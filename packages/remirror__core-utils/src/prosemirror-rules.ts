@@ -12,6 +12,7 @@ import type {
   TransactionProps,
 } from '@remirror/core-types';
 import { InputRule } from '@remirror/pm/inputrules';
+import { NodeType } from '@remirror/pm/model';
 import { markActiveInRange } from '@remirror/pm/suggest';
 
 export interface BeforeDispatchProps extends TransactionProps {
@@ -244,7 +245,7 @@ export function nodeInputRule(props: NodeInputRuleProps): SkippableInputRule {
   const rule: SkippableInputRule = new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     const { tr, schema } = state;
-    const nodeType = isString(type) ? schema.nodes[type] : type;
+    const nodeType: NodeType = isString(type) ? schema.nodes[type] : type;
 
     let captureGroup = match[1];
     let fullMatch = match[0];
@@ -275,12 +276,12 @@ export function nodeInputRule(props: NodeInputRuleProps): SkippableInputRule {
       message: `No node exists for ${type} in the schema.`,
     });
 
-    tr.replaceWith(
-      nodeType.isBlock ? tr.doc.resolve(start).before() : start,
-      end,
-      nodeType.create(attributes),
-    );
-    beforeDispatch?.({ tr, match: [fullMatch, captureGroup ?? ''], start, end });
+    const content = nodeType.createAndFill(attributes);
+
+    if (content) {
+      tr.replaceWith(nodeType.isBlock ? tr.doc.resolve(start).before() : start, end, content);
+      beforeDispatch?.({ tr, match: [fullMatch, captureGroup ?? ''], start, end });
+    }
 
     return tr;
   });
