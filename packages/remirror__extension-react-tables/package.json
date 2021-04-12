@@ -54,7 +54,7 @@
     "@remirror/react-core": "0.0.0",
     "@remirror/react-hooks": "1.0.0-next.60",
     "@remirror/theme": "1.0.0-next.60",
-    "jsx-dom": "^7.0.0-beta.1"
+    "jsx-dom": "^6.4.23"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",
