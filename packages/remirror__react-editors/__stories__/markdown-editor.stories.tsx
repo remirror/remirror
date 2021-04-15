@@ -49,9 +49,9 @@ export const Basic = () => {
         <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
           <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
         </Remirror>
-        {/* <pre>
+        <pre>
           <code>{getContext()?.helpers.getMarkdown(state)}</code>
-        </pre> */}
+        </pre>
       </ThemeProvider>
     </>
   );

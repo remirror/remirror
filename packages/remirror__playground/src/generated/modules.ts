@@ -109,6 +109,7 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   '@remirror/extension-react-component':
     ReactPlaygroundImports['@remirror/extension-react-component'],
   '@remirror/extension-react-ssr': ReactPlaygroundImports['@remirror/extension-react-ssr'],
+  '@remirror/extension-react-tables': ReactPlaygroundImports['@remirror/extension-react-tables'],
   '@remirror/preset-react': ReactPlaygroundImports['@remirror/preset-react'],
   '@remirror/react-components': ReactPlaygroundImports['@remirror/react-components'],
   '@remirror/react-core': ReactPlaygroundImports['@remirror/react-core'],

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands uploadImage can upload images 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    content 
+    <div
+      class="remirror-image-loader placeholder ProseMirror-widget"
+    />
+    <br />
+  </p>
+</div>
+`;

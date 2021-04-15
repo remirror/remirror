@@ -2,12 +2,12 @@ import { Story } from '@storybook/react';
 import { useEffect, useState } from 'react';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import {
-  TableComponents,
-  tableControllerPluginKey,
-  TableExtension,
   EditorComponent,
   ReactComponentExtension,
   Remirror,
+  TableComponents,
+  tableControllerPluginKey,
+  TableExtension,
   ThemeProvider,
   useRemirror,
   useRemirrorContext,

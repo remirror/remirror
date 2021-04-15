@@ -14,6 +14,7 @@ import * as remirrorExtensionPlaceholder from '@remirror/extension-placeholder';
 import * as remirrorExtensionPositioner from '@remirror/extension-positioner';
 import * as remirrorExtensionReactComponent from '@remirror/extension-react-component';
 import * as remirrorExtensionReactSsr from '@remirror/extension-react-ssr';
+import * as remirrorExtensionReactTables from '@remirror/extension-react-tables';
 import * as remirrorPresetReact from '@remirror/preset-react';
 import * as remirrorReactComponents from '@remirror/react-components';
 import * as remirrorReactCore from '@remirror/react-core';
@@ -27,6 +28,7 @@ export const ReactPlaygroundImports = {
   '@remirror/extension-positioner': remirrorExtensionPositioner,
   '@remirror/extension-react-component': remirrorExtensionReactComponent,
   '@remirror/extension-react-ssr': remirrorExtensionReactSsr,
+  '@remirror/extension-react-tables': remirrorExtensionReactTables,
   '@remirror/preset-react': remirrorPresetReact,
   '@remirror/react-components': remirrorReactComponents,
   '@remirror/react-core': remirrorReactCore,

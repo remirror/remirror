@@ -75,11 +75,9 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
     const { range, name } = state;
 
     if (ignoreMatchesOnDismiss) {
-      const { addIgnored, setLastChangeFromAppend } = helpers.getSuggestMethods();
       // Ignore the current mention so that it doesn't show again for this
       // matching area
-      addIgnored({ from: range.from, name, specific: true });
-      setLastChangeFromAppend();
+      helpers.getSuggestMethods().addIgnored({ from: range.from, name, specific: true });
     }
 
     // Remove the matches.

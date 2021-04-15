@@ -406,6 +406,7 @@ const DEFAULT_TSCONFIG_META: Required<TsConfigMeta> = {
       ['react-dom', '@types/react-dom'],
       ['reakit', 'reakit', 'ts'],
       '@remirror/react',
+      ['@storybook/react', '@storybook/react', 'types-6-0.d.ts'],
       '@remirror/dev',
     ],
   },

@@ -1,6 +1,6 @@
 import { getDocument, queries } from 'playwright-testing-library';
 import { ElementHandle } from 'playwright-testing-library/dist/typedefs';
-import { goto, selectAll, typist } from 'testing/playwright';
+import { goto, typist } from 'testing/playwright';
 
 describe('Positioner Extension', () => {
   const { getByRole, getByTestId, getByText } = queries;
