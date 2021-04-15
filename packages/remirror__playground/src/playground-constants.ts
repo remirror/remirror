@@ -1,5 +1,5 @@
 import type { editor, languages } from 'monaco-editor';
-import type { PackageJson } from 'type-fest';
+import type { PackageJson } from '@remirror/core';
 
 /**
  * The key used to store the internal module on the window object.

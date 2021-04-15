@@ -34,7 +34,10 @@ export class BlockquoteExtension extends NodeExtension {
       draggable: false,
       ...override,
       attrs: extra.defaults(),
-      parseDOM: [{ tag: 'blockquote', getAttrs: extra.parse, priority: 100 }],
+      parseDOM: [
+        { tag: 'blockquote', getAttrs: extra.parse, priority: 100 },
+        ...(override.parseDOM ?? []),
+      ],
       toDOM: (node) => ['blockquote', extra.dom(node), 0],
     };
   }

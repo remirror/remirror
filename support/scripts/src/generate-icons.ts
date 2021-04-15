@@ -104,20 +104,25 @@ async function convertIconData(svg: string) {
   type Cheerio = ReturnType<ReturnType<typeof cheerio['load']>['root']>;
 
   function elementToTree($element: Cheerio): IconTree[] {
-    return $element
-      .filter((_, $child) => !!($child.tagName && !['style'].includes($child.tagName)))
-      .map((_, $child) => {
-        const tag = $child.tagName;
-        const attr = attributeConverter($child.attribs, $child.tagName);
-        const child = $child.children?.length ? elementToTree(cheerio($child.children)) : undefined;
+    const iconTrees: any[] = [];
 
-        if (tag === 'g' && isEmptyObject(attr) && child?.length) {
-          return child;
-        }
+    for (const $child of $element.get() ?? []) {
+      if (!($child.tagName && !['style'].includes($child.tagName))) {
+        continue;
+      }
 
-        return { tag, attr, child };
-      })
-      .get();
+      const tag = $child.tagName;
+      const attr = attributeConverter($child.attribs, $child.tagName);
+      const child = $child.children?.length ? elementToTree(cheerio($child.children)) : undefined;
+
+      if (tag === 'g' && isEmptyObject(attr) && child?.length) {
+        iconTrees.push(child);
+      } else {
+        iconTrees.push({ tag, attr, child });
+      }
+    }
+
+    return iconTrees;
   }
 
   const tree = elementToTree($svg);

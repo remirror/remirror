@@ -29,9 +29,9 @@ const PlaygroundPage = (props: any) => {
               href='https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap'
               rel='stylesheet'
             />
-            <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
-            <script src='https://unpkg.com/prettier@2.1.2/standalone.js'></script>
-            <script src='https://unpkg.com/prettier@2.1.2/parser-typescript.js'></script>
+            <script src='https://unpkg.com/@babel/standalone/babel.min.js' />
+            <script src='https://unpkg.com/prettier@2.1.2/standalone.js' />
+            <script src='https://unpkg.com/prettier@2.1.2/parser-typescript.js' />
             <title>Remirror Playground</title>
             <meta property='og:title' content='Remirror Playground' />
             {favicon ?? <link rel='shortcut icon' href={faviconUrl} />}

@@ -61,7 +61,7 @@ export const THEME = css`
     font-size: ${getTheme((t) => t.fontSize[0])};
   }
 
-  & .ProseMirror {
+  .ProseMirror {
     min-height: ${getTheme((t) => t.space[6])};
     box-shadow: ${getTheme((t) => t.color.border)} 0px 0px 0px 0.1em;
     padding: ${getTheme((t) => t.space[3])};

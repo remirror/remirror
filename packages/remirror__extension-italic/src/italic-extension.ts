@@ -42,6 +42,7 @@ export class ItalicExtension extends MarkExtension {
         { tag: 'i', getAttrs: extra.parse },
         { tag: 'em', getAttrs: extra.parse },
         { style: 'font-style=italic' },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => ['em', extra.dom(mark), 0],
     };

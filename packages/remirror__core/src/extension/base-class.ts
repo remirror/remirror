@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 
-import type { LiteralUnion, Primitive } from 'type-fest';
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
@@ -32,7 +31,9 @@ import type {
   GetPartialDynamic,
   GetStatic,
   IfNoRequiredProperties,
+  LiteralUnion,
   MakeUndefined,
+  Primitive,
   RemoveAnnotations,
   Replace,
   Shape,

@@ -3,15 +3,21 @@ import {
   CommandFunction,
   ExtensionTag,
   findParentNode,
+  getNodeType,
+  isNodeSelection,
   NodeType,
+  ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
+import { Fragment, Slice } from '@remirror/pm/model';
 import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
+import { Selection } from '@remirror/pm/state';
+import { canSplit } from '@remirror/pm/transform';
 
 /**
  * Checks to see whether this is a list node.
  */
-function isList(node: ProsemirrorNode): boolean {
+export function isList(node: ProsemirrorNode): boolean {
   const schema = node.type.schema;
 
   return !!(
@@ -63,5 +69,118 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
     }
 
     return wrapInList(type)(state, dispatch);
+  };
+}
+
+// :: (NodeType) → (state: EditorState, dispatch: ?(tr: Transaction)) → bool
+// Build a command that splits a non-empty textblock at the top level
+// of a list item by also splitting that list item.
+export function splitListItem(
+  listItemType: string | NodeType,
+  persistedAttributes: string[] = [],
+): CommandFunction {
+  return function ({ tr, dispatch, state }) {
+    const type = getNodeType(listItemType, state.schema);
+    const { $from, $to } = tr.selection;
+
+    if (
+      // Don't apply to node selection where the selected node is a block (inline nodes might be okay)
+      // eslint-disable-next-line unicorn/consistent-destructuring
+      (isNodeSelection(tr.selection) && tr.selection.node.isBlock) ||
+      // List items can only exists at a depth of 2 or greater
+      $from.depth < 2 ||
+      // Don't apply to a selection which spans multiple nodes.
+      !$from.sameParent($to)
+    ) {
+      return false;
+    }
+
+    // Get the grandparent of the start to make sure that it has the same type
+    // as the list item type.
+    const grandParent = $from.node(-1);
+
+    if (grandParent.type !== type) {
+      return false;
+    }
+
+    const attrs: ProsemirrorAttributes = {};
+
+    for (const name of persistedAttributes) {
+      attrs[name] = grandParent.attrs[name];
+    }
+
+    if ($from.parent.content.size === 0 && $from.node(-1).childCount === $from.indexAfter(-1)) {
+      // In an empty block. If this is a nested list, the wrapping
+      // list item should be split. Otherwise, bail out and let next
+      // command handle lifting.
+      if (
+        $from.depth === 2 ||
+        $from.node(-3).type !== type ||
+        $from.index(-2) !== $from.node(-2).childCount - 1
+      ) {
+        return false;
+      }
+
+      if (dispatch) {
+        const keepItem = $from.index(-1) > 0;
+        let wrap = Fragment.empty;
+
+        // Build a fragment containing empty versions of the structure
+        // from the outer list item to the parent node of the cursor
+        for (let depth = $from.depth - (keepItem ? 1 : 2); depth >= $from.depth - 3; depth--) {
+          wrap = Fragment.from($from.node(depth).copy(wrap));
+        }
+
+        // type.contentMatch.defaultType?
+
+        // Add a second list item with an empty default start node
+        const createdNode = type.createAndFill(attrs);
+
+        if (!createdNode) {
+          return false;
+        }
+
+        wrap = wrap.append(Fragment.from(createdNode));
+
+        tr.replace(
+          $from.before(keepItem ? undefined : -1),
+          $from.after(-3),
+          new Slice(wrap, keepItem ? 3 : 2, 2),
+        );
+        tr.setSelection(
+          (tr.selection.constructor as typeof Selection).near(
+            tr.doc.resolve($from.pos + (keepItem ? 3 : 2)),
+          ),
+        );
+        dispatch(tr.scrollIntoView());
+      }
+
+      return true;
+    }
+
+    const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
+    tr.delete($from.pos, $to.pos);
+
+    const types = [{ type, attrs }];
+
+    if (nextType) {
+      const attrs: ProsemirrorAttributes = {};
+
+      for (const name of persistedAttributes) {
+        attrs[name] = $from.node().attrs[name];
+      }
+
+      types.push({ type: nextType, attrs });
+    }
+
+    if (!canSplit(tr.doc, $from.pos, 2, types)) {
+      return false;
+    }
+
+    if (dispatch) {
+      dispatch(tr.split($from.pos, 2, types).scrollIntoView());
+    }
+
+    return true;
   };
 }

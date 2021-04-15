@@ -1,7 +1,7 @@
-import { cx } from '@linaria/core';
 import { createNanoEvents } from 'nanoevents';
 import { ErrorConstant } from '@remirror/core-constants';
 import {
+  cx,
   invariant,
   isEmptyArray,
   isFunction,

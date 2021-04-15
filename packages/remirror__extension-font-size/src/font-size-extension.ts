@@ -102,6 +102,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
             return { size };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark: Mark) => {
         const { size, ...other } = omitExtraAttributes<FontSizeAttributes>(mark.attrs, extra);

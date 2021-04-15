@@ -63,6 +63,9 @@ type SetProgress = (progress: number) => void;
  * TODO ->
  * - Captions https://glitch.com/edit/#!/pet-figcaption?path=index.js%3A27%3A1 into a preset
  * - Resizable https://glitch.com/edit/#!/toothsome-shoemaker?path=index.js%3A1%3A0
+ *
+ * TODO => Split this into an image upload extension and image extension.
+ * - Add a base64 image
  */
 @extension<ImageOptions>({
   defaultOptions: {
@@ -104,6 +107,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
           getAttrs: (element) =>
             isElementDomNode(element) ? getImageAttributes({ element, parse: extra.parse }) : {},
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const attrs = omitExtraAttributes(node.attrs, extra);
@@ -248,27 +252,6 @@ export function isImageFileType(file: File): boolean {
   return IMAGE_FILE_TYPES.has(file.type);
 }
 
-// /**
-//  * Get the alignment of the text in the element.
-//  */
-// function getAlignment(element: HTMLElement) {
-//   const { cssFloat, display } = element.style;
-
-//   let align = element.getAttribute('data-align') ?? element.getAttribute('align');
-
-//   if (align) {
-//     align = /(left|right|center)/.test(align) ? align : null;
-//   } else if (cssFloat === 'left' && !display) {
-//     align = 'left';
-//   } else if (cssFloat === 'right' && !display) {
-//     align = 'right';
-//   } else if (!cssFloat && display === 'block') {
-//     align = 'block';
-//   }
-
-//   return align;
-// }
-
 /**
  * Get the width and the height of the image.
  */
@@ -302,16 +285,6 @@ function getImageAttributes({
     fileName: element.getAttribute('data-file-name') ?? null,
   };
 }
-
-// function setImageAttributes(node: NodeWithAttributes<ImageAttributes>) {}
-
-// function hasCursor<T extends object>(argument: T): argument is T & { $cursor: ResolvedPos } {
-//   return !!Cast(argument).$cursor;
-// }
-
-// function createBlockImageSpec() {}
-
-// function createInlineImageSpec() {}
 
 function createPlaceholder(_: EditorView, __: number): HTMLElement {
   const element = document.createElement('div');

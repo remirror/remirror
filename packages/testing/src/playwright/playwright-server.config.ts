@@ -1,6 +1,6 @@
 import { TestServer, TestServerName } from './playwright-types';
 
-const { E2E_SERVER = 'next', E2E_MODE = 'development' } = process.env;
+const { E2E_SERVER = 'storybook-react', E2E_MODE = 'development' } = process.env;
 const dev = E2E_MODE === 'development';
 
 export const servers: Record<TestServerName, TestServer> = {
@@ -38,13 +38,13 @@ export const servers: Record<TestServerName, TestServer> = {
     environment: 'playwright',
     config: {
       command: dev
-        ? 'cd examples/storybook-react && pnpm start -- -p 3032 --ci'
-        : 'cd examples/storybook-react && pnpm build && pnpx http-server storybook-static -p 3032',
+        ? 'cd packages/storybook-react && pnpm start -- -p 3032 --ci'
+        : 'cd packages/storybook-react && pnpm build && pnpx http-server storybook-static -p 3032',
       port: 3032,
       usedPortAction: 'kill',
       launchTimeout: 120_000,
     },
-    testMatch: ['<rootDir>/examples/storybook-react/__e2e__/**/*.test.ts'],
+    testMatch: ['<rootDir>/packages/*/__e2e__/**/*.test.ts'],
     url: 'http://localhost:3032/iframe.html?id=',
     name: 'storybook-react',
   },

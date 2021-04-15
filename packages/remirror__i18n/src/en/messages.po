@@ -15,38 +15,38 @@ msgstr ""
 
 #. The image description label.
 #: packages/remirror__messages/src/react-components-messages.ts:32
-msgid "components.image.dialog.description.label"
-msgstr "Image description"
+#~ msgid "components.image.dialog.description.label"
+#~ msgstr "Image description"
 
 #. A placeholder for the description of the image that is being inserted.
 #: packages/remirror__messages/src/react-components-messages.ts:37
-msgid "components.image.dialog.description.placeholder"
-msgstr "Add a short description here."
+#~ msgid "components.image.dialog.description.placeholder"
+#~ msgstr "Add a short description here."
 
 #. The label for the image menu button.
 #: packages/remirror__messages/src/react-components-messages.ts:22
-msgid "components.image.dialog.label"
-msgstr "Image"
+#~ msgid "components.image.dialog.label"
+#~ msgstr "Image"
 
 #. The label for the image url.
 #: packages/remirror__messages/src/react-components-messages.ts:27
-msgid "components.image.dialog.source.label"
-msgstr "Image source"
+#~ msgid "components.image.dialog.source.label"
+#~ msgstr "Image source"
 
 #. The label for the image menu button.
 #: packages/remirror__messages/src/react-components-messages.ts:17
-msgid "components.image.menu.icon.label"
-msgstr "Image"
+#~ msgid "components.image.menu.icon.label"
+#~ msgstr "Image"
 
 #. The label for the italic menu button.
 #: packages/remirror__messages/src/react-components-messages.ts:7
-msgid "components.italic.menu.icon.label"
-msgstr "Italic"
+#~ msgid "components.italic.menu.icon.label"
+#~ msgstr "Italic"
 
 #. The label for the underline menu button.
 #: packages/remirror__messages/src/react-components-messages.ts:12
-msgid "components.underline.menu.icon.label"
-msgstr "Underline"
+#~ msgid "components.underline.menu.icon.label"
+#~ msgstr "Underline"
 
 #. Label for adding an annotation.
 #: packages/remirror__messages/src/extension-annotation-messages.ts:2
@@ -521,10 +521,15 @@ msgstr "Space"
 msgid "keyboard.shortcut.tab"
 msgstr "Tab"
 
+#. Shown when no popup items are available
+#: packages/remirror__messages/src/react-components-messages.ts:2
+msgid "react-components.mention-atom-component.zero-items"
+msgstr "No items available"
+
 #. The aria label for the static menu.
 #: packages/remirror__messages/src/react-components-messages.ts:2
-msgid "react-components.top-menu.label"
-msgstr "Static Menu"
+#~ msgid "react-components.top-menu.label"
+#~ msgstr "Static Menu"
 
 #. Black color.
 #: packages/remirror__messages/src/extension-text-color-messages.ts:22

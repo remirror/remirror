@@ -36,6 +36,9 @@
     },
     {
       "path": "../../remirror__core-helpers/src"
+    },
+    {
+      "path": "../../remirror__types/src"
     }
   ]
 }

@@ -1,6 +1,13 @@
 import { css } from '@linaria/core';
 
 /**
+ * Sets the code block to wrap the text.
+ */
+export const WRAP = css`
+  white-space: pre-wrap !important;
+`;
+
+/**
  * a11y-dark theme for JavaScript, CSS, and HTML Based on the okaidia theme:
  * https://github.com/PrismJS/prism/blob/gh-pages/themes/prism-okaidia.css
  * @author ericwbailey

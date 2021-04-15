@@ -1,15 +1,14 @@
-import { cx } from '@linaria/core';
+import { Placement } from '@popperjs/core';
 import composeRefs from '@seznam/compose-react-refs';
 import { matchSorter } from 'match-sorter';
-import type { FC, ReactChild, Ref } from 'react';
-import { useEffect, useMemo } from 'react';
+import { FC, ReactChild, Ref, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useMenuState } from 'reakit/Menu';
-import { Popover, PopoverState, usePopoverState } from 'reakit/Popover';
-import { Except } from 'type-fest';
+import useLayoutEffect from 'use-isomorphic-layout-effect';
+import { cx, Except } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
-import { useEditorDomRef, useHelpers } from '@remirror/react-core';
+import { useHelpers } from '@remirror/react-core';
 import {
   useEditorFocus,
   UseEditorFocusProps,
@@ -27,18 +26,14 @@ import {
   ToolbarItem,
 } from './react-component-types';
 import { Toolbar } from './toolbar';
+import { usePopper } from './use-popper';
 
-interface UseFloatingPositioner extends UseEditorFocusProps {
+interface BaseFloatingPositioner extends UseEditorFocusProps {
   /**
    * The positioner used to determine the position of the relevant part of the
    * editor state.
    */
   positioner: PositionerParam;
-
-  /**
-   * Where to place the popover relative to the positioner.
-   */
-  placement?: PopoverState['placement'];
 
   /**
    * When `true` will hide the popover element whenever the positioner is no
@@ -57,89 +52,93 @@ interface UseFloatingPositioner extends UseEditorFocusProps {
    * Set to false to make the positioner inactive.
    */
   enabled?: boolean;
+
+  /**
+   * Where to place the popover relative to the positioner.
+   */
+  placement?: Placement;
+
+  /**
+   * When `true` the child component is rendered outside the `ProseMirror`
+   * editor. Set this to `false` when you need to render special components
+   * (like inputs) which capture events and conflict with the default
+   * prosemirror editor.
+   *
+   * For toolbars which rely on clicks you can leave this as the default.
+   *
+   * Setting to true will also make scrolling less smooth since it will be using
+   * JavaScript to keep track of the position of the element.
+   *
+   * @default false
+   */
+  renderOutsideEditor?: boolean;
 }
 
-function useFloatingPositioner(props: UseFloatingPositioner) {
-  const {
-    positioner,
-    animated,
-    placement = 'top',
-    enabled = true,
-    blurOnInactive = false,
-    ignoredElements = [],
-    hideWhenInvisible = true,
-  } = props;
-  const editorRef = useEditorDomRef();
-  const popoverState = usePopoverState({ placement, modal: false, animated });
-  const [isFocused] = useEditorFocus({ blurOnInactive, ignoredElements });
-  const { ref, active, height, x: left, y: top, width, visible } = usePositioner(
-    () => getPositioner(positioner).active(isFocused && enabled),
-    [isFocused, enabled],
-  );
-  const position = useMemo(() => ({ height, left, top, width }), [height, left, top, width]);
-
-  useEffect(() => {
-    const shouldShow = (hideWhenInvisible ? visible : true) && active;
-
-    if (!shouldShow) {
-      popoverState.stopAnimation();
-      return popoverState.hide();
-    }
-
-    if (!popoverState.visible) {
-      popoverState.show();
-    }
-
-    popoverState.unstable_update();
-  }, [active, popoverState, placement, position, visible, hideWhenInvisible]);
-
-  return useMemo(
-    () => ({
-      editorRef,
-      positionerRef: composeRefs(ref, popoverState.unstable_referenceRef) as Ref<any>,
-      popoverState,
-      position,
-    }),
-    [editorRef, popoverState, position, ref],
-  );
-}
-
-interface FloatingWrapperProps extends UseFloatingPositioner {
-  animatedClass?: string;
-  containerClass?: string;
-  floatingLabel?: string;
-
+interface FloatingWrapperProps extends BaseFloatingPositioner {
   /**
    * When true the arrow will be displayed.
    *
    * @default false
    */
   displayArrow?: boolean;
+
+  animatedClass?: string;
+  containerClass?: string;
+  floatingLabel?: string;
 }
 
 export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element => {
   const {
-    animated,
-    animatedClass,
     containerClass,
-    placement,
+    placement = 'right-end',
     positioner,
     children,
-    blurOnInactive,
-    ignoredElements,
-    enabled,
+    blurOnInactive = false,
+    ignoredElements = [],
+    enabled = true,
     floatingLabel,
-    hideWhenInvisible,
+    hideWhenInvisible = true,
+    renderOutsideEditor = false,
   } = props;
-  const { editorRef, positionerRef, popoverState, position } = useFloatingPositioner({
-    animated,
+
+  const [isFocused] = useEditorFocus({ blurOnInactive, ignoredElements });
+  const { ref, active, height, x: left, y: top, width, visible } = usePositioner(() => {
+    const active = isFocused && enabled;
+    const refinedPositioner = getPositioner(positioner);
+    return refinedPositioner.active(active);
+
+    // return renderOutsideEditor
+    //   ? getPositioner(positioner)
+    //       .clone(({ events = [] }) => ({ events: [...events, 'scroll'] }))
+    //       .active(active)
+    //   : getPositioner(positioner).active(active);
+  }, [isFocused, enabled, renderOutsideEditor]);
+
+  const shouldShow = (hideWhenInvisible ? visible : true) && active;
+  const position = useMemo(() => ({ height, left, top, width }), [height, left, top, width]);
+  const { popperRef, referenceRef, popoverStyles, update } = usePopper({
     placement,
-    positioner,
-    blurOnInactive,
-    ignoredElements,
-    enabled,
-    hideWhenInvisible,
+    visible,
   });
+
+  let floatingElement = (
+    <div
+      aria-label={floatingLabel}
+      ref={popperRef as any}
+      style={popoverStyles}
+      className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
+    >
+      {shouldShow && children}
+    </div>
+  );
+
+  if (!renderOutsideEditor) {
+    floatingElement = <PositionerPortal>{floatingElement}</PositionerPortal>;
+  }
+
+  useLayoutEffect(() => {
+    update();
+  }, [shouldShow, update, height, left, top, width]);
 
   return (
     <>
@@ -151,23 +150,11 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
             left: position.left,
             width: position.width,
             height: position.height,
-            background: 'blue',
           }}
-          ref={positionerRef}
+          ref={composeRefs(ref, referenceRef) as Ref<any>}
         />
       </PositionerPortal>
-      <PositionerPortal>
-        <Popover
-          {...popoverState}
-          aria-label={floatingLabel}
-          hideOnEsc={true}
-          unstable_initialFocusRef={editorRef}
-          unstable_finalFocusRef={editorRef}
-          className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
-        >
-          {animated ? <div className={animatedClass}>{children}</div> : children}
-        </Popover>
-      </PositionerPortal>
+      {floatingElement}
     </>
   );
 };
@@ -220,7 +207,7 @@ export const PositionerPortal: FC<PositionerComponentProps> = (props) => {
   return createPortal(<>{props.children}</>, container);
 };
 
-interface FloatingActionsMenuProps extends Partial<UseFloatingPositioner> {
+interface FloatingActionsMenuProps extends Partial<FloatingWrapperProps> {
   actions: MenuActionItemUnion[];
 }
 
@@ -236,6 +223,7 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
     blurOnInactive,
     ignoredElements,
     enabled = true,
+    ...floatingWrapperProps
   } = props;
   const { change } = useSuggest({ char: '/', name: 'actions-dropdown', matchOffset: 0 });
   const query = change?.query.full;
@@ -261,6 +249,7 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
       animated={animated}
       blurOnInactive={blurOnInactive}
       ignoredElements={ignoredElements}
+      {...floatingWrapperProps}
     >
       <div style={{ width: 50, height: 50, background: 'red' }} />
       <MenuComponent open={!!query && enabled} items={items} menuState={menuState} />

@@ -818,25 +818,6 @@ export interface CompareMatchProps<Schema extends EditorSchema = EditorSchema> {
 }
 
 /**
- * Keeps the partial properties of a type unchanged. Transforms the rest to
- * `never`.
- */
-type KeepPartialProperties<Type extends object> = {
-  [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : never;
-};
-
-/**
- * Pick the `partial` properties from the provided Type and make them all
- * required.
- */
-export type PickPartial<Type extends object> = {
-  [Key in keyof import('type-fest').ConditionalExcept<
-    KeepPartialProperties<Type>,
-    never
-  >]-?: Type[Key];
-};
-
-/**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
 export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &

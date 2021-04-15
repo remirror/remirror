@@ -3,7 +3,6 @@
  *
  * The builtin toolbars for use with remirror.
  */
-import { cx } from '@linaria/core';
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import { useCallback } from 'react';
 import { Box } from 'reakit/Box';
@@ -18,11 +17,12 @@ import {
 } from 'reakit/Toolbar';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 import { VisuallyHidden } from 'reakit/VisuallyHidden';
-import { Except } from 'type-fest';
 import {
   AnyExtension,
   CommandDecoratorMessageProps,
+  cx,
   ErrorConstant,
+  Except,
   includes,
   invariant,
 } from '@remirror/core';

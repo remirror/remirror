@@ -26,6 +26,9 @@
       "path": "../../remirror__messages/src"
     },
     {
+      "path": "../../remirror__pm/src"
+    },
+    {
       "path": "../../remirror__theme/src"
     }
   ]

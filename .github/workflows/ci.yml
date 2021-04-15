@@ -70,7 +70,7 @@ jobs:
 
   # Typecheck the project
   typecheck:
-    timeout-minutes: 8
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository

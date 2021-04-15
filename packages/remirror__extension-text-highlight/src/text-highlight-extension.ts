@@ -72,6 +72,22 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
           },
         },
         {
+          tag: `span[${TEXT_HIGHLIGHT_ATTRIBUTE}]`,
+          getAttrs: (dom) => {
+            if (!isElementDomNode(dom)) {
+              return;
+            }
+
+            const highlight = dom.getAttribute(TEXT_HIGHLIGHT_ATTRIBUTE);
+
+            if (!highlight) {
+              return;
+            }
+
+            return { ...extra.parse(dom), highlight };
+          },
+        },
+        {
           // Get the color from the css style property. This is useful for pasted content.
           style: 'background-color',
           priority: ExtensionPriority.Low,
@@ -83,6 +99,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
             return { highlight };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark: Mark) => {
         const { highlight, ...other } = omitExtraAttributes<TextHighlightAttributes>(
@@ -97,7 +114,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
         }
 
         return [
-          'span',
+          'mark',
           { ...other, ...extraAttrs, style, [TEXT_HIGHLIGHT_ATTRIBUTE]: highlight },
           0,
         ];

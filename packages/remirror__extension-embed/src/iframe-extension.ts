@@ -1,13 +1,13 @@
-import { cx } from '@linaria/core';
 import { parse, stringify } from 'querystringify';
-import { LiteralUnion } from 'type-fest';
 import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
+  cx,
   extension,
   ExtensionTag,
   findSelectedNodeOfType,
+  LiteralUnion,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
@@ -92,6 +92,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
             };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const { frameBorder, allowFullScreen, src, type, ...rest } = omitExtraAttributes(

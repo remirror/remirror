@@ -69,6 +69,7 @@ export class FontFamilyExtension extends MarkExtension {
             };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => {
         const { fontFamily } = omitExtraAttributes(mark.attrs, extra) as FontFamilyAttributes;

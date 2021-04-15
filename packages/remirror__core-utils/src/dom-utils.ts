@@ -1,6 +1,5 @@
-import { KebabCase } from 'type-fest';
 import { Cast, includes, isNumber, isObject, isString } from '@remirror/core-helpers';
-import { StringKey } from '@remirror/core-types';
+import { KebabCase, StringKey } from '@remirror/core-types';
 
 /**
  * Get the styles for a given property of an element.

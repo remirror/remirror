@@ -81,6 +81,7 @@ export class TextColorExtension extends MarkExtension<TextColorOptions> {
             return { color };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark: Mark) => {
         const { color, ...other } = omitExtraAttributes<TextColorAttributes>(mark.attrs, extra);

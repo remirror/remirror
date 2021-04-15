@@ -1,6 +1,5 @@
-import { cx } from '@linaria/core';
 import { Children, cloneElement } from 'react';
-import { isDocNodeEmpty, isString } from '@remirror/core';
+import { cx, isDocNodeEmpty, isString } from '@remirror/core';
 import { PlaceholderExtension, PlaceholderOptions } from '@remirror/extension-placeholder';
 import { SsrTransformer } from '@remirror/extension-react-ssr';
 import { getElementProps } from '@remirror/react-utils';

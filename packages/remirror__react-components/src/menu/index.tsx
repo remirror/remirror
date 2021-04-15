@@ -4,7 +4,6 @@
  * The builtin menus.
  */
 
-import { cx } from '@linaria/core';
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import { forwardRef, useEffect, useRef } from 'react';
 import { Box } from 'reakit/Box';
@@ -21,7 +20,7 @@ import {
 } from 'reakit/Menu';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
 import type { AnyExtension, CommandDecoratorMessageProps } from '@remirror/core';
-import { ErrorConstant, includes, invariant, isString } from '@remirror/core';
+import { cx, ErrorConstant, includes, invariant, isString } from '@remirror/core';
 import {
   useActive,
   useChainedCommands,
@@ -87,7 +86,7 @@ interface MenuPaneProps extends BaseMenuBarProps {
 }
 
 const MenuPane = (props: MenuPaneProps): JSX.Element => {
-  return <ReakitMenuItem {...props.menuState}></ReakitMenuItem>;
+  return <ReakitMenuItem {...props.menuState} />;
 };
 
 interface MenuCommandPaneProps extends BaseMenuBarProps {

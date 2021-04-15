@@ -1,4 +1,6 @@
 import {
+  command,
+  CommandFunction,
   CreateExtensionPlugin,
   EditorState,
   extension,
@@ -137,6 +139,17 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
   @helper()
   getMarkdown(state?: EditorState): Helper<string> {
     return this.options.htmlToMarkdown(this.store.helpers.getHTML(state));
+  }
+
+  /**
+   * TODO add commands for plain text markdown
+   * @notimplemented
+   */
+  @command()
+  toggleBoldMarkdown(): CommandFunction {
+    return (_) => {
+      return false;
+    };
   }
 }
 

@@ -4,6 +4,7 @@ import {
   command,
   CommandFunction,
   extension,
+  ExtensionPriority,
   ExtensionTag,
   keyBinding,
   KeyBindingProps,
@@ -19,7 +20,7 @@ import { toggleList } from './list-commands';
 import { ListItemExtension } from './list-item-extension';
 
 /**
- * Creates the node for a bullet list.
+ * Create the node for a bullet list.
  */
 @extension({})
 export class BulletListExtension extends NodeExtension {
@@ -36,16 +37,13 @@ export class BulletListExtension extends NodeExtension {
       content: 'listItem+',
       ...override,
       attrs: extra.defaults(),
-      parseDOM: [{ tag: 'ul', getAttrs: extra.parse }],
+      parseDOM: [{ tag: 'ul', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (node) => ['ul', extra.dom(node), 0],
     };
   }
 
-  /**
-   * Automatically add the `ListItemExtension` which is required here.
-   */
   createExtensions() {
-    return [new ListItemExtension()];
+    return [new ListItemExtension({ priority: ExtensionPriority.Low })];
   }
 
   /**

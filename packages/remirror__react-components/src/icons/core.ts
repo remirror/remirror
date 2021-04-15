@@ -32,6 +32,8 @@ import {
   closeLine,
   codeLine,
   codeView,
+  deleteBinFill,
+  deleteBinLine,
   deleteColumn,
   deleteRow,
   doubleQuotesL,
@@ -105,6 +107,8 @@ import {
   organizationChart,
   pageSeparator,
   paragraph,
+  pencilFill,
+  pencilLine,
   pinyinInput,
   questionMark,
   roundedCorner,
@@ -390,6 +394,22 @@ export const CodeLineIcon: IconType = (props) => {
  */
 export const CodeViewIcon: IconType = (props) => {
   return GenIcon(codeView)(props);
+};
+
+/**
+ * The react component for the `delete-bin-fill.svg` icon created by [RemixIcons](https://remixicons.com).
+ * ![Delete Bin Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/delete-bin-fill.svg)
+ */
+export const DeleteBinFillIcon: IconType = (props) => {
+  return GenIcon(deleteBinFill)(props);
+};
+
+/**
+ * The react component for the `delete-bin-line.svg` icon created by [RemixIcons](https://remixicons.com).
+ * ![Delete Bin Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/delete-bin-line.svg)
+ */
+export const DeleteBinLineIcon: IconType = (props) => {
+  return GenIcon(deleteBinLine)(props);
 };
 
 /**
@@ -974,6 +994,22 @@ export const PageSeparatorIcon: IconType = (props) => {
  */
 export const ParagraphIcon: IconType = (props) => {
   return GenIcon(paragraph)(props);
+};
+
+/**
+ * The react component for the `pencil-fill.svg` icon created by [RemixIcons](https://remixicons.com).
+ * ![Pencil Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Design/pencil-fill.svg)
+ */
+export const PencilFillIcon: IconType = (props) => {
+  return GenIcon(pencilFill)(props);
+};
+
+/**
+ * The react component for the `pencil-line.svg` icon created by [RemixIcons](https://remixicons.com).
+ * ![Pencil Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Design/pencil-line.svg)
+ */
+export const PencilLineIcon: IconType = (props) => {
+  return GenIcon(pencilLine)(props);
 };
 
 /**

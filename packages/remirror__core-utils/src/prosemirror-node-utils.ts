@@ -1,4 +1,3 @@
-import type { Primitive } from 'type-fest';
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, isFunction, isString, keys } from '@remirror/core-helpers';
 import type {
@@ -9,6 +8,7 @@ import type {
   OptionalProsemirrorNodeProps,
   PosProps,
   PredicateProps,
+  Primitive,
   ProsemirrorNode,
   ProsemirrorNodeProps,
   Transaction,

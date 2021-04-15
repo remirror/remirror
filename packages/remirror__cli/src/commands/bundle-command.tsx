@@ -1,22 +1,20 @@
 import { Option } from 'clipanion';
 import figures from 'figures';
-import { readFile, writeFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs-extra';
 import { Box, render, Text } from 'ink';
 import Spinner from 'ink-spinner';
 import escape from 'jsesc';
 import ms from 'ms';
 import os from 'os';
-import Bundler, { ParcelOptions } from 'parcel-bundler';
 import path from 'path';
 import { FC, useEffect } from 'react';
 import useSetState from 'react-use/lib/useSetState';
 import rimraf from 'rimraf';
+import type { RollupOptions } from 'rollup';
 import { isNumber, uniqueId } from '@remirror/core-helpers';
 
 import { notifyUpdate } from '../cli-utils';
-import { BaseCommand, CommandString, GetShapeOfCommandData } from './base-command';
-
-const REMIRROR_ID = '__remirror';
+import { BaseCommand, CommandBoolean, CommandString, GetShapeOfCommandData } from './base-command';
 
 /**
  * Create a new monorepo project.
@@ -33,11 +31,7 @@ export class BundleCommand extends BaseCommand {
     examples: [
       [
         'Quickly create a new monorepo project called awesome with all the default options',
-        '$0 bundle src/index.ts',
-      ],
-      [
-        'Bundle an editor from an npm package. Make sure the editor supports being used within a webview. Not all of them do.',
-        '$0 create @remirror/react-social',
+        '$0 bundle --src src/index.ts --dest src/bundled.ts',
       ],
     ],
   });
@@ -45,7 +39,20 @@ export class BundleCommand extends BaseCommand {
   /**
    * The source of the editor to create. This can be a.
    */
-  source: CommandString = Option.String();
+  source: CommandString = Option.String('--source,--src,-s', {
+    description: 'The relative path to the source file',
+    required: true,
+  });
+
+  destination: CommandString = Option.String('--destination,--dest,-d', {
+    description: 'The relative path to the destination file',
+    required: true,
+  });
+
+  watch?: CommandBoolean = Option.Boolean('--watch,-w', {
+    required: false,
+    description: 'Active watching for the source file',
+  });
 
   async execute(): Promise<void> {
     await renderBundleEditor({ ...this, method: bundleEntryPoint });
@@ -56,27 +63,8 @@ export class BundleCommand extends BaseCommand {
 /**
  * Create the file which exports a function to be injected into the webview.
  */
-const createFile = (withAnnotation = false) => (script: string) => `export const createHTML = ${
-  withAnnotation ? '(html: string)' : 'html'
-} => \`<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>This is the webview</title>
-  </head>
-  <body>
-    <div id="${REMIRROR_ID}">\${html}</div>
-  </body>
-<script>
-  ${escape(script, { quotes: 'backtick', isScriptContext: true })}
-</script>
-</html>\`;
-`;
-
-const createTSFile = createFile(true);
-const createJSFile = createFile();
+const createFileContents = (script: string) =>
+  `export default \`${escape(script, { quotes: 'backtick', isScriptContext: false })}\``;
 
 /**
  * Remove all files in the provided path or glob pattern.
@@ -88,37 +76,54 @@ function clearPath(glob: string) {
 /**
  * Uses parcel-bundler to bundle the target file.
  */
-export function bundleEntryPoint({ source, cwd }: BundleCommandShape): BundleMethodReturn {
+export function bundleEntryPoint(props: BundleCommandShape) {
+  const { source, cwd, destination } = props;
+
   // Paths
   const entryFile = path.join(cwd, source);
   const tempDir = path.join(os.tmpdir(), uniqueId());
   const tempFileName = 'remirror-webview.js';
   const tempFilePath = path.join(tempDir, tempFileName);
-  const outDir = cwd;
-  const isTs = !!/\.tsx?$/.test(source);
-  const outFilePath = path.join(outDir, isTs ? 'file.ts' : 'file.js');
-
-  // Parcel config
-  const options: ParcelOptions = {
-    outDir: tempDir,
-    outFile: tempFileName,
-    sourceMaps: false,
-    minify: true,
-    watch: false,
-    logLevel: 1,
-  };
-
-  const parcel = new Bundler(entryFile, options);
+  const outFilePath = path.join(cwd, destination);
 
   return {
     bundle: async () => {
-      // Create the bundle
-      await parcel.bundle();
+      const { rollup } = await import('rollup');
+      const { babel } = await import('@rollup/plugin-babel');
+      const { default: json } = await import('@rollup/plugin-json');
+      const { default: cjs } = await import('@rollup/plugin-commonjs');
+      const { terser } = await import('rollup-plugin-terser');
+      const { nodeResolve } = await import('@rollup/plugin-node-resolve');
+
+      const extensions = ['.js', '.jsx', '.ts', '.tsx', '.mjs', '.node'];
+      const options: RollupOptions = {
+        input: entryFile,
+        plugins: [
+          cjs({ extensions, include: /node_modules/ }),
+          babel({ cwd, extensions, babelHelpers: 'runtime', rootMode: 'upward-optional' }),
+          json({ namedExports: false }),
+          nodeResolve({ extensions, browser: true, preferBuiltins: true }),
+        ],
+      };
+
+      if (process.env.NODE_ENV === 'production') {
+        options.plugins?.push(terser());
+      }
+
+      const bundler = await rollup(options);
+
+      const result = await bundler.generate({
+        format: 'iife',
+        exports: 'named',
+        name: 'AWESOME',
+      });
+
+      return writeFile(outFilePath, result.output[0].code);
     },
     write: async () => {
       // Read the bundle and insert it into script template
       const script = await readFile(tempFilePath, 'utf-8');
-      const finalOutput = isTs ? createTSFile(script) : createJSFile(script);
+      const finalOutput = createFileContents(script);
       await writeFile(outFilePath, finalOutput, 'utf-8');
     },
     clean: async () => {
@@ -157,19 +162,14 @@ interface BundleEditorState {
   step: Step;
 }
 
-const useBundleEditor = ({
-  method,
-  startTime = Date.now(),
-  source,
-  cwd,
-  verbose,
-}: BundleEditorProps) => {
+function useBundleEditor(props: BundleEditorProps) {
+  const { method, startTime = Date.now(), source, destination, cwd, verbose } = props;
   const [state, setState] = useSetState<BundleEditorState>({ step: Step.Bundle });
   const { endTime, step } = state;
   const completed = step === Step.Complete;
 
   useEffect(() => {
-    const { bundle, write, clean } = method({ source, cwd, verbose });
+    const { bundle, write, clean } = method({ source, cwd, verbose, destination });
 
     bundle()
       .then(() => {
@@ -182,10 +182,10 @@ const useBundleEditor = ({
       })
       .then(() => setState({ step: Step.Complete, endTime: Date.now() }))
       .catch((error) => setState({ error: error, endTime: Date.now() }));
-  }, [source, method, cwd, verbose, setState]);
+  }, [source, method, cwd, verbose, setState, destination]);
 
   return { ...state, duration: endTime ? endTime - startTime : undefined, completed };
-};
+}
 
 /**
  * Renders a loading line
@@ -220,8 +220,8 @@ const LoadingLine: FC<BundleEditorState & { value: Step }> = ({ step, error, val
 /**
  * Renders the loading component and timestamp for the command.
  */
-export const BundleEditorComponent = ({ verbose, ...props }: BundleEditorProps): JSX.Element => {
-  const { completed, duration, ...state } = useBundleEditor({ verbose, ...props });
+export const BundleEditorComponent = (props: BundleEditorProps): JSX.Element => {
+  const { completed, duration, ...state } = useBundleEditor(props);
 
   return (
     <>
@@ -243,7 +243,7 @@ export const BundleEditorComponent = ({ verbose, ...props }: BundleEditorProps):
           </Box>
         </>
       )}
-      {isNumber(duration) && verbose && (
+      {isNumber(duration) && props.verbose && (
         <Box height={1} paddingBottom={2}>
           <Box paddingRight={2}>
             <Text color='red'>{figures.info}</Text>

@@ -4,7 +4,6 @@
  * A color picker component which is used for menus.
  */
 
-import { cx } from '@linaria/core';
 import type { FC } from 'react';
 import { useCallback } from 'react';
 import {
@@ -15,6 +14,7 @@ import {
   useCompositeState,
 } from 'reakit/Composite';
 import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
+import { cx } from '@remirror/core';
 import { HuePalette, Palette, palette as defaultPalette } from '@remirror/extension-text-color';
 import { useI18n } from '@remirror/react-core';
 import { ComponentsTheme } from '@remirror/theme';

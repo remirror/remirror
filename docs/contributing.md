@@ -105,6 +105,18 @@ pnpm test:watch extension-bold
 
 <br />
 
+## Stories
+
+Stories are an integral part of this repository. They serve as the package level documentation and are used as the building blocks for the **e2e** tests. Stories are primarily user experience focused.
+
+For example the **bold extension** will have a story which shows how the commands can be used to toggle bold text within the editor.
+
+Each story should be placed within the `__stories__` folder and the file should end with the pattern `*.stories.ts(x)`.
+
+Following the 1.0.0 release of `remirror` there will be a big push to add more stories documenting the usage of all the extensions, commands and hooks available.
+
+<br />
+
 ## Using Git
 
 I recommend that while working on your code you commit early and often. You won't be judged. All worked submitted in a pull request (see following section) will be squashed into one commit before merging (unless it makes sense to keep the commits as separate items).

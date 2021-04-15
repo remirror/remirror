@@ -14,12 +14,7 @@ import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
 import { Remirror, useRemirror } from '@remirror/react';
 
-const extensions = () => [
-  new CorePreset(),
-  new BoldExtension(),
-  new ItalicExtension(),
-  new UnderlineExtension(),
-];
+const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
 const Editor = () => {
   const { manager } = useRemirror({ extensions });
@@ -32,17 +27,18 @@ The above editor created automatically renders the editor into the dom within a 
 
 ### Overriding defaults
 
-It's likely that you want a bit more control. This is why the `Remirror` components provides the editor context to all children. When there are no children provided it automatically renders into a auto generated div. But once we provide children we can take full control.
+It's likely that you want a bit more control. This is why the `Remirror` components provides the `RemirrorContext` to all children components. When there are no children provided it automatically renders as above. But once we provide children we can take full control.
 
 Let's create a menu and custom div to render the editor into.
 
 ```tsx
 import React from 'react';
-import { useRemirrorContext } from '@remirror/react';
+import { useActive, useCommands } from '@remirror/react';
 
 const Menu = () => {
   // Access the commands and the activity status of the editor.
-  const { commands, active } = useRemirrorContext({ autoUpdate: true });
+  const commands = useCommands();
+  const active = useActive();
 
   return (
     <div>
@@ -67,34 +63,20 @@ const Menu = () => {
     </div>
   );
 };
-
-// Create the dom placeholder for the text editor ourselves..
-const TextEditor = () => {
-  const { getRootProps } = useRemirror();
-
-  return <div {...getRootProps()} style={{ width: '100%' }} />;
-};
 ```
 
-In the above snippet we are retrieving the `context` provided which gives you access to all the extra functionality that **remirror** bakes into ProseMirror. This includes, commands, chainable commands, cursor position, the editor state and more. This is where the editor specific UI will.
+In the above snippet we are retrieving commands and active status via two builtin hooks `useCommands` and `useActive`. These hooks rely on the `useRemirrorContext` hook which provides the context.
 
-`getRootProps` is used to inject the editor into a specific UI element. In the example above the root props are added to a div with custom styles. The important part of `getRootProps` is the `ref` that is returned.
-
-Adding this to the initial Editor leaves us with the following.
+This menu can be used within the `<Remirror />` component as shown below.
 
 ```tsx
 import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from '@remirror/react';
+import { EditorComponent, Remirror, useRemirror } from '@remirror/react';
 
-import { Menu, TextEditor } from './editor';
+import { Menu } from './editor';
 
-const extensions = () => [
-  new CorePreset(),
-  new BoldExtension(),
-  new ItalicExtension(),
-  new UnderlineExtension(),
-];
+const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
 const Editor = () => {
   const { manager } = useRemirror({ extensions });
@@ -102,7 +84,7 @@ const Editor = () => {
   return (
     <Remirror manager={manager}>
       {/* The text editor is placed above the menu to make the zIndex easier to manage for popups */}
-      <TextEditor />
+      <EditorComponent />
       <Menu />
     </Remirror>
   );
@@ -135,12 +117,12 @@ const Editor = () => {
     content: '<p>Initial content</p>',
 
     // Place the cursor at the start of the document. This an also be set to
-    // `end` or a numbered position.
+    // `end`, `all` or a numbered position.
     selection: 'start',
 
     // Set the string handler which means the content provided will be
-    // automatically handled as html. Markdown is also available when the
-    // `markdown` extension is added to the editor.
+    // automatically handled as html. `markdown` is also available when the
+    // `MarkdownExtension` is added to the editor.
     stringHandler: 'html',
   });
 

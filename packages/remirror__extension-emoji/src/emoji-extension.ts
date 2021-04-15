@@ -91,6 +91,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
             return { ...extra.parse(node), code };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
 
       toDOM: (node) => {
@@ -114,7 +115,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
               src: this.moji.url(code),
             },
           ],
-          emoji.emoji,
+          // ['span', { style: 'display: inline-block; text-indent: -99999px' }, emoji.emoji],
         ];
       },
     };

@@ -3,12 +3,6 @@
   "files": [],
   "references": [
     {
-      "path": "examples/storybook-react/__e2e__"
-    },
-    {
-      "path": "examples/storybook-react/src"
-    },
-    {
       "path": "examples/with-next/__e2e__"
     },
     {
@@ -114,6 +108,12 @@
       "path": "packages/remirror__es-module-shims/src"
     },
     {
+      "path": "packages/remirror__extension-annotation/__e2e__"
+    },
+    {
+      "path": "packages/remirror__extension-annotation/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-annotation/__tests__"
     },
     {
@@ -154,6 +154,9 @@
     },
     {
       "path": "packages/remirror__extension-code/src"
+    },
+    {
+      "path": "packages/remirror__extension-codemirror5/__stories__"
     },
     {
       "path": "packages/remirror__extension-codemirror5/__tests__"
@@ -270,6 +273,12 @@
       "path": "packages/remirror__extension-italic/src"
     },
     {
+      "path": "packages/remirror__extension-link/__e2e__"
+    },
+    {
+      "path": "packages/remirror__extension-link/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-link/__tests__"
     },
     {
@@ -318,6 +327,12 @@
       "path": "packages/remirror__extension-placeholder/src"
     },
     {
+      "path": "packages/remirror__extension-positioner/__e2e__"
+    },
+    {
+      "path": "packages/remirror__extension-positioner/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-positioner/__tests__"
     },
     {
@@ -340,6 +355,9 @@
     },
     {
       "path": "packages/remirror__extension-react-ssr/src"
+    },
+    {
+      "path": "packages/remirror__extension-react-tables/__stories__"
     },
     {
       "path": "packages/remirror__extension-react-tables/__tests__"
@@ -370,6 +388,9 @@
     },
     {
       "path": "packages/remirror__extension-sup/src"
+    },
+    {
+      "path": "packages/remirror__extension-tables/__stories__"
     },
     {
       "path": "packages/remirror__extension-tables/__tests__"
@@ -474,6 +495,12 @@
       "path": "packages/remirror__preset-wysiwyg/src"
     },
     {
+      "path": "packages/remirror__react-components/__e2e__"
+    },
+    {
+      "path": "packages/remirror__react-components/__stories__"
+    },
+    {
       "path": "packages/remirror__react-components/__tests__"
     },
     {
@@ -487,6 +514,15 @@
     },
     {
       "path": "packages/remirror__react-debugger/src"
+    },
+    {
+      "path": "packages/remirror__react-editors/__e2e__"
+    },
+    {
+      "path": "packages/remirror__react-editors/__stories__"
+    },
+    {
+      "path": "packages/remirror__react-editors/src"
     },
     {
       "path": "packages/remirror__react-hooks/__tests__"
@@ -538,6 +574,9 @@
     },
     {
       "path": "packages/remirror/src"
+    },
+    {
+      "path": "packages/storybook-react/src"
     },
     {
       "path": "packages/test-keyboard/__tests__"

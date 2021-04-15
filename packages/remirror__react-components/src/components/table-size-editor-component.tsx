@@ -5,10 +5,9 @@
  * editor.
  */
 
-import { cx } from '@linaria/core';
 import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
 import { createRef, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { clamp } from '@remirror/core';
+import { clamp, cx } from '@remirror/core';
 import { Rect } from '@remirror/extension-positioner';
 import { ComponentsTheme } from '@remirror/theme';
 

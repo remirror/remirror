@@ -6,7 +6,7 @@
 
 import type { ComponentType, FC } from 'react';
 import Loadable, { LoadingComponentProps } from 'react-loadable';
-import { ConditionalPick } from 'type-fest';
+import { ConditionalPick } from '@remirror/core';
 
 import { codeEditorHelper } from '../playground-state';
 import type * as CodeEditor from './code-editor';

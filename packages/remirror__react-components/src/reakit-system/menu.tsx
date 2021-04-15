@@ -1,4 +1,3 @@
-import { cx } from '@linaria/core';
 import { cloneElement, createContext, ReactNode, useCallback, useContext } from 'react';
 import { MenuHTMLProps, MenuOptions } from 'reakit/Menu/Menu';
 import { MenuBarHTMLProps, MenuBarOptions } from 'reakit/Menu/MenuBar';
@@ -8,6 +7,7 @@ import { MenuItemHTMLProps, MenuItemOptions } from 'reakit/Menu/MenuItem';
 import { MenuItemCheckboxHTMLProps, MenuItemCheckboxOptions } from 'reakit/Menu/MenuItemCheckbox';
 import { MenuItemRadioHTMLProps, MenuItemRadioOptions } from 'reakit/Menu/MenuItemRadio';
 import { MenuStateReturn } from 'reakit/Menu/MenuState';
+import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

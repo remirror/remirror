@@ -32,6 +32,9 @@
       "path": "../../remirror__icons/src"
     },
     {
+      "path": "../../remirror__messages/src"
+    },
+    {
       "path": "../../remirror__react-core/src"
     },
     {

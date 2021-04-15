@@ -171,3 +171,5 @@ cc-reporter
 
 /.detoxrc.json
 /typedoc.json
+
+.linaria-cache

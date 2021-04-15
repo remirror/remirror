@@ -40,16 +40,35 @@ declare global {
 
   namespace NodeJS {
     interface ProcessEnv {
-      E2E_BROWSER?: PlaywrightBrowserName;
-      E2E_MODE?: 'development' | 'production';
-      E2E_SERVER?: TestServerName;
-      E2E_ENVIRONMENT?: TestEnvironment;
-      E2E_DEBUG?: string;
-      E2E_COVERAGE?: string;
       /**
-       * When set only run the most basic of tests.
+       * @default 'chromium'
        */
-      E2E_BASIC?: string;
+      E2E_BROWSER?: PlaywrightBrowserName;
+
+      /**
+       * @default 'development'
+       */
+      E2E_MODE?: 'development' | 'production';
+
+      /**
+       * @default 'storybook-react'
+       */
+      E2E_SERVER?: TestServerName;
+
+      /**
+       * @default 'playwright'
+       */
+      E2E_ENVIRONMENT?: TestEnvironment;
+
+      /**
+       * @default undefined
+       */
+      E2E_DEBUG?: string;
+
+      /**
+       * @default undefined
+       */
+      E2E_COVERAGE?: string;
     }
   }
 }

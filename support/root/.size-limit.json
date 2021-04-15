@@ -52,7 +52,8 @@
       "prosemirror-state",
       "prosemirror-view",
       "@remirror/core-constants",
-      "@remirror/core-helpers"
+      "@remirror/core-helpers",
+      "@remirror/types"
     ],
     "running": false,
     "gzip": true
@@ -201,9 +202,7 @@
     "ignore": [
       "@remirror/pm",
       "@types/prettier",
-      "@types/refractor",
       "prettier",
-      "refractor",
       "@remirror/core",
       "@remirror/messages",
       "@remirror/theme"
@@ -386,7 +385,12 @@
     "name": "@remirror/extension-list",
     "limit": "10 KB",
     "path": "packages/remirror__extension-list/dist/remirror-extension-list.browser.esm.js",
-    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
+    "ignore": [
+      "@remirror/pm",
+      "@remirror/core",
+      "@remirror/extension-events",
+      "@remirror/messages"
+    ],
     "running": false,
     "gzip": true
   },
@@ -419,7 +423,8 @@
       "@remirror/pm",
       "@remirror/core",
       "@remirror/extension-events",
-      "@remirror/messages"
+      "@remirror/messages",
+      "@remirror/theme"
     ],
     "running": false,
     "gzip": true
@@ -582,6 +587,7 @@
       "@remirror/core",
       "@remirror/i18n",
       "@remirror/messages",
+      "@remirror/pm",
       "@remirror/theme"
     ],
     "running": false,
@@ -781,6 +787,7 @@
       "@remirror/extension-text-color",
       "@remirror/i18n",
       "@remirror/icons",
+      "@remirror/messages",
       "@remirror/react-core",
       "@remirror/react-hooks",
       "@remirror/react-utils",

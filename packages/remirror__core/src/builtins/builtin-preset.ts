@@ -1,6 +1,5 @@
-import type { ValueOf } from 'type-fest';
 import { pick } from '@remirror/core-helpers';
-import type { GetStaticAndDynamic } from '@remirror/core-types';
+import type { GetStaticAndDynamic, ValueOf } from '@remirror/core-types';
 
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';

@@ -62,6 +62,38 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
             continue;
           }
 
+          const textContent = slice.content.firstChild?.textContent ?? '';
+          const canBeReplaced =
+            !view.state.selection.empty && slice.content.childCount === 1 && textContent;
+          const match = findMatches(textContent, rule.regexp)[0];
+
+          if (canBeReplaced && match && rule.type === 'mark' && rule.replaceSelection) {
+            const { from, to } = view.state.selection;
+            const textSlice = view.state.doc.slice(from, to);
+            const textNode = textSlice.content.firstChild;
+
+            if (
+              textNode?.isText &&
+              (typeof rule.replaceSelection !== 'boolean'
+                ? rule.replaceSelection(textNode.textContent)
+                : rule.replaceSelection)
+            ) {
+              const { getAttributes, markType } = rule;
+              const attributes = isFunction(getAttributes)
+                ? getAttributes(match, true)
+                : getAttributes;
+              // const nodeWithMark = textNode.mark([markType.create(attributes), ...textNode.marks]);
+              // return new Slice(nodeWithMark.content, slice.openStart, slice.openEnd);
+              return new Slice(
+                Fragment.fromArray([
+                  textNode.mark([markType.create(attributes), ...textNode.marks]),
+                ]),
+                $pos.depth,
+                $pos.depth,
+              );
+            }
+          }
+
           slice = new Slice(
             regexPasteRuleHandler(slice.content, rule, view.state.schema),
             slice.openStart,
@@ -191,7 +223,7 @@ interface BaseRegexPasteRule extends BasePasteRule {
 
   /**
    * The names of marks for which this paste rule can be ignored. This means
-   * that if the matched content contains this mark it will be ignored..
+   * that if the matched content contains this mark it will be ignored.
    */
   ignoredMarks?: string[];
 
@@ -205,11 +237,13 @@ interface BaseRegexPasteRule extends BasePasteRule {
 
 interface BaseContentPasteRule extends BaseRegexPasteRule {
   /**
-   * A helper function for setting the attributes for a transformation .
+   * A helper function for setting the attributes for a transformation.
+   *
+   * The second parameter is `true` when the attributes are retrieved for a replacement.
    */
   getAttributes?:
     | Record<string, unknown>
-    | ((match: string[]) => Record<string, unknown> | undefined);
+    | ((match: string[], isReplacement: boolean) => Record<string, unknown> | undefined);
 }
 
 /**
@@ -225,6 +259,14 @@ export interface MarkPasteRule extends BaseContentPasteRule {
    * The prosemirror mark type instance.
    */
   markType: MarkType;
+
+  /**
+   * Set to `true` to replace the selection. When the regex matches for the
+   * selected text.
+   *
+   * Can be a function which receives the text that will be replaced.
+   */
+  replaceSelection?: boolean | ((replacedText: string) => boolean);
 }
 
 export interface NodePasteRule extends BaseContentPasteRule {
@@ -422,7 +464,7 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
 function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
   const { nodes, rule, textNode, match } = props;
   const { getAttributes, markType } = rule;
-  const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
+  const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
   nodes.push(textNode.mark([markType.create(attributes), ...textNode.marks]));
 }
 
@@ -432,7 +474,7 @@ function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
 function nodeRuleTransformer(props: TransformerProps<NodePasteRule>) {
   const { nodes, rule, textNode, match } = props;
   const { getAttributes, nodeType } = rule;
-  const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
+  const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
   nodes.push(nodeType.create(attributes, textNode));
 }
 

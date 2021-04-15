@@ -1,5 +1,5 @@
-import { cx } from '@linaria/core';
 import { ToolbarHTMLProps, ToolbarOptions } from 'reakit/Toolbar/Toolbar';
+import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

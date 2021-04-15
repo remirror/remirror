@@ -1,5 +1,5 @@
-import { cx } from '@linaria/core';
 import { ButtonHTMLProps, ButtonOptions } from 'reakit/Button/Button';
+import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
 import { BootstrapRoleOptions } from './role';

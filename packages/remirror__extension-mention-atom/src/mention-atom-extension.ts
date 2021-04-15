@@ -28,6 +28,7 @@ import {
   SuggestChangeHandlerProps,
   Suggester,
 } from '@remirror/pm/suggest';
+import { ExtensionMentionAtomTheme as Theme } from '@remirror/theme';
 
 /**
  * Options available to the [[`MentionAtomExtension`]].
@@ -59,6 +60,8 @@ export interface MentionAtomOptions
   /**
    * Provide the custom matchers that will be used to match mention text in the
    * editor.
+   *
+   * TODO - add customized tags here.
    */
   matchers: Static<MentionAtomExtensionMatcher[]>;
 
@@ -153,19 +156,22 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
         label: {},
         name: {},
       },
-      parseDOM: this.options.matchers.map((matcher) => ({
-        tag: `${matcher.mentionTag ?? this.options.mentionTag}[${dataAttributeId}]`,
-        getAttrs: (node) => {
-          if (!isElementDomNode(node)) {
-            return false;
-          }
+      parseDOM: [
+        ...this.options.matchers.map((matcher) => ({
+          tag: `${matcher.mentionTag ?? this.options.mentionTag}[${dataAttributeId}]`,
+          getAttrs: (node: string | Node) => {
+            if (!isElementDomNode(node)) {
+              return false;
+            }
 
-          const id = node.getAttribute(dataAttributeId);
-          const name = node.getAttribute(dataAttributeName);
-          const label = node.textContent;
-          return { ...extra.parse(node), id, label, name };
-        },
-      })),
+            const id = node.getAttribute(dataAttributeId);
+            const name = node.getAttribute(dataAttributeName);
+            const label = node.textContent;
+            return { ...extra.parse(node), id, label, name };
+          },
+        })),
+        ...(override.parseDOM ?? []),
+      ],
       toDOM: (node) => {
         const { label, id, name } = omitExtraAttributes(
           node.attrs,
@@ -289,8 +295,8 @@ const DEFAULT_MATCHER = {
   ]),
   appendText: '',
   matchOffset: 1,
-  suggestClassName: 'suggest-atom',
-  mentionClassName: 'mention-atom',
+  suggestClassName: Theme.SUGGEST_ATOM,
+  mentionClassName: Theme.MENTION_ATOM,
 };
 
 export interface OptionalMentionAtomExtensionProps {

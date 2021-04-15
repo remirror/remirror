@@ -1,5 +1,4 @@
 export type {
-  BlurEventHandler,
   ClickEventHandler,
   ClickHandler,
   ClickHandlerState,
@@ -12,11 +11,10 @@ export type {
   FocusEventHandler,
   HoverEventHandler,
   HoverEventHandlerProps,
-  MousedownEventHandler,
-  MouseenterEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
   MouseEventHandlerProps,
-  MouseleaveEventHandler,
-  MouseupEventHandler,
   ScrollEventHandler,
+  TextInputHandler,
 } from './events-extension';
 export { EventsExtension } from './events-extension';

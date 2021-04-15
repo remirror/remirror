@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import type { FocusType } from '@remirror/core';
+import { FocusType, isElementDomNode } from '@remirror/core';
 import { useRemirrorContext } from '@remirror/react-core';
 
 import { useEvent } from './use-event';
@@ -41,8 +41,10 @@ export function useEditorFocus(
   useEvent(
     'blur',
     useCallback(
-      (_: FocusEvent) => {
-        const focusedElement = document.activeElement;
+      (event: FocusEvent) => {
+        const focusedElement = isElementDomNode(event.target)
+          ? event.target
+          : document.activeElement;
         const ignoreBlur = !blurOnInactive && !focusedElement;
 
         if (ignoreBlur || view.dom.contains(focusedElement)) {

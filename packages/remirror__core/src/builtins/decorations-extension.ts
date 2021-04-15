@@ -18,7 +18,7 @@ import { Decoration, DecorationSet, WidgetDecorationSpec } from '@remirror/pm/vi
 
 import { DelayedCommand, DelayedPromiseCreator } from '../commands';
 import { extension, Helper, PlainExtension } from '../extension';
-import type { ApplyStateLifecycleProps, CreateExtensionPlugin } from '../types';
+import type { CreateExtensionPlugin } from '../types';
 import { command, helper } from './builtin-decorators';
 
 export interface DecorationsOptions {
@@ -109,12 +109,99 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
   createPlugin(): CreateExtensionPlugin {
     return {
       state: {
-        init: () => this.placeholders,
-        apply: () => this.placeholders,
+        init: () => {},
+        apply: (tr) => {
+          // Get tracker updates from the meta data
+          const { added, clearTrackers, removed, updated } = this.getMeta(tr);
+
+          if (clearTrackers) {
+            this.placeholders = DecorationSet.empty;
+
+            for (const [, widget] of this.placeholderWidgets) {
+              widget.spec.onDestroy?.(this.store.view, widget.spec.element);
+            }
+
+            this.placeholderWidgets.clear();
+            return;
+          }
+
+          this.placeholders = this.placeholders.map(tr.mapping, tr.doc, {
+            onRemove: (spec) => {
+              // Remove any removed widgets.
+              const widget = this.placeholderWidgets.get(spec.id);
+
+              if (widget) {
+                widget.spec.onDestroy?.(this.store.view, widget.spec.element);
+              }
+            },
+          });
+
+          for (const [, widget] of this.placeholderWidgets) {
+            widget.spec.onUpdate?.(
+              this.store.view,
+              widget.from,
+              widget.spec.element,
+              widget.spec.data,
+            );
+          }
+
+          // Update the decorations with any added position trackers.
+          for (const placeholder of added) {
+            if (placeholder.type === 'inline') {
+              this.addInlinePlaceholder(placeholder as WithBase<InlinePlaceholder>, tr);
+              continue;
+            }
+
+            if (placeholder.type === 'node') {
+              this.addNodePlaceholder(placeholder as WithBase<NodePlaceholder>, tr);
+              continue;
+            }
+
+            if (placeholder.type === 'widget') {
+              this.addWidgetPlaceholder(placeholder as WithBase<WidgetPlaceholder>, tr);
+              continue;
+            }
+          }
+
+          for (const { id, data } of updated) {
+            const widget = this.placeholderWidgets.get(id);
+
+            // Only support updating widget decorations.
+            if (!widget) {
+              continue;
+            }
+
+            const updatedWidget = Decoration.widget(widget.from, widget.spec.element, {
+              ...widget.spec,
+              data,
+            });
+
+            this.placeholders = this.placeholders.remove([widget]).add(tr.doc, [updatedWidget]);
+            this.placeholderWidgets.set(id, updatedWidget);
+          }
+
+          for (const id of removed) {
+            const found = this.placeholders.find(
+              undefined,
+              undefined,
+              (spec) => spec.id === id && spec.__type === __type,
+            );
+
+            const widget = this.placeholderWidgets.get(id);
+
+            if (widget) {
+              widget.spec.onDestroy?.(this.store.view, widget.spec.element);
+            }
+
+            this.placeholders = this.placeholders.remove(found);
+            this.placeholderWidgets.delete(id);
+          }
+        },
       },
       props: {
         decorations: (state) => {
           let decorationSet = this.options.decorations(state);
+          decorationSet = decorationSet.add(state.doc, this.placeholders.find());
 
           for (const extension of this.store.extensions) {
             // Skip this extension when the method doesn't exist.
@@ -256,88 +343,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    * This stores all tracked positions in the editor and maps them via the
    * transaction updates.
    */
-  onApplyState({ tr }: ApplyStateLifecycleProps): void {
-    // Get tracker updates from the meta data
-    const { added, clearTrackers, removed, updated } = this.getMeta(tr);
-
-    if (clearTrackers) {
-      this.placeholders = DecorationSet.empty;
-
-      for (const [, widget] of this.placeholderWidgets) {
-        widget.spec.onDestroy?.(this.store.view, widget.spec.element);
-      }
-
-      this.placeholderWidgets.clear();
-      return;
-    }
-
-    this.placeholders = this.placeholders.map(tr.mapping, tr.doc, {
-      onRemove: (spec) => {
-        // Remove any removed widgets.
-        const widget = this.placeholderWidgets.get(spec.id);
-
-        if (widget) {
-          widget.spec.onDestroy?.(this.store.view, widget.spec.element);
-        }
-      },
-    });
-
-    for (const [, widget] of this.placeholderWidgets) {
-      widget.spec.onUpdate?.(this.store.view, widget.from, widget.spec.element, widget.spec.data);
-    }
-
-    // Update the decorations with any added position trackers.
-    for (const placeholder of added) {
-      if (placeholder.type === 'inline') {
-        this.addInlinePlaceholder(placeholder as WithBase<InlinePlaceholder>, tr);
-        continue;
-      }
-
-      if (placeholder.type === 'node') {
-        this.addNodePlaceholder(placeholder as WithBase<NodePlaceholder>, tr);
-        continue;
-      }
-
-      if (placeholder.type === 'widget') {
-        this.addWidgetPlaceholder(placeholder as WithBase<WidgetPlaceholder>, tr);
-        continue;
-      }
-    }
-
-    for (const { id, data } of updated) {
-      const widget = this.placeholderWidgets.get(id);
-
-      // Only support updating widget decorations.
-      if (!widget) {
-        continue;
-      }
-
-      const updatedWidget = Decoration.widget(widget.from, widget.spec.element, {
-        ...widget.spec,
-        data,
-      });
-
-      this.placeholders = this.placeholders.remove([widget]).add(tr.doc, [updatedWidget]);
-      this.placeholderWidgets.set(id, updatedWidget);
-    }
-
-    for (const id of removed) {
-      const found = this.placeholders.find(
-        undefined,
-        undefined,
-        (spec) => spec.id === id && spec.__type === __type,
-      );
-
-      const widget = this.placeholderWidgets.get(id);
-
-      if (widget) {
-        widget.spec.onDestroy?.(this.store.view, widget.spec.element);
-      }
-
-      this.placeholders = this.placeholders.remove(found);
-      this.placeholderWidgets.delete(id);
-    }
-  }
+  onApplyState(): void {}
 
   /**
    * Add a widget placeholder and track it as a widget placeholder.

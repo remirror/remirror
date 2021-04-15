@@ -200,6 +200,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             return { ...extra.parse(element), id, label, name };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => {
         const { id, name } = omitExtraAttributes(mark.attrs, extra);
@@ -345,7 +346,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           cachedRange = range;
 
           // Remove the mention since it is no longer valid.
-          this.store.chain(tr).removeMention({ range });
+          return this.store.chain(tr).removeMention({ range }).tr();
         },
       };
     });

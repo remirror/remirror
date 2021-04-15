@@ -1,4 +1,3 @@
-import { LiteralUnion } from 'type-fest';
 import {
   ApplySchemaAttributes,
   command,
@@ -21,6 +20,7 @@ import {
   isTextSelection,
   keyBinding,
   KeyBindingProps,
+  LiteralUnion,
   MarkExtension,
   MarkExtensionSpec,
   MarkSpecOverride,
@@ -163,7 +163,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     defaultProtocol: '',
     selectTextOnClick: false,
     openLinkOnClick: false,
-    autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/\S*)?/,
+    autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,8}(:\d{1,5})?(\/\S*)?/,
     defaultTarget: null,
   },
   staticKeys: ['autoLinkRegex'],
@@ -182,6 +182,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     const AUTO_ATTRIBUTE = 'data-link-auto';
+
     return {
       inclusive: false,
       excludes: '_',
@@ -207,6 +208,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return { ...extra.parse(node), href, auto };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const { auto: _, ...rest } = omitExtraAttributes(node.attrs, extra);
@@ -237,14 +239,15 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * Add a handler to the `onActivateLink` to capture when .
    */
   @keyBinding({ shortcut: NamedShortcut.InsertLink })
-  shortcut({ state, dispatch, tr }: KeyBindingProps): boolean {
+  shortcut({ tr }: KeyBindingProps): boolean {
     let selectedText = '';
-    let { from, to, empty } = tr.selection;
+    let { from, to, empty, $from } = tr.selection;
     let expandedSelection = false;
+    const mark = getMarkRange($from, this.type);
 
-    // When the selection is empty, expand it
+    // When the selection is empty, expand it to the active mark
     if (empty) {
-      const selectedWord = getSelectedWord(tr);
+      const selectedWord = mark ?? getSelectedWord(tr);
 
       if (!selectedWord) {
         return false;
@@ -262,12 +265,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       selectedText = tr.doc.textBetween(from, to);
     }
 
-    if (dispatch) {
-      expandedSelection && tr.setSelection(TextSelection.create(state.doc, from, to));
-      dispatch(tr);
-    }
-
-    const mark = getMarkRange(tr.doc.resolve(from), this.type, tr.doc.resolve(to));
     this.options.onActivateLink(selectedText);
     this.options.onShortcut({
       activeLink: mark
@@ -305,6 +302,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   }
 
   /**
+   * Select the link at the current location.
+   */
+  @command()
+  selectLink(): CommandFunction {
+    return this.store.commands.selectMark.original(this.type);
+  }
+
+  /**
    * Remove the link at the current selection
    */
   @command()
@@ -324,16 +329,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * Create the paste rules that can transform a pasted link in the document.
    */
   createPasteRules(): MarkPasteRule[] {
-    if (this.options.autoLink) {
-      return [];
-    }
-
     return [
       {
         type: 'mark',
-        regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/gi,
+        regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,8}\b([\w#%&+./:=?@~-]*)/gi,
         markType: this.type,
-        getAttributes: (url) => ({ href: getMatchString(url), auto: true }),
+        getAttributes: (url, isReplacement) => ({
+          href: getMatchString(url),
+          auto: !isReplacement,
+        }),
+        // Only replace the selection for non whitespace selections
+        replaceSelection: (replacedText) => !!replacedText.trim(),
       },
     ];
   }
@@ -388,7 +394,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         cachedRange = { from: $pos.pos, to };
 
         // Remove the link
-        removeLink(cachedRange);
+        removeLink(cachedRange).tr();
 
         // Make sure the selection gets preserved otherwise the cursor jumps
         // around.
@@ -402,7 +408,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           updateLink(
             { href: extractHref(text.full, this.options.defaultProtocol), auto: true },
             range,
-          );
+          ).tr();
         }
       },
 
@@ -432,7 +438,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
           }
 
-          chain.removeLink(markRange ?? range);
+          chain.removeLink(markRange ?? range).tr();
 
           // The mark range for the position after the matched text. If this
           // exists it should be removed to handle cleanup properly.
@@ -450,7 +456,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           }
 
           if (afterMarkRange) {
-            chain.removeLink(afterMarkRange);
+            chain.removeLink(afterMarkRange).tr();
           }
 
           preserveSelection(selection, tr);
@@ -460,10 +466,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           );
 
           if (match) {
-            chain.updateLink(
-              { href: extractHref(match.text.full, this.options.defaultProtocol), auto: true },
-              match.range,
-            );
+            chain
+              .updateLink(
+                { href: extractHref(match.text.full, this.options.defaultProtocol), auto: true },
+                match.range,
+              )
+              .tr();
           } else {
             setMarkRemoved();
           }
@@ -503,7 +511,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
         /** Update the current range with the new link */
         const update = () => {
-          chain.updateLink({ href, auto: true }, range);
+          chain.updateLink({ href, auto: true }, range).tr();
           preserveSelection(selection, tr);
         };
 

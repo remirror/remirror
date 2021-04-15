@@ -1,4 +1,3 @@
-import { LiteralUnion } from 'type-fest';
 import {
   ApplySchemaAttributes,
   command,
@@ -8,6 +7,7 @@ import {
   IdentifierSchemaAttributes,
   isElementDomNode,
   joinStyles,
+  LiteralUnion,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
@@ -170,6 +170,7 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
             };
           },
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
         const {

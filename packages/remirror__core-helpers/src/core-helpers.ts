@@ -1,45 +1,22 @@
+import { cx as classNames } from '@linaria/core';
+import type { ClassName } from '@linaria/core/types/cx';
 import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
 import { BaseError } from 'make-error';
 import omit from 'object.omit';
 import pick from 'object.pick';
-import type { ConditionalExcept, Primitive } from 'type-fest';
 import { __INTERNAL_REMIRROR_IDENTIFIER_KEY__ } from '@remirror/core-constants';
+import type {
+  AnyConstructor,
+  AnyFunction,
+  ConditionalExcept,
+  Nullable,
+  Primitive,
+  Shape,
+  UnknownShape,
+} from '@remirror/types';
 
-interface Shape {
-  [key: string]: any;
-}
-type UnknownShape<Type = unknown> = Record<string, Type>;
-type Nullable<Type> = Type | null | undefined;
-type AnyConstructor<Type = any> = new (...args: any[]) => Type;
-type AnyFunction<Type = any> = (...args: any[]) => Type;
-
-type GetRecursivePath<Type, Key extends keyof Type> = Key extends string
-  ? Type[Key] extends Record<string, any>
-    ?
-        | `${Key}.${GetRecursivePath<Type[Key], Exclude<keyof Type[Key], keyof any[]>> & string}`
-        | `${Key}.${Exclude<keyof Type[Key], keyof any[]> & string}`
-    : never
-  : never;
-type GetJoinedPath<Type> = GetRecursivePath<Type, keyof Type> | keyof Type;
-export type GetPath<Type> = GetJoinedPath<Type> extends string | keyof Type
-  ? GetJoinedPath<Type>
-  : keyof Type;
-
-export type GetPathValue<
-  Type,
-  Path extends GetPath<Type>
-> = Path extends `${infer Key}.${infer Rest}`
-  ? Key extends keyof Type
-    ? Rest extends GetPath<Type[Key]>
-      ? GetPathValue<Type[Key], Rest>
-      : never
-    : never
-  : Path extends keyof Type
-  ? Type[Path]
-  : never;
-
-export type TupleRange<Size extends number> = Size extends Size
+type TupleRange<Size extends number> = Size extends Size
   ? number extends Size
     ? number[]
     : _NumberRangeTuple<[], Size>
@@ -929,7 +906,7 @@ export function unset(path: Array<string | number>, target: Shape): Shape {
   return clonedObject;
 }
 
-function makeFunctionForUniqueBy<Item = any>(value: GetPath<Item>) {
+function makeFunctionForUniqueBy<Item = any>(value: string | string[]) {
   return (item: Item) => {
     return get(item, value as string);
   };
@@ -956,7 +933,7 @@ function makeFunctionForUniqueBy<Item = any>(value: GetPath<Item>) {
  */
 export function uniqueBy<Item = any>(
   array: Item[],
-  getValue: ((item: Item) => unknown) | GetPath<Item>,
+  getValue: ((item: Item) => unknown) | string | string[],
   fromStart = false,
 ): Item[] {
   const unique: Item[] = [];
@@ -1047,6 +1024,10 @@ export function getLazyArray<Type>(value: Type[] | (() => Type[])): Type[] {
   }
 
   return value;
+}
+
+export function cx(...classes: ClassName[]): string {
+  return uniqueArray(classNames(...classes).split(' ')).join(' ');
 }
 
 // The following are forward exports for other libraries. I've structured it

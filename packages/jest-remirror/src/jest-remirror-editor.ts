@@ -221,13 +221,27 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
   /**
    * The start of the current selection
    */
-  get start(): number {
+  get from(): number {
     return this.state.selection.from;
   }
 
   /**
    * The end of the current selection. For a cursor selection this will be the
    * same as the start.
+   */
+  get to(): number {
+    return this.state.selection.to;
+  }
+
+  /**
+   * @deprecated use `from` instead
+   */
+  get start(): number {
+    return this.state.selection.from;
+  }
+
+  /**
+   * @deprecated use `to` instead
    */
   get end(): number {
     return this.state.selection.to;
@@ -408,11 +422,24 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
     fn: (
       content: Pick<
         this,
-        'helpers' | 'commands' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view'
+        'helpers' | 'commands' | 'to' | 'state' | 'tags' | 'from' | 'start' | 'end' | 'doc' | 'view'
       >,
     ) => void,
   ): this => {
-    fn(pick(this, ['helpers', 'commands', 'end', 'state', 'tags', 'start', 'doc', 'view']));
+    fn(
+      pick(this, [
+        'helpers',
+        'commands',
+        'to',
+        'state',
+        'tags',
+        'from',
+        'start',
+        'end',
+        'doc',
+        'view',
+      ]),
+    );
 
     return this;
   };

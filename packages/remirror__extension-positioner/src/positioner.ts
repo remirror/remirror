@@ -1,9 +1,9 @@
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
-import type { Except } from 'type-fest';
 import {
   EditorState,
   EditorViewProps,
   ErrorConstant,
+  Except,
   invariant,
   isFunction,
   StateUpdateLifecycleProps,

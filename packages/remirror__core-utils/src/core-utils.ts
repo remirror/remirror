@@ -8,6 +8,7 @@ import {
 } from '@remirror/core-constants';
 import {
   assert,
+  assertGet,
   clamp,
   includes,
   invariant,
@@ -109,12 +110,26 @@ export function isNodeType(value: unknown): value is NodeType<EditorSchema> {
 }
 
 /**
+ * Get the node type from a potential string value.
+ */
+export function getNodeType(type: string | NodeType, schema: EditorSchema): NodeType<EditorSchema> {
+  return isString(type) ? assertGet(schema.nodes, type) : type;
+}
+
+/**
  * Check to see if the passed value is a MarkType.
  *
  * @param value - the value to check
  */
 export function isMarkType(value: unknown): value is MarkType<EditorSchema> {
   return isObject(value) && value instanceof MarkType;
+}
+
+/**
+ * Get the mark type from a potential string value.
+ */
+export function getMarkType(type: string | MarkType, schema: EditorSchema): MarkType<EditorSchema> {
+  return isString(type) ? assertGet(schema.marks, type) : type;
 }
 
 /**
@@ -740,7 +755,7 @@ export function getSelectedGroup(
  * @param state - the editor state or transaction.
  */
 export function getSelectedWord(state: EditorState | Transaction): GetSelectedGroup | undefined {
-  return getSelectedGroup(state, /[\s\0]/);
+  return getSelectedGroup(state, /\W/);
 }
 
 /**

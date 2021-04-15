@@ -1,4 +1,3 @@
-import type { Except } from 'type-fest';
 import type { ExtensionPriority } from '@remirror/core-constants';
 import type {
   AnyConstructor,
@@ -7,6 +6,7 @@ import type {
   EditorSchema,
   EditorState,
   EditorStateProps,
+  Except,
   GetDynamic,
   GetFixedDynamic,
   GetPartialDynamic,
@@ -128,6 +128,11 @@ export interface CommandShape<Parameter extends any[] = []> {
    *and `true` when outside.
    *
    * @param args - The same arguments that are applied to the command function.
+   */
+  enabled: (...args: Parameter) => boolean;
+
+  /**
+   * @deprecated use `enabled` instead.
    */
   isEnabled: (...args: Parameter) => boolean;
 

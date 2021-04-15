@@ -397,6 +397,36 @@ export const codeView: IconTree[] = [
 ];
 
 /**
+ * The icon for `delete-bin-fill.svg` created by [RemixIcons](https://remixicons.com).
+ * ![Delete Bin Fill](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/delete-bin-fill.svg)
+ */
+export const deleteBinFill: IconTree[] = [
+  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
+  {
+    tag: 'path',
+    attr: {
+      d:
+        'M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm-8 5v6h2v-6H9zm4 0v6h2v-6h-2zM9 4v2h6V4H9z',
+    },
+  },
+];
+
+/**
+ * The icon for `delete-bin-line.svg` created by [RemixIcons](https://remixicons.com).
+ * ![Delete Bin Line](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/delete-bin-line.svg)
+ */
+export const deleteBinLine: IconTree[] = [
+  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
+  {
+    tag: 'path',
+    attr: {
+      d:
+        'M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z',
+    },
+  },
+];
+
+/**
  * The icon for `delete-column.svg` created by [RemixIcons](https://remixicons.com).
  * ![Delete Column](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Editor/delete-column.svg)
  */
@@ -1438,6 +1468,36 @@ export const paragraph: IconTree[] = [
   {
     tag: 'path',
     attr: { d: 'M12 6v15h-2v-5a6 6 0 1 1 0-12h10v2h-3v15h-2V6h-3zm-2 0a4 4 0 1 0 0 8V6z' },
+  },
+];
+
+/**
+ * The icon for `pencil-fill.svg` created by [RemixIcons](https://remixicons.com).
+ * ![Pencil Fill](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Design/pencil-fill.svg)
+ */
+export const pencilFill: IconTree[] = [
+  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
+  {
+    tag: 'path',
+    attr: {
+      d:
+        'M12.9 6.858l4.242 4.243L7.242 21H3v-4.243l9.9-9.9zm1.414-1.414l2.121-2.122a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414l-2.122 2.121-4.242-4.242z',
+    },
+  },
+];
+
+/**
+ * The icon for `pencil-line.svg` created by [RemixIcons](https://remixicons.com).
+ * ![Pencil Line](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Design/pencil-line.svg)
+ */
+export const pencilLine: IconTree[] = [
+  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
+  {
+    tag: 'path',
+    attr: {
+      d:
+        'M15.728 9.686l-1.414-1.414L5 17.586V19h1.414l9.314-9.314zm1.414-1.414l1.414-1.414-1.414-1.414-1.414 1.414 1.414 1.414zM7.242 21H3v-4.243L16.435 3.322a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 21z',
+    },
   },
 ];
 

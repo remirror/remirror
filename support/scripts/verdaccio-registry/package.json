@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-verdaccio-registry.cjs.js",
+  "module": "dist/scripts-verdaccio-registry.esm.js"
+}
