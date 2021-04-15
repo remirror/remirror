@@ -115,6 +115,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
       props: {
         decorations: (state) => {
           let decorationSet = this.options.decorations(state);
+          decorationSet.add(state.doc, this.placeholders.find());
 
           for (const extension of this.store.extensions) {
             // Skip this extension when the method doesn't exist.

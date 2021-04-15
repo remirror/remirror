@@ -218,7 +218,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
   }
 }
 
-type ImageAttributes = ProsemirrorAttributes<ImageExtensionAttributes>;
+export type ImageAttributes = ProsemirrorAttributes<ImageExtensionAttributes>;
 
 export interface ImageExtensionAttributes {
   align?: 'center' | 'end' | 'justify' | 'left' | 'match-parent' | 'right' | 'start';
@@ -251,27 +251,6 @@ const IMAGE_FILE_TYPES = new Set([
 export function isImageFileType(file: File): boolean {
   return IMAGE_FILE_TYPES.has(file.type);
 }
-
-// /**
-//  * Get the alignment of the text in the element.
-//  */
-// function getAlignment(element: HTMLElement) {
-//   const { cssFloat, display } = element.style;
-
-//   let align = element.getAttribute('data-align') ?? element.getAttribute('align');
-
-//   if (align) {
-//     align = /(left|right|center)/.test(align) ? align : null;
-//   } else if (cssFloat === 'left' && !display) {
-//     align = 'left';
-//   } else if (cssFloat === 'right' && !display) {
-//     align = 'right';
-//   } else if (!cssFloat && display === 'block') {
-//     align = 'block';
-//   }
-
-//   return align;
-// }
 
 /**
  * Get the width and the height of the image.
@@ -306,16 +285,6 @@ function getImageAttributes({
     fileName: element.getAttribute('data-file-name') ?? null,
   };
 }
-
-// function setImageAttributes(node: NodeWithAttributes<ImageAttributes>) {}
-
-// function hasCursor<T extends object>(argument: T): argument is T & { $cursor: ResolvedPos } {
-//   return !!Cast(argument).$cursor;
-// }
-
-// function createBlockImageSpec() {}
-
-// function createInlineImageSpec() {}
 
 function createPlaceholder(_: EditorView, __: number): HTMLElement {
   const element = document.createElement('div');
