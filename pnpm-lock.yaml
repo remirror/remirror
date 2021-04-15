@@ -1644,9 +1644,10 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/i18n': link:../remirror__i18n
       '@remirror/messages': link:../remirror__messages
-      '@remirror/pm': link:../remirror__pm
       '@remirror/theme': link:../remirror__theme
       color2k: 1.2.4
+    devDependencies:
+      '@remirror/pm': link:../remirror__pm
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': 1.0.0-next.60
