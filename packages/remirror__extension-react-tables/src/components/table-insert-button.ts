@@ -114,7 +114,7 @@ function TableInsertButton({
     view.dispatch(removeInsertButton(tr));
   };
 
-  button.addEventListener('click', () => {
+  button.addEventListener('mousedown', () => {
     insertRolOrColumn();
   });
 
