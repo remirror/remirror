@@ -33,12 +33,12 @@
     "pnpm"
   ],
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.2.7",
     "@actions/exec": "^1.0.4",
     "@actions/github": "^4.0.0",
     "@babel/runtime": "^7.13.10",
     "@remirror/core-helpers": "1.0.0-next.60",
-    "@types/fs-extra": "^9.0.10",
+    "@types/fs-extra": "^9.0.11",
     "@types/giphy-api": "^2.0.2",
     "@types/semver": "^7.3.4",
     "codesandbox": "^2.2.1",

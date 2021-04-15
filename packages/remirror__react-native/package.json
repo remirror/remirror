@@ -56,7 +56,7 @@
     "react": "^17.0.2",
     "react-native": "^0.64.0",
     "react-native-builder-bob": "^0.18.1",
-    "react-native-webview": "^11.3.2"
+    "react-native-webview": "^11.4.0"
   },
   "peerDependencies": {
     "@remirror/pm": "1.0.0-next.60",
