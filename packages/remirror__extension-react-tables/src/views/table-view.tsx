@@ -1,4 +1,3 @@
-import { h } from 'jsx-dom';
 import { EditorSchema, EditorView, NodeView, range, throttle, Transaction } from '@remirror/core';
 import { Node as ProsemirrorNode } from '@remirror/pm/model';
 import { TableMap, updateColumnsOnResize } from '@remirror/pm/tables';
@@ -8,6 +7,7 @@ import { ExtensionTablesTheme } from '@remirror/theme';
 import TableInsertButton, { shouldHideInsertButton } from '../components/table-insert-button';
 import { ReactTableNodeAttrs } from '../table-extensions';
 import { injectControllers } from '../utils/controller';
+import { h } from '../utils/dom';
 import { setNodeAttrs } from '../utils/prosemirror';
 
 export class TableView<Schema extends EditorSchema = EditorSchema> implements NodeView<Schema> {

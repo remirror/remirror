@@ -6,11 +6,18 @@ import { useEvent, usePositioner } from '@remirror/react-hooks';
 import { menuCellPositioner } from '../block-positioner';
 import { borderWidth } from '../const';
 
-export interface TableCellMenuButtonProps {
-  setPopupOpen: (open: boolean) => void;
+export interface TableCellMenuComponentProps {
+  popupOpen: boolean;
+  setPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DefaultTableCellMenuButton: React.FC<TableCellMenuButtonProps> = ({ setPopupOpen }) => {
+type TableCellMenuComponent = React.ComponentType<TableCellMenuComponentProps>;
+
+export interface TableCellMenuProps {
+  Component?: TableCellMenuComponent;
+}
+
+const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ setPopupOpen }) => {
   return (
     <button
       onClick={() => {
@@ -38,11 +45,7 @@ const DefaultTableCellMenuButton: React.FC<TableCellMenuButtonProps> = ({ setPop
   );
 };
 
-export interface TableCellMenuPopupProps {
-  setPopupOpen: (open: boolean) => void;
-}
-
-const DefaultTableCellMenuPopup: React.FC<TableCellMenuPopupProps> = ({ setPopupOpen }) => {
+const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({ setPopupOpen }) => {
   const ctx = useRemirrorContext();
 
   // close the popup after clicking
@@ -90,14 +93,17 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuPopupProps> = ({ setPopup
   );
 };
 
-export interface TableCellMenuProps {
-  ButtonComponent?: React.ComponentType<TableCellMenuButtonProps>;
-  PopupComponent?: React.ComponentType<TableCellMenuPopupProps>;
-}
+const DefaultTableCellMenuComponent: React.FC<TableCellMenuComponentProps> = (props) => {
+  return (
+    <>
+      <DefaultTableCellMenuButton {...props} />
+      <DefaultTableCellMenuPopup {...props} />
+    </>
+  );
+};
 
 const TableCellMenu: React.FC<TableCellMenuProps> = ({
-  ButtonComponent = DefaultTableCellMenuButton,
-  PopupComponent = DefaultTableCellMenuPopup,
+  Component = DefaultTableCellMenuComponent,
 }) => {
   const position = usePositioner(menuCellPositioner, []);
   const { ref, width, height, x, y } = position;
@@ -141,8 +147,7 @@ const TableCellMenu: React.FC<TableCellMenuProps> = ({
             pointerEvents: 'initial',
           }}
         >
-          <ButtonComponent setPopupOpen={setPopupOpen} />
-          {popupOpen ? <PopupComponent setPopupOpen={setPopupOpen} /> : null}
+          <Component popupOpen={popupOpen} setPopupOpen={setPopupOpen} />
         </div>
       </div>
     </PositionerPortal>
@@ -150,4 +155,3 @@ const TableCellMenu: React.FC<TableCellMenuProps> = ({
 };
 
 export { TableCellMenu };
-export default TableCellMenu;

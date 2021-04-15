@@ -1522,7 +1522,7 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
       '@remirror/theme': link:../remirror__theme
-      jsx-dom: 7.0.0-beta.5
+      jsx-dom: 6.4.23
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 17.0.3
@@ -1547,7 +1547,7 @@ importers:
       '@remirror/theme': 1.0.0-next.60
       '@types/react': ^17.0.2
       '@types/react-dom': ^17.0.3
-      jsx-dom: ^7.0.0-beta.1
+      jsx-dom: ^6.4.23
       react: ^17.0.2
       react-dom: ^17.0.2
   packages/remirror__extension-search:
@@ -19438,12 +19438,12 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-EIsmt3O3ljsU6sot/J4E1zDRxfBNrhjyf/OKjlydwgEimQuznlM4Wv7U+ueONJMyEn1WRE0K8dhi3dVAXYT24Q==
-  /jsx-dom/7.0.0-beta.5:
+  /jsx-dom/6.4.23:
     dependencies:
       csstype: 3.0.7
     dev: false
     resolution:
-      integrity: sha512-SJRvQmFwVItkI3/pXXZ3piW07hLCSbrA5hGTxpsbAKoZ2VFl0j8QFwgSytdq3F7VsoC9TWZWheIpk8qT2ZecpQ==
+      integrity: sha512-Y0ax82xa4nzqFdbUXs3ma2haDZy4pB638kMZsGRzZqdmtyzY2nAKs7Bh3DrLn0vqMuxmvZQ3g9hq3NtnI5yXtQ==
   /jszip/3.6.0:
     dependencies:
       lie: 3.3.0

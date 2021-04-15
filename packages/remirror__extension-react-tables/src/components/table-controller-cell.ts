@@ -1,8 +1,8 @@
-import { h } from 'jsx-dom';
 import { EditorView, findParentNodeOfType, FindProsemirrorNodeResult } from '@remirror/core';
 import { ExtensionTablesTheme } from '@remirror/theme';
 
 import { createControllerEvents } from '../utils/controller';
+import { h } from '../utils/dom';
 import TableInsertButtonTrigger from './table-insert-button-trigger';
 import TableInsertMark from './table-insert-mark';
 

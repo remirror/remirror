@@ -1,8 +1,8 @@
-import { h } from 'jsx-dom';
 import { EditorView, NodeView } from '@remirror/core';
 import { Node as ProsemirrorNode } from '@remirror/pm/model';
 
 import TableControllerCell from '../components/table-controller-cell';
+import { h } from '../utils/dom';
 
 export class TableControllerCellView implements NodeView {
   public dom: HTMLElement;

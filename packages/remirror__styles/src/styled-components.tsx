@@ -4139,15 +4139,6 @@ export const extensionYjsStyledCss: ReturnType<typeof css> = css`
   .remirror-editor.ProseMirror > .ProseMirror-yjs-cursor:first-child {
     margin-top: 16px;
   }
-  .remirror-editor.ProseMirror p:first-child,
-  .remirror-editor.ProseMirror h1:first-child,
-  .remirror-editor.ProseMirror h2:first-child,
-  .remirror-editor.ProseMirror h3:first-child,
-  .remirror-editor.ProseMirror h4:first-child,
-  .remirror-editor.ProseMirror h5:first-child,
-  .remirror-editor.ProseMirror h6:first-child {
-    margin-top: 16px;
-  }
   .remirror-editor #y-functions {
     position: absolute;
     top: 20px;
