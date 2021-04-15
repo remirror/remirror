@@ -14,9 +14,9 @@ import {
   Static,
 } from '@remirror/core';
 import { CreateEventHandlers } from '@remirror/extension-events';
-import { liftListItem, sinkListItem } from '@remirror/pm/schema-list';
+import { liftListItem, sinkListItem, splitListItem } from '@remirror/pm/schema-list';
 
-import { isList, splitListItem } from './list-commands';
+import { isList } from './list-commands';
 
 /**
  * Creates the node for a list item.
@@ -90,7 +90,7 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
 
   createKeymap(): KeyBindings {
     return {
-      Enter: splitListItem(this.type, ['closed']),
+      Enter: convertCommand(splitListItem(this.type)),
       Tab: convertCommand(sinkListItem(this.type)),
       'Shift-Tab': convertCommand(liftListItem(this.type)),
     };
