@@ -29,22 +29,23 @@ describe('commands', () => {
       jest.useRealTimers();
     });
 
-    it.only('can upload images', () => {
-      const promise = delay(100);
+    it('can upload images', async () => {
+      const promise: Promise<ImageAttributes> = delay(100).then(() => ({
+        src: 'https://test.com',
+      }));
       const editor = renderEditor(() => [new ImageExtension()]);
       const { doc, p } = editor.nodes;
       const { image } = editor.attributeNodes;
 
       editor.add(doc(p('content <cursor>')));
-      const delayedImage: DelayedPromiseCreator<ImageAttributes> = async () => {
-        await promise;
-        return { src: 'https://test.com' };
-      };
+      const delayedImage: DelayedPromiseCreator<ImageAttributes> = () => promise;
 
       editor.commands.uploadImage(delayedImage);
-      editor.debug();
 
-      expect(editor.dom).toMatchInlineSnapshot();
+      expect(editor.dom).toMatchSnapshot();
+
+      jest.runAllTimers();
+      await promise;
 
       expect(editor.doc).toEqualProsemirrorNode(
         doc(p('content ', image({ src: 'https://test.com' })())),
