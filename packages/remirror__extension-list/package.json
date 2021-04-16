@@ -11,7 +11,9 @@
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-list",
   "license": "MIT",
   "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>"
+    "Ifiok Jr. <ifiokotung@gmail.com>",
+    "Will Hawker <w.hawker@hotmail.co.uk>",
+    "Ocavue <ocavue@gmail.com>"
   ],
   "sideEffects": false,
   "exports": {
@@ -39,7 +41,8 @@
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-events": "1.0.0-next.60",
-    "@remirror/messages": "0.0.0"
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60"

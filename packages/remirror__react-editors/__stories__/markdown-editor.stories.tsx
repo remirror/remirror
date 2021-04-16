@@ -1,3 +1,5 @@
+import '@remirror/styles/all.css';
+
 import { css } from '@emotion/css';
 import { createContextState } from 'create-context-state';
 import jsx from 'refractor/lang/jsx';

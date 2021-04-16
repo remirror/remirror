@@ -72,14 +72,12 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
   };
 }
 
-// :: (NodeType) → (state: EditorState, dispatch: ?(tr: Transaction)) → bool
-// Build a command that splits a non-empty textblock at the top level
-// of a list item by also splitting that list item.
-export function splitListItem(
-  listItemType: string | NodeType,
-  persistedAttributes: string[] = [],
-): CommandFunction {
-  return function ({ tr, dispatch, state }) {
+/**
+ * Build a command that splits a non-empty textblock at the top level
+ * of a list item by also splitting that list item.
+ */
+export function splitListItem(listItemType: string | NodeType): CommandFunction {
+  return function ({ tr: tr, dispatch, state }) {
     const type = getNodeType(listItemType, state.schema);
     const { $from, $to } = tr.selection;
 
@@ -101,12 +99,6 @@ export function splitListItem(
 
     if (grandParent.type !== type) {
       return false;
-    }
-
-    const attrs: ProsemirrorAttributes = {};
-
-    for (const name of persistedAttributes) {
-      attrs[name] = grandParent.attrs[name];
     }
 
     if ($from.parent.content.size === 0 && $from.node(-1).childCount === $from.indexAfter(-1)) {
@@ -134,7 +126,7 @@ export function splitListItem(
         // type.contentMatch.defaultType?
 
         // Add a second list item with an empty default start node
-        const createdNode = type.createAndFill(attrs);
+        const createdNode = type.createAndFill({ ...grandParent.attrs, checked: false });
 
         if (!createdNode) {
           return false;
@@ -161,16 +153,10 @@ export function splitListItem(
     const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
     tr.delete($from.pos, $to.pos);
 
-    const types = [{ type, attrs }];
+    const types: TypesAfter = [undefined];
 
     if (nextType) {
-      const attrs: ProsemirrorAttributes = {};
-
-      for (const name of persistedAttributes) {
-        attrs[name] = $from.node().attrs[name];
-      }
-
-      types.push({ type: nextType, attrs });
+      types.push({ type: nextType, attrs: {} });
     }
 
     if (!canSplit(tr.doc, $from.pos, 2, types)) {
@@ -178,9 +164,13 @@ export function splitListItem(
     }
 
     if (dispatch) {
-      dispatch(tr.split($from.pos, 2, types).scrollIntoView());
+      // TODO: types for tr.split need to be fixed
+      dispatch(tr.split($from.pos, 2, types as any).scrollIntoView());
     }
 
     return true;
   };
 }
+
+type TypeAfter = { type: NodeType; attrs: ProsemirrorAttributes } | null | undefined;
+type TypesAfter = TypeAfter[];
