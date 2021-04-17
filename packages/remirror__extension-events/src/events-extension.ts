@@ -440,32 +440,34 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
       // The marks wrapping the captured position.
       const marks: GetMarkRange[] = [];
 
-      const { pos, inside } = eventPosition;
+      const { inside } = eventPosition;
+
+      // This handle the case when the context menu click has no corresponding
+      // nodes or marks because it's outside of any editor content.
+      if (inside === -1) {
+        return false;
+      }
 
       // Retrieve the resolved position from the current state.
-      const $pos = view.state.doc.resolve(pos);
+      const $pos = view.state.doc.resolve(inside);
 
       // The depth of the current node (which is a direct match)
       const currentNodeDepth = $pos.depth + 1;
 
-      // This handle the case when the context menu click has no corresponding
-      // nodes or marks because it's outside of any editor content.
-      if (inside > -1) {
-        // Populate the nodes.
-        for (const index of range(currentNodeDepth, 1)) {
-          nodes.push({
-            node: index > $pos.depth && $pos.nodeAfter ? $pos.nodeAfter : $pos.node(index),
-            pos: $pos.before(index),
-          });
-        }
+      // Populate the nodes.
+      for (const index of range(currentNodeDepth, 1)) {
+        nodes.push({
+          node: index > $pos.depth && $pos.nodeAfter ? $pos.nodeAfter : $pos.node(index),
+          pos: $pos.before(index),
+        });
+      }
 
-        // Populate the marks.
-        for (const { type } of $pos.marks()) {
-          const range = getMarkRange($pos, type);
+      // Populate the marks.
+      for (const { type } of $pos.marks()) {
+        const range = getMarkRange($pos, type);
 
-          if (range) {
-            marks.push(range);
-          }
+        if (range) {
+          marks.push(range);
         }
       }
 
