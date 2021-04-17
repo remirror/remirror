@@ -1,6 +1,5 @@
 import { css } from '@emotion/css';
 import { createContextState } from 'create-context-state';
-import React from 'react';
 import jsx from 'refractor/lang/jsx';
 import md from 'refractor/lang/markdown';
 import typescript from 'refractor/lang/typescript';
@@ -28,27 +27,11 @@ import {
   ThemeProvider,
   Toolbar,
   ToolbarItemUnion,
-  useHover,
   useRemirror,
-  useRemirrorContext,
   UseRemirrorReturn,
 } from '@remirror/react';
 
 export default { title: 'Markdown Editor' };
-
-function useDebug() {
-  useHover(
-    React.useCallback((p) => {
-      console.log('props:', p.hovering, p.nodes);
-
-      for (const node of p.nodes) {
-        if (!node.node) {
-          console.error('error:', p.nodes);
-        }
-      }
-    }, []),
-  );
-}
 
 /**
  * The editor which is used to create the annotation. Supports formatting.
@@ -63,14 +46,7 @@ export const Basic = () => {
   return (
     <>
       <ThemeProvider>
-        <Remirror
-          manager={manager}
-          autoFocus
-          onChange={onChange}
-          state={state}
-          autoRender='end'
-          hooks={[useDebug]}
-        >
+        <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
           <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
         </Remirror>
         <pre>
