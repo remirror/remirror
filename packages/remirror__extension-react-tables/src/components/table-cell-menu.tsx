@@ -45,7 +45,10 @@ const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ set
   );
 };
 
-const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({ setPopupOpen }) => {
+const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
+  setPopupOpen,
+  popupOpen,
+}) => {
   const ctx = useRemirrorContext();
 
   // close the popup after clicking
@@ -71,7 +74,7 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({ setP
         backgroundColor: 'white',
         border: '1px solid red',
         width: '200px',
-        display: 'flex',
+        display: popupOpen ? 'flex' : 'none',
         flexDirection: 'column',
       }}
     >
