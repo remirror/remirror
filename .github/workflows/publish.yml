@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
         with:
           node-version: 14
 
