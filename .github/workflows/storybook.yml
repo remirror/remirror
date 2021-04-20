@@ -49,8 +49,11 @@ jobs:
       - name: deploy storybook
         uses: amondnet/vercel-action@v20
         with:
-          vercel-args: ${{ ((env.GITHUB_REF == 'beta') || '--prod') && '' }}
+          working-directory: ./packages/storybook-react/storybook-static
           vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_STORYBOOK_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID }}
-          working-directory: ./packages/storybook-react/storybook-static
+          # deploy to production if the git reference is 'beta'.
+          vercel-args: ${{ ((env.GITHUB_REF == 'beta') || '--prod') && '' }}
+          # necessary for comment on pull request and commit.
+          github-token: ${{ secrets.GITHUB_TOKEN }}
