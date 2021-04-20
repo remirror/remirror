@@ -1,13 +1,13 @@
-name: docs
+name: storybook
 
 on:
   push:
     branches:
-      - next
+      - beta
   pull_request:
     types: [opened, synchronize]
     branches:
-      - next
+      - beta
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
@@ -16,7 +16,6 @@ jobs:
   deploy_docs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/next' || github.event.pull_request
 
     steps:
       - name: checkout code repository
@@ -44,16 +43,17 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: build docs
-        run: pnpm build:docs
+      - name: build storybook
+        run: pnpm storybook:build
 
-      - name: deploy docs
-        uses: nwtgck/actions-netlify@develop
+      - name: deploy storybook
+        uses: amondnet/vercel-action@v20
         with:
-          publish-dir: './website/build'
-          production-branch: next
+          working-directory: ./packages/storybook-react/storybook-static
+          vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_STORYBOOK_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID }}
+          # deploy to production if the git reference is 'beta'.
+          vercel-args: ${{ ((env.GITHUB_REF == 'beta') || '--prod') && '' }}
+          # necessary for comment on pull request and commit.
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NEXT_NETLIFY_SITE_ID }}
