@@ -67,6 +67,9 @@
     "remirror": "1.0.0-next.60",
     "scripts": "0.0.0"
   },
+  "devDependencies": {
+    "@types/node": "^14.14.39"
+  },
   "@remirror": {
     "tsconfigs": {
       "src": {
@@ -80,6 +83,13 @@
           ".babelrc.js",
           "main.ts"
         ]
+      },
+      "__stories__": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ]
+        }
       }
     }
   },

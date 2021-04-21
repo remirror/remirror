@@ -11,6 +11,17 @@ export const stories = glob.sync(baseDir('packages/*/__stories__/*.stories.(tsx)
   ignore: ['**/node_modules'],
 });
 
+// Make the introduction the first story.
+stories.sort((a, b) => {
+  if (a.includes('introduction.stories.tsx')) {
+    return -1;
+  } else if (b.includes('introduction.stories.tsx')) {
+    return 1;
+  }
+
+  return 0;
+});
+
 // export const addons = ['@storybook/addon-postcss'];
 
 const mode = isCI ? 'production' : 'development';
