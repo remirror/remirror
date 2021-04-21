@@ -44,7 +44,12 @@ jobs:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build storybook
-        run: pnpm storybook:build
+        run: |
+          export STORYBOOK_BUILD_TIME=$(date +"%Y-%m-%dT%H:%M:%S%z")
+          export STORYBOOK_GIT_SHA=$GITHUB_SHA
+          export STORYBOOK_GIT_REF=$GITHUB_REF
+          export STORYBOOK_MODE=production
+          pnpm storybook:build
 
       - name: deploy storybook for pull request
         uses: amondnet/vercel-action@v20
@@ -68,4 +73,4 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID }}
 
           # deploy to production environment (https://remirror.vercel.app)
-          vercel-args: '--prod'
+          vercel-args: "--prod"
