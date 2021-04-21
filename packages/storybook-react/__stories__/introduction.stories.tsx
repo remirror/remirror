@@ -1,12 +1,5 @@
 import React from 'react';
 
-const devInfo = [
-  // These environment variable will be available in GitHub Action workflows.
-  process.env.STORYBOOK_BUILD_TIME ?? 'unknown',
-  process.env.STORYBOOK_GIT_REF ?? 'unknown',
-  (process.env.STORYBOOK_GIT_SHA ?? 'unknown').slice(0, 7),
-].join(' · ');
-
 export const Introduction: React.FC = () => {
   return (
     <div
@@ -19,10 +12,15 @@ export const Introduction: React.FC = () => {
         padding: '16px',
       }}
     >
-      <h1>Welcome to remirror storybook.</h1>
+      <h1>Welcome to remirror storybook</h1>
       <div style={{ height: '64px' }} />
       <p>
-        <div style={{ color: 'gray' }}>{devInfo}</div>
+        {/* These environment variable will be available in GitHub Action workflows. */}
+        <span style={{ color: '#87c4d8' }}>{process.env.STORYBOOK_BUILD_TIME ?? 'unknown'}</span>
+        <span style={{ color: '#6d6d6d' }}> · </span>
+        <span style={{ color: '#da649a' }}>{process.env.STORYBOOK_GIT_REF ?? 'unknown'}</span>
+        <span style={{ color: '#6d6d6d' }}> · </span>
+        <span style={{ color: '#bd60c3' }}>{process.env.STORYBOOK_GIT_SHA ?? 'unknown'}</span>
       </p>
     </div>
   );
