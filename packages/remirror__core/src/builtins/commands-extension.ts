@@ -686,6 +686,20 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   }
 
   /**
+   * Insert a html string as a ProseMirror Node,
+   *
+   * @category Builtin Command
+   */
+  @command()
+  insertHtml(html: string, options?: InsertNodeOptions): CommandFunction {
+    return (props) => {
+      const { state } = props;
+      const node = this.store.stringHandlers.html({ content: html, schema: state.schema });
+      return this.insertNode(node, options)(props);
+    };
+  }
+
+  /**
    * Set the focus for the editor.
    *
    * If using this with chaining this should only be placed at the end of
