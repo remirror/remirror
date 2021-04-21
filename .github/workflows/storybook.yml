@@ -46,14 +46,26 @@ jobs:
       - name: build storybook
         run: pnpm storybook:build
 
-      - name: deploy storybook
+      - name: deploy storybook for pull request
         uses: amondnet/vercel-action@v20
+        if: github.ref != 'refs/heads/beta'
         with:
           working-directory: ./packages/storybook-react/storybook-static
           vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_STORYBOOK_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID }}
-          # deploy to production if the git reference is 'beta'.
-          vercel-args: ${{ ((env.GITHUB_REF == 'beta') || '--prod') && '' }}
-          # necessary for comment on pull request and commit.
+
+          # necessary for comment on pull request.
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: deploy storybook for production
+        uses: amondnet/vercel-action@v20
+        if: github.ref == 'refs/heads/beta'
+        with:
+          working-directory: ./packages/storybook-react/storybook-static
+          vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_STORYBOOK_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID }}
+
+          # deploy to production environment (https://remirror.vercel.app)
+          vercel-args: "--prod"
