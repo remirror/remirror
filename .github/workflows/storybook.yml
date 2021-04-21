@@ -46,9 +46,8 @@ jobs:
       - name: build storybook
         run: |
           export STORYBOOK_BUILD_TIME=$(date +"%Y-%m-%dT%H:%M:%S%z")
-          export STORYBOOK_GIT_SHA=$GITHUB_SHA
-          export STORYBOOK_GIT_REF=$GITHUB_REF
-          export STORYBOOK_MODE=production
+          export STORYBOOK_GIT_SHA=$(git rev-parse HEAD)
+          export STORYBOOK_GIT_REF=$(git rev-parse --abbrev-ref HEAD)
           pnpm storybook:build
 
       - name: deploy storybook for pull request
