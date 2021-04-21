@@ -12,6 +12,7 @@ export * from './use-force-update';
 export * from './use-helpers';
 export * from './use-i18n';
 export * from './use-manager';
+export * from './use-mark-range';
 export * from './use-portal-container';
 export * from './use-react-framework';
 export * from './use-remirror';
