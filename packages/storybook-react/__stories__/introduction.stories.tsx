@@ -16,11 +16,13 @@ export const Introduction: React.FC = () => {
       <div style={{ height: '64px' }} />
       <p>
         {/* These environment variable will be available in GitHub Action workflows. */}
-        <span style={{ color: '#87c4d8' }}>{process.env.STORYBOOK_BUILD_TIME ?? 'unknown'}</span>
-        <span style={{ color: '#6d6d6d' }}> · </span>
         <span style={{ color: '#da649a' }}>{process.env.STORYBOOK_GIT_REF ?? 'unknown'}</span>
         <span style={{ color: '#6d6d6d' }}> · </span>
-        <span style={{ color: '#bd60c3' }}>{process.env.STORYBOOK_GIT_SHA ?? 'unknown'}</span>
+        <span style={{ color: '#bd60c3' }}>
+          {(process.env.STORYBOOK_GIT_SHA ?? 'unknown').slice(0, 9)}
+        </span>
+        <span style={{ color: '#6d6d6d' }}> · </span>
+        <span style={{ color: '#87c4d8' }}>{process.env.STORYBOOK_BUILD_TIME ?? 'unknown'}</span>
       </p>
     </div>
   );

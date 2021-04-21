@@ -61,6 +61,8 @@ jobs:
 
           # necessary for comment on pull request.
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          alias-domains: |
+            pr{{PR_NUMBER}}-remirror-ocavue.vercel.app
 
       - name: deploy storybook for production
         uses: amondnet/vercel-action@v20
