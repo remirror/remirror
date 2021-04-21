@@ -263,7 +263,7 @@ interface FindChildrenByMarkProps extends BaseFindProps, MarkTypeProps {}
  * to `true`).
  *
  * ```ts
- * const nodes = findChildrenByMark({ node: state.doc, mark: schema.marks.strong });
+ * const nodes = findChildrenByMark({ node: state.doc, type: schema.marks.strong });
  * ```
  */
 export function findChildrenByMark(paramter: FindChildrenByMarkProps): NodeWithPosition[] {
