@@ -9,33 +9,35 @@
   font-variant-ligatures: none;
   font-feature-settings: 'liga' 0;
   overflow-y: scroll;
-
-  /** TODO DELETE ME */
-  max-height: 200px;
-  height: 200px;
 }
-/** END TODO */
+
 .remirror-editor.ProseMirror pre {
   white-space: pre-wrap;
 }
+
 .remirror-editor.ProseMirror li {
   position: relative;
 }
+
 .remirror-editor.ProseMirror[contenteditable='false'] {
   white-space: normal;
 }
+
 .remirror-editor.ProseMirror[contenteditable='true'] {
   white-space: pre-wrap;
 }
+
 .remirror-editor.ProseMirror hr {
   border-color: #2e2e2e;
 }
+
 .remirror-editor.ProseMirror ::-moz-selection {
   background: var(--rmr-color-selection-background);
   color: var(--rmr-color-selection-text);
   caret-color: var(--rmr-color-selection-caret);
   text-shadow: var(--rmr-color-selection-shadow);
 }
+
 .remirror-editor.ProseMirror ::selection,
 .remirror-editor.ProseMirror .selection {
   background: var(--rmr-color-selection-background);

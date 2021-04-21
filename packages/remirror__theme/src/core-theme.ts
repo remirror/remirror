@@ -17,11 +17,6 @@ export const EDITOR = css`
     font-feature-settings: 'liga' 0;
     overflow-y: scroll;
 
-    /** TODO DELETE ME */
-    max-height: 200px;
-    height: 200px;
-    /** END TODO */
-
     pre {
       white-space: pre-wrap;
     }
