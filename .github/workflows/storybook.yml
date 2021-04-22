@@ -17,6 +17,9 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
 
+    # don't run this job from a fork repository
+    if: github.event.pull_request.head.repo.full_name == github.repository
+
     steps:
       - name: checkout code repository
         uses: actions/checkout@v2
