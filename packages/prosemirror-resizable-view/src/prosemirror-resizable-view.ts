@@ -1,7 +1,6 @@
 import { Node as ProsemirrorNode } from 'prosemirror-model';
 import { EditorView, NodeView } from 'prosemirror-view';
-import { throttle } from 'throttle-debounce';
-import { isNumber, isString } from '@remirror/core-helpers';
+import { isNumber, isString, throttle } from '@remirror/core-helpers';
 
 type CreateElement = (props: {
   node: ProsemirrorNode;
