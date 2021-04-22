@@ -23,6 +23,7 @@ export {
   useHelpers,
   useI18n,
   useManager,
+  useMarkRange,
   usePortalContainer,
   useRemirror,
   useRemirrorContext,
