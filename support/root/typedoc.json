@@ -6,6 +6,7 @@
     "packages/jest-remirror/src/index.ts",
     "packages/multishift/src/index.ts",
     "packages/prosemirror-paste-rules/src/index.ts",
+    "packages/prosemirror-resizable-view/src/index.ts",
     "packages/prosemirror-suggest/src/index.ts",
     "packages/prosemirror-trailing-node/src/index.ts",
     "packages/remirror/src/index.ts",

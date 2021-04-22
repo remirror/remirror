@@ -13,13 +13,17 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
+  NodeViewMethod,
   omitExtraAttributes,
   PrimitiveSelection,
   ProsemirrorAttributes,
+  ProsemirrorNode,
 } from '@remirror/core';
 import { PasteRule } from '@remirror/pm/paste-rules';
 import { insertPoint } from '@remirror/pm/transform';
 import { ExtensionImageTheme } from '@remirror/theme';
+
+import { ResizableImageView } from './resizable-image-view';
 
 type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 
@@ -43,6 +47,15 @@ export interface ImageOptions {
    * @param setProgress - the progress handler.
    */
   uploadHandler?: (files: FileWithProgress[]) => DelayedImage[];
+
+  /**
+   * Enable resizing.
+   *
+   * If true, the image node will be rendered by `nodeView` instead of `toDOM`.
+   *
+   * @default false
+   */
+  enableResizing: boolean;
 }
 
 interface FileWithProgress {
@@ -62,7 +75,6 @@ type SetProgress = (progress: number) => void;
  *
  * TODO ->
  * - Captions https://glitch.com/edit/#!/pet-figcaption?path=index.js%3A27%3A1 into a preset
- * - Resizable https://glitch.com/edit/#!/toothsome-shoemaker?path=index.js%3A1%3A0
  *
  * TODO => Split this into an image upload extension and image extension.
  * - Add a base64 image
@@ -73,6 +85,7 @@ type SetProgress = (progress: number) => void;
     updatePlaceholder: () => {},
     destroyPlaceholder: () => {},
     uploadHandler,
+    enableResizing: false,
   },
 })
 export class ImageExtension extends NodeExtension<ImageOptions> {
@@ -100,6 +113,8 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
         src: { default: null },
         title: { default: '' },
         fileName: { default: null },
+
+        resizable: { default: false },
       },
       parseDOM: [
         {
@@ -216,6 +231,16 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
       },
     ];
   }
+
+  createNodeViews(): NodeViewMethod | Record<string, NodeViewMethod> {
+    if (this.options.enableResizing) {
+      return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
+        return new ResizableImageView(node, view, getPos as () => number);
+      };
+    }
+
+    return {};
+  }
 }
 
 export type ImageAttributes = ProsemirrorAttributes<ImageExtensionAttributes>;
@@ -277,10 +302,10 @@ function getImageAttributes({
 
   return {
     ...parse(element),
-    alt: element.getAttribute('alt') ?? null,
+    alt: element.getAttribute('alt') ?? '',
     height: Number.parseInt(height || '0', 10) || null,
     src: element.getAttribute('src') ?? null,
-    title: element.getAttribute('title') ?? null,
+    title: element.getAttribute('title') ?? '',
     width: Number.parseInt(width || '0', 10) || null,
     fileName: element.getAttribute('data-file-name') ?? null,
   };

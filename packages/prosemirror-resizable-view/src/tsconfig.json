@@ -17,16 +17,7 @@
   "include": ["./"],
   "references": [
     {
-      "path": "../../remirror__core/src"
-    },
-    {
-      "path": "../../remirror__messages/src"
-    },
-    {
-      "path": "../../remirror__theme/src"
-    },
-    {
-      "path": "../../prosemirror-resizable-view/src"
+      "path": "../../remirror__core-helpers/src"
     }
   ]
 }

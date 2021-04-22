@@ -48,6 +48,9 @@
       "path": "packages/prosemirror-paste-rules/src"
     },
     {
+      "path": "packages/prosemirror-resizable-view/src"
+    },
+    {
       "path": "packages/prosemirror-suggest/__tests__"
     },
     {
@@ -259,6 +262,9 @@
     },
     {
       "path": "packages/remirror__extension-horizontal-rule/src"
+    },
+    {
+      "path": "packages/remirror__extension-image/__stories__"
     },
     {
       "path": "packages/remirror__extension-image/__tests__"
