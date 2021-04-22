@@ -501,6 +501,23 @@ importers:
       prosemirror-model: ^1.14.0
       prosemirror-state: ^1.3.4
       prosemirror-view: ^1.18.3
+  packages/prosemirror-resizable-view:
+    dependencies:
+      '@remirror/core-helpers': link:../remirror__core-helpers
+      '@types/prosemirror-model': 1.13.0
+      '@types/prosemirror-view': 1.17.1
+      '@types/throttle-debounce': 2.1.0
+      prosemirror-model: 1.14.0
+      prosemirror-view: 1.18.3
+      throttle-debounce: 3.0.1
+    specifiers:
+      '@remirror/core-helpers': ^1.0.0-next.60
+      '@types/prosemirror-model': ^1.13.0
+      '@types/prosemirror-view': ^1.17.1
+      '@types/throttle-debounce': ^2.1.0
+      prosemirror-model: ^1.14.0
+      prosemirror-view: ^1.18.3
+      throttle-debounce: ^3.0.1
   packages/prosemirror-suggest:
     dependencies:
       '@babel/runtime': 7.13.10
@@ -1278,6 +1295,7 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
+      prosemirror-resizable-view: link:../prosemirror-resizable-view
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1286,6 +1304,7 @@ importers:
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
       '@remirror/theme': 1.0.0-next.60
+      prosemirror-resizable-view: ^0.0.0
   packages/remirror__extension-italic:
     dependencies:
       '@babel/runtime': 7.13.10

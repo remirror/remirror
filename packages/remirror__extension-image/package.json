@@ -39,6 +39,7 @@
     "dist"
   ],
   "dependencies": {
+    "prosemirror-resizable-view": "^0.0.0",
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",

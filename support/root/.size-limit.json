@@ -41,6 +41,14 @@
     "gzip": true
   },
   {
+    "name": "prosemirror-resizable-view",
+    "limit": "5 KB",
+    "path": "packages/prosemirror-resizable-view/dist/prosemirror-resizable-view.browser.esm.js",
+    "ignore": [],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "prosemirror-suggest",
     "limit": "10 KB",
     "path": "packages/prosemirror-suggest/dist/prosemirror-suggest.browser.esm.js",
