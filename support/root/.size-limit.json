@@ -362,7 +362,7 @@
   },
   {
     "name": "@remirror/extension-image",
-    "limit": "5 KB",
+    "limit": "20 KB",
     "path": "packages/remirror__extension-image/dist/remirror-extension-image.browser.esm.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages", "@remirror/theme"],
     "running": false,
