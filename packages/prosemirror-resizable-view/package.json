@@ -36,6 +36,7 @@
     "dist"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.13.10",
     "@types/prosemirror-model": "^1.13.0",
     "@types/prosemirror-view": "^1.17.1",
     "@types/throttle-debounce": "^2.1.0",
