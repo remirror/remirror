@@ -32,6 +32,9 @@
       "path": "../../remirror/src"
     },
     {
+      "path": "../../prosemirror-resizable-view/src"
+    },
+    {
       "path": "../../remirror__core/src"
     },
     {

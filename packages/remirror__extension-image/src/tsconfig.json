@@ -17,6 +17,9 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../prosemirror-resizable-view/src"
+    },
+    {
       "path": "../../remirror__core/src"
     },
     {
