@@ -3555,6 +3555,22 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
  */
   .remirror-editor {
   }
+
+  .remirror-list-item-checkbox-container {
+    position: absolute;
+    left: -24px;
+  }
+
+  .remirror-list-item-checkbox {
+    /* change the checkbox color from blue (default on Chrome) to purple. */
+    -webkit-filter: hue-rotate(60deg);
+    filter: hue-rotate(60deg);
+  }
+
+  .remirror-checkbox-list-item {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 
 export const extensionMentionAtomStyledCss: ReturnType<typeof css> = css`

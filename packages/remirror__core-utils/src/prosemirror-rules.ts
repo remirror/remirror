@@ -279,7 +279,7 @@ export function nodeInputRule(props: NodeInputRuleProps): SkippableInputRule {
     const content = nodeType.createAndFill(attributes);
 
     if (content) {
-      tr.replaceWith(nodeType.isBlock ? tr.doc.resolve(start).before() : start, end, content);
+      tr.replaceRangeWith(nodeType.isBlock ? tr.doc.resolve(start).before() : start, end, content);
       beforeDispatch?.({ tr, match: [fullMatch, captureGroup ?? ''], start, end });
     }
 

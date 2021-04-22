@@ -1318,6 +1318,7 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
+      '@remirror/theme': link:../remirror__theme
     devDependencies:
       '@remirror/pm': link:../remirror__pm
     specifiers:
@@ -1326,6 +1327,7 @@ importers:
       '@remirror/extension-events': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
+      '@remirror/theme': 1.0.0-next.60
   packages/remirror__extension-markdown:
     dependencies:
       '@babel/runtime': 7.13.10
