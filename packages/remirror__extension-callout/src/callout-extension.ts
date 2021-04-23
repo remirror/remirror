@@ -109,7 +109,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * lifted out of the callout node.
    *
    * ```ts
-   * if (commands.toggleCallout.isEnabled()) {
+   * if (commands.toggleCallout.enabled()) {
    *   commands.toggleCallout({ type: 'success' });
    * }
    * ```
@@ -124,7 +124,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * to change the type.
    *
    * ```ts
-   * if (commands.updateCallout.isEnabled()) {
+   * if (commands.updateCallout.enabled()) {
    *   commands.updateCallout({ type: 'error' });
    * }
    * ```
