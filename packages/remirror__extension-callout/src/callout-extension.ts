@@ -46,6 +46,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   readonly tags = [ExtensionTag.Block];
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    const { defaultType, validTypes } = this.options;
     return {
       content: 'block+',
       defining: true,
@@ -53,7 +54,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        type: { default: this.options.defaultType },
+        type: { default: defaultType },
       },
       parseDOM: [
         {
@@ -63,7 +64,8 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
               return false;
             }
 
-            const type = node.getAttribute(dataAttributeType);
+            const rawType = node.getAttribute(dataAttributeType);
+            const type = getCalloutType(rawType, validTypes, defaultType);
             const content = node.textContent;
             return { ...extra.parse(node), type, content };
           },
