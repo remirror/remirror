@@ -47,7 +47,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
-      content: 'block*',
+      content: 'block+',
       defining: true,
       draggable: false,
       ...override,
@@ -80,8 +80,9 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   }
 
   /**
-   * Create an input rule that listens converts the code fence into a code block
-   * when typing triple back tick followed by a space.
+   * Create an input rule that listens for input of 3 colons followed
+   * by a valid callout type, to create a callout node
+   * If the callout type is invalid, the defaultType callout is created
    */
   createInputRules(): InputRule[] {
     return [
