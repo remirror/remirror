@@ -29,7 +29,7 @@ export class BlockquoteExtension extends NodeExtension {
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
-      content: 'block*',
+      content: 'block+',
       defining: true,
       draggable: false,
       ...override,
