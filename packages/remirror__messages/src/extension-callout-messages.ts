@@ -4,7 +4,7 @@ import { defineMessage } from '@lingui/macro';
 export const LABEL = defineMessage({
   id: 'extension.command.toggle-callout.label',
   comment: 'Label for callout command with support for callout types.',
-  message: `{level, select, info {Information Callout}
+  message: `{type, select, info {Information Callout}
                             warning {Warning Callout}
                             error {Error Callout}
                             success {Success Callout}
@@ -14,7 +14,7 @@ export const LABEL = defineMessage({
 export const DESCRIPTION = defineMessage({
   id: 'extension.command.toggle-callout.description',
   comment: 'Description of the callout command with support for callout types.',
-  message: `{level, select, info {Create an information callout block}
+  message: `{type, select, info {Create an information callout block}
                             warning {Create a warning callout block}
                             error {Create an error callout block}
                             success {Create a success callout block}

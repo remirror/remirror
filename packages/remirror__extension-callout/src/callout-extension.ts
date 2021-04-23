@@ -114,7 +114,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * }
    * ```
    */
-  @command()
+  @command(toggleCalloutOptions)
   toggleCallout(attributes: CalloutAttributes = {}): CommandFunction {
     return toggleWrap(this.type, attributes);
   }
