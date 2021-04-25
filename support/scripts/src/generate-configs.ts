@@ -13,7 +13,6 @@ import path from 'path';
 import sortKeys from 'sort-keys';
 import writeJSON from 'write-json-file';
 import {
-  assert,
   assertGet,
   deepMerge,
   invariant,
