@@ -13,7 +13,6 @@ import path from 'path';
 import sortKeys from 'sort-keys';
 import writeJSON from 'write-json-file';
 import {
-  assert,
   assertGet,
   deepMerge,
   invariant,
@@ -425,26 +424,21 @@ const pnpmFolder = baseDir('node_modules', '.pnpm');
 const pnpmScopedFolders: Record<string, string[]> = {};
 
 /**
- * A function which retrieves the package folder for a given package name.
+ * A function which retrieves the .d.ts file for a given package name.
  *
  * We can't use `require.resolve` since pnpm doesn't hoist all packages.
  * Instead we're going to look at the special `.pnpm` folder inside the root
  * `node_modules`.
  */
-async function getPackageFolder(name: string, subFolder = ''): Promise<string> {
-  let searchFolders = (pnpmScopedFolders['.'] ??= await fs.readdir(pnpmFolder));
+async function getPackageDefinitionFilePath(name: string, subFolder = ''): Promise<string> {
+  const searchFolders = (pnpmScopedFolders['.'] ??= await fs.readdir(pnpmFolder));
   let folderName = name;
-  let base = pnpmFolder;
+  const base = pnpmFolder;
 
   if (name.startsWith('@')) {
     const split = name.split('/');
-    const scope = assertGet(split, 0);
-    folderName = assertGet(split, 1);
-    base = baseDir('node_modules', '.pnpm', scope);
-    searchFolders = pnpmScopedFolders[scope] ??= await fs.readdir(base);
+    folderName = `${assertGet(split, 0)}+${assertGet(split, 1)}`;
   }
-
-  assert(searchFolders);
 
   const directory = searchFolders.find((name) => name.startsWith(`${folderName}@`));
 
@@ -595,7 +589,7 @@ async function resolveTsConfigMeta(
         }
 
         const [name, pnpmFolder, subFolder] = entry;
-        const pathToDefinitionFile = await getPackageFolder(pnpmFolder, subFolder);
+        const pathToDefinitionFile = await getPackageDefinitionFilePath(pnpmFolder, subFolder);
         compilerOptionsPaths[name] = [
           path.join(path.relative(path.dirname(filepath), pathToDefinitionFile)),
         ];
