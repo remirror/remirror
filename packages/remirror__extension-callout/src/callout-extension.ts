@@ -46,14 +46,15 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   readonly tags = [ExtensionTag.Block];
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    const { defaultType, validTypes } = this.options;
     return {
-      content: 'block*',
+      content: 'block+',
       defining: true,
       draggable: false,
       ...override,
       attrs: {
         ...extra.defaults(),
-        type: { default: this.options.defaultType },
+        type: { default: defaultType },
       },
       parseDOM: [
         {
@@ -63,7 +64,8 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
               return false;
             }
 
-            const type = node.getAttribute(dataAttributeType);
+            const rawType = node.getAttribute(dataAttributeType);
+            const type = getCalloutType(rawType, validTypes, defaultType);
             const content = node.textContent;
             return { ...extra.parse(node), type, content };
           },
@@ -80,8 +82,9 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   }
 
   /**
-   * Create an input rule that listens converts the code fence into a code block
-   * when typing triple back tick followed by a space.
+   * Create an input rule that listens for input of 3 colons followed
+   * by a valid callout type, to create a callout node
+   * If the callout type is invalid, the defaultType callout is created
    */
   createInputRules(): InputRule[] {
     return [
@@ -108,12 +111,12 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * lifted out of the callout node.
    *
    * ```ts
-   * if (commands.toggleCallout.isEnabled()) {
+   * if (commands.toggleCallout.enabled()) {
    *   commands.toggleCallout({ type: 'success' });
    * }
    * ```
    */
-  @command()
+  @command(toggleCalloutOptions)
   toggleCallout(attributes: CalloutAttributes = {}): CommandFunction {
     return toggleWrap(this.type, attributes);
   }
@@ -123,7 +126,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * to change the type.
    *
    * ```ts
-   * if (commands.updateCallout.isEnabled()) {
+   * if (commands.updateCallout.enabled()) {
    *   commands.updateCallout({ type: 'error' });
    * }
    * ```
