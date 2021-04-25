@@ -224,7 +224,7 @@
   },
   "engines": {
     "node": ">=12",
-    "pnpm": "^5.15.0"
+    "pnpm": "^6.0.0"
   },
   "manypkg": {
     "defaultBranch": "HEAD"
