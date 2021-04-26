@@ -163,7 +163,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     defaultProtocol: '',
     selectTextOnClick: false,
     openLinkOnClick: false,
-    autoLinkRegex: /(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,8}(:\d{1,5})?(\/\S*)?/,
+    autoLinkRegex: /((?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+(?:[.-][\da-z]+)*\.[a-z]{2,8}(?::\d{1,5})?(\/\S*)?)/,
     defaultTarget: null,
   },
   staticKeys: ['autoLinkRegex'],
@@ -332,7 +332,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return [
       {
         type: 'mark',
-        regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,8}\b([\w#%&+./:=?@~-]*)/gi,
+        regexp: this.options.autoLinkRegex,
         markType: this.type,
         getAttributes: (url, isReplacement) => ({
           href: getMatchString(url),
