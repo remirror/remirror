@@ -116,7 +116,7 @@ export interface LinkOptions {
    * value.
    *
    * @default
-   * /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi
+   * /((?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+(?:[.-][\da-z]+)*\.[a-z]{2,8}(?::\d{1,5})?(\/\S*)?)/
    */
   autoLinkRegex?: Static<RegExp>;
 
