@@ -6,6 +6,6 @@ import { css } from '@linaria/core';
 export const NODE_FORMATTING_INDENT_ATTRIBUTE = 'data-node-formatting-indent';
 
 export const EDITOR = css`
-  &.Prosemirror {
+  &.ProseMirror {
   }
 ` as 'remirror-editor';
