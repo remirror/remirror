@@ -664,14 +664,14 @@ export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-blockquote-theme.ts
  */
-  .remirror-editor.Prosemirror blockquote {
+  .remirror-editor.ProseMirror blockquote {
     border-left: 3px solid var(--rmr-hue-gray-3);
     margin-left: 0;
     margin-right: 0;
     padding-left: 10px;
     font-style: italic;
   }
-  .remirror-editor.Prosemirror blockquote p {
+  .remirror-editor.ProseMirror blockquote p {
     color: #888;
   }
 `;
@@ -3643,7 +3643,7 @@ export const extensionNodeFormattingStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-node-formatting-theme.ts
  */
-  .remirror-editor.Prosemirror {
+  .remirror-editor.ProseMirror {
   }
 `;
 
