@@ -20,6 +20,7 @@ import {
 } from '@remirror/core';
 import { liftListItem, sinkListItem } from '@remirror/pm/schema-list';
 import { NodeSelection, TextSelection } from '@remirror/pm/state';
+import { ProsemirrorNode } from '@remirror/pm/suggest';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
@@ -116,7 +117,14 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       dom.append(markContainer);
       dom.append(contentDOM);
 
-      return { dom, contentDOM };
+      // When a list item node's `content` updates, it's necessary to re-run the
+      // nodeView function so that the list item node's `disabled` class can be
+      // updated.
+      const update = (): boolean => {
+        return false;
+      };
+
+      return { dom, contentDOM, update };
     };
   }
 
