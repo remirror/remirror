@@ -20,7 +20,6 @@ import {
 } from '@remirror/core';
 import { liftListItem, sinkListItem } from '@remirror/pm/schema-list';
 import { NodeSelection, TextSelection } from '@remirror/pm/state';
-import { ProsemirrorNode } from '@remirror/pm/suggest';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
