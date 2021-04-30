@@ -8,7 +8,7 @@ import { getTheme } from './utils';
  * a `linaria` build script.
  */
 export const EDITOR = css`
-  &.Prosemirror {
+  &.ProseMirror {
     blockquote {
       border-left: 3px solid ${getTheme((t) => t.hue.gray[3])};
       margin-left: 0;
