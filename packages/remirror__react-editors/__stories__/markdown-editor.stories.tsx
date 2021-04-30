@@ -5,7 +5,7 @@ import { createContextState } from 'create-context-state';
 import jsx from 'refractor/lang/jsx';
 import md from 'refractor/lang/markdown';
 import typescript from 'refractor/lang/typescript';
-import { getTheme } from 'remirror';
+import { ExtensionPriority, getTheme } from 'remirror';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -16,6 +16,7 @@ import {
   HeadingExtension,
   ItalicExtension,
   LinkExtension,
+  ListItemExtension,
   MarkdownExtension,
   OrderedListExtension,
   StrikeExtension,
@@ -201,8 +202,9 @@ const extensions = () => [
   new HeadingExtension(),
   new LinkExtension(),
   new BlockquoteExtension(),
-  new BulletListExtension(),
+  new BulletListExtension({ enableSpine: true }),
   new OrderedListExtension(),
+  new ListItemExtension({ priority: ExtensionPriority.High, enableCollapsible: true }),
   new CodeExtension(),
   new CodeBlockExtension({ supportedLanguages: [jsx, typescript] }),
   new TrailingNodeExtension(),
@@ -343,8 +345,8 @@ playtime is just beginning
 ## List support
 
 - an unordered
-- list is a thing
-- of beauty
+  - list is a thing
+    - of beauty
 
 1. As is
 2. An ordered

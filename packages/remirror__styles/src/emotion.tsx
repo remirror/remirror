@@ -3584,12 +3584,24 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-list-theme.ts
  */
-  .remirror-editor {
+  /* don't show the custom markers in a ordered list */
+  .remirror-editor ol > li > .remirror-list-item-marker-container {
+    display: none;
+  }
+  /* don't show the origin markers when using custom markers (checkbox / collapsible) */
+  .remirror-editor ul > li.remirror-list-item-with-custom-mark {
+    list-style: none;
+  }
+  .remirror-editor .remirror-ul-list-content > li.remirror-list-item-with-custom-mark {
+    list-style: none;
   }
 
-  .remirror-list-item-checkbox-container {
+  .remirror-list-item-marker-container {
     position: absolute;
-    left: -24px;
+    left: -32px;
+    width: 24px;
+    display: inline-block;
+    text-align: center;
   }
 
   .remirror-list-item-checkbox {
@@ -3598,9 +3610,52 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
     filter: hue-rotate(60deg);
   }
 
-  .remirror-checkbox-list-item {
-    display: flex;
-    flex-direction: row;
+  .remirror-collapsible-list-item-closed li {
+    display: none;
+  }
+
+  .remirror-collapsible-list-item-closed .remirror-collapsible-list-item-button {
+    background-color: var(--rmr-hue-gray-6);
+  }
+
+  .remirror-collapsible-list-item-button {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+
+    transition: background-color 0.25s ease;
+    background-color: var(--rmr-color-border);
+  }
+
+  .remirror-collapsible-list-item-button:hover {
+    background-color: var(--rmr-color-primary);
+  }
+
+  .remirror-collapsible-list-item-button.disabled,
+  .remirror-collapsible-list-item-button.disabled:hover {
+    background-color: var(--rmr-color-border);
+    cursor: default;
+  }
+
+  .remirror-list-spine {
+    position: absolute;
+    top: 4px;
+    bottom: 0px;
+    left: -20px;
+    width: 16px;
+    cursor: pointer;
+
+    transition: border-left-color 0.25s ease;
+    border-left-color: var(--rmr-color-border);
+    border-left-style: solid;
+    border-left-width: 1px;
+  }
+
+  .remirror-list-spine:hover {
+    border-left-color: var(--rmr-color-primary);
   }
 `;
 
