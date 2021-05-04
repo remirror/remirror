@@ -8,6 +8,7 @@ import {
   ExtensionTag,
   getMatchString,
   InputRule,
+  isBoolean,
   isNodeSelection,
   KeyBindings,
   NodeExtension,
@@ -136,10 +137,15 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
   }
 
   /**
-   * Toggles the current checkbox state
+   * Toggles the current checkbox state and transform a normal list item into a
+   * checkbox list item when necessary.
+   *
+   * @param checked - the `checked` attribute. If it's a boolean value, then it
+   * will be set as an attribute. If it's undefined, then the `checked` attribuate
+   * will be toggled.
    */
   @command()
-  toggleCheckboxChecked(): CommandFunction {
+  toggleCheckboxChecked(checked?: true | false | undefined): CommandFunction {
     return ({ state: { tr, selection }, dispatch }) => {
       // Make sure the list item is selected. Otherwise do nothing.
       if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {
@@ -147,20 +153,22 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       }
 
       const { node, from } = selection;
-      dispatch?.(
-        tr.setNodeMarkup(from, undefined, { ...node.attrs, checked: !node.attrs.checked }),
-      );
+      checked = isBoolean(checked) ? checked : !node.attrs.checked;
+      dispatch?.(tr.setNodeMarkup(from, undefined, { ...node.attrs, checked, hasCheckbox: true }));
 
       return true;
     };
   }
 
   /**
-   * Toggles the current list item
+   * Toggles the current list item.
+   *
+   * @param closed - the `closed` attribute. If it's a boolean value, then it
+   * will be set as an attribute. If it's undefined, then the `closed` attribuate
+   * will be toggled.
    */
   @command()
   toggleListItemClosed(closed?: true | false | undefined): CommandFunction {
-    // TODO: rename
     return ({ state: { tr, selection }, dispatch }) => {
       // Make sure the list item is selected. Otherwise do nothing.
       if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {
@@ -168,12 +176,8 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       }
 
       const { node, from } = selection;
-      dispatch?.(
-        tr.setNodeMarkup(from, undefined, {
-          ...node.attrs,
-          closed: closed === undefined ? !node.attrs.closed : closed,
-        }),
-      );
+      closed = isBoolean(closed) ? closed : !node.attrs.closed;
+      dispatch?.(tr.setNodeMarkup(from, undefined, { ...node.attrs, closed }));
 
       return true;
     };
