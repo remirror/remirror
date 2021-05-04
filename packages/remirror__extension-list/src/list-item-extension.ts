@@ -145,7 +145,7 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
    * will be toggled.
    */
   @command()
-  toggleCheckboxChecked(checked?: true | false | undefined): CommandFunction {
+  toggleCheckboxChecked(checked?: boolean | undefined): CommandFunction {
     return ({ state: { tr, selection }, dispatch }) => {
       // Make sure the list item is selected. Otherwise do nothing.
       if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {
@@ -168,7 +168,7 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
    * will be toggled.
    */
   @command()
-  toggleListItemClosed(closed?: true | false | undefined): CommandFunction {
+  toggleListItemClosed(closed?: boolean | undefined): CommandFunction {
     return ({ state: { tr, selection }, dispatch }) => {
       // Make sure the list item is selected. Otherwise do nothing.
       if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {

@@ -21,7 +21,7 @@ import type {
 } from '@remirror/core-types';
 import { convertCommand, getCursor, getTextSelection, isMarkActive } from '@remirror/core-utils';
 import { toggleMark as originalToggleMark } from '@remirror/pm/commands';
-import type { SelectionRange, Transaction } from '@remirror/pm/state';
+import type { SelectionRange } from '@remirror/pm/state';
 
 /**
  * The parameter that is passed into `DelayedCommand`s.
