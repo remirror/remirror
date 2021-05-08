@@ -253,3 +253,91 @@ describe('plugin', () => {
     });
   });
 });
+
+describe('inputRules', () => {
+  const {
+    add,
+    nodes: { p, doc },
+    attributeNodes: { callout },
+  } = create();
+
+  describe(':::info', () => {
+    it('followed by space creates an info callout', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText(':::info ');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'info' })(p(''))));
+    });
+
+    it('followed by enter creates an info callout', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText(':::info')
+        .press('Enter');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'info' })(p(''))));
+    });
+  });
+
+  describe(':::warning', () => {
+    it('followed by space creates a warning callout', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText(':::warning ');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'warning' })(p(''))));
+    });
+
+    it('followed by enter creates a warning callout', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText(':::warning')
+        .press('Enter');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'warning' })(p(''))));
+    });
+  });
+
+  describe(':::error', () => {
+    it('followed by space creates an error callout', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText(':::error ');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'error' })(p(''))));
+    });
+
+    it('followed by enter creates an error callout', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText(':::error')
+        .press('Enter');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'error' })(p(''))));
+    });
+  });
+
+  describe(':::success', () => {
+    it('followed by space creates a success callout', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText(':::success ');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'success' })(p(''))));
+    });
+
+    it('followed by enter creates a success callout', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText(':::success')
+        .press('Enter');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'success' })(p(''))));
+    });
+  });
+
+  describe('unknown type', () => {
+    it('followed by space creates the default type callout', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText(':::unknown ');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'info' })(p(''))));
+    });
+
+    it('followed by enter creates the default type callout', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText(':::invalid')
+        .press('Enter');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'info' })(p(''))));
+    });
+  });
+});
