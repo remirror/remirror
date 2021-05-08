@@ -261,6 +261,22 @@ describe('inputRules', () => {
     attributeNodes: { callout },
   } = create();
 
+  describe('valid content', () => {
+    it('followed by a space', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText(':::info ');
+
+      expect(state.doc).toBeValidNode();
+    });
+
+    it('followed by enter', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText(':::info')
+        .press('Enter');
+
+      expect(state.doc).toBeValidNode();
+    });
+  });
+
   describe(':::info', () => {
     it('followed by space creates an info callout', () => {
       const { state } = add(doc(p('<cursor>'))).insertText(':::info ');
