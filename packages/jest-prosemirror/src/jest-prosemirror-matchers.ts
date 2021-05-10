@@ -113,6 +113,31 @@ export const prosemirrorMatchers = {
 
     return { pass, message };
   },
+
+  toBeValidNode(this: jest.MatcherUtils, actual: TaggedProsemirrorNode) {
+    let pass = true;
+    let errorMessage = '';
+
+    try {
+      actual.check();
+    } catch (error) {
+      if (error instanceof RangeError) {
+        pass = false;
+        errorMessage = error.message;
+      }
+    }
+
+    const message = pass
+      ? () =>
+          `${this.utils.matcherHint('.not.toBeValidNode')}\n\n` +
+          `Expected Prosemirror node not to conform to schema, but it was valid.`
+      : () =>
+          `this.utils.matcherHint('.toBeValidNode')}\n\n` +
+          `Expected Prosemirror node to conform to schema, but an error was thrown.\n` +
+          `Error: ${this.utils.printReceived(errorMessage)}`;
+
+    return { pass, message };
+  },
 };
 
 declare global {
@@ -189,6 +214,30 @@ declare global {
        * ```
        */
       toEqualProsemirrorNode: (params: _ProsemirrorNode) => R;
+
+      /**
+       * Tests that a given node conforms to the schema - the node (and it's
+       * descendants) have valid content and marks.
+       *
+       * ```ts
+       * import { createEditor, doc, p } from 'jest-prosemirror';
+       * import { removeNodeAtPosition } from '@remirror/core-utils';
+       *
+       * test('inputRules', () => {
+       *   const {
+       *     add,
+       *     nodes: { p, doc, blockquote },
+       *   } = create();
+       *
+       *   add(doc(p('<cursor>')))
+       *     .insertText('> I am a blockquote')
+       *     .callback((content) => {
+       *       expect(content.state.doc).toBeValidNode();
+       *     });
+       * });
+       * ```
+       */
+      toBeValidNode: () => R;
     }
   }
 }

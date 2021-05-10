@@ -18,6 +18,7 @@ import {
   omitExtraAttributes,
   toggleWrap,
 } from '@remirror/core';
+import { Fragment, Slice } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
 
 import type { CalloutAttributes, CalloutOptions } from './callout-types';
@@ -171,9 +172,10 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     // +1 to account for the extra pos a node takes up
 
     if (dispatch) {
-      tr.replaceWith(pos, end, this.type.create({ type }));
+      const slice = new Slice(Fragment.from(this.type.create({ type })), 0, 1);
+      tr.replace(pos, end, slice);
 
-      // Set the selection to within the codeBlock
+      // Set the selection to within the callout
       tr.setSelection(TextSelection.create(tr.doc, pos + 1));
       dispatch(tr);
     }

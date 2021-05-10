@@ -141,6 +141,9 @@
       "path": "packages/remirror__extension-bold/src"
     },
     {
+      "path": "packages/remirror__extension-callout/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-callout/__tests__"
     },
     {
