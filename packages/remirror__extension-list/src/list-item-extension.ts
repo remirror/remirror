@@ -6,31 +6,29 @@ import {
   cx,
   extension,
   ExtensionTag,
-  getMatchString,
-  InputRule,
   isBoolean,
   isNodeSelection,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  nodeInputRule,
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorAttributes,
   Static,
 } from '@remirror/core';
 import { liftListItem, sinkListItem } from '@remirror/pm/schema-list';
-import { NodeSelection, TextSelection } from '@remirror/pm/state';
+import { NodeSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
+import { createCsutomMarkListItemNodeView } from './list-item-node-view';
 
 /**
  * Creates the node for a list item.
  */
 @extension<ListItemOptions>({
-  defaultOptions: { enableCollapsible: false, enableCheckbox: false },
-  staticKeys: ['enableCollapsible', 'enableCheckbox'],
+  defaultOptions: { enableCollapsible: false },
+  staticKeys: ['enableCollapsible'],
 })
 export class ListItemExtension extends NodeExtension<ListItemOptions> {
   get name() {
@@ -51,8 +49,6 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
         ...extra.defaults(),
         closed: { default: false },
         nested: { default: false },
-        hasCheckbox: { default: false },
-        checked: { default: false },
       },
       parseDOM: [{ tag: 'li', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (node) => {
@@ -64,99 +60,35 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
   }
 
   createNodeViews(): NodeViewMethod | Record<string, never> {
-    if (!this.options.enableCheckbox && !this.options.enableCollapsible) {
+    if (!this.options.enableCollapsible) {
       return {};
     }
 
     return (node, view, getPos) => {
-      const dom = document.createElement('li');
-      dom.classList.add(ExtensionListTheme.LIST_ITEM_WITH_CUSTOM_MARKER);
+      const mark: HTMLElement = document.createElement('div');
+      mark.classList.add(ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_BUTTON);
+      mark.contentEditable = 'false';
 
-      if (node.attrs.closed) {
-        dom.classList.add(ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_CLOSED);
-      }
-
-      const markContainer = document.createElement('span');
-      markContainer.contentEditable = 'false';
-      markContainer.classList.add(ExtensionListTheme.LIST_ITEM_MARKER_CONTAINER);
-
-      let mark: HTMLElement;
-
-      const contentDOM = document.createElement('span');
-
-      if (node.attrs.hasCheckbox) {
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = !!node.attrs.checked;
-        checkbox.classList.add(ExtensionListTheme.LIST_ITEM_CHECKBOX);
-        checkbox.addEventListener('click', () => {
+      if (node.childCount <= 1) {
+        mark.classList.add('disabled');
+      } else {
+        mark.addEventListener('click', () => {
           const pos = (getPos as () => number)();
           view.dispatch?.(view.state.tr.setSelection(NodeSelection.create(view.state.doc, pos)));
-          this.store.commands.toggleCheckboxChecked();
+          this.store.commands.toggleListItemClosed();
           return true;
         });
-        mark = checkbox;
-      } else {
-        mark = document.createElement('div');
-        mark.classList.add(ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_BUTTON);
-
-        if (node.childCount <= 1) {
-          mark.classList.add('disabled');
-        } else {
-          mark.addEventListener('click', () => {
-            const pos = (getPos as () => number)();
-            view.dispatch?.(view.state.tr.setSelection(NodeSelection.create(view.state.doc, pos)));
-            this.store.commands.toggleListItemClosed();
-            return true;
-          });
-        }
       }
 
-      mark.contentEditable = 'false';
-      markContainer.append(mark);
-      dom.append(markContainer);
-      dom.append(contentDOM);
-
-      // When a list item node's `content` updates, it's necessary to re-run the
-      // nodeView function so that the list item node's `disabled` class can be
-      // updated.
-      const update = (): boolean => {
-        return false;
-      };
-
-      return { dom, contentDOM, update };
+      return createCsutomMarkListItemNodeView(node, mark);
     };
   }
 
   createKeymap(): KeyBindings {
     return {
-      Enter: splitListItem(this.type), // TODO: if the previous checkbox list item is checked, the next list item should not be checked.
+      Enter: splitListItem(this.type),
       Tab: convertCommand(sinkListItem(this.type)),
       'Shift-Tab': convertCommand(liftListItem(this.type)),
-    };
-  }
-
-  /**
-   * Toggles the current checkbox state and transform a normal list item into a
-   * checkbox list item when necessary.
-   *
-   * @param checked - the `checked` attribute. If it's a boolean value, then it
-   * will be set as an attribute. If it's undefined, then the `checked` attribuate
-   * will be toggled.
-   */
-  @command()
-  toggleCheckboxChecked(checked?: boolean | undefined): CommandFunction {
-    return ({ state: { tr, selection }, dispatch }) => {
-      // Make sure the list item is selected. Otherwise do nothing.
-      if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {
-        return false;
-      }
-
-      const { node, from } = selection;
-      checked = isBoolean(checked) ? checked : !node.attrs.checked;
-      dispatch?.(tr.setNodeMarkup(from, undefined, { ...node.attrs, checked, hasCheckbox: true }));
-
-      return true;
     };
   }
 
@@ -182,26 +114,6 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       return true;
     };
   }
-
-  createInputRules(): InputRule[] {
-    return [
-      nodeInputRule({
-        regexp: /^\s*(\[( ?|x|X)]\s)$/,
-        type: this.type,
-        getAttributes: (match) => ({
-          checked: ['x', 'X'].includes(getMatchString(match, 2)),
-          hasCheckbox: true,
-        }),
-        beforeDispatch: ({ tr, start }) => {
-          const $listItemPos = tr.doc.resolve(start + 1);
-
-          if ($listItemPos.node()?.type.name === this.type.name) {
-            tr.setSelection(new TextSelection($listItemPos));
-          }
-        },
-      }),
-    ];
-  }
 }
 
 export interface ListItemOptions {
@@ -209,11 +121,6 @@ export interface ListItemOptions {
    * Set this to true to support toggling.
    */
   enableCollapsible?: Static<boolean>;
-
-  /**
-   * Set this to true to support checkbox.
-   */
-  enableCheckbox?: Static<boolean>;
 }
 
 export type ListItemAttributes = ProsemirrorAttributes<{
@@ -225,14 +132,6 @@ export type ListItemAttributes = ProsemirrorAttributes<{
    * @default false
    */
   nested: boolean;
-  /**
-   * @default false
-   */
-  hasCheckbox: boolean;
-  /**
-   * @default false
-   */
-  checked: boolean;
 }>;
 
 declare global {

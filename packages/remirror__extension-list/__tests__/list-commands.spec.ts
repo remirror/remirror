@@ -1,5 +1,12 @@
 import { createEditor, doc, li, ol, p, schema, ul } from 'jest-prosemirror';
-import { toggleList } from 'remirror/extensions';
+import { renderEditor } from 'jest-remirror';
+import {
+  BulletListExtension,
+  ListItemExtension,
+  OrderedListExtension,
+  TaskListExtension,
+  toggleList,
+} from 'remirror/extensions';
 
 describe('toggleList', () => {
   it('toggles paragraph to bullet list', () => {
@@ -53,5 +60,27 @@ describe('toggleList', () => {
     view.dispatch(tr);
 
     expect(view.state.doc).toEqualProsemirrorNode(unchanged);
+  });
+
+  it('toggles paragraph to task list', () => {
+    const editor = renderEditor([
+      new ListItemExtension(),
+      new BulletListExtension(),
+      new OrderedListExtension(),
+      new TaskListExtension(),
+    ]);
+    const {
+      nodes: { doc, paragraph: p, taskList },
+      attributeNodes: { taskListItem },
+    } = editor;
+
+    const from = doc(p('make <cursor>list'));
+    const to = doc(taskList(taskListItem({ checked: false })(p('make list'))));
+
+    editor.add(from);
+
+    editor.commands.toggleTaskList();
+
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 });
