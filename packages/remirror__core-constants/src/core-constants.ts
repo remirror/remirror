@@ -432,6 +432,7 @@ export enum NamedShortcut {
   H4 = '_|h4|_',
   H5 = '_|h5|_',
   H6 = '_|h6|_',
+  TaskList = '_|task|_',
   BulletList = '_|bullet|_',
   OrderedList = '_|number|_',
   Quote = '_|quote|_',
