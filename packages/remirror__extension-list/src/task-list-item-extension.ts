@@ -1,6 +1,5 @@
 import {
   ApplySchemaAttributes,
-  assertGet,
   command,
   CommandFunction,
   cx,
@@ -15,7 +14,6 @@ import {
 } from '@remirror/core';
 import { NodeSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
-import { toggleList } from './list-commands';
 
 import { createCsutomMarkListItemNodeView } from './list-item-node-view';
 

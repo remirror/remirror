@@ -6,8 +6,6 @@ import {
   cx,
   extension,
   ExtensionTag,
-  getMatchString,
-  InputRule,
   isBoolean,
   isNodeSelection,
   KeyBindings,
