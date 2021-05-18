@@ -6,7 +6,7 @@
  */
 
 import chalk from 'chalk';
-import cheerio from 'cheerio';
+import cheerio, { Cheerio } from 'cheerio';
 import { promises as fs } from 'fs';
 import globby from 'globby';
 import loadJson from 'load-json-file';
@@ -78,11 +78,16 @@ async function convertIconData(svg: string) {
   // filter/convert attributes
   // 1. remove class attr
   // 2. convert to camelcase ex: fill-opacity => fillOpacity
-  function attributeConverter(attrs: Record<string, string>, tagName: string) {
+  function attributeConverter(attrs: NamedNodeMap, tagName: string) {
+    const attributes: Record<string, string> = object();
     const convertedAttributes: Record<string, string> = object();
     const invalidNames = getInvalidNames(tagName);
 
-    for (const [name, value] of Object.entries(attrs)) {
+    for (const attr of attrs) {
+      attributes[attr.name] = attr?.value;
+    }
+
+    for (const [name, value] of Object.entries(attributes)) {
       if (invalidNames.has(name)) {
         continue;
       }
@@ -100,10 +105,7 @@ async function convertIconData(svg: string) {
     return convertedAttributes;
   }
 
-  // This is needed because the types are no longer exposed within cheerio.
-  type Cheerio = ReturnType<ReturnType<typeof cheerio['load']>['root']>;
-
-  function elementToTree($element: Cheerio): IconTree[] {
+  function elementToTree($element: Cheerio<Element>): IconTree[] {
     const iconTrees: any[] = [];
 
     for (const $child of $element.get() ?? []) {
@@ -112,11 +114,13 @@ async function convertIconData(svg: string) {
       }
 
       const tag = $child.tagName;
-      const attr = attributeConverter($child.attribs, $child.tagName);
-      const child = $child.children?.length ? elementToTree(cheerio($child.children)) : undefined;
+      const attr = attributeConverter($child.attributes, $child.tagName);
+      const child = $child.children?.length
+        ? elementToTree(cheerio($child.children as any))
+        : undefined;
 
       if (tag === 'g' && isEmptyObject(attr) && child?.length) {
-        iconTrees.push(child);
+        iconTrees.push(...child);
       } else {
         iconTrees.push({ tag, attr, child });
       }
@@ -125,7 +129,7 @@ async function convertIconData(svg: string) {
     return iconTrees;
   }
 
-  const tree = elementToTree($svg);
+  const tree = elementToTree($svg as any);
 
   // Get the first child to avoid the top level `svg` tag which is not needed.
   return tree[0]?.child;
