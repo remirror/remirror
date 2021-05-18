@@ -22,7 +22,7 @@ import { useRemirrorContext } from './use-remirror-context';
  * ````
  */
 export function useCommands<
-  Extension extends AnyExtension = Remirror.Extensions
+  Extension extends AnyExtension = Remirror.Extensions,
 >(): CommandsFromExtensions<Extension> {
   return useRemirrorContext<Extension>().commands;
 }

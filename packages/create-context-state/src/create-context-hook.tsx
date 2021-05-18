@@ -155,19 +155,15 @@ export interface ContextHook<Context extends object> {
 /**
  * Split but don't allow empty string.
  */
-export type Split<
-  Input extends string,
-  Splitter extends string
-> = Input extends `${infer T}${Splitter}${infer Rest}`
-  ? '' extends T
-    ? [...Split<Rest, Splitter>]
-    : [T, ...Split<Rest, Splitter>]
-  : [Input];
+export type Split<Input extends string, Splitter extends string> =
+  Input extends `${infer T}${Splitter}${infer Rest}`
+    ? '' extends T
+      ? [...Split<Rest, Splitter>]
+      : [T, ...Split<Rest, Splitter>]
+    : [Input];
 
-export type SplitEmpty<
-  Input extends string,
-  Splitter extends string
-> = Input extends `${infer T}${Splitter}${infer Rest}` ? [T, ...Split<Rest, Splitter>] : [Input];
+export type SplitEmpty<Input extends string, Splitter extends string> =
+  Input extends `${infer T}${Splitter}${infer Rest}` ? [T, ...Split<Rest, Splitter>] : [Input];
 
 function usePrevious<T>(value: T) {
   const ref = useRef<T>();

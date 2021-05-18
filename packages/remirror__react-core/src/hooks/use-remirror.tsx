@@ -177,10 +177,8 @@ export function useRemirror<Extension extends AnyExtension>(
   }, [manager]);
 
   // Memoize the return to prevent unnecessary re-renders when props change.
-  return useMemo(() => ({ state, setState, manager, onChange, getContext }), [
-    getContext,
-    manager,
-    onChange,
-    state,
-  ]);
+  return useMemo(
+    () => ({ state, setState, manager, onChange, getContext }),
+    [getContext, manager, onChange, state],
+  );
 }

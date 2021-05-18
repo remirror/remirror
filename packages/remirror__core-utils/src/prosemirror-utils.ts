@@ -606,26 +606,26 @@ export function chainKeyBindingCommands<Schema extends EditorSchema = EditorSche
      * Create the next function call. Updates the outer closure when the next
      * method has been called.
      */
-    const createNext = (
-      ...nextCommands: Array<KeyBindingCommandFunction<Schema>>
-    ): (() => boolean) => () => {
-      // If there are no commands then this can be ignored and continued.
-      if (!isNonEmptyArray(nextCommands)) {
-        return false;
-      }
+    const createNext =
+      (...nextCommands: Array<KeyBindingCommandFunction<Schema>>): (() => boolean) =>
+      () => {
+        // If there are no commands then this can be ignored and continued.
+        if (!isNonEmptyArray(nextCommands)) {
+          return false;
+        }
 
-      // Update the closure with information that the next method was invoked by
-      // this command.
-      calledNext = true;
+        // Update the closure with information that the next method was invoked by
+        // this command.
+        calledNext = true;
 
-      const [, ...nextRest] = nextCommands;
+        const [, ...nextRest] = nextCommands;
 
-      // Recursively call the key bindings method.
-      return chainKeyBindingCommands(...nextCommands)({
-        ...props,
-        next: createNext(...nextRest),
-      });
-    };
+        // Recursively call the key bindings method.
+        return chainKeyBindingCommands(...nextCommands)({
+          ...props,
+          next: createNext(...nextRest),
+        });
+      };
 
     const next = createNext(...rest);
     const exitEarly = command({ ...props, next });
@@ -670,7 +670,7 @@ export function chainKeyBindingCommands<Schema extends EditorSchema = EditorSche
  */
 function mergeKeyBindingCreator<
   Schema extends EditorSchema = EditorSchema,
-  Mapper extends AnyFunction = KeyBindingCommandFunction<Schema>
+  Mapper extends AnyFunction = KeyBindingCommandFunction<Schema>,
 >(
   extensionKeymaps: Array<KeyBindings<Schema>>,
   mapper: (command: KeyBindingCommandFunction<Schema>) => Mapper,
@@ -743,8 +743,9 @@ export function mergeProsemirrorKeyBindings<Schema extends EditorSchema = Editor
     extensionKeymaps,
     // Convert the command to have a signature of the
     // [[`ProsemirrorCommandFunction`]].
-    (command): ProsemirrorCommandFunction<Schema> => (state, dispatch, view) => {
-      return command({ state, dispatch, view, tr: state.tr, next: () => false });
-    },
+    (command): ProsemirrorCommandFunction<Schema> =>
+      (state, dispatch, view) => {
+        return command({ state, dispatch, view, tr: state.tr, next: () => false });
+      },
   );
 }

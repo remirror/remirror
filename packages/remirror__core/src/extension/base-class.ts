@@ -50,7 +50,7 @@ const GENERAL_OPTIONS = '__ALL__' as const;
 
 export abstract class BaseClass<
   Options extends ValidOptions = EmptyShape,
-  DefaultStaticOptions extends Shape = EmptyShape
+  DefaultStaticOptions extends Shape = EmptyShape,
 > {
   /**
    * The default options for this extension.
@@ -380,7 +380,7 @@ export abstract class BaseClass<
         let returnValue: unknown = reducer?.getDefault(...args);
 
         for (const [, handler] of this._mappedHandlers[key as keyof GetMappedHandler<Options>]) {
-          const value = ((handler as unknown) as AnyFunction)(...args);
+          const value = (handler as unknown as AnyFunction)(...args);
           returnValue = reducer ? reducer.accumulator(returnValue, value, ...args) : value;
 
           // Check if the method should cause an early return, based on the
@@ -508,7 +508,7 @@ function shouldReturnEarly(
  * @internal
  */
 export type CustomHandlerMethod<Options extends ValidOptions> = <
-  Key extends keyof GetCustomHandler<Options>
+  Key extends keyof GetCustomHandler<Options>,
 >(
   key: Key,
   value: Required<GetCustomHandler<Options>>[Key],
@@ -558,14 +558,14 @@ export interface HandlerKeyOptions<ReturnType = any, Args extends any[] = any[]>
 
 export interface BaseClass<
   Options extends ValidOptions,
-  DefaultStaticOptions extends Shape = EmptyShape
+  DefaultStaticOptions extends Shape = EmptyShape,
 > {
   constructor: BaseClassConstructor<Options, DefaultStaticOptions>;
 }
 
 export interface BaseClassConstructor<
   Options extends ValidOptions = EmptyShape,
-  DefaultStaticOptions extends Shape = EmptyShape
+  DefaultStaticOptions extends Shape = EmptyShape,
 > extends Function {
   new (...args: ConstructorProps<Options, DefaultStaticOptions>): any;
 
@@ -643,29 +643,25 @@ export type AnyBaseClassConstructor = Replace<
  * Auto infers the parameter for the constructor. If there is a required static
  * option then the TypeScript compiler will error if nothing is passed in.
  */
-export type ConstructorProps<
-  Options extends ValidOptions,
-  DefaultStaticOptions extends Shape
-> = IfNoRequiredProperties<
-  GetStatic<Options>,
-  [options?: GetConstructorProps<Options> & DefaultStaticOptions],
-  [options: GetConstructorProps<Options> & DefaultStaticOptions]
->;
+export type ConstructorProps<Options extends ValidOptions, DefaultStaticOptions extends Shape> =
+  IfNoRequiredProperties<
+    GetStatic<Options>,
+    [options?: GetConstructorProps<Options> & DefaultStaticOptions],
+    [options: GetConstructorProps<Options> & DefaultStaticOptions]
+  >;
 
 /**
  * Get the expected type signature for the `defaultOptions`. Requires that every
  * optional setting key (except for keys which are defined on the
  * `BaseExtensionOptions`) has a value assigned.
  */
-export type DefaultOptions<
-  Options extends ValidOptions,
-  DefaultStaticOptions extends Shape
-> = MakeUndefined<
-  UndefinedFlipPartialAndRequired<GetStatic<Options>> &
-    Partial<DefaultStaticOptions> &
-    GetFixedDynamic<Options>,
-  StringKey<GetAcceptUndefined<Options>>
->;
+export type DefaultOptions<Options extends ValidOptions, DefaultStaticOptions extends Shape> =
+  MakeUndefined<
+    UndefinedFlipPartialAndRequired<GetStatic<Options>> &
+      Partial<DefaultStaticOptions> &
+      GetFixedDynamic<Options>,
+    StringKey<GetAcceptUndefined<Options>>
+  >;
 
 export interface AnyBaseClassOverrides {
   addCustomHandler: AnyFunction;

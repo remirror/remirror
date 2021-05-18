@@ -130,13 +130,15 @@ class CustomExtension extends PlainExtension {
 
   createCommands() {
     return {
-      insertAmazingWord: (word: string): CommandFunction => ({ tr, dispatch }) => {
-        if (dispatch) {
-          tr.insertText(`${word}Amazing!`);
-        }
+      insertAmazingWord:
+        (word: string): CommandFunction =>
+        ({ tr, dispatch }) => {
+          if (dispatch) {
+            tr.insertText(`${word}Amazing!`);
+          }
 
-        return true;
-      },
+          return true;
+        },
     };
   }
 }

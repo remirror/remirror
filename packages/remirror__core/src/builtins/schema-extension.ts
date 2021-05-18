@@ -135,12 +135,8 @@ export class SchemaExtension extends PlainExtension {
    */
   onCreate(): void {
     const { managerSettings, tags, markNames, nodeNames, extensions } = this.store;
-    const {
-      defaultBlockNode,
-      disableExtraAttributes,
-      nodeOverride,
-      markOverride,
-    } = managerSettings;
+    const { defaultBlockNode, disableExtraAttributes, nodeOverride, markOverride } =
+      managerSettings;
 
     // True when the `defaultBlockNode` exists for this editor.
     const isValidDefaultBlockNode = (name: string | undefined): name is string =>
@@ -836,14 +832,8 @@ interface CreateSpecReturn<Type extends { group?: string | null }> {
 function createSpec<Type extends { group?: string | null }, Override extends object>(
   props: CreateSpecProps<Type, Override>,
 ): CreateSpecReturn<Type> {
-  const {
-    createExtensionSpec,
-    extraAttributes,
-    ignoreExtraAttributes,
-    name,
-    tags,
-    override,
-  } = props;
+  const { createExtensionSpec, extraAttributes, ignoreExtraAttributes, name, tags, override } =
+    props;
 
   // Keep track of the dynamic attributes which are a part of this spec.
   const dynamic: Record<string, DynamicAttributeCreator> = object();

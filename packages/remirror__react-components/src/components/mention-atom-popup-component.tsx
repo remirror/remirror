@@ -14,7 +14,7 @@ import { ExtensionMentionAtomTheme as Theme } from '@remirror/theme';
 import { FloatingWrapper } from '../floating-menu';
 
 interface MentionAtomPopupComponentProps<
-  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
 > extends UseMentionAtomProps<Data> {
   /**
    * Called whenever the query state changes.
@@ -33,14 +33,14 @@ interface MentionAtomPopupComponentProps<
 }
 
 interface UseMentionAtomChangeHandlerProps<
-  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
 > {
   state: UseMentionAtomReturn<Data>['state'];
   onChange: MentionAtomPopupComponentProps<Data>['onChange'];
 }
 
 function useMentionAtomChangeHandler<
-  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
 >(props: UseMentionAtomChangeHandlerProps<Data>) {
   const { onChange, state } = props;
 
@@ -53,7 +53,7 @@ function useMentionAtomChangeHandler<
  * This component renders the emoji suggestion dropdown for the user.
  */
 export function MentionAtomPopupComponent<
-  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
 >(props: MentionAtomPopupComponentProps<Data>): JSX.Element {
   const { focus } = useCommands();
   const {
@@ -62,9 +62,8 @@ export function MentionAtomPopupComponent<
     ZeroItemsComponent = DefaultZeroItemsComponent,
     ...hookProps
   } = props;
-  const { state, getMenuProps, getItemProps, indexIsHovered, indexIsSelected } = useMentionAtom(
-    hookProps,
-  );
+  const { state, getMenuProps, getItemProps, indexIsHovered, indexIsSelected } =
+    useMentionAtom(hookProps);
   useMentionAtomChangeHandler({ state, onChange });
 
   return (
@@ -105,7 +104,7 @@ export function MentionAtomPopupComponent<
 }
 
 interface MentionAtomPopupItemComponentProps<
-  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
 > {
   item: Data;
   state: UseMentionAtomReturn<Data>['state'];

@@ -173,16 +173,8 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
         ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
-        const {
-          count,
-          fill,
-          gap,
-          ruleColor,
-          ruleStyle,
-          ruleWidth,
-          width,
-          ...other
-        } = omitExtraAttributes<Required<ColumnAttributes>>(node.attrs, extra);
+        const { count, fill, gap, ruleColor, ruleStyle, ruleWidth, width, ...other } =
+          omitExtraAttributes<Required<ColumnAttributes>>(node.attrs, extra);
         const { style: currentStyle = '', ...rest } = extra.dom(node);
         const style = joinStyles(
           {

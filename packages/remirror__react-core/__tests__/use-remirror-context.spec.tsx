@@ -17,10 +17,9 @@ describe('useRemirrorContext', () => {
   it('can listen to updates', () => {
     const { chain, wrapper } = createTestChain();
     const { doc, p } = chain.nodes;
-    const { result } = renderHook(
-      () => useRemirrorContext<BoldExtension>({ autoUpdate: true }),
-      { wrapper },
-    );
+    const { result } = renderHook(() => useRemirrorContext<BoldExtension>({ autoUpdate: true }), {
+      wrapper,
+    });
     expect(result.current.active.bold()).toBe(false);
     act(() => {
       chain.overwrite(doc(p('Welcome <start>friend<end>')));

@@ -72,7 +72,7 @@ export function createContextState<Context extends object, Props extends object,
 export function createContextState<
   Context extends object,
   Props extends object = object,
-  State = undefined
+  State = undefined,
 >(
   creator: ContextCreator<Context, Props, State>,
   hook?: NamedHook<Props, State>,
@@ -188,7 +188,7 @@ export type NamedHook<Props extends object, State> = (props: Props) => State;
 export interface ContextCreatorHelpers<
   Context extends object,
   Props extends object,
-  State = undefined
+  State = undefined,
 > {
   /**
    * Get the context with a partial update.

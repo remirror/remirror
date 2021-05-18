@@ -65,21 +65,23 @@ export class MetaExtension extends PlainExtension<MetaOptions> {
 
     for (const name of Object.keys(decoratedCommands)) {
       const command: AnyFunction<CommandFunction> = (extension as any)[name];
-      (extension as any)[name] = (...args: any[]): CommandFunction => (props) => {
-        const value = command(...args)(props);
+      (extension as any)[name] =
+        (...args: any[]): CommandFunction =>
+        (props) => {
+          const value = command(...args)(props);
 
-        if (props.dispatch && value) {
-          this.setCommandMeta(props.tr, {
-            type: 'command',
-            chain: props.dispatch !== props.view?.dispatch,
-            name: name,
-            extension: extension.name,
-            decorated: true,
-          });
-        }
+          if (props.dispatch && value) {
+            this.setCommandMeta(props.tr, {
+              type: 'command',
+              chain: props.dispatch !== props.view?.dispatch,
+              name: name,
+              extension: extension.name,
+              decorated: true,
+            });
+          }
 
-        return value;
-      };
+          return value;
+        };
     }
 
     if (createCommands) {
@@ -87,21 +89,23 @@ export class MetaExtension extends PlainExtension<MetaOptions> {
         const commandsObject = createCommands();
 
         for (const [name, command] of Object.entries(commandsObject)) {
-          commandsObject[name] = (...args: any[]) => (props) => {
-            const value = command(...args)(props);
+          commandsObject[name] =
+            (...args: any[]) =>
+            (props) => {
+              const value = command(...args)(props);
 
-            if (props.dispatch && value) {
-              this.setCommandMeta(props.tr, {
-                type: 'command',
-                chain: props.dispatch !== props.view?.dispatch,
-                name: name,
-                extension: extension.name,
-                decorated: false,
-              });
-            }
+              if (props.dispatch && value) {
+                this.setCommandMeta(props.tr, {
+                  type: 'command',
+                  chain: props.dispatch !== props.view?.dispatch,
+                  name: name,
+                  extension: extension.name,
+                  decorated: false,
+                });
+              }
 
-            return value;
-          };
+              return value;
+            };
         }
 
         return commandsObject;

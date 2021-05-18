@@ -102,15 +102,17 @@ export class ReactSsrExtension extends PlainExtension<ReactSsrOptions> {
    * ReactSSRSerializer and transforms it into and element that is consistent
    * between the browser and the server.
    */
-  createSSRTransformer = () => (initialElement: JSX.Element): JSX.Element => {
-    let element: JSX.Element = initialElement;
+  createSSRTransformer =
+    () =>
+    (initialElement: JSX.Element): JSX.Element => {
+      let element: JSX.Element = initialElement;
 
-    for (const transformer of this.options.transformers) {
-      element = transformer(element);
-    }
+      for (const transformer of this.options.transformers) {
+        element = transformer(element);
+      }
 
-    return element;
-  };
+      return element;
+    };
 }
 
 export type SsrTransformer = (element: JSX.Element, state?: EditorState) => JSX.Element;
@@ -159,7 +161,7 @@ function elementIsEmpty(element: JSX.Element) {
  * @param type - the type to match
  */
 function elementIsOfType<
-  Type extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>
+  Type extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>,
 >(element: JSX.Element, type: Type) {
   return element.type === type;
 }
