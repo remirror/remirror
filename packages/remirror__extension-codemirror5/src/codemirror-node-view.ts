@@ -72,7 +72,7 @@ export class CodeMirrorNodeView implements NodeView {
     this.#getPos = getPos;
 
     // Create a CodeMirror instance
-    this.#cm = ref.CodeMirror((null as unknown) as HTMLElement, {
+    this.#cm = ref.CodeMirror(null as unknown as HTMLElement, {
       value: this.#node.textContent,
       extraKeys: this.codeMirrorKeymap(),
       ...config,

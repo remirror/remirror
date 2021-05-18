@@ -161,7 +161,7 @@ export function pmBuild<
     NodeTypeAttributes | MarkTypeAttributes
   >,
   Nodes extends string = string,
-  Marks extends string = string
+  Marks extends string = string,
 >(testSchema: EditorSchema<Nodes, Marks>, names: Type) {
   return pm.builders(testSchema, {
     doc: { nodeType: 'doc' },

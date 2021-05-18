@@ -1,52 +1,39 @@
 /* Alias Types */
 
-export type EditorSchema<
-  Nodes extends string = string,
-  Marks extends string = string
-> = import('../model').Schema<Nodes, Marks>;
-export type EditorView<
-  Schema extends EditorSchema = EditorSchema
-> = import('../view').EditorView<Schema>;
-export type Selection<
-  Schema extends EditorSchema = EditorSchema
-> = import('../state').Selection<Schema>;
-export type DecorationSet<
-  Schema extends EditorSchema = EditorSchema
-> = import('../view').DecorationSet<Schema>;
-export type Transaction<
-  Schema extends EditorSchema = EditorSchema
-> = import('../state').Transaction<Schema>;
+export type EditorSchema<Nodes extends string = string, Marks extends string = string> =
+  import('../model').Schema<Nodes, Marks>;
+export type EditorView<Schema extends EditorSchema = EditorSchema> =
+  import('../view').EditorView<Schema>;
+export type Selection<Schema extends EditorSchema = EditorSchema> =
+  import('../state').Selection<Schema>;
+export type DecorationSet<Schema extends EditorSchema = EditorSchema> =
+  import('../view').DecorationSet<Schema>;
+export type Transaction<Schema extends EditorSchema = EditorSchema> =
+  import('../state').Transaction<Schema>;
 export type PluginKey<PluginState = EditorSchema> = import('../state').PluginKey<
   PluginState,
   EditorSchema
 >;
 
 export type Mark<Schema extends EditorSchema = EditorSchema> = import('../model').Mark<Schema>;
-export type ResolvedPos<
-  Schema extends EditorSchema = EditorSchema
-> = import('../model').ResolvedPos<Schema>;
-export type InputRule<
-  Schema extends EditorSchema = EditorSchema
-> = import('../inputrules').InputRule<Schema>;
-export type Fragment<
-  Schema extends EditorSchema = EditorSchema
-> = import('../model').Fragment<Schema>;
-export type NodeView<
-  Schema extends EditorSchema = EditorSchema
-> = import('../view').NodeView<Schema>;
-export type ProsemirrorNode<
-  Schema extends EditorSchema = EditorSchema
-> = import('../model').Node<Schema>;
+export type ResolvedPos<Schema extends EditorSchema = EditorSchema> =
+  import('../model').ResolvedPos<Schema>;
+export type InputRule<Schema extends EditorSchema = EditorSchema> =
+  import('../inputrules').InputRule<Schema>;
+export type Fragment<Schema extends EditorSchema = EditorSchema> =
+  import('../model').Fragment<Schema>;
+export type NodeView<Schema extends EditorSchema = EditorSchema> =
+  import('../view').NodeView<Schema>;
+export type ProsemirrorNode<Schema extends EditorSchema = EditorSchema> =
+  import('../model').Node<Schema>;
 export type ProsemirrorPlugin<PluginState = any> = import('../state').Plugin<
   PluginState,
   EditorSchema
 >;
-export type MarkType<
-  Schema extends EditorSchema = EditorSchema
-> = import('../model').MarkType<Schema>;
-export type NodeType<
-  Schema extends EditorSchema = EditorSchema
-> = import('../model').NodeType<Schema>;
+export type MarkType<Schema extends EditorSchema = EditorSchema> =
+  import('../model').MarkType<Schema>;
+export type NodeType<Schema extends EditorSchema = EditorSchema> =
+  import('../model').NodeType<Schema>;
 export type EditorState<Schema extends EditorSchema = EditorSchema> = Readonly<
   import('../state').EditorState<Schema>
 >;
@@ -66,7 +53,7 @@ type Brand<Type, B> = Type & Branding<B>;
  */
 export type NonChainableCommandFunction<
   Schema extends EditorSchema = EditorSchema,
-  Extra extends object = object
+  Extra extends object = object,
 > = Brand<CommandFunction<Schema, Extra>, 'non-chainable'>;
 
 /**
@@ -124,7 +111,7 @@ export type ProsemirrorCommandFunction<Schema extends EditorSchema = EditorSchem
  */
 export type CommandFunction<
   Schema extends EditorSchema = EditorSchema,
-  ExtraProps extends object = object
+  ExtraProps extends object = object,
 > = (params: CommandFunctionProps<Schema> & ExtraProps) => boolean;
 
 /**

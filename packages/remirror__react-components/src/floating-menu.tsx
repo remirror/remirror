@@ -102,7 +102,15 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
   } = props;
 
   const [isFocused] = useEditorFocus({ blurOnInactive, ignoredElements });
-  const { ref, active, height, x: left, y: top, width, visible } = usePositioner(() => {
+  const {
+    ref,
+    active,
+    height,
+    x: left,
+    y: top,
+    width,
+    visible,
+  } = usePositioner(() => {
     const active = isFocused && enabled;
     const refinedPositioner = getPositioner(positioner);
     return refinedPositioner.active(active);
@@ -229,12 +237,13 @@ export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Elemen
   const query = change?.query.full;
   const menuState = useMenuState({ unstable_virtual: true, wrap: true, loop: true });
 
-  const items = (query
-    ? matchSorter(actions, query, {
-        keys: ['tags', 'description', (item) => item.description?.replace(/\W/g, '') ?? ''],
-        threshold: matchSorter.rankings.CONTAINS,
-      })
-    : actions
+  const items = (
+    query
+      ? matchSorter(actions, query, {
+          keys: ['tags', 'description', (item) => item.description?.replace(/\W/g, '') ?? ''],
+          threshold: matchSorter.rankings.CONTAINS,
+        })
+      : actions
   ).map<MenuPaneItem | MenuCommandPaneItem>((item) =>
     item.type === ComponentItem.MenuAction
       ? { ...item, type: ComponentItem.MenuPane }

@@ -500,7 +500,7 @@ export interface MultishiftStateChangeset<Item = any> {
 export type CreateMultishiftAction<
   Type extends string,
   Payload = any,
-  Args extends any[] = [Payload]
+  Args extends any[] = [Payload],
 > = (...args: Args) => ActionWithPayload<Type, Payload>;
 
 export interface GetRemoveButtonOptions<Element extends HTMLElement = any, Item = any>
@@ -528,13 +528,13 @@ export interface GetRemoveButtonReturn<Element extends HTMLElement = any>
 
 export interface GetComboBoxPropsOptions<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > extends RefProps<RefKey>,
     HTMLProps<Element> {}
 
 export type GetComboBoxPropsReturn<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > = DetailedHTMLProps<HTMLAttributes<Element>, Element> &
   { [P in RefKey]: Ref<any> } & {
     /**
@@ -549,7 +549,7 @@ export type GetComboBoxPropsReturn<
 
 export interface GetPropsWithRefOptions<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > extends RefProps<RefKey>,
     HTMLProps<Element> {
   /**
@@ -560,7 +560,7 @@ export interface GetPropsWithRefOptions<
 
 export type GetPropsWithRefReturn<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > = {
   [P in Exclude<RefKey, 'key'>]: Ref<any>;
 } &
@@ -568,7 +568,7 @@ export type GetPropsWithRefReturn<
 
 export type GetLabelPropsWithRefReturn<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > = {
   [P in Exclude<RefKey, 'key'>]: Ref<any>;
 } &
@@ -579,7 +579,7 @@ export type GetLabelPropsWithRefReturn<
 export interface GetItemPropsOptions<
   Element extends HTMLElement = any,
   RefKey extends string = 'ref',
-  Item = any
+  Item = any,
 > extends GetPropsWithRefOptions<Element, RefKey> {
   /**
    * This is the item data that will be selected when the user selects a
@@ -781,7 +781,7 @@ export interface MultishiftPropGetters<Item = any> {
 
 export interface IgnoredElementOptions<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > extends GetPropsWithRefOptions<Element, RefKey> {}
 
 export interface MultishiftHelpers<Item = any> {

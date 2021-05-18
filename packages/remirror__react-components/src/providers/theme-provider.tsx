@@ -30,9 +30,7 @@ export interface UseThemeProps {
  *
  * The theme provided is deeply merged with the parent theme.
  */
-export function useTheme(
-  props: UseThemeProps = {},
-): {
+export function useTheme(props: UseThemeProps = {}): {
   theme: RemirrorThemeType;
   style: CSSProperties;
   className?: string;

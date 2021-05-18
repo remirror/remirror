@@ -47,9 +47,9 @@ export function setNodeAttrs<T extends Transform>(
 
 // TODO: https://github.com/ProseMirror/prosemirror-tables/pull/126
 export function selectionToCellSelection(selection: Selection): CellSelection {
-  return (selection as unknown) as CellSelection;
+  return selection as unknown as CellSelection;
 }
 
 export function cellSelectionToSelection(selection: CellSelection): Selection {
-  return (selection as unknown) as Selection;
+  return selection as unknown as Selection;
 }

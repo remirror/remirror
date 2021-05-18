@@ -825,13 +825,11 @@ export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Ty
 
 export type EditorSchema = import('prosemirror-model').Schema<string, string>;
 
-export type ProsemirrorNode<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-model').Node<Schema>;
+export type ProsemirrorNode<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-model').Node<Schema>;
 
-export type Transaction<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-state').Transaction<Schema>;
+export type Transaction<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-state').Transaction<Schema>;
 
 /**
  * A parameter builder interface containing the `tr` property.
@@ -845,9 +843,8 @@ export interface TransactionProps<Schema extends EditorSchema = EditorSchema> {
   tr: Transaction<Schema>;
 }
 
-export type EditorState<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-state').EditorState<Schema>;
+export type EditorState<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-state').EditorState<Schema>;
 
 /**
  * A parameter builder interface containing the `state` property.
@@ -861,9 +858,8 @@ export interface EditorStateProps<Schema extends EditorSchema = EditorSchema> {
   state: EditorState<Schema>;
 }
 
-export type ResolvedPos<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-model').ResolvedPos<Schema>;
+export type ResolvedPos<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-model').ResolvedPos<Schema>;
 
 /**
  * @template Schema - the underlying editor schema.
@@ -886,9 +882,8 @@ export interface TextProps {
   text: string;
 }
 
-export type EditorView<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-view').EditorView<Schema>;
+export type EditorView<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-view').EditorView<Schema>;
 
 /**
  * A parameter builder interface containing the `view` property.

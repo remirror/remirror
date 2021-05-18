@@ -14,7 +14,7 @@ import {
 } from './use-menu-navigation';
 
 export interface MentionAtomState<
-  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
 > extends Pick<SuggestChangeHandlerProps, 'name' | 'query' | 'text' | 'range'> {
   /**
    * The reason for the change.
@@ -29,7 +29,7 @@ export interface MentionAtomState<
 }
 
 export interface UseMentionAtomReturn<
-  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
 > extends UseMenuNavigationReturn<Data> {
   state: MentionAtomState<Data> | null;
 }
@@ -166,7 +166,7 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
 }
 
 export interface UseMentionAtomProps<
-  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes
+  Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
 > extends MenuNavigationOptions {
   /**
    * The list of data from which an index can be calculated. Must include at

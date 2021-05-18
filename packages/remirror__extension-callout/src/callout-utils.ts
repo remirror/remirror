@@ -35,29 +35,27 @@ export function isValidCalloutAttributes(
  * This is used to update the type of the callout.
  */
 export function updateNodeAttributes(type: NodeType) {
-  return (attributes: CalloutAttributes): CommandFunction => ({
-    state: { tr, selection },
-    dispatch,
-  }) => {
-    if (!isValidCalloutAttributes(attributes)) {
-      throw new Error('Invalid attrs passed to the updateAttributes method');
-    }
+  return (attributes: CalloutAttributes): CommandFunction =>
+    ({ state: { tr, selection }, dispatch }) => {
+      if (!isValidCalloutAttributes(attributes)) {
+        throw new Error('Invalid attrs passed to the updateAttributes method');
+      }
 
-    const parent = findParentNodeOfType({ types: type, selection });
+      const parent = findParentNodeOfType({ types: type, selection });
 
-    if (!parent || isEqual(attributes, parent.node.attrs)) {
-      // Do nothing since the attrs are the same
-      return false;
-    }
+      if (!parent || isEqual(attributes, parent.node.attrs)) {
+        // Do nothing since the attrs are the same
+        return false;
+      }
 
-    tr.setNodeMarkup(parent.pos, type, { ...parent.node.attrs, ...attributes });
+      tr.setNodeMarkup(parent.pos, type, { ...parent.node.attrs, ...attributes });
 
-    if (dispatch) {
-      dispatch(tr);
-    }
+      if (dispatch) {
+        dispatch(tr);
+      }
 
-    return true;
-  };
+      return true;
+    };
 }
 
 const { DESCRIPTION, LABEL } = ExtensionCalloutMessages;

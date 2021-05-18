@@ -58,7 +58,7 @@ export type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>>
  */
 export type CommandsFromExtensions<
   Extension extends AnyExtension,
-  Expanded extends AnyExtension = GetExtensions<Extension>
+  Expanded extends AnyExtension = GetExtensions<Extension>,
 > = UnionToIntersection<
   MapToUnchainedCommand<GetCommands<Expanded> | GetDecoratedCommands<Expanded>>
 >;
@@ -146,13 +146,13 @@ export type ChainedIntersection<Extension extends AnyExtension> = UnionToInterse
 
 export type ChainedFromExtensions<
   Extension extends AnyExtension,
-  Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>
+  Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>,
 > = _ChainedFromExtensions<Extension, Chained> &
   ((tr: Transaction) => _ChainedFromExtensions<Extension, Chained>);
 
 type _ChainedFromExtensions<
   Extension extends AnyExtension,
-  Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>
+  Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>,
 > = ChainedCommandProps &
   {
     [Command in keyof Chained]: Chained[Command] extends (...args: any[]) => any
@@ -186,7 +186,7 @@ export type MapHelpers<RawHelpers extends Record<string, AnyFunction>> = {
  */
 export type HelpersFromExtensions<
   Extension extends AnyExtension,
-  Expanded extends AnyExtension = GetExtensions<Extension>
+  Expanded extends AnyExtension = GetExtensions<Extension>,
 > = UnionToIntersection<MapHelpers<GetHelpers<Expanded> | GetDecoratedHelpers<Expanded>>>;
 
 export type HelperAnnotation = Flavoring<'HelperAnnotation'>;
@@ -298,7 +298,7 @@ export type GetNameUnion<Extension extends AnyExtension> = GetExtensions<Extensi
  */
 export type GetPlainNameUnion<
   Extension extends AnyExtension,
-  Expanded extends AnyExtension = GetExtensions<Extension>
+  Expanded extends AnyExtension = GetExtensions<Extension>,
 > = Expanded extends AnyPlainExtension ? Expanded['name'] : never;
 
 /**
@@ -312,7 +312,7 @@ export type GetPlainNameUnion<
  */
 export type GetMarkNameUnion<
   Extension extends AnyExtension,
-  Expanded extends AnyExtension = GetExtensions<Extension>
+  Expanded extends AnyExtension = GetExtensions<Extension>,
 > = Expanded extends AnyMarkExtension ? Expanded['name'] : never;
 
 /**
@@ -326,7 +326,7 @@ export type GetMarkNameUnion<
  */
 export type GetNodeNameUnion<
   Extension extends AnyExtension,
-  Expanded extends AnyExtension = GetExtensions<Extension>
+  Expanded extends AnyExtension = GetExtensions<Extension>,
 > = Expanded extends AnyNodeExtension ? Expanded['name'] : never;
 
 /**

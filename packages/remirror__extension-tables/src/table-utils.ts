@@ -216,9 +216,12 @@ function createCell(props: CreateCellProps) {
  */
 export function createTable(props: CreateTableProps): ProsemirrorNode<EditorSchema> {
   const { schema, cellContent, columnsCount = 3, rowsCount = 3, withHeaderRow = true } = props;
-  const { cell: tableCell, header_cell: tableHeaderCell, row: tableRow, table } = tableNodeTypes(
-    schema,
-  );
+  const {
+    cell: tableCell,
+    header_cell: tableHeaderCell,
+    row: tableRow,
+    table,
+  } = tableNodeTypes(schema);
 
   invariant(tableCell && tableHeaderCell && tableRow && table, {
     code: ErrorConstant.EXTENSION,

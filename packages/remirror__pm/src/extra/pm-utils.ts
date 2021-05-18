@@ -81,7 +81,7 @@ export function chainableEditorState<Schema extends EditorSchema = EditorSchema>
  */
 export function convertCommand<
   Schema extends EditorSchema = EditorSchema,
-  Extra extends object = object
+  Extra extends object = object,
 >(commandFunction: ProsemirrorCommandFunction<Schema>): CommandFunction<Schema, Extra> {
   return ({ state, dispatch, view, tr }) =>
     commandFunction(chainableEditorState(tr, state), dispatch, view);
@@ -99,7 +99,7 @@ export function convertCommand<
  */
 export function nonChainable<
   Schema extends EditorSchema = EditorSchema,
-  Extra extends object = object
+  Extra extends object = object,
 >(commandFunction: CommandFunction<Schema, Extra>): NonChainableCommandFunction<Schema, Extra> {
   return ((props) => {
     invariant(props.dispatch === undefined || props.dispatch === props.view?.dispatch, {
@@ -117,7 +117,7 @@ export function nonChainable<
  */
 export function chainCommands<
   Schema extends EditorSchema = EditorSchema,
-  Extra extends object = object
+  Extra extends object = object,
 >(...commands: Array<CommandFunction<Schema, Extra>>): CommandFunction<Schema, Extra> {
   return ({ state, dispatch, view, tr, ...rest }) => {
     for (const element of commands) {

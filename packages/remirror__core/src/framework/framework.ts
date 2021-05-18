@@ -55,8 +55,9 @@ import type {
 export abstract class Framework<
   Extension extends AnyExtension = BuiltinPreset,
   Props extends FrameworkProps<Extension> = FrameworkProps<Extension>,
-  Output extends FrameworkOutput<Extension> = FrameworkOutput<Extension>
-> implements BaseFramework<Extension> {
+  Output extends FrameworkOutput<Extension> = FrameworkOutput<Extension>,
+> implements BaseFramework<Extension>
+{
   /**
    * The schema available via the provided extensions.
    *

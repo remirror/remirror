@@ -47,7 +47,7 @@ export function outerHtml(selector: string) {
  */
 function times<Type = number>(length: number, fn?: (index: number) => Type): Type[] {
   return Array.from<unknown, Type>({ length }, (_, index) =>
-    fn ? fn(index) : ((index as unknown) as Type),
+    fn ? fn(index) : (index as unknown as Type),
   );
 }
 
