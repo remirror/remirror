@@ -75,7 +75,7 @@ export class TaskListItemExtension extends NodeExtension {
    * will be toggled.
    */
   @command()
-  toggleCheckboxChecked(checked?: boolean | undefined): CommandFunction {
+  toggleCheckboxChecked(checked?: boolean): CommandFunction {
     return ({ state: { tr, selection }, dispatch }) => {
       // Make sure the list item is selected. Otherwise do nothing.
       if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {
