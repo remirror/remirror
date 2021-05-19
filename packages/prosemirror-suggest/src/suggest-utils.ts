@@ -30,9 +30,8 @@ import type {
 } from './suggest-types';
 import { ChangeReason, ExitReason } from './suggest-types';
 
-type CreateMatchWithReasonProps<
-  Schema extends EditorSchema = EditorSchema
-> = SuggestStateMatchProps<Schema> & ReasonProps;
+type CreateMatchWithReasonProps<Schema extends EditorSchema = EditorSchema> =
+  SuggestStateMatchProps<Schema> & ReasonProps;
 
 /**
  * Small utility method for creating a match with the reason property available.
@@ -152,15 +151,8 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
   props: FindMatchProps<Schema>,
 ): SuggestMatch<Schema> | undefined {
   const { $pos, suggester } = props;
-  const {
-    char,
-    name,
-    startOfLine,
-    supportedCharacters,
-    matchOffset,
-    multiline,
-    caseInsensitive,
-  } = suggester;
+  const { char, name, startOfLine, supportedCharacters, matchOffset, multiline, caseInsensitive } =
+    suggester;
 
   // Create the regular expression to match the text against
   const regexp = createRegexFromSuggester({
@@ -186,9 +178,8 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
   });
 }
 
-type RecheckMatchProps<
-  Schema extends EditorSchema = EditorSchema
-> = SuggestStateMatchProps<Schema> & EditorStateProps<Schema>;
+type RecheckMatchProps<Schema extends EditorSchema = EditorSchema> =
+  SuggestStateMatchProps<Schema> & EditorStateProps<Schema>;
 
 /**
  * Checks the provided match and generates a new match. This is useful for
@@ -300,9 +291,8 @@ function findJumpReason<Schema extends EditorSchema = EditorSchema>(
   };
 }
 
-type FindExitReasonProps<
-  Schema extends EditorSchema = EditorSchema
-> = SuggestStateMatchProps<Schema> & EditorStateProps<Schema> & ResolvedPosProps<Schema>;
+type FindExitReasonProps<Schema extends EditorSchema = EditorSchema> =
+  SuggestStateMatchProps<Schema> & EditorStateProps<Schema> & ResolvedPosProps<Schema>;
 
 /**
  * Find the reason for the exit.

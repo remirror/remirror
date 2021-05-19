@@ -43,7 +43,7 @@ export interface BaseFramework<Extension extends AnyExtension> {
 
 export interface FrameworkOptions<
   Extension extends AnyExtension,
-  Props extends FrameworkProps<Extension>
+  Props extends FrameworkProps<Extension>,
 > {
   /**
    * The initial editor state
@@ -149,7 +149,7 @@ export interface FrameworkProps<Extension extends AnyExtension> {
 }
 
 export type AddFrameworkHandler<Extension extends AnyExtension> = <
-  Key extends keyof FrameworkEvents<Extension>
+  Key extends keyof FrameworkEvents<Extension>,
 >(
   event: Key,
   cb: FrameworkEvents<Extension>[Key],

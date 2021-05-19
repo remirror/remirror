@@ -4,9 +4,7 @@ export class EventEmitter<T> {
   constructor(private readonly target: HTMLElement, private readonly eventName: string) {}
 
   emit(value: T, options?: Shape): void {
-    this.target.dispatchEvent(
-      new CustomEvent<T>(this.eventName, { detail: value, ...options }),
-    );
+    this.target.dispatchEvent(new CustomEvent<T>(this.eventName, { detail: value, ...options }));
   }
 }
 

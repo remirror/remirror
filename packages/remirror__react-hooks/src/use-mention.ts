@@ -29,7 +29,7 @@ export interface MentionState<Data extends MentionExtensionAttributes = MentionE
 }
 
 export interface UseMentionReturn<
-  Data extends MentionExtensionAttributes = MentionExtensionAttributes
+  Data extends MentionExtensionAttributes = MentionExtensionAttributes,
 > extends UseMenuNavigationReturn<Data> {
   state: MentionState<Data> | null;
 }
@@ -194,7 +194,7 @@ export function useMention<Data extends MentionExtensionAttributes = MentionExte
 }
 
 export interface UseMentionProps<
-  Data extends MentionExtensionAttributes = MentionExtensionAttributes
+  Data extends MentionExtensionAttributes = MentionExtensionAttributes,
 > extends MenuNavigationOptions {
   /**
    * The list of data from which an index can be calculated. Must include at
@@ -228,7 +228,7 @@ export interface UseMentionProps<
 }
 
 export type UseMentionExitHandler<
-  Data extends MentionExtensionAttributes = MentionExtensionAttributes
+  Data extends MentionExtensionAttributes = MentionExtensionAttributes,
 > = (props: OnExitProps<Data>, command: (attrs?: Partial<Data>) => void) => void;
 
 type OnExitProps<Data extends MentionExtensionAttributes = MentionExtensionAttributes> = Replace<

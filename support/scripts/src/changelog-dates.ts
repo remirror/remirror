@@ -25,9 +25,10 @@ async function readFile(filePath: string) {
  * @param date - the date to use
  */
 function getDate(date: Date = new Date()) {
-  return `${date.getFullYear()}-${(date.getMonth() + 1)
+  return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
+    .getDate()
     .toString()
-    .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    .padStart(2, '0')}`;
 }
 
 /**

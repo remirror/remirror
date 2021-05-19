@@ -502,7 +502,7 @@ interface ExtensionLifecycleMethods {
  * Plain extensions are a great way to add custom behavior to your editor.
  */
 export abstract class PlainExtension<
-  Options extends ValidOptions = EmptyShape
+  Options extends ValidOptions = EmptyShape,
 > extends Extension<Options> {
   /** @internal */
   static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.PlainExtensionConstructor {
@@ -526,7 +526,7 @@ export abstract class PlainExtension<
  * provide additional information about them.
  */
 export abstract class MarkExtension<
-  Options extends ValidOptions = EmptyShape
+  Options extends ValidOptions = EmptyShape,
 > extends Extension<Options> {
   /** @internal */
   static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.MarkExtensionConstructor {
@@ -592,7 +592,7 @@ export interface MarkExtension<Options extends ValidOptions = EmptyShape>
  * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
  */
 export abstract class NodeExtension<
-  Options extends ValidOptions = EmptyShape
+  Options extends ValidOptions = EmptyShape,
 > extends Extension<Options> {
   static get [__INTERNAL_REMIRROR_IDENTIFIER_KEY__](): RemirrorIdentifier.NodeExtensionConstructor {
     return RemirrorIdentifier.NodeExtensionConstructor;
@@ -771,7 +771,7 @@ export function isExtension<Type extends AnyExtension = AnyExtension>(
  * @param value - the value to test
  */
 export function isExtensionConstructor<
-  Type extends AnyExtensionConstructor = AnyExtensionConstructor
+  Type extends AnyExtensionConstructor = AnyExtensionConstructor,
 >(value: unknown): value is Type {
   return (
     isRemirrorType(value) &&

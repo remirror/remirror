@@ -73,14 +73,12 @@ async function prettifyCode({ path, source }: PrettierWorkerPayload): Promise<st
 }
 
 // Register the worker so it can resolve a value using `promise-worker`.
-registerPromiseWorker(
-  async (data: WorkerData): Promise<PrettierWorkerOutput | null> => {
-    if (data.type === 'prettier') {
-      const payload = await prettifyCode(data);
+registerPromiseWorker(async (data: WorkerData): Promise<PrettierWorkerOutput | null> => {
+  if (data.type === 'prettier') {
+    const payload = await prettifyCode(data);
 
-      return { type: 'prettier-success', code: payload };
-    }
+    return { type: 'prettier-success', code: payload };
+  }
 
-    return null;
-  },
-);
+  return null;
+});

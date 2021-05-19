@@ -236,10 +236,10 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     (item: Item) => selectedItems.map(getItemId).includes(getItemId(item)),
     [getItemId, selectedItems],
   );
-  const indexOfItem = useCallback((item: Item) => items.map(getItemId).indexOf(getItemId(item)), [
-    getItemId,
-    items,
-  ]);
+  const indexOfItem = useCallback(
+    (item: Item) => items.map(getItemId).indexOf(getItemId(item)),
+    [getItemId, items],
+  );
 
   const getComboBoxProps = useCallback(
     <Element extends HTMLElement = any, RefKey extends string = 'ref'>(

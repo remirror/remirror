@@ -38,7 +38,7 @@ const trailingNodePluginKey = new PluginKey<boolean>('trailingNode');
  * @param options - the options that can be provided to this plugin.
  */
 export function trailingNode<
-  Schema extends EditorSchema<string, string> = EditorSchema<string, string>
+  Schema extends EditorSchema<string, string> = EditorSchema<string, string>,
 >(options?: TrailingNodePluginOptions): Plugin<boolean, Schema> {
   const { ignoredNodes = [], nodeName = 'paragraph' } = options ?? {};
 

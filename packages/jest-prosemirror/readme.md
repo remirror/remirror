@@ -152,7 +152,10 @@ test('`keyBindings`', () => {
     name: 'at',
     keyBindings,
     matchOffset: 0,
-    createCommand: ({ view }) => () => view.dispatch(view.state.tr.insertText('awesome')),
+    createCommand:
+      ({ view }) =>
+      () =>
+        view.dispatch(view.state.tr.insertText('awesome')),
   });
 
   createEditor(doc(p('<cursor>')), { plugins: [plugin] })

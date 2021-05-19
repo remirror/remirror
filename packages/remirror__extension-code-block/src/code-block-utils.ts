@@ -181,29 +181,27 @@ export function isValidCodeBlockAttributes(
  * This is used to update the language for the codeBlock.
  */
 export function updateNodeAttributes(type: NodeType) {
-  return (attributes: CodeBlockAttributes): CommandFunction => ({
-    state: { tr, selection },
-    dispatch,
-  }) => {
-    if (!isValidCodeBlockAttributes(attributes)) {
-      throw new Error('Invalid attrs passed to the updateAttributes method');
-    }
+  return (attributes: CodeBlockAttributes): CommandFunction =>
+    ({ state: { tr, selection }, dispatch }) => {
+      if (!isValidCodeBlockAttributes(attributes)) {
+        throw new Error('Invalid attrs passed to the updateAttributes method');
+      }
 
-    const parent = findParentNodeOfType({ types: type, selection });
+      const parent = findParentNodeOfType({ types: type, selection });
 
-    if (!parent || isEqual(attributes, parent.node.attrs)) {
-      // Do nothing since the attrs are the same
-      return false;
-    }
+      if (!parent || isEqual(attributes, parent.node.attrs)) {
+        // Do nothing since the attrs are the same
+        return false;
+      }
 
-    tr.setNodeMarkup(parent.pos, type, { ...parent.node.attrs, ...attributes });
+      tr.setNodeMarkup(parent.pos, type, { ...parent.node.attrs, ...attributes });
 
-    if (dispatch) {
-      dispatch(tr);
-    }
+      if (dispatch) {
+        dispatch(tr);
+      }
 
-    return true;
-  };
+      return true;
+    };
 }
 
 interface GetLanguageProps {
@@ -269,64 +267,65 @@ interface FormatCodeBlockFactoryProps
  * one located at the provided position).
  */
 export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
-  return ({ pos }: Partial<PosProps> = object()): CommandFunction => ({ tr, dispatch }) => {
-    const { type, formatter, defaultLanguage: fallback } = props;
+  return ({ pos }: Partial<PosProps> = object()): CommandFunction =>
+    ({ tr, dispatch }) => {
+      const { type, formatter, defaultLanguage: fallback } = props;
 
-    const { from, to } = pos ? { from: pos, to: pos } : tr.selection;
+      const { from, to } = pos ? { from: pos, to: pos } : tr.selection;
 
-    // Find the current codeBlock the cursor is positioned in.
-    const codeBlock = findParentNodeOfType({ types: type, selection: tr.selection });
+      // Find the current codeBlock the cursor is positioned in.
+      const codeBlock = findParentNodeOfType({ types: type, selection: tr.selection });
 
-    if (!codeBlock) {
-      return false;
-    }
+      if (!codeBlock) {
+        return false;
+      }
 
-    // Get the `language`, `source` and `cursorOffset` for the block and run the
-    // formatter
-    const {
-      node: { attrs, textContent },
-      start,
-    } = codeBlock;
+      // Get the `language`, `source` and `cursorOffset` for the block and run the
+      // formatter
+      const {
+        node: { attrs, textContent },
+        start,
+      } = codeBlock;
 
-    const offsetStart = from - start;
-    const offsetEnd = to - start;
-    const language = getLanguage({ language: attrs.language, fallback });
-    const formatStart = formatter({ source: textContent, language, cursorOffset: offsetStart });
-    let formatEnd: FormattedContent | undefined;
+      const offsetStart = from - start;
+      const offsetEnd = to - start;
+      const language = getLanguage({ language: attrs.language, fallback });
+      const formatStart = formatter({ source: textContent, language, cursorOffset: offsetStart });
+      let formatEnd: FormattedContent | undefined;
 
-    // When the user has a selection
-    if (offsetStart !== offsetEnd) {
-      formatEnd = formatter({ source: textContent, language, cursorOffset: offsetEnd });
-    }
+      // When the user has a selection
+      if (offsetStart !== offsetEnd) {
+        formatEnd = formatter({ source: textContent, language, cursorOffset: offsetEnd });
+      }
 
-    if (!formatStart) {
-      return false;
-    }
+      if (!formatStart) {
+        return false;
+      }
 
-    const { cursorOffset, formatted } = formatStart;
+      const { cursorOffset, formatted } = formatStart;
 
-    // Do nothing if nothing has changed
-    if (formatted === textContent) {
-      return false;
-    }
+      // Do nothing if nothing has changed
+      if (formatted === textContent) {
+        return false;
+      }
 
-    const end = start + textContent.length;
+      const end = start + textContent.length;
 
-    // Replace the codeBlock content with the transformed text.
-    tr.insertText(formatted, start, end);
+      // Replace the codeBlock content with the transformed text.
+      tr.insertText(formatted, start, end);
 
-    // Set the new selection
-    const anchor = start + cursorOffset;
-    const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
+      // Set the new selection
+      const anchor = start + cursorOffset;
+      const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
 
-    tr.setSelection(TextSelection.create(tr.doc, anchor, head));
+      tr.setSelection(TextSelection.create(tr.doc, anchor, head));
 
-    if (dispatch) {
-      dispatch(tr);
-    }
+      if (dispatch) {
+        dispatch(tr);
+      }
 
-    return true;
-  };
+      return true;
+    };
 }
 
 /**

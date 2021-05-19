@@ -265,16 +265,8 @@ function useFloatingLinkState() {
 }
 
 const FloatingLinkToolbar = () => {
-  const {
-    isEditing,
-    linkPositioner,
-    clickEdit,
-    onRemove,
-    submitHref,
-    href,
-    setHref,
-    cancelHref,
-  } = useFloatingLinkState();
+  const { isEditing, linkPositioner, clickEdit, onRemove, submitHref, href, setHref, cancelHref } =
+    useFloatingLinkState();
   const active = useActive();
   const activeLink = active.link();
   const { empty } = useCurrentSelection();
@@ -294,9 +286,10 @@ const FloatingLinkToolbar = () => {
     [clickEdit, onRemove, activeLink],
   );
 
-  const items: ToolbarItemUnion[] = useMemo(() => [...floatingToolbarItems, ...linkEditItems], [
-    linkEditItems,
-  ]);
+  const items: ToolbarItemUnion[] = useMemo(
+    () => [...floatingToolbarItems, ...linkEditItems],
+    [linkEditItems],
+  );
   const mentionAtomPopup = useMentionAtomPopupState();
 
   return (

@@ -818,7 +818,8 @@ function parseFileForModuleReferences(sourceCode: string): string[] {
 
   // Regex used to test for `imports` module reference -
   // https://regex101.com/r/hdEpzO/4
-  const es6Pattern = /(import|export)((?!from)(?!require)(.|\n))*?(from|require\()\s?('|")(.*)('|")\)?;?$/gm;
+  const es6Pattern =
+    /(import|export)((?!from)(?!require)(.|\n))*?(from|require\()\s?('|")(.*)('|")\)?;?$/gm;
 
   // Regex used to test for only es6 imports - https://regex101.com/r/hdEpzO/6
   const es6ImportOnly = /import\s?('|")(.*)('|")\)?;?/gm;
@@ -891,16 +892,21 @@ async function main() {
   });
 
   // Generate the code from the importGroups.
-  const { exports, dtsJson: json, modules, meta, playground, reactPlayground } = await generateCode(
-    {
-      pm,
-      extensions,
-      presets,
-      core,
-      react,
-      unscoped,
-    },
-  );
+  const {
+    exports,
+    dtsJson: json,
+    modules,
+    meta,
+    playground,
+    reactPlayground,
+  } = await generateCode({
+    pm,
+    extensions,
+    presets,
+    core,
+    react,
+    unscoped,
+  });
 
   // Write the files to the intended location.
   await formatAndWriteFiles([

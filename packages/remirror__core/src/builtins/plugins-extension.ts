@@ -221,11 +221,11 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
     }
   }
 
-  private readonly getPluginStateCreator = (key: PluginKey) => <State>(
-    state?: EditorState,
-  ): State => {
-    return key.getState(state ?? this.store.getState());
-  };
+  private readonly getPluginStateCreator =
+    (key: PluginKey) =>
+    <State>(state?: EditorState): State => {
+      return key.getState(state ?? this.store.getState());
+    };
 
   /**
    * Add or replace a plugin.

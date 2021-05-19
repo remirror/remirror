@@ -278,7 +278,7 @@ function updateExtensionDuplicates<Extension extends AnyExtension>(
  */
 export interface ExtensionTransformation<
   Extension extends AnyExtension,
-  Expanded extends AnyExtension = GetExtensions<Extension>
+  Expanded extends AnyExtension = GetExtensions<Extension>,
 > {
   /**
    * The list of extensions sorted by priority and original extension. Every

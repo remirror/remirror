@@ -141,8 +141,11 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
     // invariant(!this.rootPropsConfig.called, { code: ErrorConstant.REACT_GET_ROOT_PROPS });
     this.rootPropsConfig.called = true;
 
-    const { refKey: refKey = 'ref', ref, ...config } =
-      options ?? object<GetRootPropsConfig<RefKey>>();
+    const {
+      refKey: refKey = 'ref',
+      ref,
+      ...config
+    } = options ?? object<GetRootPropsConfig<RefKey>>();
 
     return {
       [refKey]: composeRefs(ref as Ref<HTMLElement>, this.onRef),

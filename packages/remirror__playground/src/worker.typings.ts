@@ -210,18 +210,15 @@ function fetchFromTypings(dependency: string, version: string, fetchedPaths: Fet
         fetchedPaths[`node_modules/${dependency}/package.json`] = JSON.stringify(packageJSON);
 
         // Get all files in the specified directory
-        return getFileMetaData(
-          dependency,
-          version,
-          path.join('/', path.dirname(types)),
-        ).then((fileMetaData: FileMetadata) =>
-          getFileTypes(
-            depUrl,
-            dependency,
-            resolveAppropriateFile(fileMetaData, types),
-            fetchedPaths,
-            fileMetaData,
-          ),
+        return getFileMetaData(dependency, version, path.join('/', path.dirname(types))).then(
+          (fileMetaData: FileMetadata) =>
+            getFileTypes(
+              depUrl,
+              dependency,
+              resolveAppropriateFile(fileMetaData, types),
+              fetchedPaths,
+              fileMetaData,
+            ),
         );
       }
 
@@ -298,20 +295,18 @@ async function fetchDefinitions(payload: TypingsWorkerPayload) {
   throw new Error(`Type definitions are empty for ${key}`);
 }
 
-registerPromiseWorker(
-  async (data: WorkerData): Promise<TypingsWorkerOutput | null> => {
-    if (data.type === 'typings') {
-      const payload = await fetchDefinitions(data);
+registerPromiseWorker(async (data: WorkerData): Promise<TypingsWorkerOutput | null> => {
+  if (data.type === 'typings') {
+    const payload = await fetchDefinitions(data);
 
-      return { type: 'typings-success', typings: payload };
-    }
+    return { type: 'typings-success', typings: payload };
+  }
 
-    if (data.type === 'typings-init') {
-      const payload = await initDefinitions();
+  if (data.type === 'typings-init') {
+    const payload = await initDefinitions();
 
-      return { type: 'typings-success', typings: payload };
-    }
+    return { type: 'typings-success', typings: payload };
+  }
 
-    return null;
-  },
-);
+  return null;
+});
