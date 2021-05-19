@@ -42,7 +42,6 @@ export class TaskListItemExtension extends NodeExtension {
       parseDOM: [{ tag: 'li', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM: (node) => {
         const attrs = extra.dom(node);
-        attrs.class = cx(attrs.class);
         return ['li', attrs, 0];
       },
     };
