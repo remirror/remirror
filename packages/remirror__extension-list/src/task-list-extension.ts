@@ -112,7 +112,6 @@ export class TaskListExtension extends NodeExtension {
         type: this.type,
         getAttributes: (match) => ({
           checked: ['x', 'X'].includes(getMatchString(match, 2)),
-          hasCheckbox: true,
         }),
         beforeDispatch: ({ tr, start }) => {
           const $listItemPos = tr.doc.resolve(start + 1);
