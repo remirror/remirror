@@ -84,8 +84,8 @@ export class TaskListItemExtension extends NodeExtension {
       }
 
       const { node, from } = selection;
-      checked = isBoolean(checked) ? checked : !node.attrs.checked;
-      dispatch?.(tr.setNodeMarkup(from, undefined, { ...node.attrs, checked }));
+      const attrs = { ...node.attrs, checked: checked ?? !node.attrs.checked };
+      dispatch?.(tr.setNodeMarkup(from, undefined, attrs));
 
       return true;
     };
