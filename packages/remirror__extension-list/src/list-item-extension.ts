@@ -3,7 +3,6 @@ import {
   command,
   CommandFunction,
   convertCommand,
-  cx,
   extension,
   ExtensionTag,
   isBoolean,
