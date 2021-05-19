@@ -15,7 +15,7 @@ import {
 import { NodeSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
-import { createCsutomMarkListItemNodeView } from './list-item-node-view';
+import { createCustomMarkListItemNodeView } from './list-item-node-view';
 
 /**
  * Creates the node for a list item.
@@ -62,7 +62,7 @@ export class TaskListItemExtension extends NodeExtension {
         return true;
       });
 
-      return createCsutomMarkListItemNodeView(node, checkbox);
+      return createCustomMarkListItemNodeView(node, checkbox);
     };
   }
 

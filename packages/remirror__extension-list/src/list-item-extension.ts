@@ -21,7 +21,7 @@ import { NodeSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
-import { createCsutomMarkListItemNodeView } from './list-item-node-view';
+import { createCustomMarkListItemNodeView } from './list-item-node-view';
 
 /**
  * Creates the node for a list item.
@@ -80,7 +80,7 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
         });
       }
 
-      return createCsutomMarkListItemNodeView(node, mark);
+      return createCustomMarkListItemNodeView(node, mark);
     };
   }
 

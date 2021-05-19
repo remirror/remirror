@@ -2,7 +2,7 @@ import { ProsemirrorNode } from '@remirror/pm';
 import type { NodeView } from '@remirror/pm/view';
 import { ExtensionListTheme } from '@remirror/theme';
 
-export function createCsutomMarkListItemNodeView(
+export function createCustomMarkListItemNodeView(
   node: ProsemirrorNode,
   mark: HTMLElement,
 ): NodeView {
