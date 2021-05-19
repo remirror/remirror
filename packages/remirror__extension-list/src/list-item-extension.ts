@@ -74,7 +74,8 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       } else {
         mark.addEventListener('click', () => {
           const pos = (getPos as () => number)();
-          view.dispatch?.(view.state.tr.setSelection(NodeSelection.create(view.state.doc, pos)));
+          const selection = NodeSelection.create(view.state.doc, pos);
+          view.dispatch(view.state.tr.setSelection(selection));
           this.store.commands.toggleListItemClosed();
           return true;
         });

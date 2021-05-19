@@ -66,9 +66,8 @@ export class TaskListExtension extends NodeExtension {
         spine.classList.add(ExtensionListTheme.LIST_SPINE);
 
         spine.addEventListener('click', (event) => {
-          view.dispatch?.(
-            view.state.tr.setSelection(NodeSelection.create(view.state.doc, parentListItemPos - 1)),
-          );
+          const selection = NodeSelection.create(view.state.doc, parentListItemPos - 1);
+          view.dispatch(view.state.tr.setSelection(selection));
           this.store.commands.toggleListItemClosed();
 
           event.preventDefault();
