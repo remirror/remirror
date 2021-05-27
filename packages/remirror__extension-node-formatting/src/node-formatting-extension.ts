@@ -111,7 +111,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
   @command()
   setIndent(level: number | '+1' | '-1'): CommandFunction {
     return this.setNodeAttribute(({ node }) => {
-      const currentIndent: number = node.attrs.indent ?? 0;
+      const currentIndent: number = node.attrs.nodeIndent ?? 0;
       const value = level === '-1' ? currentIndent - 1 : level === '+1' ? currentIndent + 1 : level;
       const indent = clamp({ min: 0, max: this.options.indents.length - 1, value });
 
