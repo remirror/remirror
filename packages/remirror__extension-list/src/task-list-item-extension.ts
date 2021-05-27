@@ -37,10 +37,12 @@ export class TaskListItemExtension extends NodeExtension {
         ...extra.defaults(),
         checked: { default: false },
       },
-      parseDOM: [{ tag: 'li', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
+      parseDOM: [
+        { tag: 'li[data-task-list-item]', getAttrs: extra.parse },
+        ...(override.parseDOM ?? []),
+      ],
       toDOM: (node) => {
-        const attrs = extra.dom(node);
-        return ['li', attrs, 0];
+        return ['li', { ...extra.dom(node), 'data-task-list-item': '' }, 0];
       },
     };
   }

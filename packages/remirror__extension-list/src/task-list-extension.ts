@@ -3,6 +3,7 @@ import {
   assertGet,
   command,
   CommandFunction,
+  extension,
   ExtensionPriority,
   ExtensionTag,
   getMatchString,
@@ -27,6 +28,9 @@ import { TaskListItemExtension } from './task-list-item-extension';
 /**
  * Create the node for a task list.
  */
+@extension<object>({
+  defaultOptions: { priority: ExtensionPriority.Medium },
+})
 export class TaskListExtension extends NodeExtension {
   get name() {
     return 'taskList' as const;
@@ -91,7 +95,14 @@ export class TaskListExtension extends NodeExtension {
   }
 
   createExtensions() {
-    return [new TaskListItemExtension({ priority: ExtensionPriority.Low })];
+    return [
+      new TaskListItemExtension({
+        // The priority is `Medium` instead of `Low` because we want `TaskListItemExtension` has
+        // higher priority than `ListItemExtension` so that `TaskListItemExtension#parseDOM` will
+        // be called firstly.
+        priority: ExtensionPriority.Medium,
+      }),
+    ];
   }
 
   /**

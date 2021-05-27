@@ -1,19 +1,13 @@
 import { renderEditor } from 'jest-remirror';
-import {
-  BulletListExtension,
-  ListItemExtension,
-  OrderedListExtension,
-  TaskListExtension,
-  TaskListItemExtension,
-} from 'remirror/extensions';
-import { ExtensionPriority, htmlToProsemirrorNode } from '@remirror/core';
+import { BulletListExtension, OrderedListExtension, TaskListExtension } from 'remirror/extensions';
+import { htmlToProsemirrorNode } from '@remirror/core';
 
 describe('schema', () => {
   it('parses the dom structure and finds itself', () => {
     const editor = renderEditor([
       new BulletListExtension(),
       new OrderedListExtension(),
-      new TaskListExtension({ priority: ExtensionPriority.High }),
+      new TaskListExtension(),
     ]);
 
     const {
@@ -51,7 +45,7 @@ describe('schema', () => {
 
     expect(
       htmlToProsemirrorNode({
-        content: `<ul data-task-list><li>one</li><li>two</li></ul>`,
+        content: `<ul data-task-list><li data-task-list-item>one</li><li data-task-list-item>two</li></ul>`,
         schema,
       }),
     ).toEqualProsemirrorNode(
