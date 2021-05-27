@@ -11,7 +11,8 @@ describe('schema', () => {
     ]);
 
     const {
-      nodes: { doc, p, bulletList, orderedList, listItem, taskList, taskListItem },
+      nodes: { doc, p, bulletList, orderedList, listItem, taskList },
+      attributeNodes: { taskListItem },
       schema,
     } = editor;
 
@@ -51,8 +52,8 @@ describe('schema', () => {
     ).toEqualProsemirrorNode(
       doc(
         taskList(
-          taskListItem(p('one')), //
-          taskListItem(p('two')),
+          taskListItem({ checked: false })(p('one')),
+          taskListItem({ checked: false })(p('two')),
         ),
       ),
     );
