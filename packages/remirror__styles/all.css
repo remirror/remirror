@@ -687,6 +687,10 @@ button:active .remirror-menu-pane-shortcut,
   background: #effaf3;
   border-left-color: #48c774;
 }
+.remirror-editor div[data-callout-type='blank'] {
+  background: #f9f9fa;
+  border-left-color: #b1b1af;
+}
 
 /**
  * Styles extracted from: packages/remirror__theme/src/extension-code-block-theme.ts

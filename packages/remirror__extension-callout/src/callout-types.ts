@@ -16,16 +16,16 @@ export interface CalloutOptions {
   /**
    * The valid types for the callout node.
    *
-   * @default ['info', 'warning' , 'error' , 'success']
+   * @default ['info', 'warning' , 'error' , 'success', 'blank']
    */
   validTypes?: Static<string[]>;
 }
 
 export interface CalloutAttributes extends ProsemirrorAttributes {
   /**
-   * The type of callout, for instance `info`, `warning`, `error` or `success`.
+   * The type of callout, for instance `info`, `warning`, `error`, `success` or `blank`.
    *
    * @default 'info'
    */
-  type?: LiteralUnion<'info' | 'warning' | 'error' | 'success', string>;
+  type?: LiteralUnion<'info' | 'warning' | 'error' | 'success' | 'blank', string>;
 }

@@ -702,6 +702,10 @@ export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
     background: #effaf3;
     border-left-color: #48c774;
   }
+  .remirror-editor div[data-callout-type='blank'] {
+    background: #f9f9fa;
+    border-left-color: #b1b1af;
+  }
 `;
 
 export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`

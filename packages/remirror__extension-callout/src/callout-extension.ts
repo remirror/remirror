@@ -35,7 +35,7 @@ import {
 @extension<CalloutOptions>({
   defaultOptions: {
     defaultType: 'info',
-    validTypes: ['info', 'warning', 'error', 'success'],
+    validTypes: ['info', 'warning', 'error', 'success', 'blank'],
   },
   staticKeys: ['defaultType', 'validTypes'],
 })

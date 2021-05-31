@@ -3,6 +3,7 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { CalloutExtension } from 'remirror/extensions';
 import { htmlToProsemirrorNode } from '@remirror/core';
+import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 export default { title: 'Callouts' };
@@ -16,13 +17,17 @@ export const Basic: React.FC = () => {
       '<div data-callout-type="info"><p>Info callout</p></div><p />' +
       '<div data-callout-type="warning"><p>Warning callout</p></div><p />' +
       '<div data-callout-type="error"><p>Error callout</p></div><p />' +
-      '<div data-callout-type="success"><p>Success callout</p></div>',
+      '<div data-callout-type="success"><p>Success callout</p></div>' +
+      '<div data-callout-type="blank"><p>Blank callout</p></div>',
+
     stringHandler: htmlToProsemirrorNode,
   });
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end' />
+      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
+        <ProsemirrorDevTools />
+      </Remirror>
     </ThemeProvider>
   );
 };

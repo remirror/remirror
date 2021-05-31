@@ -32,4 +32,9 @@ export const EDITOR = css`
     background: #effaf3;
     border-left-color: #48c774;
   }
+
+  div[data-callout-type='blank'] {
+    background: #f9f9fa;
+    border-left-color: #b1b1af;
+  }
 ` as 'remirror-editor';
