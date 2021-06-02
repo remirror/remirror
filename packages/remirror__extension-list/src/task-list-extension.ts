@@ -99,7 +99,7 @@ export class TaskListExtension extends NodeExtension {
       new TaskListItemExtension({
         // The priority is `Medium` instead of `Default` because we want `TaskListItemExtension` to have a
         // higher priority than `ListItemExtension` so that `TaskListItemExtension#parseDOM` will
-        // be called firstly.
+        // be called first.
         priority: ExtensionPriority.Medium,
       }),
     ];
