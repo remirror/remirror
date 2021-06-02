@@ -97,7 +97,7 @@ export class TaskListExtension extends NodeExtension {
   createExtensions() {
     return [
       new TaskListItemExtension({
-        // The priority is `Medium` instead of `Low` because we want `TaskListItemExtension` has
+        // The priority is `Medium` instead of `Default` because we want `TaskListItemExtension` to have a
         // higher priority than `ListItemExtension` so that `TaskListItemExtension#parseDOM` will
         // be called firstly.
         priority: ExtensionPriority.Medium,
