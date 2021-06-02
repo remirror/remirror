@@ -16,7 +16,7 @@ import { ExtensionListTheme } from '@remirror/theme';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
 
 /**
- * Creates the node for a list item.
+ * Creates the node for a task list item.
  */
 export class TaskListItemExtension extends NodeExtension {
   get name() {
