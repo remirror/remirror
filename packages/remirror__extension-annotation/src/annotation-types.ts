@@ -3,6 +3,17 @@ import type { AcceptUndefined } from '@remirror/core';
 export type GetStyle<Type extends Annotation> = (
   annotations: Array<OmitText<Type>>,
 ) => string | undefined;
+
+export interface MapLike<K extends string, V> {
+  clear?: () => void;
+  delete: (key: K) => any;
+  forEach: (callbackfn: (value: V, key: K, map: MapLike<K, V>) => void, thisArg?: any) => void;
+  get: (key: K) => V | undefined;
+  has: (key: K) => boolean;
+  set: (key: K, value: V) => any;
+  readonly size: number;
+}
+
 export interface AnnotationOptions<Type extends Annotation = Annotation> {
   /**
    * Method to calculate styles for a segment with one or more annotations
@@ -23,6 +34,12 @@ export interface AnnotationOptions<Type extends Annotation = Annotation> {
    * @see ProsemirrorNode.textBetween
    */
   blockSeparator?: AcceptUndefined<string>;
+
+  getMap?: () => MapLike<string, OmitText<Type>>;
+
+  transformPosition?: (pos: number) => number;
+
+  transformPositionBeforeRender?: (pos: number) => number | null;
 }
 
 export interface Annotation {
