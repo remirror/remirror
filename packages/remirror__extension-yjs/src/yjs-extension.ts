@@ -1,9 +1,12 @@
 import {
+  absolutePositionToRelativePosition,
   defaultCursorBuilder,
   redo,
+  relativePositionToAbsolutePosition,
   undo,
   yCursorPlugin,
   ySyncPlugin,
+  ySyncPluginKey,
   yUndoPlugin,
   yUndoPluginKey,
 } from 'y-prosemirror';
@@ -30,6 +33,7 @@ import {
   Selection,
   Shape,
 } from '@remirror/core';
+import { AnnotationExtension } from '@remirror/extension-annotation';
 import { ExtensionHistoryMessages as Messages } from '@remirror/messages';
 
 export interface ColorDef {
@@ -140,6 +144,21 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     const { getProvider } = this.options;
 
     return (this._provider ??= getLazyValue(getProvider));
+  }
+
+  onView(): void {
+    try {
+      this.store.manager.getExtension(AnnotationExtension).setOptions({
+        getMap: () => this.provider.doc.getMap('annotations'),
+        transformPosition: this.transformPosition.bind(this),
+        transformPositionBeforeRender: this.transformPositionBeforeRender.bind(this),
+      });
+      this.provider.doc.on('update', () => {
+        this.store.commands.redrawAnnotations?.();
+      });
+    } catch {
+      // AnnotationExtension isn't present in editor
+    }
   }
 
   /**
@@ -287,6 +306,18 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   @keyBinding({ shortcut: NamedShortcut.Redo, command: 'yRedo' })
   redoShortcut(props: KeyBindingProps): boolean {
     return this.yRedo()(props);
+  }
+
+  private transformPosition(pos: number): number {
+    const state = this.store.getState();
+    const { type, binding } = ySyncPluginKey.getState(state);
+    return absolutePositionToRelativePosition(pos, type, binding.mapping);
+  }
+
+  private transformPositionBeforeRender(pos: number): number | null {
+    const state = this.store.getState();
+    const { type, binding } = ySyncPluginKey.getState(state);
+    return relativePositionToAbsolutePosition(this.provider.doc, type, pos, binding.mapping);
   }
 }
 
