@@ -43,9 +43,6 @@ function monacoEditorPlugin(_context, _options) {
       }
 
       return {
-        node: {
-          fs: 'empty',
-        },
         externals: { jsdom: 'commonjs jsdom', domino: 'commonjs domino' },
         module: {
           rules: [
@@ -55,11 +52,14 @@ function monacoEditorPlugin(_context, _options) {
             { test: /\.css$/, use: [require.resolve('css-loader')], include: [] },
           ],
         },
-        // resolve: {
-        //   alias: {
-        //     '@linaria/core': '@emotion/css',
-        //   },
-        // },
+        resolve: {
+          // alias: {
+          //   '@linaria/core': '@emotion/css',
+          // },
+          fallback: {
+            fs: false,
+          },
+        },
         plugins: [
           new MonacoEditorWebpackPlugin({ languages: ['typescript', 'javascript'] }),
           new WorkerPlugin(),
