@@ -2,10 +2,15 @@ import { ProsemirrorNode } from '@remirror/pm';
 import type { NodeView } from '@remirror/pm/view';
 import { ExtensionListTheme } from '@remirror/theme';
 
-export function createCustomMarkListItemNodeView(
-  node: ProsemirrorNode,
-  mark: HTMLElement,
-): NodeView {
+export function createCustomMarkListItemNodeView({
+  node,
+  mark,
+  extraAttrs,
+}: {
+  node: ProsemirrorNode;
+  mark: HTMLElement;
+  extraAttrs?: Record<string, string>;
+}): NodeView {
   const dom = document.createElement('li');
   dom.classList.add(ExtensionListTheme.LIST_ITEM_WITH_CUSTOM_MARKER);
 
@@ -29,6 +34,12 @@ export function createCustomMarkListItemNodeView(
   const update = (): boolean => {
     return false;
   };
+
+  if (extraAttrs) {
+    for (const [key, value] of Object.entries(extraAttrs)) {
+      dom.setAttribute(key, value);
+    }
+  }
 
   return { dom, contentDOM, update };
 }

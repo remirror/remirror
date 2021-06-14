@@ -79,7 +79,7 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
         });
       }
 
-      return createCustomMarkListItemNodeView(node, mark);
+      return createCustomMarkListItemNodeView({ node, mark });
     };
   }
 
