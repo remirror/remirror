@@ -9,7 +9,13 @@ import {
   UpdateAnnotationAction,
 } from './annotation-actions';
 import { toSegments } from './annotation-segments';
-import type { Annotation, GetStyle, MapLike, OmitText } from './annotation-types';
+import type {
+  Annotation,
+  GetStyle,
+  MapLike,
+  OmitText,
+  TransformedAnnotation,
+} from './annotation-types';
 
 interface ApplyProps extends TransactionProps {
   action: any;
@@ -26,9 +32,9 @@ export class AnnotationState<Type extends Annotation = Annotation> {
 
   constructor(
     private readonly getStyle: GetStyle<Type>,
-    private readonly map: MapLike<string, OmitText<Type>>,
-    private readonly transformPosition: (pos: number) => number,
-    private readonly transformPositionBeforeRender: (pos: number) => number | null,
+    private readonly map: MapLike<string, TransformedAnnotation<Type>>,
+    private readonly transformPosition: (pos: number) => any,
+    private readonly transformPositionBeforeRender: (rpos: any) => number | null,
   ) {}
 
   addAnnotation(addAction: AddAnnotationAction<Type>): void {
@@ -37,7 +43,7 @@ export class AnnotationState<Type extends Annotation = Annotation> {
       ...addAction.annotationData,
       from: this.transformPosition(addAction.from),
       to: this.transformPosition(addAction.to),
-    } as OmitText<Type>);
+    } as TransformedAnnotation<Type>);
   }
 
   updateAnnotation(updateAction: UpdateAnnotationAction<Type>): void {
@@ -46,7 +52,7 @@ export class AnnotationState<Type extends Annotation = Annotation> {
     this.map.set(updateAction.annotationId, {
       ...this.map.get(updateAction.annotationId),
       ...updateAction.annotationData,
-    } as OmitText<Type>);
+    } as TransformedAnnotation<Type>);
   }
 
   removeAnnotations(removeAction: RemoveAnnotationsAction): void {
@@ -69,7 +75,7 @@ export class AnnotationState<Type extends Annotation = Annotation> {
         ...annotation,
         from: this.transformPosition(from),
         to: this.transformPosition(to),
-      } as OmitText<Type>);
+      } as TransformedAnnotation<Type>);
     });
   }
 

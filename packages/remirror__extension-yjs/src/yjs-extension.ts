@@ -10,7 +10,7 @@ import {
   yUndoPlugin,
   yUndoPluginKey,
 } from 'y-prosemirror';
-import type { Doc, UndoManager } from 'yjs';
+import type { Doc, RelativePosition, UndoManager } from 'yjs';
 import {
   AcceptUndefined,
   command,
@@ -150,8 +150,8 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     try {
       this.store.manager.getExtension(AnnotationExtension).setOptions({
         getMap: () => this.provider.doc.getMap('annotations'),
-        transformPosition: this.transformPosition.bind(this),
-        transformPositionBeforeRender: this.transformPositionBeforeRender.bind(this),
+        transformPosition: this.absolutePositionToRelativePosition.bind(this),
+        transformPositionBeforeRender: this.relativePositionToAbsolutePosition.bind(this),
       });
       this.provider.doc.on('update', () => {
         this.store.commands.redrawAnnotations?.();
@@ -308,16 +308,16 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     return this.yRedo()(props);
   }
 
-  private transformPosition(pos: number): number {
+  private absolutePositionToRelativePosition(pos: number): RelativePosition {
     const state = this.store.getState();
     const { type, binding } = ySyncPluginKey.getState(state);
     return absolutePositionToRelativePosition(pos, type, binding.mapping);
   }
 
-  private transformPositionBeforeRender(pos: number): number | null {
+  private relativePositionToAbsolutePosition(relPos: RelativePosition): number | null {
     const state = this.store.getState();
     const { type, binding } = ySyncPluginKey.getState(state);
-    return relativePositionToAbsolutePosition(this.provider.doc, type, pos, binding.mapping);
+    return relativePositionToAbsolutePosition(this.provider.doc, type, relPos, binding.mapping);
   }
 }
 
