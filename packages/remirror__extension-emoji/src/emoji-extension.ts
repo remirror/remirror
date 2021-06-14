@@ -97,7 +97,6 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
       toDOM: (node) => {
         const { code } = omitExtraAttributes(node.attrs, extra) as EmojiAttributes;
         const emoji = this.moji.find(code) ?? this.moji.fallback;
-
         return [
           'span',
           {
@@ -220,6 +219,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
     return (props) => {
       const { dispatch, tr } = props;
       const emoji = this.moji.find(identifier);
+      console.log(this.moji);
 
       if (!emoji) {
         // Nothing to do here since no emoji found.
@@ -292,10 +292,45 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
   }
 }
 
+export class EmojiBlockExtension extends NodeExtension {
+  get name() {
+    return 'emojiBlock' as const;
+  }
+
+  createTags() {
+    return [ExtensionTag.Block];
+  }
+
+  createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    return {
+      content: 'emoji?',
+      draggable: false,
+      ...override,
+      attrs: {
+        ...extra.defaults(),
+      },
+      parseDOM: [
+        {
+          tag: `div`,
+          getAttrs: (node) => {
+            return { ...extra.parse(node) };
+          },
+        },
+        ...(override.parseDOM ?? []),
+      ],
+
+      toDOM: () => {
+        return ['div', { class: 'emoji-block-wrapper' }, 0];
+      },
+    };
+  }
+}
+
 declare global {
   namespace Remirror {
     interface AllExtensions {
       emoji: EmojiExtension;
+      emojiBlock: EmojiBlockExtension;
     }
   }
 }

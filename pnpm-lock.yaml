@@ -1075,12 +1075,20 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': 1.0.0-next.60
+      '@remirror/extension-emoji': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
+      '@remirror/theme': 1.0.0-next.60
+      '@svgmoji/noto': ^3.1.0
+      svgmoji: ^3.1.0
     dependencies:
       '@babel/runtime': 7.14.0
       '@remirror/core': link:../remirror__core
+      '@remirror/extension-emoji': link:../remirror__extension-emoji
       '@remirror/messages': link:../remirror__messages
+      '@remirror/theme': link:../remirror__theme
+      '@svgmoji/noto': 3.1.0
+      svgmoji: 3.1.0
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 

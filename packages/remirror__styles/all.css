@@ -666,26 +666,17 @@ button:active .remirror-menu-pane-shortcut,
  * Styles extracted from: packages/remirror__theme/src/extension-callout-theme.ts
  */
 .remirror-editor div[data-callout-type] {
-  border-left: 2px solid transparent;
   margin-left: 0;
   margin-right: 0;
-  padding-left: 10px;
+  padding: 16px 16px 16px 12px;
+  background-color: #f9f9fa;
 }
-.remirror-editor div[data-callout-type='info'] {
-  background: #eef6fc;
-  border-left-color: #3298dc;
+
+.remirror-editor div[data-callout-type] > *:not(.emoji-block-wrapper) {
+  margin-left: 30px;
 }
-.remirror-editor div[data-callout-type='warning'] {
-  background: #fffbeb;
-  border-left-color: #ffdd57;
-}
-.remirror-editor div[data-callout-type='error'] {
-  background: #feecf0;
-  border-left-color: #f14668;
-}
-.remirror-editor div[data-callout-type='success'] {
-  background: #effaf3;
-  border-left-color: #48c774;
+.remirror-editor div[class*='emoji-block-wrapper'] {
+  float: left;
 }
 
 /**

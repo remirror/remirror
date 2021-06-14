@@ -1,6 +1,7 @@
 export * from './emoji-extension';
 export type {
   AddEmojiCommandOptions,
+  DefaultMoji,
   EMOJI_DATA_ATTRIBUTE,
   EmojiAttributes,
   EmojiOptions,

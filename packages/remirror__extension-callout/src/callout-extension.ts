@@ -15,6 +15,7 @@ import {
   NodeExtensionSpec,
   nodeInputRule,
   NodeSpecOverride,
+  NodeType,
   omitExtraAttributes,
   toggleWrap,
 } from '@remirror/core';
@@ -49,7 +50,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     const { defaultType, validTypes } = this.options;
     return {
-      content: 'block+',
+      content: 'emojiBlock? block+',
       defining: true,
       draggable: false,
       ...override,
@@ -76,8 +77,13 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       toDOM: (node) => {
         const { type, ...rest } = omitExtraAttributes(node.attrs, extra);
         const attributes = { ...extra.dom(node), ...rest, [dataAttributeType]: type };
-
-        return ['div', attributes, 0];
+        console.log('toDOM', node);
+        return [
+          'div',
+          attributes,
+          ['div', { class: 'emoji-block' }],
+          ['div', { class: 'div2' }, 0],
+        ];
       },
     };
   }
@@ -92,12 +98,18 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       nodeInputRule({
         regexp: /^:::([\dA-Za-z]*) $/,
         type: this.type,
-        beforeDispatch: ({ tr, start }) => {
+        beforeDispatch: ({ tr, match, start }) => {
           const $pos = tr.doc.resolve(start);
           tr.setSelection(new TextSelection($pos));
+          const emojiBlockType = this.store.schema.nodes.emojiBlock as NodeType;
+          const EmojiType = this.store.schema.nodes.emoji as NodeType;
+          console.log('beforeDispatch', tr);
+          //const emojiBlock = emojiBlockType.create({}, EmojiType.create({ code: '⚠️' }));
+          // tr.insert(start, emojiBlock);
         },
         getAttributes: (match) => {
           const { defaultType, validTypes } = this.options;
+          console.log('getAttributes', match);
           return { type: getCalloutType(getMatchString(match, 1), validTypes, defaultType) };
         },
       }),
