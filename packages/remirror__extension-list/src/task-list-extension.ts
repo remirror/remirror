@@ -15,12 +15,9 @@ import {
   NodeExtensionSpec,
   nodeInputRule,
   NodeSpecOverride,
-  NodeViewMethod,
-  ProsemirrorNode,
 } from '@remirror/core';
 import { ExtensionListMessages as Messages } from '@remirror/messages';
-import { NodeSelection, TextSelection } from '@remirror/pm/state';
-import { ExtensionListTheme } from '@remirror/theme';
+import { TextSelection } from '@remirror/pm/state';
 
 import { toggleList } from './list-commands';
 import { TaskListItemExtension } from './task-list-item-extension';
