@@ -54,6 +54,8 @@ describe('configuration', () => {
 });
 
 describe('commands', () => {
+  hideConsoleError(true);
+
   it('can undo', () => {
     const { nodes, add } = create();
     const { p, doc } = nodes;
@@ -89,6 +91,8 @@ describe('commands', () => {
 });
 
 describe('keymap', () => {
+  hideConsoleError(true);
+
   it('can undo', () => {
     const { nodes, add } = create();
     const { p, doc } = nodes;

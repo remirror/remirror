@@ -508,3 +508,75 @@ describe('custom styling', () => {
     `);
   });
 });
+
+describe('custom map like via getMap', () => {
+  it('should use the provided map like object passed via `getMap`', () => {
+    const myMap = new Map();
+    const options = {
+      getMap: () => myMap,
+    };
+    const {
+      add,
+      nodes: { p, doc },
+      commands,
+      helpers,
+    } = create(options);
+
+    add(doc(p('Hello <start>again<end> my friend')));
+
+    commands.addAnnotation({ id: 'an-id' });
+
+    expect(myMap.size).toBe(1);
+    expect(myMap.get('an-id')).toEqual({
+      id: 'an-id',
+      from: 7,
+      to: 12,
+    });
+
+    expect(helpers.getAnnotations()).toEqual([
+      {
+        id: 'an-id',
+        from: 7,
+        to: 12,
+        text: 'again',
+      },
+    ]);
+  });
+});
+
+describe('custom positions', () => {
+  it('should use the provided map like object passed via `getMap`', () => {
+    const myMap = new Map();
+    const options = {
+      getMap: () => myMap,
+      transformPosition: (pos: number) => ({ pos, meta: { mock: 'data' } }),
+      transformPositionBeforeRender: (obj: any) => obj.pos,
+    };
+    const {
+      add,
+      nodes: { p, doc },
+      commands,
+      helpers,
+    } = create(options);
+
+    add(doc(p('Hello <start>transforms<end> my old friend')));
+
+    commands.addAnnotation({ id: 'some-id' });
+
+    expect(myMap.size).toBe(1);
+    expect(myMap.get('some-id')).toStrictEqual({
+      id: 'some-id',
+      from: { pos: 7, meta: { mock: 'data' } },
+      to: { pos: 17, meta: { mock: 'data' } },
+    });
+
+    expect(helpers.getAnnotations()).toEqual([
+      {
+        id: 'some-id',
+        from: 7,
+        to: 17,
+        text: 'transforms',
+      },
+    ]);
+  });
+});
