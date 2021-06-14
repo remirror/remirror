@@ -51,8 +51,8 @@ const content = html`
         <li>
           C.B
           <ul data-task-list>
-            <li data-task-list-item>C.B.A</li>
-            <li data-task-list-item>C.B.B</li>
+            <li data-task-list-item data-checked>C.B.A</li>
+            <li data-task-list-item data-checked>C.B.B</li>
             <li data-task-list-item>C.B.C</li>
           </ul>
         </li>
