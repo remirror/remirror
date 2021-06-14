@@ -64,8 +64,7 @@ export class AnnotationState<Type extends Annotation = Annotation> {
   setAnnotations(setAction: SetAnnotationsAction<Type>): void {
     // YJS maps don't support clear
     this.map.clear?.();
-    // eslint-disable-next-line prefer-arrow-callback
-    this.map.forEach(function (_, id, map) {
+    this.map.forEach((_, id, map) => {
       map.delete(id);
     });
 
