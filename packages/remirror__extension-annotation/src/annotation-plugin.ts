@@ -1,4 +1,4 @@
-import { assertGet, TransactionProps } from '@remirror/core';
+import { assert, Transaction, TransactionProps } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import {
@@ -9,7 +9,7 @@ import {
   UpdateAnnotationAction,
 } from './annotation-actions';
 import { toSegments } from './annotation-segments';
-import type { Annotation, GetStyle, OmitText } from './annotation-types';
+import type { Annotation, GetStyle, MapLike, OmitText } from './annotation-types';
 
 interface ApplyProps extends TransactionProps {
   action: any;
@@ -24,7 +24,92 @@ export class AnnotationState<Type extends Annotation = Annotation> {
    */
   decorationSet = DecorationSet.empty;
 
-  constructor(private readonly getStyle: GetStyle<Type>) {}
+  constructor(
+    private readonly getStyle: GetStyle<Type>,
+    private readonly map: MapLike<string, OmitText<Type>>,
+    private readonly transformPosition: (pos: number) => number,
+    private readonly transformPositionBeforeRender: (pos: number) => number | null,
+  ) {}
+
+  addAnnotation(addAction: AddAnnotationAction<Type>): void {
+    const { id } = addAction.annotationData;
+    this.map.set(id, {
+      ...addAction.annotationData,
+      from: this.transformPosition(addAction.from),
+      to: this.transformPosition(addAction.to),
+    } as OmitText<Type>);
+  }
+
+  updateAnnotation(updateAction: UpdateAnnotationAction<Type>): void {
+    assert(this.map.has(updateAction.annotationId));
+
+    this.map.set(updateAction.annotationId, {
+      ...this.map.get(updateAction.annotationId),
+      ...updateAction.annotationData,
+    } as OmitText<Type>);
+  }
+
+  removeAnnotations(removeAction: RemoveAnnotationsAction): void {
+    removeAction.annotationIds.forEach((id) => {
+      this.map.delete(id);
+    });
+  }
+
+  setAnnotations(setAction: SetAnnotationsAction<Type>): void {
+    // YJS maps don't support clear
+    this.map.clear?.();
+    // eslint-disable-next-line prefer-arrow-callback
+    this.map.forEach(function (_, id, map) {
+      map.delete(id);
+    });
+
+    setAction.annotations.forEach((annotation) => {
+      const { id, from, to } = annotation;
+      this.map.set(id, {
+        ...annotation,
+        from: this.transformPosition(from),
+        to: this.transformPosition(to),
+      } as OmitText<Type>);
+    });
+  }
+
+  formatAnnotations(): Array<OmitText<Type>> {
+    const annotations: Array<OmitText<Type>> = [];
+
+    this.map.forEach((annotation, id, map) => {
+      const from = this.transformPositionBeforeRender(annotation.from);
+      const to = this.transformPositionBeforeRender(annotation.to);
+
+      if (!from || !to) {
+        map.delete(id);
+      }
+
+      annotations.push({
+        ...annotation,
+        from,
+        to,
+      });
+    });
+
+    return annotations;
+  }
+
+  createDecorations(tr: Transaction, annotations: Array<OmitText<Type>> = []): DecorationSet {
+    // Recalculate decorations when annotations changed
+    const decos = toSegments(annotations).map((segment) => {
+      const classNames = segment.annotations
+        .map((a) => a.className)
+        .filter((className) => className);
+      const style = this.getStyle(segment.annotations);
+
+      return Decoration.inline(segment.from, segment.to, {
+        class: classNames.length > 0 ? classNames.join(' ') : undefined,
+        style,
+      });
+    });
+
+    return DecorationSet.create(tr.doc, decos);
+  }
 
   apply({ tr, action }: ApplyProps): this {
     const actionType = action?.type;
@@ -46,64 +131,25 @@ export class AnnotationState<Type extends Annotation = Annotation> {
       // Remove annotations for which all containing content was deleted
       .filter((annotation) => annotation.to !== annotation.from);
 
-    let newAnnotations: Array<OmitText<Type>> | undefined;
+    if (actionType !== undefined) {
+      if (actionType === ActionType.ADD_ANNOTATION) {
+        this.addAnnotation(action as AddAnnotationAction<Type>);
+      }
 
-    if (actionType === ActionType.ADD_ANNOTATION) {
-      const addAction = action as AddAnnotationAction<Type>;
-      const newAnnotation = {
-        ...addAction.annotationData,
-        from: addAction.from,
-        to: addAction.to,
-      } as OmitText<Type>;
-      newAnnotations = [...this.annotations, newAnnotation];
-    }
+      if (actionType === ActionType.UPDATE_ANNOTATION) {
+        this.updateAnnotation(action as UpdateAnnotationAction<Type>);
+      }
 
-    if (actionType === ActionType.UPDATE_ANNOTATION) {
-      const updateAction = action as UpdateAnnotationAction<Type>;
-      const annotationIndex = this.annotations.findIndex(
-        (annotation) => annotation.id === updateAction.annotationId,
-      );
-      const updatedAnnotation = {
-        ...assertGet(this.annotations, annotationIndex),
-        ...updateAction.annotationData,
-      };
-      newAnnotations = [
-        ...this.annotations.slice(0, annotationIndex),
-        updatedAnnotation,
-        ...this.annotations.slice(annotationIndex + 1),
-      ];
-    }
+      if (actionType === ActionType.REMOVE_ANNOTATIONS) {
+        this.removeAnnotations(action as RemoveAnnotationsAction);
+      }
 
-    if (actionType === ActionType.REMOVE_ANNOTATIONS) {
-      const removeAction = action as RemoveAnnotationsAction;
-      newAnnotations = this.annotations.filter((a) => !removeAction.annotationIds.includes(a.id));
-    }
+      if (actionType === ActionType.SET_ANNOTATIONS) {
+        this.setAnnotations(action as SetAnnotationsAction<Type>);
+      }
 
-    if (actionType === ActionType.SET_ANNOTATIONS) {
-      const setAction = action as SetAnnotationsAction<Type>;
-      newAnnotations = setAction.annotations;
-    }
-
-    if (actionType === ActionType.REDRAW_ANNOTATIONS) {
-      newAnnotations = this.annotations;
-    }
-
-    if (newAnnotations) {
-      // Recalculate decorations when annotations changed
-      const decos = toSegments(newAnnotations).map((segment) => {
-        const classNames = segment.annotations
-          .map((a) => a.className)
-          .filter((className) => className);
-        const style = this.getStyle(segment.annotations);
-
-        return Decoration.inline(segment.from, segment.to, {
-          class: classNames.length > 0 ? classNames.join(' ') : undefined,
-          style,
-        });
-      });
-
-      this.annotations = newAnnotations;
-      this.decorationSet = DecorationSet.create(tr.doc, decos);
+      this.annotations = this.formatAnnotations();
+      this.decorationSet = this.createDecorations(tr, this.annotations);
     } else {
       // Performance optimization: Adjust decoration positions based on changes
       // in the editor, e.g. if new text was added before the decoration

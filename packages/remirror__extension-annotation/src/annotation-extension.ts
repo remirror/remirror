@@ -7,6 +7,8 @@ import {
   getTextSelection,
   Helper,
   helper,
+  isEmptyObject,
+  OnSetOptionsProps,
   PlainExtension,
   PrimitiveSelection,
   within,
@@ -39,6 +41,9 @@ function defaultGetStyle<A extends Annotation>(annotations: Array<OmitText<A>>) 
   defaultOptions: {
     getStyle: defaultGetStyle,
     blockSeparator: undefined,
+    getMap: () => new Map(),
+    transformPosition: (pos) => pos,
+    transformPositionBeforeRender: (pos) => pos,
   },
   defaultPriority: ExtensionPriority.Low,
 })
@@ -49,12 +54,30 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
     return 'annotation' as const;
   }
 
+  protected onSetOptions(props: OnSetOptionsProps<AnnotationOptions<Type>>): void {
+    const { pickChanged } = props;
+    const changedPluginOptions = pickChanged([
+      'getMap',
+      'transformPosition',
+      'transformPositionBeforeRender',
+    ]);
+
+    if (!isEmptyObject(changedPluginOptions)) {
+      this.store.updateExtensionPlugins(this);
+    }
+  }
+
   /**
    * Create the custom code block plugin which handles the delete key amongst
    * other things.
    */
   createPlugin(): CreateExtensionPlugin<AnnotationState<Type>> {
-    const pluginState = new AnnotationState<Type>(this.options.getStyle);
+    const pluginState = new AnnotationState<Type>(
+      this.options.getStyle,
+      this.options.getMap(),
+      this.options.transformPosition,
+      this.options.transformPositionBeforeRender,
+    );
 
     return {
       state: {
