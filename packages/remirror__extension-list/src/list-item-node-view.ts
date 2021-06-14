@@ -22,7 +22,7 @@ export function createCustomMarkListItemNodeView({
   markContainer.contentEditable = 'false';
   markContainer.classList.add(ExtensionListTheme.LIST_ITEM_MARKER_CONTAINER);
 
-  const contentDOM = document.createElement('span');
+  const contentDOM = document.createElement('div');
 
   markContainer.append(mark);
   dom.append(markContainer);

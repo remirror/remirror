@@ -96,7 +96,12 @@ export class BulletListExtension extends NodeExtension<BulletListOptions> {
   }
 
   createExtensions() {
-    return [new ListItemExtension({ priority: ExtensionPriority.Low })];
+    return [
+      new ListItemExtension({
+        priority: ExtensionPriority.Low,
+        enableCollapsible: this.options.enableSpine,
+      }),
+    ];
   }
 
   /**
