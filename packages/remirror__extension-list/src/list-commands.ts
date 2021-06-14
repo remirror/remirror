@@ -123,8 +123,6 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
           wrap = Fragment.from($from.node(depth).copy(wrap));
         }
 
-        // type.contentMatch.defaultType?
-
         // Add a second list item with an empty default start node
         const createdNode = type.createAndFill({ ...grandParent.attrs, checked: false });
 
@@ -156,7 +154,7 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
     const types: TypesAfter = [undefined];
 
     if (nextType) {
-      types.push({ type: nextType, attrs: {} });
+      types.push({ type: nextType, attrs: { checked: false } });
     }
 
     if (!canSplit(tr.doc, $from.pos, 2, types)) {

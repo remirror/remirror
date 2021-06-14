@@ -140,18 +140,18 @@ const content = html`
     <li>B</li>
     <li>
       C
-      <ol>
-        <li>C.A</li>
-        <li>
+      <ul data-task-list>
+        <li data-task-list-item>C.A</li>
+        <li data-task-list-item data-checked>
           C.B
-          <ul data-task-list>
-            <li data-task-list-item data-checked>C.B.A</li>
-            <li data-task-list-item data-checked>C.B.B</li>
-            <li data-task-list-item>C.B.C</li>
-          </ul>
+          <ol>
+            <li>C.B.A</li>
+            <li>C.B.B</li>
+            <li>C.B.C</li>
+          </ol>
         </li>
-        <li>C.C</li>
-      </ol>
+        <li data-task-list-item data-checked>C.C</li>
+      </ul>
     </li>
   </ul>
 `;
