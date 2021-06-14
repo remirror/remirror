@@ -3,6 +3,7 @@ import {
   command,
   CommandFunction,
   ExtensionTag,
+  isElementDomNode,
   isNodeSelection,
   NodeExtension,
   NodeExtensionSpec,
@@ -38,11 +39,33 @@ export class TaskListItemExtension extends NodeExtension {
         checked: { default: false },
       },
       parseDOM: [
-        { tag: 'li[data-task-list-item]', getAttrs: extra.parse },
+        {
+          tag: 'li[data-task-list-item]',
+          getAttrs: (node) => {
+            let checked = false;
+
+            if (isElementDomNode(node) && node.getAttribute('data-checked') !== null) {
+              checked = true;
+            }
+
+            return {
+              checked,
+              ...extra.parse(node),
+            };
+          },
+        },
         ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
-        return ['li', { ...extra.dom(node), 'data-task-list-item': '' }, 0];
+        return [
+          'li',
+          {
+            ...extra.dom(node),
+            'data-task-list-item': '',
+            'data-checked': node.attrs.checked ? '' : undefined,
+          },
+          0,
+        ];
       },
     };
   }

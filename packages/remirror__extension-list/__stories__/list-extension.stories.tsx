@@ -36,7 +36,7 @@ const content = html`
   </ol>
   <ul data-task-list>
     <li data-task-list-item>first unordered list item</li>
-    <li data-task-list-item>second unordered list item</li>
+    <li data-task-list-item data-checked>second unordered list item</li>
   </ul>
 
   <p>Nested List:</p>
