@@ -1,5 +1,18 @@
-import { createEditor, doc, em, h1, p, schema, strong } from 'jest-prosemirror';
+import {
+  createEditor,
+  doc,
+  em,
+  h1,
+  hardBreak,
+  p,
+  schema,
+  strong,
+  table,
+  tableCell,
+  tableRow,
+} from 'jest-prosemirror';
 
+import { ProsemirrorNode } from '../../jest-prosemirror/node_modules/@remirror/pm/src';
 import { pasteRules } from '../';
 
 describe('pasteRules', () => {
@@ -104,6 +117,15 @@ describe('pasteRules', () => {
         });
     });
 
+    it('can remove text matches', () => {
+      const plugin = pasteRules([{ regexp: /(Hello)/, transformMatch: () => '', type: 'text' }]);
+      createEditor(doc(p('Hello <cursor>')), { plugins: [plugin] })
+        .paste('Hello')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p('Hello ')));
+        });
+    });
+
     it('can transform from matched regex', () => {
       const plugin = pasteRules([{ regexp: /abc(Hello)abc/, type: 'text' }]);
       createEditor(doc(p('<cursor>')), { plugins: [plugin] })
@@ -123,6 +145,80 @@ describe('pasteRules', () => {
         .paste('# This is a heading')
         .callback((content) => {
           expect(content.doc).toEqualProsemirrorNode(doc(p('Hello '), h1('This is a heading')));
+        });
+    });
+
+    it('can remove text without group', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /---$/,
+          type: 'node',
+          nodeType: schema.nodes.hard_break,
+          getContent: () => {},
+        },
+      ]);
+      createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+        .paste('---')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p(hardBreak())));
+        });
+    });
+
+    it('can remove text with group', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /(---)$/,
+          type: 'node',
+          nodeType: schema.nodes.hard_break,
+          getContent: () => {},
+        },
+      ]);
+      createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+        .paste('---')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p(hardBreak())));
+        });
+    });
+
+    it('can transform match to custom content', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /(::table(\d+))$/,
+          type: 'node',
+          nodeType: schema.nodes.table,
+          getContent: (match) => {
+            const size = Number.parseInt(match[2] ?? '0', 10);
+            const rows: ProsemirrorNode[] = [];
+
+            for (let i = 0; i < size; i++) {
+              const cells: ProsemirrorNode[] = [];
+
+              for (let j = 0; j < size; j++) {
+                const paragraph = schema.nodes.paragraph.createChecked();
+                const cell = schema.nodes.table_cell.createChecked(null, paragraph);
+                cells.push(cell);
+              }
+
+              const row = schema.nodes.table_row.createChecked(null, cells);
+              rows.push(row);
+            }
+
+            return rows;
+          },
+        },
+      ]);
+      createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+        .paste('::table3')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(
+              table(
+                tableRow(tableCell(p()), tableCell(p()), tableCell(p())),
+                tableRow(tableCell(p()), tableCell(p()), tableCell(p())),
+                tableRow(tableCell(p()), tableCell(p()), tableCell(p())),
+              ),
+            ),
+          );
         });
     });
   });
