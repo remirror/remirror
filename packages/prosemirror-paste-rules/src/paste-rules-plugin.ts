@@ -277,6 +277,8 @@ export interface NodePasteRule extends BaseContentPasteRule {
    * A function that transforms the match into the content to use when creating
    * a node.
    *
+   * Pass `() => {}` to remove the matched text.
+   *
    * If this function is undefined, then the text node cutted from the match
    * will be used as the content.
    */
@@ -480,7 +482,7 @@ function nodeRuleTransformer(props: TransformerProps<NodePasteRule>) {
   const { nodes, rule, textNode, match } = props;
   const { getAttributes, nodeType, getContent } = rule;
   const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
-  const content = getContent ? getContent(match) : textNode;
+  const content = (getContent ? getContent(match) : textNode) || undefined;
   nodes.push(nodeType.createChecked(attributes, content));
 }
 
