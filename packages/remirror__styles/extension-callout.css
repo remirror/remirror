@@ -6,11 +6,34 @@
   margin-right: 0;
   padding: 16px 16px 16px 12px;
   background-color: #f9f9fa;
+  border-radius: 10px;
 }
-
-.remirror-editor div[data-callout-type] > *:not(.emoji-block-wrapper) {
-  margin-left: 30px;
+.remirror-editor div[data-callout-type='info'] {
+  background: #d3e3ff;
+}
+.remirror-editor div[data-callout-type='warning'] {
+  background: #fee1a9;
+}
+.remirror-editor div[data-callout-type='error'] {
+  background: #fdd7d4;
+}
+.remirror-editor div[data-callout-type='success'] {
+  background: #d8eada;
+}
+.remirror-editor div[data-callout-type='idea'] {
+  background: #dedde0;
+}
+.remirror-editor div[class*='callout-wrapper'] {
+  display: grid;
+  grid-template-columns: 20px auto;
+  grid-column-gap: 8px;
+}
+.remirror-editor div[class*='callout-wrapper'] > *:not(.emoji-block-wrapper) {
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 .remirror-editor div[class*='emoji-block-wrapper'] {
-  float: left;
+  grid-column: 1;
+  grid-row: 1;
+  text-align: center;
 }

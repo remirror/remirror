@@ -87,3 +87,20 @@ export function getCalloutType(
 ): string {
   return includes(validTypes, value) ? value : defaultType;
 }
+
+export function getCalloutEmoji(type: CalloutAttributes['type']): string {
+  switch (type) {
+    case 'info':
+      return 'ℹ️';
+    case 'error':
+      return '⛔️';
+    case 'success':
+      return '✅';
+    case 'warning':
+      return '⚠️';
+    case 'idea':
+      return '💡';
+    default:
+      return 'ℹ️';
+  }
+}

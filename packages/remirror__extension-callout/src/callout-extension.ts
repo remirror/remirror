@@ -25,6 +25,7 @@ import { TextSelection } from '@remirror/pm/state';
 import type { CalloutAttributes, CalloutOptions } from './callout-types';
 import {
   dataAttributeType,
+  getCalloutEmoji,
   getCalloutType,
   toggleCalloutOptions,
   updateNodeAttributes,
@@ -36,7 +37,7 @@ import {
 @extension<CalloutOptions>({
   defaultOptions: {
     defaultType: 'info',
-    validTypes: ['info', 'warning', 'error', 'success'],
+    validTypes: ['info', 'warning', 'error', 'success', 'idea'],
   },
   staticKeys: ['defaultType', 'validTypes'],
 })
@@ -50,7 +51,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     const { defaultType, validTypes } = this.options;
     return {
-      content: 'emojiBlock? block+',
+      content: 'block+',
       defining: true,
       draggable: false,
       ...override,
@@ -77,13 +78,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       toDOM: (node) => {
         const { type, ...rest } = omitExtraAttributes(node.attrs, extra);
         const attributes = { ...extra.dom(node), ...rest, [dataAttributeType]: type };
-        console.log('toDOM', node);
-        return [
-          'div',
-          attributes,
-          ['div', { class: 'emoji-block' }],
-          ['div', { class: 'div2' }, 0],
-        ];
+        return ['div', attributes, ['div', { class: 'callout-wrapper' }, 0]];
       },
     };
   }
@@ -100,16 +95,20 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
         type: this.type,
         beforeDispatch: ({ tr, match, start }) => {
           const $pos = tr.doc.resolve(start);
+          const { defaultType, validTypes } = this.options;
+
           tr.setSelection(new TextSelection($pos));
           const emojiBlockType = this.store.schema.nodes.emojiBlock as NodeType;
           const EmojiType = this.store.schema.nodes.emoji as NodeType;
-          console.log('beforeDispatch', tr);
-          //const emojiBlock = emojiBlockType.create({}, EmojiType.create({ code: '⚠️' }));
-          // tr.insert(start, emojiBlock);
+          const emojiCode = getCalloutEmoji(
+            getCalloutType(getMatchString(match, 1), validTypes, defaultType),
+          );
+
+          const emojiBlock = emojiBlockType.create({}, EmojiType.create({ code: emojiCode }));
+          tr.insert(start, emojiBlock);
         },
         getAttributes: (match) => {
           const { defaultType, validTypes } = this.options;
-          console.log('getAttributes', match);
           return { type: getCalloutType(getMatchString(match, 1), validTypes, defaultType) };
         },
       }),
@@ -183,12 +182,18 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     const end = pos + nodeSize + 1;
     // +1 to account for the extra pos a node takes up
 
+    const emojiBlockType = this.store.schema.nodes.emojiBlock as NodeType;
+    const EmojiType = this.store.schema.nodes.emoji as NodeType;
+
+    const emojiBlock = emojiBlockType.create({}, EmojiType.create({ code: getCalloutEmoji(type) }));
+
     if (dispatch) {
       const slice = new Slice(Fragment.from(this.type.create({ type })), 0, 1);
       tr.replace(pos, end, slice);
+      tr.insert(pos + 1, emojiBlock);
 
       // Set the selection to within the callout
-      tr.setSelection(TextSelection.create(tr.doc, pos + 1));
+      tr.setSelection(TextSelection.create(tr.doc, pos + 3));
       dispatch(tr);
     }
 
