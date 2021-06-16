@@ -260,6 +260,13 @@ export interface MarkPasteRule extends BaseContentPasteRule {
    * Can be a function which receives the text that will be replaced.
    */
   replaceSelection?: boolean | ((replacedText: string) => boolean);
+
+  /**
+   * A function that transforms the match into the desired text value.
+   *
+   * Return an empty string to delete all content.
+   */
+  transformMatch?: (match: RegExpExecArray) => string | null | undefined;
 }
 
 export interface NodePasteRule extends BaseContentPasteRule {
@@ -469,21 +476,20 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
  * nodes.
  */
 function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
-  const { nodes, rule, textNode, match } = props;
-  const { getAttributes, markType } = rule;
+  const { nodes, rule, textNode, match, schema } = props;
+  const { transformMatch, getAttributes, markType } = rule;
   const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
-  nodes.push(textNode.mark([markType.create(attributes), ...textNode.marks]));
-}
 
-/**
- * Support for pasting node content into the editor.
- */
-function nodeRuleTransformer(props: TransformerProps<NodePasteRule>) {
-  const { nodes, rule, textNode, match } = props;
-  const { getAttributes, nodeType, getContent } = rule;
-  const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
-  const content = (getContent ? getContent(match) : textNode) || undefined;
-  nodes.push(nodeType.createChecked(attributes, content));
+  const transformedCapturedValue = transformMatch?.(match);
+
+  // remove the text if transformMatch return
+  if (transformedCapturedValue === '') {
+    return;
+  }
+
+  const text = transformedCapturedValue ?? textNode.text ?? '';
+  const marks = [markType.create(attributes), ...textNode.marks];
+  nodes.push(schema.text(text, marks));
 }
 
 /**
@@ -501,6 +507,17 @@ function textRuleTransformer(props: TransformerProps<TextPasteRule>) {
 
   const text = transformedCapturedValue ?? textNode.text ?? '';
   nodes.push(schema.text(text, textNode.marks));
+}
+
+/**
+ * Support for pasting node content into the editor.
+ */
+function nodeRuleTransformer(props: TransformerProps<NodePasteRule>) {
+  const { nodes, rule, textNode, match } = props;
+  const { getAttributes, nodeType, getContent } = rule;
+  const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
+  const content = (getContent ? getContent(match) : textNode) || undefined;
+  nodes.push(nodeType.createChecked(attributes, content));
 }
 
 /**
