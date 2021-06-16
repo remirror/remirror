@@ -68,20 +68,20 @@ describe('Enter', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
-  // it('cleans the `checked` attribute when splitting a task list item', () => {
-  //   from = doc(tl(tit(p('hello <cursor>world'))));
-  //   to = doc(tl(tit(p('hello ')), tif(p('world'))));
-  //   editor.add(from).press('Enter');
-  //   expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  it('cleans the `checked` attribute when splitting a task list item', () => {
+    from = doc(tl(tit(p('hello <cursor>world'))));
+    to = doc(tl(tit(p('hello ')), tif(p('world'))));
+    editor.add(from).press('Enter');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
 
-  //   from = doc(tl(tit(p('<cursor>hello world'))));
-  //   to = doc(tl(tit(p('')), tif(p('hello world'))));
-  //   editor.add(from).press('Enter');
-  //   expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    from = doc(tl(tit(p('<cursor>hello world'))));
+    to = doc(tl(tit(p('')), tif(p('hello world'))));
+    editor.add(from).press('Enter');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
 
-  //   from = doc(tl(tit(p('hello world<cursor>'))));
-  //   to = doc(tl(tit(p('hello world')), tif(p(''))));
-  //   editor.add(from).press('Enter');
-  //   expect(editor.view.state.doc).toEqualProsemirrorNode(to);
-  // });
+    from = doc(tl(tit(p('hello world<cursor>'))));
+    to = doc(tl(tit(p('hello world')), tif(p(''))));
+    editor.add(from).press('Enter');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
 });

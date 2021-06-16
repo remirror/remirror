@@ -151,11 +151,14 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
     const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
     tr.delete($from.pos, $to.pos);
 
+    // const types: TypesAfter = [{ type, attrs: { checked: false } }];
     const types: TypesAfter = [undefined];
 
     if (nextType) {
       types.push({ type: nextType, attrs: { checked: false } });
     }
+
+    console.log('types:', types);
 
     if (!canSplit(tr.doc, $from.pos, 2, types)) {
       return false;
