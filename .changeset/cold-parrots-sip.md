@@ -1,5 +1,5 @@
 ---
-'prosemirror-paste-rules': minor
+'prosemirror-paste-rules': major
 ---
 
 Update the API:
