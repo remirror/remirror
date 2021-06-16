@@ -35,11 +35,40 @@ export interface AnnotationOptions<Type extends Annotation = Annotation> {
    */
   blockSeparator?: AcceptUndefined<string>;
 
-  getMap?: () => MapLike<string, OmitText<Type>>;
+  /**
+   * Allows a custom map-like object for storing internal annotations
+   *
+   * @remarks
+   *
+   * This can be used to pass something like a Yjs Y.Map for shared annotations
+   */
+  getMap?: () => MapLike<string, TransformedAnnotation<Type>>;
 
-  transformPosition?: (pos: number) => number;
+  /**
+   * Allows a custom transform function that modifies how positions are stored
+   * internally
+   *
+   * @remarks
+   *
+   * This can be used to transform positions to other representations, like a
+   * Yjs Relative Position
+   *
+   * @see AnnotationOptions.transformPositionBeforeRender
+   */
+  transformPosition?: (pos: number) => any;
 
-  transformPositionBeforeRender?: (pos: number) => number | null;
+  /**
+   * Allows a custom transform function that modifies how internal positions
+   * representations are returned externally
+   *
+   * @remarks
+   *
+   * This can be used to transform positions from other representations, like a
+   * Yjs Relative Position to a ProseMirror integer (absolute) position
+   *
+   * @see AnnotationOptions.transformPosition
+   */
+  transformPositionBeforeRender?: (rpos: any) => number | null;
 }
 
 export interface Annotation {
@@ -71,6 +100,18 @@ export interface Annotation {
    */
   className?: string;
 }
+
+export type TransformedAnnotation<T extends object> = T & {
+  /**
+   * Document transformed position where the annotation starts.
+   */
+  from: any;
+
+  /**
+   * Document transformed position where the annotation ends.
+   */
+  to: any;
+};
 
 /**
  * Remove the text field from an annotation.
