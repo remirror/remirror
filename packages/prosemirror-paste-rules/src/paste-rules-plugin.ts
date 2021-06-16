@@ -11,7 +11,7 @@ import {
 import { Plugin, PluginKey, Selection } from 'prosemirror-state';
 import type { EditorView } from 'prosemirror-view';
 import { ExtensionPriority } from '@remirror/core-constants';
-import { findMatches, includes, isFunction, isString, range, sort } from '@remirror/core-helpers';
+import { findMatches, includes, isFunction, range, sort } from '@remirror/core-helpers';
 
 /**
  * Create the paste plugin handler.
@@ -226,13 +226,6 @@ interface BaseRegexPasteRule extends BasePasteRule {
    * that if the matched content contains this mark it will be ignored.
    */
   ignoredMarks?: string[];
-
-  /**
-   * A function that transforms the match into the desired text value.
-   *
-   * Return an empty string to delete all content.
-   */
-  transformMatch?: (match: RegExpExecArray) => string | null | undefined;
 }
 
 interface BaseContentPasteRule extends BaseRegexPasteRule {
@@ -267,6 +260,13 @@ export interface MarkPasteRule extends BaseContentPasteRule {
    * Can be a function which receives the text that will be replaced.
    */
   replaceSelection?: boolean | ((replacedText: string) => boolean);
+
+  /**
+   * A function that transforms the match into the desired text value.
+   *
+   * Return an empty string to delete all content.
+   */
+  transformMatch?: (match: RegExpExecArray) => string | null | undefined;
 }
 
 export interface NodePasteRule extends BaseContentPasteRule {
@@ -279,6 +279,19 @@ export interface NodePasteRule extends BaseContentPasteRule {
    * The node type to create.
    */
   nodeType: NodeType;
+
+  /**
+   * A function that transforms the match into the content to use when creating
+   * a node.
+   *
+   * Pass `() => {}` to remove the matched text.
+   *
+   * If this function is undefined, then the text node that is cut from the match
+   * will be used as the content.
+   */
+  getContent?: (
+    match: RegExpExecArray,
+  ) => Fragment | ProsemirrorNode | ProsemirrorNode[] | undefined | void;
 }
 
 /**
@@ -289,6 +302,13 @@ export interface TextPasteRule extends BaseRegexPasteRule {
    * The type of rule.
    */
   type: 'text';
+
+  /**
+   * A function that transforms the match into the desired text value.
+   *
+   * Return an empty string to delete all content.
+   */
+  transformMatch?: (match: RegExpExecArray) => string | null | undefined;
 }
 
 export type FileHandlerProps = FilePasteHandlerProps | FileDropHandlerProps;
@@ -372,7 +392,7 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
 ) {
   return function handler(props: PasteRuleHandler<Rule>) {
     const { fragment, rule, nodes } = props;
-    const { regexp, ignoreWhitespace, ignoredMarks, ignoredNodes, transformMatch } = rule;
+    const { regexp, ignoreWhitespace, ignoredMarks, ignoredNodes } = rule;
 
     fragment.forEach((child) => {
       // Check if this node should be ignored.
@@ -402,7 +422,6 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
         // The captured value from the regex.
         const capturedValue = match[1];
 
-        const transformedCapturedValue = transformMatch?.(match);
         const fullValue = match[0];
 
         if (
@@ -423,13 +442,8 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
 
         let textNode = child.cut(start, end);
 
-        // When a transformed value was provided.
-        if (isString(transformedCapturedValue)) {
-          textNode = schema.text(transformedCapturedValue, textNode.marks);
-        }
-
         // When a capture value is provided use it.
-        else if (fullValue && capturedValue) {
+        if (fullValue && capturedValue) {
           const startSpaces = fullValue.search(/\S/);
           const textStart = start + fullValue.indexOf(capturedValue);
           const textEnd = textStart + capturedValue.length;
@@ -462,10 +476,37 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
  * nodes.
  */
 function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
-  const { nodes, rule, textNode, match } = props;
-  const { getAttributes, markType } = rule;
+  const { nodes, rule, textNode, match, schema } = props;
+  const { transformMatch, getAttributes, markType } = rule;
   const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
-  nodes.push(textNode.mark([markType.create(attributes), ...textNode.marks]));
+
+  const transformedCapturedValue = transformMatch?.(match);
+
+  // remove the text if transformMatch return
+  if (transformedCapturedValue === '') {
+    return;
+  }
+
+  const text = transformedCapturedValue ?? textNode.text ?? '';
+  const marks = [markType.create(attributes), ...textNode.marks];
+  nodes.push(schema.text(text, marks));
+}
+
+/**
+ * Support for pasting and transforming text content into the editor.
+ */
+function textRuleTransformer(props: TransformerProps<TextPasteRule>) {
+  const { nodes, rule, textNode, match, schema } = props;
+  const { transformMatch } = rule;
+  const transformedCapturedValue = transformMatch?.(match);
+
+  // remove the text if transformMatch return
+  if (transformedCapturedValue === '') {
+    return;
+  }
+
+  const text = transformedCapturedValue ?? textNode.text ?? '';
+  nodes.push(schema.text(text, textNode.marks));
 }
 
 /**
@@ -473,17 +514,10 @@ function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
  */
 function nodeRuleTransformer(props: TransformerProps<NodePasteRule>) {
   const { nodes, rule, textNode, match } = props;
-  const { getAttributes, nodeType } = rule;
+  const { getAttributes, nodeType, getContent } = rule;
   const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
-  nodes.push(nodeType.create(attributes, textNode));
-}
-
-/**
- * Support for pasting and transforming text content into the editor.
- */
-function textRuleTransformer(props: TransformerProps<TextPasteRule>) {
-  const { nodes, textNode } = props;
-  nodes.push(textNode);
+  const content = (getContent ? getContent(match) : textNode) || undefined;
+  nodes.push(nodeType.createChecked(attributes, content));
 }
 
 /**
