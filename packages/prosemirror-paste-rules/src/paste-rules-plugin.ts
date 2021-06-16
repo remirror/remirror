@@ -286,7 +286,7 @@ export interface NodePasteRule extends BaseContentPasteRule {
    *
    * Pass `() => {}` to remove the matched text.
    *
-   * If this function is undefined, then the text node cutted from the match
+   * If this function is undefined, then the text node that is cut from the match
    * will be used as the content.
    */
   getContent?: (
