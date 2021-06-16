@@ -1,4 +1,4 @@
-import { Moji, SpriteCollection } from 'svgmoji';
+import { Blobmoji, Moji, Notomoji, SpriteCollection } from 'svgmoji';
 import {
   ApplySchemaAttributes,
   command,
@@ -21,9 +21,10 @@ import {
   omitExtraAttributes,
   toggleWrap,
 } from '@remirror/core';
-import { DefaultMoji } from '@remirror/extension-emoji';
+import { DefaultMoji, EmojiAttributes } from '@remirror/extension-emoji';
 import { Fragment, Slice } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
+import { ExtensionEmojiTheme } from '@remirror/theme';
 
 import type { CalloutAttributes, CalloutOptions } from './callout-types';
 import {
@@ -41,7 +42,39 @@ import {
   defaultOptions: {
     defaultType: 'info',
     data: [],
-    moji: 'noto',
+    moji: new Notomoji({
+      data: [
+        {
+          annotation: 'slightly smiling face',
+          hexcode: '1F642',
+          tags: ['face', 'smile'],
+          emoji: '🙂',
+          text: '',
+          type: 1,
+          order: 9,
+          group: 0,
+          subgroup: 0,
+          version: 1,
+          emoticon: ':)',
+          shortcodes: ['slightly_smiling_face'],
+        },
+        {
+          annotation: 'upside-down face',
+          hexcode: '1F643',
+          tags: ['face', 'upside-down'],
+          emoji: '🙃',
+          text: '',
+          type: 1,
+          order: 10,
+          group: 0,
+          subgroup: 0,
+          version: 1,
+          shortcodes: ['upside_down_face'],
+        },
+      ],
+      type: SpriteCollection.All,
+      fallback: ':slightly_smiling_face:',
+    }),
     validTypes: ['info', 'warning', 'error', 'success', 'idea'],
   },
   staticKeys: ['defaultType', 'validTypes'],
@@ -55,13 +88,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
   get moji(): Moji {
     if (!this._moji) {
-      this._moji = isString(this.options.moji)
-        ? new DefaultMoji[this.options.moji]({
-            data: this.options.data,
-            type: SpriteCollection.All,
-            // fallback: this.options.fallback,
-          })
-        : this.options.moji;
+      this._moji = this.options.moji;
     }
 
     return this._moji;
@@ -77,6 +104,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
+        code: { default: '' },
         type: { default: defaultType },
       },
       parseDOM: [
@@ -96,9 +124,32 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
         ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
-        const { type, ...rest } = omitExtraAttributes(node.attrs, extra);
+        const { type, code, ...rest } = omitExtraAttributes(node.attrs, extra) as EmojiAttributes;
+        const emoji = this.moji.find(code) ?? this.moji.fallback;
         const attributes = { ...extra.dom(node), ...rest, [dataAttributeType]: type };
-        return ['div', attributes, ['div', { class: 'callout-wrapper' }, 0]];
+        return [
+          'div',
+          { style: 'background: lightgray;' },
+          [
+            'span',
+            {
+              class: ExtensionEmojiTheme.EMOJI_WRAPPER,
+              // [EMOJI_DATA_ATTRIBUTE]: emoji[this.options.identifier],
+            },
+            [
+              'img',
+              {
+                role: 'presentation',
+                class: ExtensionEmojiTheme.EMOJI_IMAGE,
+                'aria-label': emoji.annotation,
+                alt: emoji.annotation,
+                // TODO use the emoji rather than the code once `svgmoji` supports it.
+                src: this.moji.url(code),
+              },
+            ],
+          ],
+          ['div', { class: 'callout-wrapper' }, 0],
+        ];
       },
     };
   }

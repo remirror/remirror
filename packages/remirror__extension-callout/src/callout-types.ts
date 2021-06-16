@@ -30,7 +30,7 @@ export interface CalloutOptions {
    *
    * @default 'noto'
    */
-  moji?: NamedMojiType | Moji;
+  moji?: Moji;
 
   /**
    * The list of emoji data to make available to the user. This is used to

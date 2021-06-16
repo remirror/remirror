@@ -12,7 +12,39 @@ export default { title: 'Callouts' };
 
 const basicExtensions = () => [
   new CalloutExtension(),
-  new EmojiExtension({ plainText: false, data, moji: 'noto' }),
+  new EmojiExtension({
+    plainText: false,
+    data: [
+      {
+        annotation: 'slightly smiling face',
+        hexcode: '1F642',
+        tags: ['face', 'smile'],
+        emoji: '🙂',
+        text: '',
+        type: 1,
+        order: 9,
+        group: 0,
+        subgroup: 0,
+        version: 1,
+        emoticon: ':)',
+        shortcodes: ['slightly_smiling_face'],
+      },
+      {
+        annotation: 'upside-down face',
+        hexcode: '1F643',
+        tags: ['face', 'upside-down'],
+        emoji: '🙃',
+        text: '',
+        type: 1,
+        order: 10,
+        group: 0,
+        subgroup: 0,
+        version: 1,
+        shortcodes: ['upside_down_face'],
+      },
+    ],
+    moji: 'noto',
+  }),
   new HeadingExtension(),
   new EmojiBlockExtension(),
 ];
