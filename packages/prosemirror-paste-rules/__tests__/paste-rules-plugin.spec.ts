@@ -12,7 +12,7 @@ import {
   tableRow,
 } from 'jest-prosemirror';
 
-import { ProsemirrorNode } from '../../jest-prosemirror/node_modules/@remirror/pm/src';
+import { ProsemirrorNode } from '@remirror/pm';
 import { pasteRules } from '../';
 
 describe('pasteRules', () => {
