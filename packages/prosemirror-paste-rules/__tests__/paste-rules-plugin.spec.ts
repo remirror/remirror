@@ -103,6 +103,52 @@ describe('pasteRules', () => {
           );
         });
     });
+
+    it('should replace selection', () => {
+      const plugin1 = pasteRules([
+        {
+          regexp: /(@[a-z]+)/,
+          markType: schema.marks.strong,
+          type: 'mark',
+          replaceSelection: (replacedText) => {
+            return !!replacedText.trim();
+          },
+        },
+      ]);
+      createEditor(doc(p('<start>   <end>')), { plugins: [plugin1] })
+        .paste('@test')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('@test'))));
+        });
+      createEditor(doc(p('<start>selected text is not empty<end>')), { plugins: [plugin1] })
+        .paste('@test')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p('', strong('selected text is not empty'))),
+          );
+        });
+
+      const plugin2 = pasteRules([
+        {
+          regexp: /(@[a-z]+)/,
+          markType: schema.marks.strong,
+          type: 'mark',
+          replaceSelection: true,
+        },
+      ]);
+      createEditor(doc(p('<start>   <end>')), { plugins: [plugin2] })
+        .paste('@test')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('   '))));
+        });
+      createEditor(doc(p('<start>selected text is not empty<end>')), { plugins: [plugin2] })
+        .paste('@test')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p('', strong('selected text is not empty'))),
+          );
+        });
+    });
   });
 
   describe('type: text', () => {
