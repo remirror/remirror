@@ -11,8 +11,8 @@ import {
   tableCell,
   tableRow,
 } from 'jest-prosemirror';
+import type { Node as ProsemirrorNode } from 'prosemirror-model';
 
-import { ProsemirrorNode } from '@remirror/pm';
 import { pasteRules } from '../';
 
 describe('pasteRules', () => {
