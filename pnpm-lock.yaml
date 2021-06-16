@@ -1080,7 +1080,7 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       '@remirror/theme': 1.0.0-next.60
       '@svgmoji/noto': ^3.1.0
-      svgmoji: ^3.1.0
+      svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.14.0
       '@remirror/core': link:../remirror__core
@@ -1088,7 +1088,7 @@ importers:
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
       '@svgmoji/noto': 3.1.0
-      svgmoji: 3.1.0
+      svgmoji: 3.2.0
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
@@ -4704,6 +4704,13 @@ packages:
     resolution: {integrity: sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==}
     dependencies:
       regenerator-runtime: 0.13.7
+
+  /@babel/runtime/7.14.6:
+    resolution: {integrity: sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.13.7
+    dev: false
 
   /@babel/standalone/7.14.3:
     resolution: {integrity: sha512-nv9eIzaXjrPwfytt5SfKAbM5DJWfpJ6EiGhRar+p95k8r6ZNydF8svvjQVpbqqPIubR+tz1WyRlMJ3AUfXg4Pg==}
@@ -8571,6 +8578,13 @@ packages:
       '@babel/runtime': 7.14.0
       '@svgmoji/core': 3.1.0
 
+  /@svgmoji/blob/3.2.0:
+    resolution: {integrity: sha512-N96WOrH9GxPSPZ/FuvZl6T9Rh54stAEuUcBppIRFh9/WwkU7Hczrjabw4uunwxFLX5TgR+rHlKJl3/jaTnXJrQ==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+      '@svgmoji/core': 3.2.0
+    dev: false
+
   /@svgmoji/core/3.1.0:
     resolution: {integrity: sha512-iztEW4uyavGbmd2/iKw+t2uc+53HLlkuJ2BAtEXhf1eCoY48+Ah4DvIzIIr1bcqr+fXrCQPG0o6AxjeceqB3Xg==}
     dependencies:
@@ -8581,11 +8595,29 @@ packages:
       match-sorter: 6.3.0
       type-fest: 0.21.3
 
+  /@svgmoji/core/3.2.0:
+    resolution: {integrity: sha512-QsD78Op3S/5kUVsa5ierr4Wu/xwAdYuMI3Zmc/Y2ekYBEMGEUY8QxilXQRSAQ4ku4PnNV4xlB9e7xhD5hy113A==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+      emojibase: 5.2.0
+      emojibase-regex: 5.1.3
+      idb-keyval: 5.0.6
+      match-sorter: 6.3.0
+      type-fest: 1.2.0
+    dev: false
+
   /@svgmoji/noto/3.1.0:
     resolution: {integrity: sha512-Xc2cJ7gqHkEpWk6m7zLjP2pKcYxNdQxjPmkPFMLrZfYQnzpteEgyiKXNfLidwqgY0shz6+MxIa8gWHdLVKwAEA==}
     dependencies:
       '@babel/runtime': 7.14.0
       '@svgmoji/core': 3.1.0
+
+  /@svgmoji/noto/3.2.0:
+    resolution: {integrity: sha512-JgtNciB06hMDI1Pb1N2IgLh44XRMZUUNwBANzjY5jXTPqOCu1A1VA35ENvUsRhEUZOm8I+hbdAEHkwMVqxLeIQ==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+      '@svgmoji/core': 3.2.0
+    dev: false
 
   /@svgmoji/openmoji/3.1.0:
     resolution: {integrity: sha512-8FpVItrNhQKWYlUJReVbpmSKOpLBdkLpk2c/GHp1ynMZNeyV16GGL2NaUOqj2Nhp3Qgqb7datmGNHIun/tQEaw==}
@@ -8593,11 +8625,25 @@ packages:
       '@babel/runtime': 7.14.0
       '@svgmoji/core': 3.1.0
 
+  /@svgmoji/openmoji/3.2.0:
+    resolution: {integrity: sha512-USHbG+O80HfmdoNAHbOnlO+2gppXJfHFWKSRFj53Th4aimWEx4/9MB3cFbC3KZ1NOqXaLBq9jDaw4vFuGDVTUQ==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+      '@svgmoji/core': 3.2.0
+    dev: false
+
   /@svgmoji/twemoji/3.1.0:
     resolution: {integrity: sha512-7xbBE/7Hkr8oOuWIAP4WoP2ZjocOcO9aOIvr7ffKMVJ+exVUtIH5aE3h+4unZo92dzLkugmfEH9TAuwQO42cPQ==}
     dependencies:
       '@babel/runtime': 7.14.0
       '@svgmoji/core': 3.1.0
+
+  /@svgmoji/twemoji/3.2.0:
+    resolution: {integrity: sha512-6xqZgh9viFDKf5wvrxw56ImCR3Ni84IqwK45lxojOe1Gc1Mni1GpPfr4gb7WHDKjumfx+K7BHSvX0KXt3Nr3CQ==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+      '@svgmoji/core': 3.2.0
+    dev: false
 
   /@svgr/babel-plugin-add-jsx-attribute/5.4.0:
     resolution: {integrity: sha512-ZFf2gs/8/6B8PnSofI0inYXr2SDNTDScPXhN7k5EqD4aZ3gi6u+rbmZHVB8IM3wDyx8ntKACZbtXSm7oZGRqVg==}
@@ -17577,6 +17623,10 @@ packages:
 
   /idb-keyval/5.0.5:
     resolution: {integrity: sha512-cqi65rrjhgPExI9vmSU7VcYEbHCUfIBY+9YUWxyr0PyGizptFgGFnvZQ0w+tqOXk1lUcGCZGVLfabf7QnR2S0g==}
+
+  /idb-keyval/5.0.6:
+    resolution: {integrity: sha512-6lJuVbwyo82mKSH6Wq2eHkt9LcbwHAelMIcMe0tP4p20Pod7tTxq9zf0ge2n/YDfMOpDryerfmmYyuQiaFaKOg==}
+    dev: false
 
   /ieee754/1.1.13:
     resolution: {integrity: sha512-4vf7I2LYV/HaWerSo3XmlMkp5eZ83i+/CDluXi/IGTs/O1sejBNhTtnxzmRZfvOUqj7lZjqHkeTvpgSFDlWZTg==}
@@ -27873,6 +27923,17 @@ packages:
       '@svgmoji/openmoji': 3.1.0
       '@svgmoji/twemoji': 3.1.0
 
+  /svgmoji/3.2.0:
+    resolution: {integrity: sha512-tjmdQhIju2ZQ81FLBlPngg1aWMOhQjP9ErXb2ROikM0aBGA/hqI0/DN/5J0sDsXzJPHmODpSFhWfiSsUieU3bA==}
+    dependencies:
+      '@babel/runtime': 7.14.6
+      '@svgmoji/blob': 3.2.0
+      '@svgmoji/core': 3.2.0
+      '@svgmoji/noto': 3.2.0
+      '@svgmoji/openmoji': 3.2.0
+      '@svgmoji/twemoji': 3.2.0
+    dev: false
+
   /svgo/1.3.2:
     resolution: {integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==}
     engines: {node: '>=4.0.0'}
@@ -28583,6 +28644,11 @@ packages:
 
   /type-fest/1.1.1:
     resolution: {integrity: sha512-RPDKc5KrIyKTP7Fk75LruUagqG6b+OTgXlCR2Z0aQDJFeIvL4/mhahSEtHmmVzXu4gmA0srkF/8FCH3WOWxTWA==}
+    engines: {node: '>=10'}
+    dev: false
+
+  /type-fest/1.2.0:
+    resolution: {integrity: sha512-++0N6KyAj0t2webXst0PE0xuXb4Dv3z1Z+4SGzK+j/epeWBZCfkQbkW/ezscZwpinmBQ5wu/l4TqagKSVcAGCA==}
     engines: {node: '>=10'}
     dev: false
 

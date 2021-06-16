@@ -1,3 +1,4 @@
+import { Moji, SpriteCollection } from 'svgmoji';
 import {
   ApplySchemaAttributes,
   command,
@@ -8,6 +9,7 @@ import {
   getMatchString,
   InputRule,
   isElementDomNode,
+  isString,
   isTextSelection,
   keyBinding,
   KeyBindingProps,
@@ -19,6 +21,7 @@ import {
   omitExtraAttributes,
   toggleWrap,
 } from '@remirror/core';
+import { DefaultMoji } from '@remirror/extension-emoji';
 import { Fragment, Slice } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
 
@@ -37,6 +40,8 @@ import {
 @extension<CalloutOptions>({
   defaultOptions: {
     defaultType: 'info',
+    data: [],
+    moji: 'noto',
     validTypes: ['info', 'warning', 'error', 'success', 'idea'],
   },
   staticKeys: ['defaultType', 'validTypes'],
@@ -46,6 +51,21 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     return 'callout' as const;
   }
 
+  private _moji?: Moji;
+
+  get moji(): Moji {
+    if (!this._moji) {
+      this._moji = isString(this.options.moji)
+        ? new DefaultMoji[this.options.moji]({
+            data: this.options.data,
+            type: SpriteCollection.All,
+            // fallback: this.options.fallback,
+          })
+        : this.options.moji;
+    }
+
+    return this._moji;
+  }
   readonly tags = [ExtensionTag.Block];
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {

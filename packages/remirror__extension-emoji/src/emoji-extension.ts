@@ -57,13 +57,17 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
   private _moji?: Moji;
 
   get moji(): Moji {
-    return (this._moji ??= isString(this.options.moji)
-      ? new DefaultMoji[this.options.moji]({
-          data: this.options.data,
-          type: SpriteCollection.All,
-          fallback: this.options.fallback,
-        })
-      : this.options.moji);
+    if (!this._moji) {
+      this._moji = isString(this.options.moji)
+        ? new DefaultMoji[this.options.moji]({
+            data: this.options.data,
+            type: SpriteCollection.All,
+            fallback: this.options.fallback,
+          })
+        : this.options.moji;
+    }
+
+    return this._moji;
   }
 
   createTags() {
