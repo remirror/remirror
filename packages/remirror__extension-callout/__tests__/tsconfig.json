@@ -35,7 +35,13 @@
       "path": "../../remirror__core/src"
     },
     {
+      "path": "../../remirror__extension-emoji/src"
+    },
+    {
       "path": "../../remirror__messages/src"
+    },
+    {
+      "path": "../../remirror__theme/src"
     }
   ]
 }

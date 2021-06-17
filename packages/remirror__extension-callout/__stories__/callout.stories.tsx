@@ -1,7 +1,7 @@
 import 'remirror/styles/all.css';
 
 import React from 'react';
-import { CalloutExtension, HeadingExtension } from 'remirror/extensions';
+import { CalloutExtension } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
 import { htmlToProsemirrorNode, IdentifierSchemaAttributes } from '@remirror/core';
 import { ProsemirrorDevTools } from '@remirror/dev';
@@ -13,7 +13,6 @@ const basicExtensions = () => [
     emojiData: data,
     moji: 'noto',
   }),
-  new HeadingExtension(),
 ];
 const extraAttributes: IdentifierSchemaAttributes[] = [
   { identifiers: ['emoji'], attributes: { role: { default: 'presentation' } } },
