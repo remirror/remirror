@@ -698,6 +698,9 @@ export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
     background-color: #f9f9fa;
     border-radius: 10px;
   }
+  .remirror-editor div[class*='paragraph-callout-block'] {
+    margin-left: 8px;
+  }
   .remirror-editor div[data-callout-type='info'] {
     background: #d3e3ff;
   }
@@ -712,20 +715,6 @@ export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
   }
   .remirror-editor div[data-callout-type='idea'] {
     background: #dedde0;
-  }
-  .remirror-editor div[class*='callout-wrapper'] {
-    display: grid;
-    grid-template-columns: 20px auto;
-    grid-column-gap: 8px;
-  }
-  .remirror-editor div[class*='callout-wrapper'] > *:not(.emoji-block-wrapper) {
-    grid-column-start: 2;
-    grid-column-end: 3;
-  }
-  .remirror-editor div[class*='emoji-block-wrapper'] {
-    grid-column: 1;
-    grid-row: 1;
-    text-align: center;
   }
 `;
 

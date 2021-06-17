@@ -1,5 +1,5 @@
 import type { FlatEmoji, Moji } from 'svgmoji';
-import type { LiteralUnion, ProsemirrorAttributes, Static } from '@remirror/core';
+import type { AcceptUndefined, LiteralUnion, ProsemirrorAttributes, Static } from '@remirror/core';
 import { NamedMojiType } from '@remirror/extension-emoji';
 
 /**
@@ -30,7 +30,15 @@ export interface CalloutOptions {
    *
    * @default 'noto'
    */
-  moji?: Moji;
+  moji?: NamedMojiType | Moji;
+
+  /**
+   * The fallback emoji. This is only used when `moji` is not provided or is a
+   * string.
+   *
+   * @default ':red_question_mark:'
+   */
+  emojiFallback?: AcceptUndefined<string>;
 
   /**
    * The list of emoji data to make available to the user. This is used to
@@ -46,7 +54,21 @@ export interface CalloutOptions {
    * const emojiExtension = new EmojiExtension({ data, moji: 'noto' });
    * ```
    */
-  data: FlatEmoji[];
+  emojiData: FlatEmoji[];
+
+  /**
+   * The default representation for the emoji identifier.
+   *
+   * - `emoji` for the unicode representation of the emoji `👍`
+   * - `hexcode` for the hexcode representation `1F44D`
+   *
+   * This is the value that is assigned to the emoji attributes and will be
+   * stored in the `RemirrorJSON` output. If you're backend does not support
+   * `unicode` then you should set this to `hexcode`.
+   *
+   * @default emoji
+   */
+  emojiIdentifier?: 'emoji' | 'hexcode';
 }
 
 export interface CalloutAttributes extends ProsemirrorAttributes {
@@ -56,4 +78,12 @@ export interface CalloutAttributes extends ProsemirrorAttributes {
    * @default 'info'
    */
   type?: LiteralUnion<'info' | 'warning' | 'error' | 'success' | 'idea', string>;
+
+  /**
+   * A string that uniquely identifies the emoji like
+   * - unicode - `👍`
+   * - hexcode - `1F44D`
+   * - shortcode - `thumbs_up` | `:thumbs_up:`
+   */
+  code?: string;
 }

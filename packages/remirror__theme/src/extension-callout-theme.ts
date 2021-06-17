@@ -14,6 +14,10 @@ export const EDITOR = css`
     border-radius: 10px;
   }
 
+  div[class*='paragraph-callout-block'] {
+    margin-left: 8px;
+  }
+
   div[data-callout-type='info'] {
     background: #d3e3ff;
   }
@@ -32,22 +36,5 @@ export const EDITOR = css`
 
   div[data-callout-type='idea'] {
     background: #dedde0;
-  }
-
-  div[class*='callout-wrapper'] {
-    display: grid;
-    grid-template-columns: 20px auto;
-    grid-column-gap: 8px;
-
-    & > *:not(.emoji-block-wrapper) {
-      grid-column-start: 2;
-      grid-column-end: 3;
-    }
-  }
-
-  div[class*='emoji-block-wrapper'] {
-    grid-column: 1;
-    grid-row: 1;
-    text-align: center;
   }
 ` as 'remirror-editor';

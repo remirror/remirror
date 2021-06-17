@@ -13,7 +13,10 @@ import { ExtensionCalloutMessages } from '@remirror/messages';
 import type { CalloutAttributes } from './callout-types';
 
 export const dataAttributeType = 'data-callout-type';
-
+export const blockAttributeType = {
+  emoji: 'emoji-callout-block',
+  paragraph: 'paragraph-callout-block',
+};
 /**
  * Check that the attributes exist and are valid for the codeBlock
  * updateAttributes.

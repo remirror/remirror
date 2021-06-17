@@ -1,7 +1,6 @@
 export * from './emoji-extension';
 export type {
   AddEmojiCommandOptions,
-  EMOJI_DATA_ATTRIBUTE,
   EmojiAttributes,
   EmojiOptions,
   EmojiSuggestHandler,
@@ -10,4 +9,5 @@ export type {
   FlatEmoji,
   NamedMojiType,
 } from './emoji-utils';
+export { EMOJI_DATA_ATTRIBUTE } from './emoji-utils';
 export { DefaultMoji } from './emoji-utils';

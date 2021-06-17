@@ -1,4 +1,4 @@
-import { Blobmoji, Moji, Notomoji, SpriteCollection } from 'svgmoji';
+import { Moji, SpriteCollection } from 'svgmoji';
 import {
   ApplySchemaAttributes,
   command,
@@ -17,17 +17,17 @@ import {
   NodeExtensionSpec,
   nodeInputRule,
   NodeSpecOverride,
-  NodeType,
   omitExtraAttributes,
   toggleWrap,
 } from '@remirror/core';
-import { DefaultMoji, EmojiAttributes } from '@remirror/extension-emoji';
+import { DefaultMoji, EMOJI_DATA_ATTRIBUTE } from '@remirror/extension-emoji';
 import { Fragment, Slice } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
 import { ExtensionEmojiTheme } from '@remirror/theme';
 
 import type { CalloutAttributes, CalloutOptions } from './callout-types';
 import {
+  blockAttributeType,
   dataAttributeType,
   getCalloutEmoji,
   getCalloutType,
@@ -41,40 +41,10 @@ import {
 @extension<CalloutOptions>({
   defaultOptions: {
     defaultType: 'info',
-    data: [],
-    moji: new Notomoji({
-      data: [
-        {
-          annotation: 'slightly smiling face',
-          hexcode: '1F642',
-          tags: ['face', 'smile'],
-          emoji: '🙂',
-          text: '',
-          type: 1,
-          order: 9,
-          group: 0,
-          subgroup: 0,
-          version: 1,
-          emoticon: ':)',
-          shortcodes: ['slightly_smiling_face'],
-        },
-        {
-          annotation: 'upside-down face',
-          hexcode: '1F643',
-          tags: ['face', 'upside-down'],
-          emoji: '🙃',
-          text: '',
-          type: 1,
-          order: 10,
-          group: 0,
-          subgroup: 0,
-          version: 1,
-          shortcodes: ['upside_down_face'],
-        },
-      ],
-      type: SpriteCollection.All,
-      fallback: ':slightly_smiling_face:',
-    }),
+    emojiData: [],
+    moji: 'noto',
+    emojiIdentifier: 'emoji',
+    emojiFallback: ':red_question_mark:',
     validTypes: ['info', 'warning', 'error', 'success', 'idea'],
   },
   staticKeys: ['defaultType', 'validTypes'],
@@ -88,7 +58,13 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
   get moji(): Moji {
     if (!this._moji) {
-      this._moji = this.options.moji;
+      this._moji = isString(this.options.moji)
+        ? new DefaultMoji[this.options.moji]({
+            data: this.options.emojiData,
+            type: SpriteCollection.All,
+            fallback: this.options.emojiFallback,
+          })
+        : this.options.moji;
     }
 
     return this._moji;
@@ -96,7 +72,8 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
   readonly tags = [ExtensionTag.Block];
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
-    const { defaultType, validTypes } = this.options;
+    const { defaultType, validTypes, emojiIdentifier } = this.options;
+    //console.log('createNodeSpec', this.options);
     return {
       content: 'block+',
       defining: true,
@@ -104,7 +81,6 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        code: { default: '' },
         type: { default: defaultType },
       },
       parseDOM: [
@@ -124,31 +100,41 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
         ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
-        const { type, code, ...rest } = omitExtraAttributes(node.attrs, extra) as EmojiAttributes;
-        const emoji = this.moji.find(code) ?? this.moji.fallback;
+        const { type, code, ...rest } = omitExtraAttributes(node.attrs, extra) as CalloutAttributes;
+        const typedCode = code ?? getCalloutEmoji(type);
+        const emoji = this.moji.find(typedCode) ?? this.moji.fallback;
+
         const attributes = { ...extra.dom(node), ...rest, [dataAttributeType]: type };
         return [
           'div',
-          { style: 'background: lightgray;' },
+          attributes,
           [
-            'span',
-            {
-              class: ExtensionEmojiTheme.EMOJI_WRAPPER,
-              // [EMOJI_DATA_ATTRIBUTE]: emoji[this.options.identifier],
-            },
+            'div',
+            { style: 'display:flex' },
             [
-              'img',
-              {
-                role: 'presentation',
-                class: ExtensionEmojiTheme.EMOJI_IMAGE,
-                'aria-label': emoji.annotation,
-                alt: emoji.annotation,
-                // TODO use the emoji rather than the code once `svgmoji` supports it.
-                src: this.moji.url(code),
-              },
+              'div',
+              { class: blockAttributeType['emoji'] },
+              [
+                'span',
+                {
+                  class: ExtensionEmojiTheme.EMOJI_WRAPPER,
+                  [EMOJI_DATA_ATTRIBUTE]: emoji[emojiIdentifier],
+                },
+                [
+                  'img',
+                  {
+                    role: 'presentation',
+                    class: ExtensionEmojiTheme.EMOJI_IMAGE,
+                    'aria-label': emoji.annotation,
+                    alt: emoji.annotation,
+                    // TODO use the emoji rather than the code once `svgmoji` supports it.
+                    src: this.moji.url(typedCode),
+                  },
+                ],
+              ],
             ],
+            ['div', { class: blockAttributeType['paragraph'] }, 0],
           ],
-          ['div', { class: 'callout-wrapper' }, 0],
         ];
       },
     };
@@ -164,19 +150,9 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       nodeInputRule({
         regexp: /^:::([\dA-Za-z]*) $/,
         type: this.type,
-        beforeDispatch: ({ tr, match, start }) => {
+        beforeDispatch: ({ tr, start }) => {
           const $pos = tr.doc.resolve(start);
-          const { defaultType, validTypes } = this.options;
-
           tr.setSelection(new TextSelection($pos));
-          const emojiBlockType = this.store.schema.nodes.emojiBlock as NodeType;
-          const EmojiType = this.store.schema.nodes.emoji as NodeType;
-          const emojiCode = getCalloutEmoji(
-            getCalloutType(getMatchString(match, 1), validTypes, defaultType),
-          );
-
-          const emojiBlock = emojiBlockType.create({}, EmojiType.create({ code: emojiCode }));
-          tr.insert(start, emojiBlock);
         },
         getAttributes: (match) => {
           const { defaultType, validTypes } = this.options;
@@ -253,18 +229,12 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     const end = pos + nodeSize + 1;
     // +1 to account for the extra pos a node takes up
 
-    const emojiBlockType = this.store.schema.nodes.emojiBlock as NodeType;
-    const EmojiType = this.store.schema.nodes.emoji as NodeType;
-
-    const emojiBlock = emojiBlockType.create({}, EmojiType.create({ code: getCalloutEmoji(type) }));
-
     if (dispatch) {
       const slice = new Slice(Fragment.from(this.type.create({ type })), 0, 1);
       tr.replace(pos, end, slice);
-      tr.insert(pos + 1, emojiBlock);
 
       // Set the selection to within the callout
-      tr.setSelection(TextSelection.create(tr.doc, pos + 3));
+      tr.setSelection(TextSelection.create(tr.doc, pos + 1));
       dispatch(tr);
     }
 
