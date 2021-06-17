@@ -8,6 +8,7 @@ import {
   FragmentStringHandlerOptions,
   Helper,
   helper,
+  InsertNodeOptions,
   NodeStringHandlerOptions,
   PlainExtension,
   ProsemirrorNode,
@@ -134,6 +135,54 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
       ...(options as NodeStringHandlerOptions),
       content: this.options.markdownToHtml(options.content, this.options.htmlSanitizer),
     });
+  }
+
+  /**
+   * Insert a markdown string as a ProseMirror Node.
+   *
+   * ```ts
+   * commands.insertMarkdown('# Heading\nAnd content');
+   * // => <h1 id="heading">Heading</h1><p>And content</p>
+   * ```
+   *
+   * The content will be inlined by default if not a block node.
+   *
+   * ```ts
+   * commands.insertMarkdown('**is bold.**')
+   * // => <strong>is bold.</strong>
+   * ```
+   *
+   * To always wrap the content in a block you can pass the following option.
+   *
+   * ```ts
+   * commands.insertMarkdown('**is bold.**', { alwaysWrapInBlock: true });
+   * // => <p><strong>is bold.</strong></p>
+   * ```
+   */
+  @command()
+  insertMarkdown(
+    markdown: string,
+    options?: InsertNodeOptions & { alwaysWrapInBlock?: boolean },
+  ): CommandFunction {
+    return (props) => {
+      const { state } = props;
+      let html = this.options.markdownToHtml(markdown, this.options.htmlSanitizer);
+
+      if (!options?.alwaysWrapInBlock && html.startsWith('<p><') && html.endsWith('</p>\n')) {
+        html = html.slice(3, -5);
+      }
+
+      const fragment = this.store.stringHandlers.html({
+        content: html,
+        schema: state.schema,
+        fragment: true,
+      });
+
+      return this.store.commands.insertNode.original(fragment, {
+        ...options,
+        replaceEmptyParentBlock: true,
+      })(props);
+    };
   }
 
   /**
