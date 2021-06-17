@@ -45,6 +45,7 @@ import {
   toggleWrap,
   wrapIn,
 } from '@remirror/core-utils';
+import { isProsemirrorFragment } from '@remirror/core-utils';
 import { CoreMessages as Messages } from '@remirror/messages';
 import { Mark } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
@@ -634,15 +635,15 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    */
   @command()
   insertNode(
-    node: string | NodeType | ProsemirrorNode,
+    node: string | NodeType | ProsemirrorNode | Fragment,
     options: InsertNodeOptions = {},
   ): CommandFunction {
     return ({ dispatch, tr, state }) => {
       const { attrs, range, selection } = options;
       const { from, to } = getTextSelection(selection ?? range ?? tr.selection, tr.doc);
 
-      if (isProsemirrorNode(node)) {
-        dispatch?.(tr.replaceRangeWith(from, to, node));
+      if (isProsemirrorNode(node) || isProsemirrorFragment(node)) {
+        dispatch?.(tr.replaceWith(from, to, node));
 
         return true;
       }
@@ -682,20 +683,6 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       const isReplacement = from !== to;
       dispatch?.(isReplacement ? tr.replaceRangeWith(from, to, content) : tr.insert(from, content));
       return true;
-    };
-  }
-
-  /**
-   * Insert a html string as a ProseMirror Node,
-   *
-   * @category Builtin Command
-   */
-  @command()
-  insertHtml(html: string, options?: InsertNodeOptions): CommandFunction {
-    return (props) => {
-      const { state } = props;
-      const node = this.store.stringHandlers.html({ content: html, schema: state.schema });
-      return this.insertNode(node, options)(props);
     };
   }
 

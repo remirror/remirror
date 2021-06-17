@@ -2,9 +2,11 @@ import { ErrorConstant, NULL_CHARACTER } from '@remirror/core-constants';
 import { entries, isEmptyObject, object } from '@remirror/core-helpers';
 import type {
   AnyFunction,
+  CommandFunction,
   EditorState,
   EditorStateProps,
   EmptyShape,
+  Fragment,
   LiteralUnion,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -13,12 +15,14 @@ import type {
   StateJSON,
 } from '@remirror/core-types';
 import {
+  FragmentStringHandlerOptions,
   getActiveNode,
   getMarkRange,
   htmlToProsemirrorNode,
   isMarkActive,
   isNodeActive,
   isSelectionEmpty,
+  NodeStringHandlerOptions,
   prosemirrorNodeToHtml,
   StringHandlerOptions,
 } from '@remirror/core-utils';
@@ -37,7 +41,8 @@ import {
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import type { ExtensionHelperReturn } from '../types';
-import { helper, HelperDecoratorOptions } from './builtin-decorators';
+import { command, helper, HelperDecoratorOptions } from './builtin-decorators';
+import { InsertNodeOptions } from './commands-extension';
 
 /**
  * Helpers are custom methods that can provide extra functionality to the
@@ -152,6 +157,25 @@ export class HelpersExtension extends PlainExtension {
   }
 
   /**
+   * Insert a html string as a ProseMirror Node.
+   *
+   * @category Builtin Command
+   */
+  @command()
+  insertHtml(html: string, options?: InsertNodeOptions): CommandFunction {
+    return (props) => {
+      const { state } = props;
+      const fragment = htmlToProsemirrorNode({
+        content: html,
+        schema: state.schema,
+        fragment: true,
+      });
+
+      return this.store.commands.insertNode.original(fragment, options)(props);
+    };
+  }
+
+  /**
    * A method to get all the content in the editor as text. Depending on the
    * content in your editor, it is not guaranteed to preserve it 100%, so it's
    * best to test that it meets your needs before consuming.
@@ -185,9 +209,12 @@ export class HelpersExtension extends PlainExtension {
    * Wrap the content in a pre tag to preserve whitespace and see what the
    * editor does with it.
    */
-  private textToProsemirrorNode(options: StringHandlerOptions) {
+  private textToProsemirrorNode(options: FragmentStringHandlerOptions): Fragment;
+  private textToProsemirrorNode(options: NodeStringHandlerOptions): ProsemirrorNode;
+  private textToProsemirrorNode(options: StringHandlerOptions): ProsemirrorNode | Fragment {
     const content = `<pre>${options.content}</pre>`;
-    return this.store.stringHandlers.html({ ...options, content });
+
+    return this.store.stringHandlers.html({ ...(options as NodeStringHandlerOptions), content });
   }
 }
 

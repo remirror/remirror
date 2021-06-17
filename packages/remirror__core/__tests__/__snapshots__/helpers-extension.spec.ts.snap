@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands.insertHtml can insert marks 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    Content 
+    <strong>
+      is bold.
+    </strong>
+  </p>
+</div>
+`;

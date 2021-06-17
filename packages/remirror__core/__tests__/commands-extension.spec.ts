@@ -1,5 +1,5 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { BoldExtension, HeadingExtension, ItalicExtension } from 'remirror/extensions';
+import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { AllSelection } from '@remirror/pm/state';
 
 import { CommandsExtension } from '../';
@@ -209,33 +209,5 @@ describe('setContent', () => {
     expect(editor.state.doc).toEqualProsemirrorNode(doc(p()));
     editor.commands.undo();
     expect(editor.state.doc).toEqualProsemirrorNode(doc(p('my content')));
-  });
-});
-
-describe('commands.insertHtml', () => {
-  it('can insert html', () => {
-    const editor = renderEditor([
-      new HeadingExtension(),
-      new BoldExtension(),
-      new ItalicExtension(),
-    ]);
-    const { doc, p } = editor.nodes;
-    const { bold, italic } = editor.marks;
-    const { heading } = editor.attributeNodes;
-    const h1 = heading({ level: 1 });
-
-    editor.add(doc(p('Content<cursor>')));
-
-    editor.chain.insertHtml('<h1>This is a heading</h1>').selectText('end').run();
-    expect(editor.state.doc).toEqualProsemirrorNode(doc(p('Content'), h1('This is a heading')));
-
-    editor.commands.insertHtml('<p>A paragraph <em>with</em> <strong>formatting</strong></p>');
-    expect(editor.state.doc).toEqualProsemirrorNode(
-      doc(
-        p('Content'),
-        h1('This is a heading'),
-        p('A paragraph ', italic('with'), ' ', bold('formatting')),
-      ),
-    );
   });
 });

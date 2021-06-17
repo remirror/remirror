@@ -5,14 +5,17 @@ import {
   EditorState,
   extension,
   ExtensionTag,
+  FragmentStringHandlerOptions,
   Helper,
   helper,
+  NodeStringHandlerOptions,
   PlainExtension,
+  ProsemirrorNode,
   Slice,
   Static,
   StringHandlerOptions,
 } from '@remirror/core';
-import { DOMSerializer } from '@remirror/pm/model';
+import { DOMSerializer, Fragment } from '@remirror/pm/model';
 
 import { htmlToMarkdown } from './html-to-markdown';
 import { markdownToHtml } from './markdown-to-html';
@@ -124,9 +127,11 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
   /**
    * Convert the markdown to a prosemirror node.
    */
-  private markdownToProsemirrorNode(options: StringHandlerOptions) {
+  private markdownToProsemirrorNode(options: FragmentStringHandlerOptions): Fragment;
+  private markdownToProsemirrorNode(options: NodeStringHandlerOptions): ProsemirrorNode;
+  private markdownToProsemirrorNode(options: StringHandlerOptions): ProsemirrorNode | Fragment {
     return this.store.stringHandlers.html({
-      ...options,
+      ...(options as NodeStringHandlerOptions),
       content: this.options.markdownToHtml(options.content, this.options.htmlSanitizer),
     });
   }
