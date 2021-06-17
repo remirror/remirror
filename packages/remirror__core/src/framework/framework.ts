@@ -392,11 +392,13 @@ export abstract class Framework<
    * Use this method in the `onUpdate` event to run all change handlers.
    */
   readonly onChange = (props: ListenerProps<Extension> = object()): void => {
-    this.props.onChange?.(this.eventListenerProps(props));
+    const onChangeProps = this.eventListenerProps(props);
 
     if (this.#firstRender) {
       this.#firstRender = false;
     }
+
+    this.props.onChange?.(onChangeProps);
   };
 
   /**
