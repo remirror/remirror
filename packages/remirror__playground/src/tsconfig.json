@@ -50,6 +50,9 @@
       "path": "../../prosemirror-paste-rules/src"
     },
     {
+      "path": "../../prosemirror-resizable-view/src"
+    },
+    {
       "path": "../../prosemirror-suggest/src"
     },
     {
