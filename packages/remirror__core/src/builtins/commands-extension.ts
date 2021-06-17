@@ -33,6 +33,8 @@ import {
   getMarkRange,
   getTextSelection,
   htmlToProsemirrorNode,
+  isEmptyBlockNode,
+  isProsemirrorFragment,
   isProsemirrorNode,
   isTextSelection,
   removeMark,
@@ -45,7 +47,6 @@ import {
   toggleWrap,
   wrapIn,
 } from '@remirror/core-utils';
-import { isEmptyBlockNode, isProsemirrorFragment } from '@remirror/core-utils';
 import { CoreMessages as Messages } from '@remirror/messages';
 import { Mark } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
