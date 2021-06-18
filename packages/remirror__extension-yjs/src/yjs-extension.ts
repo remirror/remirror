@@ -10,7 +10,7 @@ import {
   yUndoPlugin,
   yUndoPluginKey,
 } from 'y-prosemirror';
-import type { Doc, RelativePosition, UndoManager } from 'yjs';
+import type { Doc, RelativePosition, Transaction as YjsTransaction, UndoManager } from 'yjs';
 import {
   AcceptUndefined,
   command,
@@ -153,9 +153,18 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
         transformPosition: this.absolutePositionToRelativePosition.bind(this),
         transformPositionBeforeRender: this.relativePositionToAbsolutePosition.bind(this),
       });
-      this.provider.doc.on('update', () => {
-        this.store.commands.redrawAnnotations?.();
-      });
+
+      this.provider.doc.on(
+        'update',
+        (_update: Uint8Array, _origin: any, _doc: Doc, yjsTr: YjsTransaction) => {
+          // Ignore own changes
+          if (yjsTr.local) {
+            return;
+          }
+
+          this.store.commands.redrawAnnotations?.();
+        },
+      );
     } catch {
       // AnnotationExtension isn't present in editor
     }
