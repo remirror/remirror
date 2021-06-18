@@ -32,7 +32,7 @@ export const EmojiPopupComponent: FC = () => {
   const enabled = !!state;
 
   return (
-    <FloatingWrapper positioner='nearestWord' enabled={enabled} placement='auto-end'>
+    <FloatingWrapper positioner='cursor' enabled={enabled} placement='auto-end'>
       <div {...getMenuProps()}>
         {enabled &&
           (state?.list ?? emptyList).map((emoji, index) => {
