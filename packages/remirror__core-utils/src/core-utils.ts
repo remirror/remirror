@@ -47,7 +47,7 @@ import type {
   TrStateProps,
 } from '@remirror/core-types';
 import {
-  DOMParser,
+  DOMParser as PMDomParser,
   DOMSerializer,
   Fragment,
   Mark,
@@ -55,6 +55,7 @@ import {
   Node as PMNode,
   NodeRange,
   NodeType,
+  ParseOptions,
   ResolvedPos as PMResolvedPos,
   Schema,
   Slice,
@@ -139,6 +140,15 @@ export function getMarkType(type: string | MarkType, schema: EditorSchema): Mark
  */
 export function isProsemirrorNode(value: unknown): value is ProsemirrorNode {
   return isObject(value) && value instanceof PMNode;
+}
+
+/**
+ * Checks to see if the passed value is a ProsemirrorNode
+ *
+ * @param value - the value to check
+ */
+export function isProsemirrorFragment(value: unknown): value is Fragment {
+  return isObject(value) && value instanceof Fragment;
 }
 
 /**
@@ -975,7 +985,10 @@ export function getTextSelection(
 /**
  * A function that converts a string into a `ProsemirrorNode`.
  */
-export type StringHandler = (params: StringHandlerOptions) => ProsemirrorNode;
+export interface StringHandler {
+  (params: NodeStringHandlerOptions): ProsemirrorNode;
+  (params: FragmentStringHandlerOptions): Fragment;
+}
 
 export interface StringHandlerProps {
   /**
@@ -1143,6 +1156,11 @@ export function prosemirrorNodeToDom(
   return DOMSerializer.fromSchema(node.type.schema).serializeFragment(fragment, { document });
 }
 
+function elementFromString(html: string, document?: Document): HTMLElement {
+  const parser = new (((document ?? getDocument()) as any)?.defaultView ?? window).DOMParser();
+  return parser.parseFromString(`<body>${html}</body>`, 'text/html').body;
+}
+
 /**
  * Convert the provided `node` to a html string.
  *
@@ -1150,7 +1168,7 @@ export function prosemirrorNodeToDom(
  * @param document - the document to use for the DOM
  *
  * ```ts
- * import { EditorState, toHtml } from 'remirror';
+ * import { EditorState, prosemirrorNodeToHtml } from 'remirror';
  *
  * function convertStateToHtml(state: EditorState): string {
  *   return prosemirrorNodeToHtml({ node: state.doc, schema: state.schema });
@@ -1164,19 +1182,35 @@ export function prosemirrorNodeToHtml(node: ProsemirrorNode, document = getDocum
   return element.innerHTML;
 }
 
-export interface StringHandlerOptions extends Partial<CustomDocumentProps>, SchemaProps {
+export interface BaseStringHandlerOptions
+  extends Partial<CustomDocumentProps>,
+    SchemaProps,
+    ParseOptions {
   /**
    * The string content provided to the editor.
    */
   content: string;
 }
 
+export interface FragmentStringHandlerOptions extends BaseStringHandlerOptions {
+  /**
+   * When true will create a fragment from the provided string.
+   */
+  fragment: true;
+}
+
+export interface NodeStringHandlerOptions extends BaseStringHandlerOptions {
+  fragment?: false;
+}
+
+export type StringHandlerOptions = NodeStringHandlerOptions | FragmentStringHandlerOptions;
+
 /**
  * Convert a HTML string into a ProseMirror node. This can be used for the
  * `stringHandler` property in your editor when you want to support html.
  *
  * ```tsx
- * import { fromHtml } from 'remirror';
+ * import { htmlToProsemirrorNode } from 'remirror';
  * import { Remirror, useManager } from '@remirror/react';
  *
  * const Editor = () => {
@@ -1184,7 +1218,7 @@ export interface StringHandlerOptions extends Partial<CustomDocumentProps>, Sche
  *
  *   return (
  *     <Remirror
- *       stringHandler={fromHtml}
+ *       stringHandler={htmlToProsemirrorNode}
  *       initialContent='<p>A wise person once told me to relax</p>'
  *     >
  *       <div />
@@ -1193,12 +1227,16 @@ export interface StringHandlerOptions extends Partial<CustomDocumentProps>, Sche
  * }
  * ```
  */
-export function htmlToProsemirrorNode(props: StringHandlerOptions): ProsemirrorNode {
-  const { content, schema, document = getDocument() } = props;
-  const element = document.createElement('div');
-  element.innerHTML = content.trim();
+export function htmlToProsemirrorNode(props: FragmentStringHandlerOptions): Fragment;
+export function htmlToProsemirrorNode(props: NodeStringHandlerOptions): ProsemirrorNode;
+export function htmlToProsemirrorNode(props: StringHandlerOptions): ProsemirrorNode | Fragment {
+  const { content, schema, document, fragment = false, ...parseOptions } = props;
+  const element = elementFromString(content);
+  const parser = PMDomParser.fromSchema(schema);
 
-  return DOMParser.fromSchema(schema).parse(element);
+  return fragment
+    ? parser.parseSlice(element, parseOptions).content
+    : parser.parse(element, parseOptions);
 }
 
 /**

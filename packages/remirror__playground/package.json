@@ -91,6 +91,7 @@
     "prettier": "^2.2.1",
     "promise-worker": "^2.0.1",
     "prosemirror-paste-rules": "0.0.0",
+    "prosemirror-resizable-view": "^0.0.0",
     "prosemirror-suggest": "1.0.0-next.60",
     "prosemirror-trailing-node": "0.0.0",
     "react-content-loader": "^6.0.3",

@@ -33,6 +33,8 @@ import {
   getMarkRange,
   getTextSelection,
   htmlToProsemirrorNode,
+  isEmptyBlockNode,
+  isProsemirrorFragment,
   isProsemirrorNode,
   isTextSelection,
   removeMark,
@@ -634,15 +636,20 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    */
   @command()
   insertNode(
-    node: string | NodeType | ProsemirrorNode,
+    node: string | NodeType | ProsemirrorNode | Fragment,
     options: InsertNodeOptions = {},
   ): CommandFunction {
     return ({ dispatch, tr, state }) => {
-      const { attrs, range, selection } = options;
-      const { from, to } = getTextSelection(selection ?? range ?? tr.selection, tr.doc);
+      const { attrs, range, selection, replaceEmptyParentBlock = false } = options;
+      const { from, to, $from } = getTextSelection(selection ?? range ?? tr.selection, tr.doc);
 
-      if (isProsemirrorNode(node)) {
-        dispatch?.(tr.replaceRangeWith(from, to, node));
+      if (isProsemirrorNode(node) || isProsemirrorFragment(node)) {
+        const pos = $from.before($from.depth);
+        dispatch?.(
+          replaceEmptyParentBlock && from === to && isEmptyBlockNode($from.parent)
+            ? tr.replaceWith(pos, pos + $from.parent.nodeSize, node)
+            : tr.replaceWith(from, to, node),
+        );
 
         return true;
       }
@@ -682,20 +689,6 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       const isReplacement = from !== to;
       dispatch?.(isReplacement ? tr.replaceRangeWith(from, to, content) : tr.insert(from, content));
       return true;
-    };
-  }
-
-  /**
-   * Insert a html string as a ProseMirror Node,
-   *
-   * @category Builtin Command
-   */
-  @command()
-  insertHtml(html: string, options?: InsertNodeOptions): CommandFunction {
-    return (props) => {
-      const { state } = props;
-      const node = this.store.stringHandlers.html({ content: html, schema: state.schema });
-      return this.insertNode(node, options)(props);
     };
   }
 
@@ -1197,6 +1190,12 @@ export interface InsertNodeOptions {
    * Set the selection where the command should occur.
    */
   selection?: PrimitiveSelection;
+
+  /**
+   * Set this to true to replace an empty parent block with this content (if the
+   * content is a block node).
+   */
+  replaceEmptyParentBlock?: boolean;
 }
 
 const DEFAULT_COMMAND_META: Required<CommandExtensionMeta> = {

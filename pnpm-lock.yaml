@@ -1948,6 +1948,7 @@ importers:
       prettier: ^2.2.1
       promise-worker: ^2.0.1
       prosemirror-paste-rules: 0.0.0
+      prosemirror-resizable-view: ^0.0.0
       prosemirror-suggest: 1.0.0-next.60
       prosemirror-trailing-node: 0.0.0
       react: ^17.0.2
@@ -2003,6 +2004,7 @@ importers:
       prettier: 2.3.0
       promise-worker: 2.0.1
       prosemirror-paste-rules: link:../prosemirror-paste-rules
+      prosemirror-resizable-view: link:../prosemirror-resizable-view
       prosemirror-suggest: link:../prosemirror-suggest
       prosemirror-trailing-node: link:../prosemirror-trailing-node
       react-content-loader: 6.0.3_react@17.0.2
