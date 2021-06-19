@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { cx } from '@remirror/core';
-import { useCommands } from '@remirror/react-core';
 import { FlatEmojiWithUrl, useEmoji } from '@remirror/react-hooks';
 import { ExtensionEmojiTheme } from '@remirror/theme';
 
@@ -27,7 +26,6 @@ const emptyList: never[] = [];
  * This component renders the emoji suggestion dropdown for the user.
  */
 export const EmojiPopupComponent: FC = () => {
-  const { focus } = useCommands();
   const { state, getMenuProps, getItemProps, indexIsHovered, indexIsSelected } = useEmoji();
   const enabled = !!state;
 
@@ -49,10 +47,6 @@ export const EmojiPopupComponent: FC = () => {
                   isHovered && ExtensionEmojiTheme.EMOJI_POPUP_HOVERED,
                 )}
                 {...getItemProps({
-                  onClick: () => {
-                    state?.apply(emoji.emoji);
-                    focus();
-                  },
                   item: emoji,
                   index,
                 })}
