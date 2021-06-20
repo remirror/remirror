@@ -46,15 +46,15 @@ export const EDITOR = css`
     }
   }
 
-  .ProseMirror-hideselection *::selection {
+  &.ProseMirror-hideselection *::selection {
     background: transparent;
   }
 
-  .ProseMirror-hideselection *::-moz-selection {
+  &.ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
 
-  .ProseMirror-hideselection {
+  &.ProseMirror-hideselection {
     caret-color: transparent;
   }
 
