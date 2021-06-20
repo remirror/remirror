@@ -80,7 +80,7 @@ export function splitListItem(
   listItemType: string | NodeType,
   ignoreAttrs: string[] = ['checked'],
 ): CommandFunction {
-  return function ({ tr: tr, dispatch, state }) {
+  return function ({ tr, dispatch, state }) {
     const type = getNodeType(listItemType, state.schema);
     const { $from, $to } = tr.selection;
 
@@ -164,12 +164,12 @@ export function splitListItem(
       : [{ type, attrs: newTypeAttributes }];
 
     if (!canSplit(tr.doc, $from.pos, 2)) {
-      // I can't add `types` and I don't know why
+      // I can't use `canSplit(tr.doc, $from.pos, 2, types)` and I don't know why
       return false;
     }
 
     if (dispatch) {
-      // TODO: types for tr.split need to be fixed
+      // TODO: types for `tr.split` need to be fixed in `@types/prosemirror-transform`
       dispatch(tr.split($from.pos, 2, types as any).scrollIntoView());
     }
 
