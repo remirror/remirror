@@ -79,7 +79,12 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
         });
       }
 
-      return createCustomMarkListItemNodeView({ node, mark });
+      return createCustomMarkListItemNodeView({
+        mark,
+        extraClasses: node.attrs.closed
+          ? [ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_CLOSED]
+          : undefined,
+      });
     };
   }
 

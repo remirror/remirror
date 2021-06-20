@@ -92,7 +92,7 @@ export class TaskListItemExtension extends NodeExtension {
       const extraAttrs: Record<string, string> = node.attrs.checked
         ? { 'data-task-list-item': '', 'data-checked': '' }
         : { 'data-task-list-item': '' };
-      return createCustomMarkListItemNodeView({ node, mark: checkbox, extraAttrs });
+      return createCustomMarkListItemNodeView({ mark: checkbox, extraAttrs });
     };
   }
 

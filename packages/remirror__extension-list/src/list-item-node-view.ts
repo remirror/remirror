@@ -3,19 +3,19 @@ import type { NodeView } from '@remirror/pm/view';
 import { ExtensionListTheme } from '@remirror/theme';
 
 export function createCustomMarkListItemNodeView({
-  node,
   mark,
   extraAttrs,
+  extraClasses,
 }: {
-  node: ProsemirrorNode;
   mark: HTMLElement;
   extraAttrs?: Record<string, string>;
+  extraClasses?: string[];
 }): NodeView {
   const dom = document.createElement('li');
   dom.classList.add(ExtensionListTheme.LIST_ITEM_WITH_CUSTOM_MARKER);
 
-  if (node.attrs.closed) {
-    dom.classList.add(ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_CLOSED);
+  if (extraClasses) {
+    extraClasses.forEach((className) => dom.classList.add(className));
   }
 
   const markContainer = document.createElement('span');
