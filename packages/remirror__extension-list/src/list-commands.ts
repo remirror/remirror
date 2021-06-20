@@ -76,7 +76,10 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
  * Build a command that splits a non-empty textblock at the top level
  * of a list item by also splitting that list item.
  */
-export function splitListItem(listItemType: string | NodeType): CommandFunction {
+export function splitListItem(
+  listItemType: string | NodeType,
+  ignoreAttrs: string[] = ['checked'],
+): CommandFunction {
   return function ({ tr: tr, dispatch, state }) {
     const type = getNodeType(listItemType, state.schema);
     const { $from, $to } = tr.selection;
@@ -123,14 +126,9 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
           wrap = Fragment.from($from.node(depth).copy(wrap));
         }
 
-        // Add a second list item with an empty default start node
-        const createdNode = type.createAndFill({ ...grandParent.attrs, checked: false });
+        const nextType = type.contentMatch.defaultType?.createAndFill() || undefined;
 
-        if (!createdNode) {
-          return false;
-        }
-
-        wrap = wrap.append(Fragment.from(createdNode));
+        wrap = wrap.append(Fragment.from(type.createAndFill(null, nextType) || undefined));
 
         tr.replace(
           $from.before(keepItem ? undefined : -1),
@@ -149,18 +147,24 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
     }
 
     const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
+
+    const newTypeAttributes = Object.fromEntries(
+      Object.entries(grandParent.attrs).filter(([attr]) => !ignoreAttrs.includes(attr)),
+    );
+
+    const newNextTypeAttributes = { ...$from.node().attrs };
+
     tr.delete($from.pos, $to.pos);
 
-    // const types: TypesAfter = [{ type, attrs: { checked: false } }];
-    const types: TypesAfter = [undefined];
+    const types: TypesAfter = nextType
+      ? [
+          { type, attrs: newTypeAttributes },
+          { type: nextType, attrs: newNextTypeAttributes },
+        ]
+      : [{ type, attrs: newTypeAttributes }];
 
-    if (nextType) {
-      types.push({ type: nextType, attrs: { checked: false } });
-    }
-
-    console.log('types:', types);
-
-    if (!canSplit(tr.doc, $from.pos, 2, types)) {
+    if (!canSplit(tr.doc, $from.pos, 2)) {
+      // I can't add `types` and I don't know why
       return false;
     }
 
