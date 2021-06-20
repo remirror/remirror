@@ -6,18 +6,14 @@ import {
   extension,
   ExtensionPriority,
   ExtensionTag,
-  getMatchString,
-  InputRule,
   keyBinding,
   KeyBindingProps,
   NamedShortcut,
   NodeExtension,
   NodeExtensionSpec,
-  nodeInputRule,
   NodeSpecOverride,
 } from '@remirror/core';
 import { ExtensionListMessages as Messages } from '@remirror/messages';
-import { TextSelection } from '@remirror/pm/state';
 
 import { toggleList } from './list-commands';
 import { TaskListItemExtension } from './task-list-item-extension';
@@ -72,25 +68,6 @@ export class TaskListExtension extends NodeExtension {
   @keyBinding({ shortcut: NamedShortcut.TaskList, command: 'toggleTaskList' })
   listShortcut(props: KeyBindingProps): boolean {
     return this.toggleTaskList()(props);
-  }
-
-  createInputRules(): InputRule[] {
-    return [
-      nodeInputRule({
-        regexp: /^\s*(\[( ?|x|X)]\s)$/,
-        type: this.type,
-        getAttributes: (match) => ({
-          checked: ['x', 'X'].includes(getMatchString(match, 2)),
-        }),
-        beforeDispatch: ({ tr, start }) => {
-          const $listItemPos = tr.doc.resolve(start + 1);
-
-          if ($listItemPos.node()?.type.name === 'taskListItem') {
-            tr.setSelection(new TextSelection($listItemPos));
-          }
-        },
-      }),
-    ];
   }
 }
 

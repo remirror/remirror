@@ -4,17 +4,20 @@ import {
   CommandFunction,
   convertCommand,
   ExtensionTag,
+  getMatchString,
+  InputRule,
   isElementDomNode,
   isNodeSelection,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
+  nodeInputRule,
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorAttributes,
 } from '@remirror/core';
 import { liftListItem, sinkListItem } from '@remirror/pm/schema-list';
-import { NodeSelection } from '@remirror/pm/state';
+import { NodeSelection, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
@@ -126,6 +129,25 @@ export class TaskListItemExtension extends NodeExtension {
 
       return true;
     };
+  }
+
+  createInputRules(): InputRule[] {
+    return [
+      nodeInputRule({
+        regexp: /^\s*(\[( ?|x|X)]\s)$/,
+        type: this.type,
+        getAttributes: (match) => ({
+          checked: ['x', 'X'].includes(getMatchString(match, 2)),
+        }),
+        beforeDispatch: ({ tr, start }) => {
+          const $listItemPos = tr.doc.resolve(start + 1);
+
+          if ($listItemPos.node()?.type.name === 'taskListItem') {
+            tr.setSelection(new TextSelection($listItemPos));
+          }
+        },
+      }),
+    ];
   }
 }
 
