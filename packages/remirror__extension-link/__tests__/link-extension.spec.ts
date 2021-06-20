@@ -725,3 +725,54 @@ describe('spanning', () => {
     `);
   });
 });
+
+describe('target', () => {
+  it('should allow `supportedTargets`', () => {
+    const editor = renderEditor([new LinkExtension({ supportedTargets: ['_blank'] })]);
+    const {
+      attributeMarks: { link: a },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>')));
+    editor.chain
+      .insertHtml('<a href="//test.com" target="_blank">test</a>')
+      .selectText('end')
+      .run();
+    const link = a({ href: '//test.com', target: '_blank' });
+    // editor.debug();
+    expect(editor.doc).toEqualRemirrorDocument(doc(p(link('test'))));
+  });
+
+  it('should not allow non `supportedTargets`', () => {
+    const editor = renderEditor([new LinkExtension({ supportedTargets: ['_blank'] })]);
+    const {
+      attributeMarks: { link: a },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>')));
+    editor.chain
+      .insertHtml('<a href="//test.com" target="_parent">test</a>')
+      .selectText('end')
+      .run();
+    const link = a({ href: '//test.com' });
+    expect(editor.doc).toEqualRemirrorDocument(doc(p(link('test'))));
+  });
+
+  it('should add `defaultTarget` to supported targets', () => {
+    const editor = renderEditor([new LinkExtension({ defaultTarget: '_blank' })]);
+    const {
+      attributeMarks: { link: a },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>')));
+    editor.chain
+      .insertHtml('<a href="//test.com" target="_blank">test</a>')
+      .selectText('end')
+      .run();
+    const link = a({ href: '//test.com', target: '_blank' });
+    expect(editor.doc).toEqualRemirrorDocument(doc(p(link('test'))));
+  });
+});

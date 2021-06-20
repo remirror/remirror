@@ -629,16 +629,16 @@ export const coreStyledCss: ReturnType<typeof css> = css`
     caret-color: var(--rmr-color-selection-caret);
     text-shadow: var(--rmr-color-selection-shadow);
   }
-  .remirror-editor .ProseMirror-hideselection *::-moz-selection {
+  .remirror-editor.ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
-  .remirror-editor .ProseMirror-hideselection *::selection {
+  .remirror-editor.ProseMirror-hideselection *::selection {
     background: transparent;
   }
-  .remirror-editor .ProseMirror-hideselection *::-moz-selection {
+  .remirror-editor.ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
-  .remirror-editor .ProseMirror-hideselection {
+  .remirror-editor.ProseMirror-hideselection {
     caret-color: transparent;
   }
   .remirror-editor .ProseMirror-selectednode {

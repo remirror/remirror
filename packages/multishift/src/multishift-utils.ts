@@ -657,13 +657,7 @@ export function getChangesFromItemClick<Item = any>({
   props,
   getItemId,
 }: GetChangesFromItemClickProps<Item>): MultishiftStateProps<Item> {
-  const selectedItem = assertGet(items, index);
-  const selectedItems = toggleSelectedItems(
-    state.selectedItems,
-    [selectedItem],
-    getItemId,
-    props.multiple,
-  );
+  const selectedItem = items[index];
   const isOpen = props.multiple ? true : defaultState.isOpen;
   const params = { state, getItemId };
   const defaultReturn: MultishiftStateProps<Item> = {
@@ -675,6 +669,13 @@ export function getChangesFromItemClick<Item = any>({
     // TODO check if this logic is desirable
     return { ...defaultReturn, isOpen };
   }
+
+  const selectedItems = toggleSelectedItems(
+    state.selectedItems,
+    [selectedItem],
+    getItemId,
+    props.multiple,
+  );
 
   // Check if the modifier for selecting multiple items is pressed.
   const shiftKeyPressed = modifiers.includes('shiftKey');

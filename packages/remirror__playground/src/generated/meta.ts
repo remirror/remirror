@@ -245,6 +245,7 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
       'isNodeOfType',
       'isNodeSelection',
       'isNodeType',
+      'isProsemirrorFragment',
       'isProsemirrorMark',
       'isProsemirrorNode',
       'isRemirrorJSON',
@@ -484,6 +485,7 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
       'isNodeOfType',
       'isNodeSelection',
       'isNodeType',
+      'isProsemirrorFragment',
       'isProsemirrorMark',
       'isProsemirrorNode',
       'isRemirrorJSON',
@@ -628,7 +630,7 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
   },
   {
     moduleName: '@remirror/extension-image',
-    exports: ['ImageExtension', 'isImageFileType'],
+    exports: ['ImageExtension', 'ResizableImageView', 'isImageFileType'],
   },
   {
     moduleName: '@remirror/extension-italic',
@@ -851,6 +853,7 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
       'useHelpers',
       'useI18n',
       'useManager',
+      'useMarkRange',
       'usePortalContainer',
       'useRemirror',
       'useRemirrorContext',
@@ -940,6 +943,7 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
       'useHelpers',
       'useI18n',
       'useManager',
+      'useMarkRange',
       'usePortalContainer',
       'useRemirror',
       'useRemirrorContext',
@@ -1024,6 +1028,10 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
   {
     moduleName: 'prosemirror-paste-rules',
     exports: ['isInCode', 'pasteRules'],
+  },
+  {
+    moduleName: 'prosemirror-resizable-view',
+    exports: ['ResizableNodeView'],
   },
   {
     moduleName: 'prosemirror-suggest',
@@ -1283,6 +1291,7 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
       'isNodeOfType',
       'isNodeSelection',
       'isNodeType',
+      'isProsemirrorFragment',
       'isProsemirrorMark',
       'isProsemirrorNode',
       'isRemirrorJSON',
@@ -1331,6 +1340,7 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
       'ExtensionEmojiTheme',
       'ExtensionGapCursorTheme',
       'ExtensionImageTheme',
+      'ExtensionListTheme',
       'ExtensionMentionAtomTheme',
       'ExtensionPlaceholderTheme',
       'ExtensionPositionerTheme',

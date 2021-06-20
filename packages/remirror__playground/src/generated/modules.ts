@@ -8,6 +8,7 @@
 import * as CreateContextState from 'create-context-state';
 import * as Multishift from 'multishift';
 import * as ProsemirrorPasteRules from 'prosemirror-paste-rules';
+import * as ProsemirrorResizableView from 'prosemirror-resizable-view';
 import * as ProsemirrorSuggest from 'prosemirror-suggest';
 import * as ProsemirrorTrailingNode from 'prosemirror-trailing-node';
 import * as React from 'react';
@@ -126,6 +127,7 @@ export const IMPORT_CACHE_MODULES: Record<string, any> = {
   'create-context-state': CreateContextState,
   multishift: Multishift,
   'prosemirror-paste-rules': ProsemirrorPasteRules,
+  'prosemirror-resizable-view': ProsemirrorResizableView,
   'prosemirror-suggest': ProsemirrorSuggest,
   'prosemirror-trailing-node': ProsemirrorTrailingNode,
   remirror: Remirror,
