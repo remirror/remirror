@@ -77,11 +77,11 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
  * of a list item by also splitting that list item.
  */
 export function splitListItem(
-  listItemType: string | NodeType,
+  listItemTypeOrName: string | NodeType,
   ignoreAttrs: string[] = ['checked'],
 ): CommandFunction {
   return function ({ tr, dispatch, state }) {
-    const type = getNodeType(listItemType, state.schema);
+    const listItemType = getNodeType(listItemTypeOrName, state.schema);
     const { $from, $to } = tr.selection;
 
     if (
@@ -100,7 +100,7 @@ export function splitListItem(
     // as the list item type.
     const grandParent = $from.node(-1);
 
-    if (grandParent.type !== type) {
+    if (grandParent.type !== listItemType) {
       return false;
     }
 
@@ -110,7 +110,7 @@ export function splitListItem(
       // command handle lifting.
       if (
         $from.depth === 2 ||
-        $from.node(-3).type !== type ||
+        $from.node(-3).type !== listItemType ||
         $from.index(-2) !== $from.node(-2).childCount - 1
       ) {
         return false;
@@ -126,9 +126,9 @@ export function splitListItem(
           wrap = Fragment.from($from.node(depth).copy(wrap));
         }
 
-        const nextType = type.contentMatch.defaultType?.createAndFill() || undefined;
+        const nextType = listItemType.contentMatch.defaultType?.createAndFill() || undefined;
 
-        wrap = wrap.append(Fragment.from(type.createAndFill(null, nextType) || undefined));
+        wrap = wrap.append(Fragment.from(listItemType.createAndFill(null, nextType) || undefined));
 
         tr.replace(
           $from.before(keepItem ? undefined : -1),
@@ -146,22 +146,22 @@ export function splitListItem(
       return true;
     }
 
-    const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
-
-    const newTypeAttributes = Object.fromEntries(
+    const listItemAttributes = Object.fromEntries(
       Object.entries(grandParent.attrs).filter(([attr]) => !ignoreAttrs.includes(attr)),
     );
 
-    const newNextTypeAttributes = { ...$from.node().attrs };
+    // The content inside the list item (e.g. paragraph)
+    const contentType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
+    const contentAttributes = { ...$from.node().attrs };
 
     tr.delete($from.pos, $to.pos);
 
-    const types: TypesAfter = nextType
+    const types: TypesAfter = contentType
       ? [
-          { type, attrs: newTypeAttributes },
-          { type: nextType, attrs: newNextTypeAttributes },
+          { type: listItemType, attrs: listItemAttributes },
+          { type: contentType, attrs: contentAttributes },
         ]
-      : [{ type, attrs: newTypeAttributes }];
+      : [{ type: listItemType, attrs: listItemAttributes }];
 
     if (!canSplit(tr.doc, $from.pos, 2)) {
       // I can't use `canSplit(tr.doc, $from.pos, 2, types)` and I don't know why
