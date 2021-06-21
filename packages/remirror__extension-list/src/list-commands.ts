@@ -171,7 +171,8 @@ export function splitListItem(
 
     if (dispatch) {
       // TODO: types for `tr.split` need to be fixed in `@types/prosemirror-transform`
-      dispatch(tr.split($from.pos, 2, types as any).scrollIntoView());
+      // @ts-expect-error
+      dispatch(tr.split($from.pos, 2, types).scrollIntoView());
     }
 
     return true;
