@@ -64,12 +64,10 @@ export function useReactFramework<Extension extends AnyExtension>(
     };
   }, [framework]);
 
-  const previousEditable = usePrevious(editable);
-
   // Handle editor updates
   useEffect(() => {
-    framework.onUpdate(previousEditable);
-  }, [previousEditable, framework]);
+    framework.onUpdate();
+  }, [editable, framework]);
 
   // Handle the controlled editor usage.
   useControlledEditor(framework);

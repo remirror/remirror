@@ -561,6 +561,9 @@
       "path": "packages/remirror__react-utils/src"
     },
     {
+      "path": "packages/remirror__react/__stories__"
+    },
+    {
       "path": "packages/remirror__react/src"
     },
     {

@@ -80,6 +80,41 @@ describe('Remirror Controlled Component', () => {
     expect(chain.dom).toMatchSnapshot();
   });
 
+  it('updates with the editable prop', () => {
+    const chain = create();
+
+    const value = chain.manager.createState({
+      content: '<p>Not terrible</p>',
+    });
+    const onChange = jest.fn();
+
+    const { rerender } = strictRender(
+      <Remirror
+        {...props}
+        manager={chain.manager}
+        state={value}
+        onChange={onChange}
+        autoRender='start'
+        editable
+      />,
+    );
+
+    expect(chain.dom.getAttribute('contenteditable')).toBe('true');
+
+    rerender(
+      <Remirror
+        {...props}
+        manager={chain.manager}
+        state={value}
+        onChange={onChange}
+        autoRender='start'
+        editable={false}
+      />,
+    );
+
+    expect(chain.dom.getAttribute('contenteditable')).toBe('false');
+  });
+
   it('responds to updates to the editor state', () => {
     const chain = create();
 
