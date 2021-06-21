@@ -19,8 +19,8 @@ import { NodeSelection, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
-import { ListItemSharedExtension } from './list-item-command-extension';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
+import { ListItemSharedExtension } from './list-item-shared-extension';
 
 /**
  * Creates the node for a task list item.
