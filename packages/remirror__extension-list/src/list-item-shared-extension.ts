@@ -7,7 +7,7 @@ import { sharedLiftListItem, sharedSinkListItem } from './list-commands';
  */
 export class ListItemSharedExtension extends PlainExtension {
   get name() {
-    return 'listItemSharedCommands' as const;
+    return 'listItemShared' as const;
   }
 
   createKeymap(): KeyBindings {
