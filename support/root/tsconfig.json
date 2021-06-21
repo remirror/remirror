@@ -294,6 +294,9 @@
       "path": "packages/remirror__extension-link/src"
     },
     {
+      "path": "packages/remirror__extension-list/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-list/__tests__"
     },
     {

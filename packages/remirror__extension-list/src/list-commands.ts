@@ -1,4 +1,5 @@
 import {
+  AnyExtension,
   chainableEditorState,
   CommandFunction,
   ExtensionTag,
@@ -10,8 +11,8 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 import { Fragment, Slice } from '@remirror/pm/model';
-import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
-import { Selection } from '@remirror/pm/state';
+import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
+import { EditorState, Selection } from '@remirror/pm/state';
 import { canSplit } from '@remirror/pm/transform';
 
 /**
@@ -76,9 +77,12 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
  * Build a command that splits a non-empty textblock at the top level
  * of a list item by also splitting that list item.
  */
-export function splitListItem(listItemType: string | NodeType): CommandFunction {
-  return function ({ tr: tr, dispatch, state }) {
-    const type = getNodeType(listItemType, state.schema);
+export function splitListItem(
+  listItemTypeOrName: string | NodeType,
+  ignoreAttrs: string[] = ['checked'],
+): CommandFunction {
+  return function ({ tr, dispatch, state }) {
+    const listItemType = getNodeType(listItemTypeOrName, state.schema);
     const { $from, $to } = tr.selection;
 
     if (
@@ -97,7 +101,7 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
     // as the list item type.
     const grandParent = $from.node(-1);
 
-    if (grandParent.type !== type) {
+    if (grandParent.type !== listItemType) {
       return false;
     }
 
@@ -107,7 +111,7 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
       // command handle lifting.
       if (
         $from.depth === 2 ||
-        $from.node(-3).type !== type ||
+        $from.node(-3).type !== listItemType ||
         $from.index(-2) !== $from.node(-2).childCount - 1
       ) {
         return false;
@@ -123,16 +127,9 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
           wrap = Fragment.from($from.node(depth).copy(wrap));
         }
 
-        // type.contentMatch.defaultType?
+        const content = listItemType.contentMatch.defaultType?.createAndFill() || undefined;
 
-        // Add a second list item with an empty default start node
-        const createdNode = type.createAndFill({ ...grandParent.attrs, checked: false });
-
-        if (!createdNode) {
-          return false;
-        }
-
-        wrap = wrap.append(Fragment.from(createdNode));
+        wrap = wrap.append(Fragment.from(listItemType.createAndFill(null, content) || undefined));
 
         tr.replace(
           $from.before(keepItem ? undefined : -1),
@@ -150,22 +147,31 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
       return true;
     }
 
-    const nextType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
+    const listItemAttributes = Object.fromEntries(
+      Object.entries(grandParent.attrs).filter(([attr]) => !ignoreAttrs.includes(attr)),
+    );
+
+    // The content inside the list item (e.g. paragraph)
+    const contentType = $to.pos === $from.end() ? grandParent.contentMatchAt(0).defaultType : null;
+    const contentAttributes = { ...$from.node().attrs };
+
     tr.delete($from.pos, $to.pos);
 
-    const types: TypesAfter = [undefined];
+    const types: TypesAfter = contentType
+      ? [
+          { type: listItemType, attrs: listItemAttributes },
+          { type: contentType, attrs: contentAttributes },
+        ]
+      : [{ type: listItemType, attrs: listItemAttributes }];
 
-    if (nextType) {
-      types.push({ type: nextType, attrs: {} });
-    }
-
-    if (!canSplit(tr.doc, $from.pos, 2, types)) {
+    if (!canSplit(tr.doc, $from.pos, 2)) {
+      // I can't use `canSplit(tr.doc, $from.pos, 2, types)` and I don't know why
       return false;
     }
 
     if (dispatch) {
-      // TODO: types for tr.split need to be fixed
-      dispatch(tr.split($from.pos, 2, types as any).scrollIntoView());
+      // @ts-expect-error TODO: types for `tr.split` need to be fixed in `@types/prosemirror-transform`
+      dispatch(tr.split($from.pos, 2, types).scrollIntoView());
     }
 
     return true;
@@ -174,3 +180,75 @@ export function splitListItem(listItemType: string | NodeType): CommandFunction 
 
 type TypeAfter = { type: NodeType; attrs: ProsemirrorAttributes } | null | undefined;
 type TypesAfter = TypeAfter[];
+
+/**
+ * Get all list item node type names in currect schema
+ */
+function getAllListItemNames(allExtensions: AnyExtension[]): string[] {
+  return allExtensions
+    .filter((extension) => extension.tags.includes(ExtensionTag.ListItemNode))
+    .map((extension) => extension.name);
+}
+
+/**
+ * Get all list item node types from current selection. Sort from deepest to root.
+ */
+function getOrderedListItemTypes(
+  listItemNames: string[],
+  state: EditorState,
+): Map<string, NodeType> {
+  const { $from, $to } = state.selection;
+  const sharedDepth = $from.sharedDepth($to.pos);
+  const listItemTypes = new Map<string, NodeType>();
+
+  for (let depth = sharedDepth; depth >= 0; depth--) {
+    const type = $from.node(depth).type;
+
+    if (listItemNames.includes(type.name) && !listItemTypes.has(type.name)) {
+      listItemTypes.set(type.name, type);
+    }
+  }
+
+  return listItemTypes;
+}
+
+/**
+ * Create a command to sink the list item around the selection down into an
+ * inner list. Use this function if you get multiple list item nodes in your
+ * schema.
+ */
+export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFunction {
+  const listItemNames = getAllListItemNames(allExtensions);
+
+  return function ({ dispatch, state }) {
+    const listItemTypes = getOrderedListItemTypes(listItemNames, state);
+
+    for (const type of listItemTypes.values()) {
+      if (sinkListItem(type)(state, dispatch)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+}
+
+/**
+ * Create a command to lift the list item around the selection up intoa wrapping
+ * list. Use this function if you get multiple list item nodes in your schema.
+ */
+export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFunction {
+  const listItemNames = getAllListItemNames(allExtensions);
+
+  return function ({ dispatch, state }) {
+    const listItemTypes = getOrderedListItemTypes(listItemNames, state);
+
+    for (const type of listItemTypes.values()) {
+      if (liftListItem(type)(state, dispatch)) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+}
