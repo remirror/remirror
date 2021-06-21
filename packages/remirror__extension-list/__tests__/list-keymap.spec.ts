@@ -12,8 +12,8 @@ describe('Enter', () => {
     nodes: { doc, paragraph: p, orderedList: ol, bulletList: ul, listItem: li, taskList: tl },
     attributeNodes: { taskListItem },
   } = editor;
-  const tif = taskListItem({ checked: false });
-  const tit = taskListItem({ checked: true });
+  const unchecked = taskListItem({ checked: false });
+  const checked = taskListItem({ checked: true });
 
   let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
 
@@ -52,35 +52,35 @@ describe('Enter', () => {
   });
 
   it('splits a task list item', () => {
-    from = doc(tl(tif(p('hello <cursor>world'))));
-    to = doc(tl(tif(p('hello ')), tif(p('world'))));
+    from = doc(tl(unchecked(p('hello <cursor>world'))));
+    to = doc(tl(unchecked(p('hello ')), unchecked(p('world'))));
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
 
-    from = doc(tl(tif(p('<cursor>hello world'))));
-    to = doc(tl(tif(p('')), tif(p('hello world'))));
+    from = doc(tl(unchecked(p('<cursor>hello world'))));
+    to = doc(tl(unchecked(p('')), unchecked(p('hello world'))));
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
 
-    from = doc(tl(tif(p('hello world<cursor>'))));
-    to = doc(tl(tif(p('hello world')), tif(p(''))));
+    from = doc(tl(unchecked(p('hello world<cursor>'))));
+    to = doc(tl(unchecked(p('hello world')), unchecked(p(''))));
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
   it('cleans the `checked` attribute when splitting a task list item', () => {
-    from = doc(tl(tit(p('hello <cursor>world'))));
-    to = doc(tl(tit(p('hello ')), tif(p('world'))));
+    from = doc(tl(checked(p('hello <cursor>world'))));
+    to = doc(tl(checked(p('hello ')), unchecked(p('world'))));
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
 
-    from = doc(tl(tit(p('<cursor>hello world'))));
-    to = doc(tl(tit(p('')), tif(p('hello world'))));
+    from = doc(tl(checked(p('<cursor>hello world'))));
+    to = doc(tl(checked(p('')), unchecked(p('hello world'))));
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
 
-    from = doc(tl(tit(p('hello world<cursor>'))));
-    to = doc(tl(tit(p('hello world')), tif(p(''))));
+    from = doc(tl(checked(p('hello world<cursor>'))));
+    to = doc(tl(checked(p('hello world')), unchecked(p(''))));
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
