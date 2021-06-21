@@ -17,3 +17,11 @@ export class ListItemSharedExtension extends PlainExtension {
     };
   }
 }
+
+declare global {
+  namespace Remirror {
+    interface AllExtensions {
+      listItemShared: ListItemSharedExtension;
+    }
+  }
+}
