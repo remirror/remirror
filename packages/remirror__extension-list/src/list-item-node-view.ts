@@ -1,4 +1,3 @@
-import { ProsemirrorNode } from '@remirror/pm';
 import type { NodeView } from '@remirror/pm/view';
 import { ExtensionListTheme } from '@remirror/theme';
 
