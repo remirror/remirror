@@ -2,7 +2,6 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
-  convertCommand,
   ExtensionTag,
   getMatchString,
   InputRule,
@@ -16,11 +15,11 @@ import {
   NodeViewMethod,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import { liftListItem, sinkListItem } from '@remirror/pm/schema-list';
 import { NodeSelection, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
+import { ListItemSharedExtension } from './list-item-command-extension';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
 
 /**
@@ -102,9 +101,11 @@ export class TaskListItemExtension extends NodeExtension {
   createKeymap(): KeyBindings {
     return {
       Enter: splitListItem(this.type),
-      Tab: convertCommand(sinkListItem(this.type)),
-      'Shift-Tab': convertCommand(liftListItem(this.type)),
     };
+  }
+
+  createExtensions() {
+    return [new ListItemSharedExtension()];
   }
 
   /**
