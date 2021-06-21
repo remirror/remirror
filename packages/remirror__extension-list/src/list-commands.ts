@@ -126,9 +126,9 @@ export function splitListItem(
           wrap = Fragment.from($from.node(depth).copy(wrap));
         }
 
-        const nextType = listItemType.contentMatch.defaultType?.createAndFill() || undefined;
+        const content = listItemType.contentMatch.defaultType?.createAndFill() || undefined;
 
-        wrap = wrap.append(Fragment.from(listItemType.createAndFill(null, nextType) || undefined));
+        wrap = wrap.append(Fragment.from(listItemType.createAndFill(null, content) || undefined));
 
         tr.replace(
           $from.before(keepItem ? undefined : -1),
