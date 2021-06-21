@@ -1,4 +1,9 @@
-import { BulletListExtension, HeadingExtension, OrderedListExtension } from 'remirror/extensions';
+import {
+  BulletListExtension,
+  HeadingExtension,
+  LinkExtension,
+  OrderedListExtension,
+} from 'remirror/extensions';
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 import { TaskListExtension } from '../src/task-list-extension';
@@ -7,7 +12,7 @@ export default { title: 'List Extension' };
 
 export const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({
-    extensions: extensions,
+    extensions,
     content,
     stringHandler: 'html',
   });
@@ -42,6 +47,7 @@ const extensions = () => [
   new OrderedListExtension(),
   new TaskListExtension(),
   new HeadingExtension(),
+  new LinkExtension(),
 ];
 
 const extensionsWithSpine = () => [

@@ -88,8 +88,8 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
                 Fragment.fromArray([
                   textNode.mark([markType.create(attributes), ...textNode.marks]),
                 ]),
-                $pos.depth,
-                $pos.depth,
+                slice.openStart,
+                slice.openEnd,
               );
             }
           }
