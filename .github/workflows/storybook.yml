@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # don't run this job from a fork repository
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: github.repository_owner == 'remirror'
 
     steps:
       - name: checkout code repository
