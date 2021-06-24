@@ -189,7 +189,7 @@
   },
   {
     "name": "@remirror/extension-callout",
-    "limit": "5 KB",
+    "limit": "15 KB",
     "path": "packages/remirror__extension-callout/dist/remirror-extension-callout.browser.esm.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,

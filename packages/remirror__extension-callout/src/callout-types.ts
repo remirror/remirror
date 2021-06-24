@@ -1,4 +1,5 @@
-import type { LiteralUnion, ProsemirrorAttributes, Static } from '@remirror/core';
+import type { LiteralUnion, ProsemirrorAttributes, ProsemirrorNode, Static } from '@remirror/core';
+import { EditorView } from '@remirror/pm/view';
 
 /**
  * Options available to the [[`CalloutExtension`]].
@@ -16,9 +17,22 @@ export interface CalloutOptions {
   /**
    * The valid types for the callout node.
    *
-   * @default ['info', 'warning' , 'error' , 'success']
+   * @default ['info', 'warning' , 'error' , 'success', 'blank']
    */
   validTypes?: Static<string[]>;
+
+  /**
+   * The default emoji passed to attrsibute when none is provided.
+   *
+   * @default ''
+   */
+  defaultEmoji?: Static<string>;
+
+  /**
+   * The function passed into `calloutExtension` to render the emoji at the front.
+   *
+   */
+  renderEmoji?: (node: ProsemirrorNode, view: EditorView, getPos: () => number) => HTMLElement;
 }
 
 export interface CalloutAttributes extends ProsemirrorAttributes {
@@ -27,5 +41,5 @@ export interface CalloutAttributes extends ProsemirrorAttributes {
    *
    * @default 'info'
    */
-  type?: LiteralUnion<'info' | 'warning' | 'error' | 'success', string>;
+  type?: LiteralUnion<'info' | 'warning' | 'error' | 'success' | 'blank', string>;
 }

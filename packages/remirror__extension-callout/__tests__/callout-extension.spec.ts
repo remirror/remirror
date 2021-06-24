@@ -1,6 +1,6 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from 'remirror';
+import { htmlToProsemirrorNode, ProsemirrorNode, prosemirrorNodeToHtml } from 'remirror';
 import { createCoreManager } from 'remirror/extensions';
 
 import { CalloutExtension } from '../';
@@ -72,9 +72,11 @@ describe('commands', () => {
       commands.toggleCallout({ type: 'error' });
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
         <div data-callout-type="error">
-          <p>
-            Make this a callout
-          </p>
+          <div>
+            <p>
+              Make this a callout
+            </p>
+          </div>
         </div>
       `);
       expect(view.state.doc).toEqualRemirrorDocument(
@@ -96,9 +98,11 @@ describe('commands', () => {
       commands.toggleCallout();
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
         <div data-callout-type="info">
-          <p>
-            Make this a callout
-          </p>
+          <div>
+            <p>
+              Make this a callout
+            </p>
+          </div>
         </div>
       `);
       expect(view.state.doc).toEqualRemirrorDocument(
@@ -130,9 +134,11 @@ describe('commands', () => {
       commands.toggleCallout();
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
         <div data-callout-type="success">
-          <p>
-            Make this a callout
-          </p>
+          <div>
+            <p>
+              Make this a callout
+            </p>
+          </div>
         </div>
       `);
       expect(view.state.doc).toEqualRemirrorDocument(
@@ -148,9 +154,11 @@ describe('commands', () => {
       commands.updateCallout({ type: 'error' });
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
         <div data-callout-type="error">
-          <p>
-            This is a callout
-          </p>
+          <div>
+            <p>
+              This is a callout
+            </p>
+          </div>
         </div>
       `);
       expect(view.state.doc).toEqualRemirrorDocument(
@@ -341,6 +349,22 @@ describe('inputRules', () => {
     });
   });
 
+  describe(':::blank', () => {
+    it('followed by space creates a blank callout', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText(':::blank ');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'blank' })(p(''))));
+    });
+
+    it('followed by enter creates a blank callout', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText(':::blank')
+        .press('Enter');
+
+      expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'blank' })(p(''))));
+    });
+  });
+
   describe('unknown type', () => {
     it('followed by space creates the default type callout', () => {
       const { state } = add(doc(p('<cursor>'))).insertText(':::unknown ');
@@ -354,6 +378,96 @@ describe('inputRules', () => {
         .press('Enter');
 
       expect(state.doc).toEqualRemirrorDocument(doc(callout({ type: 'info' })(p(''))));
+    });
+  });
+});
+
+const renderEmoji = (node: ProsemirrorNode) => {
+  const emoji = document.createElement('span');
+  emoji.textContent = node.attrs.emoji;
+  return emoji;
+};
+
+function createWithNoEmoji() {
+  const calloutExtension = new CalloutExtension({ renderEmoji });
+  return renderEditor([calloutExtension]);
+}
+
+function createAndSetEmoji() {
+  const calloutExtension = new CalloutExtension({ defaultEmoji: '💓' });
+  return renderEditor([calloutExtension]);
+}
+
+describe('emoji', () => {
+  describe('without defaultEmoji setup', () => {
+    const {
+      add,
+      view,
+      nodes: { p, doc },
+      attributeNodes: { callout },
+    } = createWithNoEmoji();
+
+    it('will not render emoji', () => {
+      add(doc(callout({ type: 'info' })(p(`This is a callout<cursor>`))));
+      expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+          <div data-callout-type="info">
+            <div>
+              <p>
+                This is a callout
+              </p>
+            </div>
+          </div>
+        `);
+    });
+
+    it('passes an emoji attribute, will render the emoji', () => {
+      add(doc(callout({ type: 'info', emoji: '🦦' })(p(`This is a callout<cursor>`))));
+
+      expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+          <div data-callout-type="info"
+               data-callout-emoji="🦦"
+          >
+            <div class="remirror-callout-emoji-wrapper">
+              <span>
+                🦦
+              </span>
+            </div>
+            <div>
+              <p>
+                This is a callout
+              </p>
+            </div>
+          </div>
+        `);
+    });
+  });
+
+  describe('with defaultEmoji setup', () => {
+    const {
+      add,
+      view,
+      nodes: { p, doc },
+      attributeNodes: { callout },
+    } = createAndSetEmoji();
+
+    it('render emoji', () => {
+      add(doc(callout({ type: 'info' })(p(`This is a callout<cursor>`))));
+      expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+          <div data-callout-type="info"
+               data-callout-emoji="💓"
+          >
+            <div class="remirror-callout-emoji-wrapper">
+              <span>
+                💓
+              </span>
+            </div>
+            <div>
+              <p>
+                This is a callout
+              </p>
+            </div>
+          </div>
+        `);
     });
   });
 });

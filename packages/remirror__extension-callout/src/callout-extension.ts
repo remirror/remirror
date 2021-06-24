@@ -15,15 +15,21 @@ import {
   NodeExtensionSpec,
   nodeInputRule,
   NodeSpecOverride,
+  NodeViewMethod,
   omitExtraAttributes,
+  ProsemirrorNode,
   toggleWrap,
 } from '@remirror/core';
 import { Fragment, Slice } from '@remirror/pm/model';
 import { TextSelection } from '@remirror/pm/state';
+import { EditorView } from '@remirror/pm/view';
+import { ExtensionCalloutTheme } from '@remirror/theme';
 
 import type { CalloutAttributes, CalloutOptions } from './callout-types';
 import {
+  dataAttributeEmoji,
   dataAttributeType,
+  defaultEmojiRender,
   getCalloutType,
   toggleCalloutOptions,
   updateNodeAttributes,
@@ -35,9 +41,11 @@ import {
 @extension<CalloutOptions>({
   defaultOptions: {
     defaultType: 'info',
-    validTypes: ['info', 'warning', 'error', 'success'],
+    validTypes: ['info', 'warning', 'error', 'success', 'blank'],
+    defaultEmoji: '',
+    renderEmoji: defaultEmojiRender,
   },
-  staticKeys: ['defaultType', 'validTypes'],
+  staticKeys: ['defaultType', 'validTypes', 'defaultEmoji'],
 })
 export class CalloutExtension extends NodeExtension<CalloutOptions> {
   get name() {
@@ -46,8 +54,38 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
   readonly tags = [ExtensionTag.Block];
 
+  /**
+   * Defines the callout html structure.
+   * Adds the returned DOM node form `renderEmoji`  into it.
+   */
+  createNodeViews(): NodeViewMethod {
+    return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
+      const { type, emoji } = node.attrs;
+      const { renderEmoji } = this.options;
+      const dom = document.createElement('div');
+      const contentDOM = document.createElement('div');
+      dom.setAttribute(dataAttributeType, type);
+
+      if (emoji) {
+        const emojiWrapper = document.createElement('div');
+        const emojiNode = renderEmoji(node, view, getPos as () => number);
+
+        dom.setAttribute(dataAttributeEmoji, emoji);
+        emojiWrapper.classList.add(ExtensionCalloutTheme.CALLOUT_EMOJI_WRAPPER);
+
+        if (emojiNode) {
+          emojiWrapper.append(emojiNode);
+          dom.append(emojiWrapper);
+        }
+      }
+
+      dom.append(contentDOM);
+      return { dom, contentDOM };
+    };
+  }
+
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
-    const { defaultType, validTypes } = this.options;
+    const { defaultType, validTypes, defaultEmoji } = this.options;
     return {
       content: 'block+',
       defining: true,
@@ -56,6 +94,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       attrs: {
         ...extra.defaults(),
         type: { default: defaultType },
+        emoji: { default: defaultEmoji },
       },
       parseDOM: [
         {
@@ -66,17 +105,24 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
             }
 
             const rawType = node.getAttribute(dataAttributeType);
+            const emoji: string = node.getAttribute(dataAttributeEmoji) ?? '';
+
             const type = getCalloutType(rawType, validTypes, defaultType);
             const content = node.textContent;
-            return { ...extra.parse(node), type, content };
+            return { ...extra.parse(node), type, emoji, content };
           },
         },
         ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
-        const { type, ...rest } = omitExtraAttributes(node.attrs, extra);
-        const attributes = { ...extra.dom(node), ...rest, [dataAttributeType]: type };
-
+        const { type, emoji, ...rest } = omitExtraAttributes(node.attrs, extra);
+        const emojiAttributes = emoji ? { [dataAttributeEmoji]: emoji } : {};
+        const attributes = {
+          ...extra.dom(node),
+          ...rest,
+          [dataAttributeType]: type,
+          ...emojiAttributes,
+        };
         return ['div', attributes, 0];
       },
     };

@@ -692,10 +692,20 @@ export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
  * Styles extracted from: packages/remirror__theme/src/extension-callout-theme.ts
  */
   .remirror-editor div[data-callout-type] {
-    border-left: 2px solid transparent;
+    display: flex;
     margin-left: 0;
     margin-right: 0;
-    padding-left: 10px;
+    padding: 10px;
+    border-left: 2px solid transparent;
+  }
+
+  .remirror-editor div[data-callout-type] > .remirror-callout-emoji-wrapper {
+    min-width: 20px;
+    cursor: pointer;
+  }
+
+  .remirror-editor div[data-callout-type] > :not(.remirror-callout-emoji-wrapper) {
+    margin-left: 8px;
   }
   .remirror-editor div[data-callout-type='info'] {
     background: #eef6fc;
@@ -712,6 +722,9 @@ export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
   .remirror-editor div[data-callout-type='success'] {
     background: #effaf3;
     border-left-color: #48c774;
+  }
+  .remirror-editor div[data-callout-type='blank'] {
+    background: #f8f8f8;
   }
 `;
 

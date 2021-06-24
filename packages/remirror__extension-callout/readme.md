@@ -34,3 +34,21 @@ import { CalloutExtension } from '@remirror/extension-callout';
 
 const extension = new CalloutExtension();
 ```
+
+To render a emoji at the front.
+
+```ts
+import { CalloutExtension } from '@remirror/extension-callout';
+
+const basicExtensions = () => [new CalloutExtension({ renderEmoji, defaultEmoji: '💡' })];
+
+/**
+ *  If you want to update the emoji to a new one,
+ * you can dispatch a transaction to update the `emoji` attrs inside this function.
+ */
+const renderEmoji = (node: ProsemirrorNode) => {
+  const emoji = document.createElement('span');
+  emoji.textContent = node.attrs.emoji;
+  return emoji;
+};
+```
