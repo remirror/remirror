@@ -1,7 +1,9 @@
 /* Alias Types */
 
-export type EditorSchema<Nodes extends string = string, Marks extends string = string> =
-  import('../model').Schema<Nodes, Marks>;
+export type EditorSchema<
+  Nodes extends string = string,
+  Marks extends string = string,
+> = import('../model').Schema<Nodes, Marks>;
 export type EditorView<Schema extends EditorSchema = EditorSchema> =
   import('../view').EditorView<Schema>;
 export type Selection<Schema extends EditorSchema = EditorSchema> =

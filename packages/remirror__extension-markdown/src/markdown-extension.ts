@@ -168,9 +168,10 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
       const { state } = props;
       let html = this.options.markdownToHtml(markdown, this.options.htmlSanitizer);
 
-      if (!options?.alwaysWrapInBlock && html.startsWith('<p><') && html.endsWith('</p>\n')) {
-        html = html.slice(3, -5);
-      }
+      html =
+        !options?.alwaysWrapInBlock && html.startsWith('<p><') && html.endsWith('</p>\n')
+          ? html.slice(3, -5)
+          : `<div>${html}</div>`;
 
       const fragment = this.store.stringHandlers.html({
         content: html,
@@ -198,6 +199,8 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
   /**
    * TODO add commands for plain text markdown
    * @notimplemented
+   *
+   * @internal
    */
   @command()
   toggleBoldMarkdown(): CommandFunction {

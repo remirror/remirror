@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@lingui/core": "^3.8.9",
+    "@lingui/core": "^3.10.4",
     "@popperjs/core": "^2.9.2",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/extension-positioner": "1.0.0-next.60",
@@ -68,8 +68,8 @@
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
-    "@types/react": "^17.0.2",
-    "@types/react-dom": "^17.0.3",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

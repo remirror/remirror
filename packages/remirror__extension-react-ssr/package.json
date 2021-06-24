@@ -49,7 +49,7 @@
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/react": "1.0.0-next.60",
-    "@types/react": "^17.0.2",
+    "@types/react": "^17.0.11",
     "react": "^17.0.2"
   },
   "peerDependencies": {

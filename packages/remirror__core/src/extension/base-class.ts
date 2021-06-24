@@ -643,25 +643,29 @@ export type AnyBaseClassConstructor = Replace<
  * Auto infers the parameter for the constructor. If there is a required static
  * option then the TypeScript compiler will error if nothing is passed in.
  */
-export type ConstructorProps<Options extends ValidOptions, DefaultStaticOptions extends Shape> =
-  IfNoRequiredProperties<
-    GetStatic<Options>,
-    [options?: GetConstructorProps<Options> & DefaultStaticOptions],
-    [options: GetConstructorProps<Options> & DefaultStaticOptions]
-  >;
+export type ConstructorProps<
+  Options extends ValidOptions,
+  DefaultStaticOptions extends Shape,
+> = IfNoRequiredProperties<
+  GetStatic<Options>,
+  [options?: GetConstructorProps<Options> & DefaultStaticOptions],
+  [options: GetConstructorProps<Options> & DefaultStaticOptions]
+>;
 
 /**
  * Get the expected type signature for the `defaultOptions`. Requires that every
  * optional setting key (except for keys which are defined on the
  * `BaseExtensionOptions`) has a value assigned.
  */
-export type DefaultOptions<Options extends ValidOptions, DefaultStaticOptions extends Shape> =
-  MakeUndefined<
-    UndefinedFlipPartialAndRequired<GetStatic<Options>> &
-      Partial<DefaultStaticOptions> &
-      GetFixedDynamic<Options>,
-    StringKey<GetAcceptUndefined<Options>>
-  >;
+export type DefaultOptions<
+  Options extends ValidOptions,
+  DefaultStaticOptions extends Shape,
+> = MakeUndefined<
+  UndefinedFlipPartialAndRequired<GetStatic<Options>> &
+    Partial<DefaultStaticOptions> &
+    GetFixedDynamic<Options>,
+  StringKey<GetAcceptUndefined<Options>>
+>;
 
 export interface AnyBaseClassOverrides {
   addCustomHandler: AnyFunction;

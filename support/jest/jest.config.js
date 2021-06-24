@@ -24,4 +24,5 @@ module.exports = {
   ],
   cacheDirectory: baseDir('.jest', TEST_BUILD ? 'build' : 'aliased'),
   errorOnDeprecated: true,
+  testEnvironment: 'jsdom',
 };

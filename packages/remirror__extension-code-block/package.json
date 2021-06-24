@@ -51,13 +51,13 @@
     "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
     "@remirror/theme": "1.0.0-next.60",
-    "@types/refractor": "^3",
+    "@types/refractor": "^3.0.1",
     "refractor": "^3.3.1"
   },
   "devDependencies": {
     "@remirror/pm": "1.0.0-next.60",
-    "@types/prettier": "^2.2.3",
-    "prettier": "^2.2.1"
+    "@types/prettier": "^2.3.0",
+    "prettier": "^2.3.1"
   },
   "peerDependencies": {
     "@remirror/pm": "1.0.0-next.60",

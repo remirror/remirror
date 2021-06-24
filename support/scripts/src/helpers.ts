@@ -7,7 +7,7 @@ import camelCaseKeys from 'camelcase-keys';
 import chalk from 'chalk';
 import { exec as _exec } from 'child_process';
 import fs from 'fs';
-import diff from 'jest-diff';
+import { diff } from 'jest-diff';
 import isEqual from 'lodash.isequal';
 import minimist from 'minimist';
 import path from 'path';

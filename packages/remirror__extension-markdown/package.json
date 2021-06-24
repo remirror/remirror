@@ -38,9 +38,9 @@
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/messages": "0.0.0",
-    "@types/marked": "^2.0.2",
+    "@types/marked": "^2.0.3",
     "@types/turndown": "^5.0.0",
-    "marked": "^2.0.0",
+    "marked": "^2.1.1",
     "turndown": "^7.0.0",
     "turndown-plugin-gfm": "^1.0.2"
   },

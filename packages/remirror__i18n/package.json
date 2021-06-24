@@ -52,8 +52,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@lingui/core": "^3.8.9",
-    "@lingui/detect-locale": "^3.8.9",
+    "@lingui/core": "^3.10.4",
+    "@lingui/detect-locale": "^3.10.4",
     "@remirror/core-helpers": "1.0.0-next.60",
     "make-plural": "^6.2.1"
   },

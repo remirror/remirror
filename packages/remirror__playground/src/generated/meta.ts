@@ -642,7 +642,15 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
   },
   {
     moduleName: '@remirror/extension-list',
-    exports: ['BulletListExtension', 'ListItemExtension', 'OrderedListExtension', 'toggleList'],
+    exports: [
+      'BulletListExtension',
+      'ListItemExtension',
+      'ListItemSharedExtension',
+      'OrderedListExtension',
+      'TaskListExtension',
+      'TaskListItemExtension',
+      'toggleList',
+    ],
   },
   {
     moduleName: '@remirror/extension-markdown',

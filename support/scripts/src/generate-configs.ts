@@ -723,7 +723,7 @@ async function generatePackageTsConfigs() {
  * The runner that runs when this is actioned.
  */
 async function main() {
-  if (cliArgs.size) {
+  if (cliArgs.size > 0) {
     // Update the `size-limit.json` file.
     await Promise.all([generateSizeLimitConfig()]);
   } else if (cliArgs.tsPackages) {
