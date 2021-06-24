@@ -140,10 +140,13 @@ export type MinArray<Type, Length extends number> = Length extends Length
     ? Type[]
     : _MinArray<Type, Length, []>
   : never;
-type _MinArray<Type, Length extends number, Accumulated extends unknown[]> =
-  Accumulated['length'] extends Length
-    ? [...Accumulated, ...Type[]]
-    : _MinArray<Type, Length, [Type, ...Accumulated]>;
+type _MinArray<
+  Type,
+  Length extends number,
+  Accumulated extends unknown[],
+> = Accumulated['length'] extends Length
+  ? [...Accumulated, ...Type[]]
+  : _MinArray<Type, Length, [Type, ...Accumulated]>;
 
 /**
  * An array which must include the first item.
@@ -213,10 +216,12 @@ export type IndexUnionFromTuple<Tuple extends readonly unknown[]> = Tuple extend
     ? number
     : _IndexUnionFromTuple<[], Tuple['length']>
   : never;
-type _IndexUnionFromTuple<Tuple extends readonly unknown[], Length extends number> =
-  Tuple['length'] extends Length
-    ? Tuple[number]
-    : _IndexUnionFromTuple<[...Tuple, Tuple['length']], Length>;
+type _IndexUnionFromTuple<
+  Tuple extends readonly unknown[],
+  Length extends number,
+> = Tuple['length'] extends Length
+  ? Tuple[number]
+  : _IndexUnionFromTuple<[...Tuple, Tuple['length']], Length>;
 
 /**
  * Create a tuple of `Size` from the provided `Type`.
@@ -381,8 +386,11 @@ type NeverBrand = Brand<object, never>;
  * This is useful for dynamically setting the parameter list of a method call
  * depending on whether keys are required.
  */
-export type IfNoRequiredProperties<Type extends object, Then, Else> =
-  GetRequiredKeys<Type> extends NeverBrand ? Then : Else;
+export type IfNoRequiredProperties<
+  Type extends object,
+  Then,
+  Else,
+> = GetRequiredKeys<Type> extends NeverBrand ? Then : Else;
 
 /**
  * Get all the keys for required properties on this type.

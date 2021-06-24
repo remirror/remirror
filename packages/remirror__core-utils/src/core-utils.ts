@@ -1235,9 +1235,11 @@ export function htmlToProsemirrorNode(props: StringHandlerOptions): ProsemirrorN
   const parser = PMDomParser.fromSchema(schema);
 
   return fragment
-    ? parser.parseSlice(element, parseOptions).content
-    : parser.parse(element, parseOptions);
+    ? parser.parseSlice(element, { ...defaultParseOptions, ...parseOptions }).content
+    : parser.parse(element, { ...defaultParseOptions, ...parseOptions });
 }
+
+const defaultParseOptions = { preserveWhitespace: false } as const;
 
 /**
  * A wrapper around `state.doc.toJSON` which returns the state as a

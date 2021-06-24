@@ -1,4 +1,4 @@
-import type { MimeType } from 'codemirror/mode/meta';
+import type { ModeInfo } from 'codemirror/mode/meta';
 import { CommandFunction, findParentNodeOfType, isEqual, NodeType } from '@remirror/core';
 import { Selection } from '@remirror/pm/state';
 
@@ -67,7 +67,7 @@ export function updateNodeAttributes(type: NodeType) {
  */
 export function parseLanguageToMode(language?: string): string | null {
   if (language) {
-    let mime: MimeType | undefined;
+    let mime: ModeInfo | undefined;
 
     if ((mime = ref.CodeMirror.findModeByName(language))) {
       return mime.mode;

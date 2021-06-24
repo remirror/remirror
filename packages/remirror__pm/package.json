@@ -174,13 +174,13 @@
     "@types/prosemirror-transform": "^1",
     "@types/prosemirror-view": "^1.17.1",
     "prosemirror-collab": "^1",
-    "prosemirror-commands": "^1.1.7",
-    "prosemirror-dropcursor": "^1.3.4",
+    "prosemirror-commands": "^1.1.9",
+    "prosemirror-dropcursor": "^1.3.5",
     "prosemirror-gapcursor": "^1",
     "prosemirror-history": "^1",
     "prosemirror-inputrules": "^1",
     "prosemirror-keymap": "^1",
-    "prosemirror-model": "^1.14.0",
+    "prosemirror-model": "^1.14.2",
     "prosemirror-paste-rules": "0.0.0",
     "prosemirror-schema-list": "^1",
     "prosemirror-state": "^1.3.4",
@@ -188,7 +188,7 @@
     "prosemirror-tables": "^1.1.1",
     "prosemirror-trailing-node": "0.0.0",
     "prosemirror-transform": "^1.3.2",
-    "prosemirror-view": "^1.18.3"
+    "prosemirror-view": "^1.18.7"
   },
   "publishConfig": {
     "access": "public"

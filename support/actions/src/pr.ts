@@ -19,7 +19,7 @@ async function run() {
     process.exit(1);
   }
 
-  const octokit = getOctokit(githubToken);
+  const octokit = getOctokit(githubToken).rest;
   const giphyKey = getInput('giphyKey');
   const prNumber = context.payload.issue?.number as number;
   const owner = context.payload.repository?.full_name?.split('/')[0] as string;
@@ -80,7 +80,6 @@ async function run() {
     });
   } catch (error) {
     const gif = await getMarkdownGif(giphy, 'epic fail');
-
     await octokit.issues.createComment({
       owner,
       repo,

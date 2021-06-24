@@ -21,8 +21,10 @@ type TupleRange<Size extends number> = Size extends Size
     ? number[]
     : _NumberRangeTuple<[], Size>
   : never;
-type _NumberRangeTuple<Tuple extends readonly unknown[], Length extends number> =
-  Tuple['length'] extends Length ? Tuple : _NumberRangeTuple<[...Tuple, Tuple['length']], Length>;
+type _NumberRangeTuple<
+  Tuple extends readonly unknown[],
+  Length extends number,
+> = Tuple['length'] extends Length ? Tuple : _NumberRangeTuple<[...Tuple, Tuple['length']], Length>;
 
 /**
  * Type cast an argument. If no type is provided it will default to any.

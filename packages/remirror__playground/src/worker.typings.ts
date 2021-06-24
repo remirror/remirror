@@ -185,10 +185,9 @@ async function fetchFromMeta(dependency: string, version: string, fetchedPaths: 
 
   const items = await Promise.all(
     declarations.map((file) => {
-      return fetchAsText(`${NPM_ROOT_URL}${dependency}@${version}${file}`).then((content: string): [
-        string,
-        string,
-      ] => [`node_modules/${dependency}${file}`, content]);
+      return fetchAsText(`${NPM_ROOT_URL}${dependency}@${version}${file}`).then(
+        (content: string): [string, string] => [`node_modules/${dependency}${file}`, content],
+      );
     }),
   );
 
