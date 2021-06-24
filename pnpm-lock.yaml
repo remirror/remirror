@@ -1083,7 +1083,7 @@ importers:
       '@remirror/pm': 1.0.0-next.60
       '@remirror/theme': 1.0.0-next.60
       '@svgmoji/blob': ^3.1.0
-      svgmoji: ^3.1.0
+      svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core': link:../remirror__core
@@ -11083,7 +11083,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.1
+      follow-redirects: 1.14.1_debug@4.3.1
     transitivePeerDependencies:
       - debug
 
@@ -16065,15 +16065,6 @@ packages:
       xtend: 4.0.2
     dev: true
 
-  /follow-redirects/1.14.1:
-    resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-
   /follow-redirects/1.14.1_debug@4.3.1:
     resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
     engines: {node: '>=4.0'}
@@ -16084,7 +16075,6 @@ packages:
         optional: true
     dependencies:
       debug: 4.3.1_supports-color@6.1.0
-    dev: true
 
   /follow-redirects/1.5.10:
     resolution: {integrity: sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==}
