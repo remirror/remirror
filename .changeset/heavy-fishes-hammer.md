@@ -4,4 +4,5 @@
 '@remirror/theme': minor
 ---
 
-Added configurable emoji at the front of callout extension. Added a new type 'blank' to callout extension.
+- Added configurable emoji to the start of the `CalloutExtension`.
+- Added a new type 'blank' to the `CalloutExtension`.
