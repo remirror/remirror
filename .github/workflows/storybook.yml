@@ -17,9 +17,6 @@ jobs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
 
-    # don't run this job from a fork repository
-    if: github.repository_owner == 'remirror'
-
     steps:
       - name: checkout code repository
         uses: actions/checkout@v2
@@ -55,7 +52,7 @@ jobs:
 
       - name: deploy storybook for pull request
         uses: amondnet/vercel-action@v20
-        if: github.ref != 'refs/heads/beta'
+        if: github.ref != 'refs/heads/beta' && github.event.pull_request.head.repo.full_name == github.repository # don't run this job from a fork repository
         with:
           working-directory: ./packages/storybook-react/storybook-static
           vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
