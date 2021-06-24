@@ -1074,15 +1074,23 @@ importers:
   packages/remirror__extension-callout:
     specifiers:
       '@babel/runtime': ^7.13.10
+      '@joeattardi/emoji-button': ^4.6.0
       '@remirror/core': 1.0.0-next.60
       '@remirror/messages': 0.0.0
       '@remirror/pm': 1.0.0-next.60
+      '@remirror/theme': 1.0.0-next.60
+      '@svgmoji/blob': ^3.1.0
+      svgmoji: ^3.1.0
     dependencies:
       '@babel/runtime': 7.14.0
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
+      '@remirror/theme': link:../remirror__theme
     devDependencies:
+      '@joeattardi/emoji-button': 4.6.0
       '@remirror/pm': link:../remirror__pm
+      '@svgmoji/blob': 3.2.0
+      svgmoji: 3.2.0
 
   packages/remirror__extension-code:
     specifiers:
@@ -5936,6 +5944,36 @@ packages:
     resolution: {integrity: sha512-cT2jQpooHBPDVaVuGxRdO8L6Nnd8ucbOGPOaGFgMpm7Cyzh9Psi0ay8tiEJXIWNV7+k0ycbn8OT/HA1J8xK9lQ==}
     dev: false
 
+  /@fortawesome/fontawesome-common-types/0.2.35:
+    resolution: {integrity: sha512-IHUfxSEDS9dDGqYwIW7wTN6tn/O8E0n5PcAHz9cAaBoZw6UpG20IG/YM3NNLaGPwPqgjBAFjIURzqoQs3rrtuw==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dev: true
+
+  /@fortawesome/fontawesome-svg-core/1.2.35:
+    resolution: {integrity: sha512-uLEXifXIL7hnh2sNZQrIJWNol7cTVIzwI+4qcBIq9QWaZqUblm0IDrtSqbNg+3SQf8SMGHkiSigD++rHmCHjBg==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 0.2.35
+    dev: true
+
+  /@fortawesome/free-regular-svg-icons/5.15.3:
+    resolution: {integrity: sha512-q4/p8Xehy9qiVTdDWHL4Z+o5PCLRChePGZRTXkl+/Z7erDVL8VcZUuqzJjs6gUz6czss4VIPBRdCz6wP37/zMQ==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 0.2.35
+    dev: true
+
+  /@fortawesome/free-solid-svg-icons/5.15.3:
+    resolution: {integrity: sha512-XPeeu1IlGYqz4VWGRAT5ukNMd4VHUEEJ7ysZ7pSSgaEtNvSo+FLurybGJVmiqkQdK50OkSja2bfZXOeyMGRD8Q==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 0.2.35
+    dev: true
+
   /@graphql-tools/batch-execute/7.1.2:
     resolution: {integrity: sha512-IuR2SB2MnC2ztA/XeTMTfWcA0Wy7ZH5u+nDkDNLAdX+AaSyDnsQS35sCmHqG0VOGTl7rzoyBWLCKGwSJplgtwg==}
     peerDependencies:
@@ -6492,6 +6530,21 @@ packages:
     dependencies:
       '@babel/runtime': 7.14.0
       regenerator-runtime: 0.13.7
+    dev: true
+
+  /@joeattardi/emoji-button/4.6.0:
+    resolution: {integrity: sha512-KwOE1j+YxX47JmT0pXNCa+9Ai4Wf2fmABtvuxy6JBJ5QV0HdoThRKjL6CxAreVwwLbNQ/PDoR36xpc5QJjLXPA==}
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 1.2.35
+      '@fortawesome/free-regular-svg-icons': 5.15.3
+      '@fortawesome/free-solid-svg-icons': 5.15.3
+      '@popperjs/core': 2.9.2
+      '@types/twemoji': 12.1.1
+      focus-trap: 5.1.0
+      fuzzysort: 1.1.4
+      tiny-emitter: 2.1.0
+      tslib: 2.3.0
+      twemoji: 13.1.0
     dev: true
 
   /@kyleshevlin/eslint-plugin/1.3.0_eslint@7.26.0:
@@ -7205,7 +7258,6 @@ packages:
 
   /@popperjs/core/2.9.2:
     resolution: {integrity: sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==}
-    dev: false
 
   /@preconstruct/cli/2.1.0:
     resolution: {integrity: sha512-FfyWlZbinuv3be7yss8p9Yq87V88XKa6XUskeRSFDKgcgH1FwtTg9xYrEJm7j5QV4KThiQfPqoUN4m7hLxWlHg==}
@@ -8567,6 +8619,13 @@ packages:
       '@babel/runtime': 7.14.0
       '@svgmoji/core': 3.1.0
 
+  /@svgmoji/blob/3.2.0:
+    resolution: {integrity: sha512-N96WOrH9GxPSPZ/FuvZl6T9Rh54stAEuUcBppIRFh9/WwkU7Hczrjabw4uunwxFLX5TgR+rHlKJl3/jaTnXJrQ==}
+    dependencies:
+      '@babel/runtime': 7.14.0
+      '@svgmoji/core': 3.2.0
+    dev: true
+
   /@svgmoji/core/3.1.0:
     resolution: {integrity: sha512-iztEW4uyavGbmd2/iKw+t2uc+53HLlkuJ2BAtEXhf1eCoY48+Ah4DvIzIIr1bcqr+fXrCQPG0o6AxjeceqB3Xg==}
     dependencies:
@@ -8577,11 +8636,29 @@ packages:
       match-sorter: 6.3.0
       type-fest: 0.21.3
 
+  /@svgmoji/core/3.2.0:
+    resolution: {integrity: sha512-QsD78Op3S/5kUVsa5ierr4Wu/xwAdYuMI3Zmc/Y2ekYBEMGEUY8QxilXQRSAQ4ku4PnNV4xlB9e7xhD5hy113A==}
+    dependencies:
+      '@babel/runtime': 7.14.0
+      emojibase: 5.2.0
+      emojibase-regex: 5.1.3
+      idb-keyval: 5.0.5
+      match-sorter: 6.3.0
+      type-fest: 1.2.1
+    dev: true
+
   /@svgmoji/noto/3.1.0:
     resolution: {integrity: sha512-Xc2cJ7gqHkEpWk6m7zLjP2pKcYxNdQxjPmkPFMLrZfYQnzpteEgyiKXNfLidwqgY0shz6+MxIa8gWHdLVKwAEA==}
     dependencies:
       '@babel/runtime': 7.14.0
       '@svgmoji/core': 3.1.0
+
+  /@svgmoji/noto/3.2.0:
+    resolution: {integrity: sha512-JgtNciB06hMDI1Pb1N2IgLh44XRMZUUNwBANzjY5jXTPqOCu1A1VA35ENvUsRhEUZOm8I+hbdAEHkwMVqxLeIQ==}
+    dependencies:
+      '@babel/runtime': 7.14.0
+      '@svgmoji/core': 3.2.0
+    dev: true
 
   /@svgmoji/openmoji/3.1.0:
     resolution: {integrity: sha512-8FpVItrNhQKWYlUJReVbpmSKOpLBdkLpk2c/GHp1ynMZNeyV16GGL2NaUOqj2Nhp3Qgqb7datmGNHIun/tQEaw==}
@@ -8589,11 +8666,25 @@ packages:
       '@babel/runtime': 7.14.0
       '@svgmoji/core': 3.1.0
 
+  /@svgmoji/openmoji/3.2.0:
+    resolution: {integrity: sha512-USHbG+O80HfmdoNAHbOnlO+2gppXJfHFWKSRFj53Th4aimWEx4/9MB3cFbC3KZ1NOqXaLBq9jDaw4vFuGDVTUQ==}
+    dependencies:
+      '@babel/runtime': 7.14.0
+      '@svgmoji/core': 3.2.0
+    dev: true
+
   /@svgmoji/twemoji/3.1.0:
     resolution: {integrity: sha512-7xbBE/7Hkr8oOuWIAP4WoP2ZjocOcO9aOIvr7ffKMVJ+exVUtIH5aE3h+4unZo92dzLkugmfEH9TAuwQO42cPQ==}
     dependencies:
       '@babel/runtime': 7.14.0
       '@svgmoji/core': 3.1.0
+
+  /@svgmoji/twemoji/3.2.0:
+    resolution: {integrity: sha512-6xqZgh9viFDKf5wvrxw56ImCR3Ni84IqwK45lxojOe1Gc1Mni1GpPfr4gb7WHDKjumfx+K7BHSvX0KXt3Nr3CQ==}
+    dependencies:
+      '@babel/runtime': 7.14.0
+      '@svgmoji/core': 3.2.0
+    dev: true
 
   /@svgr/babel-plugin-add-jsx-attribute/5.4.0:
     resolution: {integrity: sha512-ZFf2gs/8/6B8PnSofI0inYXr2SDNTDScPXhN7k5EqD4aZ3gi6u+rbmZHVB8IM3wDyx8ntKACZbtXSm7oZGRqVg==}
@@ -9629,6 +9720,10 @@ packages:
   /@types/turndown/5.0.0:
     resolution: {integrity: sha512-Y7KZn6SfSv1vzjByJGijrM9w99HoUbLiAgYwe+sGH6RYi5diIGLYOcr4Z1YqR2biFs9K5PnxKv/Fbkmh57pvzg==}
     dev: false
+
+  /@types/twemoji/12.1.1:
+    resolution: {integrity: sha512-dW1B1WHTfrWmEzXb/tp8xsZqQHAyMB9JwLwbBqkIQVzmNUI02R7lJqxUpKFM114ygNZHKA1r74oPugCAiYHt1A==}
+    dev: true
 
   /@types/ua-parser-js/0.7.36:
     resolution: {integrity: sha512-N1rW+njavs70y2cApeIw1vLMYXRwfBy+7trgavGuuTfOd7j1Yh7QTRc/yqsPl6ncokt72ZXuxEU0PiCp9bSwNQ==}
@@ -16105,6 +16200,13 @@ packages:
       react: 17.0.2
     dev: true
 
+  /focus-trap/5.1.0:
+    resolution: {integrity: sha512-CkB/nrO55069QAUjWFBpX6oc+9V90Qhgpe6fBWApzruMq5gnlh90Oo7iSSDK7pKiV5ugG6OY2AXM5mxcmL3lwQ==}
+    dependencies:
+      tabbable: 4.0.0
+      xtend: 4.0.2
+    dev: true
+
   /follow-redirects/1.14.1:
     resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
     engines: {node: '>=4.0'}
@@ -16424,6 +16526,10 @@ packages:
   /fuzzaldrin/2.1.0:
     resolution: {integrity: sha1-kCBMPi/appQbso0WZF1BgGOpDps=}
     dev: false
+
+  /fuzzysort/1.1.4:
+    resolution: {integrity: sha512-JzK/lHjVZ6joAg3OnCjylwYXYVjRiwTY6Yb25LvfpJHK8bjisfnZJ5bY8aVWwTwCXgxPNgLAtmHL+Hs5q1ddLQ==}
+    dev: true
 
   /gauge/2.7.4:
     resolution: {integrity: sha1-LANAXHU4w51+s3sxcCLjJfsBi/c=}
@@ -19604,6 +19710,14 @@ packages:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
     optionalDependencies:
       graceful-fs: 4.2.6
+
+  /jsonfile/5.0.0:
+    resolution: {integrity: sha512-NQRZ5CRo74MhMMC3/3r5g2k4fjodJ/wh8MxjFbCViWKFjxrnudWSY5vomh+23ZaXzAS7J3fBZIR2dV6WbmfM0w==}
+    dependencies:
+      universalify: 0.1.2
+    optionalDependencies:
+      graceful-fs: 4.2.6
+    dev: true
 
   /jsonfile/6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
@@ -27869,6 +27983,17 @@ packages:
       '@svgmoji/openmoji': 3.1.0
       '@svgmoji/twemoji': 3.1.0
 
+  /svgmoji/3.2.0:
+    resolution: {integrity: sha512-tjmdQhIju2ZQ81FLBlPngg1aWMOhQjP9ErXb2ROikM0aBGA/hqI0/DN/5J0sDsXzJPHmODpSFhWfiSsUieU3bA==}
+    dependencies:
+      '@babel/runtime': 7.14.0
+      '@svgmoji/blob': 3.2.0
+      '@svgmoji/core': 3.2.0
+      '@svgmoji/noto': 3.2.0
+      '@svgmoji/openmoji': 3.2.0
+      '@svgmoji/twemoji': 3.2.0
+    dev: true
+
   /svgo/1.3.2:
     resolution: {integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==}
     engines: {node: '>=4.0.0'}
@@ -27927,6 +28052,10 @@ packages:
       buffer: 5.7.1
       node-fetch: 2.6.1
     dev: false
+
+  /tabbable/4.0.0:
+    resolution: {integrity: sha512-H1XoH1URcBOa/rZZWxLxHCtOdVUEev+9vo5YdYhC9tCY4wnybX+VQrCYuy9ubkg69fCBxCONJOSLGfw0DWMffQ==}
+    dev: true
 
   /table/6.7.1:
     resolution: {integrity: sha512-ZGum47Yi6KOOFDE8m223td53ath2enHcYLgOCjGr5ngu8bdIARQk6mN/wRMv4yMRcHnCSnHbCEha4sobQx5yWg==}
@@ -28197,7 +28326,6 @@ packages:
 
   /tiny-emitter/2.1.0:
     resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
-    optional: true
 
   /tiny-invariant/1.1.0:
     resolution: {integrity: sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==}
@@ -28437,6 +28565,10 @@ packages:
   /tslib/2.2.0:
     resolution: {integrity: sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==}
 
+  /tslib/2.3.0:
+    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
+    dev: true
+
   /tslog/3.2.0:
     resolution: {integrity: sha512-xOCghepl5w+wcI4qXI7vJy6c53loF8OoC/EuKz1ktAPMtltEDz00yo1poKuyBYIQaq4ZDYKYFPD9PfqVrFXh0A==}
     engines: {node: '>=10'}
@@ -28512,6 +28644,19 @@ packages:
   /tweetnacl/0.14.5:
     resolution: {integrity: sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=}
 
+  /twemoji-parser/13.1.0:
+    resolution: {integrity: sha512-AQOzLJpYlpWMy8n+0ATyKKZzWlZBJN+G0C+5lhX7Ftc2PeEVdUU/7ns2Pn2vVje26AIZ/OHwFoUbdv6YYD/wGg==}
+    dev: true
+
+  /twemoji/13.1.0:
+    resolution: {integrity: sha512-e3fZRl2S9UQQdBFLYXtTBT6o4vidJMnpWUAhJA+yLGR+kaUTZAt3PixC0cGvvxWSuq2MSz/o0rJraOXrWw/4Ew==}
+    dependencies:
+      fs-extra: 8.1.0
+      jsonfile: 5.0.0
+      twemoji-parser: 13.1.0
+      universalify: 0.1.2
+    dev: true
+
   /typanion/3.3.1:
     resolution: {integrity: sha512-VogBiMj3ZQuWaHkbhXwSgd9jXE4s7EMaaV7VSEiKTNYnKJs/bPjvcOGbD7rTM9aPqTABvgLVEZ+iFP6ab12HtQ==}
     dev: false
@@ -28581,6 +28726,11 @@ packages:
     resolution: {integrity: sha512-RPDKc5KrIyKTP7Fk75LruUagqG6b+OTgXlCR2Z0aQDJFeIvL4/mhahSEtHmmVzXu4gmA0srkF/8FCH3WOWxTWA==}
     engines: {node: '>=10'}
     dev: false
+
+  /type-fest/1.2.1:
+    resolution: {integrity: sha512-SbmIRuXhJs8KTneu77Ecylt9zuqL683tuiLYpTRil4H++eIhqCmx6ko6KAFem9dty8sOdnEiX7j4K1nRE628fQ==}
+    engines: {node: '>=10'}
+    dev: true
 
   /type-is/1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}

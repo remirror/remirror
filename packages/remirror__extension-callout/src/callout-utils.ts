@@ -7,12 +7,15 @@ import {
   isString,
   NodeType,
   ProsemirrorAttributes,
+  ProsemirrorNode,
 } from '@remirror/core';
 import { ExtensionCalloutMessages } from '@remirror/messages';
 
 import type { CalloutAttributes } from './callout-types';
 
 export const dataAttributeType = 'data-callout-type';
+
+export const dataAttributeEmoji = 'data-callout-emoji';
 
 /**
  * Check that the attributes exist and are valid for the codeBlock
@@ -86,4 +89,13 @@ export function getCalloutType(
   defaultType: string,
 ): string {
   return includes(validTypes, value) ? value : defaultType;
+}
+
+/**
+ * The default emoji render function.
+ */
+export function defaultEmojiRender(node: ProsemirrorNode): HTMLElement {
+  const emoji = document.createElement('span');
+  emoji.textContent = node.attrs.emoji;
+  return emoji;
 }
