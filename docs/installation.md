@@ -7,7 +7,7 @@ title: Installation
 
 Use the installation instruction outlined below, depending on the package manager used in your project.
 
-```bash
+```bash type=installation
 yarn add remirror @remirror/pm
 ```
 

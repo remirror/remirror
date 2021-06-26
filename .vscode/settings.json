@@ -34,7 +34,6 @@
   // Use PNPM
   "npm.packageManager": "pnpm",
   "eslint.packageManager": "pnpm",
-  "prettier.packageManager": "pnpm",
 
   // Improve editor performance. The project is large enough to cause issues
   // when symlinks are followed.

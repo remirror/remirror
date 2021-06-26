@@ -19,7 +19,7 @@ Perhaps you've removed a `NodeExtension` or `MarkExtension` from the manager sin
 
 - A node type that is unsupported by the editor (ProseMirror will throw an error).
 - A mark type that is unsupported by the editor (ProseMirror will throw an error).
-- Attributes that aren't supported (these are automatically discarded or added by ProseMirror) but can change the expected behaviour of the editor. This is the case if `schema.nodeFromJSON(json)` has attrs that don't exist on the `json.attrs`.
+- Attributes that aren't supported (these are automatically discarded or added by ProseMirror) but can change the expected behavior of the editor. This is the case if `schema.nodeFromJSON(json)` has attributes that don't exist on the `json.attrs`.
 
 ### Handling errors
 
@@ -50,4 +50,4 @@ The above editor will call the `onError` handler if there is any content that do
 
 ### Migration support
 
-Work is currently being done on the ability to automatically migrate versions of the schema when the content is first loaded.
+An [issue](https://github.com/remirror/remirror/issues/462) is being tracked to automatically migrate versions of the schema when the content is first loaded.

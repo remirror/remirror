@@ -18,6 +18,8 @@
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
 
+    // "noImplicitOverride": true, // TODO add this in a PR.
+
     "experimentalDecorators": true,
 
     // Import rules

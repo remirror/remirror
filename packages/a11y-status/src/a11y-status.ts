@@ -8,7 +8,7 @@ let statusDiv: HTMLDivElement | undefined;
  * Get the status node or create it if it does not already exist.
  *
  * @param doc - document passed by the user.
- * @return the singleton status node.
+ * @returns the singleton status node.
  */
 const getStatusDiv = (doc = document) => {
   if (statusDiv) {

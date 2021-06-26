@@ -1,3 +1,4 @@
+import path from 'path';
 import updateNotifier from 'update-notifier';
 
 import type { CommandContext } from './cli-types';

@@ -67,7 +67,7 @@
     "scripts": "0.0.1"
   },
   "devDependencies": {
-    "@types/node": "^15.12.4"
+    "@types/node": "^15.12.5"
   },
   "@remirror": {
     "tsconfigs": {

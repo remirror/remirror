@@ -5,9 +5,9 @@ const path = require('path');
  * @returns {import('@babel/core').TransformOptions}
  */
 function babelConfig(api) {
-  const caller = api.caller((caller) =>
-    caller === null || caller === void 0 ? void 0 : caller.name,
-  );
+  const caller = api.caller((caller) => {
+    return caller === null || caller === void 0 ? void 0 : caller.name;
+  });
   const isServer = caller === 'server';
   const absoluteRuntimePath = path.dirname(require.resolve('@babel/runtime/package.json'));
 

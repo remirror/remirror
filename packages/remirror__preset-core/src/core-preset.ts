@@ -40,8 +40,8 @@ const defaultOptions = {
 };
 
 /**
- * The core preset is included by default in framework code like
- * `remirror/react`.
+ * The core preset is included by default when creating an editor with
+ * `@remirror/react`.
  *
  * It comes with the the following extensions.
  *

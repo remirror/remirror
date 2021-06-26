@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json.schemastore.org/nodemon.json",
+  "watch": ["./src/**"],
+  "verbose": true
+}

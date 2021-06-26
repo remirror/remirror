@@ -47,7 +47,7 @@
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.12.5",
     "jest": "^27.0.4"
   },
   "peerDependencies": {

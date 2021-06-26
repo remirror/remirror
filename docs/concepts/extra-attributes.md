@@ -57,7 +57,7 @@ This example accomplishes the same things as the previous example and remirror i
 
 ### Render as data attributes
 
-You can return an array of a key value pair, to determine how your extra attribute is rendered in the DOM.
+You can return an array of a key value pair, to determine how your extra attribute is rendered in the DOM. The first value in the
 
 ```ts
 import { ParagraphExtension } from 'remirror/extension/paragraph';

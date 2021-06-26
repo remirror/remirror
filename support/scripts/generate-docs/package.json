@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-generate-docs.cjs.js",
+  "module": "dist/scripts-generate-docs.esm.js"
+}

@@ -90,6 +90,14 @@ export class FontFamilyExtension extends MarkExtension {
   setFontFamily(fontFamily: string): CommandFunction {
     return this.store.commands.applyMark.original(this.type, { fontFamily });
   }
+
+  /**
+   * Set the font family for the selected text.
+   */
+  @command()
+  toggleFontFamily(fontFamily: string): CommandFunction {
+    return this.store.commands.toggleMark.original({ type: this.type, attrs: { fontFamily } });
+  }
 }
 
 declare global {

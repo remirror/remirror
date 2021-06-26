@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const { getPackagesSync } = require('@manypkg/get-packages');
 const pkg = require('./package.json');
+const lightCodeTheme = require('prism-react-renderer/themes/github');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 module.exports = {
   title: 'Remirror',
@@ -14,7 +15,18 @@ module.exports = {
   themeConfig: {
     image:
       'https://repository-images.githubusercontent.com/166780923/eb30b500-a97f-11ea-8508-32089c11e24c',
-    colorMode: { disableSwitch: true },
+    colorMode: {
+      // "light" | "dark"
+      defaultMode: 'light',
+
+      // Hides the switch in the navbar
+      // Useful if you want to support a single color mode
+      disableSwitch: true,
+
+      // Should we use the prefers-color-scheme media-query,
+      // using user system preferences, instead of the hardcoded defaultMode
+      respectPrefersColorScheme: true,
+    },
     navbar: {
       logo: {
         alt: 'Remirror Logo',
@@ -27,7 +39,6 @@ module.exports = {
           label: 'Docs',
           position: 'right',
         },
-        { to: '/playground', label: 'Playground', position: 'right' },
         { to: '/blog', label: 'Blog', position: 'right' },
         { to: '/chat', label: 'Chat', position: 'right' },
         {
@@ -77,6 +88,10 @@ module.exports = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} KickJump Ltd. Built with Docusaurus`,
     },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+    },
     googleAnalytics: { trackingID: 'UA-135738542-1', anonymizeIP: true },
   },
   presets: [
@@ -84,14 +99,15 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          path: '../docs',
+          path: path.join(__dirname, '../docs'),
           sidebarPath: require.resolve('./sidebar.js'),
-          editUrl: 'https://github.com/remirror/remirror/edit/next/website/',
+          editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/',
+          // remarkPlugins: [require('remark-footnotes')],
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/remirror/remirror/edit/next/website/blog/',
-          remarkPlugins: [require('remark-footnotes')],
+          editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/blog/',
+          // remarkPlugins: [require('remark-footnotes')],
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -100,7 +116,7 @@ module.exports = {
     ],
   ],
   plugins: [
-    path.join(__dirname, 'plugins/monaco-editor'),
+    path.join(__dirname, 'plugins', 'basic-plugin.js'),
     require.resolve('@docusaurus/plugin-ideal-image'),
   ],
   themes: ['@docusaurus/theme-live-codeblock'],

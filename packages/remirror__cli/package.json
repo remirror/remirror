@@ -73,13 +73,13 @@
     "@types/ink-spinner": "^3.0.0",
     "@types/ink-testing-library": "^1.0.1",
     "@types/jsesc": "^3.0.0",
-    "@types/node": "^15.12.4",
+    "@types/node": "^15.12.5",
     "@types/react": "^17.0.11",
     "@types/rimraf": "^3.0.0",
     "ink-testing-library": "^2.1.0"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=14"
   },
   "preferGlobal": true,
   "publishConfig": {

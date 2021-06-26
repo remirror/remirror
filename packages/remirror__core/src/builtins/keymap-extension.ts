@@ -171,12 +171,12 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
-  onCreate(): void {
+  override onCreate(): void {
     this.store.setExtensionStore('rebuildKeymap', this.rebuildKeymap);
   }
 
   /** Add the created keymap to the available plugins. */
-  createExternalPlugins(): ProsemirrorPlugin[] {
+  override createExternalPlugins(): ProsemirrorPlugin[] {
     if (
       // The user doesn't want any keymaps in the editor so don't add the keymap
       // handler.
@@ -317,7 +317,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    * Create the base keymap and give it a low priority so that all other keymaps
    * override it.
    */
-  createKeymap(): PrioritizedKeyBindings {
+  override createKeymap(): PrioritizedKeyBindings {
     const { selectParentNodeOnEscape, undoInputRuleOnBackspace, excludeBaseKeymap } = this.options;
     const baseKeyBindings: KeyBindings = object();
 
@@ -367,7 +367,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    * different position in the `extraKeyBindings` array. This is especially
    * pertinent when using hooks.
    */
-  protected onAddCustomHandler: AddCustomHandler<KeymapOptions> = ({ keymap }) => {
+  protected override onAddCustomHandler: AddCustomHandler<KeymapOptions> = ({ keymap }) => {
     if (!keymap) {
       return;
     }
@@ -384,7 +384,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   /**
    * Handle changes in the dynamic properties.
    */
-  protected onSetOptions(props: OnSetOptionsProps<KeymapOptions>): void {
+  protected override onSetOptions(props: OnSetOptionsProps<KeymapOptions>): void {
     const { changes } = props;
 
     if (
@@ -683,11 +683,9 @@ export type KeyboardShortcuts = keyof typeof keyboardShortcuts | ShortcutMap;
 export type KeyBindingsTuple = [priority: ExtensionPriority, bindings: KeyBindings];
 
 /**
- * `KeyBindings` with as an object or optionally a tuple with a priority.
+ * `KeyBindings` as an object or prioritized tuple.
  */
-export type PrioritizedKeyBindings =
-  | KeyBindings
-  | [priority: ExtensionPriority, bindings: KeyBindings];
+export type PrioritizedKeyBindings = KeyBindings | KeyBindingsTuple;
 
 declare global {
   namespace Remirror {
