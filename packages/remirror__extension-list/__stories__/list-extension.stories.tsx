@@ -1,5 +1,6 @@
 import {
   BulletListExtension,
+  HardBreakExtension,
   HeadingExtension,
   LinkExtension,
   OrderedListExtension,
@@ -48,6 +49,7 @@ const extensions = () => [
   new TaskListExtension(),
   new HeadingExtension(),
   new LinkExtension(),
+  new HardBreakExtension(),
 ];
 
 const extensionsWithSpine = () => [
@@ -55,6 +57,7 @@ const extensionsWithSpine = () => [
   new OrderedListExtension(),
   new TaskListExtension(),
   new HeadingExtension(),
+  new HardBreakExtension(),
 ];
 
 const html = String.raw; // Just for better editor support

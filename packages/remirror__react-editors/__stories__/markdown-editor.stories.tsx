@@ -13,6 +13,7 @@ import {
   CodeBlockExtension,
   CodeExtension,
   DocExtension,
+  HardBreakExtension,
   HeadingExtension,
   ItalicExtension,
   LinkExtension,
@@ -210,6 +211,7 @@ const extensions = () => [
   new TrailingNodeExtension(),
   new TableExtension(),
   new MarkdownExtension({ copyAsMarkdown: false }),
+  new HardBreakExtension(),
 ];
 
 const toolbarItems: ToolbarItemUnion[] = [
