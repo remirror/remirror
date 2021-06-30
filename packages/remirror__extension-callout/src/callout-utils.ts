@@ -24,12 +24,17 @@ export const dataAttributeEmoji = 'data-callout-emoji';
 export function isValidCalloutAttributes(
   attributes: ProsemirrorAttributes,
 ): attributes is CalloutAttributes {
-  return !!(
-    attributes &&
-    isObject(attributes) &&
-    isString(attributes.type) &&
-    attributes.type.length > 0
-  );
+  if (attributes && isObject(attributes)) {
+    if (isString(attributes.type) && attributes.type.length > 0) {
+      return true;
+    }
+
+    if (isString(attributes.emoji)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**
@@ -38,13 +43,16 @@ export function isValidCalloutAttributes(
  * This is used to update the type of the callout.
  */
 export function updateNodeAttributes(type: NodeType) {
-  return (attributes: CalloutAttributes): CommandFunction =>
-    ({ state: { tr, selection }, dispatch }) => {
+  return (attributes: CalloutAttributes, pos?: number): CommandFunction =>
+    ({ state: { tr, selection, doc }, dispatch }) => {
       if (!isValidCalloutAttributes(attributes)) {
         throw new Error('Invalid attrs passed to the updateAttributes method');
       }
 
-      const parent = findParentNodeOfType({ types: type, selection });
+      const parent = findParentNodeOfType({
+        types: type,
+        selection: pos ? doc.resolve(pos) : selection,
+      });
 
       if (!parent || isEqual(attributes, parent.node.attrs)) {
         // Do nothing since the attrs are the same

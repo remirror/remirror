@@ -699,13 +699,9 @@ export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
     border-left: 2px solid transparent;
   }
 
-  .remirror-editor div[data-callout-type] > .remirror-callout-emoji-wrapper {
-    min-width: 20px;
-    cursor: pointer;
-  }
-
   .remirror-editor div[data-callout-type] > :not(.remirror-callout-emoji-wrapper) {
     margin-left: 8px;
+    flex-grow: 1;
   }
   .remirror-editor div[data-callout-type='info'] {
     background: #eef6fc;

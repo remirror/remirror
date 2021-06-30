@@ -179,8 +179,8 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * ```
    */
   @command(toggleCalloutOptions)
-  updateCallout(attributes: CalloutAttributes): CommandFunction {
-    return updateNodeAttributes(this.type)(attributes);
+  updateCallout(attributes: CalloutAttributes, pos?: number): CommandFunction {
+    return updateNodeAttributes(this.type)(attributes, pos);
   }
 
   @keyBinding({ shortcut: 'Enter' })

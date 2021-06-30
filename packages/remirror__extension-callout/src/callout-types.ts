@@ -37,9 +37,16 @@ export interface CalloutOptions {
 
 export interface CalloutAttributes extends ProsemirrorAttributes {
   /**
-   * The type of callout, for instance `info`, `warning`, `error` or `success`.
+   * The type of callout, for instance `info`, `warning`, `error`, `success` or `blank`.
    *
    * @default 'info'
    */
   type?: LiteralUnion<'info' | 'warning' | 'error' | 'success' | 'blank', string>;
+
+  /**
+   * The emoji information of callout.
+   *
+   * @default ''
+   */
+  emoji?: string;
 }
