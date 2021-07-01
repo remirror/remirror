@@ -49,6 +49,10 @@ const extensions = () => [
   new TaskListExtension(),
   new HeadingExtension(),
   new LinkExtension(),
+  /**
+   * `HardBreakExtension` allows us to create a newline inside paragraphs .
+   *  e.g. in a list item
+   */
   new HardBreakExtension(),
 ];
 

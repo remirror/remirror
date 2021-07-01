@@ -211,6 +211,10 @@ const extensions = () => [
   new TrailingNodeExtension(),
   new TableExtension(),
   new MarkdownExtension({ copyAsMarkdown: false }),
+  /**
+   * `HardBreakExtension` allows us to create a newline inside paragraphs.
+   * e.g. in a list item
+   */
   new HardBreakExtension(),
 ];
 
