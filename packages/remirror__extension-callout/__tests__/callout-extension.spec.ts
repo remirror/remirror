@@ -166,6 +166,56 @@ describe('commands', () => {
       );
     });
 
+    it('updates the emoji', () => {
+      add(doc(callout({ type: 'warning', emoji: '😄' })(p(`This is a callout<cursor>`))));
+
+      commands.updateCallout({ emoji: '😭' });
+      expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <div data-callout-type="warning"
+           data-callout-emoji="😭"
+      >
+        <div class="remirror-callout-emoji-wrapper">
+          <span>
+            😭
+          </span>
+        </div>
+        <div>
+          <p>
+            This is a callout
+          </p>
+        </div>
+      </div>
+      `);
+      expect(view.state.doc).toEqualRemirrorDocument(
+        doc(callout({ type: 'warning', emoji: '😭' })(p('This is a callout'))),
+      );
+    });
+
+    it('updates the type and emoji', () => {
+      add(doc(callout({ type: 'warning', emoji: '😄' })(p(`This is a callout<cursor>`))));
+
+      commands.updateCallout({ type: 'info', emoji: '😭' });
+      expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <div data-callout-type="info"
+           data-callout-emoji="😭"
+      >
+        <div class="remirror-callout-emoji-wrapper">
+          <span>
+            😭
+          </span>
+        </div>
+        <div>
+          <p>
+            This is a callout
+          </p>
+        </div>
+      </div>
+      `);
+      expect(view.state.doc).toEqualRemirrorDocument(
+        doc(callout({ type: 'info', emoji: '😭' })(p('This is a callout'))),
+      );
+    });
+
     it('errors when updating with an invalid type attributes', () => {
       add(doc(callout({ type: 'warning' })(p(`This is a callout<cursor>`))));
 

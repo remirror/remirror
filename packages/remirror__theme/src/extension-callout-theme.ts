@@ -16,13 +16,9 @@ export const EDITOR = css`
     padding: 10px;
     border-left: 2px solid transparent;
 
-    & > .${CALLOUT_EMOJI_WRAPPER} {
-      min-width: 20px;
-      cursor: pointer;
-    }
-
     & > :not(.${CALLOUT_EMOJI_WRAPPER}) {
       margin-left: 8px;
+      flex-grow: 1;
     }
   }
 
