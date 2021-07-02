@@ -25,13 +25,19 @@ export function isValidCalloutAttributes(
   attributes: ProsemirrorAttributes,
 ): attributes is CalloutAttributes {
   if (attributes && isObject(attributes)) {
-    if (isString(attributes.type) && attributes.type.length > 0) {
-      return true;
-    }
+    const attributesChecklist = Object.entries(attributes).map(([key, value]) => {
+      switch (key) {
+        case 'type':
+          return !!(isString(value) && value.length > 0);
 
-    if (isString(attributes.emoji)) {
-      return true;
-    }
+        case 'emoji':
+          return !!(isString(value) && value.length > 0);
+
+        default:
+          return true;
+      }
+    });
+    return attributesChecklist.every((attr) => !!attr);
   }
 
   return false;
