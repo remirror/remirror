@@ -4,6 +4,7 @@ import {
   command,
   CommandFunction,
   ExtensionTag,
+  findParentNodeOfType,
   getMatchString,
   isElementDomNode,
   isNodeSelection,
@@ -120,7 +121,9 @@ export class TaskListItemExtension extends NodeExtension {
    */
   @command()
   toggleCheckboxChecked(checked?: boolean): CommandFunction {
-    return ({ state: { tr, selection }, dispatch }) => {
+    return ({ tr, dispatch }) => {
+      const { selection } = tr;
+
       // Make sure the list item is selected. Otherwise do nothing.
       if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {
         return false;
@@ -161,17 +164,29 @@ export class TaskListItemExtension extends NodeExtension {
       },
     });
 
-    const listItemInputRule = new InputRule(regexp, (state, _, start, end) => {
+    const listItemInputRule = new InputRule(regexp, (state, match, start, end) => {
       if (!isInsideListItem(state)) {
         return null;
       }
 
-      const tr = state.tr;
+      let tr = state.tr;
       tr.deleteRange(start, end);
       const chain = this.store.chain(tr);
       chain.liftListItemOutOfList();
       chain.toggleTaskList();
-      return chain.tr();
+      tr = chain.tr();
+
+      const checked = ['x', 'X'].includes(getMatchString(match, 2));
+
+      if (checked) {
+        const found = findParentNodeOfType({ selection: tr.selection, types: this.type });
+
+        if (found) {
+          tr.setNodeMarkup(found.pos, undefined, { checked });
+        }
+      }
+
+      return tr;
     });
 
     return [defaultInputRule, listItemInputRule];
