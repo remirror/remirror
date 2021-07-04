@@ -2,6 +2,7 @@ import {
   AnyExtension,
   chainableEditorState,
   CommandFunction,
+  DispatchFunction,
   ExtensionTag,
   findParentNode,
   getNodeType,
@@ -10,10 +11,10 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
-import { Fragment, Slice } from '@remirror/pm/model';
+import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection } from '@remirror/pm/state';
-import { canSplit } from '@remirror/pm/transform';
+import { canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
 
 /**
  * Checks to see whether this is a list node.
@@ -250,5 +251,100 @@ export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFuncti
     }
 
     return false;
+  };
+}
+
+// Copy from `prosemirror-schema-list`
+function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: NodeRange) {
+  const tr = state.tr,
+    list = range.parent;
+
+  // Merge the list items into a single big item
+  for (let pos = range.end, i = range.endIndex - 1, e = range.startIndex; i > e; i--) {
+    pos -= list.child(i).nodeSize;
+    tr.delete(pos - 1, pos + 1);
+  }
+
+  const $start = tr.doc.resolve(range.start),
+    item = $start.nodeAfter;
+  const atStart = range.startIndex === 0,
+    atEnd = range.endIndex === list.childCount;
+  const parent = $start.node(-1),
+    indexBefore = $start.index(-1);
+
+  if (!item) {
+    return false;
+  }
+
+  if (
+    !parent.canReplace(
+      indexBefore + (atStart ? 0 : 1),
+      indexBefore + 1,
+      item.content.append(atEnd ? Fragment.empty : Fragment.from(list)),
+    )
+  ) {
+    return false;
+  }
+
+  const start = $start.pos,
+    end = start + item.nodeSize;
+  // Strip off the surrounding list. At the sides where we're not at
+  // the end of the list, the existing list is closed. At sides where
+  // this is the end, it is overwritten to its end.
+  tr.step(
+    new ReplaceAroundStep(
+      start - (atStart ? 1 : 0),
+      end + (atEnd ? 1 : 0),
+      start + 1,
+      end - 1,
+      new Slice(
+        (atStart ? Fragment.empty : Fragment.from(list.copy(Fragment.empty))).append(
+          atEnd ? Fragment.empty : Fragment.from(list.copy(Fragment.empty)),
+        ),
+        atStart ? 0 : 1,
+        atEnd ? 0 : 1,
+      ),
+      atStart ? 0 : 1,
+    ),
+  );
+  dispatch(tr.scrollIntoView());
+  return true;
+}
+
+export function forceToggleList(type: NodeType, itemType: NodeType): CommandFunction {
+  return (props) => {
+    const { dispatch, tr } = props;
+    const state = chainableEditorState(tr, props.state);
+    const { $from, $to } = tr.selection;
+
+    const range = $from.blockRange(
+      $to,
+      // @ts-expect-error this line of code is copied from `prosemirror-schema-list`
+      (node) => node.childCount && node.firstChild.type === itemType,
+    );
+
+    // if (!range) {
+    //   return false;
+    // }
+
+    const parentList = findParentNode({
+      predicate: (node) => isList(node),
+      selection: tr.selection,
+    });
+
+    console.log('aaaa');
+
+    // if (parentList.node.type === type) {
+    // return liftListItem(itemType)(state, dispatch);
+    if (!dispatch) {
+      return true;
+    }
+
+    if (!range) {
+      return false;
+    }
+
+    liftOutOfList(state, dispatch, range);
+    return true;
   };
 }

@@ -1,10 +1,10 @@
 import {
   ApplySchemaAttributes,
+  assertGet,
   command,
   CommandFunction,
   ExtensionTag,
   getMatchString,
-  InputRule,
   isElementDomNode,
   isNodeSelection,
   KeyBindings,
@@ -15,10 +15,12 @@ import {
   NodeViewMethod,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import { NodeSelection, TextSelection } from '@remirror/pm/state';
+import { InputRule } from '@remirror/pm/inputrules';
+import { NodeType } from '@remirror/pm/model';
+import { EditorState, NodeSelection, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
-import { splitListItem } from './list-commands';
+import { forceToggleList, splitListItem, toggleList } from './list-commands';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
 import { ListItemSharedExtension } from './list-item-shared-extension';
 
@@ -132,23 +134,79 @@ export class TaskListItemExtension extends NodeExtension {
     };
   }
 
-  createInputRules(): InputRule[] {
-    return [
-      nodeInputRule({
-        regexp: /^\s*(\[( ?|x|X)]\s)$/,
-        type: this.type,
-        getAttributes: (match) => ({
-          checked: ['x', 'X'].includes(getMatchString(match, 2)),
-        }),
-        beforeDispatch: ({ tr, start }) => {
-          const $listItemPos = tr.doc.resolve(start + 1);
+  @command()
+  forceToggleList(listType: NodeType, itemType: NodeType): CommandFunction {
+    return forceToggleList(listType, itemType);
+  }
 
-          if ($listItemPos.node()?.type.name === 'taskListItem') {
-            tr.setSelection(new TextSelection($listItemPos));
-          }
-        },
+  createInputRules(): InputRule[] {
+    const regexp = /^\s*(\[( ?|x|X)]\s)$/;
+
+    const isInsideListItem = (state: EditorState) =>
+      state.selection.$from.node(-1).type.name === 'listItem';
+
+    const defaultInputRule = nodeInputRule({
+      regexp,
+      type: this.type,
+      getAttributes: (match) => ({
+        checked: ['x', 'X'].includes(getMatchString(match, 2)),
       }),
-    ];
+      beforeDispatch: ({ tr, start }) => {
+        const $listItemPos = tr.doc.resolve(start + 1);
+
+        if ($listItemPos.node()?.type.name === 'taskListItem') {
+          tr.setSelection(new TextSelection($listItemPos));
+        }
+      },
+      shouldSkip: ({ state }) => {
+        return isInsideListItem(state);
+      },
+    });
+
+    const listItemInputRule = new InputRule(regexp, (state, match, start, end) => {
+      console.log('listItemInputRule');
+
+      if (!isInsideListItem(state)) {
+        console.log('listItemInputRule  step 1');
+        return null;
+      }
+
+      // this.store.view.dispatch();
+
+      // const chain = this.store.chain(state.tr);
+
+      const tr = state.tr;
+      tr.deleteRange(start, end);
+
+      const chain = this.store.chain(tr);
+
+      if (!chain.tr().setMeta) {
+        throw new Error('not setMeta');
+      }
+
+      if (!chain.tr().setMeta) {
+        throw new Error('not setMeta');
+      }
+
+      chain.forceToggleList(
+        assertGet(this.store.schema.nodes, 'bulletList'),
+        assertGet(this.store.schema.nodes, 'listItem'),
+      );
+
+      if (!chain.tr().setMeta) {
+        throw new Error('not setMeta');
+      }
+
+      chain.toggleTaskList();
+
+      if (!chain.tr().setMeta) {
+        throw new Error('not setMeta');
+      }
+
+      return chain.tr();
+    });
+
+    return [defaultInputRule, listItemInputRule];
   }
 }
 
