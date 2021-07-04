@@ -1,11 +1,9 @@
-import { createEditor, doc, li, ol, p, schema, ul } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import {
   BulletListExtension,
   ListItemExtension,
   OrderedListExtension,
   TaskListExtension,
-  toggleList,
 } from 'remirror/extensions';
 
 describe('create a list', () => {

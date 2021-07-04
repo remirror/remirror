@@ -1,6 +1,5 @@
 import {
   ApplySchemaAttributes,
-  assertGet,
   command,
   CommandFunction,
   ExtensionTag,
@@ -17,11 +16,10 @@ import {
   ProsemirrorAttributes,
 } from '@remirror/core';
 import { InputRule } from '@remirror/pm/inputrules';
-import { NodeType } from '@remirror/pm/model';
 import { EditorState, NodeSelection, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
-import { forceToggleList, splitListItem, toggleList } from './list-commands';
+import { splitListItem } from './list-commands';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
 import { ListItemSharedExtension } from './list-item-shared-extension';
 
