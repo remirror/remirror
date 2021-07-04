@@ -18,7 +18,7 @@ import {
 import { NodeSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
-import { splitListItem } from './list-commands';
+import { liftListItemOutOfList, splitListItem } from './list-commands';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
 import { ListItemSharedExtension } from './list-item-shared-extension';
 
@@ -126,6 +126,14 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
 
       return true;
     };
+  }
+
+  /**
+   * Lift the content inside a list item around the selection out of list
+   */
+  @command()
+  liftListItemOutOfList(): CommandFunction {
+    return liftListItemOutOfList(this.type);
   }
 }
 

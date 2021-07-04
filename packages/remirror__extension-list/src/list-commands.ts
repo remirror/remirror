@@ -254,7 +254,7 @@ export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFuncti
   };
 }
 
-// Copy from `prosemirror-schema-list`
+// Copied from `prosemirror-schema-list`
 function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: NodeRange) {
   const tr = state.tr,
     list = range.parent;
@@ -311,7 +311,11 @@ function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: No
   return true;
 }
 
-export function forceToggleList(type: NodeType, itemType: NodeType): CommandFunction {
+/**
+ * Build a command to lift the content inside a list item around the selection
+ * out of list
+ */
+export function liftListItemOutOfList(itemType: NodeType): CommandFunction {
   return (props) => {
     const { dispatch, tr } = props;
     const state = chainableEditorState(tr, props.state);
@@ -323,19 +327,6 @@ export function forceToggleList(type: NodeType, itemType: NodeType): CommandFunc
       (node) => node.childCount && node.firstChild.type === itemType,
     );
 
-    // if (!range) {
-    //   return false;
-    // }
-
-    const parentList = findParentNode({
-      predicate: (node) => isList(node),
-      selection: tr.selection,
-    });
-
-    console.log('aaaa');
-
-    // if (parentList.node.type === type) {
-    // return liftListItem(itemType)(state, dispatch);
     if (!dispatch) {
       return true;
     }

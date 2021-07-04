@@ -134,16 +134,14 @@ export class TaskListItemExtension extends NodeExtension {
     };
   }
 
-  @command()
-  forceToggleList(listType: NodeType, itemType: NodeType): CommandFunction {
-    return forceToggleList(listType, itemType);
-  }
-
   createInputRules(): InputRule[] {
     const regexp = /^\s*(\[( ?|x|X)]\s)$/;
 
     const isInsideListItem = (state: EditorState) =>
       state.selection.$from.node(-1).type.name === 'listItem';
+
+    const isInsideTaskListItem = (state: EditorState) =>
+      state.selection.$from.node(-1).type === this.type;
 
     const defaultInputRule = nodeInputRule({
       regexp,
@@ -159,50 +157,20 @@ export class TaskListItemExtension extends NodeExtension {
         }
       },
       shouldSkip: ({ state }) => {
-        return isInsideListItem(state);
+        return isInsideListItem(state) || isInsideTaskListItem(state);
       },
     });
 
-    const listItemInputRule = new InputRule(regexp, (state, match, start, end) => {
-      console.log('listItemInputRule');
-
+    const listItemInputRule = new InputRule(regexp, (state, _, start, end) => {
       if (!isInsideListItem(state)) {
-        console.log('listItemInputRule  step 1');
         return null;
       }
 
-      // this.store.view.dispatch();
-
-      // const chain = this.store.chain(state.tr);
-
       const tr = state.tr;
       tr.deleteRange(start, end);
-
       const chain = this.store.chain(tr);
-
-      if (!chain.tr().setMeta) {
-        throw new Error('not setMeta');
-      }
-
-      if (!chain.tr().setMeta) {
-        throw new Error('not setMeta');
-      }
-
-      chain.forceToggleList(
-        assertGet(this.store.schema.nodes, 'bulletList'),
-        assertGet(this.store.schema.nodes, 'listItem'),
-      );
-
-      if (!chain.tr().setMeta) {
-        throw new Error('not setMeta');
-      }
-
+      chain.liftListItemOutOfList();
       chain.toggleTaskList();
-
-      if (!chain.tr().setMeta) {
-        throw new Error('not setMeta');
-      }
-
       return chain.tr();
     });
 
