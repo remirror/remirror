@@ -1648,6 +1648,8 @@ importers:
       jsx-dom: ^6.4.23
       react: ^17.0.2
       react-dom: ^17.0.2
+      y-webrtc: ^10.2.0
+      yjs: ^13.5.10
     dependencies:
       '@babel/runtime': 7.14.6
       '@emotion/css': 11.1.3_@babel+core@7.14.6
@@ -1670,6 +1672,8 @@ importers:
       '@types/react-dom': 17.0.8
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      y-webrtc: 10.2.0
+      yjs: 13.5.10
 
   packages/remirror__extension-search:
     specifiers:

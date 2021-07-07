@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { EditorView, FindProsemirrorNodeResult, ResolvedPos, Transaction } from '@remirror/core';
+import { EditorSchema, EditorView, FindProsemirrorNodeResult, ResolvedPos } from '@remirror/core';
 import { Fragment, Node as ProsemirrorNode } from '@remirror/pm/model';
 import { cellAround, CellSelection, TableMap } from '@remirror/pm/tables';
 
@@ -12,25 +12,20 @@ import { repeat } from './array';
 import { CellAxis, FindTable } from './types';
 
 export interface InjectControllersProps {
-  view: EditorView;
+  schema: EditorSchema;
   getMap: () => TableMap;
-  getPos: () => number;
-  tr: Transaction;
   table: ProsemirrorNode;
 }
 export function injectControllers({
-  view,
+  schema,
   getMap,
-  getPos,
-  tr,
   table: oldTable,
-}: InjectControllersProps): Transaction {
-  const schema = view.state.schema;
-  const controllerCell = view.state.schema.nodes.tableControllerCell!.create();
+}: InjectControllersProps): ProsemirrorNode {
+  const controllerCell = schema.nodes.tableControllerCell!.create();
   const headerControllerCells: ProsemirrorNode[] = repeat(controllerCell, getMap().width + 1);
 
-  const crotrollerRow: ProsemirrorNode = schema.nodes.tableRow!.create({}, headerControllerCells);
-  const newRowsArray: ProsemirrorNode[] = [crotrollerRow];
+  const controllerRow: ProsemirrorNode = schema.nodes.tableRow!.create({}, headerControllerCells);
+  const newRowsArray: ProsemirrorNode[] = [controllerRow];
 
   const oldRows = oldTable.content;
   oldRows.forEach((oldRow) => {
@@ -53,8 +48,7 @@ export function injectControllers({
     isControllersInjected: true,
   };
 
-  const pos = getPos();
-  return tr.replaceRangeWith(pos, pos + oldTable.nodeSize, newTable);
+  return newTable;
 }
 
 export function createControllerEvents({

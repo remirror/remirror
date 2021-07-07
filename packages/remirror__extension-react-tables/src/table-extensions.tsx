@@ -19,12 +19,19 @@ import {
   TableHeaderCellExtension as BaseTableHeaderCellExtension,
   TableRowExtension as BaseTableRowExtension,
 } from '@remirror/extension-tables';
-import { tableEditing } from '@remirror/pm/tables';
+import {
+  createTable,
+  CreateTableCommand,
+  createTableOptions,
+} from '@remirror/extension-tables/src/table-utils';
+import { TextSelection } from '@remirror/pm/state';
+import { tableEditing, TableMap } from '@remirror/pm/tables';
 
 import { InsertButtonAttrs } from './components/table-insert-button';
 import { addColumnAfter, addColumnBefore, addRowAfter, addRowBefore } from './react-table-commands';
 import { columnResizing } from './table-column-resizing';
 import { createTableControllerPlugin } from './table-plugins';
+import { injectControllers } from './utils/controller';
 import { TableControllerCellView } from './views/table-controller-cell-view';
 import { TableView } from './views/table-view';
 
@@ -103,6 +110,39 @@ export class TableExtension extends BaseTableExtension {
       row: schema.nodes.tableRow,
       table: schema.nodes.table,
       header_cell: schema.nodes.tableHeaderCell,
+    };
+  }
+
+  /**
+   * Create a table in the editor at the current selection point.
+   */
+  @command(createTableOptions)
+  createTable(options: CreateTableCommand = {}): CommandFunction {
+    return (props) => {
+      const { tr, dispatch, state } = props;
+
+      if (!tr.selection.empty) {
+        return false;
+      }
+
+      const { schema } = state;
+      const offset = tr.selection.anchor + 1;
+
+      const table = createTable({ schema, ...options });
+      const controlledTable = injectControllers({
+        schema,
+        getMap: () => TableMap.get(table),
+        table,
+      });
+
+      dispatch?.(
+        tr
+          .replaceSelectionWith(controlledTable)
+          .scrollIntoView()
+          .setSelection(TextSelection.near(tr.doc.resolve(offset))),
+      );
+
+      return true;
     };
   }
 

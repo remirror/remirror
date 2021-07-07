@@ -12,6 +12,7 @@ import {
   SchemaProps,
   values,
 } from '@remirror/core';
+import { ExtensionTablesMessages } from '@remirror/messages';
 import type { Node as ProsemirrorNode } from '@remirror/pm/model';
 
 export interface TableSchemaSpec extends NodeExtensionSpec {
@@ -250,3 +251,11 @@ export function createTable(props: CreateTableProps): ProsemirrorNode<EditorSche
 
   return table.createChecked(null, rows);
 }
+
+const { CREATE_COMMAND_DESCRIPTION, CREATE_COMMAND_LABEL } = ExtensionTablesMessages;
+
+export const createTableOptions: Remirror.CommandDecoratorOptions = {
+  icon: 'table2',
+  description: ({ t }) => t(CREATE_COMMAND_DESCRIPTION),
+  label: ({ t }) => t(CREATE_COMMAND_LABEL),
+};
