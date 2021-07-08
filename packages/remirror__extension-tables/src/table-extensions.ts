@@ -19,7 +19,6 @@ import {
   ProsemirrorPlugin,
   StateUpdateLifecycleProps,
 } from '@remirror/core';
-import { ExtensionTablesMessages as Messages } from '@remirror/messages';
 import { TextSelection } from '@remirror/pm/state';
 import {
   addColumnAfter,
@@ -46,14 +45,9 @@ import {
   createTable,
   CreateTableCommand,
   createTableNodeSchema,
+  createTableOptions,
   TableSchemaSpec,
 } from './table-utils';
-
-const createTableCommand: Remirror.CommandDecoratorOptions = {
-  icon: 'table2',
-  description: ({ t }) => t(Messages.CREATE_COMMAND_DESCRIPTION),
-  label: ({ t }) => t(Messages.CREATE_COMMAND_LABEL),
-};
 
 export interface TableOptions {
   /**
@@ -124,7 +118,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
   /**
    * Create a table in the editor at the current selection point.
    */
-  @command(createTableCommand)
+  @command(createTableOptions)
   createTable(options: CreateTableCommand = {}): CommandFunction {
     return (props) => {
       const { tr, dispatch, state } = props;

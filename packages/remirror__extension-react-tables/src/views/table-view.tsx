@@ -6,7 +6,6 @@ import { ExtensionTablesTheme } from '@remirror/theme';
 
 import TableInsertButton, { shouldHideInsertButton } from '../components/table-insert-button';
 import { ReactTableNodeAttrs } from '../table-extensions';
-import { injectControllers } from '../utils/controller';
 import { h } from '../utils/dom';
 import { setNodeAttrs } from '../utils/prosemirror';
 
@@ -51,22 +50,6 @@ export class TableView<Schema extends EditorSchema = EditorSchema> implements No
     this.table = h('table', { className: ExtensionTablesTheme.TABLE }, this.colgroup, this.tbody);
     this.insertButtonWrapper = h('div');
     this.root = h('div', null, this.table, this.insertButtonWrapper);
-
-    if (!this.attrs().isControllersInjected) {
-      setTimeout(() => {
-        let tr = view.state.tr;
-        tr = injectControllers({
-          view: this.view,
-          getMap: () => this.map,
-          getPos: this.getPos,
-          tr,
-          table: node,
-        });
-        view.dispatch(tr);
-      }, 0); // TODO: better way to do the injection then setTimeout?
-      // TODO: add a event listener to detect `this.root` insertion
-      // see also: https://davidwalsh.name/detect-node-insertion
-    }
 
     this.render();
 
