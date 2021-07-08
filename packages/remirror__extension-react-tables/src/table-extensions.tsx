@@ -12,18 +12,15 @@ import {
   ProsemirrorNode,
   ProsemirrorPlugin,
 } from '@remirror/core';
-import type { TableSchemaSpec } from '@remirror/extension-tables';
+import type { CreateTableCommand, TableSchemaSpec } from '@remirror/extension-tables';
 import {
+  createTable,
+  createTableOptions,
   TableCellExtension as BaseTableCellExtension,
   TableExtension as BaseTableExtension,
   TableHeaderCellExtension as BaseTableHeaderCellExtension,
   TableRowExtension as BaseTableRowExtension,
 } from '@remirror/extension-tables';
-import {
-  createTable,
-  CreateTableCommand,
-  createTableOptions,
-} from '@remirror/extension-tables/src/table-utils';
 import { TextSelection } from '@remirror/pm/state';
 import { tableEditing, TableMap } from '@remirror/pm/tables';
 
