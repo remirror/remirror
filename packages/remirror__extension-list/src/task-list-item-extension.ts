@@ -3,8 +3,8 @@ import {
   command,
   CommandFunction,
   ExtensionTag,
+  findParentNodeOfType,
   getMatchString,
-  InputRule,
   isElementDomNode,
   isNodeSelection,
   KeyBindings,
@@ -15,7 +15,8 @@ import {
   NodeViewMethod,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import { NodeSelection, TextSelection } from '@remirror/pm/state';
+import { InputRule } from '@remirror/pm/inputrules';
+import { EditorState, NodeSelection, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
@@ -118,7 +119,9 @@ export class TaskListItemExtension extends NodeExtension {
    */
   @command()
   toggleCheckboxChecked(checked?: boolean): CommandFunction {
-    return ({ state: { tr, selection }, dispatch }) => {
+    return ({ tr, dispatch }) => {
+      const { selection } = tr;
+
       // Make sure the list item is selected. Otherwise do nothing.
       if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {
         return false;
@@ -133,22 +136,58 @@ export class TaskListItemExtension extends NodeExtension {
   }
 
   createInputRules(): InputRule[] {
-    return [
-      nodeInputRule({
-        regexp: /^\s*(\[( ?|x|X)]\s)$/,
-        type: this.type,
-        getAttributes: (match) => ({
-          checked: ['x', 'X'].includes(getMatchString(match, 2)),
-        }),
-        beforeDispatch: ({ tr, start }) => {
-          const $listItemPos = tr.doc.resolve(start + 1);
+    const regexp = /^\s*(\[( ?|x|X)]\s)$/;
 
-          if ($listItemPos.node()?.type.name === 'taskListItem') {
-            tr.setSelection(new TextSelection($listItemPos));
-          }
-        },
+    const isInsideListItem = (state: EditorState) =>
+      state.selection.$from.node(-1).type.name === 'listItem';
+
+    const isInsideTaskListItem = (state: EditorState) =>
+      state.selection.$from.node(-1).type === this.type;
+
+    const defaultInputRule = nodeInputRule({
+      regexp,
+      type: this.type,
+      getAttributes: (match) => ({
+        checked: ['x', 'X'].includes(getMatchString(match, 2)),
       }),
-    ];
+      beforeDispatch: ({ tr, start }) => {
+        const $listItemPos = tr.doc.resolve(start + 1);
+
+        if ($listItemPos.node()?.type.name === 'taskListItem') {
+          tr.setSelection(new TextSelection($listItemPos));
+        }
+      },
+      shouldSkip: ({ state }) => {
+        return isInsideListItem(state) || isInsideTaskListItem(state);
+      },
+    });
+
+    const listItemInputRule = new InputRule(regexp, (state, match, start, end) => {
+      if (!isInsideListItem(state)) {
+        return null;
+      }
+
+      let tr = state.tr;
+      tr.deleteRange(start, end);
+      const chain = this.store.chain(tr);
+      chain.liftListItemOutOfList();
+      chain.toggleTaskList();
+      tr = chain.tr();
+
+      const checked = ['x', 'X'].includes(getMatchString(match, 2));
+
+      if (checked) {
+        const found = findParentNodeOfType({ selection: tr.selection, types: this.type });
+
+        if (found) {
+          tr.setNodeMarkup(found.pos, undefined, { checked });
+        }
+      }
+
+      return tr;
+    });
+
+    return [defaultInputRule, listItemInputRule];
   }
 }
 
