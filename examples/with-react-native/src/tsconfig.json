@@ -1,0 +1,32 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > 'src'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "declaration": false,
+    "noEmit": true
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../../../packages/remirror__core-helpers/src"
+    },
+    {
+      "path": "../../../packages/remirror__extension-react-native-bridge/src"
+    },
+    {
+      "path": "../../../packages/remirror__react/src"
+    },
+    {
+      "path": "../../../packages/remirror__react-native/src"
+    },
+    {
+      "path": "../../../packages/remirror/src"
+    }
+  ]
+}

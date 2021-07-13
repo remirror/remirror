@@ -4,9 +4,9 @@ module.exports = {
   ...config,
   babelrcRoots: [
     '.',
-    'packages/@remirror/*',
+    'packages/remirror__*',
     'packages/*',
-    'support/website/.babelrc.js',
+    'website/.babelrc.js',
     'support/storybook/.babelrc.js',
   ],
   sourceType: 'unambiguous',

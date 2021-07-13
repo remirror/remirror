@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-inputrules.cjs.js",
+  "module": "dist/remirror-pm-inputrules.esm.js",
+  "browser": {
+    "./dist/remirror-pm-inputrules.cjs.js": "./dist/remirror-pm-inputrules.browser.cjs.js",
+    "./dist/remirror-pm-inputrules.esm.js": "./dist/remirror-pm-inputrules.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-inputrules.cjs.d.ts",
+  "rn:dev": "../src/inputrules.ts"
+}

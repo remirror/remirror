@@ -1,29 +1,35 @@
 /** @type {import('eslint').Linter.Config} */
 let config = {
   parser: '@typescript-eslint/parser',
+  ignorePatterns: ['*.d.ts'],
   plugins: [
     'jest',
     'jest-formatting',
     '@typescript-eslint',
     'react-hooks',
     'react',
+    'react-native',
     'unicorn',
     'jsx-a11y',
     'simple-import-sort',
-    'eslint-comments',
+
+    // For `remirror__lit-components`
+    'lit',
+    'lit-a11y',
+
+    // For custom hooks
+    '@kyleshevlin',
   ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'prettier',
-    'prettier/@typescript-eslint',
-    'prettier/react',
     'plugin:jest-formatting/recommended',
-    'plugin:unicorn/recommended',
-    'plugin:eslint-comments/recommended',
     'plugin:jest/recommended',
     'plugin:jest/style',
+    'plugin:lit/recommended',
+    'plugin:lit-a11y/recommended',
   ],
 
   parserOptions: {
@@ -45,17 +51,72 @@ let config = {
     es6: true,
   },
   rules: {
-    'eslint-comments/no-unused-disable': 'error',
+    'prefer-const': ['error', { destructuring: 'all' }],
 
-    'unicorn/no-fn-reference-in-iterator': 'off',
-    'unicorn/no-object-as-default-parameter': 'off',
-    'unicorn/consistent-function-scoping': 'off',
-    'unicorn/no-nested-ternary': 'off',
-    'unicorn/prevent-abbreviations': 'off', // Too aggressive.
+    'unicorn/better-regex': 'error',
+    'unicorn/catch-error-name': 'error',
+    'unicorn/consistent-destructuring': 'error',
+    'unicorn/error-message': 'error',
+    'unicorn/escape-case': 'error',
+    'unicorn/expiring-todo-comments': 'error',
+    'unicorn/explicit-length-check': 'error',
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
-    'unicorn/no-null': 'off',
-    'unicorn/no-reduce': 'off',
-    'unicorn/import-style': ['off'],
+    'unicorn/import-style': 'error',
+    'unicorn/new-for-builtins': 'error',
+    'unicorn/no-abusive-eslint-disable': 'error',
+    'unicorn/no-array-reduce': 'error',
+    'unicorn/no-console-spaces': 'error',
+    'unicorn/no-for-loop': 'error',
+    'unicorn/no-hex-escape': 'error',
+    'unicorn/no-instanceof-array': 'error',
+    'unicorn/no-lonely-if': 'error',
+    'unicorn/no-new-array': 'error',
+    'unicorn/no-new-buffer': 'error',
+    'unicorn/no-process-exit': 'error',
+    'unicorn/no-unreadable-array-destructuring': 'error',
+    'unicorn/no-useless-undefined': 'error',
+    'unicorn/no-zero-fractions': 'error',
+    'unicorn/number-literal-case': 'error',
+    'unicorn/numeric-separators-style': 'error',
+    'unicorn/prefer-add-event-listener': 'error',
+    'unicorn/prefer-array-find': 'error',
+    'unicorn/prefer-array-flat-map': 'error',
+    'unicorn/prefer-array-index-of': 'error',
+    'unicorn/prefer-array-some': 'error',
+    'unicorn/prefer-date-now': 'error',
+    'unicorn/prefer-default-parameters': 'error',
+    'unicorn/prefer-dom-node-append': 'error',
+    'unicorn/prefer-dom-node-dataset': 'error',
+    'unicorn/prefer-dom-node-remove': 'error',
+    'unicorn/prefer-dom-node-text-content': 'error',
+    'unicorn/prefer-includes': 'error',
+    'unicorn/prefer-keyboard-event-key': 'error',
+    'unicorn/prefer-math-trunc': 'error',
+    'unicorn/prefer-modern-dom-apis': 'error',
+    'unicorn/prefer-negative-index': 'error',
+    'unicorn/prefer-number-properties': 'error',
+    'unicorn/prefer-optional-catch-binding': 'error',
+    'unicorn/prefer-query-selector': 'error',
+    'unicorn/prefer-reflect-apply': 'error',
+    'unicorn/prefer-regexp-test': 'error',
+    'unicorn/prefer-set-has': 'error',
+    'unicorn/prefer-spread': 'error',
+    'unicorn/prefer-string-slice': 'error',
+    'unicorn/prefer-string-starts-ends-with': 'error',
+    'unicorn/prefer-string-trim-start-end': 'error',
+    'unicorn/prefer-ternary': 'error',
+    'unicorn/prefer-type-error': 'error',
+    'unicorn/throw-new-error': 'error',
+    'unicorn/no-array-push-push': 'error',
+
+    'unicorn/no-keyword-prefix': 'off',
+    'no-nested-ternary': 'off',
+    'unicorn/no-nested-ternary': 'off',
+    'unicorn/no-unsafe-regex': 'off',
+    'unicorn/no-unused-properties': 'off',
+    'unicorn/string-content': 'off',
+    'unicorn/custom-error-definition': 'off',
+    'unicorn/empty-brace-spaces': 'off',
 
     'jest/no-test-return-statement': 'off',
     'jest/prefer-strict-equal': 'off',
@@ -74,8 +135,9 @@ let config = {
 
     'sort-imports': 'off',
 
-    // Use nice import rules
-    'simple-import-sort/sort': [
+    // Use nice import and export rules
+    'simple-import-sort/exports': ['warn'], // TODO switch on after release
+    'simple-import-sort/imports': [
       'warn',
       {
         groups: [
@@ -84,10 +146,10 @@ let config = {
 
           // Packages that are not scoped to `remirror`
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
-          ['^(?!@remirror)@?\\w'],
+          ['^(?!@remirror)@?\\w', '^@remirror'],
 
           // Scoped packages
-          ['^@remirror'],
+          // [],
 
           // Absolute imports and other imports such as Vue-style `@/foo`.
           // Anything that does not start with a dot.
@@ -168,19 +230,24 @@ let config = {
       },
     ],
 
-    // @todo Set `explicit-module-boundary-types` lint rule to `error` once all
-    // issues are resolve @block All exported methods that are exposed to end
-    // users should be explicitly typed. It makes for better readability when
-    // contributing since inference requires more work to determine the return
-    // types, and also it forces deliberate planning.
+    /**
+     * @todo Set `explicit-module-boundary-types` lint rule to `error` once all
+     * issues are resolved
+     * @block All exported methods that are exposed to end users should be
+     * explicitly typed. It makes for better readability when contributing since
+     * inference requires more work to determine the return types, and also it
+     * forces deliberate planning.
+     */
     '@typescript-eslint/explicit-module-boundary-types': [
       'warn',
-      { allowedNames: ['name', 'createHelpers', 'createCommands', 'createExtensions'] },
+      {
+        allowedNames: ['name', 'createHelpers', 'createCommands', 'createExtensions', 'createTags'],
+      },
     ],
 
     // Turning off as it leads to code with bad patterns, where implementation
     // details are placed before the actual meaningful code.
-    '@typescript-eslint/no-use-before-define': ['off', { typedefs: false }],
+    '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/member-ordering': [
       'warn',
       { default: ['signature', 'static-field', 'static-method', 'field', 'constructor', 'method'] },
@@ -195,23 +262,30 @@ let config = {
     // React Rules
 
     'react/no-multi-comp': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'warn',
     'react/no-unescaped-entities': 'error',
     'react/no-unused-state': 'error',
     'react/no-children-prop': 'error',
+    'react/self-closing-comp': 'error',
 
     // React Hooks
 
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
 
+    // See https://kyleshevlin.com/use-encapsulation
+    '@kyleshevlin/prefer-custom-hooks': 'warn',
+
     // Built in eslint rules
     'no-constant-condition': 'off', // To many false positives
     'no-empty': 'warn',
     'no-else-return': 'warn',
     'no-useless-escape': 'warn',
-    'default-case': 'warn',
+    'default-case': 'off',
+    'default-case-last': 'error',
     'prefer-template': 'warn',
     'guard-for-in': 'warn',
     'prefer-object-spread': 'warn',
@@ -249,37 +323,53 @@ let config = {
         '@typescript-eslint/no-var-requires': 'error',
       },
     },
+
+    // Rules exclusive to published packages.
+    {
+      files: ['packages/*/src/**'],
+      rules: {
+        'no-console': 'error',
+      },
+    },
     {
       files: [
-        '**/__tests__/**',
+        '*.spec.{ts,tsx}*',
         '**/__stories__/**',
+        '*.stories.{ts,tsx}',
         'support/**',
+        'website/**',
         '**/__dts__/**',
         '**/*.test.ts',
       ],
       rules: {
+        'unicorn/consistent-destructuring': 'off',
         '@typescript-eslint/await-thenable': 'off',
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off', // Often you need to use @ts-ignore in tests
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
         'react/display-name': 'off',
+        '@kyleshevlin/prefer-custom-hooks': 'off',
       },
     },
     {
       files: [
         '**/*.d.ts',
         '**/__mocks__/**',
-        'packages/@remirror/i18n/**/*.ts',
+        'packages/remirror__i18n/**/*.ts',
         'docs/**',
         'examples/**',
         'support/**',
-        '**/__stories__',
+        'website/**',
+        '**/__stories__/**',
+        '**/__fixtures__/**',
         '**/*.stories.tsx',
         '**/*.stories.ts',
-        'packages/@remirror/cli/**',
-        'packages/@remirror/playground/**',
-        'packages/@remirror/extension-emoji/src/data/*.ts',
+        'examples/**',
+        'packages/remirror__cli/**',
+        'packages/remirror__playground/**',
+        'packages/remirror__extension-emoji/src/data/*.ts',
+        'packages/remirror__svelte/rollup.config.js',
       ],
       rules: { 'import/no-default-export': 'off' },
     },
@@ -296,15 +386,21 @@ let config = {
       },
     },
     {
-      files: ['support/scripts/**', 'support/e2e/**', 'packages/@remirror/playground/scripts/**'],
+      files: [
+        'support/**',
+        'packages/testing/**/*.{js,ts}',
+        'packages/remirror__playground/**',
+        'packages/remirror__playground-deprecated/**',
+      ],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
         'unicorn/no-process-exit': 'off',
         'unicorn/no-unreadable-array-destructuring': 'off',
       },
     },
     {
-      files: ['packages/@remirror/i18n/**/*.js'],
+      files: ['packages/remirror__i18n/**/messages.ts'],
       rules: {
         'eslint-comments/disable-enable-pair': 'off',
         'eslint-comments/no-unlimited-disable': 'off',
@@ -314,37 +410,55 @@ let config = {
     },
     {
       files: [
+        '**/__tests__/**',
+        '**/__stories__/**',
+        '**/__fixtures__/**',
         '**/*matchers.ts',
+        'website/**',
         'support/**',
+        'packages/testing/**',
         'examples/**',
-        'packages/@remirror/playground/**',
-        'packages/@remirror/core-utils/src/keyboard-utils.ts',
+        'packages/remirror__playground/**',
+        'packages/remirror__core-utils/src/keyboard-utils.ts',
       ],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',
-        'import/max-dependencies': 'off',
       },
     },
     {
-      files: ['packages/@remirror/playground/**', 'support/e2e/**'],
+      files: ['packages/remirror__playground/**', 'packages/testing/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
     },
     {
       files: [
         '**/*extension.ts',
         '**/*extension.tsx',
-        'packages/@remirror/core/src/manager/remirror-manager.ts',
-        'packages/@remirror/core/src/framework/*.ts',
-        'packages/@remirror/core/src/extension/extension-base.ts',
+        'packages/remirror__core/src/manager/remirror-manager.ts',
+        'packages/remirror__core/src/framework/*.ts',
+        'packages/remirror__core/src/extension/extension-base.ts',
       ],
       rules: { '@typescript-eslint/method-signature-style': 'off' },
     },
     {
-      files: ['packages/@remirror/styles/src/*.tsx'],
+      files: ['packages/remirror__styles/src/*.tsx'],
       // Turn these rules off to import `react` for TypeScript
       rules: {
         '@typescript-eslint/no-unused-vars-experimental': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
+      },
+    },
+    {
+      files: [
+        'examples/with-react-native/**/*.{ts,tsx}',
+        'packages/remirror__react-native/**/*.{ts,tsx}',
+      ],
+      rules: {
+        'react-native/no-unused-styles': ['error'],
+        'react-native/split-platform-components': ['error'],
+        'react-native/no-inline-styles': ['error'],
+        'react-native/no-color-literals': ['error'],
+        // 'react-native/no-raw-text': ['error'],
+        'react-native/no-single-element-style-arrays': ['error'],
       },
     },
   ],
@@ -361,43 +475,29 @@ if (process.env.FULL_ESLINT_CHECK) {
     '@typescript-eslint/restrict-plus-operands': 'warn',
     '@typescript-eslint/no-misused-promises': 'warn',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-    '@typescript-eslint/prefer-nullish-coalescing': [
-      'warn',
-      { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
-    ],
-    '@typescript-eslint/restrict-template-expressions': [
-      'warn',
-      { allowNumber: true, allowBoolean: true },
-    ],
   };
+
+  const rulesOff = {};
+
+  for (const rule of Object.keys(rules)) {
+    rulesOff[rule] = 'off';
+  }
 
   config = {
     ...config,
-    plugins: [...config.plugins, 'import', 'sonarjs'],
-    extends: [
-      ...config.extends,
-      'plugin:import/typescript',
-      // TODO Turn this rule on once failures are fixed eventually.
-      // 'plugin:sonarjs/recommended'
-    ],
+    plugins: [...config.plugins, 'import'],
+    extends: [...config.extends, 'plugin:import/typescript'],
     rules: {
       ...config.rules,
-      'import/no-deprecated': 'warn',
-      'import/max-dependencies': ['warn', { max: 30 }],
       'import/no-default-export': 'warn',
-      'import/no-mutable-exports': 'error',
       'import/first': 'error',
       'import/no-duplicates': 'error',
-      'import/no-cycle': 'error',
+      // 'import/no-cycle': 'error', // Conflicts with `react-native`.
       'import/no-self-import': 'error',
       'import/newline-after-import': 'error',
 
       // Turn off conflicting import rules
-      'import/order': 'off',
-      '@typescript-eslint/no-unused-vars-experimental': [
-        'error',
-        { ignoreArgsIfArgsAfterAreUsed: true },
-      ],
+      // 'import/order': 'off',
     },
     overrides: [
       {
@@ -409,15 +509,14 @@ if (process.env.FULL_ESLINT_CHECK) {
         files: [
           '**/__tests__/**',
           '**/__stories__/**',
+          '**/__fixtures__/**',
           'support/**',
+          'website/**',
           '**/__dts__/**',
           '**/*.test.ts',
         ],
         // Switch off rules for test files.
-        rules: Object.keys(rules).reduce(
-          (accumulator, key) => ({ ...accumulator, [key]: 'off' }),
-          {},
-        ),
+        rules: rulesOff,
       },
       ...config.overrides,
     ],
@@ -441,7 +540,9 @@ if (process.env.FULL_ESLINT_CHECK) {
 
         // Set up rules to be excluded in the markdown blocks.
         rules: {
-          'simple-import-sort/sort': 'warn',
+          '@kyleshevlin/prefer-custom-hooks': 'off',
+          'simple-import-sort/exports': 'warn',
+          'simple-import-sort/imports': 'warn',
           'unicorn/filename-case': 'off',
           '@typescript-eslint/no-unused-vars-experimental': 'off',
           '@typescript-eslint/no-unused-vars': 'off',

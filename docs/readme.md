@@ -14,4 +14,4 @@ title: <TITLE>
 Contents go here.
 ```
 
-The urls are generate by the file path. `docs/guide/installation.mdx` becomes `https://remirror.io/docs/guide/installation`.
+The urls are generate by the file path. `docs/installation.mdx` becomes `https://remirror.io/docs/installation`.

@@ -5,9 +5,9 @@
 ## Installation
 
 ```bash
-yarn add jest-remirror@next # yarn
-pnpm add jest-remirror@next # pnpm
-npm install jest-remirror@next # npm
+yarn add jest-remirror # yarn
+pnpm add jest-remirror # pnpm
+npm install jest-remirror # npm
 ```
 
 ## Getting started
@@ -84,7 +84,6 @@ Under the hood `jest-remirror` leans heavily on `@remirror/dom` to render an ins
 
 ```ts
 import { renderEditor } from 'jest-remirror';
-
 import { EmojiExtension } from '@remirror/extension-emoji';
 
 test('emoticons replaced with emoji', () => {

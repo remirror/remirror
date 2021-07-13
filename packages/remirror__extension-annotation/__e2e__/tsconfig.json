@@ -1,0 +1,42 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > '__e2e__'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "expect-playwright/global",
+      "jest-playwright-preset",
+      "jest",
+      "jest-extended",
+      "snapshot-diff",
+      "playwright",
+      "node"
+    ],
+    "declaration": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "importsNotUsedAsValues": "remove"
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../../testing/src"
+    },
+    {
+      "path": "../../remirror/src"
+    },
+    {
+      "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-positioner/src"
+    },
+    {
+      "path": "../../remirror__messages/src"
+    }
+  ]
+}

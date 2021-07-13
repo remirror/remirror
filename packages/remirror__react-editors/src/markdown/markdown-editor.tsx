@@ -1,0 +1,5 @@
+/**
+ * @jsxImportSource @emotion/react
+ */
+
+export {};

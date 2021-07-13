@@ -1,0 +1,21 @@
+{
+  "plugins": [
+    [
+      "template-html-minifier",
+      {
+        "modules": {
+          "lit-html": ["html"],
+          "lit-element": ["html", { "name": "css", "encapsulation": "style" }]
+        },
+        "strictCSS": true,
+        "htmlMinifier": {
+          "collapseWhitespace": true,
+          "conservativeCollapse": true,
+          "removeComments": true,
+          "caseSensitive": true,
+          "minifyCSS": true
+        }
+      }
+    ]
+  ]
+}

@@ -28,25 +28,25 @@ export interface ModifierInformation {
  */
 export type KeyboardEventName = 'keydown' | 'keyup' | 'keypress';
 
-export interface OptionsParameter {
+export interface OptionsProps {
   /**
    * Additional options that can be passed into the generated keyboard event.
    */
   options: KeyboardEventInit;
 }
 
-export interface TextInputParameter<Type extends string = string>
-  extends Partial<OptionsParameter>,
-    Partial<IsTypingParameter> {
+export interface TextInputProps<Type extends string = string>
+  extends Partial<OptionsProps>,
+    Partial<IsTypingProps> {
   /**
    * The text or character being passed into the generated event
    */
   text: Type;
 }
 
-export type TypingInputParameter = Omit<TextInputParameter, 'typing'>;
+export type TypingInputProps = Omit<TextInputProps, 'typing'>;
 
-export interface IsTypingParameter {
+export interface IsTypingProps {
   /** Indicates whether the text input is part of a typing sequence (i.e. into an editor)
    * This can change a few semantics.
    *
@@ -56,9 +56,9 @@ export interface IsTypingParameter {
   typing: boolean;
 }
 
-export interface OptionsWithTypingParameter extends OptionsParameter, Partial<IsTypingParameter> {}
+export interface OptionsWithTypingProps extends OptionsProps, Partial<IsTypingProps> {}
 
-export interface KeyboardConstructorParameter {
+export interface KeyboardConstructorProps {
   /**
    * The target of our events
    */

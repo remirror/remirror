@@ -1,5 +1,4 @@
 import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
-
 import type { EditorSchema } from '@remirror/core-types';
 import type { EditorView } from '@remirror/pm/view';
 
@@ -34,7 +33,7 @@ export interface CommandTransformation<Schema extends EditorSchema = EditorSchem
   to?: TaggedProsemirrorNode<Schema>;
 }
 
-export interface TaggedDocParameter<Schema extends EditorSchema = EditorSchema> {
+export interface TaggedDocProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * A tagged ProsemirrorNode which can hold cursor information from the passed in text.
    */
@@ -49,7 +48,7 @@ export interface TestEditorView<Schema extends EditorSchema = EditorSchema>
   };
 }
 
-export interface TestEditorViewParameter<Schema extends EditorSchema = EditorSchema> {
+export interface TestEditorViewProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * An instance of the test editor view which allows for dispatching events
    * and also containers TaggedProsemirrorNodes

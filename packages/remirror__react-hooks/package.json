@@ -1,0 +1,212 @@
+{
+  "name": "@remirror/react-hooks",
+  "version": "1.0.0-next.60",
+  "description": "A selection of core hooks built for working within the editor.",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-hooks",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-hooks",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-hooks.esm.js",
+      "require": "./dist/remirror-react-hooks.cjs.js",
+      "browser": "./dist/remirror-react-hooks.browser.esm.js",
+      "types": "./dist/remirror-react-hooks.cjs.d.ts",
+      "default": "./dist/remirror-react-hooks.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts",
+    "./use-context-menu": {
+      "import": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.esm.js",
+      "require": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.cjs.js",
+      "browser": "./use-context-menu/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.esm.js"
+    },
+    "./use-editor-focus": {
+      "import": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.esm.js",
+      "require": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs.js",
+      "browser": "./use-editor-focus/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs.d.ts",
+      "default": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.esm.js"
+    },
+    "./use-emoji": {
+      "import": "./use-emoji/dist/remirror-react-hooks-use-emoji.esm.js",
+      "require": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs.js",
+      "browser": "./use-emoji/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs.d.ts",
+      "default": "./use-emoji/dist/remirror-react-hooks-use-emoji.esm.js"
+    },
+    "./use-event": {
+      "import": "./use-event/dist/remirror-react-hooks-use-event.esm.js",
+      "require": "./use-event/dist/remirror-react-hooks-use-event.cjs.js",
+      "browser": "./use-event/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-event/dist/remirror-react-hooks-use-event.esm.js"
+    },
+    "./use-history": {
+      "import": "./use-history/dist/remirror-react-hooks-use-history.esm.js",
+      "require": "./use-history/dist/remirror-react-hooks-use-history.cjs.js",
+      "browser": "./use-history/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-history/dist/remirror-react-hooks-use-history.cjs.d.ts",
+      "default": "./use-history/dist/remirror-react-hooks-use-history.esm.js"
+    },
+    "./use-hover": {
+      "import": "./use-hover/dist/remirror-react-hooks-use-hover.esm.js",
+      "require": "./use-hover/dist/remirror-react-hooks-use-hover.cjs.js",
+      "browser": "./use-hover/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-hover/dist/remirror-react-hooks-use-hover.esm.js"
+    },
+    "./use-keymap": {
+      "import": "./use-keymap/dist/remirror-react-hooks-use-keymap.esm.js",
+      "require": "./use-keymap/dist/remirror-react-hooks-use-keymap.cjs.js",
+      "browser": "./use-keymap/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-keymap/dist/remirror-react-hooks-use-keymap.cjs.d.ts",
+      "default": "./use-keymap/dist/remirror-react-hooks-use-keymap.esm.js"
+    },
+    "./use-keymaps": {
+      "import": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.esm.js",
+      "require": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.cjs.js",
+      "browser": "./use-keymaps/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.esm.js"
+    },
+    "./use-mention": {
+      "import": "./use-mention/dist/remirror-react-hooks-use-mention.esm.js",
+      "require": "./use-mention/dist/remirror-react-hooks-use-mention.cjs.js",
+      "browser": "./use-mention/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-mention/dist/remirror-react-hooks-use-mention.cjs.d.ts",
+      "default": "./use-mention/dist/remirror-react-hooks-use-mention.esm.js"
+    },
+    "./use-mention-atom": {
+      "import": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.esm.js",
+      "require": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.cjs.js",
+      "browser": "./use-mention-atom/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.cjs.d.ts",
+      "default": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.esm.js"
+    },
+    "./use-menu-navigation": {
+      "import": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.esm.js",
+      "require": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.cjs.js",
+      "browser": "./use-menu-navigation/dist/remirror-react-hooks.browser.esm.js",
+      "default": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.esm.js"
+    },
+    "./use-multi-positioner": {
+      "import": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.esm.js",
+      "require": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.cjs.js",
+      "browser": "./use-multi-positioner/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.cjs.d.ts",
+      "default": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.esm.js"
+    },
+    "./use-positioner": {
+      "import": "./use-positioner/dist/remirror-react-hooks-use-positioner.esm.js",
+      "require": "./use-positioner/dist/remirror-react-hooks-use-positioner.cjs.js",
+      "browser": "./use-positioner/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-positioner/dist/remirror-react-hooks-use-positioner.cjs.d.ts",
+      "default": "./use-positioner/dist/remirror-react-hooks-use-positioner.esm.js"
+    },
+    "./use-suggest": {
+      "import": "./use-suggest/dist/remirror-react-hooks-use-suggest.esm.js",
+      "require": "./use-suggest/dist/remirror-react-hooks-use-suggest.cjs.js",
+      "browser": "./use-suggest/dist/remirror-react-hooks.browser.esm.js",
+      "types": "./use-suggest/dist/remirror-react-hooks-use-suggest.cjs.d.ts",
+      "default": "./use-suggest/dist/remirror-react-hooks-use-suggest.esm.js"
+    }
+  },
+  "main": "dist/remirror-react-hooks.cjs.js",
+  "module": "dist/remirror-react-hooks.esm.js",
+  "browser": {
+    "./dist/remirror-react-hooks.cjs.js": "./dist/remirror-react-hooks.browser.cjs.js",
+    "./dist/remirror-react-hooks.esm.js": "./dist/remirror-react-hooks.browser.esm.js"
+  },
+  "types": "dist/remirror-react-hooks.cjs.d.ts",
+  "files": [
+    "dist",
+    "use-context-menu",
+    "use-editor-focus",
+    "use-emoji",
+    "use-event",
+    "use-history",
+    "use-hover",
+    "use-keymap",
+    "use-keymaps",
+    "use-mention-atom",
+    "use-mention",
+    "use-menu-navigation",
+    "use-multi-positioner",
+    "use-positioner",
+    "use-suggest"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/extension-emoji": "1.0.0-next.60",
+    "@remirror/extension-events": "1.0.0-next.60",
+    "@remirror/extension-history": "1.0.0-next.60",
+    "@remirror/extension-mention": "1.0.0-next.60",
+    "@remirror/extension-mention-atom": "1.0.0-next.60",
+    "@remirror/extension-positioner": "1.0.0-next.60",
+    "@remirror/i18n": "1.0.0-next.60",
+    "@remirror/react-core": "0.0.0",
+    "@remirror/react-utils": "1.0.0-next.60",
+    "multishift": "1.0.0-next.60",
+    "use-isomorphic-layout-effect": "^1.1.1",
+    "use-previous": "^1.1.0"
+  },
+  "devDependencies": {
+    "@remirror/pm": "1.0.0-next.60",
+    "@remirror/react": "1.0.0-next.60",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "svgmoji": "^3.2.0"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "1.0.0-next.60",
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "200 KB"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "use-context-menu.ts",
+      "use-editor-focus.ts",
+      "use-emoji.ts",
+      "use-event.ts",
+      "use-history.ts",
+      "use-hover.ts",
+      "use-keymap.ts",
+      "use-keymaps.ts",
+      "use-mention-atom.ts",
+      "use-mention.ts",
+      "use-menu-navigation.ts",
+      "use-multi-positioner.ts",
+      "use-positioner.ts",
+      "use-suggest.ts"
+    ]
+  },
+  "rn:dev": "src/index.ts"
+}

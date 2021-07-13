@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Remirror Controlled Component can override updates to the editor state 1`] = `
+<div
+  aria-label="Remirror editor"
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    Hello
+  </p>
+  <p>
+    add more value Hello some content
+  </p>
+</div>
+`;
+
+exports[`Remirror Controlled Component overrides initial content 1`] = `
+<div
+  aria-label="Remirror editor"
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    Not terrible
+  </p>
+</div>
+`;
+
+exports[`Remirror Controlled Component responds to updates to the editor state 1`] = `
+<div
+  aria-label="Remirror editor"
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    add more value some content
+  </p>
+</div>
+`;
+
+exports[`Remirror Controlled Component should set the initial value 1`] = `
+<div
+  aria-label="Remirror editor"
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    This is the initial value
+  </p>
+</div>
+`;
+
+exports[`Remirror Controlled Component throws when switching from controlled to non-controlled 1`] = `
+"There is a problem with your controlled editor setup.
+
+You have attempted to switch from a controlled to an uncontrolled editor. Once you set up an editor as a controlled editor it must always provide a \`state\` prop.
+
+For more information visit https://remirror.io/docs/errors#rmr0203"
+`;
+
+exports[`Remirror Controlled Component throws when switching from non-controlled to controlled 1`] = `
+"There is a problem with your controlled editor setup.
+
+You have provided a \`state\` prop to an uncontrolled editor. In order to set up your editor as controlled you must provide the \`state\` prop from the very first render.
+
+For more information visit https://remirror.io/docs/errors#rmr0203"
+`;

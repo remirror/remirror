@@ -467,11 +467,9 @@ export type ItemsToString<Item = any> = (
 ) => string;
 export type GetItemId<Item = any> = (items: Item) => any;
 export type ItemToString<Item = any> = (item: Item) => string;
-export type GetA11yStatusMessage<Item = any> = (
-  options: A11yStatusMessageParameter<Item>,
-) => string;
+export type GetA11yStatusMessage<Item = any> = (options: A11yStatusMessageProps<Item>) => string;
 
-export interface A11yStatusMessageParameter<Item = any> {
+export interface A11yStatusMessageProps<Item = any> {
   state: MultishiftState<Item>;
   items: Item[];
   itemsToString: (items: Item[], itemToString?: (item: Item) => string) => string;
@@ -502,7 +500,7 @@ export interface MultishiftStateChangeset<Item = any> {
 export type CreateMultishiftAction<
   Type extends string,
   Payload = any,
-  Args extends any[] = [Payload]
+  Args extends any[] = [Payload],
 > = (...args: Args) => ActionWithPayload<Type, Payload>;
 
 export interface GetRemoveButtonOptions<Element extends HTMLElement = any, Item = any>
@@ -530,13 +528,13 @@ export interface GetRemoveButtonReturn<Element extends HTMLElement = any>
 
 export interface GetComboBoxPropsOptions<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
-> extends RefParameter<RefKey>,
+  RefKey extends string = 'ref',
+> extends RefProps<RefKey>,
     HTMLProps<Element> {}
 
 export type GetComboBoxPropsReturn<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > = DetailedHTMLProps<HTMLAttributes<Element>, Element> &
   { [P in RefKey]: Ref<any> } & {
     /**
@@ -551,8 +549,8 @@ export type GetComboBoxPropsReturn<
 
 export interface GetPropsWithRefOptions<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
-> extends RefParameter<RefKey>,
+  RefKey extends string = 'ref',
+> extends RefProps<RefKey>,
     HTMLProps<Element> {
   /**
    * Determine whether or not the item can be highlighted and selected.
@@ -562,7 +560,7 @@ export interface GetPropsWithRefOptions<
 
 export type GetPropsWithRefReturn<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > = {
   [P in Exclude<RefKey, 'key'>]: Ref<any>;
 } &
@@ -570,7 +568,7 @@ export type GetPropsWithRefReturn<
 
 export type GetLabelPropsWithRefReturn<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > = {
   [P in Exclude<RefKey, 'key'>]: Ref<any>;
 } &
@@ -581,7 +579,7 @@ export type GetLabelPropsWithRefReturn<
 export interface GetItemPropsOptions<
   Element extends HTMLElement = any,
   RefKey extends string = 'ref',
-  Item = any
+  Item = any,
 > extends GetPropsWithRefOptions<Element, RefKey> {
   /**
    * This is the item data that will be selected when the user selects a
@@ -664,21 +662,21 @@ export interface MultishiftPropGetters<Item = any> {
    * @remarks
    *
    * This method should be applied to the element which contains your list of
-   * items. Typically, this will be a <div> or a <ul> that surrounds a map
+   * items. Typically, this will be a `<div>` or a `<ul>` that surrounds a map
    * expression. This handles the proper ARIA roles and attributes.
    *
    * refKey: if you're rendering a composite component, that component will need
    * to accept a prop which it forwards to the root DOM element. Commonly, folks
    * call this innerRef. So you'd call: getMenuProps({refKey: 'innerRef'}) and
-   * your composite component would forward like: <ul ref={props.innerRef} />.
-   * However, if you are just rendering a primitive component like <div>, there
+   * your composite component would forward like: `<ul ref={props.innerRef} />`.
+   * However, if you are just rendering a primitive component like `<div>`, there
    * is no need to specify this property. Please keep in mind that menus, for
    * accessiblity purposes, should always be rendered, regardless of whether you
    * hide it or not. Otherwise, getMenuProps may throw error if you unmount and
    * remount the menu.
    *
    * aria-label: By default the menu will add an aria-labelledby that refers to
-   * the <label> rendered with getLabelProps. However, if you provide aria-label
+   * the `<label>` rendered with getLabelProps. However, if you provide aria-label
    * to give a more specific label that describes the options available, then
    * aria-labelledby will not be provided and screen readers can use your
    * aria-label instead. In some cases, you might want to completely bypass the
@@ -783,7 +781,7 @@ export interface MultishiftPropGetters<Item = any> {
 
 export interface IgnoredElementOptions<
   Element extends HTMLElement = any,
-  RefKey extends string = 'ref'
+  RefKey extends string = 'ref',
 > extends GetPropsWithRefOptions<Element, RefKey> {}
 
 export interface MultishiftHelpers<Item = any> {
@@ -797,6 +795,21 @@ export interface MultishiftHelpers<Item = any> {
    * pressed.
    */
   itemHighlightedAtIndex: (index: number) => boolean;
+
+  /**
+   * Return true when the provided item index is hovered.
+   */
+  indexIsHovered: (index: number) => boolean;
+
+  /**
+   * Return true when the provided item is hovered.
+   */
+  itemIsHovered: (item: Item) => boolean;
+
+  /**
+   * Return true when the provided item index is selected.
+   */
+  indexIsSelected: (index: number) => boolean;
 
   /**
    * Return true when the provided item is selected.
@@ -859,7 +872,7 @@ export interface MultishiftFocusHelpers {
  * This provides utility methods which make updating the state for
  * _uncontrolled_ components a bit simpler.
  *
- * @typeParam Item = the underlying item type.
+ * @template Item = the underlying item type.
  */
 export interface MultishiftStateHelpers<Item = any> {
   /**
@@ -913,7 +926,7 @@ export interface MultishiftReturn<Item = any>
   dispatch: Dispatch<MultishiftRootActions<Item>>;
 }
 
-export interface RefParameter<RefKey extends string = 'ref'> {
+export interface RefProps<RefKey extends string = 'ref'> {
   /**
    * A custom ref key which allows a reference to be obtained from non standard
    * components.

@@ -42,7 +42,7 @@ This lifecycle method is called when the `EditorView` is first added by the UI l
 ### `onStateUpdate`
 
 ```ts
-function onStateUpdate(parameter: import('remirror/core').StateUpdateLifecycleParameter): void;
+function onStateUpdate(parameter: import('remirror').StateUpdateLifecycleParameter): void;
 ```
 
 This is called whenever a transaction successfully updates the `EditorState`. For controlled component this is called whenever the state value is updated.
@@ -68,7 +68,7 @@ import {
   Handler,
   PlainExtension,
   Static,
-} from 'remirror/core';
+} from 'remirror';
 
 interface ExampleOptions {
   // `Static` types can only be provided at instantiation.
@@ -118,6 +118,8 @@ The extension decorator updates the static properties of the extension. If you p
 extensionDecorator({ defaultSettings: { color: 'red' } })(ExampleExtension);
 ```
 
+If you really don't like this pattern then you can also set the same options as static properties.
+
 ### `Dynamic` options
 
 `Dynamic` options can be passed in at instantiation and also during runtime. When no annotation exists the option is assumed to be dynamic.
@@ -142,7 +144,7 @@ If you need to accept `undefined`as an acceptable default option there are two p
 This is the preferred solution and should be used instead of the following `null` union.
 
 ```ts
-import { AcceptUndefined } from 'remirror/core';
+import { AcceptUndefined } from 'remirror';
 
 interface Options {
   optional?: AcceptUndefined<string>;
@@ -181,7 +183,7 @@ exampleExtension.setOptions({ type: 'not-awesome' });
 To get them to work we would change the above example extension implentation to look like the following.
 
 ```ts
-import { hasTransactionChanged, StateUpdateLifecycleParameter } from 'remirror/core';
+import { hasTransactionChanged, StateUpdateLifecycleParameter } from 'remirror';
 import { hasStateChanged } from 'remirror/extension-positioner';
 
 @extensionDecorator<ExampleOptions>({
@@ -231,7 +233,7 @@ const disposeChangeHandler = exampleExtension.addHandler('onChange', () => {
 disposeChangeHandler();
 ```
 
-The onChange handler is automatically managed for you.
+The `onChange` handler is automatically managed for you.
 
 ### `CustomHandler` options
 

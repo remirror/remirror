@@ -1,0 +1,19 @@
+/chat               https://discord.gg/C4cfrMK
+/projects           https://github.com/orgs/remirror/projects
+/projects/next      https://github.com/orgs/remirror/projects/1
+/projects/ir        https://github.com/orgs/remirror/projects/2
+/projects/docs      https://github.com/orgs/remirror/projects/3
+/projects/bugs      https://github.com/orgs/remirror/projects/4
+/projects/auto      https://github.com/orgs/remirror/projects/5
+
+/docs/introduction  /docs
+
+/docs/guide/installation                /docs/installation
+/docs/guide/hello-remirror              /docs/react/create-editor
+/docs/guide/create-editor               /docs/react/create-editor
+/docs/concepts/react-controlled-editor  /docs/react/controlled
+/docs/concepts/react-refs               /docs/react/refs
+/docs/concepts/presets                  /docs/
+/docs/showcase/social                   /docs/examples/social
+
+/docs/concepts/presets      /docs/concepts/extension

@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-state.cjs.js",
+  "module": "dist/remirror-pm-state.esm.js",
+  "browser": {
+    "./dist/remirror-pm-state.cjs.js": "./dist/remirror-pm-state.browser.cjs.js",
+    "./dist/remirror-pm-state.esm.js": "./dist/remirror-pm-state.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-state.cjs.d.ts",
+  "rn:dev": "../src/state.ts"
+}

@@ -1,0 +1,56 @@
+{
+  "name": "@remirror/extension-link",
+  "version": "1.0.0-next.60",
+  "description": "Add links to your text editor.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-link",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-link",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-link.esm.js",
+      "require": "./dist/remirror-extension-link.cjs.js",
+      "browser": "./dist/remirror-extension-link.browser.esm.js",
+      "types": "./dist/remirror-extension-link.cjs.d.ts",
+      "default": "./dist/remirror-extension-link.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-link.cjs.js",
+  "module": "dist/remirror-extension-link.esm.js",
+  "browser": {
+    "./dist/remirror-extension-link.cjs.js": "./dist/remirror-extension-link.browser.cjs.js",
+    "./dist/remirror-extension-link.esm.js": "./dist/remirror-extension-link.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-link.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/extension-events": "1.0.0-next.60",
+    "@remirror/messages": "0.0.0"
+  },
+  "devDependencies": {
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  },
+  "rn:dev": "src/index.ts"
+}

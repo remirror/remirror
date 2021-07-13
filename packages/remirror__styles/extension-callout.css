@@ -1,0 +1,34 @@
+/**
+ * Styles extracted from: packages/remirror__theme/src/extension-callout-theme.ts
+ */
+.remirror-editor div[data-callout-type] {
+  display: flex;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 10px;
+  border-left: 2px solid transparent;
+}
+
+.remirror-editor div[data-callout-type] > :not(.remirror-callout-emoji-wrapper) {
+  margin-left: 8px;
+  flex-grow: 1;
+}
+.remirror-editor div[data-callout-type='info'] {
+  background: #eef6fc;
+  border-left-color: #3298dc;
+}
+.remirror-editor div[data-callout-type='warning'] {
+  background: #fffbeb;
+  border-left-color: #ffdd57;
+}
+.remirror-editor div[data-callout-type='error'] {
+  background: #feecf0;
+  border-left-color: #f14668;
+}
+.remirror-editor div[data-callout-type='success'] {
+  background: #effaf3;
+  border-left-color: #48c774;
+}
+.remirror-editor div[data-callout-type='blank'] {
+  background: #f8f8f8;
+}

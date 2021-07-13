@@ -13,9 +13,9 @@ You want to write tests for some of your prosemirror editor but you don't know w
 ## Installation
 
 ```bash
-yarn add jest-prosemirror@next # yarn
-pnpm add jest-prosemirror@next # pnpm
-npm install jest-prosemirror@next # npm
+yarn add jest-prosemirror # yarn
+pnpm add jest-prosemirror # pnpm
+npm install jest-prosemirror # npm
 ```
 
 ## Getting started
@@ -152,7 +152,10 @@ test('`keyBindings`', () => {
     name: 'at',
     keyBindings,
     matchOffset: 0,
-    createCommand: ({ view }) => () => view.dispatch(view.state.tr.insertText('awesome')),
+    createCommand:
+      ({ view }) =>
+      () =>
+        view.dispatch(view.state.tr.insertText('awesome')),
   });
 
   createEditor(doc(p('<cursor>')), { plugins: [plugin] })

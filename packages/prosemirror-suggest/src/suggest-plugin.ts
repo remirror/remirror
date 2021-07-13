@@ -1,14 +1,17 @@
 import { Plugin } from 'prosemirror-state';
 
 import { suggestPluginKey, SuggestState } from './suggest-state';
-import type { EditorSchema, EditorState, Suggester } from './suggest-types';
+import type { EditorSchema, EditorState, Suggester, Transaction } from './suggest-types';
+import { IGNORE_SUGGEST_META_KEY } from './suggest-utils';
 
 /**
  * Get the state of the suggest plugin.
  *
  * @param state - the editor state.
  */
-export function getSuggestPluginState(state: EditorState): SuggestState {
+export function getSuggestPluginState<Schema extends EditorSchema = EditorSchema>(
+  state: EditorState<Schema>,
+): SuggestState {
   return suggestPluginKey.getState(state);
 }
 
@@ -23,6 +26,17 @@ export function addSuggester<Schema extends EditorSchema = EditorSchema>(
   suggester: Suggester,
 ): () => void {
   return getSuggestPluginState(state).addSuggester(suggester);
+}
+
+/**
+ * Call this method with a transaction to skip the suggest plugin checks for the
+ * next update.
+ *
+ * This can be used for updates that don't need to trigger a recheck of the
+ * suggest state.
+ */
+export function ignoreUpdateForSuggest(tr: Transaction): void {
+  tr.setMeta(IGNORE_SUGGEST_META_KEY, true);
 }
 
 /**

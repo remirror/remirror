@@ -1,0 +1,101 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > '__tests__'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom",
+      "snapshot-diff",
+      "node"
+    ],
+    "declaration": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "importsNotUsedAsValues": "remove"
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../src"
+    },
+    {
+      "path": "../../testing/src"
+    },
+    {
+      "path": "../../remirror/src"
+    },
+    {
+      "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-bidi/src"
+    },
+    {
+      "path": "../../remirror__extension-blockquote/src"
+    },
+    {
+      "path": "../../remirror__extension-bold/src"
+    },
+    {
+      "path": "../../remirror__extension-code/src"
+    },
+    {
+      "path": "../../remirror__extension-code-block/src"
+    },
+    {
+      "path": "../../remirror__extension-drop-cursor/src"
+    },
+    {
+      "path": "../../remirror__extension-embed/src"
+    },
+    {
+      "path": "../../remirror__extension-gap-cursor/src"
+    },
+    {
+      "path": "../../remirror__extension-hard-break/src"
+    },
+    {
+      "path": "../../remirror__extension-heading/src"
+    },
+    {
+      "path": "../../remirror__extension-horizontal-rule/src"
+    },
+    {
+      "path": "../../remirror__extension-image/src"
+    },
+    {
+      "path": "../../remirror__extension-italic/src"
+    },
+    {
+      "path": "../../remirror__extension-link/src"
+    },
+    {
+      "path": "../../remirror__extension-list/src"
+    },
+    {
+      "path": "../../remirror__extension-search/src"
+    },
+    {
+      "path": "../../remirror__extension-strike/src"
+    },
+    {
+      "path": "../../remirror__extension-tables/src"
+    },
+    {
+      "path": "../../remirror__extension-trailing-node/src"
+    },
+    {
+      "path": "../../remirror__extension-underline/src"
+    },
+    {
+      "path": "../../remirror__preset-core/src"
+    }
+  ]
+}

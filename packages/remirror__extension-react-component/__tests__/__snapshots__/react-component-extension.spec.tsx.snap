@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NodeViews are created with content 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <div
+    class="test-node-view-wrapper"
+  >
+    <p
+      custom="awesome"
+    >
+      <span
+        class="test-node-view-content-wrapper"
+      >
+        <span>
+          content hello world
+        </span>
+      </span>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`NodeViews are created without content 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <div
+    class="test-node-view-wrapper"
+    custom="awesome"
+  >
+    <div>
+      Ignore content
+    </div>
+  </div>
+</div>
+`;
+
+exports[`node views can be created from commands 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p
+    class=""
+  >
+    contenthello world
+
+    <br />
+  </p>
+  <div
+    class="test-node-view-wrapper"
+  >
+    <p
+      custom="custom"
+    >
+      <span
+        class="test-node-view-content-wrapper"
+      >
+        <span>
+          asdf
+        </span>
+      </span>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`simple commands 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <div
+    class="test-node-view-wrapper"
+  >
+    <p
+      custom="custom"
+    >
+      <span
+        class="test-node-view-content-wrapper"
+      >
+        <span>
+          add
+        </span>
+      </span>
+    </p>
+  </div>
+</div>
+`;

@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // Better testing UI
+    "hbenl.vscode-test-explorer",
+    "kavod-io.vscode-jest-test-adapter"
+  ]
+}

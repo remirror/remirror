@@ -1,0 +1,86 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > 'src'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "declaration": true,
+    "noEmit": false,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist-types"
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-bidi/src"
+    },
+    {
+      "path": "../../remirror__extension-blockquote/src"
+    },
+    {
+      "path": "../../remirror__extension-bold/src"
+    },
+    {
+      "path": "../../remirror__extension-code/src"
+    },
+    {
+      "path": "../../remirror__extension-code-block/src"
+    },
+    {
+      "path": "../../remirror__extension-drop-cursor/src"
+    },
+    {
+      "path": "../../remirror__extension-embed/src"
+    },
+    {
+      "path": "../../remirror__extension-gap-cursor/src"
+    },
+    {
+      "path": "../../remirror__extension-hard-break/src"
+    },
+    {
+      "path": "../../remirror__extension-heading/src"
+    },
+    {
+      "path": "../../remirror__extension-horizontal-rule/src"
+    },
+    {
+      "path": "../../remirror__extension-image/src"
+    },
+    {
+      "path": "../../remirror__extension-italic/src"
+    },
+    {
+      "path": "../../remirror__extension-link/src"
+    },
+    {
+      "path": "../../remirror__extension-list/src"
+    },
+    {
+      "path": "../../remirror__extension-search/src"
+    },
+    {
+      "path": "../../remirror__extension-strike/src"
+    },
+    {
+      "path": "../../remirror__extension-tables/src"
+    },
+    {
+      "path": "../../remirror__extension-trailing-node/src"
+    },
+    {
+      "path": "../../remirror__extension-underline/src"
+    },
+    {
+      "path": "../../remirror__preset-core/src"
+    }
+  ]
+}

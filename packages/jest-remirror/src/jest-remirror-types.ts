@@ -1,16 +1,15 @@
 import type {
-  AnyCombinedUnion,
-  AttributesParameter,
+  AnyExtension,
+  AttributesProps,
   EditorSchema,
-  MarkAttributes,
-  NodeAttributes,
+  ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
 import type { DomFrameworkProps } from '@remirror/dom';
 import type { CreateCoreManagerOptions } from '@remirror/preset-core';
 
-export interface BaseFactoryParameter<Schema extends EditorSchema = EditorSchema>
-  extends Partial<AttributesParameter> {
+export interface BaseFactoryProps<Schema extends EditorSchema = EditorSchema>
+  extends Partial<AttributesProps> {
   /**
    * The name of the node or mark
    */
@@ -85,13 +84,13 @@ export interface TaggedProsemirrorNode<Schema extends EditorSchema = EditorSchem
 
 export type MarkWithAttributes<Names extends string> = {
   [P in Names]: (
-    attrs?: MarkAttributes,
+    attrs?: ProsemirrorAttributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
 export type NodeWithAttributes<Names extends string> = {
   [P in Names]: (
-    attrs?: NodeAttributes,
+    attrs?: ProsemirrorAttributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
@@ -103,9 +102,9 @@ export type NodeWithoutAttributes<Names extends string> = {
   [P in Names]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export interface RenderEditorParameter<Combined extends AnyCombinedUnion>
+export interface RenderEditorProps<Extension extends AnyExtension>
   extends CreateCoreManagerOptions {
-  props?: Partial<Omit<DomFrameworkProps<Combined>, 'manager'>>;
+  props?: Partial<Omit<DomFrameworkProps<Extension>, 'manager'>>;
 
   /**
    * Whether to automatically cleanup the dom once the test finishes.

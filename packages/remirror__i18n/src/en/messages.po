@@ -1,0 +1,677 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2021-03-14 16:51+0000\n"
+"Mime-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#. The image description label.
+#: packages/remirror__messages/src/react-components-messages.ts:32
+#~ msgid "components.image.dialog.description.label"
+#~ msgstr "Image description"
+
+#. A placeholder for the description of the image that is being inserted.
+#: packages/remirror__messages/src/react-components-messages.ts:37
+#~ msgid "components.image.dialog.description.placeholder"
+#~ msgstr "Add a short description here."
+
+#. The label for the image menu button.
+#: packages/remirror__messages/src/react-components-messages.ts:22
+#~ msgid "components.image.dialog.label"
+#~ msgstr "Image"
+
+#. The label for the image url.
+#: packages/remirror__messages/src/react-components-messages.ts:27
+#~ msgid "components.image.dialog.source.label"
+#~ msgstr "Image source"
+
+#. The label for the image menu button.
+#: packages/remirror__messages/src/react-components-messages.ts:17
+#~ msgid "components.image.menu.icon.label"
+#~ msgstr "Image"
+
+#. The label for the italic menu button.
+#: packages/remirror__messages/src/react-components-messages.ts:7
+#~ msgid "components.italic.menu.icon.label"
+#~ msgstr "Italic"
+
+#. The label for the underline menu button.
+#: packages/remirror__messages/src/react-components-messages.ts:12
+#~ msgid "components.underline.menu.icon.label"
+#~ msgstr "Underline"
+
+#. Label for adding an annotation.
+#: packages/remirror__messages/src/extension-annotation-messages.ts:4
+msgid "extension.command.add-annotation.label"
+msgstr "Add annotation"
+
+#. Center align the text in the current node.
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:16
+msgid "extension.command.center-align.label"
+msgstr "Center align"
+
+#. Description for converting a paragraph.
+#: packages/remirror__messages/src/extension-paragraph-messages.ts:22
+msgid "extension.command.convert-paragraph.description"
+msgstr "Convert current block into a paragraph block."
+
+#. Label for converting the current node into a paragraph.
+#: packages/remirror__messages/src/extension-paragraph-messages.ts:16
+msgid "extension.command.convert-paragraph.label"
+msgstr "Convert Paragraph"
+
+#. Description for copy command.
+#: packages/remirror__messages/src/core-messages.ts:10
+msgid "extension.command.copy.description"
+msgstr "Copy the selected text"
+
+#. Label for copy command.
+#: packages/remirror__messages/src/core-messages.ts:4
+msgid "extension.command.copy.label"
+msgstr "Copy"
+
+#. Description for creating a table
+#: packages/remirror__messages/src/extension-tables-messages.ts:10
+msgid "extension.command.create-table.description"
+msgstr "Create a table with set number of rows and columns."
+
+#. Label for creating a table
+#: packages/remirror__messages/src/extension-tables-messages.ts:4
+msgid "extension.command.create-table.label"
+msgstr "Create table"
+
+#. Description for cut command.
+#: packages/remirror__messages/src/core-messages.ts:22
+msgid "extension.command.cut.description"
+msgstr "Cut the selected text"
+
+#. Label for cut command.
+#: packages/remirror__messages/src/core-messages.ts:16
+msgid "extension.command.cut.label"
+msgstr "Cut"
+
+#. Description for decreasing the font size.
+#: packages/remirror__messages/src/extension-font-size-messages.ts:34
+msgid "extension.command.decrease-font-size.description"
+msgstr "Decrease the font size."
+
+#. Label for decreasing the font size.
+#: packages/remirror__messages/src/extension-font-size-messages.ts:28
+msgid "extension.command.decrease-font-size.label"
+msgstr "Decrease"
+
+#. Label for decreasing the indentation level of the current node block.
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:10
+msgid "extension.command.decrease-indent.label"
+msgstr "Decrease indentation"
+
+#. Description for increasing the font size.
+#: packages/remirror__messages/src/extension-font-size-messages.ts:22
+msgid "extension.command.increase-font-size.description"
+msgstr "Increase the font size"
+
+#. Label for increasing the font size.
+#: packages/remirror__messages/src/extension-font-size-messages.ts:16
+msgid "extension.command.increase-font-size.label"
+msgstr "Increase"
+
+#. Label for increasing the indentation level.
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:4
+msgid "extension.command.increase-indent.label"
+msgstr "Increase indentation"
+
+#. Description for inserting a paragraph.
+#: packages/remirror__messages/src/extension-paragraph-messages.ts:10
+msgid "extension.command.insert-paragraph.description"
+msgstr "Insert a new paragraph"
+
+#. Label for inserting a paragraph.
+#: packages/remirror__messages/src/extension-paragraph-messages.ts:4
+msgid "extension.command.insert-paragraph.label"
+msgstr "Insert Paragraph"
+
+#. Justify the alignment of the selected nodes.
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:22
+msgid "extension.command.justify-align.label"
+msgstr "Justify"
+
+#. Left align the selected nodes.
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:34
+msgid "extension.command.left-align.label"
+msgstr "Left align"
+
+#. Description for paste command.
+#: packages/remirror__messages/src/core-messages.ts:34
+msgid "extension.command.paste.description"
+msgstr "Paste content into the editor"
+
+#. Label for paste command.
+#: packages/remirror__messages/src/core-messages.ts:28
+msgid "extension.command.paste.label"
+msgstr "Paste"
+
+#. Description for redo.
+#: packages/remirror__messages/src/extension-history-messages.ts:22
+msgid "extension.command.redo.description"
+msgstr "Redo the most recent action"
+
+#. Label for redo.
+#: packages/remirror__messages/src/extension-history-messages.ts:16
+msgid "extension.command.redo.label"
+msgstr "Redo"
+
+#. Label for removing an annotation.
+#: packages/remirror__messages/src/extension-annotation-messages.ts:16
+msgid "extension.command.remove-annotation.label"
+msgstr "Remove annotation"
+
+#. Right align the selected nodes.
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:28
+msgid "extension.command.right-align.label"
+msgstr "Right align"
+
+#. Description for select all command.
+#: packages/remirror__messages/src/core-messages.ts:46
+msgid "extension.command.select-all.description"
+msgstr "Select all content within the editor"
+
+#. Label for select all command.
+#: packages/remirror__messages/src/core-messages.ts:40
+msgid "extension.command.select-all.label"
+msgstr "Select all"
+
+#. Label for setting the case.
+#: packages/remirror__messages/src/extension-text-case-messages.ts:14
+msgid "extension.command.set-casing.label"
+msgstr "Set text case"
+
+#. Description for adding a font size.
+#: packages/remirror__messages/src/extension-font-size-messages.ts:10
+msgid "extension.command.set-font-size.description"
+msgstr "Set the font size for the selected text."
+
+#. Label for adding a font size.
+#: packages/remirror__messages/src/extension-font-size-messages.ts:4
+msgid "extension.command.set-font-size.label"
+msgstr "Font size"
+
+#. Description for color formatting command.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:10
+msgid "extension.command.set-text-color.description"
+msgstr "Set the text color for the selected text."
+
+#. Label for color formatting command.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:4
+msgid "extension.command.set-text-color.label"
+msgstr "Text color"
+
+#. Description for setting the text direction.
+#: packages/remirror__messages/src/extension-bidi-messages.ts:12
+msgid "extension.command.set-text-direction.description"
+msgstr ""
+"{dir, select, ltr {Set the text direction from left to right}\n"
+"rtl {Set the text direction from right to left}\n"
+"other {Reset text direction}}"
+
+#. Label for setting the text direction.
+#: packages/remirror__messages/src/extension-bidi-messages.ts:4
+msgid "extension.command.set-text-direction.label"
+msgstr ""
+"{dir, select, ltr {Left-To-Right}\n"
+"rtl {Right-To-Left}\n"
+"other {Reset Direction}}"
+
+#. Description for adding a text highlight.
+#: packages/remirror__messages/src/extension-text-highlight-messages.ts:10
+msgid "extension.command.set-text-highlight.description"
+msgstr "Set the text highlight color for the selected text."
+
+#. Label for adding a text highlight.
+#: packages/remirror__messages/src/extension-text-highlight-messages.ts:4
+msgid "extension.command.set-text-highlight.label"
+msgstr "Text highlight"
+
+#. Description for blockquote formatting command.
+#: packages/remirror__messages/src/extension-blockquote-messages.ts:10
+msgid "extension.command.toggle-blockquote.description"
+msgstr "Add blockquote formatting to the selected text"
+
+#. Label for blockquote formatting command.
+#: packages/remirror__messages/src/extension-blockquote-messages.ts:4
+msgid "extension.command.toggle-blockquote.label"
+msgstr "Blockquote"
+
+#. Description for bold formatting command.
+#: packages/remirror__messages/src/extension-bold-messages.ts:10
+msgid "extension.command.toggle-bold.description"
+msgstr "Add bold formatting to the selected text"
+
+#. Label for bold formatting command.
+#. Label for inserting an emoji.
+#: packages/remirror__messages/src/extension-bold-messages.ts:4
+#: packages/remirror__messages/src/extension-emoji-messages.ts:4
+msgid "extension.command.toggle-bold.label"
+msgstr "Insert Emoji"
+
+#. Description for inserting a bullet list into the editor.
+#: packages/remirror__messages/src/extension-list-messages.ts:10
+msgid "extension.command.toggle-bullet-list.description"
+msgstr "Bulleted list"
+
+#. Description of the callout command with support for callout types.
+#: packages/remirror__messages/src/extension-callout-messages.ts:14
+msgid "extension.command.toggle-callout.description"
+msgstr ""
+"{level, select, info {Create an information callout block}\n"
+"warning {Create a warning callout block}\n"
+"error {Create an error callout block}\n"
+"success {Create a success callout block}\n"
+"other {Create a callout block}}"
+
+#. Label for callout command with support for callout types.
+#: packages/remirror__messages/src/extension-callout-messages.ts:4
+msgid "extension.command.toggle-callout.label"
+msgstr ""
+"{level, select, info {Information Callout}\n"
+"warning {Warning Callout}\n"
+"error {Error Callout}\n"
+"success {Success Callout}\n"
+"other {Callout}}"
+
+#. Description for the code block command.
+#: packages/remirror__messages/src/extension-code-block-messages.ts:10
+msgid "extension.command.toggle-code-block.description"
+msgstr "Add a code block"
+
+#. Label for the code block command.
+#: packages/remirror__messages/src/extension-code-block-messages.ts:4
+msgid "extension.command.toggle-code-block.label"
+msgstr "Codeblock"
+
+#. Description for the inline code formatting command.
+#: packages/remirror__messages/src/extension-code-messages.ts:10
+msgid "extension.command.toggle-code.description"
+msgstr "Add inline code formatting to the selected text"
+
+#. Label for the inline code formatting.
+#: packages/remirror__messages/src/extension-code-messages.ts:4
+msgid "extension.command.toggle-code.label"
+msgstr "Code"
+
+#. Description of the columns command with support for number of columns counts.
+#: packages/remirror__messages/src/extension-columns-messages.ts:13
+msgid "extension.command.toggle-columns.description"
+msgstr ""
+"{count, select, 2 {Split the block into two columns}\n"
+"3 {Split the current block into three columns}\n"
+"4 {Split the current block into four columns}\n"
+"other {Split the current block into multiple columns}}"
+
+#. Label for columns command with support for number of columns counts.
+#: packages/remirror__messages/src/extension-columns-messages.ts:4
+msgid "extension.command.toggle-columns.label"
+msgstr ""
+"{count, select, 2 {Two Column Block}\n"
+"3 {Three Column Block}\n"
+"4 {Four Column Block}\n"
+"other {Multi Column Block}}"
+
+#. Label for heading command with support for levels.
+#: packages/remirror__messages/src/extension-heading-messages.ts:4
+msgid "extension.command.toggle-heading.label"
+msgstr ""
+"{level, select, 1 {Heading 1}\n"
+"2 {Heading 2}\n"
+"3 {Heading 3}\n"
+"4 {Heading 4}\n"
+"5 {Heading 5}\n"
+"6 {Heading 6}\n"
+"other {Heading}}"
+
+#. Description for italic formatting command.
+#: packages/remirror__messages/src/extension-italic-messages.ts:10
+msgid "extension.command.toggle-italic.description"
+msgstr "Italicize the selected text"
+
+#. Label for italic formatting command.
+#: packages/remirror__messages/src/extension-italic-messages.ts:4
+msgid "extension.command.toggle-italic.label"
+msgstr "Italic"
+
+#. Label for inserting an ordered list into the editor.
+#: packages/remirror__messages/src/extension-list-messages.ts:4
+msgid "extension.command.toggle-ordered-list.label"
+msgstr "Ordered list"
+
+#. Description for strike formatting command.
+#: packages/remirror__messages/src/extension-strike-messages.ts:10
+msgid "extension.command.toggle-strike.description"
+msgstr "Strikethrough the selected text"
+
+#. Label for strike formatting command.
+#: packages/remirror__messages/src/extension-strike-messages.ts:4
+msgid "extension.command.toggle-strike.label"
+msgstr "Strikethrough"
+
+#. Label for toggling a subscript.
+#: packages/remirror__messages/src/extension-sub-messages.ts:4
+msgid "extension.command.toggle-subscript.label"
+msgstr "Subscript"
+
+#. Label for toggling a superscript.
+#: packages/remirror__messages/src/extension-sup-messages.ts:4
+msgid "extension.command.toggle-superscript.label"
+msgstr "Superscript"
+
+#. Description for underline formatting command.
+#: packages/remirror__messages/src/extension-underline-messages.ts:10
+msgid "extension.command.toggle-underline.description"
+msgstr "Underline the selected text"
+
+#. Label for underline formatting command.
+#: packages/remirror__messages/src/extension-underline-messages.ts:4
+msgid "extension.command.toggle-underline.label"
+msgstr "Underline"
+
+#. Label for toggling between upper and lower case.
+#: packages/remirror__messages/src/extension-text-case-messages.ts:4
+msgid "extension.command.toggle-upper-case.label"
+msgstr ""
+"{case, select, upper {Uppercase}\n"
+"lower {Lowercase}\n"
+"capitalize {Sentence case}\n"
+"smallCaps {Small caps}\n"
+"other {Text case}}"
+
+#. Description for displaying whitespace characters.
+#: packages/remirror__messages/src/extension-whitespace-messages.ts:10
+msgid "extension.command.toggle-whitespace.description"
+msgstr "Show hidden whitespace characters in your editor."
+
+#. Label for displaying whitespace characters.
+#: packages/remirror__messages/src/extension-whitespace-messages.ts:4
+msgid "extension.command.toggle-whitespace.label"
+msgstr "Toggle Whitespace"
+
+#. Description for undo.
+#: packages/remirror__messages/src/extension-history-messages.ts:10
+msgid "extension.command.undo.description"
+msgstr "Undo the most recent action"
+
+#. Label for undo.
+#: packages/remirror__messages/src/extension-history-messages.ts:4
+msgid "extension.command.undo.label"
+msgstr "Undo"
+
+#. Label for updating an annotation.
+#: packages/remirror__messages/src/extension-annotation-messages.ts:10
+msgid "extension.command.update-annotation.label"
+msgstr "Update annotation"
+
+#. The number of columns
+#: packages/remirror__messages/src/extension-tables-messages.ts:19
+msgid "extension.table.column_count"
+msgstr "{count, plural, one {# column} other {# columns}}"
+
+#. The number of rows
+#: packages/remirror__messages/src/extension-tables-messages.ts:28
+msgid "extension.table.row_count"
+msgstr "{count, plural, one {# row} other {# rows}}"
+
+#. Label for alt key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:34
+msgid "keyboard.shortcut.alt"
+msgstr "Alt"
+
+#. Label for arrowDown key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:112
+msgid "keyboard.shortcut.arrowDown"
+msgstr "Arrow Down"
+
+#. Label for arrow left key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:94
+msgid "keyboard.shortcut.arrowLeft"
+msgstr "Arrow Left"
+
+#. Label for arrow right key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:100
+msgid "keyboard.shortcut.arrowRight"
+msgstr "Arrow Right"
+
+#. Label for arrow up key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:106
+msgid "keyboard.shortcut.arrowUp"
+msgstr "Arrow Up"
+
+#. Label for backspace key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:46
+msgid "keyboard.shortcut.backspace"
+msgstr "Backspace"
+
+#. Label for caps lock key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:40
+msgid "keyboard.shortcut.capsLock"
+msgstr "Caps Lock"
+
+#. Label for command key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:10
+msgid "keyboard.shortcut.command"
+msgstr "Command"
+
+#. Label for control key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:16
+msgid "keyboard.shortcut.control"
+msgstr "Control"
+
+#. Label for delete key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:64
+msgid "keyboard.shortcut.delete"
+msgstr "Delete"
+
+#. Label for end key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:88
+msgid "keyboard.shortcut.end"
+msgstr "End"
+
+#. Label for enter key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:22
+msgid "keyboard.shortcut.enter"
+msgstr "Enter"
+
+#. Label for escape key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:4
+msgid "keyboard.shortcut.escape"
+msgstr "Enter"
+
+#. Label for home key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:82
+msgid "keyboard.shortcut.home"
+msgstr "Home"
+
+#. Label for page down key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:76
+msgid "keyboard.shortcut.pageDown"
+msgstr "Page Down"
+
+#. Label for page up key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:70
+msgid "keyboard.shortcut.pageUp"
+msgstr "Page Up"
+
+#. Label for shift key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:28
+msgid "keyboard.shortcut.shift"
+msgstr "Shift"
+
+#. Label for space key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:58
+msgid "keyboard.shortcut.space"
+msgstr "Space"
+
+#. Label for tab key in shortcuts.
+#: packages/remirror__messages/src/core-utils-messages.ts:52
+msgid "keyboard.shortcut.tab"
+msgstr "Tab"
+
+#. Shown when no popup items are available
+#: packages/remirror__messages/src/react-components-messages.ts:4
+msgid "react-components.mention-atom-component.zero-items"
+msgstr "No items available"
+
+#. The aria label for the static menu.
+#: packages/remirror__messages/src/react-components-messages.ts:2
+#~ msgid "react-components.top-menu.label"
+#~ msgstr "Static Menu"
+
+#. Black color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:28
+msgid "ui.text-color.black"
+msgstr "Black"
+
+#. Blue color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:106
+msgid "ui.text-color.blue"
+msgstr "Blue"
+
+#. Blue color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:112
+msgid "ui.text-color.blue.hue"
+msgstr "Blue {hue}"
+
+#. Cyan color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:118
+msgid "ui.text-color.cyan"
+msgstr "Cyan"
+
+#. Cyan color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:124
+msgid "ui.text-color.cyan.hue"
+msgstr "Cyan {hue}"
+
+#. Grape color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:70
+msgid "ui.text-color.grape"
+msgstr "Grape"
+
+#. Grape color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:76
+msgid "ui.text-color.grape.hue"
+msgstr "Grape {hue}"
+
+#. Gray color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:34
+msgid "ui.text-color.gray"
+msgstr "Gray"
+
+#. Gray color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:40
+msgid "ui.text-color.gray.hue"
+msgstr "Gray {hue}"
+
+#. Green color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:142
+msgid "ui.text-color.green"
+msgstr "Green"
+
+#. Green color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:148
+msgid "ui.text-color.green.hue"
+msgstr "Green {hue}"
+
+#. Indigo color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:94
+msgid "ui.text-color.indigo"
+msgstr "Indigo"
+
+#. Indigo color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:100
+msgid "ui.text-color.indigo.hue"
+msgstr "Indigo {hue}"
+
+#. Lime color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:154
+msgid "ui.text-color.lime"
+msgstr "Lime"
+
+#. Lime color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:160
+msgid "ui.text-color.lime.hue"
+msgstr "Lime {hue}"
+
+#. Orange color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:178
+msgid "ui.text-color.orange"
+msgstr "Orange"
+
+#. Orange color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:184
+msgid "ui.text-color.orange.hue"
+msgstr "Orange {hue}"
+
+#. Pink color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:58
+msgid "ui.text-color.pink"
+msgstr "Pink"
+
+#. Pink color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:64
+msgid "ui.text-color.pink.hue"
+msgstr "Pink {hue}"
+
+#. Red color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:46
+msgid "ui.text-color.red"
+msgstr "Red"
+
+#. Red color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:52
+msgid "ui.text-color.red.hue"
+msgstr "Red {hue}"
+
+#. Teal color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:130
+msgid "ui.text-color.teal"
+msgstr "Teal"
+
+#. Teal color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:136
+msgid "ui.text-color.teal.hue"
+msgstr "Teal {hue}"
+
+#. Transparent color label.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:16
+msgid "ui.text-color.transparent"
+msgstr "Transparent"
+
+#. Violet color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:82
+msgid "ui.text-color.violet"
+msgstr "Violet"
+
+#. Violet color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:88
+msgid "ui.text-color.violet.hue"
+msgstr "Violet {hue}"
+
+#. White color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:22
+msgid "ui.text-color.white"
+msgstr "White"
+
+#. Yellow color.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:166
+msgid "ui.text-color.yellow"
+msgstr "Yellow"
+
+#. Yellow color hues.
+#: packages/remirror__messages/src/extension-text-color-messages.ts:172
+msgid "ui.text-color.yellow.hue"
+msgstr "Yellow {hue}"

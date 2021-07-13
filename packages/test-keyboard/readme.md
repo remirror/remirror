@@ -17,9 +17,9 @@ It is primarily designed for dom-test environments but could be extracted out in
 ## Installation
 
 ```bash
-yarn add test-keyboard@next # yarn
-pnpm add test-keyboard@next # pnpm
-npm install test-keyboard@next # npm
+yarn add test-keyboard # yarn
+pnpm add test-keyboard # pnpm
+npm install test-keyboard # npm
 ```
 
 ## `Keyboard.create` - `(params: KeyboardConstructorParameter) => Keyboard`

@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-schema-list.cjs.js",
+  "module": "dist/remirror-pm-schema-list.esm.js",
+  "browser": {
+    "./dist/remirror-pm-schema-list.cjs.js": "./dist/remirror-pm-schema-list.browser.cjs.js",
+    "./dist/remirror-pm-schema-list.esm.js": "./dist/remirror-pm-schema-list.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-schema-list.cjs.d.ts",
+  "rn:dev": "../src/schema-list.ts"
+}

@@ -45,15 +45,15 @@ The number of files in the root directory is deliberately as minimal as possible
 From the root directory use the following command to launch the documentation site.
 
 ```bash
-pnpm docs
+pnpm docs:dev
 ```
 
 Once the build completes (can take a minute the first time) navigate to <http://localhost:3000> (or another port if that one is already being used).
 
-The documentation is written using [docusaurus] and all files and dependencies are available in the `/support/website` subdirectory. To add a new dependency, you will need to add it to `/support/website/package.json` and not the top level package.json file. You can either do this by manually editing the `/support/website/package.json` file or you use the following command.
+The documentation is written using [docusaurus] and all files and dependencies are available in the `/website` subdirectory. To add a new dependency, you will need to add it to `/website/package.json` and not the top level package.json file. You can either do this by manually editing the `/website/package.json` file or you use the following command.
 
 ```bash
-cd support/website
+cd website
 pnpm add <package>
 ```
 
@@ -64,18 +64,24 @@ pnpm add <package>
 Unit tests can be run with the following commands.
 
 ```bash
-pnpm test # Unit Test
-pnpm test:e2e # Unit + Integration Tests on chrome
-pnpm test:watch # Test changed files since the last commit
+# Unit
+pnpm test
+pnpm test:watch
+
+# E2E
+pnpm e2e
+pnpm e2e:watch
 ```
 
-Always create your tests inside of a `__tests__/` sub-folder.
+Always create all your tests inside of the `__tests__/` sub-folder within the package that is being tested. So for `@remirror/react-core` all tests would be placed inside `packages/remirror__react-core/__tests__/`.
+
+Always create your e2e tests inside of a `__e2e__/` subfolder within the package or example that is being tested. So for testing stories you would add the new tests to `examples/react-storybook/__e2e__`.
 
 Sometimes you will want to narrow down tests to run only a specific file or folder.
 
 ```bash
 pnpm test dom.spec.ts # Runs the test file matching dom.spec.ts once.
-pnpm test:watch @remirror/react # Runs every tests in the `@remirror/react` package under watch mode.
+pnpm test:watch @remirror/react # Runs every test in the `@remirror/react` package under watch mode.
 ```
 
 Once in watch mode you can also press `p` and type out the file you want to focus on. Press enter to select the file.
@@ -83,13 +89,31 @@ Once in watch mode you can also press `p` and type out the file you want to focu
 **For naming conventions, use the following.**
 
 - Unit tests: `*.spec.ts(x)`
-- Integration tests: `*.e2e.test.ts` within the `/e2e` folder
+- Integration tests: `*.e2e.test.ts` within the `__e2e__/` folder
 
-Unit tests can be run limited to a specific package, e.g. for `extension-bold`:
+Unit tests can be run limited to a specific package or test file name, e.g. for `extension-bold`:
 
 ```bash
 pnpm test extension-bold
 ```
+
+This also supports watching the tests for the specific file.
+
+```bash
+pnpm test:watch extension-bold
+```
+
+<br />
+
+## Stories
+
+Stories are an integral part of this repository. They serve as the package level documentation and are used as the building blocks for the **e2e** tests. Stories are primarily user experience focused.
+
+For example the **bold extension** will have a story which shows how the commands can be used to toggle bold text within the editor.
+
+Each story should be placed within the `__stories__` folder and the file should end with the pattern `*.stories.ts(x)`.
+
+Following the 1.0.0 release of `remirror` there will be a big push to add more stories documenting the usage of all the extensions, commands and hooks available.
 
 <br />
 
@@ -126,13 +150,13 @@ This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct)
 
 ### Playground
 
-Working on the playground needs an extra step. The code being injected into the iframe needs to be pre-compiled and updates will fail for you if using `preconstruct dev`. The following command resolves this problem.
+Working on the playground requires the docs to be started.
 
 ```bash
-pnpm dev
+pnpm run docs
 ```
 
-When run this builds all packages and then watch for changes to rebuild as necessary. One issue with running this command is that you will lose any meaningful type checking. If you run `pnpm typecheck` and it fails with cryptic issues, it may be that you're still in the build state.
+When run this builds all packages and then watch for changes to rebuild as necessary.
 
 <br />
 
@@ -185,18 +209,31 @@ const doSomething = (something: string) => {
 
 ## Creating packages
 
-When creating your own extension or preset you can follow these steps.
+### Automated
 
-1. Copy `support/templates/extension-template` to `packages/@remirror/extension-<name>`.
+The easiest way to create a new scoped package in this repo is to run `pnpm create:package NAME -- --description "DESCRIPTION"`. For example the following command would create a package called `@remirror/extension-chill`.
+
+```bash
+pnpm create:package @remirror/extension-chill -- --description "The time to be chill."
+```
+
+### Manually
+
+If you prefer not to use the automated method for creating extension the following also works.
+
+1. Copy `support/templates/extension-template` to `packages/remirror__extension-<name>`.
 2. Rename `template`, `Template` and `TEMPLATE` in the new package to `<name>`, `<Name>` and `<NAME>`.
 3. Replace `TEMPLATE_DESCRIPTION` with a suitable description.
 4. Rename the files from `template-` to `<name>-`.
-5. (OPTIONAL) -Add your name and email as a contributor to the `package.json`.
-6. Add `packages/remirror/extension/<name>/package.json`.
-7. Add `packages/remirror/src/extension/<name>.ts`.
-8. Edit `packages/remirror/package.json` to add dependency and entrypoint.
-9. (OPTIONAL) - Edit `/.changeset/config.json` and add the package name to the linked array.
-10. Run `pnpm i` in root.
+
+### Final steps
+
+1. (OPTIONAL) -Add your name and email as a contributor to the `package.json`.
+2. Add `packages/remirror/extension/<name>/package.json`.
+3. Add `packages/remirror/src/extension/<name>.ts`.
+4. Edit `packages/remirror/package.json` to add dependency and entrypoint.
+5. (OPTIONAL) - Edit `/.changeset/config.json` and add the package name to the linked array.
+6. Run `pnpm i` in root.
 
 <br />
 

@@ -14,6 +14,18 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist/jest-remirror.cjs.js",
+      "types": "./dist/jest-remirror.cjs.d.ts"
+    },
+    "./environment": {
+      "require": "./environment/dist/jest-remirror-environment.cjs.js",
+      "types": "./environment/dist/jest-remirror-environment.cjs.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
   "main": "dist/jest-remirror.cjs.js",
   "types": "dist/jest-remirror.cjs.d.ts",
   "files": [
@@ -21,21 +33,22 @@
     "environment"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.0",
+    "@babel/runtime": "^7.13.10",
     "@remirror/core": "1.0.0-next.60",
     "@remirror/dom": "1.0.0-next.60",
     "@remirror/pm": "1.0.0-next.60",
     "@remirror/preset-core": "1.0.0-next.60",
-    "@testing-library/dom": "^7.26.3",
-    "@types/sanitize-html": "^1.27.0",
+    "@testing-library/dom": "^8.0.0",
+    "@types/sanitize-html": "^2.3.1",
     "jest-prosemirror": "1.0.0-next.60",
-    "jest-snapshot": "^26.6.1",
+    "jest-snapshot": "^27.0.4",
     "mutationobserver-shim": "^0.3.7",
-    "sanitize-html": "^2.1.1"
+    "sanitize-html": "^2.4.0",
+    "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@types/node": "^14.14.3",
-    "jest": "^26.6.1"
+    "@types/node": "^15.12.4",
+    "jest": "^27.0.4"
   },
   "peerDependencies": {
     "@types/node": "*",
@@ -49,10 +62,23 @@
   "publishConfig": {
     "access": "public"
   },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node",
+            "jest"
+          ]
+        }
+      }
+    }
+  },
   "preconstruct": {
     "entrypoints": [
-      ".",
-      "environment"
+      "index.ts",
+      "environment.ts"
     ]
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

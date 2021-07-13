@@ -1,0 +1,76 @@
+/**
+ * Styles extracted from: packages/remirror__theme/src/core-theme.ts
+ */
+.remirror-editor.ProseMirror {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  white-space: break-spaces;
+  position: relative;
+  font-variant-ligatures: none;
+  font-feature-settings: 'liga' 0;
+  overflow-y: scroll;
+}
+
+.remirror-editor.ProseMirror pre {
+  white-space: pre-wrap;
+}
+
+.remirror-editor.ProseMirror li {
+  position: relative;
+}
+
+.remirror-editor.ProseMirror[contenteditable='false'] {
+  white-space: normal;
+}
+
+.remirror-editor.ProseMirror[contenteditable='true'] {
+  white-space: pre-wrap;
+}
+
+.remirror-editor.ProseMirror hr {
+  border-color: #2e2e2e;
+}
+
+.remirror-editor.ProseMirror ::-moz-selection {
+  background: var(--rmr-color-selection-background);
+  color: var(--rmr-color-selection-text);
+  caret-color: var(--rmr-color-selection-caret);
+  text-shadow: var(--rmr-color-selection-shadow);
+}
+
+.remirror-editor.ProseMirror ::selection,
+.remirror-editor.ProseMirror .selection {
+  background: var(--rmr-color-selection-background);
+  color: var(--rmr-color-selection-text);
+  caret-color: var(--rmr-color-selection-caret);
+  text-shadow: var(--rmr-color-selection-shadow);
+}
+.remirror-editor.ProseMirror-hideselection *::-moz-selection {
+  background: transparent;
+}
+.remirror-editor.ProseMirror-hideselection *::selection {
+  background: transparent;
+}
+.remirror-editor.ProseMirror-hideselection *::-moz-selection {
+  background: transparent;
+}
+.remirror-editor.ProseMirror-hideselection {
+  caret-color: transparent;
+}
+.remirror-editor .ProseMirror-selectednode {
+  outline: 2px solid #8cf;
+}
+/* Make sure li selections wrap around markers */
+.remirror-editor li.ProseMirror-selectednode {
+  outline: none;
+}
+.remirror-editor li.ProseMirror-selectednode:after {
+  content: '';
+  position: absolute;
+  left: -32px;
+  right: -2px;
+  top: -2px;
+  bottom: -2px;
+  border: 2px solid #8cf;
+  pointer-events: none;
+}

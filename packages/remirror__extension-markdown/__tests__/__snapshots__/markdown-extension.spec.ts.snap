@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands.insertMarkdown can insert marks 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    Content 
+    <strong>
+      is bold.
+    </strong>
+  </p>
+</div>
+`;
+
+exports[`commands.insertMarkdown can insert marks as blocks 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    Content 
+  </p>
+  <p>
+    <strong>
+      is bold.
+    </strong>
+  </p>
+</div>
+`;
+
+exports[`commands.insertMarkdown does not replace marks 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    <strong>
+      is bold.
+    </strong>
+  </p>
+</div>
+`;

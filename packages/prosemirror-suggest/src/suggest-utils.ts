@@ -1,5 +1,4 @@
 import escapeStringRegex from 'escape-string-regexp';
-
 import { NULL_CHARACTER } from '@remirror/core-constants';
 import {
   findMatches,
@@ -9,39 +8,38 @@ import {
   object,
   range,
 } from '@remirror/core-helpers';
+import { PickPartial } from '@remirror/types';
 
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import type {
-  CompareMatchParameter,
-  DocChangedParameter,
+  CompareMatchProps,
+  DocChangedProps,
   EditorSchema,
-  EditorStateParameter,
+  EditorStateProps,
   MakeOptional,
-  PickPartial,
-  ReasonParameter,
+  ReasonProps,
   ResolvedPos,
-  ResolvedPosParameter,
+  ResolvedPosProps,
   ResolvedRangeWithCursor,
   Suggester,
-  SuggesterParameter,
+  SuggesterProps,
   SuggestMatch,
   SuggestReasonMap,
-  SuggestStateMatchParameter,
-  TextParameter,
+  SuggestStateMatchProps,
+  TextProps,
 } from './suggest-types';
 import { ChangeReason, ExitReason } from './suggest-types';
 
-type CreateMatchWithReasonParameter<
-  Schema extends EditorSchema = EditorSchema
-> = SuggestStateMatchParameter<Schema> & ReasonParameter;
+type CreateMatchWithReasonProps<Schema extends EditorSchema = EditorSchema> =
+  SuggestStateMatchProps<Schema> & ReasonProps;
 
 /**
  * Small utility method for creating a match with the reason property available.
  */
 function createMatchWithReason<Schema extends EditorSchema = EditorSchema>(
-  parameter: CreateMatchWithReasonParameter<Schema>,
+  props: CreateMatchWithReasonProps<Schema>,
 ) {
-  const { match, changeReason, exitReason } = parameter;
+  const { match, changeReason, exitReason } = props;
 
   return {
     ...match,
@@ -59,7 +57,7 @@ type IsPrefixValidOptions = Pick<
  * Checks to see if the text before the matching character is a valid prefix.
  *
  * @param prefix - the prefix to test
- * @param params - an object with the regex testing values
+ * @param options - see [[`IsPrefixValidOptions`]]
  */
 function isPrefixValid(prefix: string, options: IsPrefixValidOptions) {
   const { invalidPrefixCharacters, validPrefixCharacters } = options;
@@ -79,12 +77,12 @@ function isPrefixValid(prefix: string, options: IsPrefixValidOptions) {
 /**
  * Find the position of a mention for a given selection and character
  *
- * @param params
+ * @param props - see [[`FindPositionProps`]]
  */
 function findPosition<Schema extends EditorSchema = EditorSchema>(
-  parameter: FindPositionParameter<Schema>,
+  props: FindPositionProps<Schema>,
 ): SuggestMatch<Schema> | undefined {
-  const { text, regexp, $pos, suggester } = parameter;
+  const { text, regexp, $pos, suggester } = props;
 
   // The starting position for matches
   const start = $pos.start();
@@ -100,18 +98,25 @@ function findPosition<Schema extends EditorSchema = EditorSchema>(
       // The absolute position of the matching parent node
       const from = match.index + start;
 
+      // The full match of the created regex.
+      const fullMatch = match[0];
+
+      // The matching text for the `char` regex or string is always captured as
+      // the first matching group.
+      const charMatch = match[1];
+
+      if (!isString(fullMatch) || !isString(charMatch)) {
+        return;
+      }
+
       // The position where the match ends
-      const to = from + match[0].length;
+      const to = from + fullMatch.length;
 
       // The cursor position (or end position whichever is greater)
       const cursor = Math.min(to, $pos.pos);
 
       // The length of the current match
       const matchLength = cursor - from;
-
-      // The matching text for the `char` regex or string is always captured as
-      // the first matching group.
-      const charMatch = match[1];
 
       // If the $position is located within the matched substring, return that
       // range.
@@ -120,10 +125,10 @@ function findPosition<Schema extends EditorSchema = EditorSchema>(
           range: { from, to, cursor },
           match,
           query: {
-            partial: match[0].slice(charMatch.length, matchLength),
-            full: match[0].slice(charMatch.length),
+            partial: fullMatch.slice(charMatch.length, matchLength),
+            full: fullMatch.slice(charMatch.length),
           },
-          text: { partial: match[0].slice(0, matchLength), full: match[0] },
+          text: { partial: fullMatch.slice(0, matchLength), full: fullMatch },
           textAfter: $pos.doc.textBetween(to, $pos.end(), NULL_CHARACTER, NULL_CHARACTER),
           textBefore: $pos.doc.textBetween(start, from, NULL_CHARACTER, NULL_CHARACTER),
           suggester,
@@ -135,26 +140,19 @@ function findPosition<Schema extends EditorSchema = EditorSchema>(
   return position;
 }
 
-type FindMatchParameter<Schema extends EditorSchema = EditorSchema> = ResolvedPosParameter<Schema> &
-  SuggesterParameter<Schema>;
+type FindMatchProps<Schema extends EditorSchema = EditorSchema> = ResolvedPosProps<Schema> &
+  SuggesterProps<Schema>;
 
 /**
  * Checks if any matches exist at the current selection so that the suggesters
  * can be activated or deactivated.
  */
 function findMatch<Schema extends EditorSchema = EditorSchema>(
-  parameter: FindMatchParameter<Schema>,
+  props: FindMatchProps<Schema>,
 ): SuggestMatch<Schema> | undefined {
-  const { $pos, suggester } = parameter;
-  const {
-    char,
-    name,
-    startOfLine,
-    supportedCharacters,
-    matchOffset,
-    multiline,
-    caseInsensitive,
-  } = suggester;
+  const { $pos, suggester } = props;
+  const { char, name, startOfLine, supportedCharacters, matchOffset, multiline, caseInsensitive } =
+    suggester;
 
   // Create the regular expression to match the text against
   const regexp = createRegexFromSuggester({
@@ -180,10 +178,8 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
   });
 }
 
-type RecheckMatchParameter<Schema extends EditorSchema = EditorSchema> = SuggestStateMatchParameter<
-  Schema
-> &
-  EditorStateParameter<Schema>;
+type RecheckMatchProps<Schema extends EditorSchema = EditorSchema> =
+  SuggestStateMatchProps<Schema> & EditorStateProps<Schema>;
 
 /**
  * Checks the provided match and generates a new match. This is useful for
@@ -193,9 +189,9 @@ type RecheckMatchParameter<Schema extends EditorSchema = EditorSchema> = Suggest
  * occurred.
  */
 function recheckMatch<Schema extends EditorSchema = EditorSchema>(
-  parameter: RecheckMatchParameter<Schema>,
+  props: RecheckMatchProps<Schema>,
 ) {
-  const { state, match } = parameter;
+  const { state, match } = props;
   try {
     // Wrapped in try/catch because it's possible for everything to be deleted
     // and the doc.resolve will fail.
@@ -208,11 +204,11 @@ function recheckMatch<Schema extends EditorSchema = EditorSchema>(
   }
 }
 
-type CreateInsertReasonParameter<Schema extends EditorSchema = EditorSchema> = MakeOptional<
-  CompareMatchParameter<Schema>,
+type CreateInsertReasonProps<Schema extends EditorSchema = EditorSchema> = MakeOptional<
+  CompareMatchProps<Schema>,
   'next'
 > &
-  EditorStateParameter<Schema>;
+  EditorStateProps<Schema>;
 
 /**
  * Check whether the insert action occurred at the end, in the middle or caused
@@ -222,9 +218,9 @@ type CreateInsertReasonParameter<Schema extends EditorSchema = EditorSchema> = M
  * after the split
  */
 function createInsertReason<Schema extends EditorSchema = EditorSchema>(
-  parameter: CreateInsertReasonParameter<Schema>,
+  props: CreateInsertReasonProps<Schema>,
 ): SuggestReasonMap<Schema> {
-  const { prev, next, state } = parameter;
+  const { prev, next, state } = props;
 
   // Has the text been removed? TODO how to tests for deletions mid document?
   if (!next && prev.range.from >= state.doc.nodeSize) {
@@ -261,18 +257,16 @@ function createInsertReason<Schema extends EditorSchema = EditorSchema>(
   return {};
 }
 
-type FindJumpReasonParameter<Schema extends EditorSchema = EditorSchema> = CompareMatchParameter<
-  Schema
-> &
-  EditorStateParameter<Schema>;
+type FindJumpReasonProps<Schema extends EditorSchema = EditorSchema> = CompareMatchProps<Schema> &
+  EditorStateProps<Schema>;
 
 /**
  * Find the reason for the Jump between two suggesters.
  */
 function findJumpReason<Schema extends EditorSchema = EditorSchema>(
-  parameter: FindJumpReasonParameter<Schema>,
+  props: FindJumpReasonProps<Schema>,
 ): SuggestReasonMap<Schema> {
-  const { prev, next, state } = parameter;
+  const { prev, next, state } = props;
   const value: SuggestReasonMap<Schema> = object();
 
   const updatedPrevious = recheckMatch({ state, match: prev });
@@ -297,11 +291,8 @@ function findJumpReason<Schema extends EditorSchema = EditorSchema>(
   };
 }
 
-type FindExitReasonParameter<
-  Schema extends EditorSchema = EditorSchema
-> = SuggestStateMatchParameter<Schema> &
-  EditorStateParameter<Schema> &
-  ResolvedPosParameter<Schema>;
+type FindExitReasonProps<Schema extends EditorSchema = EditorSchema> =
+  SuggestStateMatchProps<Schema> & EditorStateProps<Schema> & ResolvedPosProps<Schema>;
 
 /**
  * Find the reason for the exit.
@@ -310,9 +301,9 @@ type FindExitReasonParameter<
  * defaults.
  */
 function findExitReason<Schema extends EditorSchema = EditorSchema>(
-  parameter: FindExitReasonParameter<Schema>,
+  props: FindExitReasonProps<Schema>,
 ) {
-  const { match, state, $pos } = parameter;
+  const { match, state, $pos } = props;
   const { selection } = state;
   const updatedPrevious = recheckMatch({ match, state });
 
@@ -322,10 +313,7 @@ function findExitReason<Schema extends EditorSchema = EditorSchema>(
   }
 
   // Exit caused by a selection
-  if (
-    !state.selection.empty &&
-    (selection.from <= match.range.from || selection.to >= match.range.to)
-  ) {
+  if (!selection.empty && (selection.from <= match.range.from || selection.to >= match.range.to)) {
     return { exit: createMatchWithReason({ match, exitReason: ExitReason.SelectionOutside }) };
   }
 
@@ -342,9 +330,9 @@ function findExitReason<Schema extends EditorSchema = EditorSchema>(
   return {};
 }
 
-interface FindFromSuggestersParameter<Schema extends EditorSchema = EditorSchema>
-  extends ResolvedPosParameter<Schema>,
-    DocChangedParameter {
+interface FindFromSuggestersProps<Schema extends EditorSchema = EditorSchema>
+  extends ResolvedPosProps<Schema>,
+    DocChangedProps {
   /**
    * The matchers to search through.
    */
@@ -356,31 +344,30 @@ interface FindFromSuggestersParameter<Schema extends EditorSchema = EditorSchema
   selectionEmpty: boolean;
 }
 
-interface FindPositionParameter<Schema extends EditorSchema = EditorSchema>
+interface FindPositionProps<Schema extends EditorSchema = EditorSchema>
   extends Pick<Suggester, 'name' | 'char'>,
-    TextParameter,
-    SuggesterParameter<Schema>,
-    ResolvedPosParameter<Schema> {
+    TextProps,
+    SuggesterProps<Schema>,
+    ResolvedPosProps<Schema> {
   /**
    * The regexp to use
    */
   regexp: RegExp;
 }
 
-type FindReasonParameter<Schema extends EditorSchema = EditorSchema> = EditorStateParameter<
-  Schema
-> &
-  ResolvedPosParameter<Schema> &
-  Partial<CompareMatchParameter<Schema>>;
+type FindReasonProps<Schema extends EditorSchema = EditorSchema> = EditorStateProps<Schema> &
+  ResolvedPosProps<Schema> &
+  Partial<CompareMatchProps<Schema>> &
+  object;
 
 /**
  * Creates an array of the actions taken based on the current prev and next
  * state field
  */
 export function findReason<Schema extends EditorSchema = EditorSchema>(
-  parameter: FindReasonParameter<Schema>,
+  props: FindReasonProps<Schema>,
 ): SuggestReasonMap<Schema> {
-  const { prev, next, state, $pos } = parameter;
+  const { prev, next, state, $pos } = props;
   const value: SuggestReasonMap<Schema> = object();
 
   if (!prev && !next) {
@@ -540,9 +527,9 @@ function isPositionValidForSuggester<Schema extends EditorSchema = EditorSchema>
  * Find a match for the provided matchers.
  */
 export function findFromSuggesters<Schema extends EditorSchema = EditorSchema>(
-  parameter: FindFromSuggestersParameter<Schema>,
+  props: FindFromSuggestersProps<Schema>,
 ): SuggestMatch<Schema> | undefined {
-  const { suggesters, $pos, selectionEmpty } = parameter;
+  const { suggesters, $pos, selectionEmpty } = props;
 
   // Find the first match and break when done
   for (const suggester of suggesters) {
@@ -615,7 +602,7 @@ export function getCharAsRegex(char: RegExp | string): RegExp {
   return isString(char) ? new RegExp(escapeStringRegex(char)) : char;
 }
 
-interface CreateRegexFromSuggesterParameter
+interface CreateRegExpFromSuggesterProps
   extends Pick<Required<Suggester>, 'startOfLine' | 'char' | 'supportedCharacters' | 'matchOffset'>,
     Pick<Suggester, 'multiline' | 'caseInsensitive' | 'captureChar'> {}
 
@@ -623,7 +610,7 @@ interface CreateRegexFromSuggesterParameter
  * Create a regex expression which evaluate matches directly from the suggester
  * properties.
  */
-export function createRegexFromSuggester(parameter: CreateRegexFromSuggesterParameter): RegExp {
+export function createRegexFromSuggester(props: CreateRegExpFromSuggesterProps): RegExp {
   const {
     char,
     matchOffset,
@@ -632,7 +619,7 @@ export function createRegexFromSuggester(parameter: CreateRegexFromSuggesterPara
     captureChar = true,
     caseInsensitive = false,
     multiline = false,
-  } = parameter;
+  } = props;
   const flags = `g${multiline ? 'm' : ''}${caseInsensitive ? 'i' : ''}`;
   let charRegex = getCharAsRegex(char).source;
 
@@ -676,6 +663,12 @@ export const DEFAULT_SUGGESTER: PickPartial<Suggester<any>> = {
   multiline: false,
   captureChar: true,
 };
+
+/**
+ * This can be added to the meta data of an update to let the suggestion plugin
+ * know that it should ignore the update.
+ */
+export const IGNORE_SUGGEST_META_KEY = '__ignore_prosemirror_suggest_update__';
 
 /**
  * Takes the passed through `suggester` and adds all the missing default values.

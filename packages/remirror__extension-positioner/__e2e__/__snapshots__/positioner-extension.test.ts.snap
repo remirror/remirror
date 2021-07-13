@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Positioner Extension cursorPositioner should show the bubble menu 1`] = `
+<span data-id="remirror-positioner-widget"
+      role="presentation"
+      contenteditable="false"
+      class="ProseMirror-widget"
+>
+  <span class="css-f0r864"
+        style="top: 19px; left: 94.1875px; width: 1px; height: 18px; background: blue;"
+  >
+  </span>
+  <div id="id-1"
+       role="dialog"
+       tabindex="-1"
+       data-dialog="true"
+       class="css-1k97hgp"
+       style
+  >
+    <button data-testid="bubble-menu-bold">
+      Bold
+    </button>
+    <button>
+      Italic
+    </button>
+    <button>
+      Underline
+    </button>
+  </div>
+</span>
+<p class>
+  This is text
+</p>
+`;

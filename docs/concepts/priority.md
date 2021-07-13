@@ -14,7 +14,7 @@ To ensure your extension is given a higher priority you can use the `ExtensionPr
 The higher the priority, the earlier the extension will be run. An extension with a priority of `10` will be run before an extension with a priority of `5`.
 
 ```ts
-import { ExtensionPriority } from 'remirror/core';
+import { ExtensionPriority } from 'remirror';
 
 import { CustomExtension } from './my/custom/extension';
 
@@ -26,7 +26,7 @@ Now your customExtension will have a priority level that's higher than other ext
 If you have full control of the extension you can also set the `defaultPriority` as a static property with the `extension.
 
 ```ts
-import { Extension, extensionDecorator, ExtensionPriority } from 'remirror/core';
+import { Extension, extensionDecorator, ExtensionPriority } from 'remirror';
 
 @extensionDecorator({
   // Now every custom extension created will have a `High` priority than default.
@@ -69,11 +69,10 @@ To solve this we just need to ensure that the anchor tag appears in the the sche
 If you have full control of the extensions within your editor then you can place the link extension before the bold extension when creating the manager.
 
 ```ts
-import { RemirrorManager } from 'remirror/core';
-import { BoldExtension } from 'remirror/extension/bold';
-import { LinkExtension } from 'remirror/extension/link';
+import { RemirrorManager } from 'remirror';
+import { BoldExtension, LinkExtension } from 'remirror/extensions';
 
-const manager = RemirrorManager.create([new LinkExtension(), new BoldExtension()]);
+const manager = RemirrorManager.create(() => [new LinkExtension(), new BoldExtension()]);
 ```
 
 The link extension appears before the bold extension and hence is given priority.
@@ -83,8 +82,8 @@ The link extension appears before the bold extension and hence is given priority
 Maybe you're using a preset which already has the bold extension and you still want control of the priority. You can accomplish this by setting the priority when creating the extension.
 
 ```ts
-import { ExtensionsPriority, RemirrorManager } from 'remirror/core';
-import { LinkExtension } from 'remirror/extension/link';
+import { ExtensionPriority, RemirrorManager } from 'remirror';
+import { LinkExtension } from 'remirror/extensions';
 
 // Set the priority for the extension.
 RemirrorManager.create([new LinkExtension({ priority: ExtensionPriority.High })]);
@@ -97,10 +96,10 @@ You can also set the priority of an extension to `ExtensionPriority.Low`, if you
 It is also possible to set the extension priority via the manager settings by specifying the name.
 
 ```ts
-import { ExtensionsPriority, RemirrorManager } from 'remirror/core';
-import { WysisygPreset } from 'remirror/editor/wysiwyg';
+import { ExtensionPriority, RemirrorManager } from 'remirror';
+import { WysiwygPreset } from 'remirror/extensions';
 
-const manager = RemirrorManager.create([new WysisygPreset()], {
+const manager = RemirrorManager.create([new WysiwygPreset()], {
   priority: { link: ExtensionPriority.High, bold: ExtensionPriority.Low },
 });
 ```
@@ -112,8 +111,8 @@ The priority is passed into the extension when being run by the manager and the 
 The preset has a similar API as the manager for setting the extension priority.
 
 ```ts
-import { ExtensionsPriority, RemirrorManager } from 'remirror/core';
-import { WysisygPreset } from 'remirror/editor/wysiwyg';
+import { ExtensionPriority, RemirrorManager } from 'remirror';
+import { WysiwygPreset } from 'remirror/editor/wysiwyg';
 
 const wysiwygPreset = new WysiwygPreset({
   priority: { link: ExtensionPriority.High, bold: ExtensionPriority.Low },
@@ -141,7 +140,7 @@ The priority of extension which determines what order it is loaded into the edit
 Import from `remirror/core`.
 
 ```ts
-import { ExtensionPriority } from 'remirror/core';
+import { ExtensionPriority } from 'remirror';
 ```
 
 Higher priority extension (higher numberic value) will ensure the extension has a higher preference in your editor. In the case where you load two identical extensions into your editor (same name, or same constructor), the extension with the higher priority is the one that will be loaded.

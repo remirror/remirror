@@ -1,0 +1,444 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`theme 1`] = `
+Object {
+  "css": "--rmr-color-background: #ffffff;
+--rmr-color-border: rgba(0, 0, 0, 0.25);
+--rmr-color-foreground: #000000;
+--rmr-color-muted: #f1f3f5;
+--rmr-color-primary: #7963d2;
+--rmr-color-secondary: #bcd263;
+--rmr-color-primary-text: #fff;
+--rmr-color-secondary-text: #fff;
+--rmr-color-text: #252103;
+--rmr-color-faded: hsla(0, 0%, 13%, 0.9);
+--rmr-color-active-background: hsla(0, 0%, 85%, 1);
+--rmr-color-active-border: hsla(0, 0%, 0%, 0.25);
+--rmr-color-active-foreground: hsla(0, 0%, 0%, 1);
+--rmr-color-active-muted: hsla(210, 17%, 80%, 1);
+--rmr-color-active-primary: hsla(252, 55%, 46%, 1);
+--rmr-color-active-secondary: hsla(72, 55%, 46%, 1);
+--rmr-color-active-primary-text: #fff;
+--rmr-color-active-secondary-text: #000;
+--rmr-color-active-text: #000;
+--rmr-color-active-faded: hsla(0, 0%, 13%, 0.9);
+--rmr-color-hover-background: hsla(0, 0%, 93%, 1);
+--rmr-color-hover-border: hsla(0, 0%, 0%, 0.25);
+--rmr-color-hover-foreground: hsla(0, 0%, 0%, 1);
+--rmr-color-hover-muted: hsla(210, 17%, 88%, 1);
+--rmr-color-hover-primary: hsla(252, 55%, 53%, 1);
+--rmr-color-hover-secondary: hsla(72, 55%, 53%, 1);
+--rmr-color-hover-primary-text: #fff;
+--rmr-color-hover-secondary-text: #000;
+--rmr-color-hover-text: #000;
+--rmr-color-hover-faded: hsla(0, 0%, 13%, 0.9);
+--rmr-color-shadow-1: rgba(10,31,68,0.08);
+--rmr-color-shadow-2: rgba(10,31,68,0.10);
+--rmr-color-shadow-3: rgba(10,31,68,0.12);
+--rmr-color-backdrop: rgba(0, 0, 0, 0.9);
+--rmr-color-outline: rgba(121, 99, 210, 0.4);
+--rmr-color-selection-background: Highlight;
+--rmr-color-selection-shadow: inherit;
+--rmr-color-selection-text: HighlightText;
+--rmr-color-selection-caret: inherit;
+--rmr-color-table-default-border: hsla(0, 0%, 80%, 1);
+--rmr-color-table-default-cell: hsla(0, 0%, 40%, 1);
+--rmr-color-table-default-controller: #dee2e6;
+--rmr-color-table-selected-border: #1c7ed6;
+--rmr-color-table-selected-cell: #d0ebff;
+--rmr-color-table-selected-controller: #339af0;
+--rmr-color-table-preselect-border: #1c7ed6;
+--rmr-color-table-preselect-cell: hsla(0, 0%, 40%, 1);
+--rmr-color-table-preselect-controller: #339af0;
+--rmr-color-table-predelete-border: #f03e3e;
+--rmr-color-table-predelete-cell: #ffe3e3;
+--rmr-color-table-predelete-controller: #ff6b6b;
+--rmr-color-table-mark: #91919196;
+--rmr-hue-gray-0: #f8f9fa;
+--rmr-hue-gray-1: #f1f3f5;
+--rmr-hue-gray-2: #e9ecef;
+--rmr-hue-gray-3: #dee2e6;
+--rmr-hue-gray-4: #ced4da;
+--rmr-hue-gray-5: #adb5bd;
+--rmr-hue-gray-6: #868e96;
+--rmr-hue-gray-7: #495057;
+--rmr-hue-gray-8: #343a40;
+--rmr-hue-gray-9: #212529;
+--rmr-hue-red-0: #fff5f5;
+--rmr-hue-red-1: #ffe3e3;
+--rmr-hue-red-2: #ffc9c9;
+--rmr-hue-red-3: #ffa8a8;
+--rmr-hue-red-4: #ff8787;
+--rmr-hue-red-5: #ff6b6b;
+--rmr-hue-red-6: #fa5252;
+--rmr-hue-red-7: #f03e3e;
+--rmr-hue-red-8: #e03131;
+--rmr-hue-red-9: #c92a2a;
+--rmr-hue-pink-0: #fff0f6;
+--rmr-hue-pink-1: #ffdeeb;
+--rmr-hue-pink-2: #fcc2d7;
+--rmr-hue-pink-3: #faa2c1;
+--rmr-hue-pink-4: #f783ac;
+--rmr-hue-pink-5: #f06595;
+--rmr-hue-pink-6: #e64980;
+--rmr-hue-pink-7: #d6336c;
+--rmr-hue-pink-8: #c2255c;
+--rmr-hue-pink-9: #a61e4d;
+--rmr-hue-grape-0: #f8f0fc;
+--rmr-hue-grape-1: #f3d9fa;
+--rmr-hue-grape-2: #eebefa;
+--rmr-hue-grape-3: #e599f7;
+--rmr-hue-grape-4: #da77f2;
+--rmr-hue-grape-5: #cc5de8;
+--rmr-hue-grape-6: #be4bdb;
+--rmr-hue-grape-7: #ae3ec9;
+--rmr-hue-grape-8: #9c36b5;
+--rmr-hue-grape-9: #862e9c;
+--rmr-hue-violet-0: #f3f0ff;
+--rmr-hue-violet-1: #e5dbff;
+--rmr-hue-violet-2: #d0bfff;
+--rmr-hue-violet-3: #b197fc;
+--rmr-hue-violet-4: #9775fa;
+--rmr-hue-violet-5: #845ef7;
+--rmr-hue-violet-6: #7950f2;
+--rmr-hue-violet-7: #7048e8;
+--rmr-hue-violet-8: #6741d9;
+--rmr-hue-violet-9: #5f3dc4;
+--rmr-hue-indigo-0: #edf2ff;
+--rmr-hue-indigo-1: #dbe4ff;
+--rmr-hue-indigo-2: #bac8ff;
+--rmr-hue-indigo-3: #91a7ff;
+--rmr-hue-indigo-4: #748ffc;
+--rmr-hue-indigo-5: #5c7cfa;
+--rmr-hue-indigo-6: #4c6ef5;
+--rmr-hue-indigo-7: #4263eb;
+--rmr-hue-indigo-8: #3b5bdb;
+--rmr-hue-indigo-9: #364fc7;
+--rmr-hue-blue-0: #e7f5ff;
+--rmr-hue-blue-1: #d0ebff;
+--rmr-hue-blue-2: #a5d8ff;
+--rmr-hue-blue-3: #74c0fc;
+--rmr-hue-blue-4: #4dabf7;
+--rmr-hue-blue-5: #339af0;
+--rmr-hue-blue-6: #228be6;
+--rmr-hue-blue-7: #1c7ed6;
+--rmr-hue-blue-8: #1971c2;
+--rmr-hue-blue-9: #1864ab;
+--rmr-hue-cyan-0: #e3fafc;
+--rmr-hue-cyan-1: #c5f6fa;
+--rmr-hue-cyan-2: #99e9f2;
+--rmr-hue-cyan-3: #66d9e8;
+--rmr-hue-cyan-4: #3bc9db;
+--rmr-hue-cyan-5: #22b8cf;
+--rmr-hue-cyan-6: #15aabf;
+--rmr-hue-cyan-7: #1098ad;
+--rmr-hue-cyan-8: #0c8599;
+--rmr-hue-cyan-9: #0b7285;
+--rmr-hue-teal-0: #e6fcf5;
+--rmr-hue-teal-1: #c3fae8;
+--rmr-hue-teal-2: #96f2d7;
+--rmr-hue-teal-3: #63e6be;
+--rmr-hue-teal-4: #38d9a9;
+--rmr-hue-teal-5: #20c997;
+--rmr-hue-teal-6: #12b886;
+--rmr-hue-teal-7: #0ca678;
+--rmr-hue-teal-8: #099268;
+--rmr-hue-teal-9: #087f5b;
+--rmr-hue-green-0: #ebfbee;
+--rmr-hue-green-1: #d3f9d8;
+--rmr-hue-green-2: #b2f2bb;
+--rmr-hue-green-3: #8ce99a;
+--rmr-hue-green-4: #69db7c;
+--rmr-hue-green-5: #51cf66;
+--rmr-hue-green-6: #40c057;
+--rmr-hue-green-7: #37b24d;
+--rmr-hue-green-8: #2f9e44;
+--rmr-hue-green-9: #2b8a3e;
+--rmr-hue-lime-0: #f4fce3;
+--rmr-hue-lime-1: #e9fac8;
+--rmr-hue-lime-2: #d8f5a2;
+--rmr-hue-lime-3: #c0eb75;
+--rmr-hue-lime-4: #a9e34b;
+--rmr-hue-lime-5: #94d82d;
+--rmr-hue-lime-6: #82c91e;
+--rmr-hue-lime-7: #74b816;
+--rmr-hue-lime-8: #66a80f;
+--rmr-hue-lime-9: #5c940d;
+--rmr-hue-yellow-0: #fff9db;
+--rmr-hue-yellow-1: #fff3bf;
+--rmr-hue-yellow-2: #ffec99;
+--rmr-hue-yellow-3: #ffe066;
+--rmr-hue-yellow-4: #ffd43b;
+--rmr-hue-yellow-5: #fcc419;
+--rmr-hue-yellow-6: #fab005;
+--rmr-hue-yellow-7: #f59f00;
+--rmr-hue-yellow-8: #f08c00;
+--rmr-hue-yellow-9: #e67700;
+--rmr-hue-orange-0: #fff4e6;
+--rmr-hue-orange-1: #ffe8cc;
+--rmr-hue-orange-2: #ffd8a8;
+--rmr-hue-orange-3: #ffc078;
+--rmr-hue-orange-4: #ffa94d;
+--rmr-hue-orange-5: #ff922b;
+--rmr-hue-orange-6: #fd7e14;
+--rmr-hue-orange-7: #f76707;
+--rmr-hue-orange-8: #e8590c;
+--rmr-hue-orange-9: #d9480f;
+--rmr-radius-border: 0.25rem;
+--rmr-radius-extra: 0.5rem;
+--rmr-radius-circle: 50%;
+--rmr-font-family-default: system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, \\"Helvetica Neue\\", sans-serif;
+--rmr-font-family-heading: inherit;
+--rmr-font-family-mono: Menlo, monospace;
+--rmr-font-size-0: 12px;
+--rmr-font-size-1: 14px;
+--rmr-font-size-2: 16px;
+--rmr-font-size-3: 20px;
+--rmr-font-size-4: 24px;
+--rmr-font-size-5: 32px;
+--rmr-font-size-6: 48px;
+--rmr-font-size-7: 64px;
+--rmr-font-size-8: 96px;
+--rmr-font-size-default: 16px;
+--rmr-space-1: 4px;
+--rmr-space-2: 8px;
+--rmr-space-3: 16px;
+--rmr-space-4: 32px;
+--rmr-space-5: 64px;
+--rmr-space-6: 128px;
+--rmr-space-7: 256px;
+--rmr-space-8: 512px;
+--rmr-font-weight-bold: 700;
+--rmr-font-weight-default: 400;
+--rmr-font-weight-heading: 700;
+--rmr-letter-spacing-tight: -1px;
+--rmr-letter-spacing-default: normal;
+--rmr-letter-spacing-loose: 1px;
+--rmr-letter-spacing-wide: 3px;
+--rmr-line-height-heading: 1.25em;
+--rmr-line-height-default: 1.5em;
+--rmr-box-shadow-1: 0 1px 1px rgba(10,31,68,0.08);
+--rmr-box-shadow-2: 0 1px 1px rgba(10,31,68,0.10);
+--rmr-box-shadow-3: 0 1px 1px rgba(10,31,68,0.12);",
+  "styles": Object {
+    "--rmr-box-shadow-1": "0 1px 1px rgba(10,31,68,0.08)",
+    "--rmr-box-shadow-2": "0 1px 1px rgba(10,31,68,0.10)",
+    "--rmr-box-shadow-3": "0 1px 1px rgba(10,31,68,0.12)",
+    "--rmr-color-active-background": "hsla(0, 0%, 85%, 1)",
+    "--rmr-color-active-border": "hsla(0, 0%, 0%, 0.25)",
+    "--rmr-color-active-faded": "hsla(0, 0%, 13%, 0.9)",
+    "--rmr-color-active-foreground": "hsla(0, 0%, 0%, 1)",
+    "--rmr-color-active-muted": "hsla(210, 17%, 80%, 1)",
+    "--rmr-color-active-primary": "hsla(252, 55%, 46%, 1)",
+    "--rmr-color-active-primary-text": "#fff",
+    "--rmr-color-active-secondary": "hsla(72, 55%, 46%, 1)",
+    "--rmr-color-active-secondary-text": "#000",
+    "--rmr-color-active-text": "#000",
+    "--rmr-color-backdrop": "rgba(0, 0, 0, 0.9)",
+    "--rmr-color-background": "#ffffff",
+    "--rmr-color-border": "rgba(0, 0, 0, 0.25)",
+    "--rmr-color-faded": "hsla(0, 0%, 13%, 0.9)",
+    "--rmr-color-foreground": "#000000",
+    "--rmr-color-hover-background": "hsla(0, 0%, 93%, 1)",
+    "--rmr-color-hover-border": "hsla(0, 0%, 0%, 0.25)",
+    "--rmr-color-hover-faded": "hsla(0, 0%, 13%, 0.9)",
+    "--rmr-color-hover-foreground": "hsla(0, 0%, 0%, 1)",
+    "--rmr-color-hover-muted": "hsla(210, 17%, 88%, 1)",
+    "--rmr-color-hover-primary": "hsla(252, 55%, 53%, 1)",
+    "--rmr-color-hover-primary-text": "#fff",
+    "--rmr-color-hover-secondary": "hsla(72, 55%, 53%, 1)",
+    "--rmr-color-hover-secondary-text": "#000",
+    "--rmr-color-hover-text": "#000",
+    "--rmr-color-muted": "#f1f3f5",
+    "--rmr-color-outline": "rgba(121, 99, 210, 0.4)",
+    "--rmr-color-primary": "#7963d2",
+    "--rmr-color-primary-text": "#fff",
+    "--rmr-color-secondary": "#bcd263",
+    "--rmr-color-secondary-text": "#fff",
+    "--rmr-color-selection-background": "Highlight",
+    "--rmr-color-selection-caret": "inherit",
+    "--rmr-color-selection-shadow": "inherit",
+    "--rmr-color-selection-text": "HighlightText",
+    "--rmr-color-shadow-1": "rgba(10,31,68,0.08)",
+    "--rmr-color-shadow-2": "rgba(10,31,68,0.10)",
+    "--rmr-color-shadow-3": "rgba(10,31,68,0.12)",
+    "--rmr-color-table-default-border": "hsla(0, 0%, 80%, 1)",
+    "--rmr-color-table-default-cell": "hsla(0, 0%, 40%, 1)",
+    "--rmr-color-table-default-controller": "#dee2e6",
+    "--rmr-color-table-mark": "#91919196",
+    "--rmr-color-table-predelete-border": "#f03e3e",
+    "--rmr-color-table-predelete-cell": "#ffe3e3",
+    "--rmr-color-table-predelete-controller": "#ff6b6b",
+    "--rmr-color-table-preselect-border": "#1c7ed6",
+    "--rmr-color-table-preselect-cell": "hsla(0, 0%, 40%, 1)",
+    "--rmr-color-table-preselect-controller": "#339af0",
+    "--rmr-color-table-selected-border": "#1c7ed6",
+    "--rmr-color-table-selected-cell": "#d0ebff",
+    "--rmr-color-table-selected-controller": "#339af0",
+    "--rmr-color-text": "#252103",
+    "--rmr-font-family-default": "system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, \\"Helvetica Neue\\", sans-serif",
+    "--rmr-font-family-heading": "inherit",
+    "--rmr-font-family-mono": "Menlo, monospace",
+    "--rmr-font-size-0": "12px",
+    "--rmr-font-size-1": "14px",
+    "--rmr-font-size-2": "16px",
+    "--rmr-font-size-3": "20px",
+    "--rmr-font-size-4": "24px",
+    "--rmr-font-size-5": "32px",
+    "--rmr-font-size-6": "48px",
+    "--rmr-font-size-7": "64px",
+    "--rmr-font-size-8": "96px",
+    "--rmr-font-size-default": "16px",
+    "--rmr-font-weight-bold": "700",
+    "--rmr-font-weight-default": "400",
+    "--rmr-font-weight-heading": "700",
+    "--rmr-hue-blue-0": "#e7f5ff",
+    "--rmr-hue-blue-1": "#d0ebff",
+    "--rmr-hue-blue-2": "#a5d8ff",
+    "--rmr-hue-blue-3": "#74c0fc",
+    "--rmr-hue-blue-4": "#4dabf7",
+    "--rmr-hue-blue-5": "#339af0",
+    "--rmr-hue-blue-6": "#228be6",
+    "--rmr-hue-blue-7": "#1c7ed6",
+    "--rmr-hue-blue-8": "#1971c2",
+    "--rmr-hue-blue-9": "#1864ab",
+    "--rmr-hue-cyan-0": "#e3fafc",
+    "--rmr-hue-cyan-1": "#c5f6fa",
+    "--rmr-hue-cyan-2": "#99e9f2",
+    "--rmr-hue-cyan-3": "#66d9e8",
+    "--rmr-hue-cyan-4": "#3bc9db",
+    "--rmr-hue-cyan-5": "#22b8cf",
+    "--rmr-hue-cyan-6": "#15aabf",
+    "--rmr-hue-cyan-7": "#1098ad",
+    "--rmr-hue-cyan-8": "#0c8599",
+    "--rmr-hue-cyan-9": "#0b7285",
+    "--rmr-hue-grape-0": "#f8f0fc",
+    "--rmr-hue-grape-1": "#f3d9fa",
+    "--rmr-hue-grape-2": "#eebefa",
+    "--rmr-hue-grape-3": "#e599f7",
+    "--rmr-hue-grape-4": "#da77f2",
+    "--rmr-hue-grape-5": "#cc5de8",
+    "--rmr-hue-grape-6": "#be4bdb",
+    "--rmr-hue-grape-7": "#ae3ec9",
+    "--rmr-hue-grape-8": "#9c36b5",
+    "--rmr-hue-grape-9": "#862e9c",
+    "--rmr-hue-gray-0": "#f8f9fa",
+    "--rmr-hue-gray-1": "#f1f3f5",
+    "--rmr-hue-gray-2": "#e9ecef",
+    "--rmr-hue-gray-3": "#dee2e6",
+    "--rmr-hue-gray-4": "#ced4da",
+    "--rmr-hue-gray-5": "#adb5bd",
+    "--rmr-hue-gray-6": "#868e96",
+    "--rmr-hue-gray-7": "#495057",
+    "--rmr-hue-gray-8": "#343a40",
+    "--rmr-hue-gray-9": "#212529",
+    "--rmr-hue-green-0": "#ebfbee",
+    "--rmr-hue-green-1": "#d3f9d8",
+    "--rmr-hue-green-2": "#b2f2bb",
+    "--rmr-hue-green-3": "#8ce99a",
+    "--rmr-hue-green-4": "#69db7c",
+    "--rmr-hue-green-5": "#51cf66",
+    "--rmr-hue-green-6": "#40c057",
+    "--rmr-hue-green-7": "#37b24d",
+    "--rmr-hue-green-8": "#2f9e44",
+    "--rmr-hue-green-9": "#2b8a3e",
+    "--rmr-hue-indigo-0": "#edf2ff",
+    "--rmr-hue-indigo-1": "#dbe4ff",
+    "--rmr-hue-indigo-2": "#bac8ff",
+    "--rmr-hue-indigo-3": "#91a7ff",
+    "--rmr-hue-indigo-4": "#748ffc",
+    "--rmr-hue-indigo-5": "#5c7cfa",
+    "--rmr-hue-indigo-6": "#4c6ef5",
+    "--rmr-hue-indigo-7": "#4263eb",
+    "--rmr-hue-indigo-8": "#3b5bdb",
+    "--rmr-hue-indigo-9": "#364fc7",
+    "--rmr-hue-lime-0": "#f4fce3",
+    "--rmr-hue-lime-1": "#e9fac8",
+    "--rmr-hue-lime-2": "#d8f5a2",
+    "--rmr-hue-lime-3": "#c0eb75",
+    "--rmr-hue-lime-4": "#a9e34b",
+    "--rmr-hue-lime-5": "#94d82d",
+    "--rmr-hue-lime-6": "#82c91e",
+    "--rmr-hue-lime-7": "#74b816",
+    "--rmr-hue-lime-8": "#66a80f",
+    "--rmr-hue-lime-9": "#5c940d",
+    "--rmr-hue-orange-0": "#fff4e6",
+    "--rmr-hue-orange-1": "#ffe8cc",
+    "--rmr-hue-orange-2": "#ffd8a8",
+    "--rmr-hue-orange-3": "#ffc078",
+    "--rmr-hue-orange-4": "#ffa94d",
+    "--rmr-hue-orange-5": "#ff922b",
+    "--rmr-hue-orange-6": "#fd7e14",
+    "--rmr-hue-orange-7": "#f76707",
+    "--rmr-hue-orange-8": "#e8590c",
+    "--rmr-hue-orange-9": "#d9480f",
+    "--rmr-hue-pink-0": "#fff0f6",
+    "--rmr-hue-pink-1": "#ffdeeb",
+    "--rmr-hue-pink-2": "#fcc2d7",
+    "--rmr-hue-pink-3": "#faa2c1",
+    "--rmr-hue-pink-4": "#f783ac",
+    "--rmr-hue-pink-5": "#f06595",
+    "--rmr-hue-pink-6": "#e64980",
+    "--rmr-hue-pink-7": "#d6336c",
+    "--rmr-hue-pink-8": "#c2255c",
+    "--rmr-hue-pink-9": "#a61e4d",
+    "--rmr-hue-red-0": "#fff5f5",
+    "--rmr-hue-red-1": "#ffe3e3",
+    "--rmr-hue-red-2": "#ffc9c9",
+    "--rmr-hue-red-3": "#ffa8a8",
+    "--rmr-hue-red-4": "#ff8787",
+    "--rmr-hue-red-5": "#ff6b6b",
+    "--rmr-hue-red-6": "#fa5252",
+    "--rmr-hue-red-7": "#f03e3e",
+    "--rmr-hue-red-8": "#e03131",
+    "--rmr-hue-red-9": "#c92a2a",
+    "--rmr-hue-teal-0": "#e6fcf5",
+    "--rmr-hue-teal-1": "#c3fae8",
+    "--rmr-hue-teal-2": "#96f2d7",
+    "--rmr-hue-teal-3": "#63e6be",
+    "--rmr-hue-teal-4": "#38d9a9",
+    "--rmr-hue-teal-5": "#20c997",
+    "--rmr-hue-teal-6": "#12b886",
+    "--rmr-hue-teal-7": "#0ca678",
+    "--rmr-hue-teal-8": "#099268",
+    "--rmr-hue-teal-9": "#087f5b",
+    "--rmr-hue-violet-0": "#f3f0ff",
+    "--rmr-hue-violet-1": "#e5dbff",
+    "--rmr-hue-violet-2": "#d0bfff",
+    "--rmr-hue-violet-3": "#b197fc",
+    "--rmr-hue-violet-4": "#9775fa",
+    "--rmr-hue-violet-5": "#845ef7",
+    "--rmr-hue-violet-6": "#7950f2",
+    "--rmr-hue-violet-7": "#7048e8",
+    "--rmr-hue-violet-8": "#6741d9",
+    "--rmr-hue-violet-9": "#5f3dc4",
+    "--rmr-hue-yellow-0": "#fff9db",
+    "--rmr-hue-yellow-1": "#fff3bf",
+    "--rmr-hue-yellow-2": "#ffec99",
+    "--rmr-hue-yellow-3": "#ffe066",
+    "--rmr-hue-yellow-4": "#ffd43b",
+    "--rmr-hue-yellow-5": "#fcc419",
+    "--rmr-hue-yellow-6": "#fab005",
+    "--rmr-hue-yellow-7": "#f59f00",
+    "--rmr-hue-yellow-8": "#f08c00",
+    "--rmr-hue-yellow-9": "#e67700",
+    "--rmr-letter-spacing-default": "normal",
+    "--rmr-letter-spacing-loose": "1px",
+    "--rmr-letter-spacing-tight": "-1px",
+    "--rmr-letter-spacing-wide": "3px",
+    "--rmr-line-height-default": "1.5em",
+    "--rmr-line-height-heading": "1.25em",
+    "--rmr-radius-border": "0.25rem",
+    "--rmr-radius-circle": "50%",
+    "--rmr-radius-extra": "0.5rem",
+    "--rmr-space-1": "4px",
+    "--rmr-space-2": "8px",
+    "--rmr-space-3": "16px",
+    "--rmr-space-4": "32px",
+    "--rmr-space-5": "64px",
+    "--rmr-space-6": "128px",
+    "--rmr-space-7": "256px",
+    "--rmr-space-8": "512px",
+  },
+}
+`;

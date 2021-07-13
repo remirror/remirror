@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`autoRender\` renders at the end 1`] = `
+<div>
+  Hello
+</div>
+<div class="remirror-editor-wrapper">
+  <div contenteditable="true"
+       role="textbox"
+       aria-multiline="true"
+       aria-label
+       class="ProseMirror remirror-editor"
+  >
+    <p class="remirror-is-empty">
+      <br>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`\`autoRender\` renders at the start 1`] = `
+<div class="remirror-editor-wrapper">
+  <div contenteditable="true"
+       role="textbox"
+       aria-multiline="true"
+       aria-label
+       class="ProseMirror remirror-editor"
+  >
+    <p class="remirror-is-empty">
+      <br>
+    </p>
+  </div>
+</div>
+<div>
+  Hello
+</div>
+`;
+
+exports[`\`autoRender\` renders at the start: when set to true 1`] = `
+<div class="remirror-editor-wrapper">
+  <div contenteditable="true"
+       role="textbox"
+       aria-multiline="true"
+       aria-label
+       class="ProseMirror remirror-editor"
+  >
+    <p class="remirror-is-empty">
+      <br>
+    </p>
+  </div>
+</div>
+<div>
+  Hello
+</div>
+`;
+
+exports[`\`autoRender\` renders by default with no children 1`] = `
+<div class="remirror-editor-wrapper">
+  <div contenteditable="true"
+       role="textbox"
+       aria-multiline="true"
+       aria-label
+       class="ProseMirror remirror-editor"
+  >
+    <p class="remirror-is-empty">
+      <br>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`multiple \`getRootProps\` applied to dom throw an error 1`] = `
+"\`getRootProps\` has been attached to the DOM more than once. It should only be attached to the dom once per editor.
+
+Called 2 times
+
+For more information visit https://remirror.io/docs/errors#rmr0201"
+`;

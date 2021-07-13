@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Manager #properties should initialize the \`extensionStore\` with the correct values 1`] = `
+Array [
+  "extensions",
+  "phase",
+  "view",
+  "managerSettings",
+  "getState",
+  "updateState",
+  "isMounted",
+  "getExtension",
+  "manager",
+  "document",
+  "stringHandlers",
+  "currentState",
+  "previousState",
+  "getStoreKey",
+  "setStoreKey",
+  "setExtensionStore",
+  "setStringHandler",
+  "nodeNames",
+  "markNames",
+  "plainNames",
+  "tags",
+  "plainTags",
+  "markTags",
+  "nodeTags",
+  "schema",
+  "updatePlugins",
+  "dispatchPluginUpdate",
+  "updateExtensionPlugins",
+  "getPluginState",
+  "updateAttributes",
+  "rebuildInputRules",
+  "addSuggester",
+  "removeSuggester",
+  "attrs",
+  "active",
+  "helpers",
+  "rebuildKeymap",
+  "createPlaceholderCommand",
+]
+`;
+
+exports[`Manager #properties should initialize the \`extensionStore\` with the correct values 2`] = `
+"This occurs when accessing a method or property before it is available.
+
+\`getState\` can only be called after the \`Framework\` or the \`EditorView\` has been added to the manager\`. Check your plugins to make sure that the decorations callback uses the state argument.
+
+For more information visit https://remirror.io/docs/errors#rmr0008"
+`;

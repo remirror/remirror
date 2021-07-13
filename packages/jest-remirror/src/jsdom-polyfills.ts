@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import sanitizeHtml from 'sanitize-html';
-
+import warning from 'tiny-warning';
 import { environment, isFunction, noop } from '@remirror/core';
 
 /**
@@ -53,6 +53,30 @@ function supportBoundingClientRect() {
   const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect.bind(
     Element.prototype,
   );
+
+  if (!window.DOMRect) {
+    global.DOMRect = window.DOMRect = class DOMRect {
+      public left: number;
+      public right: number;
+      public top: number;
+      public bottom: number;
+      constructor(
+        public x: number = 0,
+        public y: number = 0,
+        public width: number = 0,
+        public height: number = 0,
+      ) {
+        this.left = 0;
+        this.right = 0;
+        this.top = 0;
+        this.bottom = 0;
+      }
+
+      fromRect(_?: DOMRect) {
+        return new DOMRect();
+      }
+    } as any;
+  }
 
   Element.prototype.getBoundingClientRect = function () {
     if (isFunction(originalGetBoundingClientRect)) {
@@ -127,7 +151,8 @@ function supportCancelAnimationFrame() {
   window.cancelAnimationFrame = () => {
     if (!window.ignoreAllJSDOMWarnings && !window.hasWarnedAboutCancelAnimationFramePolyfill) {
       window.hasWarnedAboutCancelAnimationFramePolyfill = true;
-      console.warn(
+      warning(
+        true,
         'Warning! Test uses DOM cancelAnimationFrame API which is not available in JSDOM/Node environment.',
       );
     }

@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-extensions.cjs.js",
+  "module": "dist/remirror-extensions.esm.js",
+  "browser": {
+    "./dist/remirror-extensions.cjs.js": "./dist/remirror-extensions.browser.cjs.js",
+    "./dist/remirror-extensions.esm.js": "./dist/remirror-extensions.browser.esm.js"
+  },
+  "types": "dist/remirror-extensions.cjs.d.ts",
+  "rn:dev": "../src/extensions.ts"
+}

@@ -4,27 +4,33 @@
     "module": "ESNext",
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "jsx": "react",
+    "jsx": "react-jsxdev",
     "types": ["node", "jest"],
     "moduleResolution": "node",
-    "noImplicitReturns": true,
     "useDefineForClassFields": true,
-    "isolatedModules": true,
     "sourceMap": true,
     "declaration": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "pretty": true,
-    "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true,
+    "noEmit": true,
     "strict": true,
-    "noImplicitAny": true,
-    "alwaysStrict": true,
     "resolveJsonModule": true,
     "preserveWatchOutput": true,
-    "noEmit": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "allowUnreachableCode": true
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+
+    "experimentalDecorators": true,
+
+    // Import rules
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    // Stylistic, but faster than eslint
+    "importsNotUsedAsValues": "remove",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true
   }
 }

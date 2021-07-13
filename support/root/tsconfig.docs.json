@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["packages/**/src", "global.d.ts"],
+  "exclude": [
+    "**/__tests__",
+    "**/__dts__",
+    "**/__mocks__",
+    "**/__fixtures__",
+    "*.{test,spec}.{ts,tsx}",
+    "**/*.d.ts",
+    "*.d.ts"
+  ],
+  "typedocOptions": {
+    "out": "docs/api",
+    "json": "support/api.json",
+    "name": "Remirror",
+    "mode": "modules",
+    "exclude": ["**/*+(spec|dts).(ts|tsx)"],
+    "excludePrivate": true,
+    "excludeNotExported": true,
+    "stripInternal": true,
+    "ignoreCompilerErrors": true,
+    "includeVersion": true,
+    "includeDeclarations": false
+  }
+}

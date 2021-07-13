@@ -13,6 +13,7 @@ on:
     branches:
       - main
       - next
+      - beta
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
@@ -37,12 +38,12 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
         with:
           node-version: 14
 
       - name: install and audit
-        uses: ./.github/actions/pnpm
+        uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
@@ -64,9 +65,12 @@ jobs:
       - name: check repo and versions
         run: pnpm lint:repo
 
+      - name: check exports
+        run: pnpm lint:exports
+
   # Typecheck the project
   typecheck:
-    timeout-minutes: 8
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -83,12 +87,12 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
         with:
           node-version: 14
 
       - name: install and audit
-        uses: ./.github/actions/pnpm
+        uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
@@ -114,12 +118,12 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
         with:
           node-version: 14
 
       - name: install and audit
-        uses: ./.github/actions/pnpm
+        uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
@@ -141,7 +145,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 15.x]
+        node-version: [12.x, 14.x, 16.x]
       fail-fast: false
 
     steps:
@@ -159,12 +163,12 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: install and audit
-        uses: ./.github/actions/pnpm
+        uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
@@ -193,12 +197,12 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
         with:
           node-version: 14
 
       - name: install and audit
-        uses: ./.github/actions/pnpm
+        uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
@@ -207,81 +211,3 @@ jobs:
 
       - name: check sizes
         run: pnpm size
-
-  # Run chromium e2e tests with playwright
-  chromium_e2e:
-    timeout-minutes: 8
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-      fail-fast: false
-
-    steps:
-      - name: checkout code repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: setup caching
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PNPM_CACHE_FOLDER }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
-
-      - name: install and audit
-        uses: ./.github/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
-
-      - name: build project
-        run: pnpm build
-
-      - name: chrome integration test ${{ matrix.os }}
-        run: cd support/e2e && pnpm chromium
-
-  # Run firefox e2e tests with playwright
-  firefox_e2e:
-    timeout-minutes: 8
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-      fail-fast: false
-
-    steps:
-      - name: checkout code repository
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: setup caching
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PNPM_CACHE_FOLDER }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
-      - name: setup node.js
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: 14
-
-      - name: install and audit
-        uses: ./.github/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
-
-      - name: build project
-        run: pnpm build
-
-      - name: firefox integration test ${{ matrix.os }}
-        run: cd support/e2e && pnpm firefox

@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-create-typedoc-sidebars.cjs.js",
+  "module": "dist/scripts-create-typedoc-sidebars.esm.js"
+}

@@ -1,7 +1,6 @@
 import { marks, nodes } from 'prosemirror-schema-basic';
 import { tableNodes } from 'prosemirror-tables';
-
-import { NodeGroup } from '@remirror/core-constants';
+import { ExtensionTag } from '@remirror/core-constants';
 import { MarkSpec, NodeSpec, Schema } from '@remirror/pm/model';
 import {
   bulletList as baseBulletList,
@@ -54,7 +53,7 @@ const atomInline: NodeSpec = {
 
 const atomBlock: NodeSpec = {
   inline: false,
-  group: NodeGroup.Block,
+  group: ExtensionTag.Block,
   atom: true,
   selectable: true,
   parseDOM: [
@@ -69,7 +68,7 @@ const atomBlock: NodeSpec = {
 
 const atomContainer: NodeSpec = {
   inline: false,
-  group: NodeGroup.Block,
+  group: ExtensionTag.Block,
   content: 'atomBlock+',
   parseDOM: [
     {
@@ -83,7 +82,7 @@ const atomContainer: NodeSpec = {
 
 const containerWithRestrictedContent: NodeSpec = {
   inline: false,
-  group: NodeGroup.Block,
+  group: ExtensionTag.Block,
   content: 'paragraph+',
   parseDOM: [
     {

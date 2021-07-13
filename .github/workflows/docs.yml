@@ -34,18 +34,15 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2-beta
+        uses: actions/setup-node@v2
         with:
           # Uses node 14 to allow nullish coalescing in `.js` files
           node-version: 14
 
       - name: install and audit
-        uses: ./.github/actions/pnpm
+        uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
-
-      - name: build project
-        run: pnpm build
 
       - name: build docs
         run: pnpm build:docs
@@ -53,7 +50,7 @@ jobs:
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop
         with:
-          publish-dir: './support/website/build'
+          publish-dir: './website/build'
           production-branch: next
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'

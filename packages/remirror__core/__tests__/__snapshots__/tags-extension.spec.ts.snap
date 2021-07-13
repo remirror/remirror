@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tags throws when an invalid tag is added 1`] = `
+"An error occurred within an extension. More details should be made available.
+
+The tag provided by the extension: InvalidExtension is not supported by the editor. To add custom tags you can use the 'mutateTag' method.
+
+For more information visit https://remirror.io/docs/errors#rmr0100"
+`;

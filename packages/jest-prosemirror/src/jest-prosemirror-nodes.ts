@@ -3,7 +3,6 @@ import pm, {
   NodeTypeAttributes,
   TaggedProsemirrorNode,
 } from 'prosemirror-test-builder';
-
 import { Cast, isNumber, keys } from '@remirror/core-helpers';
 import type { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
 import { GapCursor } from '@remirror/pm/gapcursor';
@@ -17,7 +16,7 @@ import {
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 
 import { schema } from './jest-prosemirror-schema';
-import type { TaggedDocParameter } from './jest-prosemirror-types';
+import type { TaggedDocProps } from './jest-prosemirror-types';
 
 /**
  * Table specific cell resolution
@@ -33,8 +32,8 @@ function resolveCell(taggedDoc: TaggedProsemirrorNode, tag?: number) {
   return cellAround(taggedDoc.resolve(tag));
 }
 
-interface CreateTextSelectionParameter<Schema extends EditorSchema = EditorSchema>
-  extends TaggedDocParameter<Schema> {
+interface CreateTextSelectionProps<Schema extends EditorSchema = EditorSchema>
+  extends TaggedDocProps<Schema> {
   start: number;
   end?: number;
 }
@@ -51,7 +50,7 @@ function createTextSelection<Schema extends EditorSchema = EditorSchema>({
   taggedDoc,
   start,
   end,
-}: CreateTextSelectionParameter<Schema>) {
+}: CreateTextSelectionProps<Schema>) {
   const $start = taggedDoc.resolve(start);
   const $end = end && start <= end ? taggedDoc.resolve(end) : taggedDoc.resolve($start.end());
   return new TextSelection<Schema>($start, $end);
@@ -110,7 +109,7 @@ export function initSelection<Schema extends EditorSchema = EditorSchema>(
 
     if ($anchor) {
       return Cast<Selection<Schema>>(
-        new CellSelection<Schema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) ?? undefined),
+        new CellSelection<Schema>($anchor, resolveCell(taggedDoc, head) ?? undefined),
       );
     }
   }
@@ -162,7 +161,7 @@ export function pmBuild<
     NodeTypeAttributes | MarkTypeAttributes
   >,
   Nodes extends string = string,
-  Marks extends string = string
+  Marks extends string = string,
 >(testSchema: EditorSchema<Nodes, Marks>, names: Type) {
   return pm.builders(testSchema, {
     doc: { nodeType: 'doc' },

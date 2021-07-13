@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-suggest.cjs.js",
+  "module": "dist/remirror-pm-suggest.esm.js",
+  "browser": {
+    "./dist/remirror-pm-suggest.cjs.js": "./dist/remirror-pm-suggest.browser.cjs.js",
+    "./dist/remirror-pm-suggest.esm.js": "./dist/remirror-pm-suggest.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-suggest.cjs.d.ts",
+  "rn:dev": "../src/suggest.ts"
+}

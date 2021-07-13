@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-history.cjs.js",
+  "module": "dist/remirror-pm-history.esm.js",
+  "browser": {
+    "./dist/remirror-pm-history.cjs.js": "./dist/remirror-pm-history.browser.cjs.js",
+    "./dist/remirror-pm-history.esm.js": "./dist/remirror-pm-history.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-history.cjs.d.ts",
+  "rn:dev": "../src/history.ts"
+}

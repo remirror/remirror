@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Social Editor Links can handle more complex interactions 1`] = `
+<p class>
+  this is the first
+  <a href="//url.com"
+     rel="noopener noreferrer nofollow"
+     data-link-auto
+  >
+    url.com
+  </a>
+</p>
+<p>
+  <a href="//split.com"
+     rel="noopener noreferrer nofollow"
+     data-link-auto
+  >
+    split.com
+  </a>
+  this.com is test.com
+</p>
+`;
+
+exports[`Social Editor Links should have a social editor 1`] = `
+<p class>
+  This is text
+  <a href="https://url.com"
+     rel="noopener noreferrer nofollow"
+     data-link-auto
+  >
+    https://url.com
+  </a>
+</p>
+`;
+
+exports[`Social Editor Links should parse simple urls 1`] = `
+<p class>
+  <a href="//url.com"
+     rel="noopener noreferrer nofollow"
+     data-link-auto
+  >
+    url.com
+  </a>
+</p>
+`;
+
+exports[`Social Editor Links should parse simple urls 2`] = `
+<p class>
+  <a href="//url.co"
+     rel="noopener noreferrer nofollow"
+     data-link-auto
+  >
+    url.co
+  </a>
+</p>
+`;
+
+exports[`Social Editor Links should parse simple urls 3`] = `
+<p class>
+  url.c
+</p>
+`;
+
+exports[`Social Editor Links should parse simple urls 4`] = `
+<p class>
+  <a href="//url.co.uk"
+     rel="noopener noreferrer nofollow"
+     data-link-auto
+  >
+    url.co.uk
+  </a>
+</p>
+`;
+
+exports[`Social Editor Mentions @ should not trap the arrow keys 1`] = `
+<p class>
+  12 @a
+</p>
+`;

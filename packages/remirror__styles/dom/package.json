@@ -1,0 +1,9 @@
+{
+  "main": "dist/remirror-styles-dom.cjs.js",
+  "module": "dist/remirror-styles-dom.esm.js",
+  "browser": {
+    "./dist/remirror-styles-dom.cjs.js": "./dist/remirror-styles-dom.browser.cjs.js",
+    "./dist/remirror-styles-dom.esm.js": "./dist/remirror-styles-dom.browser.esm.js"
+  },
+  "types": "dist/remirror-styles-dom.cjs.d.ts"
+}

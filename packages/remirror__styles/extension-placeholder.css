@@ -1,0 +1,11 @@
+/**
+ * Styles extracted from: packages/remirror__theme/src/extension-placeholder-theme.ts
+ */
+.remirror-is-empty:first-of-type::before {
+  position: absolute;
+  color: #aaa;
+  pointer-events: none;
+  height: 0;
+  font-style: italic;
+  content: attr(data-placeholder);
+}

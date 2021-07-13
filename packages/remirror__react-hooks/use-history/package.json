@@ -1,0 +1,9 @@
+{
+  "main": "dist/remirror-react-hooks-use-history.cjs.js",
+  "module": "dist/remirror-react-hooks-use-history.esm.js",
+  "browser": {
+    "./dist/remirror-react-hooks-use-history.cjs.js": "./dist/remirror-react-hooks-use-history.browser.cjs.js",
+    "./dist/remirror-react-hooks-use-history.esm.js": "./dist/remirror-react-hooks-use-history.browser.esm.js"
+  },
+  "types": "dist/remirror-react-hooks-use-history.cjs.d.ts"
+}

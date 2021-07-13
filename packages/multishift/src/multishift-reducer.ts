@@ -1,4 +1,4 @@
-import { isEmptyArray, object } from '@remirror/core-helpers';
+import { assertGet, isEmptyArray, object } from '@remirror/core-helpers';
 
 import { MultishiftActionTypes } from './multishift-constants';
 import type {
@@ -32,7 +32,14 @@ export const multishiftReducer = <Item = any>(
   let changes: MultishiftStateProps<Item> = object();
 
   const defaultState = getDefaultState(props);
-  const { multiple, items, getItemId = defaultGetItemId, autoSelectOnBlur = true } = props;
+  const {
+    multiple,
+    items,
+    getItemId = defaultGetItemId,
+    autoSelectOnBlur = true,
+    itemToString,
+    initialHighlightedIndexes,
+  } = props;
   const highlightReset = getHighlightReset(defaultState);
 
   switch (action.type) {
@@ -101,10 +108,15 @@ export const multishiftReducer = <Item = any>(
     case MultishiftActionTypes.InputBlur:
     case MultishiftActionTypes.ToggleButtonBlur:
     case MultishiftActionTypes.MenuBlur: {
-      const { highlightedIndexes, selectedItems: selected } = state;
+      const {
+        highlightedIndexes,
+        selectedItems: selected,
+        highlightedGroupStartIndex,
+        highlightedGroupEndIndex,
+      } = state;
       const indexes = getHighlightedIndexes({
-        start: state.highlightedGroupStartIndex,
-        end: state.highlightedGroupEndIndex,
+        start: highlightedGroupStartIndex,
+        end: highlightedGroupEndIndex,
         indexes: highlightedIndexes,
         items,
       });
@@ -114,7 +126,7 @@ export const multishiftReducer = <Item = any>(
           ? {
               selectedItems: addItems(
                 selected,
-                indexes.map((index) => items[index]),
+                indexes.map((index) => assertGet(items, index)),
                 getItemId,
                 multiple,
               ),
@@ -186,7 +198,7 @@ export const multishiftReducer = <Item = any>(
       const indexes = getItemIndexesByJumpText({
         text: jumpText,
         highlightedIndexes: state.highlightedIndexes,
-        itemToString: props.itemToString,
+        itemToString,
         items,
       });
       const extraHighlights = !isEmptyArray(indexes) ? { highlightedIndexes: indexes } : {};
@@ -200,7 +212,7 @@ export const multishiftReducer = <Item = any>(
       const indexes = getHighlightedIndexOnOpen(
         {
           defaultHighlightedIndexes: defaultState.highlightedIndexes,
-          initialHighlightedIndexes: props.initialHighlightedIndexes,
+          initialHighlightedIndexes: initialHighlightedIndexes,
           items,
         },
         state,
@@ -219,7 +231,7 @@ export const multishiftReducer = <Item = any>(
       const highlightedIndexes = getHighlightedIndexOnOpen(
         {
           defaultHighlightedIndexes: defaultState.highlightedIndexes,
-          initialHighlightedIndexes: props.initialHighlightedIndexes,
+          initialHighlightedIndexes: initialHighlightedIndexes,
           items,
         },
         state,
@@ -260,14 +272,19 @@ export const multishiftReducer = <Item = any>(
 
     case MultishiftActionTypes.OuterMouseUp:
     case MultishiftActionTypes.OuterTouchEnd: {
-      const { highlightedIndexes, selectedItems: selected } = state;
+      const {
+        highlightedIndexes,
+        selectedItems: selected,
+        highlightedGroupEndIndex,
+        highlightedGroupStartIndex,
+      } = state;
       const indexes = getHighlightedIndexes({
-        start: state.highlightedGroupStartIndex,
-        end: state.highlightedGroupEndIndex,
+        start: highlightedGroupStartIndex,
+        end: highlightedGroupEndIndex,
         indexes: highlightedIndexes,
         items,
       });
-      const highlightedItems = indexes.map((index) => items[index]);
+      const highlightedItems = indexes.map((index) => assertGet(items, index));
       const extra =
         !isEmptyArray(indexes) && autoSelectOnBlur
           ? { selectedItems: addItems(selected, highlightedItems, getItemId, multiple) }

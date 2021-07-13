@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest",
+      "@types/requestidlecallback",
+      "expect-playwright/global",
+      "jest-playwright-preset",
+      "jest-extended",
+      "snapshot-diff",
+      "playwright"
+    ],
+    "declaration": false,
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": ["./*/src"]
+}

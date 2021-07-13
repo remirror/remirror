@@ -6,15 +6,12 @@
   "*.{json,yml,yaml}": [
     "prettier --write"
   ],
-  "*.{md,mdx}": [
+  "!(support/api/**)*.{md,mdx}": [
     "prettier --write",
     "eslint --fix"
   ],
   "{packages,support}/**/*.{ts,tsx,js}": [
     "prettier --write",
-    "FULL_ESLINT_CHECK=true eslint --fix"
-  ],
-  "packages/**/*.spec.{ts,tsx}": [
-    "jest --coverage=false --bail --findRelatedTests"
+    "eslint --fix"
   ]
 }

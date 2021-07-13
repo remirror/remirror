@@ -1,12 +1,9 @@
 {
-  "main": "dist/jest-prosemirror.cjs.js",
-  "module": "dist/jest-prosemirror.esm.js",
+  "main": "dist/jest-prosemirror-environment.cjs.js",
+  "module": "dist/jest-prosemirror-environment.esm.js",
   "browser": {
-    "./dist/jest-prosemirror.cjs.js": "./dist/jest-prosemirror.browser.cjs.js",
-    "./dist/jest-prosemirror.esm.js": "./dist/jest-prosemirror.browser.esm.js"
+    "./dist/jest-prosemirror-environment.cjs.js": "./dist/jest-prosemirror-environment.browser.cjs.js",
+    "./dist/jest-prosemirror-environment.esm.js": "./dist/jest-prosemirror-environment.browser.esm.js"
   },
-  "types": "dist/jest-prosemirror.cjs.d.ts",
-  "preconstruct": {
-    "source": "../src/environment"
-  }
+  "types": "dist/jest-prosemirror-environment.cjs.d.ts"
 }

@@ -437,15 +437,15 @@ export enum ChangeReason {
 }
 
 /**
- * The parameters needed for the [[`SuggestIgnoreParameter.addIgnored`]] action
+ * The parameters needed for the [[`SuggestIgnoreProps.addIgnored`]] action
  * method available to the suggest plugin handlers.
  *
  * @remarks
  *
  * See:
- * - [[`RemoveIgnoredParameter`]]
+ * - [[`RemoveIgnoredProps`]]
  */
-export interface AddIgnoredParameter extends RemoveIgnoredParameter {
+export interface AddIgnoredProps extends RemoveIgnoredProps {
   /**
    * When `false` this will ignore the range for all matching suggesters. When
    * true the ignored suggesters will only be the ones provided by the name.
@@ -454,10 +454,10 @@ export interface AddIgnoredParameter extends RemoveIgnoredParameter {
 }
 
 /**
- * The parameters needed for the {@link SuggestIgnoreParameter.removeIgnored}
+ * The parameters needed for the {@link SuggestIgnoreProps.removeIgnored}
  * action method available to the suggest plugin handlers.
  */
-export interface RemoveIgnoredParameter extends Pick<Suggester, 'name'> {
+export interface RemoveIgnoredProps extends Pick<Suggester, 'name'> {
   /**
    * The starting point of the match that should be ignored.
    */
@@ -468,7 +468,7 @@ export interface RemoveIgnoredParameter extends Pick<Suggester, 'name'> {
  * A parameter builder interface describing the ignore methods available to the
  * [[`Suggester`]] handlers.
  */
-export interface SuggestIgnoreParameter {
+export interface SuggestIgnoreProps {
   /**
    * Add a match target to the ignored matches.
    *
@@ -491,13 +491,13 @@ export interface SuggestIgnoreParameter {
    *
    * ```ts
    * const suggester = {
-   *   onChange: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParameter) => {
+   *   onChange: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerProps) => {
    *     addIgnored({ from, char, name }); // Ignore this suggester
    *   },
    * }
    * ```
    */
-  addIgnored: (parameter: AddIgnoredParameter) => void;
+  addIgnored: (props: AddIgnoredProps) => void;
 
   /**
    * When the name is provided remove all ignored decorations which match the
@@ -617,7 +617,7 @@ export interface ResolvedRangeWithCursor<Schema extends EditorSchema = EditorSch
  *
  */
 export interface SuggestMatch<Schema extends EditorSchema = EditorSchema>
-  extends SuggesterParameter<Schema> {
+  extends SuggesterProps<Schema> {
   /**
    * Range of current match; for example `@foo|bar` (where | is the cursor)
    * - `from` is the start (= 0)
@@ -663,7 +663,7 @@ export interface SuggestMatch<Schema extends EditorSchema = EditorSchema>
   textBefore: string;
 }
 
-export interface DocChangedParameter {
+export interface DocChangedProps {
   /**
    * - `true` when there was a changed in the editor content.
    * - `false` when only the selection changed.
@@ -678,7 +678,7 @@ export interface DocChangedParameter {
 /**
  * A parameter builder interface describing match found by the suggest plugin.
  */
-export interface SuggestStateMatchParameter<Schema extends EditorSchema = EditorSchema> {
+export interface SuggestStateMatchProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The match that will be triggered.
    */
@@ -690,7 +690,7 @@ export interface SuggestStateMatchParameter<Schema extends EditorSchema = Editor
  * `Marks`. The method should be called when removing a suggestion that was
  * identified by a prosemirror `Mark`.
  */
-export interface SuggestMarkParameter {
+export interface SuggestMarkProps {
   /**
    * When managing suggesters with marks it is possible to remove a mark without
    * the change reflecting in the prosemirror state. This method should be used
@@ -706,9 +706,9 @@ export interface SuggestMarkParameter {
 /**
  * A parameter builder interface indicating the reason the handler was called.
  *
- * @typeParam Reason - Whether this is change or an exit reason.
+ * @template Reason - Whether this is change or an exit reason.
  */
-export interface ReasonParameter {
+export interface ReasonProps {
   /**
    * The reason for the exit. Either this or the change reason must have a
    * value.
@@ -729,11 +729,11 @@ export interface ReasonParameter {
  * Exactly **ONE** will always be available. Unfortunately that's quite hard to
  * model in TypeScript without complicating all dependent types.
  */
-export interface SuggestChangeHandlerParameter<Schema extends EditorSchema = EditorSchema>
+export interface SuggestChangeHandlerProps<Schema extends EditorSchema = EditorSchema>
   extends SuggestMatchWithReason<Schema>,
-    EditorViewParameter<Schema>,
-    SuggestIgnoreParameter,
-    SuggestMarkParameter,
+    EditorViewProps<Schema>,
+    SuggestIgnoreProps,
+    SuggestMarkProps,
     Pick<Suggester<Schema>, 'name' | 'char'> {}
 
 /**
@@ -745,11 +745,11 @@ export interface SuggestChangeHandlerParameter<Schema extends EditorSchema = Edi
  * set to true.
  */
 export type SuggestChangeHandler<Schema extends EditorSchema = EditorSchema> = (
-  changeDetails: SuggestChangeHandlerParameter<Schema>,
+  changeDetails: SuggestChangeHandlerProps<Schema>,
   tr: Transaction<Schema>,
 ) => void;
 
-export interface SuggesterParameter<Schema extends EditorSchema = EditorSchema> {
+export interface SuggesterProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The suggester to use for finding matches.
    */
@@ -762,7 +762,7 @@ export interface SuggesterParameter<Schema extends EditorSchema = EditorSchema> 
  */
 export interface SuggestMatchWithReason<Schema extends EditorSchema = EditorSchema>
   extends SuggestMatch<Schema>,
-    ReasonParameter {}
+    ReasonProps {}
 
 /**
  * A mapping of the handler matches with their reasons for occurring within the
@@ -787,9 +787,9 @@ export interface SuggestReasonMap<Schema extends EditorSchema = EditorSchema> {
  *
  * This is used to build parameters for {@link Suggester} handler methods.
  *
- * @typeParam Reason - Whether this is change or an exit reason.
+ * @template Reason - Whether this is change or an exit reason.
  */
-export interface ReasonMatchParameter {
+export interface ReasonMatchProps {
   /**
    * The match with its reason property.
    */
@@ -805,7 +805,7 @@ export interface ReasonMatchParameter {
  * occurred (i.e. change or exit see {@link SuggestReasonMap}) and the reason
  * for that that change. See {@link ExitReason} {@link ChangeReason}
  */
-export interface CompareMatchParameter<Schema extends EditorSchema = EditorSchema> {
+export interface CompareMatchProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The initial match
    */
@@ -818,25 +818,6 @@ export interface CompareMatchParameter<Schema extends EditorSchema = EditorSchem
 }
 
 /**
- * Keeps the partial properties of a type unchanged. Transforms the rest to
- * `never`.
- */
-type KeepPartialProperties<Type extends object> = {
-  [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : never;
-};
-
-/**
- * Pick the `partial` properties from the provided Type and make them all
- * required.
- */
-export type PickPartial<Type extends object> = {
-  [Key in keyof import('type-fest').ConditionalExcept<
-    KeepPartialProperties<Type>,
-    never
-  >]-?: Type[Key];
-};
-
-/**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
 export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
@@ -844,50 +825,46 @@ export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Ty
 
 export type EditorSchema = import('prosemirror-model').Schema<string, string>;
 
-export type ProsemirrorNode<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-model').Node<Schema>;
+export type ProsemirrorNode<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-model').Node<Schema>;
 
-export type Transaction<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-state').Transaction<Schema>;
+export type Transaction<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-state').Transaction<Schema>;
 
 /**
  * A parameter builder interface containing the `tr` property.
  *
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  */
-export interface TransactionParameter<Schema extends EditorSchema = EditorSchema> {
+export interface TransactionProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror transaction
    */
   tr: Transaction<Schema>;
 }
 
-export type EditorState<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-state').EditorState<Schema>;
+export type EditorState<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-state').EditorState<Schema>;
 
 /**
  * A parameter builder interface containing the `state` property.
  *
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  */
-export interface EditorStateParameter<Schema extends EditorSchema = EditorSchema> {
+export interface EditorStateProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * A snapshot of the prosemirror editor state.
    */
   state: EditorState<Schema>;
 }
 
-export type ResolvedPos<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-model').ResolvedPos<Schema>;
+export type ResolvedPos<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-model').ResolvedPos<Schema>;
 
 /**
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  */
-export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema> {
+export interface ResolvedPosProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * A prosemirror resolved pos with provides helpful context methods when
    * working with a position in the editor.
@@ -898,30 +875,29 @@ export interface ResolvedPosParameter<Schema extends EditorSchema = EditorSchema
   $pos: ResolvedPos<Schema>;
 }
 
-export interface TextParameter {
+export interface TextProps {
   /**
    * The text to insert or work with.
    */
   text: string;
 }
 
-export type EditorView<
-  Schema extends EditorSchema = EditorSchema
-> = import('prosemirror-view').EditorView<Schema>;
+export type EditorView<Schema extends EditorSchema = EditorSchema> =
+  import('prosemirror-view').EditorView<Schema>;
 
 /**
  * A parameter builder interface containing the `view` property.
  *
- * @typeParam Schema - the underlying editor schema.
+ * @template Schema - the underlying editor schema.
  */
-export interface EditorViewParameter<Schema extends EditorSchema = EditorSchema> {
+export interface EditorViewProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * An instance of the ProseMirror editor `view`.
    */
   view: EditorView<Schema>;
 }
 
-export interface SelectionParameter<Schema extends EditorSchema = EditorSchema> {
+export interface SelectionProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The text editor selection
    */

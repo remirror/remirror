@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-enable-pr-changeset.cjs.js",
+  "module": "dist/scripts-enable-pr-changeset.esm.js"
+}

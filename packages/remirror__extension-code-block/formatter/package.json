@@ -1,0 +1,8 @@
+{
+  "main": "dist/remirror-extension-code-block-formatter.cjs.js",
+  "module": "dist/remirror-extension-code-block-formatter.esm.js",
+  "browser": {
+    "./dist/remirror-extension-code-block-formatter.cjs.js": "./dist/remirror-extension-code-block-formatter.browser.cjs.js",
+    "./dist/remirror-extension-code-block-formatter.esm.js": "./dist/remirror-extension-code-block-formatter.browser.esm.js"
+  }
+}

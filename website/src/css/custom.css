@@ -1,0 +1,169 @@
+@import '../../../packages/remirror__styles/all.css';
+
+:root {
+  --ifm-color-primary: #7963d2;
+  --ifm-color-primary-dark: #644bcb;
+  --ifm-color-primary-darker: #5a3fc8;
+  --ifm-color-primary-darkest: #4830a8;
+  --ifm-color-primary-light: #8e7bd9;
+  --ifm-color-primary-lighter: #9887dc;
+  --ifm-color-primary-lightest: #b7abe7;
+  --ifm-code-font-size: 95%;
+
+  --ifm-font-color-base: hsl(252, 15%, 15%);
+  --ifm-font-color-light: hsl(252, 15%, 30%);
+  --ifm-heading-color: hsl(252, 15%, 30%);
+  --ifm-heading-color-light: hsl(252, 15%, 30%);
+
+  --ifm-link-hover-decoration: none;
+
+  --ifm-font-family-base: Rubik, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
+    Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+  --ifm-navbar-height: 4rem;
+  --ifm-navbar-link-color: white;
+
+  --ifm-navbar-background-color: var(--ifm-color-primary);
+  --ifm-navbar-link-hover-color: white;
+
+  --ifm-navbar-shadow: initial;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+.footer {
+  .footer__title {
+    text-align: center;
+    /* padding: 0 1rem; */
+  }
+
+  .footer__item {
+    text-align: center;
+  }
+
+  .footer__link-item {
+    padding: 0.2rem 1rem;
+    border-radius: 3px;
+    &:hover {
+      background-color: white;
+      color: var(--ifm-font-color-light);
+    }
+  }
+}
+
+.navbar {
+  /* box-shadow: 0 5px 40px rgba(0, 0, 0, 0.2); */
+
+  @media screen and (min-width: 996px) {
+    padding: 0.5rem 4rem;
+  }
+
+  .navbar__brand {
+    height: 3rem;
+    margin-right: 0;
+  }
+
+  .navbar__item.navbar__link,
+  .menu__link {
+    padding: 0.2rem 1rem;
+    margin: 0 0.2rem;
+    font-weight: bold;
+    border-radius: 3px;
+
+    &.navbar__link--active,
+    &:hover {
+      background-color: white;
+      color: var(--ifm-color-primary);
+    }
+  }
+
+  .menu__link {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .navbar__items {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+
+    .navbar__toggle {
+      color: white;
+    }
+
+    &.navbar__items--right {
+      display: none;
+    }
+
+    @media screen and (min-width: 996px) {
+      flex-direction: row;
+      justify-content: initial;
+
+      &.navbar__items--right {
+        justify-content: flex-end;
+        display: flex;
+      }
+    }
+  }
+
+  .navbar-sidebar {
+    max-width: 300px;
+    --ifm-menu-color: white;
+  }
+
+  .navbar-sidebar__brand {
+    justify-content: center;
+  }
+}
+
+.menu {
+  .button--secondary:not(.button--outline) {
+    --ifm-button-background-color: white;
+
+    /* color: white; */
+  }
+}
+
+@media screen and (min-width: 1450px) {
+  #__docusaurus {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar--fixed-top {
+    justify-content: center;
+    display: flex;
+
+    .navbar__inner {
+      width: 1450px;
+      padding-left: calc(0.5rem + var(--ifm-menu-link-padding-horizontal));
+      padding-right: calc(0.5rem + var(--ifm-menu-link-padding-horizontal));
+    }
+  }
+
+  .main-wrapper {
+    width: 1450px;
+  }
+}
+
+.menu__link.menu__link--sublist {
+  font-weight: 500;
+}
+
+.main-wrapper {
+  code {
+    background-color: #ebedf0;
+    background-color: var(--ifm-code-background);
+    color: #1c1e21;
+    color: var(--ifm-code-color);
+  }
+
+  a code {
+    color: inherit;
+  }
+}

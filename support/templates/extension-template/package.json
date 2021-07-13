@@ -1,6 +1,7 @@
 {
   "name": "@remirror/extension-template",
   "version": "0.0.0",
+  "private": true,
   "description": "TEMPLATE_DESCRIPTION",
   "keywords": [
     "remirror",
@@ -13,28 +14,41 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "dist/extension-template.cjs.js",
-  "module": "dist/extension-template.esm.js",
-  "browser": {},
-  "types": "dist/extension-template.cjs.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/extension-template.esm.js",
+      "require": "./dist/extension-template.cjs.js",
+      "browser": "./dist/extension-template.esm.js",
+      "types": "./dist/extension-template.cjs.d.ts",
+      "default": "./dist/extension-template.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-template.cjs.js",
+  "module": "dist/remirror-extension-template.esm.js",
+  "browser": {
+    "./dist/remirror-extension-template.cjs.js": "./dist/remirror-extension-template.browser.cjs.js",
+    "./dist/remirror-extension-template.esm.js": "./dist/remirror-extension-template.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-template.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.0"
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "1.0.0-next.60"
   },
   "devDependencies": {
-    "@remirror/core": "*",
-    "@remirror/pm": "*"
+    "@remirror/pm": "1.0.0-next.60"
   },
   "peerDependencies": {
-    "@remirror/core": "*",
-    "@remirror/pm": "*"
+    "@remirror/pm": "1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"
   },
-  "meta": {
+  "@remirror": {
     "sizeLimit": "5 KB"
   }
 }

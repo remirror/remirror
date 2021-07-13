@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-check-styles.cjs.js",
+  "module": "dist/scripts-check-styles.esm.js"
+}

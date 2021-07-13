@@ -1,13 +1,13 @@
 import { includes, object, take } from '@remirror/core-helpers';
 
 import type {
-  KeyboardConstructorParameter,
+  KeyboardConstructorProps,
   KeyboardEventName,
   ModifierInformation,
-  OptionsParameter,
-  OptionsWithTypingParameter,
-  TextInputParameter,
-  TypingInputParameter,
+  OptionsProps,
+  OptionsWithTypingProps,
+  TextInputProps,
+  TypingInputProps,
 } from './test-keyboard-types';
 import { cleanKey, createKeyboardEvent, getModifierInformation } from './test-keyboard-utils';
 import {
@@ -46,8 +46,8 @@ export type BatchedCallback = (
 ) => void;
 
 export class Keyboard {
-  static create(params: KeyboardConstructorParameter): Keyboard {
-    return new Keyboard(params);
+  static create(props: KeyboardConstructorProps): Keyboard {
+    return new Keyboard(props);
   }
 
   static get defaultOptions(): KeyboardEventInit {
@@ -77,7 +77,7 @@ export class Keyboard {
     isMac = false,
     batch = false,
     onEventDispatch,
-  }: KeyboardConstructorParameter) {
+  }: KeyboardConstructorProps) {
     this.target = target as HTMLElement;
     this.defaultOptions = defaultOptions;
     this.isMac = isMac;
@@ -148,13 +148,9 @@ export class Keyboard {
    * Like `this.char` but only supports US Keyboard Characters. This is mainly a
    * utility for TypeScript and autocomplete support when typing characters.
    *
-   * @param params - see {@link TextInputParameter}
+   * @param props - see {@link TextInputProps}
    */
-  usChar({
-    text,
-    options = object(),
-    typing = false,
-  }: TextInputParameter<SupportedCharacters>): this {
+  usChar({ text, options = object(), typing = false }: TextInputProps<SupportedCharacters>): this {
     if (!isUSKeyboardCharacter(text)) {
       throw new Error(
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
@@ -167,9 +163,9 @@ export class Keyboard {
   /**
    * Dispatches an event for a keyboard character
    *
-   * @param params - see {@link TextInputParameter}
+   * @param props - see {@link TextInputProps}
    */
-  char({ text, options, typing }: TextInputParameter): this {
+  char({ text, options, typing }: TextInputProps): this {
     options = {
       ...options,
       ...(isUSKeyboardCharacter(text) ? cleanKey(text) : { key: text }),
@@ -183,27 +179,27 @@ export class Keyboard {
   /**
    * Triggers a keydown event with provided options
    *
-   * @param params - see {@link OptionsParameter}
+   * @param props - see {@link OptionsProps}
    */
-  keyDown = ({ options }: OptionsParameter): this => {
+  keyDown = ({ options }: OptionsProps): this => {
     return this.dispatchEvent('keydown', options);
   };
 
   /**
    * Trigger a keypress event with the provided options
    *
-   * @param params - see {@link OptionsParameter}
+   * @param props - see {@link OptionsProps}
    */
-  keyPress = ({ options }: OptionsParameter): this => {
+  keyPress = ({ options }: OptionsProps): this => {
     return this.dispatchEvent('keypress', options);
   };
 
   /**
    * Trigger a keyup event with the provided options
    *
-   * @param params - see {@link OptionsParameter}
+   * @param props - see {@link OptionsProps}
    */
-  keyUp = ({ options }: OptionsParameter): this => {
+  keyUp = ({ options }: OptionsProps): this => {
     return this.dispatchEvent('keyup', options);
   };
 
@@ -211,9 +207,9 @@ export class Keyboard {
    * Breaks a string into single characters and fires a keyboard into the target
    * node
    *
-   * @param params - see {@link TypingInputParameter}
+   * @param props - see {@link TypingInputProps}
    */
-  type({ text, options = object() }: TypingInputParameter): this {
+  type({ text, options = object() }: TypingInputProps): this {
     for (const char of text) {
       this.char({ text: char, options, typing: true });
     }
@@ -232,11 +228,11 @@ export class Keyboard {
    *   .end();
    * ```
    *
-   * @param params - see {@link TextInputParameter}
+   * @param props - see {@link TextInputProps}
    */
-  mod({ text, options = object() }: TextInputParameter): this {
+  mod({ text, options = object() }: TextInputProps): this {
     let modifiers = text.split(/-(?!$)/);
-    let result = modifiers[modifiers.length - 1];
+    let result = modifiers[modifiers.length - 1] ?? '';
     modifiers = take(modifiers, modifiers.length - 1);
 
     if (result === 'Space') {
@@ -255,9 +251,9 @@ export class Keyboard {
   /**
    * Fires events where valid.
    *
-   * @param options - see {@link OptionsWithTypingParameter}
+   * @param options - see {@link OptionsWithTypingProps}
    */
-  private fireAllEvents({ options, typing = false }: OptionsWithTypingParameter) {
+  private fireAllEvents({ options, typing = false }: OptionsWithTypingProps) {
     this.keyDown({ options });
 
     if (

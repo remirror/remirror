@@ -1,16 +1,7 @@
-import { OnSetOptionsParameter, Preset, presetDecorator } from '@remirror/core';
-
 export interface TemplateOptions {}
 
-@presetDecorator<TemplateOptions>({})
-export class TemplatePreset extends Preset<TemplateOptions> {
-  get name() {
-    return 'template' as const;
-  }
+export const templatePreset = (_: TemplateOptions = {}) => {
+  return [];
+};
 
-  protected onSetOptions(_: OnSetOptionsParameter<TemplateOptions>) {}
-
-  createExtensions() {
-    return [];
-  }
-}
+export type TemplatePreset = ReturnType<typeof templatePreset>;

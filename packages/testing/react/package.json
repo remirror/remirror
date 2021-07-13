@@ -1,0 +1,5 @@
+{
+  "main": "dist/testing-react.cjs.js",
+  "module": "dist/testing-react.esm.js",
+  "types": "dist/testing-react.cjs.d.ts"
+}
