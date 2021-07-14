@@ -7,7 +7,7 @@
   ],
   "extends": "../../../support/tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node"],
+    "types": [],
     "declaration": false,
     "noEmit": true,
     "skipLibCheck": true,
@@ -47,37 +47,10 @@
       "path": "../../remirror__core/src"
     },
     {
-      "path": "../../remirror__extension-positioner/src"
-    },
-    {
-      "path": "../../remirror__extension-text-color/src"
-    },
-    {
-      "path": "../../remirror__i18n/src"
-    },
-    {
-      "path": "../../remirror__icons/src"
-    },
-    {
       "path": "../../remirror__messages/src"
     },
     {
-      "path": "../../remirror__react-core/src"
-    },
-    {
-      "path": "../../remirror__react-hooks/src"
-    },
-    {
-      "path": "../../remirror__react-utils/src"
-    },
-    {
-      "path": "../../remirror__theme/src"
-    },
-    {
-      "path": "../../create-context-state/src"
-    },
-    {
-      "path": "../../multishift/src"
+      "path": "../../prosemirror-resizable-view/src"
     }
   ]
 }
