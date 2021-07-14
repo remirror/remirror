@@ -3,11 +3,11 @@ name: docs
 on:
   push:
     branches:
-      - next
+      - beta
   pull_request:
     types: [opened, synchronize]
     branches:
-      - next
+      - beta
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
@@ -16,7 +16,9 @@ jobs:
   deploy_docs:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/next' || github.event.pull_request
+
+    # don't run this job from a fork repository
+    if: github.event.pull_request.head.repo.full_name == github.repository
 
     steps:
       - name: checkout code repository
@@ -51,7 +53,7 @@ jobs:
         uses: nwtgck/actions-netlify@develop
         with:
           publish-dir: './website/build'
-          production-branch: next
+          production-branch: beta
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
         env:
