@@ -38,7 +38,7 @@
     "docs:redirects": "cpy ./website/_redirects ./website/build/_redirects",
     "e2e": "jest --config=jest.config.e2e.js --runInBand --verbose",
     "e2e:watch": "pnpm run e2e -- --watch --verbose=false --coverage=false",
-    "fix": "run-s -c intl fix:\\*",
+    "fix": "run-s -c intl fix:*",
     "fix:build": "preconstruct fix",
     "fix:config": "pnpm generate:ts",
     "fix:css": "node support/scripts/check-styles --fix",
@@ -64,10 +64,10 @@
     "intl:compile": "lingui compile",
     "intl:extract": "lingui extract",
     "is-logged-in": "npm whoami",
-    "lint": "run-s lint:\\*",
+    "lint": "run-s lint:*",
     "lint:build": "preconstruct validate",
     "lint:css": "node support/scripts/check-styles",
-    "lint:es": "FULL_ESLINT_CHECK=true eslint -f codeframe --ext=.tsx,.ts,.js .",
+    "lint:es": "cross-env FULL_ESLINT_CHECK=true eslint -f codeframe --ext=.tsx,.ts,.js .",
     "lint:exports": "pnpm run fix:exports -- --check",
     "lint:md": "eslint -f codeframe  --ignore-pattern='*.js' --ignore-pattern='*.ts' --ignore-pattern='*.tsx' .",
     "lint:prettier": "pnpm run:prettier -- --check",
@@ -86,7 +86,7 @@
     "storybook": "run-p css:watch storybook:start",
     "symlink:root": "node support/scripts/symlink-root.mjs",
     "test": "jest --verbose",
-    "test:build": "TEST_BUILD=true jest --verbose --coverage=false",
+    "test:build": "cross-env TEST_BUILD=true jest --verbose --coverage=false",
     "test:watch": "jest --watch --verbose=false --coverage=false",
     "ts": "node -r ./support/scripts/babel-register.js",
     "typecheck": "tsc -b",
@@ -100,9 +100,9 @@
     "postversion:changeset": "node support/scripts/changeset-forced-update --clean",
     "version:ci": "run-s version:changeset version:date version:repo fix:prettier version:lockfile",
     "version:date": "node support/scripts/changelog-dates",
-    "version:lockfile": "CI= pnpm install --frozen-lockfile=false --lockfile-only",
+    "version:lockfile": "unset CI && pnpm install --frozen-lockfile=false --lockfile-only",
     "version:pr": "node support/scripts/enable-pr-changeset",
-    "version:repo": "CI= run-s fix:repo update:workspace"
+    "version:repo": "unset CI && run-s fix:repo update:workspace"
   },
   "browserslist": [
     "since 2017"
