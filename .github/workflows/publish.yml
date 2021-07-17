@@ -3,7 +3,7 @@ name: publish
 on:
   workflow_run:
     workflows: [ci]
-    branches: [next]
+    branches: [main]
     types: [completed]
 
 env:
