@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.1",
-    "@types/codemirror": "^5.60.0",
+    "@types/codemirror": "^5.60.2",
     "codemirror": "^5.62.0"
   },
   "peerDependencies": {

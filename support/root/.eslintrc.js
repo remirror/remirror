@@ -544,6 +544,7 @@ if (process.env.FULL_ESLINT_CHECK) {
           'simple-import-sort/exports': 'warn',
           'simple-import-sort/imports': 'warn',
           'unicorn/filename-case': 'off',
+          '@typescript-eslint/explicit-module-boundary-types': 'off',
           '@typescript-eslint/no-unused-vars-experimental': 'off',
           '@typescript-eslint/no-unused-vars': 'off',
         },

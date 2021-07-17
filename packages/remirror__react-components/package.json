@@ -53,7 +53,7 @@
     "@remirror/react-utils": "^1.0.1",
     "@remirror/theme": "^1.0.1",
     "@seznam/compose-react-refs": "^1.0.6",
-    "@types/react-color": "^3.0.4",
+    "@types/react-color": "^3.0.5",
     "create-context-state": "^1.0.0",
     "match-sorter": "^6.3.0",
     "multishift": "^1.0.1",
@@ -68,8 +68,8 @@
   "devDependencies": {
     "@remirror/pm": "^1.0.1",
     "@remirror/react": "^1.0.1",
-    "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.8",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

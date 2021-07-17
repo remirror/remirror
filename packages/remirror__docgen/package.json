@@ -41,14 +41,14 @@
     "@babel/runtime": "^7.13.10",
     "@microsoft/tsdoc": "^0.13.2",
     "@microsoft/tsdoc-config": "^0.15.2",
-    "@remirror/core-helpers": "1.0.0-next.60",
-    "@types/node": "^15.12.5",
+    "@remirror/core-helpers": "1.0.1",
+    "@types/node": "^16.3.3",
     "read-pkg-up": "^7.0.1",
-    "ts-morph": "^11.0.0",
+    "ts-morph": "^11.0.3",
     "tslog": "^3.1.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.12"
   },
   "publishConfig": {
     "access": "public"

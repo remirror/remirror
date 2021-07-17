@@ -143,14 +143,6 @@
     "gzip": true
   },
   {
-    "name": "@remirror/docgen",
-    "limit": "50 KB",
-    "path": "packages/remirror__docgen/dist/remirror-docgen.browser.esm.js",
-    "ignore": ["@remirror/core-helpers"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/dom",
     "limit": "5 KB",
     "path": "packages/remirror__dom/dist/remirror-dom.browser.esm.js",
