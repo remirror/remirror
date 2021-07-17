@@ -7,13 +7,10 @@ on:
   push:
     branches:
       - main
-      - next
 
   pull_request:
     branches:
       - main
-      - next
-      - beta
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
@@ -132,7 +129,7 @@ jobs:
 
       - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
-        if: github.ref == 'refs/heads/next' || github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
