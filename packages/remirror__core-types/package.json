@@ -32,14 +32,14 @@
     "base"
   ],
   "dependencies": {
-    "@remirror/core-constants": "1.0.0",
-    "@remirror/types": "0.1.0"
+    "@remirror/core-constants": "^1.0.0",
+    "@remirror/types": "^0.1.0"
   },
   "devDependencies": {
-    "@remirror/pm": "1.0.0"
+    "@remirror/pm": "^1.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "1.0.0"
+    "@remirror/pm": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

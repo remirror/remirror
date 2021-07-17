@@ -1,30 +1,12 @@
 ---
-slug: remirror-1.0.0-beta
-title: Beta Release
+slug: remirror-1.0.0
+title: v1.0 Release
 author: Ifiok Jr.
 author_title: Remirror Maintainer
 author_url: https://github.com/ifiokjr
 author_image_url: https://avatars1.githubusercontent.com/u/1160934?v=4
 tags: [remirror, beta]
 ---
-
-Here's what's changed in the beta release.
-
-- [x] Improved `react` API
-- [x] Full `markdown` support with the `@remirror/extension-markdown` package.
-- [x] Full formatting support
-- [x] i18n support
-- [x] A11y support for react via `reakit`
-- [ ] Component Library (work in progress)
-- [ ] Start adding experimental react native support (work in progress)
-- [ ] Todo list extension (in progress see #854)
-
-### Delayed
-
-- ~Experimental svelte support~ - This will be added later in the year.
-- ~New math extension~ (will be added after the beta is released)
-- ~New pagination extension~ (will be added after the beta is released)
-- ~New text wrap extension~ (will be added after the beta is released)
 
 ## Breaking
 
