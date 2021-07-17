@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-wysiwyg",
-  "version": "1.0.0-next.60",
+  "version": "1.0.0",
   "description": "DEPRECATED: The `remirror` what-you-see-is-what-you-get (wysiwyg) editing experience.",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/remirror__react-wysiwyg",
   "license": "MIT",

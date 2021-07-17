@@ -1,6 +1,6 @@
 {
   "name": "@remirror/ui-modal",
-  "version": "1.0.0-next.1",
+  "version": "1.0.0",
   "description": "DEPRECATED - ui-modal utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/ui-modal",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/remirror__ui-modal",

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/editor-markdown",
-  "version": "1.0.0-next.2",
+  "version": "1.0.0",
   "description": "**DEPRECATED** - A markdown editor",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/remirror__editor-markdown",
   "license": "MIT",

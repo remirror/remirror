@@ -1,6 +1,6 @@
 {
   "name": "actions",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "GitHub actions for internal remirror usage.",
   "keywords": [
@@ -37,7 +37,7 @@
     "@actions/exec": "^1.1.0",
     "@actions/github": "^5.0.0",
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "1.0.0-next.60",
+    "@remirror/core-helpers": "1.0.0",
     "@types/fs-extra": "^9.0.11",
     "@types/giphy-api": "^2.0.2",
     "@types/semver": "^7.3.4",
@@ -45,7 +45,7 @@
     "fs-extra": "^10.0.0",
     "giphy-api": "^2.0.1",
     "got": "^11.8.1",
-    "scripts": "0.0.0",
+    "scripts": "0.0.1",
     "semver": "^7.3.5"
   },
   "devDependencies": {

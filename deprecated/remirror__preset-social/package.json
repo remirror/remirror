@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-social",
-  "version": "1.0.0-next.60",
+  "version": "1.0.0",
   "description": "The preset for the social editor.",
   "keywords": [
     "remirror",

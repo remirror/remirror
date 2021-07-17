@@ -1,6 +1,6 @@
 {
   "name": "@remirror/ui-icons",
-  "version": "1.0.0-next.1",
+  "version": "1.0.0",
   "description": "DEPRECATED - ui-icons utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/ui-icons",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/remirror__ui-icons",

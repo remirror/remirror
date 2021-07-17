@@ -1,5 +1,35 @@
 # @remirror/showcase
 
+## 1.0.0
+
+> 2021-07-17
+
+### Major Changes
+
+- [#706](https://github.com/remirror/remirror/pull/706) [`adfb12a4c`](https://github.com/remirror/remirror/commit/adfb12a4cee7031eec4baa10830b0fc0134ebdc8) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Deprecate the following packages:
+
+  - `@remirror/core-extensions`
+  - `@remirror/editor-markdown`
+  - `@remirror/editor-social`
+  - `@remirror/editor-wysiwyg`
+  - `@remirror/extension-auto-link`
+  - `@remirror/extension-base-keymap`
+  - `@remirror/extension-enhanced-link`
+  - `@remirror/preset-social`
+  - `@remirror/react-node-view`
+  - `@remirror/react-portals`
+  - `@remirror/react-social`
+  - `@remirror/react-wysiwyg`
+  - `@remirror/showcase`
+  - `@remirror/ui`
+  - `@remirror/ui-a11y-status`
+  - `@remirror/ui-buttons`
+  - `@remirror/ui-dropdown`
+  - `@remirror/ui-icons`
+  - `@remirror/ui-menus`
+  - `@remirror/ui-modal`
+  - `@remirror/ui-text`
+
 ## 1.0.0-next.60
 
 > 2020-12-17

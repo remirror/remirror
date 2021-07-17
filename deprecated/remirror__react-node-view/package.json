@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-node-view",
-  "version": "1.0.0-next.1",
+  "version": "1.0.0",
   "description": "DEPRECATED - Create your prosemirror node views with react",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/react-node-view",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/remirror__react-node-view",

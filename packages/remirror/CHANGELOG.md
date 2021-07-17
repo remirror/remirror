@@ -1,5 +1,324 @@
 # remirror
 
+## 1.0.0
+
+> 2021-07-17
+
+### Major Changes
+
+- [#706](https://github.com/remirror/remirror/pull/706) [`adfb12a4c`](https://github.com/remirror/remirror/commit/adfb12a4cee7031eec4baa10830b0fc0134ebdc8) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Here's what's changed in the beta release.
+
+  - [x] Improved `react` API
+  - [x] Full `markdown` support with the `@remirror/extension-markdown` package.
+  - [x] Full formatting support
+  - [x] i18n support
+  - [x] A11y support for react via `reakit`
+  - [ ] Component Library (work in progress)
+  - [ ] Start adding experimental react native support (mostly done)
+  - [ ] Todo list extension (not started)
+  - [ ] New math extension (not started)
+  - [ ] New pagination extension (not started)
+  - [ ] New text wrap extension (not started)
+
+  ### Delayed
+
+  - ~Experimental svelte support~ - This will be added later in the year.
+
+  ## Breaking
+
+  - Upgrade minimum TypeScript version to `4.1`.
+  - Editor selection now defaults to the `end` of the document.
+  - Rename all `*Parameter` interfaces to `*Props`. With the exception of \[React\]FrameworkParameter which is now \[React\]FrameworkOptions.
+  - Remove `Presets` completely. In their place a function that returns a list of `Extension`s should be used. They were clunky, difficult to use and provided little to no value.
+  - Add core exports to `remirror` package
+  - Add all Extensions and Preset package exports to the `remirror/extensions` subdirectory. It doesn't include framework specific exports which are made available from `@remirror/react`
+  - Remove `remirror/react` which has been replaced by `@remirror/react`
+  - `@remirror/react` includes which includes all the react exports from all the react packages which can be used with remirror.
+  - Remove `@remirror/showcase` - examples have been provided on how to achieve the same effect.
+  - Remove `@remirror/react-social`
+  - Remove `@remirror/react-wysiwyg`
+  - Rename `useRemirror` -> `useRemirrorContext`
+  - Replace `useManager` with better `useRemirror` which provides a lot more functionality.
+  - Rename `preset-table` to `extension-tables`
+  - Rename `preset-list` to `extension-lists`. `ListPreset` is now `BulletListExtension` and `OrderListExtension`.
+  - New `createDecorations` extension method for adding decorations to the prosemirror view.
+  - Create new decorator pattern for adding `@commands`, `@helper` functions and `@keyBindings`.
+  - Deprecate `tags` property on extension and encourage the use of `createTags` which is a method instead.
+  - Add `onApplyState` and `onInitState` lifecycle methods.
+  - Add `onApplyTransaction` method.
+  - Rename interface `CreatePluginReturn` to `CreateExtensionPlugin`.
+  - Rewrite the `DropCursor` to support animations and interactions with media.
+  - Add support updating the doc attributes.
+  - Deprecate top level context methods `focus` and `blur`. They should now be consumed as commands
+  - Remove package `@remirror/extension-auto-link`.
+
+  ### `ExtensionStore`
+
+  - Rename `addOrReplacePlugins` to `updatePlugins` in `ExtensionStore`.
+  - Remove `reconfigureStatePlugins` and auto apply it for all plugin updating methods.
+
+  One of the big changes is a hugely improved API for `@remirror/react`.
+
+  ### `@remirror/extension-positioner`
+
+  - New `Rect` interface returned by the positioner `x: number; y: number; width: number; height: number;`
+  - Added `visible` property which shows if the position currently visible within the editor viewport.
+  - Improved scrolling when using the positioner.
+  - Fixed a lot of bugs in the positioner API.
+  - This DOMRect represents an absolute position within the document. It is up to your consuming component to consume the rect.
+  - `@remirror/react-components` exports `PositionerComponent` which internally
+  - Renamed the positioners in line with the new functionality.
+
+  ```tsx
+  import React from 'react';
+  import { fromHtml, toHtml } from 'remirror';
+  import { BoldExtension, CorePreset, ItalicExtension } from 'remirror/extension';
+  import { Remirror, useRemirror, useRemirrorContext } from '@remirror/react';
+
+  const Editor = () => {
+    const { manager, onChange, state } = useRemirror({
+      extensions: () => [new BoldExtension(), new ItalicExtension()],
+      content: 'asdfasdf',
+      stringHandler: '',
+    });
+
+    return <Remirror manager={manager} onChange={onChange} state={state} />;
+  };
+  ```
+
+  When no children are provided to the
+
+  The previous `useRemirror` is now called `useRemirrorContext` since it plucks the context from the outer `Remirror` Component. The `<RemirrorProvider />` has been renamed to `<Remirror />` and automatically renders an editor.
+
+  `useManager` has been marked as `@internal` (although it is still exported) and going forward you should be using `useRemirror` as shown in the above example.
+
+  Per library expected changes.
+
+  ### `@remirror/extension-tables`
+
+  With the new support for extensions which act as parents to other extensions the table extension has now become a preset extension. It is no longer needed and has been renamed to it's initial name
+
+  ### UI Commands
+
+  - Add commands with UI configuration and i18n text descriptions
+  - `@command`, `@keyBinding`, `@helper` decorators for more typesafe configuration of extensions.
+  - `NameShortcut` keybindings which can be set in the keymap extension
+  - `overrides` property
+
+  ### Accessibility as a priority
+
+  Actively test for the following
+
+  - [ ] Screen Readers
+  - [ ] Braille display
+  - [ ] Zoom functionality
+  - [ ] High contrast for the default theme
+
+  ### Caveats around inference
+
+  - Make sure all your commands in an extension are annotated with a return type of `CommandFunction`. Failure to do so will break all type inference wherever the extension is used.
+
+    ```ts
+    import { CommandFunction } from 'remirror';
+    ```
+
+  - When setting the name of the extension make sure to use `as const` otherwise it will be a string and ruin autocompletion for extension names, nodes and marks.
+
+    ```ts
+    class MyExtension extends PlainExtension {
+      get name() {
+        return 'makeItConst' as const;
+      }
+    }
+    ```
+
+  ### `@remirror/react-hooks`
+
+  - Rename `useKeymap` to `useKeymaps`. The original `useKeymap` now has a different signature.
+
+  ```tsx
+  import { useCallback } from 'react';
+  import { BoldExtension } from 'remirror/extensions';
+  import {
+    Remirror,
+    useHelpers,
+    useKeymap,
+    useRemirror,
+    useRemirrorContext,
+  } from '@remirror/react';
+
+  const hooks = [
+    () => {
+      const active = useActive();
+      const { insertText } = useCommands();
+      const boldActive = active.bold();
+      const handler = useCallback(() => {
+        if (!boldActive) {
+          return false;
+        }
+
+        return insertText.original('\n\nWoah there!')(props);
+      }, [boldActive, insertText]);
+
+      useKeymap('Shift-Enter', handler); // Add the handler to the keypress pattern.
+    },
+  ];
+
+  const Editor = () => {
+    const { manager } = useRemirror({ extensions: () => [new BoldExtension()] });
+
+    return <Remirror manager={manager} hooks={hooks} />;
+  };
+  ```
+
+  - The `Remirror` component now has a convenient hooks props. The hooks prop takes an array of zero parameter hook functions which are rendered into the `RemirrorContext`. It's a shorthand to writing out your own components. You can see the pattern in use above.
+
+  ### Commands
+
+  There are new hooks for working with commands.
+
+  - Each command has an `original` method attached for using the original command that was used to create the command. The original command has the same type signature as the `(...args: any[]) => CommandFunction`. So you would call it with the command arguments and then also provide the CommandProps. This is useful when composing commands together or using commands within keyBindings which need to return a boolean.
+
+    - You can see the `insertText.original` being used in the `useKeymap` example above.
+
+  - `useCommands()` provides all the commands as hook. `useChainedCommands` provides all the chainable commands.
+
+    ```tsx
+    import { useCallback } from 'react';
+    import { useChainedCommands, useKeymap } from '@remirror/react';
+
+    function useLetItGo() {
+      const chain = useChainedCommands();
+      const handler = useCallback(() => {
+        chain.selectText('all').insertText('Let it goo 🤫').run();
+      }, [chain]);
+
+      // Whenever the user types `a` they let it all go
+      useKeymap('a', handler);
+    }
+    ```
+
+  ### Dependencies
+
+  - Upgrade React to require minimum versions of ^16.14.0 || ^17. This is because of the codebase now using the [new jsx transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html).
+  - Upgrade TypeScript to a minimum of `4.1`. Several of the new features make use of the new types and it is a requirement to upgrade.
+  - General upgrades across all dependencies to using the latest versions.
+    - All `prosemirror-*` packages.
+
+  ### Issues addressed
+
+  - Fixes #569
+  - Fixes #452
+  - Fixes #407
+  - Fixes #533
+  - Fixes #652
+  - Fixes #654
+  - Fixes #480
+  - Fixes #566
+  - Fixes #453
+  - Fixes #508
+  - Fixes #715
+  - Fixes #531
+  - Fixes #535
+  - Fixes #536
+  - Fixes #537
+  - Fixes #538
+  - Fixes #541
+  - Fixes #542
+  - Fixes #709
+  - Fixes #532
+  - Fixes #836
+  - Fixes #834
+  - Fixes #823
+  - Fixes #820
+  - Fixes #695
+  - Fixes #793
+  - Fixes #800
+  - Fixes #453
+  - Fixes #778
+  - Fixes #757
+  - Fixes #804
+  - Fixes #504
+  - Fixes #566
+  - Fixes #714
+  - Fixes #37
+
+### Minor Changes
+
+- [#837](https://github.com/remirror/remirror/pull/837) [`f6fc2729d`](https://github.com/remirror/remirror/commit/f6fc2729d3a39c76f52dbf1c73d4f2ce1f7f361b) Thanks [@cmanou](https://github.com/cmanou)! - Add @remirror/extension-sub extension
+
+* [#706](https://github.com/remirror/remirror/pull/706) [`7f3569729`](https://github.com/remirror/remirror/commit/7f3569729c0d843b7745a490feda383b31aa2b7e) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Make peer dependencies of `CodeBlockExtension`, `YjsExtension` and `CollaborationExtension` dependencies of `remirror`. This is so that `remirror/extensions` can be imported safely.
+
+- [#839](https://github.com/remirror/remirror/pull/839) [`db49e4678`](https://github.com/remirror/remirror/commit/db49e467811c3c95f48c29f7bd267dac4c3ff85f) Thanks [@cmanou](https://github.com/cmanou)! - Add @remirror/extension-sup extension
+
+### Patch Changes
+
+- [#865](https://github.com/remirror/remirror/pull/865) [`561ae7792`](https://github.com/remirror/remirror/commit/561ae7792e9a6632f220429c8b9add3061f964dc) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add missing `y-protocols` dependency for `remirror` package.
+
+* [#954](https://github.com/remirror/remirror/pull/954) [`4966eedae`](https://github.com/remirror/remirror/commit/4966eedaeb37cdb8c40b7b1dcce5eabf27dc1fd1) Thanks [@zofiag](https://github.com/zofiag)! - Fix decreasing node indent with keyboard shortcut `Shift-Tab`.
+
+* Updated dependencies [[`8202b65ef`](https://github.com/remirror/remirror/commit/8202b65efbce5a8338c45fd34b3efb676b7e54e7), [`979c4cb6b`](https://github.com/remirror/remirror/commit/979c4cb6bd1fa301a1716915514b27542f972c9f), [`d9bc9180b`](https://github.com/remirror/remirror/commit/d9bc9180ba85e0edd4ae11b7e53ee5aa73acb9e5), [`f6fc2729d`](https://github.com/remirror/remirror/commit/f6fc2729d3a39c76f52dbf1c73d4f2ce1f7f361b), [`e0f1bec4a`](https://github.com/remirror/remirror/commit/e0f1bec4a1e8073ce8f5500d62193e52321155b9), [`4a00b301d`](https://github.com/remirror/remirror/commit/4a00b301d87f711575cdd30c232dfa086ddc38eb), [`270edd91b`](https://github.com/remirror/remirror/commit/270edd91ba6badf9468721e35fa0ddc6a21c6dd2), [`0adccf9f0`](https://github.com/remirror/remirror/commit/0adccf9f0cabe8dd0386c2b2be99b3430ea47208), [`2214e6054`](https://github.com/remirror/remirror/commit/2214e6054c345a265bfdba6f2004c3047d69901e), [`5c981d96d`](https://github.com/remirror/remirror/commit/5c981d96d9344f2507f32a4213bd55c17bfcd92f), [`9fe4191e1`](https://github.com/remirror/remirror/commit/9fe4191e171d5e693c0f72cd7dd44a0dcab89297), [`6bba1782e`](https://github.com/remirror/remirror/commit/6bba1782e838fbe94e0d0aee0824a45371644c88), [`123a20ae8`](https://github.com/remirror/remirror/commit/123a20ae8067d97d46373d079728f942e1daed0c), [`270edd91b`](https://github.com/remirror/remirror/commit/270edd91ba6badf9468721e35fa0ddc6a21c6dd2), [`221316411`](https://github.com/remirror/remirror/commit/2213164114480feaa22638bd6dae1a8acafacb8f), [`6de1e675c`](https://github.com/remirror/remirror/commit/6de1e675c9f502197a31a1e0e21ba0bd91919fe2), [`adfb12a4c`](https://github.com/remirror/remirror/commit/adfb12a4cee7031eec4baa10830b0fc0134ebdc8), [`862a0c8ec`](https://github.com/remirror/remirror/commit/862a0c8ec4e90c2108abe8c2f50cdcb562ffa713), [`7d9f43837`](https://github.com/remirror/remirror/commit/7d9f43837e7b83e09c80374f7c09ad489a561cfa), [`9cb393ec5`](https://github.com/remirror/remirror/commit/9cb393ec58a8070dc43b7f2805c0920a04578f20), [`281ba2172`](https://github.com/remirror/remirror/commit/281ba2172713e40448c6208cc728ff60af2b2761), [`033144c84`](https://github.com/remirror/remirror/commit/033144c849b861587a28d1de94b314e02571264a), [`6ab7d2224`](https://github.com/remirror/remirror/commit/6ab7d2224d16ba821d8510e0498aaa9c420922c4), [`675243004`](https://github.com/remirror/remirror/commit/675243004231db49df37404576c393ab7305ede9), [`8b9522257`](https://github.com/remirror/remirror/commit/8b95222571ed2925be43d6eabe7340bbf9a2cd62), [`3e0925f1d`](https://github.com/remirror/remirror/commit/3e0925f1dc38096dd66f42a808177889cac01418), [`9096de83f`](https://github.com/remirror/remirror/commit/9096de83f50e6c14cde9df920521b274d98e6d87), [`d896c3196`](https://github.com/remirror/remirror/commit/d896c3196d0a2ec372e9515ea5d9362205a352a7), [`0adccf9f0`](https://github.com/remirror/remirror/commit/0adccf9f0cabe8dd0386c2b2be99b3430ea47208), [`7f3569729`](https://github.com/remirror/remirror/commit/7f3569729c0d843b7745a490feda383b31aa2b7e), [`270edd91b`](https://github.com/remirror/remirror/commit/270edd91ba6badf9468721e35fa0ddc6a21c6dd2), [`b884f04ae`](https://github.com/remirror/remirror/commit/b884f04ae45090fc95155b4cdae5f98d0377cc19), [`0adccf9f0`](https://github.com/remirror/remirror/commit/0adccf9f0cabe8dd0386c2b2be99b3430ea47208), [`e7a1d7c1d`](https://github.com/remirror/remirror/commit/e7a1d7c1db1b42ce5cffc4a821669b734c73eae2), [`b4dfcad36`](https://github.com/remirror/remirror/commit/b4dfcad364a0b41d321fbd26a97377f2b6d4047c), [`96818fbd2`](https://github.com/remirror/remirror/commit/96818fbd2c95d3df952170d353ef02b777eb1339), [`5f4ea1f1e`](https://github.com/remirror/remirror/commit/5f4ea1f1e245b10f1dc1bfc7a3245cdcf05cf012), [`e9b10fa5a`](https://github.com/remirror/remirror/commit/e9b10fa5a50dd3e342b75b0a852627db99f22dc2), [`4966eedae`](https://github.com/remirror/remirror/commit/4966eedaeb37cdb8c40b7b1dcce5eabf27dc1fd1), [`38a409923`](https://github.com/remirror/remirror/commit/38a40992377fac42ad5b30613a48ab56e69961b2), [`033144c84`](https://github.com/remirror/remirror/commit/033144c849b861587a28d1de94b314e02571264a), [`270edd91b`](https://github.com/remirror/remirror/commit/270edd91ba6badf9468721e35fa0ddc6a21c6dd2), [`4d3b81c6e`](https://github.com/remirror/remirror/commit/4d3b81c6e1b691f22061f7c152421b807965fc0d), [`6ab7d2224`](https://github.com/remirror/remirror/commit/6ab7d2224d16ba821d8510e0498aaa9c420922c4), [`ac37ea7f4`](https://github.com/remirror/remirror/commit/ac37ea7f4f332d1129b7aeb0a80e19fae6bd2b1c), [`033144c84`](https://github.com/remirror/remirror/commit/033144c849b861587a28d1de94b314e02571264a), [`f9780e645`](https://github.com/remirror/remirror/commit/f9780e645f4b6ddd80d07d11ed70741a54e7af31), [`270edd91b`](https://github.com/remirror/remirror/commit/270edd91ba6badf9468721e35fa0ddc6a21c6dd2), [`270edd91b`](https://github.com/remirror/remirror/commit/270edd91ba6badf9468721e35fa0ddc6a21c6dd2), [`270edd91b`](https://github.com/remirror/remirror/commit/270edd91ba6badf9468721e35fa0ddc6a21c6dd2), [`5befadd0d`](https://github.com/remirror/remirror/commit/5befadd0d490cc11e4d16a66d66356ae0a8ed98c), [`28b81a858`](https://github.com/remirror/remirror/commit/28b81a8580670c4ebc06ad04db088a4b684237bf), [`6ab7d2224`](https://github.com/remirror/remirror/commit/6ab7d2224d16ba821d8510e0498aaa9c420922c4), [`db49e4678`](https://github.com/remirror/remirror/commit/db49e467811c3c95f48c29f7bd267dac4c3ff85f), [`270edd91b`](https://github.com/remirror/remirror/commit/270edd91ba6badf9468721e35fa0ddc6a21c6dd2), [`9c496262b`](https://github.com/remirror/remirror/commit/9c496262bd09ff21f33de5ae8e5b6b51709021d0), [`9c496262b`](https://github.com/remirror/remirror/commit/9c496262bd09ff21f33de5ae8e5b6b51709021d0), [`9096de83f`](https://github.com/remirror/remirror/commit/9096de83f50e6c14cde9df920521b274d98e6d87), [`7024de573`](https://github.com/remirror/remirror/commit/7024de5738a968f2914a999e570d723899815611), [`561ae7792`](https://github.com/remirror/remirror/commit/561ae7792e9a6632f220429c8b9add3061f964dc), [`b6f29f0e3`](https://github.com/remirror/remirror/commit/b6f29f0e3dfa2806023d13e68f34ee57ba5c1ae9), [`03d0ae485`](https://github.com/remirror/remirror/commit/03d0ae485079a166a223b902ea72cbe62504b0f0), [`033144c84`](https://github.com/remirror/remirror/commit/033144c849b861587a28d1de94b314e02571264a), [`62a494c14`](https://github.com/remirror/remirror/commit/62a494c143157d2fe0483c010845a4c377e8524c), [`f52405b4b`](https://github.com/remirror/remirror/commit/f52405b4b27c579cec8c59b6657e6fb66bcf0e7d)]:
+  - @remirror/core@1.0.0
+  - @remirror/extension-link@1.0.0
+  - @remirror/extension-mention-atom@1.0.0
+  - @remirror/extension-sub@1.0.0
+  - @remirror/extension-image@1.0.0
+  - @remirror/extension-tables@1.0.0
+  - @remirror/extension-events@1.0.0
+  - @remirror/extension-markdown@1.0.0
+  - @remirror/extension-callout@1.0.0
+  - @remirror/extension-yjs@1.0.0
+  - @remirror/extension-annotation@1.0.0
+  - @remirror/extension-list@1.0.0
+  - @remirror/extension-positioner@1.0.0
+  - @remirror/core-constants@1.0.0
+  - @remirror/core-helpers@1.0.0
+  - @remirror/core-types@1.0.0
+  - @remirror/core-utils@1.0.0
+  - @remirror/dom@1.0.0
+  - @remirror/extension-bidi@1.0.0
+  - @remirror/extension-blockquote@1.0.0
+  - @remirror/extension-bold@1.0.0
+  - @remirror/extension-code@1.0.0
+  - @remirror/extension-code-block@1.0.0
+  - @remirror/extension-codemirror5@1.0.0
+  - @remirror/extension-collaboration@1.0.0
+  - @remirror/extension-columns@1.0.0
+  - @remirror/extension-diff@1.0.0
+  - @remirror/extension-doc@1.0.0
+  - @remirror/extension-drop-cursor@1.0.0
+  - @remirror/extension-embed@1.0.0
+  - @remirror/extension-emoji@1.0.0
+  - @remirror/extension-epic-mode@1.0.0
+  - @remirror/extension-font-family@1.0.0
+  - @remirror/extension-font-size@1.0.0
+  - @remirror/extension-gap-cursor@1.0.0
+  - @remirror/extension-hard-break@1.0.0
+  - @remirror/extension-heading@1.0.0
+  - @remirror/extension-history@1.0.0
+  - @remirror/extension-horizontal-rule@1.0.0
+  - @remirror/extension-italic@1.0.0
+  - @remirror/extension-mention@1.0.0
+  - @remirror/extension-node-formatting@1.0.0
+  - @remirror/extension-paragraph@1.0.0
+  - @remirror/extension-placeholder@1.0.0
+  - @remirror/extension-search@1.0.0
+  - @remirror/extension-strike@1.0.0
+  - @remirror/extension-sup@1.0.0
+  - @remirror/extension-text@1.0.0
+  - @remirror/extension-text-case@1.0.0
+  - @remirror/extension-text-color@1.0.0
+  - @remirror/extension-text-highlight@1.0.0
+  - @remirror/extension-trailing-node@1.0.0
+  - @remirror/extension-underline@1.0.0
+  - @remirror/extension-whitespace@1.0.0
+  - @remirror/icons@1.0.0
+  - @remirror/pm@1.0.0
+  - @remirror/preset-core@1.0.0
+  - @remirror/preset-formatting@1.0.0
+  - @remirror/preset-wysiwyg@1.0.0
+  - @remirror/theme@1.0.0
+
 ## 1.0.0-next.60
 
 > 2020-12-17

@@ -1,6 +1,6 @@
 {
   "name": "create-context-state",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Create a context hook and provider for managing the state of your react application",
   "keywords": [
     "remirror"

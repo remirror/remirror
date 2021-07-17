@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-formatting",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A preset with all the formatting node and mark extensions included.",
   "keywords": [
     "remirror",
@@ -37,27 +37,27 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "1.0.0-next.60",
-    "@remirror/extension-bold": "1.0.0-next.60",
-    "@remirror/extension-columns": "0.0.0",
-    "@remirror/extension-font-size": "0.0.0",
-    "@remirror/extension-heading": "1.0.0-next.60",
-    "@remirror/extension-italic": "1.0.0-next.60",
-    "@remirror/extension-node-formatting": "0.0.0",
-    "@remirror/extension-strike": "1.0.0-next.60",
-    "@remirror/extension-sub": "0.0.0",
-    "@remirror/extension-sup": "0.0.0",
-    "@remirror/extension-text-case": "0.0.0",
-    "@remirror/extension-text-color": "0.0.0",
-    "@remirror/extension-text-highlight": "0.0.0",
-    "@remirror/extension-underline": "1.0.0-next.60",
-    "@remirror/extension-whitespace": "0.0.0"
+    "@remirror/core": "1.0.0",
+    "@remirror/extension-bold": "1.0.0",
+    "@remirror/extension-columns": "1.0.0",
+    "@remirror/extension-font-size": "1.0.0",
+    "@remirror/extension-heading": "1.0.0",
+    "@remirror/extension-italic": "1.0.0",
+    "@remirror/extension-node-formatting": "1.0.0",
+    "@remirror/extension-strike": "1.0.0",
+    "@remirror/extension-sub": "1.0.0",
+    "@remirror/extension-sup": "1.0.0",
+    "@remirror/extension-text-case": "1.0.0",
+    "@remirror/extension-text-color": "1.0.0",
+    "@remirror/extension-text-highlight": "1.0.0",
+    "@remirror/extension-underline": "1.0.0",
+    "@remirror/extension-whitespace": "1.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "1.0.0-next.60"
+    "@remirror/pm": "1.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "1.0.0-next.60"
+    "@remirror/pm": "1.0.0"
   },
   "publishConfig": {
     "access": "public"

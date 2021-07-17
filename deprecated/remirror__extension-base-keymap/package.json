@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-base-keymap",
-  "version": "1.0.0-next.14",
+  "version": "1.0.0",
   "description": "DEPRECATED: Add familiar keyboard shortcuts to your beautiful remirror editor.",
   "keywords": [
     "remirror",

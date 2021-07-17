@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-enhanced-link",
-  "version": "1.0.0-next.2",
+  "version": "1.0.0",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/deprecated/extension-enhanced-link",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/remirror__extension-enhanced-link",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/showcase",
-  "version": "1.0.0-next.60",
+  "version": "1.0.0",
   "description": "A showcase of editors built with remirror and react.",
   "keywords": [
     "remirror",

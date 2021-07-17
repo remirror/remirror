@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core",
-  "version": "1.0.0-next.60",
+  "version": "1.0.0",
   "description": "Where your quest to create a world class editing experience begins.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core",
@@ -34,22 +34,22 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@linaria/core": "3.0.0-beta.4",
-    "@remirror/core-constants": "1.0.0-next.60",
-    "@remirror/core-helpers": "1.0.0-next.60",
-    "@remirror/core-types": "1.0.0-next.60",
-    "@remirror/core-utils": "1.0.0-next.60",
-    "@remirror/i18n": "1.0.0-next.60",
-    "@remirror/icons": "0.0.0",
-    "@remirror/messages": "0.0.0",
-    "@remirror/theme": "1.0.0-next.60",
+    "@remirror/core-constants": "1.0.0",
+    "@remirror/core-helpers": "1.0.0",
+    "@remirror/core-types": "1.0.0",
+    "@remirror/core-utils": "1.0.0",
+    "@remirror/i18n": "1.0.0",
+    "@remirror/icons": "1.0.0",
+    "@remirror/messages": "1.0.0",
+    "@remirror/theme": "1.0.0",
     "nanoevents": "^5.1.13",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@remirror/pm": "1.0.0-next.60"
+    "@remirror/pm": "1.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "1.0.0-next.60"
+    "@remirror/pm": "1.0.0"
   },
   "publishConfig": {
     "access": "public"
