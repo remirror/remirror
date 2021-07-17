@@ -89,7 +89,6 @@
 '@remirror/react-utils': patch
 '@remirror/svelte': patch
 '@remirror/theme': patch
-'storybook-react': patch
 'test-keyboard': patch
 '@remirror/extension-template': patch
 '@remirror/minimal-template': patch
