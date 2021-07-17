@@ -101,7 +101,7 @@ const ProsemirrorDocData: React.FC = () => {
 };
 
 export const Table: Story = ({ children, extensions = defaultExtensions }) => {
-  const { manager, state } = useRemirror({ extensions });
+  const { manager, state } = useRemirror({ extensions, core: { excludeExtensions: ['history'] } });
 
   return (
     <ThemeProvider>
