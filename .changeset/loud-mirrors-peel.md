@@ -1,5 +1,5 @@
 ---
-'@remirror/preset-embed': minor
+'@remirror/extension-embed': minor
 ---
 
 Set custom value for "type" of iframe embeds
