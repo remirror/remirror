@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`freeze should freeze in development 1`] = `
+"Mutation of immutable value detected.
+
+It seems you're trying to set the value of the property (a) on a frozen object. For your protection this object does not allow direct mutation.
+
+For more information visit https://remirror.io/docs/errors#rmr0005"
+`;
+
+exports[`invariant should throw generic error in production 1`] = `
+"An error occurred with the \`Remirror\` setup in production. Any details are purposefully being withheld.
+
+For more information visit https://remirror.io/docs/errors#rmr0000"
+`;
+
+exports[`invariant should throw with a code 1`] = `
+"Command method names must be unique within the editor.
+
+For more information visit https://remirror.io/docs/errors#rmr0016"
+`;
+
+exports[`invariant throws specific errors 1`] = `
+"This is a custom error, possibly thrown by an external library.
+
+always falsy
+
+For more information visit https://remirror.io/docs/errors#rmr0003"
+`;

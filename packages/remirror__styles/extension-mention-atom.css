@@ -1,0 +1,63 @@
+/**
+ * Styles extracted from: packages/remirror__theme/src/extension-mention-atom-theme.ts
+ */
+.remirror-mention-atom {
+  background: var(--rmr-hue-gray-2);
+  font-weight: bold;
+  font-size: 0.9em;
+  font-style: normal;
+  border-radius: var(--rmr-radius-border);
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+  color: var(--rmr-color-primary);
+}
+
+.remirror-suggest-atom {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.remirror-mention-atom-popup-item {
+  padding: 8px;
+  text-overflow: ellipsis;
+  max-width: 250px;
+  width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  color: white;
+}
+
+.remirror-mention-atom-popup-hovered {
+  background-color: var(--rmr-hue-gray-2);
+}
+
+.remirror-mention-atom-popup-highlight {
+  background-color: var(--rmr-hue-gray-3);
+}
+
+.remirror-mention-atom-popup-wrapper {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+  background-color: white;
+  z-index: 10;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.remirror-mention-atom-popup-name {
+  color: rgb(121, 129, 134);
+}
+
+.remirror-mention-atom-zero-items {
+  color: rgb(121, 129, 134);
+}
+
+.remirror-mention-atom-popup-char {
+  font-size: 1.25em;
+  padding-right: 5px;
+}

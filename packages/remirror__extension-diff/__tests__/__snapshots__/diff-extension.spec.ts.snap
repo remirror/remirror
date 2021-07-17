@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`#highlightCommit can highlight and remove highlights from commits 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    This is not yet committed
+    <span
+      class="blame-marker"
+    >
+       more stuff
+    </span>
+     final changes
+  </p>
+</div>
+`;
+
+exports[`#highlightCommit can highlight and remove highlights from commits 2`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    This is not yet committed
+    <span
+      class="blame-marker"
+    >
+       more stuff
+    </span>
+    <span
+      class="blame-marker"
+    >
+       final changes
+    </span>
+  </p>
+</div>
+`;
+
+exports[`#highlightCommit can highlight and remove highlights from commits 3`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    This is not yet committed
+    <span
+      class="blame-marker"
+    >
+       more stuff
+    </span>
+     final changes
+  </p>
+</div>
+`;

@@ -1,0 +1,54 @@
+{
+  "name": "prosemirror-resizable-view",
+  "version": "0.0.0",
+  "private": false,
+  "description": "A ProseMirror node view that make your node resizable",
+  "keywords": [
+    "prosemirror",
+    "resizable"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-resizable-view",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-resizable-view",
+  "license": "MIT",
+  "contributors": [
+    "Ocavue <ocavue@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/prosemirror-resizable-view.esm.js",
+      "require": "./dist/prosemirror-resizable-view.cjs.js",
+      "browser": "./dist/prosemirror-resizable-view.browser.esm.js",
+      "types": "./dist/prosemirror-resizable-view.cjs.d.ts",
+      "default": "./dist/prosemirror-resizable-view.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/prosemirror-resizable-view.cjs.js",
+  "module": "dist/prosemirror-resizable-view.esm.js",
+  "browser": {
+    "./dist/prosemirror-resizable-view.cjs.js": "./dist/prosemirror-resizable-view.browser.cjs.js",
+    "./dist/prosemirror-resizable-view.esm.js": "./dist/prosemirror-resizable-view.browser.esm.js"
+  },
+  "types": "dist/prosemirror-resizable-view.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core-helpers": "^1.0.0-next.60",
+    "prosemirror-model": "^1.14.2",
+    "prosemirror-view": "^1.18.7"
+  },
+  "devDependencies": {
+    "@types/prosemirror-model": "^1.13.0",
+    "@types/prosemirror-view": "^1.17.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

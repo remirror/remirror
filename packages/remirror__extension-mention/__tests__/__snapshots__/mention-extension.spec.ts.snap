@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`\`createSuggesters\` supports deleting content 1`] = `
+Prosemirror node: {
+  "type": "doc",
+  "content": [
+    {
+      "type": "paragraph"
+    }
+  ]
+}
+`;
+
+exports[`commands createMention throws when invalid config passed into the command 1`] = `
+"An error occurred within an extension. More details should be made available.
+
+Invalid configuration attributes passed to the MentionExtension command.
+
+For more information visit https://remirror.io/docs/errors#rmr0100"
+`;
+
+exports[`commands createMention throws when invalid config passed into the command 2`] = `
+"An error occurred within an extension. More details should be made available.
+
+Invalid configuration attributes passed to the MentionExtension command.
+
+For more information visit https://remirror.io/docs/errors#rmr0100"
+`;
+
+exports[`commands createMention throws when invalid config passed into the command 3`] = `
+"An error occurred within an extension. More details should be made available.
+
+Invalid configuration attributes passed to the MentionExtension command.
+
+For more information visit https://remirror.io/docs/errors#rmr0100"
+`;
+
+exports[`commands createMention throws when invalid config passed into the command 4`] = `
+"An error occurred within an extension. More details should be made available.
+
+Invalid configuration attributes passed to the MentionExtension command.
+
+For more information visit https://remirror.io/docs/errors#rmr0100"
+`;
+
+exports[`commands createMention throws when invalid config passed into the command 5`] = `
+"An error occurred within an extension. More details should be made available.
+
+The name 'invalid' specified for this command is invalid. Please choose from: [\\"tag\\",\\"at\\",\\"plus\\"].
+
+For more information visit https://remirror.io/docs/errors#rmr0100"
+`;
+
+exports[`commands createMention throws when invalid config passed into the command 6`] = `
+"An error occurred within an extension. More details should be made available.
+
+Invalid configuration attributes passed to the MentionExtension command.
+
+For more information visit https://remirror.io/docs/errors#rmr0100"
+`;

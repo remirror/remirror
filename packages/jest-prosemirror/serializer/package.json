@@ -1,0 +1,9 @@
+{
+  "main": "dist/jest-prosemirror-serializer.cjs.js",
+  "module": "dist/jest-prosemirror-serializer.esm.js",
+  "browser": {
+    "./dist/jest-prosemirror-serializer.cjs.js": "./dist/jest-prosemirror-serializer.browser.cjs.js",
+    "./dist/jest-prosemirror-serializer.esm.js": "./dist/jest-prosemirror-serializer.browser.esm.js"
+  },
+  "types": "dist/jest-prosemirror-serializer.cjs.d.ts"
+}

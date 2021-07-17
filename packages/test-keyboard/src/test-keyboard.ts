@@ -1,20 +1,20 @@
-import { includes, take } from '@remirror/core-helpers';
+import { includes, object, take } from '@remirror/core-helpers';
 
-import {
-  KeyboardConstructorParams,
+import type {
+  KeyboardConstructorProps,
   KeyboardEventName,
   ModifierInformation,
-  OptionsParams,
-  OptionsWithTypingParams,
-  TextInputParams,
-  TypingInputParams,
+  OptionsProps,
+  OptionsWithTypingProps,
+  TextInputProps,
+  TypingInputProps,
 } from './test-keyboard-types';
 import { cleanKey, createKeyboardEvent, getModifierInformation } from './test-keyboard-utils';
 import {
-  SupportedCharacters,
   isUSKeyboardCharacter,
   noKeyPress,
   noKeyUp,
+  SupportedCharacters,
   usKeyboardLayout,
 } from './us-keyboard-layout';
 
@@ -36,7 +36,8 @@ export interface BatchedKeyboardAction {
 }
 
 /**
- * The callback function signature for the `eachEvent` which is available when `batch` is true.
+ * The callback function signature for the `eachEvent` which is available when
+ * `batch` is true.
  */
 export type BatchedCallback = (
   action: BatchedKeyboardAction,
@@ -45,8 +46,8 @@ export type BatchedCallback = (
 ) => void;
 
 export class Keyboard {
-  public static create(params: KeyboardConstructorParams) {
-    return new Keyboard(params);
+  static create(props: KeyboardConstructorProps): Keyboard {
+    return new Keyboard(props);
   }
 
   static get defaultOptions(): KeyboardEventInit {
@@ -57,7 +58,7 @@ export class Keyboard {
     };
   }
 
-  public status: 'started' | 'ended' | 'idle' = 'idle';
+  status: 'started' | 'ended' | 'idle' = 'idle';
 
   private readonly target: HTMLElement;
   private readonly defaultOptions: KeyboardEventInit;
@@ -76,7 +77,7 @@ export class Keyboard {
     isMac = false,
     batch = false,
     onEventDispatch,
-  }: KeyboardConstructorParams) {
+  }: KeyboardConstructorProps) {
     this.target = target as HTMLElement;
     this.defaultOptions = defaultOptions;
     this.isMac = isMac;
@@ -87,7 +88,7 @@ export class Keyboard {
   /**
    * Starts the fake timers and sets the keyboard status to 'started'
    */
-  public start() {
+  start(): this {
     if (this.started) {
       return this;
     }
@@ -100,7 +101,7 @@ export class Keyboard {
   /**
    * Ends the fake timers and sets the keyboard status to 'ended'
    */
-  public end() {
+  end(): this {
     if (!this.started) {
       return this;
     }
@@ -116,9 +117,10 @@ export class Keyboard {
   }
 
   /**
-   * When batched is true the user can run through each event and fire as they please.
+   * When batched is true the user can run through each event and fire as they
+   * please.
    */
-  public forEach(fn: BatchedCallback) {
+  forEach(fn: BatchedCallback): this {
     if (!this.started) {
       return this;
     }
@@ -137,36 +139,33 @@ export class Keyboard {
    * Runs all the batched events.
    */
   private runBatchedEvents() {
-    this.actions.forEach(action => {
+    this.actions.forEach((action) => {
       action.dispatch();
     });
   }
 
   /**
-   * Like `this.char` but only supports US Keyboard Characters. This is mainly
-   * a utility for TypeScript and autocomplete support when typing characters.
+   * Like `this.char` but only supports US Keyboard Characters. This is mainly a
+   * utility for TypeScript and autocomplete support when typing characters.
    *
-   * @param params - see {@link TextInputParams}
+   * @param props - see {@link TextInputProps}
    */
-  public usChar({
-    text,
-    options = Object.create(null),
-    typing = false,
-  }: TextInputParams<SupportedCharacters>) {
+  usChar({ text, options = object(), typing = false }: TextInputProps<SupportedCharacters>): this {
     if (!isUSKeyboardCharacter(text)) {
       throw new Error(
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
       );
     }
+
     return this.char({ text, options, typing });
   }
 
   /**
    * Dispatches an event for a keyboard character
    *
-   * @param params - see {@link TextInputParams}
+   * @param props - see {@link TextInputProps}
    */
-  public char({ text, options, typing }: TextInputParams) {
+  char({ text, options, typing }: TextInputProps): this {
     options = {
       ...options,
       ...(isUSKeyboardCharacter(text) ? cleanKey(text) : { key: text }),
@@ -180,36 +179,37 @@ export class Keyboard {
   /**
    * Triggers a keydown event with provided options
    *
-   * @param params - see {@link OptionsParams}
+   * @param props - see {@link OptionsProps}
    */
-  public keyDown = ({ options }: OptionsParams) => {
+  keyDown = ({ options }: OptionsProps): this => {
     return this.dispatchEvent('keydown', options);
   };
 
   /**
    * Trigger a keypress event with the provided options
    *
-   * @param params - see {@link OptionsParams}
+   * @param props - see {@link OptionsProps}
    */
-  public keyPress = ({ options }: OptionsParams) => {
+  keyPress = ({ options }: OptionsProps): this => {
     return this.dispatchEvent('keypress', options);
   };
 
   /**
    * Trigger a keyup event with the provided options
    *
-   * @param params - see {@link OptionsParams}
+   * @param props - see {@link OptionsProps}
    */
-  public keyUp = ({ options }: OptionsParams) => {
+  keyUp = ({ options }: OptionsProps): this => {
     return this.dispatchEvent('keyup', options);
   };
 
   /**
-   * Breaks a string into single characters and fires a keyboard into the target node
+   * Breaks a string into single characters and fires a keyboard into the target
+   * node
    *
-   * @param params - see {@link TypingInputParams}
+   * @param props - see {@link TypingInputProps}
    */
-  public type({ text, options = Object.create(null) }: TypingInputParams) {
+  type({ text, options = object() }: TypingInputProps): this {
     for (const char of text) {
       this.char({ text: char, options, typing: true });
     }
@@ -228,11 +228,11 @@ export class Keyboard {
    *   .end();
    * ```
    *
-   * @param params - see {@link TextInputParams}
+   * @param props - see {@link TextInputProps}
    */
-  public mod({ text, options = Object.create(null) }: TextInputParams) {
+  mod({ text, options = object() }: TextInputProps): this {
     let modifiers = text.split(/-(?!$)/);
-    let result = modifiers[modifiers.length - 1];
+    let result = modifiers[modifiers.length - 1] ?? '';
     modifiers = take(modifiers, modifiers.length - 1);
 
     if (result === 'Space') {
@@ -251,16 +251,18 @@ export class Keyboard {
   /**
    * Fires events where valid.
    *
-   * @param options - see {@link OptionsWithTypingParams}
+   * @param options - see {@link OptionsWithTypingProps}
    */
-  private fireAllEvents({ options, typing = false }: OptionsWithTypingParams) {
+  private fireAllEvents({ options, typing = false }: OptionsWithTypingProps) {
     this.keyDown({ options });
+
     if (
       !includes(noKeyPress, options.key) ||
       (typing && isUSKeyboardCharacter(options.key) && usKeyboardLayout[options.key].text)
     ) {
       this.keyPress({ options });
     }
+
     if (!includes(noKeyUp, options.key)) {
       this.keyUp({ options });
     }
@@ -271,7 +273,8 @@ export class Keyboard {
   /**
    * Fires all modifier events
    *
-   * @param info - the modifier information for the keys see {@link ModifierInformation}
+   * @param info - the modifier information for the keys see
+   * {@link ModifierInformation}
    * @param type - the keyboard event type
    *
    */
@@ -280,6 +283,7 @@ export class Keyboard {
     type: 'keydown' | 'keyup',
   ) {
     const event = type === 'keydown' ? this.keyDown : this.keyUp;
+
     if (shiftKey) {
       event({ options: { ...this.defaultOptions, ...cleanKey('Shift') } });
     }
@@ -305,12 +309,14 @@ export class Keyboard {
    * Dispatches the action or adds it to the queue when batching is enabled.
    *
    * @param type - the keyboard event name
-   * @param options - options passed to the keyboard event. See {@link KeyboardEventInit}
+   * @param options - options passed to the keyboard event. See
+   * {@link KeyboardEventInit}
    */
   private dispatchEvent(type: KeyboardEventName, options: KeyboardEventInit) {
     if (!this.started) {
       this.start();
     }
+
     const event = createKeyboardEvent(type, { ...this.defaultOptions, ...options });
 
     const dispatch = () => {

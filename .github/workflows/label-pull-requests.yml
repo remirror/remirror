@@ -1,0 +1,13 @@
+name: label pr
+
+on:
+  - pull_request_target
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@main
+        if: "!contains(github.head_ref, 'changeset-release')"
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'

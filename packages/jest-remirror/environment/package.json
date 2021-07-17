@@ -1,0 +1,4 @@
+{
+  "main": "dist/jest-remirror-environment.cjs.js",
+  "types": "dist/jest-remirror-environment.cjs.d.ts"
+}

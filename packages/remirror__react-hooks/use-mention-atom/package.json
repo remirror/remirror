@@ -1,0 +1,9 @@
+{
+  "main": "dist/remirror-react-hooks-use-mention-atom.cjs.js",
+  "module": "dist/remirror-react-hooks-use-mention-atom.esm.js",
+  "browser": {
+    "./dist/remirror-react-hooks-use-mention-atom.cjs.js": "./dist/remirror-react-hooks-use-mention-atom.browser.cjs.js",
+    "./dist/remirror-react-hooks-use-mention-atom.esm.js": "./dist/remirror-react-hooks-use-mention-atom.browser.esm.js"
+  },
+  "types": "dist/remirror-react-hooks-use-mention-atom.cjs.d.ts"
+}

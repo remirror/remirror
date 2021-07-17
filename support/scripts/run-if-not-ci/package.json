@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-run-if-not-ci.cjs.js",
+  "module": "dist/scripts-run-if-not-ci.esm.js"
+}

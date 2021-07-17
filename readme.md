@@ -1,178 +1,247 @@
-<div align="center">
-  <br />
-  <div align="center">
-    <img width="300" height="300" src="https://rawcdn.githack.com/remirror/remirror/f94e6c63e555f65ad5f3f13a3f343204cdc92dff/support/assets/logo.svg?sanitize=true" alt="remirror" />
-  </div>
-    <br />
-    <br />
-    <br />
-</div>
+<p align="center">
+  <a href="https://remirror.io"><img width="300" height="300" src="https://raw.githubusercontent.com/remirror/remirror/next/support/assets/logo-animated-light.svg?sanitize=true" alt="animated remirror logo" /></a>
+</p>
 
 <p align="center">
-
-<a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=master"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=master" alt="Azure DevOps builds" /></a>
-<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=master"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg?branch=master" alt="GitHub Actions CI" /></a>
-<a href="https://codeclimate.com/github/remirror/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" /></a>
-<a href="https://github.com/remirror/remirror/commits/master"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
-<a href="https://github.com/remirror/remirror/commits/master"><img src="https://img.shields.io/github/last-commit/remirror/remirror.svg?amp;logo=github" alt="GitHub last commit" /></a>
-<a href="https://github.com/remirror/remirror/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-raw/remirror/remirror.svg?amp;logo=github" alt="GitHub issues" /></a>
-<a href="https://github.com/remirror/remirror/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-pr/remirror/remirror.svg?amp;logo=github" alt="GitHub pull requests" /></a>
-<a href="https://github.com/remirror/remirror"><img src="https://img.shields.io/github/stars/remirror/remirror.svg?amp;logo=github" alt="GitHub stars" /></a>
-<a href="https://github.com/remirror/remirror/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg" alt="LICENSE" /></a>
-<a href="https://app.netlify.com/sites/remirror/deploys"><img src="https://api.netlify.com/api/v1/badges/f59cbf02-798f-45dd-a78c-93ec52b08d20/deploy-status" alt="Netlify Status" /></a>
-<a href="https://spectrum.chat/remirror"><img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" /></a>
-
+  A <em>toolkit</em> for building <em>cross-platform</em> text editors
+  <br />in the <em>framework</em> of your choice.
 </p>
 
 <br />
 
-<div align="center">
-  <div align="center">
-    <img width="600"  src="https://media.githubusercontent.com/media/remirror/remirror/master/support/assets/wysiwyg.png" alt="remirror" />
-  </div>
-    <br />
-</div>
-
-> Remirror is a toolkit for building accessible editors which run on the web and desktop.
+<p align="center">
+  <a href="#motivation"><strong>Motivation</strong></a> ·
+  <a href="#status"><strong>Status</strong></a> ·
+  <a href="https://remirror.io/docs"><strong>Documentation</strong></a> ·
+  <a href="https://remirror.io/playground"><strong>Playground</strong></a> ·
+  <a href="https://remirror.io/docs/contributing"><strong>Contributing</strong></a>
+</p>
 
 <br />
 
-### Status
+<p align="center">
+  <a href="https://unpkg.com/@remirror/core/dist/core.browser.esm.js">
+    <img src="https://img.shields.io/bundlephobia/minzip/@remirror/core/next" alt="Bundled sized of core [getJSON]brary" title="@remirror/core bundle size">
+  </a>
+  <a href="https://github.com/remirror/remirror/actions?query=workflow:ci">
+    <img src="https://github.com/remirror/remirror/workflows/ci/badge.svg?branch=next" alt="Continuous integration badge for automatic releases" title="GitHub Actions CI Badge" />
+  </a>
+  <a href="https://github.com/remirror/remirror/actions?query=workflow:docs">
+    <img src="https://github.com/remirror/remirror/workflows/docs/badge.svg?branch=next" alt="Continuous integration badge for docs deployment" title="Docs Deployment CI Badge" />
+  </a>
+  <a href="https://codeclimate.com/github/remirror/remirror/maintainability">
+    <img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/maintainability" alt="Project maintainability provided by CodeClimate" title="Maintainability score"/>
+  </a>
+  <a href="https://codeclimate.com/github/remirror/remirror/test_coverage">
+    <img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" alt="Unit test coverage for the codebase" title="Code coverage" />
+  </a>
+  <a href="https://remirror.io/chat">
+    <img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server" title="Discord server link" />
+  </a>
+  <a href="./packages/remirror/package.json">
+    <img src="https://img.shields.io/npm/v/remirror/next?style=flat">
+  </a>
+</p>
 
-Remirror is still undergoing heavy development, but is used in production by at least one company. At the
-moment the focus is on releasing a stable API and while this is ongoing documentation has slipped from being
-the priority.
+<br />
 
-Right now the best way to understand the library is to read through the codebase and take a look at how
-existing editors have been structured. A quick way to get started is to
-[spin up our Next.js example](https://github.com/remirror/remirror/blob/master/examples/with-next/readme.md#getting-started).
+## Motivation
 
-### Documentation
+`remirror` was started as a personal challenge. Would it be possible to build an editor that combined great performance with ease of use? It was also important to give users of all frameworks, the ability to build an editor by picking and choosing their desired building blocks.
 
-View our documentation website at https://docs.remirror.org/
+In order to meet these goals, [ProseMirror][prosemirror] was picked as the best choice for the core editor layer. The second decision was to base the structure of the editor on blocks of functionality called `Extensions`. Each extension would be designed to fulfil a specific purpose in the editor. Due to this structure, users would be able to craft a fully custom implementation.
+
+In the upcoming version of `remirror`, some of these initial goals are starting to be met. Every single part of the editor is controlled by extensions. For example, the core (`Schema`) is managed by a [built-in extension](https://github.com/remirror/remirror/blob/HEAD/packages/remirror__core/src/builtins/schema-extension.ts). This means that the editor you choose to build is completely customizable.
+
+The API has also improved a lot. Multi-framework support is being added in the future. Currently the focus is on `React` and the `DOM`.
+
+There are also a host of drop in components and hooks being developed. To get started with the simplest possible editor the following will suffice.
+
+```tsx
+import React from 'react';
+import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
+import { Remirror, useRemirror } from '@remirror/react';
+
+const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
+
+const Editor = () => {
+  const { manager, onChange, state } = useRemirror({
+    extensions,
+    content: '<p>Hi <strong>Friend</strong></p>',
+    stringHandler: 'html',
+    selection: 'end',
+  });
+
+  return <Remirror onChange={onChange} manager={manager} state={state} />;
+};
+```
+
+With this small snippet your editor now supports some complex UI Functionality. And it's all customisable with ordinary `css`. If you prefer `CSS-in-JS` the styles are also available via `emotion` and `styled-components`.
+
+There's so much more to come and I'm glad you're taking a look. I hope `remirror` proves to be everything you need for your next text editor project.
+
+<br />
+
+## Status
+
+This is the `beta` branch of the `remirror` which will be fully released in the coming weeks.
+
+In the meantime, you can install the beta version via the following command.
+
+```bash
+yarn add remirror@pr706 @remirror/react@pr706 # Yarn
+
+npm install remirror@pr706 @remirror/react@pr706 # npm
+
+pnpm add remirror@pr706 @remirror/react@pr706 # pnpm
+```
+
+- Open an issue in our [github repo](https://github.com/remirror/remirror/issues).
+- [Join our discord server](https://remirror.io/chat) and discuss the problem with our community.
+- Create a pull request with your proposed improvement by clicking the edit button on the relevant page.
+
+Whatever you decide thanks for taking the time to explore the **remirror** project.
+
+<br />
+
+## Documentation
+
+View our documentation website [**here**][introduction].
 
 - [Introduction]
-  <!-- - [Installation] -->
-- [Getting started]
+- [Create an editor](https://remirror.io/docs/guide/create-editor)
+- [Extensions](https://remirror.io/docs/concepts/extension)
 
 <br />
 
-### Features
+## Features
 
 - A11y focused and ARIA compatible.
-- **3** prebuilt editors, [markdown](./@remirror/editor-markdown), [social](./@remirror/editor-social) and
-  [wysiwyg](./@remirror/editor-wysiwyg).
-- Extensions available for adding your own flavour to your own custom editor editor.
-- Zero config support **Server Side Rendering (SSR)**.
+- I18n support via [lingui](https://github.com/lingui/js-lingui).
+- Collaborative editing with [yjs](https://github.com/yjs/yjs).
+- 30+ extensions for creating fully customized editing experiences.
+- Zero configuration support for **Server Side Rendering (SSR)**.
+- Cross platform and cross-framework, with an Angular solution coming later this year.
 
 <br />
 
-### Prerequisites
+## Prerequisites
 
-- Typescript `>= 3.6`
-- React `>= 16.9`
-- Yarn `>= 1.17`
+- [Typescript](https://www.typescriptlang.org/) `>= 4`
+- [pnpm](https://pnpm.js.org/en/installation) `>= 5.5`
 
 <br />
 
-![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported')
+## Getting Started
 
-### Testing
-
-From the root of this repository run the following to trigger a full typecheck, linting and jest tests.
+To add an editor to your codebase, first install the required dependencies. Make sure to include the `` tag so that the correct version is installed.
 
 ```bash
-yarn checks
+# yarn
+yarn add remirror
+
+# pnpm
+pnpm add remirror
+
+# npm
+npm install remirror
 ```
 
-By default these checks are not run automatically. To enable automatic precommit and prepush hooks use the
-following command:
+## Usage
 
-```bash
-yarn start:checks
+Once installed you will be able to add the following code which creates an editor with the bold extension active. Clicking the button when text is selected will toggle between bold.
+
+```tsx
+import React, { useCallback } from 'react';
+import { BoldExtension } from 'remirror/extensions';
+import {
+  EditorComponent,
+  Remirror,
+  useActive,
+  useCommands,
+  useHelpers,
+  useKeymap,
+  useRemirror,
+} from '@remirror/react';
+
+const Button = () => {
+  // `autoUpdate` means that every editor update will recalculate the output
+  // from `active.bold()` and keep the bold status up to date in the editor.
+  const { bold } = useActive();
+
+  return (
+    <>
+      <button
+        onClick={() => commands.toggleBold()}
+        style={{ fontWeight: bold() ? 'bold' : undefined }}
+      >
+        Bold
+      </button>
+    </>
+  );
+};
+
+// Hooks can be added to the context without the need for creating custom components
+const hooks = [
+  () => {
+    const { getJSON } = useHelpers();
+
+    const onSave = useCallback(
+      (props) => {
+        const { state } = props;
+        saveToBackend(getJSON(state));
+
+        return true; // Prevents any further key handlers from being run.
+      },
+      [getJSON],
+    );
+
+    useKeymap('Mod-s', onSave);
+  },
+];
+
+const Editor = () => {
+  const { manager, state } = useRemirror({ extensions: () => [new BoldExtension()] });
+
+  // The editor is built up like lego blocks of functionality within the editor
+  // provider.
+  return (
+    <Remirror manager={manager} initialContent={state} hooks={hooks}>
+      <Button />
+      <EditorComponent />
+    </Remirror>
+  );
+};
 ```
 
-To stop per-commit / per-push checks run:
+<br />
 
-```bash
-yarn stop:checks
-```
+## Contributing
+
+Please read our [contribution guide] for details on our code of conduct, and the process for submitting pull requests. It also outlines the project structure so you can find help when navigating your way around the codebase.
+
+In addition each folder in this codebase includes a readme describing why it exists.
+
+You might also notice there are surprisingly few files in the root directory of this project. All the configuration files have been moved to the `support/root` directory and are symlinked to the root directory in a `preinstall` hook. For more information take a look at [folder](support/root) and [readme](support/root/readme.md).
+
+Finally you can keep track on what's being worked on via the [projects].
 
 <br />
 
-### Built With
+## Versioning
 
-- [Typescript]
-- [React]
-- [Prosemirror]
-- [Theme UI]
+This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/remirror/remirror/tags).
 
 <br />
 
-### Contributing
+## License
 
-Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the process for
-submitting pull requests.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/remirror/remirror)
-
-<br />
-
-### Versioning
-
-This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the
-[tags on this repository](https://github.com/remirror/remirror/tags).
-
-Currently all versions within the repo are locked and this will continue until `v1.0.0` is. At this point
-versions will be updated independently.
-
-<br />
-
-### License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-[introduction]: https://docs.remirror.org
-[installation]: https://docs.remirror.org/installation
-[getting started]: https://docs.remirror.org/guides/quickstart
+[introduction]: https://remirror.io/docs
+[contribution guide]: https://remirror.io/docs/contributing
+[projects]: https://remirror.io/projects
+[installation]: https://remirror.io/docs/installation
 [typescript]: https://github.com/microsoft/Typescript
 [react]: https://github.com/facebook/react
 [prosemirror]: https://prosemirror.net
-[theme ui]: https://github.com/system-ui/theme-ui
-
-<br />
-
-### Contributors
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://ifiokjr.com"><img src="https://avatars2.githubusercontent.com/u/1160934?v=4" width="100px;" alt=""/><br /><sub><b>Ifiok Jr.</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Documentation">📖</a> <a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Code">💻</a> <a href="#example-ifiokjr" title="Examples">💡</a> <a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Tests">⚠️</a> <a href="#maintenance-ifiokjr" title="Maintenance">🚧</a></td>
-    <td align="center"><a href="https://graphile.org/sponsor"><img src="https://avatars2.githubusercontent.com/u/129910?v=4" width="100px;" alt=""/><br /><sub><b>Benjie Gillam</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=benjie" title="Documentation">📖</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Abenjie" title="Bug reports">🐛</a> <a href="#example-benjie" title="Examples">💡</a> <a href="https://github.com/remirror/remirror/commits?author=benjie" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/aried3r"><img src="https://avatars1.githubusercontent.com/u/1301152?v=4" width="100px;" alt=""/><br /><sub><b>Anton Rieder</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=aried3r" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://aarongreenlee.com/"><img src="https://avatars0.githubusercontent.com/u/264508?v=4" width="100px;" alt=""/><br /><sub><b>Aaron Greenlee</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=aarongreenlee" title="Documentation">📖</a> <a href="https://github.com/remirror/remirror/commits?author=aarongreenlee" title="Code">💻</a></td>
-    <td align="center"><a href="http://yellowbrim.com"><img src="https://avatars2.githubusercontent.com/u/1542740?v=4" width="100px;" alt=""/><br /><sub><b>Charley Bodkin</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=charlex" title="Code">💻</a> <a href="https://github.com/remirror/remirror/commits?author=charlex" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://ocavue.github.io/"><img src="https://avatars2.githubusercontent.com/u/24715727?v=4" width="100px;" alt=""/><br /><sub><b>ocavue</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=ocavue" title="Code">💻</a></td>
-    <td align="center"><a href="https://hughboylan.com"><img src="https://avatars2.githubusercontent.com/u/2158740?v=4" width="100px;" alt=""/><br /><sub><b>Hugh Boylan</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=hboylan" title="Code">💻</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://splitinfinities.com"><img src="https://avatars0.githubusercontent.com/u/1245238?v=4" width="100px;" alt=""/><br /><sub><b>William M. Riley</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=splitinfinities" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Asplitinfinities" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://www.thebabyboxco.com"><img src="https://avatars3.githubusercontent.com/u/1892132?v=4" width="100px;" alt=""/><br /><sub><b>Adam Lane</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=Enalmada" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3AEnalmada" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://pensight.com"><img src="https://avatars0.githubusercontent.com/u/5213953?v=4" width="100px;" alt=""/><br /><sub><b>Tomas Cerskus</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=tomas-c" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Atomas-c" title="Bug reports">🐛</a> <a href="https://github.com/remirror/remirror/commits?author=tomas-c" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://lightpohl.me"><img src="https://avatars0.githubusercontent.com/u/4073684?v=4" width="100px;" alt=""/><br /><sub><b>Joshua Pohl</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=lightpohl" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Alightpohl" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://newline.co"><img src="https://avatars2.githubusercontent.com/u/4318?v=4" width="100px;" alt=""/><br /><sub><b>Nate Murray</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=jashmenn" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/zhaoyao91"><img src="https://avatars3.githubusercontent.com/u/3808838?v=4" width="100px;" alt=""/><br /><sub><b>Yao Zhao</b></sub></a><br /><a href="https://github.com/remirror/remirror/issues?q=author%3Azhaoyao91" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="http://hennessyevan.com"><img src="https://avatars1.githubusercontent.com/u/16711653?v=4" width="100px;" alt=""/><br /><sub><b>Evan Hennessy</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=hennessyevan" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Ahennessyevan" title="Bug reports">🐛</a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/watlandc"><img src="https://avatars3.githubusercontent.com/u/6117504?v=4" width="100px;" alt=""/><br /><sub><b>Chris Watland</b></sub></a><br /><a href="https://github.com/remirror/remirror/issues?q=author%3Awatlandc" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://github.com/lanyusan"><img src="https://avatars3.githubusercontent.com/u/56706512?v=4" width="100px;" alt=""/><br /><sub><b>lanyusan</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=lanyusan" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Alanyusan" title="Bug reports">🐛</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->

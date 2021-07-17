@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Remirror: Server appends to the react element by default with \`getRootProps\` 1`] = `
+<div>
+  <div data-testid="OUTER123">
+    <p>
+      Awesome
+    </p>
+  </div>
+  <div data-testid="ROOT">
+    <div role="textbox"
+         aria-multiline="true"
+         aria-label="Remirror editor"
+         class="Prosemirror remirror-editor"
+         aria-placeholder
+         contenteditable="true"
+    >
+      <p>
+        This is a node with
+        <strong>
+          bold text.
+        </strong>
+      </p>
+    </div>
+  </div>
+  <div data-testid="INNER123">
+    <p>
+      inside the editor
+    </p>
+  </div>
+</div>
+`;

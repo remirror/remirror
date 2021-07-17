@@ -1,0 +1,20 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > 'src'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "declaration": false,
+    "noEmit": true
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../../remirror__core/src"
+    }
+  ]
+}

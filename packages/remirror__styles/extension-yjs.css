@@ -1,0 +1,42 @@
+/**
+ * Styles extracted from: packages/remirror__theme/src/extension-yjs-theme.ts
+ */
+.remirror-editor.ProseMirror .ProseMirror-yjs-cursor {
+  position: absolute;
+  border-left: black;
+  border-left-style: solid;
+  border-left-width: 2px;
+  border-color: orange;
+  height: 1em;
+  word-break: normal;
+  pointer-events: none;
+}
+
+.remirror-editor.ProseMirror .ProseMirror-yjs-cursor > div {
+  position: relative;
+  top: -1.05em;
+  font-size: 13px;
+  background-color: rgb(250, 129, 0);
+  font-family: serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: white;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.remirror-editor.ProseMirror > .ProseMirror-yjs-cursor:first-child {
+  margin-top: 16px;
+}
+.remirror-editor #y-functions {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.remirror-editor #y-functions > * {
+  display: inline-block;
+}

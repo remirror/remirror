@@ -1,8 +1,8 @@
 import { omit } from '@remirror/core-helpers';
-import { PlainObject } from '@remirror/core-types';
+import type { Shape } from '@remirror/core-types';
 
-import { KeyboardEventName, ModifierInformation } from './test-keyboard-types';
-import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
+import type { KeyboardEventName, ModifierInformation } from './test-keyboard-types';
+import { KeyDefinition, SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
 
 /**
  * Creates a keyboard event which can be dispatched into the DOM
@@ -10,10 +10,14 @@ import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
  * @param type
  * @param options
  */
-export const createKeyboardEvent = (type: KeyboardEventName, options: KeyboardEventInit & PlainObject) =>
-  new KeyboardEvent(type, { ...options, bubbles: true });
+export function createKeyboardEvent(
+  type: KeyboardEventName,
+  options: KeyboardEventInit & Shape,
+): KeyboardEvent {
+  return new KeyboardEvent(type, { ...options, bubbles: true });
+}
 
-interface GetModifierInformationParams {
+interface GetModifierInformationProps {
   /**
    * The modifier keys passed in
    */
@@ -22,7 +26,7 @@ interface GetModifierInformationParams {
   /**
    * Whether to treat this as a mac
    *
-   * @defaultValue `false`
+   * @default false
    */
   isMac?: boolean;
 }
@@ -30,11 +34,10 @@ interface GetModifierInformationParams {
 /**
  * Returns an info object detailing which modifier keys are currently active
  *
- * @param params
- * @param params.modifiers
- * @param [params.isMac]
+ * @param props
  */
-export const getModifierInformation = ({ modifiers, isMac = false }: GetModifierInformationParams) => {
+export function getModifierInformation(props: GetModifierInformationProps): ModifierInformation {
+  const { modifiers, isMac = false } = props;
   const info: ModifierInformation = {
     altKey: false,
     ctrlKey: false,
@@ -63,11 +66,13 @@ export const getModifierInformation = ({ modifiers, isMac = false }: GetModifier
   }
 
   return info;
-};
+}
 
 /**
  * Removes the shiftKey property from the keyboard layout spec
  *
  * @param key
  */
-export const cleanKey = (key: SupportedCharacters) => omit(usKeyboardLayout[key], ['shiftKey']);
+export function cleanKey(key: SupportedCharacters): Omit<KeyDefinition, 'shiftKey'> {
+  return omit(usKeyboardLayout[key], ['shiftKey']);
+}

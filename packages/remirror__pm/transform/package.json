@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-transform.cjs.js",
+  "module": "dist/remirror-pm-transform.esm.js",
+  "browser": {
+    "./dist/remirror-pm-transform.cjs.js": "./dist/remirror-pm-transform.browser.cjs.js",
+    "./dist/remirror-pm-transform.esm.js": "./dist/remirror-pm-transform.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-transform.cjs.d.ts",
+  "rn:dev": "../src/transform.ts"
+}

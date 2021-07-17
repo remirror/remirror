@@ -1,0 +1,120 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 450">
+<defs>
+    <style>
+        .cls-1 {
+            fill: #7963d2;
+        }
+
+        .cls-2,
+        .cls-3 {
+            fill: #fff;
+        }
+
+        .cls-3 {
+            opacity: 0.15;
+        }
+
+        .cls-4 {
+            fill: none;
+            opacity: 0.5;
+        }
+        .rect-1{
+            transform-origin: center 40%;
+            transform: rotateX(90deg);
+            animation: rect 1.5s linear forwards;
+        }
+        @keyframes rect{
+            100%{transform: rotateX(0deg);transform-origin: center 40%;}
+        }
+        .rect-2{
+            transform-origin: center;
+            transform: rotateY(90deg);
+            animation: rect3 1.5s linear forwards;
+            animation-delay: 4s;
+            fill: #fff;
+        }
+        @keyframes rect3{
+            100%{transform: rotateY(0deg);}
+        }
+
+        .path-1{
+            stroke-dasharray:413;
+            stroke-dashoffset:0;
+            animation: dash 3s linear forwards;
+            stroke:transparent;
+            stroke-width:1;
+            fill: transparent;
+            animation-delay: 5s;
+        }
+
+            @keyframes dash{
+            0%{stroke-dashoffset:413; stroke:#fff;}
+            90%{stroke-dashoffset:0;}
+            90.1%{stroke-dashoffset:0; fill:transparent;}
+            100%{stroke-dashoffset:0; fill:#fff;stroke:#fff}
+        }
+        .path-2{
+            stroke-dasharray:413;
+            stroke-dashoffset:0;
+            animation: flip 2s linear forwards;
+            stroke:transparent;
+            stroke-width:1;
+            fill: transparent;
+            animation-delay: 8s;
+            transform-origin: center;
+            transform: rotateY(180deg);
+        }
+
+            @keyframes flip{
+            0%{transform: rotateY(180deg);fill: #fff;stroke:#fff;}
+            100%{transform: rotateY(0deg);fill: #fff;stroke:#fff;}
+        }
+
+        .latter{
+            transform: translate(-0%,22%);
+            animation: latter 1s ease-out forwards;
+        }
+        .latter1{animation-delay: 10.1s;}
+        .latter2{animation-delay: 10.2s;}
+        .latter3{animation-delay: 10.3s;}
+        .latter4{animation-delay: 10.4s;}
+        .latter5{animation-delay: 10.5s;}
+        .latter6{animation-delay: 10.6s;}
+        .latter7{animation-delay: 10.7s;}
+        .latter8{animation-delay: 10.8s;}
+        @keyframes latter{
+            0%{transform: translate(-0%,22%);}
+            100%{transform: translate(-0%,0%);}
+        }
+
+        .blink{
+            animation: blink 1.5s linear infinite;
+            animation-delay: 1.5s;
+        }
+        @keyframes blink{
+            0%{opacity: 0;}
+            49.9%{opacity: 0;}
+            50%{opacity: 1;}
+            99.9%{opacity: 1;}
+            100%{opacity: 0;}
+        }
+    </style>
+</defs>
+<title>remirror2</title>
+    <rect class="cls-1" width="450" height="450" />
+    <path class="cls-2 latter latter1" d="M66.07,363.78a11.43,11.43,0,0,1-8.38,3.48h-5a13,13,0,0,0-9.67,4.09,13.52,13.52,0,0,0-4,9.77v15a12,12,0,0,1-3.68,8.77q-3.68,3.68-10.38,3.68V381.12a26.08,26.08,0,0,1,8.16-19.34,27,27,0,0,1,19.56-8H69.55Q69.55,360.31,66.07,363.78Z" />
+    <path class="cls-2 latter latter2" d="M90.7,408.59a26.87,26.87,0,0,1-19.54-8,27.18,27.18,0,0,1,0-38.75,26.77,26.77,0,0,1,19.54-8.06h16.89q0,6.53-3.51,10a11.56,11.56,0,0,1-8.42,3.48h-5a12.79,12.79,0,0,0-9.64,4.16,13.78,13.78,0,0,0-4,9.83,13.57,13.57,0,0,0,4,9.77,12.91,12.91,0,0,0,9.64,4.09h5a11.56,11.56,0,0,1,8.42,3.48q3.51,3.48,3.51,10Zm13.38-24.2a11.54,11.54,0,0,1-8.42,3.5H87.09A6.54,6.54,0,0,1,82.32,386a6.42,6.42,0,0,1-1.94-4.76,6.65,6.65,0,0,1,1.94-4.83,6.4,6.4,0,0,1,4.77-2h20.5Q107.59,380.9,104.08,384.39Z" />
+    <path class="cls-2 latter latter3" d="M198.37,404.91a12,12,0,0,1-3.67-8.77V381.25a13.82,13.82,0,0,0-3.93-9.87,13.38,13.38,0,0,0-19.35,0,13.72,13.72,0,0,0-4,9.83v27.34q-6.72,0-10.39-3.68a12,12,0,0,1-3.67-8.77V381.25a13.82,13.82,0,0,0-3.93-9.87,13.38,13.38,0,0,0-19.35,0,13.72,13.72,0,0,0-4,9.83v14.89a12,12,0,0,1-3.65,8.8c-2.42,2.43-5.9,3.65-10.41,3.65V381.25a26.3,26.3,0,0,1,8.16-19.41A27.81,27.81,0,0,1,160.46,363a28.32,28.32,0,0,1,9.35-6.77,27.12,27.12,0,0,1,11.28-2.45,26.77,26.77,0,0,1,19.54,8.06,26.34,26.34,0,0,1,8.12,19.41v27.34Q202,408.59,198.37,404.91Z" />
+    <path class="cls-2 latter latter4" d="M217.78,404.91a12,12,0,0,1-3.68-8.77V353.78q6.71,0,10.38,3.68a11.93,11.93,0,0,1,3.68,8.77v42.36Q221.46,408.59,217.78,404.91Z" />
+    <path class="cls-2 latter latter5" d="M275.87,363.78a11.43,11.43,0,0,1-8.38,3.48h-5a13,13,0,0,0-9.67,4.09,13.52,13.52,0,0,0-4,9.77v15a12,12,0,0,1-3.68,8.77q-3.68,3.68-10.38,3.68V381.12A26.08,26.08,0,0,1,243,361.78a27,27,0,0,1,19.56-8h16.83Q279.35,360.31,275.87,363.78Z" />
+    <path class="cls-2 latter latter6" d="M322.55,363.78a11.43,11.43,0,0,1-8.38,3.48h-5a13,13,0,0,0-9.67,4.09,13.52,13.52,0,0,0-4,9.77v15a12,12,0,0,1-3.68,8.77q-3.67,3.68-10.38,3.68V381.12a26.08,26.08,0,0,1,8.16-19.34,27,27,0,0,1,19.56-8H326Q326,360.31,322.55,363.78Z" />
+    <path class="cls-2 latter latter7" d="M347.18,408.59a26.87,26.87,0,0,1-19.54-8,27.18,27.18,0,0,1,0-38.75,27.75,27.75,0,0,1,39.11,0,27.11,27.11,0,0,1,0,38.75A27,27,0,0,1,347.18,408.59Zm0-41.33a12.82,12.82,0,0,0-9.67,4.12,13.82,13.82,0,0,0-3.93,9.87,13.57,13.57,0,0,0,4,9.77,13.44,13.44,0,0,0,19.31,0,13.49,13.49,0,0,0,4-9.77,13.68,13.68,0,0,0-4-9.87A13,13,0,0,0,347.18,367.26Z" />
+    <path class="cls-2 latter latter8" d="M421.52,363.78a11.43,11.43,0,0,1-8.38,3.48h-5a13,13,0,0,0-9.67,4.09,13.53,13.53,0,0,0-4,9.77v15a12,12,0,0,1-3.67,8.77q-3.68,3.68-10.38,3.68V381.12a26.11,26.11,0,0,1,8.15-19.34,27,27,0,0,1,19.57-8H425Q425,360.31,421.52,363.78Z" />
+    <rect class="cls-3 rect-2" x="75.89" y="41.41" width="146.94" height="266.99" />
+    <rect class="cls-4" x="227.16" y="41.41" width="146.94" height="266.99" />
+    <g class="blink">
+    <rect class="cls-2 rect-1" x="222.84" y="41.41" width="4.33" height="266.99" />
+    </g>
+    <path class="cls-2 path-2" d="M267.68,114.2a64.17,64.17,0,0,1,34.55,9.54,17.67,17.67,0,0,1,15.68-9.54h15.81V243q-16,0-24.73-8.75a28.5,28.5,0,0,1-8.75-20.89v-34a32.14,32.14,0,0,0-9.53-23.26,31,31,0,0,0-23-9.76,27.22,27.22,0,0,1-20-8.29q-8.29-8.3-8.29-23.81Z" />
+    <path class="cls-2 path-1" d="M182.32,114.2a64.17,64.17,0,0,0-34.55,9.54,17.67,17.67,0,0,0-15.68-9.54H116.28V243q16,0,24.73-8.75a28.5,28.5,0,0,0,8.75-20.89v-34a32.14,32.14,0,0,1,9.53-23.26,31,31,0,0,1,23-9.76,27.22,27.22,0,0,0,20-8.29q8.29-8.3,8.29-23.81Z" />
+</svg>

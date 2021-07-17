@@ -1,0 +1,15 @@
+name: 'mutate pr'
+description: 'Prepare a PR to be published by updating all packages'
+branding:
+  icon: 'git-pull-request'
+  color: 'green'
+inputs:
+  giphyKey:
+    required: false
+    description: 'api key for giphy comments'
+outputs:
+  tag:
+    description: The tag that will be created when releasing the PR.
+runs:
+  using: 'node12'
+  main: 'dist/actions-pr.cjs.js'

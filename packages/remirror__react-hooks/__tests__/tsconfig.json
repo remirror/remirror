@@ -1,0 +1,68 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > '__tests__'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom",
+      "snapshot-diff",
+      "node"
+    ],
+    "declaration": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "importsNotUsedAsValues": "remove"
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../src"
+    },
+    {
+      "path": "../../testing/src"
+    },
+    {
+      "path": "../../remirror/src"
+    },
+    {
+      "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-emoji/src"
+    },
+    {
+      "path": "../../remirror__extension-events/src"
+    },
+    {
+      "path": "../../remirror__extension-history/src"
+    },
+    {
+      "path": "../../remirror__extension-mention/src"
+    },
+    {
+      "path": "../../remirror__extension-mention-atom/src"
+    },
+    {
+      "path": "../../remirror__extension-positioner/src"
+    },
+    {
+      "path": "../../remirror__i18n/src"
+    },
+    {
+      "path": "../../remirror__react-core/src"
+    },
+    {
+      "path": "../../remirror__react-utils/src"
+    },
+    {
+      "path": "../../multishift/src"
+    }
+  ]
+}

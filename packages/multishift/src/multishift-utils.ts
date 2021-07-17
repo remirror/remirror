@@ -1,16 +1,19 @@
 import computeScrollIntoView from 'compute-scroll-into-view';
-import { Dispatch, KeyboardEvent, SyntheticEvent } from 'react';
-import keyNames from 'w3c-keyname';
-
+import type { Dispatch, KeyboardEvent, SyntheticEvent } from 'react';
+import warning from 'tiny-warning';
+import { keyName } from 'w3c-keyname';
 import {
+  assertGet,
   clamp,
   isArray,
+  isEmptyArray,
   isNumber,
   isObject,
   isString,
   isUndefined,
   keys,
   last,
+  object,
   omit,
   range,
   take,
@@ -18,10 +21,10 @@ import {
   uniqueBy,
   within,
 } from '@remirror/core-helpers';
-import { AnyFunction, Nullable } from '@remirror/core-types';
+import type { AnyFunction, Nullable } from '@remirror/core-types';
 
 import { SpecialKey, Type } from './multishift-constants';
-import {
+import type {
   ActionCreator,
   ActionCreatorMapToDispatch,
   ActionCreatorsMapObject,
@@ -37,6 +40,7 @@ import {
   MultishiftProps,
   MultishiftState,
   MultishiftStateChangeset,
+  MultishiftStateHelpers,
   MultishiftStateProps,
   SpecialKeyDownPayload,
 } from './multishift-types';
@@ -44,14 +48,16 @@ import {
 /**
  * The default unique identifier getter function.
  */
-export const defaultGetItemId = (item: any) => item;
+export function defaultGetItemId<Item = any>(item: Item): Item {
+  return item;
+}
 
 /**
  * The default itemToString implementation.
  */
-export const defaultItemToString = <GItem = any>(item: GItem | undefined) => {
+export function defaultItemToString<Item = any>(item: Item | undefined): string {
   return item ? String(item) : '';
-};
+}
 
 /**
  * The default itemsToString function.
@@ -61,16 +67,18 @@ export const defaultItemToString = <GItem = any>(item: GItem | undefined) => {
  * @param items - the list of all selected items
  * @param itemToString - retrieve the string from an individual
  */
-export const defaultItemsToString = <GItem = any>(
-  selectedItems: GItem[],
-  itemToString = defaultItemToString as ItemToString, // TypeCast needed to prevent errors in consumers
-) => selectedItems.map(itemToString).join(', ');
+export function defaultItemsToString<Item = any>(
+  selectedItems: Item[],
+  itemToString = defaultItemToString as ItemToString,
+): string {
+  return selectedItems.map(itemToString).join(', ');
+}
 
-export interface GetInitialPropsParams<GItem = any>
+export interface GetInitialPropsProps<Item = any>
   extends MultishiftBehaviorProps,
-    MultishiftStateProps<GItem>,
-    MultishiftDefaultValueProps<GItem>,
-    MultishiftInitialValueProps<GItem> {}
+    MultishiftStateProps<Item>,
+    MultishiftDefaultValueProps<Item>,
+    MultishiftInitialValueProps<Item> {}
 
 export const DEFAULT_STATE: MultishiftState = {
   selectedItems: [],
@@ -83,7 +91,7 @@ export const DEFAULT_STATE: MultishiftState = {
   highlightedGroupEndIndex: undefined,
 };
 
-const noUndefined = <GType = any>(fallback: GType, values: Array<GType | undefined>): GType => {
+const noUndefined = <Type = any>(fallback: Type, values: Array<Type | undefined>): Type => {
   for (const value of values) {
     if (!isUndefined(value)) {
       return value;
@@ -96,53 +104,63 @@ const noUndefined = <GType = any>(fallback: GType, values: Array<GType | undefin
 /**
  * Get all the default state values.
  */
-export const getDefaultState = <GItem = any>({
-  defaultSelectedItems,
-  defaultJumpText,
-  defaultIsOpen,
-  defaultInputValue,
-  defaultHoveredIndex,
-  defaultHighlightedIndexes,
-  defaultHighlightedGroupStartIndex,
-  defaultHighlightedGroupEndIndex,
-}: GetDefaultStateParams<GItem>) => ({
-  selectedItems: defaultSelectedItems ?? DEFAULT_STATE.selectedItems,
-  jumpText: noUndefined(DEFAULT_STATE.jumpText, [defaultJumpText]),
-  isOpen: noUndefined(DEFAULT_STATE.isOpen, [defaultIsOpen]),
-  inputValue: noUndefined(DEFAULT_STATE.inputValue, [defaultInputValue]),
-  hoveredIndex: noUndefined(DEFAULT_STATE.hoveredIndex, [defaultHoveredIndex]),
-  highlightedIndexes: defaultHighlightedIndexes ?? DEFAULT_STATE.highlightedIndexes,
-  highlightedGroupStartIndex: noUndefined(DEFAULT_STATE.highlightedGroupStartIndex, [
+export function getDefaultState<Item = any>(
+  defaults: GetDefaultStateProps<Item>,
+): MultishiftState<Item> {
+  const {
+    defaultSelectedItems,
+    defaultJumpText,
+    defaultIsOpen,
+    defaultInputValue,
+    defaultHoveredIndex,
+    defaultHighlightedIndexes,
     defaultHighlightedGroupStartIndex,
-  ]),
-  highlightedGroupEndIndex: noUndefined(DEFAULT_STATE.highlightedGroupEndIndex, [
     defaultHighlightedGroupEndIndex,
-  ]),
-});
+  } = defaults;
+
+  return {
+    selectedItems: defaultSelectedItems ?? DEFAULT_STATE.selectedItems,
+    jumpText: noUndefined(DEFAULT_STATE.jumpText, [defaultJumpText]),
+    isOpen: noUndefined(DEFAULT_STATE.isOpen, [defaultIsOpen]),
+    inputValue: noUndefined(DEFAULT_STATE.inputValue, [defaultInputValue]),
+    hoveredIndex: noUndefined(DEFAULT_STATE.hoveredIndex, [defaultHoveredIndex]),
+    highlightedIndexes: defaultHighlightedIndexes ?? DEFAULT_STATE.highlightedIndexes,
+    highlightedGroupStartIndex: noUndefined(DEFAULT_STATE.highlightedGroupStartIndex, [
+      defaultHighlightedGroupStartIndex,
+    ]),
+    highlightedGroupEndIndex: noUndefined(DEFAULT_STATE.highlightedGroupEndIndex, [
+      defaultHighlightedGroupEndIndex,
+    ]),
+  };
+}
 
 /**
  * Get the initial state or props when provided.
  */
-export const getInitialStateProps = <GItem = any>({
-  initialSelectedItems,
-  initialJumpText,
-  initialIsOpen,
-  initialInputValue,
-  initialHoveredIndex,
-  initialHighlightedIndexes,
-  initialHighlightedGroupStartIndex,
-  initialHighlightedGroupEndIndex,
-  selectedItems,
-  jumpText,
-  isOpen,
-  inputValue,
-  hoveredIndex,
-  highlightedIndexes,
-  highlightedGroupStartIndex,
-  highlightedGroupEndIndex,
-  ...props
-}: GetInitialPropsParams): MultishiftState<GItem> => {
+export function getInitialStateProps<Item = any>(
+  initialProps: GetInitialPropsProps,
+): MultishiftState<Item> {
+  const {
+    initialSelectedItems,
+    initialJumpText,
+    initialIsOpen,
+    initialInputValue,
+    initialHoveredIndex,
+    initialHighlightedIndexes,
+    initialHighlightedGroupStartIndex,
+    initialHighlightedGroupEndIndex,
+    selectedItems,
+    jumpText,
+    isOpen,
+    inputValue,
+    hoveredIndex,
+    highlightedIndexes,
+    highlightedGroupStartIndex,
+    highlightedGroupEndIndex,
+    ...props
+  } = initialProps;
   const fallback = getDefaultState(props);
+
   return {
     selectedItems: noUndefined(fallback.selectedItems, [selectedItems, initialSelectedItems]),
     jumpText: noUndefined(fallback.jumpText, [jumpText, initialJumpText]),
@@ -162,138 +180,161 @@ export const getInitialStateProps = <GItem = any>({
       initialHighlightedGroupEndIndex,
     ]),
   };
-};
+}
 
-export interface GetDefaultStateParams<GItem = any>
-  extends MultishiftDefaultValueProps<GItem>,
+export interface GetDefaultStateProps<Item = any>
+  extends MultishiftDefaultValueProps<Item>,
     MultishiftBehaviorProps {}
+
+interface GetHighlightReset {
+  highlightedGroupEndIndex: number | undefined;
+  highlightedGroupStartIndex: number;
+  highlightedIndexes: number[];
+  hoveredIndex: number;
+}
 
 /**
  * The state that corresponds to the default highlight state. Useful when the
  * highlighted values need to be reset.
  */
-export const getHighlightReset = <GItem = any>(defaultState: MultishiftState<GItem>) => ({
-  highlightedGroupEndIndex: defaultState.highlightedGroupEndIndex,
-  highlightedGroupStartIndex: defaultState.highlightedGroupStartIndex,
-  highlightedIndexes: defaultState.highlightedIndexes,
-  hoveredIndex: defaultState.hoveredIndex,
-});
+export function getHighlightReset<Item = any>(
+  defaultState: MultishiftState<Item>,
+): GetHighlightReset {
+  return {
+    highlightedGroupEndIndex: defaultState.highlightedGroupEndIndex,
+    highlightedGroupStartIndex: defaultState.highlightedGroupStartIndex,
+    highlightedIndexes: defaultState.highlightedIndexes,
+    hoveredIndex: defaultState.hoveredIndex,
+  };
+}
 /**
  * Uses controlled props where available otherwise fallbacks back to internal
  * state.
  */
-export const getState = <GItem = any>(
-  state: MultishiftState<GItem>,
-  props: MultishiftStateProps<GItem>,
-): MultishiftState<GItem> => ({
-  selectedItems: props.selectedItems ?? state.selectedItems,
-  jumpText: noUndefined(state.jumpText, [props.jumpText]),
-  isOpen: noUndefined(state.isOpen, [props.isOpen]),
-  inputValue: noUndefined(state.inputValue, [props.inputValue]),
-  hoveredIndex: noUndefined(state.hoveredIndex, [props.hoveredIndex]),
-  highlightedIndexes: props.highlightedIndexes ?? state.highlightedIndexes,
-  highlightedGroupStartIndex: noUndefined(state.highlightedGroupStartIndex, [
-    props.highlightedGroupStartIndex,
-  ]),
-  highlightedGroupEndIndex: noUndefined(state.highlightedGroupEndIndex, [props.highlightedGroupEndIndex]),
-});
+export function getState<Item = any>(
+  state: MultishiftState<Item>,
+  props: MultishiftStateProps<Item>,
+): MultishiftState<Item> {
+  return {
+    selectedItems: props.selectedItems ?? state.selectedItems,
+    jumpText: noUndefined(state.jumpText, [props.jumpText]),
+    isOpen: noUndefined(state.isOpen, [props.isOpen]),
+    inputValue: noUndefined(state.inputValue, [props.inputValue]),
+    hoveredIndex: noUndefined(state.hoveredIndex, [props.hoveredIndex]),
+    highlightedIndexes: props.highlightedIndexes ?? state.highlightedIndexes,
+    highlightedGroupStartIndex: noUndefined(state.highlightedGroupStartIndex, [
+      props.highlightedGroupStartIndex,
+    ]),
+    highlightedGroupEndIndex: noUndefined(state.highlightedGroupEndIndex, [
+      props.highlightedGroupEndIndex,
+    ]),
+  };
+}
 
 const changeHandlerMap = {
-  selectedItems: <GItem = any>(
-    { onSelectedItemsChange }: MultishiftChangeHandlerProps<GItem>,
-    { state }: MultishiftStateChangeset<GItem>,
+  selectedItems: <Item = any>(
+    { onSelectedItemsChange }: MultishiftChangeHandlerProps<Item>,
+    { state }: MultishiftStateChangeset<Item>,
   ) => onSelectedItemsChange?.(state.selectedItems, state),
 
-  jumpText: <GItem = any>(
-    { onJumpTextChange }: MultishiftChangeHandlerProps<GItem>,
-    { state }: MultishiftStateChangeset<GItem>,
+  jumpText: <Item = any>(
+    { onJumpTextChange }: MultishiftChangeHandlerProps<Item>,
+    { state }: MultishiftStateChangeset<Item>,
   ) => onJumpTextChange?.(state.jumpText, state),
 
-  isOpen: <GItem = any>(
-    { onIsOpenChange }: MultishiftChangeHandlerProps<GItem>,
-    { state }: MultishiftStateChangeset<GItem>,
+  isOpen: <Item = any>(
+    { onIsOpenChange }: MultishiftChangeHandlerProps<Item>,
+    { state }: MultishiftStateChangeset<Item>,
   ) => onIsOpenChange?.(state.isOpen, state),
 
-  inputValue: <GItem = any>(
-    { onInputValueChange }: MultishiftChangeHandlerProps<GItem>,
-    { state }: MultishiftStateChangeset<GItem>,
+  inputValue: <Item = any>(
+    { onInputValueChange }: MultishiftChangeHandlerProps<Item>,
+    { state }: MultishiftStateChangeset<Item>,
   ) => onInputValueChange?.(state.inputValue, state),
 
-  hoveredIndex: <GItem = any>(
-    { onHoveredIndexChange }: MultishiftChangeHandlerProps<GItem>,
-    { state }: MultishiftStateChangeset<GItem>,
+  hoveredIndex: <Item = any>(
+    { onHoveredIndexChange }: MultishiftChangeHandlerProps<Item>,
+    { state }: MultishiftStateChangeset<Item>,
   ) => onHoveredIndexChange?.(state.hoveredIndex, state),
 
-  highlightedIndexes: <GItem = any>(
-    { onHighlightedIndexesChange }: MultishiftChangeHandlerProps<GItem>,
-    { state }: MultishiftStateChangeset<GItem>,
+  highlightedIndexes: <Item = any>(
+    { onHighlightedIndexesChange }: MultishiftChangeHandlerProps<Item>,
+    { state }: MultishiftStateChangeset<Item>,
   ) => onHighlightedIndexesChange?.(state.highlightedIndexes, state),
 
-  highlightedGroupStartIndex: <GItem = any>(
-    { onHighlightedGroupStartIndexChange }: MultishiftChangeHandlerProps<GItem>,
-    { state }: MultishiftStateChangeset<GItem>,
+  highlightedGroupStartIndex: <Item = any>(
+    { onHighlightedGroupStartIndexChange }: MultishiftChangeHandlerProps<Item>,
+    { state }: MultishiftStateChangeset<Item>,
   ) => onHighlightedGroupStartIndexChange?.(state.highlightedGroupStartIndex, state),
 
-  highlightedGroupEndIndex: <GItem = any>(
-    { onHighlightedGroupEndIndexChange }: MultishiftChangeHandlerProps<GItem>,
-    { state }: MultishiftStateChangeset<GItem>,
+  highlightedGroupEndIndex: <Item = any>(
+    { onHighlightedGroupEndIndexChange }: MultishiftChangeHandlerProps<Item>,
+    { state }: MultishiftStateChangeset<Item>,
   ) => onHighlightedGroupEndIndexChange?.(state.highlightedGroupEndIndex, state),
 };
 
 /**
  * Call all relevant change handlers.
  */
-export const callChangeHandlers = <GItem = any>(
-  handlers: MultishiftChangeHandlerProps<GItem>,
-  { changes, state, prevState }: MultishiftStateChangeset<GItem>,
-) => {
+export function callChangeHandlers<Item = any>(
+  handlers: MultishiftChangeHandlerProps<Item>,
+  changeset: MultishiftStateChangeset<Item>,
+): void {
+  const { changes, state, prevState } = changeset;
   const changedKeys = keys(changes);
   const { onStateChange } = handlers;
 
-  changedKeys.forEach(key => {
+  changedKeys.forEach((key) => {
     changeHandlerMap[key](handlers, { changes, state, prevState });
   });
 
-  if (changedKeys.length && onStateChange) {
+  if (!isEmptyArray(changedKeys.length) && onStateChange) {
     onStateChange(changes, state);
   }
-};
+}
+
+export interface GetElementIds {
+  labelId: string;
+  inputId: string;
+  menuId: string;
+  getItemA11yId: (index?: number | undefined) => string;
+  toggleButtonId: string;
+}
 
 /**
  * Get the ids for each element.
  */
-export const getElementIds = (
+export function getElementIds(
   defaultId: string | number,
-  { id, labelId, menuId, getItemA11yId, toggleButtonId, inputId }: MultishiftA11yIdProps = Object.create(
-    null,
-  ),
-) => {
+  props: MultishiftA11yIdProps = object(),
+): GetElementIds {
+  const { id, labelId, menuId, getItemA11yId, toggleButtonId, inputId } = props;
   const uniqueId = id === undefined ? `multishift-${defaultId}` : id;
 
   return {
     labelId: labelId ?? `${uniqueId}-label`,
     inputId: inputId ?? `${uniqueId}-input`,
     menuId: menuId ?? `${uniqueId}-menu`,
-    getItemA11yId: getItemA11yId ?? (index => `${uniqueId}-item-${index ?? 0}`),
+    getItemA11yId: getItemA11yId ?? ((index) => `${uniqueId}-item-${index ?? 0}`),
     toggleButtonId: toggleButtonId ?? `${uniqueId}-toggle-button`,
   };
-};
+}
 
-interface GetNextWrappingIndexParams {
+interface GetNextWrappingIndexProps {
   steps: number;
   start: number;
   size: number;
   circular: boolean;
 }
 
-export const getNextWrappingIndex = ({
+export function getNextWrappingIndex({
   start,
   steps,
   size,
   circular,
-}: GetNextWrappingIndexParams): number | undefined => {
+}: GetNextWrappingIndexProps): number | undefined {
   if (size === 0) {
-    return undefined;
+    return;
   }
 
   if (start === -1) {
@@ -305,76 +346,85 @@ export const getNextWrappingIndex = ({
   if (nextIndex < 0) {
     return circular ? size - 1 : 0;
   }
+
   if (nextIndex >= size) {
     return circular ? 0 : size - 1;
   }
 
   return nextIndex;
-};
+}
 
 /**
  * Check whether the provided value is a valid index.
  */
-export const isValidIndex = (index: number | undefined | null): index is number =>
-  isNumber(index) && index > -1;
+export function isValidIndex(index: number | undefined | null): index is number {
+  return isNumber(index) && index > -1;
+}
 
 /**
  * Get the next index when navigating with arrow keys.
  */
-export const getNextWrappingIndexes = (params: GetNextWrappingIndexParams): [number] | [] => {
+export function getNextWrappingIndexes(params: GetNextWrappingIndexProps): [number] | [] {
   const index = getNextWrappingIndex(params);
   return isValidIndex(index) ? [index] : [];
-};
+}
 
-export const isValidIndexAndNotDisabled = (index: number | undefined, disabled: number[]): index is number =>
-  isValidIndex(index) && !disabled.includes(index);
+export function isValidIndexAndNotDisabled(
+  index: number | undefined,
+  disabled: number[],
+): index is number {
+  return isValidIndex(index) && !disabled.includes(index);
+}
 
-interface GetItemIndexByJumpTextParams<GItem = any> {
+interface GetItemIndexByJumpTextProps<Item = any> {
   text: string;
   highlightedIndexes: number[];
-  items: GItem[];
+  items: Item[];
   itemToString?: ItemToString;
 }
 
 /**
  * Finds the nearest match when typing into a non input dropdown.
  */
-export const getItemIndexesByJumpText = <GItem = any>({
+export function getItemIndexesByJumpText<Item = any>({
   text,
   highlightedIndexes,
   items,
   itemToString = defaultItemToString,
-}: GetItemIndexByJumpTextParams<GItem>): [number] | [] => {
+}: GetItemIndexByJumpTextProps<Item>): [number] | [] {
   let newHighlightedIndex = -1;
   const finder = (str: string) => str.startsWith(text);
-  const itemStrings = items.map(item => itemToString(item).toLowerCase());
+  const itemStrings = items.map((item) => itemToString(item).toLowerCase());
   const startPosition = (Math.min(...highlightedIndexes) || -1) + 1;
 
   newHighlightedIndex = itemStrings.slice(startPosition).findIndex(finder);
 
   if (newHighlightedIndex > -1) {
     return [newHighlightedIndex + startPosition];
-  } else {
-    const index = itemStrings.slice(0, startPosition).findIndex(finder);
-    return isValidIndex(index) ? [index] : [];
   }
-};
+
+  const index = itemStrings.slice(0, startPosition).findIndex(finder);
+  return isValidIndex(index) ? [index] : [];
+}
 
 /**
  * Determines which highlighted indexes should be available on first open.
  */
-export const getHighlightedIndexOnOpen = <GItem = any>(
-  props: Pick<MultishiftProps<GItem>, 'items' | 'initialHighlightedIndexes' | 'defaultHighlightedIndexes'>,
-  state: MultishiftState<GItem>,
+export function getHighlightedIndexOnOpen<Item = any>(
+  props: Pick<
+    MultishiftProps<Item>,
+    'items' | 'initialHighlightedIndexes' | 'defaultHighlightedIndexes'
+  >,
+  state: MultishiftState<Item>,
   offset: number,
-  getItemId: GetItemId<GItem>,
-): number[] => {
+  getItemId: GetItemId<Item>,
+): number[] {
   const { items, initialHighlightedIndexes, defaultHighlightedIndexes } = props;
   const { selectedItems, highlightedIndexes } = state;
 
   // initialHighlightedIndexes will give value to highlightedIndex on initial
   // state only.
-  if (!isUndefined(initialHighlightedIndexes) && highlightedIndexes.length) {
+  if (!isUndefined(initialHighlightedIndexes) && !isEmptyArray(highlightedIndexes)) {
     return initialHighlightedIndexes;
   }
 
@@ -382,10 +432,10 @@ export const getHighlightedIndexOnOpen = <GItem = any>(
     return defaultHighlightedIndexes;
   }
 
-  if (selectedItems.length) {
+  if (!isEmptyArray(selectedItems)) {
     const idsOfItems = items.map(getItemId);
     const index = selectedItems
-      .map(selectedItem => idsOfItems.indexOf(getItemId(selectedItem)))
+      .map((selectedItem) => idsOfItems.indexOf(getItemId(selectedItem)))
       .findIndex(isValidIndex);
 
     if (!isValidIndex(index)) {
@@ -396,7 +446,12 @@ export const getHighlightedIndexOnOpen = <GItem = any>(
       return [index];
     }
 
-    return getNextWrappingIndexes({ steps: offset, start: index, size: items.length, circular: false });
+    return getNextWrappingIndexes({
+      steps: offset,
+      start: index,
+      size: items.length,
+      circular: false,
+    });
   }
 
   if (offset === 0) {
@@ -404,22 +459,24 @@ export const getHighlightedIndexOnOpen = <GItem = any>(
   }
 
   return offset < 0 ? [items.length - 1] : [0];
-};
+}
 
 /**
  * Get the item index from the items prop.
  */
-export const getItemIndex = <GItem = any>(index: number, item: GItem, items: GItem[]) => {
+export function getItemIndex<Item = any>(index: number, item: Item, items: Item[]): number {
   if (index !== undefined) {
     return index;
   }
+
   if (items.length === 0) {
     return -1;
   }
-  return items.indexOf(item);
-};
 
-type GetLastHighlightParams = Pick<
+  return items.indexOf(item);
+}
+
+type GetLastHighlightProps = Pick<
   MultishiftState,
   'highlightedIndexes' | 'highlightedGroupEndIndex' | 'highlightedGroupStartIndex'
 >;
@@ -429,11 +486,10 @@ type GetLastHighlightParams = Pick<
  *
  * Returns -1 when no highlighted index is found.
  */
-export const getMostRecentHighlightIndex = ({
-  highlightedGroupEndIndex,
-  highlightedGroupStartIndex,
-  highlightedIndexes,
-}: GetLastHighlightParams) => {
+export function getMostRecentHighlightIndex(lastHighlight: GetLastHighlightProps): number {
+  const { highlightedGroupEndIndex, highlightedGroupStartIndex, highlightedIndexes } =
+    lastHighlight;
+
   const lastIndex = last(highlightedIndexes);
   return isValidIndex(highlightedGroupEndIndex)
     ? highlightedGroupEndIndex
@@ -442,56 +498,64 @@ export const getMostRecentHighlightIndex = ({
     : isValidIndex(lastIndex)
     ? lastIndex
     : -1;
-};
+}
 
 /**
  * Check if the browser is running on a mac.
  */
-export const isMac = () => /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+export const isMac = (): boolean => /Mac|iPod|iPhone|iPad/.test(navigator.platform);
 
-interface GetChangesFromItemClickParams<GItem = any> {
+interface GetChangesFromItemClickProps<Item = any> {
   modifiers: Modifier[];
   index: number;
-  items: GItem[];
+  items: Item[];
   props: MultishiftBehaviorProps;
-  defaultState: MultishiftState<GItem>;
-  state: MultishiftState<GItem>;
-  getItemId: GetItemId<GItem>;
+  defaultState: MultishiftState<Item>;
+  state: MultishiftState<Item>;
+  getItemId: GetItemId<Item>;
 }
 
 /**
  * Returns true when all items are selected within the list.
  */
-export const allItemsSelected = <GItem = any>(
-  currentItems: GItem[],
-  newItems: GItem[],
-  getItemId: GetItemId<GItem>,
-) =>
-  newItems.length
-    ? newItems.every(newItem => currentItems.some(item => getItemId(item) === getItemId(newItem)))
+export function allItemsSelected<Item = any>(
+  currentItems: Item[],
+  newItems: Item[],
+  getItemId: GetItemId<Item>,
+): boolean {
+  return !isEmptyArray(newItems)
+    ? newItems.every((newItem) =>
+        currentItems.some((item) => getItemId(item) === getItemId(newItem)),
+      )
     : false;
+}
 
 /**
  * Adds the list of `newItems` to the list of `prevItems`. If `multiple` is
  * false (or undefined) then simply replace the array with the first item from
  * the `newItems` list.
  */
-export const addItems = <GItem = any>(
-  currentItems: GItem[],
-  newItems: GItem[],
-  getItemId: GetItemId<GItem>,
+export function addItems<Item = any>(
+  currentItems: Item[],
+  newItems: Item[],
+  getItemId: GetItemId<Item>,
   multiple?: boolean,
-) => (multiple ? uniqueBy([...currentItems, ...newItems], getItemId, true) : take(newItems, 1));
+): Item[] {
+  return multiple ? uniqueBy([...currentItems, ...newItems], getItemId, true) : take(newItems, 1);
+}
 
 /**
  * Remove all `removalItems` from the `prevItems` array.
  */
-export const removeItems = <GItem = any>(
-  currentItems: GItem[],
-  removalItems: GItem[],
-  getItemId: GetItemId<GItem>,
-) =>
-  currentItems.filter(prevItem => !removalItems.some(newItem => getItemId(newItem) === getItemId(prevItem)));
+export function removeItems<Item = any>(
+  currentItems: Item[],
+  removalItems: Item[],
+  getItemId: GetItemId<Item>,
+): Item[] {
+  return currentItems.filter(
+    (prevItem) => !removalItems.some((newItem) => getItemId(newItem) === getItemId(prevItem)),
+  );
+}
 
 /**
  * Toggles the selected items.
@@ -503,27 +567,28 @@ export const removeItems = <GItem = any>(
  *
  * When multiple is false or undefined it will only return one element.
  */
-export const toggleSelectedItems = <GItem = any>(
-  currentItems: GItem[],
-  toggleItems: GItem[],
-  getItemId: GetItemId<GItem>,
+export function toggleSelectedItems<Item = any>(
+  currentItems: Item[],
+  toggleItems: Item[],
+  getItemId: GetItemId<Item>,
   multiple?: boolean,
-) =>
-  allItemsSelected(currentItems, toggleItems, getItemId)
+): Item[] {
+  return allItemsSelected(currentItems, toggleItems, getItemId)
     ? removeItems(currentItems, toggleItems, getItemId)
     : addItems(currentItems, toggleItems, getItemId, multiple);
+}
 
 /**
  * Get an array of all the highlighted items Including any from the currently
  * incomplete group.
  */
-export const getHighlightedIndexes = <GItem = any>({
+export function getHighlightedIndexes<Item = any>({
   start,
   end,
   indexes,
   items,
   hoveredIndex,
-}: GetHighlightedIndexesParams<GItem>) => {
+}: GetHighlightedIndexesProps<Item>): number[] {
   const max = items.length - 1;
   const groupIndexes = isValidIndex(start)
     ? range(
@@ -535,31 +600,36 @@ export const getHighlightedIndexes = <GItem = any>({
   const hoveredIndexes = isValidIndex(hoveredIndex) ? [hoveredIndex] : [];
 
   return uniqueArray([...hoveredIndexes, ...indexes, ...groupIndexes], true);
-};
+}
 
 /**
  * Checks whether the an index is highlighted within a set of indexes and a
  * highlighted group.
  */
-export const checkItemHighlighted = (
+export function checkItemHighlighted(
   index: number,
-  { start, end, indexes }: Omit<GetHighlightedIndexesParams, 'items'>,
-) => indexes.includes(index) || within(index, start, end);
+  options: Omit<GetHighlightedIndexesProps, 'items'>,
+): boolean {
+  const { start, end, indexes } = options;
+  return indexes.includes(index) || within(index, start, end);
+}
 
 /**
  * Removes any unchanged values from the changes object so that only the correct
  * callbacks are triggered.
  */
-export const omitUnchangedState = <GItem = any>(
-  changes: MultishiftStateProps<GItem>,
-  { state, getItemId }: OmitUnchangedParams<GItem>,
-): MultishiftStateProps<GItem> => {
+export function omitUnchangedState<Item = any>(
+  changes: MultishiftStateProps<Item>,
+  { state, getItemId }: OmitUnchangedProps<Item>,
+): MultishiftStateProps<Item> {
   return omit(changes, (value, key) => {
     if (isArray(value)) {
       if (key === 'selectedItems') {
         return (
           value.length !== state.selectedItems.length ||
-          (value as GItem[]).some((item, index) => getItemId(item) !== getItemId(state.selectedItems[index]))
+          (value as Item[]).some(
+            (item, index) => getItemId(item) !== getItemId(assertGet(state.selectedItems, index)),
+          )
         );
       }
 
@@ -573,12 +643,12 @@ export const omitUnchangedState = <GItem = any>(
 
     return value !== state[key];
   });
-};
+}
 
 /**
  * Create the desired change object when an item is clicked.
  */
-export const getChangesFromItemClick = <GItem = any>({
+export function getChangesFromItemClick<Item = any>({
   modifiers,
   items,
   defaultState,
@@ -586,21 +656,26 @@ export const getChangesFromItemClick = <GItem = any>({
   index,
   props,
   getItemId,
-}: GetChangesFromItemClickParams<GItem>): MultishiftStateProps<GItem> => {
+}: GetChangesFromItemClickProps<Item>): MultishiftStateProps<Item> {
   const selectedItem = items[index];
-  const selectedItems = toggleSelectedItems(state.selectedItems, [selectedItem], getItemId, props.multiple);
   const isOpen = props.multiple ? true : defaultState.isOpen;
-  const defaultReturn: MultishiftStateProps<GItem> = {
+  const params = { state, getItemId };
+  const defaultReturn: MultishiftStateProps<Item> = {
     highlightedGroupEndIndex: defaultState.highlightedGroupEndIndex,
     highlightedGroupStartIndex: props.multiple ? index : defaultState.highlightedGroupStartIndex,
   };
-
-  const params = { state, getItemId };
 
   if (!selectedItem) {
     // TODO check if this logic is desirable
     return { ...defaultReturn, isOpen };
   }
+
+  const selectedItems = toggleSelectedItems(
+    state.selectedItems,
+    [selectedItem],
+    getItemId,
+    props.multiple,
+  );
 
   // Check if the modifier for selecting multiple items is pressed.
   const shiftKeyPressed = modifiers.includes('shiftKey');
@@ -634,7 +709,7 @@ export const getChangesFromItemClick = <GItem = any>({
 
     const extra = isHighlighted
       ? {
-          highlightedIndexes: indexes.filter(ii => ii !== index),
+          highlightedIndexes: indexes.filter((ii) => ii !== index),
           highlightedGroupEndIndex: undefined,
           highlightedGroupStartIndex: -1,
         }
@@ -668,9 +743,9 @@ export const getChangesFromItemClick = <GItem = any>({
     },
     params,
   );
-};
+}
 
-interface GetHighlightedIndexesParams<GItem = any> {
+interface GetHighlightedIndexesProps<Item = any> {
   /**
    * The current highlighted indexes
    */
@@ -689,7 +764,7 @@ interface GetHighlightedIndexesParams<GItem = any> {
   /**
    * The items being rendered right now.
    */
-  items: GItem[];
+  items: Item[];
 
   /**
    * If included will also include the hovered index.
@@ -702,8 +777,8 @@ interface GetHighlightedIndexesParams<GItem = any> {
  *
  * @param event - the keyboard event
  */
-export const getKeyName = (event: KeyboardEvent<HTMLElement>) => {
-  const key = keyNames.keyName(event.nativeEvent);
+export function getKeyName(event: KeyboardEvent<HTMLElement>): string {
+  const key = keyName(event.nativeEvent);
 
   if (key === ' ') {
     return 'Space';
@@ -714,29 +789,30 @@ export const getKeyName = (event: KeyboardEvent<HTMLElement>) => {
   }
 
   return key;
-};
+}
 
 /**
  * Log a warning when using in an internal type that doesn't get resolved.
  */
-export const warnIfInternalType = (type: string, message = '') => {
-  if (type.startsWith('$$')) {
-    console.warn(message);
-  }
-};
+export function warnIfInternalType(type: string, message = ''): void {
+  warning(!type.startsWith('$$'), message);
+}
 
-interface CreateChangesFromKeyDownParams<GItem = any> {
-  state: MultishiftState<GItem>;
+interface CreateChangesFromKeyDownProps<Item = any> {
+  state: MultishiftState<Item>;
   modifiers: Modifier[];
-  defaultState: MultishiftState<GItem>;
+  defaultState: MultishiftState<Item>;
   key: SpecialKey;
-  props: MultishiftProps<GItem>;
-  items: GItem[];
-  getItemId: GetItemId<GItem>;
+  props: MultishiftProps<Item>;
+  items: Item[];
+  getItemId: GetItemId<Item>;
   disabled: number[];
 }
 
-export const getChangesFromMenuKeyDown = <GItem = any>({
+/**
+ * Get the changes that have happened when a menu key is pressed.
+ */
+export function getChangesFromMenuKeyDown<Item = any>({
   modifiers,
   defaultState,
   state,
@@ -745,7 +821,7 @@ export const getChangesFromMenuKeyDown = <GItem = any>({
   getItemId,
   props,
   disabled,
-}: CreateChangesFromKeyDownParams<GItem>): MultishiftStateProps<GItem> => {
+}: CreateChangesFromKeyDownProps<Item>): MultishiftStateProps<Item> {
   // Check if the modifier for selecting multiple items is pressed.
   const shiftKeyPressed = modifiers.includes('shiftKey');
   const metaKeyPressed = modifiers.includes('metaKey'); // Mac only
@@ -759,7 +835,7 @@ export const getChangesFromMenuKeyDown = <GItem = any>({
     indexes: state.highlightedIndexes,
     hoveredIndex: props.includeHoveredIndexInSelection ? state.hoveredIndex : undefined,
     items,
-  }).filter(index => !disabled.includes(index));
+  }).filter((index) => !disabled.includes(index));
 
   if (key === 'Escape') {
     return omitUnchangedState(
@@ -772,7 +848,7 @@ export const getChangesFromMenuKeyDown = <GItem = any>({
   }
 
   if (key === 'Enter' || key === 'Space') {
-    const highlightedItems = indexes.map(index => items[index]);
+    const highlightedItems = indexes.map((index) => assertGet(items, index));
     const highlights = props.multiple
       ? {}
       : { ...highlightReset, highlightedIndexes: [mostRecentHighlightIndex] };
@@ -798,7 +874,7 @@ export const getChangesFromMenuKeyDown = <GItem = any>({
     // starting index to the previous highlighted index so that it retains that
     // for the next render.
     const changes = {
-      highlightedIndexes: range(0, items.length - 1).filter(index => !disabled.includes(index)),
+      highlightedIndexes: range(0, items.length - 1).filter((index) => !disabled.includes(index)),
       highlightedGroupStartIndex: mostRecentHighlightIndex,
       highlightedGroupEndIndex: defaultState.highlightedGroupEndIndex,
     };
@@ -868,16 +944,17 @@ export const getChangesFromMenuKeyDown = <GItem = any>({
   }
 
   return {};
-};
+}
 
-export const getChangesFromToggleButtonKeyDown = <GItem = any>({
+export function getChangesFromToggleButtonKeyDown<Item = any>({
   key,
   defaultState,
   props,
   getItemId,
   state,
-}: CreateChangesFromKeyDownParams<GItem>): MultishiftStateProps<GItem> => {
+}: CreateChangesFromKeyDownProps<Item>): MultishiftStateProps<Item> {
   const params = { state, getItemId };
+
   if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === 'Space') {
     const isNext = key === 'ArrowDown';
     const isPrev = key === 'ArrowUp';
@@ -911,38 +988,42 @@ export const getChangesFromToggleButtonKeyDown = <GItem = any>({
   }
 
   return {};
-};
+}
 
-export const getChangesFromInputKeyDown = <GItem = any>(
-  params: CreateChangesFromKeyDownParams<GItem>,
-): MultishiftStateProps<GItem> => {
+export const getChangesFromInputKeyDown = <Item = any>(
+  params: CreateChangesFromKeyDownProps<Item>,
+): MultishiftStateProps<Item> => {
   return getChangesFromMenuKeyDown(params);
 };
 
-/**
- * Get an array of the event modifiers
- */
-export const getModifiers = (event: {
+const modifierKeys = ['altKey', 'shiftKey', 'metaKey', 'ctrlKey'] as const;
+
+interface GetModifiersEvent {
   altKey: boolean;
   ctrlKey: boolean;
   metaKey: boolean;
   shiftKey: boolean;
-}) => (['altKey', 'shiftKey', 'metaKey', 'ctrlKey'] as const).filter(key => event[key]);
+}
+
+/**
+ * Get an array of the event modifiers
+ */
+export function getModifiers(event: GetModifiersEvent): Array<typeof modifierKeys[number]> {
+  return modifierKeys.filter((key) => event[key]);
+}
 
 /**
  * This is intended to be used to compose event handlers. They are executed in
  * order until one of them returns a truthy value.
  */
-export const callAllEventHandlers = <
-  GEvent extends Event = any,
-  GElement extends Element = any,
-  GSyntheticEvent extends SyntheticEvent<GElement, GEvent> = SyntheticEvent<GElement, GEvent>,
-  GFunction extends (event: GSyntheticEvent, ...args: any[]) => void | undefined | false | true = AnyFunction
->(
-  ...fns: Array<GFunction | undefined | null | false>
-) => {
-  return (event: GSyntheticEvent, ...args: any[]) => {
-    fns.some(fn => {
+export function callAllEventHandlers<
+  Type extends Event = any,
+  Node extends Element = any,
+  Synth extends SyntheticEvent<Element, Type> = SyntheticEvent<Node, Type>,
+  Method extends (event: Synth, ...args: any[]) => void | undefined | false | true = AnyFunction,
+>(...fns: Array<Method | undefined | null | false>) {
+  return (event: Synth, ...args: any[]): void => {
+    fns.some((fn) => {
       if (fn) {
         return fn(event, ...args) === true;
       }
@@ -950,78 +1031,80 @@ export const callAllEventHandlers = <
       return false;
     });
   };
-};
+}
 
-const bindActionCreator = <GAction, GCreator extends ActionCreator<GAction>, GDispatch extends Dispatch<any>>(
-  actionCreator: GCreator,
-  dispatch: GDispatch,
-) => (...args: Parameters<GCreator>) => dispatch(actionCreator(...args));
+function bindActionCreator<
+  Action,
+  Creator extends ActionCreator<Action>,
+  ActionDispatch extends Dispatch<any>,
+>(actionCreator: Creator, dispatch: ActionDispatch) {
+  return (...args: Parameters<Creator>) => dispatch(actionCreator(...args));
+}
 
 /**
  * Turns an object whose values are action creators, into an object with the
  * same keys, but with every function wrapped into a `dispatch` call so they may
  * be invoked directly.
  */
-export const bindActionCreators = <
-  GAction,
-  GCreatorMap extends ActionCreatorsMapObject<GAction>,
-  GDispatch extends Dispatch<any>
->(
-  actionCreators: GCreatorMap,
-  dispatch: GDispatch,
-): ActionCreatorMapToDispatch<GCreatorMap> => {
-  const boundActionCreators: ActionCreatorMapToDispatch<GCreatorMap> = Object.create(null);
+export function bindActionCreators<
+  Action,
+  CreatorMap extends ActionCreatorsMapObject<Action>,
+  ActionDispatch extends Dispatch<any>,
+>(actionCreators: CreatorMap, dispatch: ActionDispatch): ActionCreatorMapToDispatch<CreatorMap> {
+  const boundActionCreators: ActionCreatorMapToDispatch<CreatorMap> = object();
   const creatorKeys = keys(actionCreators);
 
   for (const key of creatorKeys) {
-    const actionCreator = actionCreators[key];
+    const actionCreator = assertGet(actionCreators, key);
     boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
   }
 
   return boundActionCreators;
-};
+}
 
 /**
  * Create a payload for the keydown event.
  */
-export const createKeyDownPayload = <GElement extends HTMLElement = any>(
-  event: KeyboardEvent<GElement>,
+export function createKeyDownPayload(
+  event: KeyboardEvent,
   key: SpecialKey,
   disabled: number[],
-): SpecialKeyDownPayload => {
+): SpecialKeyDownPayload {
   return {
     event,
     key,
     modifiers: getModifiers(event),
     disabled,
   };
-};
+}
 
 /**
  * Create a payload for the item click event.
  */
-export const createItemClickPayload = (event: any, index: number): ItemClickPayload => {
+export function createItemClickPayload(event: React.MouseEvent, index: number): ItemClickPayload {
   return {
     event,
     modifiers: getModifiers(event),
     index,
   };
-};
+}
 
 /**
  * Check that the character is valid for jumpText.
  */
-export const isValidCharacterKey = (key: string) => /^\S{1}$/.test(key);
+export function isValidCharacterKey(key: string): boolean {
+  return /^\S$/.test(key);
+}
 
 /**
  * Scroll node into view if necessary
  * @param element - the element that should scroll into view
  * @param menuElement - the menu element of the component
  */
-export const scrollIntoView = (
+export function scrollIntoView(
   element: Nullable<HTMLElement> | null | undefined,
   menuElement: Nullable<HTMLElement>,
-) => {
+): void {
   if (!element || !menuElement) {
     return;
   }
@@ -1036,17 +1119,20 @@ export const scrollIntoView = (
     el.scrollTop = top;
     el.scrollLeft = left;
   });
-};
+}
 
 /**
  * Checks whether the passed value is a valid dom node
  *
  * @param domNode - the dom node
  */
-export const isNode = (domNode: unknown): domNode is Node =>
-  isObject(Node)
+export function isNode(domNode: unknown): domNode is Node {
+  return isObject(Node)
     ? domNode instanceof Node
-    : isObject(domNode) && isNumber((domNode as any).nodeType) && isString((domNode as any).nodeName);
+    : isObject(domNode) &&
+        isNumber((domNode as any).nodeType) &&
+        isString((domNode as any).nodeName);
+}
 
 /**
  * Checks for an element node like `<p>` or `<div>`.
@@ -1059,35 +1145,43 @@ export const isHTMLElement = (domNode: unknown): domNode is HTMLElement =>
 /**
  * Checks that this is a browser environment.
  */
-export const isBrowser = () =>
-  typeof window !== 'undefined' &&
-  typeof window.document !== 'undefined' &&
-  window.navigator &&
-  window.navigator.userAgent;
+export function isBrowser(): boolean {
+  return !!(
+    typeof window !== 'undefined' &&
+    typeof window.document !== 'undefined' &&
+    window.navigator &&
+    window.navigator.userAgent
+  );
+}
 
 /**
  * Checks whether the parent contains (or is the same as) the child node.
  */
-export const isOrContainsNode = (parent: Node, child: Node | null): child is Node => {
+export function isOrContainsNode(parent: Node, child: Node | null): child is Node {
   return parent === child || parent.contains(child);
-};
+}
 
-interface OmitUnchangedParams<GItem = any> {
-  state: MultishiftState<GItem>;
-  getItemId: GetItemId<GItem>;
+interface OmitUnchangedProps<Item = any> {
+  state: MultishiftState<Item>;
+  getItemId: GetItemId<Item>;
 }
 
 /**
  * Helpers for transforming the state object.
  */
-export const createStateHelpers = <GItem = any>(
-  { getItemId = defaultGetItemId, multiple }: MultishiftProps<GItem>,
-  state: MultishiftState<GItem>,
-) => ({
-  addItems: (itemsToAdd: GItem[]) => addItems(state.selectedItems, itemsToAdd, getItemId, multiple),
-  addItem: (itemToAdd: GItem) => addItems(state.selectedItems, [itemToAdd], getItemId, multiple),
-  removeItems: (itemsToRemove: GItem[]) => removeItems(state.selectedItems, itemsToRemove, getItemId),
-  removeItem: (itemToRemove: GItem) => removeItems(state.selectedItems, [itemToRemove], getItemId),
-  toggleItems: (itemsToToggle: GItem[]) => removeItems(state.selectedItems, itemsToToggle, getItemId),
-  toggleItem: (itemToToggle: GItem) => removeItems(state.selectedItems, [itemToToggle], getItemId),
-});
+export function createStateHelpers<Item = any>(
+  { getItemId = defaultGetItemId, multiple }: MultishiftProps<Item>,
+  state: MultishiftState<Item>,
+): MultishiftStateHelpers<Item> {
+  return {
+    addItems: (itemsToAdd: Item[]) =>
+      addItems(state.selectedItems, itemsToAdd, getItemId, multiple),
+    addItem: (itemToAdd: Item) => addItems(state.selectedItems, [itemToAdd], getItemId, multiple),
+    removeItems: (itemsToRemove: Item[]) =>
+      removeItems(state.selectedItems, itemsToRemove, getItemId),
+    removeItem: (itemToRemove: Item) => removeItems(state.selectedItems, [itemToRemove], getItemId),
+    toggleItems: (itemsToToggle: Item[]) =>
+      removeItems(state.selectedItems, itemsToToggle, getItemId),
+    toggleItem: (itemToToggle: Item) => removeItems(state.selectedItems, [itemToToggle], getItemId),
+  };
+}

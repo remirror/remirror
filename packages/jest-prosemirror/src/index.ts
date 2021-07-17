@@ -20,7 +20,9 @@
  * ## Installation
  *
  * ```bash
- * yarn add jest-prosemirror
+ * yarn add jest-prosemirror # yarn
+ * pnpm add jest-prosemirror # pnpm
+ * npm install jest-prosemirror # npm
  * ```
  *
  * ## Getting started
@@ -95,11 +97,11 @@
  * @packageDocumentation
  */
 
-export * from './jest-prosemirror-matchers';
+export * from './jest-prosemirror-editor';
 export * from './jest-prosemirror-environment';
+export * from './jest-prosemirror-events';
+export * from './jest-prosemirror-matchers';
 export * from './jest-prosemirror-nodes';
 export * from './jest-prosemirror-schema';
-export * from './jest-prosemirror-types';
-export * from './jest-prosemirror-editor';
-export * from './jest-prosemirror-events';
 export * from './jest-prosemirror-serializer';
+export * from './jest-prosemirror-types';

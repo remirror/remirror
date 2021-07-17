@@ -1,13 +1,12 @@
-import { NodeSpec, Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
+import { tableNodes } from 'prosemirror-tables';
+import { ExtensionTag } from '@remirror/core-constants';
+import { MarkSpec, NodeSpec, Schema } from '@remirror/pm/model';
 import {
   bulletList as baseBulletList,
   listItem as baseListItem,
   orderedList as baseOrderedList,
-} from 'prosemirror-schema-list';
-import { tableNodes } from 'prosemirror-tables';
-
-import { NodeGroup } from '@remirror/core-constants';
+} from '@remirror/pm/schema-list';
 
 const {
   doc,
@@ -20,6 +19,7 @@ const {
   hard_break,
   image,
 } = nodes;
+const { link, em, strong, code } = marks;
 const { table, table_cell, table_header, table_row } = tableNodes({
   tableGroup: 'block',
   cellContent: 'block+',
@@ -53,7 +53,7 @@ const atomInline: NodeSpec = {
 
 const atomBlock: NodeSpec = {
   inline: false,
-  group: NodeGroup.Block,
+  group: ExtensionTag.Block,
   atom: true,
   selectable: true,
   parseDOM: [
@@ -68,7 +68,7 @@ const atomBlock: NodeSpec = {
 
 const atomContainer: NodeSpec = {
   inline: false,
-  group: NodeGroup.Block,
+  group: ExtensionTag.Block,
   content: 'atomBlock+',
   parseDOM: [
     {
@@ -82,7 +82,7 @@ const atomContainer: NodeSpec = {
 
 const containerWithRestrictedContent: NodeSpec = {
   inline: false,
-  group: NodeGroup.Block,
+  group: ExtensionTag.Block,
   content: 'paragraph+',
   parseDOM: [
     {
@@ -91,6 +91,27 @@ const containerWithRestrictedContent: NodeSpec = {
   ],
   toDOM: () => {
     return ['div', { 'data-node-type': 'containerWithRestrictedContent' }];
+  },
+};
+
+const strike: MarkSpec = {
+  parseDOM: [
+    {
+      tag: 's',
+    },
+    {
+      tag: 'del',
+    },
+    {
+      tag: 'strike',
+    },
+    {
+      style: 'text-decoration',
+      getAttrs: (node) => (node === 'line-through' ? {} : false),
+    },
+  ],
+  toDOM: () => {
+    return ['s', 0];
   },
 };
 
@@ -117,5 +138,11 @@ export const schema = new Schema({
     hard_break,
     image,
   },
-  marks,
+  marks: {
+    link,
+    em,
+    strong,
+    code,
+    strike,
+  },
 });

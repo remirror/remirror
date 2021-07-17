@@ -1,7 +1,8 @@
 import { isString } from '@remirror/core-helpers';
 
 /**
- * See {@link https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js}
+ * See
+ * {@link https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js}
  */
 const rawUSKeyboardLayout = {
   '0': { keyCode: 48, key: '0', code: 'Digit0' },
@@ -20,7 +21,14 @@ const rawUSKeyboardLayout = {
   Help: { keyCode: 6, code: 'Help', key: 'Help' },
   Backspace: { keyCode: 8, code: 'Backspace', key: 'Backspace' },
   Tab: { keyCode: 9, code: 'Tab', key: 'Tab' },
-  Numpad5: { keyCode: 12, shiftKeyCode: 101, key: 'Clear', code: 'Numpad5', shiftKey: '5', location: 3 },
+  Numpad5: {
+    keyCode: 12,
+    shiftKeyCode: 101,
+    key: 'Clear',
+    code: 'Numpad5',
+    shiftKey: '5',
+    location: 3,
+  },
   NumpadEnter: { keyCode: 13, code: 'NumpadEnter', key: 'Enter', text: '\r', location: 3 },
   Enter: { keyCode: 13, code: 'Enter', key: 'Enter', text: '\r' },
   '\r': { keyCode: 13, code: 'Enter', key: 'Enter', text: '\r' },
@@ -37,28 +45,91 @@ const rawUSKeyboardLayout = {
   Convert: { keyCode: 28, code: 'Convert', key: 'Convert' },
   NonConvert: { keyCode: 29, code: 'NonConvert', key: 'NonConvert' },
   Space: { keyCode: 32, code: 'Space', key: ' ' },
-  Numpad9: { keyCode: 33, shiftKeyCode: 105, key: 'PageUp', code: 'Numpad9', shiftKey: '9', location: 3 },
+  Numpad9: {
+    keyCode: 33,
+    shiftKeyCode: 105,
+    key: 'PageUp',
+    code: 'Numpad9',
+    shiftKey: '9',
+    location: 3,
+  },
   PageUp: { keyCode: 33, code: 'PageUp', key: 'PageUp' },
-  Numpad3: { keyCode: 34, shiftKeyCode: 99, key: 'PageDown', code: 'Numpad3', shiftKey: '3', location: 3 },
+  Numpad3: {
+    keyCode: 34,
+    shiftKeyCode: 99,
+    key: 'PageDown',
+    code: 'Numpad3',
+    shiftKey: '3',
+    location: 3,
+  },
   PageDown: { keyCode: 34, code: 'PageDown', key: 'PageDown' },
   End: { keyCode: 35, code: 'End', key: 'End' },
-  Numpad1: { keyCode: 35, shiftKeyCode: 97, key: 'End', code: 'Numpad1', shiftKey: '1', location: 3 },
+  Numpad1: {
+    keyCode: 35,
+    shiftKeyCode: 97,
+    key: 'End',
+    code: 'Numpad1',
+    shiftKey: '1',
+    location: 3,
+  },
   Home: { keyCode: 36, code: 'Home', key: 'Home' },
-  Numpad7: { keyCode: 36, shiftKeyCode: 103, key: 'Home', code: 'Numpad7', shiftKey: '7', location: 3 },
+  Numpad7: {
+    keyCode: 36,
+    shiftKeyCode: 103,
+    key: 'Home',
+    code: 'Numpad7',
+    shiftKey: '7',
+    location: 3,
+  },
   ArrowLeft: { keyCode: 37, code: 'ArrowLeft', key: 'ArrowLeft' },
-  Numpad4: { keyCode: 37, shiftKeyCode: 100, key: 'ArrowLeft', code: 'Numpad4', shiftKey: '4', location: 3 },
-  Numpad8: { keyCode: 38, shiftKeyCode: 104, key: 'ArrowUp', code: 'Numpad8', shiftKey: '8', location: 3 },
+  Numpad4: {
+    keyCode: 37,
+    shiftKeyCode: 100,
+    key: 'ArrowLeft',
+    code: 'Numpad4',
+    shiftKey: '4',
+    location: 3,
+  },
+  Numpad8: {
+    keyCode: 38,
+    shiftKeyCode: 104,
+    key: 'ArrowUp',
+    code: 'Numpad8',
+    shiftKey: '8',
+    location: 3,
+  },
   ArrowUp: { keyCode: 38, code: 'ArrowUp', key: 'ArrowUp' },
   ArrowRight: { keyCode: 39, code: 'ArrowRight', key: 'ArrowRight' },
-  Numpad6: { keyCode: 39, shiftKeyCode: 102, key: 'ArrowRight', code: 'Numpad6', shiftKey: '6', location: 3 },
-  Numpad2: { keyCode: 40, shiftKeyCode: 98, key: 'ArrowDown', code: 'Numpad2', shiftKey: '2', location: 3 },
+  Numpad6: {
+    keyCode: 39,
+    shiftKeyCode: 102,
+    key: 'ArrowRight',
+    code: 'Numpad6',
+    shiftKey: '6',
+    location: 3,
+  },
+  Numpad2: {
+    keyCode: 40,
+    shiftKeyCode: 98,
+    key: 'ArrowDown',
+    code: 'Numpad2',
+    shiftKey: '2',
+    location: 3,
+  },
   ArrowDown: { keyCode: 40, code: 'ArrowDown', key: 'ArrowDown' },
   Select: { keyCode: 41, code: 'Select', key: 'Select' },
   Open: { keyCode: 43, code: 'Open', key: 'Execute' },
 
   PrintScreen: { keyCode: 44, code: 'PrintScreen', key: 'PrintScreen' },
   Insert: { keyCode: 45, code: 'Insert', key: 'Insert' },
-  Numpad0: { keyCode: 45, shiftKeyCode: 96, key: 'Insert', code: 'Numpad0', shiftKey: '0', location: 3 },
+  Numpad0: {
+    keyCode: 45,
+    shiftKeyCode: 96,
+    key: 'Insert',
+    code: 'Numpad0',
+    shiftKey: '0',
+    location: 3,
+  },
   Delete: { keyCode: 46, code: 'Delete', key: 'Delete' },
   NumpadDecimal: {
     keyCode: 46,
@@ -344,9 +415,11 @@ export type USKeyboardLayout = typeof rawUSKeyboardLayout;
 export type SupportedCharacters = Extract<keyof USKeyboardLayout, string>;
 
 /**
- * Predicate for checking if the passed char is a supported character for the US Keyboard
+ * Predicate for checking if the passed char is a supported character for the US
+ * Keyboard
  *
  * @param char
  */
-export const isUSKeyboardCharacter = (char: unknown): char is SupportedCharacters =>
-  isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
+export function isUSKeyboardCharacter(char: unknown): char is SupportedCharacters {
+  return isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
+}

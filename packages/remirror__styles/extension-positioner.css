@@ -1,0 +1,25 @@
+/**
+ * Styles extracted from: packages/remirror__theme/src/extension-positioner-theme.ts
+ */
+.remirror-editor.ProseMirror {
+  position: relative;
+}
+
+.remirror-positioner {
+  position: absolute;
+  min-width: 1px;
+  min-height: 1px;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: none;
+  z-index: -1;
+}
+
+.remirror-positioner-widget {
+  width: 0;
+  height: 0;
+  position: absolute;
+}

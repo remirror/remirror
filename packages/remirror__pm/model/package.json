@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-model.cjs.js",
+  "module": "dist/remirror-pm-model.esm.js",
+  "browser": {
+    "./dist/remirror-pm-model.cjs.js": "./dist/remirror-pm-model.browser.cjs.js",
+    "./dist/remirror-pm-model.esm.js": "./dist/remirror-pm-model.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-model.cjs.d.ts",
+  "rn:dev": "../src/model.ts"
+}

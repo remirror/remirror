@@ -1,0 +1,3 @@
+# @remirror/editor-social
+
+**DEPRECATED**

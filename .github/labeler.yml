@@ -1,0 +1,93 @@
+# Documentation is available here https://github.com/actions/labeler
+
+'type: deprecation :wastebasket:':
+  - any: ['support/deprecated/**/*']
+
+'type: ci :evergreen_tree:':
+  - any:
+      [
+        '.github/**/*',
+        'support/azure/**/*',
+        '!.github/ISSUE_TEMPLATE/**',
+        '!.github/**/*.md',
+        '.devcontainer/**',
+      ]
+
+'package: jest-prosemirror :performing_arts:':
+  - any:
+      [
+        'packages/jest-prosemirror/**/*.{ts,tsx,json}',
+        '!packages/jest-prosemirror/**/*.spec.{ts,tsx}',
+      ]
+
+'package: jest-remirror :black_joker:':
+  - any: ['packages/jest-remirror/**/*.{ts,tsx,json}', '!packages/jest-remirror/**/*.spec.{ts,tsx}']
+
+'package: prosemirror-suggest :bulb:':
+  - any:
+      [
+        'packages/prosemirror-suggest/**/*.{ts,tsx,json}',
+        '!packages/prosemirror-suggest/**/*.spec.{ts,tsx}',
+      ]
+
+'package: multishift :arrow_down_small:':
+  - any: ['packages/multishift/**/*.{ts,tsx,json}', '!packages/multishift/**/*.spec.{ts,tsx}']
+
+'package: remirror :purple_circle:':
+  - any:
+      [
+        'packages/{remirror,@remirror}/**/*.{ts,tsx,json}',
+        '!packages/remirror__playground/**/*',
+        '!packages/remirror__cli/**/*',
+        '**/*.spec.{ts,tsx}',
+      ]
+
+'framework: react :atom_symbol:':
+  - any:
+      [
+        'packages/remirror__*react*/**/*.{ts,tsx,json}',
+        '!packages/remirror__*react*/**/*.spec.{ts,tsx}',
+      ]
+
+'framework: dom :globe_with_meridians:':
+  - any:
+      [
+        'packages/remirror__*dom*/**/*.{ts,tsx,json}',
+        '!packages/remirror__*dom*/**/*.spec.{ts,tsx}',
+      ]
+
+'package: @remirror/cli :pager:':
+  - any: ['packages/remirror__cli/**/*.{ts,tsx,json}', '!packages/remirror__cli/**/*.spec.{ts,tsx}']
+
+'type: ui :nail_care:':
+  - any:
+      [
+        'packages/remirror__{styles,theme,react-components}/**/*.{ts,tsx,json,css}',
+        '!**/*.spec.{ts,tsx}',
+      ]
+
+'type: playground :joystick:':
+  - any: ['packages/remirror__playground/**/*.{ts,tsx,json}', 'website/src/pages/playground.tsx']
+
+'type: docs :pencil:':
+  - any: ['docs/**/*.{md.mdx}', '**/readme.{md,mdx}']
+
+'type: changeset :butterfly:':
+  - any: ['.changeset/**/*']
+
+'test: unit :white_check_mark:':
+  - any: ['**/*.spec.{ts,tsx}']
+
+'test: e2e :heavy_check_mark:':
+  - any: ['**/*.e2e.test.{ts,tsx}', 'packages/**/*.snap', 'test/**/*.{ts,tsx,json,snap}']
+
+'type: support :books:':
+  - any:
+      [
+        'support/**/*',
+        '!website/src/pages/playground.tsx',
+        '!test/**',
+        '!support/actions/**',
+        '!support/azure/**',
+        '!support/deprecated/**',
+      ]

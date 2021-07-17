@@ -1,115 +1,57 @@
 # remirror
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/remirror.svg?)](https://bundlephobia.com/result?p=remirror)
-[![npm](https://img.shields.io/npm/dm/remirror.svg?&logo=npm)](https://www.npmjs.com/package/remirror)
+> One package to rule them all, one entry point to bind them.
 
-Remirror is an extensible text-editor for react, built on top of Prosemirror.
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
 
-## Getting Started
-
-### Prerequisites
-
-- Typescript `>= 3.6`
-- React `>= 16.9`
-- Yarn `>= 1.17`
+[version]: https://flat.badgen.net/npm/v/remirror
+[npm]: https://npmjs.com/package/remirror
+[license]: https://flat.badgen.net/badge/license/MIT/purple
+[size]: https://bundlephobia.com/result?p=remirror
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/remirror
+[typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
+[downloads-badge]: https://badgen.net/npm/dw/remirror/red?icon=npm
 
 ## Installation
 
 ```bash
-yarn add remirror
+# yarn
+yarn add remirror @remirror/pm
+
+# pnpm
+pnpm add remirror @remirror/pm
+
+# npm
+npm install remirror @remirror/pm
 ```
 
-The following is a small example which renders a floating menu and enables the extensions `Bold`, `Italic` and
-`Underline`.
+The `remirror` package will automatically install the `@remirror/pm` package for you. You only need to install it yourself if you'd like to ensure consistent versions of the `prosemirror-*` libraries when importing from `@remirror/pm/state` instead of `prosemirror-state` or `@remirror/pm/model` instead of `prosemirror-model`.
 
-```ts
-import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
+## Usage
 
-import {
-  Bold,
-  EMPTY_PARAGRAPH_NODE,
-  Italic,
-  ManagedRemirrorProvider,
-  RemirrorEventListener,
-  RemirrorExtension,
-  RemirrorManager,
-  RemirrorProps,
-  Underline,
-  bubblePositioner,
-  useRemirrorContext,
-} from 'remirror';
+Rather than installing multiple scoped packages, the `remirror` package is a gateway to using all the goodness that remirror provides while minimising your bundle size.
 
-const runAction = (action: () => void): MouseEventHandler<HTMLElement> => e => {
-  e.preventDefault();
-  action();
-};
+The following creates a controlled editor with React.
 
-const SimpleFloatingMenu: FC = () => {
-  const { getPositionerProps, actions } = useRemirrorContext(); // Pull in injected props from context
+```tsx
+import React from 'react';
+import { socialPreset } from 'remirror/extensions';
+import { Remirror, SocialEmojiComponent, useRemirror } from '@remirror/react';
 
-  const props = getPositionerProps({
-    positionerId: 'bubble',
-    ...bubblePositioner,
-  });
+const EditorWrapper = () => {
+  const socialPreset = new SocialPreset();
+  const { state, onChange } = useRemirror({ extensions: () => [...socialPreset()] });
+
   return (
-    <div
-      style={{
-        position: 'absolute',
-        bottom: props.isActive ? props.bottom : -9999,
-        left: props.isActive ? props.left : -9999,
-      }}
-      ref={props.ref}
-    >
-      <button
-        style={{
-          backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
-          fontWeight: actions.bold.isActive() ? 600 : 300,
-        }}
-        disabled={!actions.bold.isEnabled()}
-        onClick={runAction(actions.bold.command)}
-      >
-        b
-      </button>
-      <button
-        style={{
-          backgroundColor: actions.italic.isActive() ? 'white' : 'pink',
-          fontWeight: actions.italic.isActive() ? 600 : 300,
-        }}
-        disabled={!actions.italic.isEnabled()}
-        onClick={runAction(actions.italic.command)}
-      >
-        i
-      </button>
-      <button
-        style={{
-          backgroundColor: actions.underline.isActive() ? 'white' : 'pink',
-          fontWeight: actions.underline.isActive() ? 600 : 300,
-        }}
-        disabled={!actions.underline.isEnabled()}
-        onClick={runAction(actions.underline.command)}
-      >
-        u
-      </button>
-    </div>
-  );
-};
-
-const EditorLayout: FunctionComponent = () => {
-  return (
-    <RemirrorManager>
-      <RemirrorExtension Constructor={Bold} />
-      <RemirrorExtension Constructor={Italic} />
-      <RemirrorExtension Constructor={Underline} />
-      <ManagedRemirrorProvider
-        attributes={{ 'data-testid': 'editor-instance' }}
-        onChange={onChange}
-        placeholder='Start typing for magic...'
-        autoFocus={true}
-        initialContent={EMPTY_PARAGRAPH_NODE}
-      >
-        <SimpleFloatingMenu />
-      </ManagedRemirrorProvider>
-    </RemirrorManager>
+    <Remirror state={state} onChange={onChange} manager={manager} autoRender={true}>
+      <SocialEmojiComponent />
+    </Remirror>
   );
 };
 ```
+
+These are the entry points available through the `remirror` package.
+
+- `remirror` - All the core functionality available through `@remirror/core`.
+- `remirror/extensions` - All the core extensions and presets made available through the main `remirror` repository. This doesn't include any framework specific extensions and presets.
+- `remirror/dom` - The dom framework implementation of via `createDomEditor`.

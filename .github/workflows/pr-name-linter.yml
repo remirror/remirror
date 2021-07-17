@@ -1,0 +1,23 @@
+# Lint the name of opened pr's using commit lint.
+
+name: pr-name-linter
+on:
+  pull_request:
+    types: ['opened', 'edited', 'reopened', 'synchronize']
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: install commit lint conventional
+        run: npm i @commitlint/config-angular
+
+      - name: lint pr title
+        uses: JulienKode/pull-request-name-linter-action@v0.2.0
+        with:
+          configuration-path: './support/root/commitlint.config.js'

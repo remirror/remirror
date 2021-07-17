@@ -1,0 +1,8 @@
+{
+  "main": "dist/remirror-react-hooks-use-keymaps.cjs.js",
+  "module": "dist/remirror-react-hooks-use-keymaps.esm.js",
+  "browser": {
+    "./dist/remirror-react-hooks-use-keymaps.cjs.js": "./dist/remirror-react-hooks-use-keymaps.browser.cjs.js",
+    "./dist/remirror-react-hooks-use-keymaps.esm.js": "./dist/remirror-react-hooks-use-keymaps.browser.esm.js"
+  }
+}

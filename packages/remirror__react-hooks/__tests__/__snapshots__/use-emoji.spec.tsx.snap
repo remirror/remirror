@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useEmoji should choose selection when \`Enter\` key is pressed 1`] = `
+<p>
+  Initial content
+  <span class="remirror-emoji-wrapper"
+        data-remirror-emoji="😂"
+  >
+    <img role="presentation"
+         class="remirror-emoji-image"
+         aria-label="face with tears of joy"
+         alt="face with tears of joy"
+         src="https://cdn.jsdelivr.net/npm/@svgmoji/noto@3.2.0/sprites/all.svg#1F602"
+    >
+  </span>
+  <br>
+</p>
+`;
+
+exports[`useEmoji should correctly add the emoji when the command is called 1`] = `
+<p>
+  Initial content
+  <span class="remirror-emoji-wrapper"
+        data-remirror-emoji="❤️"
+  >
+    <img role="presentation"
+         class="remirror-emoji-image"
+         aria-label="red heart"
+         alt="red heart"
+         src="https://cdn.jsdelivr.net/npm/@svgmoji/noto@3.2.0/sprites/all.svg#2764"
+    >
+  </span>
+  <br>
+</p>
+`;

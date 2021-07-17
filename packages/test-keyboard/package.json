@@ -1,35 +1,51 @@
 {
   "name": "test-keyboard",
-  "version": "0.7.6",
+  "version": "1.0.0-next.60",
   "description": "A test keyboard for composing fake keyboard events",
   "keywords": [
     "compose events",
     "events",
     "keyboard"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/packages/test-keyboard",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/test-keyboard",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/test-keyboard",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/test-keyboard",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/test-keyboard.esm.js",
+      "require": "./dist/test-keyboard.cjs.js",
+      "browser": "./dist/test-keyboard.browser.esm.js",
+      "types": "./dist/test-keyboard.cjs.d.ts",
+      "default": "./dist/test-keyboard.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/test-keyboard.cjs.js",
+  "module": "dist/test-keyboard.esm.js",
+  "browser": {
+    "./dist/test-keyboard.cjs.js": "./dist/test-keyboard.browser.cjs.js",
+    "./dist/test-keyboard.esm.js": "./dist/test-keyboard.browser.esm.js"
+  },
+  "types": "dist/test-keyboard.cjs.d.ts",
   "files": [
     "environment.d.ts",
     "environment.js",
-    "lib",
-    "src"
+    "dist"
   ],
-  "main": "lib/index.js",
-  "module": "lib/dist/test-keyboard.esm.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7",
-    "@remirror/core-helpers": "^0.7.6",
-    "@remirror/core-types": "^0.9.0"
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core-helpers": "1.0.0-next.60",
+    "@remirror/core-types": "1.0.0-next.60"
   },
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/test-keyboard.cjs.js",
-  "meta": {
+  "@remirror": {
     "sizeLimit": "10 KB"
-  }
+  },
+  "rn:dev": "src/index.ts"
 }

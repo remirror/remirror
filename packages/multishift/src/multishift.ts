@@ -1,10 +1,25 @@
 import composeRefs from '@seznam/compose-react-refs';
-import { ChangeEvent, HTMLProps, Ref, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
+import {
+  ChangeEvent,
+  HTMLProps,
+  Ref,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
+import useEffectOnce from 'react-use/lib/useEffectOnce';
+import {
+  debounce,
+  includes,
+  isEmptyArray,
+  isNullOrUndefined,
+  isUndefined,
+  object,
+} from '@remirror/core-helpers';
 
-import { bool, debounce, includes, isNullOrUndefined, isUndefined } from '@remirror/core-helpers';
-import { useEffectOnUpdate, useEffectOnce, useTimeouts } from '@remirror/react-hooks';
-
-import * as MultishiftActions from './multishift-action-creators';
+import { Actions } from './multishift-action-creators';
 import {
   SPECIAL_INPUT_KEYS,
   SPECIAL_MENU_KEYS,
@@ -12,14 +27,15 @@ import {
   Type,
 } from './multishift-constants';
 import {
+  useEffectOnUpdate,
   useElementIds,
   useElementRefs,
   useMultishiftReducer,
   useOuterEventListener,
   useSetA11y,
+  useTimeouts,
 } from './multishift-hooks';
-import {
-  AllMultishiftDispatchActions,
+import type {
   GetComboBoxPropsOptions,
   GetComboBoxPropsReturn,
   GetItemPropsOptions,
@@ -72,13 +88,17 @@ import {
  * Eventually some of the code will be contributed back to the downshift
  * library.
  */
-export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): MultishiftReturn<GItem> => {
-  const { type, customA11yStatusMessage, getA11yStatusMessage, items, getItemId = defaultGetItemId } = props;
-  const [state, dispatch] = useMultishiftReducer<GItem>(props);
-  const actions = useMemo(
-    () => bindActionCreators(MultishiftActions, dispatch) as AllMultishiftDispatchActions<GItem>,
-    [dispatch],
-  );
+export const useMultishift = <Item = any>(props: MultishiftProps<Item>): MultishiftReturn<Item> => {
+  const {
+    type,
+    customA11yStatusMessage,
+    getA11yStatusMessage,
+    items,
+    getItemId = defaultGetItemId,
+    multiple,
+  } = props;
+  const [state, dispatch] = useMultishiftReducer<Item>(props);
+  const actions = useMemo(() => bindActionCreators(Actions, dispatch), [dispatch]);
 
   useSetA11y({ state, items, customA11yStatusMessage, getA11yStatusMessage });
 
@@ -95,8 +115,6 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
   } = stateProps;
 
   const { getItemA11yId, labelId, menuId, toggleButtonId, inputId } = useElementIds(props);
-
-  // const [setInternalTimeout] = useTimeouts();
 
   // Refs
   const refs = useElementRefs();
@@ -159,7 +177,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
 
   // Scroll on highlighted item if change comes from keyboard.
   useEffect(() => {
-    if (!isValidIndex(mostRecentHighlightedIndex) || !isOpen || !refs.items.current.length) {
+    if (!isValidIndex(mostRecentHighlightedIndex) || !isOpen || isEmptyArray(refs.items.current)) {
       return;
     }
 
@@ -170,361 +188,463 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     }
   }, [isOpen, mostRecentHighlightedIndex, refs.items, refs.menu]);
 
-  const itemHighlightedAtIndex = (index: number) => {
-    const isHovered = index === hoveredIndex;
-    return (
+  const itemHighlightedAtIndex = useCallback(
+    (index: number) => {
+      const isHovered = index === hoveredIndex;
+      return (
+        checkItemHighlighted(index, {
+          start: highlightedGroupStartIndex,
+          end: highlightedGroupEndIndex,
+          indexes: highlightedIndexes,
+        }) || (multiple ? isHovered : !isValidIndex(mostRecentHighlightedIndex) && isHovered)
+      );
+    },
+    [
+      highlightedGroupEndIndex,
+      highlightedGroupStartIndex,
+      highlightedIndexes,
+      hoveredIndex,
+      mostRecentHighlightedIndex,
+      multiple,
+    ],
+  );
+
+  const indexIsHovered = useCallback(
+    (index: number) => {
+      return index === hoveredIndex;
+    },
+    [hoveredIndex],
+  );
+
+  const itemIsHovered = useCallback(
+    (item: Item) => {
+      return item === items[hoveredIndex];
+    },
+    [hoveredIndex, items],
+  );
+
+  const indexIsSelected = useCallback(
+    (index: number) =>
       checkItemHighlighted(index, {
         start: highlightedGroupStartIndex,
         end: highlightedGroupEndIndex,
         indexes: highlightedIndexes,
-      }) || (props.multiple ? isHovered : !isValidIndex(mostRecentHighlightedIndex) && isHovered)
-    );
-  };
-
+      }),
+    [highlightedGroupEndIndex, highlightedGroupStartIndex, highlightedIndexes],
+  );
   const itemIsSelected = useCallback(
-    (item: GItem) => selectedItems.map(getItemId).includes(getItemId(item)),
+    (item: Item) => selectedItems.map(getItemId).includes(getItemId(item)),
     [getItemId, selectedItems],
   );
-  const indexOfItem = useCallback((item: GItem) => items.map(getItemId).indexOf(getItemId(item)), [
-    getItemId,
-    items,
-  ]);
+  const indexOfItem = useCallback(
+    (item: Item) => items.map(getItemId).indexOf(getItemId(item)),
+    [getItemId, items],
+  );
 
-  const getComboBoxProps = <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    { refKey = 'ref' as GRefKey, ref, ...rest }: GetComboBoxPropsOptions<GElement, GRefKey> = {
-      refKey: 'ref' as GRefKey,
+  const getComboBoxProps = useCallback(
+    <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+      options: GetComboBoxPropsOptions<Element, RefKey> = {
+        refKey: 'ref' as RefKey,
+      },
+    ): GetComboBoxPropsReturn<Element, RefKey> => {
+      const { refKey = 'ref' as RefKey, ref, ...rest } = options;
+
+      if (type !== Type.ComboBox) {
+        throw new Error('`getComboBoxProps` is only available for the autocomplete dropdown');
+      }
+
+      const extra = isUndefined(rest['aria-label']) ? { 'aria-labelledby': labelId } : {};
+
+      return {
+        [refKey]: composeRefs(ref as Ref<Element>, refs.comboBox),
+        role: 'combobox',
+        'aria-expanded': isOpen,
+        'aria-haspopup': 'listbox',
+        'aria-owns': isOpen ? menuId : null,
+        ...extra,
+        ...rest,
+      } as GetComboBoxPropsReturn<Element, RefKey>;
     },
-  ): GetComboBoxPropsReturn<GElement, GRefKey> => {
-    if (type !== Type.ComboBox) {
-      throw new Error('`getComboBoxProps` is only available for the autocomplete dropdown');
-    }
+    [isOpen, labelId, menuId, refs.comboBox, type],
+  );
 
-    const extra = isUndefined(rest['aria-label']) ? { 'aria-labelledby': labelId } : {};
+  const getInputProps = useCallback(
+    <DomElement extends HTMLInputElement = any, RefKey extends string = 'ref'>(
+      options: GetPropsWithRefOptions<DomElement, RefKey> = { refKey: 'ref' as RefKey },
+    ): GetPropsWithRefReturn<DomElement, RefKey> => {
+      const {
+        onKeyDown,
+        onBlur,
+        onChange,
+        onInput,
+        refKey = 'ref' as RefKey,
+        ref,
+        ...rest
+      } = options;
 
-    return {
-      [refKey]: composeRefs(ref as Ref<GElement>, refs.comboBox),
-      role: 'combobox',
-      'aria-expanded': isOpen,
-      'aria-haspopup': 'listbox',
-      'aria-owns': isOpen ? menuId : null,
-      ...extra,
-      ...rest,
-    } as GetComboBoxPropsReturn<GElement, GRefKey>;
-  };
+      if (type !== Type.ComboBox) {
+        throw new Error('`getInputProps` is only available for the `autocomplete` dropdown');
+      }
 
-  const getInputProps = <GElement extends HTMLInputElement = any, GRefKey extends string = 'ref'>(
-    {
-      onKeyDown,
-      onBlur,
-      onChange,
-      onInput,
-      refKey = 'ref' as GRefKey,
-      ref,
-      ...rest
-    }: GetPropsWithRefOptions<GElement, GRefKey> = { refKey: 'ref' as GRefKey },
-  ): GetPropsWithRefReturn<GElement, GRefKey> => {
-    if (type !== Type.ComboBox) {
-      throw new Error('`getInputProps` is only available for the `autocomplete` dropdown');
-    }
-
-    const activeDescendant = isValidIndex(mostRecentHighlightedIndex)
-      ? {
-          'aria-activedescendant': getItemA11yId(mostRecentHighlightedIndex),
-        }
-      : {};
-
-    let eventHandlers: HTMLProps<GElement> = {
-      onChange: callAllEventHandlers(onChange, onInput, event => {
-        actions.inputValueChange((event as ChangeEvent<GElement>).target.value);
-      }),
-      onKeyDown: callAllEventHandlers(onKeyDown, event => {
-        const key = getKeyName(event);
-        if (includes(SPECIAL_INPUT_KEYS, key)) {
-          actions.inputSpecialKeyDown(createKeyDownPayload(event, key, disabled.current));
-          event.preventDefault();
-        }
-      }),
-      // TODO test this blur handler.
-      onBlur: callAllEventHandlers(onBlur, () => {
-        setInternalTimeout(() => {
-          const multishiftActive =
-            isHTMLElement(document.activeElement) &&
-            refs.comboBox.current &&
-            refs.comboBox.current.contains(document.activeElement);
-          if (!contextRef.current.isMouseDown && !multishiftActive) {
-            actions.inputBlur();
+      const activeDescendant = isValidIndex(mostRecentHighlightedIndex)
+        ? {
+            'aria-activedescendant': getItemA11yId(mostRecentHighlightedIndex),
           }
-        });
-      }),
-    };
+        : {};
 
-    if (rest.disabled) {
-      eventHandlers = Object.create(null);
-    }
+      let eventHandlers: HTMLProps<DomElement> = {
+        onChange: callAllEventHandlers(onChange, onInput, (event) => {
+          actions.inputValueChange((event as ChangeEvent<DomElement>).target.value);
+        }),
+        onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
+          const key = getKeyName(event);
 
-    return {
-      [refKey]: composeRefs(ref as Ref<GElement>, refs.input),
-      'aria-autocomplete': 'list',
-      ...activeDescendant,
-      'aria-controls': isOpen ? menuId : null,
-      'aria-labelledby': labelId,
-      // https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
-      // revert back since autocomplete="nope" is ignored on latest Chrome and Opera
-      autoComplete: 'off',
-      value: inputValue,
-      id: inputId,
-      ...eventHandlers,
-      ...rest,
-    } as any;
-  };
-
-  const getMenuProps = <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    {
-      onKeyDown,
-      onBlur,
-      refKey = 'ref' as GRefKey,
-      ref,
-      ...rest
-    }: GetPropsWithRefOptions<GElement, GRefKey> = { refKey: 'ref' as GRefKey },
-  ): GetPropsWithRefReturn<GElement, GRefKey> => {
-    const multi = props.multiple ? { 'aria-multiselectable': props.multiple } : {};
-    const activeDescendant = highlightedIndexes.length
-      ? {
-          'aria-activedescendant': getItemA11yId(mostRecentHighlightedIndex),
-        }
-      : {};
-
-    let eventHandlers: HTMLProps<GElement> = {
-      onKeyDown: callAllEventHandlers(onKeyDown, event => {
-        const key = getKeyName(event);
-
-        if (includes(SPECIAL_MENU_KEYS, key)) {
-          actions.menuSpecialKeyDown(createKeyDownPayload(event, key, disabled.current));
-
-          if (key !== 'Tab') {
+          if (includes(SPECIAL_INPUT_KEYS, key)) {
+            actions.inputSpecialKeyDown(createKeyDownPayload(event, key, disabled.current));
             event.preventDefault();
           }
-        } else if (isValidCharacterKey(key)) {
-          actions.menuCharacterKeyDown(key);
-        }
-      }),
-      onBlur: callAllEventHandlers(onBlur, event => {
-        const blurTarget = event.target;
-        setInternalTimeout(() => {
-          if (
-            !contextRef.current.isMouseDown &&
-            (isNullOrUndefined(document.activeElement) ||
-              (![
-                refs.comboBox.current,
-                refs.input.current,
-                refs.toggleButton.current,
-                ...refs.items.current,
-                ...refs.ignored.current,
-              ].some(node => node && isOrContainsNode(node, document.activeElement)) &&
-                document.activeElement !== blurTarget))
-          ) {
-            actions.menuBlur();
-          }
-        });
-      }),
-    };
+        }),
+        // TODO test this blur handler.
+        onBlur: callAllEventHandlers(onBlur, () => {
+          setInternalTimeout(() => {
+            const multishiftActive =
+              isHTMLElement(document.activeElement) &&
+              refs.comboBox.current &&
+              refs.comboBox.current.contains(document.activeElement);
 
-    if (rest.disabled) {
-      eventHandlers = Object.create(null);
-    }
+            if (!contextRef.current.isMouseDown && !multishiftActive) {
+              actions.inputBlur();
+            }
+          });
+        }),
+      };
 
-    return {
-      [refKey]: composeRefs(ref as Ref<GElement>, refs.menu),
-      id: menuId,
-      role: type === Type.ControlledMenu ? 'menu' : 'listbox',
-      'aria-labelledby': labelId,
-      tabIndex: -1,
-      ...multi,
-      ...activeDescendant,
-      ...eventHandlers,
-      ...rest,
-    } as GetPropsWithRefReturn<GElement, GRefKey>;
-  };
+      if (rest.disabled) {
+        eventHandlers = object();
+      }
 
-  const getToggleButtonProps = <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    {
-      onClick,
-      onKeyDown,
-      onBlur,
-      refKey = 'ref' as GRefKey,
-      ref,
-      ...rest
-    }: GetPropsWithRefOptions<GElement, GRefKey> = { refKey: 'ref' as GRefKey },
-  ): GetPropsWithRefReturn<GElement, GRefKey> => {
-    if (type === Type.ControlledMenu) {
-      throw new Error('The toggle button props should not be used for the controlled menu');
-    }
-    const isInternalEvent = <GEvent extends SyntheticEvent = any>(event: GEvent) =>
-      [refs.input.current, refs.menu.current, ...refs.items.current].some(
-        node => node && isOrContainsNode(node, event.target as Node),
-      );
-    let eventHandlers: HTMLProps<GElement> = {
-      onClick: callAllEventHandlers(onClick, () => actions.toggleButtonClick()),
-      onKeyDown: callAllEventHandlers(onKeyDown, event => {
-        const key = getKeyName(event);
-
-        if (isInternalEvent(event)) {
-          return;
-        }
-
-        if (includes(SPECIAL_TOGGLE_BUTTON_KEYS, key)) {
-          actions.toggleButtonSpecialKeyDown(createKeyDownPayload(event, key, disabled.current));
-          event.preventDefault();
-        }
-      }),
-      onBlur: callAllEventHandlers(onBlur, event => {
-        if (isInternalEvent(event)) {
-          return;
-        }
-        const blurTarget = event.target; // Save blur target for comparison with activeElement later
-        // Need setTimeout, so that when the user presses Tab, the activeElement is the next focused element, not body element
-        setInternalTimeout(() => {
-          if (
-            !contextRef.current.isMouseDown &&
-            (isNullOrUndefined(document.activeElement) || document.activeElement.id !== menuId) &&
-            document.activeElement !== blurTarget // Do nothing if we refocus the same element again (to solve issue in Safari on iOS)
-          ) {
-            actions.toggleButtonBlur();
-          }
-        });
-      }),
-    };
-
-    if (rest.disabled) {
-      eventHandlers = Object.create(null);
-    }
-
-    const extra = type === Type.Select ? { 'aria-expanded': isOpen } : {};
-    const ariaLabel = isUndefined(rest['aria-label'])
-      ? { 'aria-labelledby': `${labelId} ${toggleButtonId}` }
-      : {};
-
-    return {
-      [refKey]: composeRefs(ref as Ref<GElement>, refs.toggleButton),
-      type: 'button',
-      role: 'button',
-      id: toggleButtonId,
-      'aria-haspopup': type === Type.ComboBox ? true : 'listbox',
-      ...ariaLabel,
-      ...extra,
-      ...eventHandlers,
-      ...rest,
-    } as any;
-  };
-
-  const getItemProps = <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>({
-    item,
-    index,
-    refKey = 'ref' as GRefKey,
-    ref,
-    onMouseMove,
-    onMouseLeave,
-    onClick,
-    ...rest
-  }: GetItemPropsOptions<GElement, GRefKey, GItem>): GetPropsWithRefReturn<GElement, GRefKey> => {
-    const itemIndex = getItemIndex(index, item, items);
-    if (!isValidIndex(itemIndex)) {
-      throw new Error('Pass either item or item index in getItemProps!');
-    }
-
-    let eventHandlers: HTMLProps<GElement> = {
-      onMouseMove: callAllEventHandlers(onMouseMove, () => actions.itemMouseMove(itemIndex)),
-      onMouseLeave: callAllEventHandlers(onMouseLeave, () => actions.itemMouseLeave(itemIndex)),
-
-      onClick: callAllEventHandlers(onClick, event => {
-        event.preventDefault();
-        actions.itemClick(createItemClickPayload(event, itemIndex));
-      }),
-    };
-
-    if (rest.disabled) {
-      disabled.current.push(itemIndex);
-      eventHandlers = Object.create(null);
-    }
-
-    return {
-      [refKey]: composeRefs(ref as Ref<GElement>, itemNode => {
-        if (itemNode) {
-          refs.items.current.push(itemNode);
-        }
-      }),
-      role: type === Type.ControlledMenu ? (props.multiple ? 'menuitemcheckbox' : 'menuitemradio') : 'option',
-      'aria-current': index === hoveredIndex || index === mostRecentHighlightedIndex,
-      'aria-selected': itemHighlightedAtIndex(index) && !rest.disabled,
-      id: getItemA11yId(itemIndex),
-      ...eventHandlers,
-      ...rest,
-    } as GetPropsWithRefReturn<GElement, GRefKey>;
-  };
-
-  const getIgnoredElementProps = <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    {
-      refKey = 'ref' as GRefKey,
-      ref,
-      onMouseMove,
-      onFocus,
-      ...rest
-    }: IgnoredElementOptions<GElement, GRefKey> = { refKey: 'ref' as GRefKey },
-  ): GetPropsWithRefReturn<GElement, GRefKey> => {
-    let eventHandlers: HTMLProps<GElement> = Object.create(null);
-
-    if (rest.disabled) {
-      eventHandlers = Object.create(null);
-    }
-
-    return {
-      [refKey]: composeRefs(ref as Ref<GElement>, node => {
-        if (node && !rest.disabled) {
-          refs.ignored.current.push(node);
-        }
-      }),
-      ...eventHandlers,
-      ...rest,
-    } as GetPropsWithRefReturn<GElement, GRefKey>;
-  };
-
-  const getLabelProps = <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
-    { refKey = 'ref' as GRefKey, ref, ...rest }: IgnoredElementOptions<GElement, GRefKey> = {
-      refKey: 'ref' as GRefKey,
+      return {
+        [refKey]: composeRefs(ref as Ref<DomElement>, refs.input),
+        'aria-autocomplete': 'list',
+        ...activeDescendant,
+        'aria-controls': isOpen ? menuId : null,
+        'aria-labelledby': labelId,
+        // https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
+        // revert back since autocomplete="nope" is ignored on latest Chrome and
+        // Opera
+        autoComplete: 'off',
+        value: inputValue,
+        id: inputId,
+        ...eventHandlers,
+        ...rest,
+      } as any;
     },
-  ): GetLabelPropsWithRefReturn<GElement, GRefKey> =>
-    ({
-      [refKey]: composeRefs(ref as Ref<GElement>, node => {
-        if (node) {
-          refs.ignored.current.push(node);
-        }
-      }),
-      id: labelId,
-      htmlFor: type === 'combobox' && refs.input.current ? inputId : menuId,
-      ...rest,
-    } as GetLabelPropsWithRefReturn<GElement, GRefKey>);
+    [
+      actions,
+      contextRef,
+      getItemA11yId,
+      inputId,
+      inputValue,
+      isOpen,
+      labelId,
+      menuId,
+      mostRecentHighlightedIndex,
+      refs,
+      setInternalTimeout,
+      type,
+    ],
+  );
 
-  const getRemoveButtonProps = <GElement extends HTMLElement = any>({
-    onClick,
-    item,
-    ...rest
-  }: GetRemoveButtonOptions<GElement, GItem>): GetRemoveButtonReturn<GElement> => {
-    let eventHandlers: Pick<GetRemoveButtonReturn<GElement>, 'onClick'> = {
-      onClick: callAllEventHandlers(onClick, () => {
-        actions.removeSelectedItem(item);
-      }),
-    };
+  const getMenuProps = useCallback(
+    <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+      options: GetPropsWithRefOptions<Element, RefKey> = { refKey: 'ref' as RefKey },
+    ): GetPropsWithRefReturn<Element, RefKey> => {
+      const { onKeyDown, onBlur, refKey = 'ref' as RefKey, ref, ...rest } = options;
 
-    if (rest.disabled) {
-      eventHandlers = Object.create(null);
-    }
+      const multi = multiple ? { 'aria-multiselectable': multiple } : {};
+      const activeDescendant = !isEmptyArray(highlightedIndexes)
+        ? {
+            'aria-activedescendant': getItemA11yId(mostRecentHighlightedIndex),
+          }
+        : {};
 
-    return {
-      ...eventHandlers,
-      role: 'button',
-      ...rest,
-    };
-  };
+      let eventHandlers: HTMLProps<Element> = {
+        onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
+          const key = getKeyName(event);
+
+          if (includes(SPECIAL_MENU_KEYS, key)) {
+            actions.menuSpecialKeyDown(createKeyDownPayload(event, key, disabled.current));
+
+            if (key !== 'Tab') {
+              event.preventDefault();
+            }
+          } else if (isValidCharacterKey(key)) {
+            actions.menuCharacterKeyDown(key);
+          }
+        }),
+        onBlur: callAllEventHandlers(onBlur, (event) => {
+          const blurTarget = event.target;
+          setInternalTimeout(() => {
+            if (
+              !contextRef.current.isMouseDown &&
+              (isNullOrUndefined(document.activeElement) ||
+                (![
+                  refs.comboBox.current,
+                  refs.input.current,
+                  refs.toggleButton.current,
+                  ...refs.items.current,
+                  ...refs.ignored.current,
+                ].some((node) => node && isOrContainsNode(node, document.activeElement)) &&
+                  document.activeElement !== blurTarget))
+            ) {
+              actions.menuBlur();
+            }
+          });
+        }),
+      };
+
+      if (rest.disabled) {
+        eventHandlers = object();
+      }
+
+      return {
+        [refKey]: composeRefs(ref as Ref<Element>, refs.menu),
+        id: menuId,
+        role: type === Type.ControlledMenu ? 'menu' : 'listbox',
+        'aria-labelledby': labelId,
+        tabIndex: -1,
+        ...multi,
+        ...activeDescendant,
+        ...eventHandlers,
+        ...rest,
+      } as GetPropsWithRefReturn<Element, RefKey>;
+    },
+    [
+      actions,
+      contextRef,
+      getItemA11yId,
+      highlightedIndexes,
+      labelId,
+      menuId,
+      mostRecentHighlightedIndex,
+      multiple,
+      refs,
+      setInternalTimeout,
+      type,
+    ],
+  );
+
+  const getToggleButtonProps = useCallback(
+    <DomElement extends HTMLElement = any, RefKey extends string = 'ref'>(
+      options: GetPropsWithRefOptions<DomElement, RefKey> = { refKey: 'ref' as RefKey },
+    ): GetPropsWithRefReturn<DomElement, RefKey> => {
+      const { onClick, onKeyDown, onBlur, refKey = 'ref' as RefKey, ref, ...rest } = options;
+
+      if (type === Type.ControlledMenu) {
+        throw new Error('The toggle button props should not be used for the controlled menu');
+      }
+
+      const isInternalEvent = <Synth extends SyntheticEvent = any>(event: Synth) =>
+        [refs.input.current, refs.menu.current, ...refs.items.current].some(
+          (node) => node && isOrContainsNode(node, event.target as Node),
+        );
+
+      let eventHandlers: HTMLProps<DomElement> = {
+        onClick: callAllEventHandlers(onClick, () => actions.toggleButtonClick()),
+        onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
+          const key = getKeyName(event);
+
+          if (isInternalEvent(event)) {
+            return;
+          }
+
+          if (includes(SPECIAL_TOGGLE_BUTTON_KEYS, key)) {
+            actions.toggleButtonSpecialKeyDown(createKeyDownPayload(event, key, disabled.current));
+            event.preventDefault();
+          }
+        }),
+        onBlur: callAllEventHandlers(onBlur, (event) => {
+          if (isInternalEvent(event)) {
+            return;
+          }
+
+          const blurTarget = event.target; // Save blur target for comparison with activeElement later
+          // Need setTimeout, so that when the user presses Tab, the activeElement
+          // is the next focused element, not body element
+          setInternalTimeout(() => {
+            if (
+              !contextRef.current.isMouseDown &&
+              (isNullOrUndefined(document.activeElement) || document.activeElement.id !== menuId) &&
+              document.activeElement !== blurTarget // Do nothing if we refocus the same element again (to solve issue in Safari on iOS)
+            ) {
+              actions.toggleButtonBlur();
+            }
+          });
+        }),
+      };
+
+      if (rest.disabled) {
+        eventHandlers = object();
+      }
+
+      const extra = type === Type.Select ? { 'aria-expanded': isOpen } : {};
+      const ariaLabel = isUndefined(rest['aria-label'])
+        ? { 'aria-labelledby': `${labelId} ${toggleButtonId}` }
+        : {};
+
+      return {
+        [refKey]: composeRefs(ref as Ref<DomElement>, refs.toggleButton),
+        type: 'button',
+        role: 'button',
+        id: toggleButtonId,
+        'aria-haspopup': type === Type.ComboBox ? true : 'listbox',
+        ...ariaLabel,
+        ...extra,
+        ...eventHandlers,
+        ...rest,
+      } as any;
+    },
+    [actions, contextRef, isOpen, labelId, menuId, refs, setInternalTimeout, toggleButtonId, type],
+  );
+
+  const getItemProps = useCallback(
+    <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+      options: GetItemPropsOptions<Element, RefKey, Item>,
+    ): GetPropsWithRefReturn<Element, RefKey> => {
+      const {
+        item,
+        index,
+        refKey = 'ref' as RefKey,
+        ref,
+        onMouseMove,
+        onMouseLeave,
+        onClick,
+        ...rest
+      } = options;
+
+      const itemIndex = getItemIndex(index, item, items);
+
+      if (!isValidIndex(itemIndex)) {
+        throw new Error('Pass either item or item index in getItemProps!');
+      }
+
+      let eventHandlers: HTMLProps<Element> = {
+        onMouseMove: callAllEventHandlers(onMouseMove, () => actions.itemMouseMove(itemIndex)),
+        onMouseLeave: callAllEventHandlers(onMouseLeave, () => actions.itemMouseLeave(itemIndex)),
+
+        onClick: callAllEventHandlers(onClick, (event) => {
+          event.preventDefault();
+          actions.itemClick(createItemClickPayload(event, itemIndex));
+        }),
+      };
+
+      if (rest.disabled) {
+        disabled.current.push(itemIndex);
+        eventHandlers = object();
+      }
+
+      return {
+        [refKey]: composeRefs(ref as Ref<Element>, (itemNode) => {
+          if (itemNode) {
+            refs.items.current.push(itemNode);
+          }
+        }),
+        role:
+          type === Type.ControlledMenu
+            ? multiple
+              ? 'menuitemcheckbox'
+              : 'menuitemradio'
+            : 'option',
+        'aria-current': index === hoveredIndex || index === mostRecentHighlightedIndex,
+        'aria-selected': itemHighlightedAtIndex(index) && !rest.disabled,
+        id: getItemA11yId(itemIndex),
+        ...eventHandlers,
+        ...rest,
+      } as GetPropsWithRefReturn<Element, RefKey>;
+    },
+    [
+      actions,
+      getItemA11yId,
+      hoveredIndex,
+      itemHighlightedAtIndex,
+      items,
+      mostRecentHighlightedIndex,
+      multiple,
+      refs.items,
+      type,
+    ],
+  );
+
+  const getIgnoredElementProps = useCallback(
+    <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+      options: IgnoredElementOptions<Element, RefKey> = { refKey: 'ref' as RefKey },
+    ): GetPropsWithRefReturn<Element, RefKey> => {
+      const { refKey = 'ref' as RefKey, ref, onMouseMove, onFocus, ...rest } = options;
+      let eventHandlers: HTMLProps<Element> = object();
+
+      if (rest.disabled) {
+        eventHandlers = object();
+      }
+
+      return {
+        [refKey]: composeRefs(ref as Ref<Element>, (node) => {
+          if (node && !rest.disabled) {
+            refs.ignored.current.push(node);
+          }
+        }),
+        ...eventHandlers,
+        ...rest,
+      } as GetPropsWithRefReturn<Element, RefKey>;
+    },
+    [refs.ignored],
+  );
+
+  const getLabelProps = useCallback(
+    <Element extends HTMLElement = any, RefKey extends string = 'ref'>(
+      options: IgnoredElementOptions<Element, RefKey> = {
+        refKey: 'ref' as RefKey,
+      },
+    ): GetLabelPropsWithRefReturn<Element, RefKey> => {
+      const { refKey = 'ref' as RefKey, ref, ...rest } = options;
+
+      return {
+        [refKey]: composeRefs(ref as Ref<Element>, (node) => {
+          if (node) {
+            refs.ignored.current.push(node);
+          }
+        }),
+        id: labelId,
+        htmlFor: type === 'combobox' && refs.input.current ? inputId : menuId,
+        ...rest,
+      } as GetLabelPropsWithRefReturn<Element, RefKey>;
+    },
+    [inputId, labelId, menuId, refs, type],
+  );
+
+  const getRemoveButtonProps = useCallback(
+    <Element extends HTMLElement = any>(
+      options: GetRemoveButtonOptions<Element, Item>,
+    ): GetRemoveButtonReturn<Element> => {
+      const { onClick, item, ...rest } = options;
+
+      let eventHandlers: Pick<GetRemoveButtonReturn<Element>, 'onClick'> = {
+        onClick: callAllEventHandlers(onClick, () => {
+          actions.removeSelectedItem(item);
+        }),
+      };
+
+      if (rest.disabled) {
+        eventHandlers = object();
+      }
+
+      return {
+        ...eventHandlers,
+        role: 'button',
+        ...rest,
+      };
+    },
+    [actions],
+  );
 
   const focusHelpers = useMemo(
     (): MultishiftFocusHelpers => ({
@@ -548,8 +668,8 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
         }
       },
       focusMenuItem: (index: number) => {
-        if (bool(refs.items.current[index])) {
-          refs.items.current[index].focus();
+        if (refs.items.current[index]) {
+          refs.items.current[index]?.focus();
         }
       },
     }),
@@ -577,6 +697,9 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
 
     // Helpers
     itemHighlightedAtIndex,
+    indexIsHovered,
+    itemIsHovered,
+    indexIsSelected,
     itemIsSelected,
     indexOfItem,
 
@@ -600,7 +723,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     clearInputValue: actions.clearInputValue,
     clearJumpText: actions.clearJumpText,
 
-    // Prop Getters
+    // Props Getters
     getMenuProps,
     getComboBoxProps,
     getToggleButtonProps,

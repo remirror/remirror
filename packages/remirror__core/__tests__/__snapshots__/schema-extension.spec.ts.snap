@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom schema 1`] = `
+Array [
+  "doc",
+  "orderedList",
+  "bulletList",
+  "listItem",
+  "paragraph",
+  "text",
+  "horizontalRule",
+  "atomInline",
+  "atomBlock",
+  "atomContainer",
+  "containerWithRestrictedContent",
+  "table",
+  "table_row",
+  "table_cell",
+  "table_header",
+  "blockquote",
+  "heading",
+  "code_block",
+  "hard_break",
+  "image",
+]
+`;
+
+exports[`custom schema 2`] = `
+Array [
+  "link",
+  "em",
+  "strong",
+  "code",
+  "strike",
+]
+`;
+
+exports[`dynamic schema attributes should dynamically add attributes when configured 1`] = `
+<div contenteditable="true"
+     role="textbox"
+     aria-multiline="true"
+     aria-label
+     class="ProseMirror remirror-editor"
+>
+  <h1>
+    This is a heading
+    <br>
+  </h1>
+  <p id="1">
+    Welcome to the
+    <strong id="1">
+      bold experiment
+    </strong>
+    <br>
+  </p>
+  <p id="2">
+    <br>
+  </p>
+  <p id="3">
+    <br>
+  </p>
+  <p id="4">
+    <br>
+  </p>
+</div>
+`;
+
+exports[`dynamic schema attributes should dynamically add attributes when configured 2`] = `
+Snapshot Diff:
+Compared values have no visual difference.
+`;

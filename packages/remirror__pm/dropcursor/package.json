@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-dropcursor.cjs.js",
+  "module": "dist/remirror-pm-dropcursor.esm.js",
+  "browser": {
+    "./dist/remirror-pm-dropcursor.cjs.js": "./dist/remirror-pm-dropcursor.browser.cjs.js",
+    "./dist/remirror-pm-dropcursor.esm.js": "./dist/remirror-pm-dropcursor.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-dropcursor.cjs.d.ts",
+  "rn:dev": "../src/dropcursor.ts"
+}

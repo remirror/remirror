@@ -1,125 +1,89 @@
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { Plugin } from 'prosemirror-state';
 
-import { EditorSchema, EditorState } from '@remirror/core-types';
-import { getPluginState } from '@remirror/core-utils';
-
-import { SuggestState } from './suggest-state';
-import { Suggester } from './suggest-types';
-
-const suggestPluginKey = new PluginKey('suggest');
+import { suggestPluginKey, SuggestState } from './suggest-state';
+import type { EditorSchema, EditorState, Suggester, Transaction } from './suggest-types';
+import { IGNORE_SUGGEST_META_KEY } from './suggest-utils';
 
 /**
  * Get the state of the suggest plugin.
  *
  * @param state - the editor state.
  */
-export const getSuggestPluginState = <GSchema extends EditorSchema = any>(state: EditorState<GSchema>) =>
-  getPluginState<SuggestState>(suggestPluginKey, state);
+export function getSuggestPluginState<Schema extends EditorSchema = EditorSchema>(
+  state: EditorState<Schema>,
+): SuggestState {
+  return suggestPluginKey.getState(state);
+}
 
 /**
- * This creates a suggestion plugin with all the suggestions provided.
+ * Add a new suggester or replace it if the name already exists in the existing
+ * configuration.
  *
- * @remarks
+ * Will return a function for disposing of the added suggester.
+ */
+export function addSuggester<Schema extends EditorSchema = EditorSchema>(
+  state: EditorState<Schema>,
+  suggester: Suggester,
+): () => void {
+  return getSuggestPluginState(state).addSuggester(suggester);
+}
+
+/**
+ * Call this method with a transaction to skip the suggest plugin checks for the
+ * next update.
  *
- * In the following example we're creating an emoji suggestion plugin that
- * responds to the colon character with a query and presents a list of matching
- * emojis based on the query typed so far.
+ * This can be used for updates that don't need to trigger a recheck of the
+ * suggest state.
+ */
+export function ignoreUpdateForSuggest(tr: Transaction): void {
+  tr.setMeta(IGNORE_SUGGEST_META_KEY, true);
+}
+
+/**
+ * Remove a suggester if it exists. Pass in the name or the full suggester
+ * object.
+ */
+export function removeSuggester<Schema extends EditorSchema = EditorSchema>(
+  state: EditorState<Schema>,
+  suggester: Suggester | string,
+): void {
+  return getSuggestPluginState(state).removeSuggester(suggester);
+}
+
+/**
+ * This creates a suggest plugin with all the suggesters that you provide.
  *
- * ```ts
- * import { Suggester, suggest } from 'prosemirror-suggest';
- *
- * const maxResults = 10;
- * let selectedIndex = 0;
- * let emojiList: string[] = [];
- * let showSuggestions = false;
- *
- * const suggestEmojis: Suggester = {
- *   // By default decorations are used to highlight the currently matched
- *   // suggestion in the dom.
- *   // In this example we don't need decorations (in fact they cause problems when the
- *   // emoji string replaces the query text in the dom).
- *   noDecorations: true,
- *   char: ':', // The character to match against
- *   name: 'emoji-suggestion', // a unique name
- *   appendText: '', // Text to append to the created match
- *
- *   // Keybindings are similar to prosemirror keymaps with a few extra niceties.
- *   // The key identifier can also include modifiers (e.g.) `Cmd-Space: () => false`
- *   // Return true to prevent any further keyboard handlers from running.
- *   keyBindings: {
- *     ArrowUp: () => {
- *       selectedIndex = rotateSelectionBackwards(selectedIndex, emojiList.length);
- *     },
- *     ArrowDown: () => {
- *       selectedIndex = rotateSelectionForwards(selectedIndex, emojiList.length);
- *     },
- *     Enter: ({ command }) => {
- *       if (showSuggestions) {
- *         command(emojiList[selectedIndex]);
- *       }
- *     },
- *     Esc: () => {
- *       showSuggestions = false;
- *     },
- *   },
- *
- *   onChange: params => {
- *     const query = params.query.full;
- *     emojiList = sortEmojiMatches({ query, maxResults });
- *     selectedIndex = 0;
- *     showSuggestions = true;
- *   },
- *
- *   onExit: () => {
- *     showSuggestions = false;
- *     emojiList = [];
- *     selectedIndex = 0;
- *   },
- *
- *   // Create a  function that is passed into the change, exit and keybinding handlers.
- *   // This is useful when these handlers are called in a different part of the app.
- *   createCommand: ({ match, view }) => {
- *     return (emoji,skinVariation) => {
- *       if (!emoji) {
- *         throw new Error('An emoji is required when calling the emoji suggestions command');
- *       }
- *
- *       const tr = view.state.tr; const { from, end: to } = match.range;
- *       tr.insertText(emoji, from, to); view.dispatch(tr);
- *     };
- *   },
- * };
- *
- *  // Create the plugin with the above configuration. It also supports multiple plugins being added.
- * const suggestionPlugin = suggest(suggestEmojis);
- *
- *  // Include the plugin in the created editor state.
- * const state = EditorState.create({schema,
- *   plugins: [suggestionPlugin],
- * });
- * ```
- *
- * The priority of the suggestions is the order in which they are passed into
+ * The priority of the suggesters is the order in which they are passed into
  * this function.
  *
  * - `const plugin = suggest(two, one, three)` - Here `two` will be checked
  *   first, then `one` and then `three`.
  *
- * Only one suggestion can match at any given time. The order and specificity of
- * the regex parameters help determines which suggestion will be active.
+ * Only one suggester can match at any given time. The order and specificity of
+ * the regex parameters help determines which suggester will be active.
  *
  * @param suggesters - a list of suggesters in the order they should be
  * evaluated.
  */
-export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Suggester[]) => {
+export function suggest<Schema extends EditorSchema = EditorSchema>(
+  ...suggesters: Array<Suggester<Schema>>
+): Plugin<SuggestState<Schema>, Schema> {
+  // Create the initial plugin state for the suggesters.
   const pluginState = SuggestState.create(suggesters);
 
-  return new Plugin<SuggestState, GSchema>({
+  return new Plugin<SuggestState<Schema>, Schema>({
     key: suggestPluginKey,
 
     // Handle the plugin view
-    view: view => {
-      return pluginState.init(view).viewHandler();
+    view: (view) => {
+      // Initialize the state with the required view before it is used.
+      pluginState.init(view);
+
+      return {
+        update: (view) => {
+          return pluginState.changeHandler(view.state.tr, false);
+        },
+      };
     },
 
     state: {
@@ -129,27 +93,36 @@ export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Sugge
       },
 
       // Apply changes to the state
-      apply: (tr, _, oldState, newState) => {
-        return pluginState.apply({ tr, oldState, newState });
+      apply: (tr, _pluginState, _oldState, state) => {
+        return pluginState.apply({ tr, state });
       },
+    },
+
+    /** Append a transaction via the onChange handlers */
+    appendTransaction: (_, __, state) => {
+      const tr = state.tr;
+
+      // Run the transaction updater for the next selection.
+      pluginState.updateWithNextSelection(tr);
+
+      // Run the change handler.
+      pluginState.changeHandler(tr, true);
+
+      // Check if the transaction has been amended in any way.
+      if (tr.docChanged || tr.steps.length > 0 || tr.selectionSet || tr.storedMarksSet) {
+        pluginState.setLastChangeFromAppend();
+        return tr;
+      }
+
+      return null;
     },
 
     props: {
-      // Call the keydown hook if suggestion is active.
-      handleKeyDown: (_, event) => {
-        return pluginState.handleKeyDown(event);
-      },
-
-      // Defer to the pluginState handler
-      handleTextInput: (_, from, to, text) => {
-        return pluginState.handleTextInput({ text, from, to });
-      },
-
       // Sets up a decoration (styling options) on the currently active
       // decoration
-      decorations: state => {
-        return pluginState.decorations(state);
+      decorations: (state) => {
+        return pluginState.createDecorations(state);
       },
     },
   });
-};
+}

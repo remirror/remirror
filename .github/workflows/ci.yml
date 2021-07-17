@@ -1,90 +1,210 @@
-name: Node CI
+name: ci
 
 on:
+  schedule:
+    - cron: '0 0 * * *'
+
   push:
+    branches:
+      - main
+
   pull_request:
     branches:
-      - master
-      - next
+      - main
 
 env:
-  CI: true
+  PNPM_CACHE_FOLDER: .pnpm-store
 
 jobs:
-  build:
+  # Lint the project
+  lint:
+    timeout-minutes: 8
     runs-on: ubuntu-latest
-
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      - name: get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v1
+      - name: setup caching
+        uses: actions/cache@v2
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: 14
 
-      - name: audit dependencies
-        # Currently yarn audit fails due to decompress - re-enable once there's a resolution.
-        run: yarn audit || true
+      - name: install and audit
+        uses: ./support/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: install dependencies
-        run: yarn ci
+      - name: check build
+        run: pnpm lint:build
 
-      - name: lint files
-        run: yarn lint
+      - name: check css
+        run: pnpm lint:css
+
+      - name: check TS / JS files
+        run: pnpm lint:es -- -f github
+
+      - name: check markdown code blocks
+        run: pnpm lint:md -- -f github
+
+      - name: check formatting
+        run: pnpm lint:prettier
+
+      - name: check repo and versions
+        run: pnpm lint:repo
+
+      - name: check exports
+        run: pnpm lint:exports
+
+  # Typecheck the project
+  typecheck:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: install and audit
+        uses: ./support/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: typecheck project
-        run: yarn typecheck
+        run: pnpm typecheck
+
+  # Unit test and update coverage report
+  unit_test:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: install and audit
+        uses: ./support/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: run unit tests
-        run: yarn test
+        run: pnpm test
 
       - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: "echo Coverage"
+          coverageCommand: 'echo Coverage'
           debug: false
 
+  # Build the project and run tests on built files.
+  build_test:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+      fail-fast: false
+
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install and audit
+        uses: ./support/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
       - name: build project
-        run: yarn build
+        run: pnpm build
+
+      - name: run unit tests with built code
+        run: pnpm test:build
+
+  # Check that package sizes are within their boundaries
+  size_check:
+    timeout-minutes: 8
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: install and audit
+        uses: ./support/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: build project
+        run: pnpm build
 
       - name: check sizes
-        run: yarn size
-
-      - name: integration tests
-        run: yarn test:e2e
-
-      - name: create release pr or publish to npm
-        if: github.ref == 'refs/heads/master'
-        uses: changesets/action@master
-        with:
-          publish: yarn release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: notify slack
-        uses: 8398a7/action-slack@v2
-        if: github.event.push && always() # Pick up events even if the job fails or is cancelled.
-        with:
-          status: ${{ job.status }}
-          author_name: Remirror GitHub CI
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: pnpm size

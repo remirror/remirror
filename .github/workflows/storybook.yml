@@ -1,0 +1,77 @@
+name: storybook
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+
+env:
+  PNPM_CACHE_FOLDER: .pnpm-store
+
+jobs:
+  deploy_docs:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: setup caching
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: setup node.js
+        uses: actions/setup-node@v2
+        with:
+          # Uses node 14 to allow nullish coalescing in `.js` files
+          node-version: 14
+
+      - name: install and audit
+        uses: ./support/actions/pnpm
+        with:
+          cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: build storybook
+        run: |
+          export STORYBOOK_BUILD_TIME=$(date +"%Y-%m-%dT%H:%M:%S%z")
+          export STORYBOOK_GIT_SHA=$GITHUB_SHA
+          export STORYBOOK_GIT_REF=$GITHUB_REF
+          pnpm storybook:build
+
+      - name: deploy storybook for pull request
+        uses: amondnet/vercel-action@v20
+        if: github.ref != 'refs/heads/main' && github.event.pull_request.head.repo.full_name == github.repository # don't run this job from a fork repository
+        with:
+          working-directory: ./packages/storybook-react/storybook-static
+          vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_STORYBOOK_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID }}
+
+          # necessary for comment on pull request.
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          alias-domains: |
+            pr{{PR_NUMBER}}-remirror-ocavue.vercel.app
+
+      - name: deploy storybook for production
+        uses: amondnet/vercel-action@v20
+        if: github.ref == 'refs/heads/main'
+        with:
+          working-directory: ./packages/storybook-react/storybook-static
+          vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_STORYBOOK_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID }}
+
+          # deploy to production environment (https://remirror.vercel.app)
+          vercel-args: '--prod'

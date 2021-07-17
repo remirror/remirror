@@ -1,6 +1,6 @@
 variables:
   CI: 'true'
-  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
+  PNPM_CACHE_FOLDER: $(Pipeline.Workspace)/.pnpm-store
 
 jobs:
   - template: pipeline-jobs.yml
@@ -13,23 +13,13 @@ jobs:
       name: macOS
       vmImage: 'macOS-latest'
 
-# Cron jobs for scheduling builds
-schedules:
-  - cron: '0 0 * * *'
-    displayName: Daily midnight build
-    branches:
-      include:
-        - master
-        - next
-    always: true
-
 # What triggers a new build
 trigger:
-  - master
+  - main
   - next
   - ci/*
 
 # The branches which cause a PR to trigger a new build
 pr:
-  - master
+  - main
   - next

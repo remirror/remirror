@@ -1,0 +1,9 @@
+{
+  "main": "dist/remirror-i18n-en.cjs.js",
+  "module": "dist/remirror-i18n-en.esm.js",
+  "browser": {
+    "./dist/remirror-i18n-en.cjs.js": "./dist/remirror-i18n-en.browser.cjs.js",
+    "./dist/remirror-i18n-en.esm.js": "./dist/remirror-i18n-en.browser.esm.js"
+  },
+  "types": "dist/remirror-i18n-en.cjs.d.ts"
+}

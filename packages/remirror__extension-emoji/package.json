@@ -1,0 +1,69 @@
+{
+  "name": "@remirror/extension-emoji",
+  "version": "1.0.0-next.60",
+  "description": "Add flavor to your editor with emoji's that make the heart sing.",
+  "keywords": [
+    "remirror",
+    "remirror-extension",
+    "emoji",
+    "smiley",
+    "emoticons",
+    "editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-emoji",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-emoji",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-emoji.esm.js",
+      "require": "./dist/remirror-extension-emoji.cjs.js",
+      "browser": "./dist/remirror-extension-emoji.browser.esm.js",
+      "types": "./dist/remirror-extension-emoji.cjs.d.ts",
+      "default": "./dist/remirror-extension-emoji.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-emoji.cjs.js",
+  "module": "dist/remirror-extension-emoji.esm.js",
+  "browser": {
+    "./dist/remirror-extension-emoji.cjs.js": "./dist/remirror-extension-emoji.browser.cjs.js",
+    "./dist/remirror-extension-emoji.esm.js": "./dist/remirror-extension-emoji.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-emoji.cjs.d.ts",
+  "files": [
+    "dist",
+    "apple"
+  ],
+  "scripts": {
+    "build:custom": "node ./build.js"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/messages": "0.0.0",
+    "@remirror/theme": "1.0.0-next.60",
+    "emojibase": "^5.1.0",
+    "emojibase-data": "^6.1.0",
+    "emojibase-regex": "^5.1.0",
+    "escape-string-regexp": "^4.0.0",
+    "svgmoji": "^3.2.0"
+  },
+  "devDependencies": {
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "1.0.0-next.60"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "60 KB"
+  },
+  "rn:dev": "src/index.ts"
+}

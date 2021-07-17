@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-api-extractor.worker.cjs.js",
+  "module": "dist/scripts-api-extractor.worker.esm.js"
+}

@@ -1,5 +1,7 @@
+import { assertGet, isEmptyArray, object } from '@remirror/core-helpers';
+
 import { MultishiftActionTypes } from './multishift-constants';
-import {
+import type {
   MultishiftProps,
   MultishiftRootActions,
   MultishiftState,
@@ -13,24 +15,31 @@ import {
   getChangesFromMenuKeyDown,
   getChangesFromToggleButtonKeyDown,
   getDefaultState,
-  getHighlightReset,
-  getHighlightedIndexOnOpen,
   getHighlightedIndexes,
+  getHighlightedIndexOnOpen,
+  getHighlightReset,
   getItemIndexesByJumpText,
   omitUnchangedState,
   removeItems,
   warnIfInternalType,
 } from './multishift-utils';
 
-export const multishiftReducer = <GItem = any>(
-  state: MultishiftState<GItem>,
-  action: MultishiftRootActions<GItem>,
-  props: MultishiftProps<GItem>,
-): [MultishiftState<GItem>, MultishiftStateProps<GItem>] => {
-  let changes: MultishiftStateProps<GItem> = Object.create(null);
+export const multishiftReducer = <Item = any>(
+  state: MultishiftState<Item>,
+  action: MultishiftRootActions<Item>,
+  props: MultishiftProps<Item>,
+): [MultishiftState<Item>, MultishiftStateProps<Item>] => {
+  let changes: MultishiftStateProps<Item> = object();
 
   const defaultState = getDefaultState(props);
-  const { multiple, items, getItemId = defaultGetItemId, autoSelectOnBlur = true } = props;
+  const {
+    multiple,
+    items,
+    getItemId = defaultGetItemId,
+    autoSelectOnBlur = true,
+    itemToString,
+    initialHighlightedIndexes,
+  } = props;
   const highlightReset = getHighlightReset(defaultState);
 
   switch (action.type) {
@@ -99,20 +108,25 @@ export const multishiftReducer = <GItem = any>(
     case MultishiftActionTypes.InputBlur:
     case MultishiftActionTypes.ToggleButtonBlur:
     case MultishiftActionTypes.MenuBlur: {
-      const { highlightedIndexes, selectedItems: selected } = state;
+      const {
+        highlightedIndexes,
+        selectedItems: selected,
+        highlightedGroupStartIndex,
+        highlightedGroupEndIndex,
+      } = state;
       const indexes = getHighlightedIndexes({
-        start: state.highlightedGroupStartIndex,
-        end: state.highlightedGroupEndIndex,
+        start: highlightedGroupStartIndex,
+        end: highlightedGroupEndIndex,
         indexes: highlightedIndexes,
         items,
       });
 
       const extra =
-        indexes.length && autoSelectOnBlur
+        !isEmptyArray(indexes) && autoSelectOnBlur
           ? {
               selectedItems: addItems(
                 selected,
-                indexes.map(index => items[index]),
+                indexes.map((index) => assertGet(items, index)),
                 getItemId,
                 multiple,
               ),
@@ -184,10 +198,10 @@ export const multishiftReducer = <GItem = any>(
       const indexes = getItemIndexesByJumpText({
         text: jumpText,
         highlightedIndexes: state.highlightedIndexes,
-        itemToString: props.itemToString,
+        itemToString,
         items,
       });
-      const extraHighlights = indexes.length ? { highlightedIndexes: indexes } : {};
+      const extraHighlights = !isEmptyArray(indexes) ? { highlightedIndexes: indexes } : {};
 
       changes = omitUnchangedState({ jumpText, ...extraHighlights }, { state, getItemId });
       break;
@@ -198,7 +212,7 @@ export const multishiftReducer = <GItem = any>(
       const indexes = getHighlightedIndexOnOpen(
         {
           defaultHighlightedIndexes: defaultState.highlightedIndexes,
-          initialHighlightedIndexes: props.initialHighlightedIndexes,
+          initialHighlightedIndexes: initialHighlightedIndexes,
           items,
         },
         state,
@@ -217,7 +231,7 @@ export const multishiftReducer = <GItem = any>(
       const highlightedIndexes = getHighlightedIndexOnOpen(
         {
           defaultHighlightedIndexes: defaultState.highlightedIndexes,
-          initialHighlightedIndexes: props.initialHighlightedIndexes,
+          initialHighlightedIndexes: initialHighlightedIndexes,
           items,
         },
         state,
@@ -258,16 +272,21 @@ export const multishiftReducer = <GItem = any>(
 
     case MultishiftActionTypes.OuterMouseUp:
     case MultishiftActionTypes.OuterTouchEnd: {
-      const { highlightedIndexes, selectedItems: selected } = state;
+      const {
+        highlightedIndexes,
+        selectedItems: selected,
+        highlightedGroupEndIndex,
+        highlightedGroupStartIndex,
+      } = state;
       const indexes = getHighlightedIndexes({
-        start: state.highlightedGroupStartIndex,
-        end: state.highlightedGroupEndIndex,
+        start: highlightedGroupStartIndex,
+        end: highlightedGroupEndIndex,
         indexes: highlightedIndexes,
         items,
       });
-      const highlightedItems = indexes.map(index => items[index]);
+      const highlightedItems = indexes.map((index) => assertGet(items, index));
       const extra =
-        indexes.length && autoSelectOnBlur
+        !isEmptyArray(indexes) && autoSelectOnBlur
           ? { selectedItems: addItems(selected, highlightedItems, getItemId, multiple) }
           : {};
       changes = {

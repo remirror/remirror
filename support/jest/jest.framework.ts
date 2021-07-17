@@ -3,19 +3,15 @@
 
 import 'jest-extended';
 
-import toDiffableHtml from 'diffable-html';
+import diffHtml from 'diffable-html';
 import { prosemirrorSerializer } from 'jest-prosemirror';
 import { getSnapshotDiffSerializer, toMatchDiffSnapshot } from 'snapshot-diff';
 
 expect.addSnapshotSerializer(getSnapshotDiffSerializer());
 expect.extend({ toMatchDiffSnapshot });
 
-if (__E2E__) {
-  jest.setTimeout(120000);
-}
-
 /* Make unhandledRejection errors easier to debug */
-process.on('unhandledRejection', reason => {
+process.on('unhandledRejection', (reason) => {
   console.error('REJECTION', reason);
 });
 
@@ -23,7 +19,7 @@ process.on('unhandledRejection', reason => {
  * Serializer for HTML content.
  */
 expect.addSnapshotSerializer({
-  test: object => {
+  test: (object) => {
     if (typeof object !== 'string') {
       return false;
     }
@@ -31,8 +27,8 @@ expect.addSnapshotSerializer({
     const trimmed = object.trim();
     return trimmed.length > 2 && trimmed.startsWith('<') && trimmed.endsWith('>');
   },
-  print: val => {
-    return toDiffableHtml(val).trim();
+  serialize: (val: string) => {
+    return diffHtml(val).trim();
   },
 });
 
@@ -44,8 +40,8 @@ interface PuppeteerHtml {
 }
 
 expect.addSnapshotSerializer({
-  test: val => val?._ === 'HTML',
-  print(val: PuppeteerHtml) {
-    return toDiffableHtml(val.html).trim();
+  test: (val) => val?._ === 'HTML',
+  serialize(val: PuppeteerHtml) {
+    return diffHtml(val.html).trim();
   },
 });

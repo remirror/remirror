@@ -1,4 +1,4 @@
-import { PlainObject } from '@remirror/core-types';
+import type { Shape } from '@remirror/core-types';
 
 // Taken from dom-testing-library
 
@@ -356,7 +356,10 @@ interface EventProperties {
 type EventMap = Record<EventType, EventProperties>;
 const eventMap: EventMap = rawEventMap as EventMap;
 
-export const createEvents = <GEvent extends Event>(event: EventType, options: PlainObject): GEvent[] => {
+export const createEvents = <CreatedEvent extends Event>(
+  event: EventType,
+  options: Shape,
+): CreatedEvent[] => {
   const { Constructor, defaultProperties } =
     event in eventMap
       ? eventMap[event]
@@ -365,23 +368,25 @@ export const createEvents = <GEvent extends Event>(event: EventType, options: Pl
           defaultProperties: { bubbles: true, cancelable: true },
         };
   let eventName = event.toLowerCase();
-  const properties: PlainObject = { ...defaultProperties, ...options };
-  type GEventConstructor = new (type: string, eventInitDict?: EventInit) => GEvent;
+  const properties: Shape = { ...defaultProperties, ...options };
+  type GEventConstructor = new (type: string, eventInitDict?: EventInit) => CreatedEvent;
 
   if (event === 'doubleClick') {
     eventName = 'dblclick';
   }
+
   let EventConstructor: GEventConstructor;
+
   if (event === 'tripleClick') {
     EventConstructor = MouseEvent as any;
     return [
-      new EventConstructor('click', { ...properties, detail: 1 } as any),
-      new EventConstructor('click', { ...properties, detail: 2 } as any),
-      new EventConstructor('click', { ...properties, detail: 3 } as any),
+      new EventConstructor('click', { ...options, detail: 1 } as EventInit),
+      new EventConstructor('click', { ...options, detail: 2 } as EventInit),
+      new EventConstructor('click', { ...options, detail: 3 } as EventInit),
     ];
   }
 
-  EventConstructor = window[Constructor as keyof Window] || Event;
+  EventConstructor = (window[Constructor as keyof Window] || Event) as any;
 
   return [new EventConstructor(eventName, properties)];
 };

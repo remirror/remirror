@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`commands updateCodeBlock updates the language 1`] = `
+<code data-code-block-language="javascript">
+  <span class="token keyword">
+    const
+  </span>
+  a
+  <span class="token operator">
+    =
+  </span>
+  <span class="token string">
+    'test'
+  </span>
+  <span class="token punctuation">
+    ;
+  </span>
+</code>
+`;
+
+exports[`plain text nodes renders decorations on plain text based on configuration {"plainTextClassName":""} 1`] = `
+<span class="token keyword">
+  const
+</span>
+a
+<span class="token operator">
+  =
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plain text nodes renders decorations on plain text based on configuration {"plainTextClassName":"text"} 1`] = `
+<span class="token keyword">
+  const
+</span>
+<span class="text">
+  a
+</span>
+<span class="token operator">
+  =
+</span>
+<span class="text">
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plain text nodes renders decorations on plain text based on configuration {} 1`] = `
+<span class="token keyword">
+  const
+</span>
+a
+<span class="token operator">
+  =
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plain text nodes renders decorations on plain text based on configuration {} 2`] = `
+<span class="token keyword">
+  const
+</span>
+a
+<span class="token operator">
+  =
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plugin can be updated 1`] = `
+<span class="token keyword">
+  const
+</span>
+a
+<span class="token operator">
+  =
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plugin can be updated 2`] = `
+<span class="token keyword">
+  const
+</span>
+a
+<span class="token operator">
+  =
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+<span class="token function">
+  log
+</span>
+<span class="token punctuation">
+  (
+</span>
+a
+<span class="token punctuation">
+  )
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plugin changes markup when the language changes 1`] = `
+<span class="token keyword">
+  const
+</span>
+a
+<span class="token operator">
+  =
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plugin renders the correct decorations 1`] = `
+<span class="token keyword">
+  const
+</span>
+a
+<span class="token operator">
+  =
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plugin updates when multiple changes occur 1`] = `
+<pre class="language-typescript">
+  <code data-code-block-language="typescript">
+    <span class="token keyword">
+      const
+    </span>
+    a
+    <span class="token operator">
+      =
+    </span>
+    <span class="token string">
+      'test'
+    </span>
+    <span class="token punctuation">
+      ;
+    </span>
+  </code>
+</pre>
+<pre class="language-typescript">
+  <code data-code-block-language="typescript">
+    <span class="token keyword">
+      let
+    </span>
+    b
+    <span class="token punctuation">
+      ;
+    </span>
+  </code>
+</pre>
+`;
+
+exports[`plugin updates when multiple changes occur 2`] = `
+<pre class="language-typescript">
+  <code data-code-block-language="typescript">
+    <span class="token keyword">
+      const
+    </span>
+    c
+    <span class="token operator">
+      =
+    </span>
+    <span class="token string">
+      'test'
+    </span>
+    <span class="token punctuation">
+      ;
+    </span>
+  </code>
+</pre>
+<pre class="language-typescript">
+  <code data-code-block-language="typescript">
+    <span class="token keyword">
+      let
+    </span>
+    d
+    <span class="token punctuation">
+      ;
+    </span>
+  </code>
+</pre>
+`;

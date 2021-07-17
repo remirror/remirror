@@ -1,0 +1,20 @@
+export type {
+  ClickEventHandler,
+  ClickHandler,
+  ClickHandlerState,
+  ClickMarkEventHandler,
+  ClickMarkHandler,
+  ClickMarkHandlerState,
+  ContextMenuEventHandler,
+  CreateEventHandlers,
+  EventsOptions,
+  FocusEventHandler,
+  HoverEventHandler,
+  HoverEventHandlerProps,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  MouseEventHandlerProps,
+  ScrollEventHandler,
+  TextInputHandler,
+} from './events-extension';
+export { EventsExtension } from './events-extension';

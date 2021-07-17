@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-tables.cjs.js",
+  "module": "dist/remirror-pm-tables.esm.js",
+  "browser": {
+    "./dist/remirror-pm-tables.cjs.js": "./dist/remirror-pm-tables.browser.cjs.js",
+    "./dist/remirror-pm-tables.esm.js": "./dist/remirror-pm-tables.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-tables.cjs.d.ts",
+  "rn:dev": "../src/tables.ts"
+}

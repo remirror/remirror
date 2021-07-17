@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-run-if-publishable.cjs.js",
+  "module": "dist/scripts-run-if-publishable.esm.js"
+}

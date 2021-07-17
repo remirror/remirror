@@ -4,4 +4,4 @@ steps:
       artifact: Build
       patterns: '**'
       path: $(Build.SourcesDirectory)
-    displayName: 'Restore build artifact'
+    displayName: 'restore build artifact'

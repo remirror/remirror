@@ -1,0 +1,9 @@
+{
+  "hooks": {
+    "pre-commit": "pnpm run if-config hooks.preCommit lint-staged",
+    "post-checkout": "cross-env-shell echo $HUSKY_GIT_STDIN | cross-env-shell sh ./support/lfs-hooks/post-checkout $HUSKY_GIT_PARAMS",
+    "post-commit": "cross-env-shell echo $HUSKY_GIT_STDIN | cross-env-shell sh ./support/lfs-hooks/post-commit $HUSKY_GIT_PARAMS",
+    "post-merge": "cross-env-shell echo $HUSKY_GIT_STDIN | cross-env-shell sh ./support/lfs-hooks/post-merge $HUSKY_GIT_PARAMS",
+    "pre-push": "cross-env-shell echo $HUSKY_GIT_STDIN | cross-env-shell sh ./support/lfs-hooks/pre-push $HUSKY_GIT_PARAMS && pnpm run if-config hooks.prePush \"pnpm checks\""
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-linaria.cjs.js",
+  "module": "dist/scripts-linaria.esm.js"
+}

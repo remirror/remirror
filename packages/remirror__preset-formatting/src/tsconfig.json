@@ -1,0 +1,65 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > 'src'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "declaration": true,
+    "noEmit": false,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist-types"
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-bold/src"
+    },
+    {
+      "path": "../../remirror__extension-columns/src"
+    },
+    {
+      "path": "../../remirror__extension-font-size/src"
+    },
+    {
+      "path": "../../remirror__extension-heading/src"
+    },
+    {
+      "path": "../../remirror__extension-italic/src"
+    },
+    {
+      "path": "../../remirror__extension-node-formatting/src"
+    },
+    {
+      "path": "../../remirror__extension-strike/src"
+    },
+    {
+      "path": "../../remirror__extension-sub/src"
+    },
+    {
+      "path": "../../remirror__extension-sup/src"
+    },
+    {
+      "path": "../../remirror__extension-text-case/src"
+    },
+    {
+      "path": "../../remirror__extension-text-color/src"
+    },
+    {
+      "path": "../../remirror__extension-text-highlight/src"
+    },
+    {
+      "path": "../../remirror__extension-underline/src"
+    },
+    {
+      "path": "../../remirror__extension-whitespace/src"
+    }
+  ]
+}

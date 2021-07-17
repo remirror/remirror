@@ -1,6 +1,6 @@
 {
   "name": "jest-remirror",
-  "version": "0.13.1",
+  "version": "1.0.0-next.60",
   "description": "A text editor for react built with prosemirror",
   "keywords": [
     "prosemirror",
@@ -8,43 +8,77 @@
     "ssr",
     "text editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
-  "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/jest-remirror",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/jest-remirror",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "files": [
-    "environment.d.ts",
-    "environment.js",
-    "lib",
-    "src"
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/jest-remirror.cjs.js",
+      "types": "./dist/jest-remirror.cjs.d.ts"
+    },
+    "./environment": {
+      "require": "./environment/dist/jest-remirror-environment.cjs.js",
+      "types": "./environment/dist/jest-remirror-environment.cjs.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/jest-remirror.cjs.js",
+  "types": "dist/jest-remirror.cjs.d.ts",
+  "files": [
+    "dist",
+    "environment"
+  ],
   "dependencies": {
-    "@babel/runtime": "^7",
-    "@remirror/core": "^0.11.0",
-    "@remirror/core-extensions": "^0.13.1",
-    "@remirror/react": "^0.13.1",
-    "@remirror/react-utils": "^0.7.6",
-    "@testing-library/react": "^10.0.1",
-    "@types/node": ">=12.11.2",
-    "@types/prosemirror-model": "^1.7.2",
-    "@types/prosemirror-view": "^1.11.2",
-    "jest-prosemirror": "^0.8.2",
-    "jest-snapshot": "^25.1.0",
-    "mutationobserver-shim": "0.3.3",
-    "prosemirror-model": "^1.9.1",
-    "prosemirror-state": "^1.3.2",
-    "prosemirror-view": "^1.14.4"
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/dom": "1.0.0-next.60",
+    "@remirror/pm": "1.0.0-next.60",
+    "@remirror/preset-core": "1.0.0-next.60",
+    "@testing-library/dom": "^8.0.0",
+    "@types/sanitize-html": "^2.3.1",
+    "jest-prosemirror": "1.0.0-next.60",
+    "jest-snapshot": "^27.0.4",
+    "mutationobserver-shim": "^0.3.7",
+    "sanitize-html": "^2.4.0",
+    "tiny-warning": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.4",
+    "jest": "^27.0.4"
   },
   "peerDependencies": {
-    "@emotion/core": "^10",
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "@types/node": "*",
+    "jest": ">= 24"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node",
+            "jest"
+          ]
+        }
+      }
+    }
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "environment.ts"
+    ]
+  },
+  "rn:dev": "src/index.ts"
 }

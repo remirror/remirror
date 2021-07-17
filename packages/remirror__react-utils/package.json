@@ -1,0 +1,65 @@
+{
+  "name": "@remirror/react-utils",
+  "version": "1.0.0-next.60",
+  "description": "A small set of utilities for react components in remirror.",
+  "keywords": [
+    "react",
+    "utils",
+    "remirror",
+    "prosemirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-utils",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-utils",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-utils.esm.js",
+      "require": "./dist/remirror-react-utils.cjs.js",
+      "browser": "./dist/remirror-react-utils.browser.esm.js",
+      "types": "./dist/remirror-react-utils.cjs.d.ts",
+      "default": "./dist/remirror-react-utils.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-react-utils.cjs.js",
+  "module": "dist/remirror-react-utils.esm.js",
+  "browser": {
+    "./dist/remirror-react-utils.cjs.js": "./dist/remirror-react-utils.browser.cjs.js",
+    "./dist/remirror-react-utils.esm.js": "./dist/remirror-react-utils.browser.esm.js"
+  },
+  "types": "dist/remirror-react-utils.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core-constants": "1.0.0-next.60",
+    "@remirror/core-helpers": "1.0.0-next.60",
+    "@remirror/core-types": "1.0.0-next.60"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.11",
+    "react": "^17.0.2"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.14.0 || ^17",
+    "react": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  },
+  "rn:dev": "src/index.ts"
+}

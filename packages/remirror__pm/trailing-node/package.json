@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-trailing-node.cjs.js",
+  "module": "dist/remirror-pm-trailing-node.esm.js",
+  "browser": {
+    "./dist/remirror-pm-trailing-node.cjs.js": "./dist/remirror-pm-trailing-node.browser.cjs.js",
+    "./dist/remirror-pm-trailing-node.esm.js": "./dist/remirror-pm-trailing-node.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-trailing-node.cjs.d.ts",
+  "rn:dev": "../src/trailing-node.ts"
+}

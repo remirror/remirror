@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-run-if-clean.cjs.js",
+  "module": "dist/scripts-run-if-clean.esm.js"
+}

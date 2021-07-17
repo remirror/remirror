@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-generate-intl.cjs.js",
+  "module": "dist/scripts-generate-intl.esm.js"
+}

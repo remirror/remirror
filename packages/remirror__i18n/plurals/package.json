@@ -1,0 +1,9 @@
+{
+  "main": "dist/remirror-i18n-plurals.cjs.js",
+  "module": "dist/remirror-i18n-plurals.esm.js",
+  "browser": {
+    "./dist/remirror-i18n-plurals.cjs.js": "./dist/remirror-i18n-plurals.browser.cjs.js",
+    "./dist/remirror-i18n-plurals.esm.js": "./dist/remirror-i18n-plurals.browser.esm.js"
+  },
+  "types": "dist/remirror-i18n-plurals.cjs.d.ts"
+}

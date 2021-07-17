@@ -1,4 +1,4 @@
-import { Value } from '@remirror/core-types';
+import type { Value } from '@remirror/core-types';
 
 export const SPECIAL_KEYS = [
   'Tab',
@@ -77,7 +77,6 @@ export const MultishiftActionTypes = {
   ToggleButtonClick: '$$__TOGGLE_BUTTON_CLICK__',
   ToggleButtonBlur: '$$__TOGGLE_BUTTON_BLUR__',
   ToggleButtonSpecialKeyDown: '$$__TOGGLE_BUTTON_SPECIAL_KEY_DOWN__',
-  // ToggleButtonCharacterKeyDown: '$$__TOGGLE_BUTTON_CHARACTER_KEY_DOWN__',
   MenuBlur: '$$__MENU_BLUR__',
   MenuSpecialKeyDown: '$$__MENU_SPECIAL_KEY_DOWN__',
   MenuCharacterKeyDown: '$$__MENU_CHARACTER_KEY_DOWN__',
@@ -94,10 +93,11 @@ type MultishiftActionTypes = typeof MultishiftActionTypes;
 type MultishiftTypesInterface = { [P in Value<MultishiftActionTypes>]: any };
 
 declare global {
-  /**
-   * This is an interface of all the actionTypes available. Use declaration merging to
-   * extend it with your own custom actionTypes.
-   */
-
-  interface GlobalMultishiftActionTypes extends MultishiftTypesInterface {}
+  namespace Multishift {
+    /**
+     * This is an interface of all the actionTypes available. Use declaration merging to
+     * extend it with your own custom actionTypes.
+     */
+    interface ActionTypes extends MultishiftTypesInterface {}
+  }
 }

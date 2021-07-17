@@ -1,0 +1,633 @@
+{
+  "include": [],
+  "files": [],
+  "references": [
+    {
+      "path": "examples/with-next/__e2e__"
+    },
+    {
+      "path": "examples/with-next/src"
+    },
+    {
+      "path": "examples/with-react-native/src"
+    },
+    {
+      "path": "packages/a11y-status/__tests__"
+    },
+    {
+      "path": "packages/a11y-status/src"
+    },
+    {
+      "path": "packages/create-context-state/__tests__"
+    },
+    {
+      "path": "packages/create-context-state/src"
+    },
+    {
+      "path": "packages/jest-prosemirror/__tests__"
+    },
+    {
+      "path": "packages/jest-prosemirror/src"
+    },
+    {
+      "path": "packages/jest-remirror/__tests__"
+    },
+    {
+      "path": "packages/jest-remirror/src"
+    },
+    {
+      "path": "packages/multishift/__tests__"
+    },
+    {
+      "path": "packages/multishift/src"
+    },
+    {
+      "path": "packages/prosemirror-paste-rules/__tests__"
+    },
+    {
+      "path": "packages/prosemirror-paste-rules/src"
+    },
+    {
+      "path": "packages/prosemirror-resizable-view/src"
+    },
+    {
+      "path": "packages/prosemirror-suggest/__tests__"
+    },
+    {
+      "path": "packages/prosemirror-suggest/src"
+    },
+    {
+      "path": "packages/prosemirror-trailing-node/__tests__"
+    },
+    {
+      "path": "packages/prosemirror-trailing-node/src"
+    },
+    {
+      "path": "packages/remirror__cli/src"
+    },
+    {
+      "path": "packages/remirror__core-constants/src"
+    },
+    {
+      "path": "packages/remirror__core-helpers/__tests__"
+    },
+    {
+      "path": "packages/remirror__core-helpers/src"
+    },
+    {
+      "path": "packages/remirror__core-types/__dts__"
+    },
+    {
+      "path": "packages/remirror__core-types/src"
+    },
+    {
+      "path": "packages/remirror__core-utils/__tests__"
+    },
+    {
+      "path": "packages/remirror__core-utils/src"
+    },
+    {
+      "path": "packages/remirror__core/__dts__"
+    },
+    {
+      "path": "packages/remirror__core/__tests__"
+    },
+    {
+      "path": "packages/remirror__core/src"
+    },
+    {
+      "path": "packages/remirror__dev/__tests__"
+    },
+    {
+      "path": "packages/remirror__dev/src"
+    },
+    {
+      "path": "packages/remirror__dom/__tests__"
+    },
+    {
+      "path": "packages/remirror__dom/src"
+    },
+    {
+      "path": "packages/remirror__es-module-shims/src"
+    },
+    {
+      "path": "packages/remirror__extension-annotation/__e2e__"
+    },
+    {
+      "path": "packages/remirror__extension-annotation/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-annotation/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-annotation/src"
+    },
+    {
+      "path": "packages/remirror__extension-bidi/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-bidi/src"
+    },
+    {
+      "path": "packages/remirror__extension-blockquote/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-blockquote/src"
+    },
+    {
+      "path": "packages/remirror__extension-bold/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-bold/src"
+    },
+    {
+      "path": "packages/remirror__extension-callout/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-callout/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-callout/src"
+    },
+    {
+      "path": "packages/remirror__extension-code-block/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-code-block/src"
+    },
+    {
+      "path": "packages/remirror__extension-code/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-code/src"
+    },
+    {
+      "path": "packages/remirror__extension-codemirror5/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-codemirror5/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-codemirror5/src"
+    },
+    {
+      "path": "packages/remirror__extension-collaboration/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-collaboration/src"
+    },
+    {
+      "path": "packages/remirror__extension-columns/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-columns/src"
+    },
+    {
+      "path": "packages/remirror__extension-diff/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-diff/src"
+    },
+    {
+      "path": "packages/remirror__extension-doc/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-doc/src"
+    },
+    {
+      "path": "packages/remirror__extension-drop-cursor/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-drop-cursor/src"
+    },
+    {
+      "path": "packages/remirror__extension-embed/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-embed/src"
+    },
+    {
+      "path": "packages/remirror__extension-emoji/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-emoji/src"
+    },
+    {
+      "path": "packages/remirror__extension-epic-mode/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-epic-mode/src"
+    },
+    {
+      "path": "packages/remirror__extension-events/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-events/src"
+    },
+    {
+      "path": "packages/remirror__extension-font-family/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-font-family/src"
+    },
+    {
+      "path": "packages/remirror__extension-font-size/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-font-size/src"
+    },
+    {
+      "path": "packages/remirror__extension-gap-cursor/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-gap-cursor/src"
+    },
+    {
+      "path": "packages/remirror__extension-hard-break/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-hard-break/src"
+    },
+    {
+      "path": "packages/remirror__extension-heading/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-heading/src"
+    },
+    {
+      "path": "packages/remirror__extension-history/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-history/src"
+    },
+    {
+      "path": "packages/remirror__extension-horizontal-rule/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-horizontal-rule/src"
+    },
+    {
+      "path": "packages/remirror__extension-image/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-image/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-image/src"
+    },
+    {
+      "path": "packages/remirror__extension-italic/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-italic/src"
+    },
+    {
+      "path": "packages/remirror__extension-link/__e2e__"
+    },
+    {
+      "path": "packages/remirror__extension-link/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-link/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-link/src"
+    },
+    {
+      "path": "packages/remirror__extension-list/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-list/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-list/src"
+    },
+    {
+      "path": "packages/remirror__extension-markdown/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-markdown/src"
+    },
+    {
+      "path": "packages/remirror__extension-mention-atom/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-mention-atom/src"
+    },
+    {
+      "path": "packages/remirror__extension-mention/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-mention/src"
+    },
+    {
+      "path": "packages/remirror__extension-node-formatting/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-node-formatting/src"
+    },
+    {
+      "path": "packages/remirror__extension-paragraph/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-paragraph/src"
+    },
+    {
+      "path": "packages/remirror__extension-placeholder/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-placeholder/src"
+    },
+    {
+      "path": "packages/remirror__extension-positioner/__e2e__"
+    },
+    {
+      "path": "packages/remirror__extension-positioner/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-positioner/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-positioner/src"
+    },
+    {
+      "path": "packages/remirror__extension-react-component/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-react-component/src"
+    },
+    {
+      "path": "packages/remirror__extension-react-native-bridge/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-react-native-bridge/src"
+    },
+    {
+      "path": "packages/remirror__extension-react-ssr/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-react-ssr/src"
+    },
+    {
+      "path": "packages/remirror__extension-react-tables/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-react-tables/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-react-tables/src"
+    },
+    {
+      "path": "packages/remirror__extension-search/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-search/src"
+    },
+    {
+      "path": "packages/remirror__extension-strike/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-strike/src"
+    },
+    {
+      "path": "packages/remirror__extension-sub/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-sub/src"
+    },
+    {
+      "path": "packages/remirror__extension-sup/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-sup/src"
+    },
+    {
+      "path": "packages/remirror__extension-tables/__stories__"
+    },
+    {
+      "path": "packages/remirror__extension-tables/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-tables/src"
+    },
+    {
+      "path": "packages/remirror__extension-text-case/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-text-case/src"
+    },
+    {
+      "path": "packages/remirror__extension-text-color/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-text-color/src"
+    },
+    {
+      "path": "packages/remirror__extension-text-highlight/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-text-highlight/src"
+    },
+    {
+      "path": "packages/remirror__extension-text/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-text/src"
+    },
+    {
+      "path": "packages/remirror__extension-trailing-node/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-trailing-node/src"
+    },
+    {
+      "path": "packages/remirror__extension-underline/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-underline/src"
+    },
+    {
+      "path": "packages/remirror__extension-whitespace/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-whitespace/src"
+    },
+    {
+      "path": "packages/remirror__extension-yjs/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-yjs/src"
+    },
+    {
+      "path": "packages/remirror__i18n/__tests__"
+    },
+    {
+      "path": "packages/remirror__i18n/src"
+    },
+    {
+      "path": "packages/remirror__icons/src"
+    },
+    {
+      "path": "packages/remirror__lit-components/src"
+    },
+    {
+      "path": "packages/remirror__lit/src"
+    },
+    {
+      "path": "packages/remirror__messages/src"
+    },
+    {
+      "path": "packages/remirror__playground/src"
+    },
+    {
+      "path": "packages/remirror__pm/__tests__"
+    },
+    {
+      "path": "packages/remirror__pm/src"
+    },
+    {
+      "path": "packages/remirror__preset-core/__tests__"
+    },
+    {
+      "path": "packages/remirror__preset-core/src"
+    },
+    {
+      "path": "packages/remirror__preset-formatting/src"
+    },
+    {
+      "path": "packages/remirror__preset-react/__tests__"
+    },
+    {
+      "path": "packages/remirror__preset-react/src"
+    },
+    {
+      "path": "packages/remirror__preset-wysiwyg/__tests__"
+    },
+    {
+      "path": "packages/remirror__preset-wysiwyg/src"
+    },
+    {
+      "path": "packages/remirror__react-components/__e2e__"
+    },
+    {
+      "path": "packages/remirror__react-components/__stories__"
+    },
+    {
+      "path": "packages/remirror__react-components/__tests__"
+    },
+    {
+      "path": "packages/remirror__react-components/src"
+    },
+    {
+      "path": "packages/remirror__react-core/__tests__"
+    },
+    {
+      "path": "packages/remirror__react-core/src"
+    },
+    {
+      "path": "packages/remirror__react-debugger/src"
+    },
+    {
+      "path": "packages/remirror__react-editors/__e2e__"
+    },
+    {
+      "path": "packages/remirror__react-editors/__stories__"
+    },
+    {
+      "path": "packages/remirror__react-editors/src"
+    },
+    {
+      "path": "packages/remirror__react-hooks/__tests__"
+    },
+    {
+      "path": "packages/remirror__react-hooks/src"
+    },
+    {
+      "path": "packages/remirror__react-native/src"
+    },
+    {
+      "path": "packages/remirror__react-renderer/__tests__"
+    },
+    {
+      "path": "packages/remirror__react-renderer/src"
+    },
+    {
+      "path": "packages/remirror__react-ssr/__tests__"
+    },
+    {
+      "path": "packages/remirror__react-ssr/src"
+    },
+    {
+      "path": "packages/remirror__react-utils/__tests__"
+    },
+    {
+      "path": "packages/remirror__react-utils/src"
+    },
+    {
+      "path": "packages/remirror__react/__stories__"
+    },
+    {
+      "path": "packages/remirror__react/src"
+    },
+    {
+      "path": "packages/remirror__styles/__tests__"
+    },
+    {
+      "path": "packages/remirror__styles/src"
+    },
+    {
+      "path": "packages/remirror__svelte/src"
+    },
+    {
+      "path": "packages/remirror__theme/__tests__"
+    },
+    {
+      "path": "packages/remirror__theme/src"
+    },
+    {
+      "path": "packages/remirror__types/src"
+    },
+    {
+      "path": "packages/remirror/src"
+    },
+    {
+      "path": "packages/storybook-react/__stories__"
+    },
+    {
+      "path": "packages/storybook-react/src"
+    },
+    {
+      "path": "packages/test-keyboard/__tests__"
+    },
+    {
+      "path": "packages/test-keyboard/src"
+    },
+    {
+      "path": "packages/testing/src"
+    },
+    {
+      "path": "support/actions/__tests__"
+    },
+    {
+      "path": "support/actions/src"
+    },
+    {
+      "path": "support/scripts/src"
+    },
+    {
+      "path": "support/templates/extension-template/__tests__"
+    },
+    {
+      "path": "support/templates/extension-template/src"
+    },
+    {
+      "path": "support/templates/minimal-template/src"
+    },
+    {
+      "path": "support/templates/preset-template/src"
+    },
+    {
+      "path": "website/src"
+    }
+  ]
+}

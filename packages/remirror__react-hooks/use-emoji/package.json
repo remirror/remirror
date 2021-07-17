@@ -1,0 +1,9 @@
+{
+  "main": "dist/remirror-react-hooks-use-emoji.cjs.js",
+  "module": "dist/remirror-react-hooks-use-emoji.esm.js",
+  "browser": {
+    "./dist/remirror-react-hooks-use-emoji.cjs.js": "./dist/remirror-react-hooks-use-emoji.browser.cjs.js",
+    "./dist/remirror-react-hooks-use-emoji.esm.js": "./dist/remirror-react-hooks-use-emoji.browser.esm.js"
+  },
+  "types": "dist/remirror-react-hooks-use-emoji.cjs.d.ts"
+}

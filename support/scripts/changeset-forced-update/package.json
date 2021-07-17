@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-changeset-forced-update.cjs.js",
+  "module": "dist/scripts-changeset-forced-update.esm.js"
+}

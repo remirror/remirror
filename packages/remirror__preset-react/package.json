@@ -1,0 +1,77 @@
+{
+  "name": "@remirror/preset-react",
+  "version": "1.0.0-next.60",
+  "description": "The core preset providing the functionality you need and want.",
+  "keywords": [
+    "remirror",
+    "preset",
+    "react",
+    "prosemirror",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__preset-react",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__preset-react",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-preset-react.esm.js",
+      "require": "./dist/remirror-preset-react.cjs.js",
+      "browser": "./dist/remirror-preset-react.browser.esm.js",
+      "types": "./dist/remirror-preset-react.cjs.d.ts",
+      "default": "./dist/remirror-preset-react.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-preset-react.cjs.js",
+  "module": "dist/remirror-preset-react.esm.js",
+  "browser": {
+    "./dist/remirror-preset-react.cjs.js": "./dist/remirror-preset-react.browser.cjs.js",
+    "./dist/remirror-preset-react.esm.js": "./dist/remirror-preset-react.browser.esm.js"
+  },
+  "types": "dist/remirror-preset-react.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "1.0.0-next.60",
+    "@remirror/extension-placeholder": "1.0.0-next.60",
+    "@remirror/extension-react-component": "1.0.0-next.60",
+    "@remirror/extension-react-ssr": "1.0.0-next.60",
+    "@remirror/react-utils": "1.0.0-next.60"
+  },
+  "devDependencies": {
+    "@remirror/pm": "1.0.0-next.60",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "1.0.0-next.60",
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "20 KB"
+  },
+  "rn:dev": "src/index.ts"
+}

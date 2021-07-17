@@ -1,0 +1,74 @@
+{
+  "name": "@remirror/i18n",
+  "version": "1.0.0-next.60",
+  "description": "Supported internationalization and locales for the remirror editor.",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__i18n",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__i18n",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-i18n.esm.js",
+      "require": "./dist/remirror-i18n.cjs.js",
+      "browser": "./dist/remirror-i18n.browser.esm.js",
+      "types": "./dist/remirror-i18n.cjs.d.ts",
+      "default": "./dist/remirror-i18n.esm.js"
+    },
+    "./en": {
+      "import": "./en/dist/remirror-i18n-en.esm.js",
+      "require": "./en/dist/remirror-i18n-en.cjs.js",
+      "browser": "./en/dist/remirror-i18n.browser.esm.js",
+      "types": "./en/dist/remirror-i18n-en.cjs.d.ts",
+      "default": "./en/dist/remirror-i18n-en.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./plurals": {
+      "import": "./plurals/dist/remirror-i18n-plurals.esm.js",
+      "require": "./plurals/dist/remirror-i18n-plurals.cjs.js",
+      "browser": "./plurals/dist/remirror-i18n.browser.esm.js",
+      "types": "./plurals/dist/remirror-i18n-plurals.cjs.d.ts",
+      "default": "./plurals/dist/remirror-i18n-plurals.esm.js"
+    },
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-i18n.cjs.js",
+  "module": "dist/remirror-i18n.esm.js",
+  "browser": {
+    "./dist/remirror-i18n.cjs.js": "./dist/remirror-i18n.browser.cjs.js",
+    "./dist/remirror-i18n.esm.js": "./dist/remirror-i18n.browser.esm.js"
+  },
+  "types": "dist/remirror-i18n.cjs.d.ts",
+  "files": [
+    "dist",
+    "plurals",
+    "en"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@lingui/core": "^3.10.4",
+    "@lingui/detect-locale": "^3.10.4",
+    "@remirror/core-helpers": "1.0.0-next.60",
+    "make-plural": "^6.2.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "50 KB"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "plurals.ts",
+      "en/index.ts"
+    ]
+  },
+  "rn:dev": "src/index.ts"
+}

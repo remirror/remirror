@@ -1,0 +1,56 @@
+{
+  "__AUTO_GENERATED__": [
+    "To update the configuration edit the following field.",
+    "`package.json > @remirror > tsconfigs > 'src'`",
+    "",
+    "Then run: `pnpm -w generate:ts`"
+  ],
+  "extends": "../../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [],
+    "declaration": true,
+    "noEmit": false,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist-types"
+  },
+  "include": ["./"],
+  "references": [
+    {
+      "path": "../../remirror__extension-placeholder/src"
+    },
+    {
+      "path": "../../remirror__extension-positioner/src"
+    },
+    {
+      "path": "../../remirror__extension-react-component/src"
+    },
+    {
+      "path": "../../remirror__extension-react-ssr/src"
+    },
+    {
+      "path": "../../remirror__extension-react-tables/src"
+    },
+    {
+      "path": "../../remirror__preset-react/src"
+    },
+    {
+      "path": "../../remirror__react-components/src"
+    },
+    {
+      "path": "../../remirror__react-core/src"
+    },
+    {
+      "path": "../../remirror__react-hooks/src"
+    },
+    {
+      "path": "../../remirror__react-renderer/src"
+    },
+    {
+      "path": "../../remirror__react-ssr/src"
+    },
+    {
+      "path": "../../remirror__react-utils/src"
+    }
+  ]
+}

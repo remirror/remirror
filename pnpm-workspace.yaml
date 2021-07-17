@@ -1,0 +1,10 @@
+packages:
+  - 'apps/*'
+  - 'deprecated/*'
+  - 'examples/*'
+  - 'packages/*'
+  - 'support'
+  - 'support/actions'
+  - 'support/scripts'
+  - 'support/templates/*'
+  - 'website'

@@ -1,0 +1,346 @@
+# @remirror/theme
+
+## 1.0.0-next.60
+
+> 2020-12-17
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.60
+
+## 1.0.0-next.59
+
+> 2020-12-12
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.59
+
+## 1.0.0-next.58
+
+> 2020-11-29
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.58
+
+## 1.0.0-next.57
+
+> 2020-11-25
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.57
+
+## 1.0.0-next.56
+
+> 2020-11-24
+
+### Patch Changes
+
+- [`01e5c2d2`](https://github.com/remirror/remirror/commit/01e5c2d2707c715cd4e0006f9ac10c0cc3b11042) [#807](https://github.com/remirror/remirror/pull/807) Thanks [@ocavue](https://github.com/ocavue)! - Remove `open-color` from the dependencies. Check https://github.com/remirror/remirror/issues/806 for more details.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.56
+
+## 1.0.0-next.55
+
+> 2020-11-20
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.55
+
+## 1.0.0-next.54
+
+> 2020-11-19
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.54
+
+## 1.0.0-next.53
+
+> 2020-11-12
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.53
+
+## 1.0.0-next.52
+
+> 2020-11-06
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.52
+
+## 1.0.0-next.51
+
+> 2020-10-27
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.51
+
+## 1.0.0-next.50
+
+> 2020-10-15
+
+### Patch Changes
+
+- [`bd8ac67d`](https://github.com/remirror/remirror/commit/bd8ac67da57c85e67f84cf41e04900f99f4f0455) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade package dependencies.
+
+- Updated dependencies [[`bd8ac67d`](https://github.com/remirror/remirror/commit/bd8ac67da57c85e67f84cf41e04900f99f4f0455)]:
+  - @remirror/core-types@1.0.0-next.50
+
+## 1.0.0-next.49
+
+> 2020-10-10
+
+### Patch Changes
+
+- Forced update in pre-release mode.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.49
+
+## 1.0.0-next.47
+
+> 2020-10-08
+
+### Patch Changes
+
+- [`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Update external dependencies.
+
+- Updated dependencies [[`4658d45c`](https://github.com/remirror/remirror/commit/4658d45ce2c60eb609cb54b19a86cc3fd4a1f33e)]:
+  - @remirror/core-types@1.0.0-next.47
+
+## 1.0.0-next.44
+
+> 2020-09-30
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.44
+
+## 1.0.0-next.40
+
+> 2020-09-24
+
+### Patch Changes
+
+- Updated dependencies [[`4b1d99a6`](https://github.com/remirror/remirror/commit/4b1d99a60c9cf7c652b69967179be39ae5db3ff4)]:
+  - @remirror/core-types@1.0.0-next.40
+
+## 1.0.0-next.39
+
+> 2020-09-16
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.39
+
+## 1.0.0-next.38
+
+> 2020-09-16
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.38
+
+## 1.0.0-next.37
+
+> 2020-09-14
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.37
+
+## 1.0.0-next.35
+
+> 2020-09-13
+
+### Patch Changes
+
+- [`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813) [#672](https://github.com/remirror/remirror/pull/672) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Reduce bundle size by updating babel configuration thanks to help from [preconstruct/preconstruct/297](https://github.com/preconstruct/preconstruct/issues/297#issuecomment-690964802). [Fixes #358](https://github.com/remirror/remirror/issues/358).
+
+* [`f9760792`](https://github.com/remirror/remirror/commit/f9760792c887a24336cb0a3777e1b47f6ac87ad3) [#676](https://github.com/remirror/remirror/pull/676) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Upgrade linaria and other dependencies
+
+* Updated dependencies [[`725df02b`](https://github.com/remirror/remirror/commit/725df02b53fa16b9c7a3768b0c9464e739e35813), [`4fee3e94`](https://github.com/remirror/remirror/commit/4fee3e9400dd5557ddb24f6256e6d7219cef34ec)]:
+  - @remirror/core-types@1.0.0-next.35
+
+## 1.0.0-next.34
+
+> 2020-09-10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.34
+
+## 1.0.0-next.33
+
+> 2020-09-07
+
+### Patch Changes
+
+- Updated dependencies [525ac3d8]
+- Updated dependencies [92ed4135]
+  - @remirror/core-types@1.0.0-next.33
+
+## 1.0.0-next.32
+
+> 2020-09-05
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.32
+
+## 1.0.0-next.28
+
+> 2020-08-27
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.0-next.28
+
+## 1.0.0-next.27
+
+> 2020-08-25
+
+### Major Changes
+
+- a7436f03: 🎉 Add support for consuming styles with `styled-components` and `emotion` as requested by a sponsor - [#550](https://github.com/remirror/remirror/issues/550).
+
+  💥 BREAKING CHANGE - Remove exports from `@remirror/theme`.
+
+  - ❌ `createAtomClasses`
+  - ❌ `defaultRemirrorAtoms`
+
+## 1.0.0-next.26
+
+> 2020-08-24
+
+### Patch Changes
+
+- @remirror/core-types@1.0.0-next.26
+
+## 1.0.0-next.22
+
+> 2020-08-17
+
+### Patch Changes
+
+- Updated dependencies [45d82746]
+  - @remirror/core-types@1.0.0-next.22
+
+## 1.0.0-next.21
+
+> 2020-08-15
+
+### Patch Changes
+
+- Updated dependencies [3673a0f0]
+  - @remirror/core-types@1.0.0-next.21
+
+## 1.0.0-next.20
+
+> 2020-08-14
+
+### Patch Changes
+
+- Updated dependencies [8f9eb16c]
+  - @remirror/core-types@1.0.0-next.20
+
+## 1.0.0-next.16
+
+> 2020-08-01
+
+### Patch Changes
+
+- a7037832: Use exact versions for `@remirror` package `dependencies` and `peerDepedencies`.
+
+  Closes #435
+
+- dcccc5fc: Add browser entrypoint to packages and shrink bundle size.
+- 231f664b: Upgrade dependencies.
+- 6c6d524e: Remove use of `export *` for better tree shaking.
+
+  Closes #406
+
+- Updated dependencies [6528323e]
+- Updated dependencies [a7037832]
+- Updated dependencies [dcccc5fc]
+- Updated dependencies [231f664b]
+- Updated dependencies [6c6d524e]
+- Updated dependencies [6c6d524e]
+  - @remirror/core-types@1.0.0-next.16
+
+## 1.0.0-next.4
+
+> 2020-07-16
+
+### Patch Changes
+
+- 5d5970ae: Update repository and website field to point to HEAD rather than a specific branch.
+- Updated dependencies [5d5970ae]
+  - @remirror/core-types@1.0.0-next.4
+
+## 1.0.0-next.1
+
+> 2020-07-05
+
+### Patch Changes
+
+- Fix missing dist files from previous publish.
+- Updated dependencies [undefined]
+  - @remirror/core-types@1.0.0-next.1
+
+## 1.0.0-next.0
+
+> 2020-07-05
+
+### Major Changes
+
+- The whole API for remirror has completely changed. These pre-release versions are a breaking change across all packages. The best way to know what's changed is to read the documentaion on the new documentation site `https://remirror.io`.
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+- Updated dependencies [28bd8bea]
+- Updated dependencies [7b817ac2]
+  - @remirror/core-types@1.0.0-next.0

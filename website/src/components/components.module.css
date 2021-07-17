@@ -1,0 +1,14 @@
+.link {
+  display: block;
+  padding: 0.5rem;
+  color: inherit;
+
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.externalIcon {
+  vertical-align: text-top;
+  width: 1em;
+  height: 1em;
+}

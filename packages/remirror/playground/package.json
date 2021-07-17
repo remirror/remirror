@@ -1,0 +1,9 @@
+{
+  "main": "dist/remirror-playground.cjs.js",
+  "module": "dist/remirror-playground.esm.js",
+  "browser": {
+    "./dist/remirror-playground.cjs.js": "./dist/remirror-playground.browser.cjs.js",
+    "./dist/remirror-playground.esm.js": "./dist/remirror-playground.browser.esm.js"
+  },
+  "types": "dist/remirror-playground.cjs.d.ts"
+}

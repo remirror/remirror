@@ -1,0 +1,85 @@
+{
+  "name": "@remirror/react",
+  "version": "1.0.0-next.60",
+  "description": "Hooks and components for consuming `remirror` with your fave framework `React`.",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react.esm.js",
+      "require": "./dist/remirror-react.cjs.js",
+      "browser": "./dist/remirror-react.browser.esm.js",
+      "types": "./dist/remirror-react.cjs.d.ts",
+      "default": "./dist/remirror-react.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./playground": {
+      "import": "./playground/dist/remirror-react-playground.esm.js",
+      "require": "./playground/dist/remirror-react-playground.cjs.js",
+      "browser": "./playground/dist/remirror-react.browser.esm.js",
+      "default": "./playground/dist/remirror-react-playground.esm.js"
+    },
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-react.cjs.js",
+  "module": "dist/remirror-react.esm.js",
+  "browser": {
+    "./dist/remirror-react.cjs.js": "./dist/remirror-react.browser.cjs.js",
+    "./dist/remirror-react.esm.js": "./dist/remirror-react.browser.esm.js"
+  },
+  "types": "dist/remirror-react.cjs.d.ts",
+  "files": [
+    "dist",
+    "playground"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/extension-placeholder": "1.0.0-next.60",
+    "@remirror/extension-positioner": "1.0.0-next.60",
+    "@remirror/extension-react-component": "1.0.0-next.60",
+    "@remirror/extension-react-ssr": "1.0.0-next.60",
+    "@remirror/extension-react-tables": "0.0.0",
+    "@remirror/preset-react": "1.0.0-next.60",
+    "@remirror/react-components": "1.0.0-next.40",
+    "@remirror/react-core": "0.0.0",
+    "@remirror/react-hooks": "1.0.0-next.60",
+    "@remirror/react-renderer": "1.0.0-next.60",
+    "@remirror/react-ssr": "1.0.0-next.60",
+    "@remirror/react-utils": "1.0.0-next.60"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.8",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "playground.ts"
+    ]
+  },
+  "rn:dev": "src/index.ts"
+}

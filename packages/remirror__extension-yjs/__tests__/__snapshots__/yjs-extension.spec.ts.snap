@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`configuration throws without a provider 1`] = `
+"An error occurred within an extension. More details should be made available.
+
+You must provide a YJS Provider to the \`YjsExtension\`.
+
+For more information visit https://remirror.io/docs/errors#rmr0100"
+`;

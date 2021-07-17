@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-deprecate-version.cjs.js",
+  "module": "dist/scripts-deprecate-version.esm.js"
+}

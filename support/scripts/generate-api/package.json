@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-generate-api.cjs.js",
+  "module": "dist/scripts-generate-api.esm.js"
+}

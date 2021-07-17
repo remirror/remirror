@@ -1,0 +1,1 @@
+export { ProsemirrorDevTools } from './dev';

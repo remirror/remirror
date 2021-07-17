@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "checkJs": false,
+    "allowJs": false
+  },
+  "include": ["../**/*.ts", "../**/*.tsx", "../**/*.js", "../packages/remirror__i18n/src"],
+  "exclude": [
+    "../**/dist/",
+    "../**/public/",
+    "../**/.cache/",
+    "../**/.linaria-cache/",
+    "../**/node_modules/**"
+  ]
+}

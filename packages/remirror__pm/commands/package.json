@@ -1,0 +1,10 @@
+{
+  "main": "dist/remirror-pm-commands.cjs.js",
+  "module": "dist/remirror-pm-commands.esm.js",
+  "browser": {
+    "./dist/remirror-pm-commands.cjs.js": "./dist/remirror-pm-commands.browser.cjs.js",
+    "./dist/remirror-pm-commands.esm.js": "./dist/remirror-pm-commands.browser.esm.js"
+  },
+  "types": "dist/remirror-pm-commands.cjs.d.ts",
+  "rn:dev": "../src/commands.ts"
+}

@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`captures the direction of each node 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    first paragraph
+  </p>
+  <p
+    dir="rtl"
+  >
+    بسيطة
+  </p>
+  <p>
+    @
+  </p>
+</div>
+`;
+
+exports[`options can make use of \`excludedNodes\` 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p
+    dir="rtl"
+  >
+    بسيطة
+  </p>
+  <h1>
+    بسيطة
+  </h1>
+</div>
+`;
+
+exports[`options can turn off \`autoUpdate\` 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p>
+    بسيطة
+  </p>
+</div>
+`;
+
+exports[`options can turn off \`autoUpdate\` 2`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p
+    dir="rtl"
+  >
+    بسيطةبسيطة
+  </p>
+</div>
+`;
+
+exports[`options respects the \`defaultDirection\` option 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  dir="rtl"
+  role="textbox"
+>
+  <p>
+    first paragraph
+  </p>
+  <p
+    dir="rtl"
+  >
+    بسيطة
+  </p>
+  <p
+    dir="rtl"
+  >
+    @
+  </p>
+</div>
+`;
+
+exports[`updates the direction based on typing 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p
+    dir="rtl"
+  >
+    بسيطة
+  </p>
+</div>
+`;
+
+exports[`updates the direction based on typing 2`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+>
+  <p
+    dir="ltr"
+  >
+    other
+  </p>
+</div>
+`;
+
+exports[`updates to the default direction affect the attributes 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  dir="rtl"
+  role="textbox"
+>
+  <p
+    dir="ltr"
+  >
+    first paragraph
+  </p>
+</div>
+`;

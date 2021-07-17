@@ -1,27 +1,36 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "lib": ["dom", "esnext"],
-    "jsx": "react",
+    "allowJs": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "react-jsxdev",
     "types": ["node", "jest"],
     "moduleResolution": "node",
-    "noImplicitReturns": true,
+    "useDefineForClassFields": true,
     "sourceMap": true,
     "declaration": true,
+    "pretty": true,
+    "noEmit": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "preserveWatchOutput": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+
+    "experimentalDecorators": true,
+
+    // Import rules
+    "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+
+    // Stylistic, but faster than eslint
+    "importsNotUsedAsValues": "remove",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "pretty": true,
-    "forceConsistentCasingInFileNames": true,
     "allowUnreachableCode": false,
-    "experimentalDecorators": true,
-    "strict": true,
-    "alwaysStrict": true,
-    "resolveJsonModule": true,
-    "plugins": [{ "name": "typescript-styled-plugin" }],
-    "preserveWatchOutput": true
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true
   }
 }

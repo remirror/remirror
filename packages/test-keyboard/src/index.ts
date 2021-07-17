@@ -1,4 +1,4 @@
 export * from './test-keyboard';
-export * from './us-keyboard-layout';
-export * from './test-keyboard-utils';
 export * from './test-keyboard-types';
+export * from './test-keyboard-utils';
+export * from './us-keyboard-layout';

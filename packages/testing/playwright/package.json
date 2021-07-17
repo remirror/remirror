@@ -1,0 +1,5 @@
+{
+  "main": "dist/testing-playwright.cjs.js",
+  "module": "dist/testing-playwright.esm.js",
+  "types": "dist/testing-playwright.cjs.d.ts"
+}

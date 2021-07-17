@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-changelog-dates.cjs.js",
+  "module": "dist/scripts-changelog-dates.esm.js"
+}
