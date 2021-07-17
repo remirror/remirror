@@ -1,5 +1,28 @@
 # @remirror/playground
 
+## 1.0.1
+
+> 2021-07-17
+
+### Patch Changes
+
+- [#1002](https://github.com/remirror/remirror/pull/1002) [`b3ea6f10d`](https://github.com/remirror/remirror/commit/b3ea6f10d4917f933971236be936731f75a69a70) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Use carets `^` for versioning of `remirror` packages.
+
+- Updated dependencies [[`b3ea6f10d`](https://github.com/remirror/remirror/commit/b3ea6f10d4917f933971236be936731f75a69a70)]:
+  - multishift@1.0.1
+  - prosemirror-paste-rules@1.0.1
+  - prosemirror-suggest@1.0.1
+  - prosemirror-trailing-node@1.0.1
+  - remirror@1.0.1
+  - @remirror/core@1.0.1
+  - @remirror/core-helpers@1.0.1
+  - @remirror/dev@1.0.1
+  - @remirror/es-module-shims@1.0.1
+  - @remirror/pm@1.0.1
+  - @remirror/react@1.0.1
+  - @remirror/react-debugger@1.0.1
+  - @remirror/react-editors@0.0.2
+
 ## 1.0.0
 
 > 2021-07-17

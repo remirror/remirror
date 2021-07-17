@@ -37,7 +37,7 @@
     "@actions/exec": "^1.1.0",
     "@actions/github": "^5.0.0",
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^1.0.0",
+    "@remirror/core-helpers": "^1.0.1",
     "@types/fs-extra": "^9.0.11",
     "@types/giphy-api": "^2.0.2",
     "@types/semver": "^7.3.4",
