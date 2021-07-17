@@ -64,7 +64,6 @@
 '@remirror/extension-text-case': major
 '@remirror/extension-text-color': major
 '@remirror/extension-text-highlight': major
-'@remirror/extension-text-wrap': major
 '@remirror/extension-trailing-node': major
 '@remirror/extension-underline': major
 '@remirror/extension-whitespace': major
