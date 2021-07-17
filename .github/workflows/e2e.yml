@@ -47,14 +47,14 @@ jobs:
       - name: build project
         run: pnpm build
 
-      - name: build server
-        if: matrix.mode == 'production'
-        run: 'pnpm build:e2e:${{ matrix.server }}'
+      # - name: build server
+      #   if: matrix.mode == 'production'
+      #   run: 'pnpm build:e2e:${{ matrix.server }}'
 
-      - name: ${{ matrix.server }} e2e - ${{ matrix.browser }} - ${{matrix.mode}}
-        env:
-          E2E_ENVIRONMENT: playwright
-          E2E_SERVER: ${{matrix.server}}
-          E2E_BROWSER: ${{matrix.browser}}
-          E2E_MODE: ${{matrix.mode}}
-        run: pnpm e2e
+      # - name: ${{ matrix.server }} e2e - ${{ matrix.browser }} - ${{matrix.mode}}
+      #   env:
+      #     E2E_ENVIRONMENT: playwright
+      #     E2E_SERVER: ${{matrix.server}}
+      #     E2E_BROWSER: ${{matrix.browser}}
+      #     E2E_MODE: ${{matrix.mode}}
+      #   run: pnpm e2e
