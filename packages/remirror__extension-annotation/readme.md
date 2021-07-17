@@ -57,5 +57,4 @@ An app using the annotation-extension can extend the base data model. For exampl
 
 ### Collaborative editing (yjs)
 
-Annotations are a separate data structure, next to the Prosemirror document, and are therefore not shared via Remirror's yjs-extension.
-The annotation-extension provides its own support for collaborative editing via yjs.
+Annotations are a separate data structure, next to the Prosemirror document, and are therefore not shared via Remirror's yjs-extension. The annotation-extension provides its own support for collaborative editing via yjs.
