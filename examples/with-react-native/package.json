@@ -10,10 +10,10 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "@remirror/core-helpers": "1.0.0",
-    "@remirror/extension-react-native-bridge": "1.0.0",
-    "@remirror/react": "1.0.0",
-    "@remirror/react-native": "1.0.0",
+    "@remirror/core-helpers": "^1.0.0",
+    "@remirror/extension-react-native-bridge": "^1.0.0",
+    "@remirror/react": "^1.0.0",
+    "@remirror/react-native": "^1.0.0",
     "@types/react": "^17.0.11",
     "@types/react-native": "^0.64.10",
     "react": "^17.0.2",

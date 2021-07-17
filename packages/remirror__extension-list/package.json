@@ -39,16 +39,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "1.0.0",
-    "@remirror/extension-events": "1.0.0",
-    "@remirror/messages": "1.0.0",
-    "@remirror/theme": "1.0.0"
+    "@remirror/core": "^1.0.0",
+    "@remirror/extension-events": "^1.0.0",
+    "@remirror/messages": "^1.0.0",
+    "@remirror/theme": "^1.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "1.0.0"
+    "@remirror/pm": "^1.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "1.0.0"
+    "@remirror/pm": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"

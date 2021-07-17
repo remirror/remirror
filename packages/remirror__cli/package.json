@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "1.0.0",
+    "@remirror/core-helpers": "^1.0.0",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-json": "^4",
@@ -68,7 +68,7 @@
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "@remirror/core-types": "1.0.0",
+    "@remirror/core-types": "^1.0.0",
     "@testing-library/react-hooks": "^7.0.0",
     "@types/ink-spinner": "^3.0.0",
     "@types/ink-testing-library": "^1.0.1",

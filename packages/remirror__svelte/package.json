@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "1.0.0"
+    "@remirror/core": "^1.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^19.0.0",
