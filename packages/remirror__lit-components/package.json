@@ -1,6 +1,6 @@
 {
   "name": "@remirror/lit-components",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Web components for @remirror/lit.",
   "keywords": [
@@ -36,14 +36,14 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.0"
+    "@remirror/core": "^1.0.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.0",
+    "@remirror/pm": "^1.0.1",
     "lit-element": "^2.4.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.0",
+    "@remirror/pm": "^1.0.1",
     "lit-element": "^2.4.0"
   },
   "publishConfig": {

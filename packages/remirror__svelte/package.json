@@ -1,6 +1,6 @@
 {
   "name": "@remirror/svelte",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "keywords": [
     "svelte"
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.0"
+    "@remirror/core": "^1.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^19.0.0",
