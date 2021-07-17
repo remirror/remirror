@@ -100,9 +100,9 @@
     "postversion:changeset": "node support/scripts/changeset-forced-update --clean",
     "version:ci": "run-s version:changeset version:date version:repo fix:prettier version:lockfile",
     "version:date": "node support/scripts/changelog-dates",
-    "version:lockfile": "unset CI && pnpm install --frozen-lockfile=false --lockfile-only",
+    "version:lockfile": "rm pnpm-lock.yaml || true && pnpm install",
     "version:pr": "node support/scripts/enable-pr-changeset",
-    "version:repo": "unset CI && run-s fix:repo update:workspace"
+    "version:repo": "rm pnpm-lock.yaml || true && run-s fix:repo update:workspace"
   },
   "browserslist": [
     "since 2017"
