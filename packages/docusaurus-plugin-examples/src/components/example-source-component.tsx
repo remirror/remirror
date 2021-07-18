@@ -9,7 +9,7 @@ import gh from 'react-syntax-highlighter/dist/esm/styles/prism/ghcolors';
 import { Tab, TabList, TabPanel, useTabState } from 'reakit/Tab';
 import { usePluginData } from '@docusaurus/useGlobalData';
 import useTheme from '@theme/hooks/useTheme';
-
+import { useExample } from './example-provider';
 import { BaseProps, ExamplesPluginData } from '../types';
 
 SyntaxHighlighter.registerLanguage('jsx', jsx);
@@ -32,9 +32,9 @@ const languageMap = {
 };
 
 export const ExampleSource = (props: SourceProps) => {
-  const { name, language = 'ts' } = props;
+  const { name } = props;
   const { isDarkTheme } = useTheme();
-  const files = useExamplesPluginData({ name, language });
+  const files = useExamplesPluginData({ name });
   const tabState = useTabState();
 
   return (
@@ -61,7 +61,8 @@ export const ExampleSource = (props: SourceProps) => {
 };
 
 function useExamplesPluginData(props: BaseProps) {
-  const { name, language = 'ts' } = props;
+  const { name } = props;
+  const { language } = useExample();
   const pluginData = usePluginData<ExamplesPluginData>('docusaurus-plugin-examples');
 
   return pluginData[name]?.[language] ?? [];

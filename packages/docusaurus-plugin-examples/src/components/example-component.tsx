@@ -2,6 +2,7 @@
 
 import { ExampleIFrame } from './example-iframe-component';
 import { ExampleSource } from './example-source-component';
+import { ToggleLanguage } from './toggle-language-component';
 import { BaseProps } from '../types';
 
 export interface ExampleProps extends BaseProps {
@@ -28,12 +29,13 @@ export interface ExampleProps extends BaseProps {
 }
 
 export const Example = (props: ExampleProps) => {
-  const { name, hideSource, language } = props;
+  const { name, hideSource } = props;
 
   return (
     <div>
+      <ToggleLanguage />
       <ExampleIFrame name={name} />
-      {!hideSource && <ExampleSource name={name} language={language} />}
+      {!hideSource && <ExampleSource name={name} />}
     </div>
   );
 };

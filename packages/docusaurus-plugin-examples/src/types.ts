@@ -45,11 +45,4 @@ export interface BaseProps {
    * The name of the examples iframe to render.
    */
   name: string;
-
-  /**
-   * The source language to use.
-   *
-   * @default `ts`
-   */
-  language?: ExampleLanguage;
 }

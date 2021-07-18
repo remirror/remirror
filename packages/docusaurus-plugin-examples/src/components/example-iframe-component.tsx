@@ -14,6 +14,7 @@ function useIFrameLoading() {
 
 export const ExampleIFrame = (props: IFrameProps) => {
   const { name } = props;
+
   const { loading, onLoad } = useIFrameLoading();
   const { ref, inView } = useInView({
     /* Optional options */
