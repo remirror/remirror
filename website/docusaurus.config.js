@@ -118,6 +118,14 @@ module.exports = {
   plugins: [
     path.join(__dirname, 'plugins', 'basic-plugin.js'),
     require.resolve('@docusaurus/plugin-ideal-image'),
+    [
+      'docusaurus-plugin-content-examples',
+      {
+        path: path.join(__dirname, 'examples'),
+        include: ['*.{js,jsx,ts,tsx}'],
+        exclude: ['*.test.{js,jsx,ts,tsx}'],
+      },
+    ],
   ],
   themes: ['@docusaurus/theme-live-codeblock'],
 

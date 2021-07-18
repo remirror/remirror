@@ -43,7 +43,7 @@ If your code is importing from `remirror/react` you should now change the import
 
 - Rename the original `useRemirror` to now be called `useRemirrorContext`.
 - Add new `@remirror/react-components` package.
-- `@remirror/react` exports all the hooks, components, core modules and react specific extensions from `@remirror/react-core`, `@remirror/react-components`, `@remirror/react-hooks` and `@remirror/react the react packages which can be used with remirror.
+- `@remirror/react` exports all the hooks, components, core modules and react specific extensions from `@remirror/react-core`, `@remirror/react-components` and `@remirror/react-hooks`.
 
 `useManager` was too focused on the implementation details. We've updated the API to be used in a different way and `useRemirror` is now the way to initialize an editor.
 
@@ -151,7 +151,7 @@ const Editor = () => {
   const Editor = () => {
     const { manager, state } = useRemirror({ selection: 'start' });
 
-    return <Remirror manger={manager} initialState={state} />;
+    return <Remirror manger={manager} initialContent={state} />;
   };
   ```
 
