@@ -3,15 +3,6 @@
   "files": [],
   "references": [
     {
-      "path": "examples/with-next/__e2e__"
-    },
-    {
-      "path": "examples/with-next/src"
-    },
-    {
-      "path": "examples/with-react-native/src"
-    },
-    {
       "path": "packages/a11y-status/__tests__"
     },
     {
@@ -24,7 +15,7 @@
       "path": "packages/create-context-state/src"
     },
     {
-      "path": "packages/docusaurus-plugin-content-examples/src"
+      "path": "packages/docusaurus-plugin-examples/src"
     },
     {
       "path": "packages/jest-prosemirror/__tests__"

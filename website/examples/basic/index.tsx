@@ -1,10 +1,10 @@
 import {
   BoldExtension,
   ItalicExtension,
-  UnderlineExtension,
   StrikeExtension,
+  UnderlineExtension,
 } from 'remirror/extensions';
-import { useRemirror, Remirror, ThemeProvider } from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
 const extensions = () => [
@@ -14,10 +14,12 @@ const extensions = () => [
   new UnderlineExtension(),
 ];
 
+const content = '<p><u>Hello</u> there <b>friend</b> <del>and</del> <em>partner</em>.</p>';
+
 const BasicEditor = () => {
   const { manager, state } = useRemirror({
     extensions,
-    content: '<p><u>Hello</u> there <b>friend</b> <del>and</del> <em>partner</em>.</p>',
+    content,
     stringHandler: 'html',
   });
 

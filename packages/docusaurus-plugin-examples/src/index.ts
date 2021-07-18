@@ -5,48 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import fs from 'fs/promises';
-import path from 'path';
+import { LoadContext, Plugin } from '@docusaurus/types';
 import {
+  aliasedSitePath,
   encodePath,
   fileToPath,
-  aliasedSitePath,
-  getPluginI18nPath,
   getFolderContainingFile,
+  getPluginI18nPath,
 } from '@docusaurus/utils';
-import { LoadContext, Plugin } from '@docusaurus/types';
-import { DEFAULT_PLUGIN_ID } from '@docusaurus/core/lib/constants';
+import fs from 'fs/promises';
 import globby from 'globby';
+import path from 'path';
+import { flattenArray, includes, sort } from '@remirror/core-helpers';
 
-import { flattenArray } from '@remirror/core-helpers';
-
-export interface ExampleFolderContent {
-  name: string;
-  content: string;
-}
-
-interface ExampleContent {
-  /** The name of the folder being used for the example */
-  id: string;
-  permalink: string;
-  source: string;
-  contents: ExampleFolderContent[];
-}
-
-type LoadedContent = ExampleContent[];
-
-type PagesContentPaths = {
-  contentPath: string;
-  contentPathLocalized: string;
-};
-
-interface PluginOptions {
-  id?: string;
-  path: string;
-  routeBasePath: string;
-  include: string[];
-  exclude: string[];
-}
+import { transformTypeScriptOnly } from './transform-typescript-only';
+import {
+  ExampleContent,
+  ExampleFolderContent,
+  ExamplesPluginData,
+  LoadedContent,
+  PagesContentPaths,
+  PluginOptions,
+  ValidExtension,
+  validExtension,
+} from './types';
 
 function getContentPathList(contentPaths: PagesContentPaths): string[] {
   return [contentPaths.contentPathLocalized, contentPaths.contentPath];
@@ -70,7 +52,6 @@ export default function pluginContentExamples(
   const {
     siteConfig,
     siteDir,
-    generatedFilesDir,
     i18n: { currentLocale },
   } = context;
 
@@ -79,16 +60,13 @@ export default function pluginContentExamples(
     contentPathLocalized: getPluginI18nPath({
       siteDir,
       locale: currentLocale,
-      pluginName: 'docusaurus-plugin-content-examples',
+      pluginName: 'docusaurus-plugin-examples',
       pluginId: options.id,
     }),
   };
 
-  const pluginDataDirRoot = path.join(generatedFilesDir, 'docusaurus-plugin-content-examples');
-  const dataDir = path.join(pluginDataDirRoot, options.id ?? DEFAULT_PLUGIN_ID);
-
   return {
-    name: 'docusaurus-plugin-content-examples',
+    name: 'docusaurus-plugin-examples',
 
     getPathsToWatch() {
       const { include = [] } = options;
@@ -146,12 +124,12 @@ export default function pluginContentExamples(
       }
 
       const { addRoute, setGlobalData } = actions;
-      const data: Record<string, ExampleFolderContent[]> = {};
+      const data: ExamplesPluginData = {};
 
       await Promise.all(
         content.map(async (metadata) => {
-          const { permalink, source, contents, id } = metadata;
-          data[id] = contents;
+          const { permalink, source, ts, js, id } = metadata;
+          data[id] = { ts, js };
           addRoute({
             path: permalink,
             component: source,
@@ -162,6 +140,16 @@ export default function pluginContentExamples(
 
       // Store the data in a global json object.
       setGlobalData(data);
+    },
+
+    getThemePath() {
+      // Where compiled JavaScript output lives
+      return path.join(__dirname, '..', 'theme');
+    },
+
+    getTypeScriptThemePath() {
+      // Where TypeScript source code lives
+      return path.resolve(__dirname, '../src/theme');
     },
   };
 }
@@ -174,22 +162,62 @@ interface CreateExampleContentTransformer {
   ignore: string[];
 }
 
+function isValidExtension(value: string): value is ValidExtension {
+  return includes(validExtension, value);
+}
+
+/**
+ * Sort the files in alphabetical order with the index file as the first file.
+ */
+function sortFiles(files: ExampleFolderContent[]): ExampleFolderContent[] {
+  return sort(files, (a, z) =>
+    a.name.startsWith('index.')
+      ? -1
+      : z.name.startsWith('index.')
+      ? 1
+      : a.name.toLowerCase().localeCompare(z.name.toLowerCase()),
+  );
+}
+
 function createExampleContentTransformer(props: CreateExampleContentTransformer) {
   const { contentPaths, siteDir, include, ignore, baseUrl } = props;
 
   return async (folderPath: string): Promise<ExampleContent> => {
     const files = await globby(include, { cwd: folderPath, ignore });
-    const contents: ExampleFolderContent[] = [];
+    const ts: ExampleFolderContent[] = [];
+    const js: ExampleFolderContent[] = [];
     let entryPointName = 'index.tsx';
 
     for (const name of files) {
+      const extension = path.extname(name);
+
+      if (!isValidExtension(extension)) {
+        continue;
+      }
+
       const content = await fs.readFile(path.join(folderPath, name), { encoding: 'utf-8' });
-      contents.push({ name, content });
+      const jsConfig = {
+        content,
+        name,
+        extension,
+      };
+
+      if (['.ts', '.tsx'].includes(extension)) {
+        jsConfig.content = transformTypeScriptOnly(content);
+        jsConfig.name = name.replace(/.tsx?$/, '.js');
+        jsConfig.extension = '.js';
+      }
+
+      ts.push({ name, content, extension });
+      js.push(jsConfig);
 
       if (name.startsWith('index.')) {
         entryPointName = name;
       }
     }
+
+    sortFiles(ts);
+    sortFiles(js);
 
     // The folder name in the examples folder.
     const id = path.basename(folderPath);
@@ -204,6 +232,6 @@ function createExampleContentTransformer(props: CreateExampleContentTransformer)
     const pathName = encodePath(fileToPath(`examples/${path.join(id, entryPointName)}`));
     const permalink = pathName.replace(/^\//, baseUrl || '');
 
-    return { contents, id, permalink, source };
+    return { ts, js, id, permalink, source };
   };
 }

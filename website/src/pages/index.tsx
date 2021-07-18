@@ -1,6 +1,7 @@
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { Example } from 'docusaurus-plugin-examples/Example';
 import Layout from '@theme/Layout';
 import { ReactElement } from 'react';
 import { cx, isString } from 'remirror';
@@ -93,7 +94,7 @@ const Home = () => {
 
   return (
     <div className={styles.mainBackground}>
-      <Layout className='asdfasdf'>
+      <Layout>
         <header className={cx('hero', styles.heroBanner)}>
           <div className={cx(styles.container)}>
             <BannerHeader />
@@ -118,6 +119,7 @@ const Home = () => {
             </section>
           )}
           <BannerLaptop />
+          <Example name='basic' />
         </main>
       </Layout>
     </div>

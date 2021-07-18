@@ -16,14 +16,6 @@
     "gzip": true
   },
   {
-    "name": "docusaurus-plugin-content-examples",
-    "limit": "50 KB",
-    "path": "packages/docusaurus-plugin-content-examples/dist/docusaurus-plugin-content-examples.browser.esm.js",
-    "ignore": ["@remirror/core-helpers"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "multishift",
     "limit": "20 KB",
     "path": "packages/multishift/dist/multishift.browser.esm.js",

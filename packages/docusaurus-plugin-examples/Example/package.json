@@ -1,0 +1,4 @@
+{
+  "main": "dist/docusaurus-plugin-examples-Example.cjs.js",
+  "module": "dist/docusaurus-plugin-examples-Example.esm.js"
+}

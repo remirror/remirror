@@ -119,7 +119,7 @@ module.exports = {
     path.join(__dirname, 'plugins', 'basic-plugin.js'),
     require.resolve('@docusaurus/plugin-ideal-image'),
     [
-      'docusaurus-plugin-content-examples',
+      'docusaurus-plugin-examples',
       {
         path: path.join(__dirname, 'examples'),
         include: ['*.{js,jsx,ts,tsx}'],

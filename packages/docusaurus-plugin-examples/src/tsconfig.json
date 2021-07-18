@@ -7,7 +7,7 @@
   ],
   "extends": "../../../support/tsconfig.base.json",
   "compilerOptions": {
-    "types": [],
+    "types": ["node"],
     "declaration": true,
     "noEmit": false,
     "composite": true,
