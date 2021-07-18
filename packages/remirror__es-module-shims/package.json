@@ -1,6 +1,6 @@
 {
   "name": "@remirror/es-module-shims",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A fork of es-module-shims to support the remirror playground.",
   "keywords": [
     "remirror"
@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^1.0.0",
+    "@remirror/core-helpers": "^1.0.1",
     "es-module-lexer": "^0.6.0",
     "tiny-warning": "^1.0.3"
   },

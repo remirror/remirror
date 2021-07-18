@@ -1,5 +1,27 @@
 # @remirror/react
 
+## 1.0.1
+
+> 2021-07-17
+
+### Patch Changes
+
+- [#1002](https://github.com/remirror/remirror/pull/1002) [`b3ea6f10d`](https://github.com/remirror/remirror/commit/b3ea6f10d4917f933971236be936731f75a69a70) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Use carets `^` for versioning of `remirror` packages.
+
+- Updated dependencies [[`b3ea6f10d`](https://github.com/remirror/remirror/commit/b3ea6f10d4917f933971236be936731f75a69a70)]:
+  - @remirror/extension-placeholder@1.0.1
+  - @remirror/extension-positioner@1.0.1
+  - @remirror/extension-react-component@1.0.1
+  - @remirror/extension-react-ssr@1.0.1
+  - @remirror/extension-react-tables@1.0.1
+  - @remirror/preset-react@1.0.1
+  - @remirror/react-components@1.0.1
+  - @remirror/react-core@1.0.1
+  - @remirror/react-hooks@1.0.1
+  - @remirror/react-renderer@1.0.1
+  - @remirror/react-ssr@1.0.1
+  - @remirror/react-utils@1.0.1
+
 ## 1.0.0
 
 > 2021-07-17
