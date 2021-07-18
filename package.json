@@ -13,7 +13,6 @@
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct dev",
     "build:docs": "run-s docs:prod docs:redirects",
-    "build:svelte": "manypkg run packages/remirror__svelte build",
     "changeset": "changeset",
     "check:pnpm": "node support/scripts/check-pnpm.mjs",
     "checks": "run-s lint typecheck:quick test",
@@ -248,7 +247,6 @@
   "preconstruct": {
     "packages": [
       "packages/*",
-      "!packages/remirror__svelte",
       "support/actions",
       "support/scripts",
       "support/templates/*"

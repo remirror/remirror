@@ -10,6 +10,11 @@
     "types": [],
     "declaration": false,
     "noEmit": true,
+    "baseUrl": "./",
+    "paths": {
+      "@components": ["components"],
+      "@components/*": ["components/*"]
+    },
     "allowJs": true
   },
   "include": ["./"],
@@ -19,6 +24,9 @@
     },
     {
       "path": "../../packages/remirror__react/src"
+    },
+    {
+      "path": "../../packages/create-context-state/src"
     },
     {
       "path": "../../packages/docusaurus-plugin-examples/src"

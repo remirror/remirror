@@ -10,7 +10,12 @@
     "types": [],
     "declaration": true,
     "noEmit": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@components": ["components"],
+      "@components/*": ["components/*"]
+    },
     "allowJs": true
   },
-  "include": ["./*.js", "src", "plugins"]
+  "include": ["components", "examples", "./*.js", "src", "plugins"]
 }

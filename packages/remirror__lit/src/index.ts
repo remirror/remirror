@@ -1,1 +1,0 @@
-export function minimalTemplate(): void {}

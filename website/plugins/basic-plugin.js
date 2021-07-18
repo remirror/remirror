@@ -1,3 +1,5 @@
+const path = require('path');
+
 /**
  * @typedef {import('@docusaurus/types').LoadContext} Context
  * @typedef {import('@docusaurus/types').Plugin} DocPlugin
@@ -23,6 +25,11 @@ function basicPlugin(_context, _options) {
     configureWebpack(config, isServer, utils) {
       return {
         externals: { jsdom: 'commonjs jsdom', domino: 'commonjs domino' },
+        resolve: {
+          alias: {
+            '@components': path.resolve(__dirname, '../src/components'),
+          },
+        },
       };
     },
   };

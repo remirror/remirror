@@ -28,9 +28,6 @@
   // Prettier
   "prettier.ignorePath": ".eslintignore",
 
-  // Deno
-  "deno.enable": false,
-
   // Use PNPM
   "npm.packageManager": "pnpm",
   "eslint.packageManager": "pnpm",

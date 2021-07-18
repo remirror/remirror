@@ -17,7 +17,7 @@
     ".": {
       "import": "./dist/remirror-docgen.esm.js",
       "require": "./dist/remirror-docgen.cjs.js",
-      "browser": "./dist/remirror-docgen.browser.esm.js",
+      "browser": "./dist/remirror-docgen.esm.js",
       "types": "./dist/remirror-docgen.cjs.d.ts",
       "default": "./dist/remirror-docgen.esm.js"
     },
@@ -26,10 +26,6 @@
   },
   "main": "dist/remirror-docgen.cjs.js",
   "module": "dist/remirror-docgen.esm.js",
-  "browser": {
-    "./dist/remirror-docgen.cjs.js": "./dist/remirror-docgen.browser.cjs.js",
-    "./dist/remirror-docgen.esm.js": "./dist/remirror-docgen.browser.esm.js"
-  },
   "types": "dist/remirror-docgen.cjs.d.ts",
   "files": [
     "dist"

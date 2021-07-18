@@ -649,6 +649,8 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
       'OrderedListExtension',
       'TaskListExtension',
       'TaskListItemExtension',
+      'sharedLiftListItem',
+      'sharedSinkListItem',
       'toggleList',
     ],
   },
@@ -745,6 +747,8 @@ export const INTERNAL_MODULE_META: Array<{ moduleName: string; exports: string[]
       'TableExtension',
       'TableHeaderCellExtension',
       'TableRowExtension',
+      'createTable',
+      'createTableOptions',
     ],
   },
   {

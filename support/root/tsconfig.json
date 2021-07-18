@@ -465,12 +465,6 @@
       "path": "packages/remirror__icons/src"
     },
     {
-      "path": "packages/remirror__lit-components/src"
-    },
-    {
-      "path": "packages/remirror__lit/src"
-    },
-    {
       "path": "packages/remirror__messages/src"
     },
     {
@@ -571,9 +565,6 @@
     },
     {
       "path": "packages/remirror__styles/src"
-    },
-    {
-      "path": "packages/remirror__svelte/src"
     },
     {
       "path": "packages/remirror__theme/__tests__"
