@@ -21,6 +21,9 @@
       "path": "../../packages/remirror__react/src"
     },
     {
+      "path": "../../packages/docusaurus-plugin-examples/src"
+    },
+    {
       "path": "../../packages/remirror/src"
     }
   ]

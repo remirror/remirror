@@ -1,8 +1,8 @@
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { Example } from 'docusaurus-plugin-examples/Example';
 import Layout from '@theme/Layout';
+import { Example } from 'docusaurus-plugin-examples/components';
 import { ReactElement } from 'react';
 import { cx, isString } from 'remirror';
 

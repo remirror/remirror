@@ -104,7 +104,8 @@
     "version:date": "node support/scripts/changelog-dates",
     "version:lockfile": "rm pnpm-lock.yaml || true && pnpm install",
     "version:pr": "node support/scripts/enable-pr-changeset",
-    "version:repo": "rm pnpm-lock.yaml || true && run-s fix:repo update:workspace"
+    "version:repo": "rm pnpm-lock.yaml || true && run-s fix:repo update:workspace",
+    "prepare": "husky install"
   },
   "browserslist": [
     "since 2017"

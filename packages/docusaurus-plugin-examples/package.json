@@ -18,25 +18,26 @@
       "import": "./dist/docusaurus-plugin-examples.esm.js",
       "require": "./dist/docusaurus-plugin-examples.cjs.js",
       "browser": "./dist/docusaurus-plugin-examples.esm.js",
-      "types": "./src/modules.d.ts",
+      "types": "./dist/docusaurus-plugin-examples.cjs.d.ts",
       "default": "./dist/docusaurus-plugin-examples.esm.js"
     },
-    "./Example": {
-      "import": "./Example/dist/docusaurus-plugin-examples-Example.esm.js",
-      "require": "./Example/dist/docusaurus-plugin-examples-Example.cjs.js",
-      "browser": "./Example/dist/docusaurus-plugin-examples.esm.js",
-      "default": "./Example/dist/docusaurus-plugin-examples-Example.esm.js"
+    "./components": {
+      "import": "./components/dist/docusaurus-plugin-examples-components.esm.js",
+      "require": "./components/dist/docusaurus-plugin-examples-components.cjs.js",
+      "browser": "./components/dist/docusaurus-plugin-examples.esm.js",
+      "types": "./components/dist/docusaurus-plugin-examples-components.cjs.d.ts",
+      "default": "./components/dist/docusaurus-plugin-examples-components.esm.js"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "dist/docusaurus-plugin-examples.cjs.js",
   "module": "dist/docusaurus-plugin-examples.esm.js",
-  "types": "src/modules.d.ts",
+  "types": "dist/docusaurus-plugin-examples.cjs.d.ts",
   "files": [
     "src",
     "dist",
-    "Example"
+    "components"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -46,6 +47,7 @@
     "@docusaurus/types": "^2.0.0-beta.3",
     "@docusaurus/utils": "^2.0.0-beta.3",
     "@remirror/core-helpers": "^1.0.1",
+    "create-context-state": "^1.0.0",
     "globby": "^11.0.4",
     "react-intersection-observer": "^8.32.0",
     "react-syntax-highlighter": "^15.4.3",
@@ -81,7 +83,7 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "Example.tsx"
+      "components/index.ts"
     ]
   }
 }

@@ -100,7 +100,7 @@ export default function pluginContentExamples(
         const files = await fs.readdir(folderPath);
 
         // No empty directories without an index file.
-        if (!files.find((file) => file.startsWith('index.'))) {
+        if (!files.some((file) => file.startsWith('index.'))) {
           continue;
         }
 

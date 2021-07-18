@@ -342,6 +342,7 @@ importers:
       '@remirror/react': ^1.0.1
       '@types/react': ^17.0.14
       '@types/react-syntax-highlighter': ^13.5.2
+      create-context-state: ^1.0.0
       globby: ^11.0.4
       react: ^17.0.2
       react-intersection-observer: ^8.32.0
@@ -356,6 +357,7 @@ importers:
       '@docusaurus/types': 2.0.0-beta.3
       '@docusaurus/utils': 2.0.0-beta.3
       '@remirror/core-helpers': link:../remirror__core-helpers
+      create-context-state: link:../create-context-state
       globby: 11.0.4
       react-intersection-observer: 8.32.0_react@17.0.2
       react-syntax-highlighter: 15.4.3_react@17.0.2

@@ -36,6 +36,8 @@ interface ExampleContentSource {
   js: ExampleFolderContent[];
 }
 
+export type ExampleLanguage = keyof ExampleContentSource;
+
 export type ExamplesPluginData = Record<string, ExampleContentSource>;
 
 export interface BaseProps {
@@ -49,5 +51,5 @@ export interface BaseProps {
    *
    * @default `ts`
    */
-  language?: keyof ExampleContentSource;
+  language?: ExampleLanguage;
 }
