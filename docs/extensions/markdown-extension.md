@@ -3,6 +3,8 @@ hide_title: true
 title: MarkdownExtension
 ---
 
+import { Example } from '@components';
+
 # `MarkdownExtension`
 
 ## Summary

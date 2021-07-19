@@ -234,8 +234,9 @@
   "pnpm": {
     "overrides": {
       "@babel/preset-env": "^7.13.10",
-      "monaco-editor": "npm:@typescript-deploys/monaco-editor@4.3.4",
-      "typescript": ">=4.3.4",
+      "monaco-editor": "npm:@typescript-deploys/monaco-editor@4.3.5",
+      "postcss": ">=8",
+      "typescript": "^4.3.5",
       "@microsoft/api-extractor-model": "^7.13.3",
       "@microsoft/api-extractor": "7.16.1",
       "@microsoft/tsdoc-config": "^0.15.2",

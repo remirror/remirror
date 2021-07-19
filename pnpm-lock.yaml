@@ -2,8 +2,9 @@ lockfileVersion: 5.3
 
 overrides:
   '@babel/preset-env': ^7.13.10
-  monaco-editor: npm:@typescript-deploys/monaco-editor@4.3.4
-  typescript: '>=4.3.4'
+  monaco-editor: npm:@typescript-deploys/monaco-editor@4.3.5
+  postcss: '>=8'
+  typescript: ^4.3.5
   '@microsoft/api-extractor-model': ^7.13.3
   '@microsoft/api-extractor': 7.16.1
   '@microsoft/tsdoc-config': ^0.15.2
@@ -124,7 +125,7 @@ importers:
       size-limit: ^5.0.1
       snapshot-diff: ^0.9.0
       testing: ^0.0.4
-      typescript: '>=4.3.4'
+      typescript: ^4.3.5
       typescript-plugin-css-modules: ^3.4.0
       typescript-snapshots-plugin: ^1.7.0
       typescript-styled-plugin: ^0.18.0
@@ -1871,7 +1872,7 @@ importers:
       json.macro: ^1.3.0
       jszip: ^3.6.0
       lz-string: ^1.4.4
-      monaco-editor: npm:@typescript-deploys/monaco-editor@4.3.4
+      monaco-editor: npm:@typescript-deploys/monaco-editor@4.3.5
       multishift: ^1.0.1
       path-browserify: ^1.0.1
       prettier: ^2.3.2
@@ -1927,7 +1928,7 @@ importers:
       json.macro: 1.3.0_babel-plugin-macros@3.1.0
       jszip: 3.6.0
       lz-string: 1.4.4
-      monaco-editor: /@typescript-deploys/monaco-editor/4.3.4
+      monaco-editor: /@typescript-deploys/monaco-editor/4.3.5
       multishift: link:../multishift
       path-browserify: 1.0.1
       prettier: 2.3.2
@@ -2624,7 +2625,6 @@ importers:
       '@remirror/pm': ^1.0.1
       '@remirror/react': ^1.0.1
       '@remirror/styles': ^1.0.0
-      '@storybook/addon-postcss': ^2.0.0
       '@storybook/addons': ^6.3.4
       '@storybook/cli': ^6.3.4
       '@storybook/components': ^6.3.4
@@ -2643,9 +2643,7 @@ importers:
       create-context-state: ^1.0.0
       globby: ^11.0.4
       is-ci: ^3.0.0
-      postcss: ^8.3.5
-      postcss-import: ^14.0.2
-      postcss-loader: ^6.1.1
+      postcss: '>=8'
       postcss-nested: ^5.0.5
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -2664,7 +2662,6 @@ importers:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
       '@remirror/styles': link:../remirror__styles
-      '@storybook/addon-postcss': 2.0.0
       '@storybook/addons': 6.3.4_react-dom@17.0.2+react@17.0.2
       '@storybook/cli': 6.3.4_jest@27.0.6
       '@storybook/components': 6.3.4_28c0df05a9559c3217649c6005b51123
@@ -2683,8 +2680,6 @@ importers:
       globby: 11.0.4
       is-ci: 3.0.0
       postcss: 8.3.5
-      postcss-import: 14.0.2_postcss@8.3.5
-      postcss-loader: 6.1.1_postcss@8.3.5
       postcss-nested: 5.0.5_postcss@8.3.5
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -2877,7 +2872,7 @@ importers:
       node-cleanup: ^2.1.2
       p-limit: ^3.1.0
       patch-package: remirror/patch-package#dist
-      postcss: ^8.3.5
+      postcss: '>=8'
       postcss-loader: ^6.1.1
       postcss-nested: ^5.0.5
       prettier: ^2.3.2
@@ -3030,7 +3025,7 @@ importers:
       docusaurus-plugin-examples: 0.0.0
       framer-motion: ^4.1.3
       is-absolute-url: ^3.0.3
-      postcss: ^8.3.5
+      postcss: '>=8'
       postcss-import: ^14.0.2
       postcss-loader: ^6.1.1
       postcss-nested: ^5.0.5
@@ -7790,19 +7785,6 @@ packages:
       url: 0.11.0
       webpack-sources: 1.4.3
 
-  /@storybook/addon-postcss/2.0.0:
-    resolution: {integrity: sha512-Nt82A7e9zJH4+A+VzLKKswUfru+T6FJTakj4dccP0i8DSn7a0CkzRPrLuZBq8tg4voV6gD74bcDf3gViCVBGtA==}
-    engines: {node: '>=10', yarn: ^1.17.0}
-    dependencies:
-      '@storybook/node-logger': 6.3.4
-      css-loader: 3.6.0
-      postcss: 7.0.36
-      postcss-loader: 4.3.0_postcss@7.0.36
-      style-loader: 1.3.0
-    transitivePeerDependencies:
-      - webpack
-    dev: false
-
   /@storybook/addons/6.3.4_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-rf8K8X3JrB43gq5nw5SYgfucQkFg2QgUMWdByf7dQ4MyIl5zet+2MYiSXJ9lfbhGKJZ8orc81rmMtiocW4oBjg==}
     peerDependencies:
@@ -7916,9 +7898,9 @@ packages:
       global: 4.4.0
       html-webpack-plugin: 4.5.2_webpack@4.46.0
       pnp-webpack-plugin: 1.6.4_typescript@4.3.5
-      postcss: 7.0.36
+      postcss: 8.3.5
       postcss-flexbugs-fixes: 4.2.1
-      postcss-loader: 4.3.0_postcss@7.0.36+webpack@4.46.0
+      postcss-loader: 4.3.0_postcss@8.3.5+webpack@4.46.0
       raw-loader: 4.0.2_webpack@4.46.0
       react: 17.0.2
       react-dev-utils: 11.0.4
@@ -8923,7 +8905,7 @@ packages:
     resolution: {integrity: sha512-QX7U7YW3zX3ex6MECtWO9folTGsXeP4b8bSjTq3I1ODM+H+sFHwGKuof+T+qBcDClGlCGtDb3SVfiTVfmcxw4g==}
     dependencies:
       '@types/browserslist': 4.15.0
-      postcss: 7.0.36
+      postcss: 8.3.5
     dev: false
 
   /@types/babel-plugin-macros/2.8.5:
@@ -9794,8 +9776,8 @@ packages:
     resolution: {integrity: sha512-qRyuv+P/1t1JK1rA+elmK1MmCL1BapEzKKfbEhDBV/LMMse4lmhZ/XbgETI39JveDJRpLjmToOI6uFtMW/WR2g==}
     dev: false
 
-  /@typescript-deploys/monaco-editor/4.3.4:
-    resolution: {integrity: sha512-/BuyPyN2cJaZgj/P/7rRY+GE5vWkkjZZFSECsalSCi0H1pLP/0mbU/Y7Y9kJeRXOO0bCvk1ae6ANfJPpj4fVmg==}
+  /@typescript-deploys/monaco-editor/4.3.5:
+    resolution: {integrity: sha512-Yx1XNp6/UJwj+F/7grXFWtBDl01x+/onFfOP/vMBUmOmmC5rbn6O8EaRt1yVBcHUnZQI6ZbZ7gBe/MNsBgApmw==}
     dev: false
 
   /@typescript-eslint/eslint-plugin/4.28.3_8da3816a7c3fb8ebc9f4c4b3e4b2e38f:
@@ -10849,7 +10831,7 @@ packages:
       colorette: 1.2.2
       normalize-range: 0.1.2
       num2fraction: 1.2.2
-      postcss: 7.0.36
+      postcss: 8.3.5
       postcss-value-parser: 4.1.0
     dev: false
 
@@ -13163,27 +13145,6 @@ packages:
       hyphenate-style-name: 1.0.4
     dev: false
 
-  /css-loader/3.6.0:
-    resolution: {integrity: sha512-M5lSukoWi1If8dhQAUCvj4H8vUt3vOnwbQBH9DdTm/s4Ym2B/3dPMtYZeJmq7Q3S3Pa+I94DcZ7pc9bP14cWIQ==}
-    engines: {node: '>= 8.9.0'}
-    peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
-    dependencies:
-      camelcase: 5.3.1
-      cssesc: 3.0.0
-      icss-utils: 4.1.1
-      loader-utils: 1.4.0
-      normalize-path: 3.0.0
-      postcss: 7.0.36
-      postcss-modules-extract-imports: 2.0.0
-      postcss-modules-local-by-default: 3.0.3
-      postcss-modules-scope: 2.2.0
-      postcss-modules-values: 3.0.0
-      postcss-value-parser: 4.1.0
-      schema-utils: 2.7.1
-      semver: 6.3.0
-    dev: false
-
   /css-loader/3.6.0_webpack@4.46.0:
     resolution: {integrity: sha512-M5lSukoWi1If8dhQAUCvj4H8vUt3vOnwbQBH9DdTm/s4Ym2B/3dPMtYZeJmq7Q3S3Pa+I94DcZ7pc9bP14cWIQ==}
     engines: {node: '>= 8.9.0'}
@@ -13195,7 +13156,7 @@ packages:
       icss-utils: 4.1.1
       loader-utils: 1.4.0
       normalize-path: 3.0.0
-      postcss: 7.0.36
+      postcss: 8.3.5
       postcss-modules-extract-imports: 2.0.0
       postcss-modules-local-by-default: 3.0.3
       postcss-modules-scope: 2.2.0
@@ -17164,14 +17125,14 @@ packages:
   /icss-utils/3.0.1:
     resolution: {integrity: sha1-7nDTroysOMa+XtkehRsn7tNDrQ8=}
     dependencies:
-      postcss: 6.0.23
+      postcss: 8.3.5
     dev: false
 
   /icss-utils/4.1.1:
     resolution: {integrity: sha512-4aFq7wvWyMHKgxsH8QQtGpvbASCf+eM3wPRLI6R+MgAnTCZ6STYsRvttLvRWK0Nfif5piF394St3HeJDaljGPA==}
     engines: {node: '>= 6'}
     dependencies:
-      postcss: 7.0.36
+      postcss: 8.3.5
     dev: false
 
   /icss-utils/5.1.0_postcss@8.3.5:
@@ -22446,20 +22407,20 @@ packages:
   /postcss-filter-plugins/3.0.1:
     resolution: {integrity: sha512-tRKbW4wWBEkSSFuJtamV2wkiV9rj6Yy7P3Y13+zaynlPEEZt8EgYKn3y/RBpMeIhNmHXFlSdzofml65hD5OafA==}
     dependencies:
-      postcss: 6.0.23
+      postcss: 8.3.5
     dev: false
 
   /postcss-flexbugs-fixes/4.2.1:
     resolution: {integrity: sha512-9SiofaZ9CWpQWxOwRh1b/r85KD5y7GgvsNt1056k6OYLvWUun0czCvogfJgylC22uJTwW1KzY3Gz65NZRlvoiQ==}
     dependencies:
-      postcss: 7.0.36
+      postcss: 8.3.5
     dev: false
 
   /postcss-icss-keyframes/0.2.1:
     resolution: {integrity: sha1-gMRFXgESsPL5w8Bax1FQYruf8pU=}
     dependencies:
       icss-utils: 3.0.1
-      postcss: 6.0.23
+      postcss: 8.3.5
       postcss-value-parser: 3.3.1
     dev: false
 
@@ -22470,7 +22431,7 @@ packages:
       generic-names: 1.0.3
       icss-utils: 3.0.1
       lodash: 4.17.21
-      postcss: 6.0.23
+      postcss: 8.3.5
     dev: false
 
   /postcss-import/14.0.2_postcss@8.3.5:
@@ -22483,6 +22444,7 @@ packages:
       postcss-value-parser: 4.1.0
       read-cache: 1.0.0
       resolve: 1.20.0
+    dev: true
 
   /postcss-load-config/3.1.0:
     resolution: {integrity: sha512-ipM8Ds01ZUophjDTQYSVP70slFSYg3T0/zyfII5vzhN6V57YSxMgG5syXuwi5VtS8wSf3iL30v0uBdoIVx4Q0g==}
@@ -22498,7 +22460,7 @@ packages:
       yaml: 1.10.2
     dev: false
 
-  /postcss-loader/4.3.0_postcss@7.0.36:
+  /postcss-loader/4.3.0_postcss@8.3.5+webpack@4.46.0:
     resolution: {integrity: sha512-M/dSoIiNDOo8Rk0mUqoj4kpGq91gcxCfb9PoyZVdZ76/AuhxylHDYZblNE8o+EQ9AMSASeMFEKxZf5aU6wlx1Q==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -22508,22 +22470,7 @@ packages:
       cosmiconfig: 7.0.0
       klona: 2.0.4
       loader-utils: 2.0.0
-      postcss: 7.0.36
-      schema-utils: 3.1.0
-      semver: 7.3.5
-    dev: false
-
-  /postcss-loader/4.3.0_postcss@7.0.36+webpack@4.46.0:
-    resolution: {integrity: sha512-M/dSoIiNDOo8Rk0mUqoj4kpGq91gcxCfb9PoyZVdZ76/AuhxylHDYZblNE8o+EQ9AMSASeMFEKxZf5aU6wlx1Q==}
-    engines: {node: '>= 10.13.0'}
-    peerDependencies:
-      postcss: ^7.0.0 || ^8.0.1
-      webpack: ^4.0.0 || ^5.0.0
-    dependencies:
-      cosmiconfig: 7.0.0
-      klona: 2.0.4
-      loader-utils: 2.0.0
-      postcss: 7.0.36
+      postcss: 8.3.5
       schema-utils: 3.1.0
       semver: 7.3.5
       webpack: 4.46.0
@@ -22635,7 +22582,7 @@ packages:
     resolution: {integrity: sha512-LaYLDNS4SG8Q5WAWqIJgdHPJrDDr/Lv775rMBFUbgjTz6j34lUznACHcdRWroPvXANP2Vj7yNK57vp9eFqzLWQ==}
     engines: {node: '>= 6'}
     dependencies:
-      postcss: 7.0.36
+      postcss: 8.3.5
     dev: false
 
   /postcss-modules-extract-imports/3.0.0_postcss@8.3.5:
@@ -22651,7 +22598,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       icss-utils: 4.1.1
-      postcss: 7.0.36
+      postcss: 8.3.5
       postcss-selector-parser: 6.0.6
       postcss-value-parser: 4.1.0
     dev: false
@@ -22671,7 +22618,7 @@ packages:
     resolution: {integrity: sha512-YyEgsTMRpNd+HmyC7H/mh3y+MeFWevy7V1evVhJWewmMbjDHIbZbOXICC2y+m1xI1UVfIT1HMW/O04Hxyu9oXQ==}
     engines: {node: '>= 6'}
     dependencies:
-      postcss: 7.0.36
+      postcss: 8.3.5
       postcss-selector-parser: 6.0.6
     dev: false
 
@@ -22688,7 +22635,7 @@ packages:
     resolution: {integrity: sha512-1//E5jCBrZ9DmRX+zCtmQtRSV6PV42Ix7Bzj9GbwJceduuf7IqP8MgeTXuRDHOWj2m0VzZD5+roFWDuU8RQjcg==}
     dependencies:
       icss-utils: 4.1.1
-      postcss: 7.0.36
+      postcss: 8.3.5
     dev: false
 
   /postcss-modules-values/4.0.0_postcss@8.3.5:
@@ -22885,24 +22832,6 @@ packages:
       postcss: ^8.2.15
     dependencies:
       postcss: 8.3.5
-
-  /postcss/6.0.23:
-    resolution: {integrity: sha512-soOk1h6J3VMTZtVeVpv15/Hpdl2cBLX3CAw4TAbkpTJiNPk9YP/zWcD1ND+xEtvyuuvKzbxliTOIyvkSeSJ6ag==}
-    engines: {node: '>=4.0.0'}
-    dependencies:
-      chalk: 2.4.2
-      source-map: 0.6.1
-      supports-color: 5.5.0
-    dev: false
-
-  /postcss/7.0.36:
-    resolution: {integrity: sha512-BebJSIUMwJHRH0HAQoxN4u1CN86glsrwsW0q7T+/m44eXOUAxSNdHRkNZPYz5vVUbg17hFgOQDE7fZk7li3pZw==}
-    engines: {node: '>=6.0.0'}
-    dependencies:
-      chalk: 2.4.2
-      source-map: 0.6.1
-      supports-color: 6.1.0
-    dev: false
 
   /postcss/8.3.5:
     resolution: {integrity: sha512-NxTuJocUhYGsMiMFHDUkmjSKT3EdH4/WbGF6GCi1NDGk+vbcUTun4fpbOqaPtD8IIsztA2ilZm2DhYCuyN58gA==}
@@ -24395,6 +24324,7 @@ packages:
     resolution: {integrity: sha1-5mTvMRYRZsl1HNvo28+GtftY93Q=}
     dependencies:
       pify: 2.3.0
+    dev: true
 
   /read-pkg-up/3.0.0:
     resolution: {integrity: sha1-PtSWaF26D4/hGNBpHcUfSh/5bwc=}
@@ -26392,16 +26322,6 @@ packages:
   /strip-json-comments/3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
-
-  /style-loader/1.3.0:
-    resolution: {integrity: sha512-V7TCORko8rs9rIqkSrlMfkqA63DfoGBBJmK1kKGCcSi+BWb4cqz0SRsnp4l6rU5iwOEd0/2ePv68SV22VXon4Q==}
-    engines: {node: '>= 8.9.0'}
-    peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
-    dependencies:
-      loader-utils: 2.0.0
-      schema-utils: 2.7.1
-    dev: false
 
   /style-loader/1.3.0_webpack@4.46.0:
     resolution: {integrity: sha512-V7TCORko8rs9rIqkSrlMfkqA63DfoGBBJmK1kKGCcSi+BWb4cqz0SRsnp4l6rU5iwOEd0/2ePv68SV22VXon4Q==}

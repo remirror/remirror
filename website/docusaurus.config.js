@@ -39,6 +39,12 @@ module.exports = {
           label: 'Docs',
           position: 'right',
         },
+        {
+          to: 'docs/api',
+          activeBasePath: 'docs/api',
+          label: 'API',
+          position: 'right',
+        },
         { to: '/blog', label: 'Blog', position: 'right' },
         { to: '/chat', label: 'Chat', position: 'right' },
         {

@@ -22,8 +22,6 @@ stories.sort((a, b) => {
   return 0;
 });
 
-// export const addons = ['@storybook/addon-postcss'];
-
 const mode = isCI ? 'production' : 'development';
 // const dev = process.env.NODE_ENV !== 'production';
 

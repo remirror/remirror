@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs-extra';
+import { mkdirp, readFile, writeFile } from 'fs-extra';
 import inquirer from 'inquirer';
 import Mustache from 'mustache';
 import path from 'path';
@@ -6,7 +6,7 @@ import { entries, kebabCase } from '@remirror/core-helpers';
 
 import { baseDir, fileExists, log } from './helpers';
 
-type Template = 'extension' | 'package' | 'command' | 'stringHandler' | 'helper';
+type Template = 'extension' | 'package' | 'command' | 'stringHandler' | 'helper' | 'hook';
 interface TemplateDetails {
   /**
    * The original location of the template.
@@ -40,6 +40,10 @@ const templates: Record<Template, TemplateDetails> = {
     destinationFolder: baseDir('docs', 'helpers'),
     origin: path.join(templateFolder, 'helper.md'),
   },
+  hook: {
+    destinationFolder: baseDir('docs', 'hooks'),
+    origin: path.join(templateFolder, 'hook.md'),
+  },
   stringHandler: {
     destinationFolder: baseDir('docs', 'string-handlers'),
     origin: path.join(templateFolder, 'string-handler.md'),
@@ -67,6 +71,7 @@ async function run() {
     return;
   }
 
+  await mkdirp(path.dirname(destination));
   await writeFile(destination, rendered, {});
 }
 

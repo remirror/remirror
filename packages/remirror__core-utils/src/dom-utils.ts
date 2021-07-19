@@ -177,7 +177,9 @@ export function isDomNode(domNode: unknown): domNode is Node {
  * @param domNode - the dom node
  */
 export function isElementDomNode(domNode: unknown): domNode is HTMLElement {
-  return isDomNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
+  return (
+    typeof document !== 'undefined' && isDomNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE
+  );
 }
 
 /**
