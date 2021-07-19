@@ -166,9 +166,12 @@ export function convertPixelsToDomUnit(
  * @param domNode - the dom node
  */
 export function isDomNode(domNode: unknown): domNode is Node {
-  return isObject(Node)
-    ? domNode instanceof Node
-    : isObject(domNode) && isNumber(Cast(domNode).nodeType) && isString(Cast(domNode).nodeName);
+  return (
+    typeof document !== 'undefined' &&
+    (isObject(Node)
+      ? domNode instanceof Node
+      : isObject(domNode) && isNumber(Cast(domNode).nodeType) && isString(Cast(domNode).nodeName))
+  );
 }
 
 /**
@@ -177,9 +180,7 @@ export function isDomNode(domNode: unknown): domNode is Node {
  * @param domNode - the dom node
  */
 export function isElementDomNode(domNode: unknown): domNode is HTMLElement {
-  return (
-    typeof document !== 'undefined' && isDomNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE
-  );
+  return isDomNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
 }
 
 /**
