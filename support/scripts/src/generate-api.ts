@@ -1,5 +1,4 @@
 import { ExtractorLogLevel, IConfigFile } from '@microsoft/api-extractor';
-import { readFile } from 'fs';
 import { Worker as JestWorker } from 'jest-worker';
 import os from 'os';
 import pLimit from 'p-limit';

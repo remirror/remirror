@@ -1,3 +1,1 @@
-// export * from './a11y-status';
-
-export const a = '';
+export * from './a11y-status';

@@ -96,9 +96,6 @@
       "path": "packages/remirror__dev/src"
     },
     {
-      "path": "packages/remirror__docgen/src"
-    },
-    {
       "path": "packages/remirror__dom/__tests__"
     },
     {
