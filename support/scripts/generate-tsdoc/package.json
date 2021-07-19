@@ -1,4 +1,0 @@
-{
-  "main": "dist/scripts-generate-tsdoc.cjs.js",
-  "module": "dist/scripts-generate-tsdoc.esm.js"
-}
