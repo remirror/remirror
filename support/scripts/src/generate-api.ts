@@ -16,7 +16,9 @@ import {
 const [, , ...args] = process.argv;
 const fix = args.includes('--fix');
 const reportFolder = baseDir('support', 'api');
-const TEST_WORKER_PATH = require.resolve('../api-extractor.worker');
+const TEST_WORKER_PATH = baseDir(
+  './support/scripts/api-extractor.worker/dist/scripts-api-extractor.worker.cjs.js',
+);
 
 /**
  * Get all typed packages.

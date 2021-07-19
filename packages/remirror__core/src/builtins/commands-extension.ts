@@ -490,8 +490,8 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * Fire an empty update to trigger an update to all decorations, and state
    * that may not yet have run.
    *
-   * This can be used in extensions to trigger updates certain options that
-   * affect the editor state have updated.
+   * This can be used in extensions to trigger updates when certain options that
+   * affect the editor state have changed.
    *
    * @param action - provide an action which is called just before the empty
    * update is dispatched (only when dispatch is available). This can be used in

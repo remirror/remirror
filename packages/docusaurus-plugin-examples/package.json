@@ -1,0 +1,70 @@
+{
+  "name": "docusaurus-plugin-examples",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A docusaurus plugin",
+  "keywords": [
+    "remirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/docusaurus-plugin-examples/docusaurus-plugin-examples",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/docusaurus-plugin-examples",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/docusaurus-plugin-examples.esm.js",
+      "require": "./dist/docusaurus-plugin-examples.cjs.js",
+      "browser": "./dist/docusaurus-plugin-examples.esm.js",
+      "types": "./dist/docusaurus-plugin-examples.cjs.d.ts",
+      "default": "./dist/docusaurus-plugin-examples.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types": {
+      "import": "./types/dist/docusaurus-plugin-examples-types.esm.js",
+      "require": "./types/dist/docusaurus-plugin-examples-types.cjs.js",
+      "browser": "./types/dist/docusaurus-plugin-examples.esm.js",
+      "default": "./types/dist/docusaurus-plugin-examples-types.esm.js"
+    },
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/docusaurus-plugin-examples.cjs.js",
+  "module": "dist/docusaurus-plugin-examples.esm.js",
+  "types": "dist/docusaurus-plugin-examples.cjs.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "types"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@docusaurus/core": "^2.0.0-beta.3",
+    "@docusaurus/types": "^2.0.0-beta.3",
+    "@docusaurus/utils": "^2.0.0-beta.3",
+    "@remirror/core-helpers": "^1.0.1",
+    "globby": "^11.0.4",
+    "sucrase": "^3.20.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ]
+        }
+      }
+    }
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "types.ts"
+    ]
+  }
+}

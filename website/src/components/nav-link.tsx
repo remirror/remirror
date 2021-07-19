@@ -24,5 +24,3 @@ export const NavLink: FC<NavLinkProps> = ({ href, children, ...props }) => {
   const to = (props.to ?? href) as string;
   return <Link {...props} to={to} className={styles.link} />;
 };
-
-export default NavLink;

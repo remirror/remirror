@@ -21,7 +21,7 @@ There are three types of `Extension`.
 
 ## Lifecycle Methods
 
-Extensions are able to completely customise the behaviour of the editor via these lifecycle methods. Even core functionality like the creation of `Schema` is built via `Extension`s. This section outlines what you're working with in extensions.
+Extensions can customise the editor via these **LifeCycle Methods**. Even core functionality like the creation of `Schema` is added to `remirror` via and `Extension`. The following is an outline of the lifecycle methods you can use while working with `remirror`.
 
 ### `onCreate`
 
@@ -42,7 +42,7 @@ This lifecycle method is called when the `EditorView` is first added by the UI l
 ### `onStateUpdate`
 
 ```ts
-function onStateUpdate(parameter: import('remirror').StateUpdateLifecycleParameter): void;
+function onStateUpdate(parameter: StateUpdateLifecycleParameter): void;
 ```
 
 This is called whenever a transaction successfully updates the `EditorState`. For controlled component this is called whenever the state value is updated.
@@ -88,7 +88,7 @@ interface ExampleOptions {
   keyBindings: CustomHandler<Record<string, () => boolean>>;
 }
 
-@extensionDecorator<ExampleOptions>({
+@extension<ExampleOptions>({
   defaultOptions: { color: 'red', backgroundColor: 'green' },
   defaultPriority: ExtensionPriority.High,
 
@@ -110,12 +110,12 @@ class ExampleExtension extends PlainExtension<ExampleOptions> {
 
 These annotations can be used to provide better intellisense support for the end user.
 
-### `extensionDecorator`
+### `extension`
 
 The extension decorator updates the static properties of the extension. If you prefer not to use decorators it can also be called as a function. The `Extension` constructor is mutated by the function call.
 
 ```ts
-extensionDecorator({ defaultSettings: { color: 'red' } })(ExampleExtension);
+extension({ defaultSettings: { color: 'red' } })(ExampleExtension);
 ```
 
 If you really don't like this pattern then you can also set the same options as static properties.
@@ -186,7 +186,7 @@ To get them to work we would change the above example extension implentation to 
 import { hasTransactionChanged, StateUpdateLifecycleParameter } from 'remirror';
 import { hasStateChanged } from 'remirror/extension-positioner';
 
-@extensionDecorator<ExampleOptions>({
+@extension<ExampleOptions>({
   defaultOptions: { color: 'red', backgroundColor: 'green' },
   defaultPriority: ExtensionPriority.High,
   staticKeys: ['type'],

@@ -187,7 +187,7 @@ export class ReactNodeView implements NodeView {
       ? document.createElement(defaultInlineNode as keyof HTMLElementTagNameMap)
       : document.createElement(defaultBlockNode as keyof HTMLElementTagNameMap);
 
-    // Prosemirror breaks down when it encounters multiple nested empty
+    // ProseMirror breaks down when it encounters multiple nested empty
     // elements. This class prevents this from happening.
     element.classList.add(`${kebabCase(this.#node.type.name)}-node-view-wrapper`);
 

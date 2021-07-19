@@ -58,17 +58,17 @@
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.1",
-    "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.8",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "y-webrtc": "^10.2.0",
-    "yjs": "^13.5.10"
+    "yjs": "^13.5.11"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.1",
-    "react": "^16.14.0 || ^17",
-    "react-dom": "^16.14.0 || ^17"
+    "react": "^16.14.0 || ^17 || ^18",
+    "react-dom": "^16.14.0 || ^17 || ^18"
   },
   "peerDependenciesMeta": {
     "react": {

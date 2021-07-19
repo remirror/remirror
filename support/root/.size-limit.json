@@ -669,22 +669,6 @@
     "gzip": true
   },
   {
-    "name": "@remirror/lit",
-    "limit": "50 KB",
-    "path": "packages/remirror__lit/dist/remirror-lit.browser.esm.js",
-    "ignore": ["@remirror/core-helpers"],
-    "running": false,
-    "gzip": true
-  },
-  {
-    "name": "@remirror/lit-components",
-    "limit": "50 KB",
-    "path": "packages/remirror__lit-components/dist/remirror-lit-components.browser.esm.js",
-    "ignore": ["@remirror/pm", "lit-element", "@remirror/core"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/messages",
     "limit": "50 KB",
     "path": "packages/remirror__messages/dist/remirror-messages.browser.esm.js",

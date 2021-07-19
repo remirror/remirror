@@ -57,6 +57,36 @@ cd website
 pnpm add <package>
 ```
 
+### Adding Documentation
+
+The following command will help create a markdown file with the documentation already scaffold.
+
+```bash
+pnpm generate:docs
+```
+
+This will present you with a list of potential documentation targets.
+
+At the time of writing you will be able to select from:
+
+- `packages`
+- `extensions`
+- `commands`
+
+### Some Tips
+
+When writing new documentation consider these three questions.
+
+- **What** is this?
+  - A concise introduction.
+- **Why** does it exist?
+  - The problem that is solved.
+  - The features it enables (with examples).
+- **How** can / do I use it?
+  - Installation
+  - Examples
+  - Detailed walk through guide
+
 <br />
 
 ## Testing

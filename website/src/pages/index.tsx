@@ -93,7 +93,7 @@ const Home = () => {
 
   return (
     <div className={styles.mainBackground}>
-      <Layout className='asdfasdf'>
+      <Layout>
         <header className={cx('hero', styles.heroBanner)}>
           <div className={cx(styles.container)}>
             <BannerHeader />
@@ -109,7 +109,7 @@ const Home = () => {
             <BannerPhone />
           </div>
         </header>
-        <main className={styles.main}>
+        <main>
           {features && features.length > 0 && (
             <section className={styles.features}>
               {features.map((props, idx) => (

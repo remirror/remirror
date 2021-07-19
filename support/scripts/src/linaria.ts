@@ -16,7 +16,6 @@ import globby from 'globby';
 import groupBy from 'lodash.groupby';
 import path from 'path';
 import postcss from 'postcss';
-import postcssImport from 'postcss-import';
 import postcssNested from 'postcss-nested';
 import prettier from 'prettier';
 import { camelCase, pascalCase } from '@remirror/core-helpers';
@@ -111,7 +110,7 @@ async function formatContents(
  * @param to - the output path for the transformation
  */
 async function processCss(css: string, from?: string, to?: string) {
-  const result = await postcss([postcssImport(), postcssNested, autoprefixer]).process(css, {
+  const result = await postcss([postcssNested, autoprefixer]).process(css, {
     from,
     to,
   });

@@ -17,7 +17,6 @@ interface RunProps extends IExtractorConfigPrepareOptions, IExtractorInvokeOptio
 
 export async function run({
   configObject,
-  configObjectFullPath,
   packageJson,
   packageJsonFullPath,
   localBuild,
@@ -27,7 +26,7 @@ export async function run({
 
   const extractor = ExtractorConfig.prepare({
     configObject,
-    configObjectFullPath,
+    configObjectFullPath: undefined,
     packageJson,
     packageJsonFullPath,
   });

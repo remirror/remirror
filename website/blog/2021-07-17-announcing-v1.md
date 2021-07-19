@@ -8,39 +8,81 @@ author_image_url: https://avatars1.githubusercontent.com/u/1160934?v=4
 tags: [remirror, beta]
 ---
 
-## Breaking
+The new version of `remirror` comes with a number of enhancements and quite a few breaking changes if you were using the `remirror@1.0.0-next.*` pre-releases.
 
-- Editor selection now defaults to the `end` of the document.
-- Rename all `*Parameter` interfaces to `*Props`. With the exception of \[React\]FrameworkParameter which is now \[React\]FrameworkOptions.
-- Remove `Presets` completely. In their place a function that returns a list of `Extension`s should be used. They were clunky, difficult to use and provided little to no value.
-- Add core exports to `remirror` package
-- Add all Extensions and Preset package exports to the `remirror/extensions` subdirectory. It doesn't include framework specific exports which are made available from `@remirror/react`
-- Remove `remirror/react` which has been replaced by `@remirror/react`
-- `@remirror/react` includes which includes all the react exports from all the react packages which can be used with remirror.
-- Remove `@remirror/showcase` - examples have been provided on how to achieve the same effect.
-- Remove `@remirror/react-social`
-- Remove `@remirror/react-wysiwyg`
-- Rename `useRemirror` -> `useRemirrorContext`
-- Replace `useManager` with better `useRemirror` which provides a lot more functionality.
-- Rename `preset-table` to `extension-tables`
-- Rename `preset-list` to `extension-lists`. `ListPreset` is now `BulletListExtension` and `OrderListExtension`.
-- New `createDecorations` extension method for adding decorations to the prosemirror view.
-- Create new decorator pattern for adding `@commands`, `@helper` functions and `@keyBindings`.
-- Deprecate `tags` property on extension and encourage the use of `createTags` which is a method instead.
-- Add `onApplyState` and `onInitState` lifecycle methods.
-- Add `onApplyTransaction` method.
-- Rename interface `CreatePluginReturn` to `CreateExtensionPlugin`.
-- Rewrite the `DropCursor` to support animations and interactions with media.
-- Add support updating the doc attributes.
-- Deprecate top level context methods `focus` and `blur`. They should now be consumed as commands
-- Remove package `@remirror/extension-auto-link`.
+The following sections outline the breaking changes and how they can be migrated if your last version was `@next`. For those upgrading from `0.11.0` the library has changed drastically and you'd be better off browsing the documentation.
 
-### `ExtensionStore`
+<!-- truncate -->
 
-- Rename `addOrReplacePlugins` to `updatePlugins` in `ExtensionStore`.
-- Remove `reconfigureStatePlugins` and auto apply it for all plugin updating methods.
+## Changes
 
-One of the big changes is a hugely improved API for `@remirror/react`.
+### All extensions are available via `remirror/extensions`
+
+When you install the top level `remirror` package you are given access to every extension developed by `remirror` via the `remirror/extension` entry point.
+
+```diff
+- import { BoldExtension } from 'remirror/extension/bold';
+- import { ItalicExtension } from 'remirror/extension/italic';
++ import { BoldExtension, ItalicExtension } from 'remirror/extensions';
+```
+
+You can also still install the extensions directly from their scoped packages.
+
+```ts
+import { BoldExtension } from '@remirror/extension-bold';
+```
+
+### Remove `remirror/react` which has been replaced by `@remirror/react`
+
+If your code is importing from `remirror/react` you should now change the import to `@remirror/react`.
+
+```diff
+- import { useManager } from 'remirror/react';
++ import { useRemirror } from '@remirror/react';
+```
+
+### Update the `@remirror/react` API
+
+- Rename the original `useRemirror` to now be called `useRemirrorContext`.
+- Add new `@remirror/react-components` package.
+- `@remirror/react` exports all the hooks, components, core modules and react specific extensions from `@remirror/react-core`, `@remirror/react-components` and `@remirror/react-hooks`.
+
+`useManager` was too focused on the implementation details. We've updated the API to be used in a different way and `useRemirror` is now the way to initialize an editor.
+
+```tsx
+import React from 'react';
+import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
+import { Remirror, useRemirror } from '@remirror/react';
+
+const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
+
+const Editor = () => {
+  const { manager } = useRemirror({ extensions });
+
+  return <Remirror manager={manager} />;
+};
+```
+
+The previous `useRemirror` is now called `useRemirrorContext` since it plucks the context from the outer `Remirror` Component. The ~~`<RemirrorProvider />`~~ has been renamed to `<Remirror />` and automatically renders an editor.
+
+When no children are provided to the `<Remirror />` component it will automatically render a container `div` where the prosemirror editor will be placed. If you do add children it is up to you to import the `<EditorComponent />` and add it to the children or set the `autoRender` prop to `'start' | 'end' | true`.
+
+~~`useManager`~~ has been marked as `@internal` (although it is still exported) and going forward you should be using `useRemirror` as shown in the above example.
+
+### `@remirror/extension-tables`
+
+`@remirror/preset-table` is now `@remirror/extension-tables`. The `TableExtension` uses the new `createExtension` method to inject the `TableRowExtension` which in turn injects the `TableCellExtension` and `TableHeaderCellExtension`. To use tables in your editor the following is sufficient.
+
+```tsx
+import { TableExtension } from 'remirror/extensions';
+import { Remirror, useRemirror } from '@remirror/react';
+
+const Editor = () => {
+  const { manager } = useRemirror({ extensions: () => [TableExtension()] });
+
+  return <Remirror manager={manager} />;
+};
+```
 
 ### `@remirror/extension-positioner`
 
@@ -49,7 +91,7 @@ One of the big changes is a hugely improved API for `@remirror/react`.
 - Improved scrolling when using the positioner.
 - Fixed a lot of bugs in the positioner API.
 - This DOMRect represents an absolute position within the document. It is up to your consuming component to consume the rect.
-- `@remirror/react-components` exports `PositionerComponent` which internally
+
 - Renamed the positioners in line with the new functionality.
 
 ```tsx
@@ -67,52 +109,6 @@ const Editor = () => {
   return <Remirror manager={manager} onChange={onChange} state={state} />;
 };
 ```
-
-The previous `useRemirror` is now called `useRemirrorContext` since it plucks the context from the outer `Remirror` Component. The `<RemirrorProvider />` has been renamed to `<Remirror />` and automatically renders an editor.
-
-When no children are provided to the `<Remirror />` component it will automatically render a container `div` where the prosemirror editor will be placed. If you do add children it is up to you to import the `<EditorComponent />` and add it to the children or set the `autoRender` prop to `'start' | 'end' | true`.
-
-`useManager` has been marked as `@internal` (although it is still exported) and going forward you should be using `useRemirror` as shown in the above example.
-
-### `@remirror/extension-tables`
-
-`@remirror/preset-table` is now `@remirror/extension-tables`. The `TableExtension` uses the new `createExtension` method to inject the `TableRowExtension` which in turn injects the `TableCellExtension` and `TableHeaderCellExtension`. To use tables in your editor the following is sufficient.
-
-```tsx
-import { TableExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from '@remirror/react';
-
-const Editor = () => {
-  const { manager } = useRemirror(() => [TableExtension()]);
-
-  return <Remirror manager={manager} />;
-};
-```
-
-### UI Commands
-
-- Add commands with UI configuration and **i18n** text labels
-- `@command`, `@keyBinding`, `@helper` decorators for more typesafe configuration of extensions.
-- `NamedShortcut` keybindings which can be set on the keymap extension. Currently `remirror` supports a google docs keyboard shortcuts.
-- Add the `overrides` property to the extensions which for advanced users allows overriding of the default `NodeSpec` and `MarkSpec`.
-
-### Caveats around inference
-
-- Make sure all your commands in an extension are annotated with a return type of `CommandFunction`. Failure to do so will break all type inference wherever the extension is used.
-
-  ```ts
-  import { CommandFunction } from 'remirror';
-  ```
-
-- When setting the name of the extension make sure to use `as const` otherwise it will be a string and ruin autocompletion for extension names, nodes and marks.
-
-  ```ts
-  class MyExtension extends PlainExtension {
-    get name() {
-      return 'makeItConst' as const;
-    }
-  }
-  ```
 
 ### `@remirror/react-hooks`
 
@@ -147,6 +143,71 @@ const Editor = () => {
 };
 ```
 
+## Breaking Changes
+
+- Editor selection now defaults to the `end` of the document. You can change the starting point as shown below.
+
+  ```tsx
+  import { Remirror, useRemirror } from '@remirror/react';
+
+  const Editor = () => {
+    const { manager, state } = useRemirror({ selection: 'start' });
+
+    return <Remirror manger={manager} initialContent={state} />;
+  };
+  ```
+
+- All interfaces which were named with the pattern `*Parameter` have been renamed to to `*Props`. The only exceptions are `*FrameworkParameter` which are now `*FrameworkOptions`.
+- Remove `Presets` completely. In their place a function that returns a list of `Extension`s should be used. They were clunky, difficult to use and provided little to no value.
+- Remove `@remirror/core` entry-point and add all core exports to the main `remirror` entry-point.
+- Add all `Extension`s and `Preset` package exports to the `remirror/extensions` subdirectory. It doesn't include framework specific exports which are made available from `@remirror/react`.
+- Rename `@remirror/preset-table` to `@remirror/extension-tables`.
+- Rename `preset-list` to `extension-lists`. `ListPreset` is now `BulletListExtension` and `OrderListExtension`.
+- Create new decorator pattern for adding `@commands`, `@helper` functions and `@keyBindings`.
+- Deprecate `tags` property on extension and encourage the use of `createTags` which is a method instead.
+- Rename interface `CreatePluginReturn` to `CreateExtensionPlugin`.
+- Add support for directly updating the `doc` attributes.
+- Deprecate top level context methods `focus` and `blur`. They should now be consumed as commands.
+
+## Removed Packages
+
+The following packages have been removed.
+
+- Remove `@remirror/showcase`
+- Remove `@remirror/react-social`
+- Remove `@remirror/react-wysiwyg`
+- Remove package `@remirror/extension-auto-link`. The functionality is now self-contained within `@remirror/extension-link`.
+
+### `ExtensionStore`
+
+### Extensions
+
+- New `createDecorations` extension method for adding decorations to the ProseMirror `EditorView`.
+- New lifecycle methods: `onInitState`, `onApplyState`, and `onApplyTransaction` lifecycle methods. These correspond exactly the the plugin methods which ProseMirror exposes and can be used to create plugin functionality without creating a new plugin.
+- `@command`, `@keyBinding`, `@helper` decorators for increased type safety when configuring extensions.
+- `NamedShortcut` keybindings which can be set on the keymap extension. Currently `remirror` defaults to using the same shortcuts as Google Docs.
+- Add the `nodeOverrides` property to the extensions which for advanced users allows overriding of the default `NodeSpec` and `MarkSpec`.
+- Rename `addOrReplacePlugins` to `updatePlugins` in `ExtensionStore`.
+- Remove `reconfigureStatePlugins` and auto apply it for all plugin updating methods.
+
+### Inference of Extension Types
+
+- Make sure all your commands in an extension are annotated with a return type of `CommandFunction`. Failure to do so will break all type inference wherever the extension is used.
+
+  ```ts
+  import { CommandFunction } from 'remirror';
+  ```
+
+- When setting the name of the extension make sure to use `as const` otherwise it will be a string and ruin autocompletion for extension names, nodes and marks.
+
+  ```ts
+  class MyExtension extends PlainExtension {
+    get name() {
+      return 'makeItConst' as const;
+    }
+  }
+  ```
+
 - The `Remirror` component now has a convenient hooks props. The hooks prop takes an array of zero parameter hook functions which are rendered into the `RemirrorContext`. It's a shorthand to writing out your own components. You can see the pattern in use above.
 
 ### Commands
@@ -177,41 +238,6 @@ There are new hooks for working with commands.
 ### Dependencies
 
 - Upgrade React to require minimum versions of ^16.14.0 || ^17. This is because of the codebase now using the [new jsx transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html).
-- Upgrade TypeScript to a minimum of `4.1`. Several of the new features make use of the new types and it is a requirement to upgrade.
+- Upgrade TypeScript to a minimum of `4.3`. Several of the new features make use of the new types and it is a requirement to upgrade.
 - General upgrades across all dependencies to using the latest versions.
   - All `prosemirror-*` packages.
-
-### Issues addressed
-
-- Fixes #569
-- Fixes #407
-- Fixes #533
-- Fixes #652
-- Fixes #480
-- Fixes #566
-- Fixes #453
-- Fixes #508
-- Fixes #715
-- Fixes #531
-- Fixes #535
-- Fixes #536
-- Fixes #537
-- Fixes #538
-- Fixes #541
-- Fixes #542
-- Fixes #709
-- Fixes #532
-- Fixes #836
-- Fixes #834
-- Fixes #823
-- Fixes #820
-- Fixes #695
-- Fixes #793
-- Fixes #800
-- Fixes #453
-- Fixes #778
-- Fixes #757
-- Fixes #804
-- Fixes #504
-- Fixes #714
-- Fixes #37

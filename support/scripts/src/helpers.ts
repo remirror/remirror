@@ -7,6 +7,7 @@ import camelCaseKeys from 'camelcase-keys';
 import chalk from 'chalk';
 import { exec as _exec } from 'child_process';
 import fs from 'fs';
+import { lstat } from 'fs/promises';
 import { diff } from 'jest-diff';
 import isEqual from 'lodash.isequal';
 import minimist from 'minimist';
@@ -58,6 +59,20 @@ export function mangleScopedPackageName(packageName: string): string {
   }
 
   return scope;
+}
+
+/**
+ * Check if a file exists for the provide `filePath` the provided target.
+ *
+ * @param {string} filePath
+ */
+export async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    const stat = await lstat(filePath);
+    return stat.isFile();
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -363,7 +378,7 @@ export const environment = {
 };
 
 /**
- * watch some files and execute a callback function when any file change.
+ * Watch some files and execute a callback function when any file change.
  *
  * @param files an array of file paths
  * @param callback the function that will be called when a file is modified
