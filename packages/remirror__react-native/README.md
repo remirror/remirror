@@ -1,3 +1,5 @@
+i
+
 # @remirror/react-native
 
 > Run your remirror editor for `React Native`

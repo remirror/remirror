@@ -9,12 +9,6 @@
   }
 }
 
-.main {
-  @media screen and (min-width: 996px) {
-    /* margin-top: 15vw; */
-  }
-}
-
 .features {
   display: grid;
   grid-template-columns: 1fr;
@@ -97,10 +91,16 @@
   background-size: 100vw;
   width: 100vw;
   background-position: 0 var(--ifm-navbar-height);
+  html[data-theme='dark'] & {
+    background-image: url('/img/background-mobile-dark.svg');
+  }
 
   @media screen and (min-width: 996px) {
     background-image: url('/img/background-desktop.svg');
     min-height: 80vw;
+    html[data-theme='dark'] & {
+      background-image: url('/img/background-desktop-dark.svg');
+    }
   }
 
   @media screen and (min-width: 1450px) {
@@ -114,7 +114,7 @@
   margin: 0 auto;
   text-align: center;
   color: var(--ifm-color-white);
-  background-color: var(--ifm-background-color);
+  background-color: transparent;
 
   h1,
   h2,

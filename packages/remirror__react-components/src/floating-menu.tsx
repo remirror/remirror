@@ -4,7 +4,7 @@ import { matchSorter } from 'match-sorter';
 import { FC, ReactChild, Ref, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useMenuState } from 'reakit/Menu';
-import useLayoutEffect from 'use-isomorphic-layout-effect';
+import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { cx, Except } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
@@ -87,6 +87,18 @@ interface FloatingWrapperProps extends BaseFloatingPositioner {
   floatingLabel?: string;
 }
 
+interface UseMemoizedPositionProps {
+  height: number;
+  left: number;
+  top: number;
+  width: number;
+}
+
+function useMemoizedPosition(props: UseMemoizedPositionProps) {
+  const { height, left, top, width } = props;
+  return useMemo(() => ({ height, left, top, width }), [height, left, top, width]);
+}
+
 export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element => {
   const {
     containerClass,
@@ -114,16 +126,10 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
     const active = isFocused && enabled;
     const refinedPositioner = getPositioner(positioner);
     return refinedPositioner.active(active);
-
-    // return renderOutsideEditor
-    //   ? getPositioner(positioner)
-    //       .clone(({ events = [] }) => ({ events: [...events, 'scroll'] }))
-    //       .active(active)
-    //   : getPositioner(positioner).active(active);
   }, [isFocused, enabled, renderOutsideEditor]);
 
   const shouldShow = (hideWhenInvisible ? visible : true) && active;
-  const position = useMemo(() => ({ height, left, top, width }), [height, left, top, width]);
+  const position = useMemoizedPosition({ height, left, top, width });
   const { popperRef, referenceRef, popoverStyles, update } = usePopper({
     placement,
     visible,
@@ -144,7 +150,7 @@ export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element =>
     floatingElement = <PositionerPortal>{floatingElement}</PositionerPortal>;
   }
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     update();
   }, [shouldShow, update, height, left, top, width]);
 

@@ -12,6 +12,8 @@ The new version of `remirror` comes with a number of enhancements and quite a fe
 
 The following sections outline the breaking changes and how they can be migrated if your last version was `@next`. For those upgrading from `0.11.0` the library has changed drastically and you'd be better off browsing the documentation.
 
+<!-- truncate -->
+
 ## Changes
 
 ### All extensions are available via `remirror/extensions`

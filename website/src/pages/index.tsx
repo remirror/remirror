@@ -2,7 +2,6 @@ import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import { Example } from 'docusaurus-plugin-examples/components';
 import { ReactElement } from 'react';
 import { cx, isString } from 'remirror';
 
@@ -110,7 +109,7 @@ const Home = () => {
             <BannerPhone />
           </div>
         </header>
-        <main className={styles.main}>
+        <main>
           {features && features.length > 0 && (
             <section className={styles.features}>
               {features.map((props, idx) => (
@@ -119,7 +118,6 @@ const Home = () => {
             </section>
           )}
           <BannerLaptop />
-          <Example name='basic' />
         </main>
       </Layout>
     </div>

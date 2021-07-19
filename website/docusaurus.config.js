@@ -21,11 +21,11 @@ module.exports = {
 
       // Hides the switch in the navbar
       // Useful if you want to support a single color mode
-      disableSwitch: true,
+      disableSwitch: false,
 
       // Should we use the prefers-color-scheme media-query,
       // using user system preferences, instead of the hardcoded defaultMode
-      respectPrefersColorScheme: true,
+      // respectPrefersColorScheme: true,
     },
     navbar: {
       logo: {
@@ -102,15 +102,13 @@ module.exports = {
           path: path.join(__dirname, '../docs'),
           sidebarPath: require.resolve('./sidebar.js'),
           editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/',
-          // remarkPlugins: [require('remark-footnotes')],
         },
         blog: {
           showReadingTime: true,
           editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/blog/',
-          // remarkPlugins: [require('remark-footnotes')],
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve('./styles.css'),
         },
       },
     ],
@@ -127,8 +125,6 @@ module.exports = {
       },
     ],
   ],
-  themes: ['@docusaurus/theme-live-codeblock'],
-
   stylesheets: [
     'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap',
   ],

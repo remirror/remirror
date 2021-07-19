@@ -3034,13 +3034,14 @@ importers:
       '@docusaurus/plugin-sitemap': ^2.0.0-beta.3
       '@docusaurus/preset-classic': ^2.0.0-beta.3
       '@docusaurus/theme-classic': ^2.0.0-beta.3
+      '@docusaurus/theme-common': ^2.0.0-beta.3
       '@docusaurus/theme-live-codeblock': ^2.0.0-beta.3
       '@docusaurus/types': ^2.0.0-beta.3
+      '@emotion/css': ^11.1.3
       '@emotion/react': ^11.1.5
       '@emotion/styled': ^11.3.0
       '@fontsource/fira-code': ^4.5.0
       '@fontsource/rubik': ^4.5.0
-      '@manypkg/get-packages': ^1.1.1
       '@mdx-js/react': ^1.6.22
       '@remirror/dev': ^1.0.1
       '@remirror/react': ^1.0.1
@@ -3056,7 +3057,6 @@ importers:
       docusaurus-plugin-examples: 0.0.0
       framer-motion: ^4.1.3
       is-absolute-url: ^3.0.3
-      monaco-editor-webpack-plugin: ^4.1.1
       postcss: ^8.3.5
       postcss-import: ^14.0.2
       postcss-loader: ^6.1.1
@@ -3068,10 +3068,10 @@ importers:
       react-syntax-highlighter: ^15.4.3
       reakit: ^1.3.8
       remark-footnotes: ^3.0.0
-      remirror: 1.0.1
-      worker-plugin: ^5.0.1
+      remirror: ^1.0.1
     dependencies:
       '@babel/runtime': 7.14.6
+      '@emotion/css': 11.1.3_@babel+core@7.14.6
       '@emotion/react': 11.4.0_7d301be8e231519c6137820423f597a2
       '@emotion/styled': 11.3.0_baf05c711ad7f101d7ae98670937cf39
       '@fontsource/fira-code': 4.5.0
@@ -3102,21 +3102,19 @@ importers:
       '@docusaurus/plugin-sitemap': 2.0.0-beta.3_react-dom@17.0.2+react@17.0.2
       '@docusaurus/preset-classic': 2.0.0-beta.3_22dd9933d0354038f3b5659cb8967395
       '@docusaurus/theme-classic': 2.0.0-beta.3_react-dom@17.0.2+react@17.0.2
+      '@docusaurus/theme-common': 2.0.0-beta.3_cf03b7458ee8070c9e09362c20b6f0a1
       '@docusaurus/theme-live-codeblock': 2.0.0-beta.3_react-dom@17.0.2+react@17.0.2
       '@docusaurus/types': 2.0.0-beta.3
-      '@manypkg/get-packages': 1.1.1
       '@types/react': 17.0.14
       '@types/react-dom': 17.0.9
       '@types/worker-plugin': 5.0.1
       autoprefixer: 10.3.1_postcss@8.3.5
       comment-mark: 1.0.0
       core-js: 3.15.2
-      monaco-editor-webpack-plugin: 4.1.1
       postcss: 8.3.5
       postcss-import: 14.0.2_postcss@8.3.5
       postcss-loader: 6.1.1_postcss@8.3.5
       postcss-nested: 5.0.5_postcss@8.3.5
-      worker-plugin: 5.0.1
 
 packages:
 
@@ -6863,6 +6861,7 @@ packages:
       '@types/node': 12.20.16
       find-up: 4.1.0
       fs-extra: 8.1.0
+    dev: false
 
   /@manypkg/get-packages/1.1.1:
     resolution: {integrity: sha512-J6VClfQSVgR6958eIDTGjfdCrELy1eT+SHeoSMomnvRQVktZMnEA5edIr5ovRFNw5y+Bk/jyoevPzGYod96mhw==}
@@ -6872,6 +6871,7 @@ packages:
       fs-extra: 8.1.0
       globby: 11.0.4
       read-yaml-file: 1.1.0
+    dev: false
 
   /@mdx-js/mdx/1.6.22:
     resolution: {integrity: sha512-AMxuLxPz2j5/6TpF/XSdKpQP1NlG0z11dFOlq+2IP/lSgl11GY8ji6S/rgsViN/L0BDvHvUMruRb7ub+24LUYA==}
@@ -9346,6 +9346,7 @@ packages:
 
   /@types/node/12.20.16:
     resolution: {integrity: sha512-6CLxw83vQf6DKqXxMPwl8qpF8I7THFZuIwLt4TnNsumxkp1VsRZWT8txQxncT/Rl2UojTsFzWgDG4FRMwafrlA==}
+    dev: false
 
   /@types/node/14.17.5:
     resolution: {integrity: sha512-bjqH2cX/O33jXT/UmReo2pM7DIJREPMnarixbQ57DOOzzFaI6D2+IcwaJQaJpv0M1E9TIhPCYVxrkcityLjlqA==}
@@ -20913,15 +20914,6 @@ packages:
     dev: false
     optional: true
 
-  /monaco-editor-webpack-plugin/4.1.1:
-    resolution: {integrity: sha512-daa+k3rytb7Jf8bcSSsbrnMsCPR7+kiHUGt08Bvqxdws3tGMPMzsiiRgCyckpKY4XChIXWoasDav3idHhrooEQ==}
-    peerDependencies:
-      monaco-editor: 0.25.x || 0.26.x
-      webpack: ^4.5.0 || 5.x
-    dependencies:
-      loader-utils: 2.0.0
-    dev: true
-
   /move-concurrently/1.0.1:
     resolution: {integrity: sha1-viwAX9oy4LKa8fBdfEszIUxwH5I=}
     dependencies:
@@ -24541,6 +24533,7 @@ packages:
       js-yaml: 3.14.1
       pify: 4.0.1
       strip-bom: 3.0.0
+    dev: false
 
   /read/1.0.7:
     resolution: {integrity: sha1-s9oZvQUkMal2cdRKQmNK33ELQMQ=}
@@ -26464,6 +26457,7 @@ packages:
   /strip-bom/3.0.0:
     resolution: {integrity: sha1-IzTBjpx1n3vdVv3vfprj1YjmjtM=}
     engines: {node: '>=4'}
+    dev: false
 
   /strip-bom/4.0.0:
     resolution: {integrity: sha512-3xurFv5tEgii33Zi8Jtp55wEIILR9eh34FAW00PZf+JnSsTmV/ioewSgQl97JHvgjoRGwPShsWm+IdrxB35d0w==}
@@ -28657,14 +28651,6 @@ packages:
     dependencies:
       errno: 0.1.8
     dev: false
-
-  /worker-plugin/5.0.1:
-    resolution: {integrity: sha512-Pn7+19jIiANcGuTSGdy+vrzyF+SGH03A5wV8iu4jRTMAOfAC9bNeiHo4+l5tPS7F0uvICMBv+h8UCvL7lunxcA==}
-    peerDependencies:
-      webpack: '>= 4'
-    dependencies:
-      loader-utils: 1.4.0
-    dev: true
 
   /worker-rpc/0.1.1:
     resolution: {integrity: sha512-P1WjMrUB3qgJNI9jfmpZ/htmBEjFh//6l/5y8SD9hg1Ef5zTTVVoRjTrTEzPrNBQvmhMxkoTsjOXN10GWU7aCg==}
