@@ -44,7 +44,7 @@
     "name": "prosemirror-resizable-view",
     "limit": "5 KB",
     "path": "packages/prosemirror-resizable-view/dist/prosemirror-resizable-view.browser.esm.js",
-    "ignore": ["@remirror/core-helpers"],
+    "ignore": ["@remirror/core-helpers", "@remirror/core-utils"],
     "running": false,
     "gzip": true
   },

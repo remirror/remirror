@@ -102,6 +102,7 @@ export {
   isElementDomNode,
   isTextDomNode,
   parseSizeUnit,
+  setStyle,
 } from './dom-utils';
 export { environment } from './environment';
 export * from './keyboard-utils';

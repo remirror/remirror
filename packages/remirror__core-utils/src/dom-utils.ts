@@ -13,6 +13,16 @@ export function getStyle(
   return style.getPropertyValue(property);
 }
 
+/**
+ * Set more styles to the given element.
+ */
+export function setStyle(
+  target: HTMLElement,
+  styles: Partial<CSSStyleDeclaration>,
+): Partial<CSSStyleDeclaration> {
+  return Object.assign(target.style, styles);
+}
+
 export const DOM_SIZE_UNITS = [
   'px',
   'rem',
