@@ -1,9 +1,9 @@
 ---
 hide_title: true
-title: 'callout-extension'
+title: 'CalloutExtension'
 ---
 
-# `callout-extension`
+# `CalloutExtension`
 
 ## Summary
 
