@@ -2,6 +2,7 @@
 
 import {
   ab,
+  addFill,
   addLine,
   alertLine,
   alignBottom,
@@ -29,6 +30,7 @@ import {
   clipboardFill,
   clipboardLine,
   closeCircleLine,
+  closeFill,
   closeLine,
   codeLine,
   codeView,
@@ -154,6 +156,14 @@ import { GenIcon, IconType } from './icons-base';
  */
 export const ABIcon: IconType = (props) => {
   return GenIcon(ab)(props);
+};
+
+/**
+ * The react component for the `add-fill.svg` icon created by [RemixIcons](https://remixicons.com).
+ * ![Add Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/add-fill.svg)
+ */
+export const AddFillIcon: IconType = (props) => {
+  return GenIcon(addFill)(props);
 };
 
 /**
@@ -370,6 +380,14 @@ export const ClipboardLineIcon: IconType = (props) => {
  */
 export const CloseCircleLineIcon: IconType = (props) => {
   return GenIcon(closeCircleLine)(props);
+};
+
+/**
+ * The react component for the `close-fill.svg` icon created by [RemixIcons](https://remixicons.com).
+ * ![Close Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/close-fill.svg)
+ */
+export const CloseFillIcon: IconType = (props) => {
+  return GenIcon(closeFill)(props);
 };
 
 /**

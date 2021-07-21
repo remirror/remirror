@@ -17,6 +17,15 @@ export const ab: IconTree[] = [
 ];
 
 /**
+ * The icon for `add-fill.svg` created by [RemixIcons](https://remixicons.com).
+ * ![Add Fill](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/add-fill.svg)
+ */
+export const addFill: IconTree[] = [
+  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
+  { tag: 'path', attr: { d: 'M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z' } },
+];
+
+/**
  * The icon for `add-line.svg` created by [RemixIcons](https://remixicons.com).
  * ![Add Line](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/add-line.svg)
  */
@@ -332,6 +341,20 @@ export const closeCircleLine: IconTree[] = [
     tag: 'path',
     attr: {
       d: 'M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9.414l2.828-2.829 1.415 1.415L13.414 12l2.829 2.828-1.415 1.415L12 13.414l-2.828 2.829-1.415-1.415L10.586 12 7.757 9.172l1.415-1.415L12 10.586z',
+    },
+  },
+];
+
+/**
+ * The icon for `close-fill.svg` created by [RemixIcons](https://remixicons.com).
+ * ![Close Fill](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/close-fill.svg)
+ */
+export const closeFill: IconTree[] = [
+  { tag: 'path', attr: { fill: 'none', d: 'M0 0h24v24H0z' } },
+  {
+    tag: 'path',
+    attr: {
+      d: 'M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z',
     },
   },
 ];

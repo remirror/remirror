@@ -8,8 +8,7 @@ import {
   Positioner,
 } from '@remirror/extension-positioner';
 import { deleteColumn, deleteRow, isCellSelection, TableMap } from '@remirror/pm/tables';
-import { PositionerPortal } from '@remirror/react-components';
-import { CloseFillIcon } from '@remirror/react-components/all-icons';
+import { Icon, PositionerPortal } from '@remirror/react-components';
 import { useRemirrorContext } from '@remirror/react-core';
 import type { UsePositionerReturn } from '@remirror/react-hooks';
 import { usePositioner } from '@remirror/react-hooks';
@@ -150,7 +149,7 @@ export const TableDeleteRowColumnInnerButton: React.FC<TableDeleteRowColumnInner
       }
       className={ExtensionTablesTheme.TABLE_DELETE_ROW_COLUMN_INNER_BUTTON}
     >
-      <CloseFillIcon size={size} color={'#ffffff'} />
+      <Icon name='closeFill' size={size} color={'#ffffff'} />
     </div>
   );
 };

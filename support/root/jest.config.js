@@ -68,6 +68,10 @@ module.exports = {
     // of remirror for simplification.
     '!packages/multishift/**',
 
+    // No need to test these static icon files.
+    '!packages/remirror__icons/src/all-icons.ts',
+    '!packages/remirror__react-components/src/icons/all.ts',
+
     // Deprecated package
     '!packages/remirror__react-wysiwyg/**',
 

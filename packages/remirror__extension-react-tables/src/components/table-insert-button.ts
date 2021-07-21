@@ -1,5 +1,5 @@
 import { EditorView, Transaction } from '@remirror/core';
-import { addFill } from '@remirror/icons/all';
+import { addFill } from '@remirror/icons';
 import { TableRect } from '@remirror/pm/tables';
 import { ExtensionTablesTheme } from '@remirror/theme';
 

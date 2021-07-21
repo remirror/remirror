@@ -13,7 +13,6 @@ import {
   addBoxLine,
   addCircleFill,
   addCircleLine,
-  addFill,
   adminFill,
   adminLine,
   advertisementFill,
@@ -378,7 +377,6 @@ import {
   closeCircleFill,
   closedCaptioningFill,
   closedCaptioningLine,
-  closeFill,
   cloudFill,
   cloudLine,
   cloudOffFill,
@@ -2259,14 +2257,6 @@ export const AddCircleFillIcon: IconType = (props) => {
  */
 export const AddCircleLineIcon: IconType = (props) => {
   return GenIcon(addCircleLine)(props);
-};
-
-/**
- * The react component for the `add-fill.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Add Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/add-fill.svg)
- */
-export const AddFillIcon: IconType = (props) => {
-  return GenIcon(addFill)(props);
 };
 
 /**
@@ -5163,14 +5153,6 @@ export const ClockwiseLineIcon: IconType = (props) => {
  */
 export const CloseCircleFillIcon: IconType = (props) => {
   return GenIcon(closeCircleFill)(props);
-};
-
-/**
- * The react component for the `close-fill.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Close Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/close-fill.svg)
- */
-export const CloseFillIcon: IconType = (props) => {
-  return GenIcon(closeFill)(props);
 };
 
 /**
