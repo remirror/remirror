@@ -27,7 +27,7 @@ The extension will use different colors for each type.
 
 The semantic types are too limiting for some use cases - especially "info" callouts could benefit from more, context-specific sub categories like:
 
-[ADD IMAGE]
+![image](https://user-images.githubusercontent.com/9339055/126482400-9fb5b5ad-aaa0-48b5-a4b1-e162b116a027.png)
 
 Context-specific sub categories can be created by configuring an emoji for the callout, additionally to the semantic type:
 
