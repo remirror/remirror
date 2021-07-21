@@ -107,8 +107,8 @@ importers:
       jest-extended: ^0.11.5
       jest-github-reporter: ^1.0.2
       jest-playwright-preset: ^1.7.0
-      jest-prosemirror: ^1.0.1
-      jest-remirror: ^1.0.1
+      jest-prosemirror: ^1.0.2
+      jest-remirror: ^1.0.2
       jest-watch-typeahead: ^0.6.4
       json.macro: ^1.3.0
       lint-staged: ^11.0.1
@@ -120,7 +120,7 @@ importers:
       playwright-testing-library: ^3.0.0
       prettier: ^2.3.2
       prettier-plugin-packagejson: ^2.2.10
-      remirror: 1.0.1
+      remirror: 1.0.2
       rimraf: ^3.0.2
       size-limit: ^5.0.1
       snapshot-diff: ^0.9.0
@@ -354,7 +354,7 @@ importers:
       '@remirror/core-constants': ^1.0.0
       '@remirror/core-helpers': ^1.0.1
       '@remirror/core-types': ^1.0.1
-      '@remirror/core-utils': ^1.0.1
+      '@remirror/core-utils': ^1.0.2
       '@remirror/pm': ^1.0.1
       '@testing-library/dom': ^8.1.0
       '@types/prosemirror-schema-basic': ^1.0.2
@@ -400,7 +400,7 @@ importers:
       '@types/node': ^16.3.3
       '@types/sanitize-html': ^2.3.2
       jest: ^27.0.6
-      jest-prosemirror: ^1.0.1
+      jest-prosemirror: ^1.0.2
       jest-snapshot: ^27.0.6
       mutationobserver-shim: ^0.3.7
       sanitize-html: ^2.4.0
@@ -560,7 +560,7 @@ importers:
       '@remirror/core-constants': ^1.0.0
       '@remirror/core-helpers': ^1.0.1
       '@remirror/core-types': ^1.0.1
-      '@remirror/core-utils': ^1.0.1
+      '@remirror/core-utils': ^1.0.2
       '@remirror/dom': ^1.0.1
       '@remirror/extension-annotation': ^1.0.1
       '@remirror/extension-bidi': ^1.0.1
@@ -610,7 +610,7 @@ importers:
       '@remirror/extension-underline': ^1.0.1
       '@remirror/extension-whitespace': ^1.0.1
       '@remirror/extension-yjs': ^1.0.1
-      '@remirror/icons': ^1.0.1
+      '@remirror/icons': ^1.0.2
       '@remirror/pm': ^1.0.1
       '@remirror/preset-core': ^1.0.1
       '@remirror/preset-formatting': ^1.0.1
@@ -794,9 +794,9 @@ importers:
       '@remirror/core-constants': ^1.0.0
       '@remirror/core-helpers': ^1.0.1
       '@remirror/core-types': ^1.0.1
-      '@remirror/core-utils': ^1.0.1
+      '@remirror/core-utils': ^1.0.2
       '@remirror/i18n': ^1.0.1
-      '@remirror/icons': ^1.0.1
+      '@remirror/icons': ^1.0.2
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
       '@remirror/theme': ^1.0.1
@@ -904,7 +904,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
+      '@remirror/react': ^1.0.2
       '@testing-library/react': ^12.0.0
       '@types/prosemirror-dev-tools': ^3.0.2
       '@types/react': ^17.0.14
@@ -1495,7 +1495,7 @@ importers:
       '@remirror/core': ^1.0.1
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
+      '@remirror/react': ^1.0.2
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       nanoevents: ^5.1.13
@@ -1520,7 +1520,7 @@ importers:
       '@remirror/core': ^1.0.1
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
+      '@remirror/react': ^1.0.2
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       lepont: ^0.11.4
@@ -1543,11 +1543,11 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^1.0.1
-      '@remirror/extension-react-component': ^1.0.1
+      '@remirror/extension-react-component': ^1.0.2
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
-      '@remirror/react-utils': ^1.0.1
+      '@remirror/react': ^1.0.2
+      '@remirror/react-utils': ^1.0.2
       '@types/react': ^17.0.14
       react: ^17.0.2
     dependencies:
@@ -1568,16 +1568,16 @@ importers:
       '@emotion/css': ^11.1.3
       '@linaria/core': 3.0.0-beta.4
       '@remirror/core': ^1.0.1
-      '@remirror/core-utils': ^1.0.1
+      '@remirror/core-utils': ^1.0.2
       '@remirror/extension-positioner': ^1.0.1
       '@remirror/extension-tables': ^1.0.1
-      '@remirror/icons': ^1.0.1
+      '@remirror/icons': ^1.0.2
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
       '@remirror/preset-core': ^1.0.1
-      '@remirror/react-components': ^1.0.1
-      '@remirror/react-core': ^1.0.1
-      '@remirror/react-hooks': ^1.0.1
+      '@remirror/react-components': ^1.0.2
+      '@remirror/react-core': ^1.0.2
+      '@remirror/react-hooks': ^1.0.2
       '@remirror/theme': ^1.0.1
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
@@ -1845,12 +1845,12 @@ importers:
       '@emotion/styled': ^11.3.0
       '@remirror/core': ^1.0.1
       '@remirror/core-helpers': ^1.0.1
-      '@remirror/dev': ^1.0.1
+      '@remirror/dev': ^1.0.2
       '@remirror/es-module-shims': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
+      '@remirror/react': ^1.0.2
       '@remirror/react-debugger': ^1.0.1
-      '@remirror/react-editors': ^0.0.2
+      '@remirror/react-editors': ^0.0.3
       '@remirror/types': ^0.1.0
       '@types/babel__core': ^7.1.15
       '@types/babel__standalone': ^7.1.3
@@ -1865,7 +1865,7 @@ importers:
       '@types/react-grid-layout': ^1.1.2
       '@types/react-loadable': ^5.5.6
       chalk: ^4.1.0
-      create-context-state: ^1.0.0
+      create-context-state: ^1.0.1
       eslint: ^7.30.0
       file-saver: ^2.0.5
       idb-keyval: ^5.0.6
@@ -1873,14 +1873,14 @@ importers:
       jszip: ^3.6.0
       lz-string: ^1.4.4
       monaco-editor: npm:@typescript-deploys/monaco-editor@4.3.5
-      multishift: ^1.0.1
+      multishift: ^1.0.2
       path-browserify: ^1.0.1
       prettier: ^2.3.2
       promise-worker: ^2.0.1
-      prosemirror-paste-rules: ^1.0.1
-      prosemirror-resizable-view: ^0.1.0
-      prosemirror-suggest: ^1.0.1
-      prosemirror-trailing-node: ^1.0.1
+      prosemirror-paste-rules: ^1.0.2
+      prosemirror-resizable-view: ^0.1.1
+      prosemirror-suggest: ^1.0.2
+      prosemirror-trailing-node: ^1.0.2
       react: ^17.0.2
       react-content-loader: ^6.0.3
       react-dom: ^17.0.2
@@ -1890,7 +1890,7 @@ importers:
       react-loadable: ^5.5.0
       react-sizeme: ^3.0.1
       regenerator-runtime: ^0.13.7
-      remirror: 1.0.1
+      remirror: 1.0.2
       tiny-warning: ^1.0.3
       tinykeys: ^1.2.0
       use-clipboard-copy: ^0.2.0
@@ -1987,7 +1987,7 @@ importers:
       prosemirror-paste-rules: ^1.0.1
       prosemirror-schema-list: ^1.1.5
       prosemirror-state: ^1.3.4
-      prosemirror-suggest: ^1.0.1
+      prosemirror-suggest: ^1.0.2
       prosemirror-tables: ^1.1.1
       prosemirror-trailing-node: ^1.0.1
       prosemirror-transform: ^1.3.2
@@ -2094,10 +2094,10 @@ importers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^1.0.1
       '@remirror/extension-placeholder': ^1.0.1
-      '@remirror/extension-react-component': ^1.0.1
-      '@remirror/extension-react-ssr': ^1.0.1
+      '@remirror/extension-react-component': ^1.0.2
+      '@remirror/extension-react-ssr': ^1.0.2
       '@remirror/pm': ^1.0.1
-      '@remirror/react-utils': ^1.0.1
+      '@remirror/react-utils': ^1.0.2
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       react: ^17.0.2
@@ -2174,16 +2174,16 @@ importers:
       '@babel/runtime': ^7.13.10
       '@remirror/extension-placeholder': ^1.0.1
       '@remirror/extension-positioner': ^1.0.1
-      '@remirror/extension-react-component': ^1.0.1
-      '@remirror/extension-react-ssr': ^1.0.1
-      '@remirror/extension-react-tables': ^1.0.1
+      '@remirror/extension-react-component': ^1.0.2
+      '@remirror/extension-react-ssr': ^1.0.2
+      '@remirror/extension-react-tables': ^1.0.2
       '@remirror/preset-react': ^1.0.1
-      '@remirror/react-components': ^1.0.1
-      '@remirror/react-core': ^1.0.1
-      '@remirror/react-hooks': ^1.0.1
-      '@remirror/react-renderer': ^1.0.1
-      '@remirror/react-ssr': ^1.0.1
-      '@remirror/react-utils': ^1.0.1
+      '@remirror/react-components': ^1.0.2
+      '@remirror/react-core': ^1.0.2
+      '@remirror/react-hooks': ^1.0.2
+      '@remirror/react-renderer': ^1.0.2
+      '@remirror/react-ssr': ^1.0.2
+      '@remirror/react-utils': ^1.0.2
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       react: ^17.0.2
@@ -2217,21 +2217,21 @@ importers:
       '@remirror/extension-positioner': ^1.0.1
       '@remirror/extension-text-color': ^1.0.1
       '@remirror/i18n': ^1.0.1
-      '@remirror/icons': ^1.0.1
+      '@remirror/icons': ^1.0.2
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
-      '@remirror/react-core': ^1.0.1
-      '@remirror/react-hooks': ^1.0.1
-      '@remirror/react-utils': ^1.0.1
+      '@remirror/react': ^1.0.2
+      '@remirror/react-core': ^1.0.2
+      '@remirror/react-hooks': ^1.0.2
+      '@remirror/react-utils': ^1.0.2
       '@remirror/theme': ^1.0.1
       '@seznam/compose-react-refs': ^1.0.6
       '@types/react': ^17.0.14
       '@types/react-color': ^3.0.5
       '@types/react-dom': ^17.0.9
-      create-context-state: ^1.0.0
+      create-context-state: ^1.0.1
       match-sorter: ^6.3.0
-      multishift: ^1.0.1
+      multishift: ^1.0.2
       react: ^17.0.2
       react-color: ^2.19.3
       react-dom: ^17.0.2
@@ -2280,21 +2280,21 @@ importers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^1.0.1
       '@remirror/extension-positioner': ^1.0.1
-      '@remirror/extension-react-component': ^1.0.1
-      '@remirror/extension-react-ssr': ^1.0.1
+      '@remirror/extension-react-component': ^1.0.2
+      '@remirror/extension-react-ssr': ^1.0.2
       '@remirror/i18n': ^1.0.1
       '@remirror/pm': ^1.0.1
       '@remirror/preset-core': ^1.0.1
       '@remirror/preset-react': ^1.0.1
-      '@remirror/react': ^1.0.1
-      '@remirror/react-renderer': ^1.0.1
-      '@remirror/react-ssr': ^1.0.1
-      '@remirror/react-utils': ^1.0.1
+      '@remirror/react': ^1.0.2
+      '@remirror/react-renderer': ^1.0.2
+      '@remirror/react-ssr': ^1.0.2
+      '@remirror/react-utils': ^1.0.2
       '@remirror/theme': ^1.0.1
       '@seznam/compose-react-refs': ^1.0.6
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
-      create-context-state: ^1.0.0
+      create-context-state: ^1.0.1
       fast-deep-equal: ^3.1.3
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -2338,7 +2338,7 @@ importers:
       '@lingui/core': ^3.10.4
       '@remirror/core': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
+      '@remirror/react': ^1.0.2
       '@testing-library/react': ^12.0.0
       '@types/html': ^1.0.1
       '@types/prosemirror-dev-tools': ^3.0.2
@@ -2395,17 +2395,17 @@ importers:
       '@emotion/css': ^11.1.3
       '@remirror/core-helpers': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
-      '@remirror/styles': ^1.0.0
+      '@remirror/react': ^1.0.2
+      '@remirror/styles': ^1.0.1
       '@svgmoji/noto': ^3.2.0
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       '@types/refractor': ^3.0.2
-      create-context-state: ^1.0.0
+      create-context-state: ^1.0.1
       react: ^17.0.2
       react-dom: ^17.0.2
       refractor: ^3.3.1
-      remirror: 1.0.1
+      remirror: 1.0.2
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.14.6
@@ -2438,12 +2438,12 @@ importers:
       '@remirror/extension-positioner': ^1.0.1
       '@remirror/i18n': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
-      '@remirror/react-core': ^1.0.1
-      '@remirror/react-utils': ^1.0.1
+      '@remirror/react': ^1.0.2
+      '@remirror/react-core': ^1.0.2
+      '@remirror/react-utils': ^1.0.2
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
-      multishift: ^1.0.1
+      multishift: ^1.0.2
       react: ^17.0.2
       react-dom: ^17.0.2
       svgmoji: ^3.2.0
@@ -2479,14 +2479,14 @@ importers:
       '@lepont/async-storage': ^0.4.2
       '@lepont/platform': ^0.1.4
       '@remirror/core': ^1.0.1
-      '@remirror/extension-react-native-bridge': ^1.0.1
+      '@remirror/extension-react-native-bridge': ^1.0.2
       '@remirror/pm': ^1.0.1
-      '@remirror/react-core': ^1.0.1
+      '@remirror/react-core': ^1.0.2
       '@types/min-document': ^2.19.0
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       '@types/react-native': ^0.64.12
-      create-context-state: ^1.0.0
+      create-context-state: ^1.0.1
       delay: ^5.0.0
       lepont: ^0.11.4
       min-document: ^2.19.0
@@ -2535,9 +2535,9 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^1.0.1
-      '@remirror/extension-react-ssr': ^1.0.1
+      '@remirror/extension-react-ssr': ^1.0.2
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
+      '@remirror/react': ^1.0.2
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       react: ^17.0.2
@@ -2619,12 +2619,12 @@ importers:
       '@babel/runtime': ^7.13.10
       '@emotion/css': ^11.1.3
       '@remirror/core': ^1.0.1
-      '@remirror/dev': ^1.0.1
-      '@remirror/extension-react-tables': ^1.0.1
+      '@remirror/dev': ^1.0.2
+      '@remirror/extension-react-tables': ^1.0.2
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
-      '@remirror/react': ^1.0.1
-      '@remirror/styles': ^1.0.0
+      '@remirror/react': ^1.0.2
+      '@remirror/styles': ^1.0.1
       '@storybook/addons': ^6.3.4
       '@storybook/cli': ^6.3.4
       '@storybook/components': ^6.3.4
@@ -2640,7 +2640,7 @@ importers:
       autoprefixer: ^10.3.1
       babel-loader: ^8.2.2
       codemirror: ^5.62.0
-      create-context-state: ^1.0.0
+      create-context-state: ^1.0.1
       globby: ^11.0.4
       is-ci: ^3.0.0
       postcss: '>=8'
@@ -2650,7 +2650,7 @@ importers:
       react-is: ^17.0.2
       reakit: ^1.3.8
       refractor: ^3.3.1
-      remirror: 1.0.1
+      remirror: 1.0.2
       scripts: 0.0.1
     dependencies:
       '@babel/runtime': 7.14.6
@@ -2709,7 +2709,7 @@ importers:
       '@remirror/core': ^1.0.1
       '@remirror/pm': ^1.0.1
       '@remirror/preset-core': ^1.0.1
-      '@remirror/react': ^1.0.1
+      '@remirror/react': ^1.0.2
       '@testing-library/react': ^12.0.0
       '@testing-library/react-hooks': ^7.0.1
       '@types/fluent-ffmpeg': ^2.1.18
@@ -2827,8 +2827,8 @@ importers:
       '@microsoft/tsdoc': ^0.13.2
       '@microsoft/tsdoc-config': ^0.15.2
       '@remirror/core-helpers': ^1.0.1
-      '@remirror/icons': ^1.0.1
-      '@remirror/playground': ^1.0.1
+      '@remirror/icons': ^1.0.2
+      '@remirror/playground': ^1.0.2
       '@remirror/types': ^0.1.0
       '@types/autoprefixer': ^9.7.2
       '@types/cheerio': ^0.22.30
@@ -3011,9 +3011,9 @@ importers:
       '@fontsource/fira-code': ^4.5.0
       '@fontsource/rubik': ^4.5.0
       '@mdx-js/react': ^1.6.22
-      '@remirror/dev': ^1.0.1
-      '@remirror/react': ^1.0.1
-      '@remirror/styles': ^1.0.0
+      '@remirror/dev': ^1.0.2
+      '@remirror/react': ^1.0.2
+      '@remirror/styles': ^1.0.1
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       '@types/react-syntax-highlighter': ^13.5.2
@@ -3021,7 +3021,7 @@ importers:
       autoprefixer: ^10.3.1
       comment-mark: ^1.0.0
       core-js: ^3.15.2
-      create-context-state: ^1.0.0
+      create-context-state: ^1.0.1
       docusaurus-plugin-examples: 0.0.0
       framer-motion: ^4.1.3
       is-absolute-url: ^3.0.3
@@ -3036,7 +3036,7 @@ importers:
       react-syntax-highlighter: ^15.4.3
       reakit: ^1.3.8
       remark-footnotes: ^3.0.0
-      remirror: ^1.0.1
+      remirror: ^1.0.2
     dependencies:
       '@babel/runtime': 7.14.6
       '@emotion/css': 11.1.3_@babel+core@7.14.6

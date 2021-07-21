@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-native-bridge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Support for communication between the webview and native editor.",
   "keywords": [
     "remirror",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.1",
-    "@remirror/react": "^1.0.1",
+    "@remirror/react": "^1.0.2",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "react": "^17.0.2",

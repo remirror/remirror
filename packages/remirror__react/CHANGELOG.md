@@ -1,5 +1,24 @@
 # @remirror/react
 
+## 1.0.2
+
+> 2021-07-21
+
+### Patch Changes
+
+- [#1014](https://github.com/remirror/remirror/pull/1014) [`22115ea9e`](https://github.com/remirror/remirror/commit/22115ea9ed1977d20b7019d065d6a31d39b359eb) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Reduce bundle size by removing `@remirror/icons/all` and `@remirror/react-icons/all-icons` from the package `@remirror/react-tables-extension`.
+
+- Updated dependencies [[`22115ea9e`](https://github.com/remirror/remirror/commit/22115ea9ed1977d20b7019d065d6a31d39b359eb), [`0464a6810`](https://github.com/remirror/remirror/commit/0464a68101bc4f64fe31a87dbba937008e17358b)]:
+  - @remirror/extension-react-tables@1.0.2
+  - @remirror/react-components@1.0.2
+  - @remirror/extension-react-component@1.0.2
+  - @remirror/extension-react-ssr@1.0.2
+  - @remirror/react-core@1.0.2
+  - @remirror/react-hooks@1.0.2
+  - @remirror/react-renderer@1.0.2
+  - @remirror/react-ssr@1.0.2
+  - @remirror/react-utils@1.0.2
+
 ## 1.0.1
 
 > 2021-07-17

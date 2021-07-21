@@ -1,5 +1,13 @@
 # @remirror/icons
 
+## 1.0.2
+
+> 2021-07-21
+
+### Patch Changes
+
+- [#1014](https://github.com/remirror/remirror/pull/1014) [`22115ea9e`](https://github.com/remirror/remirror/commit/22115ea9ed1977d20b7019d065d6a31d39b359eb) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Reduce bundle size by removing `@remirror/icons/all` and `@remirror/react-icons/all-icons` from the package `@remirror/react-tables-extension`.
+
 ## 1.0.1
 
 > 2021-07-17
