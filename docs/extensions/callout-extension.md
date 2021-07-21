@@ -21,7 +21,7 @@ These different use cases can be represented by setting the `type` property to `
 commands.toggleCallout({ type: 'error' });
 ```
 
-The extension will use different colors for each type.
+The extension will use different background colors for each type like red for errors.
 
 ### Add custom emoji
 
