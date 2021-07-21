@@ -11,7 +11,7 @@ This extension adds callouts to your text editor.
 
 ## Features
 
-### Classification with semantic types
+### Classify with semantic types
 
 Not all callouts are the same. For example, a callout could contain an urgent warning to the reader that should stand out brightly. In contrast, a callout might contain an informational note which shouldn't overshadow the other text.
 
