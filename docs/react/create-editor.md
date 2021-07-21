@@ -13,13 +13,18 @@ Creating an editor consists of two steps.
 import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
 import { Remirror, useRemirror } from '@remirror/react';
+import 'remirror/styles/all.css'
 
 const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
 const Editor = () => {
   const { manager } = useRemirror({ extensions });
 
-  return <Remirror manager={manager} />;
+  return (
+    <div className='remirror-theme'>
+      {/* the className is used to define css variables necessary for the editor */}
+      <Remirror manager={manager} />;
+    </div>
 };
 ```
 
