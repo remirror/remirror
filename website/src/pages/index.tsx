@@ -1,12 +1,12 @@
 import Link from '@docusaurus/Link';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { css } from '@emotion/css';
 import Layout from '@theme/Layout';
 import { ReactElement } from 'react';
 import { cx, isString } from 'remirror';
 
 import { ExternalIcon } from '../components/external-icon';
-import styles from './styles.module.css';
 
 const features = [
   {
@@ -122,6 +122,160 @@ const Home = () => {
       </Layout>
     </div>
   );
+};
+
+const styles = {
+  buttons: css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2.5rem;
+
+    @media screen and (min-width: 996px) {
+      justify-content: flex-start;
+    }
+  `,
+  features: css`
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-gap: 3rem;
+    padding: 2rem 1rem;
+    width: 100%;
+
+    @media screen and (min-width: 996px) {
+      margin-top: 1vh;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 1rem;
+      grid-gap: 1rem;
+    }
+  `,
+  feature: css`
+    padding: 2.5rem 1.5rem 1.5rem;
+    max-width: 500px;
+    align-self: center;
+
+    @media screen and (min-width: 996px) {
+      max-width: 400px;
+      min-height: 450px;
+    }
+  `,
+  featureImage: css`
+    height: 200px;
+
+    @media screen and (min-width: 996px) {
+      height: initial;
+      width: 200px;
+    }
+  `,
+  bottomSpacing: css`
+    padding-bottom: 2.5rem;
+  `,
+  getStarted: css`
+    margin: 0;
+    color: var(--ifm-color-primary);
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 16px;
+    background-color: var(--ifm-color-white);
+    margin-right: 16px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: var(--ifm-font-color-light);
+      color: var(--ifm-color-white);
+      text-decoration: none;
+    }
+  `,
+  bannerPhone: css`
+    display: block;
+    width: 60%;
+
+    @media screen and (min-width: 996px) {
+      display: none;
+    }
+  `,
+  bannerLaptop: css`
+    position: absolute;
+    display: none;
+    right: 3%;
+    top: 22%;
+    z-index: 0;
+    width: 25%;
+
+    @media screen and (min-width: 996px) {
+      display: block;
+    }
+  `,
+  mainBackground: css`
+    position: relative;
+    background-image: url('/img/background-mobile.svg');
+    background-repeat: no-repeat;
+    background-size: 100vw;
+    width: 100vw;
+    background-position: 0 var(--ifm-navbar-height);
+    html[data-theme='dark'] & {
+      background-image: url('/img/background-mobile-dark.svg');
+    }
+
+    @media screen and (min-width: 996px) {
+      background-image: url('/img/background-desktop.svg');
+      min-height: 80vw;
+      html[data-theme='dark'] & {
+        background-image: url('/img/background-desktop-dark.svg');
+      }
+    }
+
+    @media screen and (min-width: 1450px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  `,
+  heroBanner: css`
+    margin: 0 auto;
+    text-align: center;
+    color: var(--ifm-color-white);
+    background-color: transparent;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--ifm-color-white);
+    }
+
+    @media screen and (min-width: 996px) {
+      text-align: initial;
+      min-height: 65vh;
+    }
+  `,
+  container: css`
+    display: flex;
+    flex-direction: column;
+    max-width: var(--ifm-container-width);
+    padding-left: calc(var(--ifm-spacing-horizontal) * 2);
+    padding-right: calc(var(--ifm-spacing-horizontal) * 2);
+    width: 100%;
+    align-items: center;
+
+    @media screen and (min-width: 996px) {
+      display: block;
+      width: 90%;
+    }
+  `,
+  bannerHeader: css`
+    width: 60%;
+
+    @media screen and (min-width: 996px) {
+      max-width: 650px;
+    }
+  `,
 };
 
 export default Home;

@@ -1,6 +1,5 @@
+import { css } from '@emotion/css';
 import React from 'react';
-
-import styles from './components.module.css';
 
 /**
  * An external icon svg.
@@ -17,4 +16,12 @@ export const ExternalIcon: React.FC = () => {
       />
     </svg>
   );
+};
+
+const styles = {
+  externalIcon: css`
+    vertical-align: text-top;
+    width: 1em;
+    height: 1em;
+  `,
 };
