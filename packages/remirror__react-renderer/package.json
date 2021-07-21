@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-renderer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Render the JSON output from your remirror editor as a react component",
   "keywords": [
     "remirror"

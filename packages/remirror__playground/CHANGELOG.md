@@ -1,5 +1,23 @@
 # @remirror/playground
 
+## 1.0.2
+
+> 2021-07-21
+
+### Patch Changes
+
+- Updated dependencies [[`22115ea9e`](https://github.com/remirror/remirror/commit/22115ea9ed1977d20b7019d065d6a31d39b359eb), [`0464a6810`](https://github.com/remirror/remirror/commit/0464a68101bc4f64fe31a87dbba937008e17358b), [`0464a6810`](https://github.com/remirror/remirror/commit/0464a68101bc4f64fe31a87dbba937008e17358b)]:
+  - @remirror/react@1.0.2
+  - create-context-state@1.0.1
+  - @remirror/dev@1.0.2
+  - @remirror/react-editors@0.0.3
+  - multishift@1.0.2
+  - prosemirror-paste-rules@1.0.2
+  - prosemirror-resizable-view@0.1.1
+  - prosemirror-suggest@1.0.2
+  - prosemirror-trailing-node@1.0.2
+  - remirror@1.0.2
+
 ## 1.0.1
 
 > 2021-07-17

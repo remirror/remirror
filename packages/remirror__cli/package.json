@@ -1,6 +1,6 @@
 {
   "name": "@remirror/cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The remirror cli",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__cli",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__cli",

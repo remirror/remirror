@@ -1,5 +1,23 @@
 # @remirror/react-components
 
+## 1.0.2
+
+> 2021-07-21
+
+### Patch Changes
+
+- [#1014](https://github.com/remirror/remirror/pull/1014) [`22115ea9e`](https://github.com/remirror/remirror/commit/22115ea9ed1977d20b7019d065d6a31d39b359eb) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Reduce bundle size by removing `@remirror/icons/all` and `@remirror/react-icons/all-icons` from the package `@remirror/react-tables-extension`.
+
+* [#1010](https://github.com/remirror/remirror/pull/1010) [`0464a6810`](https://github.com/remirror/remirror/commit/0464a68101bc4f64fe31a87dbba937008e17358b) Thanks [@ifiokjr](https://github.com/ifiokjr)! - Add support for `react@18` in peer dependencies.
+
+* Updated dependencies [[`22115ea9e`](https://github.com/remirror/remirror/commit/22115ea9ed1977d20b7019d065d6a31d39b359eb), [`0464a6810`](https://github.com/remirror/remirror/commit/0464a68101bc4f64fe31a87dbba937008e17358b), [`0464a6810`](https://github.com/remirror/remirror/commit/0464a68101bc4f64fe31a87dbba937008e17358b)]:
+  - @remirror/icons@1.0.2
+  - create-context-state@1.0.1
+  - @remirror/react-core@1.0.2
+  - @remirror/react-hooks@1.0.2
+  - @remirror/react-utils@1.0.2
+  - multishift@1.0.2
+
 ## 1.0.1
 
 > 2021-07-17
