@@ -11,6 +11,8 @@ This extension allows to annotate the content in your editor
 
 ## Features
 
+## Annotate multiple text nodes
+
 Annotation enrich parts of a document. For example, a user could annotate a sentence as "important" to find it back later on.
 
 Annotations are rendered as [Decorations](https://prosemirror.net/docs/ref/#view.Decorations), these differ from [marks](https://prosemirror.net/docs/ref/#model.Mark) in that they can span across multiple Prosemirror nodes.
