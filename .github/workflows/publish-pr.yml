@@ -66,7 +66,7 @@ jobs:
         with:
           giphyKey: ${{ secrets.GIPHY_API_KEY }}
         env:
-          GITHUB_TOKEN: ${{ secrets.REMIRROR_BOT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: publish pr
         run: |

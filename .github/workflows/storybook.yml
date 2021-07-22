@@ -60,7 +60,7 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_STORYBOOK_PROJECT_ID }}
 
           # necessary for comment on pull request.
-          github-token: ${{ secrets.REMIRROR_BOT_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           alias-domains: |
             pr{{PR_NUMBER}}-remirror-ocavue.vercel.app
 

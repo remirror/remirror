@@ -52,7 +52,7 @@ jobs:
         with:
           publish-dir: './website/build'
           production-branch: main
-          github-token: ${{ secrets.REMIRROR_BOT_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
