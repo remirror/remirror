@@ -54,4 +54,4 @@ jobs:
           commit: 'chore(changeset): version update'
           title: 'chore(changeset): version update'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REMIRROR_BOT_GITHUB_TOKEN }}
