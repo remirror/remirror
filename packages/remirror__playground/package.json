@@ -1,6 +1,6 @@
 {
   "name": "@remirror/playground",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "Remirror Playground",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__playground",
@@ -91,7 +91,7 @@
     "prettier": "^2.3.2",
     "promise-worker": "^2.0.1",
     "prosemirror-paste-rules": "^1.0.2",
-    "prosemirror-resizable-view": "^0.1.1",
+    "prosemirror-resizable-view": "^1.0.0",
     "prosemirror-suggest": "^1.0.2",
     "prosemirror-trailing-node": "^1.0.2",
     "react-content-loader": "^6.0.3",

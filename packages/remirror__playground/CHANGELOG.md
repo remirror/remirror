@@ -1,5 +1,14 @@
 # @remirror/playground
 
+## 1.0.3
+
+> 2021-07-24
+
+### Patch Changes
+
+- Updated dependencies [[`0423ce7a8`](https://github.com/remirror/remirror/commit/0423ce7a8d63aaeb2baa4bfd4e7a54647730cab5)]:
+  - prosemirror-resizable-view@1.0.0
+
 ## 1.0.2
 
 > 2021-07-21

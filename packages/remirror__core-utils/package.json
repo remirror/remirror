@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-utils",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Core utilities for dealing with the dom and prosemirror within remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core-utils",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core-utils",

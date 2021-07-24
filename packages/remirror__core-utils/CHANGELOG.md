@@ -1,5 +1,13 @@
 # @remirror/core-utils
 
+## 1.1.0
+
+> 2021-07-24
+
+### Minor Changes
+
+- [#1023](https://github.com/remirror/remirror/pull/1023) [`0423ce7a8`](https://github.com/remirror/remirror/commit/0423ce7a8d63aaeb2baa4bfd4e7a54647730cab5) Thanks [@ocavue](https://github.com/ocavue)! - Add `setStyle` to add styles to a HTML element.
+
 ## 1.0.2
 
 > 2021-07-21
