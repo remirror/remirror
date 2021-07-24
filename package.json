@@ -99,11 +99,10 @@
     "preversion:changeset": "node support/scripts/changeset-forced-update",
     "version:changeset": "changeset version",
     "postversion:changeset": "node support/scripts/changeset-forced-update --clean",
-    "version:ci": "run-s version:changeset version:date version:repo fix:prettier version:lockfile",
+    "version:ci": "run-s version:changeset version:date version:repo fix:prettier",
     "version:date": "node support/scripts/changelog-dates",
-    "version:lockfile": "rm pnpm-lock.yaml || true && pnpm install",
     "version:pr": "node support/scripts/enable-pr-changeset",
-    "version:repo": "rm pnpm-lock.yaml || true && run-s fix:repo update:workspace",
+    "version:repo": "run-s fix:repo update:workspace",
     "prepare": "husky install"
   },
   "browserslist": [

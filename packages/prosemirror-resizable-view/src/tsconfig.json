@@ -18,6 +18,9 @@
   "references": [
     {
       "path": "../../remirror__core-helpers/src"
+    },
+    {
+      "path": "../../remirror__core-utils/src"
     }
   ]
 }

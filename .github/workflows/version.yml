@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          token: ${{ secrets.REMIRROR_BOT_GITHUB_TOKEN }}
 
       - name: setup caching
         uses: actions/cache@v2
@@ -47,11 +48,12 @@ jobs:
         run: pnpm version:pr
 
       - name: create versions
-        uses: changesets/action@master
+        # For security reason, use a Git commit SHA instead of a branch name or a tag name here.
+        uses: changesets/action@c2918239208f2162b9d27a87f491375c51592434
         if: github.ref == 'refs/heads/main'
         with:
           version: pnpm version:ci
           commit: 'chore(changeset): version update'
           title: 'chore(changeset): version update'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REMIRROR_BOT_GITHUB_TOKEN }}
