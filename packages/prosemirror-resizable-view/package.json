@@ -38,6 +38,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core-helpers": "^1.0.1",
+    "@remirror/core-utils": "^1.0.1",
     "prosemirror-model": "^1.14.2",
     "prosemirror-view": "^1.18.10"
   },
