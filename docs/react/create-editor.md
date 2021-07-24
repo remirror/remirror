@@ -25,7 +25,7 @@ const Editor = () => {
       {/* the className is used to define css variables necessary for the editor */}
       <Remirror manager={manager} />;
     </div>
-  )
+  );
 };
 ```
 
