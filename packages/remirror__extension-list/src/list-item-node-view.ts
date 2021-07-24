@@ -35,7 +35,7 @@ export function createCustomMarkListItemNodeView({
   //
   // However, when users are using IME, never re-create the nodeView. See also #1017.
   const update = (): boolean => {
-    if (view.composing) {
+    if (view?.composing) {
       return true;
     }
 
