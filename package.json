@@ -99,10 +99,9 @@
     "preversion:changeset": "node support/scripts/changeset-forced-update",
     "version:changeset": "changeset version",
     "postversion:changeset": "node support/scripts/changeset-forced-update --clean",
-    "version:ci": "run-s version:changeset version:date version:repo fix:prettier",
+    "version:ci": "run-s version:changeset version:date fix:repo fix:prettier",
     "version:date": "node support/scripts/changelog-dates",
     "version:pr": "node support/scripts/enable-pr-changeset",
-    "version:repo": "run-s fix:repo update:workspace",
     "prepare": "husky install"
   },
   "browserslist": [
