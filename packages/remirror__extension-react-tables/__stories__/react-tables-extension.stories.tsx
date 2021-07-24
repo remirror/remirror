@@ -1,8 +1,8 @@
-import { Story } from '@storybook/react';
 import { useEffect, useState } from 'react';
 import { YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';
 import * as Y from 'yjs';
+import type { AnyExtension } from '@remirror/core';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   EditorComponent,
@@ -100,7 +100,13 @@ const ProsemirrorDocData: React.FC = () => {
   );
 };
 
-export const Table: Story = ({ children, extensions = defaultExtensions }) => {
+export const Table = ({
+  children,
+  extensions,
+}: {
+  children?: React.ReactElement;
+  extensions: () => AnyExtension[];
+}): JSX.Element => {
   const { manager, state } = useRemirror({ extensions, core: { excludeExtensions: ['history'] } });
 
   return (
@@ -121,15 +127,15 @@ Table.args = {
   openLinkOnClick: true,
 };
 
-export const TableWithDevTools: Story = () => {
+export const TableWithDevTools = () => {
   return (
-    <Table>
+    <Table extensions={defaultExtensions}>
       <ProsemirrorDevTools />
     </Table>
   );
 };
 
-export const TableWithYjs: Story = () => {
+export const TableWithYjs = () => {
   return (
     <Table extensions={yjsExtensions}>
       <ProsemirrorDevTools />
