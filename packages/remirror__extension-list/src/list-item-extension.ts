@@ -87,6 +87,7 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       }
 
       return createCustomMarkListItemNodeView({
+        view: this.store.view,
         mark,
         extraClasses: node.attrs.closed
           ? [ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_CLOSED]
