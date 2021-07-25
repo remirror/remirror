@@ -1,5 +1,18 @@
 # @remirror/extension-embed
 
+## 1.1.0
+
+> 2021-07-24
+
+### Minor Changes
+
+- [#1023](https://github.com/remirror/remirror/pull/1023) [`0423ce7a8`](https://github.com/remirror/remirror/commit/0423ce7a8d63aaeb2baa4bfd4e7a54647730cab5) Thanks [@ocavue](https://github.com/ocavue)! - Add resizable ability to `IframeExtension` by extending `ResizableNodeView`.
+
+### Patch Changes
+
+- Updated dependencies [[`0423ce7a8`](https://github.com/remirror/remirror/commit/0423ce7a8d63aaeb2baa4bfd4e7a54647730cab5)]:
+  - prosemirror-resizable-view@1.0.0
+
 ## 1.0.1
 
 > 2021-07-17

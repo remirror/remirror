@@ -484,7 +484,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core-helpers': ^1.0.1
-      '@remirror/core-utils': ^1.0.1
+      '@remirror/core-utils': ^1.1.0
       '@types/prosemirror-model': ^1.13.1
       '@types/prosemirror-view': ^1.17.2
       prosemirror-model: ^1.14.2
@@ -1158,7 +1158,7 @@ importers:
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
       '@types/querystringify': ^2.0.0
-      prosemirror-resizable-view: ^0.1.0
+      prosemirror-resizable-view: ^1.0.0
       querystringify: ^2.2.0
     dependencies:
       '@babel/runtime': 7.14.6
@@ -1321,7 +1321,7 @@ importers:
       '@remirror/messages': ^1.0.1
       '@remirror/pm': ^1.0.1
       '@remirror/theme': ^1.0.1
-      prosemirror-resizable-view: ^0.1.0
+      prosemirror-resizable-view: ^1.0.0
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core': link:../remirror__core
@@ -1882,7 +1882,7 @@ importers:
       prettier: ^2.3.2
       promise-worker: ^2.0.1
       prosemirror-paste-rules: ^1.0.2
-      prosemirror-resizable-view: ^0.1.1
+      prosemirror-resizable-view: ^1.0.0
       prosemirror-suggest: ^1.0.2
       prosemirror-trailing-node: ^1.0.2
       react: ^17.0.2
