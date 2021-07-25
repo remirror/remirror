@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.0.2
+
+> 2021-07-25
+
+### Patch Changes
+
+- [#1018](https://github.com/remirror/remirror/pull/1018) [`259a35f3c`](https://github.com/remirror/remirror/commit/259a35f3cd56cd685d9f659002c211c80edebd91) Thanks [@ocavue](https://github.com/ocavue)! - Fix CJK IME in a task list or a collapsible list
+
 ## 1.0.1
 
 > 2021-07-17
