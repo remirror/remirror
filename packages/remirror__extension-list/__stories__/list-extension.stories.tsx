@@ -7,7 +7,7 @@ import {
 } from 'remirror/extensions';
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-import { TaskListExtension } from '../src/task-list-extension';
+import { DebugExtension, TaskListExtension } from '../src';
 
 export default { title: 'List Extension' };
 
@@ -44,6 +44,7 @@ export const Collapsible = (): JSX.Element => {
 };
 
 const extensions = () => [
+  new DebugExtension(),
   new BulletListExtension(),
   new OrderedListExtension(),
   new TaskListExtension(),
@@ -57,6 +58,7 @@ const extensions = () => [
 ];
 
 const extensionsWithSpine = () => [
+  new DebugExtension(),
   new BulletListExtension({ enableSpine: true }),
   new OrderedListExtension(),
   new TaskListExtension(),
@@ -67,6 +69,10 @@ const extensionsWithSpine = () => [
 const html = String.raw; // Just for better editor support
 
 const content = html`
+  <blockquote data-debug="">
+    <p>DEBUG BLOCK</p>
+  </blockquote>
+
   <ul>
     <li>first unordered list item</li>
     <li>second unordered list item</li>
