@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.1",
+    "@remirror/core": "^1.0.2",
     "@remirror/extension-bidi": "^1.0.1",
     "@remirror/extension-blockquote": "^1.0.1",
     "@remirror/extension-bold": "^1.0.1",

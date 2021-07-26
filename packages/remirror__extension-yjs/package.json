@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.1",
+    "@remirror/core": "^1.0.2",
     "@remirror/extension-annotation": "^1.0.1",
     "@remirror/messages": "^1.0.1",
     "y-prosemirror": "^1.0.6",

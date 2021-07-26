@@ -1,6 +1,6 @@
 {
   "name": "jest-prosemirror",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Write expressive tests for your prosemirror editor",
   "keywords": [
     "jest",
