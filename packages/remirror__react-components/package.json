@@ -42,7 +42,7 @@
     "@babel/runtime": "^7.13.10",
     "@lingui/core": "^3.10.4",
     "@popperjs/core": "^2.9.2",
-    "@remirror/core": "^1.0.1",
+    "@remirror/core": "^1.0.2",
     "@remirror/extension-positioner": "^1.0.1",
     "@remirror/extension-text-color": "^1.0.1",
     "@remirror/i18n": "^1.0.1",

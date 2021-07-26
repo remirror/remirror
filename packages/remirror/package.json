@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -74,7 +74,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.1",
+    "@remirror/core": "^1.0.2",
     "@remirror/core-constants": "^1.0.0",
     "@remirror/core-helpers": "^1.0.1",
     "@remirror/core-types": "^1.0.1",
@@ -131,7 +131,7 @@
     "@remirror/icons": "^1.0.2",
     "@remirror/preset-core": "^1.0.1",
     "@remirror/preset-formatting": "^1.0.1",
-    "@remirror/preset-wysiwyg": "^1.0.1",
+    "@remirror/preset-wysiwyg": "^1.0.2",
     "@remirror/theme": "^1.0.1",
     "@types/codemirror": "^5.60.2",
     "@types/refractor": "^3.0.2",

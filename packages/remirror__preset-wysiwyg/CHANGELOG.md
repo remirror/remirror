@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.2
+
+> 2021-07-26
+
+### Patch Changes
+
+- [#1029](https://github.com/remirror/remirror/pull/1029) [`ecad7e4be`](https://github.com/remirror/remirror/commit/ecad7e4beed04778de8060b06c93c8e893d73ed2) Thanks [@ocavue](https://github.com/ocavue)! - Update remirror dependencies.
+
+- Updated dependencies [[`ecad7e4be`](https://github.com/remirror/remirror/commit/ecad7e4beed04778de8060b06c93c8e893d73ed2)]:
+  - @remirror/core@1.0.2
+
 ## 1.0.1
 
 > 2021-07-17

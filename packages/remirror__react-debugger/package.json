@@ -42,7 +42,7 @@
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.3.0",
     "@lingui/core": "^3.10.4",
-    "@remirror/core": "^1.0.1",
+    "@remirror/core": "^1.0.2",
     "@remirror/react": "^1.0.2",
     "@types/html": "^1.0.1",
     "@types/prosemirror-dev-tools": "^3.0.2",

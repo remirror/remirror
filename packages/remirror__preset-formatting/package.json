@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.1",
+    "@remirror/core": "^1.0.2",
     "@remirror/extension-bold": "^1.0.1",
     "@remirror/extension-columns": "^1.0.1",
     "@remirror/extension-font-size": "^1.0.1",
