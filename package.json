@@ -99,7 +99,7 @@
     "preversion:changeset": "node support/scripts/changeset-forced-update",
     "version:changeset": "changeset version",
     "postversion:changeset": "node support/scripts/changeset-forced-update --clean",
-    "version:ci": "run-s version:changeset version:date fix:repo fix:prettier version:lockfile",
+    "version:ci": "run-s version:changeset version:date fix:repo update:workspace fix:prettier version:lockfile",
     "version:date": "node support/scripts/changelog-dates",
     "version:pr": "node support/scripts/enable-pr-changeset",
     "version:lockfile": "pnpm install --lockfile-only",
