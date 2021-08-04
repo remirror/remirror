@@ -37,8 +37,8 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^1.0.2",
-    "@remirror/i18n": "^1.0.1",
-    "@remirror/messages": "^1.0.1",
+    "@remirror/i18n": "^1.0.2",
+    "@remirror/messages": "^1.0.2",
     "@remirror/theme": "^1.0.1",
     "color2k": "^1.2.4"
   },
