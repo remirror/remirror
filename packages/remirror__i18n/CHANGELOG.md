@@ -1,5 +1,13 @@
 # @remirror/i18n
 
+## 1.0.2
+
+> 2021-08-04
+
+### Patch Changes
+
+- [#1033](https://github.com/remirror/remirror/pull/1033) [`ec998d82b`](https://github.com/remirror/remirror/commit/ec998d82b5f2926b4d1eb36eb62d0557aab8fe4b) Thanks [@devmrin](https://github.com/devmrin)! - Fix i18n bold command label.
+
 ## 1.0.1
 
 > 2021-07-17

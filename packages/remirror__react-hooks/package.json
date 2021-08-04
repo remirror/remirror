@@ -146,7 +146,7 @@
     "@remirror/extension-mention": "^1.0.1",
     "@remirror/extension-mention-atom": "^1.0.1",
     "@remirror/extension-positioner": "^1.0.1",
-    "@remirror/i18n": "^1.0.1",
+    "@remirror/i18n": "^1.0.2",
     "@remirror/react-core": "^1.0.2",
     "@remirror/react-utils": "^1.0.2",
     "multishift": "^1.0.2",

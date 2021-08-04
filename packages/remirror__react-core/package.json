@@ -36,7 +36,7 @@
     "@remirror/extension-positioner": "^1.0.1",
     "@remirror/extension-react-component": "^1.0.2",
     "@remirror/extension-react-ssr": "^1.0.2",
-    "@remirror/i18n": "^1.0.1",
+    "@remirror/i18n": "^1.0.2",
     "@remirror/preset-core": "^1.0.1",
     "@remirror/preset-react": "^1.0.1",
     "@remirror/react-renderer": "^1.0.2",
