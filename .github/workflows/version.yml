@@ -17,7 +17,7 @@ jobs:
   version:
     timeout-minutes: 8
     runs-on: ubuntu-latest
-    if: false == contains(github.ref, 'changeset') && github.repository == 'remirror/remirror'
+    if: ${{ false == contains(github.ref, 'changeset') && github.repository == 'remirror/remirror' && secrets.REMIRROR_BOT_GITHUB_TOKEN }}
     steps:
       - name: checkout code repository
         uses: actions/checkout@v2
