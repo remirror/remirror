@@ -259,7 +259,7 @@ msgstr "Add bold formatting to the selected text"
 #: packages/remirror__messages/src/extension-bold-messages.ts:4
 #: packages/remirror__messages/src/extension-emoji-messages.ts:4
 msgid "extension.command.toggle-bold.label"
-msgstr "Insert Emoji"
+msgstr "Bold"
 
 #. Description for inserting a bullet list into the editor.
 #: packages/remirror__messages/src/extension-list-messages.ts:10

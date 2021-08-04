@@ -62,7 +62,7 @@
     'Add blockquote formatting to the selected text',
   'extension.command.toggle-blockquote.label': 'Blockquote',
   'extension.command.toggle-bold.description': 'Add bold formatting to the selected text',
-  'extension.command.toggle-bold.label': 'Insert Emoji',
+  'extension.command.toggle-bold.label': 'Bold',
   'extension.command.toggle-bullet-list.description': 'Bulleted list',
   'extension.command.toggle-callout.description': [
     [
