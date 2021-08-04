@@ -10,10 +10,11 @@ Creating an editor consists of two steps.
 1. Creating the wrapper with `Remirror` which sets up the editor functionality by passing in the extension manager.
 
 ```tsx
+import 'remirror/styles/all.css';
+
 import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
 import { Remirror, useRemirror } from '@remirror/react';
-import 'remirror/styles/all.css'
 
 const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
