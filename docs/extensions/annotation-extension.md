@@ -65,7 +65,7 @@ The extension is provided by the `@remirror/extension-annotation` package. There
 
 ### Examples
 
-See storybook for example usage.
+See [storybook](https://remirror.vercel.app/?path=/story/annotation-extension--basic) for example usage.
 
 ## API
 
