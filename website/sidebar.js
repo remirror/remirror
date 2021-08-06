@@ -35,11 +35,6 @@ const docs = [
     label: 'More',
     items: ['contributing', 'tooling', 'errors', 'projects'],
   },
-  {
-    type: 'category',
-    label: 'More',
-    items: ['contributing', 'tooling', 'errors', 'projects'],
-  },
 ];
 
 /** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
