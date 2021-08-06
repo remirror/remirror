@@ -1,8 +1,7 @@
 {
   "include": [],
   "files": [],
-  "references": [
-    {
+  "references": [{
       "path": "packages/a11y-status/__tests__"
     },
     {
@@ -328,6 +327,9 @@
     },
     {
       "path": "packages/remirror__extension-paragraph/src"
+    },
+    {
+      "path": "packages/remirror__extension-placeholder/__stories__"
     },
     {
       "path": "packages/remirror__extension-placeholder/__tests__"

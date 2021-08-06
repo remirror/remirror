@@ -3,8 +3,6 @@ hide_title: true
 title: 'PlaceholderExtension'
 ---
 
-import { Example } from '@components';
-
 # `PlaceholderExtension`
 
 ## Summary
@@ -16,8 +14,6 @@ This extension shows a placeholder when the **ProseMirror** content of your edit
 ### Custom styling
 
 The placeholder can be styled with a custom CSS class.
-
-<Example name="ExtensionPlaceholderCustomStyling" />
 
 ## Usage
 
@@ -37,7 +33,7 @@ The extension is provided by the `@remirror/extension-placeholder` package. Ther
 
 ### Examples
 
-<Example name="ExtensionPlaceholderBasic" />
+See [storybook](https://remirror.vercel.app/?path=/story/placeholder-extension--basic) for examples.
 
 ## API
 
