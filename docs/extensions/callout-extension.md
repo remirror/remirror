@@ -3,8 +3,6 @@ hide_title: true
 title: 'CalloutExtension'
 ---
 
-import { Example } from '@components';
-
 # `CalloutExtension`
 
 ## Summary
@@ -66,7 +64,7 @@ The extension is provided by the `@remirror/extension-callout` package. There ar
 
 ### Examples
 
-<Example name="BasicCallout" />
+See storybook for examples.
 
 ## API
 
