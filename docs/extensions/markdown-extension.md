@@ -19,7 +19,7 @@ Markdown can be used to reduce the storage needed for your documents. It takes l
 
 The following example shows a hook which can be used to automatically persist content as markdown.
 
-<Example name="" />
+<Example name="markdown-basic" />
 
 ```ts
 import delay from 'delay';
