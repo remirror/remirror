@@ -2,4 +2,4 @@
 '@remirror/extension-list': patch
 ---
 
-Keep the content in its origin list item when splitting a closed item.
+When splitting a closed item, keep its content in the origin list item.
