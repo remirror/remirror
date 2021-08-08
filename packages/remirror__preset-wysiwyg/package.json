@@ -52,7 +52,7 @@
     "@remirror/extension-image": "^1.0.2",
     "@remirror/extension-italic": "^1.0.1",
     "@remirror/extension-link": "^1.0.1",
-    "@remirror/extension-list": "^1.0.2",
+    "@remirror/extension-list": "^1.0.3",
     "@remirror/extension-search": "^1.0.1",
     "@remirror/extension-strike": "^1.0.1",
     "@remirror/extension-tables": "^1.0.1",

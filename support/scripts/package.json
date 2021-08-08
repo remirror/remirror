@@ -57,7 +57,7 @@
     "@microsoft/tsdoc-config": "^0.15.2",
     "@remirror/core-helpers": "^1.0.1",
     "@remirror/icons": "^1.0.2",
-    "@remirror/playground": "^1.0.5",
+    "@remirror/playground": "^1.0.6",
     "@remirror/types": "^0.1.0",
     "@types/autoprefixer": "^9.7.2",
     "@types/cheerio": "^0.22.30",
