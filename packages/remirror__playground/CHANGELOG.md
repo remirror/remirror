@@ -1,5 +1,15 @@
 # @remirror/playground
 
+## 1.0.6
+
+> 2021-08-08
+
+### Patch Changes
+
+- Updated dependencies [[`1d83e4fde`](https://github.com/remirror/remirror/commit/1d83e4fde5a92b68b68d4b1a8e2260b4a985b3cd)]:
+  - remirror@1.0.5
+  - @remirror/react-editors@0.0.6
+
 ## 1.0.5
 
 > 2021-08-04

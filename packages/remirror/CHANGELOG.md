@@ -1,5 +1,16 @@
 # remirror
 
+## 1.0.5
+
+> 2021-08-08
+
+### Patch Changes
+
+- [#1046](https://github.com/remirror/remirror/pull/1046) [`1d83e4fde`](https://github.com/remirror/remirror/commit/1d83e4fde5a92b68b68d4b1a8e2260b4a985b3cd) Thanks [@ocavue](https://github.com/ocavue)! - Update dependency `@remirror/extension-list`.
+
+- Updated dependencies [[`79a5cb55b`](https://github.com/remirror/remirror/commit/79a5cb55b2e9c3db10b137d1e2235df724291d52)]:
+  - @remirror/extension-list@1.0.3
+
 ## 1.0.4
 
 > 2021-08-04

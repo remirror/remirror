@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.0.3
+
+> 2021-08-08
+
+### Patch Changes
+
+- [#1042](https://github.com/remirror/remirror/pull/1042) [`79a5cb55b`](https://github.com/remirror/remirror/commit/79a5cb55b2e9c3db10b137d1e2235df724291d52) Thanks [@ocavue](https://github.com/ocavue)! - When splitting a closed item, keep its content in the origin list item.
+
 ## 1.0.2
 
 > 2021-07-25
