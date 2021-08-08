@@ -128,6 +128,11 @@ msgstr "Increase"
 msgid "extension.command.increase-indent.label"
 msgstr "Increase indentation"
 
+#. Label for inserting an emoji.
+#: packages/remirror__messages/src/extension-emoji-messages.ts:4
+msgid "extension.command.insert-emoji.label"
+msgstr "Insert Emoji"
+
 #. Description for inserting a paragraph.
 #: packages/remirror__messages/src/extension-paragraph-messages.ts:10
 msgid "extension.command.insert-paragraph.description"
@@ -255,9 +260,7 @@ msgid "extension.command.toggle-bold.description"
 msgstr "Add bold formatting to the selected text"
 
 #. Label for bold formatting command.
-#. Label for inserting an emoji.
 #: packages/remirror__messages/src/extension-bold-messages.ts:4
-#: packages/remirror__messages/src/extension-emoji-messages.ts:4
 msgid "extension.command.toggle-bold.label"
 msgstr "Bold"
 

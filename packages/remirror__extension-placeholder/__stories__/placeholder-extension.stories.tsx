@@ -1,8 +1,8 @@
+import './styles.css';
+
 import { useCallback } from 'react';
 import { PlaceholderExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-
-import './styles.css';
 
 export default { title: 'Placeholder Extension' };
 
