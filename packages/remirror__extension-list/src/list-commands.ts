@@ -13,8 +13,10 @@ import {
 } from '@remirror/core';
 import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
-import { EditorState, Selection } from '@remirror/pm/state';
+import { EditorState, Selection, TextSelection } from '@remirror/pm/state';
 import { canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
+
+import { ListItemAttributes } from './list-item-extension';
 
 /**
  * Checks to see whether this is a list node.
@@ -142,6 +144,36 @@ export function splitListItem(
             tr.doc.resolve($from.pos + (keepItem ? 3 : 2)),
           ),
         );
+        dispatch(tr.scrollIntoView());
+      }
+
+      return true;
+    }
+
+    // If the current list item is closed, when we split it, we'll keep its
+    // content stay at the origin list item instead of the new list item.
+    //
+    // Since it's complex to implement, we only handle the most common case for
+    // now: when the selection is inside one list item and the selection is at
+    // the end of the first child (paragraph if using the default schema) of
+    // this list item.
+    if (
+      (grandParent.attrs as ListItemAttributes).closed &&
+      $from.sameParent($to) &&
+      $to.pos === $to.end()
+    ) {
+      if (dispatch) {
+        const newListItemStartPos = $from.after(-1);
+        const content = listItemType.contentMatch.defaultType?.createAndFill() || undefined;
+        const newListItem = listItemType.createAndFill(null, content);
+
+        if (newListItem) {
+          tr.insert(newListItemStartPos, newListItem);
+          tr.setSelection(TextSelection.create(tr.doc, newListItemStartPos + 1));
+        }
+
+        tr.delete($from.pos, $to.pos);
+
         dispatch(tr.scrollIntoView());
       }
 

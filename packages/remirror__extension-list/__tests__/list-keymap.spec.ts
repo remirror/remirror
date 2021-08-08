@@ -10,8 +10,9 @@ describe('Enter', () => {
   ]);
   const {
     nodes: { doc, paragraph: p, orderedList: ol, bulletList: ul, listItem: li, taskList: tl },
-    attributeNodes: { taskListItem },
+    attributeNodes: { taskListItem, listItem },
   } = editor;
+  const closed = listItem({ closed: true });
   const unchecked = taskListItem({ checked: false });
   const checked = taskListItem({ checked: true });
 
@@ -81,6 +82,81 @@ describe('Enter', () => {
 
     from = doc(tl(checked(p('hello world<cursor>'))));
     to = doc(tl(checked(p('hello world')), unchecked(p(''))));
+    editor.add(from).press('Enter');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('keeps the content in its origin list item when splitting a closed item', () => {
+    from = doc(
+      ul(
+        closed(
+          p('hello world<cursor>'),
+          ul(
+            li(p('nested list item')), //
+          ),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        closed(
+          p('hello world'),
+          ul(
+            li(p('nested list item')), //
+          ),
+        ),
+        li(p()),
+      ),
+    );
+    editor.add(from).press('Enter');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+
+    from = doc(
+      ul(
+        closed(
+          p('hello <start>world<end>'),
+          ul(
+            li(p('nested list item')), //
+          ),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        closed(
+          p('hello '),
+          ul(
+            li(p('nested list item')), //
+          ),
+        ),
+        li(p()),
+      ),
+    );
+    editor.add(from).press('Enter');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+
+    // Don't keep the content in its origin list item when it's not a closed list item.
+    from = doc(
+      ul(
+        li(
+          p('hello world<cursor>'),
+          ul(
+            li(p('nested list item')), //
+          ),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        li(p('hello world')),
+        li(
+          p(),
+          ul(
+            li(p('nested list item')), //
+          ),
+        ),
+      ),
+    );
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
