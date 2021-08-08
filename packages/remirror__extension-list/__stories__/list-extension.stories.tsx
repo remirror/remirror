@@ -5,6 +5,7 @@ import {
   LinkExtension,
   OrderedListExtension,
 } from 'remirror/extensions';
+import { ProsemirrorDevTools } from '@remirror/dev';
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 import { TaskListExtension } from '../src/task-list-extension';
@@ -22,6 +23,7 @@ export const Basic = (): JSX.Element => {
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state}>
         <EditorComponent />
+        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
@@ -38,6 +40,7 @@ export const Collapsible = (): JSX.Element => {
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state}>
         <EditorComponent />
+        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
