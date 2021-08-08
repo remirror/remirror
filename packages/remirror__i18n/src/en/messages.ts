@@ -24,6 +24,7 @@
   'extension.command.increase-font-size.description': 'Increase the font size',
   'extension.command.increase-font-size.label': 'Increase',
   'extension.command.increase-indent.label': 'Increase indentation',
+  'extension.command.insert-emoji.label': 'Insert Emoji',
   'extension.command.insert-paragraph.description': 'Insert a new paragraph',
   'extension.command.insert-paragraph.label': 'Insert Paragraph',
   'extension.command.justify-align.label': 'Justify',
