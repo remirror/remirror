@@ -36,6 +36,7 @@
     "packages/remirror__extension-emoji/src/index.ts",
     "packages/remirror__extension-epic-mode/src/index.ts",
     "packages/remirror__extension-events/src/index.ts",
+    "packages/remirror__extension-file/src/index.ts",
     "packages/remirror__extension-font-family/src/index.ts",
     "packages/remirror__extension-font-size/src/index.ts",
     "packages/remirror__extension-gap-cursor/src/index.ts",

@@ -1,0 +1,81 @@
+{
+  "name": "@remirror/extension-file",
+  "version": "0.1.0-beta.0",
+  "description": "",
+  "keywords": [
+    "remirror",
+    "extension",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-file",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-file",
+  "license": "MIT",
+  "contributors": [
+    "Ocavue <ocavue@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-file.esm.js",
+      "require": "./dist/remirror-extension-file.cjs.js",
+      "browser": "./dist/remirror-extension-file.browser.esm.js",
+      "types": "./dist/remirror-extension-file.cjs.d.ts",
+      "default": "./dist/remirror-extension-file.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-file.cjs.js",
+  "module": "dist/remirror-extension-file.esm.js",
+  "browser": {
+    "./dist/remirror-extension-file.cjs.js": "./dist/remirror-extension-file.browser.cjs.js",
+    "./dist/remirror-extension-file.esm.js": "./dist/remirror-extension-file.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-file.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "^1.0.0",
+    "@remirror/react": "^1.0.0",
+    "@remirror/react-components": "^1.0.2",
+    "@remirror/theme": "^1.0.1",
+    "nanoevents": "^5.1.13"
+  },
+  "devDependencies": {
+    "@remirror/pm": "^1.0.0",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "^1.0.0",
+    "@types/react": "^16.14.0 || ^17",
+    "@types/react-dom": "^16.9.0 || ^17",
+    "react": "^16.14.0 || ^17",
+    "react-dom": "^16.14.0 || ^17"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "30 KB"
+  },
+  "rn:dev": "src/index.ts"
+}

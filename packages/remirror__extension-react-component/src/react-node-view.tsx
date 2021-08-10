@@ -391,7 +391,8 @@ export class ReactNodeView implements NodeView {
    */
   ignoreMutation(mutation: IgnoreMutationProps): boolean {
     if (mutation.type === 'selection') {
-      return false;
+      // If a node type is unselectable, then ignore all selection mutations.
+      return !this.#node.type.spec.selectable;
     }
 
     if (!this.#contentDOMWrapper) {

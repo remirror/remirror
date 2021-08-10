@@ -3490,6 +3490,59 @@ export const extensionEmojiStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
+export const extensionFileStyledCss: ReturnType<typeof css> = css`
+  /**
+ * Styles extracted from: packages/remirror__theme/src/extension-file-theme.ts
+ */
+  .remirror-file-root {
+    border-radius: 4px;
+    padding: 8px 12px;
+    background-color: #e8ecf1;
+    color: #000;
+    margin: 8px auto;
+    min-height: 32px;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+  }
+
+  .remirror-file-name {
+    font-size: 1rem;
+    margin-left: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .remirror-file-size {
+    font-size: 0.8rem;
+    margin-left: 8px;
+    color: gray;
+    white-space: nowrap;
+  }
+
+  .remirror-file-upload-progress {
+    font-size: 0.8rem;
+    margin-left: 8px;
+    margin-right: 8px;
+    color: gray;
+    font-family: Menlo, Monaco, 'Courier New', monospace;
+  }
+
+  .remirror-file-error {
+    font-size: 0.8rem;
+    color: red;
+  }
+
+  .remirror-file-icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+  }
+`;
+
 export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-gap-cursor-theme.ts
@@ -4487,6 +4540,7 @@ export const allStyledCss: ReturnType<typeof css> = css`
   ${extensionCalloutStyledCss}
   ${extensionCodeBlockStyledCss}
   ${extensionEmojiStyledCss}
+  ${extensionFileStyledCss}
   ${extensionGapCursorStyledCss}
   ${extensionImageStyledCss}
   ${extensionListStyledCss}
