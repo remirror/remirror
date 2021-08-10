@@ -1,5 +1,13 @@
 # @remirror/extension-file
 
+## 0.1.2
+
+> 2021-08-10
+
+### Patch Changes
+
+- [#1052](https://github.com/remirror/remirror/pull/1052) [`aa735349e`](https://github.com/remirror/remirror/commit/aa735349e8a1da0a2e7f03670fc9cae4977c9770) Thanks [@ocavue](https://github.com/ocavue)! - Make `FileExtension` selectable by default.
+
 ## 0.1.1
 
 > 2021-08-10
