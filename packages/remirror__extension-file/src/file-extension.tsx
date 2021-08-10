@@ -81,11 +81,11 @@ export class FileExtension extends NodeExtension<FileOptions> {
         fileSize: { default: 0 },
         error: { default: null },
       },
-      ...override,
-      selectable: false,
+      selectable: true,
       draggable: true,
       atom: true,
       content: '',
+      ...override,
       parseDOM: [
         {
           tag: 'div[data-file]',
