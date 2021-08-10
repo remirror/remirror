@@ -41,7 +41,7 @@
     "@remirror/i18n": "^1.0.2",
     "@remirror/icons": "^1.0.2",
     "@remirror/messages": "^1.0.2",
-    "@remirror/theme": "^1.0.1",
+    "@remirror/theme": "^1.1.0",
     "nanoevents": "^5.1.13",
     "tiny-warning": "^1.0.3"
   },

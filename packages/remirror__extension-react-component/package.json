@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-component",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Create prosemirror node views from your react components",
   "keywords": [
     "remirror",
