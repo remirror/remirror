@@ -3,17 +3,14 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
-  EditorView,
   extension,
   ExtensionPriority,
   ExtensionTag,
   getTextSelection,
   Handler,
-  isNumber,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
-  NodeType,
   omitExtraAttributes,
   PrimitiveSelection,
   ProsemirrorNode,
@@ -24,19 +21,12 @@ import { PasteRule } from '@remirror/pm/paste-rules';
 import { NodeViewComponentProps } from '@remirror/react';
 
 import { FileComponent, FileComponentProps } from './file-component';
-import { ActionType } from './file-placeholder-actions';
-import {
-  findPlaceholderPayload,
-  findPlaceholderPos,
-  placeholderPlugin,
-  setPlaceholderAction,
-} from './file-placeholder-plugin';
-import { createUploadContext, UploadContext } from './file-upload-context';
-import { FileUploader } from './file-uploader';
+import { findPlaceholderPayload, placeholderPlugin } from './file-placeholder-plugin';
+import { PlaceholderPayload, uploadFile, UploadFileHandler } from './file-upload';
 import { createDataUrlFileUploader } from './file-uploaders';
 
 export interface FileOptions {
-  uploadFileHandler?: UploadFileHandler;
+  uploadFileHandler?: UploadFileHandler<FileAttributes>;
   render?: (props: FileComponentProps) => React.ReactElement<HTMLElement> | null;
 
   /**
@@ -67,7 +57,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
   }
 
   ReactComponent: ComponentType<NodeViewComponentProps> = (props) => {
-    const payload: PlaceholderPayload | undefined = findPlaceholderPayload(
+    const payload: PlaceholderPayload<FileAttributes> | undefined = findPlaceholderPayload(
       props.view.state,
       props.node.attrs.id,
     );
@@ -83,8 +73,8 @@ export class FileExtension extends NodeExtension<FileOptions> {
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
       attrs: {
-        id: { default: null },
         ...extra.defaults(),
+        id: { default: null },
         url: { default: '' },
         fileName: { default: '' },
         fileType: { default: '' },
@@ -223,7 +213,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
   }
 
   private uploadFile(file: File, pos?: number | undefined): void {
-    return uploadFile({
+    return uploadFile<FileAttributes>({
       file,
       pos,
       view: this.store.view,
@@ -233,186 +223,14 @@ export class FileExtension extends NodeExtension<FileOptions> {
   }
 }
 
-interface PlaceholderPayload {
-  context: UploadContext;
-  fileUploader: FileUploader;
-}
-
-type FileId = Record<never, never>;
-
 export interface FileAttributes {
   // A temporary unique id during the file loading process
-  id?: FileId | null;
+  id?: unknown;
   url?: string;
   fileName?: string;
   fileType?: string;
   fileSize?: number;
   error?: string | null;
-}
-
-type UploadFileHandler = () => FileUploader;
-
-/**
- * Try to find a point where a node of the given type can be inserted
- * near `pos`, by searching up the node hierarchy when `pos` itself
- * isn't a valid place. Return null if no position was found.
- *
- * This function is similar to `insertPoint` from `prosemirror-transform`,
- * but it will also search for a valid position even if the `pos` is in the
- * middle of a node.
- */
-function insertFilePoint(doc: ProsemirrorNode, pos: number, nodeType: NodeType): number | null {
-  const $pos = doc.resolve(pos);
-
-  if ($pos.parent.canReplaceWith($pos.index(), $pos.index(), nodeType)) {
-    return pos;
-  }
-
-  if ($pos.parentOffset === 0) {
-    for (let d = $pos.depth - 1; d >= 0; d--) {
-      const index = $pos.index(d);
-
-      if ($pos.node(d).canReplaceWith(index, index, nodeType)) {
-        return $pos.before(d + 1);
-      }
-
-      if (index > 0) {
-        return null;
-      }
-    }
-  }
-
-  for (let d = $pos.depth - 1; d >= 0; d--) {
-    const index = $pos.indexAfter(d);
-
-    if ($pos.node(d).canReplaceWith(index, index, nodeType)) {
-      return $pos.after(d + 1);
-    }
-
-    if (index < $pos.node(d).childCount) {
-      return null;
-    }
-  }
-
-  return null;
-}
-
-function createFilePlaceholder({
-  id,
-  context,
-  file,
-  pos,
-  view,
-  fileType,
-  uploadFileHandler,
-}: {
-  id: FileId;
-  context: UploadContext;
-  file: File;
-  pos: number | undefined;
-  view: EditorView;
-  fileType: NodeType;
-  uploadFileHandler: UploadFileHandler;
-}): FileUploader | void {
-  const tr = view.state.tr;
-  const insertPos = insertFilePoint(tr.doc, isNumber(pos) ? pos : tr.selection.from, fileType);
-
-  if (!isNumber(insertPos)) {
-    // failed to find a postition to insert the file node
-    return;
-  }
-
-  // create a fileUploader, which will read and/or upload the file later
-  const fileUploader = uploadFileHandler();
-
-  // insert the file node
-  const attrs: FileAttributes = { ...fileUploader.insert(file), id };
-  tr.insert(insertPos, fileType.createChecked(attrs));
-
-  // insert the placeholder decoration
-  const payload: PlaceholderPayload = { context, fileUploader };
-  setPlaceholderAction(tr, { type: ActionType.ADD_PLACEHOLDER, id, pos: insertPos, payload });
-
-  view.dispatch(tr);
-
-  return fileUploader;
-}
-
-function onFileLoaded({
-  id,
-  attrs,
-  fileType,
-  view,
-}: {
-  id: FileId;
-  attrs: FileAttributes;
-  fileType: NodeType;
-  view: EditorView;
-}) {
-  const placeholderPos = findPlaceholderPos(view.state, id);
-
-  // unexpected
-  if (placeholderPos == null) {
-    return;
-  }
-
-  const $pos = view.state.doc.resolve(placeholderPos);
-  const fileNode = $pos.nodeAfter;
-
-  // if the file node around the placeholder has been deleted, then delete
-  // the placeholder and drop the uploaded file.
-  if (!fileNode || fileNode.type !== fileType || fileNode.attrs.id !== id) {
-    const tr = view.state.tr;
-    setPlaceholderAction(tr, { type: ActionType.REMOVE_PLACEHOLDER, id });
-    view.dispatch(tr);
-    return;
-  }
-
-  // Update the file node at the placeholder's position, and remove
-  // the placeholder.
-  const tr = view.state.tr;
-  setPlaceholderAction(tr, { type: ActionType.REMOVE_PLACEHOLDER, id });
-  const fileAttrs: FileAttributes = {
-    ...fileNode.attrs,
-    ...attrs,
-    id: null,
-  };
-  tr.setNodeMarkup(placeholderPos, undefined, fileAttrs);
-  view.dispatch(tr);
-}
-
-function uploadFile({
-  file,
-  pos,
-  view,
-  fileType,
-  uploadFileHandler,
-}: {
-  file: File;
-  pos: number | undefined;
-  view: EditorView;
-  fileType: NodeType;
-  uploadFileHandler: UploadFileHandler;
-}): void {
-  // A fresh object to act as the ID for this upload.
-  const id: FileId = {};
-
-  const context = createUploadContext();
-
-  const fileUploader = createFilePlaceholder({
-    id,
-    context,
-    file,
-    pos,
-    view,
-    fileType,
-    uploadFileHandler,
-  });
-
-  fileUploader
-    ?.upload(context)
-    .then((attrs) => onFileLoaded({ id, fileType, view, attrs }))
-    .catch((error) => onFileLoaded({ id, fileType, view, attrs: { error: error.message } }));
 }
 
 declare global {

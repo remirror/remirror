@@ -1,8 +1,9 @@
+import { FileAttributes } from '../file-extension';
 import { UploadContext } from '../file-upload-context';
 import { FileUploader } from '../file-uploader';
 import { getDefaultFileAttrs } from './data-url-file-uploader';
 
-export function createSlowFileUploader(): FileUploader {
+export function createSlowFileUploader(): FileUploader<FileAttributes> {
   let file: File;
   let aborted = false;
 
