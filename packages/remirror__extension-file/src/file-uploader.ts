@@ -1,12 +1,11 @@
-import { FileAttributes } from './file-extension';
 import { UploadContext } from './file-upload-context';
 
-export interface FileUploader {
+export interface FileUploader<NodeAttributes> {
   /**
    * Inserts the file (but doesn't start the upload operation) and returns an
    * object with this to be uploaded file's attributes.
    */
-  insert: (file: File) => FileAttributes;
+  insert: (file: File) => NodeAttributes;
 
   /**
    * Starts the upload operation and returns a promise. The promise will be
@@ -20,7 +19,7 @@ export interface FileUploader {
    * keys `loaded` and `total` in `context`, which are two numbers that
    * represent the progress of the upload.
    */
-  upload: (context: UploadContext) => Promise<FileAttributes>;
+  upload: (context: UploadContext) => Promise<NodeAttributes>;
 
   /**
    * Aborts the upload operation.

@@ -1,7 +1,7 @@
 import { FileAttributes } from '../file-extension';
 import { FileUploader } from '../file-uploader';
 
-export class DataUrlFileUploader implements FileUploader {
+export class DataUrlFileUploader implements FileUploader<FileAttributes> {
   private file: File | null = null;
   private readonly fileReader: FileReader;
 

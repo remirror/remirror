@@ -3,7 +3,7 @@ import { UploadContext } from '../file-upload-context';
 import { FileUploader } from '../file-uploader';
 import { getDefaultFileAttrs } from './data-url-file-uploader';
 
-class BaseuploadFileUploader implements FileUploader {
+class BaseuploadFileUploader implements FileUploader<FileAttributes> {
   private file: File | null = null;
   private readonly xhr: XMLHttpRequest;
   private readonly uploadPromise: Promise<string>;
@@ -69,6 +69,6 @@ class BaseuploadFileUploader implements FileUploader {
   }
 }
 
-export function createBaseuploadFileUploader(): FileUploader {
+export function createBaseuploadFileUploader(): FileUploader<FileAttributes> {
   return new BaseuploadFileUploader();
 }

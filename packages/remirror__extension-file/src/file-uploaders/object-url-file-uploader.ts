@@ -1,7 +1,8 @@
+import { FileAttributes } from '../file-extension';
 import { FileUploader } from '../file-uploader';
 import { getDefaultFileAttrs } from './data-url-file-uploader';
 
-export function createObjectUrlFileUploader(): FileUploader {
+export function createObjectUrlFileUploader(): FileUploader<FileAttributes> {
   let file: File;
 
   return {
