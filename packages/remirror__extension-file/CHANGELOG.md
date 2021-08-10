@@ -1,5 +1,13 @@
 # @remirror/extension-file
 
+## 0.1.1
+
+> 2021-08-10
+
+### Patch Changes
+
+- [#1050](https://github.com/remirror/remirror/pull/1050) [`28983b4a2`](https://github.com/remirror/remirror/commit/28983b4a26f974982856b4561beec58a7dd87ec4) Thanks [@ocavue](https://github.com/ocavue)! - Export `FileAttributes`.
+
 ## 0.1.0
 
 > 2021-08-10
