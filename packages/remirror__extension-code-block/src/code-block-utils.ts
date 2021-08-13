@@ -101,10 +101,11 @@ function getPositionedRefractorNodes(
   plainTextClassName: string | undefined,
 ) {
   const { node, pos } = nodeWithPos;
-  const refractorNodes = refractor.highlight(
-    node.textContent ?? '',
-    node.attrs.language?.replace('language-', '') ?? 'markup',
-  );
+  const language = getLanguage({
+    language: node.attrs.language?.replace('language-', ''),
+    fallback: 'markup',
+  });
+  const refractorNodes = refractor.highlight(node.textContent ?? '', language);
   const parsedRefractorNodes = parseRefractorNodes(refractorNodes, plainTextClassName);
 
   let startPos = pos + 1;
