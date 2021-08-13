@@ -1,5 +1,13 @@
 # @remirror/extension-code-block
 
+## 1.0.2
+
+> 2021-08-13
+
+### Patch Changes
+
+- [#1055](https://github.com/remirror/remirror/pull/1055) [`b288d665f`](https://github.com/remirror/remirror/commit/b288d665fe1f3b8f0a9a635ca3f29e49e22ac4b3) Thanks [@ocavue](https://github.com/ocavue)! - Fix a crash when the code block node contains an invalid language name.
+
 ## 1.0.1
 
 > 2021-07-17

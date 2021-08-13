@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.6
+
+> 2021-08-13
+
+### Patch Changes
+
+- [#1057](https://github.com/remirror/remirror/pull/1057) [`662edfdaa`](https://github.com/remirror/remirror/commit/662edfdaa6ab7954edd4946b6f06da6d36288042) Thanks [@ocavue](https://github.com/ocavue)! - Update dependency `@remirror/extension-code-block`.
+
+- Updated dependencies [[`662edfdaa`](https://github.com/remirror/remirror/commit/662edfdaa6ab7954edd4946b6f06da6d36288042), [`b288d665f`](https://github.com/remirror/remirror/commit/b288d665fe1f3b8f0a9a635ca3f29e49e22ac4b3)]:
+  - @remirror/preset-wysiwyg@1.0.3
+  - @remirror/extension-code-block@1.0.2
+
 ## 1.0.5
 
 > 2021-08-08
