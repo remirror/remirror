@@ -39,7 +39,7 @@ const html = String.raw;
 const content = html`
   <pre><code data-code-block-language="typescript">
 function sayHello{
-  console.log('hello world!' )
+  console.log('hello world!')
 }
 </code></pre>
 `;
