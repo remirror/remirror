@@ -1,5 +1,14 @@
 # @remirror/react-editors
 
+## 0.0.7
+
+> 2021-08-13
+
+### Patch Changes
+
+- Updated dependencies [[`662edfdaa`](https://github.com/remirror/remirror/commit/662edfdaa6ab7954edd4946b6f06da6d36288042)]:
+  - remirror@1.0.6
+
 ## 0.0.6
 
 > 2021-08-08
