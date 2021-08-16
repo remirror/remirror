@@ -1,3 +1,5 @@
+import 'remirror/styles/all.css';
+
 import { FC, useEffect, useMemo, useState } from 'react';
 import { uniqueId } from 'remirror';
 import {
@@ -66,7 +68,7 @@ const Popup: FC = () => {
 };
 
 const SmallEditor: FC = () => {
-  const { getRootProps, setContent, commands, helpers } = useRemirrorContext({
+  const { setContent, commands, helpers } = useRemirrorContext({
     autoUpdate: true,
   });
 
@@ -106,7 +108,7 @@ const SmallEditor: FC = () => {
 
   return (
     <div>
-      <div {...getRootProps()} />
+      <EditorComponent />
       <Popup />
       <div>Annotations:</div>
       <pre>{JSON.stringify(helpers.getAnnotations(), null, '  ')}</pre>
@@ -118,9 +120,11 @@ export const Basic = () => {
   const { manager } = useRemirror({ extensions: () => [new AnnotationExtension()] });
 
   return (
-    <Remirror manager={manager}>
-      <SmallEditor />
-    </Remirror>
+    <ThemeProvider>
+      <Remirror manager={manager}>
+        <SmallEditor />
+      </Remirror>
+    </ThemeProvider>
   );
 };
 
