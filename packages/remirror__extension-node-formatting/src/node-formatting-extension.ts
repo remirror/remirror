@@ -75,6 +75,21 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
           nodeIndent: this.nodeIndent(),
           nodeTextAlignment: this.nodeTextAlignment(),
           nodeLineHeight: this.nodeLineHeight(),
+          style: {
+            default: '',
+            parseDOM: (element) => element.getAttribute('style'),
+            toDOM: ({ nodeIndent, nodeTextAlignment, nodeLineHeight, style }) => {
+              const marginLeft = nodeIndent ? this.options.indents[nodeIndent] : undefined;
+              const textAlign =
+                nodeTextAlignment && nodeTextAlignment !== 'none' ? nodeTextAlignment : undefined;
+              const lineHeight = nodeLineHeight ? nodeLineHeight : undefined;
+
+              return {
+                // Compose the style string together with the currently set style.
+                style: joinStyles({ marginLeft, textAlign, lineHeight }, style as string),
+              };
+            },
+          },
         },
       },
     ];
@@ -83,7 +98,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
   @command()
   setLineHeight(lineHeight: number): CommandFunction {
     return this.setNodeAttribute(({ node }) => {
-      if (lineHeight === node.attrs.nodeTextAlignment) {
+      if (lineHeight === node.attrs.nodeLineHeight) {
         return;
       }
 
@@ -173,7 +188,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
 
   @keyBinding({ shortcut: NamedShortcut.CenterAlignment, command: 'centerAlign' })
   centerAlignShortcut(props: KeyBindingProps): boolean {
-    return this.leftAlign()(props);
+    return this.centerAlign()(props);
   }
 
   @keyBinding({ shortcut: NamedShortcut.JustifyAlignment, command: 'justifyAlign' })
@@ -213,25 +228,6 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
           extractIndent(this.options.indents, element.style.marginLeft)
         );
       },
-      toDOM: (attrs) => {
-        // Ignoring the `0` value is intentional here.
-        if (!attrs.nodeIndent) {
-          return;
-        }
-
-        const indentIndex = `${attrs.nodeIndent}`;
-        const marginLeft = this.options.indents[attrs.nodeIndent];
-
-        if (!marginLeft) {
-          return;
-        }
-
-        return {
-          [NODE_INDENT_ATTRIBUTE]: indentIndex,
-          // Compose the style string together with the currently set style.
-          style: joinStyles({ marginLeft }, attrs.style as string),
-        };
-      },
     };
   }
 
@@ -244,19 +240,6 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
       parseDOM: (element) => {
         return element.getAttribute(NODE_TEXT_ALIGNMENT_ATTRIBUTE) ?? element.style.textAlign;
       },
-      toDOM: (attrs) => {
-        const textAlign = attrs.nodeTextAlignment;
-
-        if (!textAlign || textAlign === 'none') {
-          return;
-        }
-
-        return {
-          [NODE_TEXT_ALIGNMENT_ATTRIBUTE]: textAlign,
-          // Compose the style string together with the currently set style.
-          style: joinStyles({ textAlign }, attrs.style as string),
-        };
-      },
     };
   }
 
@@ -268,19 +251,6 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
       default: null,
       parseDOM: (element) => {
         return element.getAttribute(NODE_LINE_HEIGHT_ATTRIBUTE) ?? element.style.lineHeight;
-      },
-      toDOM: (attrs) => {
-        const lineHeight = attrs.nodeTextAlignment;
-
-        if (!lineHeight) {
-          return;
-        }
-
-        return {
-          [NODE_LINE_HEIGHT_ATTRIBUTE]: lineHeight,
-          // Compose the style string together with the currently set style.
-          style: joinStyles({ lineHeight }, attrs.style as string),
-        };
       },
     };
   }

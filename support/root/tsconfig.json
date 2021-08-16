@@ -330,6 +330,9 @@
       "path": "packages/remirror__extension-mention/src"
     },
     {
+      "path": "packages/remirror__extension-node-formatting/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-node-formatting/__tests__"
     },
     {
