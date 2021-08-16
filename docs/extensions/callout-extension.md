@@ -64,7 +64,7 @@ The extension is provided by the `@remirror/extension-callout` package. There ar
 
 ### Examples
 
-See [storybook](https://remirror.vercel.app/?path=/story/callouts--basic) for examples.
+See [storybook](https://remirror.vercel.app/?path=/story/extensions-callout--basic) for examples.
 
 ## API
 

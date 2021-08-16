@@ -90,9 +90,7 @@ The extension is provided by the `@remirror/extension-markdown` package. There a
 
 ### Examples
 
-#### A pure markdown editor
-
-#### A dual editor with markdown
+See [storybook](https://remirror.vercel.app/?path=/story/markdown-editor--basic) for examples.
 
 ## API
 
