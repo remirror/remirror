@@ -4,7 +4,7 @@ import { CodeBlockExtension } from 'remirror/extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useEditorState, useRemirror } from '@remirror/react';
 
-export default { title: 'Code Block extension' };
+export default { title: 'Extensions / Code Block' };
 
 const Dev = () => {
   const updatedState = useEditorState();

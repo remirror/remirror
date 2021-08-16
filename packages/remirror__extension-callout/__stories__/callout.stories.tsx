@@ -15,7 +15,7 @@ import {
   useRemirrorContext,
 } from '@remirror/react';
 
-export default { title: 'Callouts' };
+export default { title: 'Extensions / Callout' };
 
 const EmojiPicker = () => {
   const pickerRef = useRef(new EmojiButton({ position: 'bottom', autoFocusSearch: false }));

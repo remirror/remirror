@@ -7,7 +7,7 @@ import {
   useRemirrorContext,
 } from '@remirror/react';
 
-export default { title: 'Tables extension' };
+export default { title: 'Extensions / Tables (simple)' };
 
 const CommandMenu = () => {
   const ctx = useRemirrorContext();

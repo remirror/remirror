@@ -9,7 +9,7 @@ import { createBaseuploadFileUploader } from '../src/file-uploaders/bashupload-f
 import { createObjectUrlFileUploader } from '../src/file-uploaders/object-url-file-uploader';
 import { createSlowFileUploader } from '../src/file-uploaders/slow-file-uploader';
 
-export default { title: 'File extension' };
+export default { title: 'Extensions / File' };
 
 export const Default = (): JSX.Element => {
   const extensions = useCallback(() => [new FileExtension({})], []);
