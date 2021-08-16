@@ -5,7 +5,7 @@ import { IframeExtension } from 'remirror/extensions';
 import { htmlToProsemirrorNode } from '@remirror/core';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
-export default { title: 'Extensions / Iframe' };
+export default { title: 'Extensions / Embed' };
 
 export const Basic: React.FC = () => {
   const { manager, state, onChange } = useRemirror({
