@@ -25,7 +25,7 @@ import {
   useRemirrorContext,
 } from '@remirror/react';
 
-export default { title: 'Annotation Extension' };
+export default { title: 'Extensions / Annotation' };
 
 const SAMPLE_TEXT = 'This is a sample text';
 

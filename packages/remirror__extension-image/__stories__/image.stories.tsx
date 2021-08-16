@@ -5,7 +5,7 @@ import { ImageExtension } from 'remirror/extensions';
 import { htmlToProsemirrorNode } from '@remirror/core';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-export default { title: 'Image' };
+export default { title: 'Extensions / Image' };
 
 const basicExtensions = () => [new ImageExtension()];
 

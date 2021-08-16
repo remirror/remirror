@@ -16,7 +16,7 @@ import {
   useRemirror,
 } from '@remirror/react';
 
-export default { title: 'Positioner Extension' };
+export default { title: 'Extensions / Positioner' };
 
 const extensions = () => [
   new HeadingExtension(),

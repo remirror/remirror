@@ -10,7 +10,7 @@ import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror
 
 import { TaskListExtension } from '../src/task-list-extension';
 
-export default { title: 'List Extension' };
+export default { title: 'Extensions / List' };
 
 export const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({

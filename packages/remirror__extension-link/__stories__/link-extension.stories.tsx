@@ -33,7 +33,7 @@ import {
   useUpdateReason,
 } from '@remirror/react';
 
-export default { title: 'Link Extension' };
+export default { title: 'Extensions / Link' };
 
 const mentionAtomItems: MentionAtomNodeAttributes[] = [
   { id: 'tom', label: '@tom' },

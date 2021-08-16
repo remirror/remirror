@@ -33,7 +33,7 @@ The extension is provided by the `@remirror/extension-placeholder` package. Ther
 
 ### Examples
 
-See [storybook](https://remirror.vercel.app/?path=/story/placeholder-extension--basic) for examples.
+See [storybook](https://remirror.vercel.app/?path=/story/extensions-placeholder--basic) for examples.
 
 ## API
 

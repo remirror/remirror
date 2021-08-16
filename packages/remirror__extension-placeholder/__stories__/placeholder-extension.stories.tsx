@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { PlaceholderExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-export default { title: 'Placeholder Extension' };
+export default { title: 'Extensions / Placeholder' };
 
 export const Basic = (): JSX.Element => {
   const extensions = useCallback(

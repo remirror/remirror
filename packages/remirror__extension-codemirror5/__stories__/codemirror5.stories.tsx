@@ -8,7 +8,7 @@ import CodeMirror from 'codemirror';
 import { CodeMirrorExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-export default { title: 'Codemirror5 extension' };
+export default { title: 'Extensions / Codemirror5' };
 
 export const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
