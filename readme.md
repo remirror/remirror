@@ -154,6 +154,10 @@ const Button = () => {
   // `autoUpdate` means that every editor update will recalculate the output
   // from `active.bold()` and keep the bold status up to date in the editor.
   const { bold } = useActive();
+  
+  const commands = useCommands()
+
+  const commands = useCommands();
 
   return (
     <>
