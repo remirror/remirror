@@ -13,7 +13,7 @@
   <a href="#motivation"><strong>Motivation</strong></a> ·
   <a href="#status"><strong>Status</strong></a> ·
   <a href="https://remirror.io/docs"><strong>Documentation</strong></a> ·
-  <a href="https://remirror.io/playground"><strong>Playground</strong></a> ·
+  <a href="https://remirror.vercel.app"><strong>Storybook</strong></a> ·
   <a href="https://remirror.io/docs/contributing"><strong>Contributing</strong></a>
 </p>
 
