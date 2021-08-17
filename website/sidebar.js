@@ -9,7 +9,7 @@ const docs = [
     type: 'category',
     label: 'React',
     collapsed: false,
-    items: ['react/create-editor', 'react/controlled', 'react/hooks', 'react/refs'],
+    items: ['react/create-editor', 'react/controlled', 'react/hooks', 'react/refs', 'react/static-html'],
   },
   {
     type: 'category',
