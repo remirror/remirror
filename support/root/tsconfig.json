@@ -552,6 +552,9 @@
       "path": "packages/remirror__react-native/src"
     },
     {
+      "path": "packages/remirror__react-renderer/__stories__"
+    },
+    {
       "path": "packages/remirror__react-renderer/__tests__"
     },
     {
