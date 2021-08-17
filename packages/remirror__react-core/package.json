@@ -39,7 +39,7 @@
     "@remirror/i18n": "^1.0.2",
     "@remirror/preset-core": "^1.0.1",
     "@remirror/preset-react": "^1.0.1",
-    "@remirror/react-renderer": "^1.0.2",
+    "@remirror/react-renderer": "^1.0.3",
     "@remirror/react-ssr": "^1.0.2",
     "@remirror/react-utils": "^1.0.2",
     "@remirror/theme": "^1.1.0",

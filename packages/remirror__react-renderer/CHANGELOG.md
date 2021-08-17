@@ -1,5 +1,13 @@
 # @remirror/react-renderer
 
+## 1.0.3
+
+> 2021-08-17
+
+### Patch Changes
+
+- [#1067](https://github.com/remirror/remirror/pull/1067) [`18c101a20`](https://github.com/remirror/remirror/commit/18c101a206ba38cc935caef955f82bd16f73a551) Thanks [@whawker](https://github.com/whawker)! - Add support for callouts with emojis to the react-renderer
+
 ## 1.0.2
 
 > 2021-07-21
