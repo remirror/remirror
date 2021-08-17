@@ -6,10 +6,10 @@ import {
   Doc,
   Heading,
   MarkMap,
+  RemirrorRenderer,
   TextHandler,
   ThemeProvider,
 } from '@remirror/react';
-import { RemirrorRenderer } from '@remirror/react';
 
 import { SAMPLE_DOC } from './sample-doc';
 
