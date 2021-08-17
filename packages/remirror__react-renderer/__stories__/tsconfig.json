@@ -45,12 +45,6 @@
     },
     {
       "path": "../../remirror__core/src"
-    },
-    {
-      "path": "../../remirror__extension-events/src"
-    },
-    {
-      "path": "../../remirror__messages/src"
     }
   ]
 }
