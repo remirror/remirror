@@ -11,6 +11,8 @@ export const stories = glob.sync(baseDir('packages/*/__stories__/*.stories.(tsx)
   ignore: ['**/node_modules'],
 });
 
+export const addons = ['@storybook/addon-storysource'];
+
 // Make the introduction the first story.
 stories.sort((a, b) => {
   if (a.includes('introduction.stories.tsx')) {
