@@ -18,7 +18,21 @@ export const Callout: FC<{
     return <RemirrorRenderer json={node} key={ii} {...props} />;
   });
 
-  const calloutType = props.node.attrs?.type;
+  const { type, emoji } = props.node.attrs ?? {};
+  const dataAttrs: Record<string, unknown> = { 'data-callout-type': type };
 
-  return <div data-callout-type={calloutType}>{children}</div>;
+  if (emoji) {
+    dataAttrs['data-callout-emoji'] = emoji;
+  }
+
+  return (
+    <div {...dataAttrs}>
+      {emoji && (
+        <div className='remirror-callout-emoji-wrapper'>
+          <span>{emoji as string}</span>
+        </div>
+      )}
+      <div>{children}</div>
+    </div>
+  );
 };

@@ -21,7 +21,41 @@ describe('Callout', () => {
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
       <div data-callout-type="info">
-        Important
+        <div>
+          Important
+        </div>
+      </div>
+    `);
+  });
+
+  it('renders callout with an emoji to HTML', () => {
+    const json: RemirrorJSON = {
+      type: 'callout',
+      attrs: {
+        type: 'info',
+        emoji: 'ℹ️',
+      },
+      content: [
+        {
+          type: 'text',
+          text: 'Important',
+        },
+      ],
+    };
+    const { container } = strictRender(<Callout node={json} markMap={{}} />);
+
+    expect(container.innerHTML).toMatchInlineSnapshot(`
+      <div data-callout-type="info"
+           data-callout-emoji="ℹ️"
+      >
+        <div class="remirror-callout-emoji-wrapper">
+          <span>
+            ℹ️
+          </span>
+        </div>
+        <div>
+          Important
+        </div>
       </div>
     `);
   });
