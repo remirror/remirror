@@ -48,7 +48,7 @@
     "@remirror/react-components": "^1.0.2",
     "@remirror/react-core": "^1.0.2",
     "@remirror/react-hooks": "^1.0.2",
-    "@remirror/react-renderer": "^1.0.2",
+    "@remirror/react-renderer": "^1.0.3",
     "@remirror/react-ssr": "^1.0.2",
     "@remirror/react-utils": "^1.0.2"
   },
