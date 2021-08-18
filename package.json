@@ -264,6 +264,7 @@
     "prCreation": "not-pending",
     "stabilityDays": 7,
     "rangeStrategy": "replace",
+    "prConcurrentLimit": 2,
     "dependencyDashboard": true
   },
   "manypkg": {
