@@ -2745,7 +2745,7 @@ importers:
       '@types/semver': ^7.3.7
       '@types/throttle-debounce': ^2.1.0
       autoprefixer: ^10.3.1
-      camelcase-keys: ^6.2.2
+      camelcase-keys: ^7.0.0
       chalk: ^4.1.0
       cheerio: ^1.0.0-rc.10
       cpy: ^8.1.1
@@ -2818,7 +2818,7 @@ importers:
       '@types/semver': 7.3.7
       '@types/throttle-debounce': 2.1.0
       autoprefixer: 10.3.1_postcss@8.3.5
-      camelcase-keys: 6.2.2
+      camelcase-keys: 7.0.0
       chalk: 4.1.1
       cheerio: 1.0.0-rc.10
       cpy: 8.1.2
@@ -12116,6 +12116,16 @@ packages:
       camelcase: 5.3.1
       map-obj: 4.2.1
       quick-lru: 4.0.1
+    dev: false
+
+  /camelcase-keys/7.0.0:
+    resolution: {integrity: sha512-qlQlECgDl5Ev+gkvONaiD4X4TF2gyZKuLBvzx0zLo2UwAxmz3hJP/841aaMHTeH1T7v5HRwoRq91daulXoYWvg==}
+    engines: {node: '>=12'}
+    dependencies:
+      camelcase: 6.2.0
+      map-obj: 4.2.1
+      quick-lru: 5.1.1
+      type-fest: 1.2.2
     dev: false
 
   /camelcase/4.1.0:
