@@ -543,6 +543,9 @@
       "path": "packages/remirror__react-editors/src"
     },
     {
+      "path": "packages/remirror__react-hooks/__stories__"
+    },
+    {
       "path": "packages/remirror__react-hooks/__tests__"
     },
     {
