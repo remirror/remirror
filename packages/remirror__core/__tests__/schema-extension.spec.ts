@@ -159,6 +159,7 @@ describe('extraAttributes', () => {
     const manager = RemirrorManager.create(
       () => [
         ...wysiwygPreset(),
+        ...corePreset(),
         new ThePlainExtension(),
         new TheMarkExtension(),
         new TheNodeExtension(),

@@ -1,4 +1,4 @@
-import { ColumnsExtension, corePreset, wysiwygPreset } from 'remirror/extensions';
+import { ColumnsExtension, wysiwygPreset } from 'remirror/extensions';
 import {
   ComponentItem,
   EditorComponent,
