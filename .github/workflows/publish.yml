@@ -63,6 +63,7 @@ jobs:
           commit: main
           tag: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].body }}'
+          token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: parse changelog for @remirror/react
@@ -77,6 +78,7 @@ jobs:
           commit: main
           tag: '@remirror/react@${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].body }}'
+          token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
 
       - name: parse changelog for @remirror/pm
@@ -91,4 +93,5 @@ jobs:
           commit: main
           tag: '@remirror/pm@${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].body }}'
+          token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
