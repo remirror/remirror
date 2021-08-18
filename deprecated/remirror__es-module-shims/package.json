@@ -1,0 +1,14 @@
+{
+  "name": "@remirror/es-module-shims",
+  "version": "1.0.2",
+  "description": "A fork of es-module-shims to support the remirror playground.",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__es-module-shims",
+  "repository": "https://github.com/remirror/remirror/tree/HEAD/deprecated/remirror__es-module-shims",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
