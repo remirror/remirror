@@ -1,5 +1,13 @@
 # @remirror/extension-node-formatting
 
+## 1.0.3
+
+> 2021-08-18
+
+### Patch Changes
+
+- Publish a version of `@remirror/extension-node-formatting` without code modification.
+
 ## 1.0.2
 
 > 2021-08-18
