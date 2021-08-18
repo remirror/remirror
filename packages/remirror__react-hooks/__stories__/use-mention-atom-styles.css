@@ -1,0 +1,17 @@
+.remirror-theme {
+  /* Provide sufficient space to see the popup */
+  --rmr-space-6: 400px;
+}
+.suggestions {
+  border: 1px solid darkgray;
+  border-radius: 4px;
+}
+.suggestion {
+  padding: 2px 8px;
+}
+.highlighted {
+  background: #7963d233;
+}
+.hovered {
+  background: #7963d222;
+}
