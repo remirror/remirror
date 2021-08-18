@@ -2853,6 +2853,7 @@ importers:
       '@changesets/pre': ^1.0.6
       '@changesets/read': ^0.4.7
       '@changesets/types': ^4.0.0
+      '@changesets/write': ^0.1.4
       '@linaria/babel-preset': 3.0.0-beta.4
       '@lingui/core': ^3.10.4
       '@manypkg/get-packages': ^1.1.1
@@ -2926,7 +2927,8 @@ importers:
       '@changesets/pre': 1.0.6
       '@changesets/read': 0.4.7
       '@changesets/types': 4.0.0
-      '@linaria/babel-preset': 3.0.0-beta.4_@babel+core@7.14.6
+      '@changesets/write': 0.1.4
+      '@linaria/babel-preset': 3.0.0-beta.4
       '@lingui/core': 3.10.4
       '@manypkg/get-packages': 1.1.1
       '@microsoft/api-extractor': 7.16.1
@@ -3888,6 +3890,14 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.14.6
+      '@babel/helper-plugin-utils': 7.14.5
+    dev: false
+
+  /@babel/plugin-syntax-dynamic-import/7.8.3:
+    resolution: {integrity: sha512-5gdGbFon+PszYzqs83S3E5mpi7/y/8M9eC90MRTZfduQOYW76ig6SOSPNe41IG5LoP3FGBn2N0RjVDSQiS94kQ==}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
       '@babel/helper-plugin-utils': 7.14.5
     dev: false
 
@@ -4905,7 +4915,7 @@ packages:
   /@changesets/write/0.1.4:
     resolution: {integrity: sha512-uco+vS3mo2JqflLciIU707har+6AEFOeP8pgu3vVC1M2WcKukQgR1KylHFqZJxKQWahf8mQnuUSbgR4yJQuhmA==}
     dependencies:
-      '@babel/runtime': 7.14.6
+      '@babel/runtime': 7.15.3
       '@changesets/types': 4.0.0
       fs-extra: 7.0.1
       human-id: 1.0.2
@@ -6601,6 +6611,23 @@ packages:
 
   /@lepont/platform/0.1.4:
     resolution: {integrity: sha512-DUPPWXpKaekj3exvtP4E7Ld8zMPg4EU6199dpNsXr7UdlcqU9tajuiS0Gjl8iI8CAQ94d2f/3HcFcFbmWg+Qsw==}
+    dev: false
+
+  /@linaria/babel-preset/3.0.0-beta.4:
+    resolution: {integrity: sha512-Bjsk4VZUQXK3u04MuLlyP/+/tDd7bWeLXYCOnq4US9H2QFRdka97fm6hH34SRinoHm9fSPCHrj9d+KtY8ge2wg==}
+    peerDependencies:
+      '@babel/core': '>=7'
+    dependencies:
+      '@babel/generator': 7.14.5
+      '@babel/plugin-syntax-dynamic-import': 7.8.3
+      '@babel/template': 7.14.5
+      '@linaria/core': 3.0.0-beta.4
+      '@linaria/logger': 3.0.0-beta.3
+      cosmiconfig: 5.2.1
+      source-map: 0.6.1
+      stylis: 3.5.4
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@linaria/babel-preset/3.0.0-beta.4_@babel+core@7.14.6:

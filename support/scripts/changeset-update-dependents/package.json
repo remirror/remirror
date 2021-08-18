@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-changeset-update-dependents.cjs.js",
+  "module": "dist/scripts-changeset-update-dependents.esm.js"
+}

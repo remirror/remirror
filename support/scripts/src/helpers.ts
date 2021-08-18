@@ -203,6 +203,7 @@ let packages: Promise<Package[]>;
 interface GetAllDependencies {
   excludeDeprecated?: boolean;
   excludeSupport?: boolean;
+  excludePrivate?: boolean;
 }
 
 /**
@@ -213,6 +214,7 @@ interface GetAllDependencies {
 export function getAllDependencies({
   excludeDeprecated = true,
   excludeSupport = false,
+  excludePrivate = false,
 }: GetAllDependencies = {}): Promise<Package[]> {
   if (!packages) {
     packages = getPackages(baseDir()).then(({ packages = [] }) => {
@@ -224,6 +226,10 @@ export function getAllDependencies({
         }
 
         if (excludeDeprecated && pkg.dir.startsWith(baseDir('deprecated'))) {
+          continue;
+        }
+
+        if (excludePrivate && pkg.packageJson.private) {
           continue;
         }
 
