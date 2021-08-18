@@ -1,5 +1,16 @@
 # remirror
 
+## 1.0.7
+
+> 2021-08-18
+
+### Patch Changes
+
+- [#1069](https://github.com/remirror/remirror/pull/1069) [`937c3332d`](https://github.com/remirror/remirror/commit/937c3332d11ff28f5c218e3ed77a85b4a817b067) Thanks [@whawker](https://github.com/whawker)! - Add ability for doc node's `docAttributes` to have default attribute values
+
+- Updated dependencies [[`937c3332d`](https://github.com/remirror/remirror/commit/937c3332d11ff28f5c218e3ed77a85b4a817b067)]:
+  - @remirror/extension-doc@1.0.2
+
 ## 1.0.6
 
 > 2021-08-13
