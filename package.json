@@ -227,6 +227,45 @@
     "node": ">=12",
     "pnpm": "^6.0.0"
   },
+  "renovate": {
+    "extends": [
+      "config:base",
+      ":semanticCommitTypeAll(chore)"
+    ],
+    "lockFileMaintenance": {
+      "enabled": true,
+      "extends": "schedule:monthly"
+    },
+    "packageRules": [
+      {
+        "groupName": "prosemirror packages",
+        "matchPackagePatterns": [
+          ".*prosemirror.*"
+        ],
+        "rangeStrategy": "bump",
+        "stabilityDays": 0
+      },
+      {
+        "groupName": "dependencies (non-major)",
+        "excludePackagePatterns": [
+          ".*prosemirror.*"
+        ],
+        "matchUpdateTypes": [
+          "patch",
+          "minor"
+        ],
+        "schedule": [
+          "before 2am on Monday"
+        ],
+        "stabilityDays": 0
+      }
+    ],
+    "ignoreDeps": [],
+    "prCreation": "not-pending",
+    "stabilityDays": 7,
+    "rangeStrategy": "replace",
+    "dependencyDashboard": true
+  },
   "manypkg": {
     "defaultBranch": "HEAD"
   },
