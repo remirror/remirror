@@ -79,9 +79,9 @@ Extra attributes can also be added via the `RemirrorManager`. This can set attri
 
 ```ts
 import { RemirrorManager } from 'remirror';
-import { CorePreset, WysiwygPreset } from 'remirror/extensions';
+import { WysiwygPreset } from 'remirror/extensions';
 
-const manager = RemirrorManager.create(() => [new WysiwygPreset(), new CorePreset()], {
+const manager = RemirrorManager.create(() => [new WysiwygPreset()], {
   extraAttributes: [
     // Can match by grouping of `nodes` | `marks` | `all`.
     { identifiers: 'nodes', attributes: { totallyNodes: 'abc' } },

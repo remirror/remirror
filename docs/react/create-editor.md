@@ -109,12 +109,7 @@ import { Remirror, useRemirror } from '@remirror/react';
 
 import { Menu } from './editor';
 
-const extensions = () => [
-  new CorePreset(),
-  new BoldExtension(),
-  new ItalicExtension(),
-  new UnderlineExtension(),
-];
+const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
 const Editor = () => {
   const { manager, state } = useRemirror({
