@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.0.9
+
+> 2021-08-18
+
+### Patch Changes
+
+- Publish a version of `@remirror/extension-node-formatting` without code modification.
+
+- Updated dependencies []:
+  - remirror@1.0.8
+
 ## 0.0.8
 
 > 2021-08-18
