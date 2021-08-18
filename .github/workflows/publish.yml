@@ -63,6 +63,7 @@ jobs:
           commit: main
           tag: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].body }}'
+        continue-on-error: true
 
       - name: parse changelog for @remirror/react
         id: changelog_remirror_react
@@ -74,8 +75,9 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           commit: main
-          tag: '@remirror/react${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
+          tag: '@remirror/react@${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].body }}'
+        continue-on-error: true
 
       - name: parse changelog for @remirror/pm
         id: changelog_remirror_pm
@@ -87,5 +89,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           commit: main
-          tag: '@remirror/pmv${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
+          tag: '@remirror/pm@${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].body }}'
+        continue-on-error: true
