@@ -50,3 +50,17 @@ jobs:
           rm $HOME/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: parse changelog
+        id: changelog
+        uses: ocavue/changelog-parser-action@v1
+        with:
+          filePath: "packages/remirror/CHANGELOG.md"
+
+      - name: create release
+        uses: softprops/action-gh-release@v1
+        with:
+          target_commitish: main
+          name: "v${{ fromJSON(steps.changelog.outputs.parsed).versions[0].version }}"
+          tag_name: "v${{ fromJSON(steps.changelog.outputs.parsed).versions[0].version }}"
+          body: "${{ fromJSON(steps.changelog.outputs.parsed).versions[0].body }}"
