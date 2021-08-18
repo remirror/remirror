@@ -1,8 +1,0 @@
-{
-  "main": "dist/remirror-playground-worker.babel.cjs.js",
-  "module": "dist/remirror-playground-worker.babel.esm.js",
-  "browser": {
-    "./dist/remirror-playground-worker.babel.cjs.js": "./dist/remirror-playground-worker.babel.browser.cjs.js",
-    "./dist/remirror-playground-worker.babel.esm.js": "./dist/remirror-playground-worker.babel.browser.esm.js"
-  }
-}

@@ -365,7 +365,6 @@ let config = {
         '**/*.stories.tsx',
         '**/*.stories.ts',
         'packages/remirror__cli/**',
-        'packages/remirror__playground/**',
         'packages/remirror__extension-emoji/src/data/*.ts',
         'packages/remirror__svelte/rollup.config.js',
         'packages/testing/**',
@@ -389,12 +388,7 @@ let config = {
       },
     },
     {
-      files: [
-        'support/**',
-        'packages/testing/**/*.{js,ts}',
-        'packages/remirror__playground/**',
-        'packages/remirror__playground-deprecated/**',
-      ],
+      files: ['support/**', 'packages/testing/**/*.{js,ts}'],
       rules: {
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-var-requires': 'off',
@@ -412,7 +406,7 @@ let config = {
       },
     },
     {
-      files: ['packages/remirror__playground/**', 'packages/testing/**'],
+      files: ['packages/testing/**'],
       rules: { '@typescript-eslint/no-var-requires': 'off' },
     },
     {
