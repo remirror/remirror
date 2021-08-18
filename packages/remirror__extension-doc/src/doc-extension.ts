@@ -3,8 +3,10 @@ import {
   command,
   CommandFunction,
   EditorSchema,
+  entries,
   extension,
   ExtensionPriority,
+  isPlainObject,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
@@ -52,12 +54,29 @@ export interface DocOptions {
 
   /**
    * The doc node doesn't support `extraAttribute`. If you need to add support
-   * for adding new attributes then set the array of attributes which should be
-   * applied.
+   * for adding new attributes then this property can be used to apply attributes
+   * directly to the doc node.
    *
-   * The attributes are directly applied to the dom node.
+   * @remarks
+   *
+   * Passing an array of strings, will initialise each key with the value null
+   *
+   * ```ts
+   * new DocExtension({ docAttributes: ['key1', 'key2'] })
+   * ```
+   *
+   * Passing an object, will initialise each key with an initial value
+   *
+   * ```ts
+   * new DocExtension({
+   *   docAttributes: {
+   *     key1: 'value1',
+   *     key2: null
+   *   }
+   * })
+   * ```
    */
-  docAttributes?: Static<string[]>;
+  docAttributes?: Static<string[]> | Static<Record<string, string | null>>;
 }
 
 /**
@@ -88,15 +107,22 @@ export class DocExtension extends NodeExtension<DocOptions> {
    * Create the node spec for the `doc` the content that you've provided.
    */
   createNodeSpec(_: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    const { docAttributes, content } = this.options;
     const attrs: Record<string, AttributeSpec> = object();
 
-    for (const key of this.options.docAttributes) {
-      attrs[key] = { default: null };
+    if (isPlainObject(docAttributes)) {
+      for (const [key, value] of entries(docAttributes)) {
+        attrs[key] = { default: value };
+      }
+    } else {
+      for (const key of docAttributes) {
+        attrs[key] = { default: null };
+      }
     }
 
     return {
       attrs,
-      content: this.options.content,
+      content,
       ...override,
     };
   }
