@@ -4,9 +4,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { PlaceholderExtension } from 'remirror/extensions';
 import { cx } from '@remirror/core';
 import { MentionAtomExtension, MentionAtomNodeAttributes } from '@remirror/extension-mention-atom';
-import { FloatingWrapper, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-
-import { useMentionAtom } from '../src/use-mention-atom';
+import {
+  FloatingWrapper,
+  Remirror,
+  ThemeProvider,
+  useMentionAtom,
+  useRemirror,
+} from '@remirror/react';
 
 export default { title: 'React Hooks / useMentionAtom' };
 
