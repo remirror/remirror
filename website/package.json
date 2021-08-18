@@ -38,7 +38,7 @@
     "react-syntax-highlighter": "^15.4.3",
     "reakit": "^1.3.8",
     "remark-footnotes": "^3.0.0",
-    "remirror": "^1.0.6"
+    "remirror": "^1.0.7"
   },
   "devDependencies": {
     "@docusaurus/core": "^2.0.0-beta.3",
