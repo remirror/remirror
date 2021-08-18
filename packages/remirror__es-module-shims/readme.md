@@ -1,5 +1,7 @@
 # @remirror/es-module-shims
 
+**DEPRECATED**
+
 > A fork of [es-module-shims](https://github.com/guybedford/es-module-shims) to support the remirror playground.
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
