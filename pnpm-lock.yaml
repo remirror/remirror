@@ -256,6 +256,18 @@ importers:
   deprecated/remirror__editor-wysiwyg:
     specifiers: {}
 
+  deprecated/remirror__es-module-shims:
+    specifiers:
+      '@babel/runtime': ^7.13.10
+      '@remirror/core-helpers': ^1.0.1
+      es-module-lexer: ^0.7.1
+      tiny-warning: ^1.0.3
+    dependencies:
+      '@babel/runtime': 7.15.3
+      '@remirror/core-helpers': link:../../packages/remirror__core-helpers
+      es-module-lexer: 0.7.1
+      tiny-warning: 1.0.3
+
   deprecated/remirror__extension-auto-link:
     specifiers: {}
 
@@ -939,18 +951,6 @@ importers:
       '@remirror/preset-core': link:../remirror__preset-core
     devDependencies:
       '@remirror/pm': link:../remirror__pm
-
-  packages/remirror__es-module-shims:
-    specifiers:
-      '@babel/runtime': ^7.13.10
-      '@remirror/core-helpers': ^1.0.1
-      es-module-lexer: ^0.7.1
-      tiny-warning: ^1.0.3
-    dependencies:
-      '@babel/runtime': 7.14.6
-      '@remirror/core-helpers': link:../remirror__core-helpers
-      es-module-lexer: 0.7.1
-      tiny-warning: 1.0.3
 
   packages/remirror__extension-annotation:
     specifiers:
