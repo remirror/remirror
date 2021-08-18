@@ -197,7 +197,7 @@ For example the following would trigger this error.
 
 ```tsx
 import React from 'react';
-import { BoldExtension, CorePreset } from 'remirror/extensions';
+import { BoldExtension } from 'remirror/extensions';
 import { Remirror, useRemirror, useRemirrorContext } from '@remirror/react';
 
 const Editor = () => {
@@ -219,7 +219,7 @@ const Editor = () => {
 };
 
 const EditorWrapper = () => {
-  const manager = useRemirror([new CorePreset(), new BoldExtension()]);
+  const manager = useRemirror([new BoldExtension()]);
 
   return (
     <Remirror manager={manager}>
@@ -261,7 +261,7 @@ const TextEditor = () => {
 };
 
 const EditorWrapper = () => {
-  const manager = useRemirror([new CorePreset(), new BoldExtension()]);
+  const manager = useRemirror([new BoldExtension()]);
 
   return (
     <Remirror manager={manager}>

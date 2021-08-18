@@ -104,17 +104,12 @@ To set the initial content for the editor you can pass additional properties to 
 
 ```tsx
 import React from 'react';
-import { BoldExtension, ItalicExtension, UnderlineExtension, corePreset } from 'remirror/extensions';
+import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
 import { Remirror, useRemirror } from '@remirror/react';
 
 import { Menu } from './editor';
 
-const extensions = () => [
-  ...corePreset(),
-  new BoldExtension(),
-  new ItalicExtension(),
-  new UnderlineExtension(),
-];
+const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
 const Editor = () => {
   const { manager, state } = useRemirror({

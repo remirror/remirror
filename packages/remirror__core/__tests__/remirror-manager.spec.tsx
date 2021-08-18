@@ -213,7 +213,6 @@ test('keymaps', () => {
     new FirstExtension(),
     new SecondExtension(),
     new ThirdExtension(),
-    ...corePreset(),
   ]);
   manager.attachFramework(createFramework(manager), () => {});
 
