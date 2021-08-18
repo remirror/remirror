@@ -58,11 +58,10 @@ jobs:
           filePath: 'packages/remirror/CHANGELOG.md'
 
       - name: create release for remirror
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          target_commitish: main
-          name: 'remirror v${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
-          tag_name: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
+          commit: main
+          tag: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].body }}'
 
       - name: parse changelog for @remirror/react
@@ -72,11 +71,10 @@ jobs:
           filePath: 'packages/remirror__react/CHANGELOG.md'
 
       - name: create release for @remirror/react
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          target_commitish: main
-          name: '@remirror/react v${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
-          tag_name: '@remirror/react${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
+          commit: main
+          tag: '@remirror/react${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].body }}'
 
       - name: parse changelog for @remirror/pm
@@ -86,9 +84,8 @@ jobs:
           filePath: 'packages/remirror__pm/CHANGELOG.md'
 
       - name: create release for @remirror/pm
-        uses: softprops/action-gh-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          target_commitish: main
-          name: '@remirror/pm v${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
-          tag_name: '@remirror/pmv${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
+          commit: main
+          tag: '@remirror/pmv${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].body }}'
