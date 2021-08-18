@@ -227,6 +227,31 @@
     "node": ">=12",
     "pnpm": "^6.0.0"
   },
+  "manypkg": {
+    "defaultBranch": "HEAD"
+  },
+  "pnpm": {
+    "overrides": {
+      "@babel/preset-env": "^7.13.10",
+      "monaco-editor": "npm:@typescript-deploys/monaco-editor@4.3.5",
+      "postcss": ">=8",
+      "typescript": "^4.3.5",
+      "@microsoft/api-extractor-model": "^7.13.3",
+      "@microsoft/api-extractor": "7.16.1",
+      "@microsoft/tsdoc-config": "^0.15.2",
+      "@rushstack/node-core-library": "^3.39.0",
+      "@rushstack/rig-package": "^0.2.12",
+      "@rushstack/ts-command-line": "^4.7.10"
+    }
+  },
+  "preconstruct": {
+    "packages": [
+      "packages/*",
+      "support/actions",
+      "support/scripts",
+      "support/templates/*"
+    ]
+  },
   "renovate": {
     "extends": [
       "config:base",
@@ -266,30 +291,5 @@
     "rangeStrategy": "replace",
     "prConcurrentLimit": 2,
     "dependencyDashboard": true
-  },
-  "manypkg": {
-    "defaultBranch": "HEAD"
-  },
-  "pnpm": {
-    "overrides": {
-      "@babel/preset-env": "^7.13.10",
-      "monaco-editor": "npm:@typescript-deploys/monaco-editor@4.3.5",
-      "postcss": ">=8",
-      "typescript": "^4.3.5",
-      "@microsoft/api-extractor-model": "^7.13.3",
-      "@microsoft/api-extractor": "7.16.1",
-      "@microsoft/tsdoc-config": "^0.15.2",
-      "@rushstack/node-core-library": "^3.39.0",
-      "@rushstack/rig-package": "^0.2.12",
-      "@rushstack/ts-command-line": "^4.7.10"
-    }
-  },
-  "preconstruct": {
-    "packages": [
-      "packages/*",
-      "support/actions",
-      "support/scripts",
-      "support/templates/*"
-    ]
   }
 }
