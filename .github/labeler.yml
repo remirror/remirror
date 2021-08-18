@@ -37,7 +37,6 @@
   - any:
       [
         'packages/{remirror,@remirror}/**/*.{ts,tsx,json}',
-        '!packages/remirror__playground/**/*',
         '!packages/remirror__cli/**/*',
         '**/*.spec.{ts,tsx}',
       ]
@@ -67,7 +66,7 @@
       ]
 
 'type: playground :joystick:':
-  - any: ['packages/remirror__playground/**/*.{ts,tsx,json}', 'website/src/pages/playground.tsx']
+  - any: ['website/src/pages/playground.tsx']
 
 'type: docs :pencil:':
   - any: ['docs/**/*.{md.mdx}', '**/readme.{md,mdx}']

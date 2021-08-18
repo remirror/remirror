@@ -27,9 +27,6 @@ module.exports = {
     '!examples/**',
     '!website/**',
 
-    // This is internal code and doesn't affect the end user experience.
-    '!packages/remirror__playground/**',
-
     // Currently can't be tested with JSDOM
     '!packages/remirror__extension-epic-mode/**',
 

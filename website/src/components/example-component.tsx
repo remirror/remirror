@@ -18,13 +18,6 @@ export interface ExampleProps extends BaseProps {
    * @default true
    */
   hideSandbox?: boolean;
-
-  /**
-   * Set to `false` to hide the code in the playground.
-   *
-   * @default false
-   */
-  hidePlayground?: boolean;
 }
 
 export const Example = (props: ExampleProps) => {

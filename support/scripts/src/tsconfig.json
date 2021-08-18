@@ -20,9 +20,6 @@
       "path": "../../../packages/remirror__icons/src"
     },
     {
-      "path": "../../../packages/remirror__playground/src"
-    },
-    {
       "path": "../../../packages/remirror__types/src"
     }
   ]

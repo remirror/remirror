@@ -1,8 +1,0 @@
-{
-  "main": "dist/remirror-playground-worker.prettier.cjs.js",
-  "module": "dist/remirror-playground-worker.prettier.esm.js",
-  "browser": {
-    "./dist/remirror-playground-worker.prettier.cjs.js": "./dist/remirror-playground-worker.prettier.browser.cjs.js",
-    "./dist/remirror-playground-worker.prettier.esm.js": "./dist/remirror-playground-worker.prettier.browser.esm.js"
-  }
-}
