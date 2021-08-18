@@ -36,7 +36,7 @@
     "@remirror/types": "^0.1.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.1"
+    "@remirror/pm": "^1.0.2"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.1"

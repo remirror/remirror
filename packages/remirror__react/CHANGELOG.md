@@ -1,5 +1,13 @@
 # @remirror/react
 
+## 1.0.3
+
+> 2021-08-18
+
+### Patch Changes
+
+- Remove the playground API from `@remirror/react`.
+
 ## 1.0.2
 
 > 2021-07-21

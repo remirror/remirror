@@ -1,5 +1,19 @@
 # @remirror/react-debugger
 
+## 1.0.2
+
+> 2021-08-18
+
+### Patch Changes
+
+- Deprecate `@remirror/react-debugger`.
+
+* Remove the playground API from `@remirror/react`.
+
+* Updated dependencies []:
+  - @remirror/pm@1.0.2
+  - @remirror/react@1.0.3
+
 ## 1.0.1
 
 > 2021-07-17

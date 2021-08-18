@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-debugger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A debugger forked from prosemirror-dev-tool for your remirror editor",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-debugger",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-debugger",
@@ -43,7 +43,7 @@
     "@emotion/styled": "^11.3.0",
     "@lingui/core": "^3.10.4",
     "@remirror/core": "^1.0.2",
-    "@remirror/react": "^1.0.2",
+    "@remirror/react": "^1.0.3",
     "@types/html": "^1.0.1",
     "@types/prosemirror-dev-tools": "^3.0.2",
     "create-context-state": "^1.0.0",
@@ -61,7 +61,7 @@
     "reakit-utils": "^0.15.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.1",
+    "@remirror/pm": "^1.0.2",
     "@testing-library/react": "^12.0.0",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
@@ -69,7 +69,7 @@
     "react-dom": "^17.0.2"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.1",
+    "@remirror/pm": "^1.0.2",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",

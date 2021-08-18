@@ -1,5 +1,16 @@
 # jest-prosemirror
 
+## 1.0.4
+
+> 2021-08-18
+
+### Patch Changes
+
+- Update dependency `prosemirror-gapcursor` to `^1.1.5`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.2
+
 ## 1.0.3
 
 > 2021-07-26
