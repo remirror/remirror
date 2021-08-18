@@ -18,12 +18,6 @@
       "default": "./dist/remirror-react.esm.js"
     },
     "./package.json": "./package.json",
-    "./playground": {
-      "import": "./playground/dist/remirror-react-playground.esm.js",
-      "require": "./playground/dist/remirror-react-playground.cjs.js",
-      "browser": "./playground/dist/remirror-react.browser.esm.js",
-      "default": "./playground/dist/remirror-react-playground.esm.js"
-    },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "dist/remirror-react.cjs.js",
@@ -34,8 +28,7 @@
   },
   "types": "dist/remirror-react.cjs.d.ts",
   "files": [
-    "dist",
-    "playground"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -77,8 +70,7 @@
   },
   "preconstruct": {
     "entrypoints": [
-      "index.ts",
-      "playground.ts"
+      "index.ts"
     ]
   },
   "rn:dev": "src/index.ts"
