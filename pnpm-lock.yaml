@@ -965,13 +965,13 @@ importers:
       '@remirror/messages': ^1.0.2
       '@remirror/pm': ^1.0.2
       '@types/direction': ^1.0.0
-      direction: ^1.0.4
+      direction: ^2.0.0
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
       '@types/direction': 1.0.0
-      direction: 1.0.4
+      direction: 2.0.0
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
@@ -14070,8 +14070,8 @@ packages:
     dependencies:
       path-type: 4.0.0
 
-  /direction/1.0.4:
-    resolution: {integrity: sha512-GYqKi1aH7PJXxdhTeZBFrg8vUBeKXi+cNprXsC1kpJcbcVnV9wBsrOu1cQEdG0WeQwlfHiy3XvnKfIrJ2R0NzQ==}
+  /direction/2.0.0:
+    resolution: {integrity: sha512-J+nMrvyX/yHTCu1FYjylOGSBKB0QCcXoY10VNOW6N0QxJRV3V5VP+QSkQC7yFaVPb3ZL7pVE/Nu0rcf4m1TbpQ==}
     hasBin: true
     dev: false
 

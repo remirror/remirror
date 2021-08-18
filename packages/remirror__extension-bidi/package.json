@@ -39,7 +39,7 @@
     "@remirror/core": "^1.0.2",
     "@remirror/messages": "^1.0.2",
     "@types/direction": "^1.0.0",
-    "direction": "^1.0.4"
+    "direction": "^2.0.0"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.2"
