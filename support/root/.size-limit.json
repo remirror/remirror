@@ -143,14 +143,6 @@
     "gzip": true
   },
   {
-    "name": "@remirror/es-module-shims",
-    "limit": "50 KB",
-    "path": "packages/remirror__es-module-shims/dist/remirror-es-module-shims.browser.esm.js",
-    "ignore": ["@remirror/core-helpers"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/extension-annotation",
     "limit": "5 KB",
     "path": "packages/remirror__extension-annotation/dist/remirror-extension-annotation.browser.esm.js",

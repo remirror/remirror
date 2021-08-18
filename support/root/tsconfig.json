@@ -102,9 +102,6 @@
       "path": "packages/remirror__dom/src"
     },
     {
-      "path": "packages/remirror__es-module-shims/src"
-    },
-    {
       "path": "packages/remirror__extension-annotation/__e2e__"
     },
     {

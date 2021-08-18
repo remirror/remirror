@@ -18,7 +18,6 @@
     "packages/remirror__core-utils/src/index.ts",
     "packages/remirror__dev/src/index.ts",
     "packages/remirror__dom/src/index.ts",
-    "packages/remirror__es-module-shims/src/index.ts",
     "packages/remirror__extension-annotation/src/index.ts",
     "packages/remirror__extension-bidi/src/index.ts",
     "packages/remirror__extension-blockquote/src/index.ts",
