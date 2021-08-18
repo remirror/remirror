@@ -595,7 +595,7 @@ importers:
       '@remirror/extension-markdown': ^1.0.1
       '@remirror/extension-mention': ^1.0.1
       '@remirror/extension-mention-atom': ^1.0.1
-      '@remirror/extension-node-formatting': ^1.0.1
+      '@remirror/extension-node-formatting': ^1.0.2
       '@remirror/extension-paragraph': ^1.0.1
       '@remirror/extension-placeholder': ^1.0.1
       '@remirror/extension-positioner': ^1.0.1
@@ -2090,7 +2090,7 @@ importers:
       '@remirror/extension-font-size': ^1.0.1
       '@remirror/extension-heading': ^1.0.1
       '@remirror/extension-italic': ^1.0.1
-      '@remirror/extension-node-formatting': ^1.0.1
+      '@remirror/extension-node-formatting': ^1.0.2
       '@remirror/extension-strike': ^1.0.1
       '@remirror/extension-sub': ^1.0.1
       '@remirror/extension-sup': ^1.0.1

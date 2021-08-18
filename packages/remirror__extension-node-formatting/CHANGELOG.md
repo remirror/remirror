@@ -1,5 +1,13 @@
 # @remirror/extension-node-formatting
 
+## 1.0.2
+
+> 2021-08-18
+
+### Patch Changes
+
+- [#1072](https://github.com/remirror/remirror/pull/1072) [`e5278d75e`](https://github.com/remirror/remirror/commit/e5278d75e931a91864adfd634d223a29ccb25eda) Thanks [@ronnyroeller](https://github.com/ronnyroeller)! - Node formatting wasn't reflected in style attribute
+
 ## 1.0.1
 
 > 2021-07-17
