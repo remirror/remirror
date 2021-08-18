@@ -1876,7 +1876,7 @@ importers:
       prosemirror-collab: ^1
       prosemirror-commands: ^1.1.10
       prosemirror-dropcursor: ^1.3.5
-      prosemirror-gapcursor: ^1
+      prosemirror-gapcursor: ^1.1.5
       prosemirror-history: ^1
       prosemirror-inputrules: ^1
       prosemirror-keymap: ^1
