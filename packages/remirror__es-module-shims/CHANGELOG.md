@@ -1,5 +1,13 @@
 # @remirror/es-module-shims
 
+## 1.0.2
+
+> 2021-08-18
+
+### Patch Changes
+
+- Deprecate `@remirror/es-module-shims`.
+
 ## 1.0.1
 
 > 2021-07-17
