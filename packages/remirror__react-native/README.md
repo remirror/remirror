@@ -1,6 +1,6 @@
-i
-
 # @remirror/react-native
+
+**DEPRECATED**
 
 > Run your remirror editor for `React Native`
 

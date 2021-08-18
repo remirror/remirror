@@ -1,5 +1,7 @@
 # @remirror/react-debugger
 
+**DEPRECATED**
+
 [![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/react-debugger.svg?)](https://bundlephobia.com/result?p=@remirror/react-debugger) [![npm](https://img.shields.io/npm/dm/@remirror/react-debugger.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/react-debugger)
 
 Debug your `remirror` editor via this debugging tool.
