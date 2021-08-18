@@ -48,13 +48,6 @@
       "default": "./icons/dist/remirror-icons.esm.js"
     },
     "./package.json": "./package.json",
-    "./playground": {
-      "import": "./playground/dist/remirror-playground.esm.js",
-      "require": "./playground/dist/remirror-playground.cjs.js",
-      "browser": "./playground/dist/remirror.browser.esm.js",
-      "types": "./playground/dist/remirror-playground.cjs.d.ts",
-      "default": "./playground/dist/remirror-playground.esm.js"
-    },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "dist/remirror.cjs.js",
@@ -69,7 +62,6 @@
     "dom",
     "extensions",
     "icons",
-    "playground",
     "styles"
   ],
   "dependencies": {
@@ -166,8 +158,7 @@
       "dom.ts",
       "extensions.ts",
       "icons.ts",
-      "index.ts",
-      "playground.ts"
+      "index.ts"
     ]
   },
   "rn:dev": "src/index.ts"

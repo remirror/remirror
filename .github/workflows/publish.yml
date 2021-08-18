@@ -51,16 +51,44 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: parse changelog
-        id: changelog
+      - name: parse changelog for remirror
+        id: changelog_remirror
         uses: ocavue/changelog-parser-action@v1
         with:
           filePath: 'packages/remirror/CHANGELOG.md'
 
-      - name: create release
+      - name: create release for remirror
         uses: softprops/action-gh-release@v1
         with:
           target_commitish: main
-          name: 'v${{ fromJSON(steps.changelog.outputs.parsed).versions[0].version }}'
-          tag_name: 'v${{ fromJSON(steps.changelog.outputs.parsed).versions[0].version }}'
-          body: '${{ fromJSON(steps.changelog.outputs.parsed).versions[0].body }}'
+          name: 'remirror v${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
+          tag_name: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
+          body: '${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].body }}'
+
+      - name: parse changelog for @remirror/react
+        id: changelog_remirror_react
+        uses: ocavue/changelog-parser-action@v1
+        with:
+          filePath: 'packages/remirror__react/CHANGELOG.md'
+
+      - name: create release for @remirror/react
+        uses: softprops/action-gh-release@v1
+        with:
+          target_commitish: main
+          name: '@remirror/react v${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
+          tag_name: '@remirror/react${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
+          body: '${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].body }}'
+
+      - name: parse changelog for @remirror/pm
+        id: changelog_remirror_pm
+        uses: ocavue/changelog-parser-action@v1
+        with:
+          filePath: 'packages/remirror__pm/CHANGELOG.md'
+
+      - name: create release for @remirror/pm
+        uses: softprops/action-gh-release@v1
+        with:
+          target_commitish: main
+          name: '@remirror/pm v${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
+          tag_name: '@remirror/pmv${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
+          body: '${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].body }}'
