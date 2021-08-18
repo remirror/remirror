@@ -1,6 +1,6 @@
 {
   "name": "@remirror/pm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A bundled library containing all the core prosemirror libraries required for using remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__pm",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__pm",

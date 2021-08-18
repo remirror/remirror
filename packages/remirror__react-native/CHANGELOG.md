@@ -1,5 +1,16 @@
 # @remirror/react-native
 
+## 1.0.3
+
+> 2021-08-18
+
+### Patch Changes
+
+- Deprecate `@remirror/react-native`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.2
+
 ## 1.0.2
 
 > 2021-07-21

@@ -1,5 +1,16 @@
 # remirror
 
+## 1.0.9
+
+> 2021-08-18
+
+### Patch Changes
+
+- Remove the playground API from `remirror`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.2
+
 ## 1.0.8
 
 > 2021-08-18

@@ -38,7 +38,7 @@
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.1"
+    "@remirror/pm": "^1.0.2"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.1"

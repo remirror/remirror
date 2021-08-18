@@ -1,5 +1,22 @@
 # @remirror/react-editors
 
+## 0.0.10
+
+> 2021-08-18
+
+### Patch Changes
+
+- Remove the playground API from `remirror`.
+
+* Update dependency `prosemirror-gapcursor` to `^1.1.5`.
+
+- Remove the playground API from `@remirror/react`.
+
+- Updated dependencies []:
+  - remirror@1.0.9
+  - @remirror/pm@1.0.2
+  - @remirror/react@1.0.3
+
 ## 0.0.9
 
 > 2021-08-18

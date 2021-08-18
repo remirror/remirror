@@ -1,6 +1,6 @@
 {
   "name": "jest-remirror",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A text editor for react built with prosemirror",
   "keywords": [
     "prosemirror",
@@ -36,11 +36,11 @@
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^1.0.2",
     "@remirror/dom": "^1.0.1",
-    "@remirror/pm": "^1.0.1",
+    "@remirror/pm": "^1.0.2",
     "@remirror/preset-core": "^1.0.1",
     "@testing-library/dom": "^8.1.0",
     "@types/sanitize-html": "^2.3.2",
-    "jest-prosemirror": "^1.0.3",
+    "jest-prosemirror": "^1.0.4",
     "jest-snapshot": "^27.0.6",
     "mutationobserver-shim": "^0.3.7",
     "sanitize-html": "^2.4.0",

@@ -1,5 +1,13 @@
 # @remirror/pm
 
+## 1.0.2
+
+> 2021-08-18
+
+### Patch Changes
+
+- Update dependency `prosemirror-gapcursor` to `^1.1.5`.
+
 ## 1.0.1
 
 > 2021-07-17
