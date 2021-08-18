@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-node-formatting",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Support consistent formatting of nodes within your editor.",
   "keywords": [
     "remirror",
