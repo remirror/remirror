@@ -30,7 +30,7 @@
       ],
       "@remirror/react": ["../../remirror__react/src/index.ts"],
       "@storybook/react": [
-        "../../../node_modules/.pnpm/@storybook+react@6.3.4_5adcf14f16f83a2edb2923710ccaaea0/node_modules/@storybook/react/types-6-0.d.ts"
+        "../../../node_modules/.pnpm/@storybook+react@6.3.4_dfad392d5450b8683a621f3ec486af19/node_modules/@storybook/react/types-6-0.d.ts"
       ],
       "@remirror/dev": ["../../remirror__dev/src/index.ts"]
     }
