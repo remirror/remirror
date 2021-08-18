@@ -12,7 +12,7 @@ jobs:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '/publish' && (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'COLLABORATOR') }}
     steps:
       - name: get pr information
-        uses: actions/github-script@v3
+        uses: actions/github-script@v4
         id: pr
         with:
           script: |
