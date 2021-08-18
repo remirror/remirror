@@ -176,17 +176,15 @@ If you're modifying a package and import helpers from another packages in the mo
 
 ### General
 
-This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct) to manage builds. Each time the project is installed `preconstruct dev` is run which automatically sets the dist folder with entry points mapping to the source files of the package. This is really useful for development and except for one exception when working on the playground is all you need.
+This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct) to manage builds. Each time the project is installed `preconstruct dev` is run which automatically sets the dist folder with entry points mapping to the source files of the package. This is really useful for development and except for one exception when working on the Storybook is all you need.
 
-### Playground
-
-Working on the playground requires the docs to be started.
+### Storybook
 
 ```bash
-pnpm run docs
+pnpm run storybook
 ```
 
-When run this builds all packages and then watch for changes to rebuild as necessary.
+When run this builds all packages and then watch for changes to reload as necessary.
 
 <br />
 

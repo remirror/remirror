@@ -750,7 +750,7 @@ async function main() {
 // Run the script and listen for any errors.
 main().catch((error) => {
   log.error(
-    chalk`\n{red Something went wrong while running the} {blue.bold playground:imports} {red script.}`,
+    chalk`\n{red Something went wrong while running the} {blue.bold generate-configs} {red script.}`,
   );
 
   log.fatal('\n', error);

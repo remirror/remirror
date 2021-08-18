@@ -65,9 +65,6 @@
         '!**/*.spec.{ts,tsx}',
       ]
 
-'type: playground :joystick:':
-  - any: ['website/src/pages/playground.tsx']
-
 'type: docs :pencil:':
   - any: ['docs/**/*.{md.mdx}', '**/readme.{md,mdx}']
 
@@ -84,7 +81,6 @@
   - any:
       [
         'support/**/*',
-        '!website/src/pages/playground.tsx',
         '!test/**',
         '!support/actions/**',
         '!support/azure/**',
