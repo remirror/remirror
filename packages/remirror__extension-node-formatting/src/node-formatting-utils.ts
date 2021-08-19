@@ -2,6 +2,7 @@ import {
   clamp,
   EditorState,
   extractPixelSize,
+  isNumber,
   last,
   NodeWithPosition,
   Shape,
@@ -117,4 +118,35 @@ export function extractIndent(indents: string[], marginLeft: string | null): num
   const indentIncrement = largestIndent / max;
 
   return clamp({ max, min: 0, value: Math.floor(value / indentIncrement) });
+}
+
+const NUMERIC_REGEX = /^\d+(?:\.\d+)?$/;
+const PERCENT_REGEX = /^(\d+(?:\.\d+)?)%$/;
+
+/**
+ * Extract the line height from numeric or percentage line-height values
+ */
+export function extractLineHeight(lineHeight: string | number | null): number | null {
+  if (isNumber(lineHeight)) {
+    return lineHeight;
+  }
+
+  if (!lineHeight) {
+    return null;
+  }
+
+  const lineHeightStr = lineHeight.trim();
+  const percentMatch = lineHeightStr.match(PERCENT_REGEX);
+
+  if (percentMatch) {
+    return Number.parseFloat(percentMatch[1] as string) / 100;
+  }
+
+  const numberMatch = lineHeightStr.match(NUMERIC_REGEX);
+
+  if (numberMatch) {
+    return Number.parseFloat(numberMatch[0] as string);
+  }
+
+  return null;
 }
