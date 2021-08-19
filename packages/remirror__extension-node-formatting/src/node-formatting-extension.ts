@@ -20,6 +20,7 @@ import {
   centerAlignOptions,
   decreaseIndentOptions,
   extractIndent,
+  extractLineHeight,
   gatherNodes,
   increaseIndentOptions,
   justifyAlignOptions,
@@ -77,7 +78,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
           nodeLineHeight: this.nodeLineHeight(),
           style: {
             default: '',
-            parseDOM: (element) => element.getAttribute('style'),
+            parseDOM: () => '',
             toDOM: ({ nodeIndent, nodeTextAlignment, nodeLineHeight, style }) => {
               const marginLeft = nodeIndent ? this.options.indents[nodeIndent] : undefined;
               const textAlign =
@@ -228,6 +229,23 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
           extractIndent(this.options.indents, element.style.marginLeft)
         );
       },
+      toDOM: (attrs) => {
+        // Ignoring the `0` value is intentional here.
+        if (!attrs.nodeIndent) {
+          return;
+        }
+
+        const indentIndex = `${attrs.nodeIndent}`;
+        const marginLeft = this.options.indents[attrs.nodeIndent];
+
+        if (!marginLeft) {
+          return;
+        }
+
+        return {
+          [NODE_INDENT_ATTRIBUTE]: indentIndex,
+        };
+      },
     };
   }
 
@@ -240,6 +258,17 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
       parseDOM: (element) => {
         return element.getAttribute(NODE_TEXT_ALIGNMENT_ATTRIBUTE) ?? element.style.textAlign;
       },
+      toDOM: (attrs) => {
+        const textAlign = attrs.nodeTextAlignment;
+
+        if (!textAlign || textAlign === 'none') {
+          return;
+        }
+
+        return {
+          [NODE_TEXT_ALIGNMENT_ATTRIBUTE]: textAlign,
+        };
+      },
     };
   }
 
@@ -250,7 +279,19 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
     return {
       default: null,
       parseDOM: (element) => {
-        return element.getAttribute(NODE_LINE_HEIGHT_ATTRIBUTE) ?? element.style.lineHeight;
+        const val = element.getAttribute(NODE_LINE_HEIGHT_ATTRIBUTE);
+        return extractLineHeight(val) ?? extractLineHeight(element.style.lineHeight);
+      },
+      toDOM: (attrs) => {
+        const lineHeight = attrs.nodeLineHeight;
+
+        if (!lineHeight) {
+          return;
+        }
+
+        return {
+          [NODE_LINE_HEIGHT_ATTRIBUTE]: lineHeight.toString(),
+        };
       },
     };
   }
