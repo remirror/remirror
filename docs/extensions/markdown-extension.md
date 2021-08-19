@@ -3,8 +3,6 @@ hide_title: true
 title: MarkdownExtension
 ---
 
-import { Example } from '@components';
-
 # `MarkdownExtension`
 
 ## Summary
@@ -18,8 +16,6 @@ This extension transforms the **ProseMirror** content of your editor to markdown
 Markdown can be used to reduce the storage needed for your documents. It takes less space than a JSON object describing the same editor content.
 
 The following example shows a hook which can be used to automatically persist content as markdown.
-
-<Example name="" />
 
 ```ts
 import delay from 'delay';
