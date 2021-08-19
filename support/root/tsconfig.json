@@ -126,6 +126,9 @@
       "path": "packages/remirror__extension-blockquote/src"
     },
     {
+      "path": "packages/remirror__extension-bold/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-bold/__tests__"
     },
     {
@@ -282,6 +285,9 @@
       "path": "packages/remirror__extension-image/src"
     },
     {
+      "path": "packages/remirror__extension-italic/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-italic/__tests__"
     },
     {
@@ -396,6 +402,9 @@
       "path": "packages/remirror__extension-search/src"
     },
     {
+      "path": "packages/remirror__extension-strike/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-strike/__tests__"
     },
     {
@@ -451,6 +460,9 @@
     },
     {
       "path": "packages/remirror__extension-trailing-node/src"
+    },
+    {
+      "path": "packages/remirror__extension-underline/__stories__"
     },
     {
       "path": "packages/remirror__extension-underline/__tests__"
