@@ -119,6 +119,9 @@
       "path": "packages/remirror__extension-bidi/src"
     },
     {
+      "path": "packages/remirror__extension-blockquote/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-blockquote/__tests__"
     },
     {
