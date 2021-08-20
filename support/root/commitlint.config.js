@@ -22,6 +22,6 @@ module.exports = {
         'wip',
       ],
     ],
-    'header-max-length': [2, 'always', 150],
+    'header-max-length': [2, 'always', 200],
   },
 };
