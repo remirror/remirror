@@ -51,21 +51,6 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: parse changelog for remirror
-        id: changelog_remirror
-        uses: ocavue/changelog-parser-action@v1
-        with:
-          filePath: 'packages/remirror/CHANGELOG.md'
-
-      - name: create release for remirror
-        uses: ncipollo/release-action@v1
-        with:
-          commit: main
-          tag: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
-          body: '${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].body }}'
-          token: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true
-
       - name: parse changelog for @remirror/react
         id: changelog_remirror_react
         uses: ocavue/changelog-parser-action@v1
@@ -93,5 +78,21 @@ jobs:
           commit: main
           tag: '@remirror/pm@${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].body }}'
+          token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      # make sure that `remirror` is the last one so that it can at the top of the release list
+      - name: parse changelog for remirror
+        id: changelog_remirror
+        uses: ocavue/changelog-parser-action@v1
+        with:
+          filePath: 'packages/remirror/CHANGELOG.md'
+
+      - name: create release for remirror
+        uses: ncipollo/release-action@v1
+        with:
+          commit: main
+          tag: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
+          body: '${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].body }}'
           token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
