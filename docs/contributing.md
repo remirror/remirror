@@ -9,8 +9,6 @@ Fork [this repository][repo], clone your fork and add this repository as the ups
 
 You will need to have [`pnpm`](https://pnpm.js.org) installed so make sure you follow the installation [instructions](https://pnpm.js.org/en/installation). At the time of writing the advised way to install is via `npm i -g pnpm`.
 
-You will also need to install [`git-lfs`](https://git-lfs.github.com/) which is used for managing large file storage. The installation is platform dependent so please follow the instructions outlined [here](https://git-lfs.github.com/).
-
 ```bash
 git clone <<FORKED_REPO_URL>>
 cd remirror

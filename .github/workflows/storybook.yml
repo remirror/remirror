@@ -22,7 +22,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          lfs: true
 
       - name: setup caching
         uses: actions/cache@v2
