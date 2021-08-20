@@ -66,7 +66,7 @@
     "jest-matcher-utils": "^27.0.6",
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.1",
-    "prosemirror-test-builder": "^1.0.3",
+    "prosemirror-test-builder": "^1.0.4",
     "stringify-object": "^3.3.0",
     "test-keyboard": "1.0.1"
   },
