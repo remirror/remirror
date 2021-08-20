@@ -96,7 +96,7 @@ importers:
       eslint-plugin-react-hooks: ^4.2.0
       eslint-plugin-react-native: ^3.11.0
       eslint-plugin-simple-import-sort: ^7.0.0
-      eslint-plugin-unicorn: ^34.0.1
+      eslint-plugin-unicorn: ^35.0.0
       esm: ^3.2.25
       expect-playwright: ^0.7.2
       husky: ^7.0.1
@@ -210,7 +210,7 @@ importers:
       eslint-plugin-react-hooks: 4.2.0_eslint@7.30.0
       eslint-plugin-react-native: 3.11.0_eslint@7.30.0
       eslint-plugin-simple-import-sort: 7.0.0_eslint@7.30.0
-      eslint-plugin-unicorn: 34.0.1_eslint@7.30.0
+      eslint-plugin-unicorn: 35.0.0_eslint@7.30.0
       esm: 3.2.25
       expect-playwright: 0.7.2
       husky: 7.0.1
@@ -14873,12 +14873,13 @@ packages:
       eslint: 7.30.0
     dev: false
 
-  /eslint-plugin-unicorn/34.0.1_eslint@7.30.0:
-    resolution: {integrity: sha512-GUBtRYRhPVOW/GDu6QtOjrneSZxY/MulOT8puJU+47VKCzNmMgS/iHO2gZqoQ7KPMrpNYlebUlvCWy3IR1USVQ==}
+  /eslint-plugin-unicorn/35.0.0_eslint@7.30.0:
+    resolution: {integrity: sha512-FHsaO68tDPQILfs/mGF8eSISJp8RswR4FpUuBDnueK2wyEHC6zmsc9WxjYyldXoIsBuVmru6jQyFCbCWPoW/KQ==}
     engines: {node: '>=12'}
     peerDependencies:
       eslint: '>=7.28.0'
     dependencies:
+      '@babel/helper-validator-identifier': 7.14.9
       ci-info: 3.2.0
       clean-regexp: 1.0.0
       eslint: 7.30.0
@@ -14889,7 +14890,6 @@ packages:
       pluralize: 8.0.0
       read-pkg-up: 7.0.1
       regexp-tree: 0.1.23
-      reserved-words: 0.1.2
       safe-regex: 2.1.1
       semver: 7.3.5
     transitivePeerDependencies:
