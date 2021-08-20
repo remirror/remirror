@@ -1808,7 +1808,7 @@ importers:
       '@remirror/extension-annotation': ^1.0.1
       '@remirror/messages': ^1.0.2
       '@remirror/pm': ^1.0.2
-      y-prosemirror: ^1.0.6
+      y-prosemirror: ^1.0.9
       y-protocols: ^1.0.5
       y-webrtc: ^10.2.0
       yjs: ^13.5.11
