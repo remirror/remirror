@@ -48,7 +48,6 @@ jobs:
         run: pnpm version:pr
 
       - name: create versions
-        # For security reason, use a Git commit SHA instead of a branch name or a tag name here.
         uses: changesets/action@master
         if: github.ref == 'refs/heads/main'
         with:
