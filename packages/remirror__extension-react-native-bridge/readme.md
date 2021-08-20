@@ -1,5 +1,7 @@
 # @remirror/extension-react-native-bridge
 
+**DEPRECATED**
+
 > **Support for communication between the webview and native editor.**
 
 [![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm] [![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](#) [![MIT License][license]](#)
