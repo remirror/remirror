@@ -1,3 +1,4 @@
+// https://github.com/conventional-changelog/commitlint/blob/v13.1.0/docs/reference-rules.md
 module.exports = {
   extends: ['@commitlint/config-angular'],
   rules: {
@@ -20,6 +21,11 @@ module.exports = {
         // Custom
         'wip',
       ],
+    ],
+    'header-max-length': [
+      2,
+      'always',
+      150,
     ],
   },
 };
