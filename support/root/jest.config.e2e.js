@@ -18,7 +18,6 @@ const environment = {
       jestSupportDir('jest.framework.e2e.ts'),
     ],
   },
-  spectron: {},
 }[E2E_ENVIRONMENT];
 
 const {

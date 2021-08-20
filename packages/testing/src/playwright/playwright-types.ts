@@ -1,7 +1,7 @@
 import { Circus } from '@jest/types';
 import { JestProcessManagerOptions } from 'jest-process-manager';
 
-export type TestEnvironment = 'playwright' | 'spectron';
+export type TestEnvironment = 'playwright';
 export type TestServerName = 'next' | 'docs' | 'storybook-react';
 export type PlaywrightBrowserName = 'firefox' | 'chromium' | 'webkit';
 
@@ -18,11 +18,7 @@ interface PlaywrightTestServer extends BaseTestServer {
   name: TestServerName;
 }
 
-interface SpectronTestServer extends BaseTestServer {
-  environment: 'spectron';
-}
-
-export type TestServer = PlaywrightTestServer | SpectronTestServer;
+export type TestServer = PlaywrightTestServer;
 
 /**
  * Declare the globals used throughout tests
