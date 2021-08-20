@@ -6,7 +6,7 @@ on:
     types: ['opened', 'edited', 'reopened', 'synchronize']
 
 jobs:
-  lint:
+  lint-pr-name:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
