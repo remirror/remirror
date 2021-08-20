@@ -18,9 +18,6 @@ const environment = {
       jestSupportDir('jest.framework.e2e.ts'),
     ],
   },
-  detox: {},
-  spectron: {},
-  appium: {},
 }[E2E_ENVIRONMENT];
 
 const {

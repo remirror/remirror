@@ -169,7 +169,6 @@ cc-reporter
 ## Storybook
 **/storybook-static
 
-/.detoxrc.json
 /typedoc.json
 
 .linaria-cache
