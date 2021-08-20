@@ -42,7 +42,7 @@
     "@remirror/icons": "^1.0.2",
     "@remirror/messages": "^1.0.2",
     "@remirror/theme": "^1.1.0",
-    "nanoevents": "^5.1.13",
+    "nanoevents": "^6.0.0",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {

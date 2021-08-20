@@ -739,7 +739,7 @@ importers:
       '@remirror/messages': ^1.0.2
       '@remirror/pm': ^1.0.2
       '@remirror/theme': ^1.1.0
-      nanoevents: ^5.1.13
+      nanoevents: ^6.0.0
       tiny-warning: ^1.0.3
     dependencies:
       '@babel/runtime': 7.14.6
@@ -752,7 +752,7 @@ importers:
       '@remirror/icons': link:../remirror__icons
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
-      nanoevents: 5.1.13
+      nanoevents: 6.0.0
       tiny-warning: 1.0.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
@@ -1156,7 +1156,7 @@ importers:
       '@remirror/theme': ^1.1.0
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
-      nanoevents: ^5.1.13
+      nanoevents: ^6.0.0
       react: ^17.0.2
       react-dom: ^17.0.2
     dependencies:
@@ -1165,7 +1165,7 @@ importers:
       '@remirror/react': link:../remirror__react
       '@remirror/react-components': link:../remirror__react-components
       '@remirror/theme': link:../remirror__theme
-      nanoevents: 5.1.13
+      nanoevents: 6.0.0
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 17.0.14
@@ -1434,14 +1434,14 @@ importers:
       '@remirror/messages': ^1.0.2
       '@remirror/pm': ^1.0.2
       '@remirror/theme': ^1.1.0
-      nanoevents: ^5.1.13
+      nanoevents: ^6.0.0
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core': link:../remirror__core
       '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
-      nanoevents: 5.1.13
+      nanoevents: 6.0.0
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
@@ -1454,14 +1454,14 @@ importers:
       '@remirror/react': ^1.0.3
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
-      nanoevents: ^5.1.13
+      nanoevents: ^6.0.0
       react: ^17.0.2
       react-dom: ^17.0.2
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
-      nanoevents: 5.1.13
+      nanoevents: 6.0.0
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
@@ -20958,9 +20958,9 @@ packages:
       stylis: 4.0.10
     dev: false
 
-  /nanoevents/5.1.13:
-    resolution: {integrity: sha512-JFAeG9fp0QZnRoESHjkbVFbZ9BkOXkkagUVwZVo/pkSX+Fq1VKlY+5og/8X9CYc6C7vje/CV+bwJ5M2X0+IY9Q==}
-    engines: {node: '>=6.0.0'}
+  /nanoevents/6.0.0:
+    resolution: {integrity: sha512-0ASElaiZR21yBjhmBiRboCXeNirfIVuiKIxikn6a3H/9zUL+q2HBq+4B3Cb2UdCctoGx5YSwxTXypslD/olJKA==}
+    engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: false
 
   /nanoid/2.1.11:

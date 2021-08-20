@@ -41,7 +41,7 @@
     "@remirror/react": "^1.0.3",
     "@remirror/react-components": "^1.0.2",
     "@remirror/theme": "^1.1.0",
-    "nanoevents": "^5.1.13"
+    "nanoevents": "^6.0.0"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.2",
