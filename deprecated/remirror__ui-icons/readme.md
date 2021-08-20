@@ -1,3 +1,0 @@
-# @remirror/ui-icons
-
-**DEPRECATED**

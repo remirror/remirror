@@ -1,3 +1,0 @@
-# @remirror/editor-wysiwyg
-
-**DEPRECATED**

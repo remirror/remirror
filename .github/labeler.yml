@@ -1,8 +1,5 @@
 # Documentation is available here https://github.com/actions/labeler
 
-'type: deprecation :wastebasket:':
-  - any: ['support/deprecated/**/*']
-
 'type: ci :evergreen_tree:':
   - any:
       [
@@ -84,5 +81,4 @@
         '!test/**',
         '!support/actions/**',
         '!support/azure/**',
-        '!support/deprecated/**',
       ]
