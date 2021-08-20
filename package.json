@@ -170,7 +170,6 @@
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
     "delay": "^5.0.0",
-    "detox": "^18.19.0",
     "downlevel-dts": "^0.7.0",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.2.0",
