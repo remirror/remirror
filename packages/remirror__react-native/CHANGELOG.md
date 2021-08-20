@@ -1,5 +1,16 @@
 # @remirror/react-native
 
+## 1.0.4
+
+> 2021-08-20
+
+### Patch Changes
+
+- Deprecate `@remirror/extension-react-native-bridge`.
+
+- Updated dependencies []:
+  - @remirror/extension-react-native-bridge@1.0.3
+
 ## 1.0.3
 
 > 2021-08-18
