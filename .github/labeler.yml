@@ -75,10 +75,4 @@
   - any: ['**/*.e2e.test.{ts,tsx}', 'packages/**/*.snap', 'test/**/*.{ts,tsx,json,snap}']
 
 'type: support :books:':
-  - any:
-      [
-        'support/**/*',
-        '!test/**',
-        '!support/actions/**',
-        '!support/azure/**',
-      ]
+  - any: ['support/**/*', '!test/**', '!support/actions/**', '!support/azure/**']
