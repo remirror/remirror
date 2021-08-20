@@ -18,7 +18,7 @@ This extension is installed for you when you install the main `remirror` package
 You can use the imports in the following way.
 
 ```ts
-import { underlineExtension } from 'remirror/extensions';
+import { UnderlineExtension } from 'remirror/extensions';
 ```
 
 To install it directly you can use

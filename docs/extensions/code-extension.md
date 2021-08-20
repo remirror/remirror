@@ -18,7 +18,7 @@ This extension is installed for you when you install the main `remirror` package
 You can use the imports in the following way.
 
 ```ts
-import { codeExtension } from 'remirror/extensions';
+import { CodeExtension } from 'remirror/extensions';
 ```
 
 To install it directly you can use
