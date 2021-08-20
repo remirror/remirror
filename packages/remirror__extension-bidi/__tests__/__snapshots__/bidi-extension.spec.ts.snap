@@ -7,6 +7,7 @@ exports[`captures the direction of each node 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     first paragraph
@@ -29,6 +30,7 @@ exports[`options can make use of \`excludedNodes\` 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p
     dir="rtl"
@@ -48,6 +50,7 @@ exports[`options can turn off \`autoUpdate\` 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     بسيطة
@@ -62,6 +65,7 @@ exports[`options can turn off \`autoUpdate\` 2`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p
     dir="rtl"
@@ -79,6 +83,7 @@ exports[`options respects the \`defaultDirection\` option 1`] = `
   contenteditable="true"
   dir="rtl"
   role="textbox"
+  translate="no"
 >
   <p>
     first paragraph
@@ -103,6 +108,7 @@ exports[`updates the direction based on typing 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p
     dir="rtl"
@@ -119,6 +125,7 @@ exports[`updates the direction based on typing 2`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p
     dir="ltr"
@@ -136,6 +143,7 @@ exports[`updates to the default direction affect the attributes 1`] = `
   contenteditable="true"
   dir="rtl"
   role="textbox"
+  translate="no"
 >
   <p
     dir="ltr"

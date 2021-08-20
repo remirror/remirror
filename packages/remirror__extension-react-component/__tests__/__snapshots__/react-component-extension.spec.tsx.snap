@@ -7,6 +7,7 @@ exports[`NodeViews are created with content 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <div
     class="test-node-view-wrapper"
@@ -33,6 +34,7 @@ exports[`NodeViews are created without content 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <div
     class="test-node-view-wrapper"
@@ -52,6 +54,7 @@ exports[`node views can be created from commands 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p
     class=""
@@ -85,6 +88,7 @@ exports[`simple commands 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <div
     class="test-node-view-wrapper"

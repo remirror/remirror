@@ -7,6 +7,7 @@ exports[`commands.insertHtml can insert marks 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     Content 

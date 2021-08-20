@@ -37,6 +37,7 @@ Array [
 
 exports[`dynamic schema attributes should dynamically add attributes when configured 1`] = `
 <div contenteditable="true"
+     translate="no"
      role="textbox"
      aria-multiline="true"
      aria-label

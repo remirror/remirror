@@ -2,6 +2,7 @@
 
 exports[`options persistentSelectionClass retains selection and decoration 1`] = `
 <div contenteditable="true"
+     translate="no"
      role="textbox"
      aria-multiline="true"
      aria-label
@@ -19,6 +20,7 @@ exports[`options persistentSelectionClass retains selection and decoration 1`] =
 
 exports[`options persistentSelectionClass uses provided configuration ({"persistentSelectionClass":""}) 1`] = `
 <div contenteditable="true"
+     translate="no"
      role="textbox"
      aria-multiline="true"
      aria-label
@@ -32,6 +34,7 @@ exports[`options persistentSelectionClass uses provided configuration ({"persist
 
 exports[`options persistentSelectionClass uses provided configuration ({"persistentSelectionClass":"selection"}) 1`] = `
 <div contenteditable="true"
+     translate="no"
      role="textbox"
      aria-multiline="true"
      aria-label
@@ -49,6 +52,7 @@ exports[`options persistentSelectionClass uses provided configuration ({"persist
 
 exports[`options persistentSelectionClass uses provided configuration ({}) 1`] = `
 <div contenteditable="true"
+     translate="no"
      role="textbox"
      aria-multiline="true"
      aria-label
@@ -66,6 +70,7 @@ exports[`options persistentSelectionClass uses provided configuration ({}) 1`] =
 
 exports[`options persistentSelectionClass uses provided configuration ({}) 2`] = `
 <div contenteditable="true"
+     translate="no"
      role="textbox"
      aria-multiline="true"
      aria-label

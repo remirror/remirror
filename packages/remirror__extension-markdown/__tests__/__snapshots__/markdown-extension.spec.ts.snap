@@ -7,6 +7,7 @@ exports[`commands.insertMarkdown can insert marks 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     Content 
@@ -24,6 +25,7 @@ exports[`commands.insertMarkdown can insert marks as blocks 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     Content 
@@ -43,6 +45,7 @@ exports[`commands.insertMarkdown does not replace marks 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     <strong>

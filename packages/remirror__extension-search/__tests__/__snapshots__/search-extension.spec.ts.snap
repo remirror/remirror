@@ -7,6 +7,7 @@ exports[`commands #clearSearch 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     welcome
@@ -30,6 +31,7 @@ exports[`commands #find 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     <span
@@ -62,6 +64,7 @@ exports[`commands #find 2`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     <span
@@ -94,6 +97,7 @@ exports[`commands #find 3`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     <span
@@ -126,6 +130,7 @@ exports[`commands #findNext, #replace 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     welcomE
@@ -149,6 +154,7 @@ exports[`commands #replace 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     melcome
@@ -177,6 +183,7 @@ exports[`commands #replaceAll 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     welcome
