@@ -147,7 +147,7 @@
     "@testing-library/react-hooks": "^7.0.1",
     "@testing-library/user-event": "^13.2.0",
     "@types/eslint": "^7.2.13",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.0.0",
     "@types/jest-axe": "^3.5.2",
     "@types/ms.macro": "^2.0.0",
     "@types/node": "^16.3.3",
