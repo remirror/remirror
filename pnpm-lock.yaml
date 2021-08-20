@@ -468,7 +468,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.14.3
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.18.10
+      prosemirror-view: ^1.19.2
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core-constants': link:../remirror__core-constants
@@ -481,7 +481,7 @@ importers:
       '@types/prosemirror-view': 1.18.0
       prosemirror-model: 1.14.3
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.18.10
+      prosemirror-view: 1.19.2
 
   packages/prosemirror-resizable-view:
     specifiers:
@@ -491,13 +491,13 @@ importers:
       '@types/prosemirror-model': ^1.13.2
       '@types/prosemirror-view': ^1.18.0
       prosemirror-model: ^1.14.3
-      prosemirror-view: ^1.18.10
+      prosemirror-view: ^1.19.2
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@remirror/core-utils': link:../remirror__core-utils
       prosemirror-model: 1.14.3
-      prosemirror-view: 1.18.10
+      prosemirror-view: 1.19.2
     devDependencies:
       '@types/prosemirror-model': 1.13.2
       '@types/prosemirror-view': 1.18.0
@@ -515,7 +515,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.14.3
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.18.10
+      prosemirror-view: ^1.19.2
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core-constants': link:../remirror__core-constants
@@ -529,7 +529,7 @@ importers:
       '@types/prosemirror-view': 1.18.0
       prosemirror-model: 1.14.3
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.18.10
+      prosemirror-view: 1.19.2
 
   packages/prosemirror-trailing-node:
     specifiers:
@@ -543,7 +543,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.14.3
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.18.10
+      prosemirror-view: ^1.19.2
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core-constants': link:../remirror__core-constants
@@ -556,7 +556,7 @@ importers:
       '@types/prosemirror-view': 1.18.0
       prosemirror-model: 1.14.3
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.18.10
+      prosemirror-view: 1.19.2
 
   packages/remirror:
     specifiers:
@@ -1888,7 +1888,7 @@ importers:
       prosemirror-tables: ^1.1.1
       prosemirror-trailing-node: ^1.0.2
       prosemirror-transform: ^1.3.2
-      prosemirror-view: ^1.18.10
+      prosemirror-view: ^1.19.2
     dependencies:
       '@babel/runtime': 7.14.6
       '@remirror/core-constants': link:../remirror__core-constants
@@ -1920,7 +1920,7 @@ importers:
       prosemirror-tables: 1.1.1
       prosemirror-trailing-node: link:../prosemirror-trailing-node
       prosemirror-transform: 1.3.2
-      prosemirror-view: 1.18.10
+      prosemirror-view: 1.19.2
 
   packages/remirror__preset-core:
     specifiers:
@@ -23388,6 +23388,14 @@ packages:
 
   /prosemirror-view/1.18.10:
     resolution: {integrity: sha512-DR3lexbN3D36umBNo7DaYheEQB0MdC8Hk2Lhz2YXIC7nEPjC2VG03Zy/YcYusxTtAY08+YB6OKH3yDWJDRObtg==}
+    dependencies:
+      prosemirror-model: 1.14.3
+      prosemirror-state: 1.3.4
+      prosemirror-transform: 1.3.2
+    dev: false
+
+  /prosemirror-view/1.19.2:
+    resolution: {integrity: sha512-A3Dl4OY4hORAY4OVOFJaMhZ+5Rzj/IC+A0PsktPojXEuB7ZyqVGwMbruKjsadAgfIwytQK4kgbvYnAI/F9gDfQ==}
     dependencies:
       prosemirror-model: 1.14.3
       prosemirror-state: 1.3.4

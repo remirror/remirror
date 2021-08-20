@@ -43,7 +43,7 @@
     "@types/prosemirror-view": "^1.18.0",
     "prosemirror-model": "^1.14.3",
     "prosemirror-state": "^1.3.4",
-    "prosemirror-view": "^1.18.10"
+    "prosemirror-view": "^1.19.2"
   },
   "peerDependencies": {
     "@types/prosemirror-model": "^1",
