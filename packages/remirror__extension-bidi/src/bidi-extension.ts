@@ -1,4 +1,4 @@
-import direction from 'direction';
+import { direction } from 'direction';
 import type {
   AcceptUndefined,
   CommandFunction,
