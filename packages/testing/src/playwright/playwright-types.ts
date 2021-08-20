@@ -1,7 +1,7 @@
 import { Circus } from '@jest/types';
 import { JestProcessManagerOptions } from 'jest-process-manager';
 
-export type TestEnvironment = 'playwright' | 'appium' | 'spectron';
+export type TestEnvironment = 'playwright' | 'spectron';
 export type TestServerName = 'next' | 'docs' | 'storybook-react';
 export type PlaywrightBrowserName = 'firefox' | 'chromium' | 'webkit';
 

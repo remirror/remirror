@@ -19,7 +19,6 @@ const environment = {
     ],
   },
   spectron: {},
-  appium: {},
 }[E2E_ENVIRONMENT];
 
 const {
