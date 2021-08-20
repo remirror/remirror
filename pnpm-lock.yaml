@@ -54,7 +54,7 @@ importers:
       '@testing-library/react-hooks': ^7.0.1
       '@testing-library/user-event': ^13.2.0
       '@types/eslint': ^7.2.13
-      '@types/jest': ^26.0.24
+      '@types/jest': ^27.0.0
       '@types/jest-axe': ^3.5.2
       '@types/ms.macro': ^2.0.0
       '@types/node': ^16.3.3
@@ -168,7 +168,7 @@ importers:
       '@testing-library/react-hooks': 7.0.1
       '@testing-library/user-event': 13.2.0_@testing-library+dom@8.1.0
       '@types/eslint': 7.28.0
-      '@types/jest': 26.0.24
+      '@types/jest': 27.0.1
       '@types/jest-axe': 3.5.2
       '@types/ms.macro': 2.0.0
       '@types/node': 16.3.3
@@ -9291,6 +9291,13 @@ packages:
     dependencies:
       jest-diff: 26.6.2
       pretty-format: 26.6.2
+    dev: false
+
+  /@types/jest/27.0.1:
+    resolution: {integrity: sha512-HTLpVXHrY69556ozYkcq47TtQJXpcWAWfkoqz+ZGz2JnmZhzlRjprCIyFnetSy8gpDWwTTGBcRVv1J1I1vBrHw==}
+    dependencies:
+      jest-diff: 27.0.6
+      pretty-format: 27.0.6
     dev: false
 
   /@types/js-cookie/2.2.7:
