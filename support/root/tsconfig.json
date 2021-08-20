@@ -120,6 +120,9 @@
       "path": "packages/remirror__extension-bidi/src"
     },
     {
+      "path": "packages/remirror__extension-blockquote/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-blockquote/__tests__"
     },
     {
@@ -151,6 +154,9 @@
     },
     {
       "path": "packages/remirror__extension-code-block/src"
+    },
+    {
+      "path": "packages/remirror__extension-code/__stories__"
     },
     {
       "path": "packages/remirror__extension-code/__tests__"
@@ -436,6 +442,9 @@
     },
     {
       "path": "packages/remirror__extension-text-case/src"
+    },
+    {
+      "path": "packages/remirror__extension-text-color/__stories__"
     },
     {
       "path": "packages/remirror__extension-text-color/__tests__"
