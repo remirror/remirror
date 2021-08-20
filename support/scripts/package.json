@@ -108,7 +108,7 @@
     "remixicon": "^2.5.0",
     "rimraf": "^3.0.2",
     "semver": "^7.3.5",
-    "sort-keys": "^4.2.0",
+    "sort-keys": "^5.0.0",
     "throttle-debounce": "^3.0.1",
     "ts-dedent": "^2.1.1",
     "ts-morph": "^11.0.3",

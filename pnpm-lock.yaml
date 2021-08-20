@@ -2712,7 +2712,7 @@ importers:
       remixicon: ^2.5.0
       rimraf: ^3.0.2
       semver: ^7.3.5
-      sort-keys: ^4.2.0
+      sort-keys: ^5.0.0
       throttle-debounce: ^3.0.1
       ts-dedent: ^2.1.1
       ts-morph: ^11.0.3
@@ -2785,7 +2785,7 @@ importers:
       remixicon: 2.5.0
       rimraf: 3.0.2
       semver: 7.3.5
-      sort-keys: 4.2.0
+      sort-keys: 5.0.0
       throttle-debounce: 3.0.1
       ts-dedent: 2.1.1
       ts-morph: 11.0.3
@@ -17921,6 +17921,11 @@ packages:
     resolution: {integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==}
     engines: {node: '>=8'}
 
+  /is-plain-obj/4.0.0:
+    resolution: {integrity: sha512-NXRbBtUdBioI73y/HmOhogw/U5msYPC9DAtGkJXeFcFWSFZw0mCUsPxk/snTuJHzNKA8kLBK4rH97RMB1BfCXw==}
+    engines: {node: '>=12'}
+    dev: false
+
   /is-plain-object/2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
     engines: {node: '>=0.10.0'}
@@ -25826,6 +25831,13 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       is-plain-obj: 2.1.0
+    dev: false
+
+  /sort-keys/5.0.0:
+    resolution: {integrity: sha512-Pdz01AvCAottHTPQGzndktFNdbRA75BgOfeT1hH+AMnJFv8lynkPi42rfeEhpx1saTEI3YNMWxfqu0sFD1G8pw==}
+    engines: {node: '>=12'}
+    dependencies:
+      is-plain-obj: 4.0.0
     dev: false
 
   /sort-object-keys/1.1.3:
