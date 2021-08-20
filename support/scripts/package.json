@@ -99,7 +99,7 @@
     "minimist": "^1.2.5",
     "mustache": "^4.2.0",
     "node-cleanup": "^2.1.2",
-    "p-limit": "^3.1.0",
+    "p-limit": "^4.0.0",
     "patch-package": "remirror/patch-package#dist",
     "postcss": "^8.3.5",
     "postcss-loader": "^6.1.1",
