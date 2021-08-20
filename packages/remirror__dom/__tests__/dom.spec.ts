@@ -17,19 +17,20 @@ test('can be added to the dom', () => {
 
   expect(mock).toHaveBeenCalledTimes(2);
   expect(editor.view.dom).toMatchInlineSnapshot(`
-    <div
-      aria-label=""
-      aria-multiline="true"
-      class="ProseMirror remirror-editor"
-      contenteditable="true"
-      role="textbox"
-    >
-      <p>
-        <strong>
-          Hello
-        </strong>
-         test
-      </p>
-    </div>
-  `);
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+  translate="no"
+>
+  <p>
+    <strong>
+      Hello
+    </strong>
+     test
+  </p>
+</div>
+`);
 });

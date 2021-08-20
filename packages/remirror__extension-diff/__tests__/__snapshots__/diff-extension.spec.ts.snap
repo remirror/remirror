@@ -7,6 +7,7 @@ exports[`#highlightCommit can highlight and remove highlights from commits 1`] =
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     This is not yet committed
@@ -27,6 +28,7 @@ exports[`#highlightCommit can highlight and remove highlights from commits 2`] =
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     This is not yet committed
@@ -51,6 +53,7 @@ exports[`#highlightCommit can highlight and remove highlights from commits 3`] =
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     This is not yet committed

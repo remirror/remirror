@@ -7,6 +7,7 @@ exports[`Remirror Controlled Component can override updates to the editor state 
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     Hello
@@ -24,6 +25,7 @@ exports[`Remirror Controlled Component overrides initial content 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     Not terrible
@@ -38,6 +40,7 @@ exports[`Remirror Controlled Component responds to updates to the editor state 1
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     add more value some content
@@ -52,6 +55,7 @@ exports[`Remirror Controlled Component should set the initial value 1`] = `
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
+  translate="no"
 >
   <p>
     This is the initial value
