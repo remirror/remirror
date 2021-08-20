@@ -1,8 +1,5 @@
 # Documentation is available here https://github.com/actions/labeler
 
-'type: deprecation :wastebasket:':
-  - any: ['support/deprecated/**/*']
-
 'type: ci :evergreen_tree:':
   - any:
       [
@@ -78,11 +75,4 @@
   - any: ['**/*.e2e.test.{ts,tsx}', 'packages/**/*.snap', 'test/**/*.{ts,tsx,json,snap}']
 
 'type: support :books:':
-  - any:
-      [
-        'support/**/*',
-        '!test/**',
-        '!support/actions/**',
-        '!support/azure/**',
-        '!support/deprecated/**',
-      ]
+  - any: ['support/**/*', '!test/**', '!support/actions/**', '!support/azure/**']
