@@ -50,7 +50,7 @@
     "emojibase": "^5.1.0",
     "emojibase-data": "^6.1.0",
     "emojibase-regex": "^5.1.0",
-    "escape-string-regexp": "^4.0.0",
+    "escape-string-regexp": "^5.0.0",
     "svgmoji": "^3.2.0"
   },
   "devDependencies": {
