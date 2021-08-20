@@ -43,8 +43,8 @@
     "prosemirror-view": "^1.18.10"
   },
   "devDependencies": {
-    "@types/prosemirror-model": "^1.13.1",
-    "@types/prosemirror-view": "^1.17.2"
+    "@types/prosemirror-model": "^1.13.2",
+    "@types/prosemirror-view": "^1.18.0"
   },
   "publishConfig": {
     "access": "public"
