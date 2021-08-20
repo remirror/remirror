@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.10
+
+> 2021-08-20
+
+### Patch Changes
+
+- Fix eager parsing of style attribute, and limit valid `line-height` values in `NodeFormattingExtension`
+
+- Updated dependencies []:
+  - @remirror/extension-node-formatting@1.0.4
+  - @remirror/preset-formatting@1.0.3
+
 ## 1.0.9
 
 > 2021-08-18
