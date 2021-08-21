@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react';
-import { RemirrorJSON } from '@remirror/core';
 import { Remirror, ThemeProvider, useRemirror, useRemirrorContext } from '@remirror/react';
 
-const DOC: RemirrorJSON = {
+const DOC = {
   type: 'doc',
   content: [
     {
