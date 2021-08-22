@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.0.13
+
+> 2021-08-22
+
+### Patch Changes
+
+- Exports `remirror/styles`.
+
+- Updated dependencies []:
+  - remirror@1.0.12
+
 ## 0.0.12
 
 > 2021-08-22

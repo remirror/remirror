@@ -1,5 +1,13 @@
 # remirror
 
+## 1.0.12
+
+> 2021-08-22
+
+### Patch Changes
+
+- Exports `remirror/styles`.
+
 ## 1.0.11
 
 > 2021-08-22
