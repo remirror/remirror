@@ -23097,7 +23097,7 @@ packages:
     dependencies:
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.2
-      prosemirror-view: 1.19.2
+      prosemirror-view: 1.19.3
     dev: false
 
   /prosemirror-gapcursor/1.1.5:
@@ -23106,7 +23106,7 @@ packages:
       prosemirror-keymap: 1.1.4
       prosemirror-model: 1.14.3
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.19.2
+      prosemirror-view: 1.19.3
     dev: false
 
   /prosemirror-history/1.1.3:
@@ -23162,7 +23162,7 @@ packages:
       prosemirror-model: 1.14.3
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.2
-      prosemirror-view: 1.19.2
+      prosemirror-view: 1.19.3
     dev: false
 
   /prosemirror-test-builder/1.0.4_prosemirror-schema-basic@1.1.2:
@@ -23179,14 +23179,6 @@ packages:
     resolution: {integrity: sha512-/G6d/u9Mf6Bv3H1XR8VxhpjmUO75LYmnvj+s3ZfZpakU1hnQbsvCEybml1B3f2IWUAAQRFkbO1PnsbFhLZsYsw==}
     dependencies:
       prosemirror-model: 1.14.3
-
-  /prosemirror-view/1.19.2:
-    resolution: {integrity: sha512-A3Dl4OY4hORAY4OVOFJaMhZ+5Rzj/IC+A0PsktPojXEuB7ZyqVGwMbruKjsadAgfIwytQK4kgbvYnAI/F9gDfQ==}
-    dependencies:
-      prosemirror-model: 1.14.3
-      prosemirror-state: 1.3.4
-      prosemirror-transform: 1.3.2
-    dev: false
 
   /prosemirror-view/1.19.3:
     resolution: {integrity: sha512-YP/ZzVwqPPwbHbJi97U2/CeyZ8PIHmLJt0gIhZWP8XfnuBRGG3y+jwLzUoBVmiuoUCy3R6PSB+pOATliGzLfPg==}
