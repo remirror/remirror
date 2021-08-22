@@ -2,4 +2,4 @@
 '@remirror/i18n': patch
 ---
 
-Set `sideEffect` as true.
+Set `sideEffect` from `@remirror/i18n`'s package.json as true.
