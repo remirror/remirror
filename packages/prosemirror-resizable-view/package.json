@@ -40,7 +40,7 @@
     "@remirror/core-helpers": "^1.0.1",
     "@remirror/core-utils": "^1.1.0",
     "prosemirror-model": "^1.14.3",
-    "prosemirror-view": "^1.19.2"
+    "prosemirror-view": "^1.19.3"
   },
   "devDependencies": {
     "@types/prosemirror-model": "^1.13.2",
