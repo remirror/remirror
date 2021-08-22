@@ -1,3 +1,9 @@
+.mention {
+  background: #7963d266;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
 .remirror-theme {
   /* Provide sufficient space to see the popup */
   --rmr-space-6: 400px;
