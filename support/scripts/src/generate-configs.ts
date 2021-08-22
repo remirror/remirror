@@ -104,6 +104,12 @@ async function generateExports() {
       augmentExportsObject(packageJson, relativePath, subPackageJson);
     }
 
+    // `styles` contains CSS files without a package.json. Webpack 5 needs this
+    // to import CSS files. See also https://github.com/remirror/remirror/pull/1123
+    if (pkg.name === 'remirror') {
+      exportsObject['./styles/*'] = './styles/*';
+    }
+
     // Make sure the keys are sorted for the exports.
     packageJson.exports = sortKeys(exportsObject) ?? '';
 

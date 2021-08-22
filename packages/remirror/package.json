@@ -48,6 +48,7 @@
       "default": "./icons/dist/remirror-icons.esm.js"
     },
     "./package.json": "./package.json",
+    "./styles/*": "./styles/*",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "dist/remirror.cjs.js",
