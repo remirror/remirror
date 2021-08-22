@@ -12,7 +12,7 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "sideEffects": false,
+  "sideEffects": true,
   "exports": {
     ".": {
       "import": "./dist/remirror-i18n.esm.js",
