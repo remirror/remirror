@@ -119,7 +119,7 @@ importers:
       playwright-testing-library: ^3.0.0
       prettier: ^2.3.2
       prettier-plugin-packagejson: ^2.2.10
-      remirror: 1.0.11
+      remirror: 1.0.12
       rimraf: ^3.0.2
       size-limit: ^5.0.1
       snapshot-diff: ^0.9.0
@@ -2234,7 +2234,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       refractor: ^3.3.1
-      remirror: 1.0.11
+      remirror: 1.0.12
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.14.6
@@ -2480,7 +2480,7 @@ importers:
       react-is: ^17.0.2
       reakit: ^1.3.8
       refractor: ^3.3.1
-      remirror: 1.0.11
+      remirror: 1.0.12
       scripts: 0.0.1
     dependencies:
       '@babel/runtime': 7.14.6
@@ -2867,7 +2867,7 @@ importers:
       react-syntax-highlighter: ^15.4.3
       reakit: ^1.3.8
       remark-footnotes: ^3.0.0
-      remirror: ^1.0.11
+      remirror: ^1.0.12
     dependencies:
       '@babel/runtime': 7.14.6
       '@emotion/css': 11.1.3_@babel+core@7.14.6
