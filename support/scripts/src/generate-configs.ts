@@ -97,20 +97,17 @@ async function generateExports() {
       absolute: true,
     });
 
-    // `styles` contains CSS files without a package.json. Webpack 5 needs this
-    // to import CSS files. See also https://github.com/remirror/remirror/pull/1123
-    const subStyles = await globby('styles', {
-      cwd: location,
-      ignore: ['**/node_modules/**'],
-      onlyDirectories: true,
-      absolute: true,
-    });
-
-    for (const subPackage of [...subStyles, ...subPackages]) {
+    for (const subPackage of subPackages) {
       const subPackageJson: PackageJson = require(subPackage);
       const relativePath = prefixRelativePath(path.relative(location, path.dirname(subPackage)));
 
       augmentExportsObject(packageJson, relativePath, subPackageJson);
+    }
+
+    // `styles` contains CSS files without a package.json. Webpack 5 needs this
+    // to import CSS files. See also https://github.com/remirror/remirror/pull/1123
+    if (pkg.name === 'remirror') {
+      exportsObject['./styles/*'] = './styles/*';
     }
 
     // Make sure the keys are sorted for the exports.
@@ -202,8 +199,6 @@ function augmentExportsObject(packageJson: PackageJson, filepath: string, json: 
   if (filepath === '.') {
     exportsObject['./package.json'] = './package.json';
     exportsObject['./types/*'] = './dist/declarations/src/*.d.ts';
-  } else if (filepath === 'styles') {
-    exportsObject['./styles/*'] = './styles/*';
   }
 }
 
