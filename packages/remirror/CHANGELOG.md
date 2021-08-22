@@ -1,5 +1,70 @@
 # remirror
 
+## 1.0.11
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
+* Exports `remirror/styles`.
+
+* Updated dependencies []:
+  - @remirror/core@1.0.3
+  - @remirror/dom@1.0.2
+  - @remirror/extension-annotation@1.0.2
+  - @remirror/extension-bidi@1.0.2
+  - @remirror/extension-blockquote@1.0.2
+  - @remirror/extension-bold@1.0.2
+  - @remirror/extension-callout@1.0.2
+  - @remirror/extension-code@1.0.2
+  - @remirror/extension-code-block@1.0.3
+  - @remirror/extension-codemirror5@1.0.2
+  - @remirror/extension-collaboration@1.0.2
+  - @remirror/extension-columns@1.0.2
+  - @remirror/extension-diff@1.0.2
+  - @remirror/extension-doc@1.0.3
+  - @remirror/extension-drop-cursor@1.0.2
+  - @remirror/extension-embed@1.1.1
+  - @remirror/extension-emoji@1.0.2
+  - @remirror/extension-epic-mode@1.0.2
+  - @remirror/extension-events@1.0.2
+  - @remirror/extension-font-family@1.0.2
+  - @remirror/extension-font-size@1.0.2
+  - @remirror/extension-gap-cursor@1.0.2
+  - @remirror/extension-hard-break@1.0.2
+  - @remirror/extension-heading@1.0.2
+  - @remirror/extension-history@1.0.2
+  - @remirror/extension-horizontal-rule@1.0.2
+  - @remirror/extension-image@1.0.3
+  - @remirror/extension-italic@1.0.2
+  - @remirror/extension-link@1.0.2
+  - @remirror/extension-list@1.0.4
+  - @remirror/extension-markdown@1.0.2
+  - @remirror/extension-mention@1.0.2
+  - @remirror/extension-mention-atom@1.0.2
+  - @remirror/extension-node-formatting@1.0.5
+  - @remirror/extension-paragraph@1.0.2
+  - @remirror/extension-placeholder@1.0.2
+  - @remirror/extension-positioner@1.0.2
+  - @remirror/extension-search@1.0.2
+  - @remirror/extension-strike@1.0.2
+  - @remirror/extension-sub@1.0.2
+  - @remirror/extension-sup@1.0.2
+  - @remirror/extension-tables@1.0.2
+  - @remirror/extension-text@1.0.2
+  - @remirror/extension-text-case@1.0.2
+  - @remirror/extension-text-color@1.0.2
+  - @remirror/extension-text-highlight@1.0.2
+  - @remirror/extension-trailing-node@1.0.2
+  - @remirror/extension-underline@1.0.2
+  - @remirror/extension-whitespace@1.0.2
+  - @remirror/extension-yjs@1.0.2
+  - @remirror/preset-core@1.0.2
+  - @remirror/preset-formatting@1.0.4
+  - @remirror/preset-wysiwyg@1.0.4
+
 ## 1.0.10
 
 > 2021-08-20

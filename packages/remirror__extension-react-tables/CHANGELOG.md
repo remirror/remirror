@@ -1,5 +1,22 @@
 # @remirror/extension-react-tables
 
+## 1.0.4
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.3
+  - @remirror/extension-positioner@1.0.2
+  - @remirror/extension-tables@1.0.2
+  - @remirror/preset-core@1.0.2
+  - @remirror/react-components@1.0.3
+  - @remirror/react-core@1.0.3
+  - @remirror/react-hooks@1.0.3
+
 ## 1.0.3
 
 > 2021-07-26

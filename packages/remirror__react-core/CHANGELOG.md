@@ -1,5 +1,24 @@
 # @remirror/react-core
 
+## 1.0.3
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
+- Updated dependencies []:
+  - @remirror/i18n@1.0.3
+  - @remirror/core@1.0.3
+  - @remirror/extension-positioner@1.0.2
+  - @remirror/extension-react-component@1.0.4
+  - @remirror/extension-react-ssr@1.0.3
+  - @remirror/preset-core@1.0.2
+  - @remirror/preset-react@1.0.2
+  - @remirror/react-renderer@1.0.4
+  - @remirror/react-ssr@1.0.3
+
 ## 1.0.2
 
 > 2021-07-21

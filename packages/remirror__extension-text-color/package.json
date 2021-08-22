@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-text-color",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wraps text with a styled span using the color css property. The name of the wrapper tag should be configurable.",
   "keywords": [
     "remirror",
@@ -36,8 +36,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.2",
-    "@remirror/i18n": "^1.0.2",
+    "@remirror/core": "^1.0.3",
+    "@remirror/i18n": "^1.0.3",
     "@remirror/messages": "^1.0.2",
     "@remirror/theme": "^1.1.0",
     "color2k": "^1.2.4"

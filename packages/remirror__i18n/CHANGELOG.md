@@ -1,5 +1,13 @@
 # @remirror/i18n
 
+## 1.0.3
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
 ## 1.0.2
 
 > 2021-08-04

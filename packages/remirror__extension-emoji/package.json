@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-emoji",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Add flavor to your editor with emoji's that make the heart sing.",
   "keywords": [
     "remirror",
@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.2",
+    "@remirror/core": "^1.0.3",
     "@remirror/messages": "^1.0.2",
     "@remirror/theme": "^1.1.0",
     "emojibase": "^5.1.0",
