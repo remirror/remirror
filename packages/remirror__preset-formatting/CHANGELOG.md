@@ -1,5 +1,30 @@
 # @remirror/preset-formatting
 
+## 1.0.4
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.3
+  - @remirror/extension-bold@1.0.2
+  - @remirror/extension-columns@1.0.2
+  - @remirror/extension-font-size@1.0.2
+  - @remirror/extension-heading@1.0.2
+  - @remirror/extension-italic@1.0.2
+  - @remirror/extension-node-formatting@1.0.5
+  - @remirror/extension-strike@1.0.2
+  - @remirror/extension-sub@1.0.2
+  - @remirror/extension-sup@1.0.2
+  - @remirror/extension-text-case@1.0.2
+  - @remirror/extension-text-color@1.0.2
+  - @remirror/extension-text-highlight@1.0.2
+  - @remirror/extension-underline@1.0.2
+  - @remirror/extension-whitespace@1.0.2
+
 ## 1.0.3
 
 > 2021-08-20

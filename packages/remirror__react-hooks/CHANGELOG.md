@@ -1,5 +1,24 @@
 # @remirror/react-hooks
 
+## 1.0.3
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
+- Updated dependencies []:
+  - @remirror/i18n@1.0.3
+  - @remirror/core@1.0.3
+  - @remirror/extension-emoji@1.0.2
+  - @remirror/extension-events@1.0.2
+  - @remirror/extension-history@1.0.2
+  - @remirror/extension-mention@1.0.2
+  - @remirror/extension-mention-atom@1.0.2
+  - @remirror/extension-positioner@1.0.2
+  - @remirror/react-core@1.0.3
+
 ## 1.0.2
 
 > 2021-07-21

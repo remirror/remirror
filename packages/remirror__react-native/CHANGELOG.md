@@ -1,5 +1,18 @@
 # @remirror/react-native
 
+## 1.0.5
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.3
+  - @remirror/extension-react-native-bridge@1.0.4
+  - @remirror/react-core@1.0.3
+
 ## 1.0.4
 
 > 2021-08-20

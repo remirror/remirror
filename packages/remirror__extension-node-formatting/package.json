@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-node-formatting",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Support consistent formatting of nodes within your editor.",
   "keywords": [
     "remirror",
@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.2",
+    "@remirror/core": "^1.0.3",
     "@remirror/messages": "^1.0.2"
   },
   "devDependencies": {

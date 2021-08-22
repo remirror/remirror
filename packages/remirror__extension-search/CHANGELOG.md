@@ -1,5 +1,16 @@
 # @remirror/extension-search
 
+## 1.0.2
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
+- Updated dependencies []:
+  - @remirror/core@1.0.3
+
 ## 1.0.1
 
 > 2021-07-17

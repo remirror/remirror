@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-native",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "React Native support for your remirror editor.",
   "keywords": [
     "remirror",
@@ -38,9 +38,9 @@
     "@babel/runtime": "^7.13.10",
     "@lepont/async-storage": "^0.4.2",
     "@lepont/platform": "^0.1.4",
-    "@remirror/core": "^1.0.2",
-    "@remirror/extension-react-native-bridge": "^1.0.3",
-    "@remirror/react-core": "^1.0.2",
+    "@remirror/core": "^1.0.3",
+    "@remirror/extension-react-native-bridge": "^1.0.4",
+    "@remirror/react-core": "^1.0.3",
     "@types/min-document": "^2.19.0",
     "@types/react-dom": "^17.0.9",
     "create-context-state": "^1.0.1",

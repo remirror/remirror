@@ -1,5 +1,19 @@
 # @remirror/react-editors
 
+## 0.0.12
+
+> 2021-08-22
+
+### Patch Changes
+
+- Set `sideEffect` from `@remirror/i18n`'s package.json as true.
+
+* Exports `remirror/styles`.
+
+* Updated dependencies []:
+  - remirror@1.0.11
+  - @remirror/react@1.0.4
+
 ## 0.0.11
 
 > 2021-08-20
