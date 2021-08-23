@@ -105,9 +105,6 @@
       "path": "packages/remirror__extension-annotation/__e2e__"
     },
     {
-      "path": "packages/remirror__extension-annotation/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-annotation/__tests__"
     },
     {
@@ -120,16 +117,10 @@
       "path": "packages/remirror__extension-bidi/src"
     },
     {
-      "path": "packages/remirror__extension-blockquote/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-blockquote/__tests__"
     },
     {
       "path": "packages/remirror__extension-blockquote/src"
-    },
-    {
-      "path": "packages/remirror__extension-bold/__stories__"
     },
     {
       "path": "packages/remirror__extension-bold/__tests__"
@@ -138,16 +129,10 @@
       "path": "packages/remirror__extension-bold/src"
     },
     {
-      "path": "packages/remirror__extension-callout/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-callout/__tests__"
     },
     {
       "path": "packages/remirror__extension-callout/src"
-    },
-    {
-      "path": "packages/remirror__extension-code-block/__stories__"
     },
     {
       "path": "packages/remirror__extension-code-block/__tests__"
@@ -156,16 +141,10 @@
       "path": "packages/remirror__extension-code-block/src"
     },
     {
-      "path": "packages/remirror__extension-code/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-code/__tests__"
     },
     {
       "path": "packages/remirror__extension-code/src"
-    },
-    {
-      "path": "packages/remirror__extension-codemirror5/__stories__"
     },
     {
       "path": "packages/remirror__extension-codemirror5/__tests__"
@@ -178,9 +157,6 @@
     },
     {
       "path": "packages/remirror__extension-collaboration/src"
-    },
-    {
-      "path": "packages/remirror__extension-columns/__stories__"
     },
     {
       "path": "packages/remirror__extension-columns/__tests__"
@@ -207,9 +183,6 @@
       "path": "packages/remirror__extension-drop-cursor/src"
     },
     {
-      "path": "packages/remirror__extension-embed/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-embed/__tests__"
     },
     {
@@ -220,9 +193,6 @@
     },
     {
       "path": "packages/remirror__extension-emoji/src"
-    },
-    {
-      "path": "packages/remirror__extension-epic-mode/__stories__"
     },
     {
       "path": "packages/remirror__extension-epic-mode/__tests__"
@@ -237,25 +207,16 @@
       "path": "packages/remirror__extension-events/src"
     },
     {
-      "path": "packages/remirror__extension-file/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-file/__tests__"
     },
     {
       "path": "packages/remirror__extension-file/src"
     },
     {
-      "path": "packages/remirror__extension-font-family/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-font-family/__tests__"
     },
     {
       "path": "packages/remirror__extension-font-family/src"
-    },
-    {
-      "path": "packages/remirror__extension-font-size/__stories__"
     },
     {
       "path": "packages/remirror__extension-font-size/__tests__"
@@ -270,16 +231,10 @@
       "path": "packages/remirror__extension-gap-cursor/src"
     },
     {
-      "path": "packages/remirror__extension-hard-break/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-hard-break/__tests__"
     },
     {
       "path": "packages/remirror__extension-hard-break/src"
-    },
-    {
-      "path": "packages/remirror__extension-heading/__stories__"
     },
     {
       "path": "packages/remirror__extension-heading/__tests__"
@@ -294,25 +249,16 @@
       "path": "packages/remirror__extension-history/src"
     },
     {
-      "path": "packages/remirror__extension-horizontal-rule/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-horizontal-rule/__tests__"
     },
     {
       "path": "packages/remirror__extension-horizontal-rule/src"
     },
     {
-      "path": "packages/remirror__extension-image/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-image/__tests__"
     },
     {
       "path": "packages/remirror__extension-image/src"
-    },
-    {
-      "path": "packages/remirror__extension-italic/__stories__"
     },
     {
       "path": "packages/remirror__extension-italic/__tests__"
@@ -324,16 +270,10 @@
       "path": "packages/remirror__extension-link/__e2e__"
     },
     {
-      "path": "packages/remirror__extension-link/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-link/__tests__"
     },
     {
       "path": "packages/remirror__extension-link/src"
-    },
-    {
-      "path": "packages/remirror__extension-list/__stories__"
     },
     {
       "path": "packages/remirror__extension-list/__tests__"
@@ -360,9 +300,6 @@
       "path": "packages/remirror__extension-mention/src"
     },
     {
-      "path": "packages/remirror__extension-node-formatting/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-node-formatting/__tests__"
     },
     {
@@ -375,9 +312,6 @@
       "path": "packages/remirror__extension-paragraph/src"
     },
     {
-      "path": "packages/remirror__extension-placeholder/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-placeholder/__tests__"
     },
     {
@@ -385,9 +319,6 @@
     },
     {
       "path": "packages/remirror__extension-positioner/__e2e__"
-    },
-    {
-      "path": "packages/remirror__extension-positioner/__stories__"
     },
     {
       "path": "packages/remirror__extension-positioner/__tests__"
@@ -414,9 +345,6 @@
       "path": "packages/remirror__extension-react-ssr/src"
     },
     {
-      "path": "packages/remirror__extension-react-tables/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-react-tables/__tests__"
     },
     {
@@ -429,16 +357,10 @@
       "path": "packages/remirror__extension-search/src"
     },
     {
-      "path": "packages/remirror__extension-strike/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-strike/__tests__"
     },
     {
       "path": "packages/remirror__extension-strike/src"
-    },
-    {
-      "path": "packages/remirror__extension-sub/__stories__"
     },
     {
       "path": "packages/remirror__extension-sub/__tests__"
@@ -447,16 +369,10 @@
       "path": "packages/remirror__extension-sub/src"
     },
     {
-      "path": "packages/remirror__extension-sup/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-sup/__tests__"
     },
     {
       "path": "packages/remirror__extension-sup/src"
-    },
-    {
-      "path": "packages/remirror__extension-tables/__stories__"
     },
     {
       "path": "packages/remirror__extension-tables/__tests__"
@@ -465,25 +381,16 @@
       "path": "packages/remirror__extension-tables/src"
     },
     {
-      "path": "packages/remirror__extension-text-case/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-text-case/__tests__"
     },
     {
       "path": "packages/remirror__extension-text-case/src"
     },
     {
-      "path": "packages/remirror__extension-text-color/__stories__"
-    },
-    {
       "path": "packages/remirror__extension-text-color/__tests__"
     },
     {
       "path": "packages/remirror__extension-text-color/src"
-    },
-    {
-      "path": "packages/remirror__extension-text-highlight/__stories__"
     },
     {
       "path": "packages/remirror__extension-text-highlight/__tests__"
@@ -502,9 +409,6 @@
     },
     {
       "path": "packages/remirror__extension-trailing-node/src"
-    },
-    {
-      "path": "packages/remirror__extension-underline/__stories__"
     },
     {
       "path": "packages/remirror__extension-underline/__tests__"
@@ -567,9 +471,6 @@
       "path": "packages/remirror__react-components/__e2e__"
     },
     {
-      "path": "packages/remirror__react-components/__stories__"
-    },
-    {
       "path": "packages/remirror__react-components/__tests__"
     },
     {
@@ -588,13 +489,7 @@
       "path": "packages/remirror__react-editors/__e2e__"
     },
     {
-      "path": "packages/remirror__react-editors/__stories__"
-    },
-    {
       "path": "packages/remirror__react-editors/src"
-    },
-    {
-      "path": "packages/remirror__react-hooks/__stories__"
     },
     {
       "path": "packages/remirror__react-hooks/__tests__"
@@ -604,9 +499,6 @@
     },
     {
       "path": "packages/remirror__react-native/src"
-    },
-    {
-      "path": "packages/remirror__react-renderer/__stories__"
     },
     {
       "path": "packages/remirror__react-renderer/__tests__"
@@ -625,9 +517,6 @@
     },
     {
       "path": "packages/remirror__react-utils/src"
-    },
-    {
-      "path": "packages/remirror__react/__stories__"
     },
     {
       "path": "packages/remirror__react/src"
@@ -649,9 +538,6 @@
     },
     {
       "path": "packages/remirror/src"
-    },
-    {
-      "path": "packages/storybook-react/__stories__"
     },
     {
       "path": "packages/storybook-react/src"

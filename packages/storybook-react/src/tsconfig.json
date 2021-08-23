@@ -21,6 +21,15 @@
       "path": "../../remirror__dev/src"
     },
     {
+      "path": "../../remirror__extension-file/src"
+    },
+    {
+      "path": "../../remirror__extension-mention/src"
+    },
+    {
+      "path": "../../remirror__extension-mention-atom/src"
+    },
+    {
       "path": "../../remirror__extension-react-tables/src"
     },
     {
@@ -31,6 +40,9 @@
     },
     {
       "path": "../../remirror__react/src"
+    },
+    {
+      "path": "../../remirror__react-editors/src"
     },
     {
       "path": "../../create-context-state/src"

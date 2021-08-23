@@ -92,16 +92,7 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "200 KB",
-    "tsconfigs": {
-      "__stories__": {
-        "compilerOptions": {
-          "types": [
-            "node"
-          ]
-        }
-      }
-    }
+    "sizeLimit": "200 KB"
   },
   "preconstruct": {
     "entrypoints": [

@@ -334,7 +334,6 @@ let config = {
     {
       files: [
         '*.spec.{ts,tsx}*',
-        '**/__stories__/**',
         '*.stories.{ts,tsx}',
         'support/**',
         'website/**',
@@ -360,7 +359,6 @@ let config = {
         'docs/**',
         'support/**',
         'website/**',
-        '**/__stories__/**',
         '**/__fixtures__/**',
         '**/*.stories.tsx',
         '**/*.stories.ts',
@@ -494,7 +492,6 @@ if (process.env.FULL_ESLINT_CHECK) {
       {
         files: [
           '**/__tests__/**',
-          '**/__stories__/**',
           '**/__fixtures__/**',
           'support/**',
           'website/**',

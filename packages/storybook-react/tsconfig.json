@@ -12,5 +12,5 @@
     "noEmit": true,
     "allowJs": true
   },
-  "include": ["src", ".babelrc.js", "main.ts"]
+  "include": ["src", ".babelrc.js", "main.ts", "stories"]
 }

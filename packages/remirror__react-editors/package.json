@@ -98,13 +98,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "@remirror": {
-    "tsconfigs": {
-      "__stories__": {
-        "paths": false
-      }
-    }
-  },
   "preconstruct": {
     "entrypoints": [
       "index.ts",

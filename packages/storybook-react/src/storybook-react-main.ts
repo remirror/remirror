@@ -7,7 +7,7 @@ import { isArray, isPlainObject } from '@remirror/core';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const babelConfig = require(baseDir('packages', 'storybook-react', '.babelrc.js'));
 
-export const stories = glob.sync(baseDir('packages/*/__stories__/*.stories.(tsx)'), {
+export const stories = glob.sync(baseDir('packages/storybook-react/stories/**/*.stories.(tsx)'), {
   ignore: ['**/node_modules'],
 });
 
@@ -36,18 +36,6 @@ export async function webpackFinal(config: Configuration): Promise<Configuration
     use: [{ loader: require.resolve('babel-loader'), options: babelConfig }],
     exclude: [/node_modules/],
   });
-
-  // config.module?.rules?.push({
-  //   test: /-theme\.tsx?$/,
-  //   exclude: [/node_modules/],
-  //   use: [
-  //     { loader: require.resolve('babel-loader'), options: babelConfig },
-  //     {
-  //       loader: require.resolve('@linaria/webpack-loader'),
-  //       options: { sourceMap: dev, preprocessor: 'none' },
-  //     },
-  //   ],
-  // });
 
   const externals = config.externals ?? {};
   const plugins = config.plugins ?? [];
