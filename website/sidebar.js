@@ -4,18 +4,22 @@ const path = require('path');
 /** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
 const docs = [
   'introduction',
-  'installation',
+  {
+    type: 'category',
+    label: 'Getting started',
+    collapsed: false,
+    items: [
+      'installation',
+      'getting-started/create-manager',
+      'getting-started/create-editor',
+      'getting-started/commands-and-helpers',
+    ],
+  },
   {
     type: 'category',
     label: 'React',
     collapsed: false,
-    items: [
-      'react/create-editor',
-      'react/controlled',
-      'react/hooks',
-      'react/refs',
-      'react/static-html',
-    ],
+    items: ['react/controlled', 'react/hooks', 'react/refs', 'react/static-html'],
   },
   {
     type: 'category',
@@ -60,6 +64,7 @@ const api = [
     collapsed: true,
     items: fs
       .readdirSync(path.join(__dirname, '../docs/extensions'))
+      .sort((a, b) => (a === 'index.md' ? -1 : 0))
       .map((name) => `extensions/${name.replace(/\.md$/, '')}`),
   },
   {

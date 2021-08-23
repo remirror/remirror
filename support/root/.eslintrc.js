@@ -533,6 +533,7 @@ if (process.env.FULL_ESLINT_CHECK) {
           '@typescript-eslint/explicit-module-boundary-types': 'off',
           '@typescript-eslint/no-unused-vars-experimental': 'off',
           '@typescript-eslint/no-unused-vars': 'off',
+          'react-hooks/rules-of-hooks': 'off',
         },
       },
     ],

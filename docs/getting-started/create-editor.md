@@ -7,7 +7,8 @@ title: Create an editor
 
 Creating an editor consists of two steps.
 
-1. Creating the wrapper with `Remirror` which sets up the editor functionality by passing in the extension manager.
+1. Creating a manager, with extensions for your desired functionality (see previous guide).
+2. Rendering the `Remirror` component, by passing in the extension manager.
 
 ```tsx
 import 'remirror/styles/all.css';
@@ -18,7 +19,7 @@ import { Remirror, useRemirror } from '@remirror/react';
 
 const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
-const Editor = () => {
+export const MyEditor = () => {
   const { manager } = useRemirror({ extensions });
 
   return (
@@ -30,11 +31,13 @@ const Editor = () => {
 };
 ```
 
-The above editor created automatically renders the editor into the dom within a div. Everything you type will be passed through with keybindings for the provided extensions.
+The above editor automatically renders an editor into the DOM within a div. Everything you type will be passed through with keybindings for the provided extensions.
 
 ### Overriding defaults
 
-It's likely that you want a bit more control. This is why the `Remirror` components provides the `RemirrorContext` to all children components. When there are no children provided it automatically renders as above. But once we provide children we can take full control.
+It's likely that you want a bit more control, you likely want a menu for instance. When there are no children provided to the `Remirror` component it automatically renders as above. But once we provide children we can take full control.
+
+This is why the `Remirror` component provides the `RemirrorContext` to all children components.
 
 Let's create a menu and custom div to render the editor into.
 
@@ -42,9 +45,10 @@ Let's create a menu and custom div to render the editor into.
 import React from 'react';
 import { useActive, useCommands } from '@remirror/react';
 
-const Menu = () => {
+export const Menu = () => {
   // Access the commands and the activity status of the editor.
   const commands = useCommands();
+  // Whether bold/italic etc is active at the current selection.
   const active = useActive();
 
   return (
@@ -81,11 +85,11 @@ import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
 import { EditorComponent, Remirror, useRemirror } from '@remirror/react';
 
-import { Menu } from './editor';
+import { Menu } from './my-menu';
 
 const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
-const Editor = () => {
+export const MyEditor = () => {
   const { manager } = useRemirror({ extensions });
 
   return (
@@ -98,38 +102,6 @@ const Editor = () => {
 };
 ```
 
-### Setting initial content
+Notice the `EditorComponent` above, this component was automatically rendered in the first example, but now we are rendering it ourselves to have full control of the DOM structure.
 
-To set the initial content for the editor you can pass additional properties to the `useRemirror` hook. Initial content is only supported in uncontrolled components. You can find the docs for creating controlled components [here](./controlled.md).
-
-```tsx
-import React from 'react';
-import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from '@remirror/react';
-
-import { Menu } from './editor';
-
-const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
-
-const Editor = () => {
-  const { manager, state } = useRemirror({
-    extensions,
-
-    // Set the initial content.
-    content: '<p>Initial content</p>',
-
-    // Place the cursor at the start of the document. This an also be set to
-    // `end`, `all` or a numbered position.
-    selection: 'start',
-
-    // Set the string handler which means the content provided will be
-    // automatically handled as html. `markdown` is also available when the
-    // `MarkdownExtension` is added to the editor.
-    stringHandler: 'html',
-  });
-
-  return <Remirror manager={manager} initialContent={state} />;
-};
-```
-
-The initial content can also be set to a `RemirrorJSON` object which matches this shape of the data provided by remirror. It's up to you how you store the data.
+Rendering components as children of the `Remirror` component, that utilise `RemirrorContext` via hooks allows you to create very customised and powerful experiences.

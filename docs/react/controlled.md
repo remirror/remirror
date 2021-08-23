@@ -35,7 +35,6 @@ To simplify this process there are two properties provided by the `useRemirror` 
 
 ```tsx
 import React from 'react';
-import { htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
 import { Remirror, useRemirror } from '@remirror/react';
 
@@ -45,7 +44,7 @@ const Editor = () => {
   const { manager, state, setState } = useRemirror({
     extensions,
 
-    // Add the string handler import so that the initial
+    // Add the string handler so that the initial
     // state can created from a html string.
     stringHandler: 'html',
 
@@ -74,7 +73,6 @@ For example, the following change handler now intercepts the state update in ord
 
 ```tsx
 import React from 'react';
-import { htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
 import { Remirror, useRemirror } from '@remirror/react';
 
@@ -83,7 +81,7 @@ const extensions = () => [new BoldExtension()];
 const Editor = () => {
   const { manager, state, setState } = useRemirror({
     extensions,
-    stringHandler: htmlToProsemirrorNode,
+    stringHandler: 'html',
     content: '<p>This is the initial value</p>',
   });
 
@@ -113,7 +111,6 @@ Maybe you don't need to intercept the onChange callback, all you need is access 
 
 ```tsx
 import React from 'react';
-import { htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
 import { Remirror, useRemirror } from '@remirror/react';
 
@@ -123,9 +120,9 @@ const Editor = () => {
   const { manager, state, onChange } = useRemirror({
     extensions,
 
-    // Add the `htmlToProsemirrorNode` string handler import so that the initial
+    // Add the string handler so that the initial
     // state can created from a html string.
-    stringHandler: htmlToProsemirrorNode,
+    stringHandler: 'html',
 
     // This content is used to create the initial value. It is never referred to again after the first render.
     content: '<p>This is the initial value</p>',
@@ -159,9 +156,10 @@ The advised workaround is to use `chained` commands.
 
 ```tsx
 import React from 'react';
+import { useChainedCommands } from '@remirror/react';
 
 const ChainedButton = () => {
-  const { chained } = useRemirror();
+  const chained = useChainedCommands();
 
   return <button onClick={() => chained.toggleBold().toggleItalic().toggleUnderline().run()} />;
 };
