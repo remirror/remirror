@@ -139,7 +139,7 @@ Stories are an integral part of this repository. They serve as the package level
 
 For example the **bold extension** will have a story which shows how the commands can be used to toggle bold text within the editor.
 
-Each story should be placed within the `__stories__` folder and the file should end with the pattern `*.stories.ts(x)`.
+Each story should be placed within the `stories` folder and the file should end with the pattern `*.stories.ts(x)`.
 
 Following the 1.0.0 release of `remirror` there will be a big push to add more stories documenting the usage of all the extensions, commands and hooks available.
 
