@@ -240,10 +240,16 @@
       "path": "packages/remirror__extension-file/src"
     },
     {
+      "path": "packages/remirror__extension-font-family/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-font-family/__tests__"
     },
     {
       "path": "packages/remirror__extension-font-family/src"
+    },
+    {
+      "path": "packages/remirror__extension-font-size/__stories__"
     },
     {
       "path": "packages/remirror__extension-font-size/__tests__"
@@ -417,10 +423,16 @@
       "path": "packages/remirror__extension-strike/src"
     },
     {
+      "path": "packages/remirror__extension-sub/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-sub/__tests__"
     },
     {
       "path": "packages/remirror__extension-sub/src"
+    },
+    {
+      "path": "packages/remirror__extension-sup/__stories__"
     },
     {
       "path": "packages/remirror__extension-sup/__tests__"
@@ -436,6 +448,9 @@
     },
     {
       "path": "packages/remirror__extension-tables/src"
+    },
+    {
+      "path": "packages/remirror__extension-text-case/__stories__"
     },
     {
       "path": "packages/remirror__extension-text-case/__tests__"

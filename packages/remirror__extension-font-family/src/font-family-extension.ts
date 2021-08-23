@@ -22,7 +22,7 @@ export type FontFamilyAttributes = ProsemirrorAttributes<{
 }>;
 
 /**
- * Formatting for text casing in your editor.
+ * Add a font family to the selected text (or text within a specified range).
  */
 @extension({})
 export class FontFamilyExtension extends MarkExtension {
