@@ -37,6 +37,7 @@
     "@remirror/messages": "^1.0.2",
     "@remirror/pm": "^1.0.2",
     "@remirror/react": "^1.0.4",
+    "@remirror/react-editors": "^0.0.13",
     "@remirror/styles": "^1.1.0",
     "@storybook/addon-storysource": "^6.3.7",
     "@storybook/addons": "^6.3.4",
