@@ -129,7 +129,7 @@
     "@types/codemirror": "^5.60.2",
     "@types/refractor": "^3.0.2",
     "codemirror": "^5.62.0",
-    "refractor": "^3.3.1",
+    "refractor": "^4.0.0",
     "yjs": "^13.5.11"
   },
   "devDependencies": {

@@ -70,7 +70,7 @@
     "@svgmoji/noto": "^3.2.0",
     "@types/refractor": "^3.0.2",
     "create-context-state": "^1.0.1",
-    "refractor": "^3.3.1",
+    "refractor": "^4.0.0",
     "remirror": "1.0.12",
     "svgmoji": "^3.2.0"
   },
