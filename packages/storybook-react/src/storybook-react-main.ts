@@ -7,7 +7,7 @@ import { isArray, isPlainObject } from '@remirror/core';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const babelConfig = require(baseDir('packages', 'storybook-react', '.babelrc.js'));
 
-export const stories = glob.sync(baseDir('packages/*/__stories__/*.stories.(tsx)'), {
+export const stories = glob.sync(baseDir('packages/*/__stories__/**/*.stories.(tsx)'), {
   ignore: ['**/node_modules'],
 });
 
