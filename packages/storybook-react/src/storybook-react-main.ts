@@ -37,18 +37,6 @@ export async function webpackFinal(config: Configuration): Promise<Configuration
     exclude: [/node_modules/],
   });
 
-  // config.module?.rules?.push({
-  //   test: /-theme\.tsx?$/,
-  //   exclude: [/node_modules/],
-  //   use: [
-  //     { loader: require.resolve('babel-loader'), options: babelConfig },
-  //     {
-  //       loader: require.resolve('@linaria/webpack-loader'),
-  //       options: { sourceMap: dev, preprocessor: 'none' },
-  //     },
-  //   ],
-  // });
-
   const externals = config.externals ?? {};
   const plugins = config.plugins ?? [];
   const resolve = config.resolve ?? {};
