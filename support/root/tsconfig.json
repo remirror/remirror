@@ -1,7 +1,8 @@
 {
   "include": [],
   "files": [],
-  "references": [{
+  "references": [
+    {
       "path": "packages/a11y-status/__tests__"
     },
     {
