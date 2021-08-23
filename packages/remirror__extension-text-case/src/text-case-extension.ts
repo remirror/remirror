@@ -96,7 +96,7 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
           casing = 'none';
         }
 
-        const property = casing === 'smallCaps' ? 'fontVariant' : 'textTransform';
+        const property = casing === 'small-caps' ? 'fontVariant' : 'textTransform';
         style = joinStyles({ [property]: casing }, style);
 
         return ['span', { ...extraAttrs, style, [TEXT_CASE_ATTRIBUTE]: casing }, 0];
