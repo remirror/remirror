@@ -3,6 +3,9 @@ import { UploadContext } from '../file-upload-context';
 import { FileUploader } from '../file-uploader';
 import { getDefaultFileAttrs } from './data-url-file-uploader';
 
+/**
+ * Mock implementation of a FileUploader to test slow file uploads
+ */
 export function createSlowFileUploader(): FileUploader<FileAttributes> {
   let file: File;
   let aborted = false;
