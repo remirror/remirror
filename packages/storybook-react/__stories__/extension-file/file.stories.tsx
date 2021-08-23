@@ -2,7 +2,12 @@ import 'remirror/styles/extension-file.css';
 
 import React, { useCallback, useEffect } from 'react';
 import { ProsemirrorDevTools } from '@remirror/dev';
-import { createBaseuploadFileUploader , createObjectUrlFileUploader , createSlowFileUploader,FileExtension  } from '@remirror/extension-file';
+import {
+  createBaseuploadFileUploader,
+  createObjectUrlFileUploader,
+  createSlowFileUploader,
+  FileExtension,
+} from '@remirror/extension-file';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
 export default { title: 'Extensions / File' };
