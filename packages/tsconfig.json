@@ -4,7 +4,6 @@
     "types": [
       "node",
       "jest",
-      "@types/requestidlecallback",
       "expect-playwright/global",
       "jest-playwright-preset",
       "jest-extended",
