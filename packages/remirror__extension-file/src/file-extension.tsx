@@ -224,12 +224,35 @@ export class FileExtension extends NodeExtension<FileOptions> {
 }
 
 export interface FileAttributes {
-  // A temporary unique id during the file loading process
+  /**
+   * Unique identifier for a file
+   * During the file uploading process, this is a temporary unique ID
+   */
   id?: unknown;
+
+  /**
+   * URL where the file is stored
+   */
   url?: string;
+
+  /**
+   * Name of the file
+   */
   fileName?: string;
+
+  /**
+   * Mime type of the file, e.g. "image/jpeg"
+   */
   fileType?: string;
+
+  /**
+   * File size in bytes
+   */
   fileSize?: number;
+
+  /**
+   * Error state for the file, e.g. upload failed
+   */
   error?: string | null;
 }
 

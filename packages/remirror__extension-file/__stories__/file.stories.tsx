@@ -30,11 +30,6 @@ export const Default = (): JSX.Element => {
   );
 };
 
-Default.args = {
-  autoLink: true,
-  openLinkOnClick: true,
-};
-
 export const WithObjectUrl = (): JSX.Element => {
   const extensions = useCallback(
     () => [new FileExtension({ uploadFileHandler: createObjectUrlFileUploader })],
