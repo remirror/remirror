@@ -43,6 +43,9 @@ export interface FileOptions {
   onDeleteFile?: Handler<(props: { tr: Transaction; pos: number; node: ProsemirrorNode }) => void>;
 }
 
+/**
+ * Adds a file node to the editor
+ */
 @extension<FileOptions>({
   defaultOptions: {
     uploadFileHandler: createDataUrlFileUploader,

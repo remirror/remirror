@@ -56,7 +56,7 @@ const FloatingButtons = () => {
   );
 };
 
-export const CursorPositioner: FC = () => {
+export const Basic: FC = () => {
   const { manager, state, onChange } = useRemirror({ extensions });
 
   return (
