@@ -27,7 +27,7 @@ import {
  */
 @extension<TextCaseOptions>({
   defaultOptions: {
-    defaultCasing: 'upper',
+    defaultCasing: 'none',
   },
   staticKeys: ['defaultCasing'],
 })
