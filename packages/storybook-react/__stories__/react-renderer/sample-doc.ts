@@ -1,4 +1,4 @@
-import { RemirrorJSON } from '@remirror/core';
+import { RemirrorJSON } from 'remirror';
 
 export const SAMPLE_DOC: RemirrorJSON = {
   type: 'doc',

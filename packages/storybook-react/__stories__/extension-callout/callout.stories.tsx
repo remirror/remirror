@@ -3,9 +3,9 @@ import 'remirror/styles/all.css';
 import { EmojiButton } from '@joeattardi/emoji-button';
 import { Blobmoji } from '@svgmoji/blob';
 import React, { useCallback, useEffect, useRef } from 'react';
+import { htmlToProsemirrorNode, ProsemirrorNode } from 'remirror';
 import { CalloutExtension } from 'remirror/extensions';
 import svgmojiData from 'svgmoji/emoji.json';
-import { htmlToProsemirrorNode, ProsemirrorNode } from '@remirror/core';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   Remirror,

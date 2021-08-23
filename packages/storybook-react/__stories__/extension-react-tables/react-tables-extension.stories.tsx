@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import type { AnyExtension } from 'remirror';
 import { YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';
 import * as Y from 'yjs';
-import type { AnyExtension } from '@remirror/core';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   EditorComponent,

@@ -1,7 +1,7 @@
 import 'remirror/styles/all.css';
 
+import { htmlToProsemirrorNode } from 'remirror';
 import { HorizontalRuleExtension } from 'remirror/extensions';
-import { htmlToProsemirrorNode } from '@remirror/core';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 

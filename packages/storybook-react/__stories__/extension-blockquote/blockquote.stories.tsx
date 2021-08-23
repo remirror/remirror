@@ -1,8 +1,8 @@
 import 'remirror/styles/all.css';
 import './styles.css';
 
+import { cx, htmlToProsemirrorNode } from 'remirror';
 import { BlockquoteExtension } from 'remirror/extensions';
-import { cx, htmlToProsemirrorNode } from '@remirror/core';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
 

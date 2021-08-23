@@ -1,7 +1,7 @@
 import 'remirror/styles/all.css';
 
 import { TextHighlightExtension } from 'remirror/extensions';
-import { htmlToProsemirrorNode } from '@remirror/core';
+import { htmlToProsemirrorNode } from 'remirror';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 

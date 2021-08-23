@@ -1,8 +1,8 @@
 import 'remirror/styles/all.css';
 
 import React from 'react';
+import { htmlToProsemirrorNode } from 'remirror';
 import { ImageExtension } from 'remirror/extensions';
-import { htmlToProsemirrorNode } from '@remirror/core';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 export default { title: 'Extensions / Image' };

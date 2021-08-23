@@ -1,8 +1,8 @@
 import './use-mention-atom-styles.css';
 
 import { useCallback, useEffect, useState } from 'react';
+import { cx } from 'remirror';
 import { PlaceholderExtension } from 'remirror/extensions';
-import { cx } from '@remirror/core';
 import { MentionAtomExtension, MentionAtomNodeAttributes } from '@remirror/extension-mention-atom';
 import {
   FloatingWrapper,
