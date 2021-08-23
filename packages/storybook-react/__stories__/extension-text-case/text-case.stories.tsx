@@ -1,7 +1,7 @@
 import 'remirror/styles/all.css';
 
-import { TextCaseExtension } from 'remirror/extensions';
 import { htmlToProsemirrorNode } from 'remirror';
+import { TextCaseExtension } from 'remirror/extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
