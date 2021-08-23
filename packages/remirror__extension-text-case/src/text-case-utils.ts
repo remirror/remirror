@@ -18,7 +18,7 @@ export interface TextCaseOptions {
   /**
    * The default casing to toggle between.
    *
-   * @default 'upper'
+   * @default 'none'
    */
   defaultCasing?: Static<Casing>;
 }
