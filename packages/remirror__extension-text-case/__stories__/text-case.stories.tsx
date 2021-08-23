@@ -25,7 +25,7 @@ const TextCaseButton = () => {
 export const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
     extensions: extensions,
-    content: `<p>Text in <span data-text-case-mark="red">red</span></p>`,
+    content: `<p>Some text</p>`,
     stringHandler: htmlToProsemirrorNode,
   });
 
