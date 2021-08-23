@@ -9,7 +9,7 @@ To initialise a Remirror editor we must first create a _manager_. The manager st
 
 ### Extensions
 
-Some extensions are provided by default, like the `DocExenstion`, `ParagraphExtension` and `HistoryExtension`, but in the vast majority of cases, **you need to chose the extensions required for your end goal**.
+Some extensions are provided by default, like the `DocExtension`, `ParagraphExtension` and `HistoryExtension`, but in the vast majority of cases, **you need to chose the extensions required for your end goal**.
 
 You can see a list of provided extensions [here](/docs/extensions/index).
 
