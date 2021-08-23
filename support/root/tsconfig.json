@@ -449,6 +449,9 @@
       "path": "packages/remirror__extension-tables/src"
     },
     {
+      "path": "packages/remirror__extension-text-case/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-text-case/__tests__"
     },
     {
