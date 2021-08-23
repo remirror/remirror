@@ -272,7 +272,7 @@ importers:
       '@docusaurus/types': ^2.0.0-beta.3
       '@docusaurus/utils': ^2.0.0-beta.3
       '@remirror/core-helpers': ^1.0.1
-      globby: ^11.0.4
+      globby: ^12.0.0
       sucrase: ^3.20.0
     dependencies:
       '@babel/runtime': 7.15.3
@@ -280,7 +280,7 @@ importers:
       '@docusaurus/types': 2.0.0-beta.4
       '@docusaurus/utils': 2.0.0-beta.4
       '@remirror/core-helpers': link:../remirror__core-helpers
-      globby: 11.0.4
+      globby: 12.0.1
       sucrase: 3.20.1
 
   packages/jest-prosemirror:
@@ -660,7 +660,7 @@ importers:
       execa: ^5.1.1
       figures: ^3.2.0
       fs-extra: ^10.0.0
-      globby: ^11.0.4
+      globby: ^12.0.0
       ink: ^3.0.8
       ink-link: ^2.0.0
       ink-multi-select: ^2.0.0
@@ -697,7 +697,7 @@ importers:
       execa: 5.1.1
       figures: 3.2.0
       fs-extra: 10.0.0
-      globby: 11.0.4
+      globby: 12.0.1
       ink: 3.0.9_4cd822c6044f4c1a7e1f1fea0e728f12
       ink-link: 2.0.0_ink@3.0.9+react@17.0.2
       ink-multi-select: 2.0.0
@@ -2346,7 +2346,7 @@ importers:
       babel-loader: ^8.2.2
       codemirror: ^5.62.0
       create-context-state: ^1.0.1
-      globby: ^11.0.4
+      globby: ^12.0.0
       is-ci: ^3.0.0
       postcss: '>=8'
       postcss-nested: ^5.0.5
@@ -2387,7 +2387,7 @@ importers:
       babel-loader: 8.2.2_@babel+core@7.15.0
       codemirror: 5.62.3
       create-context-state: link:../create-context-state
-      globby: 11.0.4
+      globby: 12.0.1
       is-ci: 3.0.0
       postcss: 8.3.6
       postcss-nested: 5.0.6_postcss@8.3.6
@@ -2566,7 +2566,7 @@ importers:
       execa: ^5.1.1
       exit: ^0.1.2
       fs-extra: ^10.0.0
-      globby: ^11.0.4
+      globby: ^12.0.0
       got: ^11.8.1
       inquirer: ^8.1.2
       is-builtin-module: ^3.0.0
@@ -2639,7 +2639,7 @@ importers:
       execa: 5.1.1
       exit: 0.1.2
       fs-extra: 10.0.0
-      globby: 11.0.4
+      globby: 12.0.1
       got: 11.8.2
       inquirer: 8.1.2
       is-builtin-module: 3.1.0
@@ -10180,6 +10180,11 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
+  /array-union/3.0.1:
+    resolution: {integrity: sha512-1OvF9IbWwaeiM9VhzYXVQacMibxpXOMYVNIvMtKRyX9SImBXpKcFr8XvFDeEslCyuH/t6KRt7HEO94AlP8Iatw==}
+    engines: {node: '>=12'}
+    dev: false
+
   /array-uniq/1.0.3:
     resolution: {integrity: sha1-r2rId6Jcx/dOBYiUdThY39sk/bY=}
     engines: {node: '>=0.10.0'}
@@ -15782,6 +15787,18 @@ packages:
       ignore: 5.1.8
       merge2: 1.4.1
       slash: 3.0.0
+
+  /globby/12.0.1:
+    resolution: {integrity: sha512-AofdCGi+crQ1uN9+nMbTnvC4XGNPJN9hRiPf+A76lUZIZoWoj4Z9iyUQGge7xCGKgR/7ejB36qoIlLoDBc7fYw==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      array-union: 3.0.1
+      dir-glob: 3.0.1
+      fast-glob: 3.2.7
+      ignore: 5.1.8
+      merge2: 1.4.1
+      slash: 4.0.0
+    dev: false
 
   /globby/6.1.0:
     resolution: {integrity: sha1-9abXDoOV4hyFj7BInWTfAkJNUGw=}
@@ -24318,6 +24335,11 @@ packages:
   /slash/3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
+
+  /slash/4.0.0:
+    resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
+    engines: {node: '>=12'}
+    dev: false
 
   /slice-ansi/3.0.0:
     resolution: {integrity: sha512-pSyv7bSTC7ig9Dcgbw9AuRNUb5k5V6oDudjZoMBSr13qpLBG7tB+zgCkARjq7xIUgdz5P1Qe8u+rSGdouOOIyQ==}

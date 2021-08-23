@@ -50,7 +50,7 @@
     "execa": "^5.1.1",
     "figures": "^3.2.0",
     "fs-extra": "^10.0.0",
-    "globby": "^11.0.4",
+    "globby": "^12.0.0",
     "ink": "^3.0.8",
     "ink-link": "^2.0.0",
     "ink-multi-select": "^2.0.0",
