@@ -14,10 +14,10 @@ const TextCaseButton = () => {
   return (
     <>
       <button onClick={() => commands.setTextCase({ casing: 'none' })}>None</button>
-      <button onClick={() => commands.setTextCase({ casing: 'upper' })}>Upper</button>
-      <button onClick={() => commands.setTextCase({ casing: 'lower' })}>Lower</button>
+      <button onClick={() => commands.setTextCase({ casing: 'uppercase' })}>Upper</button>
+      <button onClick={() => commands.setTextCase({ casing: 'lowercase' })}>Lower</button>
       <button onClick={() => commands.setTextCase({ casing: 'capitalize' })}>Capitalize</button>
-      <button onClick={() => commands.setTextCase({ casing: 'smallCaps' })}>SmallCaps</button>
+      <button onClick={() => commands.setTextCase({ casing: 'small-caps' })}>Small caps</button>
     </>
   );
 };
