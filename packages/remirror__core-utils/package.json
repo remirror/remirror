@@ -45,7 +45,7 @@
     "@types/jsdom": "^16.2.13",
     "@types/node": "^16.3.3",
     "domino": "^2.1.6",
-    "jsdom": "^16.6.0"
+    "jsdom": "^17.0.0"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.1",
