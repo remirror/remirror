@@ -239,6 +239,9 @@
       "path": "packages/remirror__extension-file/src"
     },
     {
+      "path": "packages/remirror__extension-font-family/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-font-family/__tests__"
     },
     {
