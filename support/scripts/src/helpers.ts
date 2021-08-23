@@ -20,7 +20,7 @@ import { PackageJson, TsConfigJson } from '@remirror/types';
 /**
  * The `camelCased` argument passed to the cli.
  */
-export const cliArgs = camelCaseKeys(minimist(process.argv.slice(2)));
+export const cliArgs: any = camelCaseKeys(minimist(process.argv.slice(2)));
 
 // The log level to use for scripts.
 const minLevel = cliArgs.logLevel ?? process.env.LOG_LEVEL ?? 'debug';
