@@ -470,6 +470,9 @@
       "path": "packages/remirror__extension-text-color/src"
     },
     {
+      "path": "packages/remirror__extension-text-highlight/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-text-highlight/__tests__"
     },
     {
