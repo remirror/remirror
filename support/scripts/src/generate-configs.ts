@@ -357,7 +357,6 @@ const DEFAULT_TSCONFIG_META: Required<TsConfigMeta> = {
       declaration: false,
       noEmit: true,
       skipLibCheck: true,
-      // @ts-expect-error: wait for new version of `type-fest`
       importsNotUsedAsValues: 'remove',
     },
     include: ['./'],
@@ -375,7 +374,6 @@ const DEFAULT_TSCONFIG_META: Required<TsConfigMeta> = {
       declaration: false,
       noEmit: true,
       skipLibCheck: true,
-      // @ts-expect-error: wait for new version of `type-fest`
       importsNotUsedAsValues: 'remove',
     },
     include: ['./'],
@@ -390,7 +388,6 @@ const DEFAULT_TSCONFIG_META: Required<TsConfigMeta> = {
       noUnusedParameters: false,
       allowUnreachableCode: true,
       noImplicitReturns: false,
-      // @ts-expect-error: wait for new version of `type-fest`
       importsNotUsedAsValues: 'remove',
     },
     include: ['./'],
