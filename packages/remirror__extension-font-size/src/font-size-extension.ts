@@ -135,7 +135,12 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
    */
   @command(setFontSizeOptions)
   setFontSize(size: string | number, options?: SizeCommandOptions): CommandFunction {
-    return this.store.commands.applyMark.original(this.type, { size }, options?.selection);
+    return this.store.commands.applyMark.original(
+      this.type,
+      // Store always as string. This removes the need to treat string vs number when using the value
+      { size: String(size) },
+      options?.selection,
+    );
   }
 
   @command(increaseFontSizeOptions)
