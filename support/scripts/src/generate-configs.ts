@@ -395,26 +395,6 @@ const DEFAULT_TSCONFIG_META: Required<TsConfigMeta> = {
     },
     include: ['./'],
   },
-  __stories__: {
-    compilerOptions: {
-      declaration: false,
-      noEmit: true,
-      skipLibCheck: true,
-      // @ts-ignore
-      importsNotUsedAsValues: 'remove',
-    },
-    include: ['./'],
-    paths: [
-      ['react', '@types/react'],
-      ['react/jsx-dev-runtime', '@types/react', 'jsx-dev-runtime.d.ts'],
-      ['react/jsx-runtime', '@types/react', 'jsx-runtime.d.ts'],
-      ['react-dom', '@types/react-dom'],
-      ['reakit', 'reakit', 'ts'],
-      '@remirror/react',
-      ['@storybook/react', '@storybook/react', 'types-6-0.d.ts'],
-      '@remirror/dev',
-    ],
-  },
 };
 
 interface TsConfigFile {

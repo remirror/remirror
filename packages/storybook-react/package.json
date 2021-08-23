@@ -84,13 +84,6 @@
           ".babelrc.js",
           "main.ts"
         ]
-      },
-      "__stories__": {
-        "compilerOptions": {
-          "types": [
-            "node"
-          ]
-        }
       }
     }
   },

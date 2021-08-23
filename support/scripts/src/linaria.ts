@@ -36,7 +36,6 @@ const files = globby.sync(['packages/remirror__theme/src/*.{ts,tsx}'], {
     '**/__dts__',
     '**/__mocks__',
     '**/__fixtures__',
-    '**/__stories__',
     '*.{test,spec}.{ts,tsx}',
     '**/*.d.ts',
     '*.d.ts',

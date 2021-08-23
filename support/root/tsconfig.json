@@ -540,9 +540,6 @@
       "path": "packages/remirror/src"
     },
     {
-      "path": "packages/storybook-react/__stories__"
-    },
-    {
       "path": "packages/storybook-react/src"
     },
     {
