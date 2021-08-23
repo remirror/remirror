@@ -30,7 +30,7 @@ export interface HardBreakOptions {
  * It will automatically exit when used inside a `codeClock`. To
  * prevent problems occurring when the codeblock is the last node in the
  * doc, you should add the `TrailingNodeExtension` which automatically appends a
- * paragraph node to the last node..
+ * paragraph node to the last node.
  */
 @extension({
   defaultPriority: ExtensionPriority.Low,
