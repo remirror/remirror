@@ -62,7 +62,7 @@ const Editor = () => {
     selection: 'end',
   });
 
-  return <Remirror onChange={onChange} manager={manager} state={state} />;
+  return <Remirror onChange={onChange} manager={manager} initialContent={state} />;
 };
 ```
 
@@ -73,11 +73,11 @@ With this code snippet your editor now supports basic editing functionality.
 ## Installation
 
 ```bash
-yarn add remirror @remirror/react # Yarn
+yarn add remirror @remirror/react @remirror/pm # Yarn
 
-npm install remirror @remirror/react # npm
+npm add remirror @remirror/react @remirror/pm # npm
 
-pnpm add remirror @remirror/react # pnpm
+pnpm add remirror @remirror/react @remirror/pm # pnpm
 ```
 
 If you run into any issues we recommend any of the following:
@@ -97,6 +97,8 @@ View our documentation website [**here**][introduction].
 - [Introduction]
 - [Create an editor](https://remirror.io/docs/guide/create-editor)
 - [Extensions](https://remirror.io/docs/concepts/extension)
+- [Storybook]
+- [CodeSandbox starter](https://codesandbox.io/s/github/remirror/remirror-starter)
 
 <br />
 
@@ -120,17 +122,17 @@ View our documentation website [**here**][introduction].
 
 ## Getting Started
 
-To add an editor to your codebase, first install the required dependencies. Make sure to include the `` tag so that the correct version is installed.
+To add an editor to your codebase, first install the required dependencies.
 
 ```bash
 # yarn
-yarn add remirror
+yarn add remirror @remirror/react @remirror/pm
 
 # pnpm
-pnpm add remirror
+pnpm add remirror @remirror/react @remirror/pm
 
 # npm
-npm install remirror
+npm install remirror @remirror/react @remirror/pm
 ```
 
 ## Usage
@@ -151,21 +153,19 @@ import {
 } from '@remirror/react';
 
 const Button = () => {
-  // `autoUpdate` means that every editor update will recalculate the output
-  // from `active.bold()` and keep the bold status up to date in the editor.
+  // Determines whether "bold" is active within the current text selection
   const { bold } = useActive();
-
-  const commands = useCommands();
+  // Provides the ability to toggle bold on or off for the current selection
+  const { toggleBold } = useCommands();
 
   return (
-    <>
-      <button
-        onClick={() => commands.toggleBold()}
-        style={{ fontWeight: bold() ? 'bold' : undefined }}
-      >
-        Bold
-      </button>
-    </>
+    <button
+      onClick={() => toggleBold()}
+      disabled={toggleBold.enabled()}
+      style={{ fontWeight: bold() ? 'bold' : undefined }}
+    >
+      Bold
+    </button>
   );
 };
 
@@ -184,6 +184,7 @@ const hooks = [
       [getJSON],
     );
 
+    // "Mod" means platform agnostic modifier key - i.e. Ctrl on Windows, or Cmd on MacOS
     useKeymap('Mod-s', onSave);
   },
 ];
@@ -230,6 +231,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [contribution guide]: https://remirror.io/docs/contributing
 [projects]: https://remirror.io/projects
 [installation]: https://remirror.io/docs/installation
+[storybook]: https://remirror.vercel.app
 [typescript]: https://github.com/microsoft/Typescript
 [react]: https://github.com/facebook/react
 [prosemirror]: https://prosemirror.net

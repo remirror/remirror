@@ -154,14 +154,17 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
   @command()
   updateIframeSource(src: string): CommandFunction {
     return ({ tr, dispatch }) => {
-      const found = findSelectedNodeOfType({ selection: tr.selection, types: this.type });
+      const iframeNode = findSelectedNodeOfType({ selection: tr.selection, types: this.type });
 
-      if (!found) {
+      // Selected node is NOT an iframe node, return false indicating this command is NOT enabled
+      if (!iframeNode) {
         return false;
       }
 
-      dispatch?.(tr.setNodeMarkup(found.pos, undefined, { ...found.node.attrs, src }));
+      // Call dispatch method if present (using optional chaining), to modify the actual document
+      dispatch?.(tr.setNodeMarkup(iframeNode.pos, undefined, { ...iframeNode.node.attrs, src }));
 
+      // Return true, indicating this command IS enabled
       return true;
     };
   }
