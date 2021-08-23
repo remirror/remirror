@@ -284,6 +284,9 @@
       "path": "packages/remirror__extension-history/src"
     },
     {
+      "path": "packages/remirror__extension-horizontal-rule/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-horizontal-rule/__tests__"
     },
     {
