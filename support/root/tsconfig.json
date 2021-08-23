@@ -218,6 +218,9 @@
       "path": "packages/remirror__extension-emoji/src"
     },
     {
+      "path": "packages/remirror__extension-epic-mode/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-epic-mode/__tests__"
     },
     {
