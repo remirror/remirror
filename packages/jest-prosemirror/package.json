@@ -67,7 +67,7 @@
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.1",
     "prosemirror-test-builder": "^1.0.4",
-    "stringify-object": "^3.3.0",
+    "stringify-object": "^4.0.0",
     "test-keyboard": "1.0.1"
   },
   "devDependencies": {
