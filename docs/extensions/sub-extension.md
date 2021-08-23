@@ -7,7 +7,7 @@ title: 'SubExtension'
 
 ## Summary
 
-Add a `sub` mark to the editor. This is used to mark inline text as a sub snippet.
+Add a `sub` mark to the editor. This is used to mark inline text as a subscript snippet.
 
 ## Usage
 

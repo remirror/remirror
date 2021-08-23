@@ -180,6 +180,9 @@
       "path": "packages/remirror__extension-collaboration/src"
     },
     {
+      "path": "packages/remirror__extension-columns/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-columns/__tests__"
     },
     {
@@ -217,6 +220,9 @@
     },
     {
       "path": "packages/remirror__extension-emoji/src"
+    },
+    {
+      "path": "packages/remirror__extension-epic-mode/__stories__"
     },
     {
       "path": "packages/remirror__extension-epic-mode/__tests__"
@@ -264,10 +270,16 @@
       "path": "packages/remirror__extension-gap-cursor/src"
     },
     {
+      "path": "packages/remirror__extension-hard-break/__stories__"
+    },
+    {
       "path": "packages/remirror__extension-hard-break/__tests__"
     },
     {
       "path": "packages/remirror__extension-hard-break/src"
+    },
+    {
+      "path": "packages/remirror__extension-heading/__stories__"
     },
     {
       "path": "packages/remirror__extension-heading/__tests__"
@@ -280,6 +292,9 @@
     },
     {
       "path": "packages/remirror__extension-history/src"
+    },
+    {
+      "path": "packages/remirror__extension-horizontal-rule/__stories__"
     },
     {
       "path": "packages/remirror__extension-horizontal-rule/__tests__"
@@ -466,6 +481,9 @@
     },
     {
       "path": "packages/remirror__extension-text-color/src"
+    },
+    {
+      "path": "packages/remirror__extension-text-highlight/__stories__"
     },
     {
       "path": "packages/remirror__extension-text-highlight/__tests__"

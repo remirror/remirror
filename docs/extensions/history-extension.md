@@ -1,0 +1,34 @@
+---
+hide_title: true
+title: 'HistoryExtension'
+---
+
+# `HistoryExtension`
+
+## Summary
+
+This extension provides undo and redo commands and inserts a plugin which handles history related actions.
+
+## Usage
+
+### Installation
+
+This extension is installed for you when you install the main `remirror` package.
+
+You can use the imports in the following way.
+
+```ts
+import { HistoryExtension } from 'remirror/extensions';
+```
+
+To install it directly you can use
+
+The extension is provided by the `@remirror/extension-history` package. There are two ways of pulling it into your project.
+
+## API
+
+### Options
+
+### Commands
+
+### Helpers
