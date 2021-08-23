@@ -5,7 +5,7 @@ import { NodeFormattingExtension } from 'remirror/extensions';
 import { htmlToProsemirrorNode } from '@remirror/core';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
-export default { title: 'Extensions / Node Formatting' };
+export default { title: 'Extensions / NodeFormatting' };
 
 export const Basic: React.FC = () => {
   const { manager, state, onChange } = useRemirror({

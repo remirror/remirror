@@ -5,7 +5,7 @@ import { htmlToProsemirrorNode } from '@remirror/core';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
-export default { title: 'Extensions / Font family' };
+export default { title: 'Extensions / FontFamily' };
 
 const extensions = () => [new FontFamilyExtension()];
 
