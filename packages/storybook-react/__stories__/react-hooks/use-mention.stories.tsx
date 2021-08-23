@@ -1,10 +1,13 @@
 import './use-mention-atom-styles.css';
 
 import { useCallback, useEffect, useState } from 'react';
-import { PlaceholderExtension } from 'remirror/extensions';
-import { cx } from '@remirror/core';
+import { cx } from 'remirror';
+import {
+  MentionExtension,
+  MentionExtensionAttributes,
+  PlaceholderExtension,
+} from 'remirror/extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
-import { MentionExtension, MentionExtensionAttributes } from '@remirror/extension-mention';
 import { FloatingWrapper, Remirror, ThemeProvider, useMention, useRemirror } from '@remirror/react';
 
 export default { title: 'React Hooks / useMention' };
