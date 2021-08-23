@@ -1,8 +1,7 @@
 {
   "include": [],
   "files": [],
-  "references": [
-    {
+  "references": [{
       "path": "packages/a11y-status/__tests__"
     },
     {
@@ -268,6 +267,9 @@
     },
     {
       "path": "packages/remirror__extension-hard-break/src"
+    },
+    {
+      "path": "packages/remirror__extension-heading/__stories__"
     },
     {
       "path": "packages/remirror__extension-heading/__tests__"
