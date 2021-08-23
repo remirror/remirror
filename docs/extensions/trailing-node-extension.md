@@ -1,0 +1,36 @@
+---
+hide_title: true
+title: 'TrailingNodeExtension'
+---
+
+# `TrailingNodeExtension`
+
+## Summary
+
+Ensure that there's always a trailing paragraph at the end of the document.
+
+Why? In some scenarios it is difficult to place a cursor after the last element. This ensures there's always space to select the position afterward.
+
+## Usage
+
+### Installation
+
+This extension is installed for you when you install the main `remirror` package.
+
+You can use the imports in the following way.
+
+```ts
+import { TrailingNodeExtension } from 'remirror/extensions';
+```
+
+To install it directly you can use
+
+The extension is provided by the `@remirror/extension-trailing-node` package. There are two ways of pulling it into your project.
+
+## API
+
+### Options
+
+### Commands
+
+### Helpers
