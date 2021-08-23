@@ -4,11 +4,10 @@ import {
   HeadingExtension,
   LinkExtension,
   OrderedListExtension,
+  TaskListExtension,
 } from 'remirror/extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-
-import { TaskListExtension } from '../src/task-list-extension';
 
 export default { title: 'Extensions / List' };
 
