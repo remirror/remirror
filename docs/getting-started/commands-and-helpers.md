@@ -121,7 +121,7 @@ Commands must do 2 things
    - If `dispatch` **is** present, the command will modify the document.
    - If `dispatch` is **not** present, the command will **not** modify the document (this is the `.enabled()` case, checking if we _could_ execute the command).
 
-[Example here](https://github.com/remirror/remirror/blob/a2ca7a83f35b3831b97817eb2cb38b1a82d60ab8/packages/remirror__extension-embed/src/iframe-extension.ts#L148-L161)
+[Example here](https://github.com/remirror/remirror/blob/2666698102afd15d118a1e0bdf5c983fec0ba103/packages/remirror__extension-embed/src/iframe-extension.ts#L154-L170)
 
 :::note
 
