@@ -19,7 +19,13 @@ export const Basic: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end' />
+      <Remirror
+        manager={manager}
+        autoFocus
+        onChange={onChange}
+        initialContent={state}
+        autoRender='end'
+      />
     </ThemeProvider>
   );
 };
@@ -37,7 +43,13 @@ export const Resizable: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end' />
+      <Remirror
+        manager={manager}
+        autoFocus
+        onChange={onChange}
+        initialContent={state}
+        autoRender='end'
+      />
     </ThemeProvider>
   );
 };

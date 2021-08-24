@@ -45,7 +45,13 @@ export const Basic = (): JSX.Element => {
         To try out the other column config: Click again the same button to remove the current column
         config.
       </div>
-      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
+      <Remirror
+        manager={manager}
+        autoFocus
+        onChange={onChange}
+        initialContent={state}
+        autoRender='end'
+      >
         <ColumnsButton />
         <ProsemirrorDevTools />
       </Remirror>

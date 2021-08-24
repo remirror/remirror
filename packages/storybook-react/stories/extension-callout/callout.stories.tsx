@@ -158,7 +158,13 @@ export const Basic = (): JSX.Element => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
+      <Remirror
+        manager={manager}
+        autoFocus
+        onChange={onChange}
+        initialContent={state}
+        autoRender='end'
+      >
         <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
@@ -186,7 +192,13 @@ export const WithEmojiPicker: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
+      <Remirror
+        manager={manager}
+        autoFocus
+        onChange={onChange}
+        initialContent={state}
+        autoRender='end'
+      >
         <EmojiPicker />
         <ProsemirrorDevTools />
       </Remirror>
@@ -208,7 +220,13 @@ export const WithRandomEmoji: React.FC = () => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
+      <Remirror
+        manager={manager}
+        autoFocus
+        onChange={onChange}
+        initialContent={state}
+        autoRender='end'
+      >
         <RandomEmoji />
         <ProsemirrorDevTools />
       </Remirror>
