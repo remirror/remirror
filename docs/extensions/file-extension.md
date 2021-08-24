@@ -1,9 +1,9 @@
 ---
 hide_title: true
-title: 'FileExtension'
+title: 'FileExtension (Beta)'
 ---
 
-# `FileExtension`
+# `FileExtension` <span class="beta" />
 
 ## Summary
 

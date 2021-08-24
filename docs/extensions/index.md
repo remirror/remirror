@@ -29,7 +29,7 @@ title: Overview
 
 **[EventsExtension](./events-extension.md)**<br /> Listens to events which occur within the editor
 
-**[FileExtension](./file-extension.md)**<br /> Adds a file node
+**[FileExtension](./file-extension.md)** <span class="beta" /><br /> Adds a file node
 
 **[FontFamilyExtension](./font-family-extension.md)**<br /> Add a font family to the selected text
 

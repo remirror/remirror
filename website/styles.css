@@ -39,3 +39,23 @@ html[data-theme='dark'] {
 .footer__links {
   text-align: center;
 }
+
+.beta {
+  align-items: center;
+  background-color: #ffe08a;
+  border-radius: 0.375em;
+  color: rgba(0, 0, 0, 0.7);
+  display: inline-flex;
+  font-size: 0.75rem;
+  height: 2em;
+  justify-content: center;
+  line-height: 1.5;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.beta:after {
+  content: 'Beta';
+}
