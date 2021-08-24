@@ -52,14 +52,6 @@ const api = [
   'api',
   {
     type: 'category',
-    label: 'Packages',
-    collapsed: true,
-    items: fs
-      .readdirSync(path.join(__dirname, '../docs/packages'))
-      .map((name) => `packages/${name.replace(/\.md$/, '')}`),
-  },
-  {
-    type: 'category',
     label: 'Extensions',
     collapsed: true,
     items: fs
