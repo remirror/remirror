@@ -9,21 +9,23 @@ title: 'FileExtension (Beta)'
 
 Adds a file node to the editor
 
+## Beta
+
+Note this extension is in beta, so its API may change without a bump to the major semver version.
+
 ## Usage
 
 ### Installation
 
-This extension is installed for you when you install the main `remirror` package.
-
-You can use the imports in the following way.
-
-```ts
-import { FileExtension } from 'remirror/extensions';
-```
+This extension is still in beta so is **not** included in the main `remirror` package.
 
 To install it directly you can use
 
-The extension is provided by the `@remirror/extension-file` package. There are two ways of pulling it into your project.
+```ts
+import { FileExtension } from '@remirror/file-extension';
+```
+
+The extension is provided by the `@remirror/extension-file` package.
 
 ### Examples
 
