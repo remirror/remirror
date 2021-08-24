@@ -22,7 +22,7 @@ This extension is still in beta so is **not** included in the main `remirror` pa
 To install it directly you can use
 
 ```ts
-import { FileExtension } from '@remirror/file-extension';
+import { FileExtension } from '@remirror/extension-file';
 ```
 
 The extension is provided by the `@remirror/extension-file` package.
