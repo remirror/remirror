@@ -73,7 +73,7 @@ title: Overview
 
 **[TextColorExtension](./text-color-extension.md)**<br /> Makes the text under the cursor / or at the provided position range have the specified color
 
-**[TrailingNodeExtension](./undertrailing-nodeline-extension.md)**<br /> Ensure that there's always a trailing paragraph at the end of the document
+**[TrailingNodeExtension](./trailing-node-extension.md)**<br /> Ensure that there's always a trailing paragraph at the end of the document
 
 **[UnderlineExtension](./underline-extension.md)**<br /> Makes the text under the cursor / or at the provided position range <u>underline</u>
 
