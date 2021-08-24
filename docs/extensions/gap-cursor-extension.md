@@ -7,7 +7,7 @@ title: 'GapCursorExtension'
 
 ## Summary
 
-this will capture clicks near and arrow-key-motion past places that don't have a normally selectable position nearby, and create a gap cursor selection for them. The cursor is drawn as an element with class `ProseMirror-gapcursor`.
+This will capture clicks near and arrow-key-motion past places that don't have a normally selectable position nearby, and create a gap cursor selection for them. The cursor is drawn as an element with class `ProseMirror-gapcursor`.
 
 Make sure to import the styles:
 
