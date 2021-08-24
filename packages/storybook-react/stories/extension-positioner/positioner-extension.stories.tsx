@@ -61,7 +61,7 @@ export const Basic: FC = () => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} state={state} onChange={onChange} autoRender>
+      <Remirror manager={manager} initialContent={state} onChange={onChange} autoRender>
         <FloatingButtons />
       </Remirror>
     </ThemeProvider>

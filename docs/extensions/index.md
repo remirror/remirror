@@ -29,7 +29,7 @@ title: Overview
 
 **[EventsExtension](./events-extension.md)**<br /> Listens to events which occur within the editor
 
-**[FileExtension](./file-extension.md)**<br /> Adds a file node
+**[FileExtension](./file-extension.md)** <span class="beta" /><br /> Adds a file node
 
 **[FontFamilyExtension](./font-family-extension.md)**<br /> Add a font family to the selected text
 
@@ -41,7 +41,7 @@ title: Overview
 
 **[HistoryExtension](./history-extension.md)**<br /> Provides undo and redo commands
 
-**[HorizontalRuleExtension](./horizontal-rule-extension.md)**<br /> Adds a horizontal line to the editor
+**[HorizontalRuleExtension](./horizontal-rule-extension.md)**<br /> Adds a horizontal line `<hr />` tag to the editor
 
 **[ImageExtension](./image-extension.md)**<br /> Places images into the editor
 
@@ -65,9 +65,9 @@ title: Overview
 
 **[StrikeExtension](./strike-extension.md)**<br /> Makes the text under the cursor / or at the provided position range ~~strike~~
 
-**[SubExtension](./sub-extension.md)**<br /> Adds a `sub` mark to the editor. This is used to mark inline text as a subscript snippet
+**[SubExtension](./sub-extension.md)**<br /> Adds a `sub` mark to the editor. This is used to mark inline text as a <sub>subscript</sub> snippet
 
-**[SupExtension](./sup-extension.md)**<br /> Adds a `sup` mark to the editor. This is used to mark inline text as a superscript snippet
+**[SupExtension](./sup-extension.md)**<br /> Adds a `sup` mark to the editor. This is used to mark inline text as a <sup>superscript</sup> snippet
 
 **[TextCaseExtension](./text-case-extension.md)**<br /> Formatting for text casing in the editor
 

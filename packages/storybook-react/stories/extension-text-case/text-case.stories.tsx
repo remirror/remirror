@@ -31,7 +31,13 @@ export const Basic = (): JSX.Element => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
+      <Remirror
+        manager={manager}
+        autoFocus
+        onChange={onChange}
+        initialContent={state}
+        autoRender='end'
+      >
         <TextCaseButton />
         <ProsemirrorDevTools />
       </Remirror>
