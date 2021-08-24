@@ -27,7 +27,7 @@ The extension is provided by the `@remirror/extension-sub` package. There are tw
 
 ### Examples
 
-See [storybook](https://remirror.vercel.app/?path=/story/extensions-sub--basic) for examples.
+See [storybook](https://remirror.vercel.app/?path=/story/extensions-subscript--basic) for examples.
 
 ## API
 

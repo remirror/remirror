@@ -27,7 +27,7 @@ The extension is provided by the `@remirror/extension-sup` package. There are tw
 
 ### Examples
 
-See [storybook](https://remirror.vercel.app/?path=/story/extensions-sup--basic) for examples.
+See [storybook](https://remirror.vercel.app/?path=/story/extensions-superscript--basic) for examples.
 
 ## API
 
