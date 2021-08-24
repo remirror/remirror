@@ -16,7 +16,7 @@ const DOC = {
   ],
 };
 
-export default { title: 'Controlled Editor' };
+export default { title: 'Editors / Controlled' };
 
 const extensions = () => [];
 

@@ -13,7 +13,7 @@ import {
 
 import { SAMPLE_DOC } from './sample-doc';
 
-export default { title: 'React Renderer (static HTML)' };
+export default { title: 'Editors / React Renderer (static HTML)' };
 
 const typeMap: MarkMap = {
   blockquote: 'blockquote',

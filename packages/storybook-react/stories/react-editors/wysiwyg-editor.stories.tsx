@@ -1,1 +1,1 @@
-export default { title: 'Wysiwyg Editor' };
+export default { title: 'Editors / Wysiwyg' };

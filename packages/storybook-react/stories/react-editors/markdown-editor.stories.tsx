@@ -35,7 +35,7 @@ import {
   UseRemirrorReturn,
 } from '@remirror/react';
 
-export default { title: 'Markdown Editor' };
+export default { title: 'Editors / Markdown' };
 
 /**
  * The editor which is used to create the annotation. Supports formatting.
