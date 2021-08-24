@@ -5,6 +5,14 @@ title: Extension
 
 # Extension
 
+:::note
+
+This doc refers to "Extension" as a concept.
+
+You can find a list of Remirror's provided extensions [here](/docs/extensions/index).
+
+:::note
+
 Extensions manage similar concerns. It allows for grouping items that affect:
 
 - How the editor displays certain content, i.e. **bold**, _italic_, <u>underline</u>.
