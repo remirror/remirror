@@ -24,6 +24,10 @@ html[data-theme='dark'] {
   --ifm-menu-color-background-active: #fff;
 }
 
+.navbar--fixed-top {
+  width: 100%;
+}
+
 .navbar__items {
   color: #fff;
 }
