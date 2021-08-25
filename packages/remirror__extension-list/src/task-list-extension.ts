@@ -60,7 +60,7 @@ export class TaskListExtension extends NodeExtension {
   /**
    * Toggle the task list for the current selection.
    */
-  @command({ icon: 'listUnordered', label: ({ t }) => t(Messages.BULLET_LIST_LABEL) })
+  @command({ icon: 'listCheck', label: ({ t }) => t(Messages.TASK_LIST_LABEL) })
   toggleTaskList(): CommandFunction {
     return toggleList(this.type, assertGet(this.store.schema.nodes, 'taskListItem'));
   }
