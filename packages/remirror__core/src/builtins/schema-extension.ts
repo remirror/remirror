@@ -21,6 +21,7 @@ import type {
   ApplySchemaAttributes,
   DynamicAttributeCreator,
   EditorSchema,
+  JsonPrimitive,
   Mark,
   MarkExtensionSpec,
   MarkSpecOverride,
@@ -913,7 +914,7 @@ function createDefaults(
 ) {
   return () => {
     onCalled();
-    const attributes: Record<string, { default?: string | null }> = object();
+    const attributes: Record<string, { default?: JsonPrimitive }> = object();
 
     // Extra attributes can be ignored by the extension, check if that's the
     // case here.

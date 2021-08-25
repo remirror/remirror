@@ -520,6 +520,11 @@ export type ConditionalReturnKeys<Base, Return> = NonNullable<
  */
 export type ConditionalReturnPick<Base, Return> = Pick<Base, ConditionalReturnKeys<Base, Return>>;
 
+/**
+ Matches any valid JSON primitive value.
+ */
+export type JsonPrimitive = string | number | boolean | null;
+
 declare global {
   namespace Remirror {
     /**

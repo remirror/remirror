@@ -18,6 +18,7 @@ import {
   isError,
   isFunction,
   isInteger,
+  isJSONPrimitive,
   isMap,
   isNativePromise,
   isNull,
@@ -214,6 +215,22 @@ describe('predicates', () => {
     expect(isPrimitive({})).toBeFalse();
     expect(isPrimitive(class A {})).toBeFalse();
     expect(isPrimitive(/regexp/)).toBeFalse();
+  });
+
+  it('isJSONPrimitive', () => {
+    const noValue = undefined;
+
+    expect(isJSONPrimitive(1)).toBeTrue();
+    expect(isJSONPrimitive('string')).toBeTrue();
+    expect(isJSONPrimitive(10_000_000_000_000n)).toBeFalse();
+    expect(isJSONPrimitive(Symbol(''))).toBeFalse();
+    expect(isJSONPrimitive(null)).toBeTrue();
+    expect(isJSONPrimitive(noValue)).toBeFalse();
+    expect(isJSONPrimitive(false)).toBeTrue();
+    expect(isJSONPrimitive([])).toBeFalse();
+    expect(isJSONPrimitive({})).toBeFalse();
+    expect(isJSONPrimitive(class A {})).toBeFalse();
+    expect(isJSONPrimitive(/regexp/)).toBeFalse();
   });
 
   it('isPlainObject', () => {
