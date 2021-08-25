@@ -12,3 +12,9 @@ export const BULLET_LIST_LABEL: MessageDescriptor = defineMessage({
   comment: 'Description for inserting a bullet list into the editor.',
   message: 'Bulleted list',
 });
+
+export const TASK_LIST_LABEL: MessageDescriptor = defineMessage({
+  id: 'extension.command.toggle-task-list.description',
+  comment: 'Description for inserting a task list into the editor.',
+  message: 'Tasked list',
+});
