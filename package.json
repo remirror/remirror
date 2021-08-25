@@ -21,7 +21,7 @@
     "checks:fix": "run-s -c fix typecheck test build size build:dev",
     "checks:release": "run-s checks build e2e",
     "clean": "pnpm if-clean git clean -- -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
-    "clean:all": "git clean -fdX --exclude='.config.json'",
+    "clean:all": "git clean -fdx --exclude='.config.json' --exclude='.idea/'",
     "clean:modules": "git clean -fdX packages support",
     "clean:tsconfig": "rimraf packages/**/tsconfig.json",
     "cli": "node packages/remirror__cli/bin.js",
