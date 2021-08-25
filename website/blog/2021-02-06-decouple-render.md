@@ -22,7 +22,7 @@ Yet, those extensions also introduce an interesting dilemma: The richer the UI a
 
 Let’s take for example an Remirror extension, which shows a news article:
 
-```ts
+```tsx
 @extensionDecorator({})
 export class ArticleExtension extends NodeExtension {
   ReactComponent: ComponentType<NodeViewComponentProps> = ({ node }) => (
@@ -42,7 +42,7 @@ In a real application, this article card would include also a photo, an action b
 
 An alternative would be to rendered the material-ui components directly in the Remirror extension like this:
 
-```ts
+```tsx
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -68,7 +68,7 @@ For those situation, our go-to pattern are render props. The Remirror extension 
 
 The extension provides via the defaultOptions a trivial implementation for the render prop, so it can be easily used e.g. in the playground:
 
-```ts
+```tsx
 export type RenderArticle = (article: Article) => React.ReactElement<HTMLElement> | null;
 export interface ArticleOptions {
   renderArticle?: RenderArticle;
@@ -94,7 +94,8 @@ export class ArticleExtension extends NodeExtension<ArticleOptions> {
 
 The embedding application can now bring in the app-specific components via the render prop:
 
-```ts
+```tsx
+/* eslint-disable react/jsx-no-undef */
 const manager = Remirror.useManager([
   new ArticleExtension({
     renderArticle: (article) => (
