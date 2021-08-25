@@ -3,7 +3,6 @@ import {
   assertGet,
   command,
   CommandFunction,
-  extension,
   ExtensionPriority,
   ExtensionTag,
   keyBinding,
@@ -21,9 +20,6 @@ import { TaskListItemExtension } from './task-list-item-extension';
 /**
  * Create the node for a task list.
  */
-@extension<object>({
-  defaultOptions: { priority: ExtensionPriority.Medium },
-})
 export class TaskListExtension extends NodeExtension {
   get name() {
     return 'taskList' as const;
@@ -39,7 +35,13 @@ export class TaskListExtension extends NodeExtension {
       ...override,
       attrs: extra.defaults(),
       parseDOM: [
-        { tag: 'ul[data-task-list]', getAttrs: extra.parse },
+        {
+          tag: 'ul[data-task-list]',
+          getAttrs: extra.parse,
+
+          // Make sure it has higher priority then BulletListExtension's parseDOM by default
+          priority: ExtensionPriority.Medium,
+        },
         ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => ['ul', { ...extra.dom(node), 'data-task-list': '' }, 0],
@@ -47,14 +49,7 @@ export class TaskListExtension extends NodeExtension {
   }
 
   createExtensions() {
-    return [
-      new TaskListItemExtension({
-        // The priority is `Medium` instead of `Default` because we want `TaskListItemExtension` to have a
-        // higher priority than `ListItemExtension` so that `TaskListItemExtension#parseDOM` will
-        // be called first.
-        priority: ExtensionPriority.Medium,
-      }),
-    ];
+    return [new TaskListItemExtension({})];
   }
 
   /**

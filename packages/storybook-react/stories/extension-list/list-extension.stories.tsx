@@ -74,12 +74,12 @@ const content = html`
     <li>second unordered list item</li>
   </ul>
   <ol>
-    <li>first unordered list item</li>
-    <li>second unordered list item</li>
+    <li>first ordered list item</li>
+    <li>second ordered list item</li>
   </ol>
   <ul data-task-list>
-    <li data-task-list-item>first unordered list item</li>
-    <li data-task-list-item data-checked>second unordered list item</li>
+    <li data-task-list-item>first task list item</li>
+    <li data-task-list-item data-checked>second task list item</li>
   </ul>
 
   <h2>Nested bullet list:</h2>
