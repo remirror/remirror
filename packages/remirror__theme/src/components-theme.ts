@@ -22,8 +22,8 @@ export const EDITOR_WRAPPER = css`
 `;
 
 export const BUTTON_ACTIVE = css`
-  color: ${primaryText};
-  background-color: ${primary};
+  color: ${primaryText}!important;
+  background-color: ${primary}!important;
 `;
 
 export const BUTTON = css`

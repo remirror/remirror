@@ -14,8 +14,8 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-button-active {
-    color: var(--rmr-color-primary-text);
-    background-color: var(--rmr-color-primary);
+    color: var(--rmr-color-primary-text) !important;
+    background-color: var(--rmr-color-primary) !important;
   }
 
   .remirror-button {
