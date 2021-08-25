@@ -6,6 +6,7 @@ import {
   MentionAtomExtension,
   MentionAtomNodeAttributes,
   PlaceholderExtension,
+  TaskListExtension,
   wysiwygPreset,
 } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
@@ -171,6 +172,7 @@ export const SocialEditor: FC<SocialEditorProps> = ({ placeholder, ...props }) =
         ],
       }),
       new EmojiExtension({ plainText: false, data, moji: 'noto' }),
+      new TaskListExtension({}),
       ...wysiwygPreset(),
     ],
     [placeholder],
