@@ -2,6 +2,7 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
+  ExtensionPriority,
   ExtensionTag,
   findParentNodeOfType,
   getMatchString,
@@ -60,6 +61,9 @@ export class TaskListItemExtension extends NodeExtension {
               ...extra.parse(node),
             };
           },
+
+          // Make sure it has higher priority then ListItemExtension's parseDOM by default
+          priority: ExtensionPriority.Medium,
         },
         ...(override.parseDOM ?? []),
       ],
