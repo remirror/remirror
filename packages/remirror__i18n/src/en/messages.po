@@ -374,6 +374,11 @@ msgstr "Subscript"
 msgid "extension.command.toggle-superscript.label"
 msgstr "Superscript"
 
+#. Description for inserting a task list into the editor.
+#: packages/remirror__messages/src/extension-list-messages.ts:16
+msgid "extension.command.toggle-task-list.description"
+msgstr "Tasked list"
+
 #. Description for underline formatting command.
 #: packages/remirror__messages/src/extension-underline-messages.ts:10
 msgid "extension.command.toggle-underline.description"
