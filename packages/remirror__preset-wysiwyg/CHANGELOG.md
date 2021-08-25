@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.5
+
+> 2021-08-25
+
+### Patch Changes
+
+- Fixes a bug that causes the editor to insert an empty task list when deleting all content in the editor. Closes #1163.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.0.5
+
 ## 1.0.4
 
 > 2021-08-22
