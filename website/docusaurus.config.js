@@ -68,7 +68,7 @@ module.exports = {
               label: 'Installation',
               to: 'docs/installation',
             },
-            { label: 'Storybook', href: 'https://remirror.vercel.app' },
+            { label: 'Examples', href: 'https://remirror.vercel.app' },
           ],
         },
         {
