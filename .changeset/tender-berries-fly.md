@@ -3,4 +3,4 @@
 '@remirror/extension-file': minor
 ---
 
-Add a new `UploadExtension` to the builtin preset, which will mange all decoration state during the upload.
+Add a new `UploadExtension` to the built-in preset, which will manage all upload states from both `FileExtension` and `IframeExtension`.
