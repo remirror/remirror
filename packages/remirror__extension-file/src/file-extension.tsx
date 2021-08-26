@@ -16,6 +16,7 @@ import {
   PrimitiveSelection,
   ProsemirrorNode,
   Transaction,
+  uploadFile,
   UploadHandler,
   UploadPlaceholderPayload,
 } from '@remirror/core';
@@ -214,7 +215,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
   }
 
   private uploadFile(file: File, pos?: number | undefined): void {
-    return this.store.helpers.upload({
+    return uploadFile({
       file,
       pos,
       view: this.store.view,

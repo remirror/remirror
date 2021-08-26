@@ -35,6 +35,9 @@ export interface UploadFileProps<NodeAttributes extends AbstractNodeAttributes =
   uploadHandler: UploadHandler<NodeAttributes>;
 }
 
+/**
+ * Insert a file into the editor and upload it.
+ */
 export function uploadFile<NodeAttributes extends AbstractNodeAttributes>({
   file,
   pos,

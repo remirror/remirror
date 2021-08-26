@@ -19,12 +19,14 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
   Shape,
+  uploadFile,
 } from '@remirror/core';
 
 import { IframeOptions } from './iframe-types';
 import { ResizableIframeView } from './resizable-iframe-view';
 
 export type IframeAttributes = ProsemirrorAttributes<{
+  id?: any;
   src: string;
   frameBorder?: number | string;
   allowFullScreen?: 'true';
@@ -168,7 +170,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
   }
 
   private uploadFile(file: File, pos?: number | undefined): void {
-    return this.store.helpers.upload({
+    return uploadFile({
       file,
       pos,
       view: this.store.view,

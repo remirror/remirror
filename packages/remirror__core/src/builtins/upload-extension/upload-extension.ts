@@ -1,9 +1,7 @@
 import { ProsemirrorPlugin } from '@remirror/pm';
 
-import { Helper, PlainExtension } from '../../extension';
-import { helper } from '../builtin-decorators';
+import { PlainExtension } from '../../extension';
 import { createUploadPlaceholderPlugin } from './file-placeholder-plugin';
-import { uploadFile, UploadFileProps } from './file-upload';
 
 interface DecorationsOptions {}
 
@@ -20,11 +18,6 @@ export class UploadExtension extends PlainExtension<DecorationsOptions> {
    */
   createExternalPlugins(): ProsemirrorPlugin[] {
     return [createUploadPlaceholderPlugin()];
-  }
-
-  @helper()
-  upload(props: UploadFileProps): Helper<void> {
-    uploadFile(props);
   }
 }
 
