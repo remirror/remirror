@@ -7,6 +7,7 @@ import {
   EditorView,
   extension,
   ExtensionTag,
+  FileUploader,
   findSelectedNodeOfType,
   LiteralUnion,
   NodeExtension,
@@ -40,6 +41,7 @@ export type IframeAttributes = ProsemirrorAttributes<{
     defaultSource: '',
     class: 'remirror-iframe',
     enableResizing: false,
+    uploadFileHandler,
   },
   staticKeys: ['defaultSource', 'class'],
 })
@@ -74,6 +76,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
+        id: { default: null },
         src: defaultSource ? { default: defaultSource } : {},
         allowFullScreen: { default: true },
         frameBorder: { default: 0 },
@@ -145,6 +148,32 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       frameBorder: 0,
       type: 'youtube',
       allowFullScreen: 'true',
+    });
+  }
+
+  /**
+   * Upload some files (e.g. PDF files) and use iframe to display them.
+   * @param files
+   * @returns
+   */
+  @command()
+  uploadIframeFiles(files: File[]): CommandFunction {
+    return () => {
+      for (const file of files) {
+        this.uploadFile(file);
+      }
+
+      return true;
+    };
+  }
+
+  private uploadFile(file: File, pos?: number | undefined): void {
+    return this.store.helpers.upload({
+      file,
+      pos,
+      view: this.store.view,
+      fileType: this.type,
+      uploadHandler: this.options.uploadFileHandler,
     });
   }
 
@@ -246,6 +275,25 @@ function createYouTubeUrl(props: CreateYouTubeIframeProps) {
   }
 
   return `${urlStart}/embed/${id}?${stringify(searchObject)}`;
+}
+
+function uploadFileHandler(): FileUploader<IframeAttributes> {
+  let url: string;
+
+  return {
+    insert: (file: File) => {
+      url = URL.createObjectURL(file);
+      return { src: url };
+    },
+
+    upload: async () => {
+      return { src: url };
+    },
+
+    abort: (): void => {
+      // not implement
+    },
+  };
 }
 
 declare global {

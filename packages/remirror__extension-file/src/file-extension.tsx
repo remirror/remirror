@@ -26,7 +26,11 @@ import { FileComponent, FileComponentProps } from './file-component';
 import { createDataUrlFileUploader } from './file-uploaders';
 
 export interface FileOptions {
+  /**
+   * A function returns a `FileUploader` which will handle the upload process.
+   */
   uploadFileHandler?: UploadHandler<FileAttributes>;
+
   render?: (props: FileComponentProps) => React.ReactElement<HTMLElement> | null;
 
   /**

@@ -1,4 +1,6 @@
-import { Static } from '@remirror/core';
+import { Static, UploadHandler } from '@remirror/core';
+
+import type { IframeAttributes } from './iframe-extension';
 
 export interface IframeOptions {
   /**
@@ -21,4 +23,9 @@ export interface IframeOptions {
    * @default false
    */
   enableResizing: boolean;
+
+  /**
+   * A function returns a `FileUploader` which will handle the upload process.
+   */
+  uploadFileHandler?: UploadHandler<IframeAttributes>;
 }
