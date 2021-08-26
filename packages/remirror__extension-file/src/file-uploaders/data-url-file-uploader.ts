@@ -1,5 +1,6 @@
+import { FileUploader } from '@remirror/core';
+
 import { FileAttributes } from '../file-extension';
-import { FileUploader } from '../file-uploader';
 
 export class DataUrlFileUploader implements FileUploader<FileAttributes> {
   private file: File | null = null;

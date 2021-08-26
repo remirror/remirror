@@ -1,5 +1,6 @@
+import { FileUploader } from '@remirror/core';
+
 import { FileAttributes } from '../file-extension';
-import { FileUploader } from '../file-uploader';
 import { getDefaultFileAttrs } from './data-url-file-uploader';
 
 export function createObjectUrlFileUploader(): FileUploader<FileAttributes> {

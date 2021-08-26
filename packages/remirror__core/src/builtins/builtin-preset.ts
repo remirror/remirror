@@ -13,6 +13,7 @@ import { PluginsExtension } from './plugins-extension';
 import { SchemaExtension } from './schema-extension';
 import { SuggestExtension, SuggestOptions } from './suggest-extension';
 import { TagsExtension } from './tags-extension';
+import { UploadExtension } from './upload-extension/upload-extension';
 
 export interface BuiltinOptions
   extends SuggestOptions,
@@ -72,6 +73,7 @@ export function builtinPreset(options: GetStaticAndDynamic<BuiltinOptions> = {})
     new CommandsExtension(),
     new HelpersExtension(),
     new KeymapExtension(keymapOptions),
+    new UploadExtension(),
     new DecorationsExtension(decorationsOptions),
   ];
 }
@@ -88,6 +90,7 @@ export type BuiltinPreset =
   | CommandsExtension
   | HelpersExtension
   | KeymapExtension
+  | UploadExtension
   | DecorationsExtension;
 
 declare global {

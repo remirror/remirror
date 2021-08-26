@@ -1,4 +1,4 @@
-import { UploadContext } from './file-upload-context';
+import { UploadContext } from './upload-context';
 
 export interface FileUploader<NodeAttributes> {
   /**
