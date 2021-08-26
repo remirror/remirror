@@ -1154,7 +1154,6 @@ importers:
       '@remirror/theme': ^1.1.0
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
-      nanoevents: ^5.1.13
       react: ^17.0.2
       react-dom: ^17.0.2
     dependencies:
@@ -1163,7 +1162,6 @@ importers:
       '@remirror/react': link:../remirror__react
       '@remirror/react-components': link:../remirror__react-components
       '@remirror/theme': link:../remirror__theme
-      nanoevents: 5.1.13
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 17.0.19
