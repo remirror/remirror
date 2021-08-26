@@ -1,5 +1,6 @@
 import '../example.css';
 
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import { SocialEditor } from '@remirror/react-editors/social';
 
 const ALL_USERS = [
@@ -13,7 +14,13 @@ const ALL_USERS = [
 const TAGS = ['editor', 'remirror', 'opensource', 'prosemirror'];
 
 const Editor = () => {
-  return <SocialEditor placeholder='Mention @joe or add #remirror' users={ALL_USERS} tags={TAGS} />;
+  return (
+    <BrowserOnly fallback={<div>Rendered only in browser</div>}>
+      {() => (
+        <SocialEditor placeholder='Mention @joe or add #remirror' users={ALL_USERS} tags={TAGS} />
+      )}
+    </BrowserOnly>
+  );
 };
 
 export default Editor;
