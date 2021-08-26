@@ -266,7 +266,7 @@
   },
   {
     "name": "@remirror/extension-embed",
-    "limit": "10 KB",
+    "limit": "20 KB",
     "path": "packages/remirror__extension-embed/dist/remirror-extension-embed.browser.esm.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
