@@ -65,7 +65,6 @@
   'extension.command.toggle-bold.description': 'Add bold formatting to the selected text',
   'extension.command.toggle-bold.label': 'Bold',
   'extension.command.toggle-bullet-list.description': 'Bulleted list',
-  'extension.command.toggle-task-list.description': 'Task list',
   'extension.command.toggle-callout.description': [
     [
       'level',
@@ -142,6 +141,7 @@
   'extension.command.toggle-strike.label': 'Strikethrough',
   'extension.command.toggle-subscript.label': 'Subscript',
   'extension.command.toggle-superscript.label': 'Superscript',
+  'extension.command.toggle-task-list.description': 'Tasked list',
   'extension.command.toggle-underline.description': 'Underline the selected text',
   'extension.command.toggle-underline.label': 'Underline',
   'extension.command.toggle-upper-case.label': [

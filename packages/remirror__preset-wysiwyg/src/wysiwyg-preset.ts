@@ -13,7 +13,11 @@ import { HorizontalRuleExtension } from '@remirror/extension-horizontal-rule';
 import { ImageExtension } from '@remirror/extension-image';
 import { ItalicExtension } from '@remirror/extension-italic';
 import { LinkExtension, LinkOptions } from '@remirror/extension-link';
-import { BulletListExtension, OrderedListExtension } from '@remirror/extension-list';
+import {
+  BulletListExtension,
+  OrderedListExtension,
+  TaskListItemExtension,
+} from '@remirror/extension-list';
 import { SearchExtension, SearchOptions } from '@remirror/extension-search';
 import { StrikeExtension } from '@remirror/extension-strike';
 import { TableExtension, TableOptions } from '@remirror/extension-tables';
@@ -62,9 +66,10 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
   const iframeExtension = new IframeExtension();
   const bulletListExtension = new BulletListExtension();
   const orderedListExtension = new OrderedListExtension();
+  const taskListExtension = new TaskListItemExtension({});
 
   const { selectTextOnClick } = options;
-  const linkExtension = new LinkExtension({ selectTextOnClick });
+  const linkExtension = new LinkExtension({ autoLink: true, selectTextOnClick });
 
   const { autoUpdate, defaultDirection, excludeNodes } = options;
   const bidiExtension = new BidiExtension({ autoUpdate, defaultDirection, excludeNodes });
@@ -137,6 +142,7 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
     iframeExtension,
     bulletListExtension,
     orderedListExtension,
+    taskListExtension,
 
     // Marks
     boldExtension,
@@ -173,4 +179,5 @@ export type WysiwygPreset =
   | TrailingNodeExtension
   | IframeExtension
   | BulletListExtension
-  | OrderedListExtension;
+  | OrderedListExtension
+  | TaskListItemExtension;
