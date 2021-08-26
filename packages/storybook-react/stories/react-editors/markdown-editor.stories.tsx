@@ -31,33 +31,29 @@ import {
   ThemeProvider,
   Toolbar,
   ToolbarItemUnion,
+  useHelpers,
   useRemirror,
   UseRemirrorReturn,
 } from '@remirror/react';
+import { MarkdownEditor } from '@remirror/react-editors/markdown';
 
 export default { title: 'Editors / Markdown' };
 
-/**
- * The editor which is used to create the annotation. Supports formatting.
- */
-export const Basic = () => {
-  const { manager, state, onChange, getContext } = useRemirror({
-    extensions,
-    content: basicContent,
-    stringHandler: 'markdown',
-  });
+function MarkdownPreview() {
+  const { getMarkdown } = useHelpers(true);
 
   return (
-    <>
-      <ThemeProvider>
-        <Remirror manager={manager} autoFocus onChange={onChange} state={state} autoRender='end'>
-          <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
-        </Remirror>
-        <pre>
-          <code>{getContext()?.helpers.getMarkdown(state)}</code>
-        </pre>
-      </ThemeProvider>
-    </>
+    <pre>
+      <code>{getMarkdown()}</code>
+    </pre>
+  );
+}
+
+export const Basic = () => {
+  return (
+    <MarkdownEditor placeholder='Start typing...'>
+      <MarkdownPreview />
+    </MarkdownEditor>
   );
 };
 

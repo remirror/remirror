@@ -2723,6 +2723,7 @@ importers:
       '@mdx-js/react': ^1.6.22
       '@remirror/dev': ^1.0.4
       '@remirror/react': ^1.0.4
+      '@remirror/react-editors': ^0.0.14
       '@remirror/styles': ^1.1.0
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
@@ -2757,6 +2758,7 @@ importers:
       '@mdx-js/react': 1.6.22_react@17.0.2
       '@remirror/dev': link:../packages/remirror__dev
       '@remirror/react': link:../packages/remirror__react
+      '@remirror/react-editors': link:../packages/remirror__react-editors
       '@remirror/styles': link:../packages/remirror__styles
       '@types/react-syntax-highlighter': 13.5.2
       create-context-state: link:../packages/create-context-state

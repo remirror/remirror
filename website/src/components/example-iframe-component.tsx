@@ -26,7 +26,7 @@ export const ExampleIFrame = (props: IFrameProps) => {
   return (
     <div ref={ref}>
       {loading && <p>Loading...</p>}
-      {inView && <iframe src={src} width='100%' height='100%' frameBorder='0' onLoad={onLoad} />}
+      {inView && <iframe src={src} width='100%' height='300' frameBorder='0' onLoad={onLoad} />}
     </div>
   );
 };

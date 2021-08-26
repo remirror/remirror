@@ -33,7 +33,11 @@ const docs = [
       'concepts/error-handling',
     ],
   },
-  { type: 'category', label: 'Showcase', items: ['showcase/social'] },
+  {
+    type: 'category',
+    label: 'Showcase',
+    items: ['showcase/social', 'showcase/richtext', 'showcase/markdown'],
+  },
   {
     type: 'category',
     label: 'Advanced',

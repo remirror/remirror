@@ -1,3 +1,5 @@
+import '../example.css';
+
 import {
   BoldExtension,
   ItalicExtension,
