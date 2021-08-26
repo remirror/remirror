@@ -1,12 +1,13 @@
 import './use-mention-atom-styles.css';
 
 import { useCallback, useEffect, useState } from 'react';
-import { cx } from 'remirror';
+import { cx, htmlToProsemirrorNode } from 'remirror';
 import {
   MentionAtomExtension,
   MentionAtomNodeAttributes,
   PlaceholderExtension,
 } from 'remirror/extensions';
+import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   FloatingWrapper,
   Remirror,
@@ -71,23 +72,40 @@ function UserSuggestor() {
   );
 }
 
+const extensions = () => [
+  new MentionAtomExtension({
+    extraAttributes: { type: 'user' },
+    matchers: [{ name: 'at', char: '@', appendText: ' ', matchOffset: 0 }],
+  }),
+  new PlaceholderExtension({ placeholder: `Mention a @user` }),
+];
+
 export const Basic = (): JSX.Element => {
-  const extensions = useCallback(
-    () => [
-      new MentionAtomExtension({
-        extraAttributes: { type: 'user' },
-        matchers: [{ name: 'at', char: '@', appendText: ' ', matchOffset: 0 }],
-      }),
-      new PlaceholderExtension({ placeholder: `Mention a @user` }),
-    ],
-    [],
-  );
   const { manager } = useRemirror({ extensions });
 
   return (
     <ThemeProvider>
       <Remirror manager={manager} autoRender='end'>
         <UserSuggestor />
+        <ProsemirrorDevTools />
+      </Remirror>
+    </ThemeProvider>
+  );
+};
+
+export const PrefilledContent = (): JSX.Element => {
+  const { manager, state } = useRemirror({
+    extensions,
+    content:
+      '<p>Hi <span type="user" class="remirror-mention-atom remirror-mention-atom-at" data-mention-atom-id="sue" data-mention-atom-name="at">Sue</span> </p>',
+    stringHandler: htmlToProsemirrorNode,
+  });
+
+  return (
+    <ThemeProvider>
+      <Remirror manager={manager} autoRender='end' initialContent={state}>
+        <UserSuggestor />
+        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
