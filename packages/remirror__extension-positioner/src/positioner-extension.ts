@@ -127,6 +127,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
       ...update,
       previousState: update.firstUpdate ? undefined : update.previousState,
       event: 'state',
+      helpers: this.store.helpers,
     });
   }
 
@@ -197,6 +198,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
     const previousState = this.store.previousState;
 
     return {
+      helpers: this.store.helpers,
       event,
       firstUpdate: false,
       previousState,

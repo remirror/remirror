@@ -1,5 +1,6 @@
 import { createNanoEvents, Unsubscribe } from 'nanoevents';
 import {
+  AnyFunction,
   EditorState,
   EditorViewProps,
   ErrorConstant,
@@ -133,6 +134,8 @@ export interface SetActiveElement {
 }
 
 export interface BasePositionerProps extends Omit<StateUpdateLifecycleProps, 'previousState'> {
+  helpers: Record<string, AnyFunction>;
+
   previousState: undefined | EditorState;
 
   /**
