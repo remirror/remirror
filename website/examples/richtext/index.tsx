@@ -5,7 +5,7 @@ import { WysiwygEditor } from '@remirror/react-editors/wysiwyg';
 
 const Editor = () => {
   return (
-    <BrowserOnly fallback={<div>Rendered only in browser</div>}>
+    <BrowserOnly fallback={<div>Loading...</div>}>
       {() => <WysiwygEditor placeholder='Enter text...' />}
     </BrowserOnly>
   );

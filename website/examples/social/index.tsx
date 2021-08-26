@@ -15,7 +15,7 @@ const TAGS = ['editor', 'remirror', 'opensource', 'prosemirror'];
 
 const Editor = () => {
   return (
-    <BrowserOnly fallback={<div>Rendered only in browser</div>}>
+    <BrowserOnly fallback={<div>Loading...</div>}>
       {() => (
         <SocialEditor placeholder='Mention @joe or add #remirror' users={ALL_USERS} tags={TAGS} />
       )}
