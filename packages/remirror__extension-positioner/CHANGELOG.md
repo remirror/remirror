@@ -1,5 +1,13 @@
 # @remirror/extension-positioner
 
+## 1.1.0
+
+> 2021-08-26
+
+### Minor Changes
+
+- Add a `helpers` property to the `BasePositionerProps`. This will make it easier to use preconfigured helpers in the positioners.
+
 ## 1.0.2
 
 > 2021-08-22

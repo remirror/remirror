@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-tables",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Create tables with nested react components.",
   "keywords": [
     "remirror",
@@ -45,14 +45,14 @@
     "@linaria/core": "3.0.0-beta.4",
     "@remirror/core": "^1.0.3",
     "@remirror/core-utils": "^1.1.0",
-    "@remirror/extension-positioner": "^1.0.2",
+    "@remirror/extension-positioner": "^1.1.0",
     "@remirror/extension-tables": "^1.0.2",
     "@remirror/icons": "^1.0.2",
     "@remirror/messages": "^1.0.2",
-    "@remirror/preset-core": "^1.0.2",
-    "@remirror/react-components": "^1.0.3",
-    "@remirror/react-core": "^1.0.3",
-    "@remirror/react-hooks": "^1.0.3",
+    "@remirror/preset-core": "^1.0.3",
+    "@remirror/react-components": "^1.0.4",
+    "@remirror/react-core": "^1.0.4",
+    "@remirror/react-hooks": "^1.0.4",
     "@remirror/theme": "^1.1.0",
     "jsx-dom": "^6.4.23"
   },

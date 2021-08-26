@@ -1,5 +1,23 @@
 # @remirror/react-editors
 
+## 0.1.0
+
+> 2021-08-26
+
+### Minor Changes
+
+- Add pre-packaged editors
+
+  Remirror makes building editors simple. Yet, some developers just want to have a out-of-the-box editor that can be plugged into their application. For this, we provide the pre-packaged editors.
+
+### Patch Changes
+
+- Add a `helpers` property to the `BasePositionerProps`. This will make it easier to use preconfigured helpers in the positioners.
+
+- Updated dependencies []:
+  - remirror@1.0.14
+  - @remirror/react@1.0.5
+
 ## 0.0.14
 
 > 2021-08-25

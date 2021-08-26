@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-hooks",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A selection of core hooks built for working within the editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-hooks",
   "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-hooks",
@@ -145,9 +145,9 @@
     "@remirror/extension-history": "^1.0.2",
     "@remirror/extension-mention": "^1.0.2",
     "@remirror/extension-mention-atom": "^1.0.2",
-    "@remirror/extension-positioner": "^1.0.2",
+    "@remirror/extension-positioner": "^1.1.0",
     "@remirror/i18n": "^1.0.3",
-    "@remirror/react-core": "^1.0.3",
+    "@remirror/react-core": "^1.0.4",
     "@remirror/react-utils": "^1.0.2",
     "multishift": "^1.0.2",
     "use-isomorphic-layout-effect": "^1.1.1",
@@ -155,7 +155,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.2",
-    "@remirror/react": "^1.0.4",
+    "@remirror/react": "^1.0.5",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "react": "^17.0.2",

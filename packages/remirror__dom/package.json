@@ -1,6 +1,6 @@
 {
   "name": "@remirror/dom",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Use remirror directly in the dom.",
   "keywords": [
     "remirror",
@@ -37,7 +37,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^1.0.3",
-    "@remirror/preset-core": "^1.0.2"
+    "@remirror/preset-core": "^1.0.3"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.2"
