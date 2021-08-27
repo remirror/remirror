@@ -1,5 +1,21 @@
 # remirror
 
+## 1.0.14
+
+> 2021-08-26
+
+### Patch Changes
+
+- Add a `helpers` property to the `BasePositionerProps`. This will make it easier to use preconfigured helpers in the positioners.
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.1.0
+  - @remirror/dom@1.0.3
+  - @remirror/extension-annotation@1.0.3
+  - @remirror/extension-yjs@1.0.3
+  - @remirror/preset-core@1.0.3
+  - @remirror/preset-wysiwyg@1.0.6
+
 ## 1.0.13
 
 > 2021-08-25

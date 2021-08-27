@@ -1,5 +1,17 @@
 # jest-remirror
 
+## 1.0.5
+
+> 2021-08-26
+
+### Patch Changes
+
+- Add a `helpers` property to the `BasePositionerProps`. This will make it easier to use preconfigured helpers in the positioners.
+
+- Updated dependencies []:
+  - @remirror/dom@1.0.3
+  - @remirror/preset-core@1.0.3
+
 ## 1.0.4
 
 > 2021-08-22
