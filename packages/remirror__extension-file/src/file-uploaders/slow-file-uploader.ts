@@ -1,6 +1,6 @@
+import { FileUploader, UploadContext } from '@remirror/core';
+
 import { FileAttributes } from '../file-extension';
-import { UploadContext } from '../file-upload-context';
-import { FileUploader } from '../file-uploader';
 import { getDefaultFileAttrs } from './data-url-file-uploader';
 
 /**

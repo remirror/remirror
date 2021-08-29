@@ -1,6 +1,6 @@
 import 'remirror/styles/extension-file.css';
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   createBaseuploadFileUploader,
@@ -9,6 +9,8 @@ import {
   FileExtension,
 } from '@remirror/extension-file';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+
+import { useFileDialog } from './use-file-dialog';
 
 export default { title: 'Extensions / File' };
 
@@ -100,46 +102,9 @@ export const UploadProgress = (): JSX.Element => {
   );
 };
 
-function useFileDialog() {
-  const [files, setFiles] = React.useState<FileList | null>(null);
-
-  const openFileDialog = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.multiple = true;
-
-    input.addEventListener('change', (event: Event) => {
-      const { files } = event.target as HTMLInputElement;
-      setFiles(files);
-    });
-
-    input.click();
-  };
-
-  return { files, openFileDialog };
-}
-
-function useInsertFile() {
-  const { files, openFileDialog } = useFileDialog();
-  const { uploadFiles } = useCommands();
-
-  useEffect(() => {
-    if (files) {
-      const fileArray: File[] = [];
-
-      for (const file of files) {
-        fileArray.push(file);
-      }
-
-      uploadFiles(fileArray);
-    }
-  }, [files, uploadFiles]);
-
-  return { openFileDialog };
-}
-
 const UploadFileButton: React.FC = () => {
-  const { openFileDialog } = useInsertFile();
+  const { uploadFiles } = useCommands();
+  const { openFileDialog } = useFileDialog(uploadFiles);
   return <button onClick={openFileDialog}>Upload file</button>;
 };
 
