@@ -246,6 +246,78 @@ describe('toggleList', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
+  it('toggles the second child to a task list', () => {
+    const from = doc(
+      taskList(
+        checked(p('1')),
+        checked(
+          p('2'),
+          taskList(
+            checked(p('2.1')),
+            checked(
+              p('2.2'),
+              p('paragraph<cursor>'), //
+            ),
+          ),
+        ),
+      ),
+    );
+    const to = doc(
+      taskList(
+        checked(p('1')),
+        checked(
+          p('2'),
+          taskList(
+            checked(p('2.1')),
+            checked(
+              p('2.2'),
+              taskList(
+                unchecked(p('paragraph<cursor>')), //
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    editor.add(from).commands.toggleTaskList();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    editor.commands.toggleTaskList();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+  });
+
+  it('lifts list item', () => {
+    const from = doc(
+      taskList(
+        checked(p('1')),
+        checked(
+          p('2'),
+          taskList(
+            checked(p('2.1')),
+            checked(
+              p('2.2<cursor>'),
+              p('paragraph'), //
+            ),
+          ),
+        ),
+      ),
+    );
+    const to = doc(
+      taskList(
+        checked(p('1')),
+        checked(
+          p('2'),
+          taskList(
+            checked(p('2.1')), //
+          ),
+          p('2.2'),
+          p('paragraph'), //
+        ),
+      ),
+    );
+    editor.add(from).commands.toggleTaskList();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
   it('leaves document unchanged without dispatch', () => {
     const unchanged = doc(ol(li(p('make <cursor>list'))));
     const { state, view } = editor.add(unchanged);

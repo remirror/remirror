@@ -342,12 +342,10 @@ function deepChangeListType(
 
   const start = foundList.start;
   const end = start + oldList.nodeSize;
-  const selection = tr.selection;
+  const from = tr.selection.from;
 
   tr.replaceRangeWith(start, end, newList);
-  tr.setSelection(
-    (tr.selection.constructor as typeof Selection).near(tr.doc.resolve(selection.from)),
-  );
+  tr.setSelection((tr.selection.constructor as typeof Selection).near(tr.doc.resolve(from)));
   return true;
 }
 
