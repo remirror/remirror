@@ -3661,6 +3661,11 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
   .remirror-editor .remirror-ul-list-content > li.remirror-list-item-with-custom-mark {
     list-style: none;
   }
+  /* override the browser's default styles */
+  .remirror-editor ul ul + ul {
+    -webkit-margin-before: 1em;
+    margin-block-start: 1em;
+  }
 
   .remirror-list-item-marker-container {
     position: absolute;

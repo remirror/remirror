@@ -5,6 +5,7 @@ import {
   DispatchFunction,
   ExtensionTag,
   findParentNode,
+  FindProsemirrorNodeResult,
   getNodeType,
   isNodeSelection,
   NodeType,
@@ -13,7 +14,7 @@ import {
 } from '@remirror/core';
 import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
-import { EditorState, Selection, TextSelection } from '@remirror/pm/state';
+import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
 import { canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
 
 import { ListItemAttributes } from './list-item-extension';
@@ -27,7 +28,8 @@ export function isList(node: ProsemirrorNode): boolean {
   return !!(
     node.type.spec.group?.includes(ExtensionTag.ListContainerNode) ||
     node.type === schema.nodes.bulletList ||
-    node.type === schema.nodes.orderedList
+    node.type === schema.nodes.orderedList ||
+    node.type === schema.nodes.taskList
   );
 }
 
@@ -58,17 +60,31 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
       selection: tr.selection,
     });
 
-    if (range.depth >= 1 && parentList && range.depth - parentList.depth <= 1) {
+    if (
+      // the selection range is right inside the list
+      parentList &&
+      range.depth - parentList.depth <= 1 &&
+      // the selectron range is the first child of the list
+      range.startIndex === 0
+    ) {
       if (parentList.node.type === type) {
-        return liftListItem(itemType)(state, dispatch);
+        return liftListItemOutOfList(itemType)(props);
       }
 
-      if (isList(parentList.node) && type.validContent(parentList.node.content)) {
-        if (dispatch) {
-          dispatch(tr.setNodeMarkup(parentList.pos, type));
+      if (isList(parentList.node)) {
+        if (type.validContent(parentList.node.content)) {
+          dispatch?.(tr.setNodeMarkup(parentList.pos, type));
+          return true;
         }
 
-        return true;
+        // When you try to toggle a bullet list into a task list or vice versa, since these two lists
+        // use different type of list items, you can't directly change the list type.
+        if (deepChangeListType(tr, parentList, type, itemType)) {
+          dispatch?.(tr.scrollIntoView());
+          return true;
+        }
+
+        return false;
       }
     }
 
@@ -286,6 +302,55 @@ export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFuncti
   };
 }
 
+/**
+ * Change a bullet list into a task list or vice versa. These lists use different type of list items,
+ * so you need to use this function to not only change the list type but also change the list item type.
+ */
+function deepChangeListType(
+  tr: Transaction,
+  foundList: FindProsemirrorNodeResult,
+  listType: NodeType,
+  itemType: NodeType,
+): boolean {
+  const oldList = foundList.node;
+  const $start = tr.doc.resolve(foundList.start);
+  const listParent = $start.node(-1);
+  const indexBefore = $start.index(-1);
+
+  if (!listParent) {
+    return false;
+  }
+
+  if (!listParent.canReplace(indexBefore, indexBefore + 1, Fragment.from(listType.create()))) {
+    return false;
+  }
+
+  const newItems: ProsemirrorNode[] = [];
+
+  for (let index = 0; index < oldList.childCount; index++) {
+    const oldItem = oldList.child(index);
+
+    if (!itemType.validContent(oldItem.content)) {
+      return false;
+    }
+
+    const newItem = itemType.createChecked(null, oldItem.content);
+    newItems.push(newItem);
+  }
+
+  const newList = listType.createChecked(null, newItems);
+
+  const start = foundList.start;
+  const end = start + oldList.nodeSize;
+  const selection = tr.selection;
+
+  tr.replaceRangeWith(start, end, newList);
+  tr.setSelection(
+    (tr.selection.constructor as typeof Selection).near(tr.doc.resolve(selection.from)),
+  );
+  return true;
+}
+
 // Copied from `prosemirror-schema-list`
 function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: NodeRange) {
   const tr = state.tr,
@@ -351,23 +416,29 @@ export function liftListItemOutOfList(itemType: NodeType): CommandFunction {
   return (props) => {
     const { dispatch, tr } = props;
     const state = chainableEditorState(tr, props.state);
-    const { $from, $to } = tr.selection;
-
-    const range = $from.blockRange(
-      $to,
-      // @ts-expect-error this line of code is copied from `prosemirror-schema-list`
-      (node) => node.childCount && node.firstChild.type === itemType,
-    );
-
-    if (!dispatch) {
-      return true;
-    }
+    const range = getItemRange(itemType, tr.selection);
 
     if (!range) {
       return false;
     }
 
+    if (!dispatch) {
+      return true;
+    }
+
     liftOutOfList(state, dispatch, range);
     return true;
   };
+}
+
+function getItemRange(itemType: NodeType, selection: Selection) {
+  const { $from, $to } = selection;
+
+  const range = $from.blockRange(
+    $to,
+    // @ts-expect-error this line of code is copied from `prosemirror-schema-list`
+    (node) => node.childCount && node.firstChild.type === itemType,
+  );
+
+  return range;
 }

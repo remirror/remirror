@@ -7,9 +7,28 @@ import {
   TaskListExtension,
 } from 'remirror/extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
-import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import {
+  EditorComponent,
+  Remirror,
+  ThemeProvider,
+  useCommands,
+  useRemirror,
+} from '@remirror/react';
 
 export default { title: 'Extensions / List' };
+
+const Button = (): JSX.Element => {
+  const commands = useCommands();
+
+  return (
+    <>
+      <button onClick={commands.toggleTaskList}>toggleTaskList</button>
+      <button onClick={commands.toggleBulletList}>toggleBulletList</button>
+      <button onClick={commands.toggleOrderedList}>toggleOrderedList</button>
+      <button onClick={commands.liftListItemOutOfList}>liftListItemOutOfList</button>
+    </>
+  );
+};
 
 export const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({
@@ -21,6 +40,7 @@ export const Basic = (): JSX.Element => {
   return (
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state}>
+        <Button />
         <EditorComponent />
         <ProsemirrorDevTools />
       </Remirror>

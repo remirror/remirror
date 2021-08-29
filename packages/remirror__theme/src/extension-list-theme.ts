@@ -18,6 +18,11 @@ export const EDITOR = css`
   .${UL_LIST_CONTENT} > li.${LIST_ITEM_WITH_CUSTOM_MARKER} {
     list-style: none;
   }
+
+  /* override the browser's default styles */
+  ul ul + ul {
+    margin-block-start: 1em;
+  }
 `;
 
 export const LIST_ITEM_MARKER_CONTAINER = css`
