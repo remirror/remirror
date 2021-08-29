@@ -20,7 +20,7 @@ interface AbstractNodeAttributes {
   error?: string | null;
 }
 
-export type UploadHandler<NodeAttributes> = () => FileUploader<NodeAttributes>;
+export type UploadFileHandler<NodeAttributes> = () => FileUploader<NodeAttributes>;
 
 export interface UploadPlaceholderPayload<NodeAttributes extends AbstractNodeAttributes> {
   context: UploadContext;
@@ -32,7 +32,7 @@ export interface UploadFileProps<NodeAttributes extends AbstractNodeAttributes =
   pos: number | undefined;
   view: EditorView;
   fileType: NodeType;
-  uploadHandler: UploadHandler<NodeAttributes>;
+  uploadHandler: UploadFileHandler<NodeAttributes>;
 }
 
 /**
@@ -126,7 +126,7 @@ function createFilePlaceholder<NodeAttributes extends AbstractNodeAttributes>({
   pos: number | undefined;
   view: EditorView;
   fileType: NodeType;
-  uploadHandler: UploadHandler<NodeAttributes>;
+  uploadHandler: UploadFileHandler<NodeAttributes>;
 }): FileUploader<NodeAttributes> | void {
   const tr = view.state.tr;
   const insertPos = insertFilePoint(tr.doc, isNumber(pos) ? pos : tr.selection.from, fileType);

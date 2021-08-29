@@ -13,7 +13,7 @@ import { PluginsExtension } from './plugins-extension';
 import { SchemaExtension } from './schema-extension';
 import { SuggestExtension, SuggestOptions } from './suggest-extension';
 import { TagsExtension } from './tags-extension';
-import { UploadExtension } from './upload-extension/upload-extension';
+import { UploadExtension } from './upload-extension';
 
 export interface BuiltinOptions
   extends SuggestOptions,

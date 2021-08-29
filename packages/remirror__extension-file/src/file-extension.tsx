@@ -17,7 +17,7 @@ import {
   ProsemirrorNode,
   Transaction,
   uploadFile,
-  UploadHandler,
+  UploadFileHandler,
   UploadPlaceholderPayload,
 } from '@remirror/core';
 import { PasteRule } from '@remirror/pm/paste-rules';
@@ -30,7 +30,7 @@ export interface FileOptions {
   /**
    * A function returns a `FileUploader` which will handle the upload process.
    */
-  uploadFileHandler?: UploadHandler<FileAttributes>;
+  uploadFileHandler?: UploadFileHandler<FileAttributes>;
 
   render?: (props: FileComponentProps) => React.ReactElement<HTMLElement> | null;
 
