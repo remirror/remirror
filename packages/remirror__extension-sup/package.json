@@ -1,56 +1,60 @@
 {
-  "name": "@remirror/extension-sup",
-  "version": "1.0.2",
-  "description": "Add superscript formatting to your text editor.",
-  "keywords": [
-    "remirror",
-    "extension"
-  ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-sup",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-sup",
-  "license": "MIT",
-  "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>",
-    "Christopher Manouvrier <cmanou@mac.com>"
-  ],
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist/remirror-extension-sup.esm.js",
-      "require": "./dist/remirror-extension-sup.cjs.js",
-      "browser": "./dist/remirror-extension-sup.browser.esm.js",
-      "types": "./dist/remirror-extension-sup.cjs.d.ts",
-      "default": "./dist/remirror-extension-sup.esm.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
-  "main": "dist/remirror-extension-sup.cjs.js",
-  "module": "dist/remirror-extension-sup.esm.js",
-  "browser": {
-    "./dist/remirror-extension-sup.cjs.js": "./dist/remirror-extension-sup.browser.cjs.js",
-    "./dist/remirror-extension-sup.esm.js": "./dist/remirror-extension-sup.browser.esm.js"
-  },
-  "types": "dist/remirror-extension-sup.cjs.d.ts",
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/messages": "^1.0.2"
-  },
-  "devDependencies": {
-    "@remirror/pm": "^1.0.2"
-  },
-  "peerDependencies": {
-    "@remirror/pm": "^1.0.1"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "meta": {
-    "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+	"name": "@remirror/extension-sup",
+	"version": "1.0.2",
+	"description": "Add superscript formatting to your text editor.",
+	"keywords": [
+		"remirror",
+		"extension"
+	],
+	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-sup",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/remirror/remirror.git",
+		"directory": "packages/remirror__extension-sup"
+	},
+	"license": "MIT",
+	"contributors": [
+		"Ifiok Jr. <ifiokotung@gmail.com>",
+		"Christopher Manouvrier <cmanou@mac.com>"
+	],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"import": "./dist/remirror-extension-sup.esm.js",
+			"require": "./dist/remirror-extension-sup.cjs.js",
+			"browser": "./dist/remirror-extension-sup.browser.esm.js",
+			"types": "./dist/remirror-extension-sup.cjs.d.ts",
+			"default": "./dist/remirror-extension-sup.esm.js"
+		},
+		"./package.json": "./package.json",
+		"./types/*": "./dist/declarations/src/*.d.ts"
+	},
+	"main": "dist/remirror-extension-sup.cjs.js",
+	"module": "dist/remirror-extension-sup.esm.js",
+	"browser": {
+		"./dist/remirror-extension-sup.cjs.js": "./dist/remirror-extension-sup.browser.cjs.js",
+		"./dist/remirror-extension-sup.esm.js": "./dist/remirror-extension-sup.browser.esm.js"
+	},
+	"types": "dist/remirror-extension-sup.cjs.d.ts",
+	"files": [
+		"dist"
+	],
+	"dependencies": {
+		"@babel/runtime": "^7.13.10",
+		"@remirror/core": "^1.0.3",
+		"@remirror/messages": "^1.0.2"
+	},
+	"devDependencies": {
+		"@remirror/pm": "^1.0.2"
+	},
+	"peerDependencies": {
+		"@remirror/pm": "^1.0.1"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"meta": {
+		"sizeLimit": "5 KB"
+	},
+	"rn:dev": "src/index.ts"
 }

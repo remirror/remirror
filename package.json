@@ -2,7 +2,10 @@
   "name": "remirror-monorepo",
   "private": true,
   "homepage": "https://github.com/remirror/remirror",
-  "repository": "https://github.com/remirror/remirror",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git"
+  },
   "type": "module",
   "scripts": {
     "api": "node support/scripts/generate-api",
@@ -43,6 +46,7 @@
     "fix:css": "node support/scripts/check-styles --fix",
     "fix:es": "pnpm lint:es -- --fix",
     "fix:exports": "node support/scripts/generate-configs --exports",
+    "fix:package-json": "node support/scripts/generate-configs --package-json",
     "fix:md": "pnpm lint:md -- --fix",
     "fix:prettier": "pnpm run:prettier -- --write",
     "fix:repo": "manypkg fix",

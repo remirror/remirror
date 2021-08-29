@@ -1,63 +1,67 @@
 {
-  "name": "@remirror/preset-core",
-  "version": "1.0.3",
-  "description": "The core preset providing the functionality you need and want.",
-  "keywords": [
-    "remirror",
-    "preset",
-    "core",
-    "text-editor"
-  ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__preset-core",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__preset-core",
-  "license": "MIT",
-  "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>"
-  ],
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist/remirror-preset-core.esm.js",
-      "require": "./dist/remirror-preset-core.cjs.js",
-      "browser": "./dist/remirror-preset-core.browser.esm.js",
-      "types": "./dist/remirror-preset-core.cjs.d.ts",
-      "default": "./dist/remirror-preset-core.esm.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
-  "main": "dist/remirror-preset-core.cjs.js",
-  "module": "dist/remirror-preset-core.esm.js",
-  "browser": {
-    "./dist/remirror-preset-core.cjs.js": "./dist/remirror-preset-core.browser.cjs.js",
-    "./dist/remirror-preset-core.esm.js": "./dist/remirror-preset-core.browser.esm.js"
-  },
-  "types": "dist/remirror-preset-core.cjs.d.ts",
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/extension-doc": "^1.0.3",
-    "@remirror/extension-events": "^1.0.2",
-    "@remirror/extension-gap-cursor": "^1.0.2",
-    "@remirror/extension-history": "^1.0.2",
-    "@remirror/extension-paragraph": "^1.0.2",
-    "@remirror/extension-positioner": "^1.1.0",
-    "@remirror/extension-text": "^1.0.2"
-  },
-  "devDependencies": {
-    "@remirror/pm": "^1.0.2"
-  },
-  "peerDependencies": {
-    "@remirror/pm": "^1.0.1"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "@remirror": {
-    "sizeLimit": "10 KB"
-  },
-  "rn:dev": "src/index.ts"
+	"name": "@remirror/preset-core",
+	"version": "1.0.3",
+	"description": "The core preset providing the functionality you need and want.",
+	"keywords": [
+		"remirror",
+		"preset",
+		"core",
+		"text-editor"
+	],
+	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__preset-core",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/remirror/remirror.git",
+		"directory": "packages/remirror__preset-core"
+	},
+	"license": "MIT",
+	"contributors": [
+		"Ifiok Jr. <ifiokotung@gmail.com>"
+	],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"import": "./dist/remirror-preset-core.esm.js",
+			"require": "./dist/remirror-preset-core.cjs.js",
+			"browser": "./dist/remirror-preset-core.browser.esm.js",
+			"types": "./dist/remirror-preset-core.cjs.d.ts",
+			"default": "./dist/remirror-preset-core.esm.js"
+		},
+		"./package.json": "./package.json",
+		"./types/*": "./dist/declarations/src/*.d.ts"
+	},
+	"main": "dist/remirror-preset-core.cjs.js",
+	"module": "dist/remirror-preset-core.esm.js",
+	"browser": {
+		"./dist/remirror-preset-core.cjs.js": "./dist/remirror-preset-core.browser.cjs.js",
+		"./dist/remirror-preset-core.esm.js": "./dist/remirror-preset-core.browser.esm.js"
+	},
+	"types": "dist/remirror-preset-core.cjs.d.ts",
+	"files": [
+		"dist"
+	],
+	"dependencies": {
+		"@babel/runtime": "^7.13.10",
+		"@remirror/core": "^1.0.3",
+		"@remirror/extension-doc": "^1.0.3",
+		"@remirror/extension-events": "^1.0.2",
+		"@remirror/extension-gap-cursor": "^1.0.2",
+		"@remirror/extension-history": "^1.0.2",
+		"@remirror/extension-paragraph": "^1.0.2",
+		"@remirror/extension-positioner": "^1.1.0",
+		"@remirror/extension-text": "^1.0.2"
+	},
+	"devDependencies": {
+		"@remirror/pm": "^1.0.2"
+	},
+	"peerDependencies": {
+		"@remirror/pm": "^1.0.1"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"@remirror": {
+		"sizeLimit": "10 KB"
+	},
+	"rn:dev": "src/index.ts"
 }

@@ -1,57 +1,61 @@
 {
-  "name": "@remirror/extension-text",
-  "version": "1.0.2",
-  "description": "Enable text in your text-editor, an oxymoron of sorts.",
-  "keywords": [
-    "remirror",
-    "extension",
-    "text",
-    "text-editor"
-  ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-text",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-text",
-  "license": "MIT",
-  "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>"
-  ],
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist/remirror-extension-text.esm.js",
-      "require": "./dist/remirror-extension-text.cjs.js",
-      "browser": "./dist/remirror-extension-text.browser.esm.js",
-      "types": "./dist/remirror-extension-text.cjs.d.ts",
-      "default": "./dist/remirror-extension-text.esm.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
-  "main": "dist/remirror-extension-text.cjs.js",
-  "module": "dist/remirror-extension-text.esm.js",
-  "browser": {
-    "./dist/remirror-extension-text.cjs.js": "./dist/remirror-extension-text.browser.cjs.js",
-    "./dist/remirror-extension-text.esm.js": "./dist/remirror-extension-text.browser.esm.js"
-  },
-  "types": "dist/remirror-extension-text.cjs.d.ts",
-  "files": [
-    "dist"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/messages": "^1.0.2"
-  },
-  "devDependencies": {
-    "@remirror/pm": "^1.0.2"
-  },
-  "peerDependencies": {
-    "@remirror/pm": "^1.0.1"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "@remirror": {
-    "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+	"name": "@remirror/extension-text",
+	"version": "1.0.2",
+	"description": "Enable text in your text-editor, an oxymoron of sorts.",
+	"keywords": [
+		"remirror",
+		"extension",
+		"text",
+		"text-editor"
+	],
+	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-text",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/remirror/remirror.git",
+		"directory": "packages/remirror__extension-text"
+	},
+	"license": "MIT",
+	"contributors": [
+		"Ifiok Jr. <ifiokotung@gmail.com>"
+	],
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"import": "./dist/remirror-extension-text.esm.js",
+			"require": "./dist/remirror-extension-text.cjs.js",
+			"browser": "./dist/remirror-extension-text.browser.esm.js",
+			"types": "./dist/remirror-extension-text.cjs.d.ts",
+			"default": "./dist/remirror-extension-text.esm.js"
+		},
+		"./package.json": "./package.json",
+		"./types/*": "./dist/declarations/src/*.d.ts"
+	},
+	"main": "dist/remirror-extension-text.cjs.js",
+	"module": "dist/remirror-extension-text.esm.js",
+	"browser": {
+		"./dist/remirror-extension-text.cjs.js": "./dist/remirror-extension-text.browser.cjs.js",
+		"./dist/remirror-extension-text.esm.js": "./dist/remirror-extension-text.browser.esm.js"
+	},
+	"types": "dist/remirror-extension-text.cjs.d.ts",
+	"files": [
+		"dist"
+	],
+	"dependencies": {
+		"@babel/runtime": "^7.13.10",
+		"@remirror/core": "^1.0.3",
+		"@remirror/messages": "^1.0.2"
+	},
+	"devDependencies": {
+		"@remirror/pm": "^1.0.2"
+	},
+	"peerDependencies": {
+		"@remirror/pm": "^1.0.1"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"@remirror": {
+		"sizeLimit": "5 KB"
+	},
+	"rn:dev": "src/index.ts"
 }

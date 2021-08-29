@@ -95,8 +95,7 @@
       "@remirror/core-utils",
       "@remirror/i18n",
       "@remirror/icons",
-      "@remirror/messages",
-      "@remirror/theme"
+      "@remirror/messages"
     ],
     "running": false,
     "gzip": true
