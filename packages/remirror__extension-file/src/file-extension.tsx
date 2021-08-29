@@ -6,6 +6,7 @@ import {
   extension,
   ExtensionPriority,
   ExtensionTag,
+  findUploadPlaceholderPayload,
   getTextSelection,
   Handler,
   NodeExtension,
@@ -14,19 +15,23 @@ import {
   omitExtraAttributes,
   PrimitiveSelection,
   ProsemirrorNode,
-  ProsemirrorPlugin,
   Transaction,
+  uploadFile,
+  UploadFileHandler,
+  UploadPlaceholderPayload,
 } from '@remirror/core';
 import { PasteRule } from '@remirror/pm/paste-rules';
 import { NodeViewComponentProps } from '@remirror/react';
 
 import { FileComponent, FileComponentProps } from './file-component';
-import { findPlaceholderPayload, placeholderPlugin } from './file-placeholder-plugin';
-import { PlaceholderPayload, uploadFile, UploadFileHandler } from './file-upload';
 import { createDataUrlFileUploader } from './file-uploaders';
 
 export interface FileOptions {
+  /**
+   * A function returns a `FileUploader` which will handle the upload process.
+   */
   uploadFileHandler?: UploadFileHandler<FileAttributes>;
+
   render?: (props: FileComponentProps) => React.ReactElement<HTMLElement> | null;
 
   /**
@@ -60,10 +65,8 @@ export class FileExtension extends NodeExtension<FileOptions> {
   }
 
   ReactComponent: ComponentType<NodeViewComponentProps> = (props) => {
-    const payload: PlaceholderPayload<FileAttributes> | undefined = findPlaceholderPayload(
-      props.view.state,
-      props.node.attrs.id,
-    );
+    const payload: UploadPlaceholderPayload<FileAttributes> | undefined =
+      findUploadPlaceholderPayload(props.view.state, props.node.attrs.id);
     const context = payload?.context;
     const abort = () => payload?.fileUploader.abort();
     return this.options.render({ ...props, context, abort });
@@ -126,10 +129,6 @@ export class FileExtension extends NodeExtension<FileOptions> {
         return ['div', attrs];
       },
     };
-  }
-
-  createExternalPlugins(): ProsemirrorPlugin[] {
-    return [placeholderPlugin];
   }
 
   createPasteRules(): PasteRule[] {
@@ -216,12 +215,12 @@ export class FileExtension extends NodeExtension<FileOptions> {
   }
 
   private uploadFile(file: File, pos?: number | undefined): void {
-    return uploadFile<FileAttributes>({
+    return uploadFile({
       file,
       pos,
       view: this.store.view,
       fileType: this.type,
-      uploadFileHandler: this.options.uploadFileHandler,
+      uploadHandler: this.options.uploadFileHandler,
     });
   }
 }

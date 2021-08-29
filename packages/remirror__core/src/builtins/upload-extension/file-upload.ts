@@ -1,9 +1,12 @@
-import { EditorView, isNumber, NodeType, ProsemirrorNode } from '@remirror/core';
+import { isNumber } from '@remirror/core-helpers';
+import { ProsemirrorNode } from '@remirror/pm';
+import { NodeType } from '@remirror/pm/model';
+import { EditorView } from '@remirror/pm/view';
 
 import { ActionType } from './file-placeholder-actions';
-import { findPlaceholderPos, setPlaceholderAction } from './file-placeholder-plugin';
-import { createUploadContext, UploadContext } from './file-upload-context';
+import { findUploadPlaceholderPos, setUploadPlaceholderAction } from './file-placeholder-plugin';
 import { FileUploader } from './file-uploader';
+import { createUploadContext, UploadContext } from './upload-context';
 
 /**
  * Any `ProsemirrorNode` can use the `uploadFile` function in this file as long
@@ -19,24 +22,29 @@ interface AbstractNodeAttributes {
 
 export type UploadFileHandler<NodeAttributes> = () => FileUploader<NodeAttributes>;
 
-export interface PlaceholderPayload<NodeAttributes extends AbstractNodeAttributes> {
+export interface UploadPlaceholderPayload<NodeAttributes extends AbstractNodeAttributes> {
   context: UploadContext;
   fileUploader: FileUploader<NodeAttributes>;
 }
 
+export interface UploadFileProps<NodeAttributes extends AbstractNodeAttributes = object> {
+  file: File;
+  pos: number | undefined;
+  view: EditorView;
+  fileType: NodeType;
+  uploadHandler: UploadFileHandler<NodeAttributes>;
+}
+
+/**
+ * Insert a file into the editor and upload it.
+ */
 export function uploadFile<NodeAttributes extends AbstractNodeAttributes>({
   file,
   pos,
   view,
   fileType,
-  uploadFileHandler,
-}: {
-  file: File;
-  pos: number | undefined;
-  view: EditorView;
-  fileType: NodeType;
-  uploadFileHandler: UploadFileHandler<NodeAttributes>;
-}): void {
+  uploadHandler,
+}: UploadFileProps<NodeAttributes>): void {
   // A fresh object to act as the ID for this upload.
   const id = {};
 
@@ -49,7 +57,7 @@ export function uploadFile<NodeAttributes extends AbstractNodeAttributes>({
     pos,
     view,
     fileType,
-    uploadFileHandler,
+    uploadHandler,
   });
 
   fileUploader
@@ -110,7 +118,7 @@ function createFilePlaceholder<NodeAttributes extends AbstractNodeAttributes>({
   pos,
   view,
   fileType,
-  uploadFileHandler,
+  uploadHandler,
 }: {
   id: unknown;
   context: UploadContext;
@@ -118,7 +126,7 @@ function createFilePlaceholder<NodeAttributes extends AbstractNodeAttributes>({
   pos: number | undefined;
   view: EditorView;
   fileType: NodeType;
-  uploadFileHandler: UploadFileHandler<NodeAttributes>;
+  uploadHandler: UploadFileHandler<NodeAttributes>;
 }): FileUploader<NodeAttributes> | void {
   const tr = view.state.tr;
   const insertPos = insertFilePoint(tr.doc, isNumber(pos) ? pos : tr.selection.from, fileType);
@@ -129,15 +137,15 @@ function createFilePlaceholder<NodeAttributes extends AbstractNodeAttributes>({
   }
 
   // create a fileUploader, which will read and/or upload the file later
-  const fileUploader = uploadFileHandler();
+  const fileUploader = uploadHandler();
 
   // insert the file node
   const attrs: NodeAttributes = { ...fileUploader.insert(file), id };
   tr.insert(insertPos, fileType.createChecked(attrs));
 
   // insert the placeholder decoration
-  const payload: PlaceholderPayload<NodeAttributes> = { context, fileUploader };
-  setPlaceholderAction(tr, { type: ActionType.ADD_PLACEHOLDER, id, pos: insertPos, payload });
+  const payload: UploadPlaceholderPayload<NodeAttributes> = { context, fileUploader };
+  setUploadPlaceholderAction(tr, { type: ActionType.ADD_PLACEHOLDER, id, pos: insertPos, payload });
 
   view.dispatch(tr);
 
@@ -155,7 +163,7 @@ function onFileLoaded<NodeAttributes extends AbstractNodeAttributes>({
   fileType: NodeType;
   view: EditorView;
 }) {
-  const placeholderPos = findPlaceholderPos(view.state, id);
+  const placeholderPos = findUploadPlaceholderPos(view.state, id);
 
   // unexpected
   if (placeholderPos == null) {
@@ -169,7 +177,7 @@ function onFileLoaded<NodeAttributes extends AbstractNodeAttributes>({
   // the placeholder and drop the uploaded file.
   if (!fileNode || fileNode.type !== fileType || fileNode.attrs.id !== id) {
     const tr = view.state.tr;
-    setPlaceholderAction(tr, { type: ActionType.REMOVE_PLACEHOLDER, id });
+    setUploadPlaceholderAction(tr, { type: ActionType.REMOVE_PLACEHOLDER, id });
     view.dispatch(tr);
     return;
   }
@@ -177,7 +185,7 @@ function onFileLoaded<NodeAttributes extends AbstractNodeAttributes>({
   // Update the file node at the placeholder's position, and remove
   // the placeholder.
   const tr = view.state.tr;
-  setPlaceholderAction(tr, { type: ActionType.REMOVE_PLACEHOLDER, id });
+  setUploadPlaceholderAction(tr, { type: ActionType.REMOVE_PLACEHOLDER, id });
   const fileAttrs: NodeAttributes = { ...fileNode.attrs, ...attrs, id: null };
   // We need to update the node to trigger the render function, which will accept
   // differnt properties during and after the upload progress.

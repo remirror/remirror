@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { UploadContext } from '@remirror/core';
 import { NodeViewComponentProps, useCommands } from '@remirror/react';
 import {
   CloseLineIcon as StopIcon,
@@ -9,7 +10,6 @@ import {
 import { ExtensionFileTheme } from '@remirror/theme';
 
 import type { FileAttributes } from './file-extension';
-import { UploadContext } from './file-upload-context';
 
 export type FileComponentProps = NodeViewComponentProps & {
   context?: UploadContext;
