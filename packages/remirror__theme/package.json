@@ -1,6 +1,6 @@
 {
   "name": "@remirror/theme",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "The configurable theme for the remirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__theme",
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-positioner",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Reposition your elements with every state update.",
   "keywords": [
     "remirror",
@@ -42,10 +42,10 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/extension-events": "^1.0.2",
+    "@remirror/core": "^1.1.0",
+    "@remirror/extension-events": "^1.0.3",
     "@remirror/messages": "^1.0.2",
-    "@remirror/theme": "^1.1.0",
+    "@remirror/theme": "^1.1.1",
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-blockquote",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Add blockquotes to your text editor.",
   "keywords": [
     "remirror",
@@ -40,9 +40,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
+    "@remirror/core": "^1.1.0",
     "@remirror/messages": "^1.0.2",
-    "@remirror/theme": "^1.1.0"
+    "@remirror/theme": "^1.1.1"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.2"

@@ -1,5 +1,36 @@
 # @remirror/preset-formatting
 
+## 1.0.5
+
+> 2021-08-29
+
+### Patch Changes
+
+- Override the default browser style about the nested list, so that users can tell the different between two adjacent nested lists.
+
+* Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
+- Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+- Updated dependencies []:
+  - @remirror/extension-text-color@1.0.3
+  - @remirror/extension-text-highlight@1.0.3
+  - @remirror/core@1.1.0
+  - @remirror/extension-bold@1.0.3
+  - @remirror/extension-columns@1.0.3
+  - @remirror/extension-font-size@1.0.3
+  - @remirror/extension-heading@1.0.3
+  - @remirror/extension-italic@1.0.3
+  - @remirror/extension-node-formatting@1.0.6
+  - @remirror/extension-strike@1.0.3
+  - @remirror/extension-sub@1.0.3
+  - @remirror/extension-sup@1.0.3
+  - @remirror/extension-text-case@1.0.3
+  - @remirror/extension-underline@1.0.3
+  - @remirror/extension-whitespace@1.0.3
+
 ## 1.0.4
 
 > 2021-08-22

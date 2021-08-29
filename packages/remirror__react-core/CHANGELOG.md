@@ -1,5 +1,30 @@
 # @remirror/react-core
 
+## 1.0.5
+
+> 2021-08-29
+
+### Patch Changes
+
+- Override the default browser style about the nested list, so that users can tell the different between two adjacent nested lists.
+
+* Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
+- Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+- Updated dependencies []:
+  - @remirror/theme@1.1.1
+  - @remirror/extension-positioner@1.1.1
+  - @remirror/preset-core@1.0.4
+  - @remirror/preset-react@1.0.3
+  - @remirror/core@1.1.0
+  - @remirror/extension-react-component@1.0.5
+  - @remirror/extension-react-ssr@1.0.4
+  - @remirror/react-renderer@1.0.5
+  - @remirror/react-ssr@1.0.4
+
 ## 1.0.4
 
 > 2021-08-26
