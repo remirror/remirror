@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-code-block",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Unleash the inner coder with code blocks for your remirror editor.",
   "keywords": [
     "remirror",
@@ -52,9 +52,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
+    "@remirror/core": "^1.1.0",
     "@remirror/messages": "^1.0.2",
-    "@remirror/theme": "^1.1.0",
+    "@remirror/theme": "^1.1.1",
     "@types/refractor": "^3.0.2",
     "refractor": "^3.3.1"
   },

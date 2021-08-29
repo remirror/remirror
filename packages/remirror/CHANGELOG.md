@@ -1,5 +1,77 @@
 # remirror
 
+## 1.0.15
+
+> 2021-08-29
+
+### Patch Changes
+
+- Override the default browser style about the nested list, so that users can tell the different between two adjacent nested lists.
+
+* Improve commands `toggleBulletList`, `toggleOrderedList` and `toggleTaskList`. Now you can toggle list between bullet list, ordered list and task list.
+
+- Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
+* Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+* Updated dependencies []:
+  - @remirror/theme@1.1.1
+  - @remirror/dom@1.0.4
+  - @remirror/extension-annotation@1.0.4
+  - @remirror/extension-blockquote@1.0.3
+  - @remirror/extension-callout@1.0.3
+  - @remirror/extension-code-block@1.0.4
+  - @remirror/extension-emoji@1.0.3
+  - @remirror/extension-image@1.0.4
+  - @remirror/extension-list@1.0.6
+  - @remirror/extension-mention-atom@1.0.3
+  - @remirror/extension-placeholder@1.0.3
+  - @remirror/extension-positioner@1.1.1
+  - @remirror/extension-tables@1.0.3
+  - @remirror/extension-text-color@1.0.3
+  - @remirror/extension-text-highlight@1.0.3
+  - @remirror/extension-yjs@1.0.4
+  - @remirror/preset-core@1.0.4
+  - @remirror/preset-formatting@1.0.5
+  - @remirror/preset-wysiwyg@1.0.7
+  - @remirror/core@1.1.0
+  - @remirror/extension-bidi@1.0.3
+  - @remirror/extension-bold@1.0.3
+  - @remirror/extension-code@1.0.3
+  - @remirror/extension-codemirror5@1.0.3
+  - @remirror/extension-collaboration@1.0.3
+  - @remirror/extension-columns@1.0.3
+  - @remirror/extension-diff@1.0.3
+  - @remirror/extension-doc@1.0.4
+  - @remirror/extension-drop-cursor@1.0.3
+  - @remirror/extension-embed@1.1.2
+  - @remirror/extension-epic-mode@1.0.3
+  - @remirror/extension-events@1.0.3
+  - @remirror/extension-font-family@1.0.3
+  - @remirror/extension-font-size@1.0.3
+  - @remirror/extension-gap-cursor@1.0.3
+  - @remirror/extension-hard-break@1.0.3
+  - @remirror/extension-heading@1.0.3
+  - @remirror/extension-history@1.0.3
+  - @remirror/extension-horizontal-rule@1.0.3
+  - @remirror/extension-italic@1.0.3
+  - @remirror/extension-link@1.0.3
+  - @remirror/extension-markdown@1.0.3
+  - @remirror/extension-mention@1.0.3
+  - @remirror/extension-node-formatting@1.0.6
+  - @remirror/extension-paragraph@1.0.3
+  - @remirror/extension-search@1.0.3
+  - @remirror/extension-strike@1.0.3
+  - @remirror/extension-sub@1.0.3
+  - @remirror/extension-sup@1.0.3
+  - @remirror/extension-text@1.0.3
+  - @remirror/extension-text-case@1.0.3
+  - @remirror/extension-trailing-node@1.0.3
+  - @remirror/extension-underline@1.0.3
+  - @remirror/extension-whitespace@1.0.3
+
 ## 1.0.14
 
 > 2021-08-26

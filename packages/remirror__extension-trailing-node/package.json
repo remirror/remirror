@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-trailing-node",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Make sure there's always space to type in your editor.",
   "keywords": [
     "remirror",
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
+    "@remirror/core": "^1.1.0",
     "@remirror/messages": "^1.0.2"
   },
   "devDependencies": {

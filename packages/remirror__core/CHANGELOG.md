@@ -1,5 +1,19 @@
 # @remirror/core
 
+## 1.1.0
+
+> 2021-08-29
+
+### Minor Changes
+
+- Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+### Patch Changes
+
+- Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
 ## 1.0.3
 
 > 2021-08-22

@@ -1,5 +1,26 @@
 # @remirror/extension-list
 
+## 1.0.6
+
+> 2021-08-29
+
+### Patch Changes
+
+- Override the default browser style about the nested list, so that users can tell the different between two adjacent nested lists.
+
+* Improve commands `toggleBulletList`, `toggleOrderedList` and `toggleTaskList`. Now you can toggle list between bullet list, ordered list and task list.
+
+- Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
+* Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+* Updated dependencies []:
+  - @remirror/theme@1.1.1
+  - @remirror/core@1.1.0
+  - @remirror/extension-events@1.0.3
+
 ## 1.0.5
 
 > 2021-08-25

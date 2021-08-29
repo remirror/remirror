@@ -1,5 +1,45 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.7
+
+> 2021-08-29
+
+### Patch Changes
+
+- Override the default browser style about the nested list, so that users can tell the different between two adjacent nested lists.
+
+* Improve commands `toggleBulletList`, `toggleOrderedList` and `toggleTaskList`. Now you can toggle list between bullet list, ordered list and task list.
+
+- Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
+* Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+* Updated dependencies []:
+  - @remirror/extension-blockquote@1.0.3
+  - @remirror/extension-code-block@1.0.4
+  - @remirror/extension-image@1.0.4
+  - @remirror/extension-list@1.0.6
+  - @remirror/extension-tables@1.0.3
+  - @remirror/preset-core@1.0.4
+  - @remirror/core@1.1.0
+  - @remirror/extension-bidi@1.0.3
+  - @remirror/extension-bold@1.0.3
+  - @remirror/extension-code@1.0.3
+  - @remirror/extension-drop-cursor@1.0.3
+  - @remirror/extension-embed@1.1.2
+  - @remirror/extension-gap-cursor@1.0.3
+  - @remirror/extension-hard-break@1.0.3
+  - @remirror/extension-heading@1.0.3
+  - @remirror/extension-horizontal-rule@1.0.3
+  - @remirror/extension-italic@1.0.3
+  - @remirror/extension-link@1.0.3
+  - @remirror/extension-search@1.0.3
+  - @remirror/extension-strike@1.0.3
+  - @remirror/extension-trailing-node@1.0.3
+  - @remirror/extension-underline@1.0.3
+
 ## 1.0.6
 
 > 2021-08-26

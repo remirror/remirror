@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-file",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "",
   "keywords": [
     "remirror",
@@ -41,10 +41,10 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/react": "^1.0.5",
-    "@remirror/react-components": "^1.0.4",
-    "@remirror/theme": "^1.1.0",
+    "@remirror/core": "^1.1.0",
+    "@remirror/react": "^1.0.6",
+    "@remirror/react-components": "^1.0.5",
+    "@remirror/theme": "^1.1.1",
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {

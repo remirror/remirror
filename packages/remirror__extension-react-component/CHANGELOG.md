@@ -1,5 +1,20 @@
 # @remirror/extension-react-component
 
+## 1.0.5
+
+> 2021-08-29
+
+### Patch Changes
+
+- Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
+* Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+* Updated dependencies []:
+  - @remirror/core@1.1.0
+
 ## 1.0.4
 
 > 2021-08-22
