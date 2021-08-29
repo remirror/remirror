@@ -284,7 +284,9 @@
         "stabilityDays": 0
       }
     ],
-    "ignoreDeps": [],
+    "ignoreDeps": [
+      "testing"
+    ],
     "prCreation": "not-pending",
     "stabilityDays": 7,
     "rangeStrategy": "replace",
