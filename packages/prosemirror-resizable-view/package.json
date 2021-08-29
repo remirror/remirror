@@ -8,7 +8,11 @@
     "resizable"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-resizable-view",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-resizable-view",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/prosemirror-resizable-view"
+  },
   "license": "MIT",
   "contributors": [
     "Ocavue <ocavue@gmail.com>"

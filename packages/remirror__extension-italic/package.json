@@ -7,7 +7,11 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-italic",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-italic",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-italic"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

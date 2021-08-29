@@ -4,7 +4,11 @@
   "private": true,
   "description": "The storybook configuration for the remirror project.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/storybook-react",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/storybook-react",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/storybook-react"
+  },
   "exports": {
     ".": {
       "require": "./dist/storybook-react.cjs.js"

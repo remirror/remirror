@@ -11,7 +11,11 @@
     "table editing"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-tables",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-tables",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-react-tables"
+  },
   "license": "MIT",
   "contributors": [
     "Ocavue <ocavue@gmail.com>",

@@ -3,7 +3,11 @@
   "version": "1.1.0",
   "description": "Styles for every remirror package.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__styles",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__styles",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__styles"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

@@ -8,7 +8,11 @@
     "react"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-component",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-component",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-react-component"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

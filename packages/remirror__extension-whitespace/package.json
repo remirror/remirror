@@ -7,7 +7,11 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-whitespace",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-whitespace",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-whitespace"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

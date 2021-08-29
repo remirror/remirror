@@ -9,7 +9,11 @@
     "text-editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/templates/preset-template",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/templates/preset-template",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "support/templates/preset-template"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

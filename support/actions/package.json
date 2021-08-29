@@ -6,8 +6,12 @@
   "keywords": [
     "remirror"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/remirror__actions/actions",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/actions",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/actions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "support/actions"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

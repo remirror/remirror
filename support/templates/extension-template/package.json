@@ -8,7 +8,11 @@
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/templates/extension-template",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/templates/extension-template",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "support/templates/extension-template"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

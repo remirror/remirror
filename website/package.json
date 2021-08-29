@@ -4,7 +4,11 @@
   "private": true,
   "description": "The remirror documentation website",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/website",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "website"
+  },
   "scripts": {
     "build": "USE_SIMPLE_CSS_MINIFIER=true docusaurus build",
     "deploy": "docusaurus deploy",

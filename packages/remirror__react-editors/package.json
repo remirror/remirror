@@ -12,8 +12,12 @@
     "react",
     "prosemirror"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/remirror__react-editors/react-editors",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-editors",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-editors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__react-editors"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

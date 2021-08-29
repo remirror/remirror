@@ -6,8 +6,12 @@
   "keywords": [
     "remirror"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/remirror__scripts/scripts",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/scripts",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/scripts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "support/scripts"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

@@ -9,7 +9,11 @@
     "editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-codemirror5",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-codemirror5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-codemirror5"
+  },
   "license": "MIT",
   "contributors": [
     "Ocavue <ocavue@gmail.com>"

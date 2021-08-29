@@ -8,7 +8,11 @@
     "text-editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-file",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-file",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-file"
+  },
   "license": "MIT",
   "contributors": [
     "Ocavue <ocavue@gmail.com>"

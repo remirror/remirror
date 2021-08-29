@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Create a singleton live region for a11y status updates",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/a11y-status",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/a11y-status",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/a11y-status"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

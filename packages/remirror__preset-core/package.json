@@ -9,7 +9,11 @@
     "text-editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__preset-core",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__preset-core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__preset-core"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
