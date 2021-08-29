@@ -1,69 +1,69 @@
 {
-	"name": "multishift",
-	"version": "1.0.2",
-	"description": "A repurposed downshift for internal use within remirror",
-	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/remirror/remirror.git",
-		"directory": "packages/multishift"
-	},
-	"license": "MIT",
-	"contributors": [
-		"Ifiok Jr. <ifiokotung@gmail.com>"
-	],
-	"exports": {
-		".": {
-			"import": "./dist/multishift.esm.js",
-			"require": "./dist/multishift.cjs.js",
-			"browser": "./dist/multishift.browser.esm.js",
-			"types": "./dist/multishift.cjs.d.ts",
-			"default": "./dist/multishift.esm.js"
-		},
-		"./package.json": "./package.json",
-		"./types/*": "./dist/declarations/src/*.d.ts"
-	},
-	"main": "dist/multishift.cjs.js",
-	"module": "dist/multishift.esm.js",
-	"browser": {
-		"./dist/multishift.cjs.js": "./dist/multishift.browser.cjs.js",
-		"./dist/multishift.esm.js": "./dist/multishift.browser.esm.js"
-	},
-	"types": "dist/multishift.cjs.d.ts",
-	"files": [
-		"dist"
-	],
-	"dependencies": {
-		"@babel/runtime": "^7.13.10",
-		"@reach/auto-id": "^0.15.3",
-		"@remirror/core-helpers": "^1.0.1",
-		"@remirror/core-types": "^1.0.1",
-		"@seznam/compose-react-refs": "^1.0.6",
-		"a11y-status": "^1.0.0",
-		"compute-scroll-into-view": "^1.0.17",
-		"react-use": "^17.2.3",
-		"tiny-warning": "^1.0.3",
-		"w3c-keyname": "^2.2.4"
-	},
-	"devDependencies": {
-		"@testing-library/react": "^12.0.0",
-		"@types/react": "^17.0.14",
-		"react": "^17.0.2"
-	},
-	"peerDependencies": {
-		"@types/react": "^16.14.0 || ^17 || ^18",
-		"react": "^16.14.0 || ^17 || ^18"
-	},
-	"peerDependenciesMeta": {
-		"@types/react": {
-			"optional": true
-		}
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"@remirror": {
-		"sizeLimit": "20 KB"
-	},
-	"rn:dev": "src/index.ts"
+  "name": "multishift",
+  "version": "1.0.2",
+  "description": "A repurposed downshift for internal use within remirror",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/multishift"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/multishift.esm.js",
+      "require": "./dist/multishift.cjs.js",
+      "browser": "./dist/multishift.browser.esm.js",
+      "types": "./dist/multishift.cjs.d.ts",
+      "default": "./dist/multishift.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/multishift.cjs.js",
+  "module": "dist/multishift.esm.js",
+  "browser": {
+    "./dist/multishift.cjs.js": "./dist/multishift.browser.cjs.js",
+    "./dist/multishift.esm.js": "./dist/multishift.browser.esm.js"
+  },
+  "types": "dist/multishift.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@reach/auto-id": "^0.15.3",
+    "@remirror/core-helpers": "^1.0.1",
+    "@remirror/core-types": "^1.0.1",
+    "@seznam/compose-react-refs": "^1.0.6",
+    "a11y-status": "^1.0.0",
+    "compute-scroll-into-view": "^1.0.17",
+    "react-use": "^17.2.3",
+    "tiny-warning": "^1.0.3",
+    "w3c-keyname": "^2.2.4"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^12.0.0",
+    "@types/react": "^17.0.14",
+    "react": "^17.0.2"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.14.0 || ^17 || ^18",
+    "react": "^16.14.0 || ^17 || ^18"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "20 KB"
+  },
+  "rn:dev": "src/index.ts"
 }

@@ -713,15 +713,21 @@ async function generatePackageJsonConfigs() {
   await Promise.all(
     packages.packages.map((pkg) => {
       const relativeDir = path.relative(root, pkg.dir);
-      return writeJSON(path.join(pkg.dir, 'package.json'), {
-        ...pkg.packageJson,
-        repository: {
-          type: 'git',
-          url: 'https://github.com/remirror/remirror.git',
-          directory: relativeDir,
+      return writeJSON(
+        path.join(pkg.dir, 'package.json'),
+        {
+          ...pkg.packageJson,
+          repository: {
+            type: 'git',
+            url: 'https://github.com/remirror/remirror.git',
+            directory: relativeDir,
+          },
+          homepage: `https://github.com/remirror/remirror/tree/HEAD/${relativeDir}`,
         },
-        homepage: `https://github.com/remirror/remirror/tree/HEAD/${relativeDir}`,
-      });
+        {
+          indent: 2,
+        },
+      );
     }),
   );
 }

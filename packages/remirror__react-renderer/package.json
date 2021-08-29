@@ -1,64 +1,64 @@
 {
-	"name": "@remirror/react-renderer",
-	"version": "1.0.4",
-	"description": "Render the JSON output from your remirror editor as a react component",
-	"keywords": [
-		"remirror"
-	],
-	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-renderer",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/remirror/remirror.git",
-		"directory": "packages/remirror__react-renderer"
-	},
-	"license": "MIT",
-	"contributors": [
-		"Ifiok Jr. <ifiokotung@gmail.com>"
-	],
-	"sideEffects": false,
-	"exports": {
-		".": {
-			"import": "./dist/remirror-react-renderer.esm.js",
-			"require": "./dist/remirror-react-renderer.cjs.js",
-			"browser": "./dist/remirror-react-renderer.browser.esm.js",
-			"types": "./dist/remirror-react-renderer.cjs.d.ts",
-			"default": "./dist/remirror-react-renderer.esm.js"
-		},
-		"./package.json": "./package.json",
-		"./types/*": "./dist/declarations/src/*.d.ts"
-	},
-	"main": "dist/remirror-react-renderer.cjs.js",
-	"module": "dist/remirror-react-renderer.esm.js",
-	"browser": {
-		"./dist/remirror-react-renderer.cjs.js": "./dist/remirror-react-renderer.browser.cjs.js",
-		"./dist/remirror-react-renderer.esm.js": "./dist/remirror-react-renderer.browser.esm.js"
-	},
-	"types": "dist/remirror-react-renderer.cjs.d.ts",
-	"files": [
-		"dist"
-	],
-	"dependencies": {
-		"@babel/runtime": "^7.13.10",
-		"@remirror/core": "^1.0.3"
-	},
-	"devDependencies": {
-		"@types/react": "^17.0.14",
-		"react": "^17.0.2"
-	},
-	"peerDependencies": {
-		"@types/react": "^16.14.0 || ^17 || ^18",
-		"react": "^16.14.0 || ^17 || ^18"
-	},
-	"peerDependenciesMeta": {
-		"@types/react": {
-			"optional": true
-		}
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"@remirror": {
-		"sizeLimit": "50 KB"
-	},
-	"rn:dev": "src/index.ts"
+  "name": "@remirror/react-renderer",
+  "version": "1.0.4",
+  "description": "Render the JSON output from your remirror editor as a react component",
+  "keywords": [
+    "remirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-renderer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__react-renderer"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-renderer.esm.js",
+      "require": "./dist/remirror-react-renderer.cjs.js",
+      "browser": "./dist/remirror-react-renderer.browser.esm.js",
+      "types": "./dist/remirror-react-renderer.cjs.d.ts",
+      "default": "./dist/remirror-react-renderer.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-react-renderer.cjs.js",
+  "module": "dist/remirror-react-renderer.esm.js",
+  "browser": {
+    "./dist/remirror-react-renderer.cjs.js": "./dist/remirror-react-renderer.browser.cjs.js",
+    "./dist/remirror-react-renderer.esm.js": "./dist/remirror-react-renderer.browser.esm.js"
+  },
+  "types": "dist/remirror-react-renderer.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.14",
+    "react": "^17.0.2"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.14.0 || ^17 || ^18",
+    "react": "^16.14.0 || ^17 || ^18"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "50 KB"
+  },
+  "rn:dev": "src/index.ts"
 }

@@ -1,59 +1,59 @@
 {
-	"name": "@remirror/extension-horizontal-rule",
-	"version": "1.0.2",
-	"description": "Allow your users to divide their content with horizontal lines. Nice!",
-	"keywords": [
-		"remirror",
-		"extension"
-	],
-	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-horizontal-rule",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/remirror/remirror.git",
-		"directory": "packages/remirror__extension-horizontal-rule"
-	},
-	"license": "MIT",
-	"contributors": [
-		"Ifiok Jr. <ifiokotung@gmail.com>"
-	],
-	"sideEffects": false,
-	"exports": {
-		".": {
-			"import": "./dist/remirror-extension-horizontal-rule.esm.js",
-			"require": "./dist/remirror-extension-horizontal-rule.cjs.js",
-			"browser": "./dist/remirror-extension-horizontal-rule.browser.esm.js",
-			"types": "./dist/remirror-extension-horizontal-rule.cjs.d.ts",
-			"default": "./dist/remirror-extension-horizontal-rule.esm.js"
-		},
-		"./package.json": "./package.json",
-		"./types/*": "./dist/declarations/src/*.d.ts"
-	},
-	"main": "dist/remirror-extension-horizontal-rule.cjs.js",
-	"module": "dist/remirror-extension-horizontal-rule.esm.js",
-	"browser": {
-		"./dist/remirror-extension-horizontal-rule.cjs.js": "./dist/remirror-extension-horizontal-rule.browser.cjs.js",
-		"./dist/remirror-extension-horizontal-rule.esm.js": "./dist/remirror-extension-horizontal-rule.browser.esm.js"
-	},
-	"types": "dist/remirror-extension-horizontal-rule.cjs.d.ts",
-	"files": [
-		"dist"
-	],
-	"dependencies": {
-		"@babel/runtime": "^7.13.10",
-		"@remirror/core": "^1.0.3",
-		"@remirror/messages": "^1.0.2"
-	},
-	"devDependencies": {
-		"@remirror/pm": "^1.0.2"
-	},
-	"peerDependencies": {
-		"@remirror/pm": "^1.0.1"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"@remirror": {
-		"sizeLimit": "5 KB"
-	},
-	"rn:dev": "src/index.ts"
+  "name": "@remirror/extension-horizontal-rule",
+  "version": "1.0.2",
+  "description": "Allow your users to divide their content with horizontal lines. Nice!",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-horizontal-rule",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-horizontal-rule"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-horizontal-rule.esm.js",
+      "require": "./dist/remirror-extension-horizontal-rule.cjs.js",
+      "browser": "./dist/remirror-extension-horizontal-rule.browser.esm.js",
+      "types": "./dist/remirror-extension-horizontal-rule.cjs.d.ts",
+      "default": "./dist/remirror-extension-horizontal-rule.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-extension-horizontal-rule.cjs.js",
+  "module": "dist/remirror-extension-horizontal-rule.esm.js",
+  "browser": {
+    "./dist/remirror-extension-horizontal-rule.cjs.js": "./dist/remirror-extension-horizontal-rule.browser.cjs.js",
+    "./dist/remirror-extension-horizontal-rule.esm.js": "./dist/remirror-extension-horizontal-rule.browser.esm.js"
+  },
+  "types": "dist/remirror-extension-horizontal-rule.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "^1.0.3",
+    "@remirror/messages": "^1.0.2"
+  },
+  "devDependencies": {
+    "@remirror/pm": "^1.0.2"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "^1.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  },
+  "rn:dev": "src/index.ts"
 }

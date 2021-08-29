@@ -1,75 +1,75 @@
 {
-	"name": "actions",
-	"version": "0.0.1",
-	"private": true,
-	"description": "GitHub actions for internal remirror usage.",
-	"keywords": [
-		"remirror"
-	],
-	"homepage": "https://github.com/remirror/remirror/tree/HEAD/support/actions",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/remirror/remirror.git",
-		"directory": "support/actions"
-	},
-	"license": "MIT",
-	"contributors": [
-		"Ifiok Jr. <ifiokotung@gmail.com>"
-	],
-	"sideEffects": false,
-	"exports": {
-		".": {
-			"import": "./dist/actions.esm.js",
-			"require": "./dist/actions.cjs.js",
-			"browser": "./dist/actions.esm.js",
-			"types": "./dist/actions.cjs.d.ts",
-			"default": "./dist/actions.esm.js"
-		},
-		"./package.json": "./package.json",
-		"./types/*": "./dist/declarations/src/*.d.ts"
-	},
-	"main": "dist/remirror-actions.cjs.js",
-	"module": "dist/remirror-actions.esm.js",
-	"types": "dist/remirror-actions.cjs.d.ts",
-	"files": [
-		"dist",
-		"pr",
-		"pnpm"
-	],
-	"dependencies": {
-		"@actions/core": "^1.4.0",
-		"@actions/exec": "^1.1.0",
-		"@actions/github": "^5.0.0",
-		"@babel/runtime": "^7.13.10",
-		"@remirror/core-helpers": "^1.0.1",
-		"@types/fs-extra": "^9.0.12",
-		"@types/giphy-api": "^2.0.3",
-		"@types/semver": "^7.3.7",
-		"codesandbox": "^2.2.1",
-		"fs-extra": "^10.0.0",
-		"giphy-api": "^2.0.2",
-		"got": "^11.8.1",
-		"scripts": "0.0.1",
-		"semver": "^7.3.5"
-	},
-	"devDependencies": {
-		"nock": "^13.1.1"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"@remirror": {
-		"tsconfigs": {
-			"./": {
-				"include": [
-					"src"
-				]
-			}
-		}
-	},
-	"preconstruct": {
-		"entrypoints": [
-			"pr.ts"
-		]
-	}
+  "name": "actions",
+  "version": "0.0.1",
+  "private": true,
+  "description": "GitHub actions for internal remirror usage.",
+  "keywords": [
+    "remirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/actions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "support/actions"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/actions.esm.js",
+      "require": "./dist/actions.cjs.js",
+      "browser": "./dist/actions.esm.js",
+      "types": "./dist/actions.cjs.d.ts",
+      "default": "./dist/actions.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-actions.cjs.js",
+  "module": "dist/remirror-actions.esm.js",
+  "types": "dist/remirror-actions.cjs.d.ts",
+  "files": [
+    "dist",
+    "pr",
+    "pnpm"
+  ],
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "@actions/exec": "^1.1.0",
+    "@actions/github": "^5.0.0",
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core-helpers": "^1.0.1",
+    "@types/fs-extra": "^9.0.12",
+    "@types/giphy-api": "^2.0.3",
+    "@types/semver": "^7.3.7",
+    "codesandbox": "^2.2.1",
+    "fs-extra": "^10.0.0",
+    "giphy-api": "^2.0.2",
+    "got": "^11.8.1",
+    "scripts": "0.0.1",
+    "semver": "^7.3.5"
+  },
+  "devDependencies": {
+    "nock": "^13.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "./": {
+        "include": [
+          "src"
+        ]
+      }
+    }
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "pr.ts"
+    ]
+  }
 }

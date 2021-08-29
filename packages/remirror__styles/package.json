@@ -1,75 +1,75 @@
 {
-	"name": "@remirror/styles",
-	"version": "1.1.0",
-	"description": "Styles for every remirror package.",
-	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__styles",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/remirror/remirror.git",
-		"directory": "packages/remirror__styles"
-	},
-	"license": "MIT",
-	"contributors": [
-		"Ifiok Jr. <ifiokotung@gmail.com>"
-	],
-	"sideEffects": false,
-	"files": [
-		"*.css",
-		"dist",
-		"emotion",
-		"styled-components",
-		"dom"
-	],
-	"dependencies": {
-		"@babel/runtime": "^7.13.10"
-	},
-	"devDependencies": {
-		"@emotion/css": "^11.1.3",
-		"@emotion/react": "^11.1.5",
-		"@emotion/styled": "^11.3.0",
-		"@types/react": "^17.0.14",
-		"@types/styled-components": "^5.1.11",
-		"react": "^17.0.2",
-		"styled-components": "^5.2.3"
-	},
-	"peerDependencies": {
-		"@emotion/css": "^11",
-		"@emotion/react": "^11",
-		"@emotion/styled": "^11",
-		"@types/react": ">= 16.8.0",
-		"@types/styled-components": "^5",
-		"react": ">= 16.8.0",
-		"styled-components": "^5"
-	},
-	"peerDependenciesMeta": {
-		"@emotion/css": {
-			"optional": true
-		},
-		"@emotion/react": {
-			"optional": true
-		},
-		"@emotion/styled": {
-			"optional": true
-		},
-		"@types/styled-components": {
-			"optional": true
-		},
-		"react": {
-			"optional": true
-		},
-		"styled-components": {
-			"optional": true
-		}
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"preconstruct": {
-		"entrypoints": [
-			"emotion.tsx",
-			"styled-components.tsx",
-			"dom.tsx"
-		]
-	},
-	"rn:dev": "src/index.ts"
+  "name": "@remirror/styles",
+  "version": "1.1.0",
+  "description": "Styles for every remirror package.",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__styles",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__styles"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "files": [
+    "*.css",
+    "dist",
+    "emotion",
+    "styled-components",
+    "dom"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10"
+  },
+  "devDependencies": {
+    "@emotion/css": "^11.1.3",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
+    "@types/react": "^17.0.14",
+    "@types/styled-components": "^5.1.11",
+    "react": "^17.0.2",
+    "styled-components": "^5.2.3"
+  },
+  "peerDependencies": {
+    "@emotion/css": "^11",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@types/react": ">= 16.8.0",
+    "@types/styled-components": "^5",
+    "react": ">= 16.8.0",
+    "styled-components": "^5"
+  },
+  "peerDependenciesMeta": {
+    "@emotion/css": {
+      "optional": true
+    },
+    "@emotion/react": {
+      "optional": true
+    },
+    "@emotion/styled": {
+      "optional": true
+    },
+    "@types/styled-components": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "styled-components": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "emotion.tsx",
+      "styled-components.tsx",
+      "dom.tsx"
+    ]
+  },
+  "rn:dev": "src/index.ts"
 }

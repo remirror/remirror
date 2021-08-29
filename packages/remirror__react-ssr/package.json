@@ -1,72 +1,72 @@
 {
-	"name": "@remirror/react-ssr",
-	"version": "1.0.3",
-	"description": "Render the editor in an SSR environment",
-	"keywords": [
-		"remirror"
-	],
-	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-ssr",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/remirror/remirror.git",
-		"directory": "packages/remirror__react-ssr"
-	},
-	"license": "MIT",
-	"contributors": [
-		"Ifiok Jr. <ifiokotung@gmail.com>"
-	],
-	"sideEffects": false,
-	"exports": {
-		".": {
-			"import": "./dist/remirror-react-ssr.esm.js",
-			"require": "./dist/remirror-react-ssr.cjs.js",
-			"browser": "./dist/remirror-react-ssr.browser.esm.js",
-			"types": "./dist/remirror-react-ssr.cjs.d.ts",
-			"default": "./dist/remirror-react-ssr.esm.js"
-		},
-		"./package.json": "./package.json",
-		"./types/*": "./dist/declarations/src/*.d.ts"
-	},
-	"main": "dist/remirror-react-ssr.cjs.js",
-	"module": "dist/remirror-react-ssr.esm.js",
-	"browser": {
-		"./dist/remirror-react-ssr.cjs.js": "./dist/remirror-react-ssr.browser.cjs.js",
-		"./dist/remirror-react-ssr.esm.js": "./dist/remirror-react-ssr.browser.esm.js"
-	},
-	"types": "dist/remirror-react-ssr.cjs.d.ts",
-	"files": [
-		"dist"
-	],
-	"dependencies": {
-		"@babel/runtime": "^7.13.10",
-		"@remirror/core": "^1.0.3",
-		"@remirror/extension-react-ssr": "^1.0.3"
-	},
-	"devDependencies": {
-		"@remirror/pm": "^1.0.2",
-		"@remirror/react": "^1.0.5",
-		"@types/react": "^17.0.14",
-		"@types/react-dom": "^17.0.9",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2"
-	},
-	"peerDependencies": {
-		"@remirror/pm": "^1.0.1",
-		"@types/react": "^16.14.0 || ^17 || ^18",
-		"@types/react-dom": "^16.9.0 || ^17 || ^18",
-		"react": "^16.14.0 || ^17 || ^18",
-		"react-dom": "^16.14.0 || ^17 || ^18"
-	},
-	"peerDependenciesMeta": {
-		"@types/react": {
-			"optional": true
-		}
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"@remirror": {
-		"sizeLimit": "10 KB"
-	},
-	"rn:dev": "src/index.ts"
+  "name": "@remirror/react-ssr",
+  "version": "1.0.3",
+  "description": "Render the editor in an SSR environment",
+  "keywords": [
+    "remirror"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-ssr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__react-ssr"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-ssr.esm.js",
+      "require": "./dist/remirror-react-ssr.cjs.js",
+      "browser": "./dist/remirror-react-ssr.browser.esm.js",
+      "types": "./dist/remirror-react-ssr.cjs.d.ts",
+      "default": "./dist/remirror-react-ssr.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/remirror-react-ssr.cjs.js",
+  "module": "dist/remirror-react-ssr.esm.js",
+  "browser": {
+    "./dist/remirror-react-ssr.cjs.js": "./dist/remirror-react-ssr.browser.cjs.js",
+    "./dist/remirror-react-ssr.esm.js": "./dist/remirror-react-ssr.browser.esm.js"
+  },
+  "types": "dist/remirror-react-ssr.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "^1.0.3",
+    "@remirror/extension-react-ssr": "^1.0.3"
+  },
+  "devDependencies": {
+    "@remirror/pm": "^1.0.2",
+    "@remirror/react": "^1.0.5",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "^1.0.1",
+    "@types/react": "^16.14.0 || ^17 || ^18",
+    "@types/react-dom": "^16.9.0 || ^17 || ^18",
+    "react": "^16.14.0 || ^17 || ^18",
+    "react-dom": "^16.14.0 || ^17 || ^18"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "10 KB"
+  },
+  "rn:dev": "src/index.ts"
 }

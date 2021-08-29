@@ -1,88 +1,88 @@
 {
-	"name": "jest-remirror",
-	"version": "1.0.5",
-	"description": "A text editor for react built with prosemirror",
-	"keywords": [
-		"prosemirror",
-		"react",
-		"ssr",
-		"text editor"
-	],
-	"homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/jest-remirror",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/remirror/remirror.git",
-		"directory": "packages/jest-remirror"
-	},
-	"license": "MIT",
-	"contributors": [
-		"Ifiok Jr. <ifiokotung@gmail.com>"
-	],
-	"exports": {
-		".": {
-			"require": "./dist/jest-remirror.cjs.js",
-			"types": "./dist/jest-remirror.cjs.d.ts"
-		},
-		"./environment": {
-			"require": "./environment/dist/jest-remirror-environment.cjs.js",
-			"types": "./environment/dist/jest-remirror-environment.cjs.d.ts"
-		},
-		"./package.json": "./package.json",
-		"./types/*": "./dist/declarations/src/*.d.ts"
-	},
-	"main": "dist/jest-remirror.cjs.js",
-	"types": "dist/jest-remirror.cjs.d.ts",
-	"files": [
-		"dist",
-		"environment"
-	],
-	"dependencies": {
-		"@babel/runtime": "^7.13.10",
-		"@remirror/core": "^1.0.3",
-		"@remirror/dom": "^1.0.3",
-		"@remirror/pm": "^1.0.2",
-		"@remirror/preset-core": "^1.0.3",
-		"@testing-library/dom": "^8.1.0",
-		"@types/sanitize-html": "^2.3.2",
-		"jest-prosemirror": "^1.0.4",
-		"jest-snapshot": "^27.0.6",
-		"mutationobserver-shim": "^0.3.7",
-		"sanitize-html": "^2.4.0",
-		"tiny-warning": "^1.0.3"
-	},
-	"devDependencies": {
-		"@types/node": "^16.3.3",
-		"jest": "^27.0.6"
-	},
-	"peerDependencies": {
-		"@types/node": "*",
-		"jest": ">= 24"
-	},
-	"peerDependenciesMeta": {
-		"@types/node": {
-			"optional": true
-		}
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"@remirror": {
-		"tsconfigs": {
-			"src": {
-				"compilerOptions": {
-					"types": [
-						"node",
-						"jest"
-					]
-				}
-			}
-		}
-	},
-	"preconstruct": {
-		"entrypoints": [
-			"index.ts",
-			"environment.ts"
-		]
-	},
-	"rn:dev": "src/index.ts"
+  "name": "jest-remirror",
+  "version": "1.0.5",
+  "description": "A text editor for react built with prosemirror",
+  "keywords": [
+    "prosemirror",
+    "react",
+    "ssr",
+    "text editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/jest-remirror",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/jest-remirror"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/jest-remirror.cjs.js",
+      "types": "./dist/jest-remirror.cjs.d.ts"
+    },
+    "./environment": {
+      "require": "./environment/dist/jest-remirror-environment.cjs.js",
+      "types": "./environment/dist/jest-remirror-environment.cjs.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "dist/jest-remirror.cjs.js",
+  "types": "dist/jest-remirror.cjs.d.ts",
+  "files": [
+    "dist",
+    "environment"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "^1.0.3",
+    "@remirror/dom": "^1.0.3",
+    "@remirror/pm": "^1.0.2",
+    "@remirror/preset-core": "^1.0.3",
+    "@testing-library/dom": "^8.1.0",
+    "@types/sanitize-html": "^2.3.2",
+    "jest-prosemirror": "^1.0.4",
+    "jest-snapshot": "^27.0.6",
+    "mutationobserver-shim": "^0.3.7",
+    "sanitize-html": "^2.4.0",
+    "tiny-warning": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^16.3.3",
+    "jest": "^27.0.6"
+  },
+  "peerDependencies": {
+    "@types/node": "*",
+    "jest": ">= 24"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "src": {
+        "compilerOptions": {
+          "types": [
+            "node",
+            "jest"
+          ]
+        }
+      }
+    }
+  },
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "environment.ts"
+    ]
+  },
+  "rn:dev": "src/index.ts"
 }

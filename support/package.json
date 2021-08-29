@@ -1,40 +1,40 @@
 {
-	"name": "support",
-	"version": "0.0.0",
-	"private": true,
-	"description": "The support directory for the remirror monorepo",
-	"homepage": "https://github.com/remirror/remirror/tree/HEAD/support",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/remirror/remirror.git",
-		"directory": "support"
-	},
-	"main": "index.js",
-	"dependencies": {
-		"diffable-html": "^4.1.0"
-	},
-	"@remirror": {
-		"tsconfigs": {
-			"src": false,
-			"./": {
-				"compilerOptions": {
-					"types": [
-						"node"
-					],
-					"allowJs": true,
-					"noEmit": true
-				},
-				"exclude": [
-					"templates",
-					"root"
-				],
-				"include": [
-					"./*.js",
-					"jest",
-					"root",
-					"scripts"
-				]
-			}
-		}
-	}
+  "name": "support",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The support directory for the remirror monorepo",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "support"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "diffable-html": "^4.1.0"
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "src": false,
+      "./": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ],
+          "allowJs": true,
+          "noEmit": true
+        },
+        "exclude": [
+          "templates",
+          "root"
+        ],
+        "include": [
+          "./*.js",
+          "jest",
+          "root",
+          "scripts"
+        ]
+      }
+    }
+  }
 }
