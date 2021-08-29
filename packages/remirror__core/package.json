@@ -2,6 +2,7 @@
   "name": "@remirror/core",
   "version": "1.0.3",
   "description": "Where your quest to create a world class editing experience begins.",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core",
   "repository": {
     "type": "git",
     "url": "https://github.com/remirror/remirror.git",
@@ -68,6 +69,5 @@
       }
     }
   },
-  "rn:dev": "src/index.ts",
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core"
+  "rn:dev": "src/index.ts"
 }
