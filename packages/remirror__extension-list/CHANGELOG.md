@@ -1,5 +1,16 @@
 # @remirror/extension-list
 
+## 1.0.8
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/theme@1.1.2
+
 ## 1.0.7
 
 > 2021-08-30

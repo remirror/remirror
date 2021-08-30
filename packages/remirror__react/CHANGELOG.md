@@ -1,5 +1,22 @@
 # @remirror/react
 
+## 1.0.7
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.4
+  - @remirror/extension-positioner@1.1.2
+  - @remirror/extension-react-tables@1.0.7
+  - @remirror/preset-react@1.0.4
+  - @remirror/react-components@1.0.6
+  - @remirror/react-core@1.0.6
+  - @remirror/react-hooks@1.0.6
+
 ## 1.0.6
 
 > 2021-08-29

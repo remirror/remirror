@@ -1,5 +1,17 @@
 # jest-remirror
 
+## 1.0.7
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/dom@1.0.5
+  - @remirror/preset-core@1.0.5
+
 ## 1.0.6
 
 > 2021-08-29

@@ -1,5 +1,34 @@
 # remirror
 
+## 1.0.17
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/theme@1.1.2
+  - @remirror/dom@1.0.5
+  - @remirror/extension-annotation@1.0.5
+  - @remirror/extension-blockquote@1.0.4
+  - @remirror/extension-callout@1.0.4
+  - @remirror/extension-code-block@1.0.5
+  - @remirror/extension-emoji@1.0.4
+  - @remirror/extension-image@1.0.5
+  - @remirror/extension-list@1.0.8
+  - @remirror/extension-mention-atom@1.0.4
+  - @remirror/extension-placeholder@1.0.4
+  - @remirror/extension-positioner@1.1.2
+  - @remirror/extension-tables@1.0.4
+  - @remirror/extension-text-color@1.0.4
+  - @remirror/extension-text-highlight@1.0.4
+  - @remirror/extension-yjs@1.0.5
+  - @remirror/preset-core@1.0.5
+  - @remirror/preset-formatting@1.0.6
+  - @remirror/preset-wysiwyg@1.0.9
+
 ## 1.0.16
 
 > 2021-08-30

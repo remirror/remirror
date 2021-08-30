@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.3
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/styles@1.1.2
+  - remirror@1.0.17
+  - @remirror/react@1.0.7
+
 ## 0.1.2
 
 > 2021-08-30

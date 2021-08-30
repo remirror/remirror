@@ -1,5 +1,13 @@
 # @remirror/theme
 
+## 1.1.2
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
 ## 1.1.1
 
 > 2021-08-29
