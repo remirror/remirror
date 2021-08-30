@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.0.7
+
+> 2021-08-30
+
+### Patch Changes
+
+- Don't require a `NodeSelection` to fire `toggleCheckboxChecked` anymore.
+
 ## 1.0.6
 
 > 2021-08-29
