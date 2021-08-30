@@ -44,6 +44,13 @@ export const EDITOR = css`
       caret-color: ${getTheme((t) => t.color.selection.caret)};
       text-shadow: ${getTheme((t) => t.color.selection.shadow)};
     }
+
+    /* Protect against generic img rules. See also https://github.com/ProseMirror/prosemirror-view/commit/aaa50d592074c8063fc2ef77907ab6d0373822fb */
+    img.ProseMirror-separator {
+      display: inline !important;
+      border: none !important;
+      margin: 0 !important;
+    }
   }
 
   &.ProseMirror-hideselection *::selection {
