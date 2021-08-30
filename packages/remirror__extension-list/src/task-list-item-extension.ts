@@ -130,14 +130,15 @@ export class TaskListItemExtension extends NodeExtension {
     return ({ tr, dispatch }) => {
       const { selection } = tr;
 
-      // Make sure the list item is selected. Otherwise do nothing.
-      if (!isNodeSelection(selection) || selection.node.type.name !== this.name) {
+      const found = findParentNodeOfType({ selection, types: this.type });
+
+      if (!found) {
         return false;
       }
 
-      const { node, from } = selection;
+      const { node, pos } = found;
       const attrs = { ...node.attrs, checked: checked ?? !node.attrs.checked };
-      dispatch?.(tr.setNodeMarkup(from, undefined, attrs));
+      dispatch?.(tr.setNodeMarkup(pos, undefined, attrs));
 
       return true;
     };
