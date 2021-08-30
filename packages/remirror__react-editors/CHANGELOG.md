@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.2
+
+> 2021-08-30
+
+### Patch Changes
+
+- Don't require a `NodeSelection` to fire `toggleCheckboxChecked` anymore.
+
+- Updated dependencies []:
+  - remirror@1.0.16
+
 ## 0.1.1
 
 > 2021-08-29

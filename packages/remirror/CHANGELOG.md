@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.16
+
+> 2021-08-30
+
+### Patch Changes
+
+- Don't require a `NodeSelection` to fire `toggleCheckboxChecked` anymore.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.0.7
+  - @remirror/preset-wysiwyg@1.0.8
+
 ## 1.0.15
 
 > 2021-08-29
