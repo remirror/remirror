@@ -429,7 +429,7 @@ describe('toggleCheckboxChecked', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
-  it('accepts an optional boolean paramter', () => {
+  it('accepts an optional boolean parameter', () => {
     const checkedDoc = doc(taskList(checked(p('hello<cursor>'))));
     const uncheckedDoc = doc(taskList(unchecked(p('hello<cursor>'))));
 
