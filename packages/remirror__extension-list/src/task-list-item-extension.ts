@@ -7,7 +7,6 @@ import {
   findParentNodeOfType,
   getMatchString,
   isElementDomNode,
-  isNodeSelection,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
