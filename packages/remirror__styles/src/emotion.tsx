@@ -632,6 +632,14 @@ export const coreStyledCss: ReturnType<typeof css> = css`
     caret-color: var(--rmr-color-selection-caret);
     text-shadow: var(--rmr-color-selection-shadow);
   }
+
+  /* Protect against generic img rules. See also https://github.com/ProseMirror/prosemirror-view/commit/aaa50d592074c8063fc2ef77907ab6d0373822fb */
+
+  .remirror-editor.ProseMirror img.ProseMirror-separator {
+    display: inline !important;
+    border: none !important;
+    margin: 0 !important;
+  }
   .remirror-editor.ProseMirror-hideselection *::-moz-selection {
     background: transparent;
   }
