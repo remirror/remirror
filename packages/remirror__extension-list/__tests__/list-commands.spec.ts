@@ -338,7 +338,7 @@ describe('toggleCheckboxChecked', () => {
     new TaskListExtension(),
   ]);
   const {
-    nodes: { doc, paragraph: p, taskList, bulletList: ul, listItem: li, orderedList: ol },
+    nodes: { doc, paragraph: p, taskList },
     attributeNodes: { taskListItem },
   } = editor;
   const checked = taskListItem({ checked: true });
