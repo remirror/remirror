@@ -329,3 +329,126 @@ describe('toggleList', () => {
     expect(view.state.doc).toEqualProsemirrorNode(unchanged);
   });
 });
+
+describe('toggleCheckboxChecked', () => {
+  const editor = renderEditor([
+    new ListItemExtension(),
+    new BulletListExtension(),
+    new OrderedListExtension(),
+    new TaskListExtension(),
+  ]);
+  const {
+    nodes: { doc, paragraph: p, taskList },
+    attributeNodes: { taskListItem },
+  } = editor;
+  const checked = taskListItem({ checked: true });
+  const unchecked = taskListItem({ checked: false });
+
+  it('toggles checkbox checked when the cursor is at the end of a task list item', () => {
+    const from = doc(
+      taskList(
+        unchecked(p('hello<cursor>')), //
+      ),
+    );
+    const to = doc(
+      taskList(
+        checked(p('hello')), //
+      ),
+    );
+    editor.add(from).commands.toggleCheckboxChecked();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('toggles checkbox checked when the cursor is at the begining of a task list item', () => {
+    const from = doc(
+      taskList(
+        unchecked(p('<cursor>hello')), //
+      ),
+    );
+    const to = doc(
+      taskList(
+        checked(p('hello')), //
+      ),
+    );
+    editor.add(from).commands.toggleCheckboxChecked();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('toggles checkbox checked when the cursor is at the middle of a task list item', () => {
+    const from = doc(
+      taskList(
+        checked(p('h<start>ell<end>o')), //
+      ),
+    );
+    const to = doc(
+      taskList(
+        unchecked(p('hello')), //
+      ),
+    );
+    editor.add(from).commands.toggleCheckboxChecked();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('does not toggle checkbox checked when the cursor is outside of a task list item', () => {
+    const from = doc(
+      taskList(
+        checked(p('hello')), //
+      ),
+      p('<cursor>world'),
+    );
+    const to = doc(
+      taskList(
+        checked(p('hello')), //
+      ),
+      p('world'),
+    );
+    editor.add(from).commands.toggleCheckboxChecked();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('only toggles the first item', () => {
+    const from = doc(
+      taskList(
+        checked(p('111111')),
+        checked(p('2222<start>22')),
+        unchecked(p('333333')),
+        unchecked(p('4444<end>44')),
+        unchecked(p('555555')), //
+      ),
+    );
+    const to = doc(
+      taskList(
+        checked(p('111111')),
+        unchecked(p('222222')),
+        unchecked(p('333333')),
+        unchecked(p('444444')),
+        unchecked(p('555555')), //
+      ),
+    );
+    editor.add(from).commands.toggleCheckboxChecked();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('accepts an optional boolean parameter', () => {
+    const checkedDoc = doc(taskList(checked(p('hello<cursor>'))));
+    const uncheckedDoc = doc(taskList(unchecked(p('hello<cursor>'))));
+
+    editor.add(checkedDoc).commands.toggleCheckboxChecked();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(uncheckedDoc);
+
+    editor.add(checkedDoc).commands.toggleCheckboxChecked(true);
+    expect(editor.view.state.doc).toEqualProsemirrorNode(checkedDoc);
+
+    editor.add(checkedDoc).commands.toggleCheckboxChecked(false);
+    expect(editor.view.state.doc).toEqualProsemirrorNode(uncheckedDoc);
+
+    editor.add(uncheckedDoc).commands.toggleCheckboxChecked();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(checkedDoc);
+
+    editor.add(uncheckedDoc).commands.toggleCheckboxChecked(true);
+    expect(editor.view.state.doc).toEqualProsemirrorNode(checkedDoc);
+
+    editor.add(uncheckedDoc).commands.toggleCheckboxChecked(false);
+    expect(editor.view.state.doc).toEqualProsemirrorNode(uncheckedDoc);
+  });
+});
