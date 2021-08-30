@@ -1,5 +1,16 @@
 # @remirror/extension-text-highlight
 
+## 1.0.4
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/extension-text-color@1.0.4
+
 ## 1.0.3
 
 > 2021-08-29

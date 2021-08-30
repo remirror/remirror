@@ -1,5 +1,16 @@
 # @remirror/extension-yjs
 
+## 1.0.5
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/extension-annotation@1.0.5
+
 ## 1.0.4
 
 > 2021-08-29

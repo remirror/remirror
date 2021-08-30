@@ -1,5 +1,18 @@
 # @remirror/extension-file
 
+## 0.2.1
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/theme@1.1.2
+  - @remirror/react@1.0.7
+  - @remirror/react-components@1.0.6
+
 ## 0.2.0
 
 > 2021-08-29

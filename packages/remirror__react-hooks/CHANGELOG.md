@@ -1,5 +1,19 @@
 # @remirror/react-hooks
 
+## 1.0.6
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/extension-emoji@1.0.4
+  - @remirror/extension-mention-atom@1.0.4
+  - @remirror/extension-positioner@1.1.2
+  - @remirror/react-core@1.0.6
+
 ## 1.0.5
 
 > 2021-08-29

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-formatting",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A preset with all the formatting node and mark extensions included.",
   "keywords": [
     "remirror",
@@ -52,8 +52,8 @@
     "@remirror/extension-sub": "^1.0.3",
     "@remirror/extension-sup": "^1.0.3",
     "@remirror/extension-text-case": "^1.0.3",
-    "@remirror/extension-text-color": "^1.0.3",
-    "@remirror/extension-text-highlight": "^1.0.3",
+    "@remirror/extension-text-color": "^1.0.4",
+    "@remirror/extension-text-highlight": "^1.0.4",
     "@remirror/extension-underline": "^1.0.3",
     "@remirror/extension-whitespace": "^1.0.3"
   },

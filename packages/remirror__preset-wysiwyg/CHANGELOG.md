@@ -1,5 +1,21 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.9
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/extension-blockquote@1.0.4
+  - @remirror/extension-code-block@1.0.5
+  - @remirror/extension-image@1.0.5
+  - @remirror/extension-list@1.0.8
+  - @remirror/extension-tables@1.0.4
+  - @remirror/preset-core@1.0.5
+
 ## 1.0.8
 
 > 2021-08-30
