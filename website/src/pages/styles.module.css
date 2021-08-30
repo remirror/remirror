@@ -60,8 +60,8 @@
   height: 200px;
 
   @media screen and (min-width: 996px) {
-    height: initial;
-    width: 200px;
+    height: 120px;
+    width: initial;
   }
 }
 

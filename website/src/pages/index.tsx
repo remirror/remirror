@@ -20,22 +20,22 @@ const features = [
     ),
   },
   {
+    title: <>From Newbie to Pro</>,
+    imageUrl: 'img/banner-growing.svg',
+    description: (
+      <>
+        Designed to grows with your skillset. Start with the out-of-the-box editor. Customize with
+        components, React hooks, down to bare metal ProseMirror.
+      </>
+    ),
+  },
+  {
     title: <>Multi Platform</>,
     imageUrl: 'img/banner-multiplatform.svg',
     description: (
       <>
         Designed to run on all JavaScript enabled platforms. Build apps for NodeJS, for mobile, for
         desktop and for the browser.
-      </>
-    ),
-  },
-  {
-    title: <>Multi Framework</>,
-    imageUrl: 'img/banner-multiframework.svg',
-    description: (
-      <>
-        A multi-framework text editor. It supports <code>React</code>, the pure <code>dom</code> and
-        support is coming for <code>Angular</code>, <code>Svelte</code> and <code>Ember</code>.
       </>
     ),
   },

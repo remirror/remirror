@@ -2,7 +2,7 @@
   "name": "website",
   "version": "0.0.0",
   "private": true,
-  "description": "The remirror documentation website",
+  "description": "Makes ProseMirror fun to use for React developers",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/website",
   "repository": {
     "type": "git",
