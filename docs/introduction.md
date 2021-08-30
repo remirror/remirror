@@ -8,18 +8,6 @@ hide_title: true
 
 # Introduction
 
-## Preface
-
-This documentation is still a work in progress. It is being updated and still has many iterations before it can be called ready.
-
-While reading through this guide, if you find errors or would like to suggest improvements there are several options.
-
-- Open an issue in our [GitHub repo](https://github.com/remirror/remirror/issues).
-- [Join our discord server](https://discord.gg/C4cfrMK) and discuss the problem with us.
-- Create a pull request with your proposed improvement by clicking the edit button on the relevant page.
-
-Whatever you decide I'm happy that you've taken the time to dive into the `remirror` project.
-
 ## Overview
 
 Remirror is a wrapper library for [ProseMirror](https://prosemirror.net/), it is an abstraction layer that makes ProseMirror easier to work with, and provides React and ProseMirror integration.
@@ -63,3 +51,13 @@ Labels will be used to identify areas which may be more advanced.
 ### Expected knowledge
 
 This guide assumes that you're familiar with **JavaScript** and have some understanding of `React`. If you're brand new to programming or JavaScript then many would encourage you to look into other resources before attempting to read through this.
+
+:::note
+
+Found an error in the documentation? Please help us to improve:
+
+- Open an issue in our [GitHub repo](https://github.com/remirror/remirror/issues).
+- [Join our discord server](https://discord.gg/C4cfrMK) and discuss the problem with us.
+- Create a pull request with your proposed improvement by clicking the edit button on the relevant page.
+
+:::note
