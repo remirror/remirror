@@ -1768,7 +1768,7 @@ importers:
       '@remirror/core-helpers': ^1.0.1
       '@types/prosemirror-collab': ^1.1.2
       '@types/prosemirror-commands': ^1.0.4
-      '@types/prosemirror-dropcursor': ^1.0.2
+      '@types/prosemirror-dropcursor': ^1.0.3
       '@types/prosemirror-gapcursor': ^1.0.4
       '@types/prosemirror-history': ^1.0.3
       '@types/prosemirror-inputrules': ^1.0.4
@@ -1800,7 +1800,7 @@ importers:
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@types/prosemirror-collab': 1.1.2
       '@types/prosemirror-commands': 1.0.4
-      '@types/prosemirror-dropcursor': 1.0.2
+      '@types/prosemirror-dropcursor': 1.0.3
       '@types/prosemirror-gapcursor': 1.0.4
       '@types/prosemirror-history': 1.0.3
       '@types/prosemirror-inputrules': 1.0.4
@@ -8972,8 +8972,8 @@ packages:
       '@types/prosemirror-view': 1.18.0
     dev: false
 
-  /@types/prosemirror-dropcursor/1.0.2:
-    resolution: {integrity: sha512-5Ez7yIAvHQgn5YJkuafEh0w4sHV7pksCX9LTPBFRjCuznamcKsnYCez4mR0PwIWq/WuPDvHkR+wqKb4l0t9/aQ==}
+  /@types/prosemirror-dropcursor/1.0.3:
+    resolution: {integrity: sha512-b0/8njnJ4lwyHKcGuCMf3x7r1KjxyugB1R/c2iMCjplsJHSC7UY9+OysqgJR5uUXRekUSGniiLgBtac/lvH6wg==}
     dependencies:
       '@types/prosemirror-state': 1.2.7
     dev: false

@@ -167,7 +167,7 @@
     "@remirror/core-helpers": "^1.0.1",
     "@types/prosemirror-collab": "^1.1.2",
     "@types/prosemirror-commands": "^1.0.4",
-    "@types/prosemirror-dropcursor": "^1.0.2",
+    "@types/prosemirror-dropcursor": "^1.0.3",
     "@types/prosemirror-gapcursor": "^1.0.4",
     "@types/prosemirror-history": "^1.0.3",
     "@types/prosemirror-inputrules": "^1.0.4",
