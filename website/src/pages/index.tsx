@@ -24,7 +24,7 @@ const features = [
     imageUrl: 'img/banner-growing.svg',
     description: (
       <>
-        Designed to grows with your skillset. Start with the out-of-the-box editor. Customize with
+        Designed to grow with your skill set. Start with the out-of-the-box editor. Customize with
         components, React hooks, down to bare metal ProseMirror.
       </>
     ),
