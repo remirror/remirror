@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PositionerPortal } from '@remirror/react-components';
-import { useCommands, useRemirrorContext } from '@remirror/react-core';
+import { useCommands } from '@remirror/react-core';
 import { useEvent, usePositioner } from '@remirror/react-hooks';
 import { ComponentsTheme } from '@remirror/theme';
 
