@@ -50,7 +50,7 @@ async function run(): Promise<boolean> {
     }
 
     log.info(chalk`\n\nForcing update: {yellow \`--force\`} flag applied.\n\n`);
-  } catch (error) {
+  } catch (error: any) {
     log.error(error.message);
   }
 
@@ -74,7 +74,7 @@ async function main() {
     watchFiles(inputFiles, () => {
       try {
         run();
-      } catch (error) {
+      } catch (error: any) {
         console.log('error:', error);
       }
     });

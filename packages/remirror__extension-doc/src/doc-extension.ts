@@ -233,7 +233,7 @@ try {
   // Register the steps.
   Step.jsonID(STEP_TYPE, SetDocAttributeStep);
   Step.jsonID(REVERT_STEP_TYPE, SetDocAttributeStep);
-} catch (error) {
+} catch (error: any) {
   if (!error.message.startsWith(`Duplicate use of step JSON ID`)) {
     throw error;
   }

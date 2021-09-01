@@ -136,7 +136,7 @@ async function runApiExtractor() {
 async function run() {
   try {
     await runApiExtractor();
-  } catch (error) {
+  } catch (error: any) {
     log.fatal(error);
     process.exit(1);
   }
