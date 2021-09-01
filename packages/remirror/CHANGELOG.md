@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.19
+
+> 2021-09-01
+
+### Patch Changes
+
+- Fix an issue that causes clicking a nested checkbox won't toggle its checked state.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.0.10
+  - @remirror/preset-wysiwyg@1.0.11
+
 ## 1.0.18
 
 > 2021-09-01
