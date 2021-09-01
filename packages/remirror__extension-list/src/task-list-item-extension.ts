@@ -16,6 +16,7 @@ import {
   ProsemirrorAttributes,
 } from '@remirror/core';
 import { InputRule } from '@remirror/pm/inputrules';
+import { ResolvedPos } from '@remirror/pm/model';
 import { EditorState, NodeSelection, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
@@ -123,13 +124,18 @@ export class TaskListItemExtension extends NodeExtension {
    * @param checked - the `checked` attribute. If it's a boolean value, then it
    * will be set as an attribute. If it's undefined, then the `checked` attribuate
    * will be toggled.
+   *
+   * @param selection - a resolved position within the task list item you want to
+   * toggle. It it's not passed, the lower bound of the current selection's will
+   * be used.
    */
   @command()
-  toggleCheckboxChecked(checked?: boolean): CommandFunction {
+  toggleCheckboxChecked(checked?: boolean, $pos?: ResolvedPos): CommandFunction {
     return ({ tr, dispatch }) => {
-      const { selection } = tr;
-
-      const found = findParentNodeOfType({ selection, types: this.type });
+      const found = findParentNodeOfType({
+        selection: $pos ?? tr.selection.$from,
+        types: this.type,
+      });
 
       if (!found) {
         return false;
