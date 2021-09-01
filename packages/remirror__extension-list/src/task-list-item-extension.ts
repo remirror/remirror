@@ -17,7 +17,7 @@ import {
 } from '@remirror/core';
 import { InputRule } from '@remirror/pm/inputrules';
 import { ResolvedPos } from '@remirror/pm/model';
-import { EditorState, NodeSelection, TextSelection } from '@remirror/pm/state';
+import { EditorState, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
