@@ -1937,6 +1937,7 @@ importers:
       '@remirror/extension-italic': ^1.0.3
       '@remirror/extension-link': ^1.0.3
       '@remirror/extension-list': ^1.0.8
+      '@remirror/extension-react-tables': ^1.0.7
       '@remirror/extension-search': ^1.0.3
       '@remirror/extension-strike': ^1.0.3
       '@remirror/extension-tables': ^1.0.4
@@ -1962,6 +1963,7 @@ importers:
       '@remirror/extension-italic': link:../remirror__extension-italic
       '@remirror/extension-link': link:../remirror__extension-link
       '@remirror/extension-list': link:../remirror__extension-list
+      '@remirror/extension-react-tables': link:../remirror__extension-react-tables
       '@remirror/extension-search': link:../remirror__extension-search
       '@remirror/extension-strike': link:../remirror__extension-strike
       '@remirror/extension-tables': link:../remirror__extension-tables

@@ -14,6 +14,7 @@ import {
   MentionAtomPopupComponent,
   MentionAtomState,
   Remirror,
+  TableComponents,
   ThemeProvider,
   useRemirror,
 } from '@remirror/react';
@@ -89,6 +90,7 @@ export const SocialEditor: FC<SocialEditorProps> = ({ placeholder, ...props }) =
           <EditorComponent />
           <EmojiPopupComponent />
           <MentionComponent {...props} />
+          <TableComponents />
           <BubbleMenu />
           {children}
         </Remirror>
