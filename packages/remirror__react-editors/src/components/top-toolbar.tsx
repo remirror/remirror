@@ -77,6 +77,7 @@ const toolbarItems: ToolbarItemUnion[] = [
         display: 'icon',
       },
       { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleTaskList', display: 'icon' },
+      { type: ComponentItem.ToolbarCommandButton, commandName: 'createTable', display: 'icon' },
     ],
     separator: 'none',
   },

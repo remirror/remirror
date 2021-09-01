@@ -753,6 +753,7 @@
       "@remirror/extension-italic",
       "@remirror/extension-link",
       "@remirror/extension-list",
+      "@remirror/extension-react-tables",
       "@remirror/extension-search",
       "@remirror/extension-strike",
       "@remirror/extension-tables",

@@ -80,6 +80,9 @@
       "path": "../../remirror__extension-list/src"
     },
     {
+      "path": "../../remirror__extension-react-tables/src"
+    },
+    {
       "path": "../../remirror__extension-search/src"
     },
     {

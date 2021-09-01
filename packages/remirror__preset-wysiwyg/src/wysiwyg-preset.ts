@@ -18,9 +18,10 @@ import {
   OrderedListExtension,
   TaskListItemExtension,
 } from '@remirror/extension-list';
+import { TableExtension } from '@remirror/extension-react-tables';
 import { SearchExtension, SearchOptions } from '@remirror/extension-search';
 import { StrikeExtension } from '@remirror/extension-strike';
-import { TableExtension, TableOptions } from '@remirror/extension-tables';
+import { TableOptions } from '@remirror/extension-tables';
 import { TrailingNodeExtension, TrailingNodeOptions } from '@remirror/extension-trailing-node';
 import { UnderlineExtension } from '@remirror/extension-underline';
 

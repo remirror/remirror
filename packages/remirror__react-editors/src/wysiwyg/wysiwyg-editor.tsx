@@ -1,6 +1,12 @@
 import { FC, useCallback } from 'react';
 import { PlaceholderExtension, wysiwygPreset } from 'remirror/extensions';
-import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import {
+  EditorComponent,
+  Remirror,
+  TableComponents,
+  ThemeProvider,
+  useRemirror,
+} from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
 import { BubbleMenu } from '../components/bubble-menu';
@@ -26,6 +32,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({ placeholder, ...props })
           <TopToolbar />
           <EditorComponent />
           <BubbleMenu />
+          <TableComponents />
           {children}
         </Remirror>
       </ThemeProvider>
