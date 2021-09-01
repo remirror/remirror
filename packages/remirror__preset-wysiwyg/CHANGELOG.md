@@ -1,5 +1,18 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.10
+
+> 2021-09-01
+
+### Patch Changes
+
+- fix: task list wasn't available in wysiwyg editors
+
+* Don't create a node selection within the `toggleCheckboxChecked` command.
+
+* Updated dependencies []:
+  - @remirror/extension-list@1.0.9
+
 ## 1.0.9
 
 > 2021-08-30
