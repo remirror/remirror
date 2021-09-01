@@ -90,9 +90,8 @@ export class TaskListItemExtension extends NodeExtension {
       checkbox.contentEditable = 'false';
       checkbox.addEventListener('click', () => {
         const pos = (getPos as () => number)();
-        const selection = NodeSelection.create(view.state.doc, pos);
-        view.dispatch(view.state.tr.setSelection(selection));
-        this.store.commands.toggleCheckboxChecked();
+        const $pos = view.state.doc.resolve(pos);
+        this.store.commands.toggleCheckboxChecked({ $pos });
         return true;
       });
 
@@ -130,7 +129,19 @@ export class TaskListItemExtension extends NodeExtension {
    * be used.
    */
   @command()
-  toggleCheckboxChecked(checked?: boolean, $pos?: ResolvedPos): CommandFunction {
+  toggleCheckboxChecked(
+    props?: { checked?: boolean; $pos?: ResolvedPos } | boolean,
+  ): CommandFunction {
+    let checked: boolean | undefined;
+    let $pos: ResolvedPos | undefined;
+
+    if (typeof props === 'boolean') {
+      checked = props;
+    } else if (props) {
+      checked = props.checked;
+      $pos = props.$pos;
+    }
+
     return ({ tr, dispatch }) => {
       const found = findParentNodeOfType({
         selection: $pos ?? tr.selection.$from,
