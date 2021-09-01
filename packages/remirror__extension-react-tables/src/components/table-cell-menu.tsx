@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { PositionerPortal } from '@remirror/react-components';
-import { useRemirrorContext } from '@remirror/react-core';
+import { useCommands } from '@remirror/react-core';
 import { useEvent, usePositioner } from '@remirror/react-hooks';
+import { ComponentsTheme } from '@remirror/theme';
 
 import { menuCellPositioner } from '../block-positioner';
 import { borderWidth } from '../const';
@@ -39,17 +40,28 @@ const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ set
         lineHeight: '10px',
         cursor: 'pointer',
       }}
+      className={ComponentsTheme.BUTTON}
     >
       v
     </button>
   );
 };
 
+interface DefaultTableCellMenuItemProps {
+  label: string;
+  onClick: () => void;
+}
+const DefaultTableCellMenuItem: React.FC<DefaultTableCellMenuItemProps> = (props) => (
+  <button onClick={props.onClick} className={ComponentsTheme.MENU_ITEM}>
+    {props.label}
+  </button>
+);
+
 const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
   setPopupOpen,
   popupOpen,
 }) => {
-  const ctx = useRemirrorContext();
+  const commands = useCommands();
 
   // close the popup after clicking
   const handleClick = (command: () => void) => {
@@ -63,7 +75,7 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
   // because we want users to quick try multiple colors.
   const setTableCellBackground = (color: string | null) => {
     return () => {
-      ctx.commands.setTableCellBackground(color);
+      commands.setTableCellBackground(color);
     };
   };
 
@@ -72,26 +84,43 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
       style={{
         position: 'absolute',
         backgroundColor: 'white',
-        border: '1px solid red',
         width: '200px',
+        border: '1px solid lightgray',
         display: popupOpen ? 'flex' : 'none',
         flexDirection: 'column',
       }}
+      className={ComponentsTheme.MENU}
     >
-      <button onClick={setTableCellBackground('teal')}>change the cell color to teal</button>
-      <button onClick={setTableCellBackground('rgba(255,100,100,0.3)')}>
-        change the cell color to pink
-      </button>
-      <button onClick={setTableCellBackground(null)}>remove the cell color</button>
+      <DefaultTableCellMenuItem label='Color teal' onClick={setTableCellBackground('teal')} />
+      <DefaultTableCellMenuItem
+        label='Color pink'
+        onClick={setTableCellBackground('rgba(255,100,100,0.3)')}
+      />
+      <DefaultTableCellMenuItem label='Remove color' onClick={setTableCellBackground(null)} />
 
-      <button onClick={handleClick(ctx.commands.addTableRowBefore)}>add a row above</button>
-      <button onClick={handleClick(ctx.commands.addTableRowAfter)}>add a row below</button>
-      <button onClick={handleClick(ctx.commands.addTableColumnBefore)}>add a column before</button>
-      <button onClick={handleClick(ctx.commands.addTableColumnAfter)}>add a column after</button>
+      <DefaultTableCellMenuItem
+        label='Add row above'
+        onClick={handleClick(commands.addTableRowBefore)}
+      />
+      <DefaultTableCellMenuItem
+        label='Add row below'
+        onClick={handleClick(commands.addTableRowAfter)}
+      />
+      <DefaultTableCellMenuItem
+        label='Add column before'
+        onClick={handleClick(commands.addTableColumnBefore)}
+      />
+      <DefaultTableCellMenuItem
+        label='Add column after'
+        onClick={handleClick(commands.addTableColumnAfter)}
+      />
 
-      <button onClick={handleClick(ctx.commands.deleteTableColumn)}>remove column</button>
-      <button onClick={handleClick(ctx.commands.deleteTableRow)}>remove row</button>
-      <button onClick={handleClick(ctx.commands.deleteTable)}>remove table</button>
+      <DefaultTableCellMenuItem
+        label='Remove column'
+        onClick={handleClick(commands.deleteTableColumn)}
+      />
+      <DefaultTableCellMenuItem label='Remove row' onClick={handleClick(commands.deleteTableRow)} />
+      <DefaultTableCellMenuItem label='Remove table' onClick={handleClick(commands.deleteTable)} />
     </div>
   );
 };
