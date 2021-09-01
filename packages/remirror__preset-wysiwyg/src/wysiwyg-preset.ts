@@ -16,7 +16,7 @@ import { LinkExtension, LinkOptions } from '@remirror/extension-link';
 import {
   BulletListExtension,
   OrderedListExtension,
-  TaskListItemExtension,
+  TaskListExtension,
 } from '@remirror/extension-list';
 import { TableExtension } from '@remirror/extension-react-tables';
 import { SearchExtension, SearchOptions } from '@remirror/extension-search';
@@ -67,7 +67,7 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
   const iframeExtension = new IframeExtension();
   const bulletListExtension = new BulletListExtension();
   const orderedListExtension = new OrderedListExtension();
-  const taskListExtension = new TaskListItemExtension({});
+  const taskListExtension = new TaskListExtension({});
 
   const { selectTextOnClick } = options;
   const linkExtension = new LinkExtension({ autoLink: true, selectTextOnClick });
@@ -181,4 +181,4 @@ export type WysiwygPreset =
   | IframeExtension
   | BulletListExtension
   | OrderedListExtension
-  | TaskListItemExtension;
+  | TaskListExtension;
