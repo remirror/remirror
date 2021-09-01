@@ -90,7 +90,7 @@ export class TaskListItemExtension extends NodeExtension {
       checkbox.contentEditable = 'false';
       checkbox.addEventListener('click', () => {
         const pos = (getPos as () => number)();
-        const $pos = view.state.doc.resolve(pos);
+        const $pos = view.state.doc.resolve(pos + 1);
         this.store.commands.toggleCheckboxChecked({ $pos });
         return true;
       });
