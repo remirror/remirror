@@ -4,14 +4,15 @@ import { YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';
 import * as Y from 'yjs';
 import { ProsemirrorDevTools } from '@remirror/dev';
+import { TableExtension } from '@remirror/extension-react-tables';
 import {
   EditorComponent,
   ReactComponentExtension,
   Remirror,
   TableComponents,
   tableControllerPluginKey,
-  TableExtension,
   ThemeProvider,
+  useCommands,
   useRemirror,
   useRemirrorContext,
 } from '@remirror/react';
@@ -19,8 +20,7 @@ import {
 export default { title: 'Extensions / ReactTables (complex)' };
 
 const CommandMenu: React.FC = () => {
-  const { commands } = useRemirrorContext();
-  const createTable = commands.createTable;
+  const { createTable, ...commands } = useCommands();
 
   return (
     <div>
@@ -100,7 +100,7 @@ const ProsemirrorDocData: React.FC = () => {
   );
 };
 
-export const Table = ({
+const Table = ({
   children,
   extensions,
 }: {
@@ -122,12 +122,7 @@ export const Table = ({
   );
 };
 
-Table.args = {
-  autoLink: true,
-  openLinkOnClick: true,
-};
-
-export const TableWithDevTools = () => {
+export const Basic = () => {
   return (
     <Table extensions={defaultExtensions}>
       <ProsemirrorDevTools />
