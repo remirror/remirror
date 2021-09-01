@@ -16,7 +16,8 @@ import {
   ProsemirrorAttributes,
 } from '@remirror/core';
 import { InputRule } from '@remirror/pm/inputrules';
-import { EditorState, NodeSelection, TextSelection } from '@remirror/pm/state';
+import { ResolvedPos } from '@remirror/pm/model';
+import { EditorState, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
 import { splitListItem } from './list-commands';
@@ -89,9 +90,8 @@ export class TaskListItemExtension extends NodeExtension {
       checkbox.contentEditable = 'false';
       checkbox.addEventListener('click', () => {
         const pos = (getPos as () => number)();
-        const selection = NodeSelection.create(view.state.doc, pos);
-        view.dispatch(view.state.tr.setSelection(selection));
-        this.store.commands.toggleCheckboxChecked();
+        const $pos = view.state.doc.resolve(pos);
+        this.store.commands.toggleCheckboxChecked({ $pos });
         return true;
       });
 
@@ -123,13 +123,30 @@ export class TaskListItemExtension extends NodeExtension {
    * @param checked - the `checked` attribute. If it's a boolean value, then it
    * will be set as an attribute. If it's undefined, then the `checked` attribuate
    * will be toggled.
+   *
+   * @param selection - a resolved position within the task list item you want to
+   * toggle. It it's not passed, the lower bound of the current selection's will
+   * be used.
    */
   @command()
-  toggleCheckboxChecked(checked?: boolean): CommandFunction {
-    return ({ tr, dispatch }) => {
-      const { selection } = tr;
+  toggleCheckboxChecked(
+    props?: { checked?: boolean; $pos?: ResolvedPos } | boolean,
+  ): CommandFunction {
+    let checked: boolean | undefined;
+    let $pos: ResolvedPos | undefined;
 
-      const found = findParentNodeOfType({ selection, types: this.type });
+    if (typeof props === 'boolean') {
+      checked = props;
+    } else if (props) {
+      checked = props.checked;
+      $pos = props.$pos;
+    }
+
+    return ({ tr, dispatch }) => {
+      const found = findParentNodeOfType({
+        selection: $pos ?? tr.selection.$from,
+        types: this.type,
+      });
 
       if (!found) {
         return false;
