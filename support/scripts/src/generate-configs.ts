@@ -131,7 +131,7 @@ async function generateExports() {
     }
 
     log.info(chalk`\n\nForcing update: {yellow \`--force\`} flag applied.\n\n`);
-  } catch (error_) {
+  } catch (error_: any) {
     error = error_;
     log.error('\n', error?.message);
   }
