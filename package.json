@@ -262,7 +262,7 @@
     ],
     "lockFileMaintenance": {
       "enabled": true,
-      "extends": "schedule:monthly"
+      "extends": "schedule:weekly"
     },
     "packageRules": [
       {
@@ -282,9 +282,7 @@
           "patch",
           "minor"
         ],
-        "schedule": [
-          "before 2am on Monday"
-        ],
+        "extends": "schedule:weekly",
         "stabilityDays": 0
       }
     ],

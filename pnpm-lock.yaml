@@ -6241,6 +6241,24 @@ packages:
       eslint: 7.32.0
     dev: false
 
+  /@linaria/babel-preset/3.0.0-beta.12_@babel+core@7.15.0:
+    resolution: {integrity: sha512-QMl/f4j18VllyqpANFZkF32Tc1ESFhOo+J71g/0ZyqaMniEyXpk7eizX3eauYYhpJtxjF9BTnGHs3HG7CrlkXw==}
+    peerDependencies:
+      '@babel/core': '>=7'
+    dependencies:
+      '@babel/core': 7.15.0
+      '@babel/generator': 7.15.0
+      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.15.0
+      '@babel/template': 7.14.5
+      '@linaria/core': 3.0.0-beta.4
+      '@linaria/logger': 3.0.0-beta.3
+      cosmiconfig: 5.2.1
+      source-map: 0.7.3
+      stylis: 3.5.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@linaria/babel-preset/3.0.0-beta.4_@babel+core@7.15.0:
     resolution: {integrity: sha512-Bjsk4VZUQXK3u04MuLlyP/+/tDd7bWeLXYCOnq4US9H2QFRdka97fm6hH34SRinoHm9fSPCHrj9d+KtY8ge2wg==}
     peerDependencies:
@@ -6254,24 +6272,6 @@ packages:
       '@linaria/logger': 3.0.0-beta.3
       cosmiconfig: 5.2.1
       source-map: 0.6.1
-      stylis: 3.5.4
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@linaria/babel-preset/3.0.0-beta.7_@babel+core@7.15.0:
-    resolution: {integrity: sha512-NE5f//T9ywXZA+W+Pw1YjWKdzskUpaV7GVkxXhkxLM2la1+S4xOoZR1rzW77bR1C9GFFwzZTeb8XP85whb2ZqQ==}
-    peerDependencies:
-      '@babel/core': '>=7'
-    dependencies:
-      '@babel/core': 7.15.0
-      '@babel/generator': 7.15.0
-      '@babel/plugin-syntax-dynamic-import': 7.8.3_@babel+core@7.15.0
-      '@babel/template': 7.14.5
-      '@linaria/core': 3.0.0-beta.4
-      '@linaria/logger': 3.0.0-beta.3
-      cosmiconfig: 5.2.1
-      source-map: 0.7.3
       stylis: 3.5.4
     transitivePeerDependencies:
       - supports-color
@@ -6305,13 +6305,13 @@ packages:
       - supports-color
     dev: false
 
-  /@linaria/preeval/3.0.0-beta.7_@babel+core@7.15.0:
-    resolution: {integrity: sha512-fTFgxtjBGKh9P2rsqhBnHTqFo1d8VzznmXKpILM0ClAclVn+FB+KJl+nWyEbQ8nT9/ceRoTwbdZHZ/M3DFHG+w==}
+  /@linaria/preeval/3.0.0-beta.12_@babel+core@7.15.0:
+    resolution: {integrity: sha512-cgiB3hQwyyoTvJQuw5J0f1JsJRmNfdO2otA8dmhdrc3+8PLFdqf6hphmCil0db809frnt4woE5fE6EQJioC6bw==}
     peerDependencies:
       '@babel/core': '>=7'
     dependencies:
       '@babel/core': 7.15.0
-      '@linaria/babel-preset': 3.0.0-beta.7_@babel+core@7.15.0
+      '@linaria/babel-preset': 3.0.0-beta.12_@babel+core@7.15.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -6328,7 +6328,7 @@ packages:
       '@babel/preset-env': 7.15.0_@babel+core@7.15.0
       '@linaria/babel-preset': 3.0.0-beta.4_@babel+core@7.15.0
       '@linaria/logger': 3.0.0-beta.3
-      '@linaria/preeval': 3.0.0-beta.7_@babel+core@7.15.0
+      '@linaria/preeval': 3.0.0-beta.12_@babel+core@7.15.0
       babel-plugin-transform-react-remove-prop-types: 0.4.24
     transitivePeerDependencies:
       - supports-color
@@ -6337,21 +6337,21 @@ packages:
   /@linaria/webpack-loader/3.0.0-beta.4_@babel+core@7.15.0:
     resolution: {integrity: sha512-v2Z4QgkBwddKwS/M0ISkLKQBPBNfoyw4AGCBFsjFO5ov/icNrmIy8BKUFCi/yqWu8mk/krmvzPyOBSp4DpFsIA==}
     dependencies:
-      '@linaria/webpack4-loader': 3.0.0-beta.7_@babel+core@7.15.0
-      '@linaria/webpack5-loader': 3.0.0-beta.7_@babel+core@7.15.0
+      '@linaria/webpack4-loader': 3.0.0-beta.12_@babel+core@7.15.0
+      '@linaria/webpack5-loader': 3.0.0-beta.12_@babel+core@7.15.0
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
       - webpack
     dev: false
 
-  /@linaria/webpack4-loader/3.0.0-beta.7_@babel+core@7.15.0:
-    resolution: {integrity: sha512-B2c5vr9b8igcILM/ZcxE9Vu0J2w7NS9xERTvGD7Kp4TdLnFRpALMTJgYqlk3Gxq4T7RlAEi1vu8kHx65mXqA6g==}
+  /@linaria/webpack4-loader/3.0.0-beta.12_@babel+core@7.15.0:
+    resolution: {integrity: sha512-ci7mrGJNO3hqwsgDLr8bfIFt82XzbIrZ8yyOqkFyPw28beexqgoh1V215HyZvs0GClCZlywzQuw8IDNIfh0QGg==}
     peerDependencies:
       '@babel/core': '>=7'
     dependencies:
       '@babel/core': 7.15.0
-      '@linaria/babel-preset': 3.0.0-beta.7_@babel+core@7.15.0
+      '@linaria/babel-preset': 3.0.0-beta.12_@babel+core@7.15.0
       '@linaria/logger': 3.0.0-beta.3
       cosmiconfig: 5.2.1
       enhanced-resolve: 4.5.0
@@ -6363,14 +6363,14 @@ packages:
       - supports-color
     dev: false
 
-  /@linaria/webpack5-loader/3.0.0-beta.7_@babel+core@7.15.0:
-    resolution: {integrity: sha512-s2C44ml1fjDFjEJS1PFXjgCklOd3KWiG4Z3l+nUuCidncn9abnv18rDkiukUcKGwwAGJ3NhgfhU9SwXPIYFfMw==}
+  /@linaria/webpack5-loader/3.0.0-beta.12_@babel+core@7.15.0:
+    resolution: {integrity: sha512-8sNh32q9vStD2fMGRLpyEnRvPaExyBFnrXzRkS2ElK2KAZNeDjEgSxB3/n0V2A7o2Q+YXSMcGk+IVIXMqUq+YA==}
     peerDependencies:
       '@babel/core': '>=7'
       webpack: '>=5'
     dependencies:
       '@babel/core': 7.15.0
-      '@linaria/babel-preset': 3.0.0-beta.7_@babel+core@7.15.0
+      '@linaria/babel-preset': 3.0.0-beta.12_@babel+core@7.15.0
       '@linaria/logger': 3.0.0-beta.3
       cosmiconfig: 5.2.1
       enhanced-resolve: 5.8.2
@@ -16731,7 +16731,7 @@ packages:
       type-fest: 0.12.0
       widest-line: 3.1.0
       wrap-ansi: 6.2.0
-      ws: 7.5.3
+      ws: 7.5.4
       yoga-layout-prebuilt: 1.10.0
     transitivePeerDependencies:
       - bufferutil
@@ -18241,7 +18241,7 @@ packages:
       whatwg-encoding: 1.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 7.1.0
-      ws: 7.5.3
+      ws: 7.5.4
       xml-name-validator: 3.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -18282,7 +18282,7 @@ packages:
       whatwg-encoding: 1.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
-      ws: 7.5.3
+      ws: 7.5.4
       xml-name-validator: 3.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -18323,7 +18323,7 @@ packages:
       whatwg-encoding: 1.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 9.1.0
-      ws: 8.2.0
+      ws: 8.2.1
       xml-name-validator: 3.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -18690,7 +18690,7 @@ packages:
       image-size: 0.5.5
       make-dir: 2.1.0
       mime: 1.6.0
-      needle: 2.8.0
+      needle: 2.9.1
       source-map: 0.6.1
     dev: false
 
@@ -19940,8 +19940,8 @@ packages:
     hasBin: true
     dev: false
 
-  /needle/2.8.0:
-    resolution: {integrity: sha512-ZTq6WYkN/3782H1393me3utVYdq2XyqNUFBsprEE3VMAT0+hP/cItpnITpqsY6ep2yeFE4Tqtqwc74VqUlUYtw==}
+  /needle/2.9.1:
+    resolution: {integrity: sha512-6R9fqJ5Zcmf+uYaFgdIHmLwNldn5HbK8L5ybn7Uz+ylX/rnOsSp1AHcvQSrCaFN+qNM1wpymHqD7mVasEOlHGQ==}
     engines: {node: '>= 4.4.x'}
     hasBin: true
     requiresBuild: true
@@ -21145,7 +21145,7 @@ packages:
       proxy-from-env: 1.1.0
       rimraf: 3.0.2
       stack-utils: 2.0.3
-      ws: 7.5.3
+      ws: 7.5.4
       yazl: 2.5.1
     transitivePeerDependencies:
       - bufferutil
@@ -21182,7 +21182,7 @@ packages:
       proxy-from-env: 1.1.0
       rimraf: 3.0.2
       stack-utils: 2.0.3
-      ws: 7.5.3
+      ws: 7.5.4
       yazl: 2.5.1
     transitivePeerDependencies:
       - bufferutil
@@ -22566,7 +22566,7 @@ packages:
     resolution: {integrity: sha512-fqyVbp+wVVey6O4uVBk5s3J/vTiPludp7lulr6a8asTBm7DIA0vLBbjmAOLCnOlkWcgdy4mjsqOgNCbu8uICWw==}
     dependencies:
       shell-quote: 1.7.2
-      ws: 7.5.3
+      ws: 7.5.4
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -26675,7 +26675,7 @@ packages:
       lodash: 4.17.21
       opener: 1.5.2
       sirv: 1.0.14
-      ws: 7.5.3
+      ws: 7.5.4
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -27101,8 +27101,8 @@ packages:
         optional: true
     dev: false
 
-  /ws/7.5.3:
-    resolution: {integrity: sha512-kQ/dHIzuLrS6Je9+uv81ueZomEwH0qVYstcAQ4/Z93K8zeko9gtAbttJWzoC5ukqXY1PpoouV3+VSOqEAFt5wg==}
+  /ws/7.5.4:
+    resolution: {integrity: sha512-zP9z6GXm6zC27YtspwH99T3qTG7bBFv2VIkeHstMLrLlDJuzA7tQ5ls3OJ1hOGGCzTQPniNJoHXIAOS0Jljohg==}
     engines: {node: '>=8.3.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -27113,8 +27113,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  /ws/8.2.0:
-    resolution: {integrity: sha512-uYhVJ/m9oXwEI04iIVmgLmugh2qrZihkywG9y5FfZV2ATeLIzHf93qs+tUNqlttbQK957/VX3mtwAS+UfIwA4g==}
+  /ws/8.2.1:
+    resolution: {integrity: sha512-XkgWpJU3sHU7gX8f13NqTn6KQ85bd1WU7noBHTT8fSohx7OS1TPY8k+cyRPCzFkia7C4mM229yeHr1qK9sM4JQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -27222,7 +27222,7 @@ packages:
       simple-peer: 9.11.0
       y-protocols: 1.0.5
     optionalDependencies:
-      ws: 7.5.3
+      ws: 7.5.4
     transitivePeerDependencies:
       - bufferutil
       - supports-color
