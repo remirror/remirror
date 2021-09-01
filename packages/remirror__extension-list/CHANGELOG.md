@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.0.9
+
+> 2021-09-01
+
+### Patch Changes
+
+- Don't create a node selection within the `toggleCheckboxChecked` command.
+
 ## 1.0.8
 
 > 2021-08-30
