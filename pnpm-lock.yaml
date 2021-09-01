@@ -16731,7 +16731,7 @@ packages:
       type-fest: 0.12.0
       widest-line: 3.1.0
       wrap-ansi: 6.2.0
-      ws: 7.5.3
+      ws: 7.5.4
       yoga-layout-prebuilt: 1.10.0
     transitivePeerDependencies:
       - bufferutil
@@ -18241,7 +18241,7 @@ packages:
       whatwg-encoding: 1.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 7.1.0
-      ws: 7.5.3
+      ws: 7.5.4
       xml-name-validator: 3.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -18282,7 +18282,7 @@ packages:
       whatwg-encoding: 1.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
-      ws: 7.5.3
+      ws: 7.5.4
       xml-name-validator: 3.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -18323,7 +18323,7 @@ packages:
       whatwg-encoding: 1.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 9.1.0
-      ws: 8.2.0
+      ws: 8.2.1
       xml-name-validator: 3.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -21145,7 +21145,7 @@ packages:
       proxy-from-env: 1.1.0
       rimraf: 3.0.2
       stack-utils: 2.0.3
-      ws: 7.5.3
+      ws: 7.5.4
       yazl: 2.5.1
     transitivePeerDependencies:
       - bufferutil
@@ -21182,7 +21182,7 @@ packages:
       proxy-from-env: 1.1.0
       rimraf: 3.0.2
       stack-utils: 2.0.3
-      ws: 7.5.3
+      ws: 7.5.4
       yazl: 2.5.1
     transitivePeerDependencies:
       - bufferutil
@@ -22566,7 +22566,7 @@ packages:
     resolution: {integrity: sha512-fqyVbp+wVVey6O4uVBk5s3J/vTiPludp7lulr6a8asTBm7DIA0vLBbjmAOLCnOlkWcgdy4mjsqOgNCbu8uICWw==}
     dependencies:
       shell-quote: 1.7.2
-      ws: 7.5.3
+      ws: 7.5.4
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -26675,7 +26675,7 @@ packages:
       lodash: 4.17.21
       opener: 1.5.2
       sirv: 1.0.14
-      ws: 7.5.3
+      ws: 7.5.4
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -27101,18 +27101,6 @@ packages:
         optional: true
     dev: false
 
-  /ws/7.5.3:
-    resolution: {integrity: sha512-kQ/dHIzuLrS6Je9+uv81ueZomEwH0qVYstcAQ4/Z93K8zeko9gtAbttJWzoC5ukqXY1PpoouV3+VSOqEAFt5wg==}
-    engines: {node: '>=8.3.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: ^5.0.2
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-
   /ws/7.5.4:
     resolution: {integrity: sha512-zP9z6GXm6zC27YtspwH99T3qTG7bBFv2VIkeHstMLrLlDJuzA7tQ5ls3OJ1hOGGCzTQPniNJoHXIAOS0Jljohg==}
     engines: {node: '>=8.3.0'}
@@ -27124,11 +27112,9 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: true
-    optional: true
 
-  /ws/8.2.0:
-    resolution: {integrity: sha512-uYhVJ/m9oXwEI04iIVmgLmugh2qrZihkywG9y5FfZV2ATeLIzHf93qs+tUNqlttbQK957/VX3mtwAS+UfIwA4g==}
+  /ws/8.2.1:
+    resolution: {integrity: sha512-XkgWpJU3sHU7gX8f13NqTn6KQ85bd1WU7noBHTT8fSohx7OS1TPY8k+cyRPCzFkia7C4mM229yeHr1qK9sM4JQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
