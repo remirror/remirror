@@ -9,7 +9,7 @@ import { getPackages } from '@manypkg/get-packages';
 import { baseDir, getAllDependencies } from '.';
 
 function main() {
-  packages = getPackages(baseDir());
+  const packages = getPackages(baseDir());
   console.log('packages:', packages);
 }
 
