@@ -4,13 +4,77 @@
  * This script will make sure that the package `remirror` doesn't depend on `react`.
  */
 
-import { getPackages } from '@manypkg/get-packages';
+import { getPackages, Package, Packages } from '@manypkg/get-packages';
+import path from 'path';
 
 import { baseDir, getAllDependencies } from '.';
 
-function main() {
-  const packages = getPackages(baseDir());
-  console.log('packages:', packages);
+const frameworkDependencies = ['react', 'react-dom', '@types/react', '@types/react-dom'];
+
+function findPath(
+  dependentsGraph: Map<string, Set<string>>,
+  dependent: string,
+  dependency: string,
+  loopCount: number,
+): string[] | null {
+  if (loopCount > dependentsGraph.size) {
+    throw new Error('found cyclic workspace dependencies');
+  }
+
+  const dependencies = dependentsGraph.get(dependent) ?? new Set();
+
+  if (dependencies.has(dependency)) {
+    return [dependency, dependent];
+  }
+
+  for (const d of dependencies) {
+    const path = findPath(dependentsGraph, d, dependency, loopCount + 1);
+
+    if (path) {
+      path.push(dependent);
+    }
+
+    return path;
+  }
+
+  return null;
+}
+
+function getDependentsGraph(packages: Packages): Map<string, Set<string>> {
+  const graph = new Map<string, Set<string>>();
+
+  for (const pkg of packages.packages) {
+    const dependencies: string[] = [];
+    dependencies.push(
+      ...Object.keys(pkg.packageJson.dependencies ?? {}),
+      ...Object.keys(pkg.packageJson.devDependencies ?? {}),
+      ...Object.keys(pkg.packageJson.peerDependencies ?? {}),
+      ...Object.keys(pkg.packageJson.optionalDependencies ?? {}),
+    );
+    graph.set(pkg.packageJson.name, new Set(dependencies));
+  }
+
+  return graph;
+}
+
+function formatPath(path: string[]): string {
+  return path.join(' -> ');
+}
+
+async function main() {
+  const packages = await getPackages(baseDir());
+  const dependentsGraph = getDependentsGraph(packages);
+
+  for (const dependency of frameworkDependencies) {
+    const path = findPath(dependentsGraph, 'remirror', dependency, 1);
+
+    if (path) {
+      throw new Error(
+        `Package 'remirror' shouldn't depend on ${dependency}. ` +
+          `Dependency path: ${formatPath(path)}`,
+      );
+    }
+  }
 }
 
 main();
