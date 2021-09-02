@@ -34,6 +34,7 @@
     "generate-docs",
     "generate-icons",
     "generate-intl",
+    "lint-remirror-dependencies",
     "linaria",
     "run-if-clean",
     "run-if-config",

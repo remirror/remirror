@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-lint-remirror-dependencies.cjs.js",
+  "module": "dist/scripts-lint-remirror-dependencies.esm.js"
+}
