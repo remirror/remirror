@@ -10,8 +10,8 @@ import {
   ThemeProvider,
   ToolbarItemUnion,
   useRemirror,
+  wysiwygPreset,
 } from '@remirror/react';
-import { wysiwygPreset } from '@remirror/react';
 
 import { hugeContent } from './sample-content/huge';
 

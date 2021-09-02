@@ -1,5 +1,4 @@
 import { ProsemirrorDevTools } from '@remirror/dev';
-import { wysiwygPreset } from '@remirror/react';
 import {
   ComponentItem,
   EditorComponent,
@@ -8,6 +7,7 @@ import {
   Toolbar,
   ToolbarItemUnion,
   useRemirror,
+  wysiwygPreset,
 } from '@remirror/react';
 
 import { mediumContent } from './sample-content/medium';

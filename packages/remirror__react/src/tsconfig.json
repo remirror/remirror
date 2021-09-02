@@ -35,6 +35,9 @@
       "path": "../../remirror__preset-react/src"
     },
     {
+      "path": "../../remirror__preset-wysiwyg/src"
+    },
+    {
       "path": "../../remirror__react-components/src"
     },
     {
