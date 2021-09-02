@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.0.12
+
+> 2021-09-02
+
+### Patch Changes
+
+- Fix an out of range error when there is nothing in the dropdown menu.
+
+- Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.8
+
 ## 1.0.11
 
 > 2021-09-01

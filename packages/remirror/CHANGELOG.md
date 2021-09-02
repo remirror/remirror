@@ -1,5 +1,16 @@
 # remirror
 
+## 1.0.20
+
+> 2021-09-02
+
+### Patch Changes
+
+- Fix an out of range error when there is nothing in the dropdown menu.
+
+- Updated dependencies []:
+  - @remirror/preset-wysiwyg@1.0.12
+
 ## 1.0.19
 
 > 2021-09-01
