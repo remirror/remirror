@@ -14,9 +14,9 @@ function findPath(
   dependentsGraph: Map<string, Set<string>>,
   dependent: string,
   dependency: string,
-  loopCount: number,
+  depth: number,
 ): string[] | null {
-  if (loopCount > dependentsGraph.size) {
+  if (depth > dependentsGraph.size) {
     throw new Error('found cyclic workspace dependencies');
   }
 
@@ -27,7 +27,7 @@ function findPath(
   }
 
   for (const d of dependencies) {
-    const path = findPath(dependentsGraph, d, dependency, loopCount + 1);
+    const path = findPath(dependentsGraph, d, dependency, depth + 1);
 
     if (path) {
       path.push(dependent);

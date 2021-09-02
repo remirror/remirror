@@ -188,9 +188,6 @@
       "path": "../../remirror__preset-formatting/src"
     },
     {
-      "path": "../../remirror__preset-wysiwyg/src"
-    },
-    {
       "path": "../../remirror__theme/src"
     }
   ]
