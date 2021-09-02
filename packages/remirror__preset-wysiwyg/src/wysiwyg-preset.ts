@@ -18,10 +18,8 @@ import {
   OrderedListExtension,
   TaskListExtension,
 } from '@remirror/extension-list';
-import { TableExtension } from '@remirror/extension-react-tables';
 import { SearchExtension, SearchOptions } from '@remirror/extension-search';
 import { StrikeExtension } from '@remirror/extension-strike';
-import { TableOptions } from '@remirror/extension-tables';
 import { TrailingNodeExtension, TrailingNodeOptions } from '@remirror/extension-trailing-node';
 import { UnderlineExtension } from '@remirror/extension-underline';
 
@@ -33,8 +31,7 @@ export interface WysiwygOptions
     HeadingOptions,
     LinkOptions,
     SearchOptions,
-    TrailingNodeOptions,
-    TableOptions {}
+    TrailingNodeOptions {}
 
 const DEFAULT_OPTIONS = {
   ...BidiExtension.defaultOptions,
@@ -44,7 +41,6 @@ const DEFAULT_OPTIONS = {
   ...SearchExtension.defaultOptions,
   ...TrailingNodeExtension.defaultOptions,
   ...HeadingExtension.defaultOptions,
-  ...TableExtension.defaultOptions,
 };
 
 /**
@@ -63,7 +59,6 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
   const underlineExtension = new UnderlineExtension();
   const blockquoteExtension = new BlockquoteExtension();
   const codeExtension = new CodeExtension();
-  const tableExtension = new TableExtension();
   const iframeExtension = new IframeExtension();
   const bulletListExtension = new BulletListExtension();
   const orderedListExtension = new OrderedListExtension();
@@ -139,7 +134,6 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
     blockquoteExtension,
     codeBlockExtension,
     headingExtension,
-    tableExtension,
     iframeExtension,
     bulletListExtension,
     orderedListExtension,
@@ -169,7 +163,6 @@ export type WysiwygPreset =
   | UnderlineExtension
   | BlockquoteExtension
   | CodeExtension
-  | TableExtension
   | LinkExtension
   | BidiExtension
   | BoldExtension

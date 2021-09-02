@@ -80,16 +80,10 @@
       "path": "../../remirror__extension-list/src"
     },
     {
-      "path": "../../remirror__extension-react-tables/src"
-    },
-    {
       "path": "../../remirror__extension-search/src"
     },
     {
       "path": "../../remirror__extension-strike/src"
-    },
-    {
-      "path": "../../remirror__extension-tables/src"
     },
     {
       "path": "../../remirror__extension-trailing-node/src"
