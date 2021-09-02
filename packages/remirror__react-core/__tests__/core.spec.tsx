@@ -1,13 +1,11 @@
 import { axe } from 'jest-axe';
 import { RemirrorTestChain } from 'jest-remirror';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { renderToString } from 'react-dom/server';
-import { RemirrorEventListener } from 'remirror';
 import { hideConsoleError, rafMock } from 'testing';
 import { act, fireEvent, render, strictRender } from 'testing/react';
 import {
   createReactManager,
-  ReactExtensions,
   ReactFrameworkOutput,
   Remirror,
   useRemirror,
@@ -338,34 +336,13 @@ test('`focus` should be chainable', () => {
   };
 
   const Component = () => {
-    const [state, setState] = useState(() =>
-      manager.createState({
-        content: '<p>Content </p>',
-        selection: 'end',
-      }),
-    );
-
-    const onChange: RemirrorEventListener<ReactExtensions<never>> = useCallback(
-      ({ state, firstRender }) => {
-        if (firstRender) {
-          return;
-        }
-
-        act(() => {
-          setState(state);
-        });
-      },
-      [],
-    );
+    const state = manager.createState({
+      content: '<p>Content </p>',
+      selection: 'end',
+    });
 
     return (
-      <Remirror
-        autoFocus={true}
-        manager={manager}
-        onChange={onChange}
-        state={state}
-        autoRender='start'
-      >
+      <Remirror autoFocus={true} manager={manager} initialContent={state} autoRender='start'>
         <TrapContext />
       </Remirror>
     );

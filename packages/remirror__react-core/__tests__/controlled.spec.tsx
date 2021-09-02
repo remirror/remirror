@@ -329,22 +329,8 @@ test('can run multiple commands', () => {
   };
 
   const Component = () => {
-    const [value, setValue] = useState<EditorState>(
-      manager.createState({
-        content: '',
-      }),
-    );
-
     return (
-      <Remirror
-        {...props}
-        state={value}
-        manager={manager}
-        onChange={(changeProps) => {
-          const { state } = changeProps;
-          setValue(state);
-        }}
-      >
+      <Remirror {...props} manager={manager}>
         <InnerComponent />
       </Remirror>
     );

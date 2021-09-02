@@ -70,7 +70,7 @@ module.exports = {
     '!packages/remirror__cli/**',
   ],
   coverageReporters: ['json', 'lcov', 'text-summary', 'clover'],
-  collectCoverage: true,
+  collectCoverage: !!process.env.CI,
   reporters,
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   testRunner: 'jest-circus/runner',
