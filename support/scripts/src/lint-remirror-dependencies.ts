@@ -4,10 +4,9 @@
  * This script will make sure that the package `remirror` doesn't depend on `react`.
  */
 
-import { getPackages, Package, Packages } from '@manypkg/get-packages';
-import path from 'path';
+import { getPackages, Packages } from '@manypkg/get-packages';
 
-import { baseDir, getAllDependencies } from '.';
+import { baseDir, log } from './helpers';
 
 const frameworkDependencies = ['react', 'react-dom', '@types/react', '@types/react-dom'];
 
@@ -32,9 +31,8 @@ function findPath(
 
     if (path) {
       path.push(dependent);
+      return path;
     }
-
-    return path;
   }
 
   return null;
@@ -58,7 +56,7 @@ function getDependentsGraph(packages: Packages): Map<string, Set<string>> {
 }
 
 function formatPath(path: string[]): string {
-  return path.join(' -> ');
+  return path.join(' <- ');
 }
 
 async function main() {
@@ -69,12 +67,12 @@ async function main() {
     const path = findPath(dependentsGraph, 'remirror', dependency, 1);
 
     if (path) {
-      throw new Error(
-        `Package 'remirror' shouldn't depend on ${dependency}. ` +
-          `Dependency path: ${formatPath(path)}`,
-      );
+      log.error(`Package 'remirror' shouldn't depend on ${dependency}. `, formatPath(path));
+      process.exit(1);
     }
   }
+
+  console.log('ok');
 }
 
 main();
