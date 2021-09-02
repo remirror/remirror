@@ -71,8 +71,6 @@ async function main() {
       process.exit(1);
     }
   }
-
-  console.log('ok');
 }
 
 main();

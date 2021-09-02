@@ -51,4 +51,3 @@ export * from '@remirror/preset-formatting';
 
 // Presets
 export * from '@remirror/preset-core';
-export * from '@remirror/preset-wysiwyg';
