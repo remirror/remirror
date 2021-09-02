@@ -44,8 +44,7 @@ export interface UseRemirrorProps<Extension extends AnyExtension>
    * ```tsx
    * import React from 'react';
    * import { Remirror, InvalidContentHandler } from 'remirror';
-   * import { Remirror, useManager } from '@remirror/react';
-   * import { WysiwygPreset } from 'remirror/extensions';
+   * import { Remirror, useManager, WysiwygPreset } from '@remirror/react';
    *
    * const Framework = () => {
    *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {

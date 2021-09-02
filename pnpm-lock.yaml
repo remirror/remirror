@@ -1980,6 +1980,7 @@ importers:
       '@remirror/extension-react-ssr': ^1.0.4
       '@remirror/extension-react-tables': ^1.0.7
       '@remirror/preset-react': ^1.0.4
+      '@remirror/preset-wysiwyg': ^1.0.11
       '@remirror/react-components': ^1.0.6
       '@remirror/react-core': ^1.0.6
       '@remirror/react-hooks': ^1.0.6
@@ -1998,6 +1999,7 @@ importers:
       '@remirror/extension-react-ssr': link:../remirror__extension-react-ssr
       '@remirror/extension-react-tables': link:../remirror__extension-react-tables
       '@remirror/preset-react': link:../remirror__preset-react
+      '@remirror/preset-wysiwyg': link:../remirror__preset-wysiwyg
       '@remirror/react-components': link:../remirror__react-components
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
@@ -10452,7 +10454,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.2_debug@4.3.2
+      follow-redirects: 1.14.2
     transitivePeerDependencies:
       - debug
 
@@ -15108,6 +15110,15 @@ packages:
       tabbable: 4.0.0
       xtend: 4.0.2
     dev: true
+
+  /follow-redirects/1.14.2:
+    resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
 
   /follow-redirects/1.14.2_debug@4.3.2:
     resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}

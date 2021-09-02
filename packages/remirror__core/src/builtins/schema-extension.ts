@@ -476,7 +476,7 @@ export class SchemaExtension extends PlainExtension {
  * ```ts
  * import { ExtensionTag } from 'remirror';
  * import { createCoreManager, CorePreset } from 'remirror/extensions';
- * import { WysiwygPreset } from 'remirror/extensions';
+ * import { WysiwygPreset } from '@remirror/react';
  *
  * const manager = createCoreManager(() => [new WysiwygPreset(), new CorePreset()], {
  *   extraAttributes: [

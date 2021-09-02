@@ -1,5 +1,5 @@
-import { wysiwygPreset } from 'remirror/extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
+import { wysiwygPreset } from '@remirror/react';
 import {
   ComponentItem,
   EditorComponent,

@@ -38,7 +38,8 @@ This preset is designed to be used with the `CorePreset` from `remirror/presets`
 The following creates an instance of the preset.
 
 ```ts
-import { createCoreManager, wysiwygPreset } from 'remirror/extensions';
+import { createCoreManager } from 'remirror/extensions';
+import { wysiwygPreset } from '@remirror/react';
 
 // Create a manager which contains the wysiwyg preset.
 const manager = createCoreManager(() => wysiwygPreset());

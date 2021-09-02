@@ -2303,7 +2303,7 @@ For information on what's changed in this release see the [`v1.0.0` release](htt
   ```tsx
   import React from 'react';
   import { InvalidContentHandler, RemirrorProvider } from 'remirror/core';
-  import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+  import { WysiwygPreset } from '@remirror/react';
   import { RemirrorProvider, useManager } from '@remirror/react';
 
   const EditorWrapper = () => {

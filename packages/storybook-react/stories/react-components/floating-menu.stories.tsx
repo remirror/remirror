@@ -1,4 +1,4 @@
-import { ColumnsExtension, wysiwygPreset } from 'remirror/extensions';
+import { ColumnsExtension } from 'remirror/extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   ComponentItem,
@@ -11,6 +11,7 @@ import {
   ToolbarItemUnion,
   useRemirror,
 } from '@remirror/react';
+import { wysiwygPreset } from '@remirror/react';
 
 import { hugeContent } from './sample-content/huge';
 

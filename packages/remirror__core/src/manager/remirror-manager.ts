@@ -1035,7 +1035,7 @@ declare global {
        * import React from 'react';
        * import { Remirror, InvalidContentHandler } from 'remirror';
        * import { Remirror, useManager } from '@remirror/react';
-       * import { WysiwygPreset } from 'remirror/extensions';
+       * import { WysiwygPreset } from '@remirror/react';
        *
        * const Editor = () => {
        *   const onError: InvalidContentHandler = useCallback(({ json, invalidContent, transformers }) => {

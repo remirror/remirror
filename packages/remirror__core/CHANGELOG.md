@@ -606,7 +606,7 @@ For information on what's changed in this release see the [`v1.0.0` release](htt
   ```ts
   import { ExtensionTag } from 'remirror/core';
   import { CorePreset, createCoreManager } from 'remirror/preset/core';
-  import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+  import { WysiwygPreset } from '@remirror/react';
 
   const manager = createCoreManager(() => [new WysiwygPreset(), new CorePreset()], {
     extraAttributes: [
@@ -732,7 +732,7 @@ For information on what's changed in this release see the [`v1.0.0` release](htt
   ```tsx
   import React from 'react';
   import { InvalidContentHandler, RemirrorProvider } from 'remirror/core';
-  import { WysiwygPreset } from 'remirror/preset/wysiwyg';
+  import { WysiwygPreset } from '@remirror/react';
   import { RemirrorProvider, useManager } from '@remirror/react';
 
   const EditorWrapper = () => {

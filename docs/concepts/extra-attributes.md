@@ -79,7 +79,7 @@ Extra attributes can also be added via the `RemirrorManager`. This can set attri
 
 ```ts
 import { RemirrorManager } from 'remirror';
-import { WysiwygPreset } from 'remirror/extensions';
+import { WysiwygPreset } from '@remirror/react';
 
 const manager = RemirrorManager.create(() => [new WysiwygPreset()], {
   extraAttributes: [

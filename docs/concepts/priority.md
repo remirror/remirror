@@ -97,7 +97,7 @@ It is also possible to set the extension priority via the manager settings by sp
 
 ```ts
 import { ExtensionPriority, RemirrorManager } from 'remirror';
-import { WysiwygPreset } from 'remirror/extensions';
+import { WysiwygPreset } from '@remirror/react';
 
 const manager = RemirrorManager.create([new WysiwygPreset()], {
   priority: { link: ExtensionPriority.High, bold: ExtensionPriority.Low },
@@ -112,7 +112,7 @@ The preset has a similar API as the manager for setting the extension priority.
 
 ```ts
 import { ExtensionPriority, RemirrorManager } from 'remirror';
-import { WysiwygPreset } from 'remirror/editor/wysiwyg';
+import { WysiwygPreset } from '@remirror/react';
 
 const wysiwygPreset = new WysiwygPreset({
   priority: { link: ExtensionPriority.High, bold: ExtensionPriority.Low },

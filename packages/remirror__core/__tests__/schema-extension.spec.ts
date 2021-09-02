@@ -6,7 +6,7 @@ import {
   BoldExtension,
   corePreset,
   HeadingExtension,
-  wysiwygPreset,
+  ItalicExtension,
 } from 'remirror/extensions';
 
 import {
@@ -73,7 +73,7 @@ test('custom schema', () => {
 
 describe('extraAttributes', () => {
   it('should support adding attributes to `nodes`, `marks`, and `all`', () => {
-    const manager = RemirrorManager.create(() => [...wysiwygPreset(), ...corePreset()], {
+    const manager = RemirrorManager.create(() => [...corePreset()], {
       extraAttributes: [
         { identifiers: 'nodes', attributes: { totallyNodes: 'abc' } },
         { identifiers: 'marks', attributes: { totallyMarks: 'abc' } },
@@ -99,12 +99,15 @@ describe('extraAttributes', () => {
   });
 
   it('should support adding attributes by name', () => {
-    const manager = RemirrorManager.create(() => [...wysiwygPreset(), ...corePreset()], {
-      extraAttributes: [
-        { identifiers: ['bold'], attributes: { totallyBold: 'abc' } },
-        { identifiers: ['paragraph', 'italic'], attributes: { fun: 'abc' } },
-      ],
-    });
+    const manager = RemirrorManager.create(
+      () => [...corePreset(), new ItalicExtension(), new BoldExtension()],
+      {
+        extraAttributes: [
+          { identifiers: ['bold'], attributes: { totallyBold: 'abc' } },
+          { identifiers: ['paragraph', 'italic'], attributes: { fun: 'abc' } },
+        ],
+      },
+    );
 
     expect(manager.schema.nodes.paragraph.spec.attrs?.fun).toEqual({ default: 'abc' });
     expect(manager.schema.marks.italic.spec.attrs?.fun).toEqual({ default: 'abc' });
@@ -158,7 +161,6 @@ describe('extraAttributes', () => {
 
     const manager = RemirrorManager.create(
       () => [
-        ...wysiwygPreset(),
         ...corePreset(),
         new ThePlainExtension(),
         new TheMarkExtension(),

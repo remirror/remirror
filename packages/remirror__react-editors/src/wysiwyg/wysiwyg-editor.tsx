@@ -1,11 +1,12 @@
 import { FC, useCallback } from 'react';
-import { PlaceholderExtension, wysiwygPreset } from 'remirror/extensions';
+import { PlaceholderExtension } from 'remirror/extensions';
 import {
   EditorComponent,
   Remirror,
   TableComponents,
   ThemeProvider,
   useRemirror,
+  wysiwygPreset,
 } from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
