@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -128,7 +128,7 @@
     "@remirror/icons": "^1.0.2",
     "@remirror/preset-core": "^1.0.5",
     "@remirror/preset-formatting": "^1.0.6",
-    "@remirror/preset-wysiwyg": "^1.0.11",
+    "@remirror/preset-wysiwyg": "^1.0.12",
     "@remirror/theme": "^1.1.2",
     "@types/codemirror": "^5.60.2",
     "@types/refractor": "^3.0.2",

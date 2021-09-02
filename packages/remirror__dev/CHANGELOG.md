@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.0.8
+
+> 2021-09-02
+
+### Patch Changes
+
+- Fix an out of range error when there is nothing in the dropdown menu.
+
+- Updated dependencies []:
+  - @remirror/react@1.0.8
+
 ## 1.0.7
 
 > 2021-08-30

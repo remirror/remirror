@@ -1,5 +1,16 @@
 # @remirror/react-components
 
+## 1.0.7
+
+> 2021-09-02
+
+### Patch Changes
+
+- Fix an out of range error when there is nothing in the dropdown menu.
+
+- Updated dependencies []:
+  - @remirror/react-hooks@1.0.7
+
 ## 1.0.6
 
 > 2021-08-30

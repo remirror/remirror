@@ -1,5 +1,17 @@
 # @remirror/react-editors
 
+## 0.1.6
+
+> 2021-09-02
+
+### Patch Changes
+
+- Fix an out of range error when there is nothing in the dropdown menu.
+
+- Updated dependencies []:
+  - remirror@1.0.20
+  - @remirror/react@1.0.8
+
 ## 0.1.5
 
 > 2021-09-01

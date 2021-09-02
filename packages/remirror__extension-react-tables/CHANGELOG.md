@@ -1,5 +1,17 @@
 # @remirror/extension-react-tables
 
+## 1.0.8
+
+> 2021-09-02
+
+### Patch Changes
+
+- Fix an out of range error when there is nothing in the dropdown menu.
+
+- Updated dependencies []:
+  - @remirror/react-hooks@1.0.7
+  - @remirror/react-components@1.0.7
+
 ## 1.0.7
 
 > 2021-08-30
