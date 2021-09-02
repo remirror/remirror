@@ -71,6 +71,7 @@
     "lint:build": "preconstruct validate",
     "generate:docs": "node support/scripts/generate-docs",
     "lint:css": "node support/scripts/check-styles",
+    "lint:remirror-dependencies": "node support/scripts/lint-remirror-dependencies",
     "lint:es": "cross-env FULL_ESLINT_CHECK=true eslint -f codeframe --ext=.tsx,.ts,.js .",
     "lint:exports": "pnpm run fix:exports -- --check",
     "lint:md": "eslint -f codeframe  --ignore-pattern='*.js' --ignore-pattern='*.ts' --ignore-pattern='*.tsx' .",

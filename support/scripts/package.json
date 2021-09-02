@@ -140,6 +140,7 @@
       "generate-docs.ts",
       "generate-icons.ts",
       "generate-intl.ts",
+      "lint-remirror-dependencies.ts",
       "linaria.ts",
       "run-if-clean.ts",
       "run-if-config.ts",
