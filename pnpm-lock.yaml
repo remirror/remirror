@@ -551,7 +551,6 @@ importers:
       '@remirror/pm': ^1.0.2
       '@remirror/preset-core': ^1.0.5
       '@remirror/preset-formatting': ^1.0.6
-      '@remirror/preset-wysiwyg': ^1.0.11
       '@remirror/theme': ^1.1.2
       '@types/codemirror': ^5.60.2
       '@types/prettier': ^2.3.2
@@ -619,7 +618,6 @@ importers:
       '@remirror/icons': link:../remirror__icons
       '@remirror/preset-core': link:../remirror__preset-core
       '@remirror/preset-formatting': link:../remirror__preset-formatting
-      '@remirror/preset-wysiwyg': link:../remirror__preset-wysiwyg
       '@remirror/theme': link:../remirror__theme
       '@types/codemirror': 5.60.2
       '@types/refractor': 3.0.2
