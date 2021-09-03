@@ -2727,6 +2727,8 @@ importers:
       '@remirror/styles': ^1.1.2
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
+      '@types/react-helmet': ^6.1.2
+      '@types/react-router-dom': ^5.1.8
       '@types/react-syntax-highlighter': ^13.5.2
       '@types/worker-plugin': ^5.0.1
       autoprefixer: ^10.3.1
@@ -2787,6 +2789,8 @@ importers:
       '@docusaurus/types': 2.0.0-beta.4
       '@types/react': 17.0.19
       '@types/react-dom': 17.0.9
+      '@types/react-helmet': 6.1.2
+      '@types/react-router-dom': 5.1.8
       '@types/worker-plugin': 5.0.1
       autoprefixer: 10.3.2_postcss@8.3.6
       comment-mark: 1.0.0
@@ -8684,6 +8688,10 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
 
+  /@types/history/4.7.9:
+    resolution: {integrity: sha512-MUc6zSmU3tEVnkQ78q0peeEjKWPUADMlC/t++2bI8WnAG2tvYRPIgHG8lWkXwqc8MsUF6Z2MOf+Mh5sazOmhiQ==}
+    dev: true
+
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
@@ -9085,6 +9093,27 @@ packages:
     resolution: {integrity: sha512-wIvGxLfgpVDSAMH5utdL9Ngm5Owu0VsGmldro3ORLXV8CShrL8awVj06NuEXFQ5xyaYfdca7Sgbk/50Ri1GdPg==}
     dependencies:
       '@types/react': 17.0.19
+
+  /@types/react-helmet/6.1.2:
+    resolution: {integrity: sha512-dcfAZNlWb5JYFbO9CGfrPWLJAyFcT6UeR3u35eBbv8liY2Rg4K7fM1G5+HnwVgot+C+kVwXAZ8pLEn2jsMfTDg==}
+    dependencies:
+      '@types/react': 17.0.19
+    dev: true
+
+  /@types/react-router-dom/5.1.8:
+    resolution: {integrity: sha512-03xHyncBzG0PmDmf8pf3rehtjY0NpUj7TIN46FrT5n1ZWHPZvXz32gUyNboJ+xsL8cpg8bQVLcllptcQHvocrw==}
+    dependencies:
+      '@types/history': 4.7.9
+      '@types/react': 17.0.19
+      '@types/react-router': 5.1.16
+    dev: true
+
+  /@types/react-router/5.1.16:
+    resolution: {integrity: sha512-8d7nR/fNSqlTFGHti0R3F9WwIertOaaA1UEB8/jr5l5mDMOs4CidEgvvYMw4ivqrBK+vtVLxyTj2P+Pr/dtgzg==}
+    dependencies:
+      '@types/history': 4.7.9
+      '@types/react': 17.0.19
+    dev: true
 
   /@types/react-syntax-highlighter/11.0.5:
     resolution: {integrity: sha512-VIOi9i2Oj5XsmWWoB72p3KlZoEbdRAcechJa8Ztebw7bDl2YmR+odxIqhtJGp1q2EozHs02US+gzxJ9nuf56qg==}
@@ -22760,7 +22789,7 @@ packages:
       webpack: '>=4.41.1 || 5.x'
     dependencies:
       '@babel/runtime': 7.15.3
-      react-loadable: 5.5.0
+      react-loadable: 5.5.0_react@17.0.2
       webpack: 5.51.1
 
   /react-loadable/5.5.0:
