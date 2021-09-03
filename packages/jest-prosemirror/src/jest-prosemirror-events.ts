@@ -386,7 +386,7 @@ export const createEvents = <CreatedEvent extends Event>(
     ];
   }
 
-  EventConstructor = window[Constructor as keyof Window] || Event;
+  EventConstructor = (window[Constructor as keyof Window] || Event) as unknown as any;
 
   return [new EventConstructor(eventName, properties)];
 };
