@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.7
+
+> 2021-09-04
+
+### Patch Changes
+
+- Don't discard node attributes when resizing.
+
+- Updated dependencies []:
+  - remirror@1.0.21
+
 ## 0.1.6
 
 > 2021-09-02

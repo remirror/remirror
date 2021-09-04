@@ -1,5 +1,13 @@
 # prosemirror-resizable-view
 
+## 1.0.1
+
+> 2021-09-04
+
+### Patch Changes
+
+- Don't discard node attributes when resizing.
+
 ## 1.0.0
 
 > 2021-07-24

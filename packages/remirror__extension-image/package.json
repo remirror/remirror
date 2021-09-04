@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-image",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Add images to your editor.",
   "keywords": [
     "remirror",
@@ -47,7 +47,7 @@
     "@remirror/core": "^1.1.0",
     "@remirror/messages": "^1.0.2",
     "@remirror/theme": "^1.1.2",
-    "prosemirror-resizable-view": "^1.0.0"
+    "prosemirror-resizable-view": "^1.0.1"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.2"
