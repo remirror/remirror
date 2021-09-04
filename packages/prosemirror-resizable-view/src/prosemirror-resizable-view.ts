@@ -196,8 +196,9 @@ export abstract class ResizableNodeView implements NodeView {
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-      const transaction = view.state.tr.setNodeMarkup(getPos(), undefined, {
-        src: this.#node.attrs.src,
+      const pos = getPos();
+      const tr = view.state.tr.setNodeMarkup(pos, undefined, {
+        ...this.#node.attrs,
         width: this.dom.style.width,
         height: this.dom.style.height,
       });
@@ -205,7 +206,7 @@ export abstract class ResizableNodeView implements NodeView {
       this.#width = this.dom.style.width;
       this.#height = this.dom.style.height;
 
-      view.dispatch(transaction);
+      view.dispatch(tr);
     };
 
     document.addEventListener('mousemove', onMouseMove);
