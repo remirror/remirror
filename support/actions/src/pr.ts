@@ -78,7 +78,7 @@ async function run() {
         `To install use the following versions \n\n- \`remirror@${version}\`\n\n- \`@remirror/react@${version}\``,
       ),
     });
-  } catch (error) {
+  } catch (error: any) {
     const gif = await getMarkdownGif(giphy, 'epic fail');
     await octokit.issues.createComment({
       owner,

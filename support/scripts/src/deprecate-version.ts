@@ -50,7 +50,7 @@ async function run() {
           if (stdout) {
             console.info(stdout);
           }
-        } catch (error) {
+        } catch (error: any) {
           log.fatal(error);
         }
       }),

@@ -22,7 +22,7 @@ class BaseuploadFileUploader implements FileUploader<FileAttributes> {
           }
 
           resolve(`${rawUrl}?download=1`);
-        } catch (error) {
+        } catch (error: any) {
           reject(new Error(`something went wrong when parsing the server response: ${error}`));
         }
       });
