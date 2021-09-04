@@ -1,5 +1,16 @@
 # @remirror/extension-image
 
+## 1.0.6
+
+> 2021-09-04
+
+### Patch Changes
+
+- Don't discard node attributes when resizing.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.0.1
+
 ## 1.0.5
 
 > 2021-08-30

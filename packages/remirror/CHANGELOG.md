@@ -1,5 +1,18 @@
 # remirror
 
+## 1.0.21
+
+> 2021-09-04
+
+### Patch Changes
+
+- Don't discard node attributes when resizing.
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.3
+  - @remirror/extension-image@1.0.6
+  - @remirror/preset-wysiwyg@1.0.13
+
 ## 1.0.20
 
 > 2021-09-02

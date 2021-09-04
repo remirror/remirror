@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 1.1.3
+
+> 2021-09-04
+
+### Patch Changes
+
+- Don't discard node attributes when resizing.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.0.1
+
 ## 1.1.2
 
 > 2021-08-29
