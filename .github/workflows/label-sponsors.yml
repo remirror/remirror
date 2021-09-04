@@ -15,3 +15,4 @@ jobs:
           label: 'status: sponsored :sparkling_heart:'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
