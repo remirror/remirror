@@ -1,5 +1,6 @@
 import { FC, useCallback } from 'react';
 import { PlaceholderExtension, wysiwygPreset } from 'remirror/extensions';
+import { TableExtension } from '@remirror/extension-react-tables';
 import {
   EditorComponent,
   Remirror,
@@ -18,7 +19,7 @@ export interface WysiwygEditorProps {
 
 export const WysiwygEditor: FC<WysiwygEditorProps> = ({ placeholder, ...props }) => {
   const extensions = useCallback(
-    () => [new PlaceholderExtension({ placeholder }), ...wysiwygPreset()],
+    () => [new PlaceholderExtension({ placeholder }), new TableExtension(), ...wysiwygPreset()],
     [placeholder],
   );
 

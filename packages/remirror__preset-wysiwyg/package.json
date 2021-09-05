@@ -57,10 +57,8 @@
     "@remirror/extension-italic": "^1.0.3",
     "@remirror/extension-link": "^1.0.3",
     "@remirror/extension-list": "^1.0.10",
-    "@remirror/extension-react-tables": "^1.0.8",
     "@remirror/extension-search": "^1.0.3",
     "@remirror/extension-strike": "^1.0.3",
-    "@remirror/extension-tables": "^1.0.4",
     "@remirror/extension-trailing-node": "^1.0.3",
     "@remirror/extension-underline": "^1.0.3",
     "@remirror/preset-core": "^1.0.5"

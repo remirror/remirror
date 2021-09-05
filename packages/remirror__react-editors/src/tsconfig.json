@@ -20,6 +20,9 @@
       "path": "../../remirror__core-helpers/src"
     },
     {
+      "path": "../../remirror__extension-react-tables/src"
+    },
+    {
       "path": "../../remirror__pm/src"
     },
     {

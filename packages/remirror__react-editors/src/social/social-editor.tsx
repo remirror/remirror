@@ -8,6 +8,7 @@ import {
   wysiwygPreset,
 } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
+import { TableExtension } from '@remirror/extension-react-tables';
 import {
   EditorComponent,
   EmojiPopupComponent,
@@ -67,6 +68,7 @@ export const SocialEditor: FC<SocialEditorProps> = ({ placeholder, ...props }) =
   const extensions = useCallback(
     () => [
       new PlaceholderExtension({ placeholder }),
+      new TableExtension(),
       new MentionAtomExtension({
         matchers: [
           { name: 'at', char: '@', appendText: ' ' },
