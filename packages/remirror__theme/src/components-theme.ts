@@ -495,6 +495,8 @@ export const TOOLBAR = css`
   display: flex;
   flex-direction: row;
 
+  overflow-y: auto;
+
   & > *:not(:first-child) {
     margin: 0 0 0 0.5em;
   }
