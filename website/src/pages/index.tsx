@@ -5,6 +5,7 @@ import Layout from '@theme/Layout';
 import { ReactElement } from 'react';
 import { cx, isString } from 'remirror';
 
+import Editor from '../../examples/social';
 import { ExternalIcon } from '../components/external-icon';
 import styles from './styles.module.css';
 
@@ -87,6 +88,14 @@ const BannerLaptop = () => {
   return <img src='/img/laptop.svg' className={styles.bannerLaptop} />;
 };
 
+const BannerSampleEditor = () => {
+  return (
+    <div className={styles.bannerSampleEditor}>
+      <Editor />
+    </div>
+  );
+};
+
 const Home = () => {
   const context = useDocusaurusContext();
   const { siteConfig } = context;
@@ -106,6 +115,8 @@ const Home = () => {
                 Examples <ExternalIcon />
               </Link>
             </div>
+            <BannerSampleEditor />
+
             <BannerPhone />
           </div>
         </header>

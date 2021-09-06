@@ -492,6 +492,8 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   .remirror-toolbar {
     display: flex;
     flex-direction: row;
+
+    overflow-y: auto;
   }
 
   .remirror-toolbar > *:not(:first-child) {

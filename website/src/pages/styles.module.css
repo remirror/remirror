@@ -161,6 +161,18 @@
   }
 }
 
+.bannerSampleEditor {
+  background-color: white;
+  color: black;
+  padding: 8px;
+  border-radius: 4px;
+  width: 80%;
+
+  @media screen and (min-width: 996px) {
+    max-width: 705px;
+  }
+}
+
 /* Break points */
 @media screen and (min-width: 40em) {
 }
