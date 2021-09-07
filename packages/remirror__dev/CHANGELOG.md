@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.0.9
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+- Updated dependencies []:
+  - @remirror/react@1.0.9
+
 ## 1.0.8
 
 > 2021-09-02

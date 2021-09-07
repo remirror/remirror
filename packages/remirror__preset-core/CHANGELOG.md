@@ -1,5 +1,23 @@
 # @remirror/preset-core
 
+## 1.0.6
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+- Updated dependencies []:
+  - @remirror/core@1.1.1
+  - @remirror/extension-doc@1.0.5
+  - @remirror/extension-events@1.0.4
+  - @remirror/extension-gap-cursor@1.0.4
+  - @remirror/extension-history@1.0.4
+  - @remirror/extension-paragraph@1.0.4
+  - @remirror/extension-positioner@1.1.3
+  - @remirror/extension-text@1.0.4
+
 ## 1.0.5
 
 > 2021-08-30

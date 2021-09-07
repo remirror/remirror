@@ -1,5 +1,20 @@
 # @remirror/react-editors
 
+## 0.1.8
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+* Remove react dependency from wysiwyg-preset: An earlier commit upgraded the tables from simple to fancy tables. As a side effect, this had introduced a dependency from wysiwyg to the react-part of remirror. This change removes this dependency again.
+
+* Updated dependencies []:
+  - remirror@1.0.22
+  - @remirror/extension-react-tables@1.0.9
+  - @remirror/react@1.0.9
+
 ## 0.1.7
 
 > 2021-09-04

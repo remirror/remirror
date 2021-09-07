@@ -1,5 +1,19 @@
 # @remirror/preset-react
 
+## 1.0.5
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+- Updated dependencies []:
+  - @remirror/core@1.1.1
+  - @remirror/extension-placeholder@1.0.5
+  - @remirror/extension-react-component@1.0.6
+  - @remirror/extension-react-ssr@1.0.5
+
 ## 1.0.4
 
 > 2021-08-30

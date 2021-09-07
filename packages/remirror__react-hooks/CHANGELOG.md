@@ -1,5 +1,23 @@
 # @remirror/react-hooks
 
+## 1.0.8
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+- Updated dependencies []:
+  - @remirror/core@1.1.1
+  - @remirror/extension-emoji@1.0.5
+  - @remirror/extension-events@1.0.4
+  - @remirror/extension-history@1.0.4
+  - @remirror/extension-mention@1.0.4
+  - @remirror/extension-mention-atom@1.0.5
+  - @remirror/extension-positioner@1.1.3
+  - @remirror/react-core@1.0.7
+
 ## 1.0.7
 
 > 2021-09-02

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-markdown",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate markdown output from your editor",
   "keywords": [
     "remirror",
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.1.0",
+    "@remirror/core": "^1.1.1",
     "@remirror/messages": "^1.0.2",
     "@types/marked": "^2.0.4",
     "@types/turndown": "^5.0.1",

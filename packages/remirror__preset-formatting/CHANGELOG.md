@@ -1,5 +1,30 @@
 # @remirror/preset-formatting
 
+## 1.0.7
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+- Updated dependencies []:
+  - @remirror/core@1.1.1
+  - @remirror/extension-bold@1.0.4
+  - @remirror/extension-columns@1.0.4
+  - @remirror/extension-font-size@1.0.4
+  - @remirror/extension-heading@1.0.4
+  - @remirror/extension-italic@1.0.4
+  - @remirror/extension-node-formatting@1.0.7
+  - @remirror/extension-strike@1.0.4
+  - @remirror/extension-sub@1.0.4
+  - @remirror/extension-sup@1.0.4
+  - @remirror/extension-text-case@1.0.4
+  - @remirror/extension-text-color@1.0.5
+  - @remirror/extension-text-highlight@1.0.5
+  - @remirror/extension-underline@1.0.4
+  - @remirror/extension-whitespace@1.0.4
+
 ## 1.0.6
 
 > 2021-08-30
