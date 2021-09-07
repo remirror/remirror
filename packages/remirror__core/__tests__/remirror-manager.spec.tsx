@@ -17,7 +17,7 @@ import type {
   ProsemirrorAttributes,
 } from '@remirror/core-types';
 import { Schema } from '@remirror/pm/model';
-import { EditorState, Plugin } from '@remirror/pm/state';
+import { EditorState, Plugin, Transaction } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
 
 describe('Manager', () => {
@@ -95,14 +95,19 @@ describe('Manager', () => {
   it('supports commands', () => {
     const attributes = { a: 'a' };
     manager.store.commands.dummy(attributes);
+    const { state, dispatch } = manager.view;
 
     expect(mock).toHaveBeenCalledWith(attributes);
     expect(innerMock).toHaveBeenCalledWith({
-      state: manager.view.state,
-      dispatch: manager.view.dispatch,
+      state: state,
+      dispatch: dispatch,
       view: manager.view,
-      tr: manager.tr,
+      tr: expect.any(Transaction),
     });
+
+    const { tr } = innerMock.mock.calls[0][0];
+    // Check this transaction is empty
+    expect(tr.steps).toHaveLength(0);
   });
 
   it('supports helpers', () => {
