@@ -1,5 +1,17 @@
 # @remirror/extension-text-highlight
 
+## 1.0.5
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+- Updated dependencies []:
+  - @remirror/core@1.1.1
+  - @remirror/extension-text-color@1.0.5
+
 ## 1.0.4
 
 > 2021-08-30

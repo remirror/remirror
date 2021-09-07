@@ -1,5 +1,17 @@
 # @remirror/extension-list
 
+## 1.0.11
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+- Updated dependencies []:
+  - @remirror/core@1.1.1
+  - @remirror/extension-events@1.0.4
+
 ## 1.0.10
 
 > 2021-09-01
