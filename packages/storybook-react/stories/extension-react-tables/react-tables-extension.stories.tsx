@@ -122,11 +122,11 @@ const Table = ({
 };
 
 export const Basic = () => {
-  return <Table extensions={defaultExtensions}></Table>;
+  return <Table extensions={defaultExtensions} />;
 };
 
 export const TableWithYjs = () => {
-  return <Table extensions={yjsExtensions}></Table>;
+  return <Table extensions={yjsExtensions} />;
 };
 
 const defaultExtensions = () => [new ReactComponentExtension(), new TableExtension()];
