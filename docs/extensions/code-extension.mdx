@@ -3,6 +3,9 @@ hide_title: true
 title: 'CodeExtension'
 ---
 
+import MyComponentSource from '!!raw-loader!../../packages/storybook-react/stories/extension-code/code.stories.tsx';
+import { Basic } from '../../packages/storybook-react/stories/extension-code/code.stories.tsx';
+
 # `CodeExtension`
 
 ## Summary
@@ -28,6 +31,14 @@ The extension is provided by the `@remirror/extension-code` package. There are t
 ### Examples
 
 See [storybook](https://remirror.vercel.app/?path=/story/extensions-code--basic) for examples.
+
+<div> hello 2 </div>
+<Basic />
+<div> hello 3 </div>
+
+<CodeBlock className='language-jsx' title='/src/myComponent'>
+  {MyComponentSource}
+</CodeBlock>
 
 ## API
 

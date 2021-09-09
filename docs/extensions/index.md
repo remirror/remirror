@@ -15,7 +15,7 @@ title: Overview
 
 **[CodeBlockExtension](./code-block-extension.md)**<br /> Adds code blocks to the editor. This differs to the `CodeExtension`, which provides code marks on inline text.
 
-**[CodeExtension](./code-extension.md)**<br /> Makes the text under the cursor / or at the provided position range `code`
+**[CodeExtension](./code-extension.mdx)**<br /> Makes the text under the cursor / or at the provided position range `code`
 
 **[CollaborationExtension](./collaboration-extension.md)**<br /> Adds collaborative functionality
 

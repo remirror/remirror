@@ -61,7 +61,7 @@ const api = [
     items: fs
       .readdirSync(path.join(__dirname, '../docs/extensions'))
       .sort((a, b) => (a === 'index.md' ? -1 : 0))
-      .map((name) => `extensions/${name.replace(/\.md$/, '')}`),
+      .map((name) => `extensions/${name.replace(/\.mdx?$/, '')}`),
   },
   {
     type: 'category',
@@ -69,7 +69,7 @@ const api = [
     collapsed: true,
     items: fs
       .readdirSync(path.join(__dirname, '../docs/commands'))
-      .map((name) => `commands/${name.replace(/\.md$/, '')}`),
+      .map((name) => `commands/${name.replace(/\.mdx?$/, '')}`),
   },
   {
     type: 'category',
@@ -77,7 +77,7 @@ const api = [
     collapsed: true,
     items: fs
       .readdirSync(path.join(__dirname, '../docs/hooks'))
-      .map((name) => `hooks/${name.replace(/\.md$/, '')}`),
+      .map((name) => `hooks/${name.replace(/\.mdx?$/, '')}`),
   },
 ];
 
