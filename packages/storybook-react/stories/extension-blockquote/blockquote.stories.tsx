@@ -1,4 +1,4 @@
-import { Basic } from './basic';
+import Basic from './basic';
 
 export default { title: 'Extensions / Blockquote' };
 
