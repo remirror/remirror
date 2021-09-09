@@ -28,7 +28,7 @@ import CodeBlock from '@theme/CodeBlock';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/${relativePath}';
 
-import { ExampleRoot } from '../../components/example-root';
+import { StoryExample } from '../../components/example-root';
 
 const ExampleComponent = (): JSX.Element => {
   const story = (
@@ -41,7 +41,7 @@ const ExampleComponent = (): JSX.Element => {
   );
   const source = <CodeBlock className='language-tsx'>{ComponentSource}</CodeBlock>;
 
-  return <ExampleRoot story={story} source={source} />;
+  return <StoryExample story={story} source={source} />;
 };
 
 export default ExampleComponent;

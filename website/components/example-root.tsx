@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface ExampleProps {
+interface StoryExampleProps {
   story: React.ComponentType;
   source: React.ComponentType;
 }
 
-export const ExampleRoot: React.FC<ExampleProps> = ({ story, source }) => {
+export const StoryExample: React.FC<StoryExampleProps> = ({ story, source }) => {
   return (
     <div>
       {story}
