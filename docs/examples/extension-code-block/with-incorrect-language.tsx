@@ -1,5 +1,9 @@
 /* eslint-disable */
-/** THIS FILE IS AUTO GENERATED */
+/**
+ * THIS FILE IS AUTO GENERATED
+ *
+ * Run 'pnpm -w generate:website-examples' to regenerate this file.
+ */
 
 import CodeBlock from '@theme/CodeBlock';
 import ComponentSource from '!!raw-loader!../../packages/storybook-react/stories/extension-code-block/with-incorrect-language.tsx';
