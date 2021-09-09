@@ -2735,7 +2735,7 @@ importers:
       create-context-state: ^1.0.1
       docusaurus-plugin-examples: 0.0.0
       framer-motion: ^4.1.3
-      is-absolute-url: ^3.0.3
+      is-absolute-url: ^3.0.1
       postcss: '>=8'
       postcss-import: ^14.0.2
       postcss-loader: ^6.1.1
