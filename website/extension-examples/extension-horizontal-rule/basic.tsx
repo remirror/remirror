@@ -16,7 +16,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-horizontal-rule/basic')
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-horizontal-rule/basic').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

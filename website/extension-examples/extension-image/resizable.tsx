@@ -16,7 +16,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-image/resizable')
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-image/resizable').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

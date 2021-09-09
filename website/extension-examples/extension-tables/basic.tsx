@@ -16,7 +16,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-tables/basic')
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-tables/basic').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

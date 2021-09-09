@@ -34,7 +34,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/${relativePathWithoutSuffix}')
+        const ComponentStory = require('../../../packages/storybook-react/stories/${relativePathWithoutSuffix}').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

@@ -16,7 +16,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-callout/with-random-emoji')
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-callout/with-random-emoji').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

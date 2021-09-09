@@ -16,7 +16,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-codemirror5/basic')
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-codemirror5/basic').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

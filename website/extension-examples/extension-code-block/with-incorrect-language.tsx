@@ -16,7 +16,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-code-block/with-incorrect-language')
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-code-block/with-incorrect-language').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

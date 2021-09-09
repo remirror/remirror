@@ -20,7 +20,7 @@ const CodeButton = () => {
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
     extensions: extensions,
-    content: '<p>Text as <code>code</code></p>',
+    content: '<p>Text as <code>code</code>.</p>',
     stringHandler: htmlToProsemirrorNode,
   });
 
