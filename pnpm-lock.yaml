@@ -2735,12 +2735,13 @@ importers:
       create-context-state: ^1.0.1
       docusaurus-plugin-examples: 0.0.0
       framer-motion: ^4.1.3
-      is-absolute-url: ^3.0.3
+      is-absolute-url: ^3.0.1
       postcss: '>=8'
       postcss-import: ^14.0.2
       postcss-loader: ^6.1.1
       postcss-nested: ^5.0.5
       prism-react-renderer: ^1.2.1
+      raw-loader: ^4.0.2
       react: ^17.0.2
       react-dom: ^17.0.2
       react-intersection-observer: ^8.32.0
@@ -2797,6 +2798,7 @@ importers:
       postcss-import: 14.0.2_postcss@8.3.6
       postcss-loader: 6.1.1_postcss@8.3.6
       postcss-nested: 5.0.6_postcss@8.3.6
+      raw-loader: 4.0.2
 
 packages:
 
@@ -22497,6 +22499,16 @@ packages:
       unpipe: 1.0.0
     dev: false
 
+  /raw-loader/4.0.2:
+    resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
+    dependencies:
+      loader-utils: 2.0.0
+      schema-utils: 3.1.1
+    dev: true
+
   /raw-loader/4.0.2_webpack@4.46.0:
     resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
     engines: {node: '>= 10.13.0'}
@@ -22787,7 +22799,7 @@ packages:
       webpack: '>=4.41.1 || 5.x'
     dependencies:
       '@babel/runtime': 7.15.3
-      react-loadable: 5.5.0
+      react-loadable: 5.5.0_react@17.0.2
       webpack: 5.51.1
 
   /react-loadable/5.5.0:
