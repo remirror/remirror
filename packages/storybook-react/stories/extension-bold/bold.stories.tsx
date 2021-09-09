@@ -3,7 +3,6 @@ import './styles.css';
 
 import { cx, htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
 
 export default { title: 'Extensions / Bold' };
@@ -37,7 +36,6 @@ export const Basic = (): JSX.Element => {
         autoRender='end'
       >
         <BoldButton />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

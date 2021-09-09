@@ -2,7 +2,6 @@ import 'remirror/styles/all.css';
 
 import { htmlToProsemirrorNode } from 'remirror';
 import { EpicModeExtension } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 export default { title: 'Extensions / EpicMode' };
@@ -24,9 +23,7 @@ export const Basic = (): JSX.Element => {
         onChange={onChange}
         initialContent={state}
         autoRender='end'
-      >
-        <ProsemirrorDevTools />
-      </Remirror>
+      />
     </ThemeProvider>
   );
 };

@@ -6,7 +6,6 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { htmlToProsemirrorNode, ProsemirrorNode } from 'remirror';
 import { CalloutExtension } from 'remirror/extensions';
 import svgmojiData from 'svgmoji/emoji.json';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   Remirror,
   ThemeProvider,
@@ -164,9 +163,7 @@ export const Basic = (): JSX.Element => {
         onChange={onChange}
         initialContent={state}
         autoRender='end'
-      >
-        <ProsemirrorDevTools />
-      </Remirror>
+      />
     </ThemeProvider>
   );
 };
@@ -200,7 +197,6 @@ export const WithEmojiPicker: React.FC = () => {
         autoRender='end'
       >
         <EmojiPicker />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
@@ -228,7 +224,6 @@ export const WithRandomEmoji: React.FC = () => {
         autoRender='end'
       >
         <RandomEmoji />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

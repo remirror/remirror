@@ -1,7 +1,6 @@
 import 'remirror/styles/extension-file.css';
 
 import React, { useCallback } from 'react';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   createBaseuploadFileUploader,
   createObjectUrlFileUploader,
@@ -26,7 +25,6 @@ export const Default = (): JSX.Element => {
       <ThemeProvider>
         <Remirror manager={manager} initialContent={state} autoRender>
           <UploadFileButton />
-          <ProsemirrorDevTools />
         </Remirror>
       </ThemeProvider>
     </>
@@ -48,7 +46,6 @@ export const WithObjectUrl = (): JSX.Element => {
       <ThemeProvider>
         <Remirror manager={manager} initialContent={state} autoRender>
           <UploadFileButton />
-          <ProsemirrorDevTools />
         </Remirror>
       </ThemeProvider>
     </>
@@ -72,7 +69,6 @@ export const WithBashupload = (): JSX.Element => {
       <ThemeProvider>
         <Remirror manager={manager} initialContent={state} autoRender>
           <UploadFileButton />
-          <ProsemirrorDevTools />
         </Remirror>
       </ThemeProvider>
     </>
@@ -95,7 +91,6 @@ export const UploadProgress = (): JSX.Element => {
       <ThemeProvider>
         <Remirror manager={manager} initialContent={state} autoRender>
           <UploadFileButton />
-          <ProsemirrorDevTools />
         </Remirror>
       </ThemeProvider>
     </>

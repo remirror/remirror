@@ -3,7 +3,6 @@ import './styles.css';
 
 import { cx, htmlToProsemirrorNode } from 'remirror';
 import { StrikeExtension } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
 
 export default { title: 'Extensions / Strike' };
@@ -37,7 +36,6 @@ export const Basic = (): JSX.Element => {
         autoRender='end'
       >
         <StrikeButton />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

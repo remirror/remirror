@@ -7,7 +7,6 @@ import {
   MentionExtensionAttributes,
   PlaceholderExtension,
 } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { FloatingWrapper, Remirror, ThemeProvider, useMention, useRemirror } from '@remirror/react';
 
 export default { title: 'React Hooks / useMention' };
@@ -85,7 +84,6 @@ export const Basic = (): JSX.Element => {
     <ThemeProvider>
       <Remirror manager={manager} autoRender='end'>
         <UserSuggestor allUsers={allUsers} />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
@@ -117,7 +115,6 @@ export const MoreSupportedCharacters = (): JSX.Element => {
     <ThemeProvider>
       <Remirror manager={manager} autoRender='end'>
         <UserSuggestor allUsers={allUsers} />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

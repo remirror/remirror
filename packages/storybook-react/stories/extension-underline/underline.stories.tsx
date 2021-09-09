@@ -3,7 +3,6 @@ import './styles.css';
 
 import { cx, htmlToProsemirrorNode } from 'remirror';
 import { UnderlineExtension } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
 
 export default { title: 'Extensions / Underline' };
@@ -40,7 +39,6 @@ export const Basic = (): JSX.Element => {
         autoRender='end'
       >
         <UnderlineButton />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

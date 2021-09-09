@@ -3,7 +3,6 @@ import type { AnyExtension } from 'remirror';
 import { YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';
 import * as Y from 'yjs';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { TableExtension } from '@remirror/extension-react-tables';
 import {
   EditorComponent,
@@ -123,19 +122,11 @@ const Table = ({
 };
 
 export const Basic = () => {
-  return (
-    <Table extensions={defaultExtensions}>
-      <ProsemirrorDevTools />
-    </Table>
-  );
+  return <Table extensions={defaultExtensions}></Table>;
 };
 
 export const TableWithYjs = () => {
-  return (
-    <Table extensions={yjsExtensions}>
-      <ProsemirrorDevTools />
-    </Table>
-  );
+  return <Table extensions={yjsExtensions}></Table>;
 };
 
 const defaultExtensions = () => [new ReactComponentExtension(), new TableExtension()];

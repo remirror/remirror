@@ -2,7 +2,6 @@ import 'remirror/styles/all.css';
 
 import { htmlToProsemirrorNode } from 'remirror';
 import { FontFamilyExtension } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
 export default { title: 'Extensions / FontFamily' };
@@ -37,7 +36,6 @@ export const Basic = (): JSX.Element => {
         autoRender='end'
       >
         <FontFamilyButtons />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
