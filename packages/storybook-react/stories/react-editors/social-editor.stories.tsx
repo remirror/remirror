@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { SocialEditor } from '@remirror/react-editors/social';
 
 import { useHelpers, useRemirrorContext } from '../../../remirror__react-core/src';
@@ -46,7 +45,6 @@ export const Basic = () => {
     <SocialEditor placeholder='Mention @joe or add #remirror' users={ALL_USERS} tags={TAGS}>
       <LoadButton />
       <SaveButton />
-      <ProsemirrorDevTools />
     </SocialEditor>
   );
 };

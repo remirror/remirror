@@ -328,7 +328,7 @@ let config = {
     {
       files: [
         '*.spec.{ts,tsx}*',
-        '*.stories.{ts,tsx}',
+        'packages/storybook-react/**',
         'support/**',
         'website/**',
         '**/__dts__/**',
@@ -362,7 +362,6 @@ let config = {
         'packages/remirror__core-utils/src/keyboard-utils.ts',
       ],
       rules: {
-        'import/no-default-export': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
       },
     },
@@ -466,7 +465,7 @@ if (process.env.FULL_ESLINT_CHECK) {
     extends: [...config.extends, 'plugin:import/typescript'],
     rules: {
       ...config.rules,
-      'import/no-default-export': 'warn',
+      'import/no-default-export': 'off',
       'import/first': 'error',
       'import/no-duplicates': 'error',
       // 'import/no-cycle': 'error', // Conflicts with `react-native`.

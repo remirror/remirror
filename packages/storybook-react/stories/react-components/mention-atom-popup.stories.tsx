@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { MentionAtomExtension, PlaceholderExtension } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   EditorComponent,
   MentionAtomPopupComponent,
@@ -42,7 +41,6 @@ export const Basic = () => {
           items={items}
         />
         <EditorComponent />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

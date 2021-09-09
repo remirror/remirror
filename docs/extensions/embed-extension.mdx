@@ -1,0 +1,83 @@
+---
+hide_title: true
+title: 'EmbedExtension'
+---
+
+import Basic from '../../website/extension-examples/extension-embed/basic';
+
+# `EmbedExtension`
+
+## Summary
+
+This extension adds iframe-based embeds to your text editor.
+
+## Features
+
+### Add iframe embeds
+
+Any page can be embedded into the editor as an iframe:
+
+```tsx
+const AddEmbedButton = () => {
+  const commands = useCommands();
+  const handleClick = () =>
+    commands.addIframe({ src: 'https://remirror.io/', height: 250, width: 500 });
+  return <button onClick={handleClick}>Add embed</button>;
+};
+```
+
+### Add Youtube embeds
+
+The extension provides a shortcut to embed Youtube videos:
+
+```tsx
+const AddYoutubeButton = () => {
+  const commands = useCommands();
+  const handleClick = () => commands.addYouTubeVideo({ video: 'Zi7sRMcJT-o', startAt: 450 });
+  return <button onClick={handleClick}>Add video</button>;
+};
+```
+
+### Resizable embeds
+
+Users can resize the embeds via drag handles if `enableResizing` attribute is enabled:
+
+```tsx
+import { Remirror } from '@remirror/react';
+
+export const Resizable: React.FC = () => {
+  const { manager } = useRemirror({
+    extensions: () => [new IframeExtension({ enableResizing: true })],
+  });
+
+  return <Remirror manager={manager} />;
+};
+```
+
+## Usage
+
+### Installation
+
+This extension is installed for you when you install the main `remirror` package.
+
+You can use the imports in the following way.
+
+```ts
+import { EmbedExtension } from 'remirror/extensions';
+```
+
+To install it directly you can use
+
+The extension is provided by the `@remirror/extension-embed` package. There are two ways of pulling it into your project.
+
+### Examples
+
+<Basic />
+
+## API
+
+### Options
+
+### Commands
+
+### Helpers

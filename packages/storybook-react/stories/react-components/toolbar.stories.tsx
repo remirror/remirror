@@ -1,5 +1,4 @@
 import { wysiwygPreset } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   ComponentItem,
   EditorComponent,
@@ -134,7 +133,6 @@ export const FixedToolbar = () => {
       <Remirror manager={manager} initialContent={state} autoFocus placeholder='Enter your text'>
         <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
         <EditorComponent />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

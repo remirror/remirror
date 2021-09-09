@@ -7,7 +7,6 @@ import {
   MentionAtomNodeAttributes,
   PlaceholderExtension,
 } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   FloatingWrapper,
   Remirror,
@@ -87,7 +86,6 @@ export const Basic = (): JSX.Element => {
     <ThemeProvider>
       <Remirror manager={manager} autoRender='end'>
         <UserSuggestor />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
@@ -105,7 +103,6 @@ export const PrefilledContent = (): JSX.Element => {
     <ThemeProvider>
       <Remirror manager={manager} autoRender='end' initialContent={state}>
         <UserSuggestor />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

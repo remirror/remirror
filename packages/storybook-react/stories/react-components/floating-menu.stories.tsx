@@ -1,5 +1,4 @@
 import { ColumnsExtension, wysiwygPreset } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   ComponentItem,
   EditorComponent,
@@ -121,7 +120,6 @@ export const FloatingBlockNodeEditor = () => {
           placement='right-end'
           positioner='emptyBlockStart'
         />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
@@ -139,7 +137,6 @@ export const ActionsEditor = () => {
       <Remirror manager={manager} initialContent={state} autoFocus>
         <EditorComponent />
         <FloatingActionsMenu actions={floatingActions} />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
@@ -158,7 +155,6 @@ export const EditorWithLotsOfContent = () => {
       <Remirror manager={manager} initialContent={state} autoFocus>
         <EditorComponent />
         <FloatingToolbar items={floatingToolbarItems} positioner='selection' />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

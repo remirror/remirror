@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { WysiwygEditor } from '@remirror/react-editors/wysiwyg';
 
 import { useHelpers, useRemirrorContext } from '../../../remirror__react-core/src';
@@ -36,7 +35,6 @@ export const Basic = () => {
     <WysiwygEditor placeholder='Start typing...'>
       <LoadButton />
       <SaveButton />
-      <ProsemirrorDevTools />
     </WysiwygEditor>
   );
 };

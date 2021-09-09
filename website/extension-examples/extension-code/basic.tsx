@@ -7,16 +7,23 @@
 // @ts-nocheck
 
 import CodeBlock from '@theme/CodeBlock';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-code/basic.tsx';
 
-import ComponentStory from '../../../packages/storybook-react/stories/extension-code/basic';
-import { ExampleRoot } from '../../components/example-root';
+import { StoryExample } from '../../src/components/story-example-component';
 
 const ExampleComponent = (): JSX.Element => {
-  const story = <ComponentStory />;
+  const story = (
+    <BrowserOnly>
+      {() => {
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-code/basic').default
+        return <ComponentStory/>
+      }}
+    </BrowserOnly>
+  );
   const source = <CodeBlock className='language-tsx'>{ComponentSource}</CodeBlock>;
 
-  return <ExampleRoot story={story} source={source} />;
+  return <StoryExample story={story} source={source} />;
 };
 
 export default ExampleComponent;

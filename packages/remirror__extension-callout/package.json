@@ -45,10 +45,7 @@
     "@remirror/theme": "^1.1.2"
   },
   "devDependencies": {
-    "@joeattardi/emoji-button": "^4.6.0",
-    "@remirror/pm": "^1.0.2",
-    "@svgmoji/blob": "^3.1.0",
-    "svgmoji": "^3.2.0"
+    "@remirror/pm": "^1.0.2"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.1"

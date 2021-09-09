@@ -3,7 +3,6 @@ import './styles.css';
 
 import { cx, htmlToProsemirrorNode } from 'remirror';
 import { CodeExtension } from 'remirror/extensions';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
 
 const extensions = () => [new CodeExtension()];
@@ -21,7 +20,7 @@ const CodeButton = () => {
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
     extensions: extensions,
-    content: '<p>Text as <code>code</code></p>',
+    content: '<p>Text as <code>code</code>.</p>',
     stringHandler: htmlToProsemirrorNode,
   });
 
@@ -35,7 +34,6 @@ const Basic = (): JSX.Element => {
         autoRender='end'
       >
         <CodeButton />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
