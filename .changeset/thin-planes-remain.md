@@ -2,4 +2,4 @@
 'prosemirror-resizable-view': minor
 ---
 
-make handle more recognizable
+Add a white border to the handle to make it more recognizable.
