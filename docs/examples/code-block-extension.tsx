@@ -1,18 +1,18 @@
 import CodeBlock from '@theme/CodeBlock';
 
-import MyComponentSource from '!!raw-loader!../../packages/storybook-react/stories/extension-code-block/code-block.stories';
+import ComponentSource from '!!raw-loader!../../packages/storybook-react/stories/extension-code-block/basic.stories';
 
-import { Basic } from '../../packages/storybook-react/stories/extension-code-block/code-block.stories';
+import ComponentStory from '../../packages/storybook-react/stories/extension-code-block/basic.stories';
 
 const ExampleComponent = (): JSX.Element => {
   return (
     <div>
       <div> EXAMPLE </div>
-      <Basic />
+      <ComponentStory.component />
       <div> hello 3 </div>
 
       <CodeBlock className='language-jsx' title='/src/myComponent'>
-        {MyComponentSource}
+        {ComponentSource}
       </CodeBlock>
     </div>
   );
