@@ -16,9 +16,6 @@ let config = {
     // For `remirror__lit-components`
     'lit',
     'lit-a11y',
-
-    // For custom hooks
-    '@kyleshevlin',
   ],
   extends: [
     'eslint:recommended',
@@ -276,9 +273,6 @@ let config = {
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
 
-    // See https://kyleshevlin.com/use-encapsulation
-    '@kyleshevlin/prefer-custom-hooks': 'warn',
-
     // Built in eslint rules
     'no-constant-condition': 'off', // To many false positives
     'no-empty': 'warn',
@@ -348,7 +342,6 @@ let config = {
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
         'react/display-name': 'off',
-        '@kyleshevlin/prefer-custom-hooks': 'off',
       },
     },
     {
@@ -523,7 +516,6 @@ if (process.env.FULL_ESLINT_CHECK) {
 
         // Set up rules to be excluded in the markdown blocks.
         rules: {
-          '@kyleshevlin/prefer-custom-hooks': 'off',
           'simple-import-sort/exports': 'warn',
           'simple-import-sort/imports': 'warn',
           'unicorn/filename-case': 'off',
