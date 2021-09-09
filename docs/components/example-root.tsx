@@ -5,12 +5,11 @@ interface ExampleProps {
   source: React.ComponentType;
 }
 
-export const Example: React.FC<ExampleProps> = ({ url, story, source }) => {
+export const ExampleRoot: React.FC<ExampleProps> = ({ story, source }) => {
   return (
     <div>
-      <div> Story: </div>
       {story}
-      <div> source: </div>
+      <strong>Source code:</strong>
       {source}
     </div>
   );
