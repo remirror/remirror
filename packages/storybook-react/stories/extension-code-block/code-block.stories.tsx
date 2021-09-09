@@ -1,5 +1,5 @@
-import { Basic } from './basic';
-import { WithIncorrectLanguage } from './with-incorrect-language';
+import Basic from './basic';
+import WithIncorrectLanguage from './with-incorrect-language';
 
 export default { title: 'Extensions / CodeBlock' };
 

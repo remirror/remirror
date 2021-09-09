@@ -9,12 +9,12 @@ const extensions = () => [
   }),
 ];
 
-const content = `<pre><code data-code-block-language="typescript">function sayHello{
+const content = `<pre><code data-code-block-language="typescript">function sayHello {
   console.log('hello world!')
 }</code></pre>
 `;
 
-export const Basic = (): JSX.Element => {
+const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
 
   return (
@@ -23,3 +23,5 @@ export const Basic = (): JSX.Element => {
     </ThemeProvider>
   );
 };
+
+export default Basic;

@@ -9,7 +9,7 @@ const extensions = () => [
   }),
 ];
 
-export const WithIncorrectLanguage = (): JSX.Element => {
+const WithIncorrectLanguage = (): JSX.Element => {
   const { manager, state } = useRemirror({
     extensions,
     content: {
@@ -31,7 +31,4 @@ export const WithIncorrectLanguage = (): JSX.Element => {
   );
 };
 
-export default {
-  title: 'Extensions / CodeBlock / With incorrect language',
-  component: WithIncorrectLanguage,
-};
+export default WithIncorrectLanguage;
