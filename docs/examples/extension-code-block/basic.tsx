@@ -1,7 +1,7 @@
 /**
  * THIS FILE IS AUTO GENERATED
  *
- * Run 'pnpm -w generate:website-examples' to regenerate this file.
+ * Run `pnpm -w generate:website-examples` to regenerate this file.
  */
 
 // @ts-nocheck
