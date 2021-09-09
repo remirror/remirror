@@ -3,9 +3,7 @@ hide_title: true
 title: 'CodeBlockExtension'
 ---
 
-import MyComponentSource from '!!raw-loader!../../packages/storybook-react/stories/extension-code-block/code-block.stories.tsx';
-import { Basic } from '../../packages/storybook-react/stories/extension-code-block/code-block.stories.tsx';
-import CodeBlock from '@theme/CodeBlock';
+import Demo from '../examples/code-block-extension';
 
 # `CodeBlockExtension`
 
@@ -31,15 +29,8 @@ The extension is provided by the `@remirror/extension-code-block` package. There
 
 ### Examples
 
-See [storybook](https://remirror.vercel.app/?path=/story/extensions-codeblock--basic) for examples.
-
-<div> hello 2 </div>
-<Basic />
-<div> hello 3 </div>
-
-<CodeBlock className='language-jsx' title='/src/myComponent'>
-  {MyComponentSource}
-</CodeBlock>
+<Demo />
+<Demo />
 
 ## API
 
