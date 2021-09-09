@@ -9,8 +9,10 @@ export const ExampleRoot: React.FC<ExampleProps> = ({ story, source }) => {
   return (
     <div>
       {story}
-      <strong>Source code:</strong>
-      {source}
+      <details>
+        <summary>Source code</summary>
+        <div>{source}</div>
+      </details>
     </div>
   );
 };
