@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { createBaseuploadFileUploader, FileExtension } from '@remirror/extension-file';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
- const WithBashupload = (): JSX.Element => {
+const WithBashupload = (): JSX.Element => {
   const extensions = useCallback(
     () => [new FileExtension({ uploadFileHandler: createBaseuploadFileUploader })],
     [],
@@ -27,4 +27,4 @@ import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 const content = `<p>Drag and drop one or multiple non-image files into the editor.</p>`;
 
-export default WithBashupload
+export default WithBashupload;
