@@ -16,12 +16,13 @@ const storiesDirPath = path.join(baseDir(), 'packages', 'storybook-react', 'stor
 function generateExampleContent(relativePath: string): string {
   const relativePathWithoutSuffix = relativePath.replace(/\.tsx$/i, '');
 
-  return `/* eslint-disable */
-/**
+  return `/**
  * THIS FILE IS AUTO GENERATED
  *
  * Run 'pnpm -w generate:website-examples' to regenerate this file.
  */
+
+// @ts-nocheck
 
 import CodeBlock from '@theme/CodeBlock';
 import ComponentSource from '!!raw-loader!../../packages/storybook-react/stories/${relativePath}';
@@ -40,22 +41,19 @@ export default ExampleComponent;
   `;
 }
 
+async function generateExampleFile(sourceFilePath: string) {
+  const relativePath = path.relative(storiesDirPath, sourceFilePath);
+  const examplePath = path.join(examplesDirPath, relativePath);
+  await fs.mkdir(path.dirname(examplePath), { recursive: true });
+  await fs.writeFile(examplePath, generateExampleContent(relativePath), { encoding: 'utf-8' });
+}
+
 async function run() {
   await rm(examplesDirPath);
-
   const filePaths = await globby(path.join(storiesDirPath, '**', '*.tsx'));
-
-  for (const filePath of filePaths) {
-    if (!filePath.endsWith('stories.tsx')) {
-      console.log(filePath);
-      const relativePath = path.relative(storiesDirPath, filePath);
-      console.log(relativePath);
-      const examplePath = path.join(examplesDirPath, relativePath);
-      console.log(examplePath);
-      await fs.mkdir(path.dirname(examplePath), { recursive: true });
-      await fs.writeFile(examplePath, generateExampleContent(relativePath), { encoding: 'utf-8' });
-    }
-  }
+  await Promise.all(
+    filePaths.filter((filePath) => !filePath.endsWith('stories.tsx')).map(generateExampleFile),
+  );
 }
 
 run();
