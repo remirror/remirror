@@ -1,8 +1,4 @@
-import 'remirror/styles/all.css';
+import Basic from './basic';
 
-import React from 'react';
-import { htmlToProsemirrorNode } from 'remirror';
-import { NodeFormattingExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
-
+export { Basic };
 export default { title: 'Extensions / NodeFormatting' };
