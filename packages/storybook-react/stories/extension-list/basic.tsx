@@ -14,7 +14,6 @@ import {
   useRemirror,
 } from '@remirror/react';
 
-
 const Button = (): JSX.Element => {
   const commands = useCommands();
 
@@ -28,7 +27,7 @@ const Button = (): JSX.Element => {
   );
 };
 
-  const Basic = (): JSX.Element => {
+const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({
     extensions,
     content,
@@ -163,4 +162,4 @@ const content = html`
   </ul>
 `;
 
-export default Basic
+export default Basic;
