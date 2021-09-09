@@ -11,9 +11,9 @@ const AddIframeButton = () => {
   return <button onClick={handleClick}>Add iframe</button>;
 };
 
-const Basic: React.FC = () => {
+const Resizable: React.FC = () => {
   const { manager } = useRemirror({
-    extensions: () => [new IframeExtension()],
+    extensions: () => [new IframeExtension({ enableResizing: true })],
   });
 
   return (
@@ -25,4 +25,4 @@ const Basic: React.FC = () => {
   );
 };
 
-export default Basic;
+export default Resizable;

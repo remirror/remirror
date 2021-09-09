@@ -4,25 +4,24 @@ import React from 'react';
 import { IframeExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
-const AddIframeButton = () => {
+const AddYoutubeButton = () => {
   const commands = useCommands();
-  const handleClick = () =>
-    commands.addIframe({ src: 'https://remirror.io/', height: 250, width: 500 });
-  return <button onClick={handleClick}>Add iframe</button>;
+  const handleClick = () => commands.addYouTubeVideo({ video: 'Zi7sRMcJT-o', startAt: 450 });
+  return <button onClick={handleClick}>Add video</button>;
 };
 
-const Basic: React.FC = () => {
+const Youtube: React.FC = () => {
   const { manager } = useRemirror({
-    extensions: () => [new IframeExtension()],
+    extensions: () => [new IframeExtension({ enableResizing: true })],
   });
 
   return (
     <ThemeProvider>
       <Remirror manager={manager} autoRender='end'>
-        <AddIframeButton />
+        <AddYoutubeButton />
       </Remirror>
     </ThemeProvider>
   );
 };
 
-export default Basic;
+export default Youtube;
