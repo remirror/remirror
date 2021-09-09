@@ -1,5 +1,3 @@
-import 'remirror/styles/all.css';
-
 import Basic from './basic';
 import Configurable from './configurable';
 
