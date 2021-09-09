@@ -1,5 +1,6 @@
-import CodeBlock from '@theme/CodeBlock';
+/** THIS FILE IS AUTO GENERATED */
 
+import CodeBlock from '@theme/CodeBlock';
 import ComponentSource from '!!raw-loader!../../packages/storybook-react/stories/extension-code-block/basic.tsx';
 
 import ComponentStory from '../../packages/storybook-react/stories/extension-code-block/basic';

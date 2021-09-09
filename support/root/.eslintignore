@@ -33,4 +33,5 @@ website/build
 **/storybook-static
 
 docs/api/
+docs/examples/
 support/api/
