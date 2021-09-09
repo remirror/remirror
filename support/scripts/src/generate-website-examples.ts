@@ -28,7 +28,7 @@ import CodeBlock from '@theme/CodeBlock';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/${relativePath}';
 
-import { StoryExample } from '../../components/example-root';
+import { StoryExample } from '../../src/components/story-example-component';
 
 const ExampleComponent = (): JSX.Element => {
   const story = (
