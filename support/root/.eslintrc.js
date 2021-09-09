@@ -328,7 +328,7 @@ let config = {
     {
       files: [
         '*.spec.{ts,tsx}*',
-        '*.stories.{ts,tsx}',
+        'packages/storybook-react/**',
         'support/**',
         'website/**',
         '**/__dts__/**',
