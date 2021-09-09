@@ -115,7 +115,7 @@ module.exports = {
           editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/blog/',
         },
         theme: {
-          customCss: require.resolve('./styles.css'),
+          customCss: [require.resolve('./styles.css'), require.resolve('remirror/styles/all.css')],
         },
       },
     ],
