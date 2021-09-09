@@ -1,7 +1,7 @@
 /**
  * @script
  *
- * Generate files under `docs/examples`
+ * Generate files under `website/extension-examples`
  */
 
 import fs from 'fs/promises';
@@ -10,14 +10,14 @@ import path from 'path';
 
 import { baseDir, rm } from './helpers';
 
-const examplesDirPath = path.join(baseDir(), 'docs', 'examples');
+const examplesDirPath = path.join(baseDir(), 'website', 'extension-examples');
 const storiesDirPath = path.join(baseDir(), 'packages', 'storybook-react', 'stories');
 
 function generateExampleContent(relativePath: string): string {
   const relativePathWithoutSuffix = relativePath.replace(/\.tsx$/i, '');
 
   return `/**
- * THIS FILE IS AUTO GENERATED
+ * THIS FILE IS AUTO GENERATED!
  *
  * Run \`pnpm -w generate:website-examples\` to regenerate this file.
  */

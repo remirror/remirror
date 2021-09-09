@@ -1,5 +1,5 @@
 /**
- * THIS FILE IS AUTO GENERATED
+ * THIS FILE IS AUTO GENERATED!
  *
  * Run `pnpm -w generate:website-examples` to regenerate this file.
  */
