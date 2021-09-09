@@ -7,10 +7,10 @@
 // @ts-nocheck
 
 import CodeBlock from '@theme/CodeBlock';
-import ComponentSource from '!!raw-loader!../../packages/storybook-react/stories/extension-code-block/with-incorrect-language.tsx';
+import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-code-block/with-incorrect-language.tsx';
 
-import ComponentStory from '../../packages/storybook-react/stories/extension-code-block/with-incorrect-language';
-import { ExampleRoot } from '../components/example-root';
+import ComponentStory from '../../../packages/storybook-react/stories/extension-code-block/with-incorrect-language';
+import { ExampleRoot } from '../../components/example-root';
 
 const ExampleComponent = (): JSX.Element => {
   const story = <ComponentStory />;

@@ -25,10 +25,10 @@ function generateExampleContent(relativePath: string): string {
 // @ts-nocheck
 
 import CodeBlock from '@theme/CodeBlock';
-import ComponentSource from '!!raw-loader!../../packages/storybook-react/stories/${relativePath}';
+import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/${relativePath}';
 
-import ComponentStory from '../../packages/storybook-react/stories/${relativePathWithoutSuffix}';
-import { ExampleRoot } from '../components/example-root';
+import ComponentStory from '../../../packages/storybook-react/stories/${relativePathWithoutSuffix}';
+import { ExampleRoot } from '../../components/example-root';
 
 const ExampleComponent = (): JSX.Element => {
   const story = <ComponentStory />;
@@ -50,7 +50,7 @@ async function generateExampleFile(sourceFilePath: string) {
 
 async function run() {
   await rm(examplesDirPath);
-  const filePaths = await globby(path.join(storiesDirPath, '**', '*.tsx'));
+  const filePaths = await globby(path.join(storiesDirPath, '*', '*.tsx'));
   await Promise.all(
     filePaths.filter((filePath) => !filePath.endsWith('stories.tsx')).map(generateExampleFile),
   );
