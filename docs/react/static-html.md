@@ -29,6 +29,6 @@ On the upside, this approach leads to the identical rendering as in editable mod
 
 The react-render provides a more efficient way to visualize Remirror documents: It renders the document directly to HTML, by-passing the editor completely. This implies that the visualization can look differently from the editor and that you'll have to implement rendering for all your custom node types.
 
-See [storybook](https://remirror.vercel.app/?path=/story/react-renderer-static-html--basic) for example usage.
+See [storybook](https://remirror.vercel.app/?path=/story/editors-react-renderer-static-html--basic) for example usage.
 
 _Note: Today only the most widely Remirror node types are supported by the react-render. Please file a ticket (or even better PR) if you require further node types._
