@@ -1,5 +1,16 @@
 # @remirror/extension-image
 
+## 1.0.8
+
+> 2021-09-13
+
+### Patch Changes
+
+- Add a white border to the handle to make it more recognizable.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.0
+
 ## 1.0.7
 
 > 2021-09-07

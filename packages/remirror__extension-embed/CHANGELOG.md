@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 1.1.5
+
+> 2021-09-13
+
+### Patch Changes
+
+- Add a white border to the handle to make it more recognizable.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.0
+
 ## 1.1.4
 
 > 2021-09-07

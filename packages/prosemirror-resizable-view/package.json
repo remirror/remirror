@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-resizable-view",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "private": false,
   "description": "A ProseMirror node view that make your node resizable",
   "keywords": [
