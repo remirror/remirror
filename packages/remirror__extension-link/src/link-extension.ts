@@ -117,7 +117,7 @@ export interface LinkOptions {
    * value.
    *
    * @default
-   * /(?:https?:\/\/)?[\da-z]+(?:[.-][\da-z]+)*\.[a-z]{2,8}(?::\d{1,5})?(?:\/\S*)?/gi
+   * /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi
    */
   autoLinkRegex?: Static<RegExp>;
 
@@ -172,7 +172,9 @@ export type LinkAttributes = ProsemirrorAttributes<{
     defaultProtocol: '',
     selectTextOnClick: false,
     openLinkOnClick: false,
-    autoLinkRegex: /(?:https?:\/\/)?[\da-z]+(?:[.-][\da-z]+)*\.[a-z]{2,8}(?::\d{1,5})?(?:\/\S*)?/gi,
+    // Based on https://gist.github.com/dperini/729294
+    autoLinkRegex:
+      /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi,
     defaultTarget: null,
     supportedTargets: [],
   },
@@ -669,7 +671,16 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
  * Extract the `href` from the provided text.
  */
 function extractHref(url: string, defaultProtocol: DefaultProtocol) {
-  return url.startsWith('http') || url.startsWith('//') ? url : `${defaultProtocol}//${url}`;
+  const startsWithProtocol = /^((?:https?|ftp)?:)\/\//.test(url);
+
+  // This isn't 100% precise because we allowed URLs without protocol
+  // For example, userid@example.com could be email address or link http://userid@example.com
+  const isEmail = !startsWithProtocol && url.includes('@');
+  if (isEmail) {
+    return `mailto:${url}`;
+  }
+
+  return startsWithProtocol ? url : `${defaultProtocol}//${url}`;
 }
 
 declare global {

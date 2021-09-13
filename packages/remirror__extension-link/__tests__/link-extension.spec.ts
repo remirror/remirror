@@ -638,6 +638,14 @@ describe('autolinking', () => {
       doc(p('a ', link({ href: '//test.com' })('test.com'))),
     );
   });
+
+  it('detects emails as auto link', () => {
+    editor.add(doc(p('<cursor>'))).insertText('user@example.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: 'mailto:user@example.com' })('user@example.com'))),
+    );
+  });
 });
 
 describe('onClick', () => {
