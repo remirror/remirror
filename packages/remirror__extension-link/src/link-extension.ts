@@ -172,7 +172,9 @@ export type LinkAttributes = ProsemirrorAttributes<{
     defaultProtocol: '',
     selectTextOnClick: false,
     openLinkOnClick: false,
-    autoLinkRegex: /(?:https?:\/\/)?[\da-z]+(?:[.-][\da-z]+)*\.[a-z]{2,8}(?::\d{1,5})?(?:\/\S*)?/gi,
+    // Based on https://gist.github.com/dperini/729294
+    autoLinkRegex:
+      /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?/gi,
     defaultTarget: null,
     supportedTargets: [],
   },
@@ -669,6 +671,13 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
  * Extract the `href` from the provided text.
  */
 function extractHref(url: string, defaultProtocol: DefaultProtocol) {
+  // This isn't 100% precise because we allowed URLs without protocol
+  // For example, userid@example.com could be email address or link http://userid@example.com
+  const isEmail = url.includes('@');
+  if (isEmail) {
+    return `mailto:${url}`;
+  }
+
   return url.startsWith('http') || url.startsWith('//') ? url : `${defaultProtocol}//${url}`;
 }
 
