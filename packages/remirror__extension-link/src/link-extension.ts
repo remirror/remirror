@@ -671,15 +671,16 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
  * Extract the `href` from the provided text.
  */
 function extractHref(url: string, defaultProtocol: DefaultProtocol) {
+  const startsWithProtocol = url.startsWith('http') || url.startsWith('//');
+
   // This isn't 100% precise because we allowed URLs without protocol
   // For example, userid@example.com could be email address or link http://userid@example.com
-  const isEmail = url.includes('@');
-
+  const isEmail = !startsWithProtocol && url.includes('@');
   if (isEmail) {
     return `mailto:${url}`;
   }
 
-  return url.startsWith('http') || url.startsWith('//') ? url : `${defaultProtocol}//${url}`;
+  return startsWithProtocol ? url : `${defaultProtocol}//${url}`;
 }
 
 declare global {
