@@ -1,5 +1,21 @@
 # remirror
 
+## 1.0.23
+
+> 2021-09-13
+
+### Patch Changes
+
+- feat: detect emails as links
+
+* Add a white border to the handle to make it more recognizable.
+
+* Updated dependencies []:
+  - @remirror/extension-link@1.1.0
+  - @remirror/preset-wysiwyg@1.1.1
+  - @remirror/extension-embed@1.1.5
+  - @remirror/extension-image@1.0.8
+
 ## 1.0.22
 
 > 2021-09-07

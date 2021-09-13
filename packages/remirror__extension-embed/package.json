@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-embed",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Add embedded content into your editor",
   "keywords": [
     "remirror",
@@ -44,7 +44,7 @@
     "@remirror/core": "^1.1.1",
     "@remirror/messages": "^1.0.2",
     "@types/querystringify": "^2.0.0",
-    "prosemirror-resizable-view": "^1.0.1",
+    "prosemirror-resizable-view": "^1.1.0",
     "querystringify": "^2.2.0"
   },
   "devDependencies": {

@@ -1,5 +1,13 @@
 # prosemirror-resizable-view
 
+## 1.1.0
+
+> 2021-09-13
+
+### Minor Changes
+
+- Add a white border to the handle to make it more recognizable.
+
 ## 1.0.1
 
 > 2021-09-04

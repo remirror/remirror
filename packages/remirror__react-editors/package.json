@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-editors",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A showcase of possible react editors built with remirror.",
   "keywords": [
     "remirror",
@@ -76,7 +76,7 @@
     "@types/refractor": "^3.0.2",
     "create-context-state": "^1.0.1",
     "refractor": "^3.3.1",
-    "remirror": "1.0.22",
+    "remirror": "1.0.23",
     "svgmoji": "^3.2.0"
   },
   "devDependencies": {
