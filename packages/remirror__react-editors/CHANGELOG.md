@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.10
+
+> 2021-09-15
+
+### Patch Changes
+
+- Fix a RangeError when calling list commands.
+
+- Updated dependencies []:
+  - remirror@1.0.24
+
 ## 0.1.9
 
 > 2021-09-13

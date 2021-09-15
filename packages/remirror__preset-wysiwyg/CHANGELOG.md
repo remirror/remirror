@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.2
+
+> 2021-09-15
+
+### Patch Changes
+
+- Fix a RangeError when calling list commands.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.0.12
+
 ## 1.1.1
 
 > 2021-09-13
