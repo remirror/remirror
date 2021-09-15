@@ -70,6 +70,22 @@ describe('toggleList', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
+  it('toggles bullet list to task list', () => {
+    const from = doc(ul(li(p('make <cursor>list'))));
+    const to = doc(taskList(unchecked(p('make <cursor>list'))));
+
+    editor.add(from).commands.toggleTaskList();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('toggles task list to ordered list', () => {
+    const from = doc(taskList(unchecked(p('make <cursor>list'))));
+    const to = doc(ol(li(p('make list'))));
+
+    editor.add(from).commands.toggleOrderedList();
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
   it('toggles nested ordered list to bullet list', () => {
     const from = doc(
       ol(
