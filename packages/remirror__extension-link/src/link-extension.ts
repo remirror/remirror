@@ -676,6 +676,7 @@ function extractHref(url: string, defaultProtocol: DefaultProtocol) {
   // This isn't 100% precise because we allowed URLs without protocol
   // For example, userid@example.com could be email address or link http://userid@example.com
   const isEmail = !startsWithProtocol && url.includes('@');
+
   if (isEmail) {
     return `mailto:${url}`;
   }

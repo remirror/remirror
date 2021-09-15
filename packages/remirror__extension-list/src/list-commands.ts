@@ -340,7 +340,7 @@ function deepChangeListType(
 
   const newList = listType.createChecked(null, newItems);
 
-  const start = foundList.start;
+  const start = foundList.pos;
   const end = start + oldList.nodeSize;
   const from = tr.selection.from;
 

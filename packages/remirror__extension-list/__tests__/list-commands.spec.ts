@@ -24,65 +24,73 @@ describe('toggleList', () => {
 
   it('toggles paragraph to bullet list', () => {
     const from = doc(p('make <cursor>list'));
-    const to = doc(ul(li(p('make list'))));
+    const to = doc(ul(li(p('make xxlist'))));
 
     editor.add(from).commands.toggleBulletList();
+    editor.insertText('xx');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
   it('toggles bullet list to paragraph', () => {
     const from = doc(ul(li(p('make <cursor>list'))));
-    const to = doc(p('make list'));
+    const to = doc(p('make xxlist'));
 
     editor.add(from).commands.toggleBulletList();
+    editor.insertText('xx');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
   it('toggles task list to paragraph', () => {
     const from = doc(taskList(checked(p('make <cursor>list'))));
-    const to = doc(p('make list'));
+    const to = doc(p('make xxlist'));
 
     editor.add(from).commands.toggleTaskList();
+    editor.insertText('xx');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
   it('toggles paragraph to task list', () => {
-    const from = doc(p('make list'));
-    const to = doc(taskList(unchecked(p('make <cursor>list'))));
+    const from = doc(p('make <cursor>list'));
+    const to = doc(taskList(unchecked(p('make xxlist'))));
 
     editor.add(from).commands.toggleTaskList();
+    editor.insertText('xx');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
   it('toggles ordered list to bullet list', () => {
     const from = doc(ol(li(p('make <cursor>list'))));
-    const to = doc(ul(li(p('make list'))));
+    const to = doc(ul(li(p('make xxlist'))));
 
     editor.add(from).commands.toggleBulletList();
+    editor.insertText('xx');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
   it('toggles bullet list to ordered list', () => {
     const from = doc(ul(li(p('make <cursor>list'))));
-    const to = doc(ol(li(p('make list'))));
+    const to = doc(ol(li(p('make xxlist'))));
 
     editor.add(from).commands.toggleOrderedList();
+    editor.insertText('xx');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
   it('toggles bullet list to task list', () => {
     const from = doc(ul(li(p('make <cursor>list'))));
-    const to = doc(taskList(unchecked(p('make <cursor>list'))));
+    const to = doc(taskList(unchecked(p('make xxlist'))));
 
     editor.add(from).commands.toggleTaskList();
+    editor.insertText('xx');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
   it('toggles task list to ordered list', () => {
     const from = doc(taskList(unchecked(p('make <cursor>list'))));
-    const to = doc(ol(li(p('make list'))));
+    const to = doc(ol(li(p('make xxlist'))));
 
     editor.add(from).commands.toggleOrderedList();
+    editor.insertText('xx');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
