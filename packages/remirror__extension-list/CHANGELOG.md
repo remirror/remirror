@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.0.12
+
+> 2021-09-15
+
+### Patch Changes
+
+- Fix a RangeError when calling list commands.
+
 ## 1.0.11
 
 > 2021-09-07
