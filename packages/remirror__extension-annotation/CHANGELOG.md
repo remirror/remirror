@@ -1,5 +1,17 @@
 # @remirror/extension-annotation
 
+## 1.0.7
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/core@1.1.2
+  - @remirror/extension-positioner@1.1.4
+
 ## 1.0.6
 
 > 2021-09-07

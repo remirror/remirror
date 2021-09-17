@@ -1,5 +1,18 @@
 # @remirror/extension-file
 
+## 0.2.4
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/core@1.1.2
+  - @remirror/react@1.0.10
+  - @remirror/react-components@1.0.9
+
 ## 0.2.3
 
 > 2021-09-07

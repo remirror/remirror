@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 1.0.10
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.6
+  - @remirror/extension-positioner@1.1.4
+  - @remirror/extension-react-component@1.0.7
+  - @remirror/extension-react-ssr@1.0.6
+  - @remirror/extension-react-tables@1.0.10
+  - @remirror/preset-react@1.0.6
+  - @remirror/react-components@1.0.9
+  - @remirror/react-core@1.0.8
+  - @remirror/react-hooks@1.0.9
+  - @remirror/react-renderer@1.0.7
+  - @remirror/react-ssr@1.0.6
+
 ## 1.0.9
 
 > 2021-09-07

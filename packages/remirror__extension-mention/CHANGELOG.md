@@ -1,5 +1,17 @@
 # @remirror/extension-mention
 
+## 1.0.5
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/core@1.1.2
+  - @remirror/extension-events@1.0.5
+
 ## 1.0.4
 
 > 2021-09-07

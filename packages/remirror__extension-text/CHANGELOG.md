@@ -1,5 +1,16 @@
 # @remirror/extension-text
 
+## 1.0.5
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/core@1.1.2
+
 ## 1.0.4
 
 > 2021-09-07

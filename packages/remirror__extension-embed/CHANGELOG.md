@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 1.1.6
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/core@1.1.2
+
 ## 1.1.5
 
 > 2021-09-13

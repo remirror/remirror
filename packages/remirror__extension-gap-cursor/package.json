@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-gap-cursor",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Enable cursors for difficult to reach parts of the document.",
   "keywords": [
     "remirror",
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.1.1",
+    "@remirror/core": "^1.1.2",
     "@remirror/messages": "^1.0.2"
   },
   "devDependencies": {

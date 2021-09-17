@@ -1,5 +1,30 @@
 # @remirror/preset-formatting
 
+## 1.0.8
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/core@1.1.2
+  - @remirror/extension-bold@1.0.5
+  - @remirror/extension-columns@1.0.5
+  - @remirror/extension-font-size@1.0.5
+  - @remirror/extension-heading@1.0.5
+  - @remirror/extension-italic@1.0.5
+  - @remirror/extension-node-formatting@1.0.8
+  - @remirror/extension-strike@1.0.5
+  - @remirror/extension-sub@1.0.5
+  - @remirror/extension-sup@1.0.5
+  - @remirror/extension-text-case@1.0.5
+  - @remirror/extension-text-color@1.0.6
+  - @remirror/extension-text-highlight@1.0.6
+  - @remirror/extension-underline@1.0.5
+  - @remirror/extension-whitespace@1.0.5
+
 ## 1.0.7
 
 > 2021-09-07
