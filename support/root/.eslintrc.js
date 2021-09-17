@@ -83,7 +83,6 @@ let config = {
     'unicorn/prefer-date-now': 'error',
     'unicorn/prefer-default-parameters': 'error',
     'unicorn/prefer-dom-node-append': 'error',
-    'unicorn/prefer-dom-node-dataset': 'error',
     'unicorn/prefer-dom-node-remove': 'error',
     'unicorn/prefer-dom-node-text-content': 'error',
     'unicorn/prefer-includes': 'error',

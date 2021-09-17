@@ -13,6 +13,7 @@ import {
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorAttributes,
+  ProsemirrorNode,
   Static,
 } from '@remirror/core';
 import { NodeSelection } from '@remirror/pm/state';
@@ -73,25 +74,23 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       const mark: HTMLElement = document.createElement('div');
       mark.classList.add(ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_BUTTON);
       mark.contentEditable = 'false';
+      mark.addEventListener('click', () => {
+        if (mark.classList.contains('disabled')) {
+          return;
+        }
 
-      if (node.childCount <= 1) {
-        mark.classList.add('disabled');
-      } else {
-        mark.addEventListener('click', () => {
-          const pos = (getPos as () => number)();
-          const selection = NodeSelection.create(view.state.doc, pos);
-          view.dispatch(view.state.tr.setSelection(selection));
-          this.store.commands.toggleListItemClosed();
-          return true;
-        });
-      }
+        const pos = (getPos as () => number)();
+        const selection = NodeSelection.create(view.state.doc, pos);
+        view.dispatch(view.state.tr.setSelection(selection));
+        this.store.commands.toggleListItemClosed();
+        return true;
+      });
 
       return createCustomMarkListItemNodeView({
-        view: this.store.view,
         mark,
-        extraClasses: node.attrs.closed
-          ? [ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_CLOSED]
-          : undefined,
+        node,
+        updateDOM: updateNodeViewDOM,
+        updateMark: updateNodeViewMark,
       });
     };
   }
@@ -136,6 +135,16 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
   liftListItemOutOfList(): CommandFunction {
     return liftListItemOutOfList(this.type);
   }
+}
+
+function updateNodeViewDOM(node: ProsemirrorNode, dom: HTMLElement) {
+  node.attrs.closed
+    ? dom.classList.add(ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_CLOSED)
+    : dom.classList.remove(ExtensionListTheme.COLLAPSIBLE_LIST_ITEM_CLOSED);
+}
+
+function updateNodeViewMark(node: ProsemirrorNode, mark: HTMLElement) {
+  node.childCount <= 1 ? mark.classList.add('disabled') : mark.classList.remove('disabled');
 }
 
 export interface ListItemOptions {

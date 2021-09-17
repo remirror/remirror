@@ -1,52 +1,44 @@
-import type { EditorView, NodeView } from '@remirror/pm/view';
+import { ProsemirrorNode } from '@remirror/pm';
+import type { NodeView } from '@remirror/pm/view';
 import { ExtensionListTheme } from '@remirror/theme';
 
+type UpdateElement = (node: ProsemirrorNode, dom: HTMLElement) => void;
+
 export function createCustomMarkListItemNodeView({
+  node,
   mark,
-  extraAttrs,
-  extraClasses,
-  view,
+  updateDOM,
+  updateMark,
 }: {
+  node: ProsemirrorNode;
   mark: HTMLElement;
-  extraAttrs?: Record<string, string>;
-  extraClasses?: string[];
-  view: EditorView;
+  updateDOM: UpdateElement;
+  updateMark: UpdateElement;
 }): NodeView {
-  const dom = document.createElement('li');
-  dom.classList.add(ExtensionListTheme.LIST_ITEM_WITH_CUSTOM_MARKER);
-
-  if (extraClasses) {
-    extraClasses.forEach((className) => dom.classList.add(className));
-  }
-
   const markContainer = document.createElement('span');
   markContainer.contentEditable = 'false';
   markContainer.classList.add(ExtensionListTheme.LIST_ITEM_MARKER_CONTAINER);
+  markContainer.append(mark);
 
   const contentDOM = document.createElement('div');
 
-  markContainer.append(mark);
+  const dom = document.createElement('li');
+  dom.classList.add(ExtensionListTheme.LIST_ITEM_WITH_CUSTOM_MARKER);
   dom.append(markContainer);
   dom.append(contentDOM);
 
-  // When a list item node's `content` updates, it's necessary to re-run the
-  // nodeView function so that the list item node's `disabled` class can be
-  // updated.
-  //
-  // However, when users are using IME, never re-create the nodeView. See also #1017.
-  const update = (): boolean => {
-    if (view?.composing) {
-      return true;
+  const update = (newNode: ProsemirrorNode): boolean => {
+    if (newNode.type !== node.type) {
+      return false;
     }
 
-    return false;
+    node = newNode;
+    updateDOM(node, dom);
+    updateMark(node, mark);
+    return true;
   };
 
-  if (extraAttrs) {
-    for (const [key, value] of Object.entries(extraAttrs)) {
-      dom.setAttribute(key, value);
-    }
-  }
+  update(node);
 
   return { dom, contentDOM, update };
 }

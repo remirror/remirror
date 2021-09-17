@@ -14,6 +14,7 @@ import {
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorAttributes,
+  ProsemirrorNode,
 } from '@remirror/core';
 import { InputRule } from '@remirror/pm/inputrules';
 import { ResolvedPos } from '@remirror/pm/model';
@@ -83,25 +84,22 @@ export class TaskListItemExtension extends NodeExtension {
 
   createNodeViews(): NodeViewMethod | Record<string, never> {
     return (node, view, getPos) => {
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.checked = !!node.attrs.checked;
-      checkbox.classList.add(ExtensionListTheme.LIST_ITEM_CHECKBOX);
-      checkbox.contentEditable = 'false';
-      checkbox.addEventListener('click', () => {
+      const mark = document.createElement('input');
+      mark.type = 'checkbox';
+      mark.classList.add(ExtensionListTheme.LIST_ITEM_CHECKBOX);
+      mark.contentEditable = 'false';
+      mark.addEventListener('click', () => {
         const pos = (getPos as () => number)();
         const $pos = view.state.doc.resolve(pos + 1);
         this.store.commands.toggleCheckboxChecked({ $pos });
         return true;
       });
 
-      const extraAttrs: Record<string, string> = node.attrs.checked
-        ? { 'data-task-list-item': '', 'data-checked': '' }
-        : { 'data-task-list-item': '' };
       return createCustomMarkListItemNodeView({
-        view: this.store.view,
-        mark: checkbox,
-        extraAttrs,
+        node,
+        mark,
+        updateDOM: updateNodeViewDOM,
+        updateMark: updateNodeViewMark,
       });
     };
   }
@@ -214,6 +212,15 @@ export class TaskListItemExtension extends NodeExtension {
 
     return [defaultInputRule, listItemInputRule];
   }
+}
+
+function updateNodeViewDOM(node: ProsemirrorNode, dom: HTMLElement) {
+  node.attrs.checked ? dom.setAttribute('data-checked', '') : dom.removeAttribute('data-checked');
+  dom.setAttribute('data-task-list-item', '');
+}
+
+function updateNodeViewMark(node: ProsemirrorNode, mark: HTMLElement) {
+  (mark as HTMLInputElement).checked = !!node.attrs.checked;
 }
 
 export type TaskListItemAttributes = ProsemirrorAttributes<{
