@@ -288,23 +288,21 @@ export class SchemaExtension extends PlainExtension {
           return null;
         }
 
+        // If there isn't any dynamic attributes, then we skip the descendant
+        // step below. This could improve performance for most users.
+        const hasDynamicAttributes =
+          Object.keys(this.dynamicAttributes.marks).length > 0 ||
+          Object.keys(this.dynamicAttributes.nodes).length > 0;
+
         // This function loops through every node in the document and add the
         // dynamic attributes when any relevant nodes have been added.
-        findChildren({
-          // The parent node is the entire document.
-          node: tr.doc,
-
-          // This means that all nodes will be checked since it always returns
-          // true.
-          predicate: () => true,
-
-          // An action handler which is called whenever the predicate is truthy,
-          // which in this case is all the time.
-          action: (child) => {
-            this.checkAndUpdateDynamicNodes(child, tr);
-            this.checkAndUpdateDynamicMarks(child, tr);
-          },
-        });
+        if (hasDynamicAttributes) {
+          tr.doc.descendants((child, pos) => {
+            this.checkAndUpdateDynamicNodes(child, pos, tr);
+            this.checkAndUpdateDynamicMarks(child, pos, tr);
+            return true;
+          });
+        }
 
         // If the transaction has any `steps` then it has been modified and
         // should be returned i.e. appended to the additional transactions.
@@ -353,13 +351,12 @@ export class SchemaExtension extends PlainExtension {
    * - b) has just been created and does not yet have a value for the dynamic
    *   node.
    *
-   * @param child - the node and its position.
+   * @param node - the node
+   * @param pos - the node's position
    * @param tr - the mutable ProseMirror transaction which is applied to create
    * the next editor state
    */
-  private checkAndUpdateDynamicNodes(child: NodeWithPosition, tr: Transaction) {
-    const { node, pos } = child;
-
+  private checkAndUpdateDynamicNodes(node: ProsemirrorNode, pos: number, tr: Transaction) {
     // Check for matching nodes.
     for (const [name, dynamic] of entries(this.dynamicAttributes.nodes)) {
       if (node.type.name !== name) {
@@ -390,13 +387,12 @@ export class SchemaExtension extends PlainExtension {
    * - b) has just been added and doesn't yet have the dynamic attribute
    *   applied.
    *
-   * @param child - the node and its position.
+   * @param node - the node
+   * @param pos - the node's position
    * @param tr - the mutable ProseMirror transaction which is applied to create
    * the next editor state.
    */
-  private checkAndUpdateDynamicMarks(child: NodeWithPosition, tr: Transaction) {
-    const { node, pos } = child;
-
+  private checkAndUpdateDynamicMarks(node: ProsemirrorNode, pos: number, tr: Transaction) {
     // Check for matching marks.
     for (const [name, dynamic] of entries(this.dynamicAttributes.marks)) {
       // This is needed to create the new mark. Even though a mark may already
