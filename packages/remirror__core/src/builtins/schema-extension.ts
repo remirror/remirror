@@ -9,7 +9,6 @@ import {
   entries,
   invariant,
   isArray,
-  isEmptyObject,
   isFunction,
   isNullOrUndefined,
   isPlainObject,
@@ -35,13 +34,11 @@ import type {
   Transaction,
 } from '@remirror/core-types';
 import {
-  findChildren,
   getDefaultBlockNode,
   getMarkRange,
   isElementDomNode,
   isProsemirrorMark,
   isProsemirrorNode,
-  NodeWithPosition,
 } from '@remirror/core-utils';
 import { MarkSpec, NodeSpec, Schema } from '@remirror/pm/model';
 import { ignoreUpdateForSuggest } from '@remirror/pm/suggest';
@@ -211,14 +208,16 @@ export class SchemaExtension extends PlainExtension {
         // Store the node spec on the extension for future reference.
         extension.spec = spec;
 
-        // Add the spec to the nodes object which is used to create the schema
+        // Add the spec to the `nodes` object which is used to create the schema
         // with the same name as the extension name.
         nodes[extension.name] = spec as NodeSpec;
 
         // Keep track of the dynamic attributes. The `extension.name` is the
         // same name of the `NodeType` and is used by the plugin in this
         // extension to dynamically generate attributes for the correct nodes.
-        this.dynamicAttributes.nodes[extension.name] = dynamic;
+        if (Object.keys(dynamic).length > 0) {
+          this.dynamicAttributes.nodes[extension.name] = dynamic;
+        }
       }
 
       // Very similar to the previous conditional block except for marks rather
@@ -242,7 +241,13 @@ export class SchemaExtension extends PlainExtension {
         // Add the spec to the `marks` object which is used to create the schema
         // with the same name as the extension name.
         marks[extension.name] = spec as MarkSpec;
-        this.dynamicAttributes.marks[extension.name] = dynamic;
+
+        // Keep track of the dynamic attributes. The `extension.name` is the
+        // same name of the `MarkType` and is used by the plugin in this
+        // extension to dynamically generate attributes for the correct marks.
+        if (Object.keys(dynamic).length > 0) {
+          this.dynamicAttributes.marks[extension.name] = dynamic;
+        }
       }
     }
 
@@ -282,28 +287,20 @@ export class SchemaExtension extends PlainExtension {
         // committing to that level of work let's check that there user has
         // actually defined some dynamic attributes.
         if (
-          isEmptyObject(this.dynamicAttributes.nodes) ||
-          isEmptyObject(this.dynamicAttributes.marks)
+          Object.keys(this.dynamicAttributes.nodes).length === 0 &&
+          Object.keys(this.dynamicAttributes.marks).length === 0
         ) {
           return null;
         }
 
         // This function loops through every node in the document and add the
         // dynamic attributes when any relevant nodes have been added.
-        findChildren({
-          // The parent node is the entire document.
-          node: tr.doc,
+        tr.doc.descendants((child, pos) => {
+          this.checkAndUpdateDynamicNodes(child, pos, tr);
+          this.checkAndUpdateDynamicMarks(child, pos, tr);
 
-          // This means that all nodes will be checked since it always returns
-          // true.
-          predicate: () => true,
-
-          // An action handler which is called whenever the predicate is truthy,
-          // which in this case is all the time.
-          action: (child) => {
-            this.checkAndUpdateDynamicNodes(child, tr);
-            this.checkAndUpdateDynamicMarks(child, tr);
-          },
+          // This means that all nodes will be checked.
+          return true;
         });
 
         // If the transaction has any `steps` then it has been modified and
@@ -353,13 +350,12 @@ export class SchemaExtension extends PlainExtension {
    * - b) has just been created and does not yet have a value for the dynamic
    *   node.
    *
-   * @param child - the node and its position.
+   * @param node - the node
+   * @param pos - the node's position
    * @param tr - the mutable ProseMirror transaction which is applied to create
    * the next editor state
    */
-  private checkAndUpdateDynamicNodes(child: NodeWithPosition, tr: Transaction) {
-    const { node, pos } = child;
-
+  private checkAndUpdateDynamicNodes(node: ProsemirrorNode, pos: number, tr: Transaction) {
     // Check for matching nodes.
     for (const [name, dynamic] of entries(this.dynamicAttributes.nodes)) {
       if (node.type.name !== name) {
@@ -390,13 +386,12 @@ export class SchemaExtension extends PlainExtension {
    * - b) has just been added and doesn't yet have the dynamic attribute
    *   applied.
    *
-   * @param child - the node and its position.
+   * @param node - the node
+   * @param pos - the node's position
    * @param tr - the mutable ProseMirror transaction which is applied to create
    * the next editor state.
    */
-  private checkAndUpdateDynamicMarks(child: NodeWithPosition, tr: Transaction) {
-    const { node, pos } = child;
-
+  private checkAndUpdateDynamicMarks(node: ProsemirrorNode, pos: number, tr: Transaction) {
     // Check for matching marks.
     for (const [name, dynamic] of entries(this.dynamicAttributes.marks)) {
       // This is needed to create the new mark. Even though a mark may already
