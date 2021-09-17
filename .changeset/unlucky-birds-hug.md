@@ -2,4 +2,4 @@
 '@remirror/extension-list': patch
 ---
 
-Improve the performance for large list.
+Improve the performance of large task lists and collapsible bullet lists.
