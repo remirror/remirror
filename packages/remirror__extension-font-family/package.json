@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-font-family",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Add a font family to selected text, or text within the provided range.",
   "keywords": [
     "remirror",
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.1.1",
+    "@remirror/core": "^1.1.2",
     "@remirror/messages": "^1.0.2"
   },
   "devDependencies": {

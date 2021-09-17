@@ -1,5 +1,20 @@
 # @remirror/react-components
 
+## 1.0.9
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/core@1.1.2
+  - @remirror/extension-positioner@1.1.4
+  - @remirror/extension-text-color@1.0.6
+  - @remirror/react-core@1.0.8
+  - @remirror/react-hooks@1.0.9
+
 ## 1.0.8
 
 > 2021-09-07

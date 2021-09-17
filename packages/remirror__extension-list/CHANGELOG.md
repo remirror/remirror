@@ -1,5 +1,19 @@
 # @remirror/extension-list
 
+## 1.0.13
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+* Improve the performance of large task lists and collapsible bullet lists.
+
+* Updated dependencies []:
+  - @remirror/core@1.1.2
+  - @remirror/extension-events@1.0.5
+
 ## 1.0.12
 
 > 2021-09-15

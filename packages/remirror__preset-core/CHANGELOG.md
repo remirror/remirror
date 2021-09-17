@@ -1,5 +1,23 @@
 # @remirror/preset-core
 
+## 1.0.7
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/core@1.1.2
+  - @remirror/extension-doc@1.0.6
+  - @remirror/extension-events@1.0.5
+  - @remirror/extension-gap-cursor@1.0.5
+  - @remirror/extension-history@1.0.5
+  - @remirror/extension-paragraph@1.0.5
+  - @remirror/extension-positioner@1.1.4
+  - @remirror/extension-text@1.0.5
+
 ## 1.0.6
 
 > 2021-09-07

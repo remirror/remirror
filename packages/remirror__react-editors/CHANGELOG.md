@@ -1,5 +1,20 @@
 # @remirror/react-editors
 
+## 0.1.11
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+* Improve the performance of large task lists and collapsible bullet lists.
+
+* Updated dependencies []:
+  - remirror@1.0.25
+  - @remirror/extension-react-tables@1.0.10
+  - @remirror/react@1.0.10
+
 ## 0.1.10
 
 > 2021-09-15
