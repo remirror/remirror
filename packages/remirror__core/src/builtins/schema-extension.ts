@@ -298,6 +298,8 @@ export class SchemaExtension extends PlainExtension {
         tr.doc.descendants((child, pos) => {
           this.checkAndUpdateDynamicNodes(child, pos, tr);
           this.checkAndUpdateDynamicMarks(child, pos, tr);
+
+          // This means that all nodes will be checked.
           return true;
         });
 
