@@ -215,7 +215,7 @@ export class TaskListItemExtension extends NodeExtension {
 }
 
 function updateNodeViewDOM(node: ProsemirrorNode, dom: HTMLElement) {
-  node.attrs.checked ? dom.classList.remove('data-checked') : dom.classList.remove('data-checked');
+  node.attrs.checked ? dom.classList.add('data-checked') : dom.classList.remove('data-checked');
   dom.classList.add('data-task-list-item');
 }
 
