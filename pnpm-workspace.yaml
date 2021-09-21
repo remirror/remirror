@@ -5,3 +5,4 @@ packages:
   - 'support/scripts'
   - 'support/templates/*'
   - 'website'
+  - 'site'
