@@ -35,7 +35,7 @@ The following creates a controlled editor with React.
 
 ```tsx
 import React from 'react';
-import { socialPreset } from 'remirror/extensions';
+import { SocialPreset } from 'remirror/extensions';
 import { Remirror, SocialEmojiComponent, useRemirror } from '@remirror/react';
 
 const EditorWrapper = () => {
