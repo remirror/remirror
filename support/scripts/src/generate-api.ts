@@ -1,81 +1,50 @@
-import { ExtractorLogLevel, IConfigFile } from '@microsoft/api-extractor';
-import { Worker as JestWorker } from 'jest-worker';
-import os from 'os';
-import pLimit from 'p-limit';
+import { getPackages } from '@manypkg/get-packages';
+import {
+  Extractor,
+  ExtractorConfig,
+  ExtractorLogLevel,
+  ExtractorResult,
+  IConfigFile,
+} from '@microsoft/api-extractor';
 import path from 'path';
 
-import type * as CustomWorker from './api-extractor.worker';
-import {
-  baseDir,
-  getAllDependencies,
-  getRelativePathFromJson,
-  log,
-  mangleScopedPackageName,
-} from './helpers';
+import { baseDir, mangleScopedPackageName } from './helpers';
 
-const [, , ...args] = process.argv;
-const fix = args.includes('--fix');
-const reportFolder = baseDir('support', 'api');
-const TEST_WORKER_PATH = baseDir(
-  './support/scripts/api-extractor.worker/dist/scripts-api-extractor.worker.cjs.js',
-);
+const reportFolderRoot = baseDir('support', 'api');
+const reportTempFolderRoot = baseDir('support', 'api', 'temp');
+const typedPackages = new Set(['prosemirror-suggest', 'prosemirror-trailing-node']);
 
 /**
  * Get all typed packages.
  */
-async function getPackages() {
-  const packages = await getAllDependencies();
+async function getTypedPackages() {
+  const packages = await getPackages(baseDir());
 
-  return packages.filter((pkg) => !pkg.private && pkg.types && !pkg['@remirror']?.skipApi);
-}
-
-const worker = new JestWorker(TEST_WORKER_PATH, {
-  exposedMethods: ['run'],
-  forkOptions: {
-    serialization: 'advanced',
-    stdio: 'pipe',
-  },
-  maxRetries: 1,
-  numWorkers: os.cpus().length - 1,
-}) as JestWorker & typeof CustomWorker;
-
-if (worker.getStdout()) {
-  worker.getStdout().pipe(process.stdout);
-}
-
-if (worker.getStderr()) {
-  worker.getStderr().pipe(process.stderr);
+  return packages.packages.filter((pkg) => {
+    const json = pkg.packageJson;
+    return !json.private && typedPackages.has(json.name);
+  });
 }
 
 /**
  * Run the api extra.
  */
 async function runApiExtractor() {
-  const packages = await getPackages();
-  // const limit = pLimit(os.cpus().length - 1);
-  const limit = pLimit(1);
-  const promises: Array<Promise<void>> = [];
+  const packages = await getTypedPackages();
 
-  for (const json of packages) {
-    if (
-      json.private ||
-      ['jest-prosemirror', 'jest-remirror', '@remirror/cli'].includes(json.name)
-    ) {
-      continue;
-    }
-
-    const typescriptCompilerFolder = baseDir('node_modules', 'typescript');
-    const relativePath = getRelativePathFromJson(json);
+  for (const pkg of packages) {
+    const json = pkg.packageJson;
+    const name = mangleScopedPackageName(json.name);
+    const relativePath = path.relative(baseDir(), pkg.dir);
     const projectFolder = baseDir(relativePath);
-    const mainEntryPointFilePath = path.join(projectFolder, json.types ?? '');
-    const configObjectFullPath = path.join(projectFolder, 'api-extractor.json');
-    const packageJsonFullPath = path.join(projectFolder, 'package.json');
-    const reportFileName = `${mangleScopedPackageName(json.name)}.api.md`;
-    const reportTempFolder = path.join(reportFolder, 'temp');
-    const apiJsonFilePath = path.join(
-      reportTempFolder,
-      `${mangleScopedPackageName(json.name)}.api.json`,
-    );
+    const mainEntryPointFilePath = path.join(pkg.dir, (json as any).types ?? '');
+    const packageJsonFullPath = path.join(pkg.dir, 'package.json');
+    const apiJsonFilePath = path.join(reportFolderRoot, `${name}.api.json`);
+    const reportFilePath = path.join(reportFolderRoot, `${name}.api.md`);
+    const reportTempFilePath = path.join(reportTempFolderRoot, `${name}.api.md`);
+    const reportFileName = path.parse(reportFilePath).base;
+    const reportFolder = path.parse(reportFilePath).dir;
+    const reportTempFolder = path.parse(reportTempFilePath).dir;
 
     const configObject: IConfigFile = {
       projectFolder,
@@ -116,30 +85,34 @@ async function runApiExtractor() {
       },
     };
 
-    promises.push(
-      limit(() =>
-        worker.run({
-          configObject,
-          configObjectFullPath,
-          packageJson: json as any,
-          packageJsonFullPath,
-          localBuild: !!fix,
-          typescriptCompilerFolder,
-        }),
-      ),
-    );
-  }
+    const extractorConfig: ExtractorConfig = ExtractorConfig.prepare({
+      configObject,
+      configObjectFullPath: undefined,
+      packageJson: json as any,
+      packageJsonFullPath,
+    });
 
-  await Promise.all(promises);
+    const extractorResult: ExtractorResult = Extractor.invoke(extractorConfig, {
+      // Equivalent to the "--local" command-line parameter
+      localBuild: true,
+
+      // Equivalent to the "--verbose" command-line parameter
+      showVerboseMessages: true,
+    });
+
+    if (extractorResult.succeeded) {
+      console.log(`API Extractor completed successfully`);
+    } else {
+      console.error(
+        `API Extractor completed with ${extractorResult.errorCount} errors and ${extractorResult.warningCount} warnings`,
+      );
+      throw new Error('failed to run API Extractor');
+    }
+  }
 }
 
 async function run() {
-  try {
-    await runApiExtractor();
-  } catch (error: any) {
-    log.fatal(error);
-    process.exit(1);
-  }
+  await runApiExtractor();
 }
 
 run();

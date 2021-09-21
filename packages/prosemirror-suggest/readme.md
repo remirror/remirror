@@ -47,7 +47,7 @@ The installation requires the installation of the peer dependencies `prosemirror
 
 This documentation will be updated soon.
 
-`prosemirror-suggest` uses configuration objects called `Suggester`<!-- -->'s to define the behaviour of the suggesters you create. By calling the exported `suggest` method with all required `Suggester`<!-- -->'s the functionality is added to the editor in one plugin.
+`prosemirror-suggest` uses configuration objects called `Suggester`'s to define the behaviour of the suggesters you create. By calling the exported `suggest` method with all required `Suggester`'s the functionality is added to the editor in one plugin.
 
 In the following example we're creating an emoji suggestion plugin that responds to the colon character with a query and presents a list of matching emojis based on the query typed so far.
 

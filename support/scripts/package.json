@@ -21,7 +21,6 @@
   "module": "dist/scripts.esm.js",
   "files": [
     "dist",
-    "api-extractor.worker",
     "changelog-dates",
     "changeset-forced-update",
     "changeset-update-dependents",
@@ -128,7 +127,6 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "api-extractor.worker.ts",
       "changelog-dates.ts",
       "changeset-forced-update.ts",
       "changeset-update-dependents.ts",
