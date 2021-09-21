@@ -2350,6 +2350,8 @@ importers:
       remirror: 1.0.25
       scripts: 0.0.1
       svgmoji: ^3.2.0
+      y-webrtc: ^10.2.0
+      yjs: ^13.5.11
     dependencies:
       '@babel/runtime': 7.15.3
       '@emotion/css': 11.1.3_@babel+core@7.15.0
@@ -2394,6 +2396,8 @@ importers:
       remirror: link:../remirror
       scripts: link:../../support/scripts
       svgmoji: 3.2.0
+      y-webrtc: 10.2.0
+      yjs: 13.5.12
     devDependencies:
       '@types/node': 16.7.1
 
@@ -11227,7 +11231,6 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-    dev: true
 
   /builtin-modules/3.2.0:
     resolution: {integrity: sha512-lGzLKcioL90C7wMczpkY0n/oART3MbBa8R9OFGE1rJxoVI86u4WAGfEk8Wjv10eKSyTHVGkSo3bvBylCEtk7LA==}
@@ -13789,7 +13792,6 @@ packages:
 
   /err-code/3.0.1:
     resolution: {integrity: sha512-GiaH0KJUewYok+eeY05IIgjtAe4Yltygk9Wqp1V5yVWLdhf0hYZchRjNIT9bb0mSwRcIusT3cx7PJUf3zEIfUA==}
-    dev: true
 
   /errlop/2.2.0:
     resolution: {integrity: sha512-e64Qj9+4aZzjzzFpZC7p5kmm/ccCrbLhAJplhsDXQFs87XTsXwOpH4s1Io2s90Tau/8r2j9f4l/thhDevRjzxw==}
@@ -15462,7 +15464,6 @@ packages:
 
   /get-browser-rtc/1.1.0:
     resolution: {integrity: sha512-MghbMJ61EJrRsDe7w1Bvqt3ZsBuqhce5nrn/XAwgwOXhcsz53/ltdxOse1h/8eKXj5slzxdsz56g5rzOFSGwfQ==}
-    dev: true
 
   /get-caller-file/2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
@@ -24301,7 +24302,6 @@ packages:
       readable-stream: 3.6.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /simple-swizzle/0.2.2:
     resolution: {integrity: sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=}
@@ -27156,7 +27156,6 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: true
     optional: true
 
   /ws/8.2.1:
@@ -27273,7 +27272,6 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
-    dev: true
 
   /y18n/3.2.2:
     resolution: {integrity: sha512-uGZHXkHnhF0XeeAPgnKfPv1bgKAYyVvmNL1xlKsPYZPaIHxGti2hHqvOCQv71XMsLxu1QjergkqogUnms5D3YQ==}

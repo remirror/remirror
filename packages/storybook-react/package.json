@@ -73,7 +73,9 @@
     "refractor": "^3.3.1",
     "remirror": "1.0.25",
     "scripts": "0.0.1",
-    "svgmoji": "^3.2.0"
+    "svgmoji": "^3.2.0",
+    "y-webrtc": "^10.2.0",
+    "yjs": "^13.5.11"
   },
   "devDependencies": {
     "@types/node": "^16.3.3"
