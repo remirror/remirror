@@ -1,11 +1,11 @@
-import { ReactElement } from 'react';
-import { Annotations, BaseStory } from '@storybook/addons';
-import { Placement } from '@popperjs/core';
-import { FloatingWrapper, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-import type { PositionerParam } from 'remirror/extensions';
-
 import 'remirror/styles/all.css';
 import './styles.css';
+
+import { Placement } from '@popperjs/core';
+import { Annotations, BaseStory } from '@storybook/addons';
+import { ReactElement } from 'react';
+import type { PositionerParam } from 'remirror/extensions';
+import { FloatingWrapper, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 type Story = BaseStory<TemplateArgs, JSX.Element> & Annotations<TemplateArgs, JSX.Element>;
 
@@ -40,8 +40,13 @@ const Template: Story = ({ children, positioner }: TemplateArgs) => {
       {children}
       <Remirror manager={manager} initialContent={state} onChange={onChange} autoRender>
         <>
-          {Array.from(placements.entries()).map(([label, placement]) => (
-            <Positioners positioner={positioner} label={label} placement={placement} />
+          {[...placements.entries()].map(([label, placement]) => (
+            <Positioners
+              key={placement}
+              positioner={positioner}
+              label={label}
+              placement={placement}
+            />
           ))}
         </>
       </Remirror>
