@@ -40,14 +40,8 @@ module.exports = {
           label: 'Docs',
           position: 'right',
         },
-        {
-          to: 'docs/api',
-          activeBasePath: 'docs/api',
-          label: 'API',
-          position: 'right',
-        },
         { to: '/blog', label: 'Blog', position: 'right' },
-        { to: '/chat', label: 'Chat', position: 'right' },
+        { href: 'https://discord.gg/C4cfrMK', label: 'Chat', position: 'right' },
         {
           href: 'https://github.com/remirror/remirror',
           label: 'GitHub',
