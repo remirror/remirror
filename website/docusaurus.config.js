@@ -108,7 +108,28 @@ module.exports = {
         docs: {
           path: path.join(__dirname, '../docs'),
           sidebarPath: require.resolve('./sidebar.js'),
-          editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/',
+          editUrl: (
+            {
+              version,
+              versionDocsDirPath,
+              docPath,
+              permalink,
+              locale,
+            }
+          ) => {
+            console.log('editUrl:',{
+              version,
+              versionDocsDirPath,
+              docPath,
+              permalink,
+              locale,
+            })
+
+            // API documents are generated, so they won't have urls for directly edit.
+            if (permalink.startsWith('/docs/api')) {return}
+
+            return 'https://github.com/remirror/remirror/edit/HEAD/website/'
+          },
         },
         blog: {
           showReadingTime: true,
