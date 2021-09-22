@@ -8,7 +8,7 @@
   },
   "type": "module",
   "scripts": {
-    "api": "node support/scripts/generate-api && api-documenter markdown -i ./support/api -o ./docs/api",
+    "api": "node support/scripts/generate-api && api-documenter generate -i ./support/api -o ./docs/api",
     "browser:coverage": "browserslist --coverage",
     "build": "run-p build:core css:copy",
     "build:core": "preconstruct build",
@@ -175,7 +175,7 @@
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
     "delay": "^5.0.0",
-    "doc-plugin-remirror": "^0.1.0",
+    "doc-plugin-remirror": "^0.2.0",
     "downlevel-dts": "^0.7.0",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.2.0",
