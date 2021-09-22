@@ -31,8 +31,9 @@ const ReplaceContentAndClearHistory = (): JSX.Element => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} state={state} onChange={onChange} />
-      <button onClick={handleClick}>Replace content</button>
+      <Remirror manager={manager} state={state} onChange={onChange} autoRender='end'>
+        <button onClick={handleClick}>Replace content</button>
+      </Remirror>
     </ThemeProvider>
   );
 };
