@@ -71,7 +71,7 @@ importers:
       cpy-cli: ^3.1.1
       cross-env: ^7.0.3
       delay: ^5.0.0
-      doc-plugin-remirror: ^0.2.0
+      doc-plugin-remirror: ^0.2.1
       downlevel-dts: ^0.7.0
       eslint: ^7.30.0
       eslint-config-prettier: ^8.2.0
@@ -185,7 +185,7 @@ importers:
       cpy-cli: 3.1.1
       cross-env: 7.0.3
       delay: 5.0.0
-      doc-plugin-remirror: 0.2.0
+      doc-plugin-remirror: 0.2.1
       downlevel-dts: 0.7.0
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
@@ -13408,8 +13408,8 @@ packages:
     dependencies:
       buffer-indexof: 1.1.1
 
-  /doc-plugin-remirror/0.2.0:
-    resolution: {integrity: sha512-mgTq26eNaitgF+8tBj0ml5x83+HkVm7FEKiSzWGe+oFqnxxOhn5c4VaKeLCLW+BH4kKU4tPmqM651PIw2Cd2eQ==}
+  /doc-plugin-remirror/0.2.1:
+    resolution: {integrity: sha512-x4hxLlD2Q15kwr5i9P0f4dfLGumOVNoK5qw7lBwkT2dqAZyyhQScBi9AyliRVcJzeWpvTIaslocD7JFaE2FP6Q==}
     dev: false
 
   /doctrine/2.1.0:
