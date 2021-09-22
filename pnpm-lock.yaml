@@ -71,6 +71,7 @@ importers:
       cpy-cli: ^3.1.1
       cross-env: ^7.0.3
       delay: ^5.0.0
+      doc-plugin-remirror: ^0.1.0
       downlevel-dts: ^0.7.0
       eslint: ^7.30.0
       eslint-config-prettier: ^8.2.0
@@ -184,6 +185,7 @@ importers:
       cpy-cli: 3.1.1
       cross-env: 7.0.3
       delay: 5.0.0
+      doc-plugin-remirror: 0.1.0
       downlevel-dts: 0.7.0
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
@@ -10489,7 +10491,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.2_debug@4.3.2
+      follow-redirects: 1.14.2
     transitivePeerDependencies:
       - debug
 
@@ -13406,6 +13408,10 @@ packages:
     dependencies:
       buffer-indexof: 1.1.1
 
+  /doc-plugin-remirror/0.1.0:
+    resolution: {integrity: sha512-FUBLyl8Q+iCJ49LH4vcBbi2cy6RmzN7JT/0itxwXTocUlztX8E6KBYaw3QyhFwBmShxc4Ri6J+PTkdrapyiMIA==}
+    dev: false
+
   /doctrine/2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
@@ -15143,6 +15149,15 @@ packages:
       tabbable: 4.0.0
       xtend: 4.0.2
     dev: false
+
+  /follow-redirects/1.14.2:
+    resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
 
   /follow-redirects/1.14.2_debug@4.3.2:
     resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
