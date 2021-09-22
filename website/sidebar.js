@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-
 function getApiItems() {
   const apiItems = [];
 
@@ -20,28 +19,27 @@ function getApiItems() {
     ]
   */
   const apiFiles = fs
-      .readdirSync(path.join(__dirname, '../docs/api'))
-      .map((name) => `api/${name.replace(/\.mdx?$/, '')}`)
-      .sort()
-
+    .readdirSync(path.join(__dirname, '../docs/api'))
+    .map((name) => `api/${name.replace(/\.mdx?$/, '')}`)
+    .sort();
 
   for (const apiFile of apiFiles) {
     const [root, rest] = apiFile.split('.', 2);
 
     // We don't want to give *every* page a position in the sidebar
     if (apiFile.split('.').length >= 2) {
-      continue
+      continue;
     }
 
     const packageName = apiFile.replace(/^api\//, '');
     apiItems.push({
-        type: 'doc',
-        label: packageName,
-        id: apiFile
-    })
+      type: 'doc',
+      label: packageName,
+      id: apiFile,
+    });
   }
 
-  return apiItems
+  return apiItems;
 }
 
 /** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
