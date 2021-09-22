@@ -21,12 +21,20 @@ function getApiItems() {
   const apiFiles = fs
     .readdirSync(path.join(__dirname, '../docs/api'))
     .map((name) => `api/${name.replace(/\.mdx?$/, '')}`)
-    .sort();
+    .sort((a, b) => {
+      if (a === 'api/index') {
+        return -1;
+      } else if (a < b) {
+        return -1;
+      }
+
+      return +1;
+    });
 
   for (const apiFile of apiFiles) {
     const [root, rest] = apiFile.split('.', 2);
 
-    // We don't want to give *every* page a position in the sidebar
+    // We don't want to give every page a position in the sidebar
     if (apiFile.split('.').length >= 2) {
       continue;
     }
