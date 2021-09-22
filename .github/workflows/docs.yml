@@ -43,16 +43,22 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
+      - name: generate .d.ts files
+        run: pnpm build
+
+      - name: generate api markdown files
+        run: pnpm api
+
       - name: build docs
         run: pnpm build:docs
 
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop
         with:
-          publish-dir: './website/build'
+          publish-dir: "./website/build"
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
+          deploy-message: "Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NEXT_NETLIFY_SITE_ID }}
