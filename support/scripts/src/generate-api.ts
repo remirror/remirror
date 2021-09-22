@@ -12,7 +12,11 @@ import { baseDir, mangleScopedPackageName } from './helpers';
 
 const reportFolderRoot = baseDir('support', 'api');
 const reportTempFolderRoot = baseDir('support', 'api', 'temp');
-const typedPackages = new Set(['prosemirror-suggest', 'prosemirror-trailing-node']);
+const typedPackages = new Set([
+  'prosemirror-suggest',
+  'prosemirror-trailing-node',
+  '@remirror/extension-strike',
+]);
 
 /**
  * Get all typed packages.
