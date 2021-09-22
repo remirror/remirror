@@ -166,11 +166,8 @@ support/api/**
 /tsconfig.json
 /tsconfig.dev.json
 /tsconfig.lint.json
-/tsconfig.docs.json
 
 ## Storybook
 **/storybook-static
-
-/typedoc.json
 
 .linaria-cache
