@@ -3,9 +3,7 @@
   "plugins": [
     {
       "packageName": "doc-plugin-remirror",
-      "enabledFeatureNames": [
-        "remirror-feature"
-      ]
+      "enabledFeatureNames": ["remirror-feature"]
     }
   ]
 }
