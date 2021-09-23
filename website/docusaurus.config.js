@@ -12,6 +12,7 @@ module.exports = {
   favicon: 'img/favicon.png',
   organizationName: 'remirror', // Usually your GitHub org/user name.
   projectName: 'remirror', // Usually your repo name.
+  onBrokenLinks: 'warn',
   themeConfig: {
     image:
       'https://repository-images.githubusercontent.com/166780923/eb30b500-a97f-11ea-8508-32089c11e24c',
@@ -39,14 +40,8 @@ module.exports = {
           label: 'Docs',
           position: 'right',
         },
-        {
-          to: 'docs/api',
-          activeBasePath: 'docs/api',
-          label: 'API',
-          position: 'right',
-        },
         { to: '/blog', label: 'Blog', position: 'right' },
-        { to: '/chat', label: 'Chat', position: 'right' },
+        { href: 'https://discord.gg/C4cfrMK', label: 'Chat', position: 'right' },
         {
           href: 'https://github.com/remirror/remirror',
           label: 'GitHub',
@@ -108,7 +103,14 @@ module.exports = {
         docs: {
           path: path.join(__dirname, '../docs'),
           sidebarPath: require.resolve('./sidebar.js'),
-          editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/',
+          editUrl: ({ version, versionDocsDirPath, docPath, permalink, locale }) => {
+            // API documents are generated, so they won't have urls for directly edit.
+            if (permalink.startsWith('/docs/api')) {
+              return;
+            }
+
+            return 'https://github.com/remirror/remirror/edit/HEAD/website/';
+          },
         },
         blog: {
           showReadingTime: true,

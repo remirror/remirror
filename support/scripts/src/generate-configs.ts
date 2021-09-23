@@ -48,7 +48,6 @@ const PATH = {
   baseTsconfig: baseDir('support', 'tsconfig.base.json'),
   rootTsconfig: baseDir('support', 'root', tsconfigFileName),
   packagesTsconfig: baseDir('packages', tsconfigFileName),
-  rootTypedoc: baseDir('support', 'root', 'typedoc.json'),
 };
 
 // A list of all the generated files which will be prettified at the end of the
@@ -697,8 +696,6 @@ async function generatePackageTsConfigs() {
     { detectIndent: true },
   );
   await writeJSON(PATH.packagesTsconfig, packagesTsconfig, { detectIndent: true });
-  await writeJSON(PATH.rootTypedoc, { entryFiles, out: 'docs/api' }, { detectIndent: true });
-  filesToPrettify.push(PATH.rootTsconfig, PATH.rootTypedoc, PATH.packagesTsconfig);
 }
 
 /**

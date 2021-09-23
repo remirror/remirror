@@ -35,13 +35,18 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v2
         with:
-          # Uses node 14 to allow nullish coalescing in `.js` files
-          node-version: 14
+          node-version: 16
 
       - name: install and audit
         uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
+
+      - name: generate .d.ts files
+        run: pnpm build
+
+      - name: generate api markdown files
+        run: pnpm api
 
       - name: build docs
         run: pnpm build:docs

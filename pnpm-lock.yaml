@@ -39,8 +39,8 @@ importers:
       '@lingui/macro': ^3.10.2
       '@lingui/react': ^3.10.2
       '@manypkg/cli': ^0.18.0
-      '@microsoft/api-documenter': ^7.13.50
-      '@microsoft/api-extractor': ^7.18.4
+      '@microsoft/api-documenter': ^7.13.52
+      '@microsoft/api-extractor': ^7.18.9
       '@preconstruct/cli': ^2.0.7
       '@size-limit/preset-big-lib': ^5.0.1
       '@testing-library/dom': ^8.1.0
@@ -71,6 +71,7 @@ importers:
       cpy-cli: ^3.1.1
       cross-env: ^7.0.3
       delay: ^5.0.0
+      doc-plugin-remirror: ^0.2.1
       downlevel-dts: ^0.7.0
       eslint: ^7.30.0
       eslint-config-prettier: ^8.2.0
@@ -152,8 +153,8 @@ importers:
       '@lingui/macro': 3.10.2_f51bb3f21b2f2e6d00a3e78a24ac626b
       '@lingui/react': 3.10.2
       '@manypkg/cli': 0.18.0
-      '@microsoft/api-documenter': 7.13.50
-      '@microsoft/api-extractor': 7.18.4
+      '@microsoft/api-documenter': 7.13.52
+      '@microsoft/api-extractor': 7.18.9
       '@preconstruct/cli': 2.1.1
       '@size-limit/preset-big-lib': 5.0.3_122204dd3ca873a12a1d855f11493089
       '@testing-library/dom': 8.1.0
@@ -184,6 +185,7 @@ importers:
       cpy-cli: 3.1.1
       cross-env: 7.0.3
       delay: 5.0.0
+      doc-plugin-remirror: 0.2.1
       downlevel-dts: 0.7.0
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
@@ -2532,7 +2534,7 @@ importers:
       '@linaria/babel-preset': 3.0.0-beta.4
       '@lingui/core': ^3.10.4
       '@manypkg/get-packages': ^1.1.1
-      '@microsoft/api-extractor': ^7.18.4
+      '@microsoft/api-extractor': ^7.18.9
       '@microsoft/tsdoc': ^0.13.2
       '@microsoft/tsdoc-config': ^0.15.2
       '@remirror/core-helpers': ^1.0.1
@@ -2605,7 +2607,7 @@ importers:
       '@linaria/babel-preset': 3.0.0-beta.4_@babel+core@7.15.0
       '@lingui/core': 3.10.4
       '@manypkg/get-packages': 1.1.1
-      '@microsoft/api-extractor': 7.18.4
+      '@microsoft/api-extractor': 7.18.9
       '@microsoft/tsdoc': 0.13.2
       '@microsoft/tsdoc-config': 0.15.2
       '@remirror/core-helpers': link:../../packages/remirror__core-helpers
@@ -6560,8 +6562,8 @@ packages:
   /@mdx-js/util/1.6.22:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
 
-  /@microsoft/api-documenter/7.13.50:
-    resolution: {integrity: sha512-u2VWomC4x1OFHNA+6VTKwfupD9ZOCR3V6ql7rieYmfVNMm+4V1UB1RSdzDDp1SQlTt13fwPUhO4yiAGRwmJdRA==}
+  /@microsoft/api-documenter/7.13.52:
+    resolution: {integrity: sha512-d9bc8IQb+UmEHBSa71efLcg4N9VjFfx+noGNManYCG8XE+60+vPVX4DozLxY5OlQfT/cZVlFwnQEQgWDconORQ==}
     hasBin: true
     dependencies:
       '@microsoft/api-extractor-model': 7.13.7
@@ -6573,14 +6575,6 @@ packages:
       resolve: 1.17.0
     dev: false
 
-  /@microsoft/api-extractor-model/7.13.4:
-    resolution: {integrity: sha512-NYaR3hJinh089/Gkee8fvmEFf9zKkoUvNxgkqUlKBCDXH2+Ou4tNDuL8G6zjhKBPicHkp2VcL8l7q9H6txUkjQ==}
-    dependencies:
-      '@microsoft/tsdoc': 0.13.2
-      '@microsoft/tsdoc-config': 0.15.2
-      '@rushstack/node-core-library': 3.39.1
-    dev: false
-
   /@microsoft/api-extractor-model/7.13.7:
     resolution: {integrity: sha512-emwhcaSF/h3WdqBWps4UU0RtGOGzy53IsplxuoLwtCuMAx3namYvJSfUGa5ajGPBao4MCyRYGsMc3EZ6IdR8cQ==}
     dependencies:
@@ -6589,16 +6583,16 @@ packages:
       '@rushstack/node-core-library': 3.40.2
     dev: false
 
-  /@microsoft/api-extractor/7.18.4:
-    resolution: {integrity: sha512-Wx45VuIAu09Pk9Qwzt0I57OX31BaWO2r6+mfSXqYFsJjYTqwUkdFh92G1GKYgvuR9oF/ai7w10wrFpx5WZYbGg==}
+  /@microsoft/api-extractor/7.18.9:
+    resolution: {integrity: sha512-N+fbG+6SwA1i6EW3iGRp/nAT8vQpRSDvZ1DzBUr8xIS7tNfJ0C75ndPPziUT8EmalhLixRnIw6Ncmur8AFELRg==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.13.4
+      '@microsoft/api-extractor-model': 7.13.7
       '@microsoft/tsdoc': 0.13.2
       '@microsoft/tsdoc-config': 0.15.2
-      '@rushstack/node-core-library': 3.39.1
-      '@rushstack/rig-package': 0.2.13
-      '@rushstack/ts-command-line': 4.8.1
+      '@rushstack/node-core-library': 3.40.2
+      '@rushstack/rig-package': 0.3.0
+      '@rushstack/ts-command-line': 4.9.0
       colors: 1.2.5
       lodash: 4.17.21
       resolve: 1.17.0
@@ -7201,20 +7195,6 @@ packages:
       picomatch: 2.3.0
     dev: false
 
-  /@rushstack/node-core-library/3.39.1:
-    resolution: {integrity: sha512-HHgMEHZTXQ3NjpQzWd5+fSt2Eod9yFwj6qBPbaeaNtDNkOL8wbLoxVimQNtcH0Qhn4wxF5u2NTDNFsxf2yd1jw==}
-    dependencies:
-      '@types/node': 10.17.13
-      colors: 1.2.5
-      fs-extra: 7.0.1
-      import-lazy: 4.0.0
-      jju: 1.4.0
-      resolve: 1.17.0
-      semver: 7.3.5
-      timsort: 0.3.0
-      z-schema: 3.18.4
-    dev: false
-
   /@rushstack/node-core-library/3.40.2:
     resolution: {integrity: sha512-wzcRucwnhOENTfx6hZ2M+CA1Zmp8Dr572mFFtjxmcQzBWTbNFRB1Mi1wLb7DLza+69OUBoSZcHUqydlwL+gvSA==}
     dependencies:
@@ -7229,20 +7209,11 @@ packages:
       z-schema: 3.18.4
     dev: false
 
-  /@rushstack/rig-package/0.2.13:
-    resolution: {integrity: sha512-qQMAFKvfb2ooaWU9DrGIK9d8QfyHy/HiuITJbWenlKgzcDXQvQgEduk57YF4Y7LLasDJ5ZzLaaXwlfX8qCRe5Q==}
+  /@rushstack/rig-package/0.3.0:
+    resolution: {integrity: sha512-Lj6noF7Q4BBm1hKiBDw94e6uZvq1xlBwM/d2cBFaPqXeGdV+G6r3qaCWfRiSXK0pcHpGGpV5Tb2MdfhVcO6G/g==}
     dependencies:
       resolve: 1.17.0
       strip-json-comments: 3.1.1
-    dev: false
-
-  /@rushstack/ts-command-line/4.8.1:
-    resolution: {integrity: sha512-rmxvYdCNRbyRs+DYAPye3g6lkCkWHleqO40K8UPvUAzFqEuj6+YCVssBiOmrUDCoM5gaegSNT0wFDYhz24DWtw==}
-    dependencies:
-      '@types/argparse': 1.0.38
-      argparse: 1.0.10
-      colors: 1.2.5
-      string-argv: 0.3.1
     dev: false
 
   /@rushstack/ts-command-line/4.9.0:
@@ -10520,7 +10491,7 @@ packages:
   /axios/0.21.1:
     resolution: {integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==}
     dependencies:
-      follow-redirects: 1.14.2_debug@4.3.2
+      follow-redirects: 1.14.2
     transitivePeerDependencies:
       - debug
 
@@ -13437,6 +13408,10 @@ packages:
     dependencies:
       buffer-indexof: 1.1.1
 
+  /doc-plugin-remirror/0.2.1:
+    resolution: {integrity: sha512-x4hxLlD2Q15kwr5i9P0f4dfLGumOVNoK5qw7lBwkT2dqAZyyhQScBi9AyliRVcJzeWpvTIaslocD7JFaE2FP6Q==}
+    dev: false
+
   /doctrine/2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
@@ -15174,6 +15149,15 @@ packages:
       tabbable: 4.0.0
       xtend: 4.0.2
     dev: false
+
+  /follow-redirects/1.14.2:
+    resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
 
   /follow-redirects/1.14.2_debug@4.3.2:
     resolution: {integrity: sha512-yLR6WaE2lbF0x4K2qE2p9PEXKLDjUjnR/xmjS3wHAYxtlsI9MLLBJUZirAHKzUZDGLxje7w/cXR49WOUo4rbsA==}

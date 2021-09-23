@@ -1,6 +1,55 @@
 const fs = require('fs');
 const path = require('path');
 
+function getApiItems() {
+  const apiItems = [];
+
+  /*
+    apiFiles is an array like this:
+    [
+      'api/index',
+      'api/prosemirror-paste-rules',
+      'api/prosemirror-paste-rules.filedrophandlerprops',
+      'api/prosemirror-paste-rules.filedrophandlerprops.pos',
+      'api/prosemirror-paste-rules.filedrophandlerprops.type',
+      'api/prosemirror-paste-rules.filedrophandlerprops.view',
+      'api/prosemirror-paste-rules.nodepasterule',
+      'api/prosemirror-paste-rules.nodepasterule.nodetype',
+      'api/prosemirror-paste-rules.nodepasterule.type',
+    ]
+  */
+  const apiFiles = fs
+    .readdirSync(path.join(__dirname, '../docs/api'))
+    .map((name) => `api/${name.replace(/\.mdx?$/, '')}`)
+    .sort((a, b) => {
+      if (a === 'api/index') {
+        return -1;
+      } else if (a < b) {
+        return -1;
+      }
+
+      return +1;
+    });
+
+  for (const apiFile of apiFiles) {
+    const [root, rest] = apiFile.split('.', 2);
+
+    // We don't want to give every page a position in the sidebar
+    if (apiFile.split('.').length >= 2) {
+      continue;
+    }
+
+    const packageName = apiFile.replace(/^api\//, '');
+    apiItems.push({
+      type: 'doc',
+      label: packageName,
+      id: apiFile,
+    });
+  }
+
+  return apiItems;
+}
+
 /** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
 const docs = [
   'introduction',
@@ -49,11 +98,6 @@ const docs = [
     label: 'More',
     items: ['contributing', 'tooling', 'errors', 'projects'],
   },
-];
-
-/** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
-const api = [
-  'api',
   {
     type: 'category',
     label: 'Extensions',
@@ -79,7 +123,16 @@ const api = [
       .readdirSync(path.join(__dirname, '../docs/hooks'))
       .map((name) => `hooks/${name.replace(/\.mdx?$/, '')}`),
   },
+  {
+    type: 'category',
+    label: 'API',
+    collapsed: true,
+    items: getApiItems(),
+  },
 ];
 
+/** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
+// const api = fs.readdirSync(path.join(__dirname, '../docs/api')).sort((a, b) => (a === 'index.md' ? -1 : 0)).map((name) => `api/${name.replace(/\.mdx?$/, '')}`);
+// console.log('api:',api)
+
 exports.docs = docs;
-exports.api = api;
