@@ -14,7 +14,7 @@ env:
 
 jobs:
   deploy_docs:
-    timeout-minutes: 10
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.event.pull_request
 
