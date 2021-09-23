@@ -1,21 +1,25 @@
 import { getPackages } from '@manypkg/get-packages';
-import {
-  Extractor,
-  ExtractorConfig,
-  ExtractorLogLevel,
-  ExtractorResult,
-  IConfigFile,
-} from '@microsoft/api-extractor';
+import { Extractor, ExtractorConfig, ExtractorResult, IConfigFile } from '@microsoft/api-extractor';
+import { remove } from 'fs-extra';
 import path from 'path';
 
 import { baseDir, mangleScopedPackageName } from './helpers';
 
 const reportFolderRoot = baseDir('support', 'api');
 const reportTempFolderRoot = baseDir('support', 'api', 'temp');
-const typedPackages = new Set([
-  'prosemirror-suggest',
-  'prosemirror-trailing-node',
-  '@remirror/extension-strike',
+const ignorePackages = new Set([
+  // These packages below will throw errors. Need to fix them later.
+  'jest-remirror',
+  '@remirror/cli',
+  '@remirror/messages',
+  '@remirror/pm',
+  '@remirror/react-utils',
+  '@remirror/styles',
+  '@remirror/theme',
+
+  // These packages are not a part of remirror
+  'a11y-status',
+  'test-keyboard',
 ]);
 
 /**
@@ -26,7 +30,7 @@ async function getTypedPackages() {
 
   return packages.packages.filter((pkg) => {
     const json = pkg.packageJson;
-    return !json.private && typedPackages.has(json.name);
+    return !json.private && !ignorePackages.has(json.name);
   });
 }
 
@@ -39,9 +43,15 @@ async function runApiExtractor() {
   for (const pkg of packages) {
     const json = pkg.packageJson;
     const name = mangleScopedPackageName(json.name);
+    const types = (json as any).types;
+
+    if (!types) {
+      throw new Error(`unable to find "types" in ${pkg.dir}`);
+    }
+
     const relativePath = path.relative(baseDir(), pkg.dir);
     const projectFolder = baseDir(relativePath);
-    const mainEntryPointFilePath = path.join(pkg.dir, (json as any).types ?? '');
+    const mainEntryPointFilePath = path.join(pkg.dir, types);
     const packageJsonFullPath = path.join(pkg.dir, 'package.json');
     const apiJsonFilePath = path.join(reportFolderRoot, `${name}.api.json`);
     const reportFilePath = path.join(reportFolderRoot, `${name}.api.md`);
@@ -67,26 +77,6 @@ async function runApiExtractor() {
         tsconfigFilePath: path.join(projectFolder, 'src', 'tsconfig.json'),
         skipLibCheck: true,
       },
-      messages: {
-        tsdocMessageReporting: {
-          default: {
-            logLevel: 'none' as ExtractorLogLevel,
-            addToApiReportFile: false,
-          },
-        },
-        compilerMessageReporting: {
-          default: {
-            logLevel: 'none' as ExtractorLogLevel,
-            addToApiReportFile: false,
-          },
-        },
-        extractorMessageReporting: {
-          default: {
-            logLevel: 'none' as ExtractorLogLevel,
-            addToApiReportFile: false,
-          },
-        },
-      },
     };
 
     const extractorConfig: ExtractorConfig = ExtractorConfig.prepare({
@@ -95,6 +85,8 @@ async function runApiExtractor() {
       packageJson: json as any,
       packageJsonFullPath,
     });
+
+    console.log(`running API Extractor for ${json.name}`);
 
     const extractorResult: ExtractorResult = Extractor.invoke(extractorConfig, {
       // Equivalent to the "--local" command-line parameter
@@ -105,7 +97,7 @@ async function runApiExtractor() {
     });
 
     if (extractorResult.succeeded) {
-      console.log(`API Extractor completed successfully`);
+      console.log(`successfully completed API Extractor for ${json.name}`);
     } else {
       console.error(
         `API Extractor completed with ${extractorResult.errorCount} errors and ${extractorResult.warningCount} warnings`,
@@ -117,6 +109,7 @@ async function runApiExtractor() {
 
 async function run() {
   await runApiExtractor();
+  await remove(reportTempFolderRoot);
 }
 
 run();
