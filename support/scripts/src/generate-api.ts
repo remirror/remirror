@@ -108,6 +108,7 @@ async function runApiExtractor() {
 }
 
 async function run() {
+  await remove(reportFolderRoot);
   await runApiExtractor();
   await remove(reportTempFolderRoot);
 }
