@@ -49,7 +49,9 @@ jobs:
         run: pnpm api
 
       - name: build docs
-        run: pnpm build:docs
+        run: |
+          export NODE_OPTIONS=--max_old_space_size=4096
+          pnpm build:docs
 
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop
