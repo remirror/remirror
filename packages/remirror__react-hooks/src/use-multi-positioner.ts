@@ -36,7 +36,7 @@ export interface UseMultiPositionerReturn extends PositionerPosition {
  * is useful for tracking the positions of multiple items in the editor.
  *
  * ```ts
- * import { Positioner } from 'remirror/extensions
+ * import { Positioner } from 'remirror/extensions';
  * import { useMultiPositioner } from '@remirror/react';
  *
  * const positioner = Positioner.create({
