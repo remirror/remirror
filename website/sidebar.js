@@ -1,7 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 
+const API_DIR = path.join(__dirname, '../docs/api')
+
 function getApiItems() {
+  if (!fs.existsSync(API_DIR)) {return []}
+
   const apiItems = [];
 
   /*
@@ -19,7 +23,7 @@ function getApiItems() {
     ]
   */
   const apiFiles = fs
-    .readdirSync(path.join(__dirname, '../docs/api'))
+    .readdirSync(API_DIR)
     .map((name) => `api/${name.replace(/\.mdx?$/, '')}`)
     .sort((a, b) => {
       if (a === 'api/index') {
