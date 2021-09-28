@@ -1,7 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
+const API_DIR = path.join(__dirname, '../docs/api');
+
 function getApiItems() {
+  if (!fs.existsSync(API_DIR)) {
+    return [];
+  }
+
   const apiItems = [];
 
   /*
@@ -19,7 +25,7 @@ function getApiItems() {
     ]
   */
   const apiFiles = fs
-    .readdirSync(path.join(__dirname, '../docs/api'))
+    .readdirSync(API_DIR)
     .map((name) => `api/${name.replace(/\.mdx?$/, '')}`)
     .sort((a, b) => {
       if (a === 'api/index') {
@@ -130,9 +136,5 @@ const docs = [
     items: getApiItems(),
   },
 ];
-
-/** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
-// const api = fs.readdirSync(path.join(__dirname, '../docs/api')).sort((a, b) => (a === 'index.md' ? -1 : 0)).map((name) => `api/${name.replace(/\.mdx?$/, '')}`);
-// console.log('api:',api)
 
 exports.docs = docs;
