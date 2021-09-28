@@ -137,8 +137,4 @@ const docs = [
   },
 ];
 
-/** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
-// const api = fs.readdirSync(path.join(__dirname, '../docs/api')).sort((a, b) => (a === 'index.md' ? -1 : 0)).map((name) => `api/${name.replace(/\.mdx?$/, '')}`);
-// console.log('api:',api)
-
 exports.docs = docs;
