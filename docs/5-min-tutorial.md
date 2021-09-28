@@ -1,10 +1,10 @@
 ---
 id: 5-min-tutorial
 hide_title: true
-title: 5 Minute Tutorial
+title: 5 Minute tutorial
 ---
 
-# 5 Minute Tutorial
+# 5 Minute tutorial
 
 This tutorial walks you through creating a simple React app with Remirror's Social Editor. You need to have a recent Node version installed.
 
