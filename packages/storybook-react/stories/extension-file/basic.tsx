@@ -1,11 +1,12 @@
 import 'remirror/styles/extension-file.css';
 
 import { useCallback } from 'react';
+import { DropCursorExtension } from 'remirror/extensions';
 import { FileExtension } from '@remirror/extension-file';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 const Basic = (): JSX.Element => {
-  const extensions = useCallback(() => [new FileExtension({})], []);
+  const extensions = useCallback(() => [new FileExtension({}), new DropCursorExtension()], []);
   const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
 
   return (

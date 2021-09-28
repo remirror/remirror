@@ -1,12 +1,16 @@
 import 'remirror/styles/extension-file.css';
 
 import { useCallback } from 'react';
+import { DropCursorExtension } from 'remirror/extensions';
 import { createObjectUrlFileUploader, FileExtension } from '@remirror/extension-file';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 const WithObjectUrl = (): JSX.Element => {
   const extensions = useCallback(
-    () => [new FileExtension({ uploadFileHandler: createObjectUrlFileUploader })],
+    () => [
+      new FileExtension({ uploadFileHandler: createObjectUrlFileUploader }),
+      new DropCursorExtension(),
+    ],
     [],
   );
   const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
