@@ -1,10 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const API_DIR = path.join(__dirname, '../docs/api')
+const API_DIR = path.join(__dirname, '../docs/api');
 
 function getApiItems() {
-  if (!fs.existsSync(API_DIR)) {return []}
+  if (!fs.existsSync(API_DIR)) {
+    return [];
+  }
 
   const apiItems = [];
 
