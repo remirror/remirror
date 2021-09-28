@@ -6,9 +6,9 @@ title: 5 Minute Tutorial
 
 # 5 Minute Tutorial
 
-This tutorial walks you through a creating a simple React app with Remirror's Social editor. You need to have a recent Node version installed.
+This tutorial walks you through creating a simple React app with Remirror's Social Editor. You need to have a recent Node version installed.
 
-We use CRA to set up a basic React app:
+First, let's set up a basic React app with [CRA](https://reactjs.org/docs/create-a-new-react-app.html):
 
 ```bash type=installation
 npx create-react-app cra-remirror --template typescript
@@ -16,13 +16,13 @@ cd cra-remirror
 npm install
 ```
 
-Next, we're installing Remirror into the project:
+Next, we're installing Remirror:
 
 ```bash
 npm add --save remirror @remirror/react @remirror/pm @emotion/react @emotion/styled @remirror/react-editors
 ```
 
-With that in place, we can use Remirror in the app. For this, replace the App.tsx with the following:
+Now, we can use Remirror in the app. For this, replace the `srx/App.tsx` with the following:
 
 ```typescript
 import { SocialEditor } from '@remirror/react-editors/social';
