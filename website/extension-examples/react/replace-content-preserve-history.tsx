@@ -27,3 +27,4 @@ const ExampleComponent = (): JSX.Element => {
 };
 
 export default ExampleComponent;
+  

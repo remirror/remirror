@@ -1,12 +1,16 @@
 import 'remirror/styles/extension-file.css';
 
 import { useCallback } from 'react';
+import { DropCursorExtension } from 'remirror/extensions';
 import { createSlowFileUploader, FileExtension } from '@remirror/extension-file';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 const WithUploadProgress = (): JSX.Element => {
   const extensions = useCallback(
-    () => [new FileExtension({ uploadFileHandler: createSlowFileUploader })],
+    () => [
+      new FileExtension({ uploadFileHandler: createSlowFileUploader }),
+      new DropCursorExtension(),
+    ],
     [],
   );
   const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });

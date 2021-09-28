@@ -8,7 +8,7 @@
 
 import CodeBlock from '@theme/CodeBlock';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/react/replace-content-and-clear-history.tsx';
+import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-drop-cursor/basic.tsx';
 
 import { StoryExample } from '../../src/components/story-example-component';
 
@@ -16,7 +16,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/react/replace-content-and-clear-history').default
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-drop-cursor/basic').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

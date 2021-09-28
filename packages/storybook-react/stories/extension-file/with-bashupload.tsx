@@ -1,12 +1,16 @@
 import 'remirror/styles/extension-file.css';
 
 import { useCallback } from 'react';
+import { DropCursorExtension } from 'remirror/extensions';
 import { createBaseuploadFileUploader, FileExtension } from '@remirror/extension-file';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 const WithBashupload = (): JSX.Element => {
   const extensions = useCallback(
-    () => [new FileExtension({ uploadFileHandler: createBaseuploadFileUploader })],
+    () => [
+      new FileExtension({ uploadFileHandler: createBaseuploadFileUploader }),
+      new DropCursorExtension(),
+    ],
     [],
   );
   const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
