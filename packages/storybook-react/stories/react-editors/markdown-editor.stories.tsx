@@ -51,7 +51,7 @@ function MarkdownPreview() {
 
 export const Basic = () => {
   return (
-    <MarkdownEditor placeholder='Start typing...'>
+    <MarkdownEditor placeholder='Start typing...' initialContent={basicContent}>
       <MarkdownPreview />
     </MarkdownEditor>
   );
