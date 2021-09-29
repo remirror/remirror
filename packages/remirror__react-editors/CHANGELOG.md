@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.12
+
+> 2021-09-29
+
+### Patch Changes
+
+- Add a flag to filter out edge matches from `getAnnotationAt` helper
+
+- Updated dependencies []:
+  - remirror@1.0.26
+
 ## 0.1.11
 
 > 2021-09-17

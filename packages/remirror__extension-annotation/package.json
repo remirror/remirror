@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-annotation",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "This extension allows to annotate the content in your editor",
   "keywords": [
     "remirror",

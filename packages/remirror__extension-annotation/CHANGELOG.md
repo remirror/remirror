@@ -1,5 +1,13 @@
 # @remirror/extension-annotation
 
+## 1.1.0
+
+> 2021-09-29
+
+### Minor Changes
+
+- Add a flag to filter out edge matches from `getAnnotationAt` helper
+
 ## 1.0.7
 
 > 2021-09-17
