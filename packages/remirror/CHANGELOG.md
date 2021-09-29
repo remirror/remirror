@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.26
+
+> 2021-09-29
+
+### Patch Changes
+
+- Add a flag to filter out edge matches from `getAnnotationAt` helper
+
+- Updated dependencies []:
+  - @remirror/extension-annotation@1.1.0
+  - @remirror/extension-yjs@1.0.8
+
 ## 1.0.25
 
 > 2021-09-17
