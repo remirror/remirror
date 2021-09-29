@@ -234,6 +234,7 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
 
   /**
    * @param pos - the position in the root document to find annotations.
+   * @param includeEdges - whether to match annotations that start or end exactly on the given pos
    *
    * @returns all annotations at a specific position in the editor.
    *
@@ -241,7 +242,7 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
    * [[`AnnotationExtension`]] added to your editor.
    */
   @helper()
-  getAnnotationsAt(pos?: PrimitiveSelection): Helper<Type[]> {
+  getAnnotationsAt(pos?: PrimitiveSelection, includeEdges = true): Helper<Type[]> {
     const annotations: Type[] = [];
     const { doc, selection } = this.store.getState();
     const state: AnnotationState<Type> = this.getPluginState();
@@ -254,7 +255,11 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
         within(annotation.from, from, to) ||
         within(annotation.to, from, to)
       ) {
-        annotations.push(this.enrichText(annotation));
+        if (includeEdges) {
+          annotations.push(this.enrichText(annotation));
+        } else if (annotation.from !== from && annotation.to !== to) {
+          annotations.push(this.enrichText(annotation));
+        }
       }
     }
 
