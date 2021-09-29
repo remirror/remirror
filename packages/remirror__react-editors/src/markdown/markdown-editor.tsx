@@ -37,12 +37,17 @@ export default { title: 'Editors / Markdown' };
 
 export interface MarkdownEditorProps {
   placeholder?: string;
+  initialContent?: string;
 }
 
 /**
  * The editor which is used to create the annotation. Supports formatting.
  */
-export const MarkdownEditor: FC<MarkdownEditorProps> = ({ placeholder, children }) => {
+export const MarkdownEditor: FC<MarkdownEditorProps> = ({
+  placeholder,
+  initialContent,
+  children,
+}) => {
   const extensions = useCallback(
     () => [
       new PlaceholderExtension({ placeholder }),
@@ -70,12 +75,15 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ placeholder, children 
     [placeholder],
   );
 
-  const { manager } = useRemirror({ extensions });
+  const { manager } = useRemirror({
+    extensions,
+    stringHandler: 'markdown',
+  });
 
   return (
     <AllStyledComponent>
       <ThemeProvider>
-        <Remirror manager={manager} autoFocus>
+        <Remirror manager={manager} autoFocus initialContent={initialContent}>
           <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
           <EditorComponent />
           {children}
