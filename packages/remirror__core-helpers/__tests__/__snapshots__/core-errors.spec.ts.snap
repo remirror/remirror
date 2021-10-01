@@ -8,12 +8,6 @@ It seems you're trying to set the value of the property (a) on a frozen object. 
 For more information visit https://remirror.io/docs/errors#rmr0005"
 `;
 
-exports[`invariant should throw generic error in production 1`] = `
-"An error occurred with the \`Remirror\` setup in production. Any details are purposefully being withheld.
-
-For more information visit https://remirror.io/docs/errors#rmr0000"
-`;
-
 exports[`invariant should throw with a code 1`] = `
 "Command method names must be unique within the editor.
 

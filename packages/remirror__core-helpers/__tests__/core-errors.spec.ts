@@ -62,12 +62,4 @@ describe('invariant', () => {
       invariant(false, { code: ErrorConstant.DUPLICATE_COMMAND_NAMES }),
     ).toThrowErrorMatchingSnapshot();
   });
-
-  it('should throw generic error in production', () => {
-    process.env.NODE_ENV = 'production';
-
-    expect(() =>
-      invariant(false, { code: ErrorConstant.DUPLICATE_COMMAND_NAMES, message: 'Never shown' }),
-    ).toThrowErrorMatchingSnapshot();
-  });
 });
