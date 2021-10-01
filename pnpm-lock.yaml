@@ -2319,7 +2319,6 @@ importers:
       '@remirror/react': ^1.0.10
       '@remirror/react-editors': ^0.1.12
       '@remirror/styles': ^1.1.2
-      '@storybook/addon-storysource': ^6.3.7
       '@storybook/addons': ^6.3.4
       '@storybook/cli': ^6.3.4
       '@storybook/components': ^6.3.4
@@ -2367,7 +2366,6 @@ importers:
       '@remirror/react': link:../remirror__react
       '@remirror/react-editors': link:../remirror__react-editors
       '@remirror/styles': link:../remirror__styles
-      '@storybook/addon-storysource': 6.3.8_505dac708d3a942c21566371ae205bda
       '@storybook/addons': 6.3.8_react-dom@17.0.2+react@17.0.2
       '@storybook/cli': 6.3.8_jest@27.2.4
       '@storybook/components': 6.3.8_505dac708d3a942c21566371ae205bda
@@ -7472,37 +7470,6 @@ packages:
       url: 0.11.0
       webpack-sources: 1.4.3
 
-  /@storybook/addon-storysource/6.3.8_505dac708d3a942c21566371ae205bda:
-    resolution: {integrity: sha512-Yw07zGWWCOUQcvWwtEsasHJ4LqRhx7fcHBkbI5jXNb4SjB6LYDpStPDDD+Oa5uW+CO0gOuSv5U/e/xqC17Tl3w==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0
-      react-dom: ^16.8.0 || ^17.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-    dependencies:
-      '@storybook/addons': 6.3.8_react-dom@17.0.2+react@17.0.2
-      '@storybook/api': 6.3.8_react-dom@17.0.2+react@17.0.2
-      '@storybook/client-logger': 6.3.8
-      '@storybook/components': 6.3.8_505dac708d3a942c21566371ae205bda
-      '@storybook/router': 6.3.8_react-dom@17.0.2+react@17.0.2
-      '@storybook/source-loader': 6.3.8_react-dom@17.0.2+react@17.0.2
-      '@storybook/theming': 6.3.8_react-dom@17.0.2+react@17.0.2
-      core-js: 3.18.1
-      estraverse: 5.2.0
-      loader-utils: 2.0.0
-      prettier: 2.2.1
-      prop-types: 15.7.2
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-syntax-highlighter: 13.5.3_react@17.0.2
-      regenerator-runtime: 0.13.9
-    transitivePeerDependencies:
-      - '@types/react'
-    dev: false
-
   /@storybook/addons/6.3.8_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-TzYk1f/wvfoGDkLxXIx85ii5ED7IfGP/6eu00/i2Hyn4uGqdNi/ltSOJxnxa+DZv8KjYQRVAEo/Fbh95IEXI1Q==}
     peerDependencies:
@@ -8250,26 +8217,6 @@ packages:
     dependencies:
       core-js: 3.18.1
       find-up: 4.1.0
-    dev: false
-
-  /@storybook/source-loader/6.3.8_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-aQ3mrpxpVB2w7sST4jbQUBgHLQZTLD0H1SgohHSuNPz2nrYieuxmOfwjbJr1ZCtuZDCi5xyLjDgUJ3wZ1hPsfQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0
-      react-dom: ^16.8.0 || ^17.0.0
-    dependencies:
-      '@storybook/addons': 6.3.8_react-dom@17.0.2+react@17.0.2
-      '@storybook/client-logger': 6.3.8
-      '@storybook/csf': 0.0.1
-      core-js: 3.18.1
-      estraverse: 5.2.0
-      global: 4.4.0
-      loader-utils: 2.0.0
-      lodash: 4.17.21
-      prettier: 2.2.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      regenerator-runtime: 0.13.9
     dev: false
 
   /@storybook/theming/6.3.8_react-dom@17.0.2+react@17.0.2:
