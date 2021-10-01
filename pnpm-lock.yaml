@@ -2704,17 +2704,17 @@ importers:
   website:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@docusaurus/core': ^2.0.0-beta.3
-      '@docusaurus/module-type-aliases': ^2.0.0-beta.3
-      '@docusaurus/plugin-client-redirects': ^2.0.0-beta.3
-      '@docusaurus/plugin-content-docs': ^2.0.0-beta.3
-      '@docusaurus/plugin-ideal-image': ^2.0.0-beta.3
-      '@docusaurus/plugin-sitemap': ^2.0.0-beta.3
-      '@docusaurus/preset-classic': ^2.0.0-beta.3
-      '@docusaurus/theme-classic': ^2.0.0-beta.3
-      '@docusaurus/theme-common': ^2.0.0-beta.3
-      '@docusaurus/theme-live-codeblock': ^2.0.0-beta.3
-      '@docusaurus/types': ^2.0.0-beta.3
+      '@docusaurus/core': ^2.0.0-beta.6
+      '@docusaurus/module-type-aliases': ^2.0.0-beta.6
+      '@docusaurus/plugin-client-redirects': ^2.0.0-beta.6
+      '@docusaurus/plugin-content-docs': ^2.0.0-beta.6
+      '@docusaurus/plugin-ideal-image': ^2.0.0-beta.6
+      '@docusaurus/plugin-sitemap': ^2.0.0-beta.6
+      '@docusaurus/preset-classic': ^2.0.0-beta.6
+      '@docusaurus/theme-classic': ^2.0.0-beta.6
+      '@docusaurus/theme-common': ^2.0.0-beta.6
+      '@docusaurus/theme-live-codeblock': ^2.0.0-beta.6
+      '@docusaurus/types': ^2.0.0-beta.6
       '@emotion/css': ^11.1.3
       '@emotion/react': ^11.1.5
       '@emotion/styled': ^11.3.0
@@ -2725,6 +2725,7 @@ importers:
       '@remirror/react': ^1.0.10
       '@remirror/react-editors': ^0.1.12
       '@remirror/styles': ^1.1.2
+      '@tsconfig/docusaurus': ^1.0.4
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
       '@types/react-helmet': ^6.1.2
@@ -2788,6 +2789,7 @@ importers:
       '@docusaurus/theme-common': 2.0.0-beta.6_cf03b7458ee8070c9e09362c20b6f0a1
       '@docusaurus/theme-live-codeblock': 2.0.0-beta.6_react-dom@17.0.2+react@17.0.2
       '@docusaurus/types': 2.0.0-beta.6
+      '@tsconfig/docusaurus': 1.0.4
       '@types/react': 17.0.25
       '@types/react-dom': 17.0.9
       '@types/react-helmet': 6.1.2
@@ -2961,6 +2963,9 @@ packages:
   /@aws-cdk/cloud-assembly-schema/1.124.0:
     resolution: {integrity: sha512-emrkfHetGoh6lhrT7ato06VAZun1UVYjJueL9avHxFgzX5qiobP4iWk6M0EZpk7yHlDOtJtp86MJalYYMS6Oww==}
     engines: {node: '>= 10.13.0 <13 || >=13.7.0'}
+    dependencies:
+      jsonschema: 1.4.0
+      semver: 7.3.5
     dev: false
     bundledDependencies:
       - jsonschema
@@ -2984,6 +2989,7 @@ packages:
     engines: {node: '>= 10.13.0 <13 || >=13.7.0'}
     dependencies:
       '@aws-cdk/cloud-assembly-schema': 1.124.0
+      semver: 7.3.5
     dev: false
     bundledDependencies:
       - semver
@@ -8615,6 +8621,10 @@ packages:
       mkdirp: 1.0.4
       path-browserify: 1.0.1
     dev: false
+
+  /@tsconfig/docusaurus/1.0.4:
+    resolution: {integrity: sha512-I6sziQAzLrrqj9r6S26c7aOAjfGVXIE7gWdNONPwnpDcHiMRMQut1s1YCi/APem3dOy23tAb2rvHfNtGCaWuUQ==}
+    dev: true
 
   /@types/argparse/1.0.38:
     resolution: {integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==}
@@ -18665,6 +18675,10 @@ packages:
     engines: {'0': node >= 0.2.0}
     dev: false
 
+  /jsonschema/1.4.0:
+    resolution: {integrity: sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==}
+    dev: false
+
   /jsonwebtoken/8.5.1:
     resolution: {integrity: sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==}
     engines: {node: '>=4', npm: '>=1.4.28'}
@@ -22981,7 +22995,7 @@ packages:
       webpack: '>=4.41.1 || 5.x'
     dependencies:
       '@babel/runtime': 7.15.4
-      react-loadable: 5.5.0
+      react-loadable: 5.5.0_react@17.0.2
       webpack: 5.55.1
 
   /react-loadable/5.5.0:
