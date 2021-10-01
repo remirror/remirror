@@ -43,8 +43,8 @@
     "verdaccio-registry"
   ],
   "scripts": {
-    "patch": "patch-package",
-    "postinstall": "pnpm patch"
+    "postinstall": "pnpm patch",
+    "patch": "patch-package"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",

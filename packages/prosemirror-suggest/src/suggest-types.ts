@@ -824,8 +824,9 @@ export interface CompareMatchProps<Schema extends EditorSchema = EditorSchema> {
 /**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
-export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
-  { [Key in Keys]+?: Type[Key] };
+export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> & {
+  [Key in Keys]+?: Type[Key];
+};
 
 export type EditorSchema = PMModel.Schema<string, string>;
 

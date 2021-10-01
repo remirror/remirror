@@ -252,33 +252,38 @@ export type Writeable<Type> = { -readonly [Key in keyof Type]: Type[Key] };
 /**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
-export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
-  { [Key in Keys]+?: Type[Key] };
+export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> & {
+  [Key in Keys]+?: Type[Key];
+};
 
 /**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
-export type MakeUndefined<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
-  { [Key in Keys]: Type[Key] | undefined };
+export type MakeUndefined<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> & {
+  [Key in Keys]: Type[Key] | undefined;
+};
 
 /**
  * Makes specified keys of an interface nullable while the rest stay the same.
  */
-export type MakeNullable<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
-  { [Key in Keys]: Type[Key] | null };
+export type MakeNullable<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> & {
+  [Key in Keys]: Type[Key] | null;
+};
 
 /**
  * Makes specified keys of an interface Required while the rest remain
  * unchanged.
  */
-export type MakeRequired<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
-  { [Key in Keys]-?: Type[Key] };
+export type MakeRequired<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> & {
+  [Key in Keys]-?: Type[Key];
+};
 
 /**
  * Makes specified keys of an interface readonly.
  */
-export type MakeReadonly<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
-  { +readonly [Key in Keys]: NonNullable<Type[Key]> };
+export type MakeReadonly<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> & {
+  +readonly [Key in Keys]: NonNullable<Type[Key]>;
+};
 
 /**
  * All the literal types
