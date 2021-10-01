@@ -13,12 +13,6 @@ This page contains the documented errors that occur while using `remirror`. Curr
 
 <br />
 
-### RMR0000
-
-> Production Error
-
-An error occurred in production and details are intentionally being hidden.
-
 ### RMR0001
 
 > Unknown Error
