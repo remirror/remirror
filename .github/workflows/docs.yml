@@ -50,6 +50,13 @@ jobs:
 
       - name: build docs
         run: |
+          bash print-mem.sh &
+          export NODE_OPTIONS=--max_old_space_size=4096
+          pnpm build:docs
+
+      - name: build docs (test cache)
+        run: |
+          bash print-mem.sh &
           export NODE_OPTIONS=--max_old_space_size=4096
           pnpm build:docs
 
