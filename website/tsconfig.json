@@ -10,6 +10,7 @@
     "types": [],
     "declaration": true,
     "noEmit": true,
+    "noUncheckedIndexedAccess": false,
     "baseUrl": "./src",
     "paths": {
       "@components": ["components"],
