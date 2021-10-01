@@ -1,5 +1,31 @@
 # @remirror/react-core
 
+## 1.0.9
+
+> 2021-10-01
+
+### Patch Changes
+
+- Set correct label and icon for task list (#1157).
+
+* Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - @remirror/i18n@1.0.4
+  - @remirror/core@1.1.3
+  - @remirror/extension-positioner@1.1.5
+  - @remirror/extension-react-component@1.0.8
+  - @remirror/extension-react-ssr@1.0.7
+  - @remirror/preset-core@1.0.8
+  - @remirror/preset-react@1.0.7
+  - @remirror/react-renderer@1.0.8
+  - @remirror/react-ssr@1.0.7
+  - @remirror/pm@1.0.3
+  - @remirror/react-utils@1.0.3
+  - @remirror/theme@1.1.3
+
 ## 1.0.8
 
 > 2021-09-17

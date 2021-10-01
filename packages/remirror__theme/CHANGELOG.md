@@ -1,5 +1,16 @@
 # @remirror/theme
 
+## 1.1.3
+
+> 2021-10-01
+
+### Patch Changes
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.2
+
 ## 1.1.2
 
 > 2021-08-30

@@ -1,5 +1,17 @@
 # @remirror/core-types
 
+## 1.0.2
+
+> 2021-10-01
+
+### Patch Changes
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.3
+  - @remirror/core-constants@1.0.1
+
 ## 1.0.1
 
 > 2021-07-17
