@@ -54,7 +54,7 @@ if (process.env.NODE_ENV !== 'production') {
     [ErrorConstant.INVALID_SET_EXTENSION_OPTIONS]:
       'A call to `extension.setOptions` was made with invalid keys.',
     [ErrorConstant.REACT_PROVIDER_CONTEXT]:
-      '`useRemirror` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<Remirror />`.',
+      '`useRemirrorContext` was called outside of the `remirror` context. It can only be used within an active remirror context created by the `<Remirror />`.',
     [ErrorConstant.REACT_GET_ROOT_PROPS]:
       '`getRootProps` has been attached to the DOM more than once. It should only be attached to the dom once per editor.',
     [ErrorConstant.REACT_EDITOR_VIEW]: 'A problem occurred adding the editor view to the dom.',
