@@ -153,12 +153,11 @@ export type ChainedFromExtensions<
 type _ChainedFromExtensions<
   Extension extends AnyExtension,
   Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>,
-> = ChainedCommandProps &
-  {
-    [Command in keyof Chained]: Chained[Command] extends (...args: any[]) => any
-      ? (...args: Parameters<Chained[Command]>) => ChainedFromExtensions<Extension>
-      : never;
-  };
+> = ChainedCommandProps & {
+  [Command in keyof Chained]: Chained[Command] extends (...args: any[]) => any
+    ? (...args: Parameters<Chained[Command]>) => ChainedFromExtensions<Extension>
+    : never;
+};
 
 /**
  * Utility type for pulling all the command names from a list
