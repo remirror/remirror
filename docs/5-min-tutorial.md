@@ -26,15 +26,17 @@ Now, we can use Remirror in the app. For this, replace the `srx/App.tsx` with th
 
 ```typescript
 import { SocialEditor } from '@remirror/react-editors/social';
-
 const USERS = [
   { id: 'joe', label: 'Joe' },
   { id: 'john', label: 'John' },
 ];
 const TAGS = ['remirror', 'editor'];
-
 function App() {
-  return <SocialEditor users={USERS} tags={TAGS} />;
+  return (
+    <div style={{ padding: 16 }}>
+      <SocialEditor users={USERS} tags={TAGS} />
+    </div>
+  );
 }
 export default App;
 ```
