@@ -1,5 +1,23 @@
 # @remirror/extension-yjs
 
+## 1.0.9
+
+> 2021-10-01
+
+### Patch Changes
+
+- Set correct label and icon for task list (#1157).
+
+* Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - @remirror/messages@1.0.3
+  - @remirror/core@1.1.3
+  - @remirror/extension-annotation@1.1.1
+  - @remirror/pm@1.0.3
+
 ## 1.0.8
 
 > 2021-09-29

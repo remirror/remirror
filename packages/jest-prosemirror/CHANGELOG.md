@@ -1,5 +1,25 @@
 # jest-prosemirror
 
+## 1.0.5
+
+> 2021-10-01
+
+### Patch Changes
+
+- Set correct label and icon for task list (#1157).
+
+* Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - @remirror/core-utils@1.1.1
+  - @remirror/core-helpers@1.0.2
+  - @remirror/pm@1.0.3
+  - test-keyboard@1.0.2
+  - @remirror/core-constants@1.0.1
+  - @remirror/core-types@1.0.2
+
 ## 1.0.4
 
 > 2021-08-18

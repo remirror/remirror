@@ -1,5 +1,27 @@
 # @remirror/core
 
+## 1.1.3
+
+> 2021-10-01
+
+### Patch Changes
+
+- Set correct label and icon for task list (#1157).
+
+* Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - @remirror/i18n@1.0.4
+  - @remirror/messages@1.0.3
+  - @remirror/core-utils@1.1.1
+  - @remirror/core-helpers@1.0.2
+  - @remirror/icons@1.0.3
+  - @remirror/pm@1.0.3
+  - @remirror/core-constants@1.0.1
+  - @remirror/core-types@1.0.2
+
 ## 1.1.2
 
 > 2021-09-17

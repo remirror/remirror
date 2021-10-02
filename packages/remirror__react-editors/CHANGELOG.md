@@ -1,5 +1,24 @@
 # @remirror/react-editors
 
+## 0.1.13
+
+> 2021-10-01
+
+### Patch Changes
+
+- Set correct label and icon for task list (#1157).
+
+* Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - remirror@1.0.27
+  - @remirror/extension-react-tables@1.0.11
+  - @remirror/react@1.0.11
+  - @remirror/core-helpers@1.0.2
+  - @remirror/pm@1.0.3
+
 ## 0.1.12
 
 > 2021-09-29
