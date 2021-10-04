@@ -439,11 +439,7 @@ export function liftListItemOutOfList(itemType: NodeType): CommandFunction {
 function getItemRange(itemType: NodeType, selection: Selection) {
   const { $from, $to } = selection;
 
-  const range = $from.blockRange(
-    $to,
-    // @ts-expect-error this line of code is copied from `prosemirror-schema-list`
-    (node) => node.childCount >= 1 && node.firstChild.type.name === itemType.name,
-  );
+  const range = $from.blockRange($to, (node) => node.firstChild?.type === itemType);
 
   return range;
 }
