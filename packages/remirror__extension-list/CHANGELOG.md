@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.0.15
+
+> 2021-10-04
+
+### Patch Changes
+
+- Don't let the browser handle the Tab key in a list.
+
 ## 1.0.14
 
 > 2021-10-01

@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.28
+
+> 2021-10-04
+
+### Patch Changes
+
+- Don't let the browser handle the Tab key in a list.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.0.15
+  - @remirror/preset-wysiwyg@1.1.5
+
 ## 1.0.27
 
 > 2021-10-01

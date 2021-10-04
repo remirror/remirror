@@ -114,7 +114,7 @@ importers:
       playwright-testing-library: ^3.0.0
       prettier: ^2.3.2
       prettier-plugin-packagejson: ^2.2.10
-      remirror: 1.0.27
+      remirror: 1.0.28
       rimraf: ^3.0.2
       size-limit: ^5.0.1
       snapshot-diff: ^0.9.0
@@ -522,7 +522,7 @@ importers:
       '@remirror/extension-image': ^1.0.10
       '@remirror/extension-italic': ^1.0.6
       '@remirror/extension-link': ^1.1.2
-      '@remirror/extension-list': ^1.0.14
+      '@remirror/extension-list': ^1.0.15
       '@remirror/extension-markdown': ^1.0.6
       '@remirror/extension-mention': ^1.0.6
       '@remirror/extension-mention-atom': ^1.0.7
@@ -547,7 +547,7 @@ importers:
       '@remirror/pm': ^1.0.3
       '@remirror/preset-core': ^1.0.8
       '@remirror/preset-formatting': ^1.0.9
-      '@remirror/preset-wysiwyg': ^1.1.4
+      '@remirror/preset-wysiwyg': ^1.1.5
       '@remirror/theme': ^1.1.3
       '@types/codemirror': ^5.60.2
       '@types/prettier': ^2.3.2
@@ -1926,7 +1926,7 @@ importers:
       '@remirror/extension-image': ^1.0.10
       '@remirror/extension-italic': ^1.0.6
       '@remirror/extension-link': ^1.1.2
-      '@remirror/extension-list': ^1.0.14
+      '@remirror/extension-list': ^1.0.15
       '@remirror/extension-search': ^1.0.6
       '@remirror/extension-strike': ^1.0.6
       '@remirror/extension-trailing-node': ^1.0.6
@@ -2137,7 +2137,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       refractor: ^3.3.1
-      remirror: 1.0.27
+      remirror: 1.0.28
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.15.4
@@ -2317,7 +2317,7 @@ importers:
       '@remirror/messages': ^1.0.3
       '@remirror/pm': ^1.0.3
       '@remirror/react': ^1.0.11
-      '@remirror/react-editors': ^0.1.13
+      '@remirror/react-editors': ^0.1.14
       '@remirror/styles': ^1.1.2
       '@storybook/addons': ^6.3.4
       '@storybook/cli': ^6.3.4
@@ -2345,7 +2345,7 @@ importers:
       react-is: ^17.0.2
       reakit: ^1.3.8
       refractor: ^3.3.1
-      remirror: 1.0.27
+      remirror: 1.0.28
       scripts: 0.0.1
       svgmoji: ^3.2.0
       y-webrtc: ^10.2.0
@@ -2721,7 +2721,7 @@ importers:
       '@mdx-js/react': ^1.6.22
       '@remirror/dev': ^1.0.11
       '@remirror/react': ^1.0.11
-      '@remirror/react-editors': ^0.1.13
+      '@remirror/react-editors': ^0.1.14
       '@remirror/styles': ^1.1.2
       '@tsconfig/docusaurus': ^1.0.4
       '@types/react': ^17.0.14
@@ -2750,7 +2750,7 @@ importers:
       react-syntax-highlighter: ^15.4.3
       reakit: ^1.3.8
       remark-footnotes: ^3.0.0
-      remirror: ^1.0.27
+      remirror: ^1.0.28
     dependencies:
       '@babel/runtime': 7.15.4
       '@emotion/css': 11.1.3_@babel+core@7.15.5
@@ -7096,18 +7096,18 @@ packages:
     resolution: {integrity: sha512-SPgq9cenqdkqzxg1zYKEOkao5Boob2sG8QTxiSoHT7NyZoTZKnDcalvRtW9AmZBcbUHy8UtqCKfBWKyB2PSlmQ==}
     dev: false
 
-  /@remirror/core-constants/1.0.0:
-    resolution: {integrity: sha512-iP+LryMocFtzmsTyG2/RXn1WTu3NPiB3R8qo0nEk74tqSIp2ZMoGUUL0TukoQ4EQT6nQKCfPddgTdLaWRrygpQ==}
+  /@remirror/core-constants/1.0.1:
+    resolution: {integrity: sha512-g24XzSf4Cuiq6lkdY0CMVVusEzLEBy6x5VK7ifAeNhZflkrhsN6QdzdrIFlu+CT3pv+BnBpq9XuXQ+5FfFJSzQ==}
     dependencies:
       '@babel/runtime': 7.15.4
     dev: false
 
-  /@remirror/core-helpers/1.0.1:
-    resolution: {integrity: sha512-G/aRenKcXPXTY0cM3qCk3OxjmjWftHV8M5WLyANIVACltMp9Ed0rx260/WBpEioFtBg79UgIzjRJ9XdBlC8U9A==}
+  /@remirror/core-helpers/1.0.2:
+    resolution: {integrity: sha512-yrg4h3wRmqJi0lKmeHQrV2J05xBfTDgrhL5I38IaB9eoypDWdNI7ncxoYdkPItn11mRbk7RusOrqX8Eafh7jdg==}
     dependencies:
       '@babel/runtime': 7.15.4
       '@linaria/core': 3.0.0-beta.4
-      '@remirror/core-constants': 1.0.0
+      '@remirror/core-constants': 1.0.1
       '@remirror/types': 0.1.0
       '@types/object.omit': 3.0.0
       '@types/object.pick': 1.3.1
@@ -10594,7 +10594,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.4
+      follow-redirects: 1.14.4_debug@4.3.2
     transitivePeerDependencies:
       - debug
 
@@ -11373,7 +11373,7 @@ packages:
       '@babel/core': 7.15.5
       '@babel/parser': 7.15.7
       '@babel/runtime': 7.15.4
-      '@remirror/core-helpers': 1.0.1
+      '@remirror/core-helpers': 1.0.2
       '@rollup/plugin-babel': 5.3.0_ea00926c360dc6190492862468fc171c
       '@rollup/plugin-commonjs': 17.1.0_rollup@2.57.0
       '@rollup/plugin-json': 4.1.0_rollup@2.57.0
@@ -15264,7 +15264,7 @@ packages:
       xtend: 4.0.2
     dev: false
 
-  /follow-redirects/1.14.4:
+  /follow-redirects/1.14.4_debug@4.3.2:
     resolution: {integrity: sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -15272,6 +15272,8 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dependencies:
+      debug: 4.3.2_supports-color@6.1.0
 
   /follow-redirects/1.5.10:
     resolution: {integrity: sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==}
@@ -16534,7 +16536,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.14.4
+      follow-redirects: 1.14.4_debug@4.3.2
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
