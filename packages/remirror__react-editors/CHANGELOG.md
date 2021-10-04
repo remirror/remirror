@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.14
+
+> 2021-10-04
+
+### Patch Changes
+
+- Don't let the browser handle the Tab key in a list.
+
+- Updated dependencies []:
+  - remirror@1.0.28
+
 ## 0.1.13
 
 > 2021-10-01
