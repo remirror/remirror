@@ -278,7 +278,9 @@ export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFuncti
       }
     }
 
-    return false;
+    // if current selection is inside at lease one list item node, then we
+    // always return true.
+    return listItemTypes.size > 0;
   };
 }
 
@@ -298,7 +300,9 @@ export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFuncti
       }
     }
 
-    return false;
+    // if current selection is inside at lease one list item node, then we
+    // always return true.
+    return listItemTypes.size > 0;
   };
 }
 
