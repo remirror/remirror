@@ -354,6 +354,8 @@ function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: No
   const tr = state.tr,
     list = range.parent;
 
+  const originMappingLength = tr.mapping.maps.length;
+
   // Merge the list items into a single big item
   for (let pos = range.end, i = range.endIndex - 1, e = range.startIndex; i > e; i--) {
     pos -= list.child(i).nodeSize;
@@ -362,14 +364,19 @@ function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: No
 
   const $start = tr.doc.resolve(range.start),
     item = $start.nodeAfter;
-  const atStart = range.startIndex === 0,
-    atEnd = range.endIndex === list.childCount;
-  const parent = $start.node(-1),
-    indexBefore = $start.index(-1);
 
   if (!item) {
     return false;
   }
+
+  if (tr.mapping.slice(originMappingLength).map(range.end) !== range.start + item.nodeSize) {
+    return false;
+  }
+
+  const atStart = range.startIndex === 0,
+    atEnd = range.endIndex === list.childCount;
+  const parent = $start.node(-1),
+    indexBefore = $start.index(-1);
 
   if (
     !parent.canReplace(
@@ -435,7 +442,7 @@ function getItemRange(itemType: NodeType, selection: Selection) {
   const range = $from.blockRange(
     $to,
     // @ts-expect-error this line of code is copied from `prosemirror-schema-list`
-    (node) => node.childCount && node.firstChild.type === itemType,
+    (node) => node.childCount >= 1 && node.firstChild.type.name === itemType.name,
   );
 
   return range;
