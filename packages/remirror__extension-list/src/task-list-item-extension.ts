@@ -2,26 +2,26 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
+  ErrorConstant,
   ExtensionPriority,
   ExtensionTag,
   findParentNodeOfType,
   getMatchString,
+  invariant,
   isElementDomNode,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
-  nodeInputRule,
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
-import { InputRule } from '@remirror/pm/inputrules';
+import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
 import { ResolvedPos } from '@remirror/pm/model';
-import { EditorState, TextSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
-import { splitListItem } from './list-commands';
+import { splitListItem, wrapSingleItem } from './list-commands';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
 import { ListItemSharedExtension } from './list-item-shared-extension';
 
@@ -161,56 +161,39 @@ export class TaskListItemExtension extends NodeExtension {
   createInputRules(): InputRule[] {
     const regexp = /^\s*(\[( ?|x|X)]\s)$/;
 
-    const isInsideListItem = (state: EditorState) =>
-      state.selection.$from.node(-1).type.name === 'listItem';
-
-    const isInsideTaskListItem = (state: EditorState) =>
-      state.selection.$from.node(-1).type === this.type;
-
-    const defaultInputRule = nodeInputRule({
-      regexp,
-      type: this.type,
-      getAttributes: (match) => ({
-        checked: ['x', 'X'].includes(getMatchString(match, 2)),
+    return [
+      wrappingInputRule(regexp, this.type, (match) => {
+        return { checked: ['x', 'X'].includes(getMatchString(match, 2)) };
       }),
-      beforeDispatch: ({ tr, start }) => {
-        const $listItemPos = tr.doc.resolve(start + 1);
 
-        if ($listItemPos.node()?.type.name === 'taskListItem') {
-          tr.setSelection(new TextSelection($listItemPos));
+      new InputRule(regexp, (state, match, start, end) => {
+        const listType = this.store.schema.nodes.taskList;
+        invariant(listType, {
+          code: ErrorConstant.SCHEMA,
+          message: `Node type taskList does not exist on the current schema.`,
+        });
+
+        const tr = state.tr;
+        tr.deleteRange(start, end);
+        const canUpdate = wrapSingleItem({ listType, state, tr });
+
+        if (!canUpdate) {
+          return null;
         }
-      },
-      shouldSkip: ({ state }) => {
-        return isInsideListItem(state) || isInsideTaskListItem(state);
-      },
-    });
 
-    const listItemInputRule = new InputRule(regexp, (state, match, start, end) => {
-      if (!isInsideListItem(state)) {
-        return null;
-      }
+        const checked = ['x', 'X'].includes(getMatchString(match, 2));
 
-      let tr = state.tr;
-      tr.deleteRange(start, end);
-      const chain = this.store.chain(tr);
-      chain.liftListItemOutOfList();
-      chain.toggleTaskList();
-      tr = chain.tr();
+        if (checked) {
+          const found = findParentNodeOfType({ selection: tr.selection, types: this.type });
 
-      const checked = ['x', 'X'].includes(getMatchString(match, 2));
-
-      if (checked) {
-        const found = findParentNodeOfType({ selection: tr.selection, types: this.type });
-
-        if (found) {
-          tr.setNodeMarkup(found.pos, undefined, { checked });
+          if (found) {
+            tr.setNodeMarkup(found.pos, undefined, { checked });
+          }
         }
-      }
 
-      return tr;
-    });
-
-    return [defaultInputRule, listItemInputRule];
+        return tr;
+      }),
+    ];
   }
 }
 

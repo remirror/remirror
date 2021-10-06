@@ -16,6 +16,7 @@ import {
   ProsemirrorNode,
   Static,
 } from '@remirror/core';
+import { NodeType } from '@remirror/pm/model';
 import { NodeSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
@@ -132,8 +133,8 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
    * Lift the content inside a list item around the selection out of list
    */
   @command()
-  liftListItemOutOfList(): CommandFunction {
-    return liftListItemOutOfList(this.type);
+  liftListItemOutOfList(listItemType?: NodeType | undefined): CommandFunction {
+    return liftListItemOutOfList(listItemType ?? this.type);
   }
 }
 

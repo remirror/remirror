@@ -1,9 +1,9 @@
-import { KeyBindings, PlainExtension } from '@remirror/core';
+import { CreateExtensionPlugin, KeyBindings, PlainExtension } from '@remirror/core';
 
-import { sharedLiftListItem, sharedSinkListItem } from './list-commands';
+import { maybeJoinList, sharedLiftListItem, sharedSinkListItem } from './list-commands';
 
 /**
- * Provides some shared keymaps used by both `listItem` and `taskListItem`
+ * Provides some shared thing used by both `listItem` and `taskListItem`
  */
 export class ListItemSharedExtension extends PlainExtension {
   get name() {
@@ -14,6 +14,16 @@ export class ListItemSharedExtension extends PlainExtension {
     return {
       Tab: sharedSinkListItem(this.store.extensions),
       'Shift-Tab': sharedLiftListItem(this.store.extensions),
+    };
+  }
+
+  createPlugin(): CreateExtensionPlugin {
+    return {
+      appendTransaction: (_transactions, _oldState, newState) => {
+        const tr = newState.tr;
+        const updated = maybeJoinList(tr);
+        return updated ? tr : null;
+      },
     };
   }
 }

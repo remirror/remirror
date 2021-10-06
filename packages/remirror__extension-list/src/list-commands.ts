@@ -15,23 +15,10 @@ import {
 import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
-import { canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
+import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
 
 import { ListItemAttributes } from './list-item-extension';
-
-/**
- * Checks to see whether this is a list node.
- */
-export function isList(node: ProsemirrorNode): boolean {
-  const schema = node.type.schema;
-
-  return !!(
-    node.type.spec.group?.includes(ExtensionTag.ListContainerNode) ||
-    node.type === schema.nodes.bulletList ||
-    node.type === schema.nodes.orderedList ||
-    node.type === schema.nodes.taskList
-  );
-}
+import { isList, isListItem } from './list-utils';
 
 /**
  * Toggles a list item.
@@ -41,10 +28,10 @@ export function isList(node: ProsemirrorNode): boolean {
  * When the provided list wrapper is inactive (e.g. ul) then wrap the list with
  * this type. When it is active then remove the selected line from the list.
  *
- * @param type - the list node type
- * @param itemType - the list item type (must be in the schema)
+ * @param listType - the list node type
+ * @param itemType - the list item node type
  */
-export function toggleList(type: NodeType, itemType: NodeType): CommandFunction {
+export function toggleList(listType: NodeType, itemType: NodeType): CommandFunction {
   return (props) => {
     const { dispatch, tr } = props;
     const state = chainableEditorState(tr, props.state);
@@ -56,7 +43,7 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
     }
 
     const parentList = findParentNode({
-      predicate: (node) => isList(node),
+      predicate: (node) => isList(node.type),
       selection: tr.selection,
     });
 
@@ -67,19 +54,19 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
       // the selectron range is the first child of the list
       range.startIndex === 0
     ) {
-      if (parentList.node.type === type) {
+      if (parentList.node.type === listType) {
         return liftListItemOutOfList(itemType)(props);
       }
 
-      if (isList(parentList.node)) {
-        if (type.validContent(parentList.node.content)) {
-          dispatch?.(tr.setNodeMarkup(parentList.pos, type));
+      if (isList(parentList.node.type)) {
+        if (listType.validContent(parentList.node.content)) {
+          dispatch?.(tr.setNodeMarkup(parentList.pos, listType));
           return true;
         }
 
         // When you try to toggle a bullet list into a task list or vice versa, since these two lists
         // use different type of list items, you can't directly change the list type.
-        if (deepChangeListType(tr, parentList, type, itemType)) {
+        if (deepChangeListType(tr, parentList, listType, itemType)) {
           dispatch?.(tr.scrollIntoView());
           return true;
         }
@@ -88,7 +75,7 @@ export function toggleList(type: NodeType, itemType: NodeType): CommandFunction 
       }
     }
 
-    return wrapInList(type)(state, dispatch);
+    return wrapInList(listType)(state, dispatch);
   };
 }
 
@@ -269,7 +256,7 @@ function getOrderedListItemTypes(
 export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFunction {
   const listItemNames = getAllListItemNames(allExtensions);
 
-  return function ({ dispatch, state }) {
+  return ({ dispatch, state }) => {
     const listItemTypes = getOrderedListItemTypes(listItemNames, state);
 
     for (const type of listItemTypes.values()) {
@@ -291,7 +278,7 @@ export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFuncti
 export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFunction {
   const listItemNames = getAllListItemNames(allExtensions);
 
-  return function ({ dispatch, state }) {
+  return ({ dispatch, state }) => {
     const listItemTypes = getOrderedListItemTypes(listItemNames, state);
 
     for (const type of listItemTypes.values()) {
@@ -350,6 +337,48 @@ function deepChangeListType(
 
   tr.replaceRangeWith(start, end, newList);
   tr.setSelection((tr.selection.constructor as typeof Selection).near(tr.doc.resolve(from)));
+  return true;
+}
+
+/**
+ * Wrap an existed list item to a new list, which only containes this list item.
+ *
+ * @beta
+ */
+export function wrapSingleItem(params: {
+  listType: NodeType;
+  state: EditorState;
+  tr: Transaction;
+}): boolean {
+  const { tr, listType } = params;
+  const state = chainableEditorState(tr, params.state);
+  const $from = tr.selection.$from;
+
+  if ($from.depth <= 2) {
+    return false;
+  }
+
+  const item = $from.node(-1);
+  const list = $from.node(-2);
+
+  // Do nothing if current cursor is not in a list item node
+  if (!isList(list.type) || !isListItem(item.type)) {
+    return false;
+  }
+
+  // Do nothing if current list already fits the requirement
+  if (list.type === listType) {
+    return false;
+  }
+
+  if (!liftListItemOutOfList(item.type)({ state, tr, dispatch: () => {} })) {
+    return false;
+  }
+
+  if (!toggleList(listType, item.type)({ state, tr, dispatch: () => {} })) {
+    return false;
+  }
+
   return true;
 }
 
@@ -415,6 +444,51 @@ function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: No
   );
   dispatch(tr.scrollIntoView());
   return true;
+}
+
+export function maybeJoinList(tr: Transaction): boolean {
+  const { $from, to } = tr.selection;
+  const sharedDepth = $from.sharedDepth(to);
+
+  const joinable: number[] = [];
+
+  for (let depth = sharedDepth; depth >= 0; depth--) {
+    const parent = $from.node(depth);
+    {
+      const index = $from.index(depth);
+      const after = parent.maybeChild(index);
+      const before = parent.maybeChild(index - 1);
+
+      if (after && before && after.type.name === before.type.name && isList(before.type)) {
+        const pos = $from.before(depth + 1);
+        joinable.push(pos);
+      }
+    }
+    {
+      const indexAfter = $from.indexAfter(depth);
+      const after = parent.maybeChild(indexAfter);
+      const before = parent.maybeChild(indexAfter - 1);
+
+      if (after && before && after.type.name === before.type.name && isList(before.type)) {
+        const pos = $from.after(depth + 1);
+
+        if (pos !== joinable[joinable.length - 1]) {
+          joinable.push(pos);
+        }
+      }
+    }
+  }
+
+  let updated = false;
+
+  for (const pos of joinable.sort((a, b) => b - a)) {
+    if (canJoin(tr.doc, pos)) {
+      tr.join(pos);
+      updated = true;
+    }
+  }
+
+  return updated;
 }
 
 /**
