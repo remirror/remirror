@@ -5,9 +5,9 @@ title: Commands and helpers
 
 # Commands and helpers
 
-So now we have an editor, but how do we make changes to the document, and observe changes to save them to a backend?
+Now we have a working editor and the beginning of a menu. Time to wire up the menu, so users can change the document. And there is another important piece missing: We need to observe changes to save them to a backend.
 
-Remirror providers **commands** and **helpers** to enable this. You can think of commands as _write_ actions, and helpers as _read_ actions.
+Remirror enables this via **commands** and **helpers**. You can think of commands as _write_ actions, and helpers as _read_ actions.
 
 ## Commands
 
@@ -17,14 +17,37 @@ Commands are provided by extensions, and they may be triggered by input rules (i
 
 They can also be triggered manually, this is useful when creating custom components that trigger behaviour. `@remirror/react` exposes the hooks `useCommands` or `useChainedCommands` for exactly this purpose.
 
-### `useCommands`
+### Bold content
+
+Let's toggle the bold status when the user clicks the bold button:
 
 ```tsx
-import React from 'react';
+import { useCommands } from '@remirror/react';
+
+export const Menu = () => {
+  const { toggleBold, focus } = useCommands();
+
+  return (
+    <button
+      onClick={() => {
+        toggleBold();
+        focus();
+      }}
+    >
+      B
+    </button>
+  );
+};
+```
+
+### Visualize if content is bolded
+
+Users can now toggle the bold state but the button doesn't give any indication if the current text is bolded or not. This can be added via another hook: `useActive`:
+
+```tsx
 import { useActive, useCommands } from '@remirror/react';
 
-export const BoldButton = () => {
-  // Access the commands individually
+export const Menu = () => {
   const { toggleBold, focus } = useCommands();
   const active = useActive();
 
@@ -42,13 +65,15 @@ export const BoldButton = () => {
 };
 ```
 
-### `useChainedCommands`
+### Another way of bolding
+
+One cumbersome part of above click handler is that we have to execute the `toggleBold` and `focus` command after each other. Remirror offers chaining for a more natural way of executing multiple commands:
 
 ```tsx
 import React from 'react';
 import { useActive, useChainedCommands } from '@remirror/react';
 
-export const BoldButton = () => {
+export const Menu = () => {
   // Using command chaining
   const chain = useChainedCommands();
   const active = useActive();
@@ -69,43 +94,38 @@ export const BoldButton = () => {
 };
 ```
 
-However be aware a command might not make sense in the current selection context - for instance, you cannot bold or italicise text within a code block, or you cannot change callout attributes, if the selected node is not a callout.
+### Disable menu button if it can't be used
 
-It is good UX practice to hide (or disable) actions that are not available at the moment. With Remirror you can check if a command is enabled using its `.enabled()` property.
+However, be aware that a command might not make sense in the current selection context. For instance, you cannot bold text within a code block.
 
-In the example below we check if `toggleBold` is enabled, by checking the `toggleBold.enabled()` property. If not enabled, we disable the button.
+It is good UX practice to disable (or hide) actions that are not available at the moment. With Remirror you can check if a command is enabled using its `.enabled()` property:
 
 ```tsx
 import React from 'react';
-import { useActive, useCommands } from '@remirror/react';
+import { useCommands } from '@remirror/react';
 
-export const BoldButton = () => {
+export const Menu = () => {
   // Access the commands and the activity status of the editor.
   const { toggleBold } = useCommands();
-  const active = useActive();
 
   return (
-    <button
-      onClick={() => toggleBold()}
-      disabled={toggleBold.enabled() === false}
-      style={{ fontWeight: active.bold() ? 'bold' : undefined }}
-    >
+    <button onClick={() => toggleBold()} disabled={toggleBold.enabled() === false}>
       B
     </button>
   );
 };
 ```
 
-`toggleBold` is a very simple command with no arguments, others are more complex and expect arguments, like `insertImage`
+`toggleBold` is a very simple command with no arguments, others are more complex and expect arguments, like `toggleHeading`
 
 ```ts
-insertImage({ src: 'https://web.site/image.png' });
+toggleHeading({ level: 1 });
 ```
 
 In these cases it is good practice to pass the same arguments to `.enabled`, to ensure accurate results.
 
 ```ts
-insertImage.enabled({ src: 'https://web.site/image.png' });
+toggleHeading.enabled({ level: 1 });
 ```
 
 :::note
@@ -114,7 +134,7 @@ insertImage.enabled({ src: 'https://web.site/image.png' });
 
 Commands and there `.enabled` property execute the **exact same code** - the difference is whether they are _dispatched_ to the document or not.
 
-Commands must do 2 things
+Commands must do two things:
 
 1. Return `true` or `false`, to indicate whether they are enabled right now.
 2. Check whether the `dispatch` property is present.
@@ -127,11 +147,9 @@ Commands must do 2 things
 
 ## Helpers
 
-Helpers allow you to read state from the Remirror document, they are provided by extensions, just as commands are.
+Helpers allow you to read state from the Remirror document. They are provided by extensions - just as commands are. You can access the helpers via the `useHelpers` hook.
 
-`@remirror/react` exposes the hook `useHelpers` to enable you to create custom components that use document state.
-
-For instance if you want to save your Remirror document when the user presses `Ctrl/Cmd + S`, you could use a helper to extract the JSON representation of the document state.
+Let's save the Remirror document when the user presses `Ctrl/Cmd + S`! For that, we'll use a helper to extract the JSON representation of the document state:
 
 ```tsx
 import React, { useCallback } from 'react';
@@ -144,9 +162,8 @@ const hooks = [
     const { getJSON } = useHelpers();
 
     const handleSaveShortcut = useCallback(
-      (props) => {
-        const { state } = props;
-        saveToBackend(getJSON(state));
+      ({ state }) => {
+        console.log(`Save to backend: ${JSON.stringify(getJSON(state))}`);
 
         return true; // Prevents any further key handlers from being run.
       },
@@ -174,3 +191,13 @@ Here are a few useful helpers, but there are many more!
 | `getText`     | (Built in)           | Plain text representation (maintains line breaks) |
 | `getHTML`     | (Built in)           | HTML representation (using schema `toDOM`)        |
 | `getMarkdown` | `markdown-extension` | Markdown representation (where possible)          |
+
+## Summing up
+
+Congratulations! You created a manager, rendered the editor UI, added a menu, and captured the document for persistancy.
+
+With that, you've all the basic tools to start exploring Remirror.
+
+Have fun & happy coding!
+
+PS: Getting stuck with something? Reach out on [Discord](https://remirror.io/chat)!

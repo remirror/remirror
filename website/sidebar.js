@@ -65,9 +65,9 @@ const docs = [
     label: 'Getting started',
     collapsed: false,
     items: [
-      'installation',
+      'getting-started/installation',
       'getting-started/create-manager',
-      'getting-started/create-editor',
+      'getting-started/render-editor',
       'getting-started/commands-and-helpers',
     ],
   },
@@ -87,6 +87,7 @@ const docs = [
       'concepts/priority',
       'concepts/keymap',
       'concepts/error-handling',
+      'concepts/styling',
     ],
   },
   {

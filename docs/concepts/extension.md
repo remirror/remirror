@@ -5,6 +5,10 @@ title: Extension
 
 # Extension
 
+Remirror provides lots of extensions some are built-in, like the `HistoryExtension` (undo and redo), others are opt-in like `BoldExtension`.
+
+Each extension provides a wealth of functionality - like **keyboard shortcuts**, **input rules** (markdown shortcuts), **parsing of pasted HTML** and more. They also provide commands that can be triggered by external components. In raw ProseMirror you would need to implement each of these pieces of functionality yourself, in Remirror it is all encapsulated within a single extension.
+
 :::note
 
 This doc refers to "Extension" as a concept.
@@ -12,6 +16,8 @@ This doc refers to "Extension" as a concept.
 You can find a list of Remirror's provided extensions [here](/docs/extensions/index).
 
 :::note
+
+## Overview
 
 Extensions manage similar concerns. It allows for grouping items that affect:
 
