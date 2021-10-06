@@ -1,11 +1,11 @@
 ---
-slug: remirror-1.0.0
-title: v1.0 Release
+slug: migration-1.0.0
+title: Migration to v1.0
 author: Ifiok Jr.
 author_title: Remirror Maintainer
 author_url: https://github.com/ifiokjr
 author_image_url: https://avatars1.githubusercontent.com/u/1160934?v=4
-tags: [remirror, beta]
+tags: [remirror, beta, migration]
 ---
 
 The new version of `remirror` comes with a number of enhancements and quite a few breaking changes if you were using the `remirror@1.0.0-next.*` pre-releases.

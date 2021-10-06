@@ -5,7 +5,7 @@ author: Ronny Roeller
 author_title: Remirror Maintainer
 author_url: https://github.com/ronnyroeller
 author_image_url: https://avatars.githubusercontent.com/u/9339055?v=4
-tags: [remirror, showcase]
+tags: [remirror, community]
 ---
 
 _TLDR: New guard of maintainers will focus on easing adoption and adding more in-depth features._
