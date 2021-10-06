@@ -368,6 +368,34 @@ describe('create a list', () => {
     editor.insertText('[x] ');
     expect(editor.doc).toEqualProsemirrorNode(doc(taskList(uncheckedItem(p('[x] ')))));
   });
+
+  it('handle sub-list correctly', () => {
+    editor.add(
+      doc(
+        bulletList(
+          listItem(
+            p('<cursor>root item'), //
+            bulletList(
+              listItem(p('sub item')), //
+            ),
+          ),
+        ),
+      ),
+    );
+    editor.insertText('1. ');
+    expect(editor.doc).toEqualProsemirrorNode(
+      doc(
+        orderedList()(
+          listItem(
+            p('<cursor>root item'), //
+            bulletList(
+              listItem(p('sub item')), //
+            ),
+          ),
+        ),
+      ),
+    );
+  });
 });
 
 describe('joins lists', () => {
