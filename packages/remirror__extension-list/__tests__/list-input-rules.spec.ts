@@ -55,7 +55,7 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(doc(taskList(checkedItem(p('')))));
   });
 
-  it('creates a taskList in a bulletListItem', () => {
+  it('creates a task list in a bullet list', () => {
     editor.add(
       doc(
         bulletList(
@@ -73,7 +73,7 @@ describe('create a list', () => {
     );
   });
 
-  it('creates a taskList in an ordered ListItem', () => {
+  it('creates a task list in an ordered list', () => {
     editor.add(
       doc(
         orderedList({ order: 1 })(
@@ -86,6 +86,78 @@ describe('create a list', () => {
       doc(
         taskList(
           checkedItem(p('')), //
+        ),
+      ),
+    );
+  });
+
+  it('creates a bullet list in an ordered list', () => {
+    editor.add(
+      doc(
+        orderedList({ order: 1 })(
+          listItem(p('<cursor>')), //
+        ),
+      ),
+    );
+    editor.insertText('- ');
+    expect(editor.doc).toEqualProsemirrorNode(
+      doc(
+        bulletList(
+          listItem(p('')), //
+        ),
+      ),
+    );
+  });
+
+  it('creates a bullet list in a task list', () => {
+    editor.add(
+      doc(
+        taskList(
+          checkedItem(p('<cursor>')), //
+        ),
+      ),
+    );
+    editor.insertText('- ');
+    expect(editor.doc).toEqualProsemirrorNode(
+      doc(
+        bulletList(
+          listItem(p('')), //
+        ),
+      ),
+    );
+  });
+
+  it('creates an ordered list in a bullet list', () => {
+    editor.add(
+      doc(
+        bulletList(
+          listItem(p('<cursor>')), //
+        ),
+      ),
+    );
+    editor.insertText('1. ');
+    expect(editor.doc).toEqualProsemirrorNode(
+      doc(
+        orderedList()(
+          listItem(p('')), //
+        ),
+      ),
+    );
+  });
+
+  it('creates an ordered list in a task list', () => {
+    editor.add(
+      doc(
+        taskList(
+          uncheckedItem(p('<cursor>')), //
+        ),
+      ),
+    );
+    editor.insertText('1. ');
+    expect(editor.doc).toEqualProsemirrorNode(
+      doc(
+        orderedList()(
+          listItem(p('')), //
         ),
       ),
     );
@@ -295,5 +367,242 @@ describe('create a list', () => {
     editor.add(doc(taskList(uncheckedItem(p('<cursor>')))));
     editor.insertText('[x] ');
     expect(editor.doc).toEqualProsemirrorNode(doc(taskList(uncheckedItem(p('[x] ')))));
+  });
+});
+
+describe('joins lists', () => {
+  const editor = renderEditor([
+    new BulletListExtension({}),
+    new ListItemExtension({}),
+    new OrderedListExtension(),
+    new TaskListExtension(),
+  ]);
+
+  const {
+    nodes: { bulletList, taskList, listItem, doc, p },
+    attributeNodes: { taskListItem, orderedList },
+  } = editor;
+
+  const uncheckedItem = taskListItem({ checked: false });
+  const checkedItem = taskListItem({ checked: true });
+
+  describe('input rules', () => {
+    it('bullet list => task list (join backward and forward)', () => {
+      editor.add(
+        doc(
+          taskList(
+            checkedItem(p('A')), //
+          ),
+          bulletList(
+            listItem(p('<cursor>B')), //
+          ),
+          taskList(
+            checkedItem(p('C')), //
+          ),
+        ),
+      );
+      editor.insertText('[x] ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          taskList(
+            checkedItem(p('A')), //
+            checkedItem(p('B')), //
+            checkedItem(p('C')), //
+          ),
+        ),
+      );
+    });
+
+    it('bullet list => task list (join backward)', () => {
+      editor.add(
+        doc(
+          taskList(
+            checkedItem(p('A')), //
+          ),
+          bulletList(
+            listItem(p('<cursor>B')), //
+          ),
+        ),
+      );
+      editor.insertText('[x] ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          taskList(
+            checkedItem(p('A')), //
+            checkedItem(p('B')), //
+          ),
+        ),
+      );
+    });
+
+    it('bullet list => task list (join forward)', () => {
+      editor.add(
+        doc(
+          bulletList(
+            listItem(p('<cursor>B')), //
+          ),
+          taskList(
+            checkedItem(p('C')), //
+          ),
+        ),
+      );
+      editor.insertText('[x] ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          taskList(
+            checkedItem(p('B')), //
+            checkedItem(p('C')), //
+          ),
+        ),
+      );
+    });
+
+    it('ordered list => task list (join backward and forward)', () => {
+      editor.add(
+        doc(
+          taskList(
+            uncheckedItem(p('A')), //
+          ),
+          orderedList()(
+            listItem(p('<cursor>B')), //
+          ),
+          taskList(
+            uncheckedItem(p('C')), //
+          ),
+        ),
+      );
+      editor.insertText('[ ] ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          taskList(
+            uncheckedItem(p('A')), //
+            uncheckedItem(p('B')), //
+            uncheckedItem(p('C')), //
+          ),
+        ),
+      );
+    });
+
+    it('ordered list => task list (join backward)', () => {
+      editor.add(
+        doc(
+          taskList(
+            uncheckedItem(p('A')), //
+          ),
+          orderedList()(
+            listItem(p('<cursor>B')), //
+          ),
+        ),
+      );
+      editor.insertText('[ ] ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          taskList(
+            uncheckedItem(p('A')), //
+            uncheckedItem(p('B')), //
+          ),
+        ),
+      );
+    });
+
+    it('ordered list => task list (join forward)', () => {
+      editor.add(
+        doc(
+          orderedList()(
+            listItem(p('<cursor>B')), //
+          ),
+          taskList(
+            uncheckedItem(p('C')), //
+          ),
+        ),
+      );
+      editor.insertText('[ ] ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          taskList(
+            uncheckedItem(p('B')), //
+            uncheckedItem(p('C')), //
+          ),
+        ),
+      );
+    });
+
+    it('paragraph => task list (join backward and forward)', () => {
+      editor.add(
+        doc(
+          taskList(
+            checkedItem(p('A')), //
+          ),
+          p('<cursor>B'), //
+          taskList(
+            checkedItem(p('C')), //
+          ),
+        ),
+      );
+      editor.insertText('[x] ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          taskList(
+            checkedItem(p('A')), //
+            checkedItem(p('B')), //
+            checkedItem(p('C')), //
+          ),
+        ),
+      );
+    });
+
+    it('paragraph => bullet list (join backward)', () => {
+      editor.add(
+        doc(
+          bulletList(
+            listItem(p('A')), //
+          ),
+          p('<cursor>B'), //
+          taskList(
+            checkedItem(p('C')), //
+          ),
+        ),
+      );
+      editor.insertText('- ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          bulletList(
+            listItem(p('A')), //
+            listItem(p('B')), //
+          ),
+          taskList(
+            checkedItem(p('C')), //
+          ),
+        ),
+      );
+    });
+
+    it('paragraph => ordered list (join forward)', () => {
+      editor.add(
+        doc(
+          bulletList(
+            listItem(p('A')), //
+          ),
+          p('<cursor>B'), //
+          orderedList()(
+            listItem(p('C')), //
+          ),
+        ),
+      );
+      editor.insertText('1. ');
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          bulletList(
+            listItem(p('A')), //
+          ),
+          orderedList()(
+            listItem(p('B')), //
+            listItem(p('C')), //
+          ),
+        ),
+      );
+    });
+
+    //
   });
 });
