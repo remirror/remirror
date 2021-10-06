@@ -7,10 +7,8 @@ import { isListItemNode, isListNode } from './list-utils';
 
 export function indentListItemsSelected(tr: Transaction): boolean {
   const originalSelection = tr.selection;
-  const normalizedSelection = normalizeListItemsSelection({
-    selection: originalSelection,
-    doc: tr.doc,
-  });
+  const normalizedSelection = originalSelection;
+
   const { $from, $to } = normalizedSelection;
   const range = calculateRange({ selection: normalizedSelection });
 
@@ -61,27 +59,31 @@ export function indentListItemsSelected(tr: Transaction): boolean {
   });
   const hasPreviousNestedList = Boolean(previousNestedList);
   const start = from - 1;
-  tr.replaceRange(hasPreviousNestedList ? start - 1 : start, range.end, sliceSelected);
+  tr.replaceRange(hasPreviousNestedList ? start - 1 : start, to, sliceSelected);
+  // debugger;
+
   const leftoverContentPosition = tr.mapping.map(to) - 2;
 
-  if (nestedListItemsLeftover.openStart === 0) {
-    tr.insert(leftoverContentPosition, nestedListItemsLeftover.content);
-  } else {
-    tr.replace(
-      leftoverContentPosition - nestedListItemsLeftover.openStart,
-      leftoverContentPosition - nestedListItemsLeftover.openStart,
-      nestedListItemsLeftover,
-    );
-  }
+  // if (nestedListItemsLeftover.openStart === 0) {
+  //   tr.insert(leftoverContentPosition, nestedListItemsLeftover.content);
+  //   // debugger;
+  // } else {
+  //   tr.replace(
+  //     leftoverContentPosition - nestedListItemsLeftover.openStart,
+  //     leftoverContentPosition - nestedListItemsLeftover.openStart,
+  //     nestedListItemsLeftover,
+  //   );
+  //   // debugger;
+  // }
 
-  const nextSelection = calculateNewSelection({
-    originalSelection,
-    normalizedSelection,
-    tr,
-    hasPreviousNestedList,
-  });
+  // const nextSelection = calculateNewSelection({
+  //   originalSelection,
+  //   normalizedSelection,
+  //   tr,
+  //   hasPreviousNestedList,
+  // });
 
-  tr.setSelection(nextSelection);
+  // tr.setSelection(nextSelection);
   return true;
 }
 
