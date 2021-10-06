@@ -220,6 +220,17 @@ describe('Tab and Shift-Tab', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
+  it('never lift a list item out of the list', () => {
+    from = doc(
+      ul(
+        li(p('hello')),
+        li(p('world<cursor>')), //
+      ),
+    );
+    editor.add(from).press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+  });
+
   it('sink and lift the correct list item in a nested and mixed list', () => {
     from = doc(
       ul(

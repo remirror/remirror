@@ -13,10 +13,11 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
-import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
+import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
 import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
 
+import { indentListItemsSelected } from './list-indent';
 import { ListItemAttributes } from './list-item-extension';
 import { isList, isListItem } from './list-utils';
 
@@ -35,8 +36,7 @@ export function toggleList(listType: NodeType, itemType: NodeType): CommandFunct
   return (props) => {
     const { dispatch, tr } = props;
     const state = chainableEditorState(tr, props.state);
-    const { $from, $to } = tr.selection;
-    const range = $from.blockRange($to);
+    const range = calculateItemRange(itemType, tr.selection);
 
     if (!range) {
       return false;
@@ -253,21 +253,11 @@ function getOrderedListItemTypes(
  * inner list. Use this function if you get multiple list item nodes in your
  * schema.
  */
-export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFunction {
-  const listItemNames = getAllListItemNames(allExtensions);
-
-  return ({ dispatch, state }) => {
-    const listItemTypes = getOrderedListItemTypes(listItemNames, state);
-
-    for (const type of listItemTypes.values()) {
-      if (sinkListItem(type)(state, dispatch)) {
-        return true;
-      }
-    }
-
-    // if current selection is inside at lease one list item node, then we
-    // always return true.
-    return listItemTypes.size > 0;
+export function sharedSinkListItem(_allExtensions: AnyExtension[]): CommandFunction {
+  return ({ dispatch, tr }) => {
+    indentListItemsSelected(tr);
+    dispatch?.(tr);
+    return true;
   };
 }
 
@@ -499,7 +489,7 @@ export function liftListItemOutOfList(itemType: NodeType): CommandFunction {
   return (props) => {
     const { dispatch, tr } = props;
     const state = chainableEditorState(tr, props.state);
-    const range = getItemRange(itemType, tr.selection);
+    const range = calculateItemRange(itemType, tr.selection);
 
     if (!range) {
       return false;
@@ -514,7 +504,7 @@ export function liftListItemOutOfList(itemType: NodeType): CommandFunction {
   };
 }
 
-function getItemRange(itemType: NodeType, selection: Selection) {
+function calculateItemRange(itemType: NodeType, selection: Selection) {
   const { $from, $to } = selection;
 
   const range = $from.blockRange($to, (node) => node.firstChild?.type === itemType);
