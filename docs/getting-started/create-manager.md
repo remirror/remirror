@@ -3,15 +3,15 @@ hide_title: true
 title: Create a manager
 ---
 
-## Creating a manager
+# Creating a manager
 
-To initialise a Remirror editor we must first create a _manager_. The manager stores the commands and helpers from your chosen extensions.
+To initialise a Remirror editor we must first create a _manager_. The manager controls what your editor will be able to.
 
-### Extensions
+## Add extensions
 
-Some extensions are provided by default, like the `DocExtension`, `ParagraphExtension` and `HistoryExtension`, but in the vast majority of cases, **you need to chose the extensions required for your end goal**.
+The manager itself brings only extremely basic functionality. Everything else is packaged in Remirror extensions. In fact, a manager without extensions isn't usable at all. So, when creating a manager, Remirror will automatically add a minimal set of extensions like support for paragraphs (`ParagraphExtension`) and undo (`HistoryExtension`). Beyond that, you can freely pick & choose what you need for your specific use case.
 
-You can see a list of provided extensions [here](/docs/extensions/index).
+Let's add to our editor support for bold and italic formatting:
 
 ```ts
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
@@ -22,31 +22,85 @@ const { manager } = useRemirror({
 });
 ```
 
-Some extensions can be passed options, to tweak configuration options. For example here we are setting the default type for callouts.
+Bold and italic is very straight forward. Hence, there are no configuration options.
+
+Other extensions can be tweaked. For example, here we add support for callouts and default them to warnings:
 
 ```ts
-import { BoldExtension, CalloutExtension } from 'remirror/extensions';
+import { BoldExtension, CalloutExtension, ItalicExtension } from 'remirror/extensions';
 import { useRemirror } from '@remirror/react';
 
 const { manager } = useRemirror({
   extensions: () => [
-    new CalloutExtension({ defaultType: 'blank' }), // Override defaultType: 'info'
     new BoldExtension(),
+    new ItalicExtension(),
+    new CalloutExtension({ defaultType: 'warn' }), // Override defaultType: 'info'
   ],
 });
 ```
 
-:::note
-
-Some extension options are _static_ (can only be set on initialisation), whilst other are _dynamic_ (and can be changed at run time).
-
-There is more detailed information in [extension concepts](../concepts/extension.md#options).
+Remirror comes with many ready-made extensions. Check out the [list of extensions](/docs/extensions/index).
 
 :::note
 
-### Setting initial content
+Extensions allow you not only to fine-tune the editor to your specific needs. They also allow you to add your custom features to the editor. Read the [extension guide](../concepts/extension.md) for more details.
 
-To set the initial content for the editor you can pass additional properties to the `useRemirror` hook.
+:::note
+
+## Set initial content
+
+We can also set the initial content of our editor via the `useRemirror` hook. We get access to the initialized editor state via the returned `state` variable:
+
+```tsx
+import { BoldExtension, CalloutExtension, ItalicExtension } from 'remirror/extensions';
+import { useRemirror } from '@remirror/react';
+
+const { manager, state } = useRemirror({
+  extensions: () => [
+    new BoldExtension(),
+    new ItalicExtension(),
+    new CalloutExtension({ defaultType: 'warn' }),
+  ],
+
+  // Set the initial content.
+  content: '<p>I love <b>Remirror</b></p>',
+
+  // Place the cursor at the start of the document. This an also be set to
+  // `end`, `all` or a numbered position.
+  selection: 'start',
+
+  // Set the string handler which means the content provided will be
+  // automatically handled as html.
+  // `markdown` is also available when the `MarkdownExtension`
+  // is added to the editor.
+  stringHandler: 'html',
+});
+```
+
+With that, we have a manager and a prefilled state! Next up, we will use those to render our editor.
+
+:::note
+
+HTML is a great format for demo code because it's compact and easy to read. It's less ideal for real applications because HTML can't capture all the nuances of the editor content. This means that you might loose data when persisting Remirror content to HTML.
+
+Hence, you want to persist Remirror's native JSON format, and load this in your editor:
+
+```tsx
+import { BoldExtension, CalloutExtension, ItalicExtension } from 'remirror/extensions';
+import { useRemirror } from '@remirror/react';
+
+const { manager, state } = useRemirror({
+  extensions: () => [
+    new BoldExtension(),
+    new ItalicExtension(),
+    new CalloutExtension({ defaultType: 'warn' }),
+  ],
+
+  content: remirrorJsonFromStorage,
+});
+```
+
+:::note
 
 :::note
 
@@ -55,38 +109,3 @@ Initial content is only supported in uncontrolled components (which is recommend
 You can find the docs for creating controlled components [here](../react/controlled.md).
 
 :::note
-
-```tsx
-import React from 'react';
-import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from '@remirror/react';
-
-import { Menu } from './menu';
-
-const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
-
-export const MyEditor = () => {
-  const { manager, state } = useRemirror({
-    extensions,
-
-    // Set the initial content.
-    content: '<p>Initial content</p>',
-
-    // Place the cursor at the start of the document. This an also be set to
-    // `end`, `all` or a numbered position.
-    selection: 'start',
-
-    // Set the string handler which means the content provided will be
-    // automatically handled as html.
-    // `markdown` is also available when the `MarkdownExtension`
-    // is added to the editor.
-    stringHandler: 'html',
-  });
-
-  return <Remirror manager={manager} initialContent={state} />;
-};
-```
-
-The initial content can also be set to a `RemirrorJSON` object which matches this shape of the data provided by Remirror. It's up to you how you store the data.
-
-Now we have created a manager, we need to render our editor.

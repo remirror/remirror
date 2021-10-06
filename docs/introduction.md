@@ -20,11 +20,12 @@ Think of Remirror like Lego, you can follow the instructions to construct an out
 
 This means we can provide both "out-of-the-box" and "bespoke" experiences, maintaining the power and flexibility that ProseMirror is known for.
 
-### Extensions
+## Where to start?
 
-Remirror provides lots of extensions some are built-in, like the `HistoryExtension` (undo and redo), others are opt-in like `BoldExtension`.
+The guide offers two tutorials to get new users started:
 
-Each extension provides a wealth of functionality - like **keyboard shortcuts**, **input rules** (markdown shortcuts), **parsing of pasted HTML** and more. They also provide commands that can be triggered by external components. In raw ProseMirror you would need to implement each of these pieces of functionality yourself, in Remirror it is all encapsulated within a single extension.
+- [5 min tutorial](/docs/5-min-tutorial): Build an app with a pre-packaged editor
+- [Getting started](/docs/getting-started/installation): Build your own tailor-made editor and learn about the core concepts underlying Remirror
 
 ## Target audience
 
