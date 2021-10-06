@@ -1,5 +1,23 @@
 # @remirror/extension-list
 
+## 1.1.0
+
+> 2021-10-06
+
+### Minor Changes
+
+- Automagically join two lists with the same node type when there are siblings.
+
+### Patch Changes
+
+- Allow input rules to convert task list to bullet list or ordered list.
+
+* Merge a patch from the upstream prosemirror-schema-list: https://github.com/ProseMirror/prosemirror-schema-list/commit/38867345f6d97d6793655ed77c16f1a7b18f6846
+
+  Make sure liftListItem doesn't crash when multiple items can't be merged.
+
+  Fix a crash in `liftListItem` that happens when list items that can't be merged are lifted together.
+
 ## 1.0.15
 
 > 2021-10-04
