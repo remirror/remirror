@@ -3,6 +3,12 @@ hide_title: true
 title: Installation
 ---
 
+:::note
+
+This tutorial walks you through creating your own editor from scratch. If you would like an out-of-the-box solution - check our [5 min tutorial](/docs/5-min-tutorial).
+
+:::note
+
 # Installation
 
 Use the installation instruction outlined below, depending on the package manager used in your project.
