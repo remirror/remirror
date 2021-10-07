@@ -38,7 +38,7 @@ Users can even bold text via input rules: Type `**bold**` to add bold text.
 
 The automatic rendering kickstarts our development but we want to have a bit more control. For example, we'd like to have a menu where users can bold text.
 
-When there are no children provided to the `Remirror` component it automatically renders as above. But once we provide children we can take full control.
+When there are no children provided to the `Remirror` component it automatically renders the editor. But once we provide children to the `Remirror` component, we can take full control.
 
 The `Remirror` component provides access to the editor to all children components via the `RemirrorContext`. We'll take advantage of this in the next step. For now, we render just a shell where we can later add our menu:
 
