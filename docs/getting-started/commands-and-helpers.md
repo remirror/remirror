@@ -40,9 +40,9 @@ export const Menu = () => {
 };
 ```
 
-### Visualize if content is bolded
+### Visualize if content is bold
 
-Users can now toggle the bold state but the button doesn't give any indication if the current text is bolded or not. This can be added via another hook: `useActive`:
+Users can now toggle the bold state but the button doesn't give any indication if the current text is bold or not. This can be added via another hook: `useActive`:
 
 ```tsx
 import { useActive, useCommands } from '@remirror/react';
@@ -132,7 +132,7 @@ toggleHeading.enabled({ level: 1 });
 
 #### How this works (advanced)
 
-Commands and there `.enabled` property execute the **exact same code** - the difference is whether they are _dispatched_ to the document or not.
+Commands and their `.enabled` property execute the **exact same code** - the difference is whether they are _dispatched_ to the document or not.
 
 Commands must do two things:
 
