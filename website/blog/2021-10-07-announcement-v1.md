@@ -30,7 +30,7 @@ After 2.5 years of development and over 200 pre-releases, we’re excited to int
 
 ⬆️ **Migrate** from earlier versions:
 
-- To upgrade from 1.0.0-next._ / pr706._ pre-release: [Guide](.io/blog/migration-1.0.0)
+- To upgrade from 1.0.0-next._ / pr706._ pre-release: [Guide](/blog/migration-1.0.0)
 - To upgrade from earlier 0.11.\* releases: The library has changed significantly and you'd be better off browsing the documentation. Please reach out on [Discord](https://remirror.io/chat) if you need any help.
 
 🙏 A big thanks to [@ifiokjr](https://github.com/ifiokjr) and all the other contributors who made the release possible!
