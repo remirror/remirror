@@ -1,7 +1,17 @@
 import { CreateExtensionPlugin, KeyBindings, PlainExtension } from '@remirror/core';
+import { chainCommands, deleteSelection } from '@remirror/pm/commands';
 
-import { maybeJoinList, sharedLiftListItem, sharedSinkListItem } from './list-commands';
+import {
+  joinListBackward,
+  maybeJoinList,
+  sharedLiftListItem,
+  sharedSinkListItem,
+} from './list-commands';
 
+const backspace = chainCommands(
+  deleteSelection, //
+  joinListBackward, //
+);
 /**
  * Provides some shared thing used by both `listItem` and `taskListItem`
  */
@@ -14,6 +24,10 @@ export class ListItemSharedExtension extends PlainExtension {
     return {
       Tab: sharedSinkListItem(this.store.extensions),
       'Shift-Tab': sharedLiftListItem(this.store.extensions),
+      Backspace: (props) => {
+        const result = backspace(props.state, props.dispatch, props.view);
+        return result;
+      },
     };
   }
 
