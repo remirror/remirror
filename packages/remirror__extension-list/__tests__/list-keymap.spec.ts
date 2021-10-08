@@ -353,3 +353,115 @@ describe('Tab and Shift-Tab', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(from);
   });
 });
+
+describe('Backspace', () => {
+  const { doc, p, ol, ul, li, taskList, unchecked, checked, editor } = setupListEditor();
+
+  let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
+
+  it('presses backspace at the begin of a list', () => {
+    from = doc(
+      ul(
+        li(p('<cursor>A')),
+        li(p('B')),
+        li(p('C')), //
+      ),
+    );
+    to = doc(
+      p('A'),
+      ul(
+        li(p('B')),
+        li(p('C')), //
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('presses backspace at the middle of a list', () => {
+    from = doc(
+      ul(
+        li(p('A')),
+        li(p('<cursor>B')),
+        li(p('C')), //
+      ),
+    );
+    to = doc(
+      ul(
+        li(p('A'), p('B')),
+        li(p('C')), //
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('presses backspace between ul and ol', () => {
+    from = doc(
+      ul(
+        li(p('A')), //
+        li(p('B')),
+      ),
+      ol(
+        li(p('<cursor>C')), //
+        li(p('D')),
+      ),
+    );
+    to = doc(
+      ul(
+        li(p('A')), //
+        li(p('B')),
+        li(p('C')),
+        li(p('D')),
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it.skip('presses backspace between taskList and ul', () => {
+    from = doc(
+      taskList(
+        checked(p('A')), //
+        checked(p('B')),
+      ),
+      ul(
+        li(p('<cursor>C')), //
+        li(p('D')),
+      ),
+    );
+    to = doc(
+      taskList(
+        checked(p('A')), //
+        checked(p('B')),
+        unchecked(p('C')),
+        unchecked(p('D')),
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it.skip('presses backspace between ol and taskList', () => {
+    from = doc(
+      ol(
+        li(p('A')), //
+        li(p('B')),
+      ),
+      taskList(
+        checked(p('<cursor>C')), //
+        unchecked(p('D')),
+      ),
+    );
+    to = doc(
+      ol(
+        li(p('A')), //
+        li(p('B')),
+        li(p('C')),
+        li(p('D')),
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+});
