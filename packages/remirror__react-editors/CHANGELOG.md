@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.16
+
+> 2021-10-08
+
+### Patch Changes
+
+- Fix a bug that causes incorrect indent when changing list type.
+
+- Updated dependencies []:
+  - remirror@1.0.30
+
 ## 0.1.15
 
 > 2021-10-06
