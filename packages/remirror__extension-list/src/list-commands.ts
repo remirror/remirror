@@ -445,7 +445,7 @@ export function wrapSingleItem({
   state: EditorState;
   tr: Transaction;
 }): boolean {
-  return wrapSelectedItem({ listType, itemType, tr });
+  return wrapSelectedItems({ listType, itemType, tr });
   // const { tr, listType, itemType } = params;
   // const state = chainableEditorState(tr, params.state);
   // const $from = tr.selection.$from;
@@ -479,7 +479,44 @@ export function wrapSingleItem({
   // return deepChangeListItemType(tr, foundList, listType, itemType);
 }
 
-export function wrapSelectedItem({
+/**
+ * Wrap existed list items to a new type of list, which only containes these list items.
+ *
+ * @remarks
+ *
+ * @example
+ *
+ * Here is a pseudo-code exmple:
+ *
+ * before:
+ *
+ * ```html
+ *  <ul>
+ *    <li>item A</li>
+ *    <li>item B<!-- cursor --></li>
+ *    <li>item C</li>
+ *    <li>item D</li>
+ *  </ul>
+ * ```
+ *
+ * after:
+ *
+ * ```html
+ *  <ul>
+ *    <li>item A</li>
+ *  </ul>
+ *  <ol>
+ *    <li>item B<!-- cursor --></li>
+ *  </ol>
+ *  <ul>
+ *    <li>item C</li>
+ *    <li>item D</li>
+ *  </ul>
+ * ```
+ *
+ * @beta
+ */
+export function wrapSelectedItems({
   listType,
   itemType,
   tr,

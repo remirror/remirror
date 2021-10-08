@@ -3,6 +3,7 @@ export {
   sharedLiftListItem,
   sharedSinkListItem,
   toggleList,
+  wrapSelectedItems,
   wrapSingleItem,
 } from './list-commands';
 export { ListItemExtension } from './list-item-extension';
