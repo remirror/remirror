@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.1.1
+
+> 2021-10-08
+
+### Patch Changes
+
+- Fix a bug that causes incorrect indent when changing list type.
+
 ## 1.1.0
 
 > 2021-10-06

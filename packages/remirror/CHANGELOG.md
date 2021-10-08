@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.30
+
+> 2021-10-08
+
+### Patch Changes
+
+- Fix a bug that causes incorrect indent when changing list type.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.1.1
+  - @remirror/preset-wysiwyg@1.1.7
+
 ## 1.0.29
 
 > 2021-10-06
