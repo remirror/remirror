@@ -404,7 +404,7 @@ function deepChangeListItemType(
  *
  * before:
  *
- * ```ts
+ * ```html
  *  <ul>
  *    <li>A</li>
  *    <li>B<!-- cursor --></li>
@@ -414,7 +414,7 @@ function deepChangeListItemType(
  *
  * after:
  *
- * ```ts
+ * ```html
  *  <ul>
  *    <li>A</li>
  *  </ul>
@@ -425,7 +425,6 @@ function deepChangeListItemType(
  *    <li>C</li>
  *  </ul>
  * ```
- *
  *
  * @beta
  */
