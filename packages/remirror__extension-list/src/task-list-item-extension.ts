@@ -22,7 +22,7 @@ import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
 import { ResolvedPos } from '@remirror/pm/model';
 import { ExtensionListTheme } from '@remirror/theme';
 
-import { splitListItem, wrapSingleItem } from './list-commands';
+import { splitListItem, wrapSelectedItems } from './list-commands';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
 import { ListItemSharedExtension } from './list-item-shared-extension';
 
@@ -170,10 +170,9 @@ export class TaskListItemExtension extends NodeExtension {
       new InputRule(regexp, (state, match, start, end) => {
         const tr = state.tr;
         tr.deleteRange(start, end);
-        const canUpdate = wrapSingleItem({
+        const canUpdate = wrapSelectedItems({
           listType: assertGet(this.store.schema.nodes, 'taskList'),
           itemType: this.type,
-          state,
           tr,
         });
 

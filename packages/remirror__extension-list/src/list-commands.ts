@@ -18,7 +18,7 @@ import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm
 import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
 
 import { ListItemAttributes } from './list-item-extension';
-import { isList, isListItem } from './list-utils';
+import { isList } from './list-utils';
 
 /**
  * Toggles a list.
@@ -340,145 +340,6 @@ function deepChangeListType(
   return true;
 }
 
-function deepChangeListItemType(
-  tr: Transaction,
-  foundList: FindProsemirrorNodeResult,
-  listType: NodeType,
-  itemType: NodeType,
-): boolean {
-  const oldList = foundList.node;
-  const $start = tr.doc.resolve(foundList.start);
-  const start = foundList.pos;
-  const end = start + oldList.nodeSize;
-  const from = tr.selection.from;
-
-  const itemIndex = tr.selection.$from.index($start.depth);
-
-  const oldItems: ProsemirrorNode[] = [];
-
-  for (let i = 0; i < oldList.childCount; i++) {
-    oldItems.push(oldList.child(i));
-  }
-
-  const newLists: ProsemirrorNode[] = [];
-
-  //
-  const newItemsPart1 = oldItems.slice(0, itemIndex);
-
-  if (newItemsPart1.length > 0) {
-    newLists.push(oldList.copy(Fragment.from(newItemsPart1)));
-  }
-
-  //
-  const newItemsPart2: ProsemirrorNode[] = [];
-
-  for (const oldItem of oldItems.slice(itemIndex, itemIndex + 1)) {
-    if (!itemType.validContent(oldItem.content)) {
-      return false;
-    }
-
-    const newItem = itemType.createChecked(null, oldItem.content);
-    newItemsPart2.push(newItem);
-  }
-
-  newLists.push(listType.createChecked(null, newItemsPart2));
-
-  //
-  const newItemsAfter = oldItems.slice(itemIndex + 1, oldItems.length);
-
-  if (newItemsAfter.length > 0) {
-    newLists.push(oldList.copy(Fragment.from(newItemsAfter)));
-  }
-
-  //
-  tr.replaceWith(start, end, newLists);
-  tr.setSelection((tr.selection.constructor as typeof Selection).near(tr.doc.resolve(from)));
-
-  return true;
-}
-
-/**
- * Wrap an existed list item to a new list, which only containes this list item.
- *
- * @remarks
- *
- * @example
- *
- * Here is a pseudo-code exmple:
- *
- * before:
- *
- * ```html
- *  <ul>
- *    <li>item A</li>
- *    <li>item B<!-- cursor --></li>
- *    <li>item C</li>
- *    <li>item D</li>
- *  </ul>
- * ```
- *
- * after:
- *
- * ```html
- *  <ul>
- *    <li>item A</li>
- *  </ul>
- *  <ol>
- *    <li>item B<!-- cursor --></li>
- *  </ol>
- *  <ul>
- *    <li>item C</li>
- *    <li>item D</li>
- *  </ul>
- * ```
- *
- * @beta
- */
-export function wrapSingleItem({
-  listType,
-  itemType,
-  state,
-  tr,
-}: {
-  listType: NodeType;
-  itemType: NodeType;
-  state: EditorState;
-  tr: Transaction;
-}): boolean {
-  return wrapSelectedItems({ listType, itemType, tr });
-  // const { tr, listType, itemType } = params;
-  // const state = chainableEditorState(tr, params.state);
-  // const $from = tr.selection.$from;
-
-  // if ($from.depth <= 2) {
-  //   return false;
-  // }
-
-  // const item = $from.node(-1);
-  // const list = $from.node(-2);
-
-  // // Do nothing if current cursor is not in a list item node
-  // if (!isList(list.type) || !isListItem(item.type)) {
-  //   return false;
-  // }
-
-  // // Do nothing if current list already fits the requirement
-  // if (list.type === listType && item.type === itemType) {
-  //   return false;
-  // }
-
-  // const foundList = findParentNode({
-  //   selection: tr.selection,
-  //   predicate: (node) => isList(node.type),
-  // });
-
-  // if (!foundList) {
-  //   return false;
-  // }
-
-  // return deepChangeListItemType(tr, foundList, listType, itemType);
-}
-
 /**
  * Wrap existed list items to a new type of list, which only containes these list items.
  *
@@ -486,7 +347,7 @@ export function wrapSingleItem({
  *
  * @example
  *
- * Here is a pseudo-code exmple:
+ * Here is some pseudo-code to show the purpose of this function:
  *
  * before:
  *
@@ -514,7 +375,7 @@ export function wrapSingleItem({
  *  </ul>
  * ```
  *
- * @beta
+ * @alpha
  */
 export function wrapSelectedItems({
   listType,
@@ -699,6 +560,9 @@ export function liftListItemOutOfList(itemType: NodeType): CommandFunction {
   };
 }
 
+/**
+ * @deprecated
+ */
 function getItemRange(itemType: NodeType, selection: Selection) {
   const { $from, $to } = selection;
 

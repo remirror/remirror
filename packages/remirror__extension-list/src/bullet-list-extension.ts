@@ -21,7 +21,7 @@ import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
 import { NodeSelection } from '@remirror/pm/state';
 import { ExtensionListTheme } from '@remirror/theme';
 
-import { toggleList, wrapSingleItem } from './list-commands';
+import { toggleList, wrapSelectedItems } from './list-commands';
 import { ListItemExtension } from './list-item-extension';
 
 /**
@@ -126,10 +126,9 @@ export class BulletListExtension extends NodeExtension<BulletListOptions> {
       new InputRule(regexp, (state, _match, start, end) => {
         const tr = state.tr;
         tr.deleteRange(start, end);
-        const canUpdate = wrapSingleItem({
+        const canUpdate = wrapSelectedItems({
           listType: this.type,
           itemType: assertGet(this.store.schema.nodes, 'listItem'),
-          state,
           tr,
         });
 
