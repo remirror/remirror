@@ -1,18 +1,8 @@
 import { setupListEditor } from './list-setup';
 
 describe('create a list', () => {
-  const {
-    taskList,
-    li,
-    doc,
-    p,
-    ul,
-    ul: bulletList,
-    orderedList,
-    unchecked,
-    checked,
-    editor,
-  } = setupListEditor();
+  const { taskList, li, doc, p, ul, ol, orderedList, unchecked, checked, editor } =
+    setupListEditor();
 
   it('creates a bulletList', () => {
     editor.add(doc(p(''))).insertText('- ');
@@ -94,7 +84,7 @@ describe('create a list', () => {
     editor.insertText('- ');
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
-        bulletList(
+        ul(
           li(p('')), //
         ),
       ),
@@ -112,7 +102,7 @@ describe('create a list', () => {
     editor.insertText('- ');
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
-        bulletList(
+        ul(
           li(p('')), //
         ),
       ),
@@ -122,7 +112,7 @@ describe('create a list', () => {
   it('creates an ordered list in a bullet list', () => {
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(p('<cursor>')), //
         ),
       ),
@@ -158,7 +148,7 @@ describe('create a list', () => {
   it('creates a taskList in a multi-items list', () => {
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(p('123')),
           li(p('456')),
           li(p('<cursor>')), //
@@ -168,7 +158,7 @@ describe('create a list', () => {
     editor.insertText('[x] ');
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
-        bulletList(
+        ul(
           li(p('123')), //
           li(p('456')), //
         ),
@@ -180,7 +170,7 @@ describe('create a list', () => {
 
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(p('123')),
           li(p('<cursor>')), //
           li(p('789')),
@@ -190,13 +180,13 @@ describe('create a list', () => {
     editor.insertText('[x] ');
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
-        bulletList(
+        ul(
           li(p('123')), //
         ),
         taskList(
           checked(p('')), //
         ),
-        bulletList(
+        ul(
           li(p('789')), //
         ),
       ),
@@ -204,7 +194,7 @@ describe('create a list', () => {
 
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(p('<cursor>')), //
           li(p('456')),
           li(p('789')),
@@ -217,7 +207,7 @@ describe('create a list', () => {
         taskList(
           checked(p('')), //
         ),
-        bulletList(
+        ul(
           li(p('456')), //
           li(p('789')), //
         ),
@@ -228,10 +218,10 @@ describe('create a list', () => {
   it('creates a taskList in a nested list', () => {
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(
             p('123'),
-            bulletList(
+            ul(
               li(p('<cursor>')), //
             ),
           ),
@@ -241,7 +231,7 @@ describe('create a list', () => {
     editor.insertText('[x] ');
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
-        bulletList(
+        ul(
           li(
             p('123'),
             taskList(
@@ -254,10 +244,10 @@ describe('create a list', () => {
 
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(
             p('123'),
-            bulletList(
+            ul(
               li(p('abc')), //
               li(p('<cursor>')), //
             ),
@@ -268,10 +258,10 @@ describe('create a list', () => {
     editor.insertText('[x] ');
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
-        bulletList(
+        ul(
           li(
             p('123'),
-            bulletList(
+            ul(
               li(p('abc')), //
             ),
             taskList(
@@ -284,10 +274,10 @@ describe('create a list', () => {
 
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(
             p('123'),
-            bulletList(
+            ul(
               li(p('<cursor>')), //
               li(p('def')), //
             ),
@@ -298,13 +288,13 @@ describe('create a list', () => {
     editor.insertText('[x] ');
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
-        bulletList(
+        ul(
           li(
             p('123'),
             taskList(
               checked(p('<cursor>')), //
             ),
-            bulletList(
+            ul(
               li(p('def')), //
             ),
           ),
@@ -314,10 +304,10 @@ describe('create a list', () => {
 
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(
             p('123'),
-            bulletList(
+            ul(
               li(p('abc')), //
               li(p('<cursor>')), //
               li(p('def')), //
@@ -329,16 +319,16 @@ describe('create a list', () => {
     editor.insertText('[ ] ');
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
-        bulletList(
+        ul(
           li(
             p('123'),
-            bulletList(
+            ul(
               li(p('abc')), //
             ),
             taskList(
               unchecked(p('<cursor>')), //
             ),
-            bulletList(
+            ul(
               li(p('def')), //
             ),
           ),
@@ -348,9 +338,9 @@ describe('create a list', () => {
   });
 
   it('does not create a list if already inside a such list', () => {
-    editor.add(doc(bulletList(li(p('<cursor>')))));
+    editor.add(doc(ul(li(p('<cursor>')))));
     editor.insertText('- ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(bulletList(li(p('- ')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(ul(li(p('- ')))));
 
     editor.add(doc(orderedList({ order: 1 })(li(p('<cursor>')))));
     editor.insertText('1. ');
@@ -364,10 +354,10 @@ describe('create a list', () => {
   it('handle sub-list correctly', () => {
     editor.add(
       doc(
-        bulletList(
+        ul(
           li(
             p('<cursor>root item'), //
-            bulletList(
+            ul(
               li(p('sub item')), //
             ),
           ),
@@ -380,8 +370,34 @@ describe('create a list', () => {
         orderedList()(
           li(
             p('<cursor>root item'), //
-            bulletList(
+            ul(
               li(p('sub item')), //
+            ),
+          ),
+        ),
+      ),
+    );
+
+    editor.add(
+      doc(
+        ul(
+          li(
+            p('root item'), //
+            ol(
+              li(p('<cursor>sub item')), //
+            ),
+          ),
+        ),
+      ),
+    );
+    editor.insertText('[x] ');
+    expect(editor.doc).toEqualProsemirrorNode(
+      doc(
+        ul(
+          li(
+            p('<cursor>root item'), //
+            taskList(
+              checked(p('sub item')), //
             ),
           ),
         ),
