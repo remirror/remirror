@@ -32,8 +32,6 @@ import { isList, isListItem } from './list-utils';
  * @param itemType - the list item node type
  */
 export function toggleList(listType: NodeType, itemType: NodeType): CommandFunction {
-  console.log('toggleList', listType.name, itemType.name);
-
   return (props) => {
     const { dispatch, tr } = props;
     const state = chainableEditorState(tr, props.state);
@@ -616,4 +614,9 @@ function getItemRange(itemType: NodeType, selection: Selection) {
   const range = $from.blockRange($to, (node) => node.firstChild?.type === itemType);
 
   return range;
+}
+
+export function calculateItemRange(selection: Selection): NodeRange | null | undefined {
+  const { $from, $to } = selection;
+  return $from.blockRange($to, (node) => isList(node.type));
 }
