@@ -535,38 +535,41 @@ export function maybeJoinList(tr: Transaction): boolean {
   const { $from, to } = tr.selection;
   const sharedDepth = $from.sharedDepth(to);
 
-  const joinable: number[] = [];
+  let joinable: number[] = [];
+  let index: number;
+  let parent: ProsemirrorNode;
+  let before: ProsemirrorNode | null | undefined;
+  let after: ProsemirrorNode | null | undefined;
 
   for (let depth = sharedDepth; depth >= 0; depth--) {
-    const parent = $from.node(depth);
-    {
-      const index = $from.index(depth);
-      const after = parent.maybeChild(index);
-      const before = parent.maybeChild(index - 1);
+    parent = $from.node(depth);
 
-      if (after && before && after.type.name === before.type.name && isList(before.type)) {
-        const pos = $from.before(depth + 1);
-        joinable.push(pos);
-      }
+    // join backward
+    index = $from.index(depth);
+    after = parent.maybeChild(index);
+    before = parent.maybeChild(index - 1);
+
+    if (after && before && after.type.name === before.type.name && isList(before.type)) {
+      const pos = $from.before(depth + 1);
+      joinable.push(pos);
     }
-    {
-      const indexAfter = $from.indexAfter(depth);
-      const after = parent.maybeChild(indexAfter);
-      const before = parent.maybeChild(indexAfter - 1);
 
-      if (after && before && after.type.name === before.type.name && isList(before.type)) {
-        const pos = $from.after(depth + 1);
+    // join forward
+    index = $from.indexAfter(depth);
+    after = parent.maybeChild(index);
+    before = parent.maybeChild(index - 1);
 
-        if (pos !== joinable[joinable.length - 1]) {
-          joinable.push(pos);
-        }
-      }
+    if (after && before && after.type.name === before.type.name && isList(before.type)) {
+      const pos = $from.after(depth + 1);
+      joinable.push(pos);
     }
   }
 
+  // sort `joinable` reversely
+  joinable = [...new Set(joinable)].sort((a, b) => b - a);
   let updated = false;
 
-  for (const pos of joinable.sort((a, b) => b - a)) {
+  for (const pos of joinable) {
     if (canJoin(tr.doc, pos)) {
       tr.join(pos);
       updated = true;
