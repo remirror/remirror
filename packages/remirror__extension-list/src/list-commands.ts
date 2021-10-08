@@ -473,6 +473,19 @@ export function wrapSingleItem(params: {
   return deepChangeListItemType(tr, foundList, listType, itemType);
 }
 
+export function wrapSelectedItem({
+  listType,
+  itemType,
+  tr,
+}: {
+  listType: NodeType;
+  itemType: NodeType;
+  tr: Transaction;
+}): boolean {
+  const range = calculateItemRange(tr.selection);
+  return true;
+}
+
 // Copied from `prosemirror-schema-list`
 function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: NodeRange) {
   const tr = state.tr,
