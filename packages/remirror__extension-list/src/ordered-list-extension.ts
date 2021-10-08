@@ -104,7 +104,12 @@ export class OrderedListExtension extends NodeExtension {
       new InputRule(regexp, (state, match, start, end) => {
         const tr = state.tr;
         tr.deleteRange(start, end);
-        const canUpdate = wrapSingleItem({ listType: this.type, state, tr });
+        const canUpdate = wrapSingleItem({
+          listType: this.type,
+          itemType: assertGet(this.store.schema.nodes, 'listItem'),
+          state,
+          tr,
+        });
 
         if (!canUpdate) {
           return null;

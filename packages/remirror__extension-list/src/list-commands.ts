@@ -21,7 +21,7 @@ import { ListItemAttributes } from './list-item-extension';
 import { isList, isListItem } from './list-utils';
 
 /**
- * Toggles a list item.
+ * Toggles a list.
  *
  * @remarks
  *
@@ -32,6 +32,8 @@ import { isList, isListItem } from './list-utils';
  * @param itemType - the list item node type
  */
 export function toggleList(listType: NodeType, itemType: NodeType): CommandFunction {
+  console.log('toggleList', listType.name, itemType.name);
+
   return (props) => {
     const { dispatch, tr } = props;
     const state = chainableEditorState(tr, props.state);
@@ -340,6 +342,63 @@ function deepChangeListType(
   return true;
 }
 
+function deepChangeListItemType(
+  tr: Transaction,
+  foundList: FindProsemirrorNodeResult,
+  listType: NodeType,
+  itemType: NodeType,
+): boolean {
+  const oldList = foundList.node;
+  const $start = tr.doc.resolve(foundList.start);
+  const start = foundList.pos;
+  const end = start + oldList.nodeSize;
+  const from = tr.selection.from;
+
+  const itemIndex = tr.selection.$from.index($start.depth);
+
+  const oldItems: ProsemirrorNode[] = [];
+
+  for (let i = 0; i < oldList.childCount; i++) {
+    oldItems.push(oldList.child(i));
+  }
+
+  const newLists: ProsemirrorNode[] = [];
+
+  //
+  const newItemsPart1 = oldItems.slice(0, itemIndex);
+
+  if (newItemsPart1.length > 0) {
+    newLists.push(oldList.copy(Fragment.from(newItemsPart1)));
+  }
+
+  //
+  const newItemsPart2: ProsemirrorNode[] = [];
+
+  for (const oldItem of oldItems.slice(itemIndex, itemIndex + 1)) {
+    if (!itemType.validContent(oldItem.content)) {
+      return false;
+    }
+
+    const newItem = itemType.createChecked(null, oldItem.content);
+    newItemsPart2.push(newItem);
+  }
+
+  newLists.push(listType.createChecked(null, newItemsPart2));
+
+  //
+  const newItemsAfter = oldItems.slice(itemIndex + 1, oldItems.length);
+
+  if (newItemsAfter.length > 0) {
+    newLists.push(oldList.copy(Fragment.from(newItemsAfter)));
+  }
+
+  //
+  tr.replaceWith(start, end, newLists);
+  tr.setSelection((tr.selection.constructor as typeof Selection).near(tr.doc.resolve(from)));
+
+  return true;
+}
+
 /**
  * Wrap an existed list item to a new list, which only containes this list item.
  *
@@ -347,10 +406,11 @@ function deepChangeListType(
  */
 export function wrapSingleItem(params: {
   listType: NodeType;
+  itemType: NodeType;
   state: EditorState;
   tr: Transaction;
 }): boolean {
-  const { tr, listType } = params;
+  const { tr, listType, itemType } = params;
   const state = chainableEditorState(tr, params.state);
   const $from = tr.selection.$from;
 
@@ -367,19 +427,20 @@ export function wrapSingleItem(params: {
   }
 
   // Do nothing if current list already fits the requirement
-  if (list.type === listType) {
+  if (list.type === listType && item.type === itemType) {
     return false;
   }
 
-  if (!liftListItemOutOfList(item.type)({ state, tr, dispatch: () => {} })) {
+  const foundList = findParentNode({
+    selection: tr.selection,
+    predicate: (node) => isList(node.type),
+  });
+
+  if (!foundList) {
     return false;
   }
 
-  if (!toggleList(listType, item.type)({ state, tr, dispatch: () => {} })) {
-    return false;
-  }
-
-  return true;
+  return deepChangeListItemType(tr, foundList, listType, itemType);
 }
 
 // Copied from `prosemirror-schema-list`

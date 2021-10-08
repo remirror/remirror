@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  assertGet,
   command,
   CommandFunction,
   ErrorConstant,
@@ -167,15 +168,14 @@ export class TaskListItemExtension extends NodeExtension {
       }),
 
       new InputRule(regexp, (state, match, start, end) => {
-        const listType = this.store.schema.nodes.taskList;
-        invariant(listType, {
-          code: ErrorConstant.SCHEMA,
-          message: `Node type taskList does not exist on the current schema.`,
-        });
-
         const tr = state.tr;
         tr.deleteRange(start, end);
-        const canUpdate = wrapSingleItem({ listType, state, tr });
+        const canUpdate = wrapSingleItem({
+          listType: assertGet(this.store.schema.nodes, 'taskList'),
+          itemType: this.type,
+          state,
+          tr,
+        });
 
         if (!canUpdate) {
           return null;

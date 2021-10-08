@@ -126,7 +126,12 @@ export class BulletListExtension extends NodeExtension<BulletListOptions> {
       new InputRule(regexp, (state, _match, start, end) => {
         const tr = state.tr;
         tr.deleteRange(start, end);
-        const canUpdate = wrapSingleItem({ listType: this.type, state, tr });
+        const canUpdate = wrapSingleItem({
+          listType: this.type,
+          itemType: assertGet(this.store.schema.nodes, 'listItem'),
+          state,
+          tr,
+        });
 
         if (!canUpdate) {
           return null;
