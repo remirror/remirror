@@ -15,7 +15,7 @@ export function setupListEditor() {
   ]);
   const {
     nodes: { doc, paragraph: p, bulletList: ul, orderedList: ol, listItem: li, taskList },
-    attributeNodes: { taskListItem, orderedList },
+    attributeNodes: { taskListItem, orderedList, listItem },
   } = editor;
 
   const checked = taskListItem({ checked: true });
@@ -32,5 +32,7 @@ export function setupListEditor() {
     orderedList,
     checked,
     unchecked,
+    taskListItem,
+    listItem,
   };
 }

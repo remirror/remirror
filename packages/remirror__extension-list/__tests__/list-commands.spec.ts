@@ -1,11 +1,4 @@
-import { renderEditor } from 'jest-remirror';
-import {
-  BulletListExtension,
-  ListItemExtension,
-  OrderedListExtension,
-  TaskListExtension,
-  toggleList,
-} from 'remirror/extensions';
+import { toggleList } from 'remirror/extensions';
 
 import { calculateItemRange } from '../src/list-commands';
 import { setupListEditor } from './list-setup';

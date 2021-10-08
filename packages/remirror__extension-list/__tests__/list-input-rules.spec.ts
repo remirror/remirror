@@ -1,65 +1,57 @@
-import { renderEditor } from 'jest-remirror';
-import {
-  BulletListExtension,
-  ListItemExtension,
-  OrderedListExtension,
-  TaskListExtension,
-} from 'remirror/extensions';
+import { setupListEditor } from './list-setup';
 
 describe('create a list', () => {
-  const editor = renderEditor([
-    new BulletListExtension({}),
-    new ListItemExtension({}),
-    new OrderedListExtension(),
-    new TaskListExtension(),
-  ]);
-
   const {
-    nodes: { bulletList, taskList, listItem, doc, p },
-    attributeNodes: { taskListItem, orderedList },
-  } = editor;
-
-  const uncheckedItem = taskListItem({ checked: false });
-  const checkedItem = taskListItem({ checked: true });
+    taskList,
+    li,
+    doc,
+    p,
+    ul,
+    ul: bulletList,
+    orderedList,
+    unchecked,
+    checked,
+    editor,
+  } = setupListEditor();
 
   it('creates a bulletList', () => {
     editor.add(doc(p(''))).insertText('- ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(bulletList(listItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(ul(li(p('')))));
 
     editor.add(doc(p(''))).insertText('+ ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(bulletList(listItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(ul(li(p('')))));
 
     editor.add(doc(p(''))).insertText('* ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(bulletList(listItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(ul(li(p('')))));
   });
 
   it('creates an orderedList', () => {
     editor.add(doc(p(''))).insertText('1. ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(orderedList({ order: 1 })(listItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(orderedList({ order: 1 })(li(p('')))));
 
     editor.add(doc(p(''))).insertText('999. ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(orderedList({ order: 999 })(listItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(orderedList({ order: 999 })(li(p('')))));
   });
 
   it('creates a taskList', () => {
     editor.add(doc(p(''))).insertText('[] ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(uncheckedItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(unchecked(p('')))));
 
     editor.add(doc(p(''))).insertText('[ ] ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(uncheckedItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(unchecked(p('')))));
 
     editor.add(doc(p(''))).insertText('[x] ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(checkedItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(checked(p('')))));
 
     editor.add(doc(p(''))).insertText('[X] ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(checkedItem(p('')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(checked(p('')))));
   });
 
   it('creates a task list in a bullet list', () => {
     editor.add(
       doc(
-        bulletList(
-          listItem(p('<cursor>')), //
+        ul(
+          li(p('<cursor>')), //
         ),
       ),
     );
@@ -67,7 +59,7 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         taskList(
-          uncheckedItem(p('')), //
+          unchecked(p('')), //
         ),
       ),
     );
@@ -77,7 +69,7 @@ describe('create a list', () => {
     editor.add(
       doc(
         orderedList({ order: 1 })(
-          listItem(p('<cursor>')), //
+          li(p('<cursor>')), //
         ),
       ),
     );
@@ -85,7 +77,7 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         taskList(
-          checkedItem(p('')), //
+          checked(p('')), //
         ),
       ),
     );
@@ -95,7 +87,7 @@ describe('create a list', () => {
     editor.add(
       doc(
         orderedList({ order: 1 })(
-          listItem(p('<cursor>')), //
+          li(p('<cursor>')), //
         ),
       ),
     );
@@ -103,7 +95,7 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         bulletList(
-          listItem(p('')), //
+          li(p('')), //
         ),
       ),
     );
@@ -113,7 +105,7 @@ describe('create a list', () => {
     editor.add(
       doc(
         taskList(
-          checkedItem(p('<cursor>')), //
+          checked(p('<cursor>')), //
         ),
       ),
     );
@@ -121,7 +113,7 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         bulletList(
-          listItem(p('')), //
+          li(p('')), //
         ),
       ),
     );
@@ -131,7 +123,7 @@ describe('create a list', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(p('<cursor>')), //
+          li(p('<cursor>')), //
         ),
       ),
     );
@@ -139,7 +131,7 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         orderedList()(
-          listItem(p('')), //
+          li(p('')), //
         ),
       ),
     );
@@ -149,7 +141,7 @@ describe('create a list', () => {
     editor.add(
       doc(
         taskList(
-          uncheckedItem(p('<cursor>')), //
+          unchecked(p('<cursor>')), //
         ),
       ),
     );
@@ -157,7 +149,7 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         orderedList()(
-          listItem(p('')), //
+          li(p('')), //
         ),
       ),
     );
@@ -167,9 +159,9 @@ describe('create a list', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(p('123')),
-          listItem(p('456')),
-          listItem(p('<cursor>')), //
+          li(p('123')),
+          li(p('456')),
+          li(p('<cursor>')), //
         ),
       ),
     );
@@ -177,11 +169,11 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         bulletList(
-          listItem(p('123')), //
-          listItem(p('456')), //
+          li(p('123')), //
+          li(p('456')), //
         ),
         taskList(
-          checkedItem(p('')), //
+          checked(p('')), //
         ),
       ),
     );
@@ -189,9 +181,9 @@ describe('create a list', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(p('123')),
-          listItem(p('<cursor>')), //
-          listItem(p('789')),
+          li(p('123')),
+          li(p('<cursor>')), //
+          li(p('789')),
         ),
       ),
     );
@@ -199,13 +191,13 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         bulletList(
-          listItem(p('123')), //
+          li(p('123')), //
         ),
         taskList(
-          checkedItem(p('')), //
+          checked(p('')), //
         ),
         bulletList(
-          listItem(p('789')), //
+          li(p('789')), //
         ),
       ),
     );
@@ -213,9 +205,9 @@ describe('create a list', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(p('<cursor>')), //
-          listItem(p('456')),
-          listItem(p('789')),
+          li(p('<cursor>')), //
+          li(p('456')),
+          li(p('789')),
         ),
       ),
     );
@@ -223,11 +215,11 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         taskList(
-          checkedItem(p('')), //
+          checked(p('')), //
         ),
         bulletList(
-          listItem(p('456')), //
-          listItem(p('789')), //
+          li(p('456')), //
+          li(p('789')), //
         ),
       ),
     );
@@ -237,10 +229,10 @@ describe('create a list', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(
+          li(
             p('123'),
             bulletList(
-              listItem(p('<cursor>')), //
+              li(p('<cursor>')), //
             ),
           ),
         ),
@@ -250,10 +242,10 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         bulletList(
-          listItem(
+          li(
             p('123'),
             taskList(
-              checkedItem(p('<cursor>')), //
+              checked(p('<cursor>')), //
             ),
           ),
         ),
@@ -263,11 +255,11 @@ describe('create a list', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(
+          li(
             p('123'),
             bulletList(
-              listItem(p('abc')), //
-              listItem(p('<cursor>')), //
+              li(p('abc')), //
+              li(p('<cursor>')), //
             ),
           ),
         ),
@@ -277,13 +269,13 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         bulletList(
-          listItem(
+          li(
             p('123'),
             bulletList(
-              listItem(p('abc')), //
+              li(p('abc')), //
             ),
             taskList(
-              checkedItem(p('<cursor>')), //
+              checked(p('<cursor>')), //
             ),
           ),
         ),
@@ -293,11 +285,11 @@ describe('create a list', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(
+          li(
             p('123'),
             bulletList(
-              listItem(p('<cursor>')), //
-              listItem(p('def')), //
+              li(p('<cursor>')), //
+              li(p('def')), //
             ),
           ),
         ),
@@ -307,13 +299,13 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         bulletList(
-          listItem(
+          li(
             p('123'),
             taskList(
-              checkedItem(p('<cursor>')), //
+              checked(p('<cursor>')), //
             ),
             bulletList(
-              listItem(p('def')), //
+              li(p('def')), //
             ),
           ),
         ),
@@ -323,12 +315,12 @@ describe('create a list', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(
+          li(
             p('123'),
             bulletList(
-              listItem(p('abc')), //
-              listItem(p('<cursor>')), //
-              listItem(p('def')), //
+              li(p('abc')), //
+              li(p('<cursor>')), //
+              li(p('def')), //
             ),
           ),
         ),
@@ -338,16 +330,16 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         bulletList(
-          listItem(
+          li(
             p('123'),
             bulletList(
-              listItem(p('abc')), //
+              li(p('abc')), //
             ),
             taskList(
-              uncheckedItem(p('<cursor>')), //
+              unchecked(p('<cursor>')), //
             ),
             bulletList(
-              listItem(p('def')), //
+              li(p('def')), //
             ),
           ),
         ),
@@ -356,27 +348,27 @@ describe('create a list', () => {
   });
 
   it('does not create a list if already inside a such list', () => {
-    editor.add(doc(bulletList(listItem(p('<cursor>')))));
+    editor.add(doc(bulletList(li(p('<cursor>')))));
     editor.insertText('- ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(bulletList(listItem(p('- ')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(bulletList(li(p('- ')))));
 
-    editor.add(doc(orderedList({ order: 1 })(listItem(p('<cursor>')))));
+    editor.add(doc(orderedList({ order: 1 })(li(p('<cursor>')))));
     editor.insertText('1. ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(orderedList({ order: 1 })(listItem(p('1. ')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(orderedList({ order: 1 })(li(p('1. ')))));
 
-    editor.add(doc(taskList(uncheckedItem(p('<cursor>')))));
+    editor.add(doc(taskList(unchecked(p('<cursor>')))));
     editor.insertText('[x] ');
-    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(uncheckedItem(p('[x] ')))));
+    expect(editor.doc).toEqualProsemirrorNode(doc(taskList(unchecked(p('[x] ')))));
   });
 
   it('handle sub-list correctly', () => {
     editor.add(
       doc(
         bulletList(
-          listItem(
+          li(
             p('<cursor>root item'), //
             bulletList(
-              listItem(p('sub item')), //
+              li(p('sub item')), //
             ),
           ),
         ),
@@ -386,10 +378,10 @@ describe('create a list', () => {
     expect(editor.doc).toEqualProsemirrorNode(
       doc(
         orderedList()(
-          listItem(
+          li(
             p('<cursor>root item'), //
             bulletList(
-              listItem(p('sub item')), //
+              li(p('sub item')), //
             ),
           ),
         ),
@@ -399,33 +391,30 @@ describe('create a list', () => {
 });
 
 describe('joins lists', () => {
-  const editor = renderEditor([
-    new BulletListExtension({}),
-    new ListItemExtension({}),
-    new OrderedListExtension(),
-    new TaskListExtension(),
-  ]);
-
   const {
-    nodes: { bulletList, taskList, listItem, doc, p },
-    attributeNodes: { taskListItem, orderedList },
-  } = editor;
-
-  const uncheckedItem = taskListItem({ checked: false });
-  const checkedItem = taskListItem({ checked: true });
+    editor,
+    doc,
+    taskList,
+    ul: bulletList,
+    checked,
+    unchecked,
+    p,
+    orderedList,
+    li: listItem,
+  } = setupListEditor();
 
   describe('input rules', () => {
     it('bullet list => task list (join backward and forward)', () => {
       editor.add(
         doc(
           taskList(
-            checkedItem(p('A')), //
+            checked(p('A')), //
           ),
           bulletList(
             listItem(p('<cursor>B')), //
           ),
           taskList(
-            checkedItem(p('C')), //
+            checked(p('C')), //
           ),
         ),
       );
@@ -433,9 +422,9 @@ describe('joins lists', () => {
       expect(editor.doc).toEqualProsemirrorNode(
         doc(
           taskList(
-            checkedItem(p('A')), //
-            checkedItem(p('B')), //
-            checkedItem(p('C')), //
+            checked(p('A')), //
+            checked(p('B')), //
+            checked(p('C')), //
           ),
         ),
       );
@@ -445,7 +434,7 @@ describe('joins lists', () => {
       editor.add(
         doc(
           taskList(
-            checkedItem(p('A')), //
+            checked(p('A')), //
           ),
           bulletList(
             listItem(p('<cursor>B')), //
@@ -456,8 +445,8 @@ describe('joins lists', () => {
       expect(editor.doc).toEqualProsemirrorNode(
         doc(
           taskList(
-            checkedItem(p('A')), //
-            checkedItem(p('B')), //
+            checked(p('A')), //
+            checked(p('B')), //
           ),
         ),
       );
@@ -470,7 +459,7 @@ describe('joins lists', () => {
             listItem(p('<cursor>B')), //
           ),
           taskList(
-            checkedItem(p('C')), //
+            checked(p('C')), //
           ),
         ),
       );
@@ -478,8 +467,8 @@ describe('joins lists', () => {
       expect(editor.doc).toEqualProsemirrorNode(
         doc(
           taskList(
-            checkedItem(p('B')), //
-            checkedItem(p('C')), //
+            checked(p('B')), //
+            checked(p('C')), //
           ),
         ),
       );
@@ -489,13 +478,13 @@ describe('joins lists', () => {
       editor.add(
         doc(
           taskList(
-            uncheckedItem(p('A')), //
+            unchecked(p('A')), //
           ),
           orderedList()(
             listItem(p('<cursor>B')), //
           ),
           taskList(
-            uncheckedItem(p('C')), //
+            unchecked(p('C')), //
           ),
         ),
       );
@@ -503,9 +492,9 @@ describe('joins lists', () => {
       expect(editor.doc).toEqualProsemirrorNode(
         doc(
           taskList(
-            uncheckedItem(p('A')), //
-            uncheckedItem(p('B')), //
-            uncheckedItem(p('C')), //
+            unchecked(p('A')), //
+            unchecked(p('B')), //
+            unchecked(p('C')), //
           ),
         ),
       );
@@ -515,7 +504,7 @@ describe('joins lists', () => {
       editor.add(
         doc(
           taskList(
-            uncheckedItem(p('A')), //
+            unchecked(p('A')), //
           ),
           orderedList()(
             listItem(p('<cursor>B')), //
@@ -526,8 +515,8 @@ describe('joins lists', () => {
       expect(editor.doc).toEqualProsemirrorNode(
         doc(
           taskList(
-            uncheckedItem(p('A')), //
-            uncheckedItem(p('B')), //
+            unchecked(p('A')), //
+            unchecked(p('B')), //
           ),
         ),
       );
@@ -540,7 +529,7 @@ describe('joins lists', () => {
             listItem(p('<cursor>B')), //
           ),
           taskList(
-            uncheckedItem(p('C')), //
+            unchecked(p('C')), //
           ),
         ),
       );
@@ -548,8 +537,8 @@ describe('joins lists', () => {
       expect(editor.doc).toEqualProsemirrorNode(
         doc(
           taskList(
-            uncheckedItem(p('B')), //
-            uncheckedItem(p('C')), //
+            unchecked(p('B')), //
+            unchecked(p('C')), //
           ),
         ),
       );
@@ -559,11 +548,11 @@ describe('joins lists', () => {
       editor.add(
         doc(
           taskList(
-            checkedItem(p('A')), //
+            checked(p('A')), //
           ),
           p('<cursor>B'), //
           taskList(
-            checkedItem(p('C')), //
+            checked(p('C')), //
           ),
         ),
       );
@@ -571,9 +560,9 @@ describe('joins lists', () => {
       expect(editor.doc).toEqualProsemirrorNode(
         doc(
           taskList(
-            checkedItem(p('A')), //
-            checkedItem(p('B')), //
-            checkedItem(p('C')), //
+            checked(p('A')), //
+            checked(p('B')), //
+            checked(p('C')), //
           ),
         ),
       );
@@ -587,7 +576,7 @@ describe('joins lists', () => {
           ),
           p('<cursor>B'), //
           taskList(
-            checkedItem(p('C')), //
+            checked(p('C')), //
           ),
         ),
       );
@@ -599,7 +588,7 @@ describe('joins lists', () => {
             listItem(p('B')), //
           ),
           taskList(
-            checkedItem(p('C')), //
+            checked(p('C')), //
           ),
         ),
       );

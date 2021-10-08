@@ -392,10 +392,16 @@ export function wrapSelectedItems({
     return false;
   }
 
+  const oldList = range.parent;
   const atStart = range.startIndex === 0;
 
   // A slice that contianes all selected list items
   const slice: Slice = tr.doc.slice(range.start, range.end);
+
+  if (oldList.type === listType && slice.content.firstChild?.type === itemType) {
+    return false;
+  }
+
   const newItems: ProsemirrorNode[] = [];
 
   for (let i = 0; i < slice.content.childCount; i++) {
