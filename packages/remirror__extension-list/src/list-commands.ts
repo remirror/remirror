@@ -402,6 +402,12 @@ function deepChangeListItemType(
 /**
  * Wrap an existed list item to a new list, which only containes this list item.
  *
+ * @remarks
+ *
+ * @example
+ *
+ * Here is a pseudo-code exmple:
+ *
  * before:
  *
  * ```html
