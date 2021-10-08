@@ -1,26 +1,10 @@
-import { renderEditor } from 'jest-remirror';
-import {
-  BulletListExtension,
-  ListItemExtension,
-  OrderedListExtension,
-  TaskListExtension,
-  toggleList,
-} from 'remirror/extensions';
+import { toggleList } from 'remirror/extensions';
+
+import { calculateItemRange } from '../src/list-commands';
+import { setupListEditor } from './list-setup';
 
 describe('toggleList', () => {
-  const editor = renderEditor([
-    new ListItemExtension(),
-    new BulletListExtension(),
-    new OrderedListExtension(),
-    new TaskListExtension(),
-  ]);
-  const {
-    nodes: { doc, paragraph: p, taskList, bulletList: ul, listItem: li, orderedList: ol },
-    attributeNodes: { taskListItem },
-  } = editor;
-
-  const checked = taskListItem({ checked: true });
-  const unchecked = taskListItem({ checked: false });
+  const { editor, doc, p, ul, ol, li, taskList, checked, unchecked } = setupListEditor();
 
   it('toggles paragraph to bullet list', () => {
     const from = doc(p('make <cursor>list'));
@@ -355,18 +339,7 @@ describe('toggleList', () => {
 });
 
 describe('toggleCheckboxChecked', () => {
-  const editor = renderEditor([
-    new ListItemExtension(),
-    new BulletListExtension(),
-    new OrderedListExtension(),
-    new TaskListExtension(),
-  ]);
-  const {
-    nodes: { doc, paragraph: p, taskList },
-    attributeNodes: { taskListItem },
-  } = editor;
-  const checked = taskListItem({ checked: true });
-  const unchecked = taskListItem({ checked: false });
+  const { editor, doc, p, taskList, checked, unchecked } = setupListEditor();
 
   it('toggles checkbox checked when the cursor is at the end of a task list item', () => {
     const from = doc(
@@ -474,5 +447,121 @@ describe('toggleCheckboxChecked', () => {
 
     editor.add(uncheckedDoc).commands.toggleCheckboxChecked(false);
     expect(editor.view.state.doc).toEqualProsemirrorNode(uncheckedDoc);
+  });
+});
+
+describe('calculateItemRange', () => {
+  const { editor, doc, p, ul, ol, li, taskList, checked, unchecked } = setupListEditor();
+
+  it('returns correct range when the selection is empty', () => {
+    editor.add(
+      doc(
+        ul(
+          li(p('A<cursor>')), //
+          li(p('B')), //
+          li(p('C')), //
+        ),
+      ),
+    );
+    const range = calculateItemRange(editor.state.selection)!;
+    expect(range.depth).toEqual(1);
+    expect(range.parent.type.name).toEqual('bulletList');
+    expect(range.startIndex).toEqual(0);
+    expect(range.endIndex).toEqual(1);
+    expect(editor.doc.resolve(range.start).node().type.name).toEqual('bulletList');
+    expect(editor.doc.resolve(range.end).node().type.name).toEqual('bulletList');
+  });
+
+  it('returns correct range when the selection is not empty', () => {
+    editor.add(
+      doc(
+        taskList(
+          unchecked(p('A')), //
+          checked(p('B<start>')), //
+          checked(p('C<end>')), //
+        ),
+      ),
+    );
+    const range = calculateItemRange(editor.state.selection)!;
+    expect(range.depth).toEqual(1);
+    expect(range.parent.type.name).toEqual('taskList');
+    expect(range.startIndex).toEqual(1);
+    expect(range.endIndex).toEqual(3);
+    expect(editor.doc.resolve(range.start).node().type.name).toEqual('taskList');
+    expect(editor.doc.resolve(range.end).node().type.name).toEqual('taskList');
+  });
+
+  it('returns correct range when the selection is in a deep list', () => {
+    editor.add(
+      doc(
+        ul(
+          li(p('A')),
+          li(
+            p('B'),
+            ol(
+              li(p('a')), //
+              li(p('<start>b')),
+              li(p('c')),
+              li(p('d<end>')),
+            ),
+          ),
+          li(p('C')),
+        ),
+      ),
+    );
+    const range = calculateItemRange(editor.state.selection)!;
+    expect(range.depth).toEqual(3);
+    expect(range.parent.type.name).toEqual('orderedList');
+    expect(range.startIndex).toEqual(1);
+    expect(range.endIndex).toEqual(4);
+    expect(editor.doc.resolve(range.start).node().type.name).toEqual('orderedList');
+    expect(editor.doc.resolve(range.end).node().type.name).toEqual('orderedList');
+
+    const slice = editor.doc.slice(range.start, range.end);
+    expect(slice.openStart).toEqual(0);
+    expect(slice.openEnd).toEqual(0);
+    expect(slice.content.childCount).toEqual(3);
+  });
+
+  it('returns correct range when the selection across different levels', () => {
+    editor.add(
+      doc(
+        ul(
+          li(p('A')),
+          li(
+            p('B<start>'),
+            ol(
+              li(p('a')), //
+              li(p('b')),
+              li(p('c')),
+              li(p('d<end>')),
+            ),
+          ),
+          li(p('C')),
+        ),
+      ),
+    );
+    const range = calculateItemRange(editor.state.selection)!;
+    expect(range.depth).toEqual(1);
+    expect(range.parent.type.name).toEqual('bulletList');
+    expect(range.startIndex).toEqual(1);
+    expect(range.endIndex).toEqual(2);
+    expect(editor.doc.resolve(range.start).node().type.name).toEqual('bulletList');
+    expect(editor.doc.resolve(range.end).node().type.name).toEqual('bulletList');
+  });
+
+  it('returns nothing when the selection is not in a list', () => {
+    editor.add(
+      doc(
+        ul(
+          li(p('A')), //
+          li(p('B')), //
+          li(p('C')), //
+        ),
+        p('<cursor>'),
+      ),
+    );
+    const range = calculateItemRange(editor.state.selection);
+    expect(range).toBeUndefined();
   });
 });

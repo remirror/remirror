@@ -359,6 +359,7 @@ let config = {
         'packages/remirror__svelte/rollup.config.js',
         'packages/testing/**',
         'packages/remirror__core-utils/src/keyboard-utils.ts',
+        '**/__tests__/**',
       ],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off',

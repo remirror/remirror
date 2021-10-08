@@ -1,20 +1,21 @@
-import { renderEditor, TaggedProsemirrorNode } from 'jest-remirror';
-import { BulletListExtension, OrderedListExtension, TaskListExtension } from 'remirror/extensions';
+import { TaggedProsemirrorNode } from 'jest-remirror';
+
+import { setupListEditor } from './list-setup';
 
 describe('Enter', () => {
-  const editor = renderEditor([
-    new TaskListExtension({}),
-    new BulletListExtension({}),
-    new OrderedListExtension(),
-    new TaskListExtension(),
-  ]);
   const {
-    nodes: { doc, paragraph: p, orderedList: ol, bulletList: ul, listItem: li, taskList: tl },
-    attributeNodes: { taskListItem, listItem },
-  } = editor;
+    doc,
+    p,
+    ol,
+    ul,
+    li,
+    taskList: tl,
+    unchecked,
+    checked,
+    editor,
+    listItem,
+  } = setupListEditor();
   const closed = listItem({ closed: true });
-  const unchecked = taskListItem({ checked: false });
-  const checked = taskListItem({ checked: true });
 
   let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
 
@@ -163,18 +164,7 @@ describe('Enter', () => {
 });
 
 describe('Tab and Shift-Tab', () => {
-  const editor = renderEditor([
-    new TaskListExtension({}),
-    new BulletListExtension({}),
-    new OrderedListExtension(),
-    new TaskListExtension(),
-  ]);
-  const {
-    nodes: { doc, paragraph: p, orderedList: ol, bulletList: ul, listItem: li, taskList: tl },
-    attributeNodes: { taskListItem },
-  } = editor;
-  const unchecked = taskListItem({ checked: false });
-  const checked = taskListItem({ checked: true });
+  const { doc, p, ol, ul, li, taskList: tl, unchecked, checked, editor } = setupListEditor();
 
   let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
 

@@ -18,10 +18,10 @@ import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm
 import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
 
 import { ListItemAttributes } from './list-item-extension';
-import { isList, isListItem } from './list-utils';
+import { isList } from './list-utils';
 
 /**
- * Toggles a list item.
+ * Toggles a list.
  *
  * @remarks
  *
@@ -341,43 +341,92 @@ function deepChangeListType(
 }
 
 /**
- * Wrap an existed list item to a new list, which only containes this list item.
+ * Wrap existed list items to a new type of list, which only containes these list items.
  *
- * @beta
+ * @remarks
+ *
+ * @example
+ *
+ * Here is some pseudo-code to show the purpose of this function:
+ *
+ * before:
+ *
+ * ```html
+ *  <ul>
+ *    <li>item A</li>
+ *    <li>item B<!-- cursor --></li>
+ *    <li>item C</li>
+ *    <li>item D</li>
+ *  </ul>
+ * ```
+ *
+ * after:
+ *
+ * ```html
+ *  <ul>
+ *    <li>item A</li>
+ *  </ul>
+ *  <ol>
+ *    <li>item B<!-- cursor --></li>
+ *  </ol>
+ *  <ul>
+ *    <li>item C</li>
+ *    <li>item D</li>
+ *  </ul>
+ * ```
+ *
+ * @alpha
  */
-export function wrapSingleItem(params: {
+export function wrapSelectedItems({
+  listType,
+  itemType,
+  tr,
+}: {
   listType: NodeType;
-  state: EditorState;
+  itemType: NodeType;
   tr: Transaction;
 }): boolean {
-  const { tr, listType } = params;
-  const state = chainableEditorState(tr, params.state);
-  const $from = tr.selection.$from;
+  const range = calculateItemRange(tr.selection);
 
-  if ($from.depth <= 2) {
+  if (!range) {
     return false;
   }
 
-  const item = $from.node(-1);
-  const list = $from.node(-2);
+  const oldList = range.parent;
+  const atStart = range.startIndex === 0;
 
-  // Do nothing if current cursor is not in a list item node
-  if (!isList(list.type) || !isListItem(item.type)) {
+  // A slice that contianes all selected list items
+  const slice: Slice = tr.doc.slice(range.start, range.end);
+
+  if (oldList.type === listType && slice.content.firstChild?.type === itemType) {
     return false;
   }
 
-  // Do nothing if current list already fits the requirement
-  if (list.type === listType) {
-    return false;
+  const newItems: ProsemirrorNode[] = [];
+
+  for (let i = 0; i < slice.content.childCount; i++) {
+    const oldItem = slice.content.child(i);
+
+    if (!itemType.validContent(oldItem.content)) {
+      return false;
+    }
+
+    const newItem = itemType.createChecked(null, oldItem.content);
+    newItems.push(newItem);
   }
 
-  if (!liftListItemOutOfList(item.type)({ state, tr, dispatch: () => {} })) {
-    return false;
-  }
+  const newList = listType.createChecked(null, newItems);
 
-  if (!toggleList(listType, item.type)({ state, tr, dispatch: () => {} })) {
-    return false;
-  }
+  const { $from, $to } = tr.selection;
+  tr.replaceRange(range.start, range.end, new Slice(Fragment.from(newList), 0, 0));
+
+  tr.setSelection(
+    new TextSelection(
+      tr.doc.resolve(atStart ? $from.pos : $from.pos + 2),
+      tr.doc.resolve(atStart ? $to.pos : $to.pos + 2),
+    ),
+  );
+  tr.scrollIntoView();
 
   return true;
 }
@@ -450,38 +499,41 @@ export function maybeJoinList(tr: Transaction): boolean {
   const { $from, to } = tr.selection;
   const sharedDepth = $from.sharedDepth(to);
 
-  const joinable: number[] = [];
+  let joinable: number[] = [];
+  let index: number;
+  let parent: ProsemirrorNode;
+  let before: ProsemirrorNode | null | undefined;
+  let after: ProsemirrorNode | null | undefined;
 
   for (let depth = sharedDepth; depth >= 0; depth--) {
-    const parent = $from.node(depth);
-    {
-      const index = $from.index(depth);
-      const after = parent.maybeChild(index);
-      const before = parent.maybeChild(index - 1);
+    parent = $from.node(depth);
 
-      if (after && before && after.type.name === before.type.name && isList(before.type)) {
-        const pos = $from.before(depth + 1);
-        joinable.push(pos);
-      }
+    // join backward
+    index = $from.index(depth);
+    after = parent.maybeChild(index);
+    before = parent.maybeChild(index - 1);
+
+    if (after && before && after.type.name === before.type.name && isList(before.type)) {
+      const pos = $from.before(depth + 1);
+      joinable.push(pos);
     }
-    {
-      const indexAfter = $from.indexAfter(depth);
-      const after = parent.maybeChild(indexAfter);
-      const before = parent.maybeChild(indexAfter - 1);
 
-      if (after && before && after.type.name === before.type.name && isList(before.type)) {
-        const pos = $from.after(depth + 1);
+    // join forward
+    index = $from.indexAfter(depth);
+    after = parent.maybeChild(index);
+    before = parent.maybeChild(index - 1);
 
-        if (pos !== joinable[joinable.length - 1]) {
-          joinable.push(pos);
-        }
-      }
+    if (after && before && after.type.name === before.type.name && isList(before.type)) {
+      const pos = $from.after(depth + 1);
+      joinable.push(pos);
     }
   }
 
+  // sort `joinable` reversely
+  joinable = [...new Set(joinable)].sort((a, b) => b - a);
   let updated = false;
 
-  for (const pos of joinable.sort((a, b) => b - a)) {
+  for (const pos of joinable) {
     if (canJoin(tr.doc, pos)) {
       tr.join(pos);
       updated = true;
@@ -514,10 +566,18 @@ export function liftListItemOutOfList(itemType: NodeType): CommandFunction {
   };
 }
 
+/**
+ * @deprecated
+ */
 function getItemRange(itemType: NodeType, selection: Selection) {
   const { $from, $to } = selection;
 
   const range = $from.blockRange($to, (node) => node.firstChild?.type === itemType);
 
   return range;
+}
+
+export function calculateItemRange(selection: Selection): NodeRange | null | undefined {
+  const { $from, $to } = selection;
+  return $from.blockRange($to, (node) => isList(node.type));
 }

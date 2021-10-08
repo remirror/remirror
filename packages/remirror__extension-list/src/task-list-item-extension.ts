@@ -1,13 +1,12 @@
 import {
   ApplySchemaAttributes,
+  assertGet,
   command,
   CommandFunction,
-  ErrorConstant,
   ExtensionPriority,
   ExtensionTag,
   findParentNodeOfType,
   getMatchString,
-  invariant,
   isElementDomNode,
   KeyBindings,
   NodeExtension,
@@ -21,7 +20,7 @@ import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
 import { ResolvedPos } from '@remirror/pm/model';
 import { ExtensionListTheme } from '@remirror/theme';
 
-import { splitListItem, wrapSingleItem } from './list-commands';
+import { splitListItem, wrapSelectedItems } from './list-commands';
 import { createCustomMarkListItemNodeView } from './list-item-node-view';
 import { ListItemSharedExtension } from './list-item-shared-extension';
 
@@ -167,15 +166,13 @@ export class TaskListItemExtension extends NodeExtension {
       }),
 
       new InputRule(regexp, (state, match, start, end) => {
-        const listType = this.store.schema.nodes.taskList;
-        invariant(listType, {
-          code: ErrorConstant.SCHEMA,
-          message: `Node type taskList does not exist on the current schema.`,
-        });
-
         const tr = state.tr;
         tr.deleteRange(start, end);
-        const canUpdate = wrapSingleItem({ listType, state, tr });
+        const canUpdate = wrapSelectedItems({
+          listType: assertGet(this.store.schema.nodes, 'taskList'),
+          itemType: this.type,
+          tr,
+        });
 
         if (!canUpdate) {
           return null;

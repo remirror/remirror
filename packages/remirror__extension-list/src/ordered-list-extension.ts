@@ -18,7 +18,7 @@ import {
 import { ExtensionListMessages as Messages } from '@remirror/messages';
 import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
 
-import { toggleList, wrapSingleItem } from './list-commands';
+import { toggleList, wrapSelectedItems } from './list-commands';
 import { ListItemExtension } from './list-item-extension';
 
 /**
@@ -104,7 +104,11 @@ export class OrderedListExtension extends NodeExtension {
       new InputRule(regexp, (state, match, start, end) => {
         const tr = state.tr;
         tr.deleteRange(start, end);
-        const canUpdate = wrapSingleItem({ listType: this.type, state, tr });
+        const canUpdate = wrapSelectedItems({
+          listType: this.type,
+          itemType: assertGet(this.store.schema.nodes, 'listItem'),
+          tr,
+        });
 
         if (!canUpdate) {
           return null;
