@@ -434,43 +434,49 @@ function deepChangeListItemType(
  *
  * @beta
  */
-export function wrapSingleItem(params: {
+export function wrapSingleItem({
+  listType,
+  itemType,
+  state,
+  tr,
+}: {
   listType: NodeType;
   itemType: NodeType;
   state: EditorState;
   tr: Transaction;
 }): boolean {
-  const { tr, listType, itemType } = params;
-  const state = chainableEditorState(tr, params.state);
-  const $from = tr.selection.$from;
+  return wrapSelectedItem({ listType, itemType, tr });
+  // const { tr, listType, itemType } = params;
+  // const state = chainableEditorState(tr, params.state);
+  // const $from = tr.selection.$from;
 
-  if ($from.depth <= 2) {
-    return false;
-  }
+  // if ($from.depth <= 2) {
+  //   return false;
+  // }
 
-  const item = $from.node(-1);
-  const list = $from.node(-2);
+  // const item = $from.node(-1);
+  // const list = $from.node(-2);
 
-  // Do nothing if current cursor is not in a list item node
-  if (!isList(list.type) || !isListItem(item.type)) {
-    return false;
-  }
+  // // Do nothing if current cursor is not in a list item node
+  // if (!isList(list.type) || !isListItem(item.type)) {
+  //   return false;
+  // }
 
-  // Do nothing if current list already fits the requirement
-  if (list.type === listType && item.type === itemType) {
-    return false;
-  }
+  // // Do nothing if current list already fits the requirement
+  // if (list.type === listType && item.type === itemType) {
+  //   return false;
+  // }
 
-  const foundList = findParentNode({
-    selection: tr.selection,
-    predicate: (node) => isList(node.type),
-  });
+  // const foundList = findParentNode({
+  //   selection: tr.selection,
+  //   predicate: (node) => isList(node.type),
+  // });
 
-  if (!foundList) {
-    return false;
-  }
+  // if (!foundList) {
+  //   return false;
+  // }
 
-  return deepChangeListItemType(tr, foundList, listType, itemType);
+  // return deepChangeListItemType(tr, foundList, listType, itemType);
 }
 
 export function wrapSelectedItem({
@@ -483,6 +489,41 @@ export function wrapSelectedItem({
   tr: Transaction;
 }): boolean {
   const range = calculateItemRange(tr.selection);
+
+  if (!range) {
+    return false;
+  }
+
+  const atStart = range.startIndex === 0;
+
+  // A slice that contianes all selected list items
+  const slice: Slice = tr.doc.slice(range.start, range.end);
+  const newItems: ProsemirrorNode[] = [];
+
+  for (let i = 0; i < slice.content.childCount; i++) {
+    const oldItem = slice.content.child(i);
+
+    if (!itemType.validContent(oldItem.content)) {
+      return false;
+    }
+
+    const newItem = itemType.createChecked(null, oldItem.content);
+    newItems.push(newItem);
+  }
+
+  const newList = listType.createChecked(null, newItems);
+
+  const { $from, $to } = tr.selection;
+  tr.replaceRange(range.start, range.end, new Slice(Fragment.from(newList), 0, 0));
+
+  tr.setSelection(
+    new TextSelection(
+      tr.doc.resolve(atStart ? $from.pos : $from.pos + 2),
+      tr.doc.resolve(atStart ? $to.pos : $to.pos + 2),
+    ),
+  );
+  tr.scrollIntoView();
+
   return true;
 }
 
