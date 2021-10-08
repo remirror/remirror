@@ -406,9 +406,10 @@ function deepChangeListItemType(
  *
  * ```html
  *  <ul>
- *    <li>A</li>
- *    <li>B<!-- cursor --></li>
- *    <li>C</li>
+ *    <li>item A</li>
+ *    <li>item B<!-- cursor --></li>
+ *    <li>item C</li>
+ *    <li>item D</li>
  *  </ul>
  * ```
  *
@@ -416,13 +417,14 @@ function deepChangeListItemType(
  *
  * ```html
  *  <ul>
- *    <li>A</li>
+ *    <li>item A</li>
  *  </ul>
  *  <ol>
- *    <li>B<!-- cursor --></li>
+ *    <li>item B<!-- cursor --></li>
  *  </ol>
  *  <ul>
- *    <li>C</li>
+ *    <li>item C</li>
+ *    <li>item D</li>
  *  </ul>
  * ```
  *
