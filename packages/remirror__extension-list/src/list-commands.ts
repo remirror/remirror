@@ -402,6 +402,31 @@ function deepChangeListItemType(
 /**
  * Wrap an existed list item to a new list, which only containes this list item.
  *
+ * before:
+ *
+ * ```ts
+ *  <ul>
+ *    <li>A</li>
+ *    <li>B<!-- cursor --></li>
+ *    <li>C</li>
+ *  </ul>
+ * ```
+ *
+ * after:
+ *
+ * ```ts
+ *  <ul>
+ *    <li>A</li>
+ *  </ul>
+ *  <ol>
+ *    <li>B<!-- cursor --></li>
+ *  </ol>
+ *  <ul>
+ *    <li>C</li>
+ *  </ul>
+ * ```
+ *
+ *
  * @beta
  */
 export function wrapSingleItem(params: {
