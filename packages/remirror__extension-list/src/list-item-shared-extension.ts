@@ -1,7 +1,7 @@
 import { CreateExtensionPlugin, environment, KeyBindings, PlainExtension } from '@remirror/core';
 
 import {
-  joinListBackward,
+  listBackspace,
   maybeJoinList,
   sharedLiftListItem,
   sharedSinkListItem,
@@ -19,8 +19,8 @@ export class ListItemSharedExtension extends PlainExtension {
     const pcKeymap = {
       Tab: sharedSinkListItem(this.store.extensions),
       'Shift-Tab': sharedLiftListItem(this.store.extensions),
-      Backspace: joinListBackward,
-      'Mod-Backspace': joinListBackward,
+      Backspace: listBackspace,
+      'Mod-Backspace': listBackspace,
     };
 
     if (environment.isMac) {

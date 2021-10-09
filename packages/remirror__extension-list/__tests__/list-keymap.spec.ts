@@ -421,6 +421,41 @@ describe('Backspace', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
+  it('presses backspace at the begin of a 3-level list', () => {
+    from = doc(
+      ul(
+        li(
+          p('A'),
+          ul(
+            li(
+              p('<cursor>a'),
+              ul(
+                li(p('b')), //
+              ),
+            ), //
+          ),
+        ),
+        li(p('B')),
+        li(p('C')), //
+      ),
+    );
+    to = doc(
+      ul(
+        li(
+          p('A'),
+          p('a'),
+          ul(
+            li(p('b')), //
+          ),
+        ),
+        li(p('B')),
+        li(p('C')), //
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
   it('presses backspace at the middle of a list', () => {
     from = doc(
       ul(

@@ -13,7 +13,7 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
-import { joinBackward } from '@remirror/pm/commands';
+import { deleteSelection, joinBackward } from '@remirror/pm/commands';
 import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
@@ -584,13 +584,12 @@ export function calculateItemRange(selection: Selection): NodeRange | null | und
   return $from.blockRange($to, (node) => isList(node.type));
 }
 
+/**
+ * Wrap selected list items to fit the list type and list item type in the
+ * previous list.
+ */
 function wrapListBackward(tr: Transaction): boolean {
-  const $cursor = (tr.selection as TextSelection).$cursor;
-
-  if (!$cursor || $cursor.parentOffset > 0) {
-    return false;
-  }
-
+  const $cursor = tr.selection.$from;
   const range = $cursor.blockRange();
 
   if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
@@ -600,7 +599,7 @@ function wrapListBackward(tr: Transaction): boolean {
   const root = $cursor.node(range.depth - 2); // the node that contains the list
   const itemIndex = $cursor.index(range.depth); // current node is the n-th node in item
   const listIndex = $cursor.index(range.depth - 1); // current item is the n-th item in list
-  const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in root
+  const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th node in root
   const previousList = root.maybeChild(rootIndex - 1);
   const previousListItem = previousList?.lastChild;
 
@@ -626,18 +625,54 @@ function wrapListBackward(tr: Transaction): boolean {
   return false;
 }
 
-export function joinListBackward({ view }: CommandFunctionProps): boolean {
+export function listBackspace({ view }: CommandFunctionProps): boolean {
   if (!view) {
     return false;
+  }
+
+  let $cursor = (view.state.selection as TextSelection).$cursor;
+
+  if (!$cursor || $cursor.parentOffset > 0) {
+    return false;
+  }
+
+  let range = $cursor.blockRange();
+
+  if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
+    return false;
+  }
+
+  if (deleteSelection(view.state, view.dispatch)) {
+    return true;
   }
 
   const tr = view.state.tr;
 
   if (wrapListBackward(tr)) {
     view.dispatch(tr);
-    joinBackward(view.state, view.dispatch, view);
-    return true;
   }
 
-  return false;
+  $cursor = (view.state.selection as TextSelection).$cursor;
+
+  if (!$cursor || $cursor.parentOffset > 0) {
+    return false;
+  }
+
+  range = $cursor.blockRange();
+
+  if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
+    return false;
+  }
+
+  const itemIndex = $cursor.index(range.depth); // current node is the n-th node in item
+  const listIndex = $cursor.index(range.depth - 1); // current item is the n-th item in list
+  const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in root
+
+  if (itemIndex === 0 && listIndex === 0 && rootIndex <= 1) {
+    liftListItem(range.parent.type)(view.state, view.dispatch);
+  }
+
+  joinBackward(view.state, view.dispatch, view);
+
+  return true;
 }
