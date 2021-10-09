@@ -359,6 +359,25 @@ describe('Backspace', () => {
 
   let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
 
+  it('presses backspace to delete selected text', () => {
+    from = doc(
+      ul(
+        li(p('A<start>a<end>')),
+        li(p('B')),
+        li(p('C')), //
+      ),
+    );
+    to = doc(
+      ul(
+        li(p('A')),
+        li(p('B')),
+        li(p('C')), //
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
   it('presses backspace at the begin of a list', () => {
     from = doc(
       ul(
