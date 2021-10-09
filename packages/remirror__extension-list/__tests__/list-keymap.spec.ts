@@ -168,7 +168,18 @@ describe('Tab and Shift-Tab', () => {
 
   let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
 
-  it('sink a list item', () => {
+  it.skip('never lifts a list item out of the list', () => {
+    from = doc(
+      ul(
+        li(p('hello')),
+        li(p('world<cursor>')), //
+      ),
+    );
+    editor.add(from).press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+  });
+
+  it('sink and lift (1)', () => {
     from = doc(
       ul(
         li(p('hello')),
@@ -187,30 +198,11 @@ describe('Tab and Shift-Tab', () => {
     );
     editor.add(from).press('Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
   });
 
-  it('lift a list item', () => {
-    from = doc(
-      ul(
-        li(
-          p('hello'),
-          ul(
-            li(p('worl<cursor>d')), //
-          ),
-        ),
-      ),
-    );
-    to = doc(
-      ul(
-        li(p('hello')),
-        li(p('world')), //
-      ),
-    );
-    editor.add(from).press('Shift-Tab');
-    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
-  });
-
-  it('sink and lift the correct list item in a nested and mixed list', () => {
+  it('sink and lift (2)', () => {
     from = doc(
       ul(
         li(
@@ -257,7 +249,9 @@ describe('Tab and Shift-Tab', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
     editor.press('Shift-Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+  });
 
+  it('sink and lift (3)', () => {
     from = doc(
       ol(
         li(
@@ -304,7 +298,9 @@ describe('Tab and Shift-Tab', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
     editor.press('Shift-Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+  });
 
+  it('sink and lift (4)', () => {
     from = doc(
       tl(
         checked(
@@ -349,6 +345,40 @@ describe('Tab and Shift-Tab', () => {
     );
     editor.add(from).press('Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+  });
+
+  it.skip('lift mixed list items', () => {
+    from = doc(
+      tl(
+        checked(
+          p('A'),
+          ol(
+            li(
+              p('<cursor>B'), //
+              ol(
+                li(p('C')), //
+              ),
+            ),
+            li(p('D')), //
+          ),
+        ),
+      ),
+    );
+    to = doc(
+      tl(
+        checked(
+          p('A'),
+          p('B'),
+          ol(
+            li(p('C')), //
+            li(p('D')), //
+          ),
+        ),
+      ),
+    );
+    editor.add(from);
     editor.press('Shift-Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(from);
   });
