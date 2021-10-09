@@ -18,7 +18,6 @@ import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
 import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
-import { EditorView } from '@remirror/pm/view';
 
 import { ListItemAttributes } from './list-item-extension';
 import { isList, isListItemNode, isListNode } from './list-utils';
