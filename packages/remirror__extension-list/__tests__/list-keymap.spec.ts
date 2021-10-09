@@ -456,7 +456,7 @@ describe('Backspace', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
-  it('presses backspace at the begin of a 3-level mixed list', () => {
+  it('presses backspace at the begin of a 3-level mixed list (1)', () => {
     from = doc(
       taskList(
         checked(
@@ -481,6 +481,45 @@ describe('Backspace', () => {
           p('a'),
           ul(
             li(p('b')), //
+          ),
+        ),
+        checked(p('B')),
+        checked(p('C')), //
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it.skip('presses backspace at the begin of a 3-level mixed list (2)', () => {
+    from = doc(
+      taskList(
+        checked(
+          p('A'),
+          ul(
+            li(
+              p('<cursor>a'),
+              ul(
+                li(p('b')), //
+              ),
+            ), //
+            li(p('<cursor>c')), //
+          ),
+        ),
+        checked(p('B')),
+        checked(p('C')), //
+      ),
+    );
+    to = doc(
+      taskList(
+        checked(
+          p('A'),
+          p('a'),
+          ul(
+            li(p('b')), //
+          ),
+          ul(
+            li(p('c')), //
           ),
         ),
         checked(p('B')),
