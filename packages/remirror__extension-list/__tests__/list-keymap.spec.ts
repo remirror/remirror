@@ -378,7 +378,7 @@ describe('Backspace', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
-  it('presses backspace at the begin of a list', () => {
+  it('presses backspace at the begin of a ul list', () => {
     from = doc(
       ul(
         li(p('<cursor>A')),
@@ -397,7 +397,7 @@ describe('Backspace', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
-  it('presses backspace at the begin of a 2-level list', () => {
+  it('presses backspace at the begin of a 2-level ul list', () => {
     from = doc(
       ul(
         li(
@@ -421,7 +421,7 @@ describe('Backspace', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
-  it('presses backspace at the begin of a 3-level list', () => {
+  it('presses backspace at the begin of a 3-level ul list', () => {
     from = doc(
       ul(
         li(
@@ -450,6 +450,41 @@ describe('Backspace', () => {
         ),
         li(p('B')),
         li(p('C')), //
+      ),
+    );
+    editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('presses backspace at the begin of a 3-level mixed list', () => {
+    from = doc(
+      taskList(
+        checked(
+          p('A'),
+          ul(
+            li(
+              p('<cursor>a'),
+              ul(
+                li(p('b')), //
+              ),
+            ), //
+          ),
+        ),
+        checked(p('B')),
+        checked(p('C')), //
+      ),
+    );
+    to = doc(
+      taskList(
+        checked(
+          p('A'),
+          p('a'),
+          ul(
+            li(p('b')), //
+          ),
+        ),
+        checked(p('B')),
+        checked(p('C')), //
       ),
     );
     editor.add(from).press('Backspace');
