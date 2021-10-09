@@ -1,5 +1,4 @@
-import { CreateExtensionPlugin, KeyBindings, PlainExtension } from '@remirror/core';
-import { chainCommands, deleteSelection } from '@remirror/pm/commands';
+import { CreateExtensionPlugin, environment, KeyBindings, PlainExtension } from '@remirror/core';
 
 import {
   joinListBackward,
@@ -8,10 +7,6 @@ import {
   sharedSinkListItem,
 } from './list-commands';
 
-const backspace = chainCommands(
-  deleteSelection, //
-  joinListBackward, //
-);
 /**
  * Provides some shared thing used by both `listItem` and `taskListItem`
  */
@@ -21,14 +16,22 @@ export class ListItemSharedExtension extends PlainExtension {
   }
 
   createKeymap(): KeyBindings {
-    return {
+    const pcKeymap = {
       Tab: sharedSinkListItem(this.store.extensions),
       'Shift-Tab': sharedLiftListItem(this.store.extensions),
-      Backspace: (props) => {
-        const result = backspace(props.state, props.dispatch, props.view);
-        return result;
-      },
+      Backspace: joinListBackward,
+      'Mod-Backspace': joinListBackward,
     };
+
+    if (environment.isMac) {
+      const macKeymap = {
+        'Ctrl-h': pcKeymap['Backspace'],
+        'Alt-Backspace': pcKeymap['Mod-Backspace'],
+      };
+      return { ...pcKeymap, ...macKeymap };
+    }
+
+    return pcKeymap;
   }
 
   createPlugin(): CreateExtensionPlugin {

@@ -2,6 +2,7 @@ import {
   AnyExtension,
   chainableEditorState,
   CommandFunction,
+  CommandFunctionProps,
   DispatchFunction,
   ExtensionTag,
   findParentNode,
@@ -584,13 +585,8 @@ export function calculateItemRange(selection: Selection): NodeRange | null | und
   return $from.blockRange($to, (node) => isList(node.type));
 }
 
-export function joinListBackward(
-  state: EditorState,
-  dispatch?: DispatchFunction,
-  view?: EditorView,
-): boolean {
-  const selection = state.selection;
-  const $cursor = (selection as TextSelection).$cursor;
+function wrapListBackward(tr: Transaction): boolean {
+  const $cursor = (tr.selection as TextSelection).$cursor;
 
   if (!$cursor || $cursor.parentOffset > 0) {
     return false;
@@ -621,18 +617,27 @@ export function joinListBackward(
     previousListItem &&
     isListItemNode(previousListItem)
   ) {
-    const tr = state.tr;
-    const updated = wrapSelectedItems({
+    return wrapSelectedItems({
       listType: previousList.type,
       itemType: previousListItem.type,
       tr: tr,
     });
+  }
 
-    if (updated) {
-      dispatch?.(tr);
-      joinBackward(view?.state || state, dispatch, view);
-      return true;
-    }
+  return false;
+}
+
+export function joinListBackward({ view }: CommandFunctionProps): boolean {
+  if (!view) {
+    return false;
+  }
+
+  const tr = view.state.tr;
+
+  if (wrapListBackward(tr)) {
+    view.dispatch(tr);
+    joinBackward(view.state, view.dispatch, view);
+    return true;
   }
 
   return false;
