@@ -23,7 +23,7 @@ jobs:
             }
             core.info(`Getting PR #${request.pull_number} from ${request.owner}/${request.repo}`)
             try {
-              const result = await github.pulls.get(request)
+              const result = await github.rest.pulls.get(request)
               core.info(`Got PR: ${JSON.stringify(result.data)}`)
               if (result.data.head.repo.full_name !== 'remirror/remirror') {
                 throw new Error(`this workflow is only allowed on the "remirror" repository`)
