@@ -1,6 +1,11 @@
-import { CreateExtensionPlugin, KeyBindings, PlainExtension } from '@remirror/core';
+import { CreateExtensionPlugin, environment, KeyBindings, PlainExtension } from '@remirror/core';
 
-import { maybeJoinList, sharedLiftListItem, sharedSinkListItem } from './list-commands';
+import {
+  listBackspace,
+  maybeJoinList,
+  sharedLiftListItem,
+  sharedSinkListItem,
+} from './list-commands';
 
 /**
  * Provides some shared thing used by both `listItem` and `taskListItem`
@@ -11,10 +16,22 @@ export class ListItemSharedExtension extends PlainExtension {
   }
 
   createKeymap(): KeyBindings {
-    return {
+    const pcKeymap = {
       Tab: sharedSinkListItem(this.store.extensions),
       'Shift-Tab': sharedLiftListItem(this.store.extensions),
+      Backspace: listBackspace,
+      'Mod-Backspace': listBackspace,
     };
+
+    if (environment.isMac) {
+      const macKeymap = {
+        'Ctrl-h': pcKeymap['Backspace'],
+        'Alt-Backspace': pcKeymap['Mod-Backspace'],
+      };
+      return { ...pcKeymap, ...macKeymap };
+    }
+
+    return pcKeymap;
   }
 
   createPlugin(): CreateExtensionPlugin {

@@ -2,6 +2,7 @@ import {
   AnyExtension,
   chainableEditorState,
   CommandFunction,
+  CommandFunctionProps,
   DispatchFunction,
   ExtensionTag,
   findParentNode,
@@ -12,13 +13,14 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
+import { joinBackward } from '@remirror/pm/commands';
 import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
 import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
 
 import { ListItemAttributes } from './list-item-extension';
-import { isList } from './list-utils';
+import { isList, isListItemNode, isListNode } from './list-utils';
 
 /**
  * Toggles a list.
@@ -580,4 +582,117 @@ function getItemRange(itemType: NodeType, selection: Selection) {
 export function calculateItemRange(selection: Selection): NodeRange | null | undefined {
   const { $from, $to } = selection;
   return $from.blockRange($to, (node) => isList(node.type));
+}
+
+/**
+ * Wrap selected list items to fit the list type and list item type in the
+ * previous list.
+ */
+function wrapListBackward(tr: Transaction): boolean {
+  const $cursor = tr.selection.$from;
+  const range = $cursor.blockRange();
+
+  if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
+    return false;
+  }
+
+  const root = $cursor.node(range.depth - 2); // the node that contains the list
+  const itemIndex = $cursor.index(range.depth); // current node is the n-th node in item
+  const listIndex = $cursor.index(range.depth - 1); // current item is the n-th item in list
+  const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th node in root
+  const previousList = root.maybeChild(rootIndex - 1);
+  const previousListItem = previousList?.lastChild;
+
+  if (
+    // current node must be the first node in its parent list item;
+    itemIndex !== 0 ||
+    // current list item must be the first list item in its parent list;
+    listIndex !== 0
+  ) {
+    return false;
+  }
+
+  if (
+    // there is a list before current list;
+    previousList &&
+    isListNode(previousList) &&
+    // we can find the list item type for previousList;
+    previousListItem &&
+    isListItemNode(previousListItem)
+  ) {
+    return wrapSelectedItems({
+      listType: previousList.type,
+      itemType: previousListItem.type,
+      tr: tr,
+    });
+  }
+
+  if (isListItemNode(root)) {
+    const parentListItem = root;
+    const parentList = $cursor.node(range.depth - 3);
+
+    if (isListNode(parentList)) {
+      return wrapSelectedItems({
+        listType: parentList.type,
+        itemType: parentListItem.type,
+        tr: tr,
+      });
+    }
+  }
+
+  return false;
+}
+
+export function listBackspace({ view }: CommandFunctionProps): boolean {
+  if (!view) {
+    return false;
+  }
+
+  {
+    const $cursor = (view.state.selection as TextSelection).$cursor;
+
+    if (!$cursor || $cursor.parentOffset > 0) {
+      return false;
+    }
+
+    const range = $cursor.blockRange();
+
+    if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
+      return false;
+    }
+  }
+
+  {
+    const tr = view.state.tr;
+
+    if (wrapListBackward(tr)) {
+      view.dispatch(tr);
+    }
+  }
+
+  {
+    const $cursor = (view.state.selection as TextSelection).$cursor;
+
+    if (!$cursor || $cursor.parentOffset > 0) {
+      return false;
+    }
+
+    const range = $cursor.blockRange();
+
+    if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
+      return false;
+    }
+
+    const itemIndex = $cursor.index(range.depth); // current node is the n-th node in item
+    const listIndex = $cursor.index(range.depth - 1); // current item is the n-th item in list
+    const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in root
+
+    if (itemIndex === 0 && listIndex === 0 && rootIndex <= 1) {
+      liftListItem(range.parent.type)(view.state, view.dispatch);
+    }
+  }
+
+  joinBackward(view.state, view.dispatch, view);
+
+  return true;
 }
