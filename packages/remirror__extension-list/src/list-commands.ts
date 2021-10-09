@@ -13,7 +13,7 @@ import {
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
-import { deleteSelection, joinBackward } from '@remirror/pm/commands';
+import { joinBackward } from '@remirror/pm/commands';
 import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
@@ -604,10 +604,15 @@ function wrapListBackward(tr: Transaction): boolean {
   const previousListItem = previousList?.lastChild;
 
   if (
-    // current node is the first node in its parent list item;
-    itemIndex === 0 &&
-    // current list item is the first list item in its parent list;
-    listIndex === 0 &&
+    // current node must be the first node in its parent list item;
+    itemIndex !== 0 ||
+    // current list item must be the first list item in its parent list;
+    listIndex !== 0
+  ) {
+    return false;
+  }
+
+  if (
     // there is a list before current list;
     previousList &&
     isListNode(previousList) &&
@@ -622,6 +627,19 @@ function wrapListBackward(tr: Transaction): boolean {
     });
   }
 
+  if (isListItemNode(root)) {
+    const parentListItem = root;
+    const parentList = $cursor.node(range.depth - 3);
+
+    if (isListNode(parentList)) {
+      return wrapSelectedItems({
+        listType: parentList.type,
+        itemType: parentListItem.type,
+        tr: tr,
+      });
+    }
+  }
+
   return false;
 }
 
@@ -630,46 +648,48 @@ export function listBackspace({ view }: CommandFunctionProps): boolean {
     return false;
   }
 
-  let $cursor = (view.state.selection as TextSelection).$cursor;
+  {
+    const $cursor = (view.state.selection as TextSelection).$cursor;
 
-  if (!$cursor || $cursor.parentOffset > 0) {
-    return false;
+    if (!$cursor || $cursor.parentOffset > 0) {
+      return false;
+    }
+
+    const range = $cursor.blockRange();
+
+    if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
+      return false;
+    }
   }
 
-  let range = $cursor.blockRange();
+  {
+    const tr = view.state.tr;
 
-  if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
-    return false;
+    if (wrapListBackward(tr)) {
+      view.dispatch(tr);
+    }
   }
 
-  if (deleteSelection(view.state, view.dispatch)) {
-    return true;
-  }
+  {
+    const $cursor = (view.state.selection as TextSelection).$cursor;
 
-  const tr = view.state.tr;
+    if (!$cursor || $cursor.parentOffset > 0) {
+      return false;
+    }
 
-  if (wrapListBackward(tr)) {
-    view.dispatch(tr);
-  }
+    const range = $cursor.blockRange();
 
-  $cursor = (view.state.selection as TextSelection).$cursor;
+    if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
+      return false;
+    }
 
-  if (!$cursor || $cursor.parentOffset > 0) {
-    return false;
-  }
+    const itemIndex = $cursor.index(range.depth); // current node is the n-th node in item
+    const listIndex = $cursor.index(range.depth - 1); // current item is the n-th item in list
+    const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in root
 
-  range = $cursor.blockRange();
-
-  if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
-    return false;
-  }
-
-  const itemIndex = $cursor.index(range.depth); // current node is the n-th node in item
-  const listIndex = $cursor.index(range.depth - 1); // current item is the n-th item in list
-  const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in root
-
-  if (itemIndex === 0 && listIndex === 0 && rootIndex <= 1) {
-    liftListItem(range.parent.type)(view.state, view.dispatch);
+    if (itemIndex === 0 && listIndex === 0 && rootIndex <= 1) {
+      liftListItem(range.parent.type)(view.state, view.dispatch);
+    }
   }
 
   joinBackward(view.state, view.dispatch, view);
