@@ -14,7 +14,7 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 import { joinBackward } from '@remirror/pm/commands';
-import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
+import { Fragment, NodeRange, ResolvedPos, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
 import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
@@ -527,9 +527,8 @@ function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: No
   return true;
 }
 
-export function maybeJoinList(tr: Transaction): boolean {
-  const { $from, to } = tr.selection;
-  const sharedDepth = $from.sharedDepth(to);
+export function maybeJoinList(tr: Transaction, $pos?: ResolvedPos): boolean {
+  const $from = $pos || tr.selection.$from;
 
   let joinable: number[] = [];
   let index: number;
@@ -537,25 +536,25 @@ export function maybeJoinList(tr: Transaction): boolean {
   let before: ProsemirrorNode | null | undefined;
   let after: ProsemirrorNode | null | undefined;
 
-  for (let depth = sharedDepth; depth >= 0; depth--) {
+  for (let depth = $from.depth; depth >= 0; depth--) {
     parent = $from.node(depth);
 
     // join backward
     index = $from.index(depth);
-    after = parent.maybeChild(index);
     before = parent.maybeChild(index - 1);
+    after = parent.maybeChild(index);
 
-    if (after && before && after.type.name === before.type.name && isList(before.type)) {
+    if (before && after && before.type.name === after.type.name && isListNode(before)) {
       const pos = $from.before(depth + 1);
       joinable.push(pos);
     }
 
     // join forward
     index = $from.indexAfter(depth);
-    after = parent.maybeChild(index);
     before = parent.maybeChild(index - 1);
+    after = parent.maybeChild(index);
 
-    if (after && before && after.type.name === before.type.name && isList(before.type)) {
+    if (before && after && before.type.name === after.type.name && isListNode(before)) {
       const pos = $from.after(depth + 1);
       joinable.push(pos);
     }
