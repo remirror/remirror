@@ -147,7 +147,7 @@ export function indentList(tr: Transaction): boolean {
  */
 export const indentListCommand: CommandFunction = ({ tr, dispatch }) => {
   if (indentList(tr)) {
-    dispatch?.(tr);
+    dispatch?.(tr.scrollIntoView());
   }
 
   // always return `true` since we don't want the browser to handle the keyboard event.

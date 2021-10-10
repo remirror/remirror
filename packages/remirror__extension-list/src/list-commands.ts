@@ -349,59 +349,22 @@ function deepChangeListType(
 }
 
 /**
- * Wrap existed list items to a new type of list, which only containes these list items.
+ * Wraps list items in `range` to a list.
  *
- * @remarks
- *
- * @example
- *
- * Here is some pseudo-code to show the purpose of this function:
- *
- * before:
- *
- * ```html
- *  <ul>
- *    <li>item A</li>
- *    <li>item B<!-- cursor --></li>
- *    <li>item C</li>
- *    <li>item D</li>
- *  </ul>
- * ```
- *
- * after:
- *
- * ```html
- *  <ul>
- *    <li>item A</li>
- *  </ul>
- *  <ol>
- *    <li>item B<!-- cursor --></li>
- *  </ol>
- *  <ul>
- *    <li>item C</li>
- *    <li>item D</li>
- *  </ul>
- * ```
- *
- * @alpha
+ * @internal
  */
-export function wrapSelectedItems({
+export function wrapItems({
   listType,
   itemType,
   tr,
+  range,
 }: {
   listType: NodeType;
   itemType: NodeType;
   tr: Transaction;
+  range: NodeRange;
 }): boolean {
-  const range = calculateItemRange(tr.selection);
-
-  if (!range) {
-    return false;
-  }
-
   const oldList = range.parent;
-  const atStart = range.startIndex === 0;
 
   // A slice that contianes all selected list items
   const slice: Slice = tr.doc.slice(range.start, range.end);
@@ -425,13 +388,74 @@ export function wrapSelectedItems({
 
   const newList = listType.createChecked(null, newItems);
 
-  const { $from, $to } = tr.selection;
   tr.replaceRange(range.start, range.end, new Slice(Fragment.from(newList), 0, 0));
+  return true;
+}
+
+/**
+ * Wraps existed list items to a new type of list, which only containes these list items.
+ *
+ * @remarks
+ *
+ * @example
+ *
+ * Here is some pseudo-code to show the purpose of this function:
+ *
+ * before:
+ *
+ * ```html
+ *  <ul>
+ *    <li>item A</li>
+ *    <li>item B<!-- cursor_start --></li>
+ *    <li>item C<!-- cursor_end --></li>
+ *    <li>item D</li>
+ *  </ul>
+ * ```
+ *
+ * after:
+ *
+ * ```html
+ *  <ul>
+ *    <li>item A</li>
+ *  </ul>
+ *  <ol>
+ *    <li>item B<!-- cursor --></li>
+ *    <li>item C<!-- cursor_end --></li>
+ *  </ol>
+ *  <ul>
+ *    <li>item D</li>
+ *  </ul>
+ * ```
+ *
+ * @alpha
+ */
+export function wrapSelectedItems({
+  listType,
+  itemType,
+  tr,
+}: {
+  listType: NodeType;
+  itemType: NodeType;
+  tr: Transaction;
+}): boolean {
+  const range = calculateItemRange(tr.selection);
+
+  if (!range) {
+    return false;
+  }
+
+  const atStart = range.startIndex === 0;
+
+  const { from, to } = tr.selection;
+
+  if (!wrapItems({ listType, itemType, tr, range })) {
+    return false;
+  }
 
   tr.setSelection(
     new TextSelection(
-      tr.doc.resolve(atStart ? $from.pos : $from.pos + 2),
-      tr.doc.resolve(atStart ? $to.pos : $to.pos + 2),
+      tr.doc.resolve(atStart ? from : from + 2),
+      tr.doc.resolve(atStart ? to : to + 2),
     ),
   );
   tr.scrollIntoView();
