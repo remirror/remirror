@@ -1,4 +1,5 @@
 export { BulletListExtension } from './bullet-list-extension';
+export { indentList } from './list-command-indent';
 export {
   sharedLiftListItem,
   sharedSinkListItem,

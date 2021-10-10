@@ -384,6 +384,198 @@ describe('Tab and Shift-Tab', () => {
   });
 });
 
+describe('Indent', () => {
+  const { doc, p, ol, ul, li, taskList, unchecked, checked, editor } = setupListEditor();
+
+  let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
+
+  it('can indent a ul list item', () => {
+    from = doc(
+      ul(
+        li(p('A')),
+        li(p('B<start>123<end>')),
+        li(p('C')), //
+      ),
+    );
+    to = doc(
+      ul(
+        li(
+          p('A'),
+          ul(
+            li(p('B123')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    editor.add(from);
+    editor.press('Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    expect(editor.view.state.selection.content().content.toString()).toEqual(
+      `<bulletList(listItem(bulletList(listItem(paragraph("123")))))>`,
+    );
+  });
+
+  it('can indent a task list item', () => {
+    from = doc(
+      taskList(
+        unchecked(p('A')),
+        checked(p('B<start>123<end>')),
+        checked(p('C')), //
+      ),
+    );
+    to = doc(
+      taskList(
+        unchecked(
+          p('A'),
+          taskList(
+            checked(p('B123')), //
+          ),
+        ),
+        checked(p('C')),
+      ),
+    );
+    editor.add(from);
+    editor.press('Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    expect(editor.view.state.selection.content().content.toString()).toEqual(
+      `<taskList(taskListItem(taskList(taskListItem(paragraph("123")))))>`,
+    );
+  });
+
+  it('can indent a list item in a mixed list', () => {
+    from = doc(
+      taskList(
+        unchecked(p('A')), //
+      ),
+      ul(
+        li(p('B<start>123<end>')), //
+        li(p('C')), //
+      ),
+    );
+    to = doc(
+      taskList(
+        unchecked(
+          p('A'),
+          ul(
+            li(p('B123')), //
+          ),
+        ),
+      ),
+      ul(
+        li(p('C')), //
+      ),
+    );
+    editor.add(from);
+    editor.press('Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    expect(editor.view.state.selection.content().content.toString()).toEqual(
+      `<taskList(taskListItem(bulletList(listItem(paragraph("123")))))>`,
+    );
+  });
+
+  it('can not indent first list item', () => {
+    from = doc(
+      ul(
+        li(p('A<cursor>')), //
+        li(p('C')), //
+      ),
+    );
+    editor.add(from);
+    editor.press('Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+
+    from = doc(
+      ol(
+        li(
+          p(''),
+          ul(
+            li(p('A<cursor>')), //
+            li(p('C')), //
+          ),
+        ),
+      ),
+    );
+    editor.add(from);
+    editor.press('Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+  });
+
+  it("won't change the indent of unselected sublist (simple)", () => {
+    from = doc(
+      ul(
+        li(p('A')),
+        li(
+          p('B<cursor>'),
+          ul(
+            li(p('C')), //
+          ),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        li(
+          p('A'),
+          ul(
+            li(p('B')),
+            li(p('C')), //
+          ),
+        ),
+      ),
+    );
+
+    editor.add(from);
+    editor.press('Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it("won't change the indent of unselected sublist (complex)", () => {
+    from = doc(
+      ol(
+        li(p('1')),
+        li(p('2')), //
+      ),
+      ul(
+        li(
+          p('A'),
+          p('<start>B'),
+          taskList(checked(p('C')), checked(p('D'))),
+          ol(li(p('E<end>')), li(p('F'))),
+          ul(li(p('G')), li(p('H'))),
+          p('I'),
+        ),
+      ),
+    );
+    to = doc(
+      ol(
+        li(p('1')),
+        li(
+          p('2'),
+          ul(
+            li(
+              p('A'),
+              p('B'),
+              taskList(checked(p('C')), checked(p('D'))),
+              ol(li(p('E<end>')), li(p('F'))), //
+            ),
+            li(p('G')),
+            li(p('H')),
+          ),
+          p('I'),
+        ),
+      ),
+    );
+
+    editor.add(from);
+    editor.press('Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    expect(editor.view.state.selection.content().content.toString()).toEqual(
+      '<orderedList(listItem(bulletList(listItem(paragraph("B"), taskList(taskListItem(paragraph("C")), taskListItem(paragraph("D"))), orderedList(listItem(paragraph("E")))))))>',
+    );
+  });
+});
+
 describe('Backspace', () => {
   const { doc, p, ol, ul, li, taskList, unchecked, checked, editor } = setupListEditor();
 

@@ -254,6 +254,8 @@ function getOrderedListItemTypes(
  * Create a command to sink the list item around the selection down into an
  * inner list. Use this function if you get multiple list item nodes in your
  * schema.
+ *
+ * @deprecated use `indentList` instead
  */
 export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFunction {
   const listItemNames = getAllListItemNames(allExtensions);
@@ -579,13 +581,16 @@ function getItemRange(itemType: NodeType, selection: Selection) {
   return range;
 }
 
+/**
+ * Returns a range that include all selected list items.
+ */
 export function calculateItemRange(selection: Selection): NodeRange | null | undefined {
   const { $from, $to } = selection;
-  return $from.blockRange($to, (node) => isList(node.type));
+  return $from.blockRange($to, isListNode);
 }
 
 /**
- * Wrap selected list items to fit the list type and list item type in the
+ * Wraps selected list items to fit the list type and list item type in the
  * previous list.
  */
 function wrapListBackward(tr: Transaction): boolean {

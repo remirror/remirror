@@ -1,11 +1,7 @@
 import { CreateExtensionPlugin, environment, KeyBindings, PlainExtension } from '@remirror/core';
 
-import {
-  listBackspace,
-  maybeJoinList,
-  sharedLiftListItem,
-  sharedSinkListItem,
-} from './list-commands';
+import { indentListCommand } from './list-command-indent';
+import { listBackspace, maybeJoinList, sharedLiftListItem } from './list-commands';
 
 /**
  * Provides some shared thing used by both `listItem` and `taskListItem`
@@ -17,7 +13,7 @@ export class ListItemSharedExtension extends PlainExtension {
 
   createKeymap(): KeyBindings {
     const pcKeymap = {
-      Tab: sharedSinkListItem(this.store.extensions),
+      Tab: indentListCommand,
       'Shift-Tab': sharedLiftListItem(this.store.extensions),
       Backspace: listBackspace,
       'Mod-Backspace': listBackspace,
