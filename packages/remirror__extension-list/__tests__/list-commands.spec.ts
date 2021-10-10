@@ -487,8 +487,13 @@ describe('calculateItemRange', () => {
     expect(range.parent.type.name).toEqual('taskList');
     expect(range.startIndex).toEqual(1);
     expect(range.endIndex).toEqual(3);
-    expect(editor.doc.resolve(range.start).node().type.name).toEqual('taskList');
-    expect(editor.doc.resolve(range.end).node().type.name).toEqual('taskList');
+
+    const { start, end } = range;
+    expect(editor.doc.resolve(start).node().type.name).toEqual('taskList');
+    expect(editor.doc.resolve(end).node().type.name).toEqual('taskList');
+
+    expect(editor.doc.resolve(start).nodeAfter?.type.name).toEqual('taskListItem');
+    expect(editor.doc.resolve(end).nodeBefore?.type.name).toEqual('taskListItem');
   });
 
   it('returns correct range when the selection is in a deep list', () => {
