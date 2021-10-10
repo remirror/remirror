@@ -6,6 +6,7 @@ import {
   OrderedListExtension,
   TaskListExtension,
 } from 'remirror/extensions';
+import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   EditorComponent,
   Remirror,
@@ -39,6 +40,7 @@ const Basic = (): JSX.Element => {
       <Remirror manager={manager} initialContent={state}>
         <Button />
         <EditorComponent />
+        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
@@ -60,32 +62,32 @@ const extensions = () => [
 const html = String.raw; // Just for better editor support
 
 const content = html`
-  <ul>
-    <li>
-      <p>a</p>
-      <ul data-task-list="">
-        <li class="remirror-list-item-with-custom-mark" data-checked="" data-task-list-item="">
-          <span contenteditable="false" class="remirror-list-item-marker-container"
-            ><input type="checkbox" class="remirror-list-item-checkbox" contenteditable="false"
-          /></span>
-          <div><p>A</p></div>
-        </li>
-        <li class="remirror-list-item-with-custom-mark" data-checked="" data-task-list-item="">
-          <span contenteditable="false" class="remirror-list-item-marker-container"
-            ><input type="checkbox" class="remirror-list-item-checkbox" contenteditable="false"
-          /></span>
-          <div><p>B</p></div>
-        </li>
-        <li class="remirror-list-item-with-custom-mark" data-checked="" data-task-list-item="">
-          <span contenteditable="false" class="remirror-list-item-marker-container"
-            ><input type="checkbox" class="remirror-list-item-checkbox" contenteditable="false"
-          /></span>
-          <div><p>C</p></div>
-        </li>
-      </ul>
-    </li>
-    <li><p>d</p></li>
-  </ul>
+  <div
+    contenteditable="true"
+    translate="no"
+    role="textbox"
+    aria-multiline="true"
+    aria-label=""
+    class="ProseMirror remirror-editor"
+    spellcheck="false"
+  >
+    <ul>
+      <li>
+        <p>A</p>
+        <ul data-task-list="">
+          <li class="remirror-list-item-with-custom-mark" data-checked="" data-task-list-item="">
+            <span contenteditable="false" class="remirror-list-item-marker-container"
+              ><input type="checkbox" class="remirror-list-item-checkbox" contenteditable="false"
+            /></span>
+            <div><p>B</p></div>
+          </li>
+        </ul>
+        <ol>
+          <li><p>C</p></li>
+        </ol>
+      </li>
+    </ul>
+  </div>
 `;
 
 export default Basic;

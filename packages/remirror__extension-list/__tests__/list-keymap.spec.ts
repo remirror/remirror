@@ -735,6 +735,30 @@ describe('Dedent', () => {
     editor.press('Shift-Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
+
+  it('can dedent a list item with different type of sibling', () => {
+    from = doc(
+      ul(
+        li(
+          p('A'),
+          ul(li(p('B<cursor>'))), //
+          ol(li(p('C'))),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        li(p('A')),
+        li(
+          p('B'),
+          ol(li(p('C'))), //
+        ),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
 });
 
 describe('Backspace', () => {
