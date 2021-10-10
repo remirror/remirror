@@ -350,7 +350,7 @@ describe('Tab and Shift-Tab', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(from);
   });
 
-  it.skip('lift mixed list items', () => {
+  it('lift mixed list items', () => {
     from = doc(
       tl(
         checked(
@@ -381,7 +381,7 @@ describe('Tab and Shift-Tab', () => {
     );
     editor.add(from);
     editor.press('Shift-Tab');
-    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 });
 

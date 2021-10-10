@@ -3,7 +3,7 @@ import { Fragment, NodeRange, NodeType, ResolvedPos, Slice } from '@remirror/pm/
 import { Transaction } from '@remirror/pm/state';
 import { liftTarget, ReplaceAroundStep } from '@remirror/pm/transform';
 
-import { calculateItemRange, wrapSelectedItems } from './list-commands';
+import { calculateItemRange, maybeJoinList, wrapSelectedItems } from './list-commands';
 import { isListItemNode, isListNode } from './list-utils';
 
 function findParentItem($from: ResolvedPos, range: NodeRange) {
@@ -90,6 +90,13 @@ export function dedentList(tr: Transaction): boolean {
   }
 
   tr.lift(range, target);
+
+  range = calculateItemRange(tr.selection);
+
+  if (range) {
+    maybeJoinList(tr, tr.doc.resolve(range.end - 2));
+  }
+
   return true;
 }
 
