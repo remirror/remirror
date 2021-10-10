@@ -636,7 +636,7 @@ describe('Dedent', () => {
     );
   });
 
-  it.skip('can dedent a list item from a mixed list', () => {
+  it('can dedent a list item from a mixed list', () => {
     from = doc(
       ol(
         li(

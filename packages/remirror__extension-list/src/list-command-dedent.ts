@@ -1,26 +1,23 @@
 import { CommandFunction } from '@remirror/pm';
-import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
+import { Fragment, NodeRange, NodeType, ResolvedPos, Slice } from '@remirror/pm/model';
 import { Transaction } from '@remirror/pm/state';
-import { ReplaceAroundStep } from '@remirror/pm/transform';
+import { liftTarget, ReplaceAroundStep } from '@remirror/pm/transform';
 
-import { calculateItemRange } from './list-commands';
-import { isListItemNode } from './list-utils';
+import { calculateItemRange, wrapSelectedItems } from './list-commands';
+import { isListItemNode, isListNode } from './list-utils';
 
-export function dedentList(tr: Transaction): boolean {
-  let range = calculateItemRange(tr.selection);
+function findParentItem($from: ResolvedPos, range: NodeRange) {
+  const parentItem = $from.node(range.depth - 1);
+  const parentList = $from.node(range.depth - 2);
 
-  if (!range) {
-    console.log('return 1');
+  if (!isListItemNode(parentItem) || !isListNode(parentList)) {
     return false;
   }
 
-  const parentItem = tr.selection.$from.node(range.depth - 1);
+  return { parentItem, parentList };
+}
 
-  if (!isListItemNode(parentItem)) {
-    console.log('return 2');
-    return false;
-  }
-
+function indentSiblings(tr: Transaction, range: NodeRange, parentItemType: NodeType) {
   const end = range.end;
   const endOfList = range.$to.end(range.depth);
 
@@ -33,25 +30,66 @@ export function dedentList(tr: Transaction): boolean {
         endOfList,
         end,
         endOfList,
-        new Slice(Fragment.from(parentItem.type.create(null, range.parent.copy())), 1, 0),
+        new Slice(Fragment.from(parentItemType.create(null, range.parent.copy())), 1, 0),
         1,
         true,
       ),
     );
-    range = new NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfList), range.depth);
+    return new NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfList), range.depth);
   }
+
+  return range;
+}
+
+function changeItemsType(
+  tr: Transaction,
+  range: NodeRange,
+  parentListType: NodeType,
+  parentItemType: NodeType,
+) {
+  const wrapped = wrapSelectedItems({
+    listType: parentListType,
+    itemType: parentItemType,
+    tr,
+  });
+
+  if (wrapped) {
+    return new NodeRange(tr.selection.$from, tr.selection.$to, range.depth);
+  }
+
+  return range;
+}
+
+/**
+ * A helper function to dedent selected list items
+ *
+ * @beta
+ */
+export function dedentList(tr: Transaction): boolean {
+  let range = calculateItemRange(tr.selection);
+
+  if (!range) {
+    return false;
+  }
+
+  const findParentItemResult = findParentItem(tr.selection.$from, range);
+
+  if (!findParentItemResult) {
+    return false;
+  }
+
+  const { parentItem, parentList } = findParentItemResult;
+
+  range = indentSiblings(tr, range, parentItem.type);
+  range = changeItemsType(tr, range, parentList.type, parentItem.type);
 
   const target = liftTarget(range);
 
-  console.log({ end, endOfList, range, target });
-
   if (typeof target !== 'number') {
-    console.log('return 7');
     return false;
   }
 
   tr.lift(range, target);
-  console.log('return 9');
   return true;
 }
 
@@ -65,27 +103,3 @@ export const dedentListCommand: CommandFunction = ({ tr, dispatch }) => {
 
   return true;
 };
-
-function liftTarget(range: NodeRange) {
-  const parent = range.parent;
-  const content = Fragment.from(parent.content.content.slice(range.startIndex, range.endIndex));
-
-  for (let depth = range.depth; ; --depth) {
-    const node = range.$from.node(depth);
-    const index = range.$from.index(depth),
-      endIndex = range.$to.indexAfter(depth);
-
-    if (depth < range.depth) {
-      const canReplace = node.canReplace(index, endIndex, content);
-      console.log({ depth, canReplace, index, endIndex, content, node: node.type.name });
-
-      if (canReplace) {
-        return depth;
-      }
-    }
-
-    if (depth === 0) {
-      break;
-    }
-  }
-}
