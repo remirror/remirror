@@ -670,30 +670,30 @@ describe('Dedent', () => {
 
   it('can dedent a list item from a mixed list (2)', () => {
     from = doc(
-      ol(
+      ul(
         li(
           p('A'),
-          ul(
-            li(p('B1')), //
-            li(p('B2<cursor>')), //
-            li(p('B3')), //
+          taskList(
+            checked(p('B1')), //
+            checked(p('B2<cursor>')), //
+            checked(p('B3')), //
           ),
         ),
         li(p('C')),
       ),
     );
     to = doc(
-      ol(
+      ul(
         li(
           p('A'),
-          ul(
-            li(p('B1')), //
+          taskList(
+            checked(p('B1')), //
           ),
         ),
         li(
           p('B2'),
-          ul(
-            li(p('B3')), //
+          taskList(
+            checked(p('B3')), //
           ),
         ),
         li(p('C')),
@@ -706,8 +706,8 @@ describe('Dedent', () => {
 
   it('can dedent a list item from a mixed list (3)', () => {
     from = doc(
-      ol(
-        li(
+      taskList(
+        checked(
           p('A'),
           ul(
             li(p('B1')), //
@@ -715,20 +715,20 @@ describe('Dedent', () => {
             li(p('B3<cursor>')), //
           ),
         ),
-        li(p('C')),
+        checked(p('C')),
       ),
     );
     to = doc(
-      ol(
-        li(
+      taskList(
+        checked(
           p('A'),
           ul(
             li(p('B1')), //
             li(p('B2')), //
           ),
         ),
-        li(p('B3')),
-        li(p('C')),
+        unchecked(p('B3')),
+        checked(p('C')),
       ),
     );
     editor.add(from);
