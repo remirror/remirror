@@ -146,8 +146,9 @@ export function indentList(tr: Transaction): boolean {
  * @internal
  */
 export const indentListCommand: CommandFunction = ({ tr, dispatch }) => {
-  indentList(tr);
-  dispatch?.(tr);
+  if (indentList(tr)) {
+    dispatch?.(tr);
+  }
 
   // always return `true` since we don't want the browser to handle the keyboard event.
   return true;

@@ -1,5 +1,6 @@
 import { CreateExtensionPlugin, environment, KeyBindings, PlainExtension } from '@remirror/core';
 
+import { dedentListCommand } from './list-command-dedent';
 import { indentListCommand } from './list-command-indent';
 import { listBackspace, maybeJoinList, sharedLiftListItem } from './list-commands';
 
@@ -14,7 +15,7 @@ export class ListItemSharedExtension extends PlainExtension {
   createKeymap(): KeyBindings {
     const pcKeymap = {
       Tab: indentListCommand,
-      'Shift-Tab': sharedLiftListItem(this.store.extensions),
+      'Shift-Tab': dedentListCommand,
       Backspace: listBackspace,
       'Mod-Backspace': listBackspace,
     };

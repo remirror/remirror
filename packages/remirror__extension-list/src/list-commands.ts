@@ -230,6 +230,8 @@ function getAllListItemNames(allExtensions: AnyExtension[]): string[] {
 
 /**
  * Get all list item node types from current selection. Sort from deepest to root.
+ *
+ * @deprecated
  */
 function getOrderedListItemTypes(
   listItemNames: string[],
@@ -255,7 +257,7 @@ function getOrderedListItemTypes(
  * inner list. Use this function if you get multiple list item nodes in your
  * schema.
  *
- * @deprecated use `indentList` instead
+ * @deprecated use `indentList` instead.
  */
 export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFunction {
   const listItemNames = getAllListItemNames(allExtensions);
@@ -278,6 +280,8 @@ export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFuncti
 /**
  * Create a command to lift the list item around the selection up intoa wrapping
  * list. Use this function if you get multiple list item nodes in your schema.
+ *
+ * @deprecated use `dedentList` instead.
  */
 export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFunction {
   const listItemNames = getAllListItemNames(allExtensions);
