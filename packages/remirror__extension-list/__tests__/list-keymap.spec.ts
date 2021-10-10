@@ -369,8 +369,8 @@ describe('Tab and Shift-Tab', () => {
     );
     to = doc(
       tl(
-        checked(
-          p('A'),
+        checked(p('A')),
+        unchecked(
           p('B'),
           ol(
             li(p('C')), //
@@ -636,7 +636,7 @@ describe('Dedent', () => {
     );
   });
 
-  it('can dedent a list item from a mixed list', () => {
+  it('can dedent a list item from a mixed list (1)', () => {
     from = doc(
       ol(
         li(
@@ -660,6 +660,74 @@ describe('Dedent', () => {
             li(p('B3')), //
           ),
         ),
+        li(p('C')),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('can dedent a list item from a mixed list (2)', () => {
+    from = doc(
+      ol(
+        li(
+          p('A'),
+          ul(
+            li(p('B1')), //
+            li(p('B2<cursor>')), //
+            li(p('B3')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    to = doc(
+      ol(
+        li(
+          p('A'),
+          ul(
+            li(p('B1')), //
+          ),
+        ),
+        li(
+          p('B2'),
+          ul(
+            li(p('B3')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('can dedent a list item from a mixed list (3)', () => {
+    from = doc(
+      ol(
+        li(
+          p('A'),
+          ul(
+            li(p('B1')), //
+            li(p('B2')), //
+            li(p('B3<cursor>')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    to = doc(
+      ol(
+        li(
+          p('A'),
+          ul(
+            li(p('B1')), //
+            li(p('B2')), //
+          ),
+        ),
+        li(p('B3')),
         li(p('C')),
       ),
     );
