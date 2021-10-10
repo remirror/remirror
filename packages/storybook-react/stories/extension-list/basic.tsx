@@ -78,12 +78,8 @@ const content = html`
           <li><p>A</p></li>
           <li><p>B</p></li>
           <li><p>C</p></li>
-          <li><p>D</p></li>
         </ul>
-        <ol>
-          <li><p>X</p></li>
-          <li><p>Y</p></li>
-        </ol>
+        <p>Sibling</p>
       </li>
     </ul>
   </div>

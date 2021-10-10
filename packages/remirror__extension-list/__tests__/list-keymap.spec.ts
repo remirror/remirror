@@ -760,7 +760,7 @@ describe('Dedent', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
-  it.only('can indent siblings of selected items', () => {
+  it('can indent siblings of selected items', () => {
     from = doc(
       ol(
         li(
@@ -796,24 +796,24 @@ describe('Dedent', () => {
 
   it.only('can indent siblings of selected list', () => {
     from = doc(
-      ol(
+      ul(
         li(
           p('Root'),
-          taskList(
-            unchecked(p('A')),
-            unchecked(p('<start>B')),
-            unchecked(p('<end>C')), //
+          ul(
+            li(p('A')),
+            li(p('<start>B')),
+            li(p('<end>C')), //
           ),
           p('Sibling'),
         ),
       ),
     );
     to = doc(
-      ol(
+      ul(
         li(
           p('Root'),
-          taskList(
-            unchecked(p('A')), //
+          ul(
+            li(p('A')), //
           ),
         ),
         li(p('B')),
@@ -826,6 +826,38 @@ describe('Dedent', () => {
     editor.add(from);
     editor.press('Shift-Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+
+    // from = doc(
+    //   ol(
+    //     li(
+    //       p('Root'),
+    //       taskList(
+    //         unchecked(p('A')),
+    //         unchecked(p('<start>B')),
+    //         unchecked(p('<end>C')), //
+    //       ),
+    //       p('Sibling'),
+    //     ),
+    //   ),
+    // );
+    // to = doc(
+    //   ol(
+    //     li(
+    //       p('Root'),
+    //       taskList(
+    //         unchecked(p('A')), //
+    //       ),
+    //     ),
+    //     li(p('B')),
+    //     li(
+    //       p('C'),
+    //       p('Sibling'), //
+    //     ),
+    //   ),
+    // );
+    // editor.add(from);
+    // editor.press('Shift-Tab');
+    // expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 });
 

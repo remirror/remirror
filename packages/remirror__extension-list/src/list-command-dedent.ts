@@ -78,21 +78,23 @@ function indentSiblingsOfList(
     // There are sibling nodes after the selected list, which must become
     // children of the last item
 
-    // console.log('=======');
-    // printPos(tr.doc, endOfSelectedList);
-    // printPos(tr.doc, endOfParentListItem - 1);
-    // printPos(tr.doc, endOfSelectedList);
-    // printPos(tr.doc, endOfParentListItem);
-    // console.log('=======');
+    console.log('=======');
+    printPos(tr.doc, endOfSelectedList);
+    printPos(tr.doc, endOfParentListItem);
+    console.log('=======');
 
     tr.step(
       new ReplaceAroundStep(
-        endOfSelectedList + 1,
-        endOfParentListItem,
+        endOfSelectedList,
+        endOfParentListItem + 1,
         endOfSelectedList + 1,
         endOfParentListItem,
         // new Slice(Fragment.from(lastSelectedItem.type.create(null)), 2, 0),
-        new Slice(Fragment.empty, 0, 0),
+        new Slice(
+          Fragment.from(selectedList.type.create(null, lastSelectedItem.type.create(null))),
+          2,
+          0,
+        ),
         0,
         true,
       ),
