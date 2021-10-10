@@ -73,17 +73,16 @@ const content = html`
   >
     <ul>
       <li>
-        <p>A</p>
-        <ul data-task-list="">
-          <li class="remirror-list-item-with-custom-mark" data-checked="" data-task-list-item="">
-            <span contenteditable="false" class="remirror-list-item-marker-container"
-              ><input type="checkbox" class="remirror-list-item-checkbox" contenteditable="false"
-            /></span>
-            <div><p>B</p></div>
-          </li>
+        <p>Root</p>
+        <ul>
+          <li><p>A</p></li>
+          <li><p>B</p></li>
+          <li><p>C</p></li>
+          <li><p>D</p></li>
         </ul>
         <ol>
-          <li><p>C</p></li>
+          <li><p>X</p></li>
+          <li><p>Y</p></li>
         </ol>
       </li>
     </ul>
