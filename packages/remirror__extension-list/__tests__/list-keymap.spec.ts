@@ -1,4 +1,5 @@
 import { TaggedProsemirrorNode } from 'jest-remirror';
+import { bulletList } from '@remirror/pm/schema-list';
 
 import { setupListEditor } from './list-setup';
 
@@ -573,6 +574,98 @@ describe('Indent', () => {
     expect(editor.view.state.selection.content().content.toString()).toEqual(
       '<orderedList(listItem(bulletList(listItem(paragraph("B"), taskList(taskListItem(paragraph("C")), taskListItem(paragraph("D"))), orderedList(listItem(paragraph("E")))))))>',
     );
+  });
+});
+
+describe('Dedent', () => {
+  const { doc, p, ol, ul, li, taskList, unchecked, checked, editor } = setupListEditor();
+
+  let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
+
+  it('can dedent a ul list item', () => {
+    from = doc(
+      ul(
+        li(
+          p('A'),
+          ul(
+            li(p('B<start>123<end>')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    to = doc(
+      ul(
+        li(p('A')),
+        li(p('B123')),
+        li(p('C')), //
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    expect(editor.view.state.selection.content().content.toString()).toEqual(
+      '<bulletList(listItem(paragraph("123")))>',
+    );
+  });
+
+  it('can dedent a task list item', () => {
+    from = doc(
+      taskList(
+        unchecked(
+          p('A'),
+          taskList(
+            checked(p('B<start>123<end>')), //
+          ),
+        ),
+        checked(p('C')),
+      ),
+    );
+    to = doc(
+      taskList(
+        unchecked(p('A')),
+        checked(p('B123')),
+        checked(p('C')), //
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    expect(editor.view.state.selection.content().content.toString()).toEqual(
+      '<taskList(taskListItem(paragraph("123")))>',
+    );
+  });
+
+  it.skip('can dedent a list item from a mixed list', () => {
+    from = doc(
+      ol(
+        li(
+          p('A'),
+          ul(
+            li(p('B1<cursor>')), //
+            li(p('B2')), //
+            li(p('B3')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    to = doc(
+      ol(
+        li(p('A')),
+        li(
+          p('B1'),
+          ul(
+            li(p('B2')), //
+            li(p('B3')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 });
 
