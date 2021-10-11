@@ -2,7 +2,7 @@ import { CreateExtensionPlugin, environment, KeyBindings, PlainExtension } from 
 
 import { dedentListCommand } from './list-command-dedent';
 import { indentListCommand } from './list-command-indent';
-import { listBackspace, maybeJoinList, sharedLiftListItem } from './list-commands';
+import { listBackspace, maybeJoinList } from './list-commands';
 
 /**
  * Provides some shared thing used by both `listItem` and `taskListItem`
