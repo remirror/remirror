@@ -419,7 +419,7 @@ export function wrapItems({
  *    <li>item A</li>
  *  </ul>
  *  <ol>
- *    <li>item B<!-- cursor --></li>
+ *    <li>item B<!-- cursor_start --></li>
  *    <li>item C<!-- cursor_end --></li>
  *  </ol>
  *  <ul>

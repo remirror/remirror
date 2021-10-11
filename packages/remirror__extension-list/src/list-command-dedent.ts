@@ -99,7 +99,7 @@ function changeItemsType(
 }
 
 /**
- * A helper function to dedent selected list items
+ * A helper function to dedent selected list items.
  *
  * @beta
  */

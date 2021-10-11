@@ -92,7 +92,7 @@ function sliceSelectedItems(doc: ProsemirrorNode, $to: ResolvedPos, range: NodeR
 }
 
 /**
- * A helper function to indent selected list items
+ * A helper function to indent selected list items.
  *
  * @beta
  */
