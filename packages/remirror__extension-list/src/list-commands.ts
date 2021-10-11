@@ -350,10 +350,8 @@ function deepChangeListType(
 
 /**
  * Wraps list items in `range` to a list.
- *
- * @internal
  */
-export function wrapItems({
+function wrapItems({
   listType,
   itemType,
   tr,
