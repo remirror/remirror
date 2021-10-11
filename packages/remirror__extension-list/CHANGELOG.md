@@ -1,5 +1,27 @@
 # @remirror/extension-list
 
+## 1.2.0
+
+> 2021-10-11
+
+### Minor Changes
+
+- Improved the behavior of increasing indentation in a list. Now unselected sub lists won't increase indentation when the user indent the parent list item.
+
+  Exported a new helper function `indentList`.
+
+  Deprecated `sharedSinkListItem`.
+
+* Improved the behavior of decreasing indentation in a list. A list item won't be able to lift out of list anymore when the user dedent it. Indenting across different types of lists is more consistent.
+
+  Exported a new helper function `dedentList`.
+
+  Deprecated `sharedLiftListItem`.
+
+### Patch Changes
+
+- Improve backspace behavior between two lists.
+
 ## 1.1.1
 
 > 2021-10-08

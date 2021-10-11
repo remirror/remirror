@@ -1,5 +1,28 @@
 # @remirror/react-editors
 
+## 0.1.17
+
+> 2021-10-11
+
+### Patch Changes
+
+- Improved the behavior of increasing indentation in a list. Now unselected sub lists won't increase indentation when the user indent the parent list item.
+
+  Exported a new helper function `indentList`.
+
+  Deprecated `sharedSinkListItem`.
+
+* Improved the behavior of decreasing indentation in a list. A list item won't be able to lift out of list anymore when the user dedent it. Indenting across different types of lists is more consistent.
+
+  Exported a new helper function `dedentList`.
+
+  Deprecated `sharedLiftListItem`.
+
+- Improve backspace behavior between two lists.
+
+- Updated dependencies []:
+  - remirror@1.0.31
+
 ## 0.1.16
 
 > 2021-10-08
