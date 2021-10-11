@@ -1,5 +1,5 @@
 import { CommandFunction, ProsemirrorNode } from '@remirror/pm';
-import { Fragment, NodeRange, NodeType, ResolvedPos, Slice } from '@remirror/pm/model';
+import { Fragment, NodeRange, NodeType, ResolvedPos, Schema, Slice } from '@remirror/pm/model';
 import { Transaction } from '@remirror/pm/state';
 import { ReplaceAroundStep } from '@remirror/pm/transform';
 
@@ -22,7 +22,7 @@ function indentSiblingsOfItems(
   range: NodeRange,
   parentList: ProsemirrorNode,
   parentItem: ProsemirrorNode,
-) {
+): NodeRange {
   const selectedList = range.parent;
   const lastSelectedItem = range.parent.child(range.endIndex - 1);
 
@@ -63,7 +63,7 @@ function indentSiblingsOfList(
   range: NodeRange,
   parentList: ProsemirrorNode,
   parentItem: ProsemirrorNode,
-) {
+): NodeRange {
   const selectedList = range.parent;
   const lastSelectedItem = range.parent.child(range.endIndex - 1);
 
@@ -83,22 +83,81 @@ function indentSiblingsOfList(
     printPos(tr.doc, endOfParentListItem);
     console.log('=======');
 
-    tr.step(
-      new ReplaceAroundStep(
-        endOfSelectedList,
-        endOfParentListItem + 1,
-        endOfSelectedList + 1,
-        endOfParentListItem,
-        // new Slice(Fragment.from(lastSelectedItem.type.create(null)), 2, 0),
-        new Slice(
-          Fragment.from(selectedList.type.create(null, lastSelectedItem.type.create(null))),
-          2,
-          0,
+    // tr.step(
+    //   new ReplaceAroundStep(
+    //     endOfSelectedList + 1,
+    //     endOfParentListItem + 1,
+    //     endOfSelectedList + 1,
+    //     endOfParentListItem,
+    //     // new Slice(Fragment.from(lastSelectedItem.type.create(null)), 2, 0),
+    //     new Slice(Fragment.from(lastSelectedItem.type.create(null)), 1, 0),
+    //     0,
+    //     true,
+    //   ),
+    // );
+
+    const schema: Schema = tr.doc.type.schema;
+
+    const beforeReplace = JSON.stringify(tr.doc.toJSON(), null, '\t');
+    // console.log('before replace:', beforeReplace);
+
+    const slice1 = new Slice(
+      Fragment.from(
+        lastSelectedItem.type.create(
+          null,
+          schema.nodes.paragraph?.create(null, schema.text('Sibling')),
         ),
-        0,
-        true,
       ),
+      1,
+      0,
     );
+
+    const slice2 = new Slice(
+      Fragment.from(
+        selectedList.type.create(
+          null,
+          lastSelectedItem.type.create(
+            null,
+            schema.nodes.paragraph?.create(null, schema.text('Sibling')),
+          ),
+        ),
+      ),
+      2,
+      0,
+    );
+
+    const doc = tr.doc;
+
+    const replace = (from, to, openStart, openEnd) => {
+      const newDoc = doc.replace(
+        from,
+        to,
+        new Slice(
+          Fragment.from(
+            selectedList.type.create(
+              null,
+              lastSelectedItem.type.create(
+                null,
+                schema.nodes.paragraph?.create(null, schema.text('Sibling')),
+              ),
+            ),
+          ),
+          openStart,
+          openEnd,
+        ),
+      );
+      console.log(JSON.stringify(newDoc.toJSON(), null, 4));
+      return newDoc;
+    };
+
+    // debugger;
+
+    tr = tr.replace(endOfSelectedList - 1, endOfParentListItem, slice2);
+
+    const afterReplace = JSON.stringify(tr.doc.toJSON(), null, 4);
+    // console.log('after replace:', afterReplace);
+    console.log('after replace:', beforeReplace === afterReplace);
+    return new NodeRange(tr.selection.$from, tr.selection.$to, range.depth);
   }
 
   return range;
@@ -157,6 +216,11 @@ export function dedentList(tr: Transaction): boolean {
     // console.log('target2:', range2, target2);
     return true;
   }
+
+  console.log('target:', target);
+  console.log('range:', range);
+
+  console.log('doc:', JSON.stringify(tr.doc.toJSON(), null, 4));
 
   tr.lift(range, target);
 
