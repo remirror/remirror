@@ -92,7 +92,7 @@ function sliceSelectedItems(doc: ProsemirrorNode, $to: ResolvedPos, range: NodeR
 }
 
 /**
- * A helper function to indent selected list item
+ * A helper function to indent selected list items.
  *
  * @beta
  */
@@ -146,8 +146,9 @@ export function indentList(tr: Transaction): boolean {
  * @internal
  */
 export const indentListCommand: CommandFunction = ({ tr, dispatch }) => {
-  indentList(tr);
-  dispatch?.(tr);
+  if (indentList(tr)) {
+    dispatch?.(tr.scrollIntoView());
+  }
 
   // always return `true` since we don't want the browser to handle the keyboard event.
   return true;

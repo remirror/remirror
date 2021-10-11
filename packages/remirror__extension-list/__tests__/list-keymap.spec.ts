@@ -168,7 +168,7 @@ describe('Tab and Shift-Tab', () => {
 
   let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
 
-  it.skip('never lifts a list item out of the list', () => {
+  it('never lifts a list item out of the list', () => {
     from = doc(
       ul(
         li(p('hello')),
@@ -349,7 +349,7 @@ describe('Tab and Shift-Tab', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(from);
   });
 
-  it.skip('lift mixed list items', () => {
+  it('lift mixed list items', () => {
     from = doc(
       tl(
         checked(
@@ -368,8 +368,8 @@ describe('Tab and Shift-Tab', () => {
     );
     to = doc(
       tl(
-        checked(
-          p('A'),
+        checked(p('A')),
+        unchecked(
           p('B'),
           ol(
             li(p('C')), //
@@ -380,7 +380,7 @@ describe('Tab and Shift-Tab', () => {
     );
     editor.add(from);
     editor.press('Shift-Tab');
-    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 });
 
@@ -573,6 +573,290 @@ describe('Indent', () => {
     expect(editor.view.state.selection.content().content.toString()).toEqual(
       '<orderedList(listItem(bulletList(listItem(paragraph("B"), taskList(taskListItem(paragraph("C")), taskListItem(paragraph("D"))), orderedList(listItem(paragraph("E")))))))>',
     );
+  });
+});
+
+describe('Dedent', () => {
+  const { doc, p, ol, ul, li, taskList, unchecked, checked, editor } = setupListEditor();
+
+  let from: TaggedProsemirrorNode, to: TaggedProsemirrorNode;
+
+  it('can dedent a ul list item', () => {
+    from = doc(
+      ul(
+        li(
+          p('A'),
+          ul(
+            li(p('B<start>123<end>')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    to = doc(
+      ul(
+        li(p('A')),
+        li(p('B123')),
+        li(p('C')), //
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    expect(editor.view.state.selection.content().content.toString()).toEqual(
+      '<bulletList(listItem(paragraph("123")))>',
+    );
+  });
+
+  it('can dedent a task list item', () => {
+    from = doc(
+      taskList(
+        unchecked(
+          p('A'),
+          taskList(
+            checked(p('B<start>123<end>')), //
+          ),
+        ),
+        checked(p('C')),
+      ),
+    );
+    to = doc(
+      taskList(
+        unchecked(p('A')),
+        checked(p('B123')),
+        checked(p('C')), //
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    expect(editor.view.state.selection.content().content.toString()).toEqual(
+      '<taskList(taskListItem(paragraph("123")))>',
+    );
+  });
+
+  it('can dedent a list item from a mixed list (1)', () => {
+    from = doc(
+      ol(
+        li(
+          p('A'),
+          ul(
+            li(p('B1<cursor>')), //
+            li(p('B2')), //
+            li(p('B3')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    to = doc(
+      ol(
+        li(p('A')),
+        li(
+          p('B1'),
+          ul(
+            li(p('B2')), //
+            li(p('B3')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('can dedent a list item from a mixed list (2)', () => {
+    from = doc(
+      ul(
+        li(
+          p('A'),
+          taskList(
+            checked(p('B1')), //
+            checked(p('B2<cursor>')), //
+            checked(p('B3')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    to = doc(
+      ul(
+        li(
+          p('A'),
+          taskList(
+            checked(p('B1')), //
+          ),
+        ),
+        li(
+          p('B2'),
+          taskList(
+            checked(p('B3')), //
+          ),
+        ),
+        li(p('C')),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('can dedent a list item from a mixed list (3)', () => {
+    from = doc(
+      taskList(
+        checked(
+          p('A'),
+          ul(
+            li(p('B1')), //
+            li(p('B2')), //
+            li(p('B3<cursor>')), //
+          ),
+        ),
+        checked(p('C')),
+      ),
+    );
+    to = doc(
+      taskList(
+        checked(
+          p('A'),
+          ul(
+            li(p('B1')), //
+            li(p('B2')), //
+          ),
+        ),
+        unchecked(p('B3')),
+        checked(p('C')),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('can dedent a list item with different type of sibling', () => {
+    from = doc(
+      ul(
+        li(
+          p('A'),
+          ul(li(p('B<cursor>'))), //
+          ol(li(p('C'))),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        li(p('A')),
+        li(
+          p('B'),
+          ol(li(p('C'))), //
+        ),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('can indent siblings of selected items', () => {
+    from = doc(
+      ol(
+        li(
+          p('Root'),
+          taskList(
+            unchecked(p('A')),
+            unchecked(p('<start>B')),
+            unchecked(p('<end>C')),
+            unchecked(p('D')), //
+          ),
+        ),
+      ),
+    );
+    to = doc(
+      ol(
+        li(
+          p('Root'),
+          taskList(
+            unchecked(p('A')), //
+          ),
+        ),
+        li(p('B')),
+        li(
+          p('C'),
+          taskList(unchecked(p('D'))), //
+        ),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  it('can indent siblings of selected list', () => {
+    from = doc(
+      ul(
+        li(
+          p('Root'),
+          ul(
+            li(p('A')),
+            li(p('<start>B')),
+            li(p('<end>C')), //
+          ),
+          p('Sibling'),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        li(
+          p('Root'),
+          ul(
+            li(p('A')), //
+          ),
+        ),
+        li(p('B')),
+        li(
+          p('C'),
+          p('Sibling'), //
+        ),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+
+    from = doc(
+      ol(
+        li(
+          p('Root'),
+          taskList(
+            unchecked(p('A')),
+            unchecked(p('<start>B')),
+            unchecked(p('<end>C')), //
+          ),
+          ul(li(p('Sibling'))),
+        ),
+      ),
+    );
+    to = doc(
+      ol(
+        li(
+          p('Root'),
+          taskList(
+            unchecked(p('A')), //
+          ),
+        ),
+        li(p('B')),
+        li(
+          p('C'), //
+          ul(li(p('Sibling'))),
+        ),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 });
 

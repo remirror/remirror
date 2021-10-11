@@ -14,7 +14,7 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 import { joinBackward } from '@remirror/pm/commands';
-import { Fragment, NodeRange, Slice } from '@remirror/pm/model';
+import { Fragment, NodeRange, ResolvedPos, Slice } from '@remirror/pm/model';
 import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
 import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
@@ -230,6 +230,8 @@ function getAllListItemNames(allExtensions: AnyExtension[]): string[] {
 
 /**
  * Get all list item node types from current selection. Sort from deepest to root.
+ *
+ * @deprecated
  */
 function getOrderedListItemTypes(
   listItemNames: string[],
@@ -255,7 +257,7 @@ function getOrderedListItemTypes(
  * inner list. Use this function if you get multiple list item nodes in your
  * schema.
  *
- * @deprecated use `indentList` instead
+ * @deprecated use `indentList` instead.
  */
 export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFunction {
   const listItemNames = getAllListItemNames(allExtensions);
@@ -278,6 +280,8 @@ export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFuncti
 /**
  * Create a command to lift the list item around the selection up intoa wrapping
  * list. Use this function if you get multiple list item nodes in your schema.
+ *
+ * @deprecated use `dedentList` instead.
  */
 export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFunction {
   const listItemNames = getAllListItemNames(allExtensions);
@@ -345,59 +349,20 @@ function deepChangeListType(
 }
 
 /**
- * Wrap existed list items to a new type of list, which only containes these list items.
- *
- * @remarks
- *
- * @example
- *
- * Here is some pseudo-code to show the purpose of this function:
- *
- * before:
- *
- * ```html
- *  <ul>
- *    <li>item A</li>
- *    <li>item B<!-- cursor --></li>
- *    <li>item C</li>
- *    <li>item D</li>
- *  </ul>
- * ```
- *
- * after:
- *
- * ```html
- *  <ul>
- *    <li>item A</li>
- *  </ul>
- *  <ol>
- *    <li>item B<!-- cursor --></li>
- *  </ol>
- *  <ul>
- *    <li>item C</li>
- *    <li>item D</li>
- *  </ul>
- * ```
- *
- * @alpha
+ * Wraps list items in `range` to a list.
  */
-export function wrapSelectedItems({
+function wrapItems({
   listType,
   itemType,
   tr,
+  range,
 }: {
   listType: NodeType;
   itemType: NodeType;
   tr: Transaction;
+  range: NodeRange;
 }): boolean {
-  const range = calculateItemRange(tr.selection);
-
-  if (!range) {
-    return false;
-  }
-
   const oldList = range.parent;
-  const atStart = range.startIndex === 0;
 
   // A slice that contianes all selected list items
   const slice: Slice = tr.doc.slice(range.start, range.end);
@@ -421,13 +386,74 @@ export function wrapSelectedItems({
 
   const newList = listType.createChecked(null, newItems);
 
-  const { $from, $to } = tr.selection;
   tr.replaceRange(range.start, range.end, new Slice(Fragment.from(newList), 0, 0));
+  return true;
+}
+
+/**
+ * Wraps existed list items to a new type of list, which only containes these list items.
+ *
+ * @remarks
+ *
+ * @example
+ *
+ * Here is some pseudo-code to show the purpose of this function:
+ *
+ * before:
+ *
+ * ```html
+ *  <ul>
+ *    <li>item A</li>
+ *    <li>item B<!-- cursor_start --></li>
+ *    <li>item C<!-- cursor_end --></li>
+ *    <li>item D</li>
+ *  </ul>
+ * ```
+ *
+ * after:
+ *
+ * ```html
+ *  <ul>
+ *    <li>item A</li>
+ *  </ul>
+ *  <ol>
+ *    <li>item B<!-- cursor_start --></li>
+ *    <li>item C<!-- cursor_end --></li>
+ *  </ol>
+ *  <ul>
+ *    <li>item D</li>
+ *  </ul>
+ * ```
+ *
+ * @alpha
+ */
+export function wrapSelectedItems({
+  listType,
+  itemType,
+  tr,
+}: {
+  listType: NodeType;
+  itemType: NodeType;
+  tr: Transaction;
+}): boolean {
+  const range = calculateItemRange(tr.selection);
+
+  if (!range) {
+    return false;
+  }
+
+  const atStart = range.startIndex === 0;
+
+  const { from, to } = tr.selection;
+
+  if (!wrapItems({ listType, itemType, tr, range })) {
+    return false;
+  }
 
   tr.setSelection(
     new TextSelection(
-      tr.doc.resolve(atStart ? $from.pos : $from.pos + 2),
-      tr.doc.resolve(atStart ? $to.pos : $to.pos + 2),
+      tr.doc.resolve(atStart ? from : from + 2),
+      tr.doc.resolve(atStart ? to : to + 2),
     ),
   );
   tr.scrollIntoView();
@@ -499,9 +525,8 @@ function liftOutOfList(state: EditorState, dispatch: DispatchFunction, range: No
   return true;
 }
 
-export function maybeJoinList(tr: Transaction): boolean {
-  const { $from, to } = tr.selection;
-  const sharedDepth = $from.sharedDepth(to);
+export function maybeJoinList(tr: Transaction, $pos?: ResolvedPos): boolean {
+  const $from = $pos || tr.selection.$from;
 
   let joinable: number[] = [];
   let index: number;
@@ -509,25 +534,25 @@ export function maybeJoinList(tr: Transaction): boolean {
   let before: ProsemirrorNode | null | undefined;
   let after: ProsemirrorNode | null | undefined;
 
-  for (let depth = sharedDepth; depth >= 0; depth--) {
+  for (let depth = $from.depth; depth >= 0; depth--) {
     parent = $from.node(depth);
 
     // join backward
     index = $from.index(depth);
-    after = parent.maybeChild(index);
     before = parent.maybeChild(index - 1);
+    after = parent.maybeChild(index);
 
-    if (after && before && after.type.name === before.type.name && isList(before.type)) {
+    if (before && after && before.type.name === after.type.name && isListNode(before)) {
       const pos = $from.before(depth + 1);
       joinable.push(pos);
     }
 
     // join forward
     index = $from.indexAfter(depth);
-    after = parent.maybeChild(index);
     before = parent.maybeChild(index - 1);
+    after = parent.maybeChild(index);
 
-    if (after && before && after.type.name === before.type.name && isList(before.type)) {
+    if (before && after && before.type.name === after.type.name && isListNode(before)) {
       const pos = $from.after(depth + 1);
       joinable.push(pos);
     }
