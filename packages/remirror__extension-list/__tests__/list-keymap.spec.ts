@@ -1,5 +1,4 @@
 import { TaggedProsemirrorNode } from 'jest-remirror';
-import { bulletList } from '@remirror/pm/schema-list';
 
 import { setupListEditor } from './list-setup';
 
