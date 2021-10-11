@@ -794,7 +794,7 @@ describe('Dedent', () => {
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 
-  it.only('can indent siblings of selected list', () => {
+  it('can indent siblings of selected list', () => {
     from = doc(
       ul(
         li(
