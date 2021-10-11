@@ -827,37 +827,37 @@ describe('Dedent', () => {
     editor.press('Shift-Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
 
-    // from = doc(
-    //   ol(
-    //     li(
-    //       p('Root'),
-    //       taskList(
-    //         unchecked(p('A')),
-    //         unchecked(p('<start>B')),
-    //         unchecked(p('<end>C')), //
-    //       ),
-    //       p('Sibling'),
-    //     ),
-    //   ),
-    // );
-    // to = doc(
-    //   ol(
-    //     li(
-    //       p('Root'),
-    //       taskList(
-    //         unchecked(p('A')), //
-    //       ),
-    //     ),
-    //     li(p('B')),
-    //     li(
-    //       p('C'),
-    //       p('Sibling'), //
-    //     ),
-    //   ),
-    // );
-    // editor.add(from);
-    // editor.press('Shift-Tab');
-    // expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+    from = doc(
+      ol(
+        li(
+          p('Root'),
+          taskList(
+            unchecked(p('A')),
+            unchecked(p('<start>B')),
+            unchecked(p('<end>C')), //
+          ),
+          ul(li(p('Sibling'))),
+        ),
+      ),
+    );
+    to = doc(
+      ol(
+        li(
+          p('Root'),
+          taskList(
+            unchecked(p('A')), //
+          ),
+        ),
+        li(p('B')),
+        li(
+          p('C'), //
+          ul(li(p('Sibling'))),
+        ),
+      ),
+    );
+    editor.add(from);
+    editor.press('Shift-Tab');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 });
 
