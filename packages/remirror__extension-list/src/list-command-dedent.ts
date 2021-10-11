@@ -83,80 +83,83 @@ function indentSiblingsOfList(
     printPos(tr.doc, endOfParentListItem);
     console.log('=======');
 
-    // tr.step(
-    //   new ReplaceAroundStep(
-    //     endOfSelectedList + 1,
-    //     endOfParentListItem + 1,
-    //     endOfSelectedList + 1,
-    //     endOfParentListItem,
-    //     // new Slice(Fragment.from(lastSelectedItem.type.create(null)), 2, 0),
-    //     new Slice(Fragment.from(lastSelectedItem.type.create(null)), 1, 0),
-    //     0,
-    //     true,
+    tr.step(
+      new ReplaceAroundStep(
+        endOfSelectedList - 1,
+        endOfParentListItem,
+        endOfSelectedList + 1,
+        endOfParentListItem,
+        new Slice(
+          Fragment.from(selectedList.type.create(null, lastSelectedItem.type.create(null))),
+          2,
+          0,
+        ),
+        0,
+        true,
+      ),
+    );
+
+    // const schema: Schema = tr.doc.type.schema;
+
+    // const beforeReplace = JSON.stringify(tr.doc.toJSON(), null, '\t');
+    // // console.log('before replace:', beforeReplace);
+
+    // const slice1 = new Slice(
+    //   Fragment.from(
+    //     lastSelectedItem.type.create(
+    //       null,
+    //       schema.nodes.paragraph?.create(null, schema.text('Sibling')),
+    //     ),
     //   ),
+    //   1,
+    //   0,
     // );
 
-    const schema: Schema = tr.doc.type.schema;
+    // const slice2 = new Slice(
+    //   Fragment.from(
+    //     selectedList.type.create(
+    //       null,
+    //       lastSelectedItem.type.create(
+    //         null,
+    //         schema.nodes.paragraph?.create(null, schema.text('Sibling')),
+    //       ),
+    //     ),
+    //   ),
+    //   2,
+    //   0,
+    // );
 
-    const beforeReplace = JSON.stringify(tr.doc.toJSON(), null, '\t');
-    // console.log('before replace:', beforeReplace);
+    // const doc = tr.doc;
 
-    const slice1 = new Slice(
-      Fragment.from(
-        lastSelectedItem.type.create(
-          null,
-          schema.nodes.paragraph?.create(null, schema.text('Sibling')),
-        ),
-      ),
-      1,
-      0,
-    );
+    // const replace = (from, to, openStart, openEnd) => {
+    //   const newDoc = doc.replace(
+    //     from,
+    //     to,
+    //     new Slice(
+    //       Fragment.from(
+    //         selectedList.type.create(
+    //           null,
+    //           lastSelectedItem.type.create(
+    //             null,
+    //             schema.nodes.paragraph?.create(null, schema.text('Sibling')),
+    //           ),
+    //         ),
+    //       ),
+    //       openStart,
+    //       openEnd,
+    //     ),
+    //   );
+    //   console.log(JSON.stringify(newDoc.toJSON(), null, 4));
+    //   return newDoc;
+    // };
 
-    const slice2 = new Slice(
-      Fragment.from(
-        selectedList.type.create(
-          null,
-          lastSelectedItem.type.create(
-            null,
-            schema.nodes.paragraph?.create(null, schema.text('Sibling')),
-          ),
-        ),
-      ),
-      2,
-      0,
-    );
+    // // debugger;
 
-    const doc = tr.doc;
+    // // tr = tr.replace(endOfSelectedList - 1, endOfParentListItem, slice2);
 
-    const replace = (from, to, openStart, openEnd) => {
-      const newDoc = doc.replace(
-        from,
-        to,
-        new Slice(
-          Fragment.from(
-            selectedList.type.create(
-              null,
-              lastSelectedItem.type.create(
-                null,
-                schema.nodes.paragraph?.create(null, schema.text('Sibling')),
-              ),
-            ),
-          ),
-          openStart,
-          openEnd,
-        ),
-      );
-      console.log(JSON.stringify(newDoc.toJSON(), null, 4));
-      return newDoc;
-    };
-
-    // debugger;
-
-    tr = tr.replace(endOfSelectedList - 1, endOfParentListItem, slice2);
-
-    const afterReplace = JSON.stringify(tr.doc.toJSON(), null, 4);
-    // console.log('after replace:', afterReplace);
-    console.log('after replace:', beforeReplace === afterReplace);
+    // const afterReplace = JSON.stringify(tr.doc.toJSON(), null, 4);
+    // // console.log('after replace:', afterReplace);
+    // console.log('after replace:', beforeReplace === afterReplace);
     return new NodeRange(tr.selection.$from, tr.selection.$to, range.depth);
   }
 
