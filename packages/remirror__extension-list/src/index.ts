@@ -1,4 +1,5 @@
 export { BulletListExtension } from './bullet-list-extension';
+export { dedentList } from './list-command-dedent';
 export { indentList } from './list-command-indent';
 export {
   sharedLiftListItem,
