@@ -3,7 +3,7 @@ hide_title: true
 title: Frequently asked questions
 ---
 
-import ReplaceContentPreserveHistory from '../website/extension-examples/react/replace-content-preserve-history'; import ReplaceContentAndClearHistory from '../website/extension-examples/react/replace-content-and-clear-history';
+import ReplaceContentPreserveHistory from '../website/extension-examples/react/replace-content-preserve-history'; import ReplaceContentAndClearHistory from '../website/extension-examples/react/replace-content-and-clear-history'; import ReplaceContentImperative from '../website/extension-examples/react/replace-content-imperative';
 
 # Frequently Asked Questions
 
@@ -44,3 +44,9 @@ Calling `setContent(...)` replaced the content and preserves the history:
 Calling `manager.view.updateState(...)` replaces the complete editor state, including the history:
 
 <ReplaceContentAndClearHistory />
+
+#### Outside editor context
+
+Use an imperative handle if you want to replace the content from outside the editor context:
+
+<ReplaceContentImperative />

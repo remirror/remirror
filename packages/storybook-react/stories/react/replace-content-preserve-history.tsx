@@ -8,7 +8,7 @@ const DOC = {
       content: [
         {
           type: 'text',
-          text: 'New content',
+          text: 'Undo via Ctrl+Z will restore old content',
         },
       ],
     },
