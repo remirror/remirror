@@ -217,18 +217,6 @@ export type TransactionTransformer<Schema extends EditorSchema = EditorSchema> =
   state: EditorState<Schema>,
 ) => Transaction<Schema>;
 
-export interface TransactionLifecycle {
-  /**
-   * Transform the transaction before the command is run.
-   */
-  before: TransactionTransformer;
-
-  /**
-   * Transform the transaction after everything else but before dispatch.
-   */
-  after: TransactionTransformer;
-}
-
 export interface RangeProps {
   /**
    * The from/to interface.
