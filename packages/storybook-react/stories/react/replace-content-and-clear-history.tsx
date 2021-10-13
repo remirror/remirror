@@ -9,7 +9,7 @@ const DOC = {
       content: [
         {
           type: 'text',
-          text: 'New content',
+          text: `Undo via Ctrl+Z won't restore old content`,
         },
       ],
     },
