@@ -137,6 +137,11 @@ const docs = [
     collapsed: true,
     items: getApiItems(),
   },
+  {
+    type: 'link',
+    label: 'Storybook',
+    href: 'https://remirror.vercel.app/',
+  },
 ];
 
 exports.docs = docs;
