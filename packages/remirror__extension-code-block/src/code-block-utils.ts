@@ -252,6 +252,7 @@ export function codeBlockToDOM(node: ProsemirrorNode, extra: ApplySchemaAttribut
   }
 
   const attributes = {
+    spellcheck: 'false',
     ...extraAttrs,
     class: cx(extraAttrs.class, `language-${language}`),
   };
