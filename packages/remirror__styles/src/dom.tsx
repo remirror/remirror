@@ -3852,7 +3852,7 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     left: 0;
     width: 100%;
     height: 12px;
-    background: 'red';
+    background: red;
     display: block;
   }
   .remirror-editor.ProseMirror table .grip-column:hover::after {

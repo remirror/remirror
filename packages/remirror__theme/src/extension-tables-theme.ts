@@ -40,7 +40,7 @@ export const EDITOR = css`
           left: 0;
           width: 100%;
           height: 12px;
-          background: 'red';
+          background: red;
           display: block;
         }
 

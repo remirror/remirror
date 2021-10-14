@@ -143,61 +143,95 @@ export class TableExtension extends BaseTableExtension {
   createDecorations(state: EditorState): DecorationSet {
     const { doc, selection } = state;
     const decorations: Decoration[] = [];
-    const cells = getCellsInColumn(0)(selection);
+    {
+      const cells = getCellsInColumn(0)(selection);
 
-    if (cells) {
-      cells.forEach(({ pos }, index) => {
-        if (index === 0) {
+      if (cells) {
+        cells.forEach(({ pos }, index) => {
+          if (index === 0) {
+            decorations.push(
+              Decoration.widget(pos + 1, () => {
+                let className = 'grip-table';
+                const selected = isTableSelected(selection);
+
+                if (selected) {
+                  className += ' selected';
+                }
+
+                const grip = document.createElement('a');
+                grip.className = className;
+                grip.addEventListener('mousedown', (event) => {
+                  event.preventDefault();
+                  // this.options.onSelectTable(state);
+                  console.log('table is selected');
+                });
+                return grip;
+              }),
+            );
+          }
+
           decorations.push(
             Decoration.widget(pos + 1, () => {
-              let className = 'grip-table';
-              const selected = isTableSelected(selection);
+              const rowSelected = isRowSelected(index)(selection);
 
-              if (selected) {
+              let className = 'grip-row';
+
+              if (rowSelected) {
                 className += ' selected';
+              }
+
+              if (index === 0) {
+                className += ' first';
+              }
+
+              if (index === cells.length - 1) {
+                className += ' last';
               }
 
               const grip = document.createElement('a');
               grip.className = className;
               grip.addEventListener('mousedown', (event) => {
                 event.preventDefault();
-                // this.options.onSelectTable(state);
-                console.log('table is selected');
+                // this.options.onSelectRow(index, state);
+                console.log('row is selected');
               });
               return grip;
             }),
           );
-        }
+        });
+      }
+    }
+    {
+      const cells = getCellsInRow(0)(selection);
 
-        decorations.push(
-          Decoration.widget(pos + 1, () => {
-            const rowSelected = isRowSelected(index)(selection);
+      if (cells) {
+        cells.forEach(({ pos }, index) => {
+          decorations.push(
+            Decoration.widget(pos + 1, () => {
+              const colSelected = isColumnSelected(index)(selection);
+              let className = 'grip-column';
 
-            let className = 'grip-row';
+              if (colSelected) {
+                className += ' selected';
+              }
 
-            if (rowSelected) {
-              className += ' selected';
-            }
+              if (index === 0) {
+                className += ' first';
+              } else if (index === cells.length - 1) {
+                className += ' last';
+              }
 
-            if (index === 0) {
-              className += ' first';
-            }
-
-            if (index === cells.length - 1) {
-              className += ' last';
-            }
-
-            const grip = document.createElement('a');
-            grip.className = className;
-            grip.addEventListener('mousedown', (event) => {
-              event.preventDefault();
-              // this.options.onSelectRow(index, state);
-              console.log('row is selected');
-            });
-            return grip;
-          }),
-        );
-      });
+              const grip = document.createElement('a');
+              grip.className = className;
+              grip.addEventListener('mousedown', (event) => {
+                event.preventDefault();
+                // this.options.onSelectColumn(index, state);
+              });
+              return grip;
+            }),
+          );
+        });
+      }
     }
 
     return DecorationSet.create(doc, decorations);
@@ -349,7 +383,6 @@ function getCellsInColumn(columnIndex: number | number[]) {
     if (table) {
       const map = TableMap.get(table.node);
       const indexes = Array.isArray(columnIndex) ? columnIndex : [columnIndex];
-
       const cells: Array<{ pos: number; start: number; node: ProsemirrorNode }> = [];
 
       for (const index of indexes) {
@@ -359,6 +392,43 @@ function getCellsInColumn(columnIndex: number | number[]) {
             right: index + 1,
             top: 0,
             bottom: map.height,
+          });
+
+          for (const cellPos of cellPositions) {
+            const node = table.node.nodeAt(cellPos);
+            const pos = cellPos + table.start;
+            invariant(node, {
+              code: ErrorConstant.INTERNAL,
+              message: `unable to find a table cell node at position ${pos}`,
+            });
+            cells.push({ pos, start: pos + 1, node });
+          }
+        }
+      }
+
+      return cells;
+    }
+
+    return [];
+  };
+}
+
+function getCellsInRow(rowIndex: number | number[]) {
+  return function (selection: Selection) {
+    const table = findParentNodeOfType({ selection, types: 'table' });
+
+    if (table) {
+      const map = TableMap.get(table.node);
+      const indexes = Array.isArray(rowIndex) ? rowIndex : [rowIndex];
+      const cells: Array<{ pos: number; start: number; node: ProsemirrorNode }> = [];
+
+      for (const index of indexes) {
+        if (index >= 0 && index <= map.height - 1) {
+          const cellPositions = map.cellsInRect({
+            left: 0,
+            right: map.width,
+            top: index,
+            bottom: index + 1,
           });
 
           for (const cellPos of cellPositions) {
@@ -437,4 +507,20 @@ function isTableSelected(selection: Selection) {
   }
 
   return false;
+}
+
+function isColumnSelected(columnIndex: number) {
+  return function (selection: Selection) {
+    if (isCellSelection(selection)) {
+      const map = TableMap.get(selection.$anchorCell.node(-1));
+      return isRectSelected({
+        left: columnIndex,
+        right: columnIndex + 1,
+        top: 0,
+        bottom: map.height,
+      })(selection);
+    }
+
+    return false;
+  };
 }
