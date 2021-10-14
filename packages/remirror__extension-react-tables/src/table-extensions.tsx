@@ -165,6 +165,14 @@ export class TableExtension extends BaseTableExtension {
                   // this.options.onSelectTable(state);
                   console.log('table is selected');
                 });
+                grip.addEventListener('mouseover', (event) => {
+                  event.preventDefault();
+                  console.log('table mouseover');
+                });
+                grip.addEventListener('mouseout', (event) => {
+                  event.preventDefault();
+                  console.log('table mouseout');
+                });
                 return grip;
               }),
             );
@@ -194,6 +202,14 @@ export class TableExtension extends BaseTableExtension {
                 event.preventDefault();
                 // this.options.onSelectRow(index, state);
                 console.log('row is selected');
+              });
+              grip.addEventListener('mouseover', (event) => {
+                event.preventDefault();
+                console.log('row mouseover');
+              });
+              grip.addEventListener('mouseout', (event) => {
+                event.preventDefault();
+                console.log('row mouseout');
               });
               return grip;
             }),
@@ -226,6 +242,15 @@ export class TableExtension extends BaseTableExtension {
               grip.addEventListener('mousedown', (event) => {
                 event.preventDefault();
                 // this.options.onSelectColumn(index, state);
+                console.log('col mousedown');
+              });
+              grip.addEventListener('mouseover', (event) => {
+                event.preventDefault();
+                console.log('col mouseover');
+              });
+              grip.addEventListener('mouseout', (event) => {
+                event.preventDefault();
+                console.log('col mouseout');
               });
               return grip;
             }),
