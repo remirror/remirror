@@ -1,5 +1,13 @@
 # @remirror/extension-code
 
+## 1.0.7
+
+> 2021-10-14
+
+### Patch Changes
+
+- Disable spellcheck in code and codeBlock.
+
 ## 1.0.6
 
 > 2021-10-01

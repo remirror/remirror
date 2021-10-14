@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.18
+
+> 2021-10-14
+
+### Patch Changes
+
+- Disable spellcheck in code and codeBlock.
+
+- Updated dependencies []:
+  - remirror@1.0.32
+
 ## 0.1.17
 
 > 2021-10-11
