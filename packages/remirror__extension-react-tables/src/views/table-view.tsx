@@ -91,9 +91,9 @@ export class TableView<Schema extends EditorSchema = EditorSchema> implements No
   private render() {
     this.renderTable();
 
-    if (!this.attrs().isControllersInjected) {
-      return;
-    }
+    // if (!this.attrs().isControllersInjected) {
+    //   return;
+    // }
 
     this.renderInsertButton();
   }

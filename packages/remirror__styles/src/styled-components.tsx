@@ -3890,7 +3890,66 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     border-collapse: collapse;
     table-layout: fixed;
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
+    margin-left: 40px;
+    margin-top: 40px;
+  }
+  /* usage of ::after for all of the table grips works around a bug in
+       * prosemirror-tables that causes Safari to hang when selecting a cell
+       * in an empty table:
+       * https://github.com/ProseMirror/prosemirror/issues/947 */
+  .remirror-editor.ProseMirror table .grip-column::after {
+    content: '';
+    cursor: pointer;
+    position: absolute;
+    top: -16px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: 'red';
+    display: block;
+  }
+  .remirror-editor.ProseMirror table .grip-column:hover::after {
+    background: yellow;
+  }
+  .remirror-editor.ProseMirror table .grip-column.selected::after {
+    background: green;
+  }
+  .remirror-editor.ProseMirror table .grip-row::after {
+    content: '';
+    cursor: pointer;
+    position: absolute;
+    left: -16px;
+    top: 0;
+    height: 100%;
+    width: 12px;
+    background: red;
+    border-color: red;
+    display: block;
+  }
+  .remirror-editor.ProseMirror table .grip-row:hover::after {
+    background: red;
+  }
+  .remirror-editor.ProseMirror table .grip-row.selected::after {
+    background: red;
+  }
+  .remirror-editor.ProseMirror table .grip-table::after {
+    content: '';
+    cursor: pointer;
+    background: red;
+    width: 13px;
+    height: 13px;
+    border: 2px solid red;
+    position: absolute;
+    top: -18px;
+    left: -18px;
+    display: block;
+  }
+  .remirror-editor.ProseMirror table .grip-table:hover::after {
+    background: red;
+  }
+  .remirror-editor.ProseMirror table .grip-table.selected::after {
+    background: red;
   }
   .remirror-editor.ProseMirror td,
   .remirror-editor.ProseMirror th {
