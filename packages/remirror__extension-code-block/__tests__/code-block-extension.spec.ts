@@ -41,7 +41,7 @@ describe('schema', () => {
 
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(codeBlock(content))).toBe(
-      `<pre class="language-${attributes.language}"><code data-code-block-language="${attributes.language}">${content}</code></pre>`,
+      `<pre spellcheck="false" class="language-${attributes.language}"><code data-code-block-language="${attributes.language}">${content}</code></pre>`,
     );
   });
 
