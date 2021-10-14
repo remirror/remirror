@@ -3929,7 +3929,7 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     display: block;
   }
   .remirror-editor.ProseMirror table .grip-row:hover::after {
-    background: red;
+    background: yellow;
   }
   .remirror-editor.ProseMirror table .grip-row.selected::after {
     background: red;
@@ -3947,7 +3947,7 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     display: block;
   }
   .remirror-editor.ProseMirror table .grip-table:hover::after {
-    background: red;
+    background: yellow;
   }
   .remirror-editor.ProseMirror table .grip-table.selected::after {
     background: red;

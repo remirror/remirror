@@ -3837,7 +3837,7 @@ button:active .remirror-menu-pane-shortcut,
   display: block;
 }
 .remirror-editor.ProseMirror table .grip-row:hover::after {
-  background: red;
+  background: yellow;
 }
 .remirror-editor.ProseMirror table .grip-row.selected::after {
   background: red;
@@ -3855,7 +3855,7 @@ button:active .remirror-menu-pane-shortcut,
   display: block;
 }
 .remirror-editor.ProseMirror table .grip-table:hover::after {
-  background: red;
+  background: yellow;
 }
 .remirror-editor.ProseMirror table .grip-table.selected::after {
   background: red;

@@ -67,7 +67,7 @@ export const EDITOR = css`
         }
 
         &:hover::after {
-          background: red;
+          background: yellow;
         }
         &.selected::after {
           background: red;
@@ -89,7 +89,7 @@ export const EDITOR = css`
         }
 
         &:hover::after {
-          background: red;
+          background: yellow;
         }
         &.selected::after {
           background: red;
