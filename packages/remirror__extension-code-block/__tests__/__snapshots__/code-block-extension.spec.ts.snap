@@ -164,7 +164,9 @@ a
 `;
 
 exports[`plugin updates when multiple changes occur 1`] = `
-<pre class="language-typescript">
+<pre spellcheck="false"
+     class="language-typescript"
+>
   <code data-code-block-language="typescript">
     <span class="token keyword">
       const
@@ -181,7 +183,9 @@ exports[`plugin updates when multiple changes occur 1`] = `
     </span>
   </code>
 </pre>
-<pre class="language-typescript">
+<pre spellcheck="false"
+     class="language-typescript"
+>
   <code data-code-block-language="typescript">
     <span class="token keyword">
       let
@@ -195,7 +199,9 @@ exports[`plugin updates when multiple changes occur 1`] = `
 `;
 
 exports[`plugin updates when multiple changes occur 2`] = `
-<pre class="language-typescript">
+<pre spellcheck="false"
+     class="language-typescript"
+>
   <code data-code-block-language="typescript">
     <span class="token keyword">
       const
@@ -212,7 +218,9 @@ exports[`plugin updates when multiple changes occur 2`] = `
     </span>
   </code>
 </pre>
-<pre class="language-typescript">
+<pre spellcheck="false"
+     class="language-typescript"
+>
   <code data-code-block-language="typescript">
     <span class="token keyword">
       let

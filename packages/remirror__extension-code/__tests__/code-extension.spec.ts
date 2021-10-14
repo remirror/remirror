@@ -21,7 +21,9 @@ describe('schema', () => {
     const expected = 'Brilliant';
     const { p, code } = codeTester();
 
-    expect(prosemirrorNodeToHtml(p(code(expected)))).toBe(`<p><code>${expected}</code></p>`);
+    expect(prosemirrorNodeToHtml(p(code(expected)))).toBe(
+      `<p><code spellcheck="false">${expected}</code></p>`,
+    );
   });
 
   it('can parse content', () => {
@@ -97,7 +99,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         Hello
-        <code>
+        <code spellcheck="false">
           <span class="selection">
             code
           </span>
