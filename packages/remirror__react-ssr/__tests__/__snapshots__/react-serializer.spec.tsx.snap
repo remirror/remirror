@@ -3,6 +3,7 @@
 exports[`ReactSerializer #serializeNode serializes a codeBlock node with nested array from \`toDOM\` call 1`] = `
 <pre
   className="language-markup"
+  spellCheck="false"
 >
   <code
     data-code-block-language="markup"
