@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-code",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Adds the inline code `mark` to your text editor.",
   "keywords": [
     "remirror",

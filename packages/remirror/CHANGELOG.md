@@ -1,5 +1,18 @@
 # remirror
 
+## 1.0.32
+
+> 2021-10-14
+
+### Patch Changes
+
+- Disable spellcheck in code and codeBlock.
+
+- Updated dependencies []:
+  - @remirror/extension-code@1.0.7
+  - @remirror/extension-code-block@1.0.9
+  - @remirror/preset-wysiwyg@1.1.9
+
 ## 1.0.31
 
 > 2021-10-11

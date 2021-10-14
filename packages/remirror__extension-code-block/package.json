@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-code-block",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Unleash the inner coder with code blocks for your remirror editor.",
   "keywords": [
     "remirror",
