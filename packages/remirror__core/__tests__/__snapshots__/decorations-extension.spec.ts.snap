@@ -59,11 +59,7 @@ exports[`options persistentSelectionClass uses provided configuration ({}) 1`] =
      class="ProseMirror remirror-editor"
 >
   <p>
-    Som
-    <span class="selection">
-      e tex
-    </span>
-    t
+    Some text
   </p>
 </div>
 `;
