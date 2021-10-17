@@ -24,9 +24,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection"
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           important
         </span>
         note
@@ -51,9 +49,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection"
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           important
         </span>
         note
@@ -67,8 +63,8 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection updated"
-              style="background: rgb(215, 215, 255);"
+        <span style="background: rgb(215, 215, 255);"
+              class="updated"
         >
           important
         </span>
@@ -121,9 +117,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection"
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           important
         </span>
         note
@@ -134,13 +128,7 @@ describe('commands', () => {
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        An
-        <span class="selection"
-              style
-        >
-          important
-        </span>
-        note
+        An important note
       </p>
     `);
   });
@@ -163,9 +151,7 @@ describe('commands', () => {
     // Pre-condition
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection"
-              style="background: red;"
-        >
+        <span style="background: red;">
           Hello
         </span>
       </p>
@@ -176,9 +162,7 @@ describe('commands', () => {
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection"
-              style="background: green;"
-        >
+        <span style="background: green;">
           Hello
         </span>
       </p>
@@ -215,9 +199,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           important
         </span>
         note awesome!
@@ -300,7 +282,7 @@ describe('styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection custom-annotation"
+        <span class="custom-annotation"
               style="background: rgb(215, 215, 255);"
         >
           Hello
@@ -501,17 +483,15 @@ describe('custom annotations', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           Hell
         </span>
-        <span class="selection custom"
+        <span class="custom"
               style="background: rgb(175, 175, 255);"
         >
           o
         </span>
-        <span class="selection custom"
+        <span class="custom"
               style="background: rgb(215, 215, 255);"
         >
           my frie
@@ -545,9 +525,7 @@ describe('custom styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection"
-              style="background: red;"
-        >
+        <span style="background: red;">
           Hello
         </span>
         my friend
