@@ -349,7 +349,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
   createDecorations(state: EditorState): DecorationSet {
     const { persistentSelectionClass } = this.options;
 
-    // Only show the selection decoration when the view doesn't have hocus.
+    // Only show the selection decoration when the view doesn't have focus.
     // Notice that we need to listen to the focus/blur DOM events to make
     // it work since the focus state is not stored in `EditorState`.
     if (
