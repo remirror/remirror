@@ -19,4 +19,4 @@ function Editor(): JSX.Element {
 }
 ```
 
-The persistent selection will only be enable if the editor loses focus.
+In the interest of performance, the persistent selection will only be displayed if the editor loses focus.
