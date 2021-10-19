@@ -2,7 +2,7 @@
 '@remirror/core': minor
 ---
 
-**BREAKING CHANGE**: The option `persistentSelectionClass` for `DecorationsExtension` is now `undefined` by default. It needs to be explicitly configured as `'selection'` to enable persistent selection.
+**BREAKING CHANGE**: The option `persistentSelectionClass` for `DecorationsExtension` is now `undefined` by default. It needs to be explicitly configured to enable persistent selection. You can set it as `'selection'` to match the default styles provided by `@remirror/styles`.
 
 If you are using `@remirror/react`, you can enable it like this:
 
