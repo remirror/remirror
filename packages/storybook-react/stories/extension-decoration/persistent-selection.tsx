@@ -22,7 +22,7 @@ function PersistentSelection(): JSX.Element {
     <>
       <p>
         Try to selected some text in one editor and then select some text in another editor, you
-        will find the selection is persisten in the previous editor!
+        will find the selection is persisted in the previous editor!
       </p>
       <Editor initialText={'Hello world'} />
       <Editor initialText={'Hello world'} />
