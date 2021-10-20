@@ -1,8 +1,6 @@
 ---
 '@remirror/extension-file': minor
 '@remirror/core': patch
-'storybook-react': patch
-'website': patch
 ---
 
 Exposes a function `hasUploadingFile` to determine if file uploads are currently taking place.
