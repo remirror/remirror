@@ -1,5 +1,41 @@
 # @remirror/extension-bold
 
+## 1.0.7
+
+> 2021-10-20
+
+### Patch Changes
+
+- Exposes a function `hasUploadingFile` to determine if file uploads are currently taking place.
+
+  When a user drops a file, a file node is created without a href attribute - this attribute is set once the file has uploaded.
+
+  However if a user saves content, before uploads are complete we can be left with "broken" file nodes. This exposed function allows us to check if file uploads are still in progress.
+
+  Addtionally file nodes now render valid DOM attributes. Rather than `href` and `error`, they now render `data-url` and `data-error`.
+
+* **BREAKING CHANGE**: The option `persistentSelectionClass` for `DecorationsExtension` is now `undefined` by default. It needs to be explicitly configured to enable persistent selection. You can set it as `'selection'` to match the default styles provided by `@remirror/styles`.
+
+  If you are using `@remirror/react`, you can enable it like this:
+
+  ```tsx
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+
+  function Editor(): JSX.Element {
+    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} />
+      </ThemeProvider>
+    );
+  }
+  ```
+
+  In the interest of performance, the persistent selection will only be displayed if the editor loses focus.
+
+* Updated dependencies []:
+  - @remirror/core@1.2.0
+
 ## 1.0.6
 
 > 2021-10-01
