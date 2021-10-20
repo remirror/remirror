@@ -13,7 +13,7 @@ exports[`\`autoRender\` renders at the end 1`] = `
        class="ProseMirror remirror-editor"
   >
     <p class="remirror-is-empty">
-      <br>
+      <br class="ProseMirror-trailingBreak">
     </p>
   </div>
 </div>
@@ -29,7 +29,7 @@ exports[`\`autoRender\` renders at the start 1`] = `
        class="ProseMirror remirror-editor"
   >
     <p class="remirror-is-empty">
-      <br>
+      <br class="ProseMirror-trailingBreak">
     </p>
   </div>
 </div>
@@ -48,7 +48,7 @@ exports[`\`autoRender\` renders at the start: when set to true 1`] = `
        class="ProseMirror remirror-editor"
   >
     <p class="remirror-is-empty">
-      <br>
+      <br class="ProseMirror-trailingBreak">
     </p>
   </div>
 </div>
@@ -67,7 +67,7 @@ exports[`\`autoRender\` renders by default with no children 1`] = `
        class="ProseMirror remirror-editor"
   >
     <p class="remirror-is-empty">
-      <br>
+      <br class="ProseMirror-trailingBreak">
     </p>
   </div>
 </div>
