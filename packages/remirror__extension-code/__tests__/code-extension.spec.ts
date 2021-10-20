@@ -100,9 +100,7 @@ describe('commands', () => {
       <p>
         Hello
         <code spellcheck="false">
-          <span class="selection">
-            code
-          </span>
+          code
         </code>
         , lets dance.
       </p>
@@ -113,11 +111,7 @@ describe('commands', () => {
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        Hello
-        <span class="selection">
-          code
-        </span>
-        , lets dance.
+        Hello code, lets dance.
       </p>
     `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello code, lets dance.')));

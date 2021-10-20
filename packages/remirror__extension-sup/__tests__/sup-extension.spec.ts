@@ -21,9 +21,7 @@ describe('commands', () => {
       <p>
         Hello
         <sup>
-          <span class="selection">
-            sup
-          </span>
+          sup
         </sup>
         , lets dance.
       </p>
@@ -33,11 +31,7 @@ describe('commands', () => {
     commands.toggleSuperscript();
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        Hello
-        <span class="selection">
-          sup
-        </span>
-        , lets dance.
+        Hello sup, lets dance.
       </p>
     `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello sup, lets dance.')));

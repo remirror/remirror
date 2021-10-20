@@ -2,6 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import {
   ApplySchemaAttributes,
+  DecorationsExtension,
   extension,
   ExtensionTag,
   htmlToProsemirrorNode,
@@ -711,7 +712,10 @@ describe('spanning', () => {
       attributeMarks: { link },
       nodes: { doc, p },
       view,
-    } = renderEditor([new LinkExtension()]);
+    } = renderEditor([
+      new LinkExtension(),
+      new DecorationsExtension({ persistentSelectionClass: 'selection' }),
+    ]);
 
     const linkMark = link({ href: '//test.com' })('a <start>long<end> link');
     add(doc(p('Paragraph with ', linkMark, ' and text')));

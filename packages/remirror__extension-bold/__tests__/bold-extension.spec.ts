@@ -138,9 +138,7 @@ describe('commands', () => {
       <p>
         Hello
         <strong>
-          <span class="selection">
-            friend
-          </span>
+          friend
         </strong>
         , lets dance.
       </p>
@@ -153,11 +151,7 @@ describe('commands', () => {
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        Hello
-        <span class="selection">
-          friend
-        </span>
-        , lets dance.
+        Hello friend, lets dance.
       </p>
     `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello friend, lets dance.')));
@@ -172,10 +166,7 @@ describe('commands', () => {
         <strong>
           Hello
         </strong>
-        <span class="selection">
-          friend
-        </span>
-        , lets dance.
+        friend, lets dance.
       </p>
     `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p(bold('Hello'), ' friend, lets dance.')));
