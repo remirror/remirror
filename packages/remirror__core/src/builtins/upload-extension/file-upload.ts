@@ -1,4 +1,4 @@
-import { isNumber } from '@remirror/core-helpers';
+import { isNumber, uniqueId } from '@remirror/core-helpers';
 import { ProsemirrorNode } from '@remirror/pm';
 import { NodeType } from '@remirror/pm/model';
 import { EditorView } from '@remirror/pm/view';
@@ -45,8 +45,7 @@ export function uploadFile<NodeAttributes extends AbstractNodeAttributes>({
   fileType,
   uploadHandler,
 }: UploadFileProps<NodeAttributes>): void {
-  // A fresh object to act as the ID for this upload.
-  const id = {};
+  const id = uniqueId('file-placeholder-');
 
   const context = createUploadContext();
 
@@ -120,7 +119,7 @@ function createFilePlaceholder<NodeAttributes extends AbstractNodeAttributes>({
   fileType,
   uploadHandler,
 }: {
-  id: unknown;
+  id: string;
   context: UploadContext;
   file: File;
   pos: number | undefined;
@@ -158,7 +157,7 @@ function onFileLoaded<NodeAttributes extends AbstractNodeAttributes>({
   fileType,
   view,
 }: {
-  id: unknown;
+  id: string;
   attrs: NodeAttributes;
   fileType: NodeType;
   view: EditorView;
