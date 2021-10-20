@@ -1,9 +1,9 @@
 import { ComponentType } from 'react';
 import {
   ApplySchemaAttributes,
-  DOMCompatibleAttributes,
   command,
   CommandFunction,
+  DOMCompatibleAttributes,
   extension,
   ExtensionPriority,
   ExtensionTag,

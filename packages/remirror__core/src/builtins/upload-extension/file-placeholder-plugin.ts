@@ -67,6 +67,22 @@ export function findUploadPlaceholderPayload(state: EditorState, id: string): an
   return payloads.get(id);
 }
 
+/**
+ * Determine if there are active file uploads in the given state
+ *
+ * @remarks
+ * This utility is useful to warn users there are still active uploads before
+ * exiting or saving a document.
+ *
+ * @see https://remirror.vercel.app/?path=/story/extensions-file--with-upload-incomplete-warning
+ *
+ * @param state - the editor state
+ */
+export function hasUploadingFile(state: EditorState): boolean {
+  const placeholderCount = key.getState(state)?.payloads?.size ?? 0;
+  return placeholderCount > 0;
+}
+
 export function setUploadPlaceholderAction(
   tr: Transaction,
   action: PlaceholderPluginAction,

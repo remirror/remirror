@@ -1,6 +1,7 @@
 export {
   findUploadPlaceholderPayload,
   findUploadPlaceholderPos,
+  hasUploadingFile,
   setUploadPlaceholderAction,
 } from './file-placeholder-plugin';
 export type { UploadFileHandler, UploadPlaceholderPayload } from './file-upload';
