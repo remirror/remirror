@@ -45,23 +45,23 @@ exports[`dynamic schema attributes should dynamically add attributes when config
 >
   <h1>
     This is a heading
-    <br>
+    <br class="ProseMirror-trailingBreak">
   </h1>
   <p id="1">
     Welcome to the
     <strong id="1">
       bold experiment
     </strong>
-    <br>
+    <br class="ProseMirror-trailingBreak">
   </p>
   <p id="2">
-    <br>
+    <br class="ProseMirror-trailingBreak">
   </p>
   <p id="3">
-    <br>
+    <br class="ProseMirror-trailingBreak">
   </p>
   <p id="4">
-    <br>
+    <br class="ProseMirror-trailingBreak">
   </p>
 </div>
 `;

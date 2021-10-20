@@ -113,7 +113,7 @@ describe('useKeymaps', () => {
         test
       </p>
       <p>
-        <br>
+        <br class="ProseMirror-trailingBreak">
       </p>
     `);
   });

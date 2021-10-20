@@ -14,7 +14,9 @@ exports[`commands uploadImage can upload images 1`] = `
     <div
       class="remirror-image-loader placeholder ProseMirror-widget"
     />
-    <br />
+    <br
+      class="ProseMirror-trailingBreak"
+    />
   </p>
 </div>
 `;

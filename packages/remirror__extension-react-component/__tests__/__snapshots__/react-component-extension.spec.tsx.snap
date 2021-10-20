@@ -61,7 +61,9 @@ exports[`node views can be created from commands 1`] = `
   >
     contenthello world
 
-    <br />
+    <br
+      class="ProseMirror-trailingBreak"
+    />
   </p>
   <div
     class="test-node-view-wrapper"
