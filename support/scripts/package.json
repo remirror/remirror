@@ -67,7 +67,7 @@
     "@types/exit": "^0.1.31",
     "@types/fontkit": "^1.8.0",
     "@types/fs-extra": "^9.0.12",
-    "@types/inquirer": "^7.3.3",
+    "@types/inquirer": "^8.0.0",
     "@types/keyv": "^3.1.2",
     "@types/lodash.groupby": "^4.6.6",
     "@types/lodash.isequal": "^4.5.5",
