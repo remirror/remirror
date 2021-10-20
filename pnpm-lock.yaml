@@ -2543,7 +2543,7 @@ importers:
       '@types/exit': ^0.1.31
       '@types/fontkit': ^1.8.0
       '@types/fs-extra': ^9.0.12
-      '@types/inquirer': ^7.3.3
+      '@types/inquirer': ^8.0.0
       '@types/keyv': ^3.1.2
       '@types/lodash.groupby': ^4.6.6
       '@types/lodash.isequal': ^4.5.5
@@ -2616,7 +2616,7 @@ importers:
       '@types/exit': 0.1.31
       '@types/fontkit': 1.8.0
       '@types/fs-extra': 9.0.13
-      '@types/inquirer': 7.3.3
+      '@types/inquirer': 8.1.3
       '@types/keyv': 3.1.3
       '@types/lodash.groupby': 4.6.6
       '@types/lodash.isequal': 4.5.5
@@ -8925,11 +8925,11 @@ packages:
       '@types/prop-types': 15.7.4
     dev: true
 
-  /@types/inquirer/7.3.3:
-    resolution: {integrity: sha512-HhxyLejTHMfohAuhRun4csWigAMjXTmRyiJTU1Y/I1xmggikFMkOUoMQRlFm+zQcPEGHSs3io/0FAmNZf8EymQ==}
+  /@types/inquirer/8.1.3:
+    resolution: {integrity: sha512-AayK4ZL5ssPzR1OtnOLGAwpT0Dda3Xi/h1G0l1oJDNrowp7T1423q4Zb8/emr7tzRlCy4ssEri0LWVexAqHyKQ==}
     dependencies:
       '@types/through': 0.0.30
-      rxjs: 6.6.7
+      rxjs: 7.4.0
     dev: false
 
   /@types/is-function/1.0.1:
