@@ -194,7 +194,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-react-native": "^3.11.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "eslint-plugin-unicorn": "^35.0.0",
+    "eslint-plugin-unicorn": "^37.0.0",
     "esm": "^3.2.25",
     "expect-playwright": "^0.7.2",
     "husky": "^7.0.1",
