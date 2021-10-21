@@ -202,7 +202,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
     };
   }
 
-  private fileUploadHandler(files: File[]) {
+  private fileUploadFileHandler(files: File[]) {
     const { commands, chain } = this.store;
     const filesWithProgress: FileWithProgress[] = files.map((file, index) => ({
       file,
@@ -227,7 +227,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
       {
         type: 'file',
         regexp: /image/i,
-        fileHandler: ({ files }) => this.fileUploadHandler(files),
+        fileHandler: ({ files }) => this.fileUploadFileHandler(files),
       },
     ];
   }

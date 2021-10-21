@@ -24,9 +24,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection"
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           important
         </span>
         note
@@ -51,9 +49,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection"
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           important
         </span>
         note
@@ -67,8 +63,8 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection updated"
-              style="background: rgb(215, 215, 255);"
+        <span style="background: rgb(215, 215, 255);"
+              class="updated"
         >
           important
         </span>
@@ -121,9 +117,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class="selection"
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           important
         </span>
         note
@@ -134,13 +128,7 @@ describe('commands', () => {
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        An
-        <span class="selection"
-              style
-        >
-          important
-        </span>
-        note
+        An important note
       </p>
     `);
   });
@@ -163,9 +151,7 @@ describe('commands', () => {
     // Pre-condition
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection"
-              style="background: red;"
-        >
+        <span style="background: red;">
           Hello
         </span>
       </p>
@@ -176,9 +162,7 @@ describe('commands', () => {
 
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection"
-              style="background: green;"
-        >
+        <span style="background: green;">
           Hello
         </span>
       </p>
@@ -215,9 +199,7 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span class
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           important
         </span>
         note awesome!
@@ -300,7 +282,7 @@ describe('styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection custom-annotation"
+        <span class="custom-annotation"
               style="background: rgb(215, 215, 255);"
         >
           Hello
@@ -311,102 +293,149 @@ describe('styling', () => {
 });
 
 describe('helpers', () => {
-  it('#getAnnotations', () => {
-    const {
-      add,
-      helpers,
-      nodes: { p, doc },
-      commands,
-    } = create();
+  describe('#getAnnotations', () => {
+    it('default', () => {
+      const {
+        add,
+        helpers,
+        nodes: { p, doc },
+        commands,
+      } = create();
 
-    add(doc(p('<start>Hello<end>')));
-    commands.addAnnotation({ id: '1' });
+      add(doc(p('<start>Hello<end>')));
+      commands.addAnnotation({ id: '1' });
 
-    expect(helpers.getAnnotations()).toEqual([
-      {
-        id: '1',
-        from: 1,
-        to: 6,
-        text: 'Hello',
-      },
-    ]);
-  });
-
-  it('#getAnnotations gracefully handles misplaced annotations', () => {
-    const {
-      add,
-      helpers,
-      nodes: { p, doc },
-      commands,
-    } = create();
-
-    add(doc(p('Hello')));
-    commands.setAnnotations([
-      {
-        id: '1',
-        from: 100,
-        to: 110,
-      },
-    ]);
-
-    expect(helpers.getAnnotations()[0]?.text).toBeUndefined();
-  });
-
-  it('#getAnnotations concats multi-block content with configured blockseparator', () => {
-    const {
-      add,
-      helpers,
-      nodes: { p, doc },
-      commands,
-    } = create({
-      blockSeparator: '<NEWLINE>',
+      expect(helpers.getAnnotations()).toEqual([
+        {
+          id: '1',
+          from: 1,
+          to: 6,
+          text: 'Hello',
+        },
+      ]);
     });
 
-    add(doc(p('Hello'), p('World')));
-    commands.setAnnotations([
-      {
-        id: '1',
-        from: 1,
-        to: 13,
-      },
-    ]);
+    it('gracefully handles misplaced annotations', () => {
+      const {
+        add,
+        helpers,
+        nodes: { p, doc },
+        commands,
+      } = create();
 
-    expect(helpers.getAnnotations()[0]?.text).toEqual('Hello<NEWLINE>World');
+      add(doc(p('Hello')));
+      commands.setAnnotations([
+        {
+          id: '1',
+          from: 100,
+          to: 110,
+        },
+      ]);
+
+      expect(helpers.getAnnotations()[0]?.text).toBeUndefined();
+    });
+
+    it('concats multi-block content with configured blockseparator', () => {
+      const {
+        add,
+        helpers,
+        nodes: { p, doc },
+        commands,
+      } = create({
+        blockSeparator: '<NEWLINE>',
+      });
+
+      add(doc(p('Hello'), p('World')));
+      commands.setAnnotations([
+        {
+          id: '1',
+          from: 1,
+          to: 13,
+        },
+      ]);
+
+      expect(helpers.getAnnotations()[0]?.text).toEqual('Hello<NEWLINE>World');
+    });
   });
 
-  it('#getAnnotationsAt', () => {
-    const {
+  describe('#getAnnotationsAt', () => {
+    let {
       add,
       helpers,
       nodes: { p, doc },
       commands,
     } = create();
 
-    add(doc(p('An <start>important<end> note')));
-    commands.addAnnotation({ id: '1' });
+    beforeEach(() => {
+      ({
+        add,
+        helpers,
+        nodes: { p, doc },
+        commands,
+      } = create());
+      add(doc(p('An <start>important<end> note')));
+      commands.addAnnotation({ id: '1' });
+    });
 
-    expect(helpers.getAnnotationsAt(5)).toEqual([
-      {
-        id: '1',
-        from: 4,
-        to: 13,
-        text: 'important',
-      },
-    ]);
-  });
+    it('default', () => {
+      expect(helpers.getAnnotationsAt()).toEqual([
+        {
+          id: '1',
+          from: 4,
+          to: 13,
+          text: 'important',
+        },
+      ]);
+    });
 
-  it('#getAnnotationsAt (unannotated)', () => {
-    const {
-      add,
-      helpers,
-      nodes: { p, doc },
-      commands,
-    } = create();
+    it('pos', () => {
+      expect(helpers.getAnnotationsAt(5)).toEqual([
+        {
+          id: '1',
+          from: 4,
+          to: 13,
+          text: 'important',
+        },
+      ]);
+    });
 
-    add(doc(p('An <start>important<end> note')));
-    commands.addAnnotation({ id: '1' });
+    it('edge pos', () => {
+      expect(helpers.getAnnotationsAt(13)).toEqual([
+        {
+          id: '1',
+          from: 4,
+          to: 13,
+          text: 'important',
+        },
+      ]);
+    });
 
-    expect(helpers.getAnnotationsAt(2)).toEqual([]);
+    it('no annotation', () => {
+      expect(helpers.getAnnotationsAt(2)).toEqual([]);
+    });
+
+    it('default, includeEdges = false', () => {
+      expect(helpers.getAnnotationsAt(undefined, false)).toEqual([]);
+    });
+
+    it('pos, includeEdges = false', () => {
+      expect(helpers.getAnnotationsAt(5, false)).toEqual([
+        {
+          id: '1',
+          from: 4,
+          to: 13,
+          text: 'important',
+        },
+      ]);
+    });
+
+    it('edge pos, includeEdges = false', () => {
+      expect(helpers.getAnnotationsAt(13, false)).toEqual([]);
+    });
+
+    it('no annotation, includeEdges = false', () => {
+      expect(helpers.getAnnotationsAt(2, false)).toEqual([]);
+    });
   });
 });
 
@@ -454,17 +483,15 @@ describe('custom annotations', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class
-              style="background: rgb(215, 215, 255);"
-        >
+        <span style="background: rgb(215, 215, 255);">
           Hell
         </span>
-        <span class="selection custom"
+        <span class="custom"
               style="background: rgb(175, 175, 255);"
         >
           o
         </span>
-        <span class="selection custom"
+        <span class="custom"
               style="background: rgb(215, 215, 255);"
         >
           my frie
@@ -498,9 +525,7 @@ describe('custom styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="selection"
-              style="background: red;"
-        >
+        <span style="background: red;">
           Hello
         </span>
         my friend

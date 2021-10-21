@@ -1,9 +1,13 @@
 {
   "name": "@remirror/dev",
-  "version": "1.0.4",
+  "version": "1.0.12",
   "description": "Development utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__dev",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__dev"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -32,12 +36,12 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/react": "^1.0.4",
+    "@remirror/react": "^1.0.12",
     "@types/prosemirror-dev-tools": "^3.0.2",
     "prosemirror-dev-tools": "^3.1.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.2",
+    "@remirror/pm": "^1.0.3",
     "@testing-library/react": "^12.0.0",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
@@ -45,7 +49,7 @@
     "react-dom": "^17.0.2"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.2",
+    "@remirror/pm": "^1.0.3",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",

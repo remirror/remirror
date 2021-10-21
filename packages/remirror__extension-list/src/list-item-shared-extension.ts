@@ -1,9 +1,11 @@
-import { KeyBindings, PlainExtension } from '@remirror/core';
+import { CreateExtensionPlugin, environment, KeyBindings, PlainExtension } from '@remirror/core';
 
-import { sharedLiftListItem, sharedSinkListItem } from './list-commands';
+import { dedentListCommand } from './list-command-dedent';
+import { indentListCommand } from './list-command-indent';
+import { listBackspace, maybeJoinList } from './list-commands';
 
 /**
- * Provides some shared keymaps used by both `listItem` and `taskListItem`
+ * Provides some shared thing used by both `listItem` and `taskListItem`
  */
 export class ListItemSharedExtension extends PlainExtension {
   get name() {
@@ -11,9 +13,31 @@ export class ListItemSharedExtension extends PlainExtension {
   }
 
   createKeymap(): KeyBindings {
+    const pcKeymap = {
+      Tab: indentListCommand,
+      'Shift-Tab': dedentListCommand,
+      Backspace: listBackspace,
+      'Mod-Backspace': listBackspace,
+    };
+
+    if (environment.isMac) {
+      const macKeymap = {
+        'Ctrl-h': pcKeymap['Backspace'],
+        'Alt-Backspace': pcKeymap['Mod-Backspace'],
+      };
+      return { ...pcKeymap, ...macKeymap };
+    }
+
+    return pcKeymap;
+  }
+
+  createPlugin(): CreateExtensionPlugin {
     return {
-      Tab: sharedSinkListItem(this.store.extensions),
-      'Shift-Tab': sharedLiftListItem(this.store.extensions),
+      appendTransaction: (_transactions, _oldState, newState) => {
+        const tr = newState.tr;
+        const updated = maybeJoinList(tr);
+        return updated ? tr : null;
+      },
     };
   }
 }

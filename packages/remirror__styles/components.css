@@ -6,8 +6,8 @@
 }
 
 .remirror-button-active {
-  color: var(--rmr-color-primary-text);
-  background-color: var(--rmr-color-primary);
+  color: var(--rmr-color-primary-text) !important;
+  background-color: var(--rmr-color-primary) !important;
 }
 
 .remirror-button {
@@ -484,6 +484,8 @@ button:active .remirror-menu-pane-shortcut,
 .remirror-toolbar {
   display: flex;
   flex-direction: row;
+
+  overflow-y: auto;
 }
 
 .remirror-toolbar > *:not(:first-child) {

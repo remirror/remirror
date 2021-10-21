@@ -6,7 +6,11 @@
     "remirror"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/create-context-state",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/create-context-state",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/create-context-state"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"

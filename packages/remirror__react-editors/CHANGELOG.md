@@ -1,5 +1,323 @@
 # @remirror/react-editors
 
+## 0.1.19
+
+> 2021-10-20
+
+### Patch Changes
+
+- Exposes a function `hasUploadingFile` to determine if file uploads are currently taking place.
+
+  When a user drops a file, a file node is created without a href attribute - this attribute is set once the file has uploaded.
+
+  However if a user saves content, before uploads are complete we can be left with "broken" file nodes. This exposed function allows us to check if file uploads are still in progress.
+
+  Addtionally file nodes now render valid DOM attributes. Rather than `href` and `error`, they now render `data-url` and `data-error`.
+
+* **BREAKING CHANGE**: The option `persistentSelectionClass` for `DecorationsExtension` is now `undefined` by default. It needs to be explicitly configured to enable persistent selection. You can set it as `'selection'` to match the default styles provided by `@remirror/styles`.
+
+  If you are using `@remirror/react`, you can enable it like this:
+
+  ```tsx
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+
+  function Editor(): JSX.Element {
+    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} />
+      </ThemeProvider>
+    );
+  }
+  ```
+
+  In the interest of performance, the persistent selection will only be displayed if the editor loses focus.
+
+* Updated dependencies []:
+  - remirror@1.0.33
+  - @remirror/extension-react-tables@1.0.12
+  - @remirror/react@1.0.12
+
+## 0.1.18
+
+> 2021-10-14
+
+### Patch Changes
+
+- Disable spellcheck in code and codeBlock.
+
+- Updated dependencies []:
+  - remirror@1.0.32
+
+## 0.1.17
+
+> 2021-10-11
+
+### Patch Changes
+
+- Improved the behavior of increasing indentation in a list. Now unselected sub lists won't increase indentation when the user indent the parent list item.
+
+  Exported a new helper function `indentList`.
+
+  Deprecated `sharedSinkListItem`.
+
+* Improved the behavior of decreasing indentation in a list. A list item won't be able to lift out of list anymore when the user dedent it. Indenting across different types of lists is more consistent.
+
+  Exported a new helper function `dedentList`.
+
+  Deprecated `sharedLiftListItem`.
+
+- Improve backspace behavior between two lists.
+
+- Updated dependencies []:
+  - remirror@1.0.31
+
+## 0.1.16
+
+> 2021-10-08
+
+### Patch Changes
+
+- Fix a bug that causes incorrect indent when changing list type.
+
+- Updated dependencies []:
+  - remirror@1.0.30
+
+## 0.1.15
+
+> 2021-10-06
+
+### Patch Changes
+
+- Automagically join two lists with the same node type when there are siblings.
+
+* Allow input rules to convert task list to bullet list or ordered list.
+
+- Merge a patch from the upstream prosemirror-schema-list: https://github.com/ProseMirror/prosemirror-schema-list/commit/38867345f6d97d6793655ed77c16f1a7b18f6846
+
+  Make sure liftListItem doesn't crash when multiple items can't be merged.
+
+  Fix a crash in `liftListItem` that happens when list items that can't be merged are lifted together.
+
+- Updated dependencies []:
+  - remirror@1.0.29
+
+## 0.1.14
+
+> 2021-10-04
+
+### Patch Changes
+
+- Don't let the browser handle the Tab key in a list.
+
+- Updated dependencies []:
+  - remirror@1.0.28
+
+## 0.1.13
+
+> 2021-10-01
+
+### Patch Changes
+
+- Set correct label and icon for task list (#1157).
+
+* Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - remirror@1.0.27
+  - @remirror/extension-react-tables@1.0.11
+  - @remirror/react@1.0.11
+  - @remirror/core-helpers@1.0.2
+  - @remirror/pm@1.0.3
+
+## 0.1.12
+
+> 2021-09-29
+
+### Patch Changes
+
+- Add a flag to filter out edge matches from `getAnnotationAt` helper
+
+- Updated dependencies []:
+  - remirror@1.0.26
+
+## 0.1.11
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+* Improve the performance of large task lists and collapsible bullet lists.
+
+* Updated dependencies []:
+  - remirror@1.0.25
+  - @remirror/extension-react-tables@1.0.10
+  - @remirror/react@1.0.10
+
+## 0.1.10
+
+> 2021-09-15
+
+### Patch Changes
+
+- Fix a RangeError when calling list commands.
+
+- Updated dependencies []:
+  - remirror@1.0.24
+
+## 0.1.9
+
+> 2021-09-13
+
+### Patch Changes
+
+- feat: detect emails as links
+
+* Add a white border to the handle to make it more recognizable.
+
+* Updated dependencies []:
+  - remirror@1.0.23
+
+## 0.1.8
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+* Remove react dependency from wysiwyg-preset: An earlier commit upgraded the tables from simple to fancy tables. As a side effect, this had introduced a dependency from wysiwyg to the react-part of remirror. This change removes this dependency again.
+
+* Updated dependencies []:
+  - remirror@1.0.22
+  - @remirror/extension-react-tables@1.0.9
+  - @remirror/react@1.0.9
+
+## 0.1.7
+
+> 2021-09-04
+
+### Patch Changes
+
+- Don't discard node attributes when resizing.
+
+- Updated dependencies []:
+  - remirror@1.0.21
+
+## 0.1.6
+
+> 2021-09-02
+
+### Patch Changes
+
+- Fix an out of range error when there is nothing in the dropdown menu.
+
+- Updated dependencies []:
+  - remirror@1.0.20
+  - @remirror/react@1.0.8
+
+## 0.1.5
+
+> 2021-09-01
+
+### Patch Changes
+
+- Fix an issue that causes clicking a nested checkbox won't toggle its checked state.
+
+- Updated dependencies []:
+  - remirror@1.0.19
+
+## 0.1.4
+
+> 2021-09-01
+
+### Patch Changes
+
+- fix: task list wasn't available in wysiwyg editors
+
+* Don't create a node selection within the `toggleCheckboxChecked` command.
+
+* Updated dependencies []:
+  - remirror@1.0.18
+
+## 0.1.3
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/styles@1.1.2
+  - remirror@1.0.17
+  - @remirror/react@1.0.7
+
+## 0.1.2
+
+> 2021-08-30
+
+### Patch Changes
+
+- Don't require a `NodeSelection` to fire `toggleCheckboxChecked` anymore.
+
+- Updated dependencies []:
+  - remirror@1.0.16
+
+## 0.1.1
+
+> 2021-08-29
+
+### Patch Changes
+
+- Override the default browser style about the nested list, so that users can tell the different between two adjacent nested lists.
+
+* Improve commands `toggleBulletList`, `toggleOrderedList` and `toggleTaskList`. Now you can toggle list between bullet list, ordered list and task list.
+
+- Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
+* Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+* Updated dependencies []:
+  - @remirror/styles@1.1.1
+  - remirror@1.0.15
+  - @remirror/react@1.0.6
+
+## 0.1.0
+
+> 2021-08-26
+
+### Minor Changes
+
+- Add pre-packaged editors
+
+  Remirror makes building editors simple. Yet, some developers just want to have a out-of-the-box editor that can be plugged into their application. For this, we provide the pre-packaged editors.
+
+### Patch Changes
+
+- Add a `helpers` property to the `BasePositionerProps`. This will make it easier to use preconfigured helpers in the positioners.
+
+- Updated dependencies []:
+  - remirror@1.0.14
+  - @remirror/react@1.0.5
+
+## 0.0.14
+
+> 2021-08-25
+
+### Patch Changes
+
+- Fixes a bug that causes the editor to insert an empty task list when deleting all content in the editor. Closes #1163.
+
+- Updated dependencies []:
+  - remirror@1.0.13
+
 ## 0.0.13
 
 > 2021-08-22

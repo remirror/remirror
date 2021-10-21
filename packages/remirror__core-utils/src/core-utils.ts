@@ -1069,7 +1069,7 @@ export function createDocumentNode(props: CreateDocumentNodeProps): ProsemirrorN
   try {
     // This will throw an error for invalid content.
     return schema.nodeFromJSON(content);
-  } catch (error) {
+  } catch (error: any) {
     const details = getInvalidContent({ schema, error, json: content });
     const transformedContent = onError?.(details);
 

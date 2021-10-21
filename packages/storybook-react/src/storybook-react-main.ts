@@ -11,7 +11,7 @@ export const stories = glob.sync(baseDir('packages/storybook-react/stories/**/*.
   ignore: ['**/node_modules'],
 });
 
-export const addons = ['@storybook/addon-storysource'];
+export const addons = [];
 
 // Make the introduction the first story.
 stories.sort((a, b) => {

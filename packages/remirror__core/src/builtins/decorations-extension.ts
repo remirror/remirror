@@ -26,6 +26,9 @@ export interface DecorationsOptions {
    * This setting is for adding a decoration to the selected text and can be
    * used to preserve the marker for the selection when the editor loses focus.
    *
+   * You can set it as `'selection'` to match the default styles provided by
+   * `@remirror/styles`.
+   *
    * @default undefined
    */
   persistentSelectionClass?: AcceptUndefined<string | boolean>;
@@ -60,7 +63,7 @@ export interface DecorationsOptions {
  */
 @extension<DecorationsOptions>({
   defaultOptions: {
-    persistentSelectionClass: 'selection',
+    persistentSelectionClass: undefined,
     placeholderClassName: 'placeholder',
     placeholderNodeName: 'span',
   },
@@ -215,6 +218,26 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
 
           return decorationSet;
         },
+        handleDOMEvents: {
+          // Dispatch a transaction for focus/blur events so that the editor state
+          // can be refreshed.
+          //
+          // https://discuss.prosemirror.net/t/handling-focus-in-plugins/1981/2
+          blur: (view) => {
+            if (this.options.persistentSelectionClass) {
+              view.dispatch(view.state.tr.setMeta(persistentSelectionFocusKey, false));
+            }
+
+            return false;
+          },
+          focus: (view) => {
+            if (this.options.persistentSelectionClass) {
+              view.dispatch(view.state.tr.setMeta(persistentSelectionFocusKey, true));
+            }
+
+            return false;
+          },
+        },
       },
     };
   }
@@ -326,17 +349,21 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
   createDecorations(state: EditorState): DecorationSet {
     const { persistentSelectionClass } = this.options;
 
-    // A container for the gathered decorations.
-    let decorationSet = DecorationSet.empty;
-
-    if (persistentSelectionClass && !this.store.helpers.isInteracting?.()) {
-      // Add the selection decoration to the decorations array.
-      decorationSet = generatePersistentSelectionDecorations(state, decorationSet, {
-        class: isString(persistentSelectionClass) ? persistentSelectionClass : 'selection',
-      });
+    // Only show the selection decoration when the view doesn't have focus.
+    // Notice that we need to listen to the focus/blur DOM events to make
+    // it work since the focus state is not stored in `EditorState`.
+    if (
+      !persistentSelectionClass ||
+      this.store.view?.hasFocus() ||
+      this.store.helpers.isInteracting?.()
+    ) {
+      return DecorationSet.empty;
     }
 
-    return decorationSet;
+    // Add the selection decoration to the decorations array.
+    return generatePersistentSelectionDecorations(state, DecorationSet.empty, {
+      class: isString(persistentSelectionClass) ? persistentSelectionClass : 'selection',
+    });
   }
 
   /**
@@ -600,6 +627,8 @@ const DEFAULT_PLACEHOLDER_META: Required<DecorationPlaceholderMeta> = {
 };
 
 const __type = 'placeholderDecoration';
+
+const persistentSelectionFocusKey = 'persistentSelectionFocus';
 
 export interface DecorationPlaceholderMeta {
   /**

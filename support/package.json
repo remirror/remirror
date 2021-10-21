@@ -4,7 +4,11 @@
   "private": true,
   "description": "The support directory for the remirror monorepo",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/support",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/support",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "support"
+  },
   "main": "index.js",
   "dependencies": {
     "diffable-html": "^4.1.0"

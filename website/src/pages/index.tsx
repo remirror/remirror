@@ -5,6 +5,7 @@ import Layout from '@theme/Layout';
 import { ReactElement } from 'react';
 import { cx, isString } from 'remirror';
 
+import Editor from '../../examples/social';
 import { ExternalIcon } from '../components/external-icon';
 import styles from './styles.module.css';
 
@@ -20,22 +21,22 @@ const features = [
     ),
   },
   {
+    title: <>From Newbie to Pro</>,
+    imageUrl: 'img/banner-growing.svg',
+    description: (
+      <>
+        Designed to grow with your skill set. Start with the out-of-the-box editor. Customize with
+        components, React hooks, down to bare metal ProseMirror.
+      </>
+    ),
+  },
+  {
     title: <>Multi Platform</>,
     imageUrl: 'img/banner-multiplatform.svg',
     description: (
       <>
         Designed to run on all JavaScript enabled platforms. Build apps for NodeJS, for mobile, for
         desktop and for the browser.
-      </>
-    ),
-  },
-  {
-    title: <>Multi Framework</>,
-    imageUrl: 'img/banner-multiframework.svg',
-    description: (
-      <>
-        A multi-framework text editor. It supports <code>React</code>, the pure <code>dom</code> and
-        support is coming for <code>Angular</code>, <code>Svelte</code> and <code>Ember</code>.
       </>
     ),
   },
@@ -87,6 +88,14 @@ const BannerLaptop = () => {
   return <img src='/img/laptop.svg' className={styles.bannerLaptop} />;
 };
 
+const BannerSampleEditor = () => {
+  return (
+    <div className={styles.bannerSampleEditor}>
+      <Editor />
+    </div>
+  );
+};
+
 const Home = () => {
   const context = useDocusaurusContext();
   const { siteConfig } = context;
@@ -103,12 +112,11 @@ const Home = () => {
                 Documentation
               </Link>
               <Link className={cx(styles.getStarted)} href='https://remirror.vercel.app'>
-                Storybook <ExternalIcon />
-              </Link>
-              <Link className={cx(styles.getStarted)} href='https://github.com/remirror/remirror'>
-                GitHub <ExternalIcon />
+                Examples <ExternalIcon />
               </Link>
             </div>
+            <BannerSampleEditor />
+
             <BannerPhone />
           </div>
         </header>

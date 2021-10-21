@@ -1,0 +1,4 @@
+{
+  "main": "dist/scripts-generate-website-examples.cjs.js",
+  "module": "dist/scripts-generate-website-examples.esm.js"
+}

@@ -1,3 +1,7 @@
+import * as PMModel from 'prosemirror-model';
+import * as PMState from 'prosemirror-state';
+import * as PMView from 'prosemirror-view';
+
 /**
  * This [[`Suggester`]] interface defines all the options required to create a
  * suggestion within your editor.
@@ -820,16 +824,15 @@ export interface CompareMatchProps<Schema extends EditorSchema = EditorSchema> {
 /**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
-export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
-  { [Key in Keys]+?: Type[Key] };
+export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> & {
+  [Key in Keys]+?: Type[Key];
+};
 
-export type EditorSchema = import('prosemirror-model').Schema<string, string>;
+export type EditorSchema = PMModel.Schema<string, string>;
 
-export type ProsemirrorNode<Schema extends EditorSchema = EditorSchema> =
-  import('prosemirror-model').Node<Schema>;
+export type ProsemirrorNode<Schema extends EditorSchema = EditorSchema> = PMModel.Node<Schema>;
 
-export type Transaction<Schema extends EditorSchema = EditorSchema> =
-  import('prosemirror-state').Transaction<Schema>;
+export type Transaction<Schema extends EditorSchema = EditorSchema> = PMState.Transaction<Schema>;
 
 /**
  * A parameter builder interface containing the `tr` property.
@@ -843,8 +846,7 @@ export interface TransactionProps<Schema extends EditorSchema = EditorSchema> {
   tr: Transaction<Schema>;
 }
 
-export type EditorState<Schema extends EditorSchema = EditorSchema> =
-  import('prosemirror-state').EditorState<Schema>;
+export type EditorState<Schema extends EditorSchema = EditorSchema> = PMState.EditorState<Schema>;
 
 /**
  * A parameter builder interface containing the `state` property.
@@ -858,8 +860,7 @@ export interface EditorStateProps<Schema extends EditorSchema = EditorSchema> {
   state: EditorState<Schema>;
 }
 
-export type ResolvedPos<Schema extends EditorSchema = EditorSchema> =
-  import('prosemirror-model').ResolvedPos<Schema>;
+export type ResolvedPos<Schema extends EditorSchema = EditorSchema> = PMModel.ResolvedPos<Schema>;
 
 /**
  * @template Schema - the underlying editor schema.
@@ -882,8 +883,7 @@ export interface TextProps {
   text: string;
 }
 
-export type EditorView<Schema extends EditorSchema = EditorSchema> =
-  import('prosemirror-view').EditorView<Schema>;
+export type EditorView<Schema extends EditorSchema = EditorSchema> = PMView.EditorView<Schema>;
 
 /**
  * A parameter builder interface containing the `view` property.
@@ -901,5 +901,5 @@ export interface SelectionProps<Schema extends EditorSchema = EditorSchema> {
   /**
    * The text editor selection
    */
-  selection: import('prosemirror-state').Selection<Schema>;
+  selection: PMState.Selection<Schema>;
 }

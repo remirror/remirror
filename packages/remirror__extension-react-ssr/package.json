@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-ssr",
-  "version": "1.0.3",
+  "version": "1.0.8",
   "description": "If server side support is important to you, then this is perfect for your remirror editor in react.",
   "keywords": [
     "remirror",
@@ -12,7 +12,11 @@
     "text-editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-ssr",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-ssr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-react-ssr"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -41,19 +45,19 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/extension-react-component": "^1.0.4",
-    "@remirror/messages": "^1.0.2",
-    "@remirror/react-utils": "^1.0.2"
+    "@remirror/core": "^1.2.0",
+    "@remirror/extension-react-component": "^1.0.9",
+    "@remirror/messages": "^1.0.3",
+    "@remirror/react-utils": "^1.0.3"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.2",
-    "@remirror/react": "^1.0.4",
+    "@remirror/pm": "^1.0.3",
+    "@remirror/react": "^1.0.12",
     "@types/react": "^17.0.14",
     "react": "^17.0.2"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.1",
+    "@remirror/pm": "^1.0.3",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18"
   },

@@ -20,7 +20,6 @@ import type {
   Shape,
   Transaction,
 } from '@remirror/core-types';
-import { CoreTheme } from '@remirror/theme';
 
 import type { BuiltinPreset, UpdatableViewProps } from '../builtins';
 import type { AnyExtension, CommandsFromExtensions, GetSchema } from '../extension';
@@ -298,7 +297,7 @@ export abstract class Framework<
     }
 
     const uniqueClasses = uniqueArray(
-      cx(ssr && 'Prosemirror', CoreTheme.EDITOR, managerAttributes?.class, ...classNames).split(
+      cx(ssr && 'Prosemirror', 'remirror-editor', managerAttributes?.class, ...classNames).split(
         ' ',
       ),
     ).join(' ');

@@ -1,20 +1,11 @@
-import { renderEditor } from 'jest-remirror';
-import { BulletListExtension, OrderedListExtension, TaskListExtension } from 'remirror/extensions';
 import { htmlToProsemirrorNode } from '@remirror/core';
+
+import { setupListEditor } from './list-setup';
 
 describe('schema', () => {
   it('parses the dom structure and finds itself', () => {
-    const editor = renderEditor([
-      new BulletListExtension(),
-      new OrderedListExtension(),
-      new TaskListExtension(),
-    ]);
-
-    const {
-      nodes: { doc, p, bulletList, orderedList, listItem, taskList },
-      attributeNodes: { taskListItem },
-      schema,
-    } = editor;
+    const { doc, p, ul, ol, li, taskList, taskListItem, editor } = setupListEditor();
+    const { schema } = editor;
 
     expect(
       htmlToProsemirrorNode({
@@ -23,9 +14,9 @@ describe('schema', () => {
       }),
     ).toEqualProsemirrorNode(
       doc(
-        bulletList(
-          listItem(p('one')), //
-          listItem(p('two')),
+        ul(
+          li(p('one')), //
+          li(p('two')),
         ),
       ),
     );
@@ -37,9 +28,9 @@ describe('schema', () => {
       }),
     ).toEqualProsemirrorNode(
       doc(
-        orderedList(
-          listItem(p('one')), //
-          listItem(p('two')),
+        ol(
+          li(p('one')), //
+          li(p('two')),
         ),
       ),
     );

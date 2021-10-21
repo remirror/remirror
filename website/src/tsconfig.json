@@ -10,6 +10,7 @@
     "types": [],
     "declaration": false,
     "noEmit": true,
+    "noUncheckedIndexedAccess": false,
     "baseUrl": "./",
     "paths": {
       "@components": ["components"],
@@ -24,6 +25,9 @@
     },
     {
       "path": "../../packages/remirror__react/src"
+    },
+    {
+      "path": "../../packages/remirror__react-editors/src"
     },
     {
       "path": "../../packages/create-context-state/src"

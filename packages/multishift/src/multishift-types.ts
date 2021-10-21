@@ -535,17 +535,16 @@ export interface GetComboBoxPropsOptions<
 export type GetComboBoxPropsReturn<
   Element extends HTMLElement = any,
   RefKey extends string = 'ref',
-> = DetailedHTMLProps<HTMLAttributes<Element>, Element> &
-  { [P in RefKey]: Ref<any> } & {
-    /**
-     * @default 'combobox'
-     */
-    role: string;
-    'aria-expanded': boolean;
-    'aria-haspopup': boolean | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
-    'aria-owns': string | undefined;
-    'aria-labelledby': string;
-  };
+> = DetailedHTMLProps<HTMLAttributes<Element>, Element> & { [P in RefKey]: Ref<any> } & {
+  /**
+   * @default 'combobox'
+   */
+  role: string;
+  'aria-expanded': boolean;
+  'aria-haspopup': boolean | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
+  'aria-owns': string | undefined;
+  'aria-labelledby': string;
+};
 
 export interface GetPropsWithRefOptions<
   Element extends HTMLElement = any,
@@ -563,16 +562,14 @@ export type GetPropsWithRefReturn<
   RefKey extends string = 'ref',
 > = {
   [P in Exclude<RefKey, 'key'>]: Ref<any>;
-} &
-  DetailedHTMLProps<HTMLAttributes<Element>, Element>;
+} & DetailedHTMLProps<HTMLAttributes<Element>, Element>;
 
 export type GetLabelPropsWithRefReturn<
   Element extends HTMLElement = any,
   RefKey extends string = 'ref',
 > = {
   [P in Exclude<RefKey, 'key'>]: Ref<any>;
-} &
-  DetailedHTMLProps<HTMLAttributes<Element>, Element> & {
+} & DetailedHTMLProps<HTMLAttributes<Element>, Element> & {
     htmlFor?: string;
   };
 

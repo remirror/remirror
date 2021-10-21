@@ -6,8 +6,12 @@
   "keywords": [
     "remirror"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/remirror__scripts/scripts",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/support/scripts",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/support/scripts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "support/scripts"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -17,12 +21,10 @@
   "module": "dist/scripts.esm.js",
   "files": [
     "dist",
-    "api-extractor.worker",
     "changelog-dates",
     "changeset-forced-update",
     "changeset-update-dependents",
     "check-styles",
-    "create-typedoc-sidebars",
     "deprecate-version",
     "enable-pr-changeset",
     "generate-api",
@@ -30,6 +32,7 @@
     "generate-docs",
     "generate-icons",
     "generate-intl",
+    "generate-website-examples",
     "linaria",
     "run-if-clean",
     "run-if-config",
@@ -40,8 +43,8 @@
     "verdaccio-registry"
   ],
   "scripts": {
-    "patch": "patch-package",
-    "postinstall": "pnpm patch"
+    "postinstall": "pnpm patch",
+    "patch": "patch-package"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -53,18 +56,18 @@
     "@linaria/babel-preset": "3.0.0-beta.4",
     "@lingui/core": "^3.10.4",
     "@manypkg/get-packages": "^1.1.1",
-    "@microsoft/api-extractor": "7.18.4",
+    "@microsoft/api-extractor": "^7.18.9",
     "@microsoft/tsdoc": "^0.13.2",
     "@microsoft/tsdoc-config": "^0.15.2",
-    "@remirror/core-helpers": "^1.0.1",
-    "@remirror/icons": "^1.0.2",
+    "@remirror/core-helpers": "^1.0.2",
+    "@remirror/icons": "^1.0.3",
     "@remirror/types": "^0.1.0",
     "@types/autoprefixer": "^9.7.2",
     "@types/cheerio": "^0.22.30",
     "@types/exit": "^0.1.31",
     "@types/fontkit": "^1.8.0",
     "@types/fs-extra": "^9.0.12",
-    "@types/inquirer": "^7.3.3",
+    "@types/inquirer": "^8.0.0",
     "@types/keyv": "^3.1.2",
     "@types/lodash.groupby": "^4.6.6",
     "@types/lodash.isequal": "^4.5.5",
@@ -123,12 +126,10 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "api-extractor.worker.ts",
       "changelog-dates.ts",
       "changeset-forced-update.ts",
       "changeset-update-dependents.ts",
       "check-styles.ts",
-      "create-typedoc-sidebars.ts",
       "deprecate-version.ts",
       "enable-pr-changeset.ts",
       "generate-api.ts",
@@ -136,6 +137,7 @@
       "generate-docs.ts",
       "generate-icons.ts",
       "generate-intl.ts",
+      "generate-website-examples.ts",
       "linaria.ts",
       "run-if-clean.ts",
       "run-if-config.ts",

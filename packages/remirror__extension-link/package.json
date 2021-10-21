@@ -1,13 +1,17 @@
 {
   "name": "@remirror/extension-link",
-  "version": "1.0.2",
+  "version": "1.1.3",
   "description": "Add links to your text editor.",
   "keywords": [
     "remirror",
     "extension"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-link",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-link",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-link"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -36,15 +40,15 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/extension-events": "^1.0.2",
-    "@remirror/messages": "^1.0.2"
+    "@remirror/core": "^1.2.0",
+    "@remirror/extension-events": "^1.0.7",
+    "@remirror/messages": "^1.0.3"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.2"
+    "@remirror/pm": "^1.0.3"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.1"
+    "@remirror/pm": "^1.0.3"
   },
   "publishConfig": {
     "access": "public"

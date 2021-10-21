@@ -126,7 +126,7 @@ export const prosemirrorMatchers = {
 
     try {
       actual.check();
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof RangeError) {
         pass = false;
         errorMessage = error.message;

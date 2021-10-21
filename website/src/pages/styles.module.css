@@ -60,8 +60,8 @@
   height: 200px;
 
   @media screen and (min-width: 996px) {
-    height: initial;
-    width: 200px;
+    height: 120px;
+    width: initial;
   }
 }
 
@@ -158,6 +158,18 @@
 
   @media screen and (min-width: 996px) {
     max-width: 650px;
+  }
+}
+
+.bannerSampleEditor {
+  background-color: white;
+  color: black;
+  padding: 8px;
+  border-radius: 4px;
+  width: 80%;
+
+  @media screen and (min-width: 996px) {
+    max-width: 705px;
   }
 }
 

@@ -14,7 +14,7 @@ env:
 
 jobs:
   deploy_docs:
-    timeout-minutes: 10
+    timeout-minutes: 90
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.event.pull_request
 
@@ -35,16 +35,29 @@ jobs:
       - name: setup node.js
         uses: actions/setup-node@v2
         with:
-          # Uses node 14 to allow nullish coalescing in `.js` files
-          node-version: 14
+          node-version: 16
 
       - name: install and audit
         uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
+      - name: setup docusaurus caching
+        uses: actions/cache@v2
+        with:
+          path: website/node_modules/.cache
+          key: ${{ runner.os }}-docusaurus-v1
+
+      - name: generate .d.ts files
+        run: pnpm build
+
+      - name: generate api markdown files
+        run: pnpm api
+
       - name: build docs
-        run: pnpm build:docs
+        run: |
+          export NODE_OPTIONS=--max_old_space_size=4096
+          pnpm build:docs
 
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop

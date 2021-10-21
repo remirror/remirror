@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-yjs",
-  "version": "1.0.2",
+  "version": "1.0.10",
   "description": "Realtime collaboration with yjs",
   "keywords": [
     "remirror",
@@ -10,7 +10,11 @@
     "collaboration"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-yjs",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-yjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-yjs"
+  },
   "license": "MIT",
   "contributors": [
     "Benjie Gillam <code@benjiegillam.com>",
@@ -40,19 +44,19 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/extension-annotation": "^1.0.2",
-    "@remirror/messages": "^1.0.2",
+    "@remirror/core": "^1.2.0",
+    "@remirror/extension-annotation": "^1.1.2",
+    "@remirror/messages": "^1.0.3",
     "y-prosemirror": "^1.0.9",
     "y-protocols": "^1.0.5"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.2",
+    "@remirror/pm": "^1.0.3",
     "y-webrtc": "^10.2.0",
     "yjs": "^13.5.11"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.1",
+    "@remirror/pm": "^1.0.3",
     "yjs": "^13.4.0"
   },
   "publishConfig": {

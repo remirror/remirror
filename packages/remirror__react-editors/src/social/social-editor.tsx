@@ -2,28 +2,27 @@ import { FC, useCallback, useMemo, useState } from 'react';
 import { IdentifierSchemaAttributes } from 'remirror';
 import {
   EmojiExtension,
-  LinkExtension,
   MentionAtomExtension,
   MentionAtomNodeAttributes,
   PlaceholderExtension,
-  TaskListExtension,
   wysiwygPreset,
 } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
+import { TableExtension } from '@remirror/extension-react-tables';
 import {
-  ComponentItem,
   EditorComponent,
   EmojiPopupComponent,
-  FloatingToolbar,
   MentionAtomPopupComponent,
   MentionAtomState,
   Remirror,
+  TableComponents,
   ThemeProvider,
-  Toolbar,
-  ToolbarItemUnion,
   useRemirror,
 } from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
+
+import { BubbleMenu } from '../components/bubble-menu';
+import { TopToolbar } from '../components/top-toolbar';
 
 const extraAttributes: IdentifierSchemaAttributes[] = [
   { identifiers: ['mention', 'emoji'], attributes: { role: { default: 'presentation' } } },
@@ -33,101 +32,6 @@ const extraAttributes: IdentifierSchemaAttributes[] = [
 export interface SocialEditorProps extends Pick<MentionComponentProps, 'users' | 'tags'> {
   placeholder?: string;
 }
-
-const toolbarItems: ToolbarItemUnion[] = [
-  {
-    type: ComponentItem.ToolbarGroup,
-    label: 'History',
-    items: [
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'undo', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'redo', display: 'icon' },
-      {
-        type: ComponentItem.ToolbarCommandButton,
-        commandName: 'toggleColumns',
-        display: 'icon',
-        attrs: { count: 2 },
-      },
-    ],
-    separator: 'end',
-  },
-  {
-    type: ComponentItem.ToolbarGroup,
-    label: 'Clipboard',
-    items: [
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'copy', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'cut', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'paste', display: 'icon' },
-    ],
-    separator: 'end',
-  },
-  {
-    type: ComponentItem.ToolbarGroup,
-    label: 'Heading Formatting',
-    items: [
-      {
-        type: ComponentItem.ToolbarCommandButton,
-        commandName: 'toggleHeading',
-        display: 'icon',
-        attrs: { level: 1 },
-      },
-      {
-        type: ComponentItem.ToolbarCommandButton,
-        commandName: 'toggleHeading',
-        display: 'icon',
-        attrs: { level: 2 },
-      },
-      {
-        type: ComponentItem.ToolbarCommandButton,
-        commandName: 'toggleHeading',
-        display: 'icon',
-        attrs: { level: 3 },
-      },
-    ],
-    separator: 'end',
-  },
-  {
-    type: ComponentItem.ToolbarGroup,
-    label: 'Simple Formatting',
-    items: [
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleBold', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleItalic', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleUnderline', display: 'icon' },
-    ],
-    separator: 'end',
-  },
-  {
-    type: ComponentItem.ToolbarGroup,
-    label: 'Lists',
-    items: [
-      {
-        type: ComponentItem.ToolbarCommandButton,
-        commandName: 'toggleBulletList',
-        display: 'icon',
-      },
-      {
-        type: ComponentItem.ToolbarCommandButton,
-        commandName: 'toggleOrderedList',
-        display: 'icon',
-      },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleTaskList', display: 'icon' },
-    ],
-    separator: 'none',
-  },
-];
-
-const floatingToolbarItems: ToolbarItemUnion[] = [
-  {
-    type: ComponentItem.ToolbarGroup,
-    label: 'Simple Formatting',
-    items: [
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleBold', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleItalic', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleUnderline', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleStrike', display: 'icon' },
-      { type: ComponentItem.ToolbarCommandButton, commandName: 'toggleCode', display: 'icon' },
-    ],
-  },
-];
 
 interface MentionComponentProps<
   UserData extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
@@ -164,7 +68,7 @@ export const SocialEditor: FC<SocialEditorProps> = ({ placeholder, ...props }) =
   const extensions = useCallback(
     () => [
       new PlaceholderExtension({ placeholder }),
-      new LinkExtension({ autoLink: true }),
+      new TableExtension(),
       new MentionAtomExtension({
         matchers: [
           { name: 'at', char: '@', appendText: ' ' },
@@ -172,7 +76,6 @@ export const SocialEditor: FC<SocialEditorProps> = ({ placeholder, ...props }) =
         ],
       }),
       new EmojiExtension({ plainText: false, data, moji: 'noto' }),
-      new TaskListExtension({}),
       ...wysiwygPreset(),
     ],
     [placeholder],
@@ -185,11 +88,12 @@ export const SocialEditor: FC<SocialEditorProps> = ({ placeholder, ...props }) =
     <AllStyledComponent>
       <ThemeProvider>
         <Remirror manager={manager}>
-          <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
+          <TopToolbar />
           <EditorComponent />
           <EmojiPopupComponent />
           <MentionComponent {...props} />
-          <FloatingToolbar items={floatingToolbarItems} positioner='selection' placement='bottom' />
+          <TableComponents />
+          <BubbleMenu />
           {children}
         </Remirror>
       </ThemeProvider>

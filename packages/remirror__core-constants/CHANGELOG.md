@@ -1,5 +1,13 @@
 # @remirror/core-constants
 
+## 1.0.1
+
+> 2021-10-01
+
+### Patch Changes
+
+- Stop hiding error details in production.
+
 ## 1.0.0
 
 > 2021-07-17

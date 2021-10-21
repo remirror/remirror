@@ -95,8 +95,7 @@
       "@remirror/core-utils",
       "@remirror/i18n",
       "@remirror/icons",
-      "@remirror/messages",
-      "@remirror/theme"
+      "@remirror/messages"
     ],
     "running": false,
     "gzip": true
@@ -266,7 +265,7 @@
   },
   {
     "name": "@remirror/extension-embed",
-    "limit": "10 KB",
+    "limit": "20 KB",
     "path": "packages/remirror__extension-embed/dist/remirror-extension-embed.browser.esm.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -756,7 +755,6 @@
       "@remirror/extension-list",
       "@remirror/extension-search",
       "@remirror/extension-strike",
-      "@remirror/extension-tables",
       "@remirror/extension-trailing-node",
       "@remirror/extension-underline",
       "@remirror/preset-core"

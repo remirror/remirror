@@ -1,0 +1,50 @@
+---
+hide_title: true
+title: 'CodeBlockExtension'
+---
+
+import Basic from '../../website/extension-examples/extension-code-block/basic';
+
+# `CodeBlockExtension`
+
+## Summary
+
+The CodeBlock extension adds fenced code blocks to your editor. A code block contains a formatted snippets of source code.
+
+:::info
+
+This extension differs from the `CodeExtension`, which provides code marks on inline text.
+
+:::
+
+## Features
+
+### Formatting
+
+Code blocks can be formatted for many different languages. For example, JavaScript code will be formatted differently from markdown or JSON code.
+
+For a list of supported languages, please consult [refractor](https://github.com/wooorm/refractor/tree/main/lang), which we use under the hood.
+
+### Keyboard support
+
+Users can create a new code block by typing <code>&grave;&grave;&grave;&nbsp;</code> (3 ticks and a space). Users can define the language of the code block by typing <code>&grave;&grave;&grave;html&nbsp;</code>.
+
+## Usage
+
+### Installation
+
+This extension is installed for you when you install the main `remirror` package.
+
+You can use the imports in the following way:
+
+```ts
+import { CodeBlockExtension } from 'remirror/extensions';
+```
+
+### Examples
+
+<Basic />
+
+## API
+
+- [CodeBlockExtension](../api/extension-code-block)

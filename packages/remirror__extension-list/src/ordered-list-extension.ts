@@ -6,6 +6,7 @@ import {
   extension,
   ExtensionPriority,
   ExtensionTag,
+  findParentNodeOfType,
   isElementDomNode,
   keyBinding,
   KeyBindingProps,
@@ -17,7 +18,7 @@ import {
 import { ExtensionListMessages as Messages } from '@remirror/messages';
 import { InputRule, wrappingInputRule } from '@remirror/pm/inputrules';
 
-import { toggleList } from './list-commands';
+import { toggleList, wrapSelectedItems } from './list-commands';
 import { ListItemExtension } from './list-item-extension';
 
 /**
@@ -90,13 +91,41 @@ export class OrderedListExtension extends NodeExtension {
   }
 
   createInputRules(): InputRule[] {
+    const regexp = /^(\d+)\.\s$/;
+
     return [
       wrappingInputRule(
-        /^(\d+)\.\s$/,
+        regexp,
         this.type,
         (match) => ({ order: +assertGet(match, 1) }),
         (match, node) => node.childCount + (node.attrs.order as number) === +assertGet(match, 1),
       ),
+
+      new InputRule(regexp, (state, match, start, end) => {
+        const tr = state.tr;
+        tr.deleteRange(start, end);
+        const canUpdate = wrapSelectedItems({
+          listType: this.type,
+          itemType: assertGet(this.store.schema.nodes, 'listItem'),
+          tr,
+        });
+
+        if (!canUpdate) {
+          return null;
+        }
+
+        const order = +assertGet(match, 1);
+
+        if (order !== 1) {
+          const found = findParentNodeOfType({ selection: tr.selection, types: this.type });
+
+          if (found) {
+            tr.setNodeMarkup(found.pos, undefined, { order });
+          }
+        }
+
+        return tr;
+      }),
     ];
   }
 }

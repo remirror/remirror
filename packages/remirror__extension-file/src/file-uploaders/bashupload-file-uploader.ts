@@ -1,6 +1,6 @@
+import { FileUploader, UploadContext } from '@remirror/core';
+
 import { FileAttributes } from '../file-extension';
-import { UploadContext } from '../file-upload-context';
-import { FileUploader } from '../file-uploader';
 import { getDefaultFileAttrs } from './data-url-file-uploader';
 
 class BaseuploadFileUploader implements FileUploader<FileAttributes> {
@@ -22,7 +22,7 @@ class BaseuploadFileUploader implements FileUploader<FileAttributes> {
           }
 
           resolve(`${rawUrl}?download=1`);
-        } catch (error) {
+        } catch (error: any) {
           reject(new Error(`something went wrong when parsing the server response: ${error}`));
         }
       });

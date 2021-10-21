@@ -1,5 +1,21 @@
 # @remirror/styles
 
+## 1.1.2
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+## 1.1.1
+
+> 2021-08-29
+
+### Patch Changes
+
+- Override the default browser style about the nested list, so that users can tell the different between two adjacent nested lists.
+
 ## 1.1.0
 
 > 2021-08-10

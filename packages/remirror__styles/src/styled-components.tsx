@@ -13,8 +13,8 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-button-active {
-    color: var(--rmr-color-primary-text);
-    background-color: var(--rmr-color-primary);
+    color: var(--rmr-color-primary-text) !important;
+    background-color: var(--rmr-color-primary) !important;
   }
 
   .remirror-button {
@@ -491,6 +491,8 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   .remirror-toolbar {
     display: flex;
     flex-direction: row;
+
+    overflow-y: auto;
   }
 
   .remirror-toolbar > *:not(:first-child) {
@@ -630,6 +632,14 @@ export const coreStyledCss: ReturnType<typeof css> = css`
     color: var(--rmr-color-selection-text);
     caret-color: var(--rmr-color-selection-caret);
     text-shadow: var(--rmr-color-selection-shadow);
+  }
+
+  /* Protect against generic img rules. See also https://github.com/ProseMirror/prosemirror-view/commit/aaa50d592074c8063fc2ef77907ab6d0373822fb */
+
+  .remirror-editor.ProseMirror img.ProseMirror-separator {
+    display: inline !important;
+    border: none !important;
+    margin: 0 !important;
   }
   .remirror-editor.ProseMirror-hideselection *::-moz-selection {
     background: transparent;
@@ -3659,6 +3669,11 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
   }
   .remirror-editor .remirror-ul-list-content > li.remirror-list-item-with-custom-mark {
     list-style: none;
+  }
+  /* override the browser's default styles */
+  .remirror-editor ul ul + ul {
+    -webkit-margin-before: 1em;
+    margin-block-start: 1em;
   }
 
   .remirror-list-item-marker-container {

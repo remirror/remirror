@@ -2,11 +2,13 @@
   "name": "remirror-monorepo",
   "private": true,
   "homepage": "https://github.com/remirror/remirror",
-  "repository": "https://github.com/remirror/remirror",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git"
+  },
   "type": "module",
   "scripts": {
-    "api": "node support/scripts/generate-api",
-    "api:update": "node support/scripts/generate-api --fix",
+    "api": "node support/scripts/generate-api && api-documenter generate -i ./support/api -o ./docs/api",
     "browser:coverage": "browserslist --coverage",
     "build": "run-p build:core css:copy",
     "build:core": "preconstruct build",
@@ -44,28 +46,30 @@
     "fix:es": "pnpm lint:es -- --fix",
     "fix:exports": "node support/scripts/generate-configs --exports",
     "fix:md": "pnpm lint:md -- --fix",
+    "fix:package-json": "node support/scripts/generate-configs --package-json",
     "fix:prettier": "pnpm run:prettier -- --write",
     "fix:repo": "manypkg fix",
     "fix:size": "pnpm generate:size",
+    "fix:website-examples": "pnpm generate:website-examples",
+    "generate:docs": "node support/scripts/generate-docs",
     "generate:exports": "pnpm run fix:exports -- --force",
     "generate:icons": "node support/scripts/generate-icons",
     "generate:intl": "node support/scripts/generate-intl",
     "generate:size": "node support/scripts/generate-configs --size",
     "generate:ts": "node support/scripts/generate-configs --ts-packages",
+    "generate:website-examples": "node support/scripts/generate-website-examples",
     "if-clean": "node support/scripts/run-if-clean",
     "if-config": "node support/scripts/run-if-config",
     "if-not-ci": "node support/scripts/run-if-not-ci",
     "if-publishable": "node support/scripts/run-if-publishable",
     "preinstall": "pnpm symlink:root && pnpm check:pnpm",
     "postinstall": "npm-run-all patch -p build:dev css:copy",
-    "patch": "patch-package",
     "intl": "run-s intl:extract intl:compile generate:intl",
     "intl:compile": "lingui compile",
     "intl:extract": "lingui extract",
     "is-logged-in": "npm whoami",
     "lint": "run-s lint:*",
     "lint:build": "preconstruct validate",
-    "generate:docs": "node support/scripts/generate-docs",
     "lint:css": "node support/scripts/check-styles",
     "lint:es": "cross-env FULL_ESLINT_CHECK=true eslint -f codeframe --ext=.tsx,.ts,.js .",
     "lint:exports": "pnpm run fix:exports -- --check",
@@ -73,6 +77,8 @@
     "lint:prettier": "pnpm run:prettier -- --check",
     "lint:repo": "manypkg check",
     "mutate:pr": "node support/scripts/publish-pr",
+    "patch": "patch-package",
+    "prepare": "husky install",
     "refresh": "pnpm clean:all; pnpm symlink:root; pnpm install;",
     "prerelease": "pnpm if-not-ci run-s checks:release",
     "release": "pnpm if-publishable run-s release",
@@ -81,9 +87,9 @@
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm symlink:root; pnpm install;",
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
-    "storybook:start": "manypkg run packages/storybook-react start",
-    "storybook:build": "manypkg run packages/storybook-react build",
     "storybook": "run-p css:watch storybook:start",
+    "storybook:build": "manypkg run packages/storybook-react build",
+    "storybook:start": "manypkg run packages/storybook-react start",
     "symlink:root": "node support/scripts/symlink-root.mjs",
     "test": "jest --verbose",
     "test:build": "cross-env TEST_BUILD=true jest --verbose --coverage=false",
@@ -98,12 +104,11 @@
     "preversion:changeset": "node support/scripts/changeset-forced-update",
     "version:changeset": "changeset version",
     "postversion:changeset": "node support/scripts/changeset-forced-update --clean",
+    "version:changeset-dependents": "node support/scripts/changeset-update-dependents",
     "version:ci": "run-s version:changeset-dependents version:changeset version:date fix:repo update:workspace fix:prettier version:lockfile",
     "version:date": "node support/scripts/changelog-dates",
-    "version:pr": "node support/scripts/enable-pr-changeset",
-    "version:changeset-dependents": "node support/scripts/changeset-update-dependents",
     "version:lockfile": "pnpm install --lockfile-only",
-    "prepare": "husky install"
+    "version:pr": "node support/scripts/enable-pr-changeset"
   },
   "browserslist": [
     "since 2017"
@@ -130,7 +135,6 @@
     "@changesets/changelog-github": "^0.4.0",
     "@changesets/cli": "^2.16.0",
     "@jest/types": "^27.0.6",
-    "@kyleshevlin/eslint-plugin": "^1.3.0",
     "@linaria/babel-preset": "3.0.0-beta.4",
     "@linaria/cli": "3.0.0-beta.4",
     "@linaria/shaker": "3.0.0-beta.4",
@@ -139,9 +143,10 @@
     "@lingui/macro": "^3.10.2",
     "@lingui/react": "^3.10.2",
     "@manypkg/cli": "^0.18.0",
-    "@microsoft/api-extractor": "7.18.4",
+    "@microsoft/api-documenter": "^7.13.52",
+    "@microsoft/api-extractor": "^7.18.9",
     "@preconstruct/cli": "^2.0.7",
-    "@size-limit/preset-big-lib": "^5.0.1",
+    "@size-limit/preset-big-lib": "^6.0.0",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react-hooks": "^7.0.1",
@@ -170,6 +175,7 @@
     "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
     "delay": "^5.0.0",
+    "doc-plugin-remirror": "^0.2.1",
     "downlevel-dts": "^0.7.0",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.2.0",
@@ -199,8 +205,8 @@
     "jest-extended": "^0.11.5",
     "jest-github-reporter": "^1.0.2",
     "jest-playwright-preset": "^1.7.0",
-    "jest-prosemirror": "^1.0.4",
-    "jest-remirror": "^1.0.4",
+    "jest-prosemirror": "^1.0.5",
+    "jest-remirror": "^1.0.11",
     "jest-watch-typeahead": "^0.6.4",
     "json.macro": "^1.3.0",
     "lint-staged": "^11.0.1",
@@ -212,7 +218,7 @@
     "playwright-testing-library": "^3.0.0",
     "prettier": "^2.3.2",
     "prettier-plugin-packagejson": "^2.2.10",
-    "remirror": "1.0.12",
+    "remirror": "1.0.33",
     "rimraf": "^3.0.2",
     "size-limit": "^5.0.1",
     "snapshot-diff": "^0.9.0",
@@ -234,13 +240,7 @@
       "@babel/preset-env": "^7.13.10",
       "monaco-editor": "npm:@typescript-deploys/monaco-editor@4.3.5",
       "postcss": ">=8",
-      "typescript": "^4.3.5",
-      "@microsoft/api-extractor-model": "^7.13.3",
-      "@microsoft/api-extractor": "7.16.1",
-      "@microsoft/tsdoc-config": "^0.15.2",
-      "@rushstack/node-core-library": "^3.39.0",
-      "@rushstack/rig-package": "^0.2.12",
-      "@rushstack/ts-command-line": "^4.7.10"
+      "typescript": "^4.3.5"
     }
   },
   "preconstruct": {
@@ -258,7 +258,7 @@
     ],
     "lockFileMaintenance": {
       "enabled": true,
-      "extends": "schedule:monthly"
+      "extends": "schedule:weekly"
     },
     "packageRules": [
       {
@@ -278,13 +278,13 @@
           "patch",
           "minor"
         ],
-        "schedule": [
-          "before 2am on Monday"
-        ],
+        "extends": "schedule:weekly",
         "stabilityDays": 0
       }
     ],
-    "ignoreDeps": [],
+    "ignoreDeps": [
+      "testing"
+    ],
     "prCreation": "not-pending",
     "stabilityDays": 7,
     "rangeStrategy": "replace",

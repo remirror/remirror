@@ -1,5 +1,37 @@
 # prosemirror-resizable-view
 
+## 1.1.1
+
+> 2021-10-01
+
+### Patch Changes
+
+- Set correct label and icon for task list (#1157).
+
+* Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - @remirror/core-utils@1.1.1
+  - @remirror/core-helpers@1.0.2
+
+## 1.1.0
+
+> 2021-09-13
+
+### Minor Changes
+
+- Add a white border to the handle to make it more recognizable.
+
+## 1.0.1
+
+> 2021-09-04
+
+### Patch Changes
+
+- Don't discard node attributes when resizing.
+
 ## 1.0.0
 
 > 2021-07-24

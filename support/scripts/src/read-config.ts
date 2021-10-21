@@ -56,7 +56,7 @@ const configFilePath = baseDir('.config.json');
 function readJSON(str: string) {
   try {
     return JSON.parse(str);
-  } catch (error) {
+  } catch (error: any) {
     log.error('Invalid JSON data in file .config.json', str);
     throw error;
   }

@@ -22,8 +22,8 @@ export const EDITOR_WRAPPER = css`
 `;
 
 export const BUTTON_ACTIVE = css`
-  color: ${primaryText};
-  background-color: ${primary};
+  color: ${primaryText}!important;
+  background-color: ${primary}!important;
 `;
 
 export const BUTTON = css`
@@ -494,6 +494,8 @@ export const TABBABLE = css`
 export const TOOLBAR = css`
   display: flex;
   flex-direction: row;
+
+  overflow-y: auto;
 
   & > *:not(:first-child) {
     margin: 0 0 0 0.5em;

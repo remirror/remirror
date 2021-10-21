@@ -1133,7 +1133,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
         dispatch = view.dispatch;
       }
 
-      return command(...args)({ state, dispatch, view, tr: this.transaction });
+      return command(...args)({ state, dispatch, view, tr: state.tr });
     };
   }
 

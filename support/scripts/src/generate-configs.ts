@@ -4,6 +4,7 @@
  * Generate configuration files for `sizeLimit` and package `tsconfig`'s.
  */
 
+import { getPackages } from '@manypkg/get-packages';
 import chalk from 'chalk';
 import fs, { readdir } from 'fs-extra';
 import globby from 'globby';
@@ -47,7 +48,6 @@ const PATH = {
   baseTsconfig: baseDir('support', 'tsconfig.base.json'),
   rootTsconfig: baseDir('support', 'root', tsconfigFileName),
   packagesTsconfig: baseDir('packages', tsconfigFileName),
-  rootTypedoc: baseDir('support', 'root', 'typedoc.json'),
 };
 
 // A list of all the generated files which will be prettified at the end of the
@@ -130,7 +130,7 @@ async function generateExports() {
     }
 
     log.info(chalk`\n\nForcing update: {yellow \`--force\`} flag applied.\n\n`);
-  } catch (error_) {
+  } catch (error_: any) {
     error = error_;
     log.error('\n', error?.message);
   }
@@ -696,8 +696,37 @@ async function generatePackageTsConfigs() {
     { detectIndent: true },
   );
   await writeJSON(PATH.packagesTsconfig, packagesTsconfig, { detectIndent: true });
-  await writeJSON(PATH.rootTypedoc, { entryFiles, out: 'docs/api' }, { detectIndent: true });
-  filesToPrettify.push(PATH.rootTsconfig, PATH.rootTypedoc, PATH.packagesTsconfig);
+}
+
+/**
+ * Generate "repository" and "homepage" for every package.
+ */
+async function generatePackageJsonConfigs() {
+  log.info(chalk`\n{blue Running script for package.json {bold.grey exports} field}`);
+
+  const root = baseDir();
+  const packages = await getPackages(root);
+
+  await Promise.all(
+    packages.packages.map((pkg) => {
+      const relativeDir = path.relative(root, pkg.dir);
+      return writeJSON(
+        path.join(pkg.dir, 'package.json'),
+        {
+          ...pkg.packageJson,
+          repository: {
+            type: 'git',
+            url: 'https://github.com/remirror/remirror.git',
+            directory: relativeDir,
+          },
+          homepage: `https://github.com/remirror/remirror/tree/HEAD/${relativeDir}`,
+        },
+        {
+          indent: 2,
+        },
+      );
+    }),
+  );
 }
 
 /**
@@ -710,6 +739,9 @@ async function main() {
   } else if (cliArgs.tsPackages) {
     // Run when flag `--ts-packages` is used.
     await Promise.all([generatePackageTsConfigs()]);
+  } else if (cliArgs.packageJson) {
+    // Run when flag `--package-json` is used.
+    await Promise.all([generatePackageJsonConfigs()]);
   } else if (cliArgs.exports) {
     // Run when `--exports` is used
     await Promise.all([generateExports()]);

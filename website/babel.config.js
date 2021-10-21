@@ -76,7 +76,7 @@ function babelConfig(api) {
             require.resolve('@babel/preset-env'),
             {
               useBuiltIns: 'entry',
-              loose: true,
+              loose: false,
               corejs: { version: '3.6', proposals: true },
               // Do not transform modules to CJS
               modules: false,

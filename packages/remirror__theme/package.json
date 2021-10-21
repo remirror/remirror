@@ -1,9 +1,13 @@
 {
   "name": "@remirror/theme",
-  "version": "1.1.0",
+  "version": "1.1.3",
   "description": "The configurable theme for the remirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__theme",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__theme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__theme"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -34,7 +38,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@linaria/core": "3.0.0-beta.4",
-    "@remirror/core-types": "^1.0.1",
+    "@remirror/core-types": "^1.0.2",
     "case-anything": "^1.1.3",
     "color2k": "^1.2.4",
     "csstype": "^3.0.7"

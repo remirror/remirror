@@ -13,10 +13,13 @@ import { HorizontalRuleExtension } from '@remirror/extension-horizontal-rule';
 import { ImageExtension } from '@remirror/extension-image';
 import { ItalicExtension } from '@remirror/extension-italic';
 import { LinkExtension, LinkOptions } from '@remirror/extension-link';
-import { BulletListExtension, OrderedListExtension } from '@remirror/extension-list';
+import {
+  BulletListExtension,
+  OrderedListExtension,
+  TaskListExtension,
+} from '@remirror/extension-list';
 import { SearchExtension, SearchOptions } from '@remirror/extension-search';
 import { StrikeExtension } from '@remirror/extension-strike';
-import { TableExtension, TableOptions } from '@remirror/extension-tables';
 import { TrailingNodeExtension, TrailingNodeOptions } from '@remirror/extension-trailing-node';
 import { UnderlineExtension } from '@remirror/extension-underline';
 
@@ -28,8 +31,7 @@ export interface WysiwygOptions
     HeadingOptions,
     LinkOptions,
     SearchOptions,
-    TrailingNodeOptions,
-    TableOptions {}
+    TrailingNodeOptions {}
 
 const DEFAULT_OPTIONS = {
   ...BidiExtension.defaultOptions,
@@ -39,7 +41,6 @@ const DEFAULT_OPTIONS = {
   ...SearchExtension.defaultOptions,
   ...TrailingNodeExtension.defaultOptions,
   ...HeadingExtension.defaultOptions,
-  ...TableExtension.defaultOptions,
 };
 
 /**
@@ -58,13 +59,13 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
   const underlineExtension = new UnderlineExtension();
   const blockquoteExtension = new BlockquoteExtension();
   const codeExtension = new CodeExtension();
-  const tableExtension = new TableExtension();
   const iframeExtension = new IframeExtension();
   const bulletListExtension = new BulletListExtension();
   const orderedListExtension = new OrderedListExtension();
+  const taskListExtension = new TaskListExtension({});
 
   const { selectTextOnClick } = options;
-  const linkExtension = new LinkExtension({ selectTextOnClick });
+  const linkExtension = new LinkExtension({ autoLink: true, selectTextOnClick });
 
   const { autoUpdate, defaultDirection, excludeNodes } = options;
   const bidiExtension = new BidiExtension({ autoUpdate, defaultDirection, excludeNodes });
@@ -133,10 +134,10 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
     blockquoteExtension,
     codeBlockExtension,
     headingExtension,
-    tableExtension,
     iframeExtension,
     bulletListExtension,
     orderedListExtension,
+    taskListExtension,
 
     // Marks
     boldExtension,
@@ -162,7 +163,6 @@ export type WysiwygPreset =
   | UnderlineExtension
   | BlockquoteExtension
   | CodeExtension
-  | TableExtension
   | LinkExtension
   | BidiExtension
   | BoldExtension
@@ -173,4 +173,5 @@ export type WysiwygPreset =
   | TrailingNodeExtension
   | IframeExtension
   | BulletListExtension
-  | OrderedListExtension;
+  | OrderedListExtension
+  | TaskListExtension;

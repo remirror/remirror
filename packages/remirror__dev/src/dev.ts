@@ -4,7 +4,7 @@ import { unmountComponentAtNode } from 'react-dom';
 import { useRemirrorContext } from '@remirror/react';
 
 /**
- * A component that should be placed within the remirror context and will
+ * A React component that should be placed within the remirror context and will
  * automatically wrap the prosemirror view and create a lovely dev tools
  * components.
  *

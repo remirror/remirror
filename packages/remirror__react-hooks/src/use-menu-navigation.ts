@@ -136,7 +136,7 @@ export function useMenuNavigation<Item = any>(
   } = useMultishift<Item>({
     items,
     isOpen,
-    highlightedIndexes: [index],
+    highlightedIndexes: 0 <= index && index < items.length ? [index] : [],
     type: Type.ControlledMenu,
   });
 

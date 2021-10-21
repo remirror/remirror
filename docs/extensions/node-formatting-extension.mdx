@@ -1,0 +1,90 @@
+---
+hide_title: true
+title: 'NodeFormattingExtension'
+---
+
+import Basic from '../../website/extension-examples/extension-node-formatting/basic';
+
+# `NodeFormattingExtension`
+
+## Summary
+
+This extension adds node formatting to your text editor.
+
+## Features
+
+### Text alignment
+
+Text can be aligned in different ways like left, right, center, justify, etc.
+
+```tsx
+const AlignButtons = () => {
+  const commands = useCommands();
+  return (
+    <>
+      <button onClick={() => commands.leftAlign()}>Left</button>
+      <button onClick={() => commands.centerAlign()}>Center</button>
+      <button onClick={() => commands.rightAlign()}>Right</button>
+    </>
+  );
+};
+```
+
+### Indent
+
+Text can be structured with different levels of indent.
+
+```tsx
+const IndentButtons = () => {
+  const commands = useCommands();
+  return (
+    <>
+      <button onClick={() => commands.decreaseIndent()}>&lt;&lt;</button>
+      <button onClick={() => commands.increaseIndent()}>&gt;&gt;</button>
+    </>
+  );
+};
+```
+
+### Line height
+
+The line height can be adjusted to be:
+
+- **More compact**: showing more lines of text per page allows to convey more information
+- **More spacious**: adding more whitespace between lines eases reading
+
+```tsx
+const LineHeightButtons = () => {
+  const commands = useCommands();
+  return (
+    <>
+      <button onClick={() => commands.setLineHeight(1)}>Narrow</button>
+      <button onClick={() => commands.setLineHeight(2)}>Wide</button>
+    </>
+  );
+};
+```
+
+## Usage
+
+### Installation
+
+This extension is installed for you when you install the main `remirror` package.
+
+You can use the imports in the following way.
+
+```ts
+import { NodeFormattingExtension } from 'remirror/extensions';
+```
+
+To install it directly you can use
+
+The extension is provided by the `@remirror/extension-node-formatting` package. There are two ways of pulling it into your project.
+
+### Examples
+
+<Basic />
+
+## API
+
+- [NodeFormattingExtension](../api/extension-node-formatting)

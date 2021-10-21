@@ -2,6 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import {
   ApplySchemaAttributes,
+  DecorationsExtension,
   extension,
   ExtensionTag,
   htmlToProsemirrorNode,
@@ -638,6 +639,14 @@ describe('autolinking', () => {
       doc(p('a ', link({ href: '//test.com' })('test.com'))),
     );
   });
+
+  it('detects emails as auto link', () => {
+    editor.add(doc(p('<cursor>'))).insertText('user@example.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: 'mailto:user@example.com' })('user@example.com'))),
+    );
+  });
 });
 
 describe('onClick', () => {
@@ -703,7 +712,10 @@ describe('spanning', () => {
       attributeMarks: { link },
       nodes: { doc, p },
       view,
-    } = renderEditor([new LinkExtension()]);
+    } = renderEditor([
+      new LinkExtension(),
+      new DecorationsExtension({ persistentSelectionClass: 'selection' }),
+    ]);
 
     const linkMark = link({ href: '//test.com' })('a <start>long<end> link');
     add(doc(p('Paragraph with ', linkMark, ' and text')));

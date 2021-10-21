@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { EmojiExtension, PlaceholderExtension } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
-import { ProsemirrorDevTools } from '@remirror/dev';
 import {
   EditorComponent,
   EmojiPopupComponent,
@@ -27,7 +26,6 @@ export const PlainText = () => {
       <Remirror manager={manager} initialContent={state} autoFocus>
         <EmojiPopupComponent />
         <EditorComponent />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );
@@ -48,7 +46,6 @@ export const Noto = () => {
       <Remirror manager={manager} initialContent={state} autoFocus>
         <EmojiPopupComponent />
         <EditorComponent />
-        <ProsemirrorDevTools />
       </Remirror>
     </ThemeProvider>
   );

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-codemirror5",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "description": "Add CodeMirror to your editor.",
   "keywords": [
     "remirror",
@@ -9,7 +9,11 @@
     "editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-codemirror5",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-codemirror5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-codemirror5"
+  },
   "license": "MIT",
   "contributors": [
     "Ocavue <ocavue@gmail.com>"
@@ -38,16 +42,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.0.3",
-    "@remirror/messages": "^1.0.2"
+    "@remirror/core": "^1.2.0",
+    "@remirror/messages": "^1.0.3"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.2",
+    "@remirror/pm": "^1.0.3",
     "@types/codemirror": "^5.60.2",
     "codemirror": "^5.62.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.1",
+    "@remirror/pm": "^1.0.3",
     "@types/codemirror": "*",
     "codemirror": "^5"
   },

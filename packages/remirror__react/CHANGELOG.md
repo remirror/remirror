@@ -1,5 +1,191 @@
 # @remirror/react
 
+## 1.0.12
+
+> 2021-10-20
+
+### Patch Changes
+
+- Exposes a function `hasUploadingFile` to determine if file uploads are currently taking place.
+
+  When a user drops a file, a file node is created without a href attribute - this attribute is set once the file has uploaded.
+
+  However if a user saves content, before uploads are complete we can be left with "broken" file nodes. This exposed function allows us to check if file uploads are still in progress.
+
+  Addtionally file nodes now render valid DOM attributes. Rather than `href` and `error`, they now render `data-url` and `data-error`.
+
+* **BREAKING CHANGE**: The option `persistentSelectionClass` for `DecorationsExtension` is now `undefined` by default. It needs to be explicitly configured to enable persistent selection. You can set it as `'selection'` to match the default styles provided by `@remirror/styles`.
+
+  If you are using `@remirror/react`, you can enable it like this:
+
+  ```tsx
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+
+  function Editor(): JSX.Element {
+    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} />
+      </ThemeProvider>
+    );
+  }
+  ```
+
+  In the interest of performance, the persistent selection will only be displayed if the editor loses focus.
+
+* Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.8
+  - @remirror/extension-positioner@1.1.6
+  - @remirror/extension-react-component@1.0.9
+  - @remirror/extension-react-ssr@1.0.8
+  - @remirror/extension-react-tables@1.0.12
+  - @remirror/preset-react@1.0.8
+  - @remirror/react-components@1.0.11
+  - @remirror/react-core@1.0.10
+  - @remirror/react-hooks@1.0.11
+  - @remirror/react-renderer@1.0.9
+  - @remirror/react-ssr@1.0.8
+
+## 1.0.11
+
+> 2021-10-01
+
+### Patch Changes
+
+- Set correct label and icon for task list (#1157).
+
+* Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+- Stop hiding error details in production.
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.7
+  - @remirror/extension-positioner@1.1.5
+  - @remirror/extension-react-component@1.0.8
+  - @remirror/extension-react-ssr@1.0.7
+  - @remirror/extension-react-tables@1.0.11
+  - @remirror/preset-react@1.0.7
+  - @remirror/react-components@1.0.10
+  - @remirror/react-core@1.0.9
+  - @remirror/react-hooks@1.0.10
+  - @remirror/react-renderer@1.0.8
+  - @remirror/react-ssr@1.0.7
+  - @remirror/react-utils@1.0.3
+
+## 1.0.10
+
+> 2021-09-17
+
+### Patch Changes
+
+- Improve performance for dynamic attributes.
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.6
+  - @remirror/extension-positioner@1.1.4
+  - @remirror/extension-react-component@1.0.7
+  - @remirror/extension-react-ssr@1.0.6
+  - @remirror/extension-react-tables@1.0.10
+  - @remirror/preset-react@1.0.6
+  - @remirror/react-components@1.0.9
+  - @remirror/react-core@1.0.8
+  - @remirror/react-hooks@1.0.9
+  - @remirror/react-renderer@1.0.7
+  - @remirror/react-ssr@1.0.6
+
+## 1.0.9
+
+> 2021-09-07
+
+### Patch Changes
+
+- Unchained commands should use a new transaction to prevent leaking of previous command steps
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.5
+  - @remirror/extension-positioner@1.1.3
+  - @remirror/extension-react-component@1.0.6
+  - @remirror/extension-react-ssr@1.0.5
+  - @remirror/extension-react-tables@1.0.9
+  - @remirror/preset-react@1.0.5
+  - @remirror/react-components@1.0.8
+  - @remirror/react-core@1.0.7
+  - @remirror/react-hooks@1.0.8
+  - @remirror/react-renderer@1.0.6
+  - @remirror/react-ssr@1.0.5
+
+## 1.0.8
+
+> 2021-09-02
+
+### Patch Changes
+
+- Fix an out of range error when there is nothing in the dropdown menu.
+
+- Updated dependencies []:
+  - @remirror/react-hooks@1.0.7
+  - @remirror/extension-react-tables@1.0.8
+  - @remirror/react-components@1.0.7
+
+## 1.0.7
+
+> 2021-08-30
+
+### Patch Changes
+
+- Reset some CSS on IMG separator nodes.
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.4
+  - @remirror/extension-positioner@1.1.2
+  - @remirror/extension-react-tables@1.0.7
+  - @remirror/preset-react@1.0.4
+  - @remirror/react-components@1.0.6
+  - @remirror/react-core@1.0.6
+  - @remirror/react-hooks@1.0.6
+
+## 1.0.6
+
+> 2021-08-29
+
+### Patch Changes
+
+- Override the default browser style about the nested list, so that users can tell the different between two adjacent nested lists.
+
+* Don't install `@remirror/theme` as a dependency of `@remirror/core`.
+
+- Add a new `UploadExtension` to the built-in preset, which will manage all upload states from `FileExtension` and other extensions in the future.
+
+  **Breaking changes**: `UploadContext` and `FileUploader` are now exported by `@remirror/core` instead of `@remirror/extension-file`.
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.3
+  - @remirror/extension-positioner@1.1.1
+  - @remirror/extension-react-tables@1.0.6
+  - @remirror/preset-react@1.0.3
+  - @remirror/react-components@1.0.5
+  - @remirror/react-core@1.0.5
+  - @remirror/react-hooks@1.0.5
+  - @remirror/extension-react-component@1.0.5
+  - @remirror/extension-react-ssr@1.0.4
+  - @remirror/react-renderer@1.0.5
+  - @remirror/react-ssr@1.0.4
+
+## 1.0.5
+
+> 2021-08-26
+
+### Patch Changes
+
+- Add a `helpers` property to the `BasePositionerProps`. This will make it easier to use preconfigured helpers in the positioners.
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.1.0
+  - @remirror/extension-react-tables@1.0.5
+  - @remirror/react-components@1.0.4
+  - @remirror/react-core@1.0.4
+  - @remirror/react-hooks@1.0.4
+
 ## 1.0.4
 
 > 2021-08-22

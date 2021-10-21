@@ -1,5 +1,18 @@
 # @remirror/cli
 
+## 1.0.3
+
+> 2021-10-01
+
+### Patch Changes
+
+- Correct the error message for `ErrorConstant.REACT_PROVIDER_CONTEXT`.
+
+* Stop hiding error details in production.
+
+* Updated dependencies []:
+  - @remirror/core-helpers@1.0.2
+
 ## 1.0.2
 
 > 2021-07-21

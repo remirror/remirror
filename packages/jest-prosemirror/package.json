@@ -1,6 +1,6 @@
 {
   "name": "jest-prosemirror",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Write expressive tests for your prosemirror editor",
   "keywords": [
     "jest",
@@ -9,7 +9,11 @@
     "tests"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/jest-prosemirror",
-  "repository": "https://github.com/remirror/remirror/tree/HEAD/packages/jest-prosemirror",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/jest-prosemirror"
+  },
   "license": "MIT",
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
@@ -53,11 +57,11 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-constants": "^1.0.0",
-    "@remirror/core-helpers": "^1.0.1",
-    "@remirror/core-types": "^1.0.1",
-    "@remirror/core-utils": "^1.1.0",
-    "@remirror/pm": "^1.0.2",
+    "@remirror/core-constants": "^1.0.1",
+    "@remirror/core-helpers": "^1.0.2",
+    "@remirror/core-types": "^1.0.2",
+    "@remirror/core-utils": "^1.1.1",
+    "@remirror/pm": "^1.0.3",
     "@testing-library/dom": "^8.1.0",
     "@types/prosemirror-schema-basic": "^1.0.2",
     "@types/prosemirror-test-builder": "^1.0.2",
@@ -66,9 +70,9 @@
     "jest-matcher-utils": "^27.0.6",
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.1",
-    "prosemirror-test-builder": "^1.0.4",
+    "prosemirror-test-builder": "^1.0.5",
     "stringify-object": "^3.3.0",
-    "test-keyboard": "1.0.1"
+    "test-keyboard": "1.0.2"
   },
   "devDependencies": {
     "jest": "^27.0.6"
