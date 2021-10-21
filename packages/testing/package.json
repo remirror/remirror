@@ -62,7 +62,7 @@
     "expect-playwright": "^0.7.2",
     "fluent-ffmpeg": "^2.1.2",
     "jest": "^27.0.6",
-    "jest-dev-server": "^5.0.3",
+    "jest-dev-server": "^6.0.0",
     "jest-diff": "^27.0.6",
     "jest-playwright-preset": "^1.7.0",
     "jest-process-manager": "^0.3.1",
