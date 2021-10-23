@@ -19,7 +19,6 @@ export class ResizableImageView extends ResizableNodeView implements NodeView {
     setStyle(inner, {
       width: '100%',
       minWidth: '50px',
-      minHeight: '30px',
       objectFit: 'contain', // maintain image's aspect ratio
     });
 

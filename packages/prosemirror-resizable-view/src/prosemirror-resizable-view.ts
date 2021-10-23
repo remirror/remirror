@@ -5,6 +5,8 @@ import { setStyle } from '@remirror/core-utils';
 
 import { ResizableHandle, ResizableHandleType } from './resizable-view-handle';
 
+const MIN_WIDTH = 50;
+
 export enum ResizableRatioType {
   Fixed,
   Flexible,
@@ -136,7 +138,7 @@ export abstract class ResizableNodeView implements NodeView {
 
     setStyle(outer, {
       maxWidth: '100%',
-      minWidth: '50px',
+      minWidth: `${MIN_WIDTH}px`,
       display: 'inline-block',
       lineHeight: '0', // necessary so the bottom right handle is aligned nicely
       transition: 'width 0.15s ease-out, height 0.15s ease-out', // make sure transition time is larger then mousemove event's throttle time
@@ -165,40 +167,63 @@ export abstract class ResizableNodeView implements NodeView {
       const currentY = e.pageY;
       const diffX = currentX - startX;
       const diffY = currentY - startY;
+      let newWidth: number | null = null;
+      let newHeight: number | null = null;
 
-      switch (handle.type) {
-        case ResizableHandleType.Right:
-          this.dom.style.width = `${startWidth + diffX}px`;
+      if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
+        switch (handle.type) {
+          case ResizableHandleType.Right:
+          case ResizableHandleType.BottomRight:
+            newWidth = startWidth + diffX;
+            newHeight = (startHeight / startWidth) * newWidth;
+            break;
+          case ResizableHandleType.Left:
+          case ResizableHandleType.BottomLeft:
+            newWidth = startWidth - diffX;
+            newHeight = (startHeight / startWidth) * newWidth;
+            break;
+          case ResizableHandleType.Bottom:
+            newHeight = startHeight + diffY;
+            newWidth = (startWidth / startHeight) * newHeight;
+            break;
+        }
+      } else if (this.aspectRatio === ResizableRatioType.Flexible) {
+        switch (handle.type) {
+          case ResizableHandleType.Right:
+            newWidth = startWidth + diffX;
+            break;
+          case ResizableHandleType.Left:
+            newWidth = startWidth - diffX;
+            break;
+          case ResizableHandleType.Bottom:
+            newHeight = startHeight + diffY;
+            break;
+          case ResizableHandleType.BottomRight:
+            newWidth = startWidth + diffX;
+            newHeight = startHeight + diffY;
+            break;
+          case ResizableHandleType.BottomLeft:
+            newWidth = startWidth - diffX;
+            newHeight = startHeight + diffY;
+            break;
+        }
+      }
 
-          if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
-            this.dom.style.height = `${(startHeight / startWidth) * (startWidth + diffX)}px`;
-          }
+      if (typeof newWidth === 'number' && newWidth < MIN_WIDTH) {
+        if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
+          newWidth = MIN_WIDTH;
+          newHeight = (startHeight / startWidth) * newWidth;
+        } else if (this.aspectRatio === ResizableRatioType.Flexible) {
+          newWidth = MIN_WIDTH;
+        }
+      }
 
-          break;
-        case ResizableHandleType.Left:
-          this.dom.style.width = `${startWidth - diffX}px`;
+      if (newWidth) {
+        this.dom.style.width = `${newWidth}px`;
+      }
 
-          if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
-            this.dom.style.height = `${(startHeight / startWidth) * (startWidth + diffX)}px`;
-          }
-
-          break;
-        case ResizableHandleType.Bottom:
-          this.dom.style.height = `${startHeight + diffY}px`;
-
-          if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
-            this.dom.style.width = `${(startWidth / startHeight) * (startHeight + diffY)}px`;
-          }
-
-          break;
-        case ResizableHandleType.BottomRight:
-          this.dom.style.width = `${startWidth + diffX}px`;
-          this.dom.style.height = `${startHeight + diffY}px`;
-          break;
-        case ResizableHandleType.BottomLeft:
-          this.dom.style.width = `${startWidth - diffX}px`;
-          this.dom.style.height = `${startHeight + diffY}px`;
-          break;
+      if (newHeight) {
+        this.dom.style.height = `${newHeight}px`;
       }
     });
 
