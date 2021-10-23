@@ -1,5 +1,31 @@
 # @remirror/react
 
+## 1.0.13
+
+> 2021-10-23
+
+### Patch Changes
+
+- ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.9
+  - @remirror/extension-positioner@1.1.7
+  - @remirror/extension-react-component@1.0.10
+  - @remirror/extension-react-ssr@1.0.9
+  - @remirror/extension-react-tables@1.0.13
+  - @remirror/preset-react@1.0.9
+  - @remirror/react-components@1.0.12
+  - @remirror/react-core@1.0.11
+  - @remirror/react-hooks@1.0.12
+  - @remirror/react-renderer@1.0.10
+  - @remirror/react-ssr@1.0.9
+  - @remirror/react-utils@1.0.4
+
 ## 1.0.12
 
 > 2021-10-20

@@ -1,5 +1,28 @@
 # @remirror/preset-core
 
+## 1.0.10
+
+> 2021-10-23
+
+### Patch Changes
+
+- ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+- Updated dependencies []:
+  - @remirror/core@1.2.1
+  - @remirror/extension-doc@1.0.9
+  - @remirror/extension-events@1.0.8
+  - @remirror/extension-gap-cursor@1.0.8
+  - @remirror/extension-history@1.0.8
+  - @remirror/extension-paragraph@1.0.8
+  - @remirror/extension-positioner@1.1.7
+  - @remirror/extension-text@1.0.8
+  - @remirror/pm@1.0.4
+
 ## 1.0.9
 
 > 2021-10-20

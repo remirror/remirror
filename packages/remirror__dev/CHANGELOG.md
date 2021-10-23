@@ -1,5 +1,21 @@
 # @remirror/dev
 
+## 1.0.13
+
+> 2021-10-23
+
+### Patch Changes
+
+- ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+- Updated dependencies []:
+  - @remirror/react@1.0.13
+  - @remirror/pm@1.0.4
+
 ## 1.0.12
 
 > 2021-10-20

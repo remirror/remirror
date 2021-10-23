@@ -1,5 +1,23 @@
 # @remirror/pm
 
+## 1.0.4
+
+> 2021-10-23
+
+### Patch Changes
+
+- ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.3
+  - prosemirror-paste-rules@1.0.4
+  - prosemirror-suggest@1.0.4
+  - prosemirror-trailing-node@1.0.4
+
 ## 1.0.3
 
 > 2021-10-01

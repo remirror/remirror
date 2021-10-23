@@ -47,7 +47,7 @@
     "@docusaurus/core": "^0.0.0-4039",
     "@docusaurus/types": "^0.0.0-4039",
     "@docusaurus/utils": "^0.0.0-4039",
-    "@remirror/core-helpers": "^1.0.2",
+    "@remirror/core-helpers": "^1.0.3",
     "globby": "^11.0.4",
     "sucrase": "^3.20.0"
   },

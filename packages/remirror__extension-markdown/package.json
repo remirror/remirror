@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-markdown",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Generate markdown output from your editor",
   "keywords": [
     "remirror",
@@ -40,8 +40,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.0",
-    "@remirror/messages": "^1.0.3",
+    "@remirror/core": "^1.2.1",
+    "@remirror/messages": "^1.0.4",
     "@types/marked": "^3.0.0",
     "@types/turndown": "^5.0.1",
     "marked": "^3.0.0",
@@ -49,10 +49,10 @@
     "turndown-plugin-gfm": "^1.0.2"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.3"
+    "@remirror/pm": "^1.0.4"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.3"
+    "@remirror/pm": "^1.0.4"
   },
   "publishConfig": {
     "access": "public"
