@@ -19,10 +19,30 @@ const Button = (): JSX.Element => {
 
   return (
     <>
-      <button onClick={() => commands.toggleTaskList()}>toggleTaskList</button>
-      <button onClick={() => commands.toggleBulletList()}>toggleBulletList</button>
-      <button onClick={() => commands.toggleOrderedList()}>toggleOrderedList</button>
-      <button onClick={() => commands.liftListItemOutOfList()}>liftListItemOutOfList</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.toggleTaskList()}
+      >
+        toggleTaskList
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.toggleBulletList()}
+      >
+        toggleBulletList
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.toggleOrderedList()}
+      >
+        toggleOrderedList
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.liftListItemOutOfList()}
+      >
+        liftListItemOutOfList
+      </button>
     </>
   );
 };

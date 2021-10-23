@@ -8,7 +8,14 @@ const extensions = () => [new HardBreakExtension()];
 
 const HardBreakButton = () => {
   const commands = useCommands();
-  return <button onClick={() => commands.insertHardBreak()}>Insert</button>;
+  return (
+    <button
+      onMouseDown={(event) => event.preventDefault()}
+      onClick={() => commands.insertHardBreak()}
+    >
+      Insert
+    </button>
+  );
 };
 
 const Basic = (): JSX.Element => {

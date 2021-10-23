@@ -11,7 +11,11 @@ const BoldButton = () => {
   const commands = useCommands();
   const active = useActive(true);
   return (
-    <button onClick={() => commands.toggleBold()} className={cx(active.bold() && 'active')}>
+    <button
+      onMouseDown={(event) => event.preventDefault()}
+      onClick={() => commands.toggleBold()}
+      className={cx(active.bold() && 'active')}
+    >
       Bold
     </button>
   );

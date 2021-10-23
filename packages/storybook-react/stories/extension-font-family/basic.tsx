@@ -10,8 +10,18 @@ const FontFamilyButtons = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.setFontFamily('serif')}>Serif</button>
-      <button onClick={() => commands.setFontFamily('sans-serif')}>Sans serif</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setFontFamily('serif')}
+      >
+        Serif
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setFontFamily('sans-serif')}
+      >
+        Sans serif
+      </button>
     </>
   );
 };

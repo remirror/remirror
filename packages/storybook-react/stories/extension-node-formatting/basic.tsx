@@ -35,9 +35,18 @@ const AlignButtons = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.leftAlign()}>Left</button>
-      <button onClick={() => commands.centerAlign()}>Center</button>
-      <button onClick={() => commands.rightAlign()}>Right</button>
+      <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.leftAlign()}>
+        Left
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.centerAlign()}
+      >
+        Center
+      </button>
+      <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.rightAlign()}>
+        Right
+      </button>
     </>
   );
 };
@@ -46,8 +55,18 @@ const IndentButtons = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.decreaseIndent()}>&lt;&lt;</button>
-      <button onClick={() => commands.increaseIndent()}>&gt;&gt;</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.decreaseIndent()}
+      >
+        &lt;&lt;
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.increaseIndent()}
+      >
+        &gt;&gt;
+      </button>
     </>
   );
 };
@@ -56,8 +75,18 @@ const LineHeightButtons = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.setLineHeight(1)}>Narrow</button>
-      <button onClick={() => commands.setLineHeight(2)}>Wide</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setLineHeight(1)}
+      >
+        Narrow
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setLineHeight(2)}
+      >
+        Wide
+      </button>
     </>
   );
 };

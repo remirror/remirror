@@ -12,6 +12,7 @@ const BlockquoteButton = () => {
   const active = useActive(true);
   return (
     <button
+      onMouseDown={(event) => event.preventDefault()}
       onClick={() => commands.toggleBlockquote()}
       className={cx(active.blockquote() && 'active')}
     >

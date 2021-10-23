@@ -11,7 +11,11 @@ const ItalicButton = () => {
   const commands = useCommands();
   const active = useActive(true);
   return (
-    <button onClick={() => commands.toggleItalic()} className={cx(active.italic() && 'active')}>
+    <button
+      onMouseDown={(event) => event.preventDefault()}
+      onClick={() => commands.toggleItalic()}
+      className={cx(active.italic() && 'active')}
+    >
       Italic
     </button>
   );

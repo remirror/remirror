@@ -8,7 +8,14 @@ const extensions = () => [new SupExtension()];
 
 const SupButton = () => {
   const commands = useCommands();
-  return <button onClick={() => commands.toggleSuperscript()}>Toggle Superscript</button>;
+  return (
+    <button
+      onMouseDown={(event) => event.preventDefault()}
+      onClick={() => commands.toggleSuperscript()}
+    >
+      Toggle Superscript
+    </button>
+  );
 };
 
 const Basic = (): JSX.Element => {

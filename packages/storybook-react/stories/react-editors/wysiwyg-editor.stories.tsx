@@ -20,14 +20,22 @@ function LoadButton() {
   const { setContent } = useRemirrorContext();
   const handleClick = useCallback(() => setContent(SAMPLE_DOC), [setContent]);
 
-  return <button onClick={handleClick}>Load</button>;
+  return (
+    <button onMouseDown={(event) => event.preventDefault()} onClick={handleClick}>
+      Load
+    </button>
+  );
 }
 
 function SaveButton() {
   const { getJSON } = useHelpers();
   const handleClick = useCallback(() => alert(JSON.stringify(getJSON())), [getJSON]);
 
-  return <button onClick={handleClick}>Save</button>;
+  return (
+    <button onMouseDown={(event) => event.preventDefault()} onClick={handleClick}>
+      Save
+    </button>
+  );
 }
 
 export const Basic = () => {

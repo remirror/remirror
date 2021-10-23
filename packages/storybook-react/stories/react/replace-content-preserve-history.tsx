@@ -17,7 +17,11 @@ const DOC = {
 
 function SetContentButton() {
   const { setContent } = useRemirrorContext();
-  return <button onClick={() => setContent(DOC)}>Replace content</button>;
+  return (
+    <button onMouseDown={(event) => event.preventDefault()} onClick={() => setContent(DOC)}>
+      Replace content
+    </button>
+  );
 }
 
 const ReplaceContentPreserveHistory = (): JSX.Element => {

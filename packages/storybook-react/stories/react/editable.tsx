@@ -13,7 +13,10 @@ const Editable = (): JSX.Element => {
   return (
     <ThemeProvider>
       <Remirror manager={manager} state={state} onChange={onChange} editable={editable} />
-      <button onClick={() => setEditable(!editable)}>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => setEditable(!editable)}
+      >
         Toggle editable (currently {editable.toString()})
       </button>
     </ThemeProvider>
