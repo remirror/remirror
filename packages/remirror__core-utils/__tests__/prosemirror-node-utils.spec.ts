@@ -33,7 +33,7 @@ describe('findChildren', () => {
     expect(result).toHaveLength(3);
 
     result.forEach((item) => {
-      expect(item.node.type.name).toEqual('paragraph');
+      expect(item.node.type.name).toBe('paragraph');
     });
   });
 
@@ -50,7 +50,7 @@ describe('findChildren', () => {
     expect(mock).toHaveBeenCalledTimes(3);
 
     mock.mock.calls.forEach(([item]) => {
-      expect(item.node.type.name).toEqual('paragraph');
+      expect(item.node.type.name).toBe('paragraph');
     });
   });
 
@@ -136,7 +136,7 @@ describe('findChildrenByAttribute', () => {
     expect(result).toHaveLength(2);
 
     result.forEach((item) => {
-      expect(item.node.attrs.colspan).toEqual(2);
+      expect(item.node.attrs.colspan).toBe(2);
     });
   });
 
@@ -173,7 +173,7 @@ describe('findChildrenByNode', () => {
     expect(result).toHaveLength(3);
 
     result.forEach((item) => {
-      expect(item.node.type.name).toEqual('table_cell');
+      expect(item.node.type.name).toBe('table_cell');
     });
   });
 });
@@ -195,7 +195,7 @@ describe('findChildrenByMark', () => {
     expect(result).toHaveLength(2);
 
     result.forEach((item) => {
-      expect(item.node.marks[0]?.type.name).toEqual('strong');
+      expect(item.node.marks[0]?.type.name).toBe('strong');
     });
   });
 });

@@ -241,11 +241,11 @@ describe('plugin#apply', () => {
     commands.addAnnotation({ id: '1' });
 
     // Pre-condition
-    expect(helpers.getAnnotations()[0]?.text).toEqual('Hello');
+    expect(helpers.getAnnotations()[0]?.text).toBe('Hello');
 
     commands.insertText('ADDED', { from: 3 });
 
-    expect(helpers.getAnnotations()[0]?.text).toEqual('HeADDEDllo');
+    expect(helpers.getAnnotations()[0]?.text).toBe('HeADDEDllo');
   });
 
   it("doesn't extend annotation when content is added at the end of an annotation", () => {
@@ -260,11 +260,11 @@ describe('plugin#apply', () => {
     commands.addAnnotation({ id: '1' });
 
     // Pre-condition
-    expect(helpers.getAnnotations()[0]?.text).toEqual('Hello');
+    expect(helpers.getAnnotations()[0]?.text).toBe('Hello');
 
     commands.insertText('ADDED', { from: 6 });
 
-    expect(helpers.getAnnotations()[0]?.text).toEqual('Hello');
+    expect(helpers.getAnnotations()[0]?.text).toBe('Hello');
   });
 });
 
@@ -354,7 +354,7 @@ describe('helpers', () => {
         },
       ]);
 
-      expect(helpers.getAnnotations()[0]?.text).toEqual('Hello<NEWLINE>World');
+      expect(helpers.getAnnotations()[0]?.text).toBe('Hello<NEWLINE>World');
     });
   });
 

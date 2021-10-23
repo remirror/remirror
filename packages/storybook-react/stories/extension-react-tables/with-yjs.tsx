@@ -119,7 +119,7 @@ const Table = ({
   );
 };
 
-const WithYjs = () => {
+const WithYjs = (): JSX.Element => {
   return <Table extensions={extensions} />;
 };
 
