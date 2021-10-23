@@ -1,5 +1,28 @@
 # @remirror/react-editors
 
+## 0.1.20
+
+> 2021-10-23
+
+### Patch Changes
+
+- Fixed an issue that causes resizable image's height can't be updated during resizing.
+
+* Update dependency `marked` to v3.
+
+- ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+- Updated dependencies []:
+  - remirror@1.0.34
+  - @remirror/core-helpers@1.0.3
+  - @remirror/extension-react-tables@1.0.13
+  - @remirror/react@1.0.13
+  - @remirror/pm@1.0.4
+
 ## 0.1.19
 
 > 2021-10-20

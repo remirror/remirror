@@ -1,5 +1,35 @@
 # @remirror/preset-formatting
 
+## 1.0.11
+
+> 2021-10-23
+
+### Patch Changes
+
+- ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+- Updated dependencies []:
+  - @remirror/core@1.2.1
+  - @remirror/extension-bold@1.0.8
+  - @remirror/extension-columns@1.0.8
+  - @remirror/extension-font-size@1.0.8
+  - @remirror/extension-heading@1.0.8
+  - @remirror/extension-italic@1.0.8
+  - @remirror/extension-node-formatting@1.0.11
+  - @remirror/extension-strike@1.0.8
+  - @remirror/extension-sub@1.0.8
+  - @remirror/extension-sup@1.0.8
+  - @remirror/extension-text-case@1.0.8
+  - @remirror/extension-text-color@1.0.9
+  - @remirror/extension-text-highlight@1.0.9
+  - @remirror/extension-underline@1.0.8
+  - @remirror/extension-whitespace@1.0.8
+  - @remirror/pm@1.0.4
+
 ## 1.0.10
 
 > 2021-10-20

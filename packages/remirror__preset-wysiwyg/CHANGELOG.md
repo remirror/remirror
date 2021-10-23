@@ -1,5 +1,43 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.11
+
+> 2021-10-23
+
+### Patch Changes
+
+- Fixed an issue that causes resizable image's height can't be updated during resizing.
+
+* ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+* Updated dependencies []:
+  - @remirror/extension-embed@1.1.9
+  - @remirror/extension-image@1.0.12
+  - @remirror/core@1.2.1
+  - @remirror/extension-bidi@1.0.8
+  - @remirror/extension-blockquote@1.0.9
+  - @remirror/extension-bold@1.0.8
+  - @remirror/extension-code@1.0.9
+  - @remirror/extension-code-block@1.0.11
+  - @remirror/extension-drop-cursor@1.0.8
+  - @remirror/extension-gap-cursor@1.0.8
+  - @remirror/extension-hard-break@1.0.8
+  - @remirror/extension-heading@1.0.8
+  - @remirror/extension-horizontal-rule@1.0.8
+  - @remirror/extension-italic@1.0.8
+  - @remirror/extension-link@1.1.4
+  - @remirror/extension-list@1.2.2
+  - @remirror/extension-search@1.0.8
+  - @remirror/extension-strike@1.0.8
+  - @remirror/extension-trailing-node@1.0.8
+  - @remirror/extension-underline@1.0.8
+  - @remirror/preset-core@1.0.10
+  - @remirror/pm@1.0.4
+
 ## 1.1.10
 
 > 2021-10-20
