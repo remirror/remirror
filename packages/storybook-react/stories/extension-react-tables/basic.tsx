@@ -116,7 +116,7 @@ const Table = ({
   );
 };
 
-const Basic = () => {
+const Basic = (): JSX.Element => {
   return <Table extensions={defaultExtensions} />;
 };
 

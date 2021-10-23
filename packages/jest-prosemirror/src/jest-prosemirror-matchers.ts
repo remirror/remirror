@@ -13,7 +13,7 @@ import { apply } from './jest-prosemirror-editor';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-prosemirror-messages';
 import type { CommandTransformation } from './jest-prosemirror-types';
 
-export const prosemirrorMatchers = {
+export const prosemirrorMatchers: jest.ExpectExtendMap = {
   toTransformNode(
     this: jest.MatcherUtils,
     command: ProsemirrorCommandFunction,
