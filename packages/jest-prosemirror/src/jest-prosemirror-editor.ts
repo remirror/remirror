@@ -171,7 +171,7 @@ export function insertText<Schema extends EditorSchema = EditorSchema>(
 
   let pos = start;
 
-  text.split('').forEach((character) => {
+  [...text].forEach((character) => {
     keys.char({ text: character, typing: true });
 
     if (!view.someProp('handleTextInput', (f) => f(view, pos, pos, character))) {
