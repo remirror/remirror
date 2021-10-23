@@ -2,9 +2,8 @@ lockfileVersion: 5.3
 
 overrides:
   '@babel/preset-env': ^7.13.10
-  monaco-editor: npm:@typescript-deploys/monaco-editor@4.3.5
   postcss: '>=8'
-  typescript: ^4.3.5
+  eslint-plugin-react-hooks: 4.2.1-alpha-3c4c1c470-20211021
 
 importers:
 
@@ -87,7 +86,7 @@ importers:
       eslint-plugin-markdown: ^2.2.1
       eslint-plugin-promise: ^5.1.0
       eslint-plugin-react: ^7.26.1
-      eslint-plugin-react-hooks: ^4.2.0
+      eslint-plugin-react-hooks: 4.2.1-alpha-3c4c1c470-20211021
       eslint-plugin-react-native: ^3.11.0
       eslint-plugin-simple-import-sort: ^7.0.0
       eslint-plugin-unicorn: ^37.0.1
@@ -201,7 +200,7 @@ importers:
       eslint-plugin-markdown: 2.2.1_eslint@8.0.1
       eslint-plugin-promise: 5.1.0_eslint@8.0.1
       eslint-plugin-react: 7.26.1_eslint@8.0.1
-      eslint-plugin-react-hooks: 4.2.0_eslint@8.0.1
+      eslint-plugin-react-hooks: 4.2.1-alpha-3c4c1c470-20211021_eslint@8.0.1
       eslint-plugin-react-native: 3.11.0_eslint@8.0.1
       eslint-plugin-simple-import-sort: 7.0.0_eslint@8.0.1
       eslint-plugin-unicorn: 37.0.1_eslint@8.0.1
@@ -14464,11 +14463,11 @@ packages:
       eslint: 8.0.1
     dev: false
 
-  /eslint-plugin-react-hooks/4.2.0_eslint@8.0.1:
-    resolution: {integrity: sha512-623WEiZJqxR7VdxFCKLI6d6LLpwJkGPYKODnkH3D7WpOG5KM8yWueBd8TLsNAetEJNF5iJmolaAKO3F8yzyVBQ==}
+  /eslint-plugin-react-hooks/4.2.1-alpha-3c4c1c470-20211021_eslint@8.0.1:
+    resolution: {integrity: sha512-07ueV5T1tsvmYhV2x4JFxoQOuRBe9gWMO5dYdfH7v7H69fD8/RCoHLOMDUTwDxEiIP087WGHldkb5hWLfgtPzQ==}
     engines: {node: '>=10'}
     peerDependencies:
-      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
     dependencies:
       eslint: 8.0.1
     dev: false

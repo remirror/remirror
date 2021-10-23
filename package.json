@@ -238,9 +238,8 @@
   "pnpm": {
     "overrides": {
       "@babel/preset-env": "^7.13.10",
-      "monaco-editor": "npm:@typescript-deploys/monaco-editor@4.3.5",
-      "postcss": ">=8",
-      "typescript": "^4.3.5"
+      "eslint-plugin-react-hooks": "4.2.1-alpha-3c4c1c470-20211021",
+      "postcss": ">=8"
     }
   },
   "preconstruct": {
