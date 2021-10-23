@@ -10,6 +10,7 @@ import type {
   AnyConstructor,
   AnyFunction,
   ConditionalExcept,
+  JsonPrimitive,
   Nullable,
   Primitive,
   Shape,
@@ -314,6 +315,13 @@ export function isPlainObject<Type = unknown>(value: unknown): value is UnknownS
  */
 export function isPrimitive(value: unknown): value is Primitive {
   return value == null || /^[bns]/.test(typeof value);
+}
+
+/**
+ * Predicate check for whether passed in value is a JSON primitive value
+ */
+export function isJSONPrimitive(value: unknown): value is JsonPrimitive {
+  return value === null || ['boolean', 'number', 'string'].includes(typeof value);
 }
 
 /**

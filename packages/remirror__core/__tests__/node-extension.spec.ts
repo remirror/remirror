@@ -44,13 +44,24 @@ describe('extraAttributes', () => {
       crazy: { default: 'yo', parseDOM: (domNode) => domNode.getAttribute('simple') },
       foo: { default: '' },
       bar: { default: null },
+      numeric: {
+        default: 0,
+        parseDOM: (dom) => {
+          const val = dom.getAttribute('data-numeric');
+          return val ? Number.parseInt(val, 10) : 0;
+        },
+      },
+      boolean: {
+        default: false,
+        parseDOM: (dom) => dom.getAttribute('data-boolean') === 'true',
+      },
     },
   });
 
   const { schema } = createCoreManager([customExtension]);
   const { doc, custom, other } = pmBuild(schema, {
-    custom: { nodeType: 'custom', run, title, crazy: 'yo' },
-    other: { nodeType: 'custom', run, title, crazy: 'believe me' },
+    custom: { nodeType: 'custom', run, title, crazy: 'yo', numeric: 100, boolean: true },
+    other: { nodeType: 'custom', run, title, crazy: 'believe me', numeric: 0, boolean: false },
   });
 
   it('creates attrs with the correct shape', () => {
@@ -60,12 +71,14 @@ describe('extraAttributes', () => {
       crazy: { default: 'yo' },
       foo: { default: '' },
       bar: { default: null },
+      numeric: { default: 0 },
+      boolean: { default: false },
     });
   });
 
   it('parses the dom for extra attributes', () => {
     const node = htmlToProsemirrorNode({
-      content: `<p title="${title}" data-run="${run}">hello</p>`,
+      content: `<p title="${title}" data-run="${run}" data-numeric="100" data-boolean="true">hello</p>`,
       schema,
     });
 
@@ -74,7 +87,7 @@ describe('extraAttributes', () => {
 
   it('supports parsing with getAttributes method', () => {
     const node = htmlToProsemirrorNode({
-      content: `<p title="${title}" data-run="${run}" simple="believe me">hello</p>`,
+      content: `<p title="${title}" data-run="${run}" simple="believe me" data-boolean="false">hello</p>`,
       schema,
     });
     const expected = doc(other('hello'));
