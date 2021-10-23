@@ -169,9 +169,19 @@ export abstract class ResizableNodeView implements NodeView {
       switch (handle.type) {
         case ResizableHandleType.Right:
           this.dom.style.width = `${startWidth + diffX}px`;
+
+          if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
+            this.dom.style.height = `${(startWidth / startHeight) * (startWidth + diffX)}px`;
+          }
+
           break;
         case ResizableHandleType.Left:
           this.dom.style.width = `${startWidth - diffX}px`;
+
+          if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
+            this.dom.style.height = `${(startWidth / startHeight) * (startWidth + diffX)}px`;
+          }
+
           break;
         case ResizableHandleType.Bottom:
           this.dom.style.height = `${startHeight + diffY}px`;
@@ -179,7 +189,6 @@ export abstract class ResizableNodeView implements NodeView {
         case ResizableHandleType.BottomRight:
           this.dom.style.width = `${startWidth + diffX}px`;
           this.dom.style.height = `${startHeight + diffY}px`;
-
           break;
         case ResizableHandleType.BottomLeft:
           this.dom.style.width = `${startWidth - diffX}px`;
