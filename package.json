@@ -285,7 +285,7 @@
       "testing"
     ],
     "prCreation": "not-pending",
-    "stabilityDays": 7,
+    "stabilityDays": 30,
     "rangeStrategy": "replace",
     "prConcurrentLimit": 1,
     "dependencyDashboard": true
