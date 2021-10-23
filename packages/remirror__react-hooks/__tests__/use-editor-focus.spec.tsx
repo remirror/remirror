@@ -40,11 +40,11 @@ test('should update in response to the editor focus state', () => {
     fireEvent.blur(editor.dom);
   });
 
-  expect(result.focused).toEqual(false);
+  expect(result.focused).toBe(false);
 
   act(() => {
     fireEvent.focus(editor.dom);
   });
 
-  expect(result.focused).toEqual(true);
+  expect(result.focused).toBe(true);
 });

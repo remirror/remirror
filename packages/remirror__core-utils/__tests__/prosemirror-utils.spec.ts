@@ -236,7 +236,7 @@ describe('findElementAtPosition', () => {
     const reference = findElementAtPosition(6, view);
 
     expect(reference instanceof HTMLDivElement).toBe(true);
-    expect(reference.getAttribute('data-node-type')).toEqual('atomBlock');
+    expect(reference.getAttribute('data-node-type')).toBe('atomBlock');
   });
 
   it('should return DOM reference of a nested inline leaf node', () => {
@@ -244,7 +244,7 @@ describe('findElementAtPosition', () => {
     const reference = findElementAtPosition(4, view);
 
     expect(reference instanceof HTMLSpanElement).toBe(true);
-    expect(reference.getAttribute('data-node-type')).toEqual('atomInline');
+    expect(reference.getAttribute('data-node-type')).toBe('atomInline');
   });
 
   it('should return DOM reference of a content block node', () => {
@@ -374,7 +374,7 @@ describe('findParentNode', () => {
       selection,
     });
 
-    expect(result?.node.type.name).toEqual('table');
+    expect(result?.node.type.name).toBe('table');
   });
 
   it('returns `undefined` when no parent node found', () => {
@@ -511,7 +511,7 @@ describe('findSelectedNodeOfType', () => {
       selection: tr.selection,
     });
 
-    expect(selectedNode!.node.type.name).toEqual('paragraph');
+    expect(selectedNode!.node.type.name).toBe('paragraph');
   });
 
   it('should return selected node of one of the given `nodeType`s', () => {
@@ -522,7 +522,7 @@ describe('findSelectedNodeOfType', () => {
       selection: state.selection,
     });
 
-    expect(selectedNode?.node.type.name).toEqual('paragraph');
+    expect(selectedNode?.node.type.name).toBe('paragraph');
   });
 });
 

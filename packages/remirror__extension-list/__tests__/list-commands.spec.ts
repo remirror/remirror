@@ -464,12 +464,12 @@ describe('calculateItemRange', () => {
       ),
     );
     const range = calculateItemRange(editor.state.selection)!;
-    expect(range.depth).toEqual(1);
-    expect(range.parent.type.name).toEqual('bulletList');
-    expect(range.startIndex).toEqual(0);
-    expect(range.endIndex).toEqual(1);
-    expect(editor.doc.resolve(range.start).node().type.name).toEqual('bulletList');
-    expect(editor.doc.resolve(range.end).node().type.name).toEqual('bulletList');
+    expect(range.depth).toBe(1);
+    expect(range.parent.type.name).toBe('bulletList');
+    expect(range.startIndex).toBe(0);
+    expect(range.endIndex).toBe(1);
+    expect(editor.doc.resolve(range.start).node().type.name).toBe('bulletList');
+    expect(editor.doc.resolve(range.end).node().type.name).toBe('bulletList');
   });
 
   it('returns correct range when the selection is not empty', () => {
@@ -483,17 +483,17 @@ describe('calculateItemRange', () => {
       ),
     );
     const range = calculateItemRange(editor.state.selection)!;
-    expect(range.depth).toEqual(1);
-    expect(range.parent.type.name).toEqual('taskList');
-    expect(range.startIndex).toEqual(1);
-    expect(range.endIndex).toEqual(3);
+    expect(range.depth).toBe(1);
+    expect(range.parent.type.name).toBe('taskList');
+    expect(range.startIndex).toBe(1);
+    expect(range.endIndex).toBe(3);
 
     const { start, end } = range;
-    expect(editor.doc.resolve(start).node().type.name).toEqual('taskList');
-    expect(editor.doc.resolve(end).node().type.name).toEqual('taskList');
+    expect(editor.doc.resolve(start).node().type.name).toBe('taskList');
+    expect(editor.doc.resolve(end).node().type.name).toBe('taskList');
 
-    expect(editor.doc.resolve(start).nodeAfter?.type.name).toEqual('taskListItem');
-    expect(editor.doc.resolve(end).nodeBefore?.type.name).toEqual('taskListItem');
+    expect(editor.doc.resolve(start).nodeAfter?.type.name).toBe('taskListItem');
+    expect(editor.doc.resolve(end).nodeBefore?.type.name).toBe('taskListItem');
   });
 
   it('returns correct range when the selection is in a deep list', () => {
@@ -515,17 +515,17 @@ describe('calculateItemRange', () => {
       ),
     );
     const range = calculateItemRange(editor.state.selection)!;
-    expect(range.depth).toEqual(3);
-    expect(range.parent.type.name).toEqual('orderedList');
-    expect(range.startIndex).toEqual(1);
-    expect(range.endIndex).toEqual(4);
-    expect(editor.doc.resolve(range.start).node().type.name).toEqual('orderedList');
-    expect(editor.doc.resolve(range.end).node().type.name).toEqual('orderedList');
+    expect(range.depth).toBe(3);
+    expect(range.parent.type.name).toBe('orderedList');
+    expect(range.startIndex).toBe(1);
+    expect(range.endIndex).toBe(4);
+    expect(editor.doc.resolve(range.start).node().type.name).toBe('orderedList');
+    expect(editor.doc.resolve(range.end).node().type.name).toBe('orderedList');
 
     const slice = editor.doc.slice(range.start, range.end);
-    expect(slice.openStart).toEqual(0);
-    expect(slice.openEnd).toEqual(0);
-    expect(slice.content.childCount).toEqual(3);
+    expect(slice.openStart).toBe(0);
+    expect(slice.openEnd).toBe(0);
+    expect(slice.content.childCount).toBe(3);
   });
 
   it('returns correct range when the selection across different levels', () => {
@@ -547,12 +547,12 @@ describe('calculateItemRange', () => {
       ),
     );
     const range = calculateItemRange(editor.state.selection)!;
-    expect(range.depth).toEqual(1);
-    expect(range.parent.type.name).toEqual('bulletList');
-    expect(range.startIndex).toEqual(1);
-    expect(range.endIndex).toEqual(2);
-    expect(editor.doc.resolve(range.start).node().type.name).toEqual('bulletList');
-    expect(editor.doc.resolve(range.end).node().type.name).toEqual('bulletList');
+    expect(range.depth).toBe(1);
+    expect(range.parent.type.name).toBe('bulletList');
+    expect(range.startIndex).toBe(1);
+    expect(range.endIndex).toBe(2);
+    expect(editor.doc.resolve(range.start).node().type.name).toBe('bulletList');
+    expect(editor.doc.resolve(range.end).node().type.name).toBe('bulletList');
   });
 
   it('returns nothing when the selection is not in a list', () => {

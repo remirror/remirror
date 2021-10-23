@@ -570,7 +570,7 @@ describe('Indent', () => {
     editor.add(from);
     editor.press('Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
-    expect(editor.view.state.selection.content().content.toString()).toEqual(
+    expect(editor.view.state.selection.content().content.toString()).toBe(
       '<orderedList(listItem(bulletList(listItem(paragraph("B"), taskList(taskListItem(paragraph("C")), taskListItem(paragraph("D"))), orderedList(listItem(paragraph("E")))))))>',
     );
   });
@@ -603,7 +603,7 @@ describe('Dedent', () => {
     editor.add(from);
     editor.press('Shift-Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
-    expect(editor.view.state.selection.content().content.toString()).toEqual(
+    expect(editor.view.state.selection.content().content.toString()).toBe(
       '<bulletList(listItem(paragraph("123")))>',
     );
   });
@@ -630,7 +630,7 @@ describe('Dedent', () => {
     editor.add(from);
     editor.press('Shift-Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
-    expect(editor.view.state.selection.content().content.toString()).toEqual(
+    expect(editor.view.state.selection.content().content.toString()).toBe(
       '<taskList(taskListItem(paragraph("123")))>',
     );
   });
