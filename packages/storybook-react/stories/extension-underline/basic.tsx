@@ -12,6 +12,7 @@ const UnderlineButton = () => {
   const active = useActive(true);
   return (
     <button
+      onMouseDown={(event) => event.preventDefault()}
       onClick={() => commands.toggleUnderline()}
       className={cx(active.underline() && 'active')}
     >

@@ -22,8 +22,18 @@ const ColumnsButton = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.toggleColumns(TWO_COLUMNS)}>2 columns</button>
-      <button onClick={() => commands.toggleColumns(THREE_COLUMNS)}>3 columns</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.toggleColumns(TWO_COLUMNS)}
+      >
+        2 columns
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.toggleColumns(THREE_COLUMNS)}
+      >
+        3 columns
+      </button>
     </>
   );
 };

@@ -8,7 +8,11 @@ const AddIframeButton = () => {
   const commands = useCommands();
   const handleClick = () =>
     commands.addIframe({ src: 'https://remirror.io/', height: 250, width: 500 });
-  return <button onClick={handleClick}>Add iframe</button>;
+  return (
+    <button onMouseDown={(event) => event.preventDefault()} onClick={handleClick}>
+      Add iframe
+    </button>
+  );
 };
 
 const Resizable: React.FC = () => {

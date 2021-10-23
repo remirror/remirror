@@ -32,6 +32,7 @@ const FloatingButtons = () => {
   return (
     <FloatingWrapper positioner='cursor' placement='top'>
       <button
+        onMouseDown={(event) => event.preventDefault()}
         onClick={() => commands.toggleBold()}
         style={{ fontWeight: active.bold() ? 'bold' : undefined }}
         data-testid='bubble-menu-bold'
@@ -39,12 +40,14 @@ const FloatingButtons = () => {
         Bold
       </button>
       <button
+        onMouseDown={(event) => event.preventDefault()}
         onClick={() => commands.toggleItalic()}
         style={{ fontWeight: active.italic() ? 'bold' : undefined }}
       >
         Italic
       </button>
       <button
+        onMouseDown={(event) => event.preventDefault()}
         onClick={() => commands.toggleUnderline()}
         style={{ fontWeight: active.underline() ? 'bold' : undefined }}
       >

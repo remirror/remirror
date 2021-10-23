@@ -8,7 +8,14 @@ const extensions = () => [new SubExtension()];
 
 const SubButton = () => {
   const commands = useCommands();
-  return <button onClick={() => commands.toggleSubscript()}>Toggle Subscript</button>;
+  return (
+    <button
+      onMouseDown={(event) => event.preventDefault()}
+      onClick={() => commands.toggleSubscript()}
+    >
+      Toggle Subscript
+    </button>
+  );
 };
 
 const Basic = (): JSX.Element => {

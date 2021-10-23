@@ -11,7 +11,11 @@ const StrikeButton = () => {
   const commands = useCommands();
   const active = useActive(true);
   return (
-    <button onClick={() => commands.toggleStrike()} className={cx(active.strike() && 'active')}>
+    <button
+      onMouseDown={(event) => event.preventDefault()}
+      onClick={() => commands.toggleStrike()}
+      className={cx(active.strike() && 'active')}
+    >
       Strike
     </button>
   );

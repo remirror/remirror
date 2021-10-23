@@ -10,8 +10,18 @@ const FontSizeButtons = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.setFontSize(8)}>Small</button>
-      <button onClick={() => commands.setFontSize(24)}>Large</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setFontSize(8)}
+      >
+        Small
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setFontSize(24)}
+      >
+        Large
+      </button>
     </>
   );
 };
