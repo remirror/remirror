@@ -2,7 +2,6 @@
 const config = {
   bracketSpacing: true,
   endOfLine: 'lf',
-  jsxBracketSameLine: false,
   jsxSingleQuote: true,
   plugins: [require.resolve('prettier-plugin-packagejson')],
   printWidth: 100,
