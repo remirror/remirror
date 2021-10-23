@@ -5,8 +5,6 @@
 '@remirror/types': patch
 ---
 
----
-
 ## '@remirror/core-types': patch
 
 Fix types so extraAttributes can be any JSON primitivee value
