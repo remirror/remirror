@@ -275,7 +275,6 @@ let config = {
     // Built in eslint rules
     'no-constant-condition': 'off', // To many false positives
     'no-empty': 'warn',
-    'no-else-return': 'warn',
     'no-useless-escape': 'warn',
     'default-case': 'off',
     'default-case-last': 'error',

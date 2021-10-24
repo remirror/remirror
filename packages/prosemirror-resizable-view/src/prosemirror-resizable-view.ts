@@ -126,13 +126,13 @@ export abstract class ResizableNodeView implements NodeView {
 
     if (initialSize) {
       setStyle(outer, {
-        width: `${initialSize.width}px`,
-        height: `${initialSize.height}px`,
+        width: normalizeSize(initialSize.width),
+        height: normalizeSize(initialSize.height),
       });
     } else {
       setStyle(outer, {
-        width: node.attrs.width,
-        height: node.attrs.height,
+        width: normalizeSize(node.attrs.width),
+        height: normalizeSize(node.attrs.height),
       });
     }
 
@@ -325,4 +325,14 @@ function sameMarkup(node1: ProsemirrorNode, node2: ProsemirrorNode, ignoreAttrs:
   node2.attrs = node2Attrs;
 
   return same;
+}
+
+function normalizeSize(size: string | number | null | undefined): string | undefined {
+  if (typeof size === 'number') {
+    return `${size}px`;
+  } else if (size) {
+    return size;
+  } else {
+    return undefined;
+  }
 }
