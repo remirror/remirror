@@ -219,13 +219,13 @@ export abstract class ResizableNodeView implements NodeView {
       }
 
       if (newWidth) {
-        this.dom.style.width = `${newWidth}px`;
-        this.#width = newWidth;
+        this.#width = Math.round(newWidth);
+        this.dom.style.width = `${this.#width}px`;
       }
 
       if (newHeight) {
-        this.dom.style.height = `${newHeight}px`;
-        this.#height = newHeight;
+        this.#height = Math.round(newHeight);
+        this.dom.style.height = `${this.#height}px`;
       }
     });
 
