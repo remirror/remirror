@@ -1,5 +1,16 @@
 # @remirror/extension-image
 
+## 1.0.14
+
+> 2021-10-24
+
+### Patch Changes
+
+- Fix a bug that causes initial size CSS in resizable view not be set.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.4
+
 ## 1.0.13
 
 > 2021-10-24
