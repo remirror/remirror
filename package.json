@@ -224,8 +224,6 @@
     "snapshot-diff": "^0.9.0",
     "testing": "^0.0.4",
     "typescript": "^4.3.5",
-    "typescript-plugin-css-modules": "^3.4.0",
-    "typescript-snapshots-plugin": "^1.7.0",
     "typescript-styled-plugin": "^0.18.0"
   },
   "engines": {
@@ -237,9 +235,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@babel/preset-env": "^7.13.10",
-      "eslint-plugin-react-hooks": "4.2.1-alpha-3c4c1c470-20211021",
-      "postcss": ">=8"
+      "eslint-plugin-react-hooks": "4.2.1-alpha-3c4c1c470-20211021"
     }
   },
   "preconstruct": {
