@@ -36,8 +36,8 @@ export abstract class ResizableNodeView implements NodeView {
 
   // cache the current element's size so that we can compare with new node's
   // size when `update` method is called.
-  #width = '';
-  #height = '';
+  #width: number | undefined = undefined;
+  #height: number | undefined = undefined;
 
   constructor({
     node,
@@ -220,10 +220,12 @@ export abstract class ResizableNodeView implements NodeView {
 
       if (newWidth) {
         this.dom.style.width = `${newWidth}px`;
+        this.#width = newWidth;
       }
 
       if (newHeight) {
         this.dom.style.height = `${newHeight}px`;
+        this.#height = newHeight;
       }
     });
 
@@ -238,12 +240,9 @@ export abstract class ResizableNodeView implements NodeView {
       const pos = getPos();
       const tr = view.state.tr.setNodeMarkup(pos, undefined, {
         ...this.#node.attrs,
-        width: this.dom.style.width,
-        height: this.dom.style.height,
+        width: this.#width,
+        height: this.#height,
       });
-
-      this.#width = this.dom.style.width;
-      this.#height = this.dom.style.height;
 
       view.dispatch(tr);
     };

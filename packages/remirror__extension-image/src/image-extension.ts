@@ -248,8 +248,8 @@ export type ImageAttributes = ProsemirrorAttributes<ImageExtensionAttributes>;
 export interface ImageExtensionAttributes {
   align?: 'center' | 'end' | 'justify' | 'left' | 'match-parent' | 'right' | 'start';
   alt?: string;
-  height?: string;
-  width?: string;
+  height?: string | number;
+  width?: string | number;
   rotate?: string;
   src: string;
   title?: string;
