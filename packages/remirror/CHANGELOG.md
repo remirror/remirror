@@ -1,5 +1,20 @@
 # remirror
 
+## 1.0.35
+
+> 2021-10-24
+
+### Patch Changes
+
+- Make sure that the `width` and `height` attribute of `<img>` and `<iframe>` HTML elements is an integer without a unit.
+
+* Update the type of `ImageExtensionAttributes.height` and `ImageExtensionAttributes.width` to `string | number`.
+
+* Updated dependencies []:
+  - @remirror/extension-embed@1.1.10
+  - @remirror/extension-image@1.0.13
+  - @remirror/preset-wysiwyg@1.1.12
+
 ## 1.0.34
 
 > 2021-10-23

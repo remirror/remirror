@@ -1,5 +1,13 @@
 # prosemirror-resizable-view
 
+## 1.1.3
+
+> 2021-10-24
+
+### Patch Changes
+
+- Make sure that the `width` and `height` attribute of `<img>` and `<iframe>` HTML elements is an integer without a unit.
+
 ## 1.1.2
 
 > 2021-10-23

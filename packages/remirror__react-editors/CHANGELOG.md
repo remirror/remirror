@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.21
+
+> 2021-10-24
+
+### Patch Changes
+
+- Make sure that the `width` and `height` attribute of `<img>` and `<iframe>` HTML elements is an integer without a unit.
+
+* Update the type of `ImageExtensionAttributes.height` and `ImageExtensionAttributes.width` to `string | number`.
+
+* Updated dependencies []:
+  - remirror@1.0.35
+
 ## 0.1.20
 
 > 2021-10-23
