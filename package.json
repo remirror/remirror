@@ -235,7 +235,8 @@
   },
   "pnpm": {
     "overrides": {
-      "eslint-plugin-react-hooks": "4.2.1-alpha-3c4c1c470-20211021"
+      "eslint-plugin-react-hooks": "4.2.1-alpha-3c4c1c470-20211021",
+      "postcss": ">= 8.0.0"
     }
   },
   "preconstruct": {
