@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.22
+
+> 2021-10-24
+
+### Patch Changes
+
+- Fix a bug that causes initial size CSS in resizable view not be set.
+
+- Updated dependencies []:
+  - remirror@1.0.36
+
 ## 0.1.21
 
 > 2021-10-24

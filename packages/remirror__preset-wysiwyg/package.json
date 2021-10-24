@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -48,12 +48,12 @@
     "@remirror/extension-code": "^1.0.9",
     "@remirror/extension-code-block": "^1.0.11",
     "@remirror/extension-drop-cursor": "^1.0.8",
-    "@remirror/extension-embed": "^1.1.10",
+    "@remirror/extension-embed": "^1.1.11",
     "@remirror/extension-gap-cursor": "^1.0.8",
     "@remirror/extension-hard-break": "^1.0.8",
     "@remirror/extension-heading": "^1.0.8",
     "@remirror/extension-horizontal-rule": "^1.0.8",
-    "@remirror/extension-image": "^1.0.13",
+    "@remirror/extension-image": "^1.0.14",
     "@remirror/extension-italic": "^1.0.8",
     "@remirror/extension-link": "^1.1.4",
     "@remirror/extension-list": "^1.2.2",

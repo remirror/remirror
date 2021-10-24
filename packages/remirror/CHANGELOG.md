@@ -1,5 +1,18 @@
 # remirror
 
+## 1.0.36
+
+> 2021-10-24
+
+### Patch Changes
+
+- Fix a bug that causes initial size CSS in resizable view not be set.
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.11
+  - @remirror/extension-image@1.0.14
+  - @remirror/preset-wysiwyg@1.1.13
+
 ## 1.0.35
 
 > 2021-10-24

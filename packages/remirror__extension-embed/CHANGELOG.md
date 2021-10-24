@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 1.1.11
+
+> 2021-10-24
+
+### Patch Changes
+
+- Fix a bug that causes initial size CSS in resizable view not be set.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.4
+
 ## 1.1.10
 
 > 2021-10-24

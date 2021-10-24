@@ -1,5 +1,13 @@
 # prosemirror-resizable-view
 
+## 1.1.4
+
+> 2021-10-24
+
+### Patch Changes
+
+- Fix a bug that causes initial size CSS in resizable view not be set.
+
 ## 1.1.3
 
 > 2021-10-24
