@@ -10,6 +10,9 @@ import {
   findUploadPlaceholderPayload,
   getTextSelection,
   Handler,
+  isNodeSelection,
+  keyBinding,
+  KeyBindingProps,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
@@ -217,6 +220,32 @@ export class FileExtension extends NodeExtension<FileOptions> {
 
       return false;
     };
+  }
+
+  @keyBinding({ shortcut: 'Backspace' })
+  backspaceKey(props: KeyBindingProps): boolean {
+    const { tr } = props;
+
+    // If the selection is not a node selection result false and let other
+    // extension (ie: BaseKeymapExtension) do the deleting operation.
+    if (!isNodeSelection(tr.selection)) {
+      return false;
+    }
+
+    return this.deleteFile(tr.selection.from)(props);
+  }
+
+  @keyBinding({ shortcut: 'Delete' })
+  deleteKey(props: KeyBindingProps): boolean {
+    const { tr } = props;
+
+    // If the selection is not a node selection result false and let other
+    // extension (ie: BaseKeymapExtension) do the deleting operation.
+    if (!isNodeSelection(tr.selection)) {
+      return false;
+    }
+
+    return this.deleteFile(tr.selection.from)(props);
   }
 
   private uploadFile(file: File, pos?: number | undefined): void {
