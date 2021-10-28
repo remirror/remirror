@@ -18,6 +18,9 @@ const CommandMenu = () => {
 
   return (
     <div>
+      <p>navigator.platform:{navigator?.platform} </p>
+      <p>navigator.userAgentData.platform:{(navigator as any)?.userAgentData.platform} </p>
+
       <p>commands:</p>
       <p
         style={{
