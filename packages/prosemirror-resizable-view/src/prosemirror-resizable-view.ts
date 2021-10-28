@@ -5,6 +5,8 @@ import { setStyle } from '@remirror/core-utils';
 
 import { ResizableHandle, ResizableHandleType } from './resizable-view-handle';
 
+const MIN_WIDTH = 50;
+
 export enum ResizableRatioType {
   Fixed,
   Flexible,
@@ -34,8 +36,8 @@ export abstract class ResizableNodeView implements NodeView {
 
   // cache the current element's size so that we can compare with new node's
   // size when `update` method is called.
-  #width = '';
-  #height = '';
+  #width: number | undefined = undefined;
+  #height: number | undefined = undefined;
 
   constructor({
     node,
@@ -124,19 +126,19 @@ export abstract class ResizableNodeView implements NodeView {
 
     if (initialSize) {
       setStyle(outer, {
-        width: `${initialSize.width}px`,
-        height: `${initialSize.height}px`,
+        width: normalizeSize(initialSize.width),
+        height: normalizeSize(initialSize.height),
       });
     } else {
       setStyle(outer, {
-        width: node.attrs.width,
-        height: node.attrs.height,
+        width: normalizeSize(node.attrs.width),
+        height: normalizeSize(node.attrs.height),
       });
     }
 
     setStyle(outer, {
       maxWidth: '100%',
-      minWidth: '50px',
+      minWidth: `${MIN_WIDTH}px`,
       display: 'inline-block',
       lineHeight: '0', // necessary so the bottom right handle is aligned nicely
       transition: 'width 0.15s ease-out, height 0.15s ease-out', // make sure transition time is larger then mousemove event's throttle time
@@ -165,26 +167,65 @@ export abstract class ResizableNodeView implements NodeView {
       const currentY = e.pageY;
       const diffX = currentX - startX;
       const diffY = currentY - startY;
+      let newWidth: number | null = null;
+      let newHeight: number | null = null;
 
-      switch (handle.type) {
-        case ResizableHandleType.Right:
-          this.dom.style.width = `${startWidth + diffX}px`;
-          break;
-        case ResizableHandleType.Left:
-          this.dom.style.width = `${startWidth - diffX}px`;
-          break;
-        case ResizableHandleType.Bottom:
-          this.dom.style.height = `${startHeight + diffY}px`;
-          break;
-        case ResizableHandleType.BottomRight:
-          this.dom.style.width = `${startWidth + diffX}px`;
-          this.dom.style.height = `${startHeight + diffY}px`;
+      if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
+        switch (handle.type) {
+          case ResizableHandleType.Right:
+          case ResizableHandleType.BottomRight:
+            newWidth = startWidth + diffX;
+            newHeight = (startHeight / startWidth) * newWidth;
+            break;
+          case ResizableHandleType.Left:
+          case ResizableHandleType.BottomLeft:
+            newWidth = startWidth - diffX;
+            newHeight = (startHeight / startWidth) * newWidth;
+            break;
+          case ResizableHandleType.Bottom:
+            newHeight = startHeight + diffY;
+            newWidth = (startWidth / startHeight) * newHeight;
+            break;
+        }
+      } else if (this.aspectRatio === ResizableRatioType.Flexible) {
+        switch (handle.type) {
+          case ResizableHandleType.Right:
+            newWidth = startWidth + diffX;
+            break;
+          case ResizableHandleType.Left:
+            newWidth = startWidth - diffX;
+            break;
+          case ResizableHandleType.Bottom:
+            newHeight = startHeight + diffY;
+            break;
+          case ResizableHandleType.BottomRight:
+            newWidth = startWidth + diffX;
+            newHeight = startHeight + diffY;
+            break;
+          case ResizableHandleType.BottomLeft:
+            newWidth = startWidth - diffX;
+            newHeight = startHeight + diffY;
+            break;
+        }
+      }
 
-          break;
-        case ResizableHandleType.BottomLeft:
-          this.dom.style.width = `${startWidth - diffX}px`;
-          this.dom.style.height = `${startHeight + diffY}px`;
-          break;
+      if (typeof newWidth === 'number' && newWidth < MIN_WIDTH) {
+        if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
+          newWidth = MIN_WIDTH;
+          newHeight = (startHeight / startWidth) * newWidth;
+        } else if (this.aspectRatio === ResizableRatioType.Flexible) {
+          newWidth = MIN_WIDTH;
+        }
+      }
+
+      if (newWidth) {
+        this.#width = Math.round(newWidth);
+        this.dom.style.width = `${this.#width}px`;
+      }
+
+      if (newHeight) {
+        this.#height = Math.round(newHeight);
+        this.dom.style.height = `${this.#height}px`;
       }
     });
 
@@ -199,12 +240,9 @@ export abstract class ResizableNodeView implements NodeView {
       const pos = getPos();
       const tr = view.state.tr.setNodeMarkup(pos, undefined, {
         ...this.#node.attrs,
-        width: this.dom.style.width,
-        height: this.dom.style.height,
+        width: this.#width,
+        height: this.#height,
       });
-
-      this.#width = this.dom.style.width;
-      this.#height = this.dom.style.height;
 
       view.dispatch(tr);
     };
@@ -287,4 +325,14 @@ function sameMarkup(node1: ProsemirrorNode, node2: ProsemirrorNode, ignoreAttrs:
   node2.attrs = node2Attrs;
 
   return same;
+}
+
+function normalizeSize(size: string | number | null | undefined): string | undefined {
+  if (typeof size === 'number') {
+    return `${size}px`;
+  } else if (size) {
+    return size;
+  } else {
+    return undefined;
+  }
 }

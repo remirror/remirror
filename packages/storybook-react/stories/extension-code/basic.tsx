@@ -11,7 +11,11 @@ const CodeButton = () => {
   const commands = useCommands();
   const active = useActive(true);
   return (
-    <button onClick={() => commands.toggleCode()} className={cx(active.code() && 'active')}>
+    <button
+      onMouseDown={(event) => event.preventDefault()}
+      onClick={() => commands.toggleCode()}
+      className={cx(active.code() && 'active')}
+    >
       Code
     </button>
   );

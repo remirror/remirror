@@ -28,36 +28,51 @@ const CommandMenu: React.FC = () => {
         }}
       >
         <button
+          onMouseDown={(event) => event.preventDefault()}
           data-testid='btn-3-3'
           onClick={() => createTable({ rowsCount: 3, columnsCount: 3, withHeaderRow: false })}
         >
           insert a 3*3 table
         </button>
         <button
+          onMouseDown={(event) => event.preventDefault()}
           data-testid='btn-4-10'
           onClick={() => createTable({ rowsCount: 10, columnsCount: 4, withHeaderRow: false })}
         >
           insert a 4*10 table
         </button>
         <button
+          onMouseDown={(event) => event.preventDefault()}
           data-testid='btn-3-30'
           onClick={() => createTable({ rowsCount: 30, columnsCount: 3, withHeaderRow: false })}
         >
           insert a 3*30 table
         </button>
         <button
+          onMouseDown={(event) => event.preventDefault()}
           data-testid='btn-8-100'
           onClick={() => createTable({ rowsCount: 100, columnsCount: 8, withHeaderRow: false })}
         >
           insert a 8*100 table
         </button>
-        <button onClick={() => commands.addTableColumnAfter()}>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.addTableColumnAfter()}
+        >
           add a column after the current one
         </button>
-        <button onClick={() => commands.addTableRowBefore()}>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.addTableRowBefore()}
+        >
           add a row before the current one
         </button>
-        <button onClick={() => commands.deleteTable()}>delete the table</button>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.deleteTable()}
+        >
+          delete the table
+        </button>
       </p>
     </div>
   );

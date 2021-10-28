@@ -10,9 +10,24 @@ const HighlightButtons = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.setTextHighlight('red')}>Highlight red</button>
-      <button onClick={() => commands.setTextHighlight('green')}>Highlight green</button>
-      <button onClick={() => commands.removeTextHighlight()}>Remove</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextHighlight('red')}
+      >
+        Highlight red
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextHighlight('green')}
+      >
+        Highlight green
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.removeTextHighlight()}
+      >
+        Remove
+      </button>
     </>
   );
 };

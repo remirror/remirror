@@ -5,7 +5,7 @@ import { ActionType, PlaceholderPluginAction } from './file-placeholder-actions'
 
 interface UploadPlaceholderPluginData {
   set: DecorationSet;
-  payloads: Map<unknown, any>;
+  payloads: Map<string, any>;
 }
 
 const key = new PluginKey<UploadPlaceholderPluginData>('remirroFilePlaceholderPlugin');
@@ -15,7 +15,7 @@ export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginD
     key: key,
     state: {
       init(): UploadPlaceholderPluginData {
-        return { set: DecorationSet.empty, payloads: new Map<unknown, any>() };
+        return { set: DecorationSet.empty, payloads: new Map<string, any>() };
       },
       apply(tr, { set, payloads }: UploadPlaceholderPluginData): UploadPlaceholderPluginData {
         // Adjust decoration positions to changes made by the transaction
@@ -46,7 +46,7 @@ export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginD
   });
 }
 
-export function findUploadPlaceholderPos(state: EditorState, id: unknown): number | undefined {
+export function findUploadPlaceholderPos(state: EditorState, id: string): number | undefined {
   const set = key.getState(state)?.set;
 
   if (!set) {
@@ -57,7 +57,7 @@ export function findUploadPlaceholderPos(state: EditorState, id: unknown): numbe
   return found[0]?.from;
 }
 
-export function findUploadPlaceholderPayload(state: EditorState, id: unknown): any | undefined {
+export function findUploadPlaceholderPayload(state: EditorState, id: string): any | undefined {
   const payloads = key.getState(state)?.payloads;
 
   if (!payloads) {
@@ -65,6 +65,22 @@ export function findUploadPlaceholderPayload(state: EditorState, id: unknown): a
   }
 
   return payloads.get(id);
+}
+
+/**
+ * Determine if there are active file uploads in the given state
+ *
+ * @remarks
+ * This utility is useful to warn users there are still active uploads before
+ * exiting or saving a document.
+ *
+ * @see https://remirror.vercel.app/?path=/story/extensions-file--with-upload-incomplete-warning
+ *
+ * @param state - the editor state
+ */
+export function hasUploadingFile(state: EditorState): boolean {
+  const placeholderCount = key.getState(state)?.payloads?.size ?? 0;
+  return placeholderCount > 0;
 }
 
 export function setUploadPlaceholderAction(

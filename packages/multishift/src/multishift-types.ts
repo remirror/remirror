@@ -132,7 +132,7 @@ export type ActionCreatorMapToDispatch<CreatorMap extends ActionCreatorsMapObjec
 /**
  * Infers Action union-type from action-creator map object
  */
-type ActionType<ActionCreatorMap extends any> = ActionCreatorMap extends ActionCreator<any>
+type ActionType<ActionCreatorMap> = ActionCreatorMap extends ActionCreator<any>
   ? ReturnType<ActionCreatorMap>
   : ActionCreatorMap extends Record<any, any>
   ? {

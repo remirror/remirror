@@ -41,7 +41,12 @@ const ReplaceContentImperative = (): JSX.Element => {
 
   return (
     <>
-      <button onClick={() => editorRef.current!.setContent(DOC)}>Replace content</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => editorRef.current!.setContent(DOC)}
+      >
+        Replace content
+      </button>
       <ThemeProvider>
         <Remirror manager={manager} initialContent={state} autoRender='end'>
           <ImperativeHandle ref={editorRef} />

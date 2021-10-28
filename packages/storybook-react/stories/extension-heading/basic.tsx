@@ -15,6 +15,7 @@ const HeadingButtons = () => {
       {[1, 2, 3, 4, 5, 6].map((level) => (
         <button
           key={level}
+          onMouseDown={(event) => event.preventDefault()}
           onClick={() => commands.toggleHeading({ level })}
           className={cx(active.heading({ level }) && 'active')}
         >

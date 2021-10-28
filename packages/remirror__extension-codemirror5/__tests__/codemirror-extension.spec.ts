@@ -178,10 +178,10 @@ describe('commands', () => {
 
     it('updates the language', () => {
       add(doc(jsBlock())).callback((content) => {
-        expect(getCodeMirrorMode(dom)).toEqual('javascript');
+        expect(getCodeMirrorMode(dom)).toBe('javascript');
 
         content.commands.updateCodeMirror({ language: 'python' });
-        expect(getCodeMirrorMode(dom)).toEqual('python');
+        expect(getCodeMirrorMode(dom)).toBe('python');
       });
     });
   });

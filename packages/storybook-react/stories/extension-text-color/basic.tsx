@@ -10,9 +10,24 @@ const TextColorButton = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.setTextColor('red')}>Red</button>
-      <button onClick={() => commands.setTextColor('green')}>Green</button>
-      <button onClick={() => commands.removeTextColor()}>Remove</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextColor('red')}
+      >
+        Red
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextColor('green')}
+      >
+        Green
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.removeTextColor()}
+      >
+        Remove
+      </button>
     </>
   );
 };

@@ -47,9 +47,7 @@ describe('commands', () => {
       <p>
         Hello
         <s>
-          <span class="selection">
-            strike
-          </span>
+          strike
         </s>
         , lets dance.
       </p>
@@ -61,11 +59,7 @@ describe('commands', () => {
     commands.toggleStrike();
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        Hello
-        <span class="selection">
-          strike
-        </span>
-        , lets dance.
+        Hello strike, lets dance.
       </p>
     `);
     expect(view.state.doc).toEqualRemirrorDocument(doc(p('Hello strike, lets dance.')));

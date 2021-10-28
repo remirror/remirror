@@ -3,6 +3,7 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
+  DOMCompatibleAttributes,
   extension,
   ExtensionPriority,
   ExtensionTag,
@@ -98,7 +99,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
           priority: ExtensionPriority.Low,
           getAttrs: (dom) => {
             const anchor = dom as HTMLAnchorElement;
-            const url = anchor.getAttribute('href');
+            const url = anchor.getAttribute('data-url');
             const fileName = anchor.getAttribute('data-filename');
             const fileType = anchor.getAttribute('data-filetype');
             const fileSize = anchor.getAttribute('data-filesize');
@@ -115,16 +116,20 @@ export class FileExtension extends NodeExtension<FileOptions> {
         ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {
-        const { url, ...rest } = omitExtraAttributes(node.attrs, extra);
-        const attrs = {
+        const { url, error, ...rest } = omitExtraAttributes(node.attrs, extra);
+        const attrs: DOMCompatibleAttributes = {
           ...extra.dom(node),
           ...rest,
-          href: url,
+          'data-url': url,
           'data-file': '',
           'data-filename': node.attrs.fileName,
           'data-filetype': node.attrs.fileType,
           'data-filesize': node.attrs.fileSize,
         };
+
+        if (error) {
+          attrs['data-error'] = error;
+        }
 
         return ['div', attrs];
       },

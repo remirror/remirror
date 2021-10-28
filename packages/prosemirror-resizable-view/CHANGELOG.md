@@ -1,5 +1,39 @@
 # prosemirror-resizable-view
 
+## 1.1.4
+
+> 2021-10-24
+
+### Patch Changes
+
+- Fix a bug that causes initial size CSS in resizable view not be set.
+
+## 1.1.3
+
+> 2021-10-24
+
+### Patch Changes
+
+- Make sure that the `width` and `height` attribute of `<img>` and `<iframe>` HTML elements is an integer without a unit.
+
+## 1.1.2
+
+> 2021-10-23
+
+### Patch Changes
+
+- Fixed an issue that causes resizable image's height can't be updated during resizing.
+
+* ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+* Updated dependencies []:
+  - @remirror/core-helpers@1.0.3
+  - @remirror/core-utils@1.1.2
+
 ## 1.1.1
 
 > 2021-10-01

@@ -1,5 +1,211 @@
 # remirror
 
+## 1.0.36
+
+> 2021-10-24
+
+### Patch Changes
+
+- Fix a bug that causes initial size CSS in resizable view not be set.
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.11
+  - @remirror/extension-image@1.0.14
+  - @remirror/preset-wysiwyg@1.1.13
+
+## 1.0.35
+
+> 2021-10-24
+
+### Patch Changes
+
+- Make sure that the `width` and `height` attribute of `<img>` and `<iframe>` HTML elements is an integer without a unit.
+
+* Update the type of `ImageExtensionAttributes.height` and `ImageExtensionAttributes.width` to `string | number`.
+
+* Updated dependencies []:
+  - @remirror/extension-embed@1.1.10
+  - @remirror/extension-image@1.0.13
+  - @remirror/preset-wysiwyg@1.1.12
+
+## 1.0.34
+
+> 2021-10-23
+
+### Patch Changes
+
+- Fixed an issue that causes resizable image's height can't be updated during resizing.
+
+* Update dependency `marked` to v3.
+
+- ## '@remirror/core-types': patch
+
+  Fix types so extraAttributes can be any JSON primitivee value
+
+  Previously only strings were allowed, now any JSON primitive value maybe used as an extraAttributes value
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.9
+  - @remirror/extension-image@1.0.12
+  - @remirror/preset-wysiwyg@1.1.11
+  - @remirror/extension-markdown@1.0.8
+  - @remirror/core@1.2.1
+  - @remirror/core-helpers@1.0.3
+  - @remirror/core-types@1.0.3
+  - @remirror/dom@1.0.10
+  - @remirror/extension-annotation@1.1.3
+  - @remirror/extension-bidi@1.0.8
+  - @remirror/extension-blockquote@1.0.9
+  - @remirror/extension-bold@1.0.8
+  - @remirror/extension-callout@1.0.9
+  - @remirror/extension-code@1.0.9
+  - @remirror/extension-code-block@1.0.11
+  - @remirror/extension-codemirror5@1.0.8
+  - @remirror/extension-collaboration@1.0.8
+  - @remirror/extension-columns@1.0.8
+  - @remirror/extension-diff@1.0.8
+  - @remirror/extension-doc@1.0.9
+  - @remirror/extension-drop-cursor@1.0.8
+  - @remirror/extension-emoji@1.0.9
+  - @remirror/extension-epic-mode@1.0.8
+  - @remirror/extension-events@1.0.8
+  - @remirror/extension-font-family@1.0.8
+  - @remirror/extension-font-size@1.0.8
+  - @remirror/extension-gap-cursor@1.0.8
+  - @remirror/extension-hard-break@1.0.8
+  - @remirror/extension-heading@1.0.8
+  - @remirror/extension-history@1.0.8
+  - @remirror/extension-horizontal-rule@1.0.8
+  - @remirror/extension-italic@1.0.8
+  - @remirror/extension-link@1.1.4
+  - @remirror/extension-list@1.2.2
+  - @remirror/extension-mention@1.0.8
+  - @remirror/extension-mention-atom@1.0.9
+  - @remirror/extension-node-formatting@1.0.11
+  - @remirror/extension-paragraph@1.0.8
+  - @remirror/extension-placeholder@1.0.9
+  - @remirror/extension-positioner@1.1.7
+  - @remirror/extension-search@1.0.8
+  - @remirror/extension-strike@1.0.8
+  - @remirror/extension-sub@1.0.8
+  - @remirror/extension-sup@1.0.8
+  - @remirror/extension-tables@1.0.9
+  - @remirror/extension-text@1.0.8
+  - @remirror/extension-text-case@1.0.8
+  - @remirror/extension-text-color@1.0.9
+  - @remirror/extension-text-highlight@1.0.9
+  - @remirror/extension-trailing-node@1.0.8
+  - @remirror/extension-underline@1.0.8
+  - @remirror/extension-whitespace@1.0.8
+  - @remirror/extension-yjs@1.0.11
+  - @remirror/preset-core@1.0.10
+  - @remirror/preset-formatting@1.0.11
+  - @remirror/core-utils@1.1.2
+  - @remirror/icons@1.0.4
+  - @remirror/pm@1.0.4
+  - @remirror/theme@1.1.4
+
+## 1.0.33
+
+> 2021-10-20
+
+### Patch Changes
+
+- Exposes a function `hasUploadingFile` to determine if file uploads are currently taking place.
+
+  When a user drops a file, a file node is created without a href attribute - this attribute is set once the file has uploaded.
+
+  However if a user saves content, before uploads are complete we can be left with "broken" file nodes. This exposed function allows us to check if file uploads are still in progress.
+
+  Addtionally file nodes now render valid DOM attributes. Rather than `href` and `error`, they now render `data-url` and `data-error`.
+
+* **BREAKING CHANGE**: The option `persistentSelectionClass` for `DecorationsExtension` is now `undefined` by default. It needs to be explicitly configured to enable persistent selection. You can set it as `'selection'` to match the default styles provided by `@remirror/styles`.
+
+  If you are using `@remirror/react`, you can enable it like this:
+
+  ```tsx
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+
+  function Editor(): JSX.Element {
+    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} />
+      </ThemeProvider>
+    );
+  }
+  ```
+
+  In the interest of performance, the persistent selection will only be displayed if the editor loses focus.
+
+* Updated dependencies []:
+  - @remirror/core@1.2.0
+  - @remirror/dom@1.0.9
+  - @remirror/extension-annotation@1.1.2
+  - @remirror/extension-bidi@1.0.7
+  - @remirror/extension-blockquote@1.0.8
+  - @remirror/extension-bold@1.0.7
+  - @remirror/extension-callout@1.0.8
+  - @remirror/extension-code@1.0.8
+  - @remirror/extension-code-block@1.0.10
+  - @remirror/extension-codemirror5@1.0.7
+  - @remirror/extension-collaboration@1.0.7
+  - @remirror/extension-columns@1.0.7
+  - @remirror/extension-diff@1.0.7
+  - @remirror/extension-doc@1.0.8
+  - @remirror/extension-drop-cursor@1.0.7
+  - @remirror/extension-embed@1.1.8
+  - @remirror/extension-emoji@1.0.8
+  - @remirror/extension-epic-mode@1.0.7
+  - @remirror/extension-events@1.0.7
+  - @remirror/extension-font-family@1.0.7
+  - @remirror/extension-font-size@1.0.7
+  - @remirror/extension-gap-cursor@1.0.7
+  - @remirror/extension-hard-break@1.0.7
+  - @remirror/extension-heading@1.0.7
+  - @remirror/extension-history@1.0.7
+  - @remirror/extension-horizontal-rule@1.0.7
+  - @remirror/extension-image@1.0.11
+  - @remirror/extension-italic@1.0.7
+  - @remirror/extension-link@1.1.3
+  - @remirror/extension-list@1.2.1
+  - @remirror/extension-markdown@1.0.7
+  - @remirror/extension-mention@1.0.7
+  - @remirror/extension-mention-atom@1.0.8
+  - @remirror/extension-node-formatting@1.0.10
+  - @remirror/extension-paragraph@1.0.7
+  - @remirror/extension-placeholder@1.0.8
+  - @remirror/extension-positioner@1.1.6
+  - @remirror/extension-search@1.0.7
+  - @remirror/extension-strike@1.0.7
+  - @remirror/extension-sub@1.0.7
+  - @remirror/extension-sup@1.0.7
+  - @remirror/extension-tables@1.0.8
+  - @remirror/extension-text@1.0.7
+  - @remirror/extension-text-case@1.0.7
+  - @remirror/extension-text-color@1.0.8
+  - @remirror/extension-text-highlight@1.0.8
+  - @remirror/extension-trailing-node@1.0.7
+  - @remirror/extension-underline@1.0.7
+  - @remirror/extension-whitespace@1.0.7
+  - @remirror/extension-yjs@1.0.10
+  - @remirror/preset-core@1.0.9
+  - @remirror/preset-formatting@1.0.10
+  - @remirror/preset-wysiwyg@1.1.10
+
+## 1.0.32
+
+> 2021-10-14
+
+### Patch Changes
+
+- Disable spellcheck in code and codeBlock.
+
+- Updated dependencies []:
+  - @remirror/extension-code@1.0.7
+  - @remirror/extension-code-block@1.0.9
+  - @remirror/preset-wysiwyg@1.1.9
+
 ## 1.0.31
 
 > 2021-10-11

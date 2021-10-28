@@ -27,11 +27,15 @@ const CommandMenu = () => {
           alignItems: 'flex-start',
         }}
       >
-        <button onClick={() => commands.createTable()}>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.createTable()}
+        >
           create a table with the default options
         </button>
 
         <button
+          onMouseDown={(event) => event.preventDefault()}
           onClick={() =>
             commands.createTable({ rowsCount: 4, columnsCount: 4, withHeaderRow: false })
           }
@@ -40,6 +44,7 @@ const CommandMenu = () => {
         </button>
 
         <button
+          onMouseDown={(event) => event.preventDefault()}
           onClick={() =>
             commands.createTable({ rowsCount: 4, columnsCount: 4, withHeaderRow: true })
           }
@@ -47,23 +52,47 @@ const CommandMenu = () => {
           create a 4*4 table with headers
         </button>
 
-        <button onClick={() => commands.createTable({ cellContent: customCellContent })}>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.createTable({ cellContent: customCellContent })}
+        >
           create a table with custom cell content
         </button>
 
-        <button onClick={() => commands.deleteTableColumn()}>delete the current column</button>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.deleteTableColumn()}
+        >
+          delete the current column
+        </button>
 
-        <button onClick={() => commands.deleteTableRow()}>delete the current row</button>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.deleteTableRow()}
+        >
+          delete the current row
+        </button>
 
-        <button onClick={() => commands.addTableColumnAfter()}>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.addTableColumnAfter()}
+        >
           add a column after the current one
         </button>
 
-        <button onClick={() => commands.addTableRowBefore()}>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.addTableRowBefore()}
+        >
           add a row before the current one
         </button>
 
-        <button onClick={() => commands.deleteTable()}>delete the table</button>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => commands.deleteTable()}
+        >
+          delete the table
+        </button>
       </p>
     </div>
   );

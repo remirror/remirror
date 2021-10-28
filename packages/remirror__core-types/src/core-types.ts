@@ -15,7 +15,7 @@ import type {
 } from '@remirror/pm';
 import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
 import type { Decoration, NodeView } from '@remirror/pm/view';
-import type { Literal, ObjectMark, ProsemirrorAttributes } from '@remirror/types';
+import type { JsonPrimitive, Literal, ObjectMark, ProsemirrorAttributes } from '@remirror/types';
 
 import type { FromToProps, MarkWithAttributes, NodeWithAttributes } from './props-types';
 
@@ -333,7 +333,7 @@ export type PrimitiveSelection =
  * A dynamic attributes creator. This is used to create attributes that are
  * dynamically set when a node is first added to the dom.
  */
-export type DynamicAttributeCreator = (nodeOrMark: ProsemirrorNode | Mark) => string;
+export type DynamicAttributeCreator = (nodeOrMark: ProsemirrorNode | Mark) => JsonPrimitive;
 
 /**
  * The configuration object for adding extra attributes to the node or mark in
@@ -358,7 +358,7 @@ export interface SchemaAttributesObject {
    * This can also be a function which enables dynamically setting the attribute
    * based on the value returned.
    */
-  default: string | null | DynamicAttributeCreator;
+  default: JsonPrimitive | DynamicAttributeCreator;
 
   /**
    * A function used to extract the attribute from the dom and must be applied
@@ -367,7 +367,7 @@ export interface SchemaAttributesObject {
    * If a string is set this will automatically call
    * `domNode.getAttribute('<name>')`.
    */
-  parseDOM?: ((domNode: HTMLElement) => unknown) | string;
+  parseDOM?: ((domNode: HTMLElement) => JsonPrimitive | undefined) | string;
 
   /**
    * Takes the node attributes and applies them to the dom.
@@ -400,7 +400,7 @@ export interface ApplySchemaAttributes {
    * A function which returns the object of defaults. Since this is for extra
    * attributes a default must be provided.
    */
-  defaults: () => Record<string, { default?: string | null }>;
+  defaults: () => Record<string, { default?: JsonPrimitive }>;
 
   /**
    * Read a value from the dome and convert it into prosemirror attributes.

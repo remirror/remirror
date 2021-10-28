@@ -1,12 +1,14 @@
 import { FC } from 'react';
 import { Literal } from '@remirror/core';
 
-export const createLinkHandler = (overwriteAttrs?: Record<string, Literal>) => {
-  const linkHandler: FC<{
-    href: string;
-    target?: string | null;
-    children: React.ReactElement<HTMLElement>;
-  }> = ({ href, target, children }) => {
+type LinkHandler = FC<{
+  href: string;
+  target?: string | null;
+  children: React.ReactElement<HTMLElement>;
+}>;
+
+export const createLinkHandler = (overwriteAttrs?: Record<string, Literal>): LinkHandler => {
+  const linkHandler: LinkHandler = ({ href, target, children }) => {
     const normalizedAttrs = {
       href,
       target: target ?? undefined,

@@ -5,14 +5,14 @@ export enum ActionType {
 
 interface AddPlaceholderAction {
   type: ActionType.ADD_PLACEHOLDER;
-  id: unknown;
+  id: string;
   payload: any;
   pos: number;
 }
 
 interface RemovePlaceholderAction {
   type: ActionType.REMOVE_PLACEHOLDER;
-  id: unknown;
+  id: string;
 }
 
 export type PlaceholderPluginAction = AddPlaceholderAction | RemovePlaceholderAction;

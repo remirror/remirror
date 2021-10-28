@@ -41,7 +41,7 @@ describe('schema', () => {
 
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(codeBlock(content))).toBe(
-      `<pre class="language-${attributes.language}"><code data-code-block-language="${attributes.language}">${content}</code></pre>`,
+      `<pre spellcheck="false" class="language-${attributes.language}"><code data-code-block-language="${attributes.language}">${content}</code></pre>`,
     );
   });
 
@@ -60,9 +60,9 @@ describe('constructor', () => {
   it('is created with the correct default properties and settings', () => {
     const codeBlock = new CodeBlockExtension({ syntaxTheme: 'a11y_dark' });
 
-    expect(codeBlock.options.syntaxTheme).toEqual('a11y_dark');
-    expect(codeBlock.options.defaultLanguage).toEqual('markup');
-    expect(codeBlock.options.plainTextClassName).toEqual('');
+    expect(codeBlock.options.syntaxTheme).toBe('a11y_dark');
+    expect(codeBlock.options.defaultLanguage).toBe('markup');
+    expect(codeBlock.options.plainTextClassName).toBe('');
   });
 });
 
@@ -435,8 +435,8 @@ describe('language', () => {
 
   it('yaml', () => {
     // Just here to make sure it's not undefined
-    expect(yaml.name).toEqual('yaml');
-    expect(yaml.aliases[0]).toEqual('yml');
+    expect(yaml.name).toBe('yaml');
+    expect(yaml.aliases[0]).toBe('yml');
     expect(getLang('yaml')).toEqual(yaml.name);
     expect(getLang('yml')).toEqual(yaml.aliases[0]);
     expect(getLang('YAML')).toEqual(yaml.name);
@@ -444,14 +444,14 @@ describe('language', () => {
   });
 
   it('graphql', () => {
-    expect(graphql.name).toEqual('graphql');
+    expect(graphql.name).toBe('graphql');
     expect(getLang('graphql')).toEqual(graphql.name);
     expect(getLang('GraphQL')).toEqual(graphql.name);
     expect(getLang('GRAPHQL')).toEqual(graphql.name);
   });
 
   it('handles unknown', () => {
-    expect(getLang(`this_language_does_not_exist`)).toEqual('');
+    expect(getLang(`this_language_does_not_exist`)).toBe('');
   });
 });
 

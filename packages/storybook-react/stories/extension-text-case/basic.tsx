@@ -10,11 +10,36 @@ const TextCaseButton = () => {
   const commands = useCommands();
   return (
     <>
-      <button onClick={() => commands.setTextCase({ casing: 'none' })}>None</button>
-      <button onClick={() => commands.setTextCase({ casing: 'uppercase' })}>Upper</button>
-      <button onClick={() => commands.setTextCase({ casing: 'lowercase' })}>Lower</button>
-      <button onClick={() => commands.setTextCase({ casing: 'capitalize' })}>Capitalize</button>
-      <button onClick={() => commands.setTextCase({ casing: 'small-caps' })}>Small caps</button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextCase({ casing: 'none' })}
+      >
+        None
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextCase({ casing: 'uppercase' })}
+      >
+        Upper
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextCase({ casing: 'lowercase' })}
+      >
+        Lower
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextCase({ casing: 'capitalize' })}
+      >
+        Capitalize
+      </button>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.setTextCase({ casing: 'small-caps' })}
+      >
+        Small caps
+      </button>
     </>
   );
 };

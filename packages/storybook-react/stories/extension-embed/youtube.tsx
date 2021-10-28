@@ -7,7 +7,11 @@ import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/rea
 const AddYoutubeButton = () => {
   const commands = useCommands();
   const handleClick = () => commands.addYouTubeVideo({ video: 'Zi7sRMcJT-o', startAt: 450 });
-  return <button onClick={handleClick}>Add video</button>;
+  return (
+    <button onMouseDown={(event) => event.preventDefault()} onClick={handleClick}>
+      Add video
+    </button>
+  );
 };
 
 const Youtube: React.FC = () => {
