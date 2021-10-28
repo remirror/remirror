@@ -1,6 +1,7 @@
 const CommandMenu = () => {
   return (
     <div>
+      v2
       <p>
         <strong>navigator.userAgent</strong>: {navigator?.userAgent}
       </p>
@@ -9,7 +10,7 @@ const CommandMenu = () => {
       </p>
       <p>
         <strong>navigator.userAgentData.platform</strong>:{' '}
-        {(navigator as any)?.userAgentData.platform}
+        {(navigator as any)?.userAgentData?.platform}
       </p>
     </div>
   );
