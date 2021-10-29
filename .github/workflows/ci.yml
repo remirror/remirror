@@ -128,7 +128,7 @@ jobs:
         run: pnpm test
 
       - name: publish code coverage report
-        uses: paambaati/codeclimate-action@v2.4.0
+        uses: paambaati/codeclimate-action@v2.7.5
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

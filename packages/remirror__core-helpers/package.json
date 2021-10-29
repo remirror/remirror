@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@linaria/core": "3.0.0-beta.4",
+    "@linaria/core": "3.0.0-beta.13",
     "@remirror/core-constants": "^1.0.1",
     "@remirror/types": "^0.1.1",
     "@types/object.omit": "^3.0.0",
