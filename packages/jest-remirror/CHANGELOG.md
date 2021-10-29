@@ -1,5 +1,17 @@
 # jest-remirror
 
+## 1.0.13
+
+> 2021-10-29
+
+### Patch Changes
+
+- Update prosemirror packages.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.5
+  - jest-prosemirror@1.0.7
+
 ## 1.0.12
 
 > 2021-10-23

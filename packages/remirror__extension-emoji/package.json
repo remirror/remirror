@@ -58,7 +58,7 @@
     "svgmoji": "^3.2.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.5"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.4"

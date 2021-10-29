@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.23
+
+> 2021-10-29
+
+### Patch Changes
+
+- Update prosemirror packages.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.5
+
 ## 0.1.22
 
 > 2021-10-24
