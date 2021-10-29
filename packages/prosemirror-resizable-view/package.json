@@ -43,8 +43,8 @@
     "@babel/runtime": "^7.13.10",
     "@remirror/core-helpers": "^1.0.3",
     "@remirror/core-utils": "^1.1.2",
-    "prosemirror-model": "^1.14.3",
-    "prosemirror-view": "^1.20.3"
+    "prosemirror-model": "^1.15.0",
+    "prosemirror-view": "^1.21.0"
   },
   "devDependencies": {
     "@types/prosemirror-model": "^1.13.2",

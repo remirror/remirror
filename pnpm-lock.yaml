@@ -388,9 +388,9 @@ importers:
       '@types/prosemirror-state': ^1.2.7
       '@types/prosemirror-view': ^1.19.1
       escape-string-regexp: ^4.0.0
-      prosemirror-model: ^1.14.3
+      prosemirror-model: ^1.15.0
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.20.3
+      prosemirror-view: ^1.21.0
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -412,8 +412,8 @@ importers:
       '@remirror/core-utils': ^1.1.2
       '@types/prosemirror-model': ^1.13.2
       '@types/prosemirror-view': ^1.19.1
-      prosemirror-model: ^1.14.3
-      prosemirror-view: ^1.20.3
+      prosemirror-model: ^1.15.0
+      prosemirror-view: ^1.21.0
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-helpers': link:../remirror__core-helpers
@@ -435,9 +435,9 @@ importers:
       '@types/prosemirror-state': ^1.2.7
       '@types/prosemirror-view': ^1.19.1
       escape-string-regexp: ^4.0.0
-      prosemirror-model: ^1.14.3
+      prosemirror-model: ^1.15.0
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.20.3
+      prosemirror-view: ^1.21.0
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -463,9 +463,9 @@ importers:
       '@types/prosemirror-state': ^1.2.7
       '@types/prosemirror-view': ^1.19.1
       escape-string-regexp: ^4.0.0
-      prosemirror-model: ^1.14.3
+      prosemirror-model: ^1.15.0
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.20.3
+      prosemirror-view: ^1.21.0
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -1763,13 +1763,13 @@ importers:
       '@types/prosemirror-transform': ^1.1.4
       '@types/prosemirror-view': ^1.19.1
       prosemirror-collab: ^1
-      prosemirror-commands: ^1.1.11
+      prosemirror-commands: ^1.1.12
       prosemirror-dropcursor: ^1.3.5
       prosemirror-gapcursor: ^1.2.0
       prosemirror-history: ^1
       prosemirror-inputrules: ^1
       prosemirror-keymap: ^1
-      prosemirror-model: ^1.14.3
+      prosemirror-model: ^1.15.0
       prosemirror-paste-rules: ^1.0.4
       prosemirror-schema-list: ^1.1.6
       prosemirror-state: ^1.3.4
@@ -1777,7 +1777,7 @@ importers:
       prosemirror-tables: ^1.1.1
       prosemirror-trailing-node: ^1.0.4
       prosemirror-transform: ^1.3.3
-      prosemirror-view: ^1.20.3
+      prosemirror-view: ^1.21.0
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -2958,6 +2958,9 @@ packages:
   /@aws-cdk/cloud-assembly-schema/1.129.0:
     resolution: {integrity: sha512-1GRxfRrC6p+Jafl12ALkzJ+sV47pM3V8MMQNDQS5XFl7M3+x7kScwYBSNptjC0H6VxywVksN5AMzlY4FXEyV1Q==}
     engines: {node: '>= 10.13.0 <13 || >=13.7.0'}
+    dependencies:
+      jsonschema: 1.4.0
+      semver: 7.3.5
     dev: false
     bundledDependencies:
       - jsonschema
@@ -2981,6 +2984,7 @@ packages:
     engines: {node: '>= 10.13.0 <13 || >=13.7.0'}
     dependencies:
       '@aws-cdk/cloud-assembly-schema': 1.129.0
+      semver: 7.3.5
     dev: false
     bundledDependencies:
       - semver
@@ -18942,6 +18946,7 @@ packages:
       chalk: 2.4.2
       diff-match-patch: 1.0.5
     dev: false
+    bundledDependencies: []
 
   /jsonfile/2.4.0:
     resolution: {integrity: sha1-NzaitCi4e72gzIO1P6PWM6NcKug=}
@@ -18979,6 +18984,10 @@ packages:
   /jsonparse/1.3.1:
     resolution: {integrity: sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=}
     engines: {'0': node >= 0.2.0}
+    dev: false
+
+  /jsonschema/1.4.0:
+    resolution: {integrity: sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==}
     dev: false
 
   /jsonwebtoken/8.5.1:
