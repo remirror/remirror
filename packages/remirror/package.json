@@ -137,7 +137,7 @@
     "yjs": "^13.5.11"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.4",
+    "@remirror/pm": "^1.0.5",
     "@types/prettier": "^2.3.2",
     "prettier": "^2.3.2"
   },
