@@ -222,21 +222,12 @@ export class FileExtension extends NodeExtension<FileOptions> {
     };
   }
 
-  @keyBinding({ shortcut: 'Backspace' })
+  @keyBinding({ shortcut: ['Backspace', 'Delete'] })
   backspaceKey(props: KeyBindingProps): boolean {
-    return this.removeKeyPress(props);
-  }
-
-  @keyBinding({ shortcut: 'Delete' })
-  deleteKey(props: KeyBindingProps): boolean {
-    return this.removeKeyPress(props);
-  }
-
-  private removeKeyPress(props: KeyBindingProps): boolean {
     const { tr, state } = props;
     const { from, to, empty } = tr.selection;
 
-    if (empty) {
+    if (!this.options.onDeleteFile || empty) {
       return false;
     }
 
