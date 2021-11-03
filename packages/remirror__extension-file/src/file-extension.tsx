@@ -16,6 +16,7 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
+  NodeWithPosition,
   omitExtraAttributes,
   PrimitiveSelection,
   ProsemirrorNode,
@@ -224,28 +225,39 @@ export class FileExtension extends NodeExtension<FileOptions> {
 
   @keyBinding({ shortcut: 'Backspace' })
   backspaceKey(props: KeyBindingProps): boolean {
-    const { tr } = props;
-
-    // If the selection is not a node selection result false and let other
-    // extension (ie: BaseKeymapExtension) do the deleting operation.
-    if (!isNodeSelection(tr.selection)) {
-      return false;
-    }
-
-    return this.deleteFile(tr.selection.from)(props);
+    return this.removeKeyPress(props);
   }
 
   @keyBinding({ shortcut: 'Delete' })
   deleteKey(props: KeyBindingProps): boolean {
-    const { tr } = props;
+    return this.removeKeyPress(props);
+  }
 
-    // If the selection is not a node selection result false and let other
-    // extension (ie: BaseKeymapExtension) do the deleting operation.
-    if (!isNodeSelection(tr.selection)) {
+  private removeKeyPress(props: KeyBindingProps): boolean {
+    const { tr, state } = props;
+    const { from, to, empty } = tr.selection;
+
+    if (empty) {
       return false;
     }
 
-    return this.deleteFile(tr.selection.from)(props);
+    // Collect a list of files nodes contained within this delete range
+    const onDeleteFileCallbacks: NodeWithPosition[] = [];
+    state.doc.nodesBetween(from, to, (node, pos) => {
+      if (node.type === this.type) {
+        onDeleteFileCallbacks.push({ node, pos });
+      }
+
+      return true;
+    });
+
+    // Call the onDeleteFile callback for each file being deleted.
+    onDeleteFileCallbacks.forEach(({ node, pos }) => {
+      this.options.onDeleteFile({ tr, node, pos });
+    });
+
+    // Don't need to handle the delete ourselves, just the callbacks
+    return false;
   }
 
   private uploadFile(file: File, pos?: number | undefined): void {
