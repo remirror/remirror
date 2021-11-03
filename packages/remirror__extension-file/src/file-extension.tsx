@@ -10,7 +10,6 @@ import {
   findUploadPlaceholderPayload,
   getTextSelection,
   Handler,
-  isNodeSelection,
   keyBinding,
   KeyBindingProps,
   NodeExtension,
