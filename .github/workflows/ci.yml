@@ -2,7 +2,7 @@ name: ci
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
   push:
     branches:
@@ -133,7 +133,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: 'echo Coverage'
+          coverageCommand: "echo Coverage"
           debug: false
 
   # Build the project and run tests on built files.
@@ -142,7 +142,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.8] # TODO: Make it 16 after this is fixed: https://github.com/nodejs/node/issues/40030
+        node-version: [14.x, 16.x]
       fail-fast: false
 
     steps:
