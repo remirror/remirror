@@ -127,21 +127,30 @@ export abstract class ResizableNodeView implements NodeView {
     if (initialSize) {
       setStyle(outer, {
         width: normalizeSize(initialSize.width),
-        height: normalizeSize(initialSize.height),
+        aspectRatio: `${initialSize.width} / ${initialSize.height}`,
       });
     } else {
       setStyle(outer, {
         width: normalizeSize(node.attrs.width),
-        height: normalizeSize(node.attrs.height),
+        aspectRatio: `${node.attrs.width} / ${node.attrs.height}`,
       });
     }
 
     setStyle(outer, {
       maxWidth: '100%',
       minWidth: `${MIN_WIDTH}px`,
+
+      // By default, inline-block has "vertical-align: baseline", which makes
+      // the outer wrapper slightly taller than the resizable view, which will
+      // causes layout shift. So we need to set `vertical-align` to avoid this.
+      verticalAlign: 'bottom',
       display: 'inline-block',
-      lineHeight: '0', // necessary so the bottom right handle is aligned nicely
-      transition: 'width 0.15s ease-out, height 0.15s ease-out', // make sure transition time is larger then mousemove event's throttle time
+
+      // necessary so the bottom right handle is aligned nicely
+      lineHeight: '0',
+
+      // make sure transition time is larger then mousemove event's throttle time
+      transition: 'width 0.15s ease-out, height 0.15s ease-out',
     });
 
     return outer;
@@ -225,7 +234,10 @@ export abstract class ResizableNodeView implements NodeView {
 
       if (newHeight) {
         this.#height = Math.round(newHeight);
-        this.dom.style.height = `${this.#height}px`;
+      }
+
+      if (newWidth || newHeight) {
+        this.dom.style.aspectRatio = `${this.#width} / ${this.#height}`;
       }
     });
 
