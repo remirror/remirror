@@ -127,12 +127,12 @@ export abstract class ResizableNodeView implements NodeView {
     if (initialSize) {
       setStyle(outer, {
         width: normalizeSize(initialSize.width),
-        height: normalizeSize(initialSize.height),
+        aspectRatio: `${initialSize.width} / ${initialSize.height}`,
       });
     } else {
       setStyle(outer, {
         width: normalizeSize(node.attrs.width),
-        height: normalizeSize(node.attrs.height),
+        aspectRatio: `${node.attrs.width} / ${node.attrs.height}`,
       });
     }
 
@@ -225,7 +225,10 @@ export abstract class ResizableNodeView implements NodeView {
 
       if (newHeight) {
         this.#height = Math.round(newHeight);
-        this.dom.style.height = `${this.#height}px`;
+      }
+
+      if (newWidth || newHeight) {
+        this.dom.style.aspectRatio = `${this.#width} / ${this.#height}`;
       }
     });
 
