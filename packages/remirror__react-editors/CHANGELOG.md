@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.24
+
+> 2021-11-04
+
+### Patch Changes
+
+- Fix an issue where the resizable view is too tall on a small viewpoint.
+
+- Updated dependencies []:
+  - remirror@1.0.37
+
 ## 0.1.23
 
 > 2021-10-29

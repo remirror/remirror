@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 1.1.12
+
+> 2021-11-04
+
+### Patch Changes
+
+- Fix an issue where the resizable view is too tall on a small viewpoint.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.5
+
 ## 1.1.11
 
 > 2021-10-24

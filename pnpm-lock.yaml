@@ -112,7 +112,7 @@ importers:
       playwright-testing-library: ^3.0.0
       prettier: ^2.3.2
       prettier-plugin-packagejson: ^2.2.10
-      remirror: 1.0.36
+      remirror: 1.0.37
       rimraf: ^3.0.2
       size-limit: ^5.0.1
       snapshot-diff: ^0.9.0
@@ -502,7 +502,7 @@ importers:
       '@remirror/extension-diff': ^1.0.8
       '@remirror/extension-doc': ^1.0.9
       '@remirror/extension-drop-cursor': ^1.0.8
-      '@remirror/extension-embed': ^1.1.11
+      '@remirror/extension-embed': ^1.1.12
       '@remirror/extension-emoji': ^1.0.9
       '@remirror/extension-epic-mode': ^1.0.8
       '@remirror/extension-events': ^1.0.8
@@ -513,7 +513,7 @@ importers:
       '@remirror/extension-heading': ^1.0.8
       '@remirror/extension-history': ^1.0.8
       '@remirror/extension-horizontal-rule': ^1.0.8
-      '@remirror/extension-image': ^1.0.14
+      '@remirror/extension-image': ^1.0.15
       '@remirror/extension-italic': ^1.0.8
       '@remirror/extension-link': ^1.1.4
       '@remirror/extension-list': ^1.2.2
@@ -541,7 +541,7 @@ importers:
       '@remirror/pm': ^1.0.5
       '@remirror/preset-core': ^1.0.10
       '@remirror/preset-formatting': ^1.0.11
-      '@remirror/preset-wysiwyg': ^1.1.13
+      '@remirror/preset-wysiwyg': ^1.1.14
       '@remirror/theme': ^1.1.4
       '@types/codemirror': ^5.60.2
       '@types/prettier': ^2.3.2
@@ -1063,7 +1063,7 @@ importers:
       '@remirror/messages': ^1.0.4
       '@remirror/pm': ^1.0.5
       '@types/querystringify': ^2.0.0
-      prosemirror-resizable-view: ^1.1.4
+      prosemirror-resizable-view: ^1.1.5
       querystringify: ^2.2.0
     dependencies:
       '@babel/runtime': 7.15.4
@@ -1253,7 +1253,7 @@ importers:
       '@remirror/messages': ^1.0.4
       '@remirror/pm': ^1.0.5
       '@remirror/theme': ^1.1.4
-      prosemirror-resizable-view: ^1.1.4
+      prosemirror-resizable-view: ^1.1.5
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core': link:../remirror__core
@@ -1912,12 +1912,12 @@ importers:
       '@remirror/extension-code': ^1.0.9
       '@remirror/extension-code-block': ^1.0.11
       '@remirror/extension-drop-cursor': ^1.0.8
-      '@remirror/extension-embed': ^1.1.11
+      '@remirror/extension-embed': ^1.1.12
       '@remirror/extension-gap-cursor': ^1.0.8
       '@remirror/extension-hard-break': ^1.0.8
       '@remirror/extension-heading': ^1.0.8
       '@remirror/extension-horizontal-rule': ^1.0.8
-      '@remirror/extension-image': ^1.0.14
+      '@remirror/extension-image': ^1.0.15
       '@remirror/extension-italic': ^1.0.8
       '@remirror/extension-link': ^1.1.4
       '@remirror/extension-list': ^1.2.2
@@ -2131,7 +2131,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       refractor: ^3.3.1
-      remirror: 1.0.36
+      remirror: 1.0.37
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.15.4
@@ -2311,7 +2311,7 @@ importers:
       '@remirror/messages': ^1.0.4
       '@remirror/pm': ^1.0.5
       '@remirror/react': ^1.0.13
-      '@remirror/react-editors': ^0.1.23
+      '@remirror/react-editors': ^0.1.24
       '@remirror/styles': ^1.1.2
       '@storybook/addon-controls': ^6.3.12
       '@storybook/addons': ^6.3.4
@@ -2340,7 +2340,7 @@ importers:
       react-is: ^17.0.2
       reakit: ^1.3.8
       refractor: ^3.3.1
-      remirror: 1.0.36
+      remirror: 1.0.37
       scripts: 0.0.1
       svgmoji: ^3.2.0
       y-webrtc: ^10.2.0
@@ -2717,7 +2717,7 @@ importers:
       '@mdx-js/react': ^1.6.22
       '@remirror/dev': ^1.0.13
       '@remirror/react': ^1.0.13
-      '@remirror/react-editors': ^0.1.23
+      '@remirror/react-editors': ^0.1.24
       '@remirror/styles': ^1.1.2
       '@tsconfig/docusaurus': ^1.0.4
       '@types/react': ^17.0.14
@@ -2746,7 +2746,7 @@ importers:
       react-syntax-highlighter: ^15.4.3
       reakit: ^1.3.8
       remark-footnotes: ^3.0.0
-      remirror: ^1.0.36
+      remirror: ^1.0.37
     dependencies:
       '@babel/runtime': 7.15.4
       '@emotion/css': 11.5.0_@babel+core@7.15.8
@@ -10877,7 +10877,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.4
+      follow-redirects: 1.14.4_debug@4.3.2
     transitivePeerDependencies:
       - debug
 
@@ -15583,15 +15583,6 @@ packages:
       xtend: 4.0.2
     dev: false
 
-  /follow-redirects/1.14.4:
-    resolution: {integrity: sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-
   /follow-redirects/1.14.4_debug@4.3.2:
     resolution: {integrity: sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==}
     engines: {node: '>=4.0'}
@@ -16421,7 +16412,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.14.2
+      uglify-js: 3.14.3
     dev: false
 
   /har-schema/2.0.0:
@@ -26334,8 +26325,8 @@ packages:
     resolution: {integrity: sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==}
     dev: true
 
-  /uglify-js/3.14.2:
-    resolution: {integrity: sha512-rtPMlmcO4agTUfz10CbgJ1k6UAoXM2gWb3GoMPPZB/+/Ackf8lNWk11K4rYi2D0apgoFRLtQOZhb+/iGNJq26A==}
+  /uglify-js/3.14.3:
+    resolution: {integrity: sha512-mic3aOdiq01DuSVx0TseaEzMIVqebMZ0Z3vaeDhFEh9bsc24hV1TFvN74reA2vs08D0ZWfNjAcJ3UbVLaBss+g==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true
