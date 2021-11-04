@@ -142,7 +142,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.8] # TODO: Make it 16 after this is fixed: https://github.com/nodejs/node/issues/40030
+        node-version: [14.x, 16.x]
       fail-fast: false
 
     steps:
