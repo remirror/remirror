@@ -1,5 +1,17 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.14
+
+> 2021-11-04
+
+### Patch Changes
+
+- Fix an issue where the resizable view is too tall on a small viewpoint.
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.12
+  - @remirror/extension-image@1.0.15
+
 ## 1.1.13
 
 > 2021-10-24
