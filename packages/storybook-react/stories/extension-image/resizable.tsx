@@ -1,12 +1,14 @@
 import 'remirror/styles/all.css';
 
-import React from 'react';
 import { ImageExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 const extensions = () => [new ImageExtension({ enableResizing: true })];
 
-const Resizable: React.FC = () => {
+const Resizable = ({ delaySeconds = 1 }: { delaySeconds: number }): JSX.Element => {
+  const imageSrc = 'https://dummyimage.com/2000x800/479e0c/fafafa';
+  const proxySrc = `https://deelay.me/${delaySeconds * 1000}/${imageSrc}`;
+
   const { manager, state, onChange } = useRemirror({
     extensions,
     content: {
@@ -16,8 +18,12 @@ const Resizable: React.FC = () => {
           type: 'paragraph',
           content: [
             {
-              type: 'text',
-              text: 'You can see a resizable image below. Move your mouse over the image and drag the resizing handler to resize it.',
+              type: 'image',
+              attrs: {
+                height: 160,
+                width: 400,
+                src: proxySrc,
+              },
             },
           ],
         },
@@ -25,22 +31,11 @@ const Resizable: React.FC = () => {
           type: 'paragraph',
           content: [
             {
-              type: 'image',
-              attrs: {
-                alt: '',
-                crop: null,
-                height: 160,
-                width: 400,
-                rotate: null,
-                src: 'https://deelay.me/10000/https://dummyimage.com/2000x800/479e0c/fafafa',
-                title: '',
-                fileName: null,
-                resizable: false,
-              },
+              type: 'text',
+              text: 'You can see a resizable image above. Move your mouse over the image and drag the resizing handler to resize it.',
             },
           ],
         },
-        { type: 'paragraph', content: [{ type: 'text', text: 'aa' }] },
       ],
     },
   });
