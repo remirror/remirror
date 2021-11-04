@@ -1,5 +1,17 @@
 # @remirror/dev
 
+## 1.0.14
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.6
+  - @remirror/react@1.0.14
+
 ## 1.0.13
 
 > 2021-10-23

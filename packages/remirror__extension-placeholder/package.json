@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-placeholder",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "TEMPLATE_DESCRIPTION",
   "keywords": [
     "remirror",
@@ -41,15 +41,15 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.1",
-    "@remirror/messages": "^1.0.4",
+    "@remirror/core": "^1.2.2",
+    "@remirror/messages": "^1.0.5",
     "@remirror/theme": "^1.1.4"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.5"
+    "@remirror/pm": "^1.0.6"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.6"
   },
   "publishConfig": {
     "access": "public"

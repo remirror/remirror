@@ -1,5 +1,19 @@
 # @remirror/extension-image
 
+## 1.0.16
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.6
+  - @remirror/core@1.2.2
+  - @remirror/messages@1.0.5
+  - @remirror/pm@1.0.6
+
 ## 1.0.15
 
 > 2021-11-04

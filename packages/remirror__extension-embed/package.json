@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-embed",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "Add embedded content into your editor",
   "keywords": [
     "remirror",
@@ -41,17 +41,17 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.1",
-    "@remirror/messages": "^1.0.4",
+    "@remirror/core": "^1.2.2",
+    "@remirror/messages": "^1.0.5",
     "@types/querystringify": "^2.0.0",
-    "prosemirror-resizable-view": "^1.1.5",
+    "prosemirror-resizable-view": "^1.1.6",
     "querystringify": "^2.2.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.5"
+    "@remirror/pm": "^1.0.6"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.6"
   },
   "publishConfig": {
     "access": "public"

@@ -1,5 +1,17 @@
 # prosemirror-resizable-view
 
+## 1.1.6
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+  - @remirror/core-utils@1.1.3
+
 ## 1.1.5
 
 > 2021-11-04

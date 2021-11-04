@@ -1,5 +1,20 @@
 # @remirror/react-editors
 
+## 0.1.25
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+  - remirror@1.0.38
+  - @remirror/extension-react-tables@1.0.14
+  - @remirror/pm@1.0.6
+  - @remirror/react@1.0.14
+
 ## 0.1.24
 
 > 2021-11-04

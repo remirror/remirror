@@ -1,5 +1,21 @@
 # @remirror/core
 
+## 1.2.2
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+  - @remirror/core-utils@1.1.3
+  - @remirror/i18n@1.0.6
+  - @remirror/icons@1.0.5
+  - @remirror/messages@1.0.5
+  - @remirror/pm@1.0.6
+
 ## 1.2.1
 
 > 2021-10-23

@@ -1,5 +1,19 @@
 # @remirror/extension-mention-atom
 
+## 1.0.10
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core@1.2.2
+  - @remirror/extension-events@1.0.9
+  - @remirror/messages@1.0.5
+  - @remirror/pm@1.0.6
+
 ## 1.0.9
 
 > 2021-10-23

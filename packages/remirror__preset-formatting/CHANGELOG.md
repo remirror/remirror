@@ -1,5 +1,31 @@
 # @remirror/preset-formatting
 
+## 1.0.12
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core@1.2.2
+  - @remirror/extension-bold@1.0.9
+  - @remirror/extension-columns@1.0.9
+  - @remirror/extension-font-size@1.0.9
+  - @remirror/extension-heading@1.0.9
+  - @remirror/extension-italic@1.0.9
+  - @remirror/extension-node-formatting@1.0.12
+  - @remirror/extension-strike@1.0.9
+  - @remirror/extension-sub@1.0.9
+  - @remirror/extension-sup@1.0.9
+  - @remirror/extension-text-case@1.0.9
+  - @remirror/extension-text-color@1.0.10
+  - @remirror/extension-text-highlight@1.0.10
+  - @remirror/extension-underline@1.0.9
+  - @remirror/extension-whitespace@1.0.9
+  - @remirror/pm@1.0.6
+
 ## 1.0.11
 
 > 2021-10-23

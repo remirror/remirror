@@ -1,5 +1,16 @@
 # @remirror/react-renderer
 
+## 1.0.11
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core@1.2.2
+
 ## 1.0.10
 
 > 2021-10-23

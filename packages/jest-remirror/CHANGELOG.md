@@ -1,5 +1,20 @@
 # jest-remirror
 
+## 1.0.14
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - jest-prosemirror@1.0.8
+  - @remirror/core@1.2.2
+  - @remirror/dom@1.0.11
+  - @remirror/pm@1.0.6
+  - @remirror/preset-core@1.0.11
+
 ## 1.0.13
 
 > 2021-10-29

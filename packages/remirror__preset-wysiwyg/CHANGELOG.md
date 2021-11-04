@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.15
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core@1.2.2
+  - @remirror/extension-bidi@1.0.9
+  - @remirror/extension-blockquote@1.0.10
+  - @remirror/extension-bold@1.0.9
+  - @remirror/extension-code@1.0.10
+  - @remirror/extension-code-block@1.0.12
+  - @remirror/extension-drop-cursor@1.0.9
+  - @remirror/extension-embed@1.1.13
+  - @remirror/extension-gap-cursor@1.0.9
+  - @remirror/extension-hard-break@1.0.9
+  - @remirror/extension-heading@1.0.9
+  - @remirror/extension-horizontal-rule@1.0.9
+  - @remirror/extension-image@1.0.16
+  - @remirror/extension-italic@1.0.9
+  - @remirror/extension-link@1.1.5
+  - @remirror/extension-list@1.2.3
+  - @remirror/extension-search@1.0.9
+  - @remirror/extension-strike@1.0.9
+  - @remirror/extension-trailing-node@1.0.9
+  - @remirror/extension-underline@1.0.9
+  - @remirror/pm@1.0.6
+  - @remirror/preset-core@1.0.11
+
 ## 1.1.14
 
 > 2021-11-04

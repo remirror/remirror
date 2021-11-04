@@ -1,6 +1,6 @@
 {
   "name": "@remirror/cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The remirror cli",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__cli",
   "repository": {
@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^1.0.3",
+    "@remirror/core-helpers": "^1.0.4",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-json": "^4",
