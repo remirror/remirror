@@ -1,5 +1,26 @@
 # @remirror/react-components
 
+## 1.0.13
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - multishift@1.0.5
+  - @remirror/core@1.2.2
+  - @remirror/extension-positioner@1.1.8
+  - @remirror/extension-text-color@1.0.10
+  - @remirror/i18n@1.0.6
+  - @remirror/icons@1.0.5
+  - @remirror/messages@1.0.5
+  - @remirror/pm@1.0.6
+  - @remirror/react-core@1.0.12
+  - @remirror/react-hooks@1.0.13
+  - @remirror/react-utils@1.0.5
+
 ## 1.0.12
 
 > 2021-10-23

@@ -1,5 +1,16 @@
 # test-keyboard
 
+## 1.0.4
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+
 ## 1.0.3
 
 > 2021-10-23

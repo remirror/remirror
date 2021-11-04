@@ -1,5 +1,19 @@
 # @remirror/pm
 
+## 1.0.6
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+  - prosemirror-paste-rules@1.0.5
+  - prosemirror-suggest@1.0.5
+  - prosemirror-trailing-node@1.0.5
+
 ## 1.0.5
 
 > 2021-10-29

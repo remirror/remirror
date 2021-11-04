@@ -1,5 +1,24 @@
 # @remirror/preset-core
 
+## 1.0.11
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core@1.2.2
+  - @remirror/extension-doc@1.0.10
+  - @remirror/extension-events@1.0.9
+  - @remirror/extension-gap-cursor@1.0.9
+  - @remirror/extension-history@1.0.9
+  - @remirror/extension-paragraph@1.0.9
+  - @remirror/extension-positioner@1.1.8
+  - @remirror/extension-text@1.0.9
+  - @remirror/pm@1.0.6
+
 ## 1.0.10
 
 > 2021-10-23

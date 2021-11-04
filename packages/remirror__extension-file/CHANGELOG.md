@@ -1,5 +1,19 @@
 # @remirror/extension-file
 
+## 0.3.2
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core@1.2.2
+  - @remirror/pm@1.0.6
+  - @remirror/react@1.0.14
+  - @remirror/react-components@1.0.13
+
 ## 0.3.1
 
 > 2021-10-23
