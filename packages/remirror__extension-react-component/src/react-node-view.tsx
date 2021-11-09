@@ -100,15 +100,6 @@ export class ReactNodeView implements NodeView {
     return this.#selected;
   }
 
-  #isDragging = false;
-
-  /**
-   * Whether or not the node is currently been dragging.
-   */
-  public get isDragging(): boolean {
-    return this.#isDragging;
-  }
-
   #contentDOM?: Node | undefined;
 
   /**
@@ -162,7 +153,6 @@ export class ReactNodeView implements NodeView {
     this.#getPosition = getPosition;
     this.#options = options;
     this.#dom = this.createDom();
-    this.#isDragging = false;
 
     const { contentDOM, wrapper } = this.createContentDom() ?? {};
 
@@ -440,7 +430,6 @@ export class ReactNodeView implements NodeView {
       return true;
     }
 
-    const { isDragging } = this;
     const isDraggable = !!this.#node.type.spec.draggable;
     const isSelectable = NodeSelection.isSelectable(this.#node);
     const isCopyEvent = event.type === 'copy';
@@ -456,14 +445,13 @@ export class ReactNodeView implements NodeView {
       event.preventDefault();
     }
 
-    if (isDraggable && isDragEvent && !isDragging) {
+    if (isDraggable && isDragEvent) {
       event.preventDefault();
       return false;
     }
 
     // these events are handled by prosemirror
     if (
-      isDragging ||
       isDropEvent ||
       isCopyEvent ||
       isPasteEvent ||
