@@ -1,5 +1,21 @@
 # @remirror/preset-react
 
+## 1.0.11
+
+> 2021-11-10
+
+### Patch Changes
+
+- Implement the `stopEvent` method in `ReactNodeView`.
+
+* Add new method `hasHandlers` to extensions.
+
+* Updated dependencies []:
+  - @remirror/extension-react-component@1.1.0
+  - @remirror/extension-react-ssr@1.0.11
+  - @remirror/core@1.3.0
+  - @remirror/extension-placeholder@1.0.11
+
 ## 1.0.10
 
 > 2021-11-04

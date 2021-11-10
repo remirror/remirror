@@ -1,5 +1,23 @@
 # @remirror/preset-core
 
+## 1.0.12
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/extension-doc@1.0.11
+  - @remirror/extension-events@1.0.10
+  - @remirror/extension-gap-cursor@1.0.10
+  - @remirror/extension-history@1.0.10
+  - @remirror/extension-paragraph@1.0.10
+  - @remirror/extension-positioner@1.1.9
+  - @remirror/extension-text@1.0.10
+
 ## 1.0.11
 
 > 2021-11-04

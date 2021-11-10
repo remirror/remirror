@@ -1,5 +1,20 @@
 # @remirror/react-editors
 
+## 0.1.26
+
+> 2021-11-10
+
+### Patch Changes
+
+- Implement the `stopEvent` method in `ReactNodeView`.
+
+* Add new method `hasHandlers` to extensions.
+
+* Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.15
+  - @remirror/react@1.0.15
+  - remirror@1.0.39
+
 ## 0.1.25
 
 > 2021-11-04

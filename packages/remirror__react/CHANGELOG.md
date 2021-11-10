@@ -1,5 +1,28 @@
 # @remirror/react
 
+## 1.0.15
+
+> 2021-11-10
+
+### Patch Changes
+
+- Implement the `stopEvent` method in `ReactNodeView`.
+
+* Add new method `hasHandlers` to extensions.
+
+* Updated dependencies []:
+  - @remirror/extension-react-component@1.1.0
+  - @remirror/extension-react-ssr@1.0.11
+  - @remirror/extension-react-tables@1.0.15
+  - @remirror/preset-react@1.0.11
+  - @remirror/react-components@1.0.14
+  - @remirror/react-core@1.0.13
+  - @remirror/react-hooks@1.0.14
+  - @remirror/react-ssr@1.0.11
+  - @remirror/extension-placeholder@1.0.11
+  - @remirror/extension-positioner@1.1.9
+  - @remirror/react-renderer@1.0.12
+
 ## 1.0.14
 
 > 2021-11-04

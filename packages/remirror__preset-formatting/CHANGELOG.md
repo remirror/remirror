@@ -1,5 +1,30 @@
 # @remirror/preset-formatting
 
+## 1.0.13
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/extension-bold@1.0.10
+  - @remirror/extension-columns@1.0.10
+  - @remirror/extension-font-size@1.0.10
+  - @remirror/extension-heading@1.0.10
+  - @remirror/extension-italic@1.0.10
+  - @remirror/extension-node-formatting@1.0.13
+  - @remirror/extension-strike@1.0.10
+  - @remirror/extension-sub@1.0.10
+  - @remirror/extension-sup@1.0.10
+  - @remirror/extension-text-case@1.0.10
+  - @remirror/extension-text-color@1.0.11
+  - @remirror/extension-text-highlight@1.0.11
+  - @remirror/extension-underline@1.0.10
+  - @remirror/extension-whitespace@1.0.10
+
 ## 1.0.12
 
 > 2021-11-04

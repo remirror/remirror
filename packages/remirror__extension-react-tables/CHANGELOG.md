@@ -1,5 +1,24 @@
 # @remirror/extension-react-tables
 
+## 1.0.15
+
+> 2021-11-10
+
+### Patch Changes
+
+- Implement the `stopEvent` method in `ReactNodeView`.
+
+* Add new method `hasHandlers` to extensions.
+
+* Updated dependencies []:
+  - @remirror/react-components@1.0.14
+  - @remirror/react-core@1.0.13
+  - @remirror/react-hooks@1.0.14
+  - @remirror/core@1.3.0
+  - @remirror/extension-positioner@1.1.9
+  - @remirror/extension-tables@1.0.11
+  - @remirror/preset-core@1.0.12
+
 ## 1.0.14
 
 > 2021-11-04

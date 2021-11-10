@@ -1,5 +1,17 @@
 # @remirror/dom
 
+## 1.0.12
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/preset-core@1.0.12
+
 ## 1.0.11
 
 > 2021-11-04

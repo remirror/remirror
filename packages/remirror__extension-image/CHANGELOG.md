@@ -1,5 +1,16 @@
 # @remirror/extension-image
 
+## 1.0.17
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+
 ## 1.0.16
 
 > 2021-11-04

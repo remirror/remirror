@@ -1,5 +1,36 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.16
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/extension-bidi@1.0.10
+  - @remirror/extension-blockquote@1.0.11
+  - @remirror/extension-bold@1.0.10
+  - @remirror/extension-code@1.0.11
+  - @remirror/extension-code-block@1.0.13
+  - @remirror/extension-drop-cursor@1.0.10
+  - @remirror/extension-embed@1.1.14
+  - @remirror/extension-gap-cursor@1.0.10
+  - @remirror/extension-hard-break@1.0.10
+  - @remirror/extension-heading@1.0.10
+  - @remirror/extension-horizontal-rule@1.0.10
+  - @remirror/extension-image@1.0.17
+  - @remirror/extension-italic@1.0.10
+  - @remirror/extension-link@1.1.6
+  - @remirror/extension-list@1.2.4
+  - @remirror/extension-search@1.0.10
+  - @remirror/extension-strike@1.0.10
+  - @remirror/extension-trailing-node@1.0.10
+  - @remirror/extension-underline@1.0.10
+  - @remirror/preset-core@1.0.12
+
 ## 1.1.15
 
 > 2021-11-04

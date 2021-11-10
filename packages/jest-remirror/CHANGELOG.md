@@ -1,5 +1,18 @@
 # jest-remirror
 
+## 1.0.15
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/dom@1.0.12
+  - @remirror/preset-core@1.0.12
+
 ## 1.0.14
 
 > 2021-11-04

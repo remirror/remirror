@@ -1,5 +1,17 @@
 # @remirror/extension-positioner
 
+## 1.1.9
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/extension-events@1.0.10
+
 ## 1.1.8
 
 > 2021-11-04
