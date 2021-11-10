@@ -1,5 +1,17 @@
 # @remirror/extension-text-highlight
 
+## 1.0.11
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/extension-text-color@1.0.11
+
 ## 1.0.10
 
 > 2021-11-04

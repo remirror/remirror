@@ -1,5 +1,17 @@
 # @remirror/extension-annotation
 
+## 1.1.5
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/extension-positioner@1.1.9
+
 ## 1.1.4
 
 > 2021-11-04

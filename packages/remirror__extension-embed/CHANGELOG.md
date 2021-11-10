@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 1.1.14
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+
 ## 1.1.13
 
 > 2021-11-04

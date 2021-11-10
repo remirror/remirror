@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-hard-break",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Add `br` tags to your editor.",
   "keywords": [
     "remirror",
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.2",
+    "@remirror/core": "^1.3.0",
     "@remirror/messages": "^1.0.5"
   },
   "devDependencies": {
