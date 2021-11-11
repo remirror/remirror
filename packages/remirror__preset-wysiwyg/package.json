@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "1.1.16",
+  "version": "1.1.17",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -55,7 +55,7 @@
     "@remirror/extension-horizontal-rule": "^1.0.10",
     "@remirror/extension-image": "^1.0.17",
     "@remirror/extension-italic": "^1.0.10",
-    "@remirror/extension-link": "^1.1.6",
+    "@remirror/extension-link": "^1.1.7",
     "@remirror/extension-list": "^1.2.4",
     "@remirror/extension-search": "^1.0.10",
     "@remirror/extension-strike": "^1.0.10",

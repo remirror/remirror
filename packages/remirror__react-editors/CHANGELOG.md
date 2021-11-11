@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.27
+
+> 2021-11-11
+
+### Patch Changes
+
+- Add a new option `extractHref` to `ExtensionLink`. Users can use this option to customize the `href` attribute, for example `file://` and `tel:`.
+
+- Updated dependencies []:
+  - remirror@1.0.40
+
 ## 0.1.26
 
 > 2021-11-10
