@@ -501,20 +501,35 @@ describe('autolinking', () => {
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: '//test.com' })('test.com'))),
     );
+
+    editor.insertText(' test.com test.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: '//test.com' })('test.com'),
+        ),
+      ),
+    );
   });
 
   it('can parse telphone by overriding extractHref', () => {
-    const phoneRegex = /(?:\+?(\d{1,3}))?[ (.-]*(\d{3})[ ).-]*(\d{3})[ .-]*(\d{4})(?: *x(\d+))?/;
+    const phoneRegex = /(?:\+?(\d{1,3}))?[(.-]*(\d{3})[).-]*(\d{3})[.-]*(\d{4})(?: *x(\d+))?/;
     const linkRegex =
-      /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/i;
+      /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi;
 
     const composedRegex = new RegExp(
       [phoneRegex, linkRegex].map((regex) => `(${regex.source})`).join('|'),
-      // 'i',
+      'gi',
     );
 
     const extractLinkOrTel = (props: { url: string; defaultProtocol: string }): string => {
-      const isLink = linkRegex.exec(props.url);
+      linkRegex.lastIndex = 0;
+      const isLink = linkRegex.test(props.url);
       return isLink ? extractHref(props) : `tel:${props.url}`;
     };
 
@@ -534,10 +549,46 @@ describe('autolinking', () => {
       doc(p(link({ auto: true, href: '//test.com' })('test.com'))),
     );
 
-    editor.add(doc(p('<cursor>'))).insertText('800-555-1234');
+    editor.insertText(' test.com');
 
     expect(editor.doc).toEqualRemirrorDocument(
-      doc(p(link({ auto: true, href: 'tel:800-555-1234' })('800-555-1234'))),
+      doc(
+        p(
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: '//test.com' })('test.com'),
+        ),
+      ),
+    );
+
+    editor.insertText(' 800-555-1234');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: 'tel:800-555-1234' })('800-555-1234'),
+        ),
+      ),
+    );
+
+    editor.insertText(' 800-555-0000');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: 'tel:800-555-1234' })('800-555-1234'),
+          ' ',
+          link({ auto: true, href: 'tel:800-555-0000' })('800-555-0000'),
+        ),
+      ),
     );
   });
 
