@@ -5,4 +5,4 @@ export type {
   LinkOptions,
   ShortcutHandlerProps,
 } from './link-extension';
-export { LinkExtension } from './link-extension';
+export { extractHref, LinkExtension } from './link-extension';

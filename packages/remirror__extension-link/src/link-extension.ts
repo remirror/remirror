@@ -46,7 +46,7 @@ const UPDATE_LINK = 'updateLink';
 /**
  * Can be an empty string which sets url's to '//google.com'.
  */
-export type DefaultProtocol = 'http:' | 'https:' | '';
+export type DefaultProtocol = 'http:' | 'https:' | '' | string;
 
 interface EventMeta {
   selection: TextSelection;
@@ -79,16 +79,22 @@ export interface LinkOptions {
    *
    * If multiple links exist within the range, only the first is returned. I'm
    * open to PR's if you feel it's important to capture all contained links.
+   *
+   * @default undefined
    */
   onShortcut?: Handler<(props: ShortcutHandlerProps) => void>;
 
   /**
    * Called after the `commands.updateLink` has been called.
+   *
+   * @default undefined
    */
   onUpdateLink?: Handler<(selectedText: string, meta: EventMeta) => void>;
 
   /**
-   * Whether whether to select the text of the full active link when clicked.
+   * Whether to select the text of the full active link when clicked.
+   *
+   * @default false
    */
   selectTextOnClick?: boolean;
 
@@ -96,6 +102,16 @@ export interface LinkOptions {
    * Listen to click events for links.
    */
   onClick?: Handler<(event: MouseEvent, data: LinkClickData) => boolean>;
+
+  /**
+   * Extract the `href` attribute from the provided `url` text.
+   *
+   * @remarks
+   *
+   * By default this will return the `url` text with a `${defaultProtocol}//` or
+   * `mailto:` prefix if needed.
+   */
+  extractHref?: Static<(props: { url: string; defaultProtocol: DefaultProtocol }) => string>;
 
   /**
    * Whether the link is opened when being clicked.
@@ -177,6 +193,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
       /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi,
     defaultTarget: null,
     supportedTargets: [],
+    extractHref,
   },
   staticKeys: ['autoLinkRegex'],
   handlerKeyOptions: { onClick: { earlyReturnValue: true } },
@@ -404,7 +421,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         }
 
         const { mark, to, text } = range;
-        const href = extractHref(text, this.options.defaultProtocol);
+        const href = this.buildHref(text);
 
         if (mark.attrs.href === href) {
           return;
@@ -435,7 +452,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         if (match) {
           const { range, text } = match;
           updateLink(
-            { href: extractHref(text.full, this.options.defaultProtocol), auto: true },
+            {
+              href: this.buildHref(text.full),
+              auto: true,
+            },
             range,
           ).tr();
         }
@@ -444,7 +464,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       onChange: (details, tr) => {
         const selection = tr.selection;
         const { text, range, exitReason, setMarkRemoved } = details;
-        const href = extractHref(text.full, this.options.defaultProtocol);
+        const href = this.buildHref(text.full);
 
         // Using the chainable commands so that the selection can be preserved
         // for the update.
@@ -497,7 +517,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           if (match) {
             chain
               .updateLink(
-                { href: extractHref(match.text.full, this.options.defaultProtocol), auto: true },
+                {
+                  href: this.buildHref(match.text.full),
+                  auto: true,
+                },
                 match.range,
               )
               .tr();
@@ -665,12 +688,29 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       },
     };
   }
+
+  private buildHref(url: string): string {
+    return this.options.extractHref({
+      url,
+      defaultProtocol: this.options.defaultProtocol,
+    });
+  }
 }
 
 /**
  * Extract the `href` from the provided text.
+ *
+ * @remarks
+ *
+ * This will return the `url` text with a `${defaultProtocol}//` or `mailto:` prefix if needed.
  */
-function extractHref(url: string, defaultProtocol: DefaultProtocol) {
+export function extractHref({
+  url,
+  defaultProtocol,
+}: {
+  url: string;
+  defaultProtocol: DefaultProtocol;
+}): string {
   const startsWithProtocol = /^((?:https?|ftp)?:)\/\//.test(url);
 
   // This isn't 100% precise because we allowed URLs without protocol
