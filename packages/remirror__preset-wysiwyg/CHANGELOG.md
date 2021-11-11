@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.17
+
+> 2021-11-11
+
+### Patch Changes
+
+- Add a new option `extractHref` to `ExtensionLink`. Users can use this option to customize the `href` attribute, for example `file://` and `tel:`.
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.7
+
 ## 1.1.16
 
 > 2021-11-10
