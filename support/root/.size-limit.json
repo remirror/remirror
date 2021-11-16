@@ -549,6 +549,14 @@
     "gzip": true
   },
   {
+    "name": "@remirror/extension-shortcuts",
+    "limit": "5 KB",
+    "path": "packages/remirror__extension-shortcuts/dist/remirror-extension-shortcuts.browser.esm.js",
+    "ignore": ["@remirror/pm", "@remirror/core"],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-strike",
     "limit": "5 KB",
     "path": "packages/remirror__extension-strike/dist/remirror-extension-strike.browser.esm.js",

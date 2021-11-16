@@ -525,6 +525,7 @@ importers:
       '@remirror/extension-placeholder': ^1.0.11
       '@remirror/extension-positioner': ^1.1.9
       '@remirror/extension-search': ^1.0.10
+      '@remirror/extension-shortcuts': ^1.0.1
       '@remirror/extension-strike': ^1.0.10
       '@remirror/extension-sub': ^1.0.10
       '@remirror/extension-sup': ^1.0.10
@@ -594,6 +595,7 @@ importers:
       '@remirror/extension-placeholder': link:../remirror__extension-placeholder
       '@remirror/extension-positioner': link:../remirror__extension-positioner
       '@remirror/extension-search': link:../remirror__extension-search
+      '@remirror/extension-shortcuts': link:../remirror__extension-shortcuts
       '@remirror/extension-strike': link:../remirror__extension-strike
       '@remirror/extension-sub': link:../remirror__extension-sub
       '@remirror/extension-sup': link:../remirror__extension-sup
@@ -1534,6 +1536,17 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
       escape-string-regexp: 4.0.0
+    devDependencies:
+      '@remirror/pm': link:../remirror__pm
+
+  packages/remirror__extension-shortcuts:
+    specifiers:
+      '@babel/runtime': ^7.13.10
+      '@remirror/core': ^1.3.0
+      '@remirror/pm': ^1.0.6
+    dependencies:
+      '@babel/runtime': 7.15.4
+      '@remirror/core': link:../remirror__core
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 

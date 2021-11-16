@@ -35,6 +35,7 @@ export * from '@remirror/extension-paragraph';
 export * from '@remirror/extension-placeholder';
 export * from '@remirror/extension-positioner';
 export * from '@remirror/extension-search';
+export * from '@remirror/extension-shortcuts';
 export * from '@remirror/extension-strike';
 export * from '@remirror/extension-sub';
 export * from '@remirror/extension-sup';

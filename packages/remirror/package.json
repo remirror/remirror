@@ -113,6 +113,7 @@
     "@remirror/extension-placeholder": "^1.0.11",
     "@remirror/extension-positioner": "^1.1.9",
     "@remirror/extension-search": "^1.0.10",
+    "@remirror/extension-shortcuts": "^1.0.1",
     "@remirror/extension-strike": "^1.0.10",
     "@remirror/extension-sub": "^1.0.10",
     "@remirror/extension-sup": "^1.0.10",
