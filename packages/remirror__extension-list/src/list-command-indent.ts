@@ -77,7 +77,9 @@ function sliceSelectedItems(doc: ProsemirrorNode, $to: ResolvedPos, range: NodeR
   let unselectedSlice: Slice | null;
 
   const start = range.start;
-  const mid = $to.end(range.depth + 2);
+  // `range.depth` is the depth of the list node. We +2 here because we want to
+  // get the depth of item children (e.g. paragraph).
+  const mid = $to.depth >= range.depth + 2 ? $to.end(range.depth + 2) : range.end - 1;
   const end = range.end;
 
   if (mid + 1 >= end) {
