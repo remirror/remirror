@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.28
+
+> 2021-11-16
+
+### Patch Changes
+
+- Fix an error when indenting the list.
+
+- Updated dependencies []:
+  - remirror@1.0.41
+
 ## 0.1.27
 
 > 2021-11-11
