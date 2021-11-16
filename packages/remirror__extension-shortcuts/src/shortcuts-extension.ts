@@ -6,13 +6,13 @@ const SHORTCUTS: Array<[RegExp, string]> = [
   // Dash
   [/--$/, '—'],
   // ellipsis
-  [/\.\.\.$/, '…'],
+  [/\.{3}$/, '…'],
   // openDoubleQuote
-  [/(?:^|[\s{[(<'"\u2018\u201C])(")$/, '“'],
+  [/(?:^|[\s"'(<[{\u2018\u201C])(")$/, '“'],
   // closeDoubleQuote
   [/"$/, '”'],
   // openSingleQuote
-  [/(?:^|[\s{[(<'"\u2018\u201C])(')$/, '‘'],
+  [/(?:^|[\s"'(<[{\u2018\u201C])(')$/, '‘'],
   // closeSingleQuote
   [/'$/, '’'],
   // leftArrow
