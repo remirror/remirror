@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.29
+
+> 2021-11-16
+
+### Patch Changes
+
+- Add support for keyboard shortcuts
+
+* Add keyboard shortcuts
+
+* Updated dependencies []:
+  - remirror@1.0.42
+
 ## 0.1.28
 
 > 2021-11-16

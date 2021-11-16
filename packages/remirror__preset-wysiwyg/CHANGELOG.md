@@ -1,5 +1,18 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.19
+
+> 2021-11-16
+
+### Patch Changes
+
+- Add support for keyboard shortcuts
+
+* Add keyboard shortcuts
+
+* Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.2
+
 ## 1.1.18
 
 > 2021-11-16
