@@ -1,5 +1,13 @@
 # @remirror/extension-shortcuts
 
+## 1.0.2
+
+> 2021-11-16
+
+### Patch Changes
+
+- Add support for keyboard shortcuts
+
 ## 1.0.1
 
 > 2021-07-17
