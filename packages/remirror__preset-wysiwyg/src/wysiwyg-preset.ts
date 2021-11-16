@@ -19,6 +19,7 @@ import {
   TaskListExtension,
 } from '@remirror/extension-list';
 import { SearchExtension, SearchOptions } from '@remirror/extension-search';
+import { ShortcutsExtension } from '@remirror/extension-shortcuts';
 import { StrikeExtension } from '@remirror/extension-strike';
 import { TrailingNodeExtension, TrailingNodeOptions } from '@remirror/extension-trailing-node';
 import { UnderlineExtension } from '@remirror/extension-underline';
@@ -63,6 +64,7 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
   const bulletListExtension = new BulletListExtension();
   const orderedListExtension = new OrderedListExtension();
   const taskListExtension = new TaskListExtension({});
+  const shortcutsExtension = new ShortcutsExtension();
 
   const { selectTextOnClick } = options;
   const linkExtension = new LinkExtension({ autoLink: true, selectTextOnClick });
@@ -125,6 +127,7 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
     dropCursorExtension,
     gapCursorExtension,
     searchExtension,
+    shortcutsExtension,
     trailingNodeExtension,
 
     // Nodes
@@ -174,4 +177,5 @@ export type WysiwygPreset =
   | IframeExtension
   | BulletListExtension
   | OrderedListExtension
-  | TaskListExtension;
+  | TaskListExtension
+  | ShortcutsExtension;

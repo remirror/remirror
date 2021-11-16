@@ -351,6 +351,12 @@
       "path": "packages/remirror__extension-search/src"
     },
     {
+      "path": "packages/remirror__extension-shortcuts/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-shortcuts/src"
+    },
+    {
       "path": "packages/remirror__extension-strike/__tests__"
     },
     {
