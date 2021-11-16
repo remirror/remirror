@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.2.5
+
+> 2021-11-16
+
+### Patch Changes
+
+- Fix an error when indenting the list.
+
 ## 1.2.4
 
 > 2021-11-10

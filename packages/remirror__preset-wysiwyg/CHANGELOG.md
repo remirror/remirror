@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.18
+
+> 2021-11-16
+
+### Patch Changes
+
+- Fix an error when indenting the list.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.5
+
 ## 1.1.17
 
 > 2021-11-11
