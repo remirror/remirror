@@ -1935,6 +1935,7 @@ importers:
       '@remirror/extension-link': ^1.1.7
       '@remirror/extension-list': ^1.2.4
       '@remirror/extension-search': ^1.0.10
+      '@remirror/extension-shortcuts': ^1.0.1
       '@remirror/extension-strike': ^1.0.10
       '@remirror/extension-trailing-node': ^1.0.10
       '@remirror/extension-underline': ^1.0.10
@@ -1959,6 +1960,7 @@ importers:
       '@remirror/extension-link': link:../remirror__extension-link
       '@remirror/extension-list': link:../remirror__extension-list
       '@remirror/extension-search': link:../remirror__extension-search
+      '@remirror/extension-shortcuts': link:../remirror__extension-shortcuts
       '@remirror/extension-strike': link:../remirror__extension-strike
       '@remirror/extension-trailing-node': link:../remirror__extension-trailing-node
       '@remirror/extension-underline': link:../remirror__extension-underline

@@ -83,6 +83,9 @@
       "path": "../../remirror__extension-search/src"
     },
     {
+      "path": "../../remirror__extension-shortcuts/src"
+    },
+    {
       "path": "../../remirror__extension-strike/src"
     },
     {

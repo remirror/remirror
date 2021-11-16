@@ -762,6 +762,7 @@
       "@remirror/extension-link",
       "@remirror/extension-list",
       "@remirror/extension-search",
+      "@remirror/extension-shortcuts",
       "@remirror/extension-strike",
       "@remirror/extension-trailing-node",
       "@remirror/extension-underline",
