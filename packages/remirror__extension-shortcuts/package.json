@@ -1,7 +1,6 @@
 {
   "name": "@remirror/extension-shortcuts",
   "version": "1.0.2",
-  "private": true,
   "description": "Replace characters with keyboard shortcuts",
   "keywords": [
     "remirror",
