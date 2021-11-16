@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.20
+
+> 2021-11-16
+
+### Patch Changes
+
+- Make extension-shortcuts package public
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.3
+
 ## 1.1.19
 
 > 2021-11-16

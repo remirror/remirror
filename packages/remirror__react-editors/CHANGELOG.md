@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.30
+
+> 2021-11-16
+
+### Patch Changes
+
+- Make extension-shortcuts package public
+
+- Updated dependencies []:
+  - remirror@1.0.43
+
 ## 0.1.29
 
 > 2021-11-16

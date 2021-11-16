@@ -1,5 +1,13 @@
 # @remirror/extension-shortcuts
 
+## 1.0.3
+
+> 2021-11-16
+
+### Patch Changes
+
+- Make extension-shortcuts package public
+
 ## 1.0.2
 
 > 2021-11-16
