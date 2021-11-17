@@ -22,7 +22,7 @@ describe('commands', () => {
     } = create();
 
     add(doc(p('<start>Big small<end>')));
-    commands.setFontSize('8px');
+    commands.setFontSize('6pt');
     console.log(view.dom.innerHTML);
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
