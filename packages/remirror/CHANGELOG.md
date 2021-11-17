@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.44
+
+> 2021-11-17
+
+### Patch Changes
+
+- fix: removeFontSize should respect user text selection
+
+- Updated dependencies []:
+  - @remirror/extension-font-size@1.0.11
+  - @remirror/preset-formatting@1.0.14
+
 ## 1.0.43
 
 > 2021-11-16

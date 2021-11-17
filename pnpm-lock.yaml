@@ -112,7 +112,7 @@ importers:
       playwright-testing-library: ^3.0.0
       prettier: ^2.3.2
       prettier-plugin-packagejson: ^2.2.10
-      remirror: 1.0.43
+      remirror: 1.0.44
       rimraf: ^3.0.2
       size-limit: ^5.0.1
       snapshot-diff: ^0.9.0
@@ -507,7 +507,7 @@ importers:
       '@remirror/extension-epic-mode': ^1.0.10
       '@remirror/extension-events': ^1.0.10
       '@remirror/extension-font-family': ^1.0.10
-      '@remirror/extension-font-size': ^1.0.10
+      '@remirror/extension-font-size': ^1.0.11
       '@remirror/extension-gap-cursor': ^1.0.10
       '@remirror/extension-hard-break': ^1.0.10
       '@remirror/extension-heading': ^1.0.10
@@ -541,7 +541,7 @@ importers:
       '@remirror/icons': ^1.0.5
       '@remirror/pm': ^1.0.6
       '@remirror/preset-core': ^1.0.12
-      '@remirror/preset-formatting': ^1.0.13
+      '@remirror/preset-formatting': ^1.0.14
       '@remirror/preset-wysiwyg': ^1.1.20
       '@remirror/theme': ^1.1.4
       '@types/codemirror': ^5.60.2
@@ -1855,7 +1855,7 @@ importers:
       '@remirror/core': ^1.3.0
       '@remirror/extension-bold': ^1.0.10
       '@remirror/extension-columns': ^1.0.10
-      '@remirror/extension-font-size': ^1.0.10
+      '@remirror/extension-font-size': ^1.0.11
       '@remirror/extension-heading': ^1.0.10
       '@remirror/extension-italic': ^1.0.10
       '@remirror/extension-node-formatting': ^1.0.13
@@ -2146,7 +2146,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       refractor: ^3.3.1
-      remirror: 1.0.43
+      remirror: 1.0.44
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.15.4
@@ -2326,7 +2326,7 @@ importers:
       '@remirror/messages': ^1.0.5
       '@remirror/pm': ^1.0.6
       '@remirror/react': ^1.0.15
-      '@remirror/react-editors': ^0.1.30
+      '@remirror/react-editors': ^0.1.31
       '@remirror/styles': ^1.1.2
       '@storybook/addon-controls': ^6.3.12
       '@storybook/addons': ^6.3.4
@@ -2355,7 +2355,7 @@ importers:
       react-is: ^17.0.2
       reakit: ^1.3.8
       refractor: ^3.3.1
-      remirror: 1.0.43
+      remirror: 1.0.44
       scripts: 0.0.1
       svgmoji: ^3.2.0
       y-webrtc: ^10.2.0
@@ -2732,7 +2732,7 @@ importers:
       '@mdx-js/react': ^1.6.22
       '@remirror/dev': ^1.0.15
       '@remirror/react': ^1.0.15
-      '@remirror/react-editors': ^0.1.30
+      '@remirror/react-editors': ^0.1.31
       '@remirror/styles': ^1.1.2
       '@tsconfig/docusaurus': ^1.0.4
       '@types/react': ^17.0.14
@@ -2761,7 +2761,7 @@ importers:
       react-syntax-highlighter: ^15.4.3
       reakit: ^1.3.8
       remark-footnotes: ^3.0.0
-      remirror: ^1.0.43
+      remirror: ^1.0.44
     dependencies:
       '@babel/runtime': 7.15.4
       '@emotion/css': 11.5.0_@babel+core@7.15.8
