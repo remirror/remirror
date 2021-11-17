@@ -176,7 +176,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
    */
   @command()
   removeFontSize(options?: SizeCommandOptions): CommandFunction {
-    return this.store.commands.removeMark.original({ type: this.type, ...options, expand: true });
+    return this.store.commands.removeMark.original({ type: this.type, ...options });
   }
 
   /**
