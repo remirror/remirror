@@ -51,11 +51,10 @@ export class ShortcutsExtension extends PlainExtension<ShortcutsOptions> {
   }
 
   /**
-   * Manage input rules for emoticons.
+   * Manage input rules for keyboard shortcuts
    */
   createInputRules(): InputRule[] {
     return SHORTCUTS.map(([regexp, replace]) => {
-      // Replace emoticons
       return plainInputRule({
         regexp,
         transformMatch: () => replace,
