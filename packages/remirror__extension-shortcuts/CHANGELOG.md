@@ -1,5 +1,13 @@
 # @remirror/extension-shortcuts
 
+## 1.0.4
+
+> 2021-11-18
+
+### Patch Changes
+
+- fix: remove rules depending on capture groups
+
 ## 1.0.3
 
 > 2021-11-16

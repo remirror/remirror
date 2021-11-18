@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.32
+
+> 2021-11-18
+
+### Patch Changes
+
+- fix: remove rules depending on capture groups
+
+- Updated dependencies []:
+  - remirror@1.0.45
+
 ## 0.1.31
 
 > 2021-11-17

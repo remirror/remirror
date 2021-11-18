@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.21
+
+> 2021-11-18
+
+### Patch Changes
+
+- fix: remove rules depending on capture groups
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.4
+
 ## 1.1.20
 
 > 2021-11-16
