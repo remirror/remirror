@@ -7,14 +7,6 @@ const SHORTCUTS: Array<[RegExp, string]> = [
   [/--$/, '—'],
   // ellipsis
   [/\.{3}$/, '…'],
-  // openDoubleQuote
-  [/(?:^|[\s"'(<[{\u2018\u201C])(")$/, '“'],
-  // closeDoubleQuote
-  [/"$/, '”'],
-  // openSingleQuote
-  [/(?:^|[\s"'(<[{\u2018\u201C])(')$/, '‘'],
-  // closeSingleQuote
-  [/'$/, '’'],
   // leftArrow
   [/<-$/, '←'],
   // rightArrow
@@ -35,8 +27,6 @@ const SHORTCUTS: Array<[RegExp, string]> = [
   [/<<$/, '«'],
   // raquo
   [/>>$/, '»'],
-  // multiplication
-  [/\d+\s?([*x])\s?\d+$/, '×'],
   // superscriptTwo
   [/\^2$/, '²'],
   // superscriptThree
