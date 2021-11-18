@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.31
+
+> 2021-11-17
+
+### Patch Changes
+
+- fix: removeFontSize should respect user text selection
+
+- Updated dependencies []:
+  - remirror@1.0.44
+
 ## 0.1.30
 
 > 2021-11-16
