@@ -7,14 +7,6 @@ const SHORTCUTS: Array<[RegExp, string]> = [
   [/--$/, '—'],
   // ellipsis
   [/\.{3}$/, '…'],
-  // openDoubleQuote
-  [/(?:^|[\s"'(<[{\u2018\u201C])(")$/, '“'],
-  // closeDoubleQuote
-  [/"$/, '”'],
-  // openSingleQuote
-  [/(?:^|[\s"'(<[{\u2018\u201C])(')$/, '‘'],
-  // closeSingleQuote
-  [/'$/, '’'],
   // leftArrow
   [/<-$/, '←'],
   // rightArrow
@@ -35,8 +27,6 @@ const SHORTCUTS: Array<[RegExp, string]> = [
   [/<<$/, '«'],
   // raquo
   [/>>$/, '»'],
-  // multiplication
-  [/\d+\s?([*x])\s?\d+$/, '×'],
   // superscriptTwo
   [/\^2$/, '²'],
   // superscriptThree
@@ -61,11 +51,10 @@ export class ShortcutsExtension extends PlainExtension<ShortcutsOptions> {
   }
 
   /**
-   * Manage input rules for emoticons.
+   * Manage input rules for keyboard shortcuts
    */
   createInputRules(): InputRule[] {
     return SHORTCUTS.map(([regexp, replace]) => {
-      // Replace emoticons
       return plainInputRule({
         regexp,
         transformMatch: () => replace,
