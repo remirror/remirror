@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.48
+
+> 2021-11-23
+
+### Patch Changes
+
+- Restore image dimensions correctly from the markup.
+
+- Updated dependencies []:
+  - @remirror/extension-image@1.0.20
+  - @remirror/preset-wysiwyg@1.1.24
+
 ## 1.0.47
 
 > 2021-11-23

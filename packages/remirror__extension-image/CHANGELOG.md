@@ -1,5 +1,13 @@
 # @remirror/extension-image
 
+## 1.0.20
+
+> 2021-11-23
+
+### Patch Changes
+
+- Restore image dimensions correctly from the markup.
+
 ## 1.0.19
 
 > 2021-11-23
