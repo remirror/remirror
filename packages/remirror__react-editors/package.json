@@ -34,21 +34,21 @@
     "./markdown": {
       "import": "./markdown/dist/remirror-react-editors-markdown.esm.js",
       "require": "./markdown/dist/remirror-react-editors-markdown.cjs.js",
-      "browser": "./markdown/dist/remirror-react-editors.browser.esm.js",
+      "browser": "./markdown/dist/remirror-react-editors-markdown.browser.esm.js",
       "default": "./markdown/dist/remirror-react-editors-markdown.esm.js"
     },
     "./package.json": "./package.json",
     "./social": {
       "import": "./social/dist/remirror-react-editors-social.esm.js",
       "require": "./social/dist/remirror-react-editors-social.cjs.js",
-      "browser": "./social/dist/remirror-react-editors.browser.esm.js",
+      "browser": "./social/dist/remirror-react-editors-social.browser.esm.js",
       "default": "./social/dist/remirror-react-editors-social.esm.js"
     },
     "./types/*": "./dist/declarations/src/*.d.ts",
     "./wysiwyg": {
       "import": "./wysiwyg/dist/remirror-react-editors-wysiwyg.esm.js",
       "require": "./wysiwyg/dist/remirror-react-editors-wysiwyg.cjs.js",
-      "browser": "./wysiwyg/dist/remirror-react-editors.browser.esm.js",
+      "browser": "./wysiwyg/dist/remirror-react-editors-wysiwyg.browser.esm.js",
       "default": "./wysiwyg/dist/remirror-react-editors-wysiwyg.esm.js"
     }
   },

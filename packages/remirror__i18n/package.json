@@ -28,7 +28,7 @@
     "./en": {
       "import": "./en/dist/remirror-i18n-en.esm.js",
       "require": "./en/dist/remirror-i18n-en.cjs.js",
-      "browser": "./en/dist/remirror-i18n.browser.esm.js",
+      "browser": "./en/dist/remirror-i18n-en.browser.esm.js",
       "types": "./en/dist/remirror-i18n-en.cjs.d.ts",
       "default": "./en/dist/remirror-i18n-en.esm.js"
     },
@@ -36,7 +36,7 @@
     "./plurals": {
       "import": "./plurals/dist/remirror-i18n-plurals.esm.js",
       "require": "./plurals/dist/remirror-i18n-plurals.cjs.js",
-      "browser": "./plurals/dist/remirror-i18n.browser.esm.js",
+      "browser": "./plurals/dist/remirror-i18n-plurals.browser.esm.js",
       "types": "./plurals/dist/remirror-i18n-plurals.cjs.d.ts",
       "default": "./plurals/dist/remirror-i18n-plurals.esm.js"
     },

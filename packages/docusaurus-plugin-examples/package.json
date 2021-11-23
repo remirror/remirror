@@ -29,7 +29,7 @@
     "./types": {
       "import": "./types/dist/docusaurus-plugin-examples-types.esm.js",
       "require": "./types/dist/docusaurus-plugin-examples-types.cjs.js",
-      "browser": "./types/dist/docusaurus-plugin-examples.esm.js",
+      "browser": "./types/dist/docusaurus-plugin-examples-types.esm.js",
       "default": "./types/dist/docusaurus-plugin-examples-types.esm.js"
     },
     "./types/*": "./dist/declarations/src/*.d.ts"

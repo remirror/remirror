@@ -22,14 +22,14 @@
     "./playwright": {
       "import": "./playwright/dist/testing-playwright.esm.js",
       "require": "./playwright/dist/testing-playwright.cjs.js",
-      "browser": "./playwright/dist/testing.esm.js",
+      "browser": "./playwright/dist/testing-playwright.esm.js",
       "types": "./playwright/dist/testing-playwright.cjs.d.ts",
       "default": "./playwright/dist/testing-playwright.esm.js"
     },
     "./react": {
       "import": "./react/dist/testing-react.esm.js",
       "require": "./react/dist/testing-react.cjs.js",
-      "browser": "./react/dist/testing.esm.js",
+      "browser": "./react/dist/testing-react.esm.js",
       "types": "./react/dist/testing-react.cjs.d.ts",
       "default": "./react/dist/testing-react.esm.js"
     },

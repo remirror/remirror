@@ -29,7 +29,7 @@
     "./environment": {
       "import": "./environment/dist/jest-prosemirror-environment.esm.js",
       "require": "./environment/dist/jest-prosemirror-environment.cjs.js",
-      "browser": "./environment/dist/jest-prosemirror.browser.esm.js",
+      "browser": "./environment/dist/jest-prosemirror-environment.browser.esm.js",
       "types": "./environment/dist/jest-prosemirror-environment.cjs.d.ts",
       "default": "./environment/dist/jest-prosemirror-environment.esm.js"
     },
@@ -37,7 +37,7 @@
     "./serializer": {
       "import": "./serializer/dist/jest-prosemirror-serializer.esm.js",
       "require": "./serializer/dist/jest-prosemirror-serializer.cjs.js",
-      "browser": "./serializer/dist/jest-prosemirror.browser.esm.js",
+      "browser": "./serializer/dist/jest-prosemirror-serializer.browser.esm.js",
       "types": "./serializer/dist/jest-prosemirror-serializer.cjs.d.ts",
       "default": "./serializer/dist/jest-prosemirror-serializer.esm.js"
     },
