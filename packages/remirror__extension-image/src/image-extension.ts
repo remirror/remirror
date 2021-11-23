@@ -282,8 +282,8 @@ export function isImageFileType(file: File): boolean {
  */
 function getDimensions(element: HTMLElement) {
   let { width, height } = element.style;
-  width = width ?? element.getAttribute('width') ?? '';
-  height = height ?? element.getAttribute('height') ?? '';
+  width = width || element.getAttribute('width') || '';
+  height = height || element.getAttribute('height') || '';
 
   return { width, height };
 }
