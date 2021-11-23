@@ -224,6 +224,14 @@
     "gzip": true
   },
   {
+    "name": "@remirror/extension-codemirror6",
+    "limit": "15 KB",
+    "path": "packages/remirror__extension-codemirror6/dist/remirror-extension-codemirror6.browser.esm.js",
+    "ignore": ["@remirror/pm", "@remirror/core"],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-collaboration",
     "limit": "5 KB",
     "path": "packages/remirror__extension-collaboration/dist/remirror-extension-collaboration.browser.esm.js",
