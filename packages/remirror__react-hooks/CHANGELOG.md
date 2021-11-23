@@ -1,5 +1,24 @@
 # @remirror/react-hooks
 
+## 1.0.15
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/extension-emoji@1.0.12
+  - @remirror/extension-events@1.0.11
+  - @remirror/extension-history@1.0.11
+  - @remirror/extension-mention@1.0.11
+  - @remirror/extension-mention-atom@1.0.12
+  - @remirror/extension-positioner@1.1.10
+  - @remirror/react-core@1.0.14
+  - @remirror/pm@1.0.7
+
 ## 1.0.14
 
 > 2021-11-10

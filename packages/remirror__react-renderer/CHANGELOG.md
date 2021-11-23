@@ -1,5 +1,16 @@
 # @remirror/react-renderer
 
+## 1.0.13
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+
 ## 1.0.12
 
 > 2021-11-10

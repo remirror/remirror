@@ -1,5 +1,13 @@
 # @remirror/pm
 
+## 1.0.7
+
+> 2021-11-23
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
 ## 1.0.6
 
 > 2021-11-04

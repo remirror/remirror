@@ -1,5 +1,19 @@
 # @remirror/extension-file
 
+## 0.3.4
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/react@1.0.16
+  - @remirror/react-components@1.0.15
+  - @remirror/pm@1.0.7
+
 ## 0.3.3
 
 > 2021-11-10

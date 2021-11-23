@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 1.0.16
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.12
+  - @remirror/extension-positioner@1.1.10
+  - @remirror/extension-react-component@1.1.1
+  - @remirror/extension-react-ssr@1.0.12
+  - @remirror/extension-react-tables@1.0.16
+  - @remirror/preset-react@1.0.12
+  - @remirror/react-components@1.0.15
+  - @remirror/react-core@1.0.14
+  - @remirror/react-hooks@1.0.15
+  - @remirror/react-renderer@1.0.13
+  - @remirror/react-ssr@1.0.12
+
 ## 1.0.15
 
 > 2021-11-10

@@ -1,5 +1,70 @@
 # remirror
 
+## 1.0.46
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/dom@1.0.13
+  - @remirror/extension-annotation@1.1.6
+  - @remirror/extension-bidi@1.0.11
+  - @remirror/extension-blockquote@1.0.12
+  - @remirror/extension-bold@1.0.11
+  - @remirror/extension-callout@1.0.12
+  - @remirror/extension-code@1.0.12
+  - @remirror/extension-code-block@1.0.14
+  - @remirror/extension-codemirror5@1.0.11
+  - @remirror/extension-collaboration@1.0.11
+  - @remirror/extension-columns@1.0.11
+  - @remirror/extension-diff@1.0.11
+  - @remirror/extension-doc@1.0.12
+  - @remirror/extension-drop-cursor@1.0.11
+  - @remirror/extension-embed@1.1.15
+  - @remirror/extension-emoji@1.0.12
+  - @remirror/extension-epic-mode@1.0.11
+  - @remirror/extension-events@1.0.11
+  - @remirror/extension-font-family@1.0.11
+  - @remirror/extension-font-size@1.0.12
+  - @remirror/extension-gap-cursor@1.0.11
+  - @remirror/extension-hard-break@1.0.11
+  - @remirror/extension-heading@1.0.11
+  - @remirror/extension-history@1.0.11
+  - @remirror/extension-horizontal-rule@1.0.11
+  - @remirror/extension-image@1.0.18
+  - @remirror/extension-italic@1.0.11
+  - @remirror/extension-link@1.1.8
+  - @remirror/extension-list@1.2.6
+  - @remirror/extension-markdown@1.0.11
+  - @remirror/extension-mention@1.0.11
+  - @remirror/extension-mention-atom@1.0.12
+  - @remirror/extension-node-formatting@1.0.14
+  - @remirror/extension-paragraph@1.0.11
+  - @remirror/extension-placeholder@1.0.12
+  - @remirror/extension-positioner@1.1.10
+  - @remirror/extension-search@1.0.11
+  - @remirror/extension-shortcuts@1.0.5
+  - @remirror/extension-strike@1.0.11
+  - @remirror/extension-sub@1.0.11
+  - @remirror/extension-sup@1.0.11
+  - @remirror/extension-tables@1.0.12
+  - @remirror/extension-text@1.0.11
+  - @remirror/extension-text-case@1.0.11
+  - @remirror/extension-text-color@1.0.12
+  - @remirror/extension-text-highlight@1.0.12
+  - @remirror/extension-trailing-node@1.0.11
+  - @remirror/extension-underline@1.0.11
+  - @remirror/extension-whitespace@1.0.11
+  - @remirror/extension-yjs@1.0.14
+  - @remirror/preset-core@1.0.13
+  - @remirror/preset-formatting@1.0.15
+  - @remirror/preset-wysiwyg@1.1.22
+  - @remirror/pm@1.0.7
+
 ## 1.0.45
 
 > 2021-11-18

@@ -1,5 +1,31 @@
 # @remirror/preset-formatting
 
+## 1.0.15
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/extension-bold@1.0.11
+  - @remirror/extension-columns@1.0.11
+  - @remirror/extension-font-size@1.0.12
+  - @remirror/extension-heading@1.0.11
+  - @remirror/extension-italic@1.0.11
+  - @remirror/extension-node-formatting@1.0.14
+  - @remirror/extension-strike@1.0.11
+  - @remirror/extension-sub@1.0.11
+  - @remirror/extension-sup@1.0.11
+  - @remirror/extension-text-case@1.0.11
+  - @remirror/extension-text-color@1.0.12
+  - @remirror/extension-text-highlight@1.0.12
+  - @remirror/extension-underline@1.0.11
+  - @remirror/extension-whitespace@1.0.11
+  - @remirror/pm@1.0.7
+
 ## 1.0.14
 
 > 2021-11-17
