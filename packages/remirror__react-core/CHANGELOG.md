@@ -1,5 +1,25 @@
 # @remirror/react-core
 
+## 1.0.15
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/i18n@1.0.7
+  - @remirror/pm@1.0.8
+  - @remirror/core@1.3.2
+  - @remirror/extension-positioner@1.1.11
+  - @remirror/extension-react-component@1.1.2
+  - @remirror/extension-react-ssr@1.0.13
+  - @remirror/preset-core@1.0.14
+  - @remirror/preset-react@1.0.13
+  - @remirror/react-renderer@1.0.14
+  - @remirror/react-ssr@1.0.13
+
 ## 1.0.14
 
 > 2021-11-23

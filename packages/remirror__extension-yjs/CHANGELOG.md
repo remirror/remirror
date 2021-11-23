@@ -1,5 +1,18 @@
 # @remirror/extension-yjs
 
+## 1.0.15
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.8
+  - @remirror/core@1.3.2
+  - @remirror/extension-annotation@1.1.7
+
 ## 1.0.14
 
 > 2021-11-23

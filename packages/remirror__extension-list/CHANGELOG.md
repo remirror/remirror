@@ -1,5 +1,18 @@
 # @remirror/extension-list
 
+## 1.2.7
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.8
+  - @remirror/core@1.3.2
+  - @remirror/extension-events@1.0.12
+
 ## 1.2.6
 
 > 2021-11-23

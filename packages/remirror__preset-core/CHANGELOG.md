@@ -1,5 +1,24 @@
 # @remirror/preset-core
 
+## 1.0.14
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.8
+  - @remirror/core@1.3.2
+  - @remirror/extension-doc@1.0.13
+  - @remirror/extension-events@1.0.12
+  - @remirror/extension-gap-cursor@1.0.12
+  - @remirror/extension-history@1.0.12
+  - @remirror/extension-paragraph@1.0.12
+  - @remirror/extension-positioner@1.1.11
+  - @remirror/extension-text@1.0.12
+
 ## 1.0.13
 
 > 2021-11-23
