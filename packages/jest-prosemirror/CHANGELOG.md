@@ -1,5 +1,16 @@
 # jest-prosemirror
 
+## 1.0.10
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.8
+
 ## 1.0.9
 
 > 2021-11-23

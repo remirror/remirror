@@ -1,5 +1,38 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.23
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/extension-code-block@1.0.15
+  - @remirror/pm@1.0.8
+  - @remirror/core@1.3.2
+  - @remirror/extension-bidi@1.0.12
+  - @remirror/extension-blockquote@1.0.13
+  - @remirror/extension-bold@1.0.12
+  - @remirror/extension-code@1.0.13
+  - @remirror/extension-drop-cursor@1.0.12
+  - @remirror/extension-embed@1.1.16
+  - @remirror/extension-gap-cursor@1.0.12
+  - @remirror/extension-hard-break@1.0.12
+  - @remirror/extension-heading@1.0.12
+  - @remirror/extension-horizontal-rule@1.0.12
+  - @remirror/extension-image@1.0.19
+  - @remirror/extension-italic@1.0.12
+  - @remirror/extension-link@1.1.9
+  - @remirror/extension-list@1.2.7
+  - @remirror/extension-search@1.0.12
+  - @remirror/extension-shortcuts@1.0.6
+  - @remirror/extension-strike@1.0.12
+  - @remirror/extension-trailing-node@1.0.12
+  - @remirror/extension-underline@1.0.12
+  - @remirror/preset-core@1.0.14
+
 ## 1.1.22
 
 > 2021-11-23

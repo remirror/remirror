@@ -1,5 +1,16 @@
 # @remirror/react-renderer
 
+## 1.0.14
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.2
+
 ## 1.0.13
 
 > 2021-11-23

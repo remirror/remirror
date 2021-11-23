@@ -1,5 +1,18 @@
 # @remirror/core
 
+## 1.3.2
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/i18n@1.0.7
+  - @remirror/icons@1.0.6
+  - @remirror/pm@1.0.8
+
 ## 1.3.1
 
 > 2021-11-23
