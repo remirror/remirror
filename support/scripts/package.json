@@ -60,7 +60,7 @@
     "@microsoft/tsdoc": "^0.13.2",
     "@microsoft/tsdoc-config": "^0.15.2",
     "@remirror/core-helpers": "^1.0.4",
-    "@remirror/icons": "^1.0.5",
+    "@remirror/icons": "^1.0.6",
     "@remirror/types": "^0.1.1",
     "@types/autoprefixer": "^9.7.2",
     "@types/cheerio": "^0.22.30",

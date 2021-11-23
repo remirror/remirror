@@ -1,5 +1,23 @@
 # @remirror/react-components
 
+## 1.0.16
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/i18n@1.0.7
+  - @remirror/icons@1.0.6
+  - @remirror/pm@1.0.8
+  - @remirror/react-hooks@1.0.16
+  - @remirror/core@1.3.2
+  - @remirror/extension-positioner@1.1.11
+  - @remirror/extension-text-color@1.0.13
+  - @remirror/react-core@1.0.15
+
 ## 1.0.15
 
 > 2021-11-23

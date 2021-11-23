@@ -1,5 +1,13 @@
 # @remirror/i18n
 
+## 1.0.7
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
 ## 1.0.6
 
 > 2021-11-04

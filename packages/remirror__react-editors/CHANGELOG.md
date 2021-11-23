@@ -1,5 +1,19 @@
 # @remirror/react-editors
 
+## 0.1.34
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - remirror@1.0.47
+  - @remirror/pm@1.0.8
+  - @remirror/extension-react-tables@1.0.17
+  - @remirror/react@1.0.17
+
 ## 0.1.33
 
 > 2021-11-23

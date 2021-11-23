@@ -1,5 +1,17 @@
 # @remirror/dev
 
+## 1.0.17
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.8
+  - @remirror/react@1.0.17
+
 ## 1.0.16
 
 > 2021-11-23
