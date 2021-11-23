@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.35
+
+> 2021-11-23
+
+### Patch Changes
+
+- Restore image dimensions correctly from the markup.
+
+- Updated dependencies []:
+  - remirror@1.0.48
+
 ## 0.1.34
 
 > 2021-11-23
