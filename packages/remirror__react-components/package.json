@@ -24,7 +24,7 @@
     "./all-icons": {
       "import": "./all-icons/dist/remirror-react-components-all-icons.esm.js",
       "require": "./all-icons/dist/remirror-react-components-all-icons.cjs.js",
-      "browser": "./all-icons/dist/remirror-react-components.browser.esm.js",
+      "browser": "./all-icons/dist/remirror-react-components-all-icons.browser.esm.js",
       "default": "./all-icons/dist/remirror-react-components-all-icons.esm.js"
     },
     "./package.json": "./package.json",

@@ -34,21 +34,21 @@
     "./dom": {
       "import": "./dom/dist/remirror-dom.esm.js",
       "require": "./dom/dist/remirror-dom.cjs.js",
-      "browser": "./dom/dist/remirror.browser.esm.js",
+      "browser": "./dom/dist/remirror-dom.browser.esm.js",
       "types": "./dom/dist/remirror-dom.cjs.d.ts",
       "default": "./dom/dist/remirror-dom.esm.js"
     },
     "./extensions": {
       "import": "./extensions/dist/remirror-extensions.esm.js",
       "require": "./extensions/dist/remirror-extensions.cjs.js",
-      "browser": "./extensions/dist/remirror.browser.esm.js",
+      "browser": "./extensions/dist/remirror-extensions.browser.esm.js",
       "types": "./extensions/dist/remirror-extensions.cjs.d.ts",
       "default": "./extensions/dist/remirror-extensions.esm.js"
     },
     "./icons": {
       "import": "./icons/dist/remirror-icons.esm.js",
       "require": "./icons/dist/remirror-icons.cjs.js",
-      "browser": "./icons/dist/remirror.browser.esm.js",
+      "browser": "./icons/dist/remirror-icons.browser.esm.js",
       "default": "./icons/dist/remirror-icons.esm.js"
     },
     "./package.json": "./package.json",

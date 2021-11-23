@@ -26,93 +26,93 @@
     "./use-context-menu": {
       "import": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.esm.js",
       "require": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.cjs.js",
-      "browser": "./use-context-menu/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.browser.esm.js",
       "default": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.esm.js"
     },
     "./use-editor-focus": {
       "import": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.esm.js",
       "require": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs.js",
-      "browser": "./use-editor-focus/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.browser.esm.js",
       "types": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs.d.ts",
       "default": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.esm.js"
     },
     "./use-emoji": {
       "import": "./use-emoji/dist/remirror-react-hooks-use-emoji.esm.js",
       "require": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs.js",
-      "browser": "./use-emoji/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-emoji/dist/remirror-react-hooks-use-emoji.browser.esm.js",
       "types": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs.d.ts",
       "default": "./use-emoji/dist/remirror-react-hooks-use-emoji.esm.js"
     },
     "./use-event": {
       "import": "./use-event/dist/remirror-react-hooks-use-event.esm.js",
       "require": "./use-event/dist/remirror-react-hooks-use-event.cjs.js",
-      "browser": "./use-event/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-event/dist/remirror-react-hooks-use-event.browser.esm.js",
       "default": "./use-event/dist/remirror-react-hooks-use-event.esm.js"
     },
     "./use-history": {
       "import": "./use-history/dist/remirror-react-hooks-use-history.esm.js",
       "require": "./use-history/dist/remirror-react-hooks-use-history.cjs.js",
-      "browser": "./use-history/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-history/dist/remirror-react-hooks-use-history.browser.esm.js",
       "types": "./use-history/dist/remirror-react-hooks-use-history.cjs.d.ts",
       "default": "./use-history/dist/remirror-react-hooks-use-history.esm.js"
     },
     "./use-hover": {
       "import": "./use-hover/dist/remirror-react-hooks-use-hover.esm.js",
       "require": "./use-hover/dist/remirror-react-hooks-use-hover.cjs.js",
-      "browser": "./use-hover/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-hover/dist/remirror-react-hooks-use-hover.browser.esm.js",
       "default": "./use-hover/dist/remirror-react-hooks-use-hover.esm.js"
     },
     "./use-keymap": {
       "import": "./use-keymap/dist/remirror-react-hooks-use-keymap.esm.js",
       "require": "./use-keymap/dist/remirror-react-hooks-use-keymap.cjs.js",
-      "browser": "./use-keymap/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-keymap/dist/remirror-react-hooks-use-keymap.browser.esm.js",
       "types": "./use-keymap/dist/remirror-react-hooks-use-keymap.cjs.d.ts",
       "default": "./use-keymap/dist/remirror-react-hooks-use-keymap.esm.js"
     },
     "./use-keymaps": {
       "import": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.esm.js",
       "require": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.cjs.js",
-      "browser": "./use-keymaps/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.browser.esm.js",
       "default": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.esm.js"
     },
     "./use-mention": {
       "import": "./use-mention/dist/remirror-react-hooks-use-mention.esm.js",
       "require": "./use-mention/dist/remirror-react-hooks-use-mention.cjs.js",
-      "browser": "./use-mention/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-mention/dist/remirror-react-hooks-use-mention.browser.esm.js",
       "types": "./use-mention/dist/remirror-react-hooks-use-mention.cjs.d.ts",
       "default": "./use-mention/dist/remirror-react-hooks-use-mention.esm.js"
     },
     "./use-mention-atom": {
       "import": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.esm.js",
       "require": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.cjs.js",
-      "browser": "./use-mention-atom/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.browser.esm.js",
       "types": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.cjs.d.ts",
       "default": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.esm.js"
     },
     "./use-menu-navigation": {
       "import": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.esm.js",
       "require": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.cjs.js",
-      "browser": "./use-menu-navigation/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.browser.esm.js",
       "default": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.esm.js"
     },
     "./use-multi-positioner": {
       "import": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.esm.js",
       "require": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.cjs.js",
-      "browser": "./use-multi-positioner/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.browser.esm.js",
       "types": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.cjs.d.ts",
       "default": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.esm.js"
     },
     "./use-positioner": {
       "import": "./use-positioner/dist/remirror-react-hooks-use-positioner.esm.js",
       "require": "./use-positioner/dist/remirror-react-hooks-use-positioner.cjs.js",
-      "browser": "./use-positioner/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-positioner/dist/remirror-react-hooks-use-positioner.browser.esm.js",
       "types": "./use-positioner/dist/remirror-react-hooks-use-positioner.cjs.d.ts",
       "default": "./use-positioner/dist/remirror-react-hooks-use-positioner.esm.js"
     },
     "./use-suggest": {
       "import": "./use-suggest/dist/remirror-react-hooks-use-suggest.esm.js",
       "require": "./use-suggest/dist/remirror-react-hooks-use-suggest.cjs.js",
-      "browser": "./use-suggest/dist/remirror-react-hooks.browser.esm.js",
+      "browser": "./use-suggest/dist/remirror-react-hooks-use-suggest.browser.esm.js",
       "types": "./use-suggest/dist/remirror-react-hooks-use-suggest.cjs.d.ts",
       "default": "./use-suggest/dist/remirror-react-hooks-use-suggest.esm.js"
     }

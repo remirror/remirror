@@ -168,30 +168,30 @@ function prefixRelativePath<Type extends string | undefined>(path: Type): Type {
  * Add the path with relevant fields to the export field of the provided
  * `package.json` object.
  */
-function augmentExportsObject(packageJson: PackageJson, filepath: string, json: PackageJson) {
+function augmentExportsObject(rootJson: PackageJson, filepath: string, subJson: PackageJson) {
   filepath = filepath || '.';
-  const browserPath = getBrowserPath(packageJson);
+  const browserPath = getBrowserPath(subJson);
   const field: ExportField = {
-    import: prefixRelativePath(json.module ? path.join(filepath, json.module) : undefined),
-    require: prefixRelativePath(json.main ? path.join(filepath, json.main) : undefined),
+    import: prefixRelativePath(subJson.module ? path.join(filepath, subJson.module) : undefined),
+    require: prefixRelativePath(subJson.main ? path.join(filepath, subJson.main) : undefined),
     browser: prefixRelativePath(browserPath ? path.join(filepath, browserPath) : undefined),
 
     // Experimental since this is not currently resolved by TypeScript.
-    types: prefixRelativePath(json.types ? path.join(filepath, json.types) : undefined),
+    types: prefixRelativePath(subJson.types ? path.join(filepath, subJson.types) : undefined),
   };
   field.default = field.import;
 
   let exportsObject: Exports;
 
-  if (isPlainObject(packageJson.exports)) {
-    exportsObject = packageJson.exports as Exports;
+  if (isPlainObject(rootJson.exports)) {
+    exportsObject = rootJson.exports as Exports;
   } else {
     exportsObject = object();
-    packageJson.exports = exportsObject as PackageJson.Exports;
+    rootJson.exports = exportsObject as PackageJson.Exports;
   }
 
-  if (!packageJson.exports || isString(packageJson.exports)) {
-    packageJson.exports = {};
+  if (!rootJson.exports || isString(rootJson.exports)) {
+    rootJson.exports = {};
   }
 
   exportsObject[filepath] = omitUndefined(field);

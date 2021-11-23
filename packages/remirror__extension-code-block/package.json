@@ -33,7 +33,7 @@
     "./formatter": {
       "import": "./formatter/dist/remirror-extension-code-block-formatter.esm.js",
       "require": "./formatter/dist/remirror-extension-code-block-formatter.cjs.js",
-      "browser": "./formatter/dist/remirror-extension-code-block.browser.esm.js",
+      "browser": "./formatter/dist/remirror-extension-code-block-formatter.browser.esm.js",
       "default": "./formatter/dist/remirror-extension-code-block-formatter.esm.js"
     },
     "./package.json": "./package.json",

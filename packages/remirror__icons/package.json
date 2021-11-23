@@ -27,7 +27,7 @@
     "./all": {
       "import": "./all/dist/remirror-icons-all.esm.js",
       "require": "./all/dist/remirror-icons-all.cjs.js",
-      "browser": "./all/dist/remirror-icons.browser.esm.js",
+      "browser": "./all/dist/remirror-icons-all.browser.esm.js",
       "default": "./all/dist/remirror-icons-all.esm.js"
     },
     "./package.json": "./package.json",
