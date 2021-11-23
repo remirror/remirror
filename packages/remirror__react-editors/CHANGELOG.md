@@ -1,5 +1,21 @@
 # @remirror/react-editors
 
+## 0.1.33
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+* Update ProseMirror dependencies.
+
+* Updated dependencies []:
+  - remirror@1.0.46
+  - @remirror/extension-react-tables@1.0.16
+  - @remirror/react@1.0.16
+  - @remirror/pm@1.0.7
+
 ## 0.1.32
 
 > 2021-11-18

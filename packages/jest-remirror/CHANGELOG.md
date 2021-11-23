@@ -1,5 +1,22 @@
 # jest-remirror
 
+## 1.0.16
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+* Update ProseMirror dependencies.
+
+* Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/dom@1.0.13
+  - @remirror/preset-core@1.0.13
+  - @remirror/pm@1.0.7
+  - jest-prosemirror@1.0.9
+
 ## 1.0.15
 
 > 2021-11-10

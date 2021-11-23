@@ -1,5 +1,24 @@
 # @remirror/preset-core
 
+## 1.0.13
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/extension-doc@1.0.12
+  - @remirror/extension-events@1.0.11
+  - @remirror/extension-gap-cursor@1.0.11
+  - @remirror/extension-history@1.0.11
+  - @remirror/extension-paragraph@1.0.11
+  - @remirror/extension-positioner@1.1.10
+  - @remirror/extension-text@1.0.11
+  - @remirror/pm@1.0.7
+
 ## 1.0.12
 
 > 2021-11-10
