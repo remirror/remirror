@@ -1,9 +1,9 @@
 import { lstat, readFile } from 'fs-extra';
-import loadJson from 'load-json-file';
+import { loadJsonFileSync } from 'load-json-file';
 
 import { baseDir, log } from './helpers';
 
-const DEFAULT_CONFIG: ConfigFile = loadJson.sync(baseDir('support', '.config.sample.json'));
+const DEFAULT_CONFIG: ConfigFile = loadJsonFileSync(baseDir('support', '.config.sample.json'));
 
 /**
  * Check if a file exists for the provide `filePath` the provided target.

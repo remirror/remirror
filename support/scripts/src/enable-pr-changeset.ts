@@ -8,12 +8,12 @@
  */
 
 import chalk from 'chalk';
-import loadJson from 'load-json-file';
+import { loadJsonFileSync } from 'load-json-file';
 import writeJson from 'write-json-file';
 
 import { baseDir } from './helpers';
 
-const changesetConfig: object = loadJson.sync(baseDir('.changeset', 'config.json'));
+const changesetConfig: object = loadJsonFileSync(baseDir('.changeset', 'config.json'));
 
 async function main() {
   if (!process.env.CI) {

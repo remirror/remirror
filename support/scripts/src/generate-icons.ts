@@ -9,7 +9,7 @@ import chalk from 'chalk';
 import cheerio, { Cheerio } from 'cheerio';
 import { promises as fs } from 'fs';
 import globby from 'globby';
-import loadJson from 'load-json-file';
+import { loadJsonFileSync } from 'load-json-file';
 import path from 'path';
 import {
   camelCase,
@@ -23,7 +23,7 @@ import type { IconTree } from '@remirror/icons';
 
 import { baseDir, formatFiles, log } from './helpers';
 
-const data: { icons: string[] } = loadJson.sync(
+const data: { icons: string[] } = loadJsonFileSync(
   baseDir('support', 'scripts', 'data', 'icons.json'),
 );
 
