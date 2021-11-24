@@ -2583,7 +2583,7 @@ importers:
       jest-worker: ^27.0.6
       keyv: ^4.0.3
       keyv-file: ^0.2.0
-      load-json-file: ^6.2.0
+      load-json-file: ^7.0.0
       lodash.groupby: ^4.6.0
       lodash.isequal: ^4.5.0
       minimist: ^1.2.5
@@ -2656,7 +2656,7 @@ importers:
       jest-worker: 27.3.1
       keyv: 4.0.3
       keyv-file: 0.2.0
-      load-json-file: 6.2.0
+      load-json-file: 7.0.1
       lodash.groupby: 4.6.0
       lodash.isequal: 4.5.0
       minimist: 1.2.5
@@ -19275,14 +19275,9 @@ packages:
       strip-bom: 3.0.0
     dev: false
 
-  /load-json-file/6.2.0:
-    resolution: {integrity: sha512-gUD/epcRms75Cw8RT1pUdHugZYM5ce64ucs2GEISABwkRsOQr0q2wm/MV2TKThycIe5e0ytRweW2RZxclogCdQ==}
-    engines: {node: '>=8'}
-    dependencies:
-      graceful-fs: 4.2.8
-      parse-json: 5.2.0
-      strip-bom: 4.0.0
-      type-fest: 0.6.0
+  /load-json-file/7.0.1:
+    resolution: {integrity: sha512-Gnxj3ev3mB5TkVBGad0JM6dmLiQL+o0t23JPBZ9sd+yvSLk05mFoqKBw5N8gbbkU4TNXyqCgIrl/VM17OgUIgQ==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
   /load-yaml-file/0.2.0:
@@ -27605,6 +27600,7 @@ packages:
   /ws/7.5.6:
     resolution: {integrity: sha512-6GLgCqo2cy2A2rjCNFlxQS6ZljG/coZfZXclldI8FB/1G3CCI36Zd8xy2HrFVACi8tfk5XrgLQEk+P0Tnz9UcA==}
     engines: {node: '>=8.3.0'}
+    requiresBuild: true
     peerDependencies:
       bufferutil: ^4.0.1
       utf-8-validate: ^5.0.2
