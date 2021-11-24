@@ -202,7 +202,7 @@
     "jest": "^27.0.6",
     "jest-axe": "^5.0.1",
     "jest-circus": "^27.0.6",
-    "jest-extended": "^0.11.5",
+    "jest-extended": "^1.0.0",
     "jest-github-reporter": "^1.0.2",
     "jest-playwright-preset": "^1.7.0",
     "jest-prosemirror": "^1.0.10",
