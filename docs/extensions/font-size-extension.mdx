@@ -31,6 +31,38 @@ The extension is provided by the `@remirror/extension-font-size` package. There 
 
 <Basic />
 
+### JSON Content
+
+Initial content can be provided as JSON instead of HTML.
+Here is how you would provide the size mark.
+
+```tsx
+import {FontSizeExtension} from 'remirror/extensions';
+import {useRemirror} from '@remirror/react';
+
+const {manager, state} = useRemirror({
+
+  extensions: () => [
+    new FontSizeExtension()
+  ],
+
+  content: {
+    type: 'doc',
+    content: [{ type: 'paragraph',
+                content: [{ type: 'text',
+                            text: 'Hello ',
+                            marks: [{ type: 'fontSize',
+                                      attrs: { size: '20pt' }}]
+                           }]
+              }]
+  }
+
+});
+```
+
+Make sure you include the size unit in the mark because it can throw an error without a unit.
+
+
 ## API
 
 - [FontSizeExtension](../api/extension-font-size)
