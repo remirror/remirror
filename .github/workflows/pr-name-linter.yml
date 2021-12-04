@@ -1,6 +1,6 @@
 # Lint the name of opened pr's using commit lint.
 
-name: pr-name-linter
+name: pr-name-linter-dir
 on:
   pull_request:
     types: ['opened', 'edited', 'reopened', 'synchronize']
@@ -15,9 +15,18 @@ jobs:
           fetch-depth: 0
 
       - name: install commit lint conventional
-        run: npm i '@commitlint/config-angular@^15'
+        run: |
+          mkdir -p /tmp/pr-name-linter-dir
+          cd /tmp/pr-name-linter-dir
+          npm init --yes
+          npm i '@commitlint/config-angular@^15'
+
+      - name: copy config file
+        run: |
+          cp ./support/root/commitlint.config.js /tmp/pr-name-linter-dir/commitlint.config.js
 
       - name: lint pr title
         uses: JulienKode/pull-request-name-linter-action@v0.4.0
+        working-directory: /tmp/pr-name-linter-dir
         with:
-          configuration-path: './support/root/commitlint.config.js'
+          configuration-path: './commitlint.config.js'
