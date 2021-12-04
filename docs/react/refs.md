@@ -15,12 +15,7 @@ Here's the pure **JavaScript** version.
 
 ```jsx
 import React, { forwardRef, useImperativeHandle } from 'react';
-import {
-  ReactExtensions,
-  ReactFrameworkOutput,
-  Remirror,
-  useRemirror,
-} from '@remirror/react';
+import { ReactExtensions, ReactFrameworkOutput, Remirror, useRemirror } from '@remirror/react';
 
 const extensions = () => [new BoldExtension()];
 
