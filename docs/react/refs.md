@@ -18,7 +18,6 @@ import React, { forwardRef, useImperativeHandle } from 'react';
 import {
   ReactExtensions,
   ReactFrameworkOutput,
-  ReactFrameworkOutput,
   Remirror,
   useRemirror,
 } from '@remirror/react';
