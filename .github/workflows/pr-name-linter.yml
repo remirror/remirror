@@ -1,6 +1,6 @@
 # Lint the name of opened pr's using commit lint.
 
-name: pr-name-linter-dir
+name: pr-name-linter
 on:
   pull_request:
     types: ['opened', 'edited', 'reopened', 'synchronize']
