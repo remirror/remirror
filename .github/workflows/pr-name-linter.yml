@@ -15,7 +15,9 @@ jobs:
           fetch-depth: 0
 
       - name: install commit lint conventional
-        run: npm i '@commitlint/config-angular@^15'
+        run: |
+          cd $HOME
+          npm i -g '@commitlint/config-angular@^15'
 
       - name: lint pr title
         uses: JulienKode/pull-request-name-linter-action@v0.4.0
