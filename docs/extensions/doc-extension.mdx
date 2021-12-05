@@ -1,0 +1,41 @@
+---
+hide_title: true
+title: 'DocExtension'
+---
+
+# `DocExtension`
+
+## Summary
+
+Configure how the wrapped ProseMirror lib handles the content of the editor.
+
+## Usage
+
+### Installation
+
+This extension is installed for you when you install the main `remirror` package.
+
+You can construct the instance as part of your extensions if you want to change the configuration.
+
+### Custom Schema
+
+This example shows a schema where there is no Paragraph node at the top level. Without the custom schema, the Select All action does not return marks correctly for the node.
+
+```tsx
+import { DocExtension } from 'remirror/extensions';
+import { useRemirror } from '@remirror/react';
+
+const { manager, state } = useRemirror({
+  extensions: () => [
+    // doc tree shape supports text nodes without a paragraph parent
+    new DocExtension({ content: 'text*' }),
+  ],
+
+  content: {
+    type: 'doc',
+    content: [{ type: 'text', text: 'Hello ', marks: [{ type: 'bold', attrs: {} }] }],
+  },
+});
+```
+
+See https://prosemirror.net/docs/ref/#model.Document_Schema for more info about custom schemas.
