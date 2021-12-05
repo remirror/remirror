@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          path: ../repo
+          path: ./repo
 
       - name: install commit lint conventional
         run: |
@@ -22,7 +22,7 @@ jobs:
 
       - name: copy config file
         run: |
-          cp ../repo/support/root/commitlint.config.js ./commitlint.config.js
+          cp ./repo/support/root/commitlint.config.js ./commitlint.config.js
 
       - name: lint pr title
         uses: JulienKode/pull-request-name-linter-action@v0.4.0
