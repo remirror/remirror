@@ -1171,7 +1171,7 @@ function elementFromString(html: string, document?: Document): HTMLElement {
  * import { EditorState, prosemirrorNodeToHtml } from 'remirror';
  *
  * function convertStateToHtml(state: EditorState): string {
- *   return prosemirrorNodeToHtml({ node: state.doc, schema: state.schema });
+ *   return prosemirrorNodeToHtml(state.doc);
  * }
  * ```
  */
