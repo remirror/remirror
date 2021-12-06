@@ -56,9 +56,7 @@ exports[`node views can be created from commands 1`] = `
   role="textbox"
   translate="no"
 >
-  <p
-    class=""
-  >
+  <p>
     contenthello world
 
     <br
