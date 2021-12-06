@@ -445,13 +445,9 @@ export class ReactNodeView implements NodeView {
       event.preventDefault();
     }
 
-    if (isDraggable && isDragEvent) {
-      event.preventDefault();
-      return false;
-    }
-
     // these events are handled by prosemirror
     if (
+      isDragEvent ||
       isDropEvent ||
       isCopyEvent ||
       isPasteEvent ||
