@@ -2,6 +2,7 @@ import type { Story } from '@storybook/react';
 
 import BasicComponent from './basic';
 import ResizableCompoment from './resizable';
+import WithFigcaption from './with-figcaption';
 
 const Basic: Story<{ delaySeconds: number }> = BasicComponent.bind({});
 Basic.args = {
@@ -15,6 +16,6 @@ Resizable.args = {
 };
 Resizable.storyName = 'Resizable';
 
-export { Basic, Resizable };
+export { Basic, Resizable, WithFigcaption };
 
 export default { title: 'Extensions / Image' };
