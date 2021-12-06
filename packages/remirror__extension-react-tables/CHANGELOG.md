@@ -1,5 +1,18 @@
 # @remirror/extension-react-tables
 
+## 1.0.18
+
+> 2021-12-06
+
+### Patch Changes
+
+- Fix an issue that cause `draggable` React node views unable to be draged.
+
+- Updated dependencies []:
+  - @remirror/react-components@1.0.17
+  - @remirror/react-core@1.0.16
+  - @remirror/react-hooks@1.0.17
+
 ## 1.0.17
 
 > 2021-11-23
