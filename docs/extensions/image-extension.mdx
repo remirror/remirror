@@ -5,6 +5,7 @@ title: 'ImageExtension'
 
 import Basic from '../../website/extension-examples/extension-image/basic';
 import Resizable from '../../website/extension-examples/extension-image/resizable';
+import WithFigcaption from '../../website/extension-examples/extension-image/with-figcaption';
 
 # `ImageExtension`
 
@@ -30,9 +31,17 @@ The extension is provided by the `@remirror/extension-image` package. There are 
 
 ### Examples
 
+Here is a basic image example. You can see a grean image below.
+
 <Basic />
 
+You can also make an image resizable by using `enableResizing` option.
+
 <Resizable />
+
+You can further customize `ImageExtension` by extending it. For example, using a `<figure>` element to wrap the image and adding a `<figcaption>` element.
+
+<WithFigcaption />
 
 ## API
 

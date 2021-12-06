@@ -32,7 +32,7 @@ const Basic = ({ delaySeconds = 1 }: { delaySeconds: number }): JSX.Element => {
           content: [
             {
               type: 'text',
-              text: 'You can see a green image below.',
+              text: 'You can see a green image above.',
             },
           ],
         },

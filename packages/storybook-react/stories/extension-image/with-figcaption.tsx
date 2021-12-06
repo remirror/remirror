@@ -54,15 +54,6 @@ const WithFigcaption = (): JSX.Element => {
             },
           ],
         },
-        {
-          type: 'paragraph',
-          content: [
-            {
-              type: 'text',
-              text: 'You can see a green image with a figure caption',
-            },
-          ],
-        },
       ],
     },
   });
