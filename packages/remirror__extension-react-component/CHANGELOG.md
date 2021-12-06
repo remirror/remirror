@@ -1,5 +1,13 @@
 # @remirror/extension-react-component
 
+## 1.1.3
+
+> 2021-12-06
+
+### Patch Changes
+
+- Fix an issue that cause `draggable` React node views unable to be draged.
+
 ## 1.1.2
 
 > 2021-11-23

@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.0.18
+
+> 2021-12-06
+
+### Patch Changes
+
+- Fix an issue that cause `draggable` React node views unable to be draged.
+
+- Updated dependencies []:
+  - @remirror/react@1.0.18
+
 ## 1.0.17
 
 > 2021-11-23
