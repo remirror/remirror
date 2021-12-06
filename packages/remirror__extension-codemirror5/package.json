@@ -46,7 +46,7 @@
     "@remirror/messages": "^1.0.5"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.8",
+    "@remirror/pm": "^1.0.9",
     "@types/codemirror": "^5.60.2",
     "codemirror": "^5.62.0"
   },
