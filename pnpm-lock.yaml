@@ -629,7 +629,7 @@ importers:
       '@remirror/core-helpers': ^1.0.4
       '@remirror/core-types': ^1.0.3
       '@rollup/plugin-babel': ^5.3.0
-      '@rollup/plugin-commonjs': ^20.0.0
+      '@rollup/plugin-commonjs': ^21.0.0
       '@rollup/plugin-json': ^4
       '@rollup/plugin-node-resolve': ^13.0.2
       '@rollup/plugin-replace': ^3.0.0
@@ -673,7 +673,7 @@ importers:
       '@babel/runtime': 7.15.4
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@rollup/plugin-babel': 5.3.0_@babel+core@7.15.8+rollup@2.58.3
-      '@rollup/plugin-commonjs': 20.0.0_rollup@2.58.3
+      '@rollup/plugin-commonjs': 21.0.1_rollup@2.58.3
       '@rollup/plugin-json': 4.1.0_rollup@2.58.3
       '@rollup/plugin-node-resolve': 13.0.6_rollup@2.58.3
       '@rollup/plugin-replace': 3.0.0_rollup@2.58.3
@@ -7246,8 +7246,8 @@ packages:
       rollup: 2.58.3
     dev: false
 
-  /@rollup/plugin-commonjs/20.0.0_rollup@2.58.3:
-    resolution: {integrity: sha512-5K0g5W2Ol8hAcTHqcTBHiA7M58tfmYi1o9KxeJuuRNpGaTa5iLjcyemBitCBcKXaHamOBBEH2dGom6v6Unmqjg==}
+  /@rollup/plugin-commonjs/21.0.1_rollup@2.58.3:
+    resolution: {integrity: sha512-EA+g22lbNJ8p5kuZJUYyhhDK7WgJckW5g4pNN7n4mAFUM96VuwUnNT3xr2Db2iCZPI1pJPbGyfT5mS9T1dHfMg==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       rollup: ^2.38.3
@@ -10835,7 +10835,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.4_debug@4.3.2
+      follow-redirects: 1.14.4
     transitivePeerDependencies:
       - debug
 
@@ -15540,6 +15540,15 @@ packages:
       tabbable: 4.0.0
       xtend: 4.0.2
     dev: false
+
+  /follow-redirects/1.14.4:
+    resolution: {integrity: sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
 
   /follow-redirects/1.14.4_debug@4.3.2:
     resolution: {integrity: sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==}
