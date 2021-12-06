@@ -260,7 +260,10 @@
       {
         "groupName": "prosemirror packages",
         "matchPackagePatterns": [
-          ".*prosemirror.*"
+          "^@proprosemirror.*"
+        ],
+        "excludePackagePatterns": [
+          "y-prosemirror"
         ],
         "rangeStrategy": "bump",
         "stabilityDays": 0
