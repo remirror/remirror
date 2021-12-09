@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.38
+
+> 2021-12-09
+
+### Patch Changes
+
+- Fix an issue that causes the content below a list item is being deleted when deleting this list item by pressing Enter.
+
+- Updated dependencies []:
+  - remirror@1.0.49
+
 ## 0.1.37
 
 > 2021-12-06

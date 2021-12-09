@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.25
+
+> 2021-12-09
+
+### Patch Changes
+
+- Fix an issue that causes the content below a list item is being deleted when deleting this list item by pressing Enter.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.8
+
 ## 1.1.24
 
 > 2021-11-23
