@@ -11,6 +11,9 @@ const SHORTCUTS: Array<[RegExp, string]> = [
   [/<-$/, '←'],
   // rightArrow
   [/->$/, '→'],
+  // left/right arrow
+  // First "<-" gets replaced by left arrow; after typing ">", both get replaced by left/right arrow
+  [/←>$/, '⬌'],
   // copyright
   [/\(c\)$/, '©'],
   // trademark
