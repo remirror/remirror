@@ -1,5 +1,13 @@
 # @remirror/extension-shortcuts
 
+## 1.1.0
+
+> 2021-12-10
+
+### Minor Changes
+
+- feat: support shortcut for left/right arrows
+
 ## 1.0.6
 
 > 2021-11-23

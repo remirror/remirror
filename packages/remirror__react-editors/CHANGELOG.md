@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.39
+
+> 2021-12-10
+
+### Patch Changes
+
+- feat: support shortcut for left/right arrows
+
+- Updated dependencies []:
+  - remirror@1.0.50
+
 ## 0.1.38
 
 > 2021-12-09
