@@ -1,5 +1,13 @@
 # @remirror/extension-shortcuts
 
+## 1.1.1
+
+> 2021-12-10
+
+### Patch Changes
+
+- Align left/right arrow style with other arrows
+
 ## 1.1.0
 
 > 2021-12-10

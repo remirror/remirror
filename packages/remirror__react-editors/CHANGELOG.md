@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.40
+
+> 2021-12-10
+
+### Patch Changes
+
+- Align left/right arrow style with other arrows
+
+- Updated dependencies []:
+  - remirror@1.0.51
+
 ## 0.1.39
 
 > 2021-12-10

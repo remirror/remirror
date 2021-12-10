@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.51
+
+> 2021-12-10
+
+### Patch Changes
+
+- Align left/right arrow style with other arrows
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.1.1
+  - @remirror/preset-wysiwyg@1.1.27
+
 ## 1.0.50
 
 > 2021-12-10
