@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.50
+
+> 2021-12-10
+
+### Patch Changes
+
+- feat: support shortcut for left/right arrows
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.1.0
+  - @remirror/preset-wysiwyg@1.1.26
+
 ## 1.0.49
 
 > 2021-12-09
