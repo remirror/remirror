@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.52
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.10
+  - @remirror/preset-wysiwyg@1.1.28
+
 ## 1.0.51
 
 > 2021-12-10

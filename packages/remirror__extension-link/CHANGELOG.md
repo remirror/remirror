@@ -1,5 +1,13 @@
 # @remirror/extension-link
 
+## 1.1.10
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
 ## 1.1.9
 
 > 2021-11-23
