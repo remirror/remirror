@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.41
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
+- Updated dependencies []:
+  - remirror@1.0.52
+
 ## 0.1.40
 
 > 2021-12-10
