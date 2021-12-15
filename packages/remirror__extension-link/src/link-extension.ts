@@ -384,8 +384,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           href: getMatchString(url),
           auto: !isReplacement,
         }),
-        // Only replace the selection for non whitespace selections
-        replaceSelection: (replacedText) => !!replacedText.trim(),
       },
     ];
   }
