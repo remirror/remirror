@@ -54,14 +54,14 @@ export interface EventsOptions {
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  copy?: Handler<ScrollEventHandler>;
+  copy?: Handler<ClipboardEventHandler>;
 
   /**
    * Listens to `paste` events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
    */
-  paste?: Handler<ScrollEventHandler>;
+  paste?: Handler<ClipboardEventHandler>;
 
   /**
    * Listens for mousedown events on the editor.
@@ -152,6 +152,7 @@ export interface EventsOptions {
 
 export type FocusEventHandler = (event: FocusEvent) => boolean | undefined | void;
 export type ScrollEventHandler = (event: Event) => boolean | undefined | void;
+export type ClipboardEventHandler = (event: ClipboardEvent) => boolean | undefined | void;
 export type MouseEventHandler = (event: MouseEvent) => boolean | undefined | void;
 export type TextInputHandler = (props: {
   from: number;
