@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.42
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - remirror@1.0.53
+  - @remirror/extension-react-tables@1.0.19
+  - @remirror/react@1.0.19
+
 ## 0.1.41
 
 > 2021-12-15

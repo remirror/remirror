@@ -1,5 +1,16 @@
 # @remirror/extension-mention-atom
 
+## 1.0.14
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-events@1.0.13
+
 ## 1.0.13
 
 > 2021-11-23

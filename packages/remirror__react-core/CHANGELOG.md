@@ -1,5 +1,17 @@
 # @remirror/react-core
 
+## 1.0.17
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.1.12
+  - @remirror/preset-core@1.0.15
+
 ## 1.0.16
 
 > 2021-12-06

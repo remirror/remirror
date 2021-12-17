@@ -1,5 +1,20 @@
 # @remirror/react-hooks
 
+## 1.0.18
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-events@1.0.13
+  - @remirror/extension-mention@1.0.13
+  - @remirror/extension-mention-atom@1.0.14
+  - @remirror/extension-positioner@1.1.12
+  - @remirror/react-core@1.0.17
+
 ## 1.0.17
 
 > 2021-12-06

@@ -1,5 +1,20 @@
 # @remirror/react
 
+## 1.0.19
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.1.12
+  - @remirror/extension-react-tables@1.0.19
+  - @remirror/react-components@1.0.18
+  - @remirror/react-core@1.0.17
+  - @remirror/react-hooks@1.0.18
+
 ## 1.0.18
 
 > 2021-12-06

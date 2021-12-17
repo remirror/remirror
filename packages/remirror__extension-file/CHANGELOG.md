@@ -1,5 +1,17 @@
 # @remirror/extension-file
 
+## 0.3.7
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/react@1.0.19
+  - @remirror/react-components@1.0.18
+
 ## 0.3.6
 
 > 2021-12-06

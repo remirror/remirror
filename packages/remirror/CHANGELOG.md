@@ -1,5 +1,26 @@
 # remirror
 
+## 1.0.53
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-events@1.0.13
+  - @remirror/dom@1.0.15
+  - @remirror/extension-annotation@1.1.8
+  - @remirror/extension-link@1.1.11
+  - @remirror/extension-list@1.2.9
+  - @remirror/extension-mention@1.0.13
+  - @remirror/extension-mention-atom@1.0.14
+  - @remirror/extension-positioner@1.1.12
+  - @remirror/extension-yjs@1.0.16
+  - @remirror/preset-core@1.0.15
+  - @remirror/preset-wysiwyg@1.1.29
+
 ## 1.0.52
 
 > 2021-12-15

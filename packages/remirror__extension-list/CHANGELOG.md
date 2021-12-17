@@ -1,5 +1,16 @@
 # @remirror/extension-list
 
+## 1.2.9
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-events@1.0.13
+
 ## 1.2.8
 
 > 2021-12-09

@@ -1,5 +1,16 @@
 # @remirror/extension-annotation
 
+## 1.1.8
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.1.12
+
 ## 1.1.7
 
 > 2021-11-23
