@@ -205,6 +205,8 @@ export type HoverEventHandler = (props: HoverEventHandlerProps) => boolean | und
     hover: { earlyReturnValue: true },
     contextmenu: { earlyReturnValue: true },
     scroll: { earlyReturnValue: true },
+    copy: { earlyReturnValue: true },
+    paste: { earlyReturnValue: true },
   },
   defaultPriority: ExtensionPriority.High,
 })
