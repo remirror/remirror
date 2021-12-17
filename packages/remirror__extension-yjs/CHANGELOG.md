@@ -1,5 +1,16 @@
 # @remirror/extension-yjs
 
+## 1.0.16
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-annotation@1.1.8
+
 ## 1.0.15
 
 > 2021-11-23

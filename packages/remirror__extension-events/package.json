@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-events",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Manage your remirror editor dom events.",
   "keywords": [
     "remirror",

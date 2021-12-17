@@ -1,5 +1,18 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.29
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.11
+  - @remirror/extension-list@1.2.9
+  - @remirror/preset-core@1.0.15
+
 ## 1.1.28
 
 > 2021-12-15
