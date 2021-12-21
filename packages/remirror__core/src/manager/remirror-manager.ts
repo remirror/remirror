@@ -677,7 +677,7 @@ export class RemirrorManager<Extension extends AnyExtension> {
     this.#extensionStore.currentState = props.state;
     this.#extensionStore.previousState = props.previousState;
 
-    if (this.#firstStateUpdate) {
+    if (firstUpdate) {
       this.#phase = ManagerPhase.Runtime;
       this.#firstStateUpdate = false;
     }
