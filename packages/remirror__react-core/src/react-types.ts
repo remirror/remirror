@@ -79,7 +79,7 @@ export interface ReactFrameworkOutput<Extension extends AnyExtension>
    * import { PresetCore } from '@remirror/preset-core';
    * import { BoldExtension } from '@remirror/extension-bold';
    *
-   * const Editor = () => {
+   * const InnerEditor = () => {
    *   const { getRootProps, renderSsr } = useRemirror();
    *   return <div {...getRootProps()} />;
    * }
