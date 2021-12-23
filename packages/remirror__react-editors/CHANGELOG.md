@@ -1,5 +1,96 @@
 # @remirror/react-editors
 
+## 0.1.42
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - remirror@1.0.53
+  - @remirror/extension-react-tables@1.0.19
+  - @remirror/react@1.0.19
+
+## 0.1.41
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
+- Updated dependencies []:
+  - remirror@1.0.52
+
+## 0.1.40
+
+> 2021-12-10
+
+### Patch Changes
+
+- Align left/right arrow style with other arrows
+
+- Updated dependencies []:
+  - remirror@1.0.51
+
+## 0.1.39
+
+> 2021-12-10
+
+### Patch Changes
+
+- feat: support shortcut for left/right arrows
+
+- Updated dependencies []:
+  - remirror@1.0.50
+
+## 0.1.38
+
+> 2021-12-09
+
+### Patch Changes
+
+- Fix an issue that causes the content below a list item is being deleted when deleting this list item by pressing Enter.
+
+- Updated dependencies []:
+  - remirror@1.0.49
+
+## 0.1.37
+
+> 2021-12-06
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.9
+
+## 0.1.36
+
+> 2021-12-06
+
+### Patch Changes
+
+- Fix an issue that cause `draggable` React node views unable to be draged.
+
+- Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.18
+  - @remirror/react@1.0.18
+
+## 0.1.35
+
+> 2021-11-23
+
+### Patch Changes
+
+- Restore image dimensions correctly from the markup.
+
+- Updated dependencies []:
+  - remirror@1.0.48
+
 ## 0.1.34
 
 > 2021-11-23

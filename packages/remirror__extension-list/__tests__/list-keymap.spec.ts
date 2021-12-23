@@ -161,6 +161,41 @@ describe('Enter', () => {
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
+
+  it('keeps the content below when deleting a list item', () => {
+    from = doc(
+      ul(
+        li(
+          p('Head'),
+          ul(
+            li(p('A1')), //
+            li(p('A2')), //
+            li(p('A3')), //
+            li(p('<cursor>')), //
+          ),
+          p('Tail'),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        li(
+          p('Head'),
+          ul(
+            li(p('A1')), //
+            li(p('A2')), //
+            li(p('A3')), //
+          ),
+        ),
+        li(
+          p(''),
+          p('Tail'), //
+        ),
+      ),
+    );
+    editor.add(from).press('Enter');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
 });
 
 describe('Tab and Shift-Tab', () => {

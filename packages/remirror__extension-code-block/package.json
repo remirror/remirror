@@ -59,7 +59,7 @@
     "refractor": "^3.3.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.8",
+    "@remirror/pm": "^1.0.9",
     "@types/prettier": "^2.3.2",
     "prettier": "^2.3.2"
   },

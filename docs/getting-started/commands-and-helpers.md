@@ -194,7 +194,7 @@ Here are a few useful helpers, but there are many more!
 
 ## Summing up
 
-Congratulations! You created a manager, rendered the editor UI, added a menu, and captured the document for persistancy.
+Congratulations! You created a manager, rendered the editor UI, added a menu, and captured the document for persistency.
 
 With that, you've all the basic tools to start [exploring Remirror](https://remirror.vercel.app).
 

@@ -15,7 +15,7 @@ env:
 jobs:
   # Update package versions with changesets.
   version:
-    timeout-minutes: 8
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     if: ${{ false == contains(github.ref, 'changeset') && github.repository == 'remirror/remirror' }}
     steps:

@@ -1,5 +1,16 @@
 # @remirror/dom
 
+## 1.0.15
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/preset-core@1.0.15
+
 ## 1.0.14
 
 > 2021-11-23

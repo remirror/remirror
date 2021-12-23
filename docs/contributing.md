@@ -190,7 +190,7 @@ When run this builds all packages and then watch for changes to reload as necess
 
 Once your work is complete you'll want to create a Pull Request to share all that goodness with the rest of us.
 
-1. Create a [pull request](https://help.github.com/en/articles/creating-a-pull-request) using the github interface. The template will automatically populate for you.
+1. Create a [pull request](https://help.github.com/en/articles/creating-a-pull-request) using the github interface. The template will automatically populate the description for you; use a PR name following the ["Conventional Commits" conventions](https://www.conventionalcommits.org/en/v1.0.0/).
 2. Add a description and reference the issue this pull request addresses where applicable. The description will be used as the body of the git commit message since all pull request are squashed down into one commit before merging.
 3. Tick off all relevant check boxes by placing an x between the square brackets i.e. `[ ]` to `[x]`.
 4. Please add a screenshot where the change is related to the user interface or design. It makes it so much easier to grasp the intentions of your work. You can use your favourite GIF screenshare tool for creating animated screenshots.

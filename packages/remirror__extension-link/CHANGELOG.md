@@ -1,5 +1,24 @@
 # @remirror/extension-link
 
+## 1.1.11
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-events@1.0.13
+
+## 1.1.10
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
 ## 1.1.9
 
 > 2021-11-23

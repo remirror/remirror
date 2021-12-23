@@ -1,5 +1,16 @@
 # @remirror/extension-react-ssr
 
+## 1.0.14
+
+> 2021-12-06
+
+### Patch Changes
+
+- Fix an issue that cause `draggable` React node views unable to be draged.
+
+- Updated dependencies []:
+  - @remirror/extension-react-component@1.1.3
+
 ## 1.0.13
 
 > 2021-11-23

@@ -13,11 +13,18 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          path: ./repo
 
       - name: install commit lint conventional
-        run: npm i '@commitlint/config-angular@^12'
+        run: |
+          npm init --yes
+          npm i '@commitlint/config-angular@^15'
+
+      - name: copy config file
+        run: |
+          cp ./repo/support/root/commitlint.config.js ./commitlint.config.js
 
       - name: lint pr title
         uses: JulienKode/pull-request-name-linter-action@v0.4.0
         with:
-          configuration-path: './support/root/commitlint.config.js'
+          configuration-path: './commitlint.config.js'

@@ -1,5 +1,86 @@
 # remirror
 
+## 1.0.53
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-events@1.0.13
+  - @remirror/dom@1.0.15
+  - @remirror/extension-annotation@1.1.8
+  - @remirror/extension-link@1.1.11
+  - @remirror/extension-list@1.2.9
+  - @remirror/extension-mention@1.0.13
+  - @remirror/extension-mention-atom@1.0.14
+  - @remirror/extension-positioner@1.1.12
+  - @remirror/extension-yjs@1.0.16
+  - @remirror/preset-core@1.0.15
+  - @remirror/preset-wysiwyg@1.1.29
+
+## 1.0.52
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.10
+  - @remirror/preset-wysiwyg@1.1.28
+
+## 1.0.51
+
+> 2021-12-10
+
+### Patch Changes
+
+- Align left/right arrow style with other arrows
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.1.1
+  - @remirror/preset-wysiwyg@1.1.27
+
+## 1.0.50
+
+> 2021-12-10
+
+### Patch Changes
+
+- feat: support shortcut for left/right arrows
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.1.0
+  - @remirror/preset-wysiwyg@1.1.26
+
+## 1.0.49
+
+> 2021-12-09
+
+### Patch Changes
+
+- Fix an issue that causes the content below a list item is being deleted when deleting this list item by pressing Enter.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.8
+  - @remirror/preset-wysiwyg@1.1.25
+
+## 1.0.48
+
+> 2021-11-23
+
+### Patch Changes
+
+- Restore image dimensions correctly from the markup.
+
+- Updated dependencies []:
+  - @remirror/extension-image@1.0.20
+  - @remirror/preset-wysiwyg@1.1.24
+
 ## 1.0.47
 
 > 2021-11-23

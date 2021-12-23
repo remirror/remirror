@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../globals.d.ts" />
-
-import 'jest-extended';
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference types="jest-extended" />
 
 import diffHtml from 'diffable-html';
+import * as matchers from 'jest-extended';
 import { prosemirrorSerializer } from 'jest-prosemirror';
 import { getSnapshotDiffSerializer, toMatchDiffSnapshot } from 'snapshot-diff';
 
@@ -14,6 +15,8 @@ expect.extend({ toMatchDiffSnapshot });
 process.on('unhandledRejection', (reason) => {
   console.error('REJECTION', reason);
 });
+
+expect.extend(matchers);
 
 /**
  * Serializer for HTML content.
