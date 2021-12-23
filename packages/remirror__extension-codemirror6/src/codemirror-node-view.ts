@@ -1,5 +1,7 @@
 import { defaultKeymap } from '@codemirror/commands';
+import type { LanguageSupport } from '@codemirror/language';
 import {
+  Compartment,
   EditorState as CodeMirrorEditorState,
   Extension as CodeMirrorExtension,
   Prec,
@@ -11,6 +13,7 @@ import {
   KeyBinding as CodeMirrorKeyBinding,
   keymap,
 } from '@codemirror/view';
+import { isPromise } from '@remirror/core';
 import type {
   EditorSchema,
   EditorView as EditorView,
@@ -19,6 +22,8 @@ import type {
 } from '@remirror/pm';
 import { exitCode } from '@remirror/pm/commands';
 import { Selection, TextSelection } from '@remirror/pm/state';
+
+type LoadLanguage = (lang: string) => Promise<LanguageSupport> | LanguageSupport | undefined;
 
 export class CodeMirror6NodeView implements NodeView {
   public dom: HTMLElement;
@@ -29,22 +34,30 @@ export class CodeMirror6NodeView implements NodeView {
   private readonly schema: EditorSchema;
   private readonly cm: CodeMirrorEditorView;
   private updating = false;
+  private loadLanguage: LoadLanguage;
+  private languageConf: Compartment;
+  private languageName: string;
 
   constructor({
     node,
     view,
     getPos,
     extensions,
+    loadLanguage,
   }: {
     node: ProsemirrorNode;
     view: EditorView;
     getPos: () => number;
-    extensions?: CodeMirrorExtension[] | null;
+    extensions: CodeMirrorExtension[] | null;
+    loadLanguage: LoadLanguage;
   }) {
     this.node = node;
     this.view = view;
     this.getPos = getPos;
     this.schema = node.type.schema;
+    this.loadLanguage = loadLanguage;
+    this.languageConf = new Compartment();
+    this.languageName = '';
 
     const changeFilter = CodeMirrorEditorState.changeFilter.of((tr) => {
       if (!tr.docChanged && !this.updating) {
@@ -63,6 +76,7 @@ export class CodeMirror6NodeView implements NodeView {
         // override the default `ArrowUp` and `ArrowDown` keymaps
         Prec.high(keymap.of(this.codeMirrorKeymap())),
         changeFilter,
+        this.languageConf.of([]),
         ...(extensions ?? []),
       ],
     });
@@ -75,6 +89,9 @@ export class CodeMirror6NodeView implements NodeView {
 
     // The editor's outer node is our DOM representation
     this.dom = this.cm.dom;
+
+    // Try to find and load the language
+    this.updateLanguage();
   }
 
   update(node: ProsemirrorNode): boolean {
@@ -83,6 +100,7 @@ export class CodeMirror6NodeView implements NodeView {
     }
 
     this.node = node;
+    this.updateLanguage();
     const change = computeChange(this.cm.state.doc.toString(), node.textContent);
 
     if (change) {
@@ -94,6 +112,37 @@ export class CodeMirror6NodeView implements NodeView {
     }
 
     return true;
+  }
+
+  private updateLanguage() {
+    const languageName = this.node.attrs.language;
+
+    if (languageName === this.languageName) {
+      return;
+    }
+
+    const language = this.loadLanguage(languageName);
+
+    if (!language) {
+      return;
+    }
+
+    if (isPromise(language)) {
+      language.then((lang) => {
+        this.setLanguage(lang);
+        this.languageName = languageName;
+      });
+      return;
+    }
+
+    this.setLanguage(language);
+    this.languageName = languageName;
+  }
+
+  private setLanguage(language: LanguageSupport) {
+    this.cm.dispatch({
+      effects: this.languageConf.reconfigure(language),
+    });
   }
 
   /**

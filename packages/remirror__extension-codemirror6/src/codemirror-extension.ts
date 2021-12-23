@@ -1,3 +1,4 @@
+import type { LanguageDescription, LanguageSupport } from '@codemirror/language';
 import { oneDark } from '@codemirror/theme-one-dark';
 import {
   ApplySchemaAttributes,
@@ -27,6 +28,8 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
     return 'codeMirror' as const;
   }
 
+  private languageMap: Record<string, LanguageDescription> | null = null;
+
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
       group: 'block',
@@ -37,7 +40,6 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
       code: true,
       attrs: {
         ...extra.defaults(),
-        codeMirrorConfig: { default: undefined },
         language: { default: undefined },
       },
       parseDOM: [
@@ -61,6 +63,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
         view,
         getPos: getPos as () => number,
         extensions: this.options.extensions,
+        loadLanguage: this.loadLanguage.bind(this),
       });
     };
   }
@@ -72,5 +75,32 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
       ArrowUp: arrowHandler('up'),
       ArrowDown: arrowHandler('down'),
     };
+  }
+
+  private getLanguageMap(): Record<string, LanguageDescription> {
+    if (!this.languageMap) {
+      this.languageMap = {};
+
+      for (const language of this.options.languages ?? []) {
+        for (const alias of language.alias) {
+          this.languageMap[alias] = language;
+        }
+      }
+    }
+
+    return this.languageMap;
+  }
+
+  private loadLanguage(
+    inputLanguage: string,
+  ): Promise<LanguageSupport> | LanguageSupport | undefined {
+    const languageMap = this.getLanguageMap();
+    const language = languageMap[inputLanguage.toLowerCase()];
+
+    if (!language) {
+      return undefined;
+    }
+
+    return language.support || language.load();
   }
 }
