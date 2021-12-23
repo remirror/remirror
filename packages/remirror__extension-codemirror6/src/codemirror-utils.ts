@@ -24,7 +24,7 @@ export function arrowHandler(dir: 'left' | 'right' | 'up' | 'down'): CommandFunc
     const $head = tr.selection.$head;
     const nextPos = Selection.near(tr.doc.resolve(side > 0 ? $head.after() : $head.before()), side);
 
-    if (nextPos.$head && nextPos.$head.parent.type.name === 'codeMirror6') {
+    if (nextPos.$head && nextPos.$head.parent.type.name === 'codeMirror') {
       dispatch?.(tr.setSelection(nextPos));
       return true;
     }

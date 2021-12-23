@@ -1,7 +1,7 @@
-import { CodeMirror6Extension } from '@remirror/extension-codemirror6';
+import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-const extensions = () => [new CodeMirror6Extension()];
+const extensions = () => [new CodeMirrorExtension()];
 
 const content = `<pre><code>log('hello world!!')</code></pre>`;
 

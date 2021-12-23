@@ -21,8 +21,10 @@ import { arrowHandler } from './codemirror-utils';
     extensions: [oneDark],
   },
 })
-export class CodeMirror6Extension extends NodeExtension<CodeMirrorExtensionOptions> {
-  name = 'codeMirror6';
+export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOptions> {
+  get name() {
+    return 'codeMirror' as const;
+  }
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
     return {
