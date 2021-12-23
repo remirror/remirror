@@ -26,7 +26,7 @@ export class CodeMirror6NodeView implements NodeView {
   private node: ProsemirrorNode;
   private readonly view: EditorView;
   private readonly getPos: () => number;
-  private schema: EditorSchema;
+  private readonly schema: EditorSchema;
   private readonly cm: CodeMirrorEditorView;
   private updating = false;
 
