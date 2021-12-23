@@ -13,8 +13,8 @@ import {
 } from '@remirror/core';
 
 import { CodeMirrorExtensionOptions } from '.';
-import { CodeMirror6NodeView } from './codemirror6-node-view';
-import { arrowHandler } from './codemirror6-utils';
+import { CodeMirror6NodeView } from './codemirror-node-view';
+import { arrowHandler } from './codemirror-utils';
 
 @extension<CodeMirrorExtensionOptions>({
   defaultOptions: {
