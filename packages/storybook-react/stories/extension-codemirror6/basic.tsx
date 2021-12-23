@@ -1,7 +1,8 @@
+import { languages } from '@codemirror/language-data';
 import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-const extensions = () => [new CodeMirrorExtension()];
+const extensions = () => [new CodeMirrorExtension({ languages })];
 
 const content = `<pre><code>log('hello world!!')</code></pre>`;
 

@@ -34,8 +34,8 @@ export class CodeMirror6NodeView implements NodeView {
   private readonly schema: EditorSchema;
   private readonly cm: CodeMirrorEditorView;
   private updating = false;
-  private loadLanguage: LoadLanguage;
-  private languageConf: Compartment;
+  private readonly loadLanguage: LoadLanguage;
+  private readonly languageConf: Compartment;
   private languageName: string;
 
   constructor({
