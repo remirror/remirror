@@ -12,8 +12,8 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 
-import { CodeMirrorExtensionOptions } from '.';
 import { CodeMirror6NodeView } from './codemirror-node-view';
+import { CodeMirrorExtensionOptions } from './codemirror-types';
 import { arrowHandler } from './codemirror-utils';
 
 @extension<CodeMirrorExtensionOptions>({
