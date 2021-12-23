@@ -1,0 +1,65 @@
+---
+hide_title: true
+title: 'CodeMirrorExtension'
+---
+
+import Basic from '../../website/extension-examples/extension-codemirror6/basic';
+import WithCustomExtension from '../../website/extension-examples/extension-codemirror6/with-custom-extension';
+
+# `CodeMirrorExtension`
+
+## Summary
+
+The CodeMirror extension adds fenced code blocks to your editor. A code block contains a formatted snippets of source code.
+
+:::info
+
+This extension differs from the `CodeExtension`, which provides code marks on inline text.
+
+:::
+
+:::info
+
+Also check a simpler code block implementation at [CodeBlockExtension](code-block-extension).
+
+:::
+
+## Features
+
+### Formatting
+
+Code blocks can be formatted for many different languages. For example, JavaScript code will be formatted differently from markdown or JSON code.
+
+For a list of supported languages, please consult [refractor](https://github.com/wooorm/refractor/tree/main/lang), which we use under the hood.
+
+### Keyboard support
+
+Users can create a new code block by typing <code>&grave;&grave;&grave;&nbsp;</code> (3 ticks and a space). Users can define the language of the code block by typing <code>&grave;&grave;&grave;html&nbsp;</code>.
+
+## Usage
+
+### Installation
+
+This extension is NOT installed for you when you install the main `remirror` package but need to be installed separately:
+
+```bash
+npm install @remirror/extension-codemirror6
+```
+
+You can use the imports in the following way:
+
+```ts
+import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
+```
+
+### Examples
+
+<Basic />
+
+You can customize your CodeMirror editor by passing your custom extensions.
+
+<WithCustomExtension />
+
+## API
+
+- [CodeMirrorExtension](../api/extension-codemirror6)
