@@ -39,7 +39,7 @@ export class CodeMirror6NodeView implements NodeView {
     node: ProsemirrorNode;
     view: EditorView;
     getPos: () => number;
-    extensions?: CodeMirrorExtension[];
+    extensions?: CodeMirrorExtension[] | null;
   }) {
     this.node = node;
     this.view = view;

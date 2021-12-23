@@ -1,6 +1,8 @@
+import { oneDark } from '@codemirror/theme-one-dark';
 import {
   ApplySchemaAttributes,
   EditorView,
+  extension,
   isElementDomNode,
   NodeExtension,
   NodeExtensionSpec,
@@ -10,10 +12,16 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 
+import { CodeMirrorExtensionOptions } from '.';
 import { CodeMirror6NodeView } from './codemirror6-node-view';
 import { arrowHandler } from './codemirror6-utils';
 
-export class CodeMirror6Extension extends NodeExtension {
+@extension<CodeMirrorExtensionOptions>({
+  defaultOptions: {
+    extensions: [oneDark],
+  },
+})
+export class CodeMirror6Extension extends NodeExtension<CodeMirrorExtensionOptions> {
   name = 'codeMirror6';
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
@@ -45,7 +53,12 @@ export class CodeMirror6Extension extends NodeExtension {
 
   createNodeViews(): NodeViewMethod {
     return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
-      return new CodeMirror6NodeView({ node, view, getPos: getPos as () => number });
+      return new CodeMirror6NodeView({
+        node,
+        view,
+        getPos: getPos as () => number,
+        extensions: this.options.extensions,
+      });
     };
   }
 
