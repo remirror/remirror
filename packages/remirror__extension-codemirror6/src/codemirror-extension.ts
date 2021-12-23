@@ -19,6 +19,7 @@ import { arrowHandler } from './codemirror-utils';
 @extension<CodeMirrorExtensionOptions>({
   defaultOptions: {
     extensions: [oneDark],
+    languages: null,
   },
 })
 export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOptions> {

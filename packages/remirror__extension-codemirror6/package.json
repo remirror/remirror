@@ -43,6 +43,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@codemirror/commands": "^0.19.5",
+    "@codemirror/language": "^0.19.7",
     "@codemirror/state": "^0.19.6",
     "@codemirror/text": "^0.19.5",
     "@codemirror/theme-one-dark": "^0.19.1",

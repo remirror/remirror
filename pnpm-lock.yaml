@@ -997,6 +997,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@codemirror/commands': ^0.19.5
+      '@codemirror/language': ^0.19.7
       '@codemirror/state': ^0.19.6
       '@codemirror/text': ^0.19.5
       '@codemirror/theme-one-dark': ^0.19.1
@@ -1006,6 +1007,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.15.4
       '@codemirror/commands': 0.19.5
+      '@codemirror/language': 0.19.7
       '@codemirror/state': 0.19.6
       '@codemirror/text': 0.19.5
       '@codemirror/theme-one-dark': 0.19.1
@@ -4602,7 +4604,7 @@ packages:
   /@codemirror/commands/0.19.5:
     resolution: {integrity: sha512-8PZOtx7d/GbKhFYA88zs2wINDtaUgj3pEjLYScKTd/Vsyw8qOp86tJQQNnMFTRZj/ISQl9Lbg3aAmHvroMqspw==}
     dependencies:
-      '@codemirror/language': 0.19.5
+      '@codemirror/language': 0.19.7
       '@codemirror/matchbrackets': 0.19.3
       '@codemirror/state': 0.19.6
       '@codemirror/text': 0.19.5
@@ -4621,7 +4623,7 @@ packages:
   /@codemirror/highlight/0.19.6:
     resolution: {integrity: sha512-+eibu6on9quY8uN3xJ/n3rH+YIDLlpX7YulVmFvqAIz/ukRQ5tWaBmB7fMixHmnmRIRBRZgB8rNtonuMwZSAHQ==}
     dependencies:
-      '@codemirror/language': 0.19.5
+      '@codemirror/language': 0.19.7
       '@codemirror/rangeset': 0.19.2
       '@codemirror/state': 0.19.6
       '@codemirror/view': 0.19.20
@@ -4787,6 +4789,16 @@ packages:
       '@lezer/lr': 0.15.4
     dev: false
 
+  /@codemirror/language/0.19.7:
+    resolution: {integrity: sha512-pNNUtYWMIMG0lUSKyUXJr8U0rFiCKsKFXbA2Oj17PC+S1FY99hV0z1vcntW67ekAIZw9DMEUQnLsKBuIbAUX7Q==}
+    dependencies:
+      '@codemirror/state': 0.19.6
+      '@codemirror/text': 0.19.5
+      '@codemirror/view': 0.19.37
+      '@lezer/common': 0.15.8
+      '@lezer/lr': 0.15.4
+    dev: false
+
   /@codemirror/legacy-modes/0.19.0:
     resolution: {integrity: sha512-GSPdBNUeyF3nxJ2lztXGp2UoQjn+ggK5z+Kd4tflziecCG1+8mcdudDgFvxDuaTGWyM34S7Ldb4Xv7/XodZtBA==}
     dependencies:
@@ -4808,7 +4820,7 @@ packages:
   /@codemirror/matchbrackets/0.19.3:
     resolution: {integrity: sha512-ljkrBxaLgh8jesroUiBa57pdEwqJamxkukXrJpL9LdyFZVJaF+9TldhztRaMsMZO1XnCSSHQ9sg32iuHo7Sc2g==}
     dependencies:
-      '@codemirror/language': 0.19.5
+      '@codemirror/language': 0.19.7
       '@codemirror/state': 0.19.6
       '@codemirror/view': 0.19.20
       '@lezer/common': 0.15.8
