@@ -1,10 +1,13 @@
 import { basicSetup } from '@codemirror/basic-setup';
 import { languages } from '@codemirror/language-data';
+import { oneDark } from '@codemirror/theme-one-dark';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-const extensions = () => [new CodeMirrorExtension({ languages, extensions: [basicSetup] })];
+const extensions = () => [
+  new CodeMirrorExtension({ languages, extensions: [basicSetup, oneDark] }),
+];
 
 const content = {
   type: 'doc',

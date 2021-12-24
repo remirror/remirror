@@ -3,14 +3,22 @@ import {
   ApplySchemaAttributes,
   EditorView,
   extension,
+  GetAttributes,
+  getMatchString,
+  InputRule,
   isElementDomNode,
+  isTextSelection,
+  keyBinding,
+  KeyBindingProps,
   NodeExtension,
   NodeExtensionSpec,
+  nodeInputRule,
   NodeSpecOverride,
   NodeViewMethod,
   PrioritizedKeyBindings,
   ProsemirrorNode,
 } from '@remirror/core';
+import { TextSelection } from '@remirror/pm/state';
 
 import { CodeMirror6NodeView } from './codemirror-node-view';
 import { CodeMirrorExtensionOptions } from './codemirror-types';
@@ -74,6 +82,74 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
       ArrowUp: arrowHandler('up'),
       ArrowDown: arrowHandler('down'),
     };
+  }
+
+  /**
+   * Create an input rule that listens converts the code fence into a code block
+   * when typing triple back tick followed by a space.
+   */
+  createInputRules(): InputRule[] {
+    const regexp = /^```(\S+) $/;
+
+    const getAttributes: GetAttributes = (match) => {
+      const language = getMatchString(match, 1) ?? '';
+      return { language };
+    };
+
+    return [
+      nodeInputRule({
+        regexp,
+        type: this.type,
+        beforeDispatch: ({ tr, start }) => {
+          const $pos = tr.doc.resolve(start);
+          tr.setSelection(new TextSelection($pos));
+        },
+        getAttributes: getAttributes,
+      }),
+    ];
+  }
+
+  @keyBinding({ shortcut: 'Enter' })
+  enterKey({ dispatch, tr }: KeyBindingProps): boolean {
+    if (!(isTextSelection(tr.selection) && tr.selection.empty)) {
+      return false;
+    }
+
+    const { nodeBefore, parent } = tr.selection.$anchor;
+
+    if (!nodeBefore || !nodeBefore.isText || !parent.type.isTextblock) {
+      return false;
+    }
+
+    const regex = /^```(\S*)?$/;
+    const { text, nodeSize } = nodeBefore;
+    const { textContent } = parent;
+
+    if (!text) {
+      return false;
+    }
+
+    const matchesNodeBefore = text.match(regex);
+    const matchesParent = textContent.match(regex);
+
+    if (!matchesNodeBefore || !matchesParent) {
+      return false;
+    }
+
+    const language = getMatchString(matchesNodeBefore, 1) ?? '';
+
+    const pos = tr.selection.$from.before();
+    const end = pos + nodeSize + 1; // +1 to account for the extra pos a node takes up
+    tr.replaceWith(pos, end, this.type.create({ language }));
+
+    // Set the selection to within the codeBlock
+    tr.setSelection(TextSelection.create(tr.doc, pos + 1));
+
+    if (dispatch) {
+      dispatch(tr);
+    }
+
+    return true;
   }
 
   private getLanguageMap(): Record<string, LanguageDescription> {
