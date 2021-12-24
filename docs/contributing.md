@@ -252,14 +252,17 @@ If you prefer not to use the automated method for creating extension the followi
 3. Replace `TEMPLATE_DESCRIPTION` with a suitable description.
 4. Rename the files from `template-` to `<name>-`.
 
+### Edit `remirror` package.
+
+If you think this package is important and most users would want it, you can add it into the `remirror` package so that users won't need to install it separately.
+
+1. Edit `packages/remirror/package.json` to add dependency and entrypoint.
+2. Edit `packages/remirror/src/extensions.ts`. to export your extension.
+
 ### Final steps
 
-1. (OPTIONAL) -Add your name and email as a contributor to the `package.json`.
-2. Add `packages/remirror/extension/<name>/package.json`.
-3. Add `packages/remirror/src/extension/<name>.ts`.
-4. Edit `packages/remirror/package.json` to add dependency and entrypoint.
-5. (OPTIONAL) - Edit `/.changeset/config.json` and add the package name to the linked array.
-6. Run `pnpm i` in root.
+1. (OPTIONAL) Add your name and email as a contributor to the `package.json`.
+2. Run `pnpm i` in root.
 
 <br />
 
