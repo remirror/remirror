@@ -15,9 +15,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-codemirror6@next@next # yarn
-pnpm add @remirror/extension-codemirror6@next@next # pnpm
-npm install @remirror/extension-codemirror6@next@next # npm
+yarn add @remirror/extension-codemirror6 # yarn
+pnpm add @remirror/extension-codemirror6 # pnpm
+npm install @remirror/extension-codemirror6 # npm
 ```
 
 <!-- ## Usage -->
