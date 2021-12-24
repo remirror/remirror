@@ -42,6 +42,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
+    "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/commands": "^0.19.5",
     "@codemirror/language": "^0.19.7",
     "@codemirror/state": "^0.19.6",

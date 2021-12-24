@@ -1,10 +1,8 @@
-import { defaultKeymap } from '@codemirror/commands';
 import type { LanguageSupport } from '@codemirror/language';
 import {
   Compartment,
   EditorState as CodeMirrorEditorState,
   Extension as CodeMirrorExtension,
-  Prec,
   Transaction as CodeMirrorTransaction,
 } from '@codemirror/state';
 import {
@@ -71,10 +69,7 @@ export class CodeMirror6NodeView implements NodeView {
     const startState = CodeMirrorEditorState.create({
       doc: this.node.textContent,
       extensions: [
-        keymap.of(defaultKeymap),
-        // We give the following keymap a higher precedence so that it can
-        // override the default `ArrowUp` and `ArrowDown` keymaps
-        Prec.high(keymap.of(this.codeMirrorKeymap())),
+        keymap.of(this.codeMirrorKeymap()),
         changeFilter,
         this.languageConf.of([]),
         ...(extensions ?? []),

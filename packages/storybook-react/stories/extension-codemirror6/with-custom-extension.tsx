@@ -1,3 +1,4 @@
+import { basicSetup } from '@codemirror/basic-setup';
 import { EditorView as CodeMirrorEditorView } from '@codemirror/view';
 import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
@@ -28,7 +29,7 @@ const myTheme = CodeMirrorEditorView.theme(
   { dark: false },
 );
 
-const extensions = () => [new CodeMirrorExtension({ extensions: [myTheme] })];
+const extensions = () => [new CodeMirrorExtension({ extensions: [basicSetup, myTheme] })];
 
 const content = `<pre><code>Custom CodeMirror color theme</code></pre>`;
 

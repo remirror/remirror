@@ -1,3 +1,4 @@
+import { basicSetup } from '@codemirror/basic-setup';
 import type { LanguageDescription, LanguageSupport } from '@codemirror/language';
 import { oneDark } from '@codemirror/theme-one-dark';
 import {
@@ -19,7 +20,7 @@ import { arrowHandler } from './codemirror-utils';
 
 @extension<CodeMirrorExtensionOptions>({
   defaultOptions: {
-    extensions: [oneDark],
+    extensions: [oneDark, basicSetup],
     languages: null,
   },
 })

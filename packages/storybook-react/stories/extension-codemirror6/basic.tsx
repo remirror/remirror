@@ -1,9 +1,10 @@
+import { basicSetup } from '@codemirror/basic-setup';
 import { languages } from '@codemirror/language-data';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-const extensions = () => [new CodeMirrorExtension({ languages })];
+const extensions = () => [new CodeMirrorExtension({ languages, extensions: [basicSetup] })];
 
 const content = {
   type: 'doc',
