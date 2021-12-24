@@ -153,6 +153,9 @@
       "path": "packages/remirror__extension-codemirror5/src"
     },
     {
+      "path": "packages/remirror__extension-codemirror6/src"
+    },
+    {
       "path": "packages/remirror__extension-collaboration/__tests__"
     },
     {
