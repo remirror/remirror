@@ -40,7 +40,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
       code: true,
       attrs: {
         ...extra.defaults(),
-        language: { default: undefined },
+        language: { default: '' },
       },
       parseDOM: [
         {
@@ -94,6 +94,10 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
   private loadLanguage(
     inputLanguage: string,
   ): Promise<LanguageSupport> | LanguageSupport | undefined {
+    if (typeof inputLanguage !== 'string') {
+      return undefined;
+    }
+
     const languageMap = this.getLanguageMap();
     const language = languageMap[inputLanguage.toLowerCase()];
 

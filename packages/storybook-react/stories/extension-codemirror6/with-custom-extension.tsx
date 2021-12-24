@@ -5,21 +5,22 @@ import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 const myTheme = CodeMirrorEditorView.theme(
   {
     '&': {
-      color: 'white',
-      backgroundColor: '#242841',
+      color: '#633501',
+      backgroundColor: '#f5f0ab',
       borderRadius: '16px',
+      fontSize: '1.5em',
     },
     '.cm-content': {
       padding: '18px 16px',
-      caretColor: '#0e9',
+      caretColor: '#7e490d',
     },
     '&.cm-editor.cm-focused': {
-      outlineColor: '#aeb8dd',
+      outlineColor: '#a5a27d',
       outlineWidth: '3px',
       outlineStyle: 'solid',
     },
   },
-  { dark: true },
+  { dark: false },
 );
 
 const extensions = () => [new CodeMirrorExtension({ extensions: [myTheme] })];
