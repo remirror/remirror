@@ -7,9 +7,13 @@ export interface CodeMirrorExtensionOptions {
    *
    * @remarks
    *
-   * By default, the official [`oneDark`](https://github.com/codemirror/theme-one-dark)
-   * extension and [`basicSetup`](https://github.com/codemirror/basic-setup)
-   * extension will be used.
+   * For package size reasons, no CodeMirror extensions are included by default.
+   * You might want to install and add the following two extensions:
+   *
+   * - [`basicSetup`](https://codemirror.net/6/docs/ref/#basic-setup.basicSetup)
+   * - [`oneDark`](https://github.com/codemirror/theme-one-dark)
+   *
+   * @default null
    */
   extensions?: CodeMirrorExtension[] | null;
 
@@ -19,6 +23,8 @@ export interface CodeMirrorExtensionOptions {
    * @remarks
    *
    * You can install [`@codemirror/language-data`](https://codemirror.net/6/docs/ref/#language-data) and import languages from there.
+   *
+   * @default null
    */
   languages?: LanguageDescription[] | null;
 }
