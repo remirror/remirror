@@ -21,7 +21,7 @@ import type {
 import { exitCode } from '@remirror/pm/commands';
 import { Selection, TextSelection } from '@remirror/pm/state';
 
-type LoadLanguage = (lang: string) => Promise<LanguageSupport> | LanguageSupport | undefined;
+type LoadLanguage = (lang: string) => Promise<LanguageSupport> | LanguageSupport | void;
 
 export class CodeMirror6NodeView implements NodeView {
   public dom: HTMLElement;
@@ -57,7 +57,7 @@ export class CodeMirror6NodeView implements NodeView {
     this.languageConf = new Compartment();
     this.languageName = '';
 
-    const changeFilter = CodeMirrorEditorState.changeFilter.of((tr) => {
+    const changeFilter = CodeMirrorEditorState.changeFilter.of((tr: CodeMirrorTransaction) => {
       if (!tr.docChanged && !this.updating) {
         this.forwardSelection();
       }

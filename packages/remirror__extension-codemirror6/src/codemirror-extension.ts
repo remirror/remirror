@@ -91,14 +91,14 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
   }
 
   private loadLanguage(
-    inputLanguage: string,
+    languageName: string,
   ): Promise<LanguageSupport> | LanguageSupport | undefined {
-    if (typeof inputLanguage !== 'string') {
+    if (typeof languageName !== 'string') {
       return undefined;
     }
 
     const languageMap = this.getLanguageMap();
-    const language = languageMap[inputLanguage.toLowerCase()];
+    const language = languageMap[languageName.toLowerCase()];
 
     if (!language) {
       return undefined;
