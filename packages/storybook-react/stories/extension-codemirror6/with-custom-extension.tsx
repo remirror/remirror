@@ -10,14 +10,19 @@ const myTheme = CodeMirrorEditorView.theme(
       borderRadius: '16px',
       fontSize: '1.5em',
     },
+    '&.cm-editor': {
+      outlineWidth: '3px',
+      outlineStyle: 'solid',
+      outlineColor: '#c2c0b1',
+    },
+    '&.cm-editor.cm-focused': {
+      outlineWidth: '3px',
+      outlineStyle: 'solid',
+      outlineColor: '#da8845',
+    },
     '.cm-content': {
       padding: '18px 16px',
       caretColor: '#7e490d',
-    },
-    '&.cm-editor.cm-focused': {
-      outlineColor: '#a5a27d',
-      outlineWidth: '3px',
-      outlineStyle: 'solid',
     },
   },
   { dark: false },
@@ -25,7 +30,7 @@ const myTheme = CodeMirrorEditorView.theme(
 
 const extensions = () => [new CodeMirrorExtension({ extensions: [myTheme] })];
 
-const content = `<pre><code>With custom CodeMirror theme</code></pre>`;
+const content = `<pre><code>Custom CodeMirror color theme</code></pre>`;
 
 const WithCustomExtension = (): JSX.Element => {
   const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
