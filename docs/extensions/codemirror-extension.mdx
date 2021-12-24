@@ -26,7 +26,9 @@ Also check a simpler code block implementation at [CodeBlockExtension](code-bloc
 
 ## Features
 
-TBD
+### Keyboard support
+
+Users can create a new code block by typing <code>&grave;&grave;&grave;&nbsp;</code> (3 ticks and a space). Users can define the language of the code block by typing <code>&grave;&grave;&grave;html&nbsp;</code>.
 
 ## Usage
 
@@ -38,10 +40,24 @@ This extension is NOT installed for you when you install the main `remirror` pac
 npm install @remirror/extension-codemirror6
 ```
 
+You will probably also want to install some basic CodeMirror packages:
+
+```bash
+npm install @codemirror/basic-setup @codemirror/language-data @codemirror/theme-one-dark
+```
+
 You can use the imports in the following way:
 
 ```ts
+import { basicSetup } from '@codemirror/basic-setup';
+import { languages } from '@codemirror/language-data';
+import { oneDark } from '@codemirror/theme-one-dark';
 import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
+
+const codeMirrorExtension = new CodeMirrorExtension({
+  languages: languages,
+  extensions: [basicSetup, oneDark],
+});
 ```
 
 ### Examples
