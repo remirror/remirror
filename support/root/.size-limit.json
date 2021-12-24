@@ -225,7 +225,7 @@
   },
   {
     "name": "@remirror/extension-codemirror6",
-    "limit": "30 KB",
+    "limit": "60 KB",
     "path": "packages/remirror__extension-codemirror6/dist/remirror-extension-codemirror6.browser.esm.js",
     "ignore": ["@remirror/pm", "@remirror/core"],
     "running": false,
