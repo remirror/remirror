@@ -9,18 +9,20 @@ const extensions = () => [
   new CodeMirrorExtension({ languages, extensions: [basicSetup, oneDark] }),
 ];
 
+const jsCode = `function sayHello {
+  console.log('Hello world, JavaScript!')
+}`;
+const mdCode = `Hello _world_, **Markdown**`;
+const cssCode = `.hello-world-css {
+  color: red;
+}`;
+const jsonCode = `{
+  "hello-world": "JSON"
+}`;
+
 const content = {
   type: 'doc',
   content: [
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: 'Here is a JavaScript code block:',
-        },
-      ],
-    },
     {
       type: 'codeMirror',
       attrs: {
@@ -29,28 +31,43 @@ const content = {
       content: [
         {
           type: 'text',
-          text: 'while (true) {\n    console.log("Eat");\n    console.log("Sleep");\n    console.log("Code");\n}',
-        },
-      ],
-    },
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: 'Here is a Python code block:',
+          text: jsCode,
         },
       ],
     },
     {
       type: 'codeMirror',
       attrs: {
-        language: 'Python',
+        language: 'markdown',
       },
       content: [
         {
           type: 'text',
-          text: 'while True:\n    print("Eat")\n    print("Sleep")\n    print("Code")',
+          text: mdCode,
+        },
+      ],
+    },
+    {
+      type: 'codeMirror',
+      attrs: {
+        language: 'css',
+      },
+      content: [
+        {
+          type: 'text',
+          text: cssCode,
+        },
+      ],
+    },
+    {
+      type: 'codeMirror',
+      attrs: {
+        language: 'JSON',
+      },
+      content: [
+        {
+          type: 'text',
+          text: jsonCode,
         },
       ],
     },
