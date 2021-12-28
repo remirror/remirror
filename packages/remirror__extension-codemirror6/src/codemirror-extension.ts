@@ -4,7 +4,6 @@ import {
   EditorView,
   extension,
   GetAttributes,
-  getMatchString,
   InputRule,
   isElementDomNode,
   isTextSelection,
@@ -136,7 +135,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
       return false;
     }
 
-    const language = matchesNodeBefore[0] ?? '';
+    const language = matchesNodeBefore[1] ?? '';
 
     const pos = tr.selection.$from.before();
     const end = pos + nodeSize + 1; // +1 to account for the extra pos a node takes up
