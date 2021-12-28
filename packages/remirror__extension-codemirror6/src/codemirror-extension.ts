@@ -4,7 +4,6 @@ import {
   EditorView,
   extension,
   GetAttributes,
-  getMatchString,
   InputRule,
   isElementDomNode,
   isTextSelection,
@@ -92,7 +91,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
     const regexp = /^```(\S+) $/;
 
     const getAttributes: GetAttributes = (match) => {
-      const language = getMatchString(match, 1) ?? '';
+      const language = match[1] ?? '';
       return { language };
     };
 
@@ -136,7 +135,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
       return false;
     }
 
-    const language = getMatchString(matchesNodeBefore, 1) ?? '';
+    const language = matchesNodeBefore[1] ?? '';
 
     const pos = tr.selection.$from.before();
     const end = pos + nodeSize + 1; // +1 to account for the extra pos a node takes up
