@@ -27,6 +27,7 @@ import { arrowHandler } from './codemirror-utils';
   defaultOptions: {
     extensions: null,
     languages: null,
+    toggleName: 'paragraph',
   },
 })
 export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOptions> {
@@ -70,6 +71,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
         getPos: getPos as () => number,
         extensions: this.options.extensions,
         loadLanguage: this.loadLanguage.bind(this),
+        toggleName: this.options.toggleName,
       });
     };
   }

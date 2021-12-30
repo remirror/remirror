@@ -367,12 +367,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       }
     } else if (start > 2) {
       // Jump to the previous node.
-      tr.setSelection(TextSelection.create(tr.doc, start - 2));
+      tr.setSelection(TextSelection.near(tr.doc.resolve(start - 2)));
     } else {
       // There is no content before the codeBlock so simply create a new
       // block and jump into it.
       tr.insert(0, toggleNode.create());
-      tr.setSelection(TextSelection.create(tr.doc, 1));
+      tr.setSelection(TextSelection.near(tr.doc.resolve(1)));
     }
 
     if (dispatch) {

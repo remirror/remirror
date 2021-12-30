@@ -27,4 +27,11 @@ export interface CodeMirrorExtensionOptions {
    * @default null
    */
   languages?: LanguageDescription[] | null;
+
+  /**
+   * The name of the node that the codeMirror block should toggle back and forth from.
+   *
+   * @default "paragraph"
+   */
+  toggleName?: string;
 }
