@@ -11,7 +11,7 @@ import {
   KeyBinding as CodeMirrorKeyBinding,
   keymap,
 } from '@codemirror/view';
-import { isPromise } from '@remirror/core';
+import { assertGet, isPromise, replaceNodeAtPosition } from '@remirror/core';
 import type { EditorSchema, EditorView, NodeView, ProsemirrorNode } from '@remirror/pm';
 import { exitCode } from '@remirror/pm/commands';
 import { Selection, TextSelection } from '@remirror/pm/state';
@@ -30,6 +30,7 @@ export class CodeMirror6NodeView implements NodeView {
   private readonly loadLanguage: LoadLanguage;
   private readonly languageConf: Compartment;
   private languageName: string;
+  private toggleName: string;
 
   constructor({
     node,
@@ -37,12 +38,14 @@ export class CodeMirror6NodeView implements NodeView {
     getPos,
     extensions,
     loadLanguage,
+    toggleName,
   }: {
     node: ProsemirrorNode;
     view: EditorView;
     getPos: () => number;
     extensions: CodeMirrorExtension[] | null;
     loadLanguage: LoadLanguage;
+    toggleName: string;
   }) {
     this.node = node;
     this.view = view;
@@ -51,6 +54,7 @@ export class CodeMirror6NodeView implements NodeView {
     this.loadLanguage = loadLanguage;
     this.languageConf = new Compartment();
     this.languageName = '';
+    this.toggleName = toggleName;
 
     const changeFilter = CodeMirrorEditorState.changeFilter.of((tr: CodeMirrorTransaction) => {
       if (!tr.docChanged && !this.updating) {
@@ -228,6 +232,43 @@ export class CodeMirror6NodeView implements NodeView {
           }
 
           return false;
+        },
+      },
+      {
+        key: 'Backspace',
+        run: () => {
+          const ranges = this.cm.state.selection.ranges;
+
+          if (ranges.length > 1) {
+            return false;
+          }
+
+          const selection = ranges[0];
+
+          if (selection && (!selection.empty || selection.anchor > 0)) {
+            return false;
+          }
+
+          // We don't want to convert a multi-line code block into a paragraph
+          // because newline characters are invalid in a paragraph node.
+          if (this.cm.state.doc.lines >= 2) {
+            return false;
+          }
+
+          const state = this.view.state;
+          const toggleNode = assertGet(state.schema.nodes, this.toggleName);
+          const pos = this.getPos();
+          const tr = replaceNodeAtPosition({
+            pos: pos,
+            tr: state.tr,
+            content: toggleNode.createChecked({}, this.node.content),
+          });
+
+          tr.setSelection(TextSelection.near(tr.doc.resolve(pos)));
+
+          this.view.dispatch(tr);
+          this.view.focus();
+          return true;
         },
       },
     ];

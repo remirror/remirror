@@ -1,10 +1,8 @@
 import type { LanguageDescription, LanguageSupport } from '@codemirror/language';
 import {
   ApplySchemaAttributes,
-  assertGet,
   EditorView,
   extension,
-  findParentNodeOfType,
   GetAttributes,
   InputRule,
   isElementDomNode,
@@ -18,8 +16,6 @@ import {
   NodeViewMethod,
   PrioritizedKeyBindings,
   ProsemirrorNode,
-  removeNodeAtPosition,
-  replaceNodeAtPosition,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
 
@@ -75,6 +71,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
         getPos: getPos as () => number,
         extensions: this.options.extensions,
         loadLanguage: this.loadLanguage.bind(this),
+        toggleName: this.options.toggleName,
       });
     };
   }
@@ -111,48 +108,6 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
         getAttributes: getAttributes,
       }),
     ];
-  }
-
-  @keyBinding({ shortcut: 'Backspace' })
-  backspaceKey({ dispatch, tr, state }: KeyBindingProps): boolean {
-    // If the selection is not empty, return false and let other extension
-    // (ie: BaseKeymapExtension) to do the deleting operation.
-    if (!tr.selection.empty) {
-      return false;
-    }
-
-    // Check that this is the correct node.
-    const parent = findParentNodeOfType({ types: this.type, selection: tr.selection });
-
-    if (parent?.start !== tr.selection.from) {
-      return false;
-    }
-
-    const { pos, node, start } = parent;
-    const toggleNode = assertGet(state.schema.nodes, this.options.toggleName);
-
-    if (node.textContent.trim() === '') {
-      // eslint-disable-next-line unicorn/consistent-destructuring
-      if (tr.doc.lastChild === node && tr.doc.firstChild === node) {
-        replaceNodeAtPosition({ pos, tr, content: toggleNode.create() });
-      } else {
-        removeNodeAtPosition({ pos, tr });
-      }
-    } else if (start > 2) {
-      // Jump to the previous node.
-      tr.setSelection(TextSelection.near(tr.doc.resolve(start - 2), -1));
-    } else {
-      // There is no content before the codeBlock so simply create a new
-      // block and jump into it.
-      tr.insert(0, toggleNode.create());
-      tr.setSelection(TextSelection.near(tr.doc.resolve(1), -1));
-    }
-
-    if (dispatch) {
-      dispatch(tr);
-    }
-
-    return true;
   }
 
   @keyBinding({ shortcut: 'Enter' })
