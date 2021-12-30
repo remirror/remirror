@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.43
+
+> 2021-12-30
+
+### Patch Changes
+
+- Correct a document error about `CodeBlockExtension`'s option `toggleName`. Its default value should be `'paragraph'` instead of `undefined`.
+
+* Fix a potential issue that might cause invalid text selection when pressing `Backspace` instead a code block node.
+
+* Updated dependencies []:
+  - remirror@1.0.54
+
 ## 0.1.42
 
 > 2021-12-17

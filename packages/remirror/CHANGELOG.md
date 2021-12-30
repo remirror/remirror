@@ -1,5 +1,19 @@
 # remirror
 
+## 1.0.54
+
+> 2021-12-30
+
+### Patch Changes
+
+- Correct a document error about `CodeBlockExtension`'s option `toggleName`. Its default value should be `'paragraph'` instead of `undefined`.
+
+* Fix a potential issue that might cause invalid text selection when pressing `Backspace` instead a code block node.
+
+* Updated dependencies []:
+  - @remirror/extension-code-block@1.0.16
+  - @remirror/preset-wysiwyg@1.1.30
+
 ## 1.0.53
 
 > 2021-12-17
