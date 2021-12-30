@@ -1,5 +1,15 @@
 # @remirror/extension-code-block
 
+## 1.0.16
+
+> 2021-12-30
+
+### Patch Changes
+
+- Correct a document error about `CodeBlockExtension`'s option `toggleName`. Its default value should be `'paragraph'` instead of `undefined`.
+
+* Fix a potential issue that might cause invalid text selection when pressing `Backspace` instead a code block node.
+
 ## 1.0.15
 
 > 2021-11-23
