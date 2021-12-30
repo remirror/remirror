@@ -1,6 +1,5 @@
 import type { LanguageDescription } from '@codemirror/language';
 import { Extension as CodeMirrorExtension } from '@codemirror/state';
-import { AcceptUndefined } from '@remirror/core';
 
 export interface CodeMirrorExtensionOptions {
   /**
