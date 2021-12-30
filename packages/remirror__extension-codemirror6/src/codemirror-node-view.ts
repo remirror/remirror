@@ -12,12 +12,7 @@ import {
   keymap,
 } from '@codemirror/view';
 import { isPromise } from '@remirror/core';
-import type {
-  EditorSchema,
-  EditorView as EditorView,
-  NodeView,
-  ProsemirrorNode,
-} from '@remirror/pm';
+import type { EditorSchema, EditorView, NodeView, ProsemirrorNode } from '@remirror/pm';
 import { exitCode } from '@remirror/pm/commands';
 import { Selection, TextSelection } from '@remirror/pm/state';
 
