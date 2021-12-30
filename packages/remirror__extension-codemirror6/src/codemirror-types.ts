@@ -1,5 +1,6 @@
 import type { LanguageDescription } from '@codemirror/language';
 import { Extension as CodeMirrorExtension } from '@codemirror/state';
+import { AcceptUndefined } from '@remirror/core';
 
 export interface CodeMirrorExtensionOptions {
   /**
@@ -27,4 +28,11 @@ export interface CodeMirrorExtensionOptions {
    * @default null
    */
   languages?: LanguageDescription[] | null;
+
+  /**
+   * The name of the node that the codeMirror block should toggle back and forth from.
+   *
+   * @default "paragraph"
+   */
+  toggleName?: string;
 }
