@@ -7,17 +7,17 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-codemirror5
 [npm]: https://npmjs.com/package/@remirror/extension-codemirror5
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-codemirror5@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-codemirror5@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-codemirror5
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-codemirror5
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-codemirror5/red?icon=npm
 
 ## Installation
 
 ```bash
-yarn add @remirror/extension-codemirror5@next@next # yarn
-pnpm add @remirror/extension-codemirror5@next@next # pnpm
-npm install @remirror/extension-codemirror5@next@next # npm
+yarn add @remirror/extension-codemirror5 # yarn
+pnpm add @remirror/extension-codemirror5 # pnpm
+npm install @remirror/extension-codemirror5 # npm
 ```
 
 You will also need to make sure you have a version of `codemirror@5` installed. If you are using TypeScript you can also install the `@types/codemirror` package alongside.

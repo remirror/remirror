@@ -7,8 +7,8 @@
 [version]: https://flat.badgen.net/npm/v/@remirror/extension-codemirror6
 [npm]: https://npmjs.com/package/@remirror/extension-codemirror6
 [license]: https://flat.badgen.net/badge/license/MIT/purple
-[size]: https://bundlephobia.com/result?p=@remirror/extension-codemirror6@next
-[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-codemirror6@next
+[size]: https://bundlephobia.com/result?p=@remirror/extension-codemirror6
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-codemirror6
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-codemirror6/red?icon=npm
 
