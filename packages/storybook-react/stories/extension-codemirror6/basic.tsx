@@ -1,3 +1,5 @@
+import './styles.css';
+
 import { languages } from '@codemirror/language-data';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { ProsemirrorDevTools } from '@remirror/dev';
