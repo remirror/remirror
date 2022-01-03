@@ -24,13 +24,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-dev.cjs.js",
-  "module": "dist/remirror-dev.esm.js",
+  "main": "./dist/remirror-dev.cjs.js",
+  "module": "./dist/remirror-dev.esm.js",
   "browser": {
     "./dist/remirror-dev.cjs.js": "./dist/remirror-dev.browser.cjs.js",
     "./dist/remirror-dev.esm.js": "./dist/remirror-dev.browser.esm.js"
   },
-  "types": "dist/remirror-dev.cjs.d.ts",
+  "types": "./dist/remirror-dev.cjs.d.ts",
   "files": [
     "dist"
   ],

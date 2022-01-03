@@ -24,13 +24,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/prosemirror-paste-rules.cjs.js",
-  "module": "dist/prosemirror-paste-rules.esm.js",
+  "main": "./dist/prosemirror-paste-rules.cjs.js",
+  "module": "./dist/prosemirror-paste-rules.esm.js",
   "browser": {
     "./dist/prosemirror-paste-rules.cjs.js": "./dist/prosemirror-paste-rules.browser.cjs.js",
     "./dist/prosemirror-paste-rules.esm.js": "./dist/prosemirror-paste-rules.browser.esm.js"
   },
-  "types": "dist/prosemirror-paste-rules.cjs.d.ts",
+  "types": "./dist/prosemirror-paste-rules.cjs.d.ts",
   "files": [
     "dist"
   ],

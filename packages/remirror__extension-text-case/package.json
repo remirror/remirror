@@ -28,13 +28,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-text-case.cjs.js",
-  "module": "dist/remirror-extension-text-case.esm.js",
+  "main": "./dist/remirror-extension-text-case.cjs.js",
+  "module": "./dist/remirror-extension-text-case.esm.js",
   "browser": {
     "./dist/remirror-extension-text-case.cjs.js": "./dist/remirror-extension-text-case.browser.cjs.js",
     "./dist/remirror-extension-text-case.esm.js": "./dist/remirror-extension-text-case.browser.esm.js"
   },
-  "types": "dist/remirror-extension-text-case.cjs.d.ts",
+  "types": "./dist/remirror-extension-text-case.cjs.d.ts",
   "files": [
     "dist"
   ],

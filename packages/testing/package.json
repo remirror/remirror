@@ -35,9 +35,9 @@
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/testing.cjs.js",
-  "module": "dist/testing.esm.js",
-  "types": "dist/testing.cjs.d.ts",
+  "main": "./dist/testing.cjs.js",
+  "module": "./dist/testing.esm.js",
+  "types": "./dist/testing.cjs.d.ts",
   "files": [
     "dist",
     "playwright",

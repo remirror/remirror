@@ -28,13 +28,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-search.cjs.js",
-  "module": "dist/remirror-extension-search.esm.js",
+  "main": "./dist/remirror-extension-search.cjs.js",
+  "module": "./dist/remirror-extension-search.esm.js",
   "browser": {
     "./dist/remirror-extension-search.cjs.js": "./dist/remirror-extension-search.browser.cjs.js",
     "./dist/remirror-extension-search.esm.js": "./dist/remirror-extension-search.browser.esm.js"
   },
-  "types": "dist/remirror-extension-search.cjs.d.ts",
+  "types": "./dist/remirror-extension-search.cjs.d.ts",
   "files": [
     "dist"
   ],

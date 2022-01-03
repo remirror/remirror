@@ -28,13 +28,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-hard-break.cjs.js",
-  "module": "dist/remirror-extension-hard-break.esm.js",
+  "main": "./dist/remirror-extension-hard-break.cjs.js",
+  "module": "./dist/remirror-extension-hard-break.esm.js",
   "browser": {
     "./dist/remirror-extension-hard-break.cjs.js": "./dist/remirror-extension-hard-break.browser.cjs.js",
     "./dist/remirror-extension-hard-break.esm.js": "./dist/remirror-extension-hard-break.browser.esm.js"
   },
-  "types": "dist/remirror-extension-hard-break.cjs.d.ts",
+  "types": "./dist/remirror-extension-hard-break.cjs.d.ts",
   "files": [
     "dist"
   ],

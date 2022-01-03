@@ -28,13 +28,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-text-highlight.cjs.js",
-  "module": "dist/remirror-extension-text-highlight.esm.js",
+  "main": "./dist/remirror-extension-text-highlight.cjs.js",
+  "module": "./dist/remirror-extension-text-highlight.esm.js",
   "browser": {
     "./dist/remirror-extension-text-highlight.cjs.js": "./dist/remirror-extension-text-highlight.browser.cjs.js",
     "./dist/remirror-extension-text-highlight.esm.js": "./dist/remirror-extension-text-highlight.browser.esm.js"
   },
-  "types": "dist/remirror-extension-text-highlight.cjs.d.ts",
+  "types": "./dist/remirror-extension-text-highlight.cjs.d.ts",
   "files": [
     "dist"
   ],

@@ -30,7 +30,7 @@
     "./dist/remirror-core-utils.cjs.js": "./dist/remirror-core-utils.browser.cjs.js",
     "./dist/remirror-core-utils.esm.js": "./dist/remirror-core-utils.browser.esm.js"
   },
-  "types": "dist/remirror-core-utils.cjs.d.ts",
+  "types": "./dist/remirror-core-utils.cjs.d.ts",
   "files": [
     "dist"
   ],

@@ -31,13 +31,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-preset-react.cjs.js",
-  "module": "dist/remirror-preset-react.esm.js",
+  "main": "./dist/remirror-preset-react.cjs.js",
+  "module": "./dist/remirror-preset-react.esm.js",
   "browser": {
     "./dist/remirror-preset-react.cjs.js": "./dist/remirror-preset-react.browser.cjs.js",
     "./dist/remirror-preset-react.esm.js": "./dist/remirror-preset-react.browser.esm.js"
   },
-  "types": "dist/remirror-preset-react.cjs.d.ts",
+  "types": "./dist/remirror-preset-react.cjs.d.ts",
   "files": [
     "dist"
   ],
