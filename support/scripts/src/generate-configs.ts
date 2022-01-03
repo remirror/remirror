@@ -154,6 +154,45 @@ async function generateExports() {
 }
 
 /**
+ * Make sure that "main", "module" and "types" fields within the packages are
+ * prefixed with `./`.
+ */
+async function generateEntryPoint() {
+  const fields = ['main', 'module', 'types'] as const;
+
+  log.info(chalk`\n{blue Running script for package.json {bold.grey ${fields}} fields}`);
+
+  // Get all the packages in the `pnpm` monorepo.
+  const packages = await getAllDependencies({ excludeSupport: true });
+
+  for (const pkg of packages) {
+    const { location, ...packageJson } = pkg;
+    const packageJsonPath = path.join(location, 'package.json');
+    let edited = false;
+
+    for (const field of fields) {
+      const originValue = packageJson[field];
+
+      if (!originValue) {
+        continue;
+      }
+
+      const fixedValue = prefixRelativePath(originValue);
+
+      if (originValue !== fixedValue) {
+        packageJson[field] = fixedValue;
+        edited = true;
+      }
+    }
+
+    if (edited) {
+      await writeJSON(packageJsonPath, packageJson);
+      filesToPrettify.push(packageJsonPath);
+    }
+  }
+}
+
+/**
  * Add a `./` prefix to a path that needs to be seen as relative.
  */
 function prefixRelativePath<Type extends string | undefined>(path: Type): Type {
@@ -745,6 +784,9 @@ async function main() {
   } else if (cliArgs.exports) {
     // Run when `--exports` is used
     await Promise.all([generateExports()]);
+  } else if (cliArgs.entryPoint) {
+    // Run when `--entry-point` is used
+    await Promise.all([generateEntryPoint()]);
   } else {
     // This is the default mode to run.
     await Promise.all([generateSizeLimitConfig()]);
