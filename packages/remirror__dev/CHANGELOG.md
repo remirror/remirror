@@ -1,5 +1,17 @@
 # @remirror/dev
 
+## 1.0.20
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.10
+  - @remirror/react@1.0.20
+
 ## 1.0.19
 
 > 2021-12-17

@@ -1,5 +1,23 @@
 # @remirror/core
 
+## 1.3.3
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.2
+  - @remirror/core-helpers@1.0.5
+  - @remirror/core-types@1.0.4
+  - @remirror/core-utils@1.1.4
+  - @remirror/pm@1.0.10
+  - @remirror/i18n@1.0.8
+  - @remirror/icons@1.0.7
+  - @remirror/messages@1.0.6
+
 ## 1.3.2
 
 > 2021-11-23

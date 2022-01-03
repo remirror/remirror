@@ -1,5 +1,20 @@
 # @remirror/react-editors
 
+## 0.1.44
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - remirror@1.0.55
+  - @remirror/core-helpers@1.0.5
+  - @remirror/pm@1.0.10
+  - @remirror/extension-react-tables@1.0.20
+  - @remirror/react@1.0.20
+
 ## 0.1.43
 
 > 2021-12-30

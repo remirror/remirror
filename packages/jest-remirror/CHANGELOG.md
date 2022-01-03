@@ -1,5 +1,20 @@
 # jest-remirror
 
+## 1.0.20
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/dom@1.0.16
+  - jest-prosemirror@1.0.12
+  - @remirror/pm@1.0.10
+  - @remirror/preset-core@1.0.16
+
 ## 1.0.19
 
 > 2021-12-17

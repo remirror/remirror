@@ -1,5 +1,27 @@
 # @remirror/react-hooks
 
+## 1.0.19
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/extension-emoji@1.0.14
+  - @remirror/extension-events@1.0.14
+  - @remirror/pm@1.0.10
+  - @remirror/extension-history@1.0.13
+  - @remirror/extension-mention@1.0.14
+  - @remirror/extension-mention-atom@1.0.15
+  - @remirror/extension-positioner@1.1.13
+  - @remirror/react-core@1.0.18
+  - multishift@1.0.6
+  - @remirror/i18n@1.0.8
+  - @remirror/react-utils@1.0.6
+
 ## 1.0.18
 
 > 2021-12-17
