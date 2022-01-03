@@ -165,6 +165,8 @@ async function generateEntryPoint() {
   // Get all the packages in the `pnpm` monorepo.
   const packages = await getAllDependencies({ excludeSupport: true });
 
+  const promises: Array<Promise<void>> = [];
+
   for (const pkg of packages) {
     const { location, ...packageJson } = pkg;
     const packageJsonPath = path.join(location, 'package.json');
@@ -186,10 +188,12 @@ async function generateEntryPoint() {
     }
 
     if (edited) {
-      await writeJSON(packageJsonPath, packageJson);
+      promises.push(writeJSON(packageJsonPath, packageJson));
       filesToPrettify.push(packageJsonPath);
     }
   }
+
+  await Promise.all(promises);
 }
 
 /**

@@ -64,7 +64,7 @@
     "if-not-ci": "node support/scripts/run-if-not-ci",
     "if-publishable": "node support/scripts/run-if-publishable",
     "preinstall": "pnpm symlink:root && pnpm check:pnpm",
-    "postinstall": "npm-run-all patch -p build:dev css:copy",
+    "postinstall": "npm-run-all patch -s fix:build build:dev fix:entry-point css:copy",
     "intl": "run-s intl:extract intl:compile generate:intl",
     "intl:compile": "lingui compile",
     "intl:extract": "lingui extract",
