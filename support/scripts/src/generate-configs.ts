@@ -154,6 +154,49 @@ async function generateExports() {
 }
 
 /**
+ * Make sure that "main", "module" and "types" fields within the packages are
+ * prefixed with `./`.
+ */
+async function generateEntryPoint() {
+  const fields = ['main', 'module', 'types'] as const;
+
+  log.info(chalk`\n{blue Running script for package.json {bold.grey ${fields}} fields}`);
+
+  // Get all the packages in the `pnpm` monorepo.
+  const packages = await getAllDependencies({ excludeSupport: true });
+
+  const promises: Array<Promise<void>> = [];
+
+  for (const pkg of packages) {
+    const { location, ...packageJson } = pkg;
+    const packageJsonPath = path.join(location, 'package.json');
+    let edited = false;
+
+    for (const field of fields) {
+      const originValue = packageJson[field];
+
+      if (!originValue) {
+        continue;
+      }
+
+      const fixedValue = prefixRelativePath(originValue);
+
+      if (originValue !== fixedValue) {
+        packageJson[field] = fixedValue;
+        edited = true;
+      }
+    }
+
+    if (edited) {
+      promises.push(writeJSON(packageJsonPath, packageJson));
+      filesToPrettify.push(packageJsonPath);
+    }
+  }
+
+  await Promise.all(promises);
+}
+
+/**
  * Add a `./` prefix to a path that needs to be seen as relative.
  */
 function prefixRelativePath<Type extends string | undefined>(path: Type): Type {
@@ -207,7 +250,9 @@ function augmentExportsObject(rootJson: PackageJson, filepath: string, subJson: 
  * to the module or main path.
  */
 function getBrowserPath(pkg: PackageJson) {
-  const browserPath = isString(pkg.browser) ? pkg.browser : pkg.browser?.[`./${pkg.module}`];
+  const browserPath = isString(pkg.browser)
+    ? pkg.browser
+    : pkg.browser?.[prefixRelativePath(pkg.module ?? '')];
 
   return isString(browserPath) ? browserPath : pkg.module;
 }
@@ -745,6 +790,9 @@ async function main() {
   } else if (cliArgs.exports) {
     // Run when `--exports` is used
     await Promise.all([generateExports()]);
+  } else if (cliArgs.entryPoint) {
+    // Run when `--entry-point` is used
+    await Promise.all([generateEntryPoint()]);
   } else {
     // This is the default mode to run.
     await Promise.all([generateSizeLimitConfig()]);

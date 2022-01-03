@@ -24,13 +24,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-core-constants.cjs.js",
-  "module": "dist/remirror-core-constants.esm.js",
+  "main": "./dist/remirror-core-constants.cjs.js",
+  "module": "./dist/remirror-core-constants.esm.js",
   "browser": {
     "./dist/remirror-core-constants.cjs.js": "./dist/remirror-core-constants.browser.cjs.js",
     "./dist/remirror-core-constants.esm.js": "./dist/remirror-core-constants.browser.esm.js"
   },
-  "types": "dist/remirror-core-constants.cjs.d.ts",
+  "types": "./dist/remirror-core-constants.cjs.d.ts",
   "files": [
     "dist"
   ],

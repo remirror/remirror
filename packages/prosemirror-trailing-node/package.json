@@ -24,13 +24,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/prosemirror-trailing-node.cjs.js",
-  "module": "dist/prosemirror-trailing-node.esm.js",
+  "main": "./dist/prosemirror-trailing-node.cjs.js",
+  "module": "./dist/prosemirror-trailing-node.esm.js",
   "browser": {
     "./dist/prosemirror-trailing-node.cjs.js": "./dist/prosemirror-trailing-node.browser.cjs.js",
     "./dist/prosemirror-trailing-node.esm.js": "./dist/prosemirror-trailing-node.browser.esm.js"
   },
-  "types": "dist/prosemirror-trailing-node.cjs.d.ts",
+  "types": "./dist/prosemirror-trailing-node.cjs.d.ts",
   "files": [
     "dist"
   ],

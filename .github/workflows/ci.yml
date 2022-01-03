@@ -44,9 +44,6 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: check build
-        run: pnpm lint:build
-
       - name: check css
         run: pnpm lint:css
 

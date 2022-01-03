@@ -28,13 +28,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-whitespace.cjs.js",
-  "module": "dist/remirror-extension-whitespace.esm.js",
+  "main": "./dist/remirror-extension-whitespace.cjs.js",
+  "module": "./dist/remirror-extension-whitespace.esm.js",
   "browser": {
     "./dist/remirror-extension-whitespace.cjs.js": "./dist/remirror-extension-whitespace.browser.cjs.js",
     "./dist/remirror-extension-whitespace.esm.js": "./dist/remirror-extension-whitespace.browser.esm.js"
   },
-  "types": "dist/remirror-extension-whitespace.cjs.d.ts",
+  "types": "./dist/remirror-extension-whitespace.cjs.d.ts",
   "files": [
     "dist"
   ],

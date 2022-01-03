@@ -30,7 +30,7 @@ export class CodeMirror6NodeView implements NodeView {
   private readonly loadLanguage: LoadLanguage;
   private readonly languageConf: Compartment;
   private languageName: string;
-  private toggleName: string;
+  private readonly toggleName: string;
 
   constructor({
     node,
