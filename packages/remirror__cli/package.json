@@ -1,6 +1,6 @@
 {
   "name": "@remirror/cli",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "The remirror cli",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__cli",
   "repository": {
@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^1.0.4",
+    "@remirror/core-helpers": "^1.0.5",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^21.0.0",
     "@rollup/plugin-json": "^4",
@@ -72,7 +72,7 @@
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "@remirror/core-types": "^1.0.3",
+    "@remirror/core-types": "^1.0.4",
     "@testing-library/react-hooks": "^7.0.1",
     "@types/ink-spinner": "^3.0.1",
     "@types/ink-testing-library": "^1.0.1",

@@ -1,5 +1,31 @@
 # @remirror/preset-formatting
 
+## 1.0.17
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/extension-bold@1.0.13
+  - @remirror/extension-columns@1.0.13
+  - @remirror/extension-font-size@1.0.14
+  - @remirror/pm@1.0.10
+  - @remirror/extension-heading@1.0.13
+  - @remirror/extension-italic@1.0.13
+  - @remirror/extension-node-formatting@1.0.16
+  - @remirror/extension-strike@1.0.13
+  - @remirror/extension-sub@1.0.13
+  - @remirror/extension-sup@1.0.13
+  - @remirror/extension-text-case@1.0.13
+  - @remirror/extension-text-color@1.0.14
+  - @remirror/extension-text-highlight@1.0.14
+  - @remirror/extension-underline@1.0.13
+  - @remirror/extension-whitespace@1.0.13
+
 ## 1.0.16
 
 > 2021-11-23

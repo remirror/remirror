@@ -1,5 +1,27 @@
 # @remirror/react-core
 
+## 1.0.18
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/pm@1.0.10
+  - @remirror/extension-positioner@1.1.13
+  - @remirror/extension-react-component@1.1.4
+  - @remirror/extension-react-ssr@1.0.15
+  - @remirror/preset-core@1.0.16
+  - @remirror/preset-react@1.0.15
+  - @remirror/react-renderer@1.0.15
+  - @remirror/react-ssr@1.0.15
+  - @remirror/i18n@1.0.8
+  - @remirror/react-utils@1.0.6
+  - @remirror/theme@1.1.5
+
 ## 1.0.17
 
 > 2021-12-17

@@ -1,5 +1,27 @@
 # @remirror/extension-react-tables
 
+## 1.0.20
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/core-utils@1.1.4
+  - @remirror/pm@1.0.10
+  - @remirror/extension-positioner@1.1.13
+  - @remirror/extension-tables@1.0.14
+  - @remirror/preset-core@1.0.16
+  - @remirror/react-components@1.0.19
+  - @remirror/react-core@1.0.18
+  - @remirror/react-hooks@1.0.19
+  - @remirror/icons@1.0.7
+  - @remirror/messages@1.0.6
+  - @remirror/theme@1.1.5
+
 ## 1.0.19
 
 > 2021-12-17

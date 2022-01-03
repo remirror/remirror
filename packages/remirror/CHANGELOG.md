@@ -1,5 +1,76 @@
 # remirror
 
+## 1.0.55
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/core-constants@1.0.2
+  - @remirror/core-helpers@1.0.5
+  - @remirror/core-types@1.0.4
+  - @remirror/core-utils@1.1.4
+  - @remirror/dom@1.0.16
+  - @remirror/extension-annotation@1.1.9
+  - @remirror/extension-bidi@1.0.13
+  - @remirror/extension-blockquote@1.0.14
+  - @remirror/extension-bold@1.0.13
+  - @remirror/extension-callout@1.0.14
+  - @remirror/extension-code@1.0.14
+  - @remirror/extension-code-block@1.0.17
+  - @remirror/extension-codemirror5@1.0.13
+  - @remirror/extension-collaboration@1.0.13
+  - @remirror/extension-columns@1.0.13
+  - @remirror/extension-diff@1.0.13
+  - @remirror/extension-doc@1.0.14
+  - @remirror/extension-drop-cursor@1.0.13
+  - @remirror/extension-embed@1.1.17
+  - @remirror/extension-emoji@1.0.14
+  - @remirror/extension-epic-mode@1.0.13
+  - @remirror/extension-events@1.0.14
+  - @remirror/extension-font-family@1.0.13
+  - @remirror/extension-font-size@1.0.14
+  - @remirror/pm@1.0.10
+  - @remirror/extension-image@1.0.21
+  - @remirror/preset-wysiwyg@1.1.31
+  - @remirror/extension-gap-cursor@1.0.13
+  - @remirror/extension-hard-break@1.0.13
+  - @remirror/extension-heading@1.0.13
+  - @remirror/extension-history@1.0.13
+  - @remirror/extension-horizontal-rule@1.0.13
+  - @remirror/extension-italic@1.0.13
+  - @remirror/extension-link@1.1.12
+  - @remirror/extension-list@1.2.10
+  - @remirror/extension-markdown@1.0.13
+  - @remirror/extension-mention@1.0.14
+  - @remirror/extension-mention-atom@1.0.15
+  - @remirror/extension-node-formatting@1.0.16
+  - @remirror/extension-paragraph@1.0.13
+  - @remirror/extension-placeholder@1.0.14
+  - @remirror/extension-positioner@1.1.13
+  - @remirror/extension-search@1.0.13
+  - @remirror/extension-shortcuts@1.1.2
+  - @remirror/extension-strike@1.0.13
+  - @remirror/extension-sub@1.0.13
+  - @remirror/extension-sup@1.0.13
+  - @remirror/extension-tables@1.0.14
+  - @remirror/extension-text@1.0.13
+  - @remirror/extension-text-case@1.0.13
+  - @remirror/extension-text-color@1.0.14
+  - @remirror/extension-text-highlight@1.0.14
+  - @remirror/extension-trailing-node@1.0.13
+  - @remirror/extension-underline@1.0.13
+  - @remirror/extension-whitespace@1.0.13
+  - @remirror/extension-yjs@1.0.17
+  - @remirror/preset-core@1.0.16
+  - @remirror/preset-formatting@1.0.17
+  - @remirror/icons@1.0.7
+  - @remirror/theme@1.1.5
+
 ## 1.0.54
 
 > 2021-12-30
