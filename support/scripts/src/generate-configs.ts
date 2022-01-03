@@ -250,7 +250,9 @@ function augmentExportsObject(rootJson: PackageJson, filepath: string, subJson: 
  * to the module or main path.
  */
 function getBrowserPath(pkg: PackageJson) {
-  const browserPath = isString(pkg.browser) ? pkg.browser : pkg.browser?.[`./${pkg.module}`];
+  const browserPath = isString(pkg.browser)
+    ? pkg.browser
+    : pkg.browser?.[prefixRelativePath(pkg.module ?? '')];
 
   return isString(browserPath) ? browserPath : pkg.module;
 }
