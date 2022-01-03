@@ -25,7 +25,7 @@ import { shortcuts, toggleHeadingOptions } from './heading-constants';
 
 export interface HeadingOptions {
   /**
-   * The numerical value of the supporting headings.
+   * The numerical value of the supporting headings...
    *
    * @default `[1, 2, 3, 4, 5, 6]`
    */
