@@ -66,8 +66,8 @@
     "@types/react-dom": "^17.0.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "y-webrtc": "^10.2.0",
-    "yjs": "^13.5.11"
+    "y-webrtc": "^10.2.2",
+    "yjs": "^13.5.23"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.10",
