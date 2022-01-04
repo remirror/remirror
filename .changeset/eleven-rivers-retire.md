@@ -1,6 +1,5 @@
 ---
 'remirror': patch
-'@remirror/extension-react-tables': patch
 '@remirror/extension-yjs': patch
 ---
 
