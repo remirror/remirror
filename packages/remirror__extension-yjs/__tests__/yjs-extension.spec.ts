@@ -1,5 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { hideConsoleError } from 'testing';
+import { yUndoPluginKey } from 'y-prosemirror';
 import { WebrtcProvider } from 'y-webrtc';
 import { Doc } from 'yjs';
 
@@ -50,6 +51,29 @@ describe('configuration', () => {
 
     extension.setOptions({ getProvider: () => provider });
     expect(extension.options.destroyProvider).toHaveBeenCalledTimes(1);
+  });
+
+  it('throws when updating undo-related options', () => {
+    const { manager } = create();
+    const extension = manager.getExtension(YjsExtension);
+
+    const protectedNodes = new Set<string>();
+    const trackedOrigins: any[] = [];
+
+    expect(() =>
+      extension.setOptions({ protectedNodes, trackedOrigins }),
+    ).toThrowErrorMatchingSnapshot();
+  });
+
+  it('uses the same undo manager in each state', () => {
+    const { manager } = create();
+
+    const state = manager.createState();
+    const initialUndoManager = yUndoPluginKey.getState(state).undoManager;
+
+    const secondState = manager.createState();
+    const secondUndoManager = yUndoPluginKey.getState(secondState).undoManager;
+    expect(secondUndoManager).toBe(initialUndoManager);
   });
 });
 
