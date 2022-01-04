@@ -69,9 +69,9 @@
     "looks-same": "^7.3.0",
     "min-document": "^2.19.0",
     "p-limit": "^3.1.0",
-    "playwright": "^1.12.3",
+    "playwright": "^1.16.2",
     "playwright-core": "^1.12.3",
-    "playwright-testing-library": "^3.0.0",
+    "playwright-testing-library": "^3.0.1",
     "react-test-renderer": "^17.0.2",
     "signal-exit": "^3.0.3",
     "test-keyboard": "1.0.5"
