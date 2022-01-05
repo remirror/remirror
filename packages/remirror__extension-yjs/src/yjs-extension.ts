@@ -1,6 +1,7 @@
 import {
   absolutePositionToRelativePosition,
   defaultCursorBuilder,
+  defaultDeleteFilter,
   redo,
   relativePositionToAbsolutePosition,
   undo,
@@ -10,7 +11,8 @@ import {
   yUndoPlugin,
   yUndoPluginKey,
 } from 'y-prosemirror';
-import type { Doc, RelativePosition, Transaction as YjsTransaction, UndoManager } from 'yjs';
+import type { Doc, RelativePosition, Transaction as YjsTransaction } from 'yjs';
+import { UndoManager } from 'yjs';
 import {
   AcceptUndefined,
   command,
@@ -186,6 +188,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     const yDoc = this.provider.doc;
     const type = yDoc.getXmlFragment('prosemirror');
 
+    const undoManager = new UndoManager(type, {
+      trackedOrigins: new Set([ySyncPluginKey, ...trackedOrigins]),
+      deleteFilter: (item) => defaultDeleteFilter(item, protectedNodes),
+    });
     return [
       ySyncPlugin(type, syncPluginOptions),
       yCursorPlugin(
@@ -193,7 +199,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
         { cursorBuilder, cursorStateField, getSelection },
         cursorStateField,
       ),
-      yUndoPlugin({ protectedNodes, trackedOrigins }),
+      yUndoPlugin({ undoManager }),
     ];
   }
 
@@ -211,6 +217,13 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       'protectedNodes',
       'trackedOrigins',
     ]);
+
+    if (changes.protectedNodes.changed || changes.trackedOrigins.changed) {
+      // Cannot change these, as we would need a new undo manager instance, and for that
+      // we would need to unregister the previous instance from the document to avoid
+      // memory leaks.
+      throw new Error(`Cannot change "protectedNodes" or "trackedOrigins" options`);
+    }
 
     if (changes.getProvider.changed) {
       this._provider = undefined;

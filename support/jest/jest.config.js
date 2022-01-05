@@ -15,6 +15,7 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': [require.resolve('babel-jest'), { rootMode: 'upward' }],
   },
+  transformIgnorePatterns: ['node_modules(?!/(.+/)*(lib0|y-protocols)[@/])'],
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
   testRegex: '/__tests__/.*\\.spec\\.tsx?$',
