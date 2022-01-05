@@ -1,5 +1,18 @@
 # remirror
 
+## 1.0.56
+
+> 2022-01-05
+
+### Patch Changes
+
+- Update yjs packages to latest version.
+
+* Avoid leaking Yjs UndoManager instances
+
+* Updated dependencies []:
+  - @remirror/extension-yjs@1.0.18
+
 ## 1.0.55
 
 > 2022-01-03
