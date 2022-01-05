@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-yjs",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Realtime collaboration with yjs",
   "keywords": [
     "remirror",

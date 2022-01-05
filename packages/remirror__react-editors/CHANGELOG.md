@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.45
+
+> 2022-01-05
+
+### Patch Changes
+
+- Update yjs packages to latest version.
+
+* Avoid leaking Yjs UndoManager instances
+
+* Updated dependencies []:
+  - remirror@1.0.56
+
 ## 0.1.44
 
 > 2022-01-03
