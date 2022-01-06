@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.2.11
+
+> 2022-01-06
+
+### Patch Changes
+
+- Fix a bug that causes the cursor to jump to the end of the first node when pressing backspace at the beginning of a list and this list is the second child of the document.
+
 ## 1.2.10
 
 > 2022-01-03
