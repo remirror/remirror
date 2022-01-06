@@ -2,12 +2,22 @@ import 'remirror/styles/all.css';
 
 import { htmlToProsemirrorNode } from 'remirror';
 import { FontSizeExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+import {
+  Remirror,
+  ThemeProvider,
+  useCommands,
+  useHelpers,
+  useRemirror,
+  useRemirrorContext,
+} from '@remirror/react';
 
 const extensions = () => [new FontSizeExtension()];
 
 const FontSizeButtons = () => {
   const commands = useCommands();
+  const helpers = useHelpers();
+  const { view } = useRemirrorContext({ autoUpdate: true });
+
   return (
     <>
       <button
@@ -21,6 +31,24 @@ const FontSizeButtons = () => {
         onClick={() => commands.setFontSize(24)}
       >
         Large
+      </button>
+
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.decreaseFontSize()}
+      >
+        -
+      </button>
+
+      <button onMouseDown={(event) => event.preventDefault()}>
+        current fontSize: {helpers.getFontSizeForSelection(view.state.selection)}
+      </button>
+
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.increaseFontSize()}
+      >
+        +
       </button>
     </>
   );
