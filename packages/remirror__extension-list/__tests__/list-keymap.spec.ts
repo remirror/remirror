@@ -1160,4 +1160,20 @@ describe('Backspace', () => {
     editor.add(from).press('Backspace');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
+
+  // This test case covers the issue from https://github.com/remirror/remirror/pull/1461
+  it('presses backspace before a list item when the list is the second child of the doc', () => {
+    from = doc(
+      p('text'),
+      ol(
+        li(p('<cursor>')), //
+      ),
+    );
+    editor.add(from).press('Backspace').insertText('!');
+    to = doc(
+      p('text'),
+      p('!'), //
+    );
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
 });
