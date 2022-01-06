@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.57
+
+> 2022-01-06
+
+### Patch Changes
+
+- Fix a bug that causes the cursor to jump to the end of the first node when pressing backspace at the beginning of a list and this list is the second child of the document.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.11
+  - @remirror/preset-wysiwyg@1.1.32
+
 ## 1.0.56
 
 > 2022-01-05

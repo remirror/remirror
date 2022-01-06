@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.46
+
+> 2022-01-06
+
+### Patch Changes
+
+- Fix a bug that causes the cursor to jump to the end of the first node when pressing backspace at the beginning of a list and this list is the second child of the document.
+
+- Updated dependencies []:
+  - remirror@1.0.57
+
 ## 0.1.45
 
 > 2022-01-05
