@@ -720,11 +720,16 @@ export function listBackspace({ view }: CommandFunctionProps): boolean {
       return false;
     }
 
+    // Handle the backspace key in a three-levels list correctly:
+    // * A
+    //   * <cursor>B
+    //     * C
     const itemIndex = $cursor.index(range.depth); // current node is the n-th node in item
     const listIndex = $cursor.index(range.depth - 1); // current item is the n-th item in list
-    const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in root
+    const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in its parent
+    const isNestedList = range.depth - 2 >= 1 && isListItemNode($cursor.node(range.depth - 2));
 
-    if (itemIndex === 0 && listIndex === 0 && rootIndex <= 1) {
+    if (itemIndex === 0 && listIndex === 0 && rootIndex <= 1 && isNestedList) {
       liftListItem(range.parent.type)(view.state, view.dispatch);
     }
   }
