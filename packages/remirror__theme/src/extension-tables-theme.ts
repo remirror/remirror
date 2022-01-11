@@ -1,6 +1,6 @@
 import { css } from '@linaria/core';
 
-import { getTheme } from './utils';
+import { getThemeVar } from './utils';
 
 const controllerSize = 12;
 const markRadius = 2;
@@ -31,7 +31,7 @@ export const EDITOR = css`
       position: relative;
       border-width: 1px;
       border-style: solid;
-      border-color: ${getTheme((t) => t.color.table.default.border)};
+      border-color: ${getThemeVar('color', 'table', 'default', 'border')};
     }
 
     .column-resize-handle {
@@ -41,7 +41,7 @@ export const EDITOR = css`
       bottom: 0;
       width: 4px;
       z-index: 40;
-      background-color: ${getTheme((t) => t.hue.blue[7])};
+      background-color: ${getThemeVar('hue', 'blue', 7)};
       pointer-events: none;
     }
 
@@ -67,8 +67,8 @@ export const EDITOR = css`
     */
     th.${SELECTED_CELL}, td.${SELECTED_CELL} {
       border-style: double;
-      border-color: ${getTheme((t) => t.color.table.selected.border)};
-      background-color: ${getTheme((t) => t.color.table.selected.cell)};
+      border-color: ${getThemeVar('color', 'table', 'selected', 'border')};
+      background-color: ${getThemeVar('color', 'table', 'selected', 'cell')};
     }
   }
 ` as 'remirror-editor';
@@ -125,7 +125,7 @@ const CSSSegements = (() => {
     height: 0px;
     border-radius: 50%;
     border-style: solid;
-    border-color: ${getTheme((t) => t.color.table.mark)};
+    border-color: ${getThemeVar('color', 'table', 'mark')};
     border-width: ${markRadius}px;
   `;
 
@@ -332,14 +332,14 @@ export const TABLE_TBODY_WITH_CONTROLLERS = css`
   /* Styles for default */
   & {
     th.${TABLE_CONTROLLER} {
-      background-color: ${getTheme((t) => t.color.table.default.controller)};
+      background-color: ${getThemeVar('color', 'table', 'default', 'controller')};
     }
   }
 
   /* Styles for selected */
   & {
     th.${SELECTED_CELL}.${TABLE_CONTROLLER} {
-      background-color: ${getTheme((t) => t.color.table.selected.controller)};
+      background-color: ${getThemeVar('color', 'table', 'selected', 'controller')};
     }
   }
 ` as 'remirror-table-tbody-with-controllers';
@@ -348,11 +348,11 @@ export const TABLE_SHOW_PREDELETE = css`
   /* Styles for predelete */
   & {
     th.${SELECTED_CELL}.${SELECTED_CELL}.${TABLE_CONTROLLER} {
-      background-color: ${getTheme((t) => t.color.table.predelete.controller)};
+      background-color: ${getThemeVar('color', 'table', 'predelete', 'controller')};
     }
     th.${SELECTED_CELL}.${SELECTED_CELL}, td.${SELECTED_CELL}.${SELECTED_CELL} {
-      border-color: ${getTheme((t) => t.color.table.predelete.border)};
-      background-color: ${getTheme((t) => t.color.table.predelete.cell)};
+      border-color: ${getThemeVar('color', 'table', 'predelete', 'border')};
+      background-color: ${getThemeVar('color', 'table', 'predelete', 'cell')};
     }
   }
 ` as 'remirror-table-show-predelete';

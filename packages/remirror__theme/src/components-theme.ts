@@ -1,24 +1,24 @@
 import { css } from '@linaria/core';
 
-import { getTheme } from './utils';
+import { getThemeVar } from './utils';
 
-const foreground = getTheme((t) => t.color.foreground);
-const text = getTheme((t) => t.color.text);
-const background = getTheme((t) => t.color.background);
-const backdrop = getTheme((t) => t.color.backdrop);
-const border = getTheme((t) => t.color.border);
-const shadow1 = getTheme((t) => t.color.shadow1);
-const borderHover = getTheme((t) => t.color.hover.border);
-const borderActive = getTheme((t) => t.color.active.border);
-const primary = getTheme((t) => t.color.primary);
-const primaryText = getTheme((t) => t.color.primaryText);
-const primaryHover = getTheme((t) => t.color.hover.primary);
-const primaryHoverText = getTheme((t) => t.color.hover.primaryText);
-const primaryActive = getTheme((t) => t.color.active.primary);
-const primaryActiveText = getTheme((t) => t.color.active.primaryText);
+const foreground = getThemeVar('color', 'foreground');
+const text = getThemeVar('color', 'text');
+const background = getThemeVar('color', 'background');
+const backdrop = getThemeVar('color', 'backdrop');
+const border = getThemeVar('color', 'border');
+const shadow1 = getThemeVar('color', 'shadow1');
+const borderHover = getThemeVar('color', 'hover', 'border');
+const borderActive = getThemeVar('color', 'active', 'border');
+const primary = getThemeVar('color', 'primary');
+const primaryText = getThemeVar('color', 'primaryText');
+const primaryHover = getThemeVar('color', 'hover', 'primary');
+const primaryHoverText = getThemeVar('color', 'hover', 'primaryText');
+const primaryActive = getThemeVar('color', 'active', 'primary');
+const primaryActiveText = getThemeVar('color', 'active', 'primaryText');
 
 export const EDITOR_WRAPPER = css`
-  padding-top: ${getTheme((t) => t.space[3])};
+  padding-top: ${getThemeVar('space', 3)};
 `;
 
 export const BUTTON_ACTIVE = css`
@@ -34,7 +34,7 @@ export const BUTTON = css`
   user-select: none;
   padding: 0.375em 0.75em;
   line-height: 1.5;
-  border-radius: ${getTheme((t) => t.radius.border)};
+  border-radius: ${getThemeVar('radius', 'border')};
   text-decoration: none;
   border: 1px solid ${border};
   cursor: pointer;
@@ -93,7 +93,7 @@ export const DIALOG = css`
   top: 28px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: ${getTheme((t) => t.radius.border)};
+  border-radius: ${getThemeVar('radius', 'border')};
   padding: 1em;
   max-height: calc(100vh - 56px);
   outline: 0;
@@ -142,7 +142,7 @@ export const FORM_GROUP = css`
   display: block;
   color: ${text};
   border: 1px solid ${border};
-  border-radius: ${getTheme((t) => t.radius.border)};
+  border-radius: ${getThemeVar('radius', 'border')};
   padding: 0.5rem 1rem 1rem;
   & > * {
     display: block;
@@ -176,15 +176,15 @@ export const GROUP = css`
 export const INPUT = css`
   display: block;
   width: 100%;
-  border-radius: ${getTheme((t) => t.radius.border)};
+  border-radius: ${getThemeVar('radius', 'border')};
   padding: 0.5em 0.75em;
   font-size: 100%;
-  border: 1px solid ${getTheme((t) => t.hue.gray[2])};
-  color: ${getTheme((t) => t.hue.gray[5])};
+  border: 1px solid ${getThemeVar('hue', 'gray', 2)};
+  color: ${getThemeVar('hue', 'gray', 5)};
   margin: 0 !important;
 
   &:focus {
-    border-color: ${getTheme((t) => t.hue.gray[3])};
+    border-color: ${getThemeVar('hue', 'gray', 3)};
   }
 `;
 
@@ -198,9 +198,9 @@ export const MENU_PANE = css`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: ${getTheme((t) => t.space[1])};
-  padding-bottom: ${getTheme((t) => t.space[1])};
-  padding-right: ${getTheme((t) => t.space[2])};
+  padding-top: ${getThemeVar('space', 1)};
+  padding-bottom: ${getThemeVar('space', 1)};
+  padding-right: ${getThemeVar('space', 2)};
 `;
 
 export const MENU_PANE_ACTIVE = css`
@@ -209,19 +209,19 @@ export const MENU_PANE_ACTIVE = css`
 `;
 
 export const MENU_DROPDOWN_LABEL = css`
-  padding: 0 ${getTheme((t) => t.space[2])};
+  padding: 0 ${getThemeVar('space', 2)};
 `;
 
 export const MENU_PANE_ICON = css`
   position: absolute;
   left: 8px;
   width: 20px;
-  color: ${getTheme((t) => t.hue.gray[7])};
+  color: ${getThemeVar('hue', 'gray', 7)};
 
   button:hover &,
   button:active &,
   [aria-checked='true'] & {
-    color: ${getTheme((t) => t.hue.gray[1])};
+    color: ${getThemeVar('hue', 'gray', 1)};
   }
 `;
 
@@ -229,34 +229,34 @@ export const MENU_PANE_LABEL = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-right: ${getTheme((t) => t.space[3])};
+  padding-right: ${getThemeVar('space', 3)};
 `;
 
 export const MENU_PANE_SHORTCUT = css`
   align-self: flex-end;
-  color: ${getTheme((t) => t.hue.gray[6])};
+  color: ${getThemeVar('hue', 'gray', 6)};
 
   button:hover &,
   button:active &,
   [aria-checked='true'] & {
-    color: ${getTheme((t) => t.hue.gray[1])};
+    color: ${getThemeVar('hue', 'gray', 1)};
   }
 `;
 
 export const MENU_BUTTON_LEFT = css`
   [role='menu'] > & {
-    left: ${getTheme((t) => t.space[2])};
+    left: ${getThemeVar('space', 2)};
   }
 ` as 'remirror-menu-button-left';
 export const MENU_BUTTON_RIGHT = css`
   [role='menu'] > & {
-    right: ${getTheme((t) => t.space[2])};
+    right: ${getThemeVar('space', 2)};
   }
 ` as 'remirror-menu-button-right';
 
 export const MENU_BUTTON_NESTED_LEFT = css`
   svg {
-    margin-right: ${getTheme((t) => t.space[2])};
+    margin-right: ${getThemeVar('space', 2)};
   }
 ` as 'remirror-menu-button-nested-left';
 
@@ -266,7 +266,7 @@ export const MENU_BUTTON_NESTED_RIGHT = css`
   }
 
   svg {
-    margin-left: ${getTheme((t) => t.space[2])};
+    margin-left: ${getThemeVar('space', 2)};
   }
 ` as 'remirror-menu-button-nested-right';
 
@@ -342,11 +342,11 @@ export const MENU_ITEM = css`
 `;
 
 export const MENU_ITEM_ROW = css`
-  padding: 0 ${getTheme((t) => t.space[2])};
+  padding: 0 ${getThemeVar('space', 2)};
 `;
 
 export const MENU_ITEM_COLUMN = css`
-  padding: 0 ${getTheme((t) => t.space[4])};
+  padding: 0 ${getThemeVar('space', 4)};
 `;
 
 export const MENU_ITEM_CHECKBOX = css`
@@ -388,7 +388,7 @@ export const MENU_GROUP = css`
 ` as 'remirror-menu-group';
 
 export const FLOATING_POPOVER = css`
-  /* padding: ${getTheme((t) => t.space[2])}; */
+  /* padding: ${getThemeVar('space', 2)}; */
   padding: 0;
   border: none;
   max-height: calc(100vh - 56px);
@@ -420,7 +420,7 @@ export const ANIMATED_POPOVER = css`
 export const ROLE = css`
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-family: ${getTheme((t) => t.fontFamily.default)};
+  font-family: ${getThemeVar('fontFamily', 'default')};
   color: ${text};
   background-color: ${background};
   /* border: 1px solid ${border}; */
@@ -445,7 +445,7 @@ export const TAB = css`
   background-color: transparent;
   border: 1px solid transparent;
   border-width: 1px 1px 0 1px;
-  border-radius: ${getTheme((t) => t.radius.border)} ${getTheme((t) => t.radius.border)} 0 0;
+  border-radius: ${getThemeVar('radius', 'border')} ${getThemeVar('radius', 'border')} 0 0;
   font-size: 100%;
   padding: 0.5em 1em;
   margin: 0 0 -1px 0;
@@ -478,7 +478,7 @@ export const TABBABLE = css`
     /* transition: box-shadow 0.15s ease-in-out; */
     outline: 0;
     &:focus {
-      box-shadow: ${getTheme((t) => t.color.outline)} 0px 0px 0px 0.2em;
+      box-shadow: ${getThemeVar('color', 'outline')} 0px 0px 0px 0.2em;
       position: relative;
       z-index: 2;
     }
@@ -512,11 +512,11 @@ export const TOOLBAR = css`
 `;
 
 export const TOOLTIP = css`
-  background-color: ${getTheme((t) => t.color.faded)};
+  background-color: ${getThemeVar('color', 'faded')};
   color: white;
   font-size: 0.8em;
   padding: 0.5rem;
-  border-radius: ${getTheme((t) => t.radius.border)};
+  border-radius: ${getThemeVar('radius', 'border')};
   z-index: 999;
 
   [data-arrow] {
@@ -525,16 +525,16 @@ export const TOOLTIP = css`
       fill: transparent;
     }
     & .fill {
-      fill: ${getTheme((t) => t.hue.gray[8])};
+      fill: ${getThemeVar('hue', 'gray', 8)};
     }
   }
 `;
 
 export const TABLE_SIZE_EDITOR = css`
-  background: ${getTheme((t) => t.color.background)};
-  box-shadow: ${getTheme((t) => t.color.shadow1)};
-  font-family: ${getTheme((t) => t.fontFamily.default)};
-  font-size: ${getTheme((t) => t.fontSize[1])};
+  background: ${getThemeVar('color', 'background')};
+  box-shadow: ${getThemeVar('color', 'shadow1')};
+  font-family: ${getThemeVar('fontFamily', 'default')};
+  font-size: ${getThemeVar('fontSize', 1)};
 `;
 
 export const TABLE_SIZE_EDITOR_BODY = css`
@@ -552,27 +552,27 @@ export const TABLE_SIZE_EDITOR_BODY = css`
 `;
 
 export const TABLE_SIZE_EDITOR_CELL = css`
-  border: ${getTheme((t) => t.color.border)};
+  border: ${getThemeVar('color', 'border')};
   position: absolute;
   z-index: 2;
 `;
 
 export const TABLE_SIZE_EDITOR_CELL_SELECTED = css`
-  background: ${getTheme((t) => t.color.selection.background)};
-  border-color: ${getTheme((t) => t.color.border)};
+  background: ${getThemeVar('color', 'selection', 'background')};
+  border-color: ${getThemeVar('color', 'border')};
 `;
 
 export const TABLE_SIZE_EDITOR_FOOTER = css`
-  padding-bottom: ${getTheme((t) => t.space['1'])};
+  padding-bottom: ${getThemeVar('space', 1)};
   text-align: center;
 `;
 
 export const COLOR_PICKER = css`
-  background: ${getTheme((t) => t.color.background)};
-  box-shadow: ${getTheme((t) => t.boxShadow[1])};
-  font-family: ${getTheme((t) => t.fontFamily.default)};
-  font-size: ${getTheme((t) => t.fontSize[1])};
-  padding: ${getTheme((t) => t.space[2])} ${getTheme((t) => t.space[3])};
+  background: ${getThemeVar('color', 'background')};
+  box-shadow: ${getThemeVar('boxShadow', 1)};
+  font-family: ${getThemeVar('fontFamily', 'default')};
+  font-size: ${getThemeVar('fontSize', 1)};
+  padding: ${getThemeVar('space', 2)} ${getThemeVar('space', 3)};
 `;
 export const COLOR_PICKER_CELL = css``;
 export const COLOR_PICKER_CELL_SELECTED = css``;
