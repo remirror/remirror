@@ -1,5 +1,31 @@
 # jest-remirror
 
+## 1.0.21
+
+> 2022-01-11
+
+### Patch Changes
+
+- Deprecate `getTheme` and `getThemeProps` in favour of new methods `getThemeVar` and `getThemeVarName`.
+
+  This removes a code path that used an ES6 Proxy, which cannot be polyfilled.
+
+  ```
+  getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
+
+  getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
+  ```
+
+  ```
+  getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
+
+  getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
+  ```
+
+- Updated dependencies []:
+  - @remirror/dom@1.0.17
+  - @remirror/preset-core@1.0.17
+
 ## 1.0.20
 
 > 2022-01-03
