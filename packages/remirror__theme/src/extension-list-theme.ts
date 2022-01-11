@@ -1,6 +1,6 @@
 import { css } from '@linaria/core';
 
-import { getTheme } from './utils';
+import { getThemeVar } from './utils';
 
 export const LIST_ITEM_WITH_CUSTOM_MARKER = 'remirror-list-item-with-custom-mark';
 export const UL_LIST_CONTENT = 'remirror-ul-list-content';
@@ -44,7 +44,7 @@ export const COLLAPSIBLE_LIST_ITEM_CLOSED = css`
   }
 
   & .remirror-collapsible-list-item-button {
-    background-color: ${getTheme((t) => t.hue.gray[6])};
+    background-color: ${getThemeVar('hue', 'gray', 6)};
   }
 ` as 'remirror-collapsible-list-item-closed';
 
@@ -57,15 +57,15 @@ export const COLLAPSIBLE_LIST_ITEM_BUTTON = css`
   vertical-align: middle;
 
   transition: background-color 0.25s ease;
-  background-color: ${getTheme((t) => t.color.border)};
+  background-color: ${getThemeVar('color', 'border')};
 
   &:hover {
-    background-color: ${getTheme((t) => t.color.primary)};
+    background-color: ${getThemeVar('color', 'primary')};
   }
 
   &.disabled,
   &.disabled:hover {
-    background-color: ${getTheme((t) => t.color.border)};
+    background-color: ${getThemeVar('color', 'border')};
     cursor: default;
   }
 ` as 'remirror-collapsible-list-item-button';
@@ -79,11 +79,11 @@ export const LIST_SPINE = css`
   cursor: pointer;
 
   transition: border-left-color 0.25s ease;
-  border-left-color: ${getTheme((t) => t.color.border)};
+  border-left-color: ${getThemeVar('color', 'border')};
   border-left-style: solid;
   border-left-width: 1px;
 
   &:hover {
-    border-left-color: ${getTheme((t) => t.color.primary)};
+    border-left-color: ${getThemeVar('color', 'primary')};
   }
 ` as 'remirror-list-spine';

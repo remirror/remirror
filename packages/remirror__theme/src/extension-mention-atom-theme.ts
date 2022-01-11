@@ -1,16 +1,16 @@
 import { css } from '@linaria/core';
 
-import { getTheme } from './utils';
+import { getThemeVar } from './utils';
 
 export const MENTION_ATOM = css`
-  background: ${getTheme((t) => t.hue.gray[2])};
+  background: ${getThemeVar('hue', 'gray', 2)};
   font-weight: bold;
   font-size: 0.9em;
   font-style: normal;
-  border-radius: ${getTheme((t) => t.radius.border)};
+  border-radius: ${getThemeVar('radius', 'border')};
   padding: 0.2rem 0.5rem;
   white-space: nowrap;
-  color: ${getTheme((t) => t.color.primary)};
+  color: ${getThemeVar('color', 'primary')};
 ` as 'remirror-mention-atom';
 
 export const SUGGEST_ATOM = css`
@@ -28,11 +28,11 @@ export const MENTION_ATOM_POPUP_ITEM = css`
 `;
 
 export const MENTION_ATOM_POPUP_HOVERED = css`
-  background-color: ${getTheme((t) => t.hue.gray[2])};
+  background-color: ${getThemeVar('hue', 'gray', 2)};
 `;
 
 export const MENTION_ATOM_POPUP_HIGHLIGHT = css`
-  background-color: ${getTheme((t) => t.hue.gray[3])};
+  background-color: ${getThemeVar('hue', 'gray', 3)};
 `;
 
 export const MENTION_ATOM_POPUP_WRAPPER = css`

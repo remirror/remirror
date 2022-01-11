@@ -7,12 +7,12 @@ import {
 } from '@remirror/core';
 import { Plugin, PluginKey, Transaction } from '@remirror/pm/state';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
-import { ExtensionTablesTheme, getTheme } from '@remirror/theme';
+import { ExtensionTablesTheme, getThemeVar } from '@remirror/theme';
 
 import { InsertButtonAttrs } from './components/table-insert-button';
 
-const preselectBorderColor = getTheme((t) => t.color.table.preselect.border);
-const preselectControllerBackgroundColor = getTheme((t) => t.color.table.preselect.controller);
+const preselectBorderColor = getThemeVar('color', 'table', 'preselect', 'border');
+const preselectControllerBackgroundColor = getThemeVar('color', 'table', 'preselect', 'controller');
 
 export function getTableStyle(attrs: ControllerStateValues): string {
   const preselectClass = css`

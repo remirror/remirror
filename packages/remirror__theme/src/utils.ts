@@ -114,9 +114,43 @@ function keyCapturingProxy<Type extends object>(getter: (obj: Type) => string): 
  * import { getTheme } from '@remirror/theme';
  * getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
  * ```
+ *
+ * @deprecated use getThemeVar instead
  */
 export function getTheme(getter: (theme: DeepString<Remirror.Theme>) => string): string {
   return getVar(keyCapturingProxy(getter));
+}
+
+/**
+ * Get the theme custom property wrapped in a `var`.
+ *
+ * ```ts
+ * import { getThemeVar } from '@remirror/theme';
+ * getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
+ * ```
+ */
+export function getThemeVar<TKey1 extends keyof Remirror.Theme>(t1: TKey1): string;
+
+export function getThemeVar<
+  TKey1 extends keyof Remirror.Theme,
+  TKey2 extends keyof Remirror.Theme[TKey1],
+>(t1: TKey1, t2: TKey2): string;
+
+export function getThemeVar<
+  TKey1 extends keyof Remirror.Theme,
+  TKey2 extends keyof Remirror.Theme[TKey1],
+  TKey3 extends keyof Remirror.Theme[TKey1][TKey2],
+>(t1: TKey1, t2: TKey2, t3: TKey3): string;
+
+export function getThemeVar<
+  TKey1 extends keyof Remirror.Theme,
+  TKey2 extends keyof Remirror.Theme[TKey1],
+  TKey3 extends keyof Remirror.Theme[TKey1][TKey2],
+  TKey4 extends keyof Remirror.Theme[TKey1][TKey2][TKey3],
+>(t1: TKey1, t2: TKey2, t3: TKey3, t4: TKey4): string;
+
+export function getThemeVar(...args: Array<string | number>): string {
+  return getVar(args.map((p) => p.toString()));
 }
 
 /**
@@ -126,10 +160,45 @@ export function getTheme(getter: (theme: DeepString<Remirror.Theme>) => string):
  * import {getThemeProps} from '@remirror/theme';
  * getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
  * ```
+ *
+ * @deprecated use getThemeVarName instead
  */
 export function getThemeProps(getter: (theme: DeepString<Remirror.Theme>) => string): string {
   return getCustomPropertyName(keyCapturingProxy(getter));
 }
+
+/**
+ * Get the theme custom property wrapped in a `var`.
+ *
+ * ```ts
+ * import { getThemeVarName } from '@remirror/theme';
+ * getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
+ * ```
+ */
+export function getThemeVarName<TKey1 extends keyof Remirror.Theme>(t1: TKey1): string;
+
+export function getThemeVarName<
+  TKey1 extends keyof Remirror.Theme,
+  TKey2 extends keyof Remirror.Theme[TKey1],
+>(t1: TKey1, t2: TKey2): string;
+
+export function getThemeVarName<
+  TKey1 extends keyof Remirror.Theme,
+  TKey2 extends keyof Remirror.Theme[TKey1],
+  TKey3 extends keyof Remirror.Theme[TKey1][TKey2],
+>(t1: TKey1, t2: TKey2, t3: TKey3): string;
+
+export function getThemeVarName<
+  TKey1 extends keyof Remirror.Theme,
+  TKey2 extends keyof Remirror.Theme[TKey1],
+  TKey3 extends keyof Remirror.Theme[TKey1][TKey2],
+  TKey4 extends keyof Remirror.Theme[TKey1][TKey2][TKey3],
+>(t1: TKey1, t2: TKey2, t3: TKey3, t4: TKey4): string;
+
+export function getThemeVarName(...args: Array<string | number>): string {
+  return getCustomPropertyName(args.map((p) => p.toString()));
+}
+
 // defaultRemirrorThemeHue is copied from https://github.com/yeun/open-color/blob/v1.7.0/open-color.json
 const defaultRemirrorThemeHue: Remirror.ThemeHue = {
   gray: [

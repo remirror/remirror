@@ -1,6 +1,6 @@
 import { css } from '@linaria/core';
 
-import { getTheme } from './utils';
+import { getThemeVar } from './utils';
 
 export const EMOJI_IMAGE = css`
   object-fit: contain;
@@ -24,11 +24,11 @@ export const EMOJI_POPUP_ITEM = css`
 `;
 
 export const EMOJI_POPUP_HOVERED = css`
-  background-color: ${getTheme((t) => t.hue.gray[2])};
+  background-color: ${getThemeVar('hue', 'gray', 2)};
 `;
 
 export const EMOJI_POPUP_HIGHLIGHT = css`
-  background-color: ${getTheme((t) => t.hue.gray[3])};
+  background-color: ${getThemeVar('hue', 'gray', 3)};
 `;
 
 export const EMOJI_POPUP_WRAPPER = css`

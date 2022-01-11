@@ -1,7 +1,7 @@
 import { range } from '@remirror/core';
 import { I18n, MessageDescriptor } from '@remirror/i18n';
 import { ExtensionTextColorMessages as Messages } from '@remirror/messages';
-import { getTheme } from '@remirror/theme';
+import { getThemeVar } from '@remirror/theme';
 
 import {
   ColorPalette,
@@ -31,7 +31,7 @@ function createHuePalette(props: CreateHuePaletteProps): HuePalette {
   const label = t(labelDescriptor);
   const hues = hueRange.map((hue) => ({
     label: t(hueDescriptor, { hue }),
-    color: getTheme((theme) => theme.hue[name][hue]),
+    color: getThemeVar('hue', name, hue),
   })) as ColorWithLabelTuple;
 
   return { label, hues };
