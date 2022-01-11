@@ -1,5 +1,48 @@
 # remirror
 
+## 1.0.58
+
+> 2022-01-11
+
+### Patch Changes
+
+- Deprecate `getTheme` and `getThemeProps` in favour of new methods `getThemeVar` and `getThemeVarName`.
+
+  This removes a code path that used an ES6 Proxy, which cannot be polyfilled.
+
+  ```
+  getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
+
+  getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
+  ```
+
+  ```
+  getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
+
+  getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
+  ```
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.0
+  - @remirror/extension-text-color@1.0.15
+  - @remirror/dom@1.0.17
+  - @remirror/extension-annotation@1.1.10
+  - @remirror/extension-blockquote@1.0.15
+  - @remirror/extension-callout@1.0.15
+  - @remirror/extension-code-block@1.0.18
+  - @remirror/extension-emoji@1.0.15
+  - @remirror/extension-image@1.0.22
+  - @remirror/extension-list@1.2.12
+  - @remirror/extension-mention-atom@1.0.16
+  - @remirror/extension-placeholder@1.0.15
+  - @remirror/extension-positioner@1.1.14
+  - @remirror/extension-tables@1.0.15
+  - @remirror/extension-text-highlight@1.0.15
+  - @remirror/extension-yjs@1.0.19
+  - @remirror/preset-core@1.0.17
+  - @remirror/preset-formatting@1.0.18
+  - @remirror/preset-wysiwyg@1.1.33
+
 ## 1.0.57
 
 > 2022-01-06

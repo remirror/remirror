@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "1.1.32",
+  "version": "1.1.33",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -43,26 +43,26 @@
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^1.3.3",
     "@remirror/extension-bidi": "^1.0.13",
-    "@remirror/extension-blockquote": "^1.0.14",
+    "@remirror/extension-blockquote": "^1.0.15",
     "@remirror/extension-bold": "^1.0.13",
     "@remirror/extension-code": "^1.0.14",
-    "@remirror/extension-code-block": "^1.0.17",
+    "@remirror/extension-code-block": "^1.0.18",
     "@remirror/extension-drop-cursor": "^1.0.13",
     "@remirror/extension-embed": "^1.1.17",
     "@remirror/extension-gap-cursor": "^1.0.13",
     "@remirror/extension-hard-break": "^1.0.13",
     "@remirror/extension-heading": "^1.0.13",
     "@remirror/extension-horizontal-rule": "^1.0.13",
-    "@remirror/extension-image": "^1.0.21",
+    "@remirror/extension-image": "^1.0.22",
     "@remirror/extension-italic": "^1.0.13",
     "@remirror/extension-link": "^1.1.12",
-    "@remirror/extension-list": "^1.2.11",
+    "@remirror/extension-list": "^1.2.12",
     "@remirror/extension-search": "^1.0.13",
     "@remirror/extension-shortcuts": "^1.1.2",
     "@remirror/extension-strike": "^1.0.13",
     "@remirror/extension-trailing-node": "^1.0.13",
     "@remirror/extension-underline": "^1.0.13",
-    "@remirror/preset-core": "^1.0.16"
+    "@remirror/preset-core": "^1.0.17"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.10"

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-core",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "The core preset providing the functionality you need and want.",
   "keywords": [
     "remirror",
@@ -48,7 +48,7 @@
     "@remirror/extension-gap-cursor": "^1.0.13",
     "@remirror/extension-history": "^1.0.13",
     "@remirror/extension-paragraph": "^1.0.13",
-    "@remirror/extension-positioner": "^1.1.13",
+    "@remirror/extension-positioner": "^1.1.14",
     "@remirror/extension-text": "^1.0.13"
   },
   "devDependencies": {
