@@ -2,7 +2,6 @@
 '@remirror/theme': minor
 '@remirror/extension-react-tables': patch
 '@remirror/extension-text-color': patch
-'storybook-react': patch
 ---
 
 Deprecate `getTheme` and `getThemeProps` in favour of new methods `getThemeVar` and `getThemeVarName`.
