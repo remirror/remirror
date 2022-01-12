@@ -23,9 +23,16 @@ You can use the imports in the following way.
 import { YjsExtension } from 'remirror/extensions';
 ```
 
-To install it directly you can use
+The `yjs` extension provides support for "undo"/"redo" commands, which conflicts with the default `history` extension. You should therefore disable the `history` extension when using the `yjs` extension in the core preset configuration:
 
-The extension is provided by the `@remirror/extension-yjs` package. There are two ways of pulling it into your project.
+```ts
+const { manager } = useRemirror({
+  extensions: () => [new YjsExtension({ getProvider })],
+  core: {
+    excludeExtensions: ['history'],
+  },
+});
+```
 
 ### Examples
 

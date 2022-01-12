@@ -16,7 +16,7 @@ const extensions = () => [
 ];
 
 const Basic = (): JSX.Element => {
-  const { manager } = useRemirror({ extensions });
+  const { manager } = useRemirror({ extensions, core: { excludeExtensions: ['history'] } });
 
   return (
     <ThemeProvider>
