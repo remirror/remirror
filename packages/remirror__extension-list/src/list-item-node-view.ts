@@ -15,7 +15,7 @@ export function createCustomMarkListItemNodeView({
   updateDOM: UpdateElement;
   updateMark: UpdateElement;
 }): NodeView {
-  const markContainer = document.createElement('span');
+  const markContainer = document.createElement('label');
   markContainer.contentEditable = 'false';
   markContainer.classList.add(ExtensionListTheme.LIST_ITEM_MARKER_CONTAINER);
   markContainer.append(mark);
