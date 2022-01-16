@@ -1,5 +1,13 @@
 # @remirror/extension-font-size
 
+## 1.0.15
+
+> 2022-01-16
+
+### Patch Changes
+
+- Fix a runtime error when getting font size before the editor view is initialized.
+
 ## 1.0.14
 
 > 2022-01-03

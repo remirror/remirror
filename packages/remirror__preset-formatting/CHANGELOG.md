@@ -1,5 +1,16 @@
 # @remirror/preset-formatting
 
+## 1.0.19
+
+> 2022-01-16
+
+### Patch Changes
+
+- Fix a runtime error when getting font size before the editor view is initialized.
+
+- Updated dependencies []:
+  - @remirror/extension-font-size@1.0.15
+
 ## 1.0.18
 
 > 2022-01-11

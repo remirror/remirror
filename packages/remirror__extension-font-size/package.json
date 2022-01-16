@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-font-size",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Add font size to the selected text, or text within the provided range.",
   "keywords": [
     "remirror",
