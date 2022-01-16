@@ -122,7 +122,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
   private getFontSize(size: string) {
     const { unit, roundingMultiple, max, min } = this.options;
     const value = clamp({
-      value: round(convertPixelsToDomUnit(size, unit, this.store.view.dom), roundingMultiple),
+      value: round(convertPixelsToDomUnit(size, unit, this.store.view?.dom), roundingMultiple),
       max,
       min,
     });
