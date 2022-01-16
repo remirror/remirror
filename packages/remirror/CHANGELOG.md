@@ -1,5 +1,21 @@
 # remirror
 
+## 1.0.59
+
+> 2022-01-16
+
+### Patch Changes
+
+- Fix a runtime error when getting font size before the editor view is initialized.
+
+* Increase the clickable area of the task list checkbox by using `<label>` to wrap the checkbox.
+
+* Updated dependencies []:
+  - @remirror/extension-font-size@1.0.15
+  - @remirror/preset-formatting@1.0.19
+  - @remirror/extension-list@1.2.13
+  - @remirror/preset-wysiwyg@1.1.34
+
 ## 1.0.58
 
 > 2022-01-11

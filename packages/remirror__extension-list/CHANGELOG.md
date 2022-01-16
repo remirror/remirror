@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.2.13
+
+> 2022-01-16
+
+### Patch Changes
+
+- Increase the clickable area of the task list checkbox by using `<label>` to wrap the checkbox.
+
 ## 1.2.12
 
 > 2022-01-11

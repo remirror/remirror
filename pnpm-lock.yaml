@@ -112,7 +112,7 @@ importers:
       playwright-testing-library: ^3.0.1
       prettier: ^2.3.2
       prettier-plugin-packagejson: ^2.2.13
-      remirror: 1.0.58
+      remirror: 1.0.59
       rimraf: ^3.0.2
       size-limit: ^5.0.5
       snapshot-diff: ^0.9.0
@@ -507,7 +507,7 @@ importers:
       '@remirror/extension-epic-mode': ^1.0.13
       '@remirror/extension-events': ^1.0.14
       '@remirror/extension-font-family': ^1.0.13
-      '@remirror/extension-font-size': ^1.0.14
+      '@remirror/extension-font-size': ^1.0.15
       '@remirror/extension-gap-cursor': ^1.0.13
       '@remirror/extension-hard-break': ^1.0.13
       '@remirror/extension-heading': ^1.0.13
@@ -516,7 +516,7 @@ importers:
       '@remirror/extension-image': ^1.0.22
       '@remirror/extension-italic': ^1.0.13
       '@remirror/extension-link': ^1.1.12
-      '@remirror/extension-list': ^1.2.12
+      '@remirror/extension-list': ^1.2.13
       '@remirror/extension-markdown': ^1.0.13
       '@remirror/extension-mention': ^1.0.14
       '@remirror/extension-mention-atom': ^1.0.16
@@ -541,8 +541,8 @@ importers:
       '@remirror/icons': ^1.0.7
       '@remirror/pm': ^1.0.10
       '@remirror/preset-core': ^1.0.17
-      '@remirror/preset-formatting': ^1.0.18
-      '@remirror/preset-wysiwyg': ^1.1.33
+      '@remirror/preset-formatting': ^1.0.19
+      '@remirror/preset-wysiwyg': ^1.1.34
       '@remirror/theme': ^1.2.0
       '@types/codemirror': ^5.60.2
       '@types/prettier': ^2.3.2
@@ -1872,7 +1872,7 @@ importers:
       '@remirror/core': ^1.3.3
       '@remirror/extension-bold': ^1.0.13
       '@remirror/extension-columns': ^1.0.13
-      '@remirror/extension-font-size': ^1.0.14
+      '@remirror/extension-font-size': ^1.0.15
       '@remirror/extension-heading': ^1.0.13
       '@remirror/extension-italic': ^1.0.13
       '@remirror/extension-node-formatting': ^1.0.16
@@ -1950,7 +1950,7 @@ importers:
       '@remirror/extension-image': ^1.0.22
       '@remirror/extension-italic': ^1.0.13
       '@remirror/extension-link': ^1.1.12
-      '@remirror/extension-list': ^1.2.12
+      '@remirror/extension-list': ^1.2.13
       '@remirror/extension-search': ^1.0.13
       '@remirror/extension-shortcuts': ^1.1.2
       '@remirror/extension-strike': ^1.0.13
@@ -2163,7 +2163,7 @@ importers:
       react: ^17.0.2
       react-dom: ^17.0.2
       refractor: ^3.3.1
-      remirror: 1.0.58
+      remirror: 1.0.59
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.15.4
@@ -2348,7 +2348,7 @@ importers:
       '@remirror/messages': ^1.0.6
       '@remirror/pm': ^1.0.10
       '@remirror/react': ^1.0.21
-      '@remirror/react-editors': ^0.1.47
+      '@remirror/react-editors': ^0.1.48
       '@remirror/styles': ^1.1.2
       '@storybook/addon-controls': ^6.3.12
       '@storybook/addons': ^6.3.4
@@ -2377,7 +2377,7 @@ importers:
       react-is: ^17.0.2
       reakit: ^1.3.8
       refractor: ^3.3.1
-      remirror: 1.0.58
+      remirror: 1.0.59
       scripts: 0.0.1
       svgmoji: ^3.2.0
       y-webrtc: ^10.2.2
@@ -2759,7 +2759,7 @@ importers:
       '@mdx-js/react': ^1.6.22
       '@remirror/dev': ^1.0.21
       '@remirror/react': ^1.0.21
-      '@remirror/react-editors': ^0.1.47
+      '@remirror/react-editors': ^0.1.48
       '@remirror/styles': ^1.1.2
       '@tsconfig/docusaurus': ^1.0.4
       '@types/react': ^17.0.14
@@ -2788,7 +2788,7 @@ importers:
       react-syntax-highlighter: ^15.4.3
       reakit: ^1.3.8
       remark-footnotes: ^3.0.0
-      remirror: ^1.0.58
+      remirror: ^1.0.59
     dependencies:
       '@babel/runtime': 7.15.4
       '@emotion/css': 11.5.0_@babel+core@7.15.8

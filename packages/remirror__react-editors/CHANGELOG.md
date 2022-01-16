@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.48
+
+> 2022-01-16
+
+### Patch Changes
+
+- Fix a runtime error when getting font size before the editor view is initialized.
+
+* Increase the clickable area of the task list checkbox by using `<label>` to wrap the checkbox.
+
+* Updated dependencies []:
+  - remirror@1.0.59
+
 ## 0.1.47
 
 > 2022-01-11
