@@ -56,7 +56,7 @@
     "use-previous": "^1.1.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.10",
+    "@remirror/pm": "^1.0.11",
     "@remirror/react": "^1.0.21",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",

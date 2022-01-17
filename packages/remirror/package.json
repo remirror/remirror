@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "1.0.59",
+  "version": "1.0.60",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -90,7 +90,7 @@
     "@remirror/extension-diff": "^1.0.13",
     "@remirror/extension-doc": "^1.0.14",
     "@remirror/extension-drop-cursor": "^1.0.13",
-    "@remirror/extension-embed": "^1.1.17",
+    "@remirror/extension-embed": "^1.1.18",
     "@remirror/extension-emoji": "^1.0.15",
     "@remirror/extension-epic-mode": "^1.0.13",
     "@remirror/extension-events": "^1.0.14",
@@ -101,7 +101,7 @@
     "@remirror/extension-heading": "^1.0.13",
     "@remirror/extension-history": "^1.0.13",
     "@remirror/extension-horizontal-rule": "^1.0.13",
-    "@remirror/extension-image": "^1.0.22",
+    "@remirror/extension-image": "^1.0.23",
     "@remirror/extension-italic": "^1.0.13",
     "@remirror/extension-link": "^1.1.12",
     "@remirror/extension-list": "^1.2.13",
@@ -129,7 +129,7 @@
     "@remirror/icons": "^1.0.7",
     "@remirror/preset-core": "^1.0.17",
     "@remirror/preset-formatting": "^1.0.19",
-    "@remirror/preset-wysiwyg": "^1.1.34",
+    "@remirror/preset-wysiwyg": "^1.1.35",
     "@remirror/theme": "^1.2.0",
     "@types/codemirror": "^5.60.2",
     "@types/refractor": "^3.0.2",
@@ -138,12 +138,12 @@
     "yjs": "^13.5.23"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.10",
+    "@remirror/pm": "^1.0.11",
     "@types/prettier": "^2.3.2",
     "prettier": "^2.3.2"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.10",
+    "@remirror/pm": "^1.0.11",
     "@types/prettier": "^2.1.5",
     "prettier": "^2.2.0"
   },

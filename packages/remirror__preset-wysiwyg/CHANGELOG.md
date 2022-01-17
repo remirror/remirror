@@ -1,5 +1,18 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.35
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.11
+  - @remirror/extension-embed@1.1.18
+  - @remirror/extension-image@1.0.23
+
 ## 1.1.34
 
 > 2022-01-16
