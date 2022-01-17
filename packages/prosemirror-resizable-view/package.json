@@ -43,12 +43,12 @@
     "@babel/runtime": "^7.13.10",
     "@remirror/core-helpers": "^1.0.5",
     "@remirror/core-utils": "^1.1.4",
-    "prosemirror-model": "^1.15.0",
-    "prosemirror-view": "^1.23.3"
+    "prosemirror-model": "^1.16.1",
+    "prosemirror-view": "^1.23.6"
   },
   "devDependencies": {
-    "@types/prosemirror-model": "^1.13.2",
-    "@types/prosemirror-view": "^1.19.2"
+    "@types/prosemirror-model": "^1.16.0",
+    "@types/prosemirror-view": "^1.23.1"
   },
   "publishConfig": {
     "access": "public"
