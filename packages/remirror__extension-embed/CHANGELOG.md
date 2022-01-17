@@ -1,5 +1,17 @@
 # @remirror/extension-embed
 
+## 1.1.18
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.8
+  - @remirror/pm@1.0.11
+
 ## 1.1.17
 
 > 2022-01-03

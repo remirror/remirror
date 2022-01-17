@@ -49,7 +49,7 @@
     "@remirror/theme": "^1.2.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.10"
+    "@remirror/pm": "^1.0.11"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.10"

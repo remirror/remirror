@@ -1,5 +1,13 @@
 # prosemirror-suggest
 
+## 1.0.7
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
 ## 1.0.6
 
 > 2022-01-03

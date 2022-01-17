@@ -1,5 +1,18 @@
 # @remirror/pm
 
+## 1.0.11
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - prosemirror-paste-rules@1.0.7
+  - prosemirror-suggest@1.0.7
+  - prosemirror-trailing-node@1.0.7
+
 ## 1.0.10
 
 > 2022-01-03
