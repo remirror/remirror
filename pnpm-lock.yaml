@@ -384,13 +384,13 @@ importers:
       '@remirror/core-constants': ^1.0.2
       '@remirror/core-helpers': ^1.0.5
       '@types/prosemirror-keymap': ^1.0.4
-      '@types/prosemirror-model': ^1.13.2
+      '@types/prosemirror-model': ^1.16.0
       '@types/prosemirror-state': ^1.2.8
-      '@types/prosemirror-view': ^1.19.2
+      '@types/prosemirror-view': ^1.23.1
       escape-string-regexp: ^4.0.0
-      prosemirror-model: ^1.15.0
+      prosemirror-model: ^1.16.1
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.23.3
+      prosemirror-view: ^1.23.6
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -398,31 +398,31 @@ importers:
       escape-string-regexp: 4.0.0
     devDependencies:
       '@types/prosemirror-keymap': 1.0.4
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-view': 1.19.2
-      prosemirror-model: 1.15.0
+      '@types/prosemirror-view': 1.23.1
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.3
+      prosemirror-view: 1.23.6
 
   packages/prosemirror-resizable-view:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core-helpers': ^1.0.5
       '@remirror/core-utils': ^1.1.4
-      '@types/prosemirror-model': ^1.13.2
-      '@types/prosemirror-view': ^1.19.2
-      prosemirror-model: ^1.15.0
-      prosemirror-view: ^1.23.3
+      '@types/prosemirror-model': ^1.16.0
+      '@types/prosemirror-view': ^1.23.1
+      prosemirror-model: ^1.16.1
+      prosemirror-view: ^1.23.6
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@remirror/core-utils': link:../remirror__core-utils
-      prosemirror-model: 1.15.0
-      prosemirror-view: 1.23.3
+      prosemirror-model: 1.16.1
+      prosemirror-view: 1.23.6
     devDependencies:
-      '@types/prosemirror-model': 1.13.2
-      '@types/prosemirror-view': 1.19.2
+      '@types/prosemirror-model': 1.16.0
+      '@types/prosemirror-view': 1.23.1
 
   packages/prosemirror-suggest:
     specifiers:
@@ -431,13 +431,13 @@ importers:
       '@remirror/core-helpers': ^1.0.5
       '@remirror/types': ^0.1.1
       '@types/prosemirror-keymap': ^1.0.4
-      '@types/prosemirror-model': ^1.13.2
+      '@types/prosemirror-model': ^1.16.0
       '@types/prosemirror-state': ^1.2.8
-      '@types/prosemirror-view': ^1.19.2
+      '@types/prosemirror-view': ^1.23.1
       escape-string-regexp: ^4.0.0
-      prosemirror-model: ^1.15.0
+      prosemirror-model: ^1.16.1
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.23.3
+      prosemirror-view: ^1.23.6
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -446,12 +446,12 @@ importers:
       escape-string-regexp: 4.0.0
     devDependencies:
       '@types/prosemirror-keymap': 1.0.4
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-view': 1.19.2
-      prosemirror-model: 1.15.0
+      '@types/prosemirror-view': 1.23.1
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.3
+      prosemirror-view: 1.23.6
 
   packages/prosemirror-trailing-node:
     specifiers:
@@ -459,13 +459,13 @@ importers:
       '@remirror/core-constants': ^1.0.2
       '@remirror/core-helpers': ^1.0.5
       '@types/prosemirror-keymap': ^1.0.4
-      '@types/prosemirror-model': ^1.13.2
+      '@types/prosemirror-model': ^1.16.0
       '@types/prosemirror-state': ^1.2.8
-      '@types/prosemirror-view': ^1.19.2
+      '@types/prosemirror-view': ^1.23.1
       escape-string-regexp: ^4.0.0
-      prosemirror-model: ^1.15.0
+      prosemirror-model: ^1.16.1
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.23.3
+      prosemirror-view: ^1.23.6
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -473,12 +473,12 @@ importers:
       escape-string-regexp: 4.0.0
     devDependencies:
       '@types/prosemirror-keymap': 1.0.4
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-view': 1.19.2
-      prosemirror-model: 1.15.0
+      '@types/prosemirror-view': 1.23.1
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.3
+      prosemirror-view: 1.23.6
 
   packages/remirror:
     specifiers:
@@ -1787,19 +1787,19 @@ importers:
       '@types/prosemirror-history': ^1.0.3
       '@types/prosemirror-inputrules': ^1.0.4
       '@types/prosemirror-keymap': ^1.0.4
-      '@types/prosemirror-model': ^1.13.2
+      '@types/prosemirror-model': ^1.16.0
       '@types/prosemirror-schema-list': ^1.0.3
       '@types/prosemirror-state': ^1.2.8
-      '@types/prosemirror-transform': ^1.1.4
-      '@types/prosemirror-view': ^1.19.2
+      '@types/prosemirror-transform': ^1.1.5
+      '@types/prosemirror-view': ^1.23.1
       prosemirror-collab: ^1.2.2
-      prosemirror-commands: ^1.1.12
+      prosemirror-commands: ^1.2.0
       prosemirror-dropcursor: ^1.4.0
-      prosemirror-gapcursor: ^1.2.0
+      prosemirror-gapcursor: ^1.2.1
       prosemirror-history: ^1.2.0
       prosemirror-inputrules: ^1.1.3
       prosemirror-keymap: ^1.1.5
-      prosemirror-model: ^1.15.0
+      prosemirror-model: ^1.16.1
       prosemirror-paste-rules: ^1.0.6
       prosemirror-schema-list: ^1.1.6
       prosemirror-state: ^1.3.4
@@ -1807,7 +1807,7 @@ importers:
       prosemirror-tables: ^1.1.1
       prosemirror-trailing-node: ^1.0.6
       prosemirror-transform: ^1.3.3
-      prosemirror-view: ^1.23.3
+      prosemirror-view: ^1.23.6
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -1819,19 +1819,19 @@ importers:
       '@types/prosemirror-history': 1.0.3
       '@types/prosemirror-inputrules': 1.0.4
       '@types/prosemirror-keymap': 1.0.4
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-schema-list': 1.0.3
       '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-transform': 1.1.4
-      '@types/prosemirror-view': 1.19.2
+      '@types/prosemirror-transform': 1.1.5
+      '@types/prosemirror-view': 1.23.1
       prosemirror-collab: 1.2.2
-      prosemirror-commands: 1.1.12
+      prosemirror-commands: 1.2.0
       prosemirror-dropcursor: 1.4.0
-      prosemirror-gapcursor: 1.2.0
+      prosemirror-gapcursor: 1.2.1
       prosemirror-history: 1.2.0
       prosemirror-inputrules: 1.1.3
       prosemirror-keymap: 1.1.5
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-paste-rules: link:../prosemirror-paste-rules
       prosemirror-schema-list: 1.1.6
       prosemirror-state: 1.3.4
@@ -1839,7 +1839,7 @@ importers:
       prosemirror-tables: 1.1.1
       prosemirror-trailing-node: link:../prosemirror-trailing-node
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.3
+      prosemirror-view: 1.23.6
 
   packages/remirror__preset-core:
     specifiers:
@@ -6580,7 +6580,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@jest/test-result': 27.3.1
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
       jest-haste-map: 27.3.1
       jest-runtime: 27.3.1
     transitivePeerDependencies:
@@ -9745,22 +9745,22 @@ packages:
   /@types/prosemirror-collab/1.1.2:
     resolution: {integrity: sha512-aYPyJezuA/zpVWx3hFkgNjslaEL6yvMzY+hQb/aGuYmYOi+aJgQfzGW5ynNj9vkadg8c9scMAbz++Cgd45rXvQ==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-transform': 1.1.4
+      '@types/prosemirror-transform': 1.1.5
     dev: false
 
   /@types/prosemirror-commands/1.0.4:
     resolution: {integrity: sha512-utDNYB3EXLjAfYIcRWJe6pn3kcQ5kG4RijbT/0Y/TFOm6yhvYS/D9eJVnijdg9LDjykapcezchxGRqFD5LcyaQ==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-view': 1.19.2
+      '@types/prosemirror-view': 1.23.1
 
   /@types/prosemirror-dev-tools/3.0.2:
     resolution: {integrity: sha512-lZiu4pZ3JfZKdWJDj6e1Gy28Ee3wIH3bOoAG432B7PuEPaV+S5oRMsZMdiuolNyD3T4XylJxAE3ARFxAAT+Jkg==}
     dependencies:
-      '@types/prosemirror-view': 1.19.2
+      '@types/prosemirror-view': 1.23.1
     dev: false
 
   /@types/prosemirror-dropcursor/1.0.3:
@@ -9772,21 +9772,21 @@ packages:
   /@types/prosemirror-gapcursor/1.0.4:
     resolution: {integrity: sha512-9xKjFIG5947dzerFvkLWp6F53JwrUYoYwh3SgcTFEp8SbSfNNrez/PFYVZKPnoqPoaK5WtTdQTaMwpCV9rXQIg==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
     dev: false
 
   /@types/prosemirror-history/1.0.3:
     resolution: {integrity: sha512-5TloMDRavgLjOAKXp1Li8u0xcsspzbT1Cm9F2pwHOkgvQOz1jWQb2VIXO7RVNsFjLBZdIXlyfSLivro3DuMWXg==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
     dev: false
 
   /@types/prosemirror-inputrules/1.0.4:
     resolution: {integrity: sha512-lJIMpOjO47SYozQybUkpV6QmfuQt7GZKHtVrvS+mR5UekA8NMC5HRIVMyaIauJLWhKU6oaNjpVaXdw41kh165g==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
     dev: false
 
@@ -9794,53 +9794,53 @@ packages:
     resolution: {integrity: sha512-ycevwkqUh+jEQtPwqO7sWGcm+Sybmhu8MpBsM8DlO3+YTKnXbKA6SDz/+q14q1wK3UA8lHJyfR+v+GPxfUSemg==}
     dependencies:
       '@types/prosemirror-commands': 1.0.4
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-view': 1.19.2
+      '@types/prosemirror-view': 1.23.1
 
-  /@types/prosemirror-model/1.13.2:
-    resolution: {integrity: sha512-a2rDB0aZ+7aIP7uBqQq1wLb4Hg4qqEvpkCqvhsgT/gG8IWC0peCAZfQ24sgTco0qSJLeDgIbtPeU6mgr869/kg==}
+  /@types/prosemirror-model/1.16.0:
+    resolution: {integrity: sha512-nv93YLyTEcDDl17OB90EldxZjyJQJll2WSMLDvLzTewbpvE/vtMjHT3j4mik3uSzQ6YD486AcloCO3WODY/lDg==}
     dependencies:
       '@types/orderedmap': 1.0.0
 
   /@types/prosemirror-schema-basic/1.0.2:
     resolution: {integrity: sha512-dzT/6t+dq8/On1be0yarcOIu8wROjhK8QB5wslpLbtTIr5wb0iQv/esJm/KAHcD/PBXR9nSV4TL5AtQmBrcRnw==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
     dev: false
 
   /@types/prosemirror-schema-list/1.0.3:
     resolution: {integrity: sha512-uWybOf+M2Ea7rlbs0yLsS4YJYNGXYtn4N+w8HCw3Vvfl6wBAROzlMt0gV/D/VW/7J/LlAjwMezuGe8xi24HzXA==}
     dependencies:
       '@types/orderedmap': 1.0.0
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
     dev: false
 
   /@types/prosemirror-state/1.2.8:
     resolution: {integrity: sha512-mq9uyQWcpu8jeamO6Callrdvf/e1H/aRLR2kZWSpZrPHctEsxWHBbluD/wqVjXBRIOoMHLf6ZvOkrkmGLoCHVA==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
-      '@types/prosemirror-transform': 1.1.4
-      '@types/prosemirror-view': 1.19.2
+      '@types/prosemirror-model': 1.16.0
+      '@types/prosemirror-transform': 1.1.5
+      '@types/prosemirror-view': 1.23.1
 
   /@types/prosemirror-test-builder/1.0.2:
     resolution: {integrity: sha512-L1cZhJ1d+E5VbX6zIjb+XHkFmDiF74lzSokaK03Qvt856NEvEt1DwajMkxME4yPhNuHjFfr+KNW9hAKKX2BVWA==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
     dev: false
 
-  /@types/prosemirror-transform/1.1.4:
-    resolution: {integrity: sha512-HP1PauvkqSgDquZut8HaLOTUDQ6jja/LAy4OA7tTS1XG7wqRnX3gLUyEj0mD6vFd4y8BPkNddNdOh/BeGHlUjg==}
+  /@types/prosemirror-transform/1.1.5:
+    resolution: {integrity: sha512-Wr2HXaEF4JPklWpC17RTxE6PxyU54Taqk5FMhK1ojgcN93J+GpkYW8s0mD3rl7KfTmlhVwZPCHE9o0cYf2Go5A==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
 
-  /@types/prosemirror-view/1.19.2:
-    resolution: {integrity: sha512-pmh2DuMJzva4D7SxspRKIzkV6FK2o52uAqGjq2dPYcQFPwu4+5RcS1TMjFVCh1R+Ia1Rx8wsCNIId/5+6DB0Bg==}
+  /@types/prosemirror-view/1.23.1:
+    resolution: {integrity: sha512-6e1B2oKUnhmZPUrsVvYjDqeVjE6jGezygjtoHsAK4ZENAxHzHqy5NT4jUvdPTWjCYeH0t2Y7pSfRPNrPIyQX4A==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-transform': 1.1.4
+      '@types/prosemirror-transform': 1.1.5
 
   /@types/q/1.5.5:
     resolution: {integrity: sha512-L28j2FcJfSZOnL1WBjDYp2vUHCeIFlyYI/53EwD/rKUBQ7MtUUfbQWiyKJGpcnv4/WgrhWsFKrcPstcAt/J0tQ==}
@@ -11297,7 +11297,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.4_debug@4.3.2
+      follow-redirects: 1.14.4
     transitivePeerDependencies:
       - debug
 
@@ -16007,6 +16007,15 @@ packages:
       xtend: 4.0.2
     dev: false
 
+  /follow-redirects/1.14.4:
+    resolution: {integrity: sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+
   /follow-redirects/1.14.4_debug@4.3.2:
     resolution: {integrity: sha512-zwGkiSXC1MUJG/qmeIFH2HBJx9u0V46QGUe3YR1fXG8bXQxq7fLj0RjLZQ5nubr9qNJUZrH+xUcwXEoXNpfS+g==}
     engines: {node: '>=4.0'}
@@ -16207,7 +16216,7 @@ packages:
   /fs-extra/4.0.3:
     resolution: {integrity: sha512-q6rbdDd1o2mAnQreO7YADIxf/Whx4AHBiRf6d+/cVT8h44ss+lHgxf1FemcqDnQt9X3ct4McHr+JMGlYSsK7Cg==}
     dependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
       jsonfile: 4.0.0
       universalify: 0.1.2
     dev: false
@@ -16764,7 +16773,6 @@ packages:
 
   /graceful-fs/4.2.9:
     resolution: {integrity: sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==}
-    dev: false
 
   /grapheme-splitter/1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
@@ -18860,7 +18868,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@types/node': 16.11.6
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
 
   /jest-snapshot/27.3.1:
     resolution: {integrity: sha512-APZyBvSgQgOT0XumwfFu7X3G5elj6TGhCBLbBdn3R1IzYustPGPE38F51dBWMQ8hRXa9je0vAdeVDtqHLvB6lg==}
@@ -19394,7 +19402,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
 
   /jsonparse/1.3.1:
     resolution: {integrity: sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=}
@@ -19698,7 +19706,7 @@ packages:
     resolution: {integrity: sha512-OfCBkGEw4nN6JLtgRidPX6QxjBQGQf72q3si2uvqyFEMbycSFFHwAZeXx6cJgFM9wmLrf9zBwCP3Ivqa+LLZPw==}
     engines: {node: '>=6'}
     dependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
       js-yaml: 3.14.1
       pify: 4.0.1
       strip-bom: 3.0.0
@@ -22886,10 +22894,10 @@ packages:
       prosemirror-state: 1.3.4
     dev: false
 
-  /prosemirror-commands/1.1.12:
-    resolution: {integrity: sha512-+CrMs3w/ZVPSkR+REg8KL/clyFLv/1+SgY/OMN+CB22Z24j9TZDje72vL36lOZ/E4NeRXuiCcmENcW/vAcG67A==}
+  /prosemirror-commands/1.2.0:
+    resolution: {integrity: sha512-Q9e7R9DXSL44Vd2HO+kDMRZbxJPfL8TvzbbwApOuSl8rfZx7oTJoycg/VnVRO7ZxEEFy7oGhVpWYooba4Ci8Gg==}
     dependencies:
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.3
     dev: false
@@ -22909,7 +22917,7 @@ packages:
       jsondiffpatch: 0.4.1
       nanoid: 2.1.11
       prop-types: 15.7.2
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
       react: 17.0.2
       react-dock: 0.2.4_react@17.0.2
@@ -22927,16 +22935,16 @@ packages:
     dependencies:
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.3
+      prosemirror-view: 1.23.6
     dev: false
 
-  /prosemirror-gapcursor/1.2.0:
-    resolution: {integrity: sha512-yCLy5+0rVqLir/KcHFathQj4Rf8aRHi80FmEfKtM0JmyzvwdomslLzDZ/pX4oFhFKDgjl/WBBBFNqDyNifWg7g==}
+  /prosemirror-gapcursor/1.2.1:
+    resolution: {integrity: sha512-PHa9lj27iM/g4C46gxVzsefuXVfy/LrGQH4QjMRht7VDBgw77iWYWn8ZHMWSFkwtr9jQEuxI5gccHHHwWG80nw==}
     dependencies:
       prosemirror-keymap: 1.1.5
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.3
+      prosemirror-view: 1.23.6
     dev: false
 
   /prosemirror-history/1.2.0:
@@ -22961,44 +22969,44 @@ packages:
       w3c-keyname: 2.2.4
     dev: false
 
-  /prosemirror-model/1.15.0:
-    resolution: {integrity: sha512-hQJv7SnIhlAy9ga3lhPPgaufhvCbQB9tHwscJ9E1H1pPHmN8w5V/lURueoYv9Kc3/bpNWoyHa8r3g//m7N0ChQ==}
+  /prosemirror-model/1.16.1:
+    resolution: {integrity: sha512-r1/w0HDU40TtkXp0DyKBnFPYwd8FSlUSJmGCGFv4DeynfeSlyQF2FD0RQbVEMOe6P3PpUSXM6LZBV7W/YNZ4mA==}
     dependencies:
       orderedmap: 1.1.1
 
   /prosemirror-schema-basic/1.1.2:
     resolution: {integrity: sha512-G4q8WflNsR1Q33QAV4MQO0xWrHLOJ+BQcKswGXMy626wlQj6c/1n1v4eC9ns+h2y1r/fJHZEgSZnsNhm9lbrDw==}
     dependencies:
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
     dev: false
 
   /prosemirror-schema-list/1.1.6:
     resolution: {integrity: sha512-aFGEdaCWmJzouZ8DwedmvSsL50JpRkqhQ6tcpThwJONVVmCgI36LJHtoQ4VGZbusMavaBhXXr33zyD2IVsTlkw==}
     dependencies:
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-transform: 1.3.3
     dev: false
 
   /prosemirror-state/1.3.4:
     resolution: {integrity: sha512-Xkkrpd1y/TQ6HKzN3agsQIGRcLckUMA9u3j207L04mt8ToRgpGeyhbVv0HI7omDORIBHjR29b7AwlATFFf2GLA==}
     dependencies:
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-transform: 1.3.3
 
   /prosemirror-tables/1.1.1:
     resolution: {integrity: sha512-LmCz4jrlqQZRsYRDzCRYf/pQ5CUcSOyqZlAj5kv67ZWBH1SVLP2U9WJEvQfimWgeRlIz0y0PQVqO1arRm1+woA==}
     dependencies:
       prosemirror-keymap: 1.1.5
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.3
+      prosemirror-view: 1.23.6
     dev: false
 
   /prosemirror-test-builder/1.0.5:
     resolution: {integrity: sha512-mymXkqJlhcB4JtQpM5buHvfn7SawJ2vRwYzuIUMkky00ILBOPUnwUCAbjA7L8o4hsaQeyHljRCNdpjXKK8KsOw==}
     dependencies:
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-schema-basic: 1.1.2
       prosemirror-schema-list: 1.1.6
     dev: false
@@ -23006,12 +23014,12 @@ packages:
   /prosemirror-transform/1.3.3:
     resolution: {integrity: sha512-9NLVXy1Sfa2G6qPqhWMkEvwQQMTw7OyTqOZbJaGQWsCeH3hH5Cw+c5eNaLM1Uu75EyKLsEZhJ93XpHJBa6RX8A==}
     dependencies:
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
 
-  /prosemirror-view/1.23.3:
-    resolution: {integrity: sha512-89icyMdXXwxmTxYj0TIuG5M/d0iKeu79tr+PVtC/4qtCOoHrPSPrblJcFOuOWcxGlA/Ei8PqJB4g5HkKR8jWvQ==}
+  /prosemirror-view/1.23.6:
+    resolution: {integrity: sha512-B4DAzriNpI/AVoW0Lu6SVfX00jZZQxOVwdBQEjWlRbCdT9V0pvk4GQJ3JTFaib+b6BcPdRZ3MjWXz2xvV1rblA==}
     dependencies:
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.3
 
@@ -27479,7 +27487,7 @@ packages:
     engines: {node: '>=10.13.0'}
     dependencies:
       glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
 
   /wbuf/1.7.3:
     resolution: {integrity: sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA==}
