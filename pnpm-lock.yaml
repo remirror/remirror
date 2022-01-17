@@ -9760,7 +9760,7 @@ packages:
   /@types/prosemirror-dev-tools/3.0.2:
     resolution: {integrity: sha512-lZiu4pZ3JfZKdWJDj6e1Gy28Ee3wIH3bOoAG432B7PuEPaV+S5oRMsZMdiuolNyD3T4XylJxAE3ARFxAAT+Jkg==}
     dependencies:
-      '@types/prosemirror-view': 1.19.2
+      '@types/prosemirror-view': 1.23.1
     dev: false
 
   /@types/prosemirror-dropcursor/1.0.3:
@@ -9836,24 +9836,10 @@ packages:
       '@types/prosemirror-model': 1.13.2
     dev: false
 
-  /@types/prosemirror-transform/1.1.4:
-    resolution: {integrity: sha512-HP1PauvkqSgDquZut8HaLOTUDQ6jja/LAy4OA7tTS1XG7wqRnX3gLUyEj0mD6vFd4y8BPkNddNdOh/BeGHlUjg==}
-    dependencies:
-      '@types/prosemirror-model': 1.13.2
-    dev: false
-
   /@types/prosemirror-transform/1.1.5:
     resolution: {integrity: sha512-Wr2HXaEF4JPklWpC17RTxE6PxyU54Taqk5FMhK1ojgcN93J+GpkYW8s0mD3rl7KfTmlhVwZPCHE9o0cYf2Go5A==}
     dependencies:
       '@types/prosemirror-model': 1.16.0
-
-  /@types/prosemirror-view/1.19.2:
-    resolution: {integrity: sha512-pmh2DuMJzva4D7SxspRKIzkV6FK2o52uAqGjq2dPYcQFPwu4+5RcS1TMjFVCh1R+Ia1Rx8wsCNIId/5+6DB0Bg==}
-    dependencies:
-      '@types/prosemirror-model': 1.13.2
-      '@types/prosemirror-state': 1.2.8
-      '@types/prosemirror-transform': 1.1.4
-    dev: false
 
   /@types/prosemirror-view/1.23.1:
     resolution: {integrity: sha512-6e1B2oKUnhmZPUrsVvYjDqeVjE6jGezygjtoHsAK4ZENAxHzHqy5NT4jUvdPTWjCYeH0t2Y7pSfRPNrPIyQX4A==}
@@ -22937,7 +22923,7 @@ packages:
       jsondiffpatch: 0.4.1
       nanoid: 2.1.11
       prop-types: 15.7.2
-      prosemirror-model: 1.15.0
+      prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
       react: 17.0.2
       react-dock: 0.2.4_react@17.0.2
@@ -22987,12 +22973,6 @@ packages:
     dependencies:
       prosemirror-state: 1.3.4
       w3c-keyname: 2.2.4
-    dev: false
-
-  /prosemirror-model/1.15.0:
-    resolution: {integrity: sha512-hQJv7SnIhlAy9ga3lhPPgaufhvCbQB9tHwscJ9E1H1pPHmN8w5V/lURueoYv9Kc3/bpNWoyHa8r3g//m7N0ChQ==}
-    dependencies:
-      orderedmap: 1.1.1
     dev: false
 
   /prosemirror-model/1.16.1:
