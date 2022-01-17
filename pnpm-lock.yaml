@@ -9798,12 +9798,6 @@ packages:
       '@types/prosemirror-state': 1.2.8
       '@types/prosemirror-view': 1.23.1
 
-  /@types/prosemirror-model/1.13.2:
-    resolution: {integrity: sha512-a2rDB0aZ+7aIP7uBqQq1wLb4Hg4qqEvpkCqvhsgT/gG8IWC0peCAZfQ24sgTco0qSJLeDgIbtPeU6mgr869/kg==}
-    dependencies:
-      '@types/orderedmap': 1.0.0
-    dev: false
-
   /@types/prosemirror-model/1.16.0:
     resolution: {integrity: sha512-nv93YLyTEcDDl17OB90EldxZjyJQJll2WSMLDvLzTewbpvE/vtMjHT3j4mik3uSzQ6YD486AcloCO3WODY/lDg==}
     dependencies:
@@ -9833,7 +9827,7 @@ packages:
   /@types/prosemirror-test-builder/1.0.2:
     resolution: {integrity: sha512-L1cZhJ1d+E5VbX6zIjb+XHkFmDiF74lzSokaK03Qvt856NEvEt1DwajMkxME4yPhNuHjFfr+KNW9hAKKX2BVWA==}
     dependencies:
-      '@types/prosemirror-model': 1.13.2
+      '@types/prosemirror-model': 1.16.0
     dev: false
 
   /@types/prosemirror-transform/1.1.5:
