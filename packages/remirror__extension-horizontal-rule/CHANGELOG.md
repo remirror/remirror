@@ -1,5 +1,13 @@
 # @remirror/extension-horizontal-rule
 
+## 1.0.14
+
+> 2022-01-21
+
+### Patch Changes
+
+- fix: make HorizontalRule compatible with Shortcuts
+
 ## 1.0.13
 
 > 2022-01-03

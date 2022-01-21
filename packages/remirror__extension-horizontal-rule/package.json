@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-horizontal-rule",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Allow your users to divide their content with horizontal lines. Nice!",
   "keywords": [
     "remirror",

@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.50
+
+> 2022-01-21
+
+### Patch Changes
+
+- fix: make HorizontalRule compatible with Shortcuts
+
+- Updated dependencies []:
+  - remirror@1.0.61
+
 ## 0.1.49
 
 > 2022-01-17

@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.61
+
+> 2022-01-21
+
+### Patch Changes
+
+- fix: make HorizontalRule compatible with Shortcuts
+
+- Updated dependencies []:
+  - @remirror/extension-horizontal-rule@1.0.14
+  - @remirror/preset-wysiwyg@1.1.36
+
 ## 1.0.60
 
 > 2022-01-17
