@@ -23,7 +23,7 @@ const extensions = () => [
 ];
 
 const Menu = () => {
-  const { removeAnnotations, addAnnotation } = useCommands();
+  const { removeAnnotations, addAnnotation, redrawAnnotations } = useCommands();
   const { getAnnotationsAt, selectionHasAnnotation } = useHelpers();
   const selection = useCurrentSelection();
 
@@ -47,6 +47,14 @@ const Menu = () => {
         disabled={!selectionHasAnnotation()}
       >
         Remove annotation(s)
+      </button>
+      <button
+        onClick={() => {
+          redrawAnnotations();
+          focus();
+        }}
+      >
+        Redraw annotation(s)
       </button>
     </>
   );
