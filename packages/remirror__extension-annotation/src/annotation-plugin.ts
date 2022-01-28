@@ -16,6 +16,9 @@ interface ApplyProps extends TransactionProps {
 }
 
 export class AnnotationState<Type extends Annotation = Annotation> {
+  /**
+   * Cache of annotations being currently shown
+   */
   annotations: Array<OmitText<Type>> = [];
 
   /**
@@ -79,21 +82,6 @@ export class AnnotationState<Type extends Annotation = Annotation> {
       return this;
     }
 
-    this.annotations = this.annotations
-      // Adjust annotation positions based on changes in the editor, e.g.
-      // if new text was added before the decoration
-      .map((annotation) => ({
-        ...annotation,
-        // 1 indicates that the annotation isn't extended when the user types
-        // at the beginning of the annotation
-        from: tr.mapping.map(annotation.from, 1),
-        // -1 indicates that the annotation isn't extended when the user types
-        // at the end of the annotation
-        to: tr.mapping.map(annotation.to, -1),
-      }))
-      // Remove annotations for which all containing content was deleted
-      .filter((annotation) => annotation.to !== annotation.from);
-
     if (actionType !== undefined) {
       if (actionType === ActionType.ADD_ANNOTATION) {
         this.addAnnotation(action as AddAnnotationAction<Type>);
@@ -114,6 +102,20 @@ export class AnnotationState<Type extends Annotation = Annotation> {
       this.annotations = this.formatAnnotations();
       this.decorationSet = this.createDecorations(tr, this.annotations);
     } else {
+      // Adjust annotation positions based on changes in the editor, e.g.
+      // if new text was added before the decoration
+      this.annotations = this.annotations
+        .map((annotation) => ({
+          ...annotation,
+          // 1 indicates that the annotation isn't extended when the user types
+          // at the beginning of the annotation
+          from: tr.mapping.map(annotation.from, 1),
+          // -1 indicates that the annotation isn't extended when the user types
+          // at the end of the annotation
+          to: tr.mapping.map(annotation.to, -1),
+        }))
+        // Remove annotations for which all containing content was deleted
+        .filter((annotation) => annotation.to !== annotation.from);
       // Performance optimization: Adjust decoration positions based on changes
       // in the editor, e.g. if new text was added before the decoration
       this.decorationSet = this.decorationSet.map(tr.mapping, tr.doc);
