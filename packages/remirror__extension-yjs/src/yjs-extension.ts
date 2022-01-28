@@ -18,7 +18,7 @@ import type {
   Transaction as YjsTransaction,
   XmlFragment as YXmlFragment,
 } from 'yjs';
-import { UndoManager } from 'yjs';
+import { transact, UndoManager } from 'yjs';
 import {
   AcceptUndefined,
   assert,
@@ -173,12 +173,16 @@ class YjsAnnotationStore<Type extends Annotation> implements AnnotationStore<Typ
   }
 
   removeAnnotations(ids: string[]): void {
-    ids.forEach((id) => this.map.delete(id));
+    transact(this.doc, () => {
+      ids.forEach((id) => this.map.delete(id));
+    });
   }
 
   setAnnotations(annotations: Array<OmitText<Type>>): void {
-    this.map.clear();
-    annotations.forEach((annotation) => this.addAnnotation(annotation));
+    transact(this.doc, () => {
+      this.map.clear();
+      annotations.forEach((annotation) => this.addAnnotation(annotation));
+    });
   }
 
   formatAnnotations(): Array<OmitText<Type>> {
