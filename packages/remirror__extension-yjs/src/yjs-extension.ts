@@ -17,6 +17,7 @@ import {
   AcceptUndefined,
   command,
   convertCommand,
+  Dispose,
   EditorState,
   ErrorConstant,
   extension,
@@ -148,7 +149,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     return (this._provider ??= getLazyValue(getProvider));
   }
 
-  onView(): void {
+  onView(): Dispose | void {
     try {
       this.store.manager.getExtension(AnnotationExtension).setOptions({
         getMap: () => this.provider.doc.getMap('annotations'),
@@ -156,17 +157,18 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
         transformPositionBeforeRender: this.relativePositionToAbsolutePosition.bind(this),
       });
 
-      this.provider.doc.on(
-        'update',
-        (_update: Uint8Array, _origin: any, _doc: Doc, yjsTr: YjsTransaction) => {
-          // Ignore own changes
-          if (yjsTr.local) {
-            return;
-          }
+      const handler = (_update: Uint8Array, _origin: any, _doc: Doc, yjsTr: YjsTransaction) => {
+        // Ignore own changes
+        if (yjsTr.local) {
+          return;
+        }
 
-          this.store.commands.redrawAnnotations?.();
-        },
-      );
+        this.store.commands.redrawAnnotations?.();
+      };
+      this.provider.doc.on('update', handler);
+      return () => {
+        this.provider.doc.off('update', handler);
+      };
     } catch {
       // AnnotationExtension isn't present in editor
     }
