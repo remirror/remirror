@@ -26,8 +26,6 @@ npm install @remirror/extension-file # npm
 
 This is **NOT** included by default when you install the recommended `remirror` package.
 
-To install it directly you can use
-
 ```ts
 import { FileExtension } from '@remirror/extension-file';
 ```
