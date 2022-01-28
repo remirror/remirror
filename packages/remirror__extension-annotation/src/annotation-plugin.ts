@@ -1,4 +1,4 @@
-import { assert, Transaction, TransactionProps } from '@remirror/core';
+import { Transaction, TransactionProps } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import {
@@ -9,13 +9,7 @@ import {
   UpdateAnnotationAction,
 } from './annotation-actions';
 import { toSegments } from './annotation-segments';
-import type {
-  Annotation,
-  GetStyle,
-  MapLike,
-  OmitText,
-  TransformedAnnotation,
-} from './annotation-types';
+import type { Annotation, AnnotationStore, GetStyle, OmitText } from './annotation-types';
 
 interface ApplyProps extends TransactionProps {
   action: any;
@@ -32,71 +26,33 @@ export class AnnotationState<Type extends Annotation = Annotation> {
 
   constructor(
     private readonly getStyle: GetStyle<Type>,
-    private readonly map: MapLike<string, TransformedAnnotation<Type>>,
-    private readonly transformPosition: (pos: number) => any,
-    private readonly transformPositionBeforeRender: (rpos: any) => number | null,
+    private readonly store: AnnotationStore<Type>,
   ) {}
 
   addAnnotation(addAction: AddAnnotationAction<Type>): void {
-    const { id } = addAction.annotationData;
-    this.map.set(id, {
+    // FIXME: Review and remove explicit cast.
+    const annotation: OmitText<Type> = {
+      from: addAction.from,
+      to: addAction.to,
       ...addAction.annotationData,
-      from: this.transformPosition(addAction.from),
-      to: this.transformPosition(addAction.to),
-    } as TransformedAnnotation<Type>);
+    } as OmitText<Type>;
+    this.store.addAnnotation(annotation);
   }
 
   updateAnnotation(updateAction: UpdateAnnotationAction<Type>): void {
-    assert(this.map.has(updateAction.annotationId));
-
-    this.map.set(updateAction.annotationId, {
-      ...this.map.get(updateAction.annotationId),
-      ...updateAction.annotationData,
-    } as TransformedAnnotation<Type>);
+    this.store.updateAnnotation(updateAction.annotationId, updateAction.annotationData);
   }
 
   removeAnnotations(removeAction: RemoveAnnotationsAction): void {
-    removeAction.annotationIds.forEach((id) => {
-      this.map.delete(id);
-    });
+    this.store.removeAnnotations(removeAction.annotationIds);
   }
 
   setAnnotations(setAction: SetAnnotationsAction<Type>): void {
-    // YJS maps don't support clear
-    this.map.clear?.();
-    this.map.forEach((_, id, map) => {
-      map.delete(id);
-    });
-
-    setAction.annotations.forEach((annotation) => {
-      const { id, from, to } = annotation;
-      this.map.set(id, {
-        ...annotation,
-        from: this.transformPosition(from),
-        to: this.transformPosition(to),
-      } as TransformedAnnotation<Type>);
-    });
+    this.store.setAnnotations(setAction.annotations);
   }
 
   formatAnnotations(): Array<OmitText<Type>> {
-    const annotations: Array<OmitText<Type>> = [];
-
-    this.map.forEach((annotation, id, map) => {
-      const from = this.transformPositionBeforeRender(annotation.from);
-      const to = this.transformPositionBeforeRender(annotation.to);
-
-      if (!from || !to) {
-        map.delete(id);
-      }
-
-      annotations.push({
-        ...annotation,
-        from,
-        to,
-      });
-    });
-
-    return annotations;
+    return this.store.formatAnnotations();
   }
 
   createDecorations(tr: Transaction, annotations: Array<OmitText<Type>> = []): DecorationSet {

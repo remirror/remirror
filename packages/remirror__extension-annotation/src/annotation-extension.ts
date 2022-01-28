@@ -1,7 +1,9 @@
 import {
+  assert,
   command,
   CommandFunction,
   CreateExtensionPlugin,
+  environment,
   extension,
   ExtensionPriority,
   getTextSelection,
@@ -15,9 +17,16 @@ import {
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
 
+import { AnnotationStore } from '.';
 import { ActionType, UpdateAnnotationAction } from './annotation-actions';
 import { AnnotationState } from './annotation-plugin';
-import type { Annotation, AnnotationOptions, GetData, OmitText } from './annotation-types';
+import { MapLikeAnnotationStore } from './annotation-store';
+import type {
+  Annotation,
+  AnnotationOptions,
+  OmitText,
+  OmitTextAndPosition,
+} from './annotation-types';
 
 /**
  * Computes a background color based on how many overlapping annotations are in
@@ -41,9 +50,12 @@ function defaultGetStyle<A extends Annotation>(annotations: Array<OmitText<A>>) 
   defaultOptions: {
     getStyle: defaultGetStyle,
     blockSeparator: undefined,
-    getMap: () => new Map(),
-    transformPosition: (pos) => pos,
-    transformPositionBeforeRender: (pos) => pos,
+    getStore: () => new MapLikeAnnotationStore(),
+
+    // Obsolete options
+    getMap: undefined,
+    transformPosition: undefined,
+    transformPositionBeforeRender: undefined,
   },
   defaultPriority: ExtensionPriority.Low,
 })
@@ -57,6 +69,7 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
   protected onSetOptions(props: OnSetOptionsProps<AnnotationOptions<Type>>): void {
     const { pickChanged } = props;
     const changedPluginOptions = pickChanged([
+      'getStore',
       'getMap',
       'transformPosition',
       'transformPositionBeforeRender',
@@ -72,12 +85,23 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
    * other things.
    */
   createPlugin(): CreateExtensionPlugin<AnnotationState<Type>> {
-    const pluginState = new AnnotationState<Type>(
-      this.options.getStyle,
-      this.options.getMap(),
-      this.options.transformPosition,
-      this.options.transformPositionBeforeRender,
-    );
+    let store: AnnotationStore<Type>;
+
+    if (this.options.getMap) {
+      assert(
+        environment.isProduction || !this.options.getStore,
+        'Must not provide both "getMap" and "getStore"',
+      );
+      store = new MapLikeAnnotationStore(
+        this.options.getMap(),
+        this.options.transformPosition,
+        this.options.transformPositionBeforeRender,
+      );
+    } else {
+      store = this.options.getStore();
+    }
+
+    const pluginState = new AnnotationState<Type>(this.options.getStyle, store);
 
     return {
       state: {
@@ -106,7 +130,7 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
    * @param annotationData - the data for the provided annotation.
    */
   @command()
-  addAnnotation(annotationData: GetData<Type>): CommandFunction {
+  addAnnotation(annotationData: OmitTextAndPosition<Type>): CommandFunction {
     return ({ tr, dispatch }) => {
       const { empty, from, to } = tr.selection;
 
@@ -139,14 +163,14 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
   @command()
   updateAnnotation(
     id: string,
-    annotationDataWithoutId: Omit<GetData<Type>, 'id'>,
+    annotationDataWithoutId: Omit<OmitTextAndPosition<Type>, 'id'>,
   ): CommandFunction {
     return ({ tr, dispatch }) => {
       if (dispatch) {
         const annotationData = {
           ...annotationDataWithoutId,
           id,
-        } as GetData<Type>;
+        } as OmitTextAndPosition<Type>;
 
         const action: UpdateAnnotationAction<Type> = {
           type: ActionType.UPDATE_ANNOTATION,
