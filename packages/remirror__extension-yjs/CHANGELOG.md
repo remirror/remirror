@@ -1,5 +1,16 @@
 # @remirror/extension-yjs
 
+## 1.0.20
+
+> 2022-01-31
+
+### Patch Changes
+
+- fix: don't extend annotation when the user types at the beginning
+
+- Updated dependencies []:
+  - @remirror/extension-annotation@1.1.11
+
 ## 1.0.19
 
 > 2022-01-11

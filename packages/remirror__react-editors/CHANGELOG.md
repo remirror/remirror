@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.51
+
+> 2022-01-31
+
+### Patch Changes
+
+- fix: don't extend annotation when the user types at the beginning
+
+- Updated dependencies []:
+  - remirror@1.0.62
+
 ## 0.1.50
 
 > 2022-01-21
