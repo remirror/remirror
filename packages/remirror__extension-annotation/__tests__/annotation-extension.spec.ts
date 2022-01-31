@@ -2,6 +2,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import type { AnnotationOptions } from '../';
 import { Annotation, AnnotationExtension } from '../';
+import { MapLikeAnnotationStore } from '../src/annotation-store';
 
 extensionValidityTest(AnnotationExtension);
 
@@ -553,10 +554,50 @@ describe('custom styling', () => {
   });
 });
 
+describe('custom store', () => {
+  it('should use the provided store', () => {
+    const myStore = new (class extends MapLikeAnnotationStore<Annotation> {
+      public get innerMap() {
+        return this.map;
+      }
+    })();
+    const options = {
+      getStore: () => myStore,
+    };
+    const {
+      add,
+      nodes: { p, doc },
+      commands,
+      helpers,
+    } = create(options);
+
+    add(doc(p('Hello <start>again<end> my friend')));
+
+    commands.addAnnotation({ id: 'an-id' });
+
+    expect(myStore.innerMap.size).toBe(1);
+    expect(myStore.innerMap.get('an-id')).toEqual({
+      id: 'an-id',
+      from: 7,
+      to: 12,
+    });
+
+    expect(helpers.getAnnotations()).toEqual([
+      {
+        id: 'an-id',
+        from: 7,
+        to: 12,
+        text: 'again',
+      },
+    ]);
+  });
+});
+
 describe('custom map like via getMap', () => {
   it('should use the provided map like object passed via `getMap`', () => {
     const myMap = new Map();
     const options = {
+      getStore: undefined,
       getMap: () => myMap,
     };
     const {
@@ -592,6 +633,7 @@ describe('custom positions', () => {
   it('should use the provided map like object passed via `getMap`', () => {
     const myMap = new Map();
     const options = {
+      getStore: undefined,
       getMap: () => myMap,
       transformPosition: (pos: number) => ({ pos, meta: { mock: 'data' } }),
       transformPositionBeforeRender: (obj: any) => obj.pos,
