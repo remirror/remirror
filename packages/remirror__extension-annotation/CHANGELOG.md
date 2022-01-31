@@ -1,5 +1,13 @@
 # @remirror/extension-annotation
 
+## 1.1.11
+
+> 2022-01-31
+
+### Patch Changes
+
+- fix: don't extend annotation when the user types at the beginning
+
 ## 1.1.10
 
 > 2022-01-11
