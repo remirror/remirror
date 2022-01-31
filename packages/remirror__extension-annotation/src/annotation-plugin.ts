@@ -128,7 +128,9 @@ export class AnnotationState<Type extends Annotation = Annotation> {
       // if new text was added before the decoration
       .map((annotation) => ({
         ...annotation,
-        from: tr.mapping.map(annotation.from, -1),
+        // 1 indicates that the annotation isn't extended when the user types
+        // at the beginning of the annotation
+        from: tr.mapping.map(annotation.from, 1),
         // -1 indicates that the annotation isn't extended when the user types
         // at the end of the annotation
         to: tr.mapping.map(annotation.to, -1),
