@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.52
+
+> 2022-02-02
+
+### Patch Changes
+
+- Avoid race conditions in processing annotations
+
+- Updated dependencies []:
+  - remirror@1.0.63
+
 ## 0.1.51
 
 > 2022-01-31

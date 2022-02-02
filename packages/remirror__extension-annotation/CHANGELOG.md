@@ -1,5 +1,13 @@
 # @remirror/extension-annotation
 
+## 1.1.12
+
+> 2022-02-02
+
+### Patch Changes
+
+- Avoid race conditions in processing annotations
+
 ## 1.1.11
 
 > 2022-01-31
