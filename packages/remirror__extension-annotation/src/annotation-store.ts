@@ -1,5 +1,3 @@
-import { assert } from '@remirror/core';
-
 import { Annotation } from '.';
 import {
   AnnotationStore,
@@ -32,7 +30,10 @@ export class MapLikeAnnotationStore<Type extends Annotation> implements Annotati
 
   updateAnnotation(id: string, data: OmitTextAndPosition<Type>): void {
     const existing = this.map.get(id);
-    assert(existing);
+
+    if (!existing) {
+      return;
+    }
 
     this.map.set(id, {
       ...existing,
