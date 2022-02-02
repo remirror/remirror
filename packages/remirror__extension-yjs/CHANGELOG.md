@@ -1,5 +1,16 @@
 # @remirror/extension-yjs
 
+## 1.0.21
+
+> 2022-02-02
+
+### Patch Changes
+
+- Avoid race conditions in processing annotations
+
+- Updated dependencies []:
+  - @remirror/extension-annotation@1.1.12
+
 ## 1.0.20
 
 > 2022-01-31
