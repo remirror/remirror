@@ -517,6 +517,40 @@ describe('autolinking', () => {
     );
   });
 
+  describe.only('more auto link cases', () => {
+    const testCases = [
+      ['google.com', '//google.com'],
+      ['www.google.com', '//www.google.com'],
+      ['http://github.com'],
+      ['https://github.com/remirror/remirror'],
+
+      // IP address
+      ['http://192.169.1.1'],
+
+      // With port
+      ['http://localhost:8080'],
+
+      // with "#"
+      [`https://en.wikipedia.org/wiki/The_Power_of_the_Powerless#Havel's_greengrocer`],
+
+      // with '(' and ')'
+      ['https://en.wikipedia.org/wiki/Specials_(Unicode_block)'],
+
+      // with "?"
+      ['https://www.google.com/search?q=test'],
+    ] as const;
+
+    for (const [inputText, expectedHref] of testCases) {
+      it(`can auto link ${inputText}`, () => {
+        editor.add(doc(p('<cursor>'))).insertText(inputText);
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(p(link({ auto: true, href: expectedHref ?? inputText })(inputText))),
+        );
+      });
+    }
+  });
+
   it('can parse telephone by overriding extractHref', () => {
     const phoneRegex = /(?:\+?(\d{1,3}))?[(.-]*(\d{3})[).-]*(\d{3})[.-]*(\d{4})(?: *x(\d+))?/;
     const linkRegex =
