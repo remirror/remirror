@@ -21,7 +21,6 @@ import type {
 import { transact, UndoManager } from 'yjs';
 import {
   AcceptUndefined,
-  assert,
   command,
   convertCommand,
   Dispose,
@@ -163,7 +162,10 @@ class YjsAnnotationStore<Type extends Annotation> implements AnnotationStore<Typ
 
   updateAnnotation(id: string, updateData: OmitTextAndPosition<Type>): void {
     const existing = this.map.get(id);
-    assert(existing);
+
+    if (!existing) {
+      return;
+    }
 
     this.map.set(id, {
       ...updateData,
