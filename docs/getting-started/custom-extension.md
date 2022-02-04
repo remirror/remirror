@@ -62,7 +62,7 @@ By now, our editor knows about `samp` marks but we still can't create a UI to in
 
 ```ts
 export class SampExtension extends MarkExtension<SampOptions> {
-  ...
+  // ...
 
   @command()
   toggleSamp(selection?: PrimitiveSelection): CommandFunction {
