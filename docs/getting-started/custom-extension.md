@@ -15,7 +15,7 @@ We want to add extra styling to our inline content. The way to do this in Prosem
 
 Remirror provides the `MarkExtension` class to easily declare new Prosemirror marks. The initial `SampExtension` only renders our marks as `<samp>` tags and parses them back to marks:
 
-```ts
+```tsx
 import {
   ApplySchemaAttributes,
   extension,
@@ -60,7 +60,7 @@ export class SampExtension extends MarkExtension<SampOptions> {
 
 By now, our editor knows about `samp` marks but we still can't create a UI to interact with them. For that, we need to add a couple of commands:
 
-```ts
+```tsx
 export class SampExtension extends MarkExtension<SampOptions> {
   // ...
 
@@ -100,10 +100,11 @@ export class SampExtension extends MarkExtension<SampOptions> {
 
 Our custom extension is identical to any other extension provided by Remirror. Hence, we can use it in the same way:
 
-```ts
+```tsx
 import 'remirror/styles/all.css';
 
 import { EditorComponent, Remirror, useCommands, useRemirror } from '@remirror/react';
+
 import { SampExtension } from './samp-extension';
 
 export const Menu = () => {
