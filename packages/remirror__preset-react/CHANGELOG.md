@@ -1,5 +1,19 @@
 # @remirror/preset-react
 
+## 1.0.17
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/extension-placeholder@1.0.16
+  - @remirror/extension-react-component@1.1.5
+  - @remirror/extension-react-ssr@1.0.16
+
 ## 1.0.16
 
 > 2022-01-11

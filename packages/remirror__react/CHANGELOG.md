@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 1.0.22
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.16
+  - @remirror/extension-positioner@1.1.15
+  - @remirror/extension-react-component@1.1.5
+  - @remirror/extension-react-ssr@1.0.16
+  - @remirror/extension-react-tables@1.0.22
+  - @remirror/preset-react@1.0.17
+  - @remirror/react-components@1.0.21
+  - @remirror/react-core@1.0.20
+  - @remirror/react-hooks@1.0.21
+  - @remirror/react-renderer@1.0.16
+  - @remirror/react-ssr@1.0.16
+
 ## 1.0.21
 
 > 2022-01-11

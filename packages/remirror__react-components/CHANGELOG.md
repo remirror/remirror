@@ -1,5 +1,20 @@
 # @remirror/react-components
 
+## 1.0.21
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/extension-positioner@1.1.15
+  - @remirror/extension-text-color@1.0.16
+  - @remirror/react-core@1.0.20
+  - @remirror/react-hooks@1.0.21
+
 ## 1.0.20
 
 > 2022-01-11

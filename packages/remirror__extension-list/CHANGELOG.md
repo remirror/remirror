@@ -1,5 +1,17 @@
 # @remirror/extension-list
 
+## 1.2.14
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/extension-events@1.0.15
+
 ## 1.2.13
 
 > 2022-01-16

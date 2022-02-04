@@ -1,5 +1,17 @@
 # @remirror/extension-react-ssr
 
+## 1.0.16
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/extension-react-component@1.1.5
+
 ## 1.0.15
 
 > 2022-01-03

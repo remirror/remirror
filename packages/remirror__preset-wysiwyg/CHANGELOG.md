@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.37
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.13
+  - @remirror/core@1.3.4
+  - @remirror/extension-bidi@1.0.14
+  - @remirror/extension-blockquote@1.0.16
+  - @remirror/extension-bold@1.0.14
+  - @remirror/extension-code@1.0.15
+  - @remirror/extension-code-block@1.0.19
+  - @remirror/extension-drop-cursor@1.0.14
+  - @remirror/extension-embed@1.1.19
+  - @remirror/extension-gap-cursor@1.0.14
+  - @remirror/extension-hard-break@1.0.14
+  - @remirror/extension-heading@1.0.14
+  - @remirror/extension-horizontal-rule@1.0.15
+  - @remirror/extension-image@1.0.24
+  - @remirror/extension-italic@1.0.14
+  - @remirror/extension-list@1.2.14
+  - @remirror/extension-search@1.0.14
+  - @remirror/extension-shortcuts@1.1.3
+  - @remirror/extension-strike@1.0.14
+  - @remirror/extension-trailing-node@1.0.14
+  - @remirror/extension-underline@1.0.14
+  - @remirror/preset-core@1.0.18
+
 ## 1.1.36
 
 > 2022-01-21
