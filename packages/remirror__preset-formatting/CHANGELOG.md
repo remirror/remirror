@@ -1,5 +1,30 @@
 # @remirror/preset-formatting
 
+## 1.0.20
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/extension-bold@1.0.14
+  - @remirror/extension-columns@1.0.14
+  - @remirror/extension-font-size@1.0.16
+  - @remirror/extension-heading@1.0.14
+  - @remirror/extension-italic@1.0.14
+  - @remirror/extension-node-formatting@1.0.17
+  - @remirror/extension-strike@1.0.14
+  - @remirror/extension-sub@1.0.14
+  - @remirror/extension-sup@1.0.14
+  - @remirror/extension-text-case@1.0.14
+  - @remirror/extension-text-color@1.0.16
+  - @remirror/extension-text-highlight@1.0.16
+  - @remirror/extension-underline@1.0.14
+  - @remirror/extension-whitespace@1.0.14
+
 ## 1.0.19
 
 > 2022-01-16

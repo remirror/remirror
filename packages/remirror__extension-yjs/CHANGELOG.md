@@ -1,5 +1,19 @@
 # @remirror/extension-yjs
 
+## 1.0.22
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+* Replace wrong assertion
+
+* Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/extension-annotation@1.1.13
+
 ## 1.0.21
 
 > 2022-02-02

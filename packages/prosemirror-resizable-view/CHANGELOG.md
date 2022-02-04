@@ -1,5 +1,16 @@
 # prosemirror-resizable-view
 
+## 1.1.9
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core-utils@1.1.5
+
 ## 1.1.8
 
 > 2022-01-17

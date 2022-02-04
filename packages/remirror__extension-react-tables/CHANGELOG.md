@@ -1,5 +1,23 @@
 # @remirror/extension-react-tables
 
+## 1.0.22
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core-utils@1.1.5
+  - @remirror/core@1.3.4
+  - @remirror/extension-positioner@1.1.15
+  - @remirror/extension-tables@1.0.16
+  - @remirror/preset-core@1.0.18
+  - @remirror/react-components@1.0.21
+  - @remirror/react-core@1.0.20
+  - @remirror/react-hooks@1.0.21
+
 ## 1.0.21
 
 > 2022-01-11

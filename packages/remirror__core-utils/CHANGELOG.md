@@ -1,5 +1,13 @@
 # @remirror/core-utils
 
+## 1.1.5
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
 ## 1.1.4
 
 > 2022-01-03

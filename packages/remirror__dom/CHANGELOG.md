@@ -1,5 +1,17 @@
 # @remirror/dom
 
+## 1.0.18
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/preset-core@1.0.18
+
 ## 1.0.17
 
 > 2022-01-11

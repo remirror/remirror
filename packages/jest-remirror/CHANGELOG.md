@@ -1,5 +1,19 @@
 # jest-remirror
 
+## 1.0.23
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - jest-prosemirror@1.0.14
+  - @remirror/core@1.3.4
+  - @remirror/dom@1.0.18
+  - @remirror/preset-core@1.0.18
+
 ## 1.0.22
 
 > 2022-01-17

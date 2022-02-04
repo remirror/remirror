@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.0.22
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/react@1.0.22
+
 ## 1.0.21
 
 > 2022-01-11

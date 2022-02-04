@@ -1,5 +1,20 @@
 # @remirror/react-editors
 
+## 0.1.53
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+* Replace wrong assertion
+
+* Updated dependencies []:
+  - remirror@1.0.64
+  - @remirror/extension-react-tables@1.0.22
+  - @remirror/react@1.0.22
+
 ## 0.1.52
 
 > 2022-02-02

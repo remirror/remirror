@@ -1,5 +1,18 @@
 # @remirror/extension-file
 
+## 0.3.10
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/react@1.0.22
+  - @remirror/react-components@1.0.21
+
 ## 0.3.9
 
 > 2022-01-11

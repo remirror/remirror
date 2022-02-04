@@ -1,5 +1,17 @@
 # @remirror/extension-embed
 
+## 1.1.19
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.9
+  - @remirror/core@1.3.4
+
 ## 1.1.18
 
 > 2022-01-17
