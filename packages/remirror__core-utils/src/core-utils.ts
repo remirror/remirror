@@ -69,8 +69,20 @@ import {
   Transaction as PMTransaction,
 } from '@remirror/pm/state';
 import type { Step } from '@remirror/pm/transform';
+import {
+  AddMarkStep,
+  RemoveMarkStep,
+  ReplaceAroundStep,
+  ReplaceStep,
+} from '@remirror/pm/transform';
 
 import { environment } from './environment';
+
+function isRangeStep(
+  step: Step,
+): step is AddMarkStep | ReplaceAroundStep | ReplaceStep | RemoveMarkStep {
+  return isValidStep(step, [AddMarkStep, ReplaceAroundStep, ReplaceStep, RemoveMarkStep]);
+}
 
 /**
  * Identifies the value as having a remirror identifier. This is the core
@@ -592,6 +604,17 @@ function isValidStep(step: Step, StepTypes: Array<AnyConstructor<Step>>) {
   return StepTypes.length === 0 || StepTypes.some((Constructor) => step instanceof Constructor);
 }
 
+export interface ChangedRange extends FromToProps {
+  /**
+   * The previous starting position in the document.
+   */
+  prevFrom: number;
+  /**
+   * The previous ending position in the document.
+   */
+  prevTo: number;
+}
+
 /**
  * Get all the ranges of changes for the provided transaction.
  *
@@ -608,9 +631,9 @@ function isValidStep(step: Step, StepTypes: Array<AnyConstructor<Step>>) {
 export function getChangedRanges(
   tr: Transaction,
   StepTypes: Array<AnyConstructor<Step>> = [],
-): FromToProps[] {
+): ChangedRange[] {
   // The holder for the ranges value which will be returned from this function.
-  const ranges: FromToProps[] = [];
+  const ranges: ChangedRange[] = [];
   const rawRanges: FromToProps[] = [];
 
   for (const step of tr.steps) {
@@ -618,9 +641,23 @@ export function getChangedRanges(
       continue;
     }
 
-    step.getMap().forEach((_, __, from, to) => {
+    const stepMap = step.getMap();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore @see https://github.com/ProseMirror/prosemirror/issues/1075
+    if (stepMap.ranges.length === 0 && isRangeStep(step)) {
+      const { from, to } = step;
+
+      if (from === undefined || to === undefined) {
+        continue;
+      }
+
       rawRanges.push({ from, to });
-    });
+    } else {
+      step.getMap().forEach((_, __, from, to) => {
+        rawRanges.push({ from, to });
+      });
+    }
   }
 
   // Sort the ranges.
@@ -636,7 +673,12 @@ export function getChangedRanges(
 
     if (noOverlap) {
       // Add the new range when no overlap is found.
-      ranges.push({ from, to });
+      ranges.push({
+        from,
+        to,
+        prevFrom: tr.mapping.invert().map(from, -1),
+        prevTo: tr.mapping.invert().map(to),
+      });
     } else if (lastRange) {
       // Update the lastRange's end value.
       lastRange.to = Math.max(lastRange.from, to);

@@ -517,7 +517,7 @@ describe('autolinking', () => {
     );
   });
 
-  it('can parse telphone by overriding extractHref', () => {
+  it('can parse telephone by overriding extractHref', () => {
     const phoneRegex = /(?:\+?(\d{1,3}))?[(.-]*(\d{3})[).-]*(\d{3})[.-]*(\d{4})(?: *x(\d+))?/;
     const linkRegex =
       /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi;
@@ -602,7 +602,6 @@ describe('autolinking', () => {
       range: {
         from: 1,
         to: editorText.length + 1,
-        cursor: editorText.length + 1,
       },
       attrs: { auto: true, href: '//test.co' },
     });
@@ -616,7 +615,6 @@ describe('autolinking', () => {
       range: {
         from: 1,
         to: editorText.length + 1,
-        cursor: editorText.length + 1,
       },
       attrs: { auto: true, href: '//test.com' },
     });
@@ -656,6 +654,18 @@ describe('autolinking', () => {
     );
   });
 
+  it('updates the autolink if modified in the middle', () => {
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('github.com')
+      .selectText(7)
+      .insertText('status');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//githubstatus.com' })('githubstatus.com'))),
+    );
+  });
+
   it('supports deleting selected to to invalidate the match', () => {
     editor
       .add(doc(p('<cursor>')))
@@ -673,6 +683,14 @@ describe('autolinking', () => {
       .backspace(2);
 
     expect(editor.doc).toEqualRemirrorDocument(doc(p('test.c')));
+  });
+
+  it('supports backspace to create a match', () => {
+    editor.add(doc(p('test. <cursor>com'))).backspace();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.com' })('test.com'))),
+    );
   });
 
   it('can respond to `Enter` key presses', () => {
@@ -727,6 +745,42 @@ describe('autolinking', () => {
 
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p('a ', link({ href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('does not remove other links in the same parent node', () => {
+    editor
+      .add(
+        doc(
+          p(
+            link({ auto: true, href: '//remirror.io' })('remirror.io'),
+            '<cursor> ',
+            link({ href: '//test.com' })('test.com'),
+          ),
+        ),
+      )
+      .backspace();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('remirror.i ', link({ href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('does not remove other auto links in the same parent node', () => {
+    editor
+      .add(
+        doc(
+          p(
+            link({ auto: true, href: '//remirror.io' })('remirror.io'),
+            '<cursor> ',
+            link({ auto: true, href: '//test.com' })('test.com'),
+          ),
+        ),
+      )
+      .backspace();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('remirror.i ', link({ auto: true, href: '//test.com' })('test.com'))),
     );
   });
 

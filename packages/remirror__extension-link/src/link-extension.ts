@@ -7,7 +7,9 @@ import {
   extension,
   ExtensionPriority,
   ExtensionTag,
+  findMatches,
   FromToProps,
+  getChangedRanges,
   GetMarkRange,
   getMarkRange,
   getMatchString,
@@ -27,26 +29,34 @@ import {
   MarkSpecOverride,
   NamedShortcut,
   omitExtraAttributes,
-  OnSetOptionsProps,
-  preserveSelection,
   ProsemirrorAttributes,
   ProsemirrorNode,
-  range as numberRange,
   removeMark,
   Static,
   updateMark,
+  within,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
 import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { TextSelection } from '@remirror/pm/state';
-import { isInvalidSplitReason, isRemovedReason, Suggester } from '@remirror/pm/suggest';
 
 const UPDATE_LINK = 'updateLink';
+
+// Based on https://gist.github.com/dperini/729294
+const DEFAULT_AUTO_LINK_REGEX =
+  /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi;
 
 /**
  * Can be an empty string which sets url's to '//google.com'.
  */
 export type DefaultProtocol = 'http:' | 'https:' | '' | string;
+
+interface FoundAutoLink {
+  href: string;
+  text: string;
+  start: number;
+  end: number;
+}
 
 interface EventMeta {
   selection: TextSelection;
@@ -188,9 +198,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     defaultProtocol: '',
     selectTextOnClick: false,
     openLinkOnClick: false,
-    // Based on https://gist.github.com/dperini/729294
-    autoLinkRegex:
-      /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi,
+    autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -204,6 +212,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   get name() {
     return 'link' as const;
   }
+
+  /**
+   * The autoLinkRegex option with the global flag removed, ensure no "lastIndex" state is maintained over multiple matches
+   * @private
+   */
+  private _autoLinkRegexNonGlobal: RegExp | undefined = undefined;
 
   createTags() {
     return [ExtensionTag.Link, ExtensionTag.ExcludeInputRules];
@@ -237,9 +251,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const href = node.getAttribute('href');
-            const auto =
-              node.hasAttribute(AUTO_ATTRIBUTE) ||
-              this.options.autoLinkRegex.test(node.textContent ?? '');
+            const auto = node.hasAttribute(AUTO_ATTRIBUTE);
             return {
               ...extra.parse(node),
               href,
@@ -267,18 +279,13 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     };
   }
 
-  onSetOptions(options: OnSetOptionsProps<LinkOptions>): void {
-    if (options.changes.autoLink.changed) {
-      const [newSuggester] = this.createSuggesters();
-
-      if (options.changes.autoLink.value === true && newSuggester) {
-        this.store.addSuggester(newSuggester);
-      }
-
-      if (options.changes.autoLink.value === false) {
-        this.store.removeSuggester(this.name);
-      }
-    }
+  onCreate(): void {
+    const { autoLinkRegex } = this.options;
+    // Remove the global flag from autoLinkRegex, and wrap in start (^) and end ($) terminator to test for exact match
+    this._autoLinkRegexNonGlobal = new RegExp(
+      `^${autoLinkRegex.source}$`,
+      autoLinkRegex.flags.replace('g', ''),
+    );
   }
 
   /**
@@ -388,207 +395,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     ];
   }
 
-  createSuggesters(): [Suggester] | [] {
-    if (!this.options.autoLink) {
-      return [];
-    }
-
-    // Keep track of this to prevent multiple updates which prevent history from
-    // working
-    let cachedRange: FromToProps | undefined;
-
-    const suggester: Suggester = {
-      name: this.name,
-      matchOffset: 0,
-      supportedCharacters: /$/,
-      char: this.options.autoLinkRegex,
-      priority: ExtensionPriority.Lowest,
-      caseInsensitive: true,
-      disableDecorations: true,
-      appendTransaction: true,
-
-      checkNextValidSelection: ($pos, tr) => {
-        const range = getMarkRange($pos, this.type);
-
-        if (!range || (cachedRange?.from === $pos.pos && cachedRange.to === range.to)) {
-          return;
-        }
-
-        if (!range.mark.attrs.auto) {
-          return;
-        }
-
-        const { mark, to, text } = range;
-        const href = this.buildHref(text);
-
-        if (mark.attrs.href === href) {
-          return;
-        }
-
-        // The helpers to use here.
-        const { getSuggestMethods } = this.store.helpers;
-
-        // Using the chainable commands so that the selection can be preserved
-        // for the update.
-        const { updateLink, removeLink } = this.store.chain(tr);
-        const { findMatchAtPosition } = getSuggestMethods();
-        const selection = tr.selection;
-
-        // Keep track of the last removal.
-        cachedRange = { from: $pos.pos, to };
-
-        // Remove the link
-        removeLink(cachedRange).tr();
-
-        // Make sure the selection gets preserved otherwise the cursor jumps
-        // around.
-        preserveSelection(selection, tr);
-
-        // Check for active matches from the provided $pos
-        const match = findMatchAtPosition($pos, this.name);
-
-        if (match) {
-          const { range, text } = match;
-          updateLink(
-            {
-              href: this.buildHref(text.full),
-              auto: true,
-            },
-            range,
-          ).tr();
-        }
-      },
-
-      onChange: (details, tr) => {
-        const selection = tr.selection;
-        const { text, range, exitReason, setMarkRemoved } = details;
-        const href = this.buildHref(text.full);
-
-        // Using the chainable commands so that the selection can be preserved
-        // for the update.
-
-        const chain = this.store.chain(tr);
-        const { getSuggestMethods } = this.store.helpers;
-        const { findMatchAtPosition } = getSuggestMethods();
-
-        /** Remove the link at the provided range. */
-        const remove = () => {
-          // Call the command to use a custom transaction rather than the current.
-
-          let markRange: ReturnType<typeof getMarkRange> | undefined;
-
-          for (const pos of numberRange(range.from, range.to)) {
-            markRange = getMarkRange(tr.doc.resolve(pos), this.type);
-
-            if (markRange) {
-              break;
-            }
-          }
-
-          chain.removeLink(markRange ?? range).tr();
-
-          // The mark range for the position after the matched text. If this
-          // exists it should be removed to handle cleanup properly.
-          let afterMarkRange: ReturnType<typeof getMarkRange> | undefined;
-
-          for (const pos of numberRange(
-            tr.selection.to,
-            Math.min(tr.selection.$to.end(), tr.doc.nodeSize - 2),
-          )) {
-            afterMarkRange = getMarkRange(tr.doc.resolve(pos), this.type);
-
-            if (afterMarkRange) {
-              break;
-            }
-          }
-
-          if (afterMarkRange) {
-            chain.removeLink(afterMarkRange).tr();
-          }
-
-          preserveSelection(selection, tr);
-          const match = findMatchAtPosition(
-            tr.doc.resolve(Math.min(range.from + 1, tr.doc.nodeSize - 2)),
-            this.name,
-          );
-
-          if (match) {
-            chain
-              .updateLink(
-                {
-                  href: this.buildHref(match.text.full),
-                  auto: true,
-                },
-                match.range,
-              )
-              .tr();
-          } else {
-            setMarkRemoved();
-          }
-        };
-
-        // Respond when there is an exit.
-        if (exitReason) {
-          const isInvalid = isInvalidSplitReason(exitReason);
-          const isRemoved = isRemovedReason(exitReason);
-
-          if (isInvalid || isRemoved) {
-            try {
-              remove();
-            } catch {
-              // Errors here can be ignored since they can be caused by deleting
-              // the whole document.
-              return;
-            }
-          }
-
-          return;
-        }
-
-        let value: ReturnType<typeof getMarkRange> | undefined;
-
-        for (const pos of numberRange(range.from, range.to)) {
-          value = getMarkRange(tr.doc.resolve(pos), this.type);
-
-          if (value?.mark.attrs.auto === false) {
-            return;
-          }
-
-          if (value) {
-            break;
-          }
-        }
-
-        /** Update the current range with the new link */
-        const update = () => {
-          chain.updateLink({ href, auto: true }, range).tr();
-          preserveSelection(selection, tr);
-        };
-
-        // Update when there is a value
-        if (!value) {
-          update();
-
-          return;
-        }
-
-        // Do nothing when the current mark is identical to the mark that would be created.
-        if (
-          value.from === range.from &&
-          value.to === range.to &&
-          value.mark.attrs.auto &&
-          value.mark.attrs.href === href
-        ) {
-          return;
-        }
-
-        update();
-      },
-    };
-
-    return [suggester];
-  }
-
   /**
    * Track click events passed through to the editor.
    */
@@ -664,12 +470,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           return true;
         },
       },
-      appendTransaction: (transactions, _oldState, state: EditorState) => {
+      appendTransaction: (transactions, prevState, state: EditorState) => {
         const transactionsWithLinkMeta = transactions.filter((tr) => !!tr.getMeta(this.name));
-
-        if (transactionsWithLinkMeta.length === 0) {
-          return;
-        }
 
         transactionsWithLinkMeta.forEach((tr) => {
           const trMeta = tr.getMeta(this.name);
@@ -683,6 +485,99 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             this.options.onUpdateLink(doc.textBetween(from, to), meta);
           }
         });
+
+        if (!this.options.autoLink) {
+          return;
+        }
+
+        const docChanged = transactions.some((tr) => tr.docChanged);
+
+        if (!docChanged) {
+          return;
+        }
+
+        // Create a single transaction, by combining all transactions
+        const composedTransaction = prevState.tr;
+        transactions.forEach((transaction) => {
+          transaction.steps.forEach((step) => {
+            composedTransaction.step(step);
+          });
+        });
+
+        const changes = getChangedRanges(composedTransaction);
+        const { mapping } = composedTransaction;
+        const { tr, doc } = state;
+
+        const { updateLink, removeLink } = this.store.chain(tr);
+
+        changes.forEach(({ from, to, prevFrom, prevTo }) => {
+          // Remove auto links that are no longer valid
+          this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
+            const newFrom = mapping.map(prevMark.from);
+            const newTo = mapping.map(prevMark.to);
+            const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
+
+            newMarks.forEach((newMark) => {
+              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
+              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
+
+              if (wasLink && !isLink) {
+                removeLink({ from: newMark.from, to: newMark.to }).tr();
+              }
+            });
+          });
+
+          // Store all the callbacks we need to make
+          const onUpdateCallbacks: Array<Pick<EventMeta, 'range' | 'attrs'> & { text: string }> =
+            [];
+
+          // Find text that can be auto linked
+          tr.doc.nodesBetween(from, to, (node, pos) => {
+            if (!node.isTextblock) {
+              return;
+            }
+
+            const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
+            this.findAutoLinks(nodeText)
+              // calculate link position
+              .map((link) => ({
+                ...link,
+                from: pos + link.start + 1,
+                to: pos + link.end + 1,
+              }))
+              .filter((link) => {
+                // Determine if found link is within the changed range
+                return (
+                  within(link.from, from, to) ||
+                  within(link.to, from, to) ||
+                  within(from, link.from, link.to) ||
+                  within(to, link.from, link.to)
+                );
+              })
+              .filter((link) => {
+                // Avoid overwriting manually created links
+                const marks = this.getLinkMarksInRange(tr.doc, link.from, link.to, false);
+                return marks.length === 0;
+              })
+              .forEach(({ from, to, href, text }) => {
+                const attrs = { href, auto: true };
+                const range = { from, to };
+                updateLink(attrs, range).tr();
+                onUpdateCallbacks.push({ attrs, range, text });
+              });
+          });
+
+          onUpdateCallbacks.forEach(({ range, attrs, text }) => {
+            const { doc, selection } = tr;
+            this.options.onUpdateLink(text, { doc, selection, range, attrs });
+          });
+        });
+
+        if (tr.steps.length === 0) {
+          return;
+        }
+
+        return tr;
       },
     };
   }
@@ -692,6 +587,65 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       url,
       defaultProtocol: this.options.defaultProtocol,
     });
+  }
+
+  private getLinkMarksInRange(
+    doc: ProsemirrorNode,
+    from: number,
+    to: number,
+    isAutoLink: boolean,
+  ): GetMarkRange[] {
+    const linkMarks: GetMarkRange[] = [];
+
+    if (from === to) {
+      const $pos = doc.resolve(from);
+      $pos.marks().forEach(() => {
+        const range = getMarkRange($pos, this.type);
+
+        if (range?.mark.attrs.auto === isAutoLink) {
+          linkMarks.push(range);
+        }
+      });
+    } else {
+      doc.nodesBetween(from, to, (node, pos) => {
+        const marks = node.marks ?? [];
+        const linkMark = marks.find(
+          ({ type, attrs }) => type === this.type && attrs.auto === isAutoLink,
+        );
+
+        if (linkMark) {
+          linkMarks.push({
+            from: pos,
+            to: pos + node.nodeSize,
+            mark: linkMark,
+            text: node.textContent,
+          });
+        }
+      });
+    }
+
+    return linkMarks;
+  }
+
+  private findAutoLinks(str: string): FoundAutoLink[] {
+    const toAutoLink: FoundAutoLink[] = [];
+
+    for (const match of findMatches(str, this.options.autoLinkRegex)) {
+      const text = match[0];
+
+      if (!text) {
+        continue;
+      }
+
+      toAutoLink.push({
+        text,
+        href: this.buildHref(text),
+        start: match.index,
+        end: match.index + text.length,
+      });
+    }
+
+    return toAutoLink;
   }
 }
 
