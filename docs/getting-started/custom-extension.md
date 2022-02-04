@@ -9,7 +9,7 @@ So far, we built a UI to interact with the existing features of the editor. Now,
 
 Remirror enables this via **extensions**.
 
-## Add extenion
+## Add extension
 
 We want to add extra styling to our inline content. The way to do this in Prosemirror are [marks](https://prosemirror.net/docs/guide/#schema.marks).
 
