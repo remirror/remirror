@@ -69,6 +69,7 @@ const docs = [
       'getting-started/create-manager',
       'getting-started/render-editor',
       'getting-started/commands-and-helpers',
+      'getting-started/custom-extension',
     ],
   },
   {
