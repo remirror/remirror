@@ -192,12 +192,4 @@ Here are a few useful helpers, but there are many more!
 | `getHTML`     | (Built in)           | HTML representation (using schema `toDOM`)        |
 | `getMarkdown` | `markdown-extension` | Markdown representation (where possible)          |
 
-## Summing up
-
-Congratulations! You created a manager, rendered the editor UI, added a menu, and captured the document for persistency.
-
-With that, you've all the basic tools to start [exploring Remirror](https://remirror.vercel.app).
-
-Have fun & happy coding!
-
-PS: Getting stuck with something? Reach out on [Discord](https://remirror.io/chat)!
+With that, we have a UI to interact with our editor. Next, we'll extend the functionalities of the editor itself.
