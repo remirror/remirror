@@ -18,12 +18,14 @@ import type {
   Fragment,
   KeyBindingCommandFunction,
   KeyBindings,
+  Mark,
   MarkTypesProps,
   NodeTypeProps,
   NodeTypesProps,
   OptionalMarkProps,
   OptionalProsemirrorNodeProps,
   PosProps,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorKeyBindings,
   ProsemirrorNode,
@@ -748,4 +750,19 @@ export function mergeProsemirrorKeyBindings<Schema extends EditorSchema = Editor
         return command({ state, dispatch, view, tr: state.tr, next: () => false });
       },
   );
+}
+
+/**
+ * Determines if a Node or Mark contains the given attributes in its attributes set
+ *
+ * @param nodeOrMark - The Node or Mark to check
+ * @param attrs - The set of attributes it must contain
+ */
+export function containsAttributes<Schema extends EditorSchema = EditorSchema>(
+  nodeOrMark: ProsemirrorNode<Schema> | Mark<Schema>,
+  attrs: ProsemirrorAttributes,
+): boolean {
+  const currentAttrs = nodeOrMark.attrs ?? {};
+
+  return Object.entries(attrs).every(([name, value]) => currentAttrs[name] === value);
 }

@@ -21,6 +21,7 @@ import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 
 import {
   cloneTransaction,
+  containsAttributes,
   findElementAtPosition,
   findNodeAtSelection,
   findParentNode,
@@ -543,4 +544,39 @@ describe('findNodeAt...', () => {
 
 test('schemaToJSON', () => {
   expect(schemaToJSON(createCoreManager([new BoldExtension()]).schema)).toMatchSnapshot();
+});
+
+describe('containsAttributes', () => {
+  it('return true when node contains supplied attribute values', () => {
+    expect(containsAttributes(h2(), { level: 2 })).toBeTrue();
+  });
+
+  it('return false when node does not contains supplied attribute values', () => {
+    expect(containsAttributes(h2(), { level: 1 })).toBeFalse();
+    expect(containsAttributes(h2(), { level: 2, something: 'else' })).toBeFalse();
+  });
+
+  it('return false when node does not have any attribute values', () => {
+    expect(containsAttributes(p(), { level: 1 })).toBeFalse();
+  });
+
+  it('return true when mark contains supplied attribute values', () => {
+    const link = schema.marks.link.create({ href: '//test.com', title: 'foo' });
+    expect(containsAttributes(link, { href: '//test.com' })).toBeTrue();
+    expect(containsAttributes(link, { href: '//test.com', title: 'foo' })).toBeTrue();
+  });
+
+  it('return false when mark does not contains supplied attribute values', () => {
+    const link = schema.marks.link.create({ href: '//remirror.io', title: 'foo' });
+    expect(containsAttributes(link, { href: '//prosemirror.net' })).toBeFalse();
+    expect(containsAttributes(link, { href: '//remirror.io', title: 'bar' })).toBeFalse();
+    expect(
+      containsAttributes(link, { href: '//remirror.io', title: 'foo', something: 'else' }),
+    ).toBeFalse();
+  });
+
+  it('return false when mark does not have any attribute values', () => {
+    const strong = schema.marks.strong.create();
+    expect(containsAttributes(strong, { href: '//remirror.io' })).toBeFalse();
+  });
 });

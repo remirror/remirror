@@ -1,24 +1,27 @@
 import 'remirror/styles/all.css';
 
-import { htmlToProsemirrorNode } from 'remirror';
+import { cx, htmlToProsemirrorNode } from 'remirror';
 import { TextColorExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
 
 const extensions = () => [new TextColorExtension()];
 
 const TextColorButton = () => {
   const commands = useCommands();
+  const active = useActive();
   return (
     <>
       <button
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => commands.setTextColor('red')}
+        className={cx(active.textColor({ color: 'red' }) && 'active')}
       >
         Red
       </button>
       <button
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => commands.setTextColor('green')}
+        className={cx(active.textColor({ color: 'green' }) && 'active')}
       >
         Green
       </button>
