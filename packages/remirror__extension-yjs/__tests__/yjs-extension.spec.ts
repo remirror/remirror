@@ -53,17 +53,15 @@ describe('configuration', () => {
     expect(extension.options.destroyProvider).toHaveBeenCalledTimes(1);
   });
 
-  it('throws when updating undo-related options', () => {
-    const { manager } = create();
-    const extension = manager.getExtension(YjsExtension);
+  it.each([{ protectedNodes: new Set<string>() }, { trackedOrigins: [] }])(
+    'throws when updating undo-related options (%o)',
+    (option: any) => {
+      const { manager } = create();
+      const extension = manager.getExtension(YjsExtension);
 
-    const protectedNodes = new Set<string>();
-    const trackedOrigins: any[] = [];
-
-    expect(() =>
-      extension.setOptions({ protectedNodes, trackedOrigins }),
-    ).toThrowErrorMatchingSnapshot();
-  });
+      expect(() => extension.setOptions({ ...option })).toThrowErrorMatchingSnapshot();
+    },
+  );
 
   it('uses the same undo manager in each state', () => {
     const { manager } = create();

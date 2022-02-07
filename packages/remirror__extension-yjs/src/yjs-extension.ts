@@ -41,6 +41,7 @@ import {
   ProsemirrorPlugin,
   Selection,
   Shape,
+  Static,
 } from '@remirror/core';
 import {
   Annotation,
@@ -119,8 +120,8 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
    *
    * @default `new Set('paragraph')`
    */
-  protectedNodes?: Set<string>;
-  trackedOrigins?: any[];
+  protectedNodes?: Static<Set<string>>;
+  trackedOrigins?: Static<any[]>;
 }
 
 interface YjsAnnotationPosition {
@@ -235,6 +236,7 @@ class YjsAnnotationStore<Type extends Annotation> implements AnnotationStore<Typ
     trackedOrigins: [],
   },
   defaultPriority: ExtensionPriority.High,
+  staticKeys: ['protectedNodes', 'trackedOrigins'],
 })
 export class YjsExtension extends PlainExtension<YjsOptions> {
   get name() {
@@ -329,16 +331,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       'getProvider',
       'getSelection',
       'syncPluginOptions',
-      'protectedNodes',
-      'trackedOrigins',
     ]);
-
-    if (changes.protectedNodes.changed || changes.trackedOrigins.changed) {
-      // Cannot change these, as we would need a new undo manager instance, and for that
-      // we would need to unregister the previous instance from the document to avoid
-      // memory leaks.
-      throw new Error(`Cannot change "protectedNodes" or "trackedOrigins" options`);
-    }
 
     if (changes.getProvider.changed) {
       this._provider = undefined;
