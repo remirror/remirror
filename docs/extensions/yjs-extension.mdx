@@ -23,7 +23,9 @@ You can use the imports in the following way:
 import { YjsExtension } from 'remirror/extensions';
 ```
 
-The `yjs` extension provides support for "undo"/"redo" commands, which conflicts with the default `history` extension. You should therefore disable the `history` extension when using the `yjs` extension in the core preset configuration:
+The `yjs` extension provides support for "undo"/"redo" commands, which conflicts with the default `history` extension. The `history` extension provides "undo"/"redo" for the changes done by the _current user_ only, while the `yjs` extension provides "undo"/"redo" on the level of the underlying yjs transactions, which covers changes by _all active users._ Note however that a `yjs` "undo" replaces the complete document, which prevents other extensions (such as the `annotations` extension) from tracking positions.
+
+You can select the `yjs` "undo"/"redo" implementation by disabling the `history` extension in the core preset configuration:
 
 ```ts
 const { manager } = useRemirror({
@@ -33,6 +35,16 @@ const { manager } = useRemirror({
   },
 });
 ```
+
+Alternatively you can also disable the "undo"/"redo" functionality of the `yjs` extension:
+
+```ts
+const { manager } = useRemirror({
+  extensions: () => [new YjsExtension({ getProvider, disableUndo: true })],
+});
+```
+
+_Note that using the `history` extension "undo"/"redo" requires [additional support from the `y-prosemirror` library](https://github.com/yjs/y-prosemirror/pull/91)._
 
 ### Examples
 

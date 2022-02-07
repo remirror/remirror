@@ -53,7 +53,7 @@ describe('configuration', () => {
     expect(extension.options.destroyProvider).toHaveBeenCalledTimes(1);
   });
 
-  it.each([{ protectedNodes: new Set<string>() }, { trackedOrigins: [] }])(
+  it.each([{ protectedNodes: new Set<string>() }, { trackedOrigins: [] }, { disableUndo: true }])(
     'throws when updating undo-related options (%o)',
     (option: any) => {
       const { manager } = create();
