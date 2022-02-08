@@ -26,6 +26,7 @@ import type {
   AnchorHeadProps,
   AnyConstructor,
   ApplySchemaAttributes,
+  AttributesProps,
   DOMCompatibleAttributes,
   EditorSchema,
   EditorState,
@@ -77,6 +78,7 @@ import {
 } from '@remirror/pm/transform';
 
 import { environment } from './environment';
+import { containsAttributes } from './prosemirror-utils';
 
 function isRangeStep(
   step: Step,
@@ -235,6 +237,50 @@ export function isResolvedPos(value: unknown): value is PMResolvedPos<EditorSche
   return isObject(value) && value instanceof PMResolvedPos;
 }
 
+interface RangeHasMarkProps
+  extends TrStateProps,
+    FromToProps,
+    MarkTypeProps,
+    Partial<AttributesProps> {}
+
+/**
+ * A wrapper for ProsemirrorNode.rangeHasMark that can also compare mark attributes (if supplied)
+ *
+ * @param props - see [[`RangeHasMarkProps`]] for options
+ */
+export function rangeHasMark(props: RangeHasMarkProps): boolean {
+  const { trState, from, to, type, attrs = {} } = props;
+  const { doc } = trState;
+  const markType = getMarkType(type, doc.type.schema);
+
+  if (Object.keys(attrs).length === 0) {
+    return doc.rangeHasMark(from, to, markType);
+  }
+
+  let found = false;
+
+  if (to > from) {
+    doc.nodesBetween(from, to, (node) => {
+      if (found) {
+        return false;
+      }
+
+      const marks = node.marks ?? [];
+      found = marks.some((mark) => {
+        if (mark.type !== markType) {
+          return false;
+        }
+
+        return containsAttributes(mark, attrs);
+      });
+      // Don't descend if found
+      return !found;
+    });
+  }
+
+  return found;
+}
+
 /**
  * Predicate checking whether the selection is a NodeSelection
  *
@@ -244,7 +290,11 @@ export function isNodeSelection(value: unknown): value is NodeSelection<EditorSc
   return isObject(value) && value instanceof NodeSelection;
 }
 
-interface IsMarkActiveProps extends MarkTypeProps, Partial<FromToProps>, TrStateProps {}
+interface IsMarkActiveProps
+  extends MarkTypeProps,
+    Partial<AttributesProps>,
+    Partial<FromToProps>,
+    TrStateProps {}
 
 /**
  * Checks that a mark is active within the selected region, or the current
@@ -254,7 +304,7 @@ interface IsMarkActiveProps extends MarkTypeProps, Partial<FromToProps>, TrState
  * @param props - see [[`IsMarkActiveProps`]] for options
  */
 export function isMarkActive(props: IsMarkActiveProps): boolean {
-  const { trState, type, from, to } = props;
+  const { trState, type, attrs = {}, from, to } = props;
   const { selection, doc, storedMarks } = trState;
   const markType = isString(type) ? doc.type.schema.marks[type] : type;
 
@@ -265,17 +315,24 @@ export function isMarkActive(props: IsMarkActiveProps): boolean {
 
   if (from && to) {
     try {
-      return Math.max(from, to) < doc.nodeSize && doc.rangeHasMark(from, to, markType);
+      return Math.max(from, to) < doc.nodeSize && rangeHasMark({ ...props, from, to });
     } catch {
       return false;
     }
   }
 
   if (selection.empty) {
-    return !!markType.isInSet(storedMarks ?? selection.$from.marks());
+    const marks = storedMarks ?? selection.$from.marks();
+    return marks.some((mark) => {
+      if (mark.type !== type) {
+        return false;
+      }
+
+      return containsAttributes(mark, attrs ?? {});
+    });
   }
 
-  return doc.rangeHasMark(selection.from, selection.to, markType);
+  return rangeHasMark({ ...props, from: selection.from, to: selection.to });
 }
 
 /**

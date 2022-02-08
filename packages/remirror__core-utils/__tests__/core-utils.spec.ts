@@ -1,5 +1,6 @@
 import domino from 'domino';
 import {
+  a,
   atomInline,
   blockquote,
   createEditor,
@@ -103,6 +104,14 @@ describe('markActive', () => {
     expect(isMarkActive({ trState: state, type: schema.marks.em, from: 11, to: 20 })).toBeTrue();
   });
 
+  it('is false when from and to are illogical', () => {
+    const { state, schema } = createEditor(
+      doc(p('<start>Something<end>', em('is italic'), ' here')),
+    );
+
+    expect(isMarkActive({ trState: state, type: schema.marks.em, from: 20, to: 11 })).toBeFalse();
+  });
+
   it('is false when empty document with from and to specified', () => {
     const { state, schema } = createEditor(doc(p('')));
 
@@ -113,6 +122,126 @@ describe('markActive', () => {
     const { state, schema } = createEditor(doc(p(em('is italic')), p('')));
 
     expect(isMarkActive({ trState: state, type: schema.marks.em, from: 11, to: 20 })).toBeFalse();
+  });
+
+  it('with matching attributes shows active when within an active region', () => {
+    const { state, schema } = createEditor(doc(p('Something', a('is <cursor>linked'), ' here')));
+
+    expect(
+      isMarkActive({ trState: state, type: schema.marks.link, attrs: { href: 'foo' } }),
+    ).toBeTrue();
+  });
+
+  it("return false when attributes don't match when within an active region", () => {
+    const { state, schema } = createEditor(doc(p('Something', a('is <cursor>linked'), ' here')));
+
+    expect(
+      isMarkActive({ trState: state, type: schema.marks.link, attrs: { href: 'bar' } }),
+    ).toBeFalse();
+  });
+
+  it('returns false when not within an active region with attributes', () => {
+    const { state, schema } = createEditor(doc(p('Something<cursor>', a('is linked'), ' here')));
+
+    expect(
+      isMarkActive({ trState: state, type: schema.marks.link, attrs: { href: 'foo' } }),
+    ).toBeFalse();
+  });
+
+  it('returns false with no selection with attributes', () => {
+    const { state, schema } = createEditor(doc(p(' ', a('link'))));
+
+    expect(
+      isMarkActive({ trState: state, type: schema.marks.link, attrs: { href: 'foo' } }),
+    ).toBeFalse();
+  });
+
+  it('returns true when surrounding an active region with matching attributes', () => {
+    const { state, schema } = createEditor(
+      doc(p('Something<start>', a('is linked'), '<end> here')),
+    );
+
+    expect(
+      isMarkActive({ trState: state, type: schema.marks.link, attrs: { href: 'foo' } }),
+    ).toBeTrue();
+  });
+
+  it('returns false when surrounding an active region with non matching attributes', () => {
+    const { state, schema } = createEditor(
+      doc(p('Something<start>', a('is linked'), '<end> here')),
+    );
+
+    expect(
+      isMarkActive({ trState: state, type: schema.marks.link, attrs: { href: 'bar' } }),
+    ).toBeFalse();
+  });
+
+  it('can override from and to with matching attributes', () => {
+    const { state, schema } = createEditor(
+      doc(p('<start>Something<end>', a('is linked'), ' here')),
+    );
+
+    expect(
+      isMarkActive({
+        trState: state,
+        type: schema.marks.link,
+        from: 11,
+        to: 20,
+        attrs: { href: 'foo' },
+      }),
+    ).toBeTrue();
+  });
+
+  it('is false when from and to are illogical with attributes', () => {
+    const { state, schema } = createEditor(
+      doc(p('<start>Something<end>', a('is linked'), ' here')),
+    );
+
+    expect(isMarkActive({ trState: state, type: schema.marks.link, from: 20, to: 11 })).toBeFalse();
+  });
+
+  it('can override from and to but returns false with non matching attributes', () => {
+    const { state, schema } = createEditor(
+      doc(p('<start>Something<end>', a('is linked'), ' here')),
+    );
+
+    expect(
+      isMarkActive({
+        trState: state,
+        type: schema.marks.link,
+        from: 11,
+        to: 20,
+        attrs: { href: 'bar' },
+      }),
+    ).toBeFalse();
+  });
+
+  it('is false when empty document with from and to specified with mark attributes', () => {
+    const { state, schema } = createEditor(doc(p('')));
+
+    expect(
+      isMarkActive({
+        trState: state,
+        type: schema.marks.link,
+        from: 11,
+        to: 20,
+        attrs: { href: 'foo' },
+      }),
+    ).toBeFalse();
+  });
+
+  it('is false when from and to specified in empty node with mark attributes', () => {
+    const { state, schema } = createEditor(doc(p(a('is linked')), p('')));
+
+    expect(
+      isMarkActive({
+        trState: state,
+        type: schema.marks.link,
+        from: 11,
+        to: 20,
+        attrs: { href: 'foo' },
+      }),
+    ).toBeFalse();
   });
 });
 
