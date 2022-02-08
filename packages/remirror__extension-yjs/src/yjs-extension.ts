@@ -41,6 +41,7 @@ import {
   ProsemirrorPlugin,
   Selection,
   Shape,
+  Static,
 } from '@remirror/core';
 import {
   Annotation,
@@ -114,13 +115,15 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
    */
   getSelection?: (state: EditorState) => Selection;
 
+  disableUndo?: Static<boolean>;
+
   /**
    * Names of nodes in the editor which should be protected.
    *
    * @default `new Set('paragraph')`
    */
-  protectedNodes?: Set<string>;
-  trackedOrigins?: any[];
+  protectedNodes?: Static<Set<string>>;
+  trackedOrigins?: Static<any[]>;
 }
 
 interface YjsAnnotationPosition {
@@ -231,9 +234,11 @@ class YjsAnnotationStore<Type extends Annotation> implements AnnotationStore<Typ
     cursorBuilder: defaultCursorBuilder,
     cursorStateField: 'cursor',
     getSelection: (state) => state.selection,
+    disableUndo: false,
     protectedNodes: new Set('paragraph'),
     trackedOrigins: [],
   },
+  staticKeys: ['disableUndo', 'protectedNodes', 'trackedOrigins'],
   defaultPriority: ExtensionPriority.High,
 })
 export class YjsExtension extends PlainExtension<YjsOptions> {
@@ -296,6 +301,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       cursorBuilder,
       getSelection,
       cursorStateField,
+      disableUndo,
       protectedNodes,
       trackedOrigins,
     } = this.options;
@@ -303,19 +309,24 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     const yDoc = this.provider.doc;
     const type = yDoc.getXmlFragment('prosemirror');
 
-    const undoManager = new UndoManager(type, {
-      trackedOrigins: new Set([ySyncPluginKey, ...trackedOrigins]),
-      deleteFilter: (item) => defaultDeleteFilter(item, protectedNodes),
-    });
-    return [
+    const plugins = [
       ySyncPlugin(type, syncPluginOptions),
       yCursorPlugin(
         this.provider.awareness,
         { cursorBuilder, cursorStateField, getSelection },
         cursorStateField,
       ),
-      yUndoPlugin({ undoManager }),
     ];
+
+    if (!disableUndo) {
+      const undoManager = new UndoManager(type, {
+        trackedOrigins: new Set([ySyncPluginKey, ...trackedOrigins]),
+        deleteFilter: (item) => defaultDeleteFilter(item, protectedNodes),
+      });
+      plugins.push(yUndoPlugin({ undoManager }));
+    }
+
+    return plugins;
   }
 
   /**
@@ -329,16 +340,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       'getProvider',
       'getSelection',
       'syncPluginOptions',
-      'protectedNodes',
-      'trackedOrigins',
     ]);
-
-    if (changes.protectedNodes.changed || changes.trackedOrigins.changed) {
-      // Cannot change these, as we would need a new undo manager instance, and for that
-      // we would need to unregister the previous instance from the document to avoid
-      // memory leaks.
-      throw new Error(`Cannot change "protectedNodes" or "trackedOrigins" options`);
-    }
 
     if (changes.getProvider.changed) {
       this._provider = undefined;
@@ -370,11 +372,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   }
 
   /**
-   * Undo within a collaborative editor.
-   *
-   * This should be used instead of the built in `undo` command.
+   * Undo that last Yjs transaction(s)
    *
    * This command does **not** support chaining.
+   * This command is a no-op and always returns `false` when the `disableUndo` option is set.
    */
   @command({
     disableChaining: true,
@@ -384,6 +385,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   })
   yUndo(): NonChainableCommandFunction {
     return nonChainable((props) => {
+      if (this.options.disableUndo) {
+        return false;
+      }
+
       const { state, dispatch } = props;
       const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
 
@@ -400,11 +405,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   }
 
   /**
-   * Redo, within a collaborative editor.
-   *
-   * This should be used instead of the built in `redo` command.
+   * Redo the last transaction undone with a previous `yUndo` command.
    *
    * This command does **not** support chaining.
+   * This command is a no-op and always returns `false` when the `disableUndo` option is set.
    */
   @command({
     disableChaining: true,
@@ -414,6 +418,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   })
   yRedo(): NonChainableCommandFunction {
     return nonChainable((props) => {
+      if (this.options.disableUndo) {
+        return false;
+      }
+
       const { state, dispatch } = props;
       const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
 
