@@ -102,8 +102,15 @@ export class AnnotationState<Type extends Annotation = Annotation> {
       this.annotations = this.formatAnnotations();
       this.decorationSet = this.createDecorations(tr, this.annotations);
     } else {
-      // Adjust annotation positions based on changes in the editor, e.g.
-      // if new text was added before the decoration
+      // Adjust cached annotation positions based on changes in the editor, e.g.
+      // if new text was added before the decoration.
+      //
+      // Note: If you see annotations getting removed here check the source of
+      // the transaction and whether it contains any unexpected steps. In particular
+      // 'replace' steps that modify the entire document range, such as the one
+      // used by the Yjs extension for supporting `undo`, can cause issues.
+      // Consider using the `disableUndo` option of the Yjs extension, if you are
+      // using both the Yjs and Annotations extensions.
       this.annotations = this.annotations
         .map((annotation) => ({
           ...annotation,
@@ -116,8 +123,6 @@ export class AnnotationState<Type extends Annotation = Annotation> {
         }))
         // Remove annotations for which all containing content was deleted
         .filter((annotation) => annotation.to !== annotation.from);
-      // Performance optimization: Adjust decoration positions based on changes
-      // in the editor, e.g. if new text was added before the decoration
       this.decorationSet = this.decorationSet.map(tr.mapping, tr.doc);
     }
 
