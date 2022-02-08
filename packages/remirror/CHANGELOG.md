@@ -1,5 +1,83 @@
 # remirror
 
+## 1.0.65
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+* Allow disabling the yjs undo functionality in the yjs extension
+
+* Updated dependencies []:
+  - @remirror/core@1.3.5
+  - @remirror/core-utils@1.1.6
+  - @remirror/dom@1.0.19
+  - @remirror/extension-annotation@1.1.14
+  - @remirror/extension-bidi@1.0.15
+  - @remirror/extension-blockquote@1.0.17
+  - @remirror/extension-bold@1.0.15
+  - @remirror/extension-callout@1.0.17
+  - @remirror/extension-code@1.0.16
+  - @remirror/extension-code-block@1.0.20
+  - @remirror/extension-codemirror5@1.0.15
+  - @remirror/extension-collaboration@1.0.15
+  - @remirror/extension-columns@1.0.15
+  - @remirror/extension-diff@1.0.15
+  - @remirror/extension-doc@1.0.16
+  - @remirror/extension-drop-cursor@1.0.15
+  - @remirror/extension-embed@1.1.20
+  - @remirror/extension-emoji@1.0.17
+  - @remirror/extension-epic-mode@1.0.15
+  - @remirror/extension-events@1.0.16
+  - @remirror/extension-font-family@1.0.15
+  - @remirror/extension-font-size@1.0.17
+  - @remirror/extension-gap-cursor@1.0.15
+  - @remirror/extension-hard-break@1.0.15
+  - @remirror/extension-heading@1.0.15
+  - @remirror/extension-history@1.0.15
+  - @remirror/extension-horizontal-rule@1.0.16
+  - @remirror/extension-image@1.0.25
+  - @remirror/extension-italic@1.0.15
+  - @remirror/extension-link@1.1.14
+  - @remirror/extension-list@1.2.15
+  - @remirror/extension-markdown@1.0.15
+  - @remirror/extension-mention@1.0.16
+  - @remirror/extension-mention-atom@1.0.18
+  - @remirror/extension-node-formatting@1.0.18
+  - @remirror/extension-paragraph@1.0.15
+  - @remirror/extension-placeholder@1.0.17
+  - @remirror/extension-positioner@1.1.16
+  - @remirror/extension-search@1.0.15
+  - @remirror/extension-shortcuts@1.1.4
+  - @remirror/extension-strike@1.0.15
+  - @remirror/extension-sub@1.0.15
+  - @remirror/extension-sup@1.0.15
+  - @remirror/extension-tables@1.0.17
+  - @remirror/extension-text@1.0.15
+  - @remirror/extension-text-case@1.0.15
+  - @remirror/extension-text-color@1.0.17
+  - @remirror/extension-text-highlight@1.0.17
+  - @remirror/extension-trailing-node@1.0.15
+  - @remirror/extension-underline@1.0.15
+  - @remirror/extension-whitespace@1.0.15
+  - @remirror/extension-yjs@1.0.23
+  - @remirror/preset-core@1.0.19
+  - @remirror/preset-formatting@1.0.21
+  - @remirror/preset-wysiwyg@1.1.38
+
 ## 1.0.64
 
 > 2022-02-04

@@ -1,5 +1,31 @@
 # @remirror/react-editors
 
+## 0.1.54
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+* Allow disabling the yjs undo functionality in the yjs extension
+
+* Updated dependencies []:
+  - @remirror/react@1.0.23
+  - remirror@1.0.65
+  - @remirror/extension-react-tables@1.0.23
+
 ## 0.1.53
 
 > 2022-02-04
