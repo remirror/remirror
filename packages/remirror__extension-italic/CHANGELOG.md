@@ -1,5 +1,27 @@
 # @remirror/extension-italic
 
+## 1.0.15
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.3.5
+
 ## 1.0.14
 
 > 2022-02-04

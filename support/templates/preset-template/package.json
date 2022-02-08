@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.3.4"
+    "@remirror/core": "^1.3.5"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.11"

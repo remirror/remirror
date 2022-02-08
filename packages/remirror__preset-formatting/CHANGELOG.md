@@ -1,5 +1,41 @@
 # @remirror/preset-formatting
 
+## 1.0.21
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.3.5
+  - @remirror/extension-bold@1.0.15
+  - @remirror/extension-columns@1.0.15
+  - @remirror/extension-font-size@1.0.17
+  - @remirror/extension-heading@1.0.15
+  - @remirror/extension-italic@1.0.15
+  - @remirror/extension-node-formatting@1.0.18
+  - @remirror/extension-strike@1.0.15
+  - @remirror/extension-sub@1.0.15
+  - @remirror/extension-sup@1.0.15
+  - @remirror/extension-text-case@1.0.15
+  - @remirror/extension-text-color@1.0.17
+  - @remirror/extension-text-highlight@1.0.17
+  - @remirror/extension-underline@1.0.15
+  - @remirror/extension-whitespace@1.0.15
+
 ## 1.0.20
 
 > 2022-02-04

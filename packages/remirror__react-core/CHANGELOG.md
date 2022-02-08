@@ -1,5 +1,34 @@
 # @remirror/react-core
 
+## 1.0.21
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.3.5
+  - @remirror/extension-positioner@1.1.16
+  - @remirror/extension-react-component@1.1.6
+  - @remirror/extension-react-ssr@1.0.17
+  - @remirror/preset-core@1.0.19
+  - @remirror/preset-react@1.0.18
+  - @remirror/react-renderer@1.0.17
+  - @remirror/react-ssr@1.0.17
+
 ## 1.0.20
 
 > 2022-02-04
