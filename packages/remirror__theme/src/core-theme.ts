@@ -55,10 +55,12 @@ export const EDITOR = css`
 
   &.ProseMirror-hideselection *::selection {
     background: transparent;
+    color: inherit;
   }
 
   &.ProseMirror-hideselection *::-moz-selection {
     background: transparent;
+    color: inherit;
   }
 
   &.ProseMirror-hideselection {
