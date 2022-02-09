@@ -1,5 +1,18 @@
 # @remirror/extension-file
 
+## 0.3.12
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.1
+  - @remirror/react@1.0.24
+  - @remirror/react-components@1.0.23
+
 ## 0.3.11
 
 > 2022-02-08

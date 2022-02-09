@@ -1,5 +1,16 @@
 # @remirror/extension-annotation
 
+## 1.1.15
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.1.17
+
 ## 1.1.14
 
 > 2022-02-08

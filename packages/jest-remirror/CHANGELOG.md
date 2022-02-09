@@ -1,5 +1,17 @@
 # jest-remirror
 
+## 1.0.25
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/dom@1.0.20
+  - @remirror/preset-core@1.0.20
+
 ## 1.0.24
 
 > 2022-02-08

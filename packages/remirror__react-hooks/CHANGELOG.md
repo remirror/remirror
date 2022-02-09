@@ -1,5 +1,19 @@
 # @remirror/react-hooks
 
+## 1.0.23
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/extension-emoji@1.0.18
+  - @remirror/extension-mention-atom@1.0.19
+  - @remirror/extension-positioner@1.1.17
+  - @remirror/react-core@1.0.22
+
 ## 1.0.22
 
 > 2022-02-08

@@ -1,5 +1,16 @@
 # @remirror/extension-image
 
+## 1.0.26
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.1
+
 ## 1.0.25
 
 > 2022-02-08

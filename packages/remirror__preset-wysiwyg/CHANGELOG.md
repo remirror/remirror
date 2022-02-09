@@ -1,5 +1,20 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.39
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/extension-blockquote@1.0.18
+  - @remirror/extension-code-block@1.0.21
+  - @remirror/extension-image@1.0.26
+  - @remirror/extension-list@1.2.16
+  - @remirror/preset-core@1.0.20
+
 ## 1.1.38
 
 > 2022-02-08

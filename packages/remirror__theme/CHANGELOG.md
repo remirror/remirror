@@ -1,5 +1,13 @@
 # @remirror/theme
 
+## 1.2.1
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
 ## 1.2.0
 
 > 2022-01-11

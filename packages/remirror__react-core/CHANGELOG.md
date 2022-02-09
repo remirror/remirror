@@ -1,5 +1,19 @@
 # @remirror/react-core
 
+## 1.0.22
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.1
+  - @remirror/extension-positioner@1.1.17
+  - @remirror/preset-core@1.0.20
+  - @remirror/preset-react@1.0.19
+
 ## 1.0.21
 
 > 2022-02-08

@@ -1,5 +1,19 @@
 # @remirror/react-editors
 
+## 0.1.55
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/styles@1.1.3
+  - remirror@1.0.66
+  - @remirror/extension-react-tables@1.0.24
+  - @remirror/react@1.0.24
+
 ## 0.1.54
 
 > 2022-02-08

@@ -1,5 +1,16 @@
 # @remirror/extension-yjs
 
+## 1.0.24
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/extension-annotation@1.1.15
+
 ## 1.0.23
 
 > 2022-02-08

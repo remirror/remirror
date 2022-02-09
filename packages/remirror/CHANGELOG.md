@@ -1,5 +1,34 @@
 # remirror
 
+## 1.0.66
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.1
+  - @remirror/dom@1.0.20
+  - @remirror/extension-annotation@1.1.15
+  - @remirror/extension-blockquote@1.0.18
+  - @remirror/extension-callout@1.0.18
+  - @remirror/extension-code-block@1.0.21
+  - @remirror/extension-emoji@1.0.18
+  - @remirror/extension-image@1.0.26
+  - @remirror/extension-list@1.2.16
+  - @remirror/extension-mention-atom@1.0.19
+  - @remirror/extension-placeholder@1.0.18
+  - @remirror/extension-positioner@1.1.17
+  - @remirror/extension-tables@1.0.18
+  - @remirror/extension-text-color@1.0.18
+  - @remirror/extension-text-highlight@1.0.18
+  - @remirror/extension-yjs@1.0.24
+  - @remirror/preset-core@1.0.20
+  - @remirror/preset-formatting@1.0.22
+  - @remirror/preset-wysiwyg@1.1.39
+
 ## 1.0.65
 
 > 2022-02-08

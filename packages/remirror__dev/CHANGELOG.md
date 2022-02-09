@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.0.24
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/react@1.0.24
+
 ## 1.0.23
 
 > 2022-02-08
