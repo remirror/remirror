@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-diff",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "Track diffs between your json documents.",
   "keywords": [
     "remirror",
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.3.5",
+    "@remirror/core": "^1.3.6",
     "@remirror/messages": "^1.0.6"
   },
   "devDependencies": {

@@ -1,5 +1,18 @@
 # @remirror/core
 
+## 1.3.6
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core-utils@1.1.7
+
 ## 1.3.5
 
 > 2022-02-08

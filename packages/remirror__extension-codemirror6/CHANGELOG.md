@@ -1,5 +1,18 @@
 # @remirror/extension-codemirror6
 
+## 0.2.4
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.6
+
 ## 0.2.3
 
 > 2022-02-08

@@ -1,5 +1,20 @@
 # @remirror/extension-markdown
 
+## 1.0.16
+
+> 2022-02-22
+
+### Patch Changes
+
+- Updated marked to v4 to resolve vunerable dependency alert
+
+* Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+* Updated dependencies []:
+  - @remirror/core@1.3.6
+
 ## 1.0.15
 
 > 2022-02-08

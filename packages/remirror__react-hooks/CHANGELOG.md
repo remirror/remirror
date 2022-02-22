@@ -1,5 +1,25 @@
 # @remirror/react-hooks
 
+## 1.0.24
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.6
+  - @remirror/extension-emoji@1.0.19
+  - @remirror/extension-events@1.0.17
+  - @remirror/extension-history@1.0.16
+  - @remirror/extension-mention@1.0.17
+  - @remirror/extension-mention-atom@1.0.20
+  - @remirror/extension-positioner@1.1.18
+  - @remirror/react-core@1.0.23
+
 ## 1.0.23
 
 > 2022-02-09

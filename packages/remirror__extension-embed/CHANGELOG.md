@@ -1,5 +1,19 @@
 # @remirror/extension-embed
 
+## 1.1.21
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.11
+  - @remirror/core@1.3.6
+
 ## 1.1.20
 
 > 2022-02-08

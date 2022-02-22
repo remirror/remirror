@@ -1,5 +1,25 @@
 # @remirror/react-core
 
+## 1.0.23
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.6
+  - @remirror/extension-positioner@1.1.18
+  - @remirror/extension-react-component@1.1.7
+  - @remirror/extension-react-ssr@1.0.18
+  - @remirror/preset-core@1.0.21
+  - @remirror/preset-react@1.0.20
+  - @remirror/react-renderer@1.0.18
+  - @remirror/react-ssr@1.0.18
+
 ## 1.0.22
 
 > 2022-02-09

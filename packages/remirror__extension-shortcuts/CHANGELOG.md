@@ -1,5 +1,18 @@
 # @remirror/extension-shortcuts
 
+## 1.1.5
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.6
+
 ## 1.1.4
 
 > 2022-02-08

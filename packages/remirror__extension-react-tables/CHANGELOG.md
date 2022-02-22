@@ -1,5 +1,25 @@
 # @remirror/extension-react-tables
 
+## 1.0.25
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core-utils@1.1.7
+  - @remirror/core@1.3.6
+  - @remirror/extension-positioner@1.1.18
+  - @remirror/extension-tables@1.0.19
+  - @remirror/preset-core@1.0.21
+  - @remirror/react-components@1.0.24
+  - @remirror/react-core@1.0.23
+  - @remirror/react-hooks@1.0.24
+
 ## 1.0.24
 
 > 2022-02-09

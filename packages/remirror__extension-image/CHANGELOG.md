@@ -1,5 +1,19 @@
 # @remirror/extension-image
 
+## 1.0.27
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.11
+  - @remirror/core@1.3.6
+
 ## 1.0.26
 
 > 2022-02-09
