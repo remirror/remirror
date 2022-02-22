@@ -20,6 +20,7 @@ import {
   keys,
   omit,
   sort,
+  uniqueBy,
   unset,
 } from '@remirror/core-helpers';
 import type {
@@ -742,7 +743,10 @@ export function getChangedRanges(
     }
   }
 
-  return ranges;
+  return uniqueBy(
+    ranges,
+    ({ from, to, prevFrom, prevTo }) => `${from}_${to}_${prevFrom}_${prevTo}`,
+  );
 }
 
 /**

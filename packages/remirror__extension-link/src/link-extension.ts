@@ -37,8 +37,10 @@ import {
   within,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
+import { undoDepth } from '@remirror/pm/history';
 import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { TextSelection } from '@remirror/pm/state';
+import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
 const UPDATE_LINK = 'updateLink';
 
@@ -490,10 +492,16 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           return;
         }
 
+        const isUndo = undoDepth(prevState) - undoDepth(state) === 1;
+
+        if (isUndo) {
+          return; // Don't execute auto link logic if an undo was performed.
+        }
+
         const docChanged = transactions.some((tr) => tr.docChanged);
 
         if (!docChanged) {
-          return;
+          return; // Don't execute auto link logic if nothing has changed.
         }
 
         // Create a single transaction, by combining all transactions
@@ -504,7 +512,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           });
         });
 
-        const changes = getChangedRanges(composedTransaction);
+        const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
         const { mapping } = composedTransaction;
         const { tr, doc } = state;
 
