@@ -1,5 +1,39 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.40
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.15
+  - @remirror/core@1.3.6
+  - @remirror/extension-bidi@1.0.16
+  - @remirror/extension-blockquote@1.0.19
+  - @remirror/extension-bold@1.0.16
+  - @remirror/extension-code@1.0.17
+  - @remirror/extension-code-block@1.0.22
+  - @remirror/extension-drop-cursor@1.0.16
+  - @remirror/extension-embed@1.1.21
+  - @remirror/extension-gap-cursor@1.0.16
+  - @remirror/extension-hard-break@1.0.16
+  - @remirror/extension-heading@1.0.16
+  - @remirror/extension-horizontal-rule@1.0.17
+  - @remirror/extension-image@1.0.27
+  - @remirror/extension-italic@1.0.16
+  - @remirror/extension-list@1.2.17
+  - @remirror/extension-search@1.0.16
+  - @remirror/extension-shortcuts@1.1.5
+  - @remirror/extension-strike@1.0.16
+  - @remirror/extension-trailing-node@1.0.16
+  - @remirror/extension-underline@1.0.16
+  - @remirror/preset-core@1.0.21
+
 ## 1.1.39
 
 > 2022-02-09

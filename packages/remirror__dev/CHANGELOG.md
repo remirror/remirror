@@ -1,5 +1,18 @@
 # @remirror/dev
 
+## 1.0.25
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/react@1.0.25
+
 ## 1.0.24
 
 > 2022-02-09

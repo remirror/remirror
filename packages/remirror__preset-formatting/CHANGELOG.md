@@ -1,5 +1,32 @@
 # @remirror/preset-formatting
 
+## 1.0.23
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.6
+  - @remirror/extension-bold@1.0.16
+  - @remirror/extension-columns@1.0.16
+  - @remirror/extension-font-size@1.0.18
+  - @remirror/extension-heading@1.0.16
+  - @remirror/extension-italic@1.0.16
+  - @remirror/extension-node-formatting@1.0.19
+  - @remirror/extension-strike@1.0.16
+  - @remirror/extension-sub@1.0.16
+  - @remirror/extension-sup@1.0.16
+  - @remirror/extension-text-case@1.0.16
+  - @remirror/extension-text-color@1.0.19
+  - @remirror/extension-text-highlight@1.0.19
+  - @remirror/extension-underline@1.0.16
+  - @remirror/extension-whitespace@1.0.16
+
 ## 1.0.22
 
 > 2022-02-09

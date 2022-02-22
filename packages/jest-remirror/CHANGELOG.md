@@ -1,5 +1,21 @@
 # jest-remirror
 
+## 1.0.26
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - jest-prosemirror@1.0.16
+  - @remirror/core@1.3.6
+  - @remirror/dom@1.0.21
+  - @remirror/preset-core@1.0.21
+
 ## 1.0.25
 
 > 2022-02-09

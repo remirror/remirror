@@ -1,5 +1,22 @@
 # @remirror/react-editors
 
+## 0.1.56
+
+> 2022-02-22
+
+### Patch Changes
+
+- Updated marked to v4 to resolve vunerable dependency alert
+
+* Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+* Updated dependencies []:
+  - remirror@1.0.67
+  - @remirror/extension-react-tables@1.0.25
+  - @remirror/react@1.0.25
+
 ## 0.1.55
 
 > 2022-02-09

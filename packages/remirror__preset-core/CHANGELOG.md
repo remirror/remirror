@@ -1,5 +1,25 @@
 # @remirror/preset-core
 
+## 1.0.21
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.6
+  - @remirror/extension-doc@1.0.17
+  - @remirror/extension-events@1.0.17
+  - @remirror/extension-gap-cursor@1.0.16
+  - @remirror/extension-history@1.0.16
+  - @remirror/extension-paragraph@1.0.16
+  - @remirror/extension-positioner@1.1.18
+  - @remirror/extension-text@1.0.16
+
 ## 1.0.20
 
 > 2022-02-09
