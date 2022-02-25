@@ -1,5 +1,15 @@
 # prosemirror-paste-rules
 
+## 1.0.8
+
+> 2022-02-25
+
+### Patch Changes
+
+- Fixes an issue that causes invalid duplicate marks when using `pasteRules` plugin.
+
+* Fixes an issue that causes some text nodes to be deleted when using `replaceSelection`.
+
 ## 1.0.7
 
 > 2022-01-17
