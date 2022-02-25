@@ -82,12 +82,10 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
               const attributes = isFunction(getAttributes)
                 ? getAttributes(match, true)
                 : getAttributes;
-              // const nodeWithMark = textNode.mark([markType.create(attributes), ...textNode.marks]);
-              // return new Slice(nodeWithMark.content, slice.openStart, slice.openEnd);
+              const mark = markType.create(attributes);
+              const marks = mark.addToSet(textNode.marks);
               return new Slice(
-                Fragment.fromArray([
-                  textNode.mark([markType.create(attributes), ...textNode.marks]),
-                ]),
+                Fragment.fromArray([textNode.mark(marks)]),
                 slice.openStart,
                 slice.openEnd,
               );
@@ -488,7 +486,8 @@ function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
   }
 
   const text = transformedCapturedValue ?? textNode.text ?? '';
-  const marks = [markType.create(attributes), ...textNode.marks];
+  const mark = markType.create(attributes);
+  const marks = mark.addToSet(textNode.marks);
   nodes.push(schema.text(text, marks));
 }
 

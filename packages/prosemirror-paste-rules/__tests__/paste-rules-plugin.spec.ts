@@ -149,6 +149,37 @@ describe('pasteRules', () => {
           );
         });
     });
+
+    it('should not create invalid nodes with duplicate marks', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /(@[a-z]+)/,
+          markType: schema.marks.strong,
+          type: 'mark',
+          replaceSelection: (replacedText) => {
+            return !!replacedText.trim();
+          },
+        },
+      ]);
+      createEditor(doc(p('<start>foo<end>')), { plugins: [plugin] })
+        .paste(p('@bar'))
+        .callback((content) => {
+          content.doc.check();
+          expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('foo'))));
+        });
+      createEditor(doc(p('<start>foo<end>')), { plugins: [plugin] })
+        .paste(p(strong('@bar')))
+        .callback((content) => {
+          content.doc.check();
+          expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('foo'))));
+        });
+      createEditor(doc(p('<start><end>')), { plugins: [plugin] })
+        .paste(p(strong('@bar')))
+        .callback((content) => {
+          content.doc.check();
+          expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('@bar'))));
+        });
+    });
   });
 
   describe('type: text', () => {
