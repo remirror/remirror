@@ -70,27 +70,29 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
           if (canBeReplaced && match && rule.type === 'mark' && rule.replaceSelection) {
             const { from, to } = view.state.selection;
             const textSlice = view.state.doc.slice(from, to);
-            const textNode = textSlice.content.firstChild;
+            const textContent = textSlice.content.textBetween(0, textSlice.content.size);
 
             if (
-              textNode?.isText &&
-              (typeof rule.replaceSelection !== 'boolean'
-                ? rule.replaceSelection(textNode.textContent)
-                : rule.replaceSelection)
+              typeof rule.replaceSelection !== 'boolean'
+                ? rule.replaceSelection(textContent)
+                : rule.replaceSelection
             ) {
+              const newTextNodes: ProsemirrorNode[] = [];
+
               const { getAttributes, markType } = rule;
               const attributes = isFunction(getAttributes)
                 ? getAttributes(match, true)
                 : getAttributes;
-              // const nodeWithMark = textNode.mark([markType.create(attributes), ...textNode.marks]);
-              // return new Slice(nodeWithMark.content, slice.openStart, slice.openEnd);
-              return new Slice(
-                Fragment.fromArray([
-                  textNode.mark([markType.create(attributes), ...textNode.marks]),
-                ]),
-                slice.openStart,
-                slice.openEnd,
-              );
+              const mark = markType.create(attributes);
+
+              textSlice.content.forEach((textNode) => {
+                if (textNode.isText) {
+                  const marks = mark.addToSet(textNode.marks);
+                  newTextNodes.push(textNode.mark(marks));
+                }
+              });
+
+              return new Slice(Fragment.fromArray(newTextNodes), slice.openStart, slice.openEnd);
             }
           }
 
@@ -488,7 +490,8 @@ function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
   }
 
   const text = transformedCapturedValue ?? textNode.text ?? '';
-  const marks = [markType.create(attributes), ...textNode.marks];
+  const mark = markType.create(attributes);
+  const marks = mark.addToSet(textNode.marks);
   nodes.push(schema.text(text, marks));
 }
 
