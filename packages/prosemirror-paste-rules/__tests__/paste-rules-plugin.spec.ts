@@ -148,6 +148,15 @@ describe('pasteRules', () => {
             doc(p('', strong('selected text is not empty'))),
           );
         });
+      createEditor(doc(p('<start>multiple text nodes ', strong('are'), ' ', em('selected<end>'))), {
+        plugins: [plugin2],
+      })
+        .paste('@test')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p('', strong('multiple text nodes are ', em(strong('selected'))))),
+          );
+        });
     });
 
     it('should not create invalid nodes with duplicate marks', () => {
