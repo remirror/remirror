@@ -1,5 +1,18 @@
 # @remirror/pm
 
+## 1.0.12
+
+> 2022-02-25
+
+### Patch Changes
+
+- Fixes an issue that causes invalid duplicate marks when using `pasteRules` plugin.
+
+* Fixes an issue that causes some text nodes to be deleted when using `replaceSelection`.
+
+* Updated dependencies []:
+  - prosemirror-paste-rules@1.0.8
+
 ## 1.0.11
 
 > 2022-01-17

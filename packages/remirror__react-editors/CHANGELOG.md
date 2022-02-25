@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.57
+
+> 2022-02-25
+
+### Patch Changes
+
+- Fixes an issue that causes invalid duplicate marks when using `pasteRules` plugin.
+
+* Fixes an issue that causes some text nodes to be deleted when using `replaceSelection`.
+
+* Updated dependencies []:
+  - @remirror/pm@1.0.12
+
 ## 0.1.56
 
 > 2022-02-22
