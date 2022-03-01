@@ -25,7 +25,7 @@ import {
   isTextDomNode,
 } from '@remirror/core-utils';
 import { inputRules } from '@remirror/pm/inputrules';
-import { DOMParser, Slice } from '@remirror/pm/model';
+import { Slice } from '@remirror/pm/model';
 import { AllSelection, NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 import {
