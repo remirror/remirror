@@ -1,5 +1,18 @@
 # jest-prosemirror
 
+## 1.0.18
+
+> 2022-03-01
+
+### Patch Changes
+
+- Fix an issue that causes the selected text being deleted when pasting.
+
+* Make the result more accurate when pasting plain text from the clipboard.
+
+* Updated dependencies []:
+  - @remirror/pm@1.0.13
+
 ## 1.0.17
 
 > 2022-02-25

@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.58
+
+> 2022-03-01
+
+### Patch Changes
+
+- Fix an issue that causes the selected text being deleted when pasting.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.13
+
 ## 0.1.57
 
 > 2022-02-25

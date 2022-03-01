@@ -158,7 +158,7 @@
     "use-previous": "^1.1.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.12",
+    "@remirror/pm": "^1.0.13",
     "@remirror/react": "^1.0.25",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
