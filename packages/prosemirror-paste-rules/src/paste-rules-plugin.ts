@@ -92,7 +92,7 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
                 }
               });
 
-              return new Slice(Fragment.fromArray(newTextNodes), slice.openStart, slice.openEnd);
+              return Slice.maxOpen(Fragment.fromArray(newTextNodes));
             }
           }
 
