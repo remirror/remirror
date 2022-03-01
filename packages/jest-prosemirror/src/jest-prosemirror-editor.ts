@@ -25,7 +25,7 @@ import {
   isTextDomNode,
 } from '@remirror/core-utils';
 import { inputRules } from '@remirror/pm/inputrules';
-import { Slice } from '@remirror/pm/model';
+import { DOMParser, Slice } from '@remirror/pm/model';
 import { AllSelection, NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 import {
@@ -144,11 +144,10 @@ export function pasteContent<Schema extends EditorSchema = EditorSchema>(
         : { from: 0, to: undefined };
 
     slice = content.slice(from, to);
+    view.someProp('transformPasted', (f) => {
+      slice = f(slice);
+    });
   }
-
-  view.someProp('transformPasted', (f) => {
-    slice = f(slice);
-  });
 
   view.dispatch(view.state.tr.replaceSelection(slice));
 }
