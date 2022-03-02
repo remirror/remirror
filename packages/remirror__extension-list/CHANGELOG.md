@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.2.18
+
+> 2022-03-02
+
+### Patch Changes
+
+- Fix an error when clicking the list spine.
+
 ## 1.2.17
 
 > 2022-02-22

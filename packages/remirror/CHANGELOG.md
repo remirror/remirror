@@ -1,5 +1,17 @@
 # remirror
 
+## 1.0.68
+
+> 2022-03-02
+
+### Patch Changes
+
+- Fix an error when clicking the list spine.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.18
+  - @remirror/preset-wysiwyg@1.1.41
+
 ## 1.0.67
 
 > 2022-02-22

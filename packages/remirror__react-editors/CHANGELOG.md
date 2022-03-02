@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.59
+
+> 2022-03-02
+
+### Patch Changes
+
+- Fix an error when clicking the list spine.
+
+- Updated dependencies []:
+  - remirror@1.0.68
+
 ## 0.1.58
 
 > 2022-03-01
