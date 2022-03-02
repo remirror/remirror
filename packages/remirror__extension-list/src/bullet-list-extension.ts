@@ -67,13 +67,14 @@ export class BulletListExtension extends NodeExtension<BulletListOptions> {
       const isFirstLevel = parentListItemNode?.type?.name !== 'listItem';
 
       if (!isFirstLevel) {
-        const parentListItemPos: number = $pos.start($pos.depth - 1);
-
         const spine = document.createElement('div');
         spine.contentEditable = 'false';
         spine.classList.add(ExtensionListTheme.LIST_SPINE);
 
         spine.addEventListener('click', (event) => {
+          const pos = (getPos as () => number)();
+          const $pos = view.state.doc.resolve(pos + 1);
+          const parentListItemPos: number = $pos.start($pos.depth - 1);
           const selection = NodeSelection.create(view.state.doc, parentListItemPos - 1);
           view.dispatch(view.state.tr.setSelection(selection));
           this.store.commands.toggleListItemClosed();
