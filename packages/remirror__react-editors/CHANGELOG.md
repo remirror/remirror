@@ -1,5 +1,20 @@
 # @remirror/react-editors
 
+## 0.1.60
+
+> 2022-03-04
+
+### Patch Changes
+
+- Add the ability to force update positioners with a new command `forceUpdatePositioners`.
+
+  This can be useful to update positioners when the view is updated in a way that doesn't trigger a ProseMirror state change. For instance when an image URL is loaded and the document is reflowed.
+
+- Updated dependencies []:
+  - remirror@1.0.69
+  - @remirror/extension-react-tables@1.0.26
+  - @remirror/react@1.0.26
+
 ## 0.1.59
 
 > 2022-03-02
