@@ -1,5 +1,23 @@
 # remirror
 
+## 1.0.69
+
+> 2022-03-04
+
+### Patch Changes
+
+- Add the ability to force update positioners with a new command `forceUpdatePositioners`.
+
+  This can be useful to update positioners when the view is updated in a way that doesn't trigger a ProseMirror state change. For instance when an image URL is loaded and the document is reflowed.
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.2.0
+  - @remirror/dom@1.0.22
+  - @remirror/extension-annotation@1.1.17
+  - @remirror/extension-yjs@1.0.26
+  - @remirror/preset-core@1.0.22
+  - @remirror/preset-wysiwyg@1.1.42
+
 ## 1.0.68
 
 > 2022-03-02
