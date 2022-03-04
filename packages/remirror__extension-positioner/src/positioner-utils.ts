@@ -4,6 +4,7 @@ import {
   getStyle,
   hasTransactionChanged,
   isElementDomNode,
+  Transaction,
   TransactionProps,
   within,
 } from '@remirror/core';
@@ -12,6 +13,20 @@ export { isEmptyBlockNode } from '@remirror/core';
 
 interface HasChangedProps extends EditorStateProps, Partial<TransactionProps> {
   previousState: EditorState | undefined;
+}
+
+/**
+ * Checks if the given transaction force updates positioners.
+ *
+ * @param tr - the Transaction to check
+ * @param key - filter for a specific key. Defaults to all.
+ */
+export function isPositionerUpdateTransaction(
+  tr: Transaction,
+  key = POSITIONER_UPDATE_ALL,
+): boolean {
+  const { key: trKey } = tr?.getMeta(POSITIONER_UPDATE_KEY) ?? {};
+  return trKey === key;
 }
 
 /**
@@ -24,6 +39,10 @@ export function hasStateChanged(props: HasChangedProps): boolean {
   const { tr, state, previousState } = props;
 
   if (!previousState) {
+    return true;
+  }
+
+  if (tr && isPositionerUpdateTransaction(tr)) {
     return true;
   }
 
@@ -105,3 +124,7 @@ export function isPositionVisible(
 }
 
 export const POSITIONER_WIDGET_KEY = 'remirror-positioner-widget';
+
+export const POSITIONER_UPDATE_KEY = 'positionerUpdate';
+
+export const POSITIONER_UPDATE_ALL = '__all_positioners__';

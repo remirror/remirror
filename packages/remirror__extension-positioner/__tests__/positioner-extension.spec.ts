@@ -4,18 +4,83 @@ import { isAllSelection } from '@remirror/core';
 import {
   blockNodePositioner,
   cursorPositioner,
+  isPositionerUpdateTransaction,
+  POSITIONER_UPDATE_KEY,
   PositionerExtension,
   selectionPositioner,
 } from '../';
 
 extensionValidityTest(PositionerExtension);
 
+function create(extension?: PositionerExtension) {
+  return renderEditor([extension ?? new PositionerExtension()]);
+}
+
+describe('#forceUpdatePositioners', () => {
+  it('triggers a transaction with meta indicating all positioners should update', () => {
+    const { manager, chain } = create();
+
+    chain.forceUpdatePositioners().tr();
+
+    expect(manager.tr.getMeta(POSITIONER_UPDATE_KEY)).toMatchInlineSnapshot(`
+      Object {
+        "key": "__all_positioners__",
+      }
+    `);
+  });
+
+  it('triggers a transaction with meta indicating the specific key should update', () => {
+    const { manager, chain } = create();
+
+    chain.forceUpdatePositioners('myCustomFiltering').tr();
+
+    expect(manager.tr.getMeta(POSITIONER_UPDATE_KEY)).toMatchInlineSnapshot(`
+      Object {
+        "key": "myCustomFiltering",
+      }
+    `);
+  });
+});
+
+describe('utils#isPositionerUpdateTransaction', () => {
+  it('returns true if the transaction is a positioner update', () => {
+    const { manager, chain } = create();
+
+    chain.forceUpdatePositioners().tr();
+
+    expect(isPositionerUpdateTransaction(manager.tr)).toBeTrue();
+  });
+
+  it('returns false if the transaction is NOT a positioner update', () => {
+    const { manager } = create();
+
+    expect(isPositionerUpdateTransaction(manager.tr)).toBeFalse();
+  });
+
+  it('returns true if the transaction is of the matching positioner key', () => {
+    const { manager, chain } = create();
+
+    chain.forceUpdatePositioners('myCustomKey').tr();
+
+    expect(isPositionerUpdateTransaction(manager.tr, 'myCustomKey')).toBeTrue();
+  });
+
+  it('returns false if the transaction is of the matching positioner key', () => {
+    const { manager, chain } = create();
+
+    chain.forceUpdatePositioners('myCustomKey').tr();
+
+    expect(isPositionerUpdateTransaction(manager.tr)).toBeFalse();
+    expect(isPositionerUpdateTransaction(manager.tr, 'myOtherKey')).toBeFalse();
+  });
+});
+
 test('`cursorPositioner` can position itself', () => {
   const positionerExtension = new PositionerExtension();
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([positionerExtension]);
+  } = create(positionerExtension);
 
   const cursorElement = document.createElement('div');
   document.body.append(cursorElement);
@@ -50,7 +115,7 @@ test('`selectionPositioner` can position itself', () => {
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([positionerExtension]);
+  } = create(positionerExtension);
 
   const centeredElement = document.createElement('div');
   document.body.append(centeredElement);
@@ -85,7 +150,7 @@ test('`positionerExtension` can position itself', () => {
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([positionerExtension]);
+  } = create(positionerExtension);
 
   const floatingElement = document.createElement('div');
   document.body.append(floatingElement);
@@ -116,7 +181,7 @@ test("a custom positioner can define it's own hasChanged behaviour", () => {
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([positionerExtension]);
+  } = create(positionerExtension);
 
   const customElement = document.createElement('div');
   document.body.append(customElement);
@@ -148,7 +213,7 @@ test("a custom positioner can determine it's own active state", () => {
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([positionerExtension]);
+  } = create(positionerExtension);
 
   const customElement = document.createElement('div');
   document.body.append(customElement);

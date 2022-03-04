@@ -1,5 +1,7 @@
 import {
   AddCustomHandler,
+  command,
+  CommandFunction,
   CustomHandler,
   debounce,
   EditorState,
@@ -33,7 +35,11 @@ import type {
   PositionerUpdateEvent,
   SetActiveElement,
 } from './positioner';
-import { POSITIONER_WIDGET_KEY } from './positioner-utils';
+import {
+  POSITIONER_UPDATE_ALL,
+  POSITIONER_UPDATE_KEY,
+  POSITIONER_WIDGET_KEY,
+} from './positioner-utils';
 
 export interface PositionerOptions {
   /**
@@ -150,6 +156,21 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
       stopEvent: () => true,
     });
     return DecorationSet.create(state.doc, [decoration]);
+  }
+
+  /**
+   * Trigger an update of positioners manually. This can be useful to update positioners when
+   * the view is updated in a way that doesn't trigger a ProseMirror state change. For instance
+   * when an image URL is loaded and the document is reflowed.
+   *
+   * @param key - Allows filtering a specific type of positioner to update. Defaults to all.
+   */
+  @command()
+  forceUpdatePositioners(key = POSITIONER_UPDATE_ALL): CommandFunction {
+    return ({ tr, dispatch }) => {
+      dispatch?.(tr.setMeta(POSITIONER_UPDATE_KEY, { key }));
+      return true;
+    };
   }
 
   /**
