@@ -84,7 +84,8 @@ export class DomFramework<Extension extends AnyExtension> extends Framework<
     // the component's copy of the state.
     this.view.updateState(state);
 
-    if (triggerChange) {
+    // If `transactions` is an empty array, that means the transaction was cancelled by `filterTransaction`.
+    if (triggerChange && transactions?.length !== 0) {
       this.onChange({ state, tr });
     }
 

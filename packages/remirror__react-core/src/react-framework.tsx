@@ -215,7 +215,8 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
     // the component's copy of the state.
     this.view.updateState(state);
 
-    if (triggerChange) {
+    // If `transactions` is an empty array, that means the transaction was cancelled by `filterTransaction`.
+    if (triggerChange && transactions?.length !== 0) {
       // Update the `onChange` handler before notifying the manager but only when a change should be triggered.
       this.onChange({ state, tr });
     }
