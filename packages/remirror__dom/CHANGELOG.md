@@ -1,5 +1,13 @@
 # @remirror/dom
 
+## 1.0.23
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
 ## 1.0.22
 
 > 2022-03-04

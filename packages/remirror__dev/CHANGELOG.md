@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.0.27
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
+- Updated dependencies []:
+  - @remirror/react@1.0.27
+
 ## 1.0.26
 
 > 2022-03-04

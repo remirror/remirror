@@ -1,5 +1,16 @@
 # jest-remirror
 
+## 1.0.31
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
+- Updated dependencies []:
+  - @remirror/dom@1.0.23
+
 ## 1.0.30
 
 > 2022-03-06
