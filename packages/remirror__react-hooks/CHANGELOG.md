@@ -1,5 +1,16 @@
 # @remirror/react-hooks
 
+## 1.0.26
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
+- Updated dependencies []:
+  - @remirror/react-core@1.0.25
+
 ## 1.0.25
 
 > 2022-03-04

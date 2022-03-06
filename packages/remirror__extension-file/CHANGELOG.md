@@ -1,5 +1,17 @@
 # @remirror/extension-file
 
+## 0.3.15
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
+- Updated dependencies []:
+  - @remirror/react@1.0.27
+  - @remirror/react-components@1.0.26
+
 ## 0.3.14
 
 > 2022-03-04

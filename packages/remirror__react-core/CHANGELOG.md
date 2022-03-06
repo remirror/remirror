@@ -1,5 +1,13 @@
 # @remirror/react-core
 
+## 1.0.25
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
 ## 1.0.24
 
 > 2022-03-04

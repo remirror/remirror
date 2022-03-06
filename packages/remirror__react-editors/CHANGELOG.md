@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.61
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
+- Updated dependencies []:
+  - remirror@1.0.70
+  - @remirror/extension-react-tables@1.0.27
+  - @remirror/react@1.0.27
+
 ## 0.1.60
 
 > 2022-03-04
