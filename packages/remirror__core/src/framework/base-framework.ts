@@ -308,7 +308,7 @@ export interface UpdateStateProps<Schema extends EditorSchema = EditorSchema>
    * updates caused by prosemirror plugins hook state methods like
    * `filterTransactions` and `appendTransactions`.
    *
-   * This is for advanced users only, and I personally have never needed it.
+   * This is for advanced users only.
    */
   transactions?: Array<Transaction<Schema>>;
 }
