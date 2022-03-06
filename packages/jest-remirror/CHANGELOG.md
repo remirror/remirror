@@ -1,5 +1,13 @@
 # jest-remirror
 
+## 1.0.30
+
+> 2022-03-06
+
+### Patch Changes
+
+- Add `default` filed in the `package.json`.
+
 ## 1.0.29
 
 > 2022-03-04
