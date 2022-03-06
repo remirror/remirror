@@ -16,10 +16,12 @@
   "exports": {
     ".": {
       "require": "./dist/remirror-cli.cjs.js",
-      "types": "./dist/remirror-cli.cjs.d.ts"
+      "types": "./dist/remirror-cli.cjs.d.ts",
+      "default": "./dist/remirror-cli.cjs.js"
     },
     "./cli": {
-      "require": "./cli/dist/remirror-cli-cli.cjs.js"
+      "require": "./cli/dist/remirror-cli-cli.cjs.js",
+      "default": "./cli/dist/remirror-cli-cli.cjs.js"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"

@@ -11,11 +11,13 @@
   },
   "exports": {
     ".": {
-      "require": "./dist/storybook-react.cjs.js"
+      "require": "./dist/storybook-react.cjs.js",
+      "default": "./dist/storybook-react.cjs.js"
     },
     "./package.json": "./package.json",
     "./storybook-react-main": {
-      "require": "./storybook-react-main/dist/storybook-react-storybook-react-main.cjs.js"
+      "require": "./storybook-react-main/dist/storybook-react-storybook-react-main.cjs.js",
+      "default": "./storybook-react-main/dist/storybook-react-storybook-react-main.cjs.js"
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
