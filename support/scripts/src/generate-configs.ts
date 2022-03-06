@@ -222,7 +222,7 @@ function augmentExportsObject(rootJson: PackageJson, filepath: string, subJson: 
     // Experimental since this is not currently resolved by TypeScript.
     types: prefixRelativePath(subJson.types ? path.join(filepath, subJson.types) : undefined),
   };
-  field.default = field.import;
+  field.default = field.import || field.require;
 
   let exportsObject: Exports;
 

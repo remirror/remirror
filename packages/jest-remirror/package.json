@@ -21,11 +21,13 @@
   "exports": {
     ".": {
       "require": "./dist/jest-remirror.cjs.js",
-      "types": "./dist/jest-remirror.cjs.d.ts"
+      "types": "./dist/jest-remirror.cjs.d.ts",
+      "default": "./dist/jest-remirror.cjs.js"
     },
     "./environment": {
       "require": "./environment/dist/jest-remirror-environment.cjs.js",
-      "types": "./environment/dist/jest-remirror-environment.cjs.d.ts"
+      "types": "./environment/dist/jest-remirror-environment.cjs.d.ts",
+      "default": "./environment/dist/jest-remirror-environment.cjs.js"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
