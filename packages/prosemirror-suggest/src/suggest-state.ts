@@ -530,12 +530,12 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * @param - params
    */
   apply(props: TransactionProps<Schema> & EditorStateProps<Schema>): this {
-    const { exit } = this.#handlerMatches;
+    const { exit, change } = this.#handlerMatches;
 
     if (this.#lastChangeFromAppend) {
       this.#lastChangeFromAppend = false;
 
-      if (!exit?.suggester.appendTransaction) {
+      if (!exit?.suggester.appendTransaction && !change?.suggester.appendTransaction) {
         return this;
       }
     }
