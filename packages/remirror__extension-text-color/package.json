@@ -47,7 +47,7 @@
     "color2k": "^1.2.4"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.13"
+    "@remirror/pm": "^1.0.14"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.10"
