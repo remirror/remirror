@@ -1,5 +1,17 @@
 # jest-remirror
 
+## 1.0.32
+
+> 2022-03-08
+
+### Patch Changes
+
+- When using `prosemirror-suggest`, if `appendTransaction` is `true`, make sure the match state will be updated after every transaction.
+
+- Updated dependencies []:
+  - jest-prosemirror@1.0.19
+  - @remirror/pm@1.0.14
+
 ## 1.0.31
 
 > 2022-03-06

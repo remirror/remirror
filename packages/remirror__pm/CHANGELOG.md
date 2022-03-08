@@ -1,5 +1,16 @@
 # @remirror/pm
 
+## 1.0.14
+
+> 2022-03-08
+
+### Patch Changes
+
+- When using `prosemirror-suggest`, if `appendTransaction` is `true`, make sure the match state will be updated after every transaction.
+
+- Updated dependencies []:
+  - prosemirror-suggest@1.0.8
+
 ## 1.0.13
 
 > 2022-03-01

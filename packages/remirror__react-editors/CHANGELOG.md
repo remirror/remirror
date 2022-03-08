@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.62
+
+> 2022-03-08
+
+### Patch Changes
+
+- When using `prosemirror-suggest`, if `appendTransaction` is `true`, make sure the match state will be updated after every transaction.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.14
+
 ## 0.1.61
 
 > 2022-03-06
