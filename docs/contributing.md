@@ -190,7 +190,7 @@ When run this builds all packages and then watch for changes to reload as necess
 
 Once your work is complete you'll want to create a Pull Request to share all that goodness with the rest of us.
 
-1. Create a [pull request](https://help.github.com/en/articles/creating-a-pull-request) using the github interface. The template will automatically populate for you.
+1. Create a [pull request](https://help.github.com/en/articles/creating-a-pull-request) using the github interface. The template will automatically populate the description for you; use a PR name following the ["Conventional Commits" conventions](https://www.conventionalcommits.org/en/v1.0.0/).
 2. Add a description and reference the issue this pull request addresses where applicable. The description will be used as the body of the git commit message since all pull request are squashed down into one commit before merging.
 3. Tick off all relevant check boxes by placing an x between the square brackets i.e. `[ ]` to `[x]`.
 4. Please add a screenshot where the change is related to the user interface or design. It makes it so much easier to grasp the intentions of your work. You can use your favourite GIF screenshare tool for creating animated screenshots.
@@ -252,14 +252,17 @@ If you prefer not to use the automated method for creating extension the followi
 3. Replace `TEMPLATE_DESCRIPTION` with a suitable description.
 4. Rename the files from `template-` to `<name>-`.
 
+### Edit `remirror` package.
+
+If you think this package is important and most users would want it, you can add it into the `remirror` package so that users won't need to install it separately.
+
+1. Edit `packages/remirror/package.json` to add dependency and entrypoint.
+2. Edit `packages/remirror/src/extensions.ts`. to export your extension.
+
 ### Final steps
 
-1. (OPTIONAL) -Add your name and email as a contributor to the `package.json`.
-2. Add `packages/remirror/extension/<name>/package.json`.
-3. Add `packages/remirror/src/extension/<name>.ts`.
-4. Edit `packages/remirror/package.json` to add dependency and entrypoint.
-5. (OPTIONAL) - Edit `/.changeset/config.json` and add the package name to the linked array.
-6. Run `pnpm i` in root.
+1. (OPTIONAL) Add your name and email as a contributor to the `package.json`.
+2. Run `pnpm i` in root.
 
 <br />
 

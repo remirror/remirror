@@ -17,15 +17,34 @@ The YJS extension is the recommended extension for creating a collaborative edit
 
 This extension is installed for you when you install the main `remirror` package.
 
-You can use the imports in the following way.
+You can use the imports in the following way:
 
 ```ts
 import { YjsExtension } from 'remirror/extensions';
 ```
 
-To install it directly you can use
+The `yjs` extension provides support for "undo"/"redo" commands, which conflicts with the default `history` extension. The `history` extension provides "undo"/"redo" for the changes done by the _current user_ only, while the `yjs` extension provides "undo"/"redo" on the level of the underlying yjs transactions, which covers changes by _all active users._ Note however that a `yjs` "undo" replaces the complete document, which prevents other extensions (such as the `annotations` extension) from tracking positions.
 
-The extension is provided by the `@remirror/extension-yjs` package. There are two ways of pulling it into your project.
+You can select the `yjs` "undo"/"redo" implementation by disabling the `history` extension in the core preset configuration:
+
+```ts
+const { manager } = useRemirror({
+  extensions: () => [new YjsExtension({ getProvider })],
+  core: {
+    excludeExtensions: ['history'],
+  },
+});
+```
+
+Alternatively you can also disable the "undo"/"redo" functionality of the `yjs` extension:
+
+```ts
+const { manager } = useRemirror({
+  extensions: () => [new YjsExtension({ getProvider, disableUndo: true })],
+});
+```
+
+_Note that using the `history` extension "undo"/"redo" requires [additional support from the `y-prosemirror` library](https://github.com/yjs/y-prosemirror/pull/91)._
 
 ### Examples
 

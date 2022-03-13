@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-suggest",
-  "version": "1.0.4",
+  "version": "1.0.8",
   "description": "Primitives for building your prosemirror suggestion and autocomplete functionality",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-suggest",
   "repository": {
@@ -24,31 +24,31 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/prosemirror-suggest.cjs.js",
-  "module": "dist/prosemirror-suggest.esm.js",
+  "main": "./dist/prosemirror-suggest.cjs.js",
+  "module": "./dist/prosemirror-suggest.esm.js",
   "browser": {
     "./dist/prosemirror-suggest.cjs.js": "./dist/prosemirror-suggest.browser.cjs.js",
     "./dist/prosemirror-suggest.esm.js": "./dist/prosemirror-suggest.browser.esm.js"
   },
-  "types": "dist/prosemirror-suggest.cjs.d.ts",
+  "types": "./dist/prosemirror-suggest.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-constants": "^1.0.1",
-    "@remirror/core-helpers": "^1.0.3",
+    "@remirror/core-constants": "^1.0.2",
+    "@remirror/core-helpers": "^1.0.5",
     "@remirror/types": "^0.1.1",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
     "@types/prosemirror-keymap": "^1.0.4",
-    "@types/prosemirror-model": "^1.13.2",
-    "@types/prosemirror-state": "^1.2.7",
-    "@types/prosemirror-view": "^1.19.1",
-    "prosemirror-model": "^1.14.3",
+    "@types/prosemirror-model": "^1.16.0",
+    "@types/prosemirror-state": "^1.2.8",
+    "@types/prosemirror-view": "^1.23.1",
+    "prosemirror-model": "^1.16.1",
     "prosemirror-state": "^1.3.4",
-    "prosemirror-view": "^1.20.3"
+    "prosemirror-view": "^1.23.6"
   },
   "peerDependencies": {
     "@types/prosemirror-model": "^1",

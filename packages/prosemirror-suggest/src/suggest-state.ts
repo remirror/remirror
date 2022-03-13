@@ -530,13 +530,17 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * @param - params
    */
   apply(props: TransactionProps<Schema> & EditorStateProps<Schema>): this {
+    const { exit, change } = this.#handlerMatches;
+
     if (this.#lastChangeFromAppend) {
       this.#lastChangeFromAppend = false;
-      return this;
+
+      if (!exit?.suggester.appendTransaction && !change?.suggester.appendTransaction) {
+        return this;
+      }
     }
 
     const { tr, state } = props;
-    const { exit } = this.#handlerMatches;
     const transactionHasChanged = tr.docChanged || tr.selectionSet;
     const shouldIgnoreUpdate: boolean = tr.getMeta(IGNORE_SUGGEST_META_KEY);
 

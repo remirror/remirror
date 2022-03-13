@@ -30,8 +30,8 @@ export const EmojiPopupComponent: FC = () => {
   const enabled = !!state;
 
   return (
-    <FloatingWrapper positioner='cursor' enabled={enabled} placement='auto-end'>
-      <div {...getMenuProps()}>
+    <FloatingWrapper positioner='cursor' enabled={enabled} placement='auto-end' renderOutsideEditor>
+      <div {...getMenuProps()} className={cx(ExtensionEmojiTheme.EMOJI_POPUP_WRAPPER)}>
         {enabled &&
           (state?.list ?? emptyList).map((emoji, index) => {
             const isHighlighted = indexIsSelected(index);

@@ -73,6 +73,7 @@ import { ReactNodeView } from './react-node-view';
     defaultContentNode: 'span',
     defaultEnvironment: 'both',
     nodeViewComponents: {},
+    stopEvent: null,
   },
   staticKeys: ['defaultBlockNode', 'defaultInlineNode', 'defaultContentNode', 'defaultEnvironment'],
 })

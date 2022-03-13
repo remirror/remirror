@@ -15,6 +15,7 @@ import type {
   StateJSON,
 } from '@remirror/core-types';
 import {
+  containsAttributes,
   FragmentStringHandlerOptions,
   getActiveNode,
   getMarkRange,
@@ -88,12 +89,22 @@ export class HelpersExtension extends PlainExtension {
       }
 
       if (isMarkExtension(extension)) {
-        active[extension.name] = () => {
-          return isMarkActive({ trState: this.store.getState(), type: extension.type });
+        active[extension.name] = (attrs?: ProsemirrorAttributes) => {
+          return isMarkActive({ trState: this.store.getState(), type: extension.type, attrs });
         };
 
-        attrs[extension.name] = () => {
-          return getMarkRange(this.store.getState().selection.$from, extension.type)?.mark.attrs;
+        attrs[extension.name] = (attrs?: ProsemirrorAttributes) => {
+          const markRange = getMarkRange(this.store.getState().selection.$from, extension.type);
+
+          if (!markRange || !attrs) {
+            return markRange?.mark.attrs;
+          }
+
+          if (containsAttributes(markRange.mark, attrs)) {
+            return markRange.mark.attrs;
+          }
+
+          return;
         };
       }
 

@@ -1,4 +1,4 @@
-import { assert, Transaction, TransactionProps } from '@remirror/core';
+import { Transaction, TransactionProps } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import {
@@ -9,19 +9,16 @@ import {
   UpdateAnnotationAction,
 } from './annotation-actions';
 import { toSegments } from './annotation-segments';
-import type {
-  Annotation,
-  GetStyle,
-  MapLike,
-  OmitText,
-  TransformedAnnotation,
-} from './annotation-types';
+import type { Annotation, AnnotationStore, GetStyle, OmitText } from './annotation-types';
 
 interface ApplyProps extends TransactionProps {
   action: any;
 }
 
 export class AnnotationState<Type extends Annotation = Annotation> {
+  /**
+   * Cache of annotations being currently shown
+   */
   annotations: Array<OmitText<Type>> = [];
 
   /**
@@ -32,71 +29,33 @@ export class AnnotationState<Type extends Annotation = Annotation> {
 
   constructor(
     private readonly getStyle: GetStyle<Type>,
-    private readonly map: MapLike<string, TransformedAnnotation<Type>>,
-    private readonly transformPosition: (pos: number) => any,
-    private readonly transformPositionBeforeRender: (rpos: any) => number | null,
+    private readonly store: AnnotationStore<Type>,
   ) {}
 
   addAnnotation(addAction: AddAnnotationAction<Type>): void {
-    const { id } = addAction.annotationData;
-    this.map.set(id, {
+    // FIXME: Review and remove explicit cast.
+    const annotation: OmitText<Type> = {
+      from: addAction.from,
+      to: addAction.to,
       ...addAction.annotationData,
-      from: this.transformPosition(addAction.from),
-      to: this.transformPosition(addAction.to),
-    } as TransformedAnnotation<Type>);
+    } as OmitText<Type>;
+    this.store.addAnnotation(annotation);
   }
 
   updateAnnotation(updateAction: UpdateAnnotationAction<Type>): void {
-    assert(this.map.has(updateAction.annotationId));
-
-    this.map.set(updateAction.annotationId, {
-      ...this.map.get(updateAction.annotationId),
-      ...updateAction.annotationData,
-    } as TransformedAnnotation<Type>);
+    this.store.updateAnnotation(updateAction.annotationId, updateAction.annotationData);
   }
 
   removeAnnotations(removeAction: RemoveAnnotationsAction): void {
-    removeAction.annotationIds.forEach((id) => {
-      this.map.delete(id);
-    });
+    this.store.removeAnnotations(removeAction.annotationIds);
   }
 
   setAnnotations(setAction: SetAnnotationsAction<Type>): void {
-    // YJS maps don't support clear
-    this.map.clear?.();
-    this.map.forEach((_, id, map) => {
-      map.delete(id);
-    });
-
-    setAction.annotations.forEach((annotation) => {
-      const { id, from, to } = annotation;
-      this.map.set(id, {
-        ...annotation,
-        from: this.transformPosition(from),
-        to: this.transformPosition(to),
-      } as TransformedAnnotation<Type>);
-    });
+    this.store.setAnnotations(setAction.annotations);
   }
 
   formatAnnotations(): Array<OmitText<Type>> {
-    const annotations: Array<OmitText<Type>> = [];
-
-    this.map.forEach((annotation, id, map) => {
-      const from = this.transformPositionBeforeRender(annotation.from);
-      const to = this.transformPositionBeforeRender(annotation.to);
-
-      if (!from || !to) {
-        map.delete(id);
-      }
-
-      annotations.push({
-        ...annotation,
-        from,
-        to,
-      });
-    });
-
-    return annotations;
+    return this.store.formatAnnotations();
   }
 
   createDecorations(tr: Transaction, annotations: Array<OmitText<Type>> = []): DecorationSet {
@@ -123,19 +82,6 @@ export class AnnotationState<Type extends Annotation = Annotation> {
       return this;
     }
 
-    this.annotations = this.annotations
-      // Adjust annotation positions based on changes in the editor, e.g.
-      // if new text was added before the decoration
-      .map((annotation) => ({
-        ...annotation,
-        from: tr.mapping.map(annotation.from, -1),
-        // -1 indicates that the annotation isn't extended when the user types
-        // at the end of the annotation
-        to: tr.mapping.map(annotation.to, -1),
-      }))
-      // Remove annotations for which all containing content was deleted
-      .filter((annotation) => annotation.to !== annotation.from);
-
     if (actionType !== undefined) {
       if (actionType === ActionType.ADD_ANNOTATION) {
         this.addAnnotation(action as AddAnnotationAction<Type>);
@@ -156,8 +102,27 @@ export class AnnotationState<Type extends Annotation = Annotation> {
       this.annotations = this.formatAnnotations();
       this.decorationSet = this.createDecorations(tr, this.annotations);
     } else {
-      // Performance optimization: Adjust decoration positions based on changes
-      // in the editor, e.g. if new text was added before the decoration
+      // Adjust cached annotation positions based on changes in the editor, e.g.
+      // if new text was added before the decoration.
+      //
+      // Note: If you see annotations getting removed here check the source of
+      // the transaction and whether it contains any unexpected steps. In particular
+      // 'replace' steps that modify the entire document range, such as the one
+      // used by the Yjs extension for supporting `undo`, can cause issues.
+      // Consider using the `disableUndo` option of the Yjs extension, if you are
+      // using both the Yjs and Annotations extensions.
+      this.annotations = this.annotations
+        .map((annotation) => ({
+          ...annotation,
+          // 1 indicates that the annotation isn't extended when the user types
+          // at the beginning of the annotation
+          from: tr.mapping.map(annotation.from, 1),
+          // -1 indicates that the annotation isn't extended when the user types
+          // at the end of the annotation
+          to: tr.mapping.map(annotation.to, -1),
+        }))
+        // Remove annotations for which all containing content was deleted
+        .filter((annotation) => annotation.to !== annotation.from);
       this.decorationSet = this.decorationSet.map(tr.mapping, tr.doc);
     }
 

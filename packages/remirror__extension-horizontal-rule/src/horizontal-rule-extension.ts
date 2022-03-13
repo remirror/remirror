@@ -96,7 +96,9 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
   createInputRules(): InputRule[] {
     return [
       nodeInputRule({
-        regexp: /^(?:---|___\s|\*\*\*\s)$/,
+        // Allow dash + hyphen to cater for ShortcutsExtension, which replaces first
+        // two hyphens with a dash, i.e. "---" becomes "<dash>-"
+        regexp: /^(?:---|—-|___\s|\*\*\*\s)$/,
         type: this.type,
         beforeDispatch: ({ tr }) => {
           // Update to using a text selection.

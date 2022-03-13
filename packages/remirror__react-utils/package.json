@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-utils",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "A small set of utilities for react components in remirror.",
   "keywords": [
     "react",
@@ -30,21 +30,21 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-react-utils.cjs.js",
-  "module": "dist/remirror-react-utils.esm.js",
+  "main": "./dist/remirror-react-utils.cjs.js",
+  "module": "./dist/remirror-react-utils.esm.js",
   "browser": {
     "./dist/remirror-react-utils.cjs.js": "./dist/remirror-react-utils.browser.cjs.js",
     "./dist/remirror-react-utils.esm.js": "./dist/remirror-react-utils.browser.esm.js"
   },
-  "types": "dist/remirror-react-utils.cjs.d.ts",
+  "types": "./dist/remirror-react-utils.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-constants": "^1.0.1",
-    "@remirror/core-helpers": "^1.0.3",
-    "@remirror/core-types": "^1.0.3"
+    "@remirror/core-constants": "^1.0.2",
+    "@remirror/core-helpers": "^1.0.5",
+    "@remirror/core-types": "^1.0.4"
   },
   "devDependencies": {
     "@types/react": "^17.0.14",

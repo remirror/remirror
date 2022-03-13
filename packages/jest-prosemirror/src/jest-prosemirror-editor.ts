@@ -25,10 +25,14 @@ import {
   isTextDomNode,
 } from '@remirror/core-utils';
 import { inputRules } from '@remirror/pm/inputrules';
-import { DOMParser, Slice } from '@remirror/pm/model';
+import { Slice } from '@remirror/pm/model';
 import { AllSelection, NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 import { cellAround, CellSelection } from '@remirror/pm/tables';
-import { DirectEditorProps, EditorView } from '@remirror/pm/view';
+import {
+  __parseFromClipboard as parseFromClipboard,
+  DirectEditorProps,
+  EditorView,
+} from '@remirror/pm/view';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
 import { createState, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
@@ -126,12 +130,13 @@ export function pasteContent<Schema extends EditorSchema = EditorSchema>(
   let slice: ProsemirrorNode[] | Slice | Slice[];
 
   if (isString(content)) {
-    const element = document.createElement('div');
-    element.innerHTML = content;
-    slice = DOMParser.fromSchema(view.state.schema).parseSlice(element, {
-      context: view.state.selection.$head,
-      preserveWhitespace: true,
-    });
+    const parsedSlice = parseFromClipboard(view, content, '', true, view.state.selection.$head);
+
+    if (!parsedSlice) {
+      throw new Error('No content to paste');
+    }
+
+    slice = parsedSlice;
   } else {
     const { from, to } =
       content.type.name === 'doc'
@@ -139,11 +144,10 @@ export function pasteContent<Schema extends EditorSchema = EditorSchema>(
         : { from: 0, to: undefined };
 
     slice = content.slice(from, to);
+    view.someProp('transformPasted', (f) => {
+      slice = f(slice);
+    });
   }
-
-  view.someProp('transformPasted', (f) => {
-    slice = f(slice);
-  });
 
   view.dispatch(view.state.tr.replaceSelection(slice));
 }

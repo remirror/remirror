@@ -513,6 +513,8 @@ export function findMatches(
   regexp: RegExp,
   runWhile: (match: RegExpExecArray | null) => boolean = (match) => !!match,
 ): RegExpExecArray[] {
+  regexp.lastIndex = 0;
+
   const results: RegExpExecArray[] = [];
   const flags = regexp.flags;
   let match: RegExpExecArray | null;

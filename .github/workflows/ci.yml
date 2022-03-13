@@ -18,7 +18,7 @@ env:
 jobs:
   # Lint the project
   lint:
-    timeout-minutes: 8
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -43,9 +43,6 @@ jobs:
         uses: ./support/actions/pnpm
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
-
-      - name: check build
-        run: pnpm lint:build
 
       - name: check css
         run: pnpm lint:css
@@ -98,7 +95,7 @@ jobs:
 
   # Unit test and update coverage report
   unit_test:
-    timeout-minutes: 8
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -128,7 +125,7 @@ jobs:
         run: pnpm test
 
       - name: publish code coverage report
-        uses: paambaati/codeclimate-action@v2.4.0
+        uses: paambaati/codeclimate-action@v2.7.5
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
@@ -138,11 +135,11 @@ jobs:
 
   # Build the project and run tests on built files.
   build_test:
-    timeout-minutes: 8
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.8] # TODO: Make it 16 after this is fixed: https://github.com/nodejs/node/issues/40030
+        node-version: [14.x, 16.x]
       fail-fast: false
 
     steps:
@@ -177,7 +174,7 @@ jobs:
 
   # Check that package sizes are within their boundaries
   size_check:
-    timeout-minutes: 8
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository

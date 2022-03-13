@@ -139,9 +139,16 @@ export function splitListItem(
 
         wrap = wrap.append(Fragment.from(listItemType.createAndFill(null, content) || undefined));
 
+        const depthAfter =
+          $from.indexAfter(-1) < $from.node(-2).childCount
+            ? 1
+            : $from.indexAfter(-2) < $from.node(-3).childCount
+            ? 2
+            : 3;
+
         tr.replace(
           $from.before(keepItem ? undefined : -1),
-          $from.after(-3),
+          $from.after(-depthAfter),
           new Slice(wrap, keepItem ? 3 : 2, 2),
         );
         tr.setSelection(
@@ -713,11 +720,16 @@ export function listBackspace({ view }: CommandFunctionProps): boolean {
       return false;
     }
 
+    // Handle the backspace key in a three-levels list correctly:
+    // * A
+    //   * <cursor>B
+    //     * C
     const itemIndex = $cursor.index(range.depth); // current node is the n-th node in item
     const listIndex = $cursor.index(range.depth - 1); // current item is the n-th item in list
-    const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in root
+    const rootIndex = $cursor.index(range.depth - 2); // current list is the n-th list in its parent
+    const isNestedList = range.depth - 2 >= 1 && isListItemNode($cursor.node(range.depth - 2));
 
-    if (itemIndex === 0 && listIndex === 0 && rootIndex <= 1) {
+    if (itemIndex === 0 && listIndex === 0 && rootIndex <= 1 && isNestedList) {
       liftListItem(range.parent.type)(view.state, view.dispatch);
     }
   }

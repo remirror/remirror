@@ -1,5 +1,114 @@
 # @remirror/pm
 
+## 1.0.14
+
+> 2022-03-08
+
+### Patch Changes
+
+- When using `prosemirror-suggest`, if `appendTransaction` is `true`, make sure the match state will be updated after every transaction.
+
+- Updated dependencies []:
+  - prosemirror-suggest@1.0.8
+
+## 1.0.13
+
+> 2022-03-01
+
+### Patch Changes
+
+- Fix an issue that causes the selected text being deleted when pasting.
+
+- Updated dependencies []:
+  - prosemirror-paste-rules@1.0.9
+
+## 1.0.12
+
+> 2022-02-25
+
+### Patch Changes
+
+- Fixes an issue that causes invalid duplicate marks when using `pasteRules` plugin.
+
+* Fixes an issue that causes some text nodes to be deleted when using `replaceSelection`.
+
+* Updated dependencies []:
+  - prosemirror-paste-rules@1.0.8
+
+## 1.0.11
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - prosemirror-paste-rules@1.0.7
+  - prosemirror-suggest@1.0.7
+  - prosemirror-trailing-node@1.0.7
+
+## 1.0.10
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - prosemirror-paste-rules@1.0.6
+  - prosemirror-suggest@1.0.6
+  - prosemirror-trailing-node@1.0.6
+  - @remirror/core-constants@1.0.2
+  - @remirror/core-helpers@1.0.5
+
+## 1.0.9
+
+> 2021-12-06
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+## 1.0.8
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+## 1.0.7
+
+> 2021-11-23
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+## 1.0.6
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+  - prosemirror-paste-rules@1.0.5
+  - prosemirror-suggest@1.0.5
+  - prosemirror-trailing-node@1.0.5
+
+## 1.0.5
+
+> 2021-10-29
+
+### Patch Changes
+
+- Update prosemirror packages.
+
 ## 1.0.4
 
 > 2021-10-23

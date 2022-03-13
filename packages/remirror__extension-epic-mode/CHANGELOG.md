@@ -1,5 +1,112 @@
 # @remirror/extension-epic-mode
 
+## 1.0.16
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.6
+
+## 1.0.15
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.3.5
+
+## 1.0.14
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+
+## 1.0.13
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/pm@1.0.10
+  - @remirror/messages@1.0.6
+
+## 1.0.12
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.8
+  - @remirror/core@1.3.2
+
+## 1.0.11
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/pm@1.0.7
+
+## 1.0.10
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+
+## 1.0.9
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core@1.2.2
+  - @remirror/messages@1.0.5
+  - @remirror/pm@1.0.6
+
 ## 1.0.8
 
 > 2021-10-23

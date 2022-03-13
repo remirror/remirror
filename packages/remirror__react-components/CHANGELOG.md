@@ -1,5 +1,253 @@
 # @remirror/react-components
 
+## 1.0.26
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
+- Updated dependencies []:
+  - @remirror/react-core@1.0.25
+  - @remirror/react-hooks@1.0.26
+
+## 1.0.25
+
+> 2022-03-04
+
+### Patch Changes
+
+- Add the ability to force update positioners with a new command `forceUpdatePositioners`.
+
+  This can be useful to update positioners when the view is updated in a way that doesn't trigger a ProseMirror state change. For instance when an image URL is loaded and the document is reflowed.
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.2.0
+  - @remirror/react-core@1.0.24
+  - @remirror/react-hooks@1.0.25
+
+## 1.0.24
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.6
+  - @remirror/extension-positioner@1.1.18
+  - @remirror/extension-text-color@1.0.19
+  - @remirror/react-core@1.0.23
+  - @remirror/react-hooks@1.0.24
+
+## 1.0.23
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.1
+  - @remirror/extension-positioner@1.1.17
+  - @remirror/extension-text-color@1.0.18
+  - @remirror/react-core@1.0.22
+  - @remirror/react-hooks@1.0.23
+
+## 1.0.22
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.3.5
+  - @remirror/extension-positioner@1.1.16
+  - @remirror/extension-text-color@1.0.17
+  - @remirror/react-core@1.0.21
+  - @remirror/react-hooks@1.0.22
+
+## 1.0.21
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.4
+  - @remirror/extension-positioner@1.1.15
+  - @remirror/extension-text-color@1.0.16
+  - @remirror/react-core@1.0.20
+  - @remirror/react-hooks@1.0.21
+
+## 1.0.20
+
+> 2022-01-11
+
+### Patch Changes
+
+- Deprecate `getTheme` and `getThemeProps` in favour of new methods `getThemeVar` and `getThemeVarName`.
+
+  This removes a code path that used an ES6 Proxy, which cannot be polyfilled.
+
+  ```
+  getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
+
+  getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
+  ```
+
+  ```
+  getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
+
+  getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
+  ```
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.0
+  - @remirror/extension-text-color@1.0.15
+  - @remirror/extension-positioner@1.1.14
+  - @remirror/react-core@1.0.19
+  - @remirror/react-hooks@1.0.20
+
+## 1.0.19
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/pm@1.0.10
+  - @remirror/extension-positioner@1.1.13
+  - @remirror/extension-text-color@1.0.14
+  - @remirror/react-core@1.0.18
+  - @remirror/react-hooks@1.0.19
+  - multishift@1.0.6
+  - @remirror/i18n@1.0.8
+  - @remirror/icons@1.0.7
+  - @remirror/messages@1.0.6
+  - @remirror/react-utils@1.0.6
+  - @remirror/theme@1.1.5
+
+## 1.0.18
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.1.12
+  - @remirror/react-core@1.0.17
+  - @remirror/react-hooks@1.0.18
+
+## 1.0.17
+
+> 2021-12-06
+
+### Patch Changes
+
+- Fix an issue that cause `draggable` React node views unable to be draged.
+
+- Updated dependencies []:
+  - @remirror/react-core@1.0.16
+  - @remirror/react-hooks@1.0.17
+
+## 1.0.16
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/i18n@1.0.7
+  - @remirror/icons@1.0.6
+  - @remirror/pm@1.0.8
+  - @remirror/react-hooks@1.0.16
+  - @remirror/core@1.3.2
+  - @remirror/extension-positioner@1.1.11
+  - @remirror/extension-text-color@1.0.13
+  - @remirror/react-core@1.0.15
+
+## 1.0.15
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/extension-positioner@1.1.10
+  - @remirror/extension-text-color@1.0.12
+  - @remirror/react-core@1.0.14
+  - @remirror/react-hooks@1.0.15
+  - @remirror/pm@1.0.7
+
+## 1.0.14
+
+> 2021-11-10
+
+### Patch Changes
+
+- Implement the `stopEvent` method in `ReactNodeView`.
+
+* Add new method `hasHandlers` to extensions.
+
+* Updated dependencies []:
+  - @remirror/react-core@1.0.13
+  - @remirror/react-hooks@1.0.14
+  - @remirror/core@1.3.0
+  - @remirror/extension-positioner@1.1.9
+  - @remirror/extension-text-color@1.0.11
+
+## 1.0.13
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - multishift@1.0.5
+  - @remirror/core@1.2.2
+  - @remirror/extension-positioner@1.1.8
+  - @remirror/extension-text-color@1.0.10
+  - @remirror/i18n@1.0.6
+  - @remirror/icons@1.0.5
+  - @remirror/messages@1.0.5
+  - @remirror/pm@1.0.6
+  - @remirror/react-core@1.0.12
+  - @remirror/react-hooks@1.0.13
+  - @remirror/react-utils@1.0.5
+
 ## 1.0.12
 
 > 2021-10-23

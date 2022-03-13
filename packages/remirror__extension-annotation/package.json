@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-annotation",
-  "version": "1.1.3",
+  "version": "1.1.17",
   "description": "This extension allows to annotate the content in your editor",
   "keywords": [
     "remirror",
@@ -28,27 +28,27 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-annotation.cjs.js",
-  "module": "dist/remirror-extension-annotation.esm.js",
+  "main": "./dist/remirror-extension-annotation.cjs.js",
+  "module": "./dist/remirror-extension-annotation.esm.js",
   "browser": {
     "./dist/remirror-extension-annotation.cjs.js": "./dist/remirror-extension-annotation.browser.cjs.js",
     "./dist/remirror-extension-annotation.esm.js": "./dist/remirror-extension-annotation.browser.esm.js"
   },
-  "types": "dist/remirror-extension-annotation.cjs.d.ts",
+  "types": "./dist/remirror-extension-annotation.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.1",
-    "@remirror/extension-positioner": "^1.1.7",
-    "@remirror/messages": "^1.0.4"
+    "@remirror/core": "^1.3.6",
+    "@remirror/extension-positioner": "^1.2.0",
+    "@remirror/messages": "^1.0.6"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.14"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.10"
   },
   "publishConfig": {
     "access": "public"

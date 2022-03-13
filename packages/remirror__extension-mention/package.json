@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-mention",
-  "version": "1.0.8",
+  "version": "1.0.17",
   "description": "Mention extension for the remirror wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-mention",
   "repository": {
@@ -24,28 +24,28 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-mention.cjs.js",
-  "module": "dist/remirror-extension-mention.esm.js",
+  "main": "./dist/remirror-extension-mention.cjs.js",
+  "module": "./dist/remirror-extension-mention.esm.js",
   "browser": {
     "./dist/remirror-extension-mention.cjs.js": "./dist/remirror-extension-mention.browser.cjs.js",
     "./dist/remirror-extension-mention.esm.js": "./dist/remirror-extension-mention.browser.esm.js"
   },
-  "types": "dist/remirror-extension-mention.cjs.d.ts",
+  "types": "./dist/remirror-extension-mention.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.1",
-    "@remirror/extension-events": "^1.0.8",
-    "@remirror/messages": "^1.0.4",
+    "@remirror/core": "^1.3.6",
+    "@remirror/extension-events": "^1.0.17",
+    "@remirror/messages": "^1.0.6",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.14"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.10"
   },
   "publishConfig": {
     "access": "public"

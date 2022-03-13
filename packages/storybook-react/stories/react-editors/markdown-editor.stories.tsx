@@ -5,7 +5,7 @@ import { createContextState } from 'create-context-state';
 import jsx from 'refractor/lang/jsx';
 import md from 'refractor/lang/markdown';
 import typescript from 'refractor/lang/typescript';
-import { ExtensionPriority, getTheme } from 'remirror';
+import { ExtensionPriority, getThemeVar } from 'remirror';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -107,7 +107,7 @@ const MarkdownTextEditor = () => {
 
             pre {
               height: 100%;
-              padding: ${getTheme((t) => t.space[3])};
+              padding: ${getThemeVar('space', 3)};
               margin: 0;
             }
           }
@@ -137,14 +137,14 @@ const VisualEditor = () => {
             p,
             h3,
             h4 {
-              margin-top: ${getTheme((t) => t.space[2])};
-              margin-bottom: ${getTheme((t) => t.space[2])};
+              margin-top: ${getThemeVar('space', 2)};
+              margin-bottom: ${getThemeVar('space', 2)};
             }
 
             h1,
             h2 {
-              margin-bottom: ${getTheme((t) => t.space[3])};
-              margin-top: ${getTheme((t) => t.space[3])};
+              margin-bottom: ${getThemeVar('space', 3)};
+              margin-top: ${getThemeVar('space', 3)};
             }
           }
         `,

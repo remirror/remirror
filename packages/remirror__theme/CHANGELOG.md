@@ -1,5 +1,46 @@
 # @remirror/theme
 
+## 1.2.1
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+## 1.2.0
+
+> 2022-01-11
+
+### Minor Changes
+
+- Deprecate `getTheme` and `getThemeProps` in favour of new methods `getThemeVar` and `getThemeVarName`.
+
+  This removes a code path that used an ES6 Proxy, which cannot be polyfilled.
+
+  ```
+  getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
+
+  getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
+  ```
+
+  ```
+  getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
+
+  getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
+  ```
+
+## 1.1.5
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core-types@1.0.4
+
 ## 1.1.4
 
 > 2021-10-23

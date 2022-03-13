@@ -93,7 +93,7 @@ describe('pasteRules', () => {
         { regexp: /(@[a-z]+)/, markType: schema.marks.strong, type: 'mark' },
       ]);
       createEditor(doc(p('<cursor>')), { plugins: [plugin] })
-        .paste('<div>Some @test @content</div><div>should @be amazing</div>')
+        .paste(doc(p('Some @test @content'), p('should @be amazing')))
         .callback((content) => {
           expect(content.doc).toEqualProsemirrorNode(
             doc(
@@ -147,6 +147,89 @@ describe('pasteRules', () => {
           expect(content.doc).toEqualProsemirrorNode(
             doc(p('', strong('selected text is not empty'))),
           );
+        });
+      createEditor(doc(p('<start>multiple text nodes ', strong('are'), ' ', em('selected<end>'))), {
+        plugins: [plugin2],
+      })
+        .paste('@test')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p('', strong('multiple text nodes are ', em(strong('selected'))))),
+          );
+        });
+      createEditor(doc(p('<start>ab<end>')), { plugins: [plugin2] })
+        .paste('@test')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p(strong('ab'))));
+        });
+      createEditor(doc(p('<start>a<end>')), { plugins: [plugin2] })
+        .paste('@test')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p(strong('a'))));
+        });
+
+      const plugin3 = pasteRules([
+        {
+          regexp: /https:\/\/www\.[a-z]+\.com/gi,
+          markType: schema.marks.strong,
+          type: 'mark',
+          replaceSelection: (text) => {
+            return !!text;
+          },
+          getAttributes: (url, isReplacement) => ({
+            href: url,
+            auto: !isReplacement,
+          }),
+        },
+      ]);
+      // Paste over 1 character
+      createEditor(doc(p('<start>a<end>')), { plugins: [plugin3] })
+        .paste('https://www.google.com/')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p(strong('a'))));
+        });
+      // Paste over 2 characters
+      createEditor(doc(p('<start>ab<end>')), { plugins: [plugin3] })
+        .paste('https://www.google.com/')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p(strong('ab'))));
+        });
+      // Paste over 5 characters
+      createEditor(doc(p('<start>abcde<end>')), { plugins: [plugin3] })
+        .paste('https://www.google.com/')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p(strong('abcde'))));
+        });
+    });
+
+    it('should not create invalid nodes with duplicate marks', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /(@[a-z]+)/,
+          markType: schema.marks.strong,
+          type: 'mark',
+          replaceSelection: (replacedText) => {
+            return !!replacedText.trim();
+          },
+        },
+      ]);
+      createEditor(doc(p('<start>foo<end>')), { plugins: [plugin] })
+        .paste(p('@bar'))
+        .callback((content) => {
+          content.doc.check();
+          expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('foo'))));
+        });
+      createEditor(doc(p('<start>foo<end>')), { plugins: [plugin] })
+        .paste(p(strong('@bar')))
+        .callback((content) => {
+          content.doc.check();
+          expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('foo'))));
+        });
+      createEditor(doc(p('<start><end>')), { plugins: [plugin] })
+        .paste(p(strong('@bar')))
+        .callback((content) => {
+          content.doc.check();
+          expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('@bar'))));
         });
     });
   });

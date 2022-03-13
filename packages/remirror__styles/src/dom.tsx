@@ -641,12 +641,15 @@ export const coreStyledCss: ReturnType<typeof css> = css`
   }
   .remirror-editor.ProseMirror-hideselection *::-moz-selection {
     background: transparent;
+    color: inherit;
   }
   .remirror-editor.ProseMirror-hideselection *::selection {
     background: transparent;
+    color: inherit;
   }
   .remirror-editor.ProseMirror-hideselection *::-moz-selection {
     background: transparent;
+    color: inherit;
   }
   .remirror-editor.ProseMirror-hideselection {
     caret-color: transparent;

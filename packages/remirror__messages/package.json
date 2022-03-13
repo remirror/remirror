@@ -1,6 +1,6 @@
 {
   "name": "@remirror/messages",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Internalization strings which are used throughout the remirror core codebase.",
   "keywords": [
     "remirror"
@@ -27,20 +27,20 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-messages.cjs.js",
-  "module": "dist/remirror-messages.esm.js",
+  "main": "./dist/remirror-messages.cjs.js",
+  "module": "./dist/remirror-messages.esm.js",
   "browser": {
     "./dist/remirror-messages.cjs.js": "./dist/remirror-messages.browser.cjs.js",
     "./dist/remirror-messages.esm.js": "./dist/remirror-messages.browser.esm.js"
   },
-  "types": "dist/remirror-messages.cjs.d.ts",
+  "types": "./dist/remirror-messages.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@lingui/core": "^3.10.4",
-    "@remirror/core-helpers": "^1.0.3"
+    "@remirror/core-helpers": "^1.0.5"
   },
   "publishConfig": {
     "access": "public"

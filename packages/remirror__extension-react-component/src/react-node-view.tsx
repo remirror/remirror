@@ -21,6 +21,7 @@ import {
   SELECTED_NODE_CLASS_NAME,
 } from '@remirror/core';
 import { DOMSerializer } from '@remirror/pm/model';
+import { NodeSelection } from '@remirror/pm/state';
 
 import type {
   CreateNodeViewProps,
@@ -142,7 +143,7 @@ export class ReactNodeView implements NodeView {
   }: ReactNodeViewProps) {
     invariant(isFunction(getPosition), {
       message:
-        'You are attempting to use a node view for a mark type. Please check your configuration.',
+        'You are attempting to use a node view for a mark type. This is not supported yet. Please check your configuration.',
     });
 
     this.#node = node;
@@ -400,6 +401,63 @@ export class ReactNodeView implements NodeView {
     }
 
     return !this.#contentDOMWrapper.contains(mutation.target);
+  }
+
+  stopEvent(event: Event): boolean {
+    if (!this.#dom) {
+      return false;
+    }
+
+    if (isFunction(this.#options.stopEvent)) {
+      return this.#options.stopEvent({ event });
+    }
+
+    const target = event.target as HTMLElement;
+    const isInElement = this.#dom.contains(target) && !this.contentDOM?.contains(target);
+
+    // any event from child nodes should be handled by ProseMirror
+    if (!isInElement) {
+      return false;
+    }
+
+    const isDropEvent = event.type === 'drop';
+    const isInput =
+      ['INPUT', 'BUTTON', 'SELECT', 'TEXTAREA'].includes(target.tagName) ||
+      target.isContentEditable;
+
+    // any input event within node views should be ignored by ProseMirror
+    if (isInput && !isDropEvent) {
+      return true;
+    }
+
+    const isDraggable = !!this.#node.type.spec.draggable;
+    const isSelectable = NodeSelection.isSelectable(this.#node);
+    const isCopyEvent = event.type === 'copy';
+    const isPasteEvent = event.type === 'paste';
+    const isCutEvent = event.type === 'cut';
+    const isClickEvent = event.type === 'mousedown';
+    const isDragEvent = event.type.startsWith('drag');
+
+    // ProseMirror tries to drag selectable nodes
+    // even if `draggable` is set to `false`
+    // this fix prevents that
+    if (!isDraggable && isSelectable && isDragEvent) {
+      event.preventDefault();
+    }
+
+    // these events are handled by prosemirror
+    if (
+      isDragEvent ||
+      isDropEvent ||
+      isCopyEvent ||
+      isPasteEvent ||
+      isCutEvent ||
+      (isClickEvent && isSelectable)
+    ) {
+      return false;
+    }
+
+    return true;
   }
 }
 

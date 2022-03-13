@@ -20,12 +20,14 @@ import {
   keys,
   omit,
   sort,
+  uniqueBy,
   unset,
 } from '@remirror/core-helpers';
 import type {
   AnchorHeadProps,
   AnyConstructor,
   ApplySchemaAttributes,
+  AttributesProps,
   DOMCompatibleAttributes,
   EditorSchema,
   EditorState,
@@ -69,8 +71,21 @@ import {
   Transaction as PMTransaction,
 } from '@remirror/pm/state';
 import type { Step } from '@remirror/pm/transform';
+import {
+  AddMarkStep,
+  RemoveMarkStep,
+  ReplaceAroundStep,
+  ReplaceStep,
+} from '@remirror/pm/transform';
 
 import { environment } from './environment';
+import { containsAttributes } from './prosemirror-utils';
+
+function isRangeStep(
+  step: Step,
+): step is AddMarkStep | ReplaceAroundStep | ReplaceStep | RemoveMarkStep {
+  return isValidStep(step, [AddMarkStep, ReplaceAroundStep, ReplaceStep, RemoveMarkStep]);
+}
 
 /**
  * Identifies the value as having a remirror identifier. This is the core
@@ -223,6 +238,50 @@ export function isResolvedPos(value: unknown): value is PMResolvedPos<EditorSche
   return isObject(value) && value instanceof PMResolvedPos;
 }
 
+interface RangeHasMarkProps
+  extends TrStateProps,
+    FromToProps,
+    MarkTypeProps,
+    Partial<AttributesProps> {}
+
+/**
+ * A wrapper for ProsemirrorNode.rangeHasMark that can also compare mark attributes (if supplied)
+ *
+ * @param props - see [[`RangeHasMarkProps`]] for options
+ */
+export function rangeHasMark(props: RangeHasMarkProps): boolean {
+  const { trState, from, to, type, attrs = {} } = props;
+  const { doc } = trState;
+  const markType = getMarkType(type, doc.type.schema);
+
+  if (Object.keys(attrs).length === 0) {
+    return doc.rangeHasMark(from, to, markType);
+  }
+
+  let found = false;
+
+  if (to > from) {
+    doc.nodesBetween(from, to, (node) => {
+      if (found) {
+        return false;
+      }
+
+      const marks = node.marks ?? [];
+      found = marks.some((mark) => {
+        if (mark.type !== markType) {
+          return false;
+        }
+
+        return containsAttributes(mark, attrs);
+      });
+      // Don't descend if found
+      return !found;
+    });
+  }
+
+  return found;
+}
+
 /**
  * Predicate checking whether the selection is a NodeSelection
  *
@@ -232,7 +291,11 @@ export function isNodeSelection(value: unknown): value is NodeSelection<EditorSc
   return isObject(value) && value instanceof NodeSelection;
 }
 
-interface IsMarkActiveProps extends MarkTypeProps, Partial<FromToProps>, TrStateProps {}
+interface IsMarkActiveProps
+  extends MarkTypeProps,
+    Partial<AttributesProps>,
+    Partial<FromToProps>,
+    TrStateProps {}
 
 /**
  * Checks that a mark is active within the selected region, or the current
@@ -242,7 +305,7 @@ interface IsMarkActiveProps extends MarkTypeProps, Partial<FromToProps>, TrState
  * @param props - see [[`IsMarkActiveProps`]] for options
  */
 export function isMarkActive(props: IsMarkActiveProps): boolean {
-  const { trState, type, from, to } = props;
+  const { trState, type, attrs = {}, from, to } = props;
   const { selection, doc, storedMarks } = trState;
   const markType = isString(type) ? doc.type.schema.marks[type] : type;
 
@@ -253,17 +316,24 @@ export function isMarkActive(props: IsMarkActiveProps): boolean {
 
   if (from && to) {
     try {
-      return Math.max(from, to) < doc.nodeSize && doc.rangeHasMark(from, to, markType);
+      return Math.max(from, to) < doc.nodeSize && rangeHasMark({ ...props, from, to });
     } catch {
       return false;
     }
   }
 
   if (selection.empty) {
-    return !!markType.isInSet(storedMarks ?? selection.$from.marks());
+    const marks = storedMarks ?? selection.$from.marks();
+    return marks.some((mark) => {
+      if (mark.type !== type) {
+        return false;
+      }
+
+      return containsAttributes(mark, attrs ?? {});
+    });
   }
 
-  return doc.rangeHasMark(selection.from, selection.to, markType);
+  return rangeHasMark({ ...props, from: selection.from, to: selection.to });
 }
 
 /**
@@ -592,6 +662,17 @@ function isValidStep(step: Step, StepTypes: Array<AnyConstructor<Step>>) {
   return StepTypes.length === 0 || StepTypes.some((Constructor) => step instanceof Constructor);
 }
 
+export interface ChangedRange extends FromToProps {
+  /**
+   * The previous starting position in the document.
+   */
+  prevFrom: number;
+  /**
+   * The previous ending position in the document.
+   */
+  prevTo: number;
+}
+
 /**
  * Get all the ranges of changes for the provided transaction.
  *
@@ -608,9 +689,9 @@ function isValidStep(step: Step, StepTypes: Array<AnyConstructor<Step>>) {
 export function getChangedRanges(
   tr: Transaction,
   StepTypes: Array<AnyConstructor<Step>> = [],
-): FromToProps[] {
+): ChangedRange[] {
   // The holder for the ranges value which will be returned from this function.
-  const ranges: FromToProps[] = [];
+  const ranges: ChangedRange[] = [];
   const rawRanges: FromToProps[] = [];
 
   for (const step of tr.steps) {
@@ -618,9 +699,23 @@ export function getChangedRanges(
       continue;
     }
 
-    step.getMap().forEach((_, __, from, to) => {
+    const stepMap = step.getMap();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore @see https://github.com/ProseMirror/prosemirror/issues/1075
+    if (stepMap.ranges.length === 0 && isRangeStep(step)) {
+      const { from, to } = step;
+
+      if (from === undefined || to === undefined) {
+        continue;
+      }
+
       rawRanges.push({ from, to });
-    });
+    } else {
+      step.getMap().forEach((_, __, from, to) => {
+        rawRanges.push({ from, to });
+      });
+    }
   }
 
   // Sort the ranges.
@@ -636,14 +731,22 @@ export function getChangedRanges(
 
     if (noOverlap) {
       // Add the new range when no overlap is found.
-      ranges.push({ from, to });
+      ranges.push({
+        from,
+        to,
+        prevFrom: tr.mapping.invert().map(from, -1),
+        prevTo: tr.mapping.invert().map(to),
+      });
     } else if (lastRange) {
       // Update the lastRange's end value.
       lastRange.to = Math.max(lastRange.from, to);
     }
   }
 
-  return ranges;
+  return uniqueBy(
+    ranges,
+    ({ from, to, prevFrom, prevTo }) => `${from}_${to}_${prevFrom}_${prevTo}`,
+  );
 }
 
 /**
@@ -1171,7 +1274,7 @@ function elementFromString(html: string, document?: Document): HTMLElement {
  * import { EditorState, prosemirrorNodeToHtml } from 'remirror';
  *
  * function convertStateToHtml(state: EditorState): string {
- *   return prosemirrorNodeToHtml({ node: state.doc, schema: state.schema });
+ *   return prosemirrorNodeToHtml(state.doc);
  * }
  * ```
  */

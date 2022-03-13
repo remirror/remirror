@@ -161,6 +161,41 @@ describe('Enter', () => {
     editor.add(from).press('Enter');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
+
+  it('keeps the content below when deleting a list item', () => {
+    from = doc(
+      ul(
+        li(
+          p('Head'),
+          ul(
+            li(p('A1')), //
+            li(p('A2')), //
+            li(p('A3')), //
+            li(p('<cursor>')), //
+          ),
+          p('Tail'),
+        ),
+      ),
+    );
+    to = doc(
+      ul(
+        li(
+          p('Head'),
+          ul(
+            li(p('A1')), //
+            li(p('A2')), //
+            li(p('A3')), //
+          ),
+        ),
+        li(
+          p(''),
+          p('Tail'), //
+        ),
+      ),
+    );
+    editor.add(from).press('Enter');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
 });
 
 describe('Tab and Shift-Tab', () => {
@@ -1123,6 +1158,22 @@ describe('Backspace', () => {
       ),
     );
     editor.add(from).press('Backspace');
+    expect(editor.view.state.doc).toEqualProsemirrorNode(to);
+  });
+
+  // This test case covers the issue from https://github.com/remirror/remirror/pull/1461
+  it('presses backspace before a list item when the list is the second child of the doc', () => {
+    from = doc(
+      p('text'),
+      ol(
+        li(p('<cursor>')), //
+      ),
+    );
+    editor.add(from).press('Backspace').insertText('!');
+    to = doc(
+      p('text'),
+      p('!'), //
+    );
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
   });
 });

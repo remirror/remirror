@@ -36,7 +36,7 @@ This works by transforming the markdown content you provided into html and then 
 The following code creates an instance of this extension.
 
 ```ts
-import { MarkdownExtension } from 'remirror/extension';
+import { MarkdownExtension } from 'remirror/extensions';
 
 const extension = new MarkdownExtension();
 ```

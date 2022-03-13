@@ -1,6 +1,6 @@
 {
   "name": "test-keyboard",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "A test keyboard for composing fake keyboard events",
   "keywords": [
     "compose events",
@@ -28,13 +28,13 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/test-keyboard.cjs.js",
-  "module": "dist/test-keyboard.esm.js",
+  "main": "./dist/test-keyboard.cjs.js",
+  "module": "./dist/test-keyboard.esm.js",
   "browser": {
     "./dist/test-keyboard.cjs.js": "./dist/test-keyboard.browser.cjs.js",
     "./dist/test-keyboard.esm.js": "./dist/test-keyboard.browser.esm.js"
   },
-  "types": "dist/test-keyboard.cjs.d.ts",
+  "types": "./dist/test-keyboard.cjs.d.ts",
   "files": [
     "environment.d.ts",
     "environment.js",
@@ -42,8 +42,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^1.0.3",
-    "@remirror/core-types": "^1.0.3"
+    "@remirror/core-helpers": "^1.0.5",
+    "@remirror/core-types": "^1.0.4"
   },
   "publishConfig": {
     "access": "public"

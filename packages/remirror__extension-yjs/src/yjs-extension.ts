@@ -1,6 +1,7 @@
 import {
   absolutePositionToRelativePosition,
   defaultCursorBuilder,
+  defaultDeleteFilter,
   redo,
   relativePositionToAbsolutePosition,
   undo,
@@ -10,11 +11,19 @@ import {
   yUndoPlugin,
   yUndoPluginKey,
 } from 'y-prosemirror';
-import type { Doc, RelativePosition, Transaction as YjsTransaction, UndoManager } from 'yjs';
+import type {
+  Doc,
+  Map as YMap,
+  RelativePosition,
+  Transaction as YjsTransaction,
+  XmlFragment as YXmlFragment,
+} from 'yjs';
+import { transact, UndoManager } from 'yjs';
 import {
   AcceptUndefined,
   command,
   convertCommand,
+  Dispose,
   EditorState,
   ErrorConstant,
   extension,
@@ -32,8 +41,15 @@ import {
   ProsemirrorPlugin,
   Selection,
   Shape,
+  Static,
 } from '@remirror/core';
-import { AnnotationExtension } from '@remirror/extension-annotation';
+import {
+  Annotation,
+  AnnotationExtension,
+  AnnotationStore,
+  OmitText,
+  OmitTextAndPosition,
+} from '@remirror/extension-annotation';
 import { ExtensionHistoryMessages as Messages } from '@remirror/messages';
 
 export interface ColorDef {
@@ -99,13 +115,106 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
    */
   getSelection?: (state: EditorState) => Selection;
 
+  disableUndo?: Static<boolean>;
+
   /**
    * Names of nodes in the editor which should be protected.
    *
    * @default `new Set('paragraph')`
    */
-  protectedNodes?: Set<string>;
-  trackedOrigins?: any[];
+  protectedNodes?: Static<Set<string>>;
+  trackedOrigins?: Static<any[]>;
+}
+
+interface YjsAnnotationPosition {
+  from: RelativePosition;
+  to: RelativePosition;
+}
+
+/**
+ * Data stored for annotations inside the Y.Doc
+ *
+ * Note that these fields are part of the API, and changes may require handling
+ * older stored documents.
+ */
+type StoredType<Type extends Annotation> = OmitTextAndPosition<Type> & YjsAnnotationPosition;
+
+class YjsAnnotationStore<Type extends Annotation> implements AnnotationStore<Type> {
+  type: YXmlFragment;
+  map: YMap<StoredType<Type>>;
+
+  constructor(
+    private readonly doc: Doc,
+    pmName: string,
+    mapName: string,
+    private readonly getMapping: () => /* ProsemirrorMapping */ any,
+  ) {
+    this.type = doc.getXmlFragment(pmName);
+    this.map = doc.getMap(mapName);
+  }
+
+  addAnnotation({ from, to, ...data }: OmitText<Type>): void {
+    // XXX: Why is this cast needed?
+    const storedData: StoredType<Type> = {
+      ...data,
+      from: this.absolutePositionToRelativePosition(from),
+      to: this.absolutePositionToRelativePosition(to),
+    } as StoredType<Type>;
+    this.map.set(data.id, storedData);
+  }
+
+  updateAnnotation(id: string, updateData: OmitTextAndPosition<Type>): void {
+    const existing = this.map.get(id);
+
+    if (!existing) {
+      return;
+    }
+
+    this.map.set(id, {
+      ...updateData,
+      from: existing.from,
+      to: existing.to,
+    });
+  }
+
+  removeAnnotations(ids: string[]): void {
+    transact(this.doc, () => {
+      ids.forEach((id) => this.map.delete(id));
+    });
+  }
+
+  setAnnotations(annotations: Array<OmitText<Type>>): void {
+    transact(this.doc, () => {
+      this.map.clear();
+      annotations.forEach((annotation) => this.addAnnotation(annotation));
+    });
+  }
+
+  formatAnnotations(): Array<OmitText<Type>> {
+    const result: Array<OmitText<Type>> = [];
+    this.map.forEach(({ from: relFrom, to: relTo, ...data }) => {
+      const from = this.relativePositionToAbsolutePosition(relFrom);
+      const to = this.relativePositionToAbsolutePosition(relTo);
+
+      if (!from || !to) {
+        return;
+      }
+
+      // XXX: Why is this cast needed?
+      result.push({ ...data, from, to } as unknown as OmitText<Type>);
+    });
+    return result;
+  }
+
+  private absolutePositionToRelativePosition(pos: number): RelativePosition {
+    const mapping = this.getMapping();
+    return absolutePositionToRelativePosition(pos, this.type, mapping);
+  }
+
+  private relativePositionToAbsolutePosition(relPos: RelativePosition): number | null {
+    const mapping = this.getMapping();
+    return relativePositionToAbsolutePosition(this.doc, this.type, relPos, mapping);
+  }
 }
 
 /**
@@ -125,9 +234,11 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
     cursorBuilder: defaultCursorBuilder,
     cursorStateField: 'cursor',
     getSelection: (state) => state.selection,
+    disableUndo: false,
     protectedNodes: new Set('paragraph'),
     trackedOrigins: [],
   },
+  staticKeys: ['disableUndo', 'protectedNodes', 'trackedOrigins'],
   defaultPriority: ExtensionPriority.High,
 })
 export class YjsExtension extends PlainExtension<YjsOptions> {
@@ -146,25 +257,36 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     return (this._provider ??= getLazyValue(getProvider));
   }
 
-  onView(): void {
+  getBinding(): { mapping: Map<any, any> } | undefined {
+    const state = this.store.getState();
+    const { binding } = ySyncPluginKey.getState(state);
+    return binding;
+  }
+
+  onView(): Dispose | void {
     try {
+      const annotationStore = new YjsAnnotationStore(
+        this.provider.doc,
+        'prosemirror',
+        'annotations',
+        () => this.getBinding()?.mapping,
+      );
       this.store.manager.getExtension(AnnotationExtension).setOptions({
-        getMap: () => this.provider.doc.getMap('annotations'),
-        transformPosition: this.absolutePositionToRelativePosition.bind(this),
-        transformPositionBeforeRender: this.relativePositionToAbsolutePosition.bind(this),
+        getStore: () => annotationStore,
       });
 
-      this.provider.doc.on(
-        'update',
-        (_update: Uint8Array, _origin: any, _doc: Doc, yjsTr: YjsTransaction) => {
-          // Ignore own changes
-          if (yjsTr.local) {
-            return;
-          }
+      const handler = (_update: Uint8Array, _origin: any, _doc: Doc, yjsTr: YjsTransaction) => {
+        // Ignore own changes
+        if (yjsTr.local) {
+          return;
+        }
 
-          this.store.commands.redrawAnnotations?.();
-        },
-      );
+        this.store.commands.redrawAnnotations?.();
+      };
+      this.provider.doc.on('update', handler);
+      return () => {
+        this.provider.doc.off('update', handler);
+      };
     } catch {
       // AnnotationExtension isn't present in editor
     }
@@ -179,6 +301,7 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       cursorBuilder,
       getSelection,
       cursorStateField,
+      disableUndo,
       protectedNodes,
       trackedOrigins,
     } = this.options;
@@ -186,15 +309,24 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     const yDoc = this.provider.doc;
     const type = yDoc.getXmlFragment('prosemirror');
 
-    return [
+    const plugins = [
       ySyncPlugin(type, syncPluginOptions),
       yCursorPlugin(
         this.provider.awareness,
         { cursorBuilder, cursorStateField, getSelection },
         cursorStateField,
       ),
-      yUndoPlugin({ protectedNodes, trackedOrigins }),
     ];
+
+    if (!disableUndo) {
+      const undoManager = new UndoManager(type, {
+        trackedOrigins: new Set([ySyncPluginKey, ...trackedOrigins]),
+        deleteFilter: (item) => defaultDeleteFilter(item, protectedNodes),
+      });
+      plugins.push(yUndoPlugin({ undoManager }));
+    }
+
+    return plugins;
   }
 
   /**
@@ -208,8 +340,6 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       'getProvider',
       'getSelection',
       'syncPluginOptions',
-      'protectedNodes',
-      'trackedOrigins',
     ]);
 
     if (changes.getProvider.changed) {
@@ -242,11 +372,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   }
 
   /**
-   * Undo within a collaborative editor.
-   *
-   * This should be used instead of the built in `undo` command.
+   * Undo that last Yjs transaction(s)
    *
    * This command does **not** support chaining.
+   * This command is a no-op and always returns `false` when the `disableUndo` option is set.
    */
   @command({
     disableChaining: true,
@@ -256,6 +385,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   })
   yUndo(): NonChainableCommandFunction {
     return nonChainable((props) => {
+      if (this.options.disableUndo) {
+        return false;
+      }
+
       const { state, dispatch } = props;
       const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
 
@@ -272,11 +405,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   }
 
   /**
-   * Redo, within a collaborative editor.
-   *
-   * This should be used instead of the built in `redo` command.
+   * Redo the last transaction undone with a previous `yUndo` command.
    *
    * This command does **not** support chaining.
+   * This command is a no-op and always returns `false` when the `disableUndo` option is set.
    */
   @command({
     disableChaining: true,
@@ -286,6 +418,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   })
   yRedo(): NonChainableCommandFunction {
     return nonChainable((props) => {
+      if (this.options.disableUndo) {
+        return false;
+      }
+
       const { state, dispatch } = props;
       const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
 
@@ -315,18 +451,6 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
   @keyBinding({ shortcut: NamedShortcut.Redo, command: 'yRedo' })
   redoShortcut(props: KeyBindingProps): boolean {
     return this.yRedo()(props);
-  }
-
-  private absolutePositionToRelativePosition(pos: number): RelativePosition {
-    const state = this.store.getState();
-    const { type, binding } = ySyncPluginKey.getState(state);
-    return absolutePositionToRelativePosition(pos, type, binding.mapping);
-  }
-
-  private relativePositionToAbsolutePosition(relPos: RelativePosition): number | null {
-    const state = this.store.getState();
-    const { type, binding } = ySyncPluginKey.getState(state);
-    return relativePositionToAbsolutePosition(this.provider.doc, type, relPos, binding.mapping);
   }
 }
 

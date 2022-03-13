@@ -7,9 +7,9 @@ Development tools to make life easier when building your editor.
 ## Installation
 
 ```bash
-yarn add @remirror/dev@next # yarn
-pnpm add @remirror/dev@next # pnpm
-npm install @remirror/dev@next # npm
+yarn add @remirror/dev# yarn
+pnpm add @remirror/dev# pnpm
+npm install @remirror/dev# npm
 ```
 
 ## Usage

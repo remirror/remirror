@@ -1,5 +1,5 @@
 import type { RefractorSyntax } from 'refractor/core';
-import type { AcceptUndefined, ProsemirrorAttributes, Static, StringKey } from '@remirror/core';
+import type { ProsemirrorAttributes, Static, StringKey } from '@remirror/core';
 import { ExtensionCodeBlockTheme } from '@remirror/theme';
 
 /**
@@ -82,11 +82,9 @@ export interface CodeBlockOptions {
   /**
    * The name of the node that the code block should toggle back and forth from.
    *
-   * Leave `undefined` to use the `defaultBlockNode` for the editor.
-   *
-   * @default undefined
+   * @default 'paragraph'
    */
-  toggleName?: AcceptUndefined<string>;
+  toggleName?: string;
 
   /**
    * Class to use in decorations of plain `text` nodes.

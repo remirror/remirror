@@ -94,9 +94,9 @@ const Editor = () => {
         let nextState = parameter.state;
 
         // Check if the document content for the editor changed.
-        if (tr?.docChanged) {
+        if (parameter.tr?.docChanged) {
           // Insert text into the editor via a new state.
-          nextState = state.applyTransaction(state.tr.insertText(' NO!!!'));
+          nextState = state.applyTransaction(state.tr.insertText(' NO!!!')).state;
         }
 
         // Update the state to the latest value.

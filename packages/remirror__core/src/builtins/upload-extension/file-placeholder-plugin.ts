@@ -46,15 +46,39 @@ export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginD
   });
 }
 
+/**
+ * Try to find the positon of the placeholder in the document based on the
+ * upload placeholder id
+ *
+ * @remark
+ *
+ * This function will first try to find the position based on the decoration set.
+ * However, in some cases (e.g. `ReplaceStep`) the decoration will not be
+ * available. In that case, it will then try to find every node in the document
+ * recursively, which is much slower than the decoration set way in a large
+ * document.
+ */
 export function findUploadPlaceholderPos(state: EditorState, id: string): number | undefined {
   const set = key.getState(state)?.set;
 
-  if (!set) {
-    return undefined;
+  if (set) {
+    const decos = set.find(undefined, undefined, (spec) => spec.id === id);
+    const pos = decos?.[0]?.from;
+
+    if (pos !== undefined) {
+      return pos;
+    }
   }
 
-  const found = set.find(undefined, undefined, (spec) => spec.id === id);
-  return found[0]?.from;
+  let foundPos: number | undefined;
+  state.doc.descendants((node, pos) => {
+    if (node.attrs.id === id) {
+      foundPos = pos;
+    }
+
+    return foundPos === undefined; // return false to stop the descent
+  });
+  return foundPos;
 }
 
 export function findUploadPlaceholderPayload(state: EditorState, id: string): any | undefined {

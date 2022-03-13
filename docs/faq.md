@@ -18,7 +18,7 @@ To get the html string from the editor the following should work well for you.
 ```tsx
 import { prosemirrorNodeToHtml } from 'remirror';
 
-const htmlString = prosemirrorNodeToHtml({ node: state.doc, schema: state.schema });
+const htmlString = prosemirrorNodeToHtml(state.doc);
 ```
 
 To convert a html string to a valid node, the following should work.
@@ -26,7 +26,7 @@ To convert a html string to a valid node, the following should work.
 ```tsx
 import { htmlToProsemirrorNode } from 'remirror';
 
-const doc = htmlToProsemirrorNode({ html, schema: state.schema });
+const doc = htmlToProsemirrorNode({ content: html, schema: state.schema });
 ```
 
 ### Q: How to replace the content in the editor?

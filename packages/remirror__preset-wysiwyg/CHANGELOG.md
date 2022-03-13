@@ -1,5 +1,540 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.42
+
+> 2022-03-04
+
+### Patch Changes
+
+- Add the ability to force update positioners with a new command `forceUpdatePositioners`.
+
+  This can be useful to update positioners when the view is updated in a way that doesn't trigger a ProseMirror state change. For instance when an image URL is loaded and the document is reflowed.
+
+- Updated dependencies []:
+  - @remirror/preset-core@1.0.22
+
+## 1.1.41
+
+> 2022-03-02
+
+### Patch Changes
+
+- Fix an error when clicking the list spine.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.18
+
+## 1.1.40
+
+> 2022-02-22
+
+### Patch Changes
+
+- Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.15
+  - @remirror/core@1.3.6
+  - @remirror/extension-bidi@1.0.16
+  - @remirror/extension-blockquote@1.0.19
+  - @remirror/extension-bold@1.0.16
+  - @remirror/extension-code@1.0.17
+  - @remirror/extension-code-block@1.0.22
+  - @remirror/extension-drop-cursor@1.0.16
+  - @remirror/extension-embed@1.1.21
+  - @remirror/extension-gap-cursor@1.0.16
+  - @remirror/extension-hard-break@1.0.16
+  - @remirror/extension-heading@1.0.16
+  - @remirror/extension-horizontal-rule@1.0.17
+  - @remirror/extension-image@1.0.27
+  - @remirror/extension-italic@1.0.16
+  - @remirror/extension-list@1.2.17
+  - @remirror/extension-search@1.0.16
+  - @remirror/extension-shortcuts@1.1.5
+  - @remirror/extension-strike@1.0.16
+  - @remirror/extension-trailing-node@1.0.16
+  - @remirror/extension-underline@1.0.16
+  - @remirror/preset-core@1.0.21
+
+## 1.1.39
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/extension-blockquote@1.0.18
+  - @remirror/extension-code-block@1.0.21
+  - @remirror/extension-image@1.0.26
+  - @remirror/extension-list@1.2.16
+  - @remirror/preset-core@1.0.20
+
+## 1.1.38
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.3.5
+  - @remirror/extension-bidi@1.0.15
+  - @remirror/extension-blockquote@1.0.17
+  - @remirror/extension-bold@1.0.15
+  - @remirror/extension-code@1.0.16
+  - @remirror/extension-code-block@1.0.20
+  - @remirror/extension-drop-cursor@1.0.15
+  - @remirror/extension-embed@1.1.20
+  - @remirror/extension-gap-cursor@1.0.15
+  - @remirror/extension-hard-break@1.0.15
+  - @remirror/extension-heading@1.0.15
+  - @remirror/extension-horizontal-rule@1.0.16
+  - @remirror/extension-image@1.0.25
+  - @remirror/extension-italic@1.0.15
+  - @remirror/extension-link@1.1.14
+  - @remirror/extension-list@1.2.15
+  - @remirror/extension-search@1.0.15
+  - @remirror/extension-shortcuts@1.1.4
+  - @remirror/extension-strike@1.0.15
+  - @remirror/extension-trailing-node@1.0.15
+  - @remirror/extension-underline@1.0.15
+  - @remirror/preset-core@1.0.19
+
+## 1.1.37
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.13
+  - @remirror/core@1.3.4
+  - @remirror/extension-bidi@1.0.14
+  - @remirror/extension-blockquote@1.0.16
+  - @remirror/extension-bold@1.0.14
+  - @remirror/extension-code@1.0.15
+  - @remirror/extension-code-block@1.0.19
+  - @remirror/extension-drop-cursor@1.0.14
+  - @remirror/extension-embed@1.1.19
+  - @remirror/extension-gap-cursor@1.0.14
+  - @remirror/extension-hard-break@1.0.14
+  - @remirror/extension-heading@1.0.14
+  - @remirror/extension-horizontal-rule@1.0.15
+  - @remirror/extension-image@1.0.24
+  - @remirror/extension-italic@1.0.14
+  - @remirror/extension-list@1.2.14
+  - @remirror/extension-search@1.0.14
+  - @remirror/extension-shortcuts@1.1.3
+  - @remirror/extension-strike@1.0.14
+  - @remirror/extension-trailing-node@1.0.14
+  - @remirror/extension-underline@1.0.14
+  - @remirror/preset-core@1.0.18
+
+## 1.1.36
+
+> 2022-01-21
+
+### Patch Changes
+
+- fix: make HorizontalRule compatible with Shortcuts
+
+- Updated dependencies []:
+  - @remirror/extension-horizontal-rule@1.0.14
+
+## 1.1.35
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.11
+  - @remirror/extension-embed@1.1.18
+  - @remirror/extension-image@1.0.23
+
+## 1.1.34
+
+> 2022-01-16
+
+### Patch Changes
+
+- Increase the clickable area of the task list checkbox by using `<label>` to wrap the checkbox.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.13
+
+## 1.1.33
+
+> 2022-01-11
+
+### Patch Changes
+
+- Deprecate `getTheme` and `getThemeProps` in favour of new methods `getThemeVar` and `getThemeVarName`.
+
+  This removes a code path that used an ES6 Proxy, which cannot be polyfilled.
+
+  ```
+  getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
+
+  getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
+  ```
+
+  ```
+  getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
+
+  getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
+  ```
+
+- Updated dependencies []:
+  - @remirror/extension-blockquote@1.0.15
+  - @remirror/extension-code-block@1.0.18
+  - @remirror/extension-image@1.0.22
+  - @remirror/extension-list@1.2.12
+  - @remirror/preset-core@1.0.17
+
+## 1.1.32
+
+> 2022-01-06
+
+### Patch Changes
+
+- Fix a bug that causes the cursor to jump to the end of the first node when pressing backspace at the beginning of a list and this list is the second child of the document.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.11
+
+## 1.1.31
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/extension-bidi@1.0.13
+  - @remirror/extension-blockquote@1.0.14
+  - @remirror/extension-bold@1.0.13
+  - @remirror/extension-code@1.0.14
+  - @remirror/extension-code-block@1.0.17
+  - @remirror/extension-drop-cursor@1.0.13
+  - @remirror/extension-embed@1.1.17
+  - @remirror/pm@1.0.10
+  - @remirror/extension-image@1.0.21
+  - @remirror/extension-gap-cursor@1.0.13
+  - @remirror/extension-hard-break@1.0.13
+  - @remirror/extension-heading@1.0.13
+  - @remirror/extension-horizontal-rule@1.0.13
+  - @remirror/extension-italic@1.0.13
+  - @remirror/extension-link@1.1.12
+  - @remirror/extension-list@1.2.10
+  - @remirror/extension-search@1.0.13
+  - @remirror/extension-shortcuts@1.1.2
+  - @remirror/extension-strike@1.0.13
+  - @remirror/extension-trailing-node@1.0.13
+  - @remirror/extension-underline@1.0.13
+  - @remirror/preset-core@1.0.16
+
+## 1.1.30
+
+> 2021-12-30
+
+### Patch Changes
+
+- Correct a document error about `CodeBlockExtension`'s option `toggleName`. Its default value should be `'paragraph'` instead of `undefined`.
+
+* Fix a potential issue that might cause invalid text selection when pressing `Backspace` instead a code block node.
+
+* Updated dependencies []:
+  - @remirror/extension-code-block@1.0.16
+
+## 1.1.29
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.11
+  - @remirror/extension-list@1.2.9
+  - @remirror/preset-core@1.0.15
+
+## 1.1.28
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.10
+
+## 1.1.27
+
+> 2021-12-10
+
+### Patch Changes
+
+- Align left/right arrow style with other arrows
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.1.1
+
+## 1.1.26
+
+> 2021-12-10
+
+### Patch Changes
+
+- feat: support shortcut for left/right arrows
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.1.0
+
+## 1.1.25
+
+> 2021-12-09
+
+### Patch Changes
+
+- Fix an issue that causes the content below a list item is being deleted when deleting this list item by pressing Enter.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.8
+
+## 1.1.24
+
+> 2021-11-23
+
+### Patch Changes
+
+- Restore image dimensions correctly from the markup.
+
+- Updated dependencies []:
+  - @remirror/extension-image@1.0.20
+
+## 1.1.23
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/extension-code-block@1.0.15
+  - @remirror/pm@1.0.8
+  - @remirror/core@1.3.2
+  - @remirror/extension-bidi@1.0.12
+  - @remirror/extension-blockquote@1.0.13
+  - @remirror/extension-bold@1.0.12
+  - @remirror/extension-code@1.0.13
+  - @remirror/extension-drop-cursor@1.0.12
+  - @remirror/extension-embed@1.1.16
+  - @remirror/extension-gap-cursor@1.0.12
+  - @remirror/extension-hard-break@1.0.12
+  - @remirror/extension-heading@1.0.12
+  - @remirror/extension-horizontal-rule@1.0.12
+  - @remirror/extension-image@1.0.19
+  - @remirror/extension-italic@1.0.12
+  - @remirror/extension-link@1.1.9
+  - @remirror/extension-list@1.2.7
+  - @remirror/extension-search@1.0.12
+  - @remirror/extension-shortcuts@1.0.6
+  - @remirror/extension-strike@1.0.12
+  - @remirror/extension-trailing-node@1.0.12
+  - @remirror/extension-underline@1.0.12
+  - @remirror/preset-core@1.0.14
+
+## 1.1.22
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/extension-bidi@1.0.11
+  - @remirror/extension-blockquote@1.0.12
+  - @remirror/extension-bold@1.0.11
+  - @remirror/extension-code@1.0.12
+  - @remirror/extension-code-block@1.0.14
+  - @remirror/extension-drop-cursor@1.0.11
+  - @remirror/extension-embed@1.1.15
+  - @remirror/extension-gap-cursor@1.0.11
+  - @remirror/extension-hard-break@1.0.11
+  - @remirror/extension-heading@1.0.11
+  - @remirror/extension-horizontal-rule@1.0.11
+  - @remirror/extension-image@1.0.18
+  - @remirror/extension-italic@1.0.11
+  - @remirror/extension-link@1.1.8
+  - @remirror/extension-list@1.2.6
+  - @remirror/extension-search@1.0.11
+  - @remirror/extension-shortcuts@1.0.5
+  - @remirror/extension-strike@1.0.11
+  - @remirror/extension-trailing-node@1.0.11
+  - @remirror/extension-underline@1.0.11
+  - @remirror/preset-core@1.0.13
+  - @remirror/pm@1.0.7
+
+## 1.1.21
+
+> 2021-11-18
+
+### Patch Changes
+
+- fix: remove rules depending on capture groups
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.4
+
+## 1.1.20
+
+> 2021-11-16
+
+### Patch Changes
+
+- Make extension-shortcuts package public
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.3
+
+## 1.1.19
+
+> 2021-11-16
+
+### Patch Changes
+
+- Add support for keyboard shortcuts
+
+* Add keyboard shortcuts
+
+* Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.2
+
+## 1.1.18
+
+> 2021-11-16
+
+### Patch Changes
+
+- Fix an error when indenting the list.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.5
+
+## 1.1.17
+
+> 2021-11-11
+
+### Patch Changes
+
+- Add a new option `extractHref` to `ExtensionLink`. Users can use this option to customize the `href` attribute, for example `file://` and `tel:`.
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.7
+
+## 1.1.16
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/extension-bidi@1.0.10
+  - @remirror/extension-blockquote@1.0.11
+  - @remirror/extension-bold@1.0.10
+  - @remirror/extension-code@1.0.11
+  - @remirror/extension-code-block@1.0.13
+  - @remirror/extension-drop-cursor@1.0.10
+  - @remirror/extension-embed@1.1.14
+  - @remirror/extension-gap-cursor@1.0.10
+  - @remirror/extension-hard-break@1.0.10
+  - @remirror/extension-heading@1.0.10
+  - @remirror/extension-horizontal-rule@1.0.10
+  - @remirror/extension-image@1.0.17
+  - @remirror/extension-italic@1.0.10
+  - @remirror/extension-link@1.1.6
+  - @remirror/extension-list@1.2.4
+  - @remirror/extension-search@1.0.10
+  - @remirror/extension-strike@1.0.10
+  - @remirror/extension-trailing-node@1.0.10
+  - @remirror/extension-underline@1.0.10
+  - @remirror/preset-core@1.0.12
+
+## 1.1.15
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core@1.2.2
+  - @remirror/extension-bidi@1.0.9
+  - @remirror/extension-blockquote@1.0.10
+  - @remirror/extension-bold@1.0.9
+  - @remirror/extension-code@1.0.10
+  - @remirror/extension-code-block@1.0.12
+  - @remirror/extension-drop-cursor@1.0.9
+  - @remirror/extension-embed@1.1.13
+  - @remirror/extension-gap-cursor@1.0.9
+  - @remirror/extension-hard-break@1.0.9
+  - @remirror/extension-heading@1.0.9
+  - @remirror/extension-horizontal-rule@1.0.9
+  - @remirror/extension-image@1.0.16
+  - @remirror/extension-italic@1.0.9
+  - @remirror/extension-link@1.1.5
+  - @remirror/extension-list@1.2.3
+  - @remirror/extension-search@1.0.9
+  - @remirror/extension-strike@1.0.9
+  - @remirror/extension-trailing-node@1.0.9
+  - @remirror/extension-underline@1.0.9
+  - @remirror/pm@1.0.6
+  - @remirror/preset-core@1.0.11
+
+## 1.1.14
+
+> 2021-11-04
+
+### Patch Changes
+
+- Fix an issue where the resizable view is too tall on a small viewpoint.
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.12
+  - @remirror/extension-image@1.0.15
+
 ## 1.1.13
 
 > 2021-10-24

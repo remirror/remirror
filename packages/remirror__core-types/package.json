@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-types",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Provides the core TS types for use throughout the remirror codebase",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core-types",
   "repository": {
@@ -24,26 +24,26 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-core-types.cjs.js",
-  "module": "dist/remirror-core-types.esm.js",
+  "main": "./dist/remirror-core-types.cjs.js",
+  "module": "./dist/remirror-core-types.esm.js",
   "browser": {
     "./dist/remirror-core-types.cjs.js": "./dist/remirror-core-types.browser.cjs.js",
     "./dist/remirror-core-types.esm.js": "./dist/remirror-core-types.browser.esm.js"
   },
-  "types": "dist/remirror-core-types.cjs.d.ts",
+  "types": "./dist/remirror-core-types.cjs.d.ts",
   "files": [
     "dist",
     "base"
   ],
   "dependencies": {
-    "@remirror/core-constants": "^1.0.1",
+    "@remirror/core-constants": "^1.0.2",
     "@remirror/types": "^0.1.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.14"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.10"
   },
   "publishConfig": {
     "access": "public"

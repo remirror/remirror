@@ -56,6 +56,11 @@ export interface ReactComponentOptions {
    * ```
    */
   nodeViewComponents?: Dynamic<Record<string, ComponentType<NodeViewComponentProps>>>;
+
+  /**
+   * Override the return value from the `stopEvent` method in `ReactNodeView`
+   */
+  stopEvent?: Dynamic<(props: { event: Event }) => boolean> | null;
 }
 
 export interface NodeViewComponentProps extends EditorViewProps, NodeWithAttributesProps {

@@ -154,6 +154,49 @@ async function generateExports() {
 }
 
 /**
+ * Make sure that "main", "module" and "types" fields within the packages are
+ * prefixed with `./`.
+ */
+async function generateEntryPoint() {
+  const fields = ['main', 'module', 'types'] as const;
+
+  log.info(chalk`\n{blue Running script for package.json {bold.grey ${fields}} fields}`);
+
+  // Get all the packages in the `pnpm` monorepo.
+  const packages = await getAllDependencies({ excludeSupport: true });
+
+  const promises: Array<Promise<void>> = [];
+
+  for (const pkg of packages) {
+    const { location, ...packageJson } = pkg;
+    const packageJsonPath = path.join(location, 'package.json');
+    let edited = false;
+
+    for (const field of fields) {
+      const originValue = packageJson[field];
+
+      if (!originValue) {
+        continue;
+      }
+
+      const fixedValue = prefixRelativePath(originValue);
+
+      if (originValue !== fixedValue) {
+        packageJson[field] = fixedValue;
+        edited = true;
+      }
+    }
+
+    if (edited) {
+      promises.push(writeJSON(packageJsonPath, packageJson));
+      filesToPrettify.push(packageJsonPath);
+    }
+  }
+
+  await Promise.all(promises);
+}
+
+/**
  * Add a `./` prefix to a path that needs to be seen as relative.
  */
 function prefixRelativePath<Type extends string | undefined>(path: Type): Type {
@@ -168,30 +211,30 @@ function prefixRelativePath<Type extends string | undefined>(path: Type): Type {
  * Add the path with relevant fields to the export field of the provided
  * `package.json` object.
  */
-function augmentExportsObject(packageJson: PackageJson, filepath: string, json: PackageJson) {
+function augmentExportsObject(rootJson: PackageJson, filepath: string, subJson: PackageJson) {
   filepath = filepath || '.';
-  const browserPath = getBrowserPath(packageJson);
+  const browserPath = getBrowserPath(subJson);
   const field: ExportField = {
-    import: prefixRelativePath(json.module ? path.join(filepath, json.module) : undefined),
-    require: prefixRelativePath(json.main ? path.join(filepath, json.main) : undefined),
+    import: prefixRelativePath(subJson.module ? path.join(filepath, subJson.module) : undefined),
+    require: prefixRelativePath(subJson.main ? path.join(filepath, subJson.main) : undefined),
     browser: prefixRelativePath(browserPath ? path.join(filepath, browserPath) : undefined),
 
     // Experimental since this is not currently resolved by TypeScript.
-    types: prefixRelativePath(json.types ? path.join(filepath, json.types) : undefined),
+    types: prefixRelativePath(subJson.types ? path.join(filepath, subJson.types) : undefined),
   };
-  field.default = field.import;
+  field.default = field.import || field.require;
 
   let exportsObject: Exports;
 
-  if (isPlainObject(packageJson.exports)) {
-    exportsObject = packageJson.exports as Exports;
+  if (isPlainObject(rootJson.exports)) {
+    exportsObject = rootJson.exports as Exports;
   } else {
     exportsObject = object();
-    packageJson.exports = exportsObject as PackageJson.Exports;
+    rootJson.exports = exportsObject as PackageJson.Exports;
   }
 
-  if (!packageJson.exports || isString(packageJson.exports)) {
-    packageJson.exports = {};
+  if (!rootJson.exports || isString(rootJson.exports)) {
+    rootJson.exports = {};
   }
 
   exportsObject[filepath] = omitUndefined(field);
@@ -207,7 +250,9 @@ function augmentExportsObject(packageJson: PackageJson, filepath: string, json: 
  * to the module or main path.
  */
 function getBrowserPath(pkg: PackageJson) {
-  const browserPath = isString(pkg.browser) ? pkg.browser : pkg.browser?.[`./${pkg.module}`];
+  const browserPath = isString(pkg.browser)
+    ? pkg.browser
+    : pkg.browser?.[prefixRelativePath(pkg.module ?? '')];
 
   return isString(browserPath) ? browserPath : pkg.module;
 }
@@ -745,6 +790,9 @@ async function main() {
   } else if (cliArgs.exports) {
     // Run when `--exports` is used
     await Promise.all([generateExports()]);
+  } else if (cliArgs.entryPoint) {
+    // Run when `--entry-point` is used
+    await Promise.all([generateEntryPoint()]);
   } else {
     // This is the default mode to run.
     await Promise.all([generateSizeLimitConfig()]);

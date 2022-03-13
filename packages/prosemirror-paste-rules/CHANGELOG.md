@@ -1,5 +1,54 @@
 # prosemirror-paste-rules
 
+## 1.0.9
+
+> 2022-03-01
+
+### Patch Changes
+
+- Fix an issue that causes the selected text being deleted when pasting.
+
+## 1.0.8
+
+> 2022-02-25
+
+### Patch Changes
+
+- Fixes an issue that causes invalid duplicate marks when using `pasteRules` plugin.
+
+* Fixes an issue that causes some text nodes to be deleted when using `replaceSelection`.
+
+## 1.0.7
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+## 1.0.6
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core-constants@1.0.2
+  - @remirror/core-helpers@1.0.5
+
+## 1.0.5
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+
 ## 1.0.4
 
 > 2021-10-23

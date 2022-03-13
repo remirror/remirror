@@ -1,5 +1,529 @@
 # @remirror/react-editors
 
+## 0.1.62
+
+> 2022-03-08
+
+### Patch Changes
+
+- When using `prosemirror-suggest`, if `appendTransaction` is `true`, make sure the match state will be updated after every transaction.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.14
+
+## 0.1.61
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
+- Updated dependencies []:
+  - remirror@1.0.70
+  - @remirror/extension-react-tables@1.0.27
+  - @remirror/react@1.0.27
+
+## 0.1.60
+
+> 2022-03-04
+
+### Patch Changes
+
+- Add the ability to force update positioners with a new command `forceUpdatePositioners`.
+
+  This can be useful to update positioners when the view is updated in a way that doesn't trigger a ProseMirror state change. For instance when an image URL is loaded and the document is reflowed.
+
+- Updated dependencies []:
+  - remirror@1.0.69
+  - @remirror/extension-react-tables@1.0.26
+  - @remirror/react@1.0.26
+
+## 0.1.59
+
+> 2022-03-02
+
+### Patch Changes
+
+- Fix an error when clicking the list spine.
+
+- Updated dependencies []:
+  - remirror@1.0.68
+
+## 0.1.58
+
+> 2022-03-01
+
+### Patch Changes
+
+- Fix an issue that causes the selected text being deleted when pasting.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.13
+
+## 0.1.57
+
+> 2022-02-25
+
+### Patch Changes
+
+- Fixes an issue that causes invalid duplicate marks when using `pasteRules` plugin.
+
+* Fixes an issue that causes some text nodes to be deleted when using `replaceSelection`.
+
+* Updated dependencies []:
+  - @remirror/pm@1.0.12
+
+## 0.1.56
+
+> 2022-02-22
+
+### Patch Changes
+
+- Updated marked to v4 to resolve vunerable dependency alert
+
+* Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+* Updated dependencies []:
+  - remirror@1.0.67
+  - @remirror/extension-react-tables@1.0.25
+  - @remirror/react@1.0.25
+
+## 0.1.55
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/styles@1.1.3
+  - remirror@1.0.66
+  - @remirror/extension-react-tables@1.0.24
+  - @remirror/react@1.0.24
+
+## 0.1.54
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+* Allow disabling the yjs undo functionality in the yjs extension
+
+* Updated dependencies []:
+  - @remirror/react@1.0.23
+  - remirror@1.0.65
+  - @remirror/extension-react-tables@1.0.23
+
+## 0.1.53
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+* Replace wrong assertion
+
+* Updated dependencies []:
+  - remirror@1.0.64
+  - @remirror/extension-react-tables@1.0.22
+  - @remirror/react@1.0.22
+
+## 0.1.52
+
+> 2022-02-02
+
+### Patch Changes
+
+- Avoid race conditions in processing annotations
+
+- Updated dependencies []:
+  - remirror@1.0.63
+
+## 0.1.51
+
+> 2022-01-31
+
+### Patch Changes
+
+- fix: don't extend annotation when the user types at the beginning
+
+- Updated dependencies []:
+  - remirror@1.0.62
+
+## 0.1.50
+
+> 2022-01-21
+
+### Patch Changes
+
+- fix: make HorizontalRule compatible with Shortcuts
+
+- Updated dependencies []:
+  - remirror@1.0.61
+
+## 0.1.49
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.11
+  - remirror@1.0.60
+
+## 0.1.48
+
+> 2022-01-16
+
+### Patch Changes
+
+- Fix a runtime error when getting font size before the editor view is initialized.
+
+* Increase the clickable area of the task list checkbox by using `<label>` to wrap the checkbox.
+
+* Updated dependencies []:
+  - remirror@1.0.59
+
+## 0.1.47
+
+> 2022-01-11
+
+### Patch Changes
+
+- Deprecate `getTheme` and `getThemeProps` in favour of new methods `getThemeVar` and `getThemeVarName`.
+
+  This removes a code path that used an ES6 Proxy, which cannot be polyfilled.
+
+  ```
+  getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
+
+  getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
+  ```
+
+  ```
+  getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
+
+  getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
+  ```
+
+- Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.21
+  - remirror@1.0.58
+  - @remirror/react@1.0.21
+
+## 0.1.46
+
+> 2022-01-06
+
+### Patch Changes
+
+- Fix a bug that causes the cursor to jump to the end of the first node when pressing backspace at the beginning of a list and this list is the second child of the document.
+
+- Updated dependencies []:
+  - remirror@1.0.57
+
+## 0.1.45
+
+> 2022-01-05
+
+### Patch Changes
+
+- Update yjs packages to latest version.
+
+* Avoid leaking Yjs UndoManager instances
+
+* Updated dependencies []:
+  - remirror@1.0.56
+
+## 0.1.44
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - remirror@1.0.55
+  - @remirror/core-helpers@1.0.5
+  - @remirror/pm@1.0.10
+  - @remirror/extension-react-tables@1.0.20
+  - @remirror/react@1.0.20
+
+## 0.1.43
+
+> 2021-12-30
+
+### Patch Changes
+
+- Correct a document error about `CodeBlockExtension`'s option `toggleName`. Its default value should be `'paragraph'` instead of `undefined`.
+
+* Fix a potential issue that might cause invalid text selection when pressing `Backspace` instead a code block node.
+
+* Updated dependencies []:
+  - remirror@1.0.54
+
+## 0.1.42
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - remirror@1.0.53
+  - @remirror/extension-react-tables@1.0.19
+  - @remirror/react@1.0.19
+
+## 0.1.41
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
+- Updated dependencies []:
+  - remirror@1.0.52
+
+## 0.1.40
+
+> 2021-12-10
+
+### Patch Changes
+
+- Align left/right arrow style with other arrows
+
+- Updated dependencies []:
+  - remirror@1.0.51
+
+## 0.1.39
+
+> 2021-12-10
+
+### Patch Changes
+
+- feat: support shortcut for left/right arrows
+
+- Updated dependencies []:
+  - remirror@1.0.50
+
+## 0.1.38
+
+> 2021-12-09
+
+### Patch Changes
+
+- Fix an issue that causes the content below a list item is being deleted when deleting this list item by pressing Enter.
+
+- Updated dependencies []:
+  - remirror@1.0.49
+
+## 0.1.37
+
+> 2021-12-06
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.9
+
+## 0.1.36
+
+> 2021-12-06
+
+### Patch Changes
+
+- Fix an issue that cause `draggable` React node views unable to be draged.
+
+- Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.18
+  - @remirror/react@1.0.18
+
+## 0.1.35
+
+> 2021-11-23
+
+### Patch Changes
+
+- Restore image dimensions correctly from the markup.
+
+- Updated dependencies []:
+  - remirror@1.0.48
+
+## 0.1.34
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - remirror@1.0.47
+  - @remirror/pm@1.0.8
+  - @remirror/extension-react-tables@1.0.17
+  - @remirror/react@1.0.17
+
+## 0.1.33
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+* Update ProseMirror dependencies.
+
+* Updated dependencies []:
+  - remirror@1.0.46
+  - @remirror/extension-react-tables@1.0.16
+  - @remirror/react@1.0.16
+  - @remirror/pm@1.0.7
+
+## 0.1.32
+
+> 2021-11-18
+
+### Patch Changes
+
+- fix: remove rules depending on capture groups
+
+- Updated dependencies []:
+  - remirror@1.0.45
+
+## 0.1.31
+
+> 2021-11-17
+
+### Patch Changes
+
+- fix: removeFontSize should respect user text selection
+
+- Updated dependencies []:
+  - remirror@1.0.44
+
+## 0.1.30
+
+> 2021-11-16
+
+### Patch Changes
+
+- Make extension-shortcuts package public
+
+- Updated dependencies []:
+  - remirror@1.0.43
+
+## 0.1.29
+
+> 2021-11-16
+
+### Patch Changes
+
+- Add support for keyboard shortcuts
+
+* Add keyboard shortcuts
+
+* Updated dependencies []:
+  - remirror@1.0.42
+
+## 0.1.28
+
+> 2021-11-16
+
+### Patch Changes
+
+- Fix an error when indenting the list.
+
+- Updated dependencies []:
+  - remirror@1.0.41
+
+## 0.1.27
+
+> 2021-11-11
+
+### Patch Changes
+
+- Add a new option `extractHref` to `ExtensionLink`. Users can use this option to customize the `href` attribute, for example `file://` and `tel:`.
+
+- Updated dependencies []:
+  - remirror@1.0.40
+
+## 0.1.26
+
+> 2021-11-10
+
+### Patch Changes
+
+- Implement the `stopEvent` method in `ReactNodeView`.
+
+* Add new method `hasHandlers` to extensions.
+
+* Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.15
+  - @remirror/react@1.0.15
+  - remirror@1.0.39
+
+## 0.1.25
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+  - remirror@1.0.38
+  - @remirror/extension-react-tables@1.0.14
+  - @remirror/pm@1.0.6
+  - @remirror/react@1.0.14
+
+## 0.1.24
+
+> 2021-11-04
+
+### Patch Changes
+
+- Fix an issue where the resizable view is too tall on a small viewpoint.
+
+- Updated dependencies []:
+  - remirror@1.0.37
+
+## 0.1.23
+
+> 2021-10-29
+
+### Patch Changes
+
+- Update prosemirror packages.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.5
+
 ## 0.1.22
 
 > 2021-10-24

@@ -1,5 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`configuration throws when updating undo-related options ({ disableUndo: true }) 1`] = `
+"A call to \`extension.setOptions\` was made with invalid keys.
+
+Invalid properties passed into the 'setOptions()' method: [\\"disableUndo\\"].
+
+For more information visit https://remirror.io/docs/errors#rmr0103"
+`;
+
+exports[`configuration throws when updating undo-related options ({ protectedNodes: Set(0) {} }) 1`] = `
+"A call to \`extension.setOptions\` was made with invalid keys.
+
+Invalid properties passed into the 'setOptions()' method: [\\"protectedNodes\\"].
+
+For more information visit https://remirror.io/docs/errors#rmr0103"
+`;
+
+exports[`configuration throws when updating undo-related options ({ trackedOrigins: [ [length]: 0 ] }) 1`] = `
+"A call to \`extension.setOptions\` was made with invalid keys.
+
+Invalid properties passed into the 'setOptions()' method: [\\"trackedOrigins\\"].
+
+For more information visit https://remirror.io/docs/errors#rmr0103"
+`;
+
 exports[`configuration throws without a provider 1`] = `
 "An error occurred within an extension. More details should be made available.
 

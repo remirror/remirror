@@ -10,9 +10,12 @@ import {
   findUploadPlaceholderPayload,
   getTextSelection,
   Handler,
+  keyBinding,
+  KeyBindingProps,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
+  NodeWithPosition,
   omitExtraAttributes,
   PrimitiveSelection,
   ProsemirrorNode,
@@ -217,6 +220,34 @@ export class FileExtension extends NodeExtension<FileOptions> {
 
       return false;
     };
+  }
+
+  @keyBinding({ shortcut: ['Backspace', 'Delete'] })
+  backspaceShortcut(props: KeyBindingProps): boolean {
+    const { tr, state } = props;
+    const { from, to, empty } = tr.selection;
+
+    if (!this.hasHandlers('onDeleteFile') || empty) {
+      return false;
+    }
+
+    // Collect a list of files nodes contained within this delete range
+    const onDeleteFileCallbacks: NodeWithPosition[] = [];
+    state.doc.nodesBetween(from, to, (node, pos) => {
+      if (node.type === this.type) {
+        onDeleteFileCallbacks.push({ node, pos });
+      }
+
+      return true;
+    });
+
+    // Call the onDeleteFile callback for each file being deleted.
+    onDeleteFileCallbacks.forEach(({ node, pos }) => {
+      this.options.onDeleteFile({ tr, node, pos });
+    });
+
+    // Don't need to handle the delete ourselves, just the callbacks
+    return false;
   }
 
   private uploadFile(file: File, pos?: number | undefined): void {

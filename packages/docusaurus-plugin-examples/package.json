@@ -29,14 +29,14 @@
     "./types": {
       "import": "./types/dist/docusaurus-plugin-examples-types.esm.js",
       "require": "./types/dist/docusaurus-plugin-examples-types.cjs.js",
-      "browser": "./types/dist/docusaurus-plugin-examples.esm.js",
+      "browser": "./types/dist/docusaurus-plugin-examples-types.esm.js",
       "default": "./types/dist/docusaurus-plugin-examples-types.esm.js"
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/docusaurus-plugin-examples.cjs.js",
-  "module": "dist/docusaurus-plugin-examples.esm.js",
-  "types": "dist/docusaurus-plugin-examples.cjs.d.ts",
+  "main": "./dist/docusaurus-plugin-examples.cjs.js",
+  "module": "./dist/docusaurus-plugin-examples.esm.js",
+  "types": "./dist/docusaurus-plugin-examples.cjs.d.ts",
   "files": [
     "src",
     "dist",
@@ -47,7 +47,7 @@
     "@docusaurus/core": "^2.0.0-beta.8",
     "@docusaurus/types": "^2.0.0-beta.8",
     "@docusaurus/utils": "^2.0.0-beta.8",
-    "@remirror/core-helpers": "^1.0.3",
+    "@remirror/core-helpers": "^1.0.5",
     "globby": "^11.0.4",
     "sucrase": "^3.20.0"
   },

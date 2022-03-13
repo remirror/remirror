@@ -1,6 +1,6 @@
 {
   "name": "@remirror/dom",
-  "version": "1.0.10",
+  "version": "1.0.23",
   "description": "Use remirror directly in the dom.",
   "keywords": [
     "remirror",
@@ -28,26 +28,26 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-dom.cjs.js",
-  "module": "dist/remirror-dom.esm.js",
+  "main": "./dist/remirror-dom.cjs.js",
+  "module": "./dist/remirror-dom.esm.js",
   "browser": {
     "./dist/remirror-dom.cjs.js": "./dist/remirror-dom.browser.cjs.js",
     "./dist/remirror-dom.esm.js": "./dist/remirror-dom.browser.esm.js"
   },
-  "types": "dist/remirror-dom.cjs.d.ts",
+  "types": "./dist/remirror-dom.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.1",
-    "@remirror/preset-core": "^1.0.10"
+    "@remirror/core": "^1.3.6",
+    "@remirror/preset-core": "^1.0.22"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.14"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.10"
   },
   "publishConfig": {
     "access": "public"

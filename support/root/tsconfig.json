@@ -153,6 +153,9 @@
       "path": "packages/remirror__extension-codemirror5/src"
     },
     {
+      "path": "packages/remirror__extension-codemirror6/src"
+    },
+    {
       "path": "packages/remirror__extension-collaboration/__tests__"
     },
     {
@@ -349,6 +352,12 @@
     },
     {
       "path": "packages/remirror__extension-search/src"
+    },
+    {
+      "path": "packages/remirror__extension-shortcuts/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-shortcuts/src"
     },
     {
       "path": "packages/remirror__extension-strike/__tests__"

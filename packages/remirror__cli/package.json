@@ -1,6 +1,6 @@
 {
   "name": "@remirror/cli",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "The remirror cli",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__cli",
   "repository": {
@@ -16,16 +16,18 @@
   "exports": {
     ".": {
       "require": "./dist/remirror-cli.cjs.js",
-      "types": "./dist/remirror-cli.cjs.d.ts"
+      "types": "./dist/remirror-cli.cjs.d.ts",
+      "default": "./dist/remirror-cli.cjs.js"
     },
     "./cli": {
-      "require": "./cli/dist/remirror-cli-cli.cjs.js"
+      "require": "./cli/dist/remirror-cli-cli.cjs.js",
+      "default": "./cli/dist/remirror-cli-cli.cjs.js"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-cli.cjs.js",
-  "types": "dist/remirror-cli.cjs.d.ts",
+  "main": "./dist/remirror-cli.cjs.js",
+  "types": "./dist/remirror-cli.cjs.d.ts",
   "bin": {
     "remirror": "bin.js"
   },
@@ -36,9 +38,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^1.0.3",
+    "@remirror/core-helpers": "^1.0.5",
     "@rollup/plugin-babel": "^5.3.0",
-    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-commonjs": "^21.0.0",
     "@rollup/plugin-json": "^4",
     "@rollup/plugin-node-resolve": "^13.0.2",
     "@rollup/plugin-replace": "^3.0.0",
@@ -72,7 +74,7 @@
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "@remirror/core-types": "^1.0.3",
+    "@remirror/core-types": "^1.0.4",
     "@testing-library/react-hooks": "^7.0.1",
     "@types/ink-spinner": "^3.0.1",
     "@types/ink-testing-library": "^1.0.1",

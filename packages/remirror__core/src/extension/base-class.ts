@@ -426,6 +426,32 @@ export abstract class BaseClass<
       ));
   }
 
+  /**
+   * Determines if handlers exist for the given key.
+   *
+   * Checking the existence of a handler property directly gives wrong results.
+   * `this.options.onHandlerName` is always truthy because it is a reference to
+   * the wrapper function that calls each handler.
+   *
+   * ```ts
+   *
+   * // GOOD ✅
+   * if (!this.hasHandlers('onHandlerName')) {
+   *   return;
+   * }
+   *
+   * // BAD ❌
+   * if (!this.options.onHandlerName) {
+   *   return;
+   * }
+   * ```
+   *
+   * @param key The handler to test
+   */
+  hasHandlers<Key extends keyof GetHandler<Options>>(key: Key): boolean {
+    return (this._mappedHandlers[key] ?? []).length > 0;
+  }
+
   private sortHandlers<Key extends keyof GetHandler<Options>>(key: Key) {
     this._mappedHandlers[key] = sort(
       this._mappedHandlers[key],

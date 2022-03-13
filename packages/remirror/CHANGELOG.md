@@ -1,5 +1,937 @@
 # remirror
 
+## 1.0.70
+
+> 2022-03-06
+
+### Patch Changes
+
+- `onChange` shouldn't be called if the transaction is canceled by `filterTransaction`.
+
+- Updated dependencies []:
+  - @remirror/dom@1.0.23
+
+## 1.0.69
+
+> 2022-03-04
+
+### Patch Changes
+
+- Add the ability to force update positioners with a new command `forceUpdatePositioners`.
+
+  This can be useful to update positioners when the view is updated in a way that doesn't trigger a ProseMirror state change. For instance when an image URL is loaded and the document is reflowed.
+
+- Updated dependencies []:
+  - @remirror/extension-positioner@1.2.0
+  - @remirror/dom@1.0.22
+  - @remirror/extension-annotation@1.1.17
+  - @remirror/extension-yjs@1.0.26
+  - @remirror/preset-core@1.0.22
+  - @remirror/preset-wysiwyg@1.1.42
+
+## 1.0.68
+
+> 2022-03-02
+
+### Patch Changes
+
+- Fix an error when clicking the list spine.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.18
+  - @remirror/preset-wysiwyg@1.1.41
+
+## 1.0.67
+
+> 2022-02-22
+
+### Patch Changes
+
+- Updated marked to v4 to resolve vunerable dependency alert
+
+* Fix auto link behaviour when performing an undo.
+
+  Return only unique ranges from `getChangedRanges`.
+
+* Updated dependencies []:
+  - @remirror/extension-markdown@1.0.16
+  - @remirror/core-utils@1.1.7
+  - @remirror/extension-link@1.1.15
+  - @remirror/core@1.3.6
+  - @remirror/dom@1.0.21
+  - @remirror/extension-annotation@1.1.16
+  - @remirror/extension-bidi@1.0.16
+  - @remirror/extension-blockquote@1.0.19
+  - @remirror/extension-bold@1.0.16
+  - @remirror/extension-callout@1.0.19
+  - @remirror/extension-code@1.0.17
+  - @remirror/extension-code-block@1.0.22
+  - @remirror/extension-codemirror5@1.0.16
+  - @remirror/extension-collaboration@1.0.16
+  - @remirror/extension-columns@1.0.16
+  - @remirror/extension-diff@1.0.16
+  - @remirror/extension-doc@1.0.17
+  - @remirror/extension-drop-cursor@1.0.16
+  - @remirror/extension-embed@1.1.21
+  - @remirror/extension-emoji@1.0.19
+  - @remirror/extension-epic-mode@1.0.16
+  - @remirror/extension-events@1.0.17
+  - @remirror/extension-font-family@1.0.16
+  - @remirror/extension-font-size@1.0.18
+  - @remirror/extension-gap-cursor@1.0.16
+  - @remirror/extension-hard-break@1.0.16
+  - @remirror/extension-heading@1.0.16
+  - @remirror/extension-history@1.0.16
+  - @remirror/extension-horizontal-rule@1.0.17
+  - @remirror/extension-image@1.0.27
+  - @remirror/extension-italic@1.0.16
+  - @remirror/extension-list@1.2.17
+  - @remirror/extension-mention@1.0.17
+  - @remirror/extension-mention-atom@1.0.20
+  - @remirror/extension-node-formatting@1.0.19
+  - @remirror/extension-paragraph@1.0.16
+  - @remirror/extension-placeholder@1.0.19
+  - @remirror/extension-positioner@1.1.18
+  - @remirror/extension-search@1.0.16
+  - @remirror/extension-shortcuts@1.1.5
+  - @remirror/extension-strike@1.0.16
+  - @remirror/extension-sub@1.0.16
+  - @remirror/extension-sup@1.0.16
+  - @remirror/extension-tables@1.0.19
+  - @remirror/extension-text@1.0.16
+  - @remirror/extension-text-case@1.0.16
+  - @remirror/extension-text-color@1.0.19
+  - @remirror/extension-text-highlight@1.0.19
+  - @remirror/extension-trailing-node@1.0.16
+  - @remirror/extension-underline@1.0.16
+  - @remirror/extension-whitespace@1.0.16
+  - @remirror/extension-yjs@1.0.25
+  - @remirror/preset-core@1.0.21
+  - @remirror/preset-formatting@1.0.23
+  - @remirror/preset-wysiwyg@1.1.40
+
+## 1.0.66
+
+> 2022-02-09
+
+### Patch Changes
+
+- Fix Ctrl+Click making the selected text invisible on Windows
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.1
+  - @remirror/dom@1.0.20
+  - @remirror/extension-annotation@1.1.15
+  - @remirror/extension-blockquote@1.0.18
+  - @remirror/extension-callout@1.0.18
+  - @remirror/extension-code-block@1.0.21
+  - @remirror/extension-emoji@1.0.18
+  - @remirror/extension-image@1.0.26
+  - @remirror/extension-list@1.2.16
+  - @remirror/extension-mention-atom@1.0.19
+  - @remirror/extension-placeholder@1.0.18
+  - @remirror/extension-positioner@1.1.17
+  - @remirror/extension-tables@1.0.18
+  - @remirror/extension-text-color@1.0.18
+  - @remirror/extension-text-highlight@1.0.18
+  - @remirror/extension-yjs@1.0.24
+  - @remirror/preset-core@1.0.20
+  - @remirror/preset-formatting@1.0.22
+  - @remirror/preset-wysiwyg@1.1.39
+
+## 1.0.65
+
+> 2022-02-08
+
+### Patch Changes
+
+- Add support for attribute filtering for `useActive` and `useAttrs` hooks when used with marks.
+
+  This provides consistent behaviour for the hook, aligning with functionality provided for node types.
+
+  ```tsx
+  const active = useActive();
+
+  // Previously this ignored passed attributes and only checked the mark's type
+  //
+  // Now this will only return true if mark type is active AND its color attribute is red
+  const isActive = active.textColor({ color: 'red' });
+  ```
+
+* Allow disabling the yjs undo functionality in the yjs extension
+
+* Updated dependencies []:
+  - @remirror/core@1.3.5
+  - @remirror/core-utils@1.1.6
+  - @remirror/dom@1.0.19
+  - @remirror/extension-annotation@1.1.14
+  - @remirror/extension-bidi@1.0.15
+  - @remirror/extension-blockquote@1.0.17
+  - @remirror/extension-bold@1.0.15
+  - @remirror/extension-callout@1.0.17
+  - @remirror/extension-code@1.0.16
+  - @remirror/extension-code-block@1.0.20
+  - @remirror/extension-codemirror5@1.0.15
+  - @remirror/extension-collaboration@1.0.15
+  - @remirror/extension-columns@1.0.15
+  - @remirror/extension-diff@1.0.15
+  - @remirror/extension-doc@1.0.16
+  - @remirror/extension-drop-cursor@1.0.15
+  - @remirror/extension-embed@1.1.20
+  - @remirror/extension-emoji@1.0.17
+  - @remirror/extension-epic-mode@1.0.15
+  - @remirror/extension-events@1.0.16
+  - @remirror/extension-font-family@1.0.15
+  - @remirror/extension-font-size@1.0.17
+  - @remirror/extension-gap-cursor@1.0.15
+  - @remirror/extension-hard-break@1.0.15
+  - @remirror/extension-heading@1.0.15
+  - @remirror/extension-history@1.0.15
+  - @remirror/extension-horizontal-rule@1.0.16
+  - @remirror/extension-image@1.0.25
+  - @remirror/extension-italic@1.0.15
+  - @remirror/extension-link@1.1.14
+  - @remirror/extension-list@1.2.15
+  - @remirror/extension-markdown@1.0.15
+  - @remirror/extension-mention@1.0.16
+  - @remirror/extension-mention-atom@1.0.18
+  - @remirror/extension-node-formatting@1.0.18
+  - @remirror/extension-paragraph@1.0.15
+  - @remirror/extension-placeholder@1.0.17
+  - @remirror/extension-positioner@1.1.16
+  - @remirror/extension-search@1.0.15
+  - @remirror/extension-shortcuts@1.1.4
+  - @remirror/extension-strike@1.0.15
+  - @remirror/extension-sub@1.0.15
+  - @remirror/extension-sup@1.0.15
+  - @remirror/extension-tables@1.0.17
+  - @remirror/extension-text@1.0.15
+  - @remirror/extension-text-case@1.0.15
+  - @remirror/extension-text-color@1.0.17
+  - @remirror/extension-text-highlight@1.0.17
+  - @remirror/extension-trailing-node@1.0.15
+  - @remirror/extension-underline@1.0.15
+  - @remirror/extension-whitespace@1.0.15
+  - @remirror/extension-yjs@1.0.23
+  - @remirror/preset-core@1.0.19
+  - @remirror/preset-formatting@1.0.21
+  - @remirror/preset-wysiwyg@1.1.38
+
+## 1.0.64
+
+> 2022-02-04
+
+### Patch Changes
+
+- Simplify how auto link works in the link extension, to simplify maintainance and fix a few issues.
+
+* Replace wrong assertion
+
+* Updated dependencies []:
+  - @remirror/core-utils@1.1.5
+  - @remirror/extension-link@1.1.13
+  - @remirror/core@1.3.4
+  - @remirror/dom@1.0.18
+  - @remirror/extension-annotation@1.1.13
+  - @remirror/extension-bidi@1.0.14
+  - @remirror/extension-blockquote@1.0.16
+  - @remirror/extension-bold@1.0.14
+  - @remirror/extension-callout@1.0.16
+  - @remirror/extension-code@1.0.15
+  - @remirror/extension-code-block@1.0.19
+  - @remirror/extension-codemirror5@1.0.14
+  - @remirror/extension-collaboration@1.0.14
+  - @remirror/extension-columns@1.0.14
+  - @remirror/extension-diff@1.0.14
+  - @remirror/extension-doc@1.0.15
+  - @remirror/extension-drop-cursor@1.0.14
+  - @remirror/extension-embed@1.1.19
+  - @remirror/extension-emoji@1.0.16
+  - @remirror/extension-epic-mode@1.0.14
+  - @remirror/extension-events@1.0.15
+  - @remirror/extension-font-family@1.0.14
+  - @remirror/extension-font-size@1.0.16
+  - @remirror/extension-gap-cursor@1.0.14
+  - @remirror/extension-hard-break@1.0.14
+  - @remirror/extension-heading@1.0.14
+  - @remirror/extension-history@1.0.14
+  - @remirror/extension-horizontal-rule@1.0.15
+  - @remirror/extension-image@1.0.24
+  - @remirror/extension-italic@1.0.14
+  - @remirror/extension-list@1.2.14
+  - @remirror/extension-markdown@1.0.14
+  - @remirror/extension-mention@1.0.15
+  - @remirror/extension-mention-atom@1.0.17
+  - @remirror/extension-node-formatting@1.0.17
+  - @remirror/extension-paragraph@1.0.14
+  - @remirror/extension-placeholder@1.0.16
+  - @remirror/extension-positioner@1.1.15
+  - @remirror/extension-search@1.0.14
+  - @remirror/extension-shortcuts@1.1.3
+  - @remirror/extension-strike@1.0.14
+  - @remirror/extension-sub@1.0.14
+  - @remirror/extension-sup@1.0.14
+  - @remirror/extension-tables@1.0.16
+  - @remirror/extension-text@1.0.14
+  - @remirror/extension-text-case@1.0.14
+  - @remirror/extension-text-color@1.0.16
+  - @remirror/extension-text-highlight@1.0.16
+  - @remirror/extension-trailing-node@1.0.14
+  - @remirror/extension-underline@1.0.14
+  - @remirror/extension-whitespace@1.0.14
+  - @remirror/extension-yjs@1.0.22
+  - @remirror/preset-core@1.0.18
+  - @remirror/preset-formatting@1.0.20
+  - @remirror/preset-wysiwyg@1.1.37
+
+## 1.0.63
+
+> 2022-02-02
+
+### Patch Changes
+
+- Avoid race conditions in processing annotations
+
+- Updated dependencies []:
+  - @remirror/extension-annotation@1.1.12
+  - @remirror/extension-yjs@1.0.21
+
+## 1.0.62
+
+> 2022-01-31
+
+### Patch Changes
+
+- fix: don't extend annotation when the user types at the beginning
+
+- Updated dependencies []:
+  - @remirror/extension-annotation@1.1.11
+  - @remirror/extension-yjs@1.0.20
+
+## 1.0.61
+
+> 2022-01-21
+
+### Patch Changes
+
+- fix: make HorizontalRule compatible with Shortcuts
+
+- Updated dependencies []:
+  - @remirror/extension-horizontal-rule@1.0.14
+  - @remirror/preset-wysiwyg@1.1.36
+
+## 1.0.60
+
+> 2022-01-17
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.11
+  - @remirror/extension-embed@1.1.18
+  - @remirror/extension-image@1.0.23
+  - @remirror/preset-wysiwyg@1.1.35
+
+## 1.0.59
+
+> 2022-01-16
+
+### Patch Changes
+
+- Fix a runtime error when getting font size before the editor view is initialized.
+
+* Increase the clickable area of the task list checkbox by using `<label>` to wrap the checkbox.
+
+* Updated dependencies []:
+  - @remirror/extension-font-size@1.0.15
+  - @remirror/preset-formatting@1.0.19
+  - @remirror/extension-list@1.2.13
+  - @remirror/preset-wysiwyg@1.1.34
+
+## 1.0.58
+
+> 2022-01-11
+
+### Patch Changes
+
+- Deprecate `getTheme` and `getThemeProps` in favour of new methods `getThemeVar` and `getThemeVarName`.
+
+  This removes a code path that used an ES6 Proxy, which cannot be polyfilled.
+
+  ```
+  getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
+
+  getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
+  ```
+
+  ```
+  getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
+
+  getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
+  ```
+
+- Updated dependencies []:
+  - @remirror/theme@1.2.0
+  - @remirror/extension-text-color@1.0.15
+  - @remirror/dom@1.0.17
+  - @remirror/extension-annotation@1.1.10
+  - @remirror/extension-blockquote@1.0.15
+  - @remirror/extension-callout@1.0.15
+  - @remirror/extension-code-block@1.0.18
+  - @remirror/extension-emoji@1.0.15
+  - @remirror/extension-image@1.0.22
+  - @remirror/extension-list@1.2.12
+  - @remirror/extension-mention-atom@1.0.16
+  - @remirror/extension-placeholder@1.0.15
+  - @remirror/extension-positioner@1.1.14
+  - @remirror/extension-tables@1.0.15
+  - @remirror/extension-text-highlight@1.0.15
+  - @remirror/extension-yjs@1.0.19
+  - @remirror/preset-core@1.0.17
+  - @remirror/preset-formatting@1.0.18
+  - @remirror/preset-wysiwyg@1.1.33
+
+## 1.0.57
+
+> 2022-01-06
+
+### Patch Changes
+
+- Fix a bug that causes the cursor to jump to the end of the first node when pressing backspace at the beginning of a list and this list is the second child of the document.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.11
+  - @remirror/preset-wysiwyg@1.1.32
+
+## 1.0.56
+
+> 2022-01-05
+
+### Patch Changes
+
+- Update yjs packages to latest version.
+
+* Avoid leaking Yjs UndoManager instances
+
+* Updated dependencies []:
+  - @remirror/extension-yjs@1.0.18
+
+## 1.0.55
+
+> 2022-01-03
+
+### Patch Changes
+
+- Make sure that "main", "module" and "types" fields within the `package.json` are prefixed with `./`. This is a [best practice](https://github.com/remirror/remirror/pull/1451#issuecomment-1003858682) according to node.js, esbuild and vite's documentation.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.3
+  - @remirror/core-constants@1.0.2
+  - @remirror/core-helpers@1.0.5
+  - @remirror/core-types@1.0.4
+  - @remirror/core-utils@1.1.4
+  - @remirror/dom@1.0.16
+  - @remirror/extension-annotation@1.1.9
+  - @remirror/extension-bidi@1.0.13
+  - @remirror/extension-blockquote@1.0.14
+  - @remirror/extension-bold@1.0.13
+  - @remirror/extension-callout@1.0.14
+  - @remirror/extension-code@1.0.14
+  - @remirror/extension-code-block@1.0.17
+  - @remirror/extension-codemirror5@1.0.13
+  - @remirror/extension-collaboration@1.0.13
+  - @remirror/extension-columns@1.0.13
+  - @remirror/extension-diff@1.0.13
+  - @remirror/extension-doc@1.0.14
+  - @remirror/extension-drop-cursor@1.0.13
+  - @remirror/extension-embed@1.1.17
+  - @remirror/extension-emoji@1.0.14
+  - @remirror/extension-epic-mode@1.0.13
+  - @remirror/extension-events@1.0.14
+  - @remirror/extension-font-family@1.0.13
+  - @remirror/extension-font-size@1.0.14
+  - @remirror/pm@1.0.10
+  - @remirror/extension-image@1.0.21
+  - @remirror/preset-wysiwyg@1.1.31
+  - @remirror/extension-gap-cursor@1.0.13
+  - @remirror/extension-hard-break@1.0.13
+  - @remirror/extension-heading@1.0.13
+  - @remirror/extension-history@1.0.13
+  - @remirror/extension-horizontal-rule@1.0.13
+  - @remirror/extension-italic@1.0.13
+  - @remirror/extension-link@1.1.12
+  - @remirror/extension-list@1.2.10
+  - @remirror/extension-markdown@1.0.13
+  - @remirror/extension-mention@1.0.14
+  - @remirror/extension-mention-atom@1.0.15
+  - @remirror/extension-node-formatting@1.0.16
+  - @remirror/extension-paragraph@1.0.13
+  - @remirror/extension-placeholder@1.0.14
+  - @remirror/extension-positioner@1.1.13
+  - @remirror/extension-search@1.0.13
+  - @remirror/extension-shortcuts@1.1.2
+  - @remirror/extension-strike@1.0.13
+  - @remirror/extension-sub@1.0.13
+  - @remirror/extension-sup@1.0.13
+  - @remirror/extension-tables@1.0.14
+  - @remirror/extension-text@1.0.13
+  - @remirror/extension-text-case@1.0.13
+  - @remirror/extension-text-color@1.0.14
+  - @remirror/extension-text-highlight@1.0.14
+  - @remirror/extension-trailing-node@1.0.13
+  - @remirror/extension-underline@1.0.13
+  - @remirror/extension-whitespace@1.0.13
+  - @remirror/extension-yjs@1.0.17
+  - @remirror/preset-core@1.0.16
+  - @remirror/preset-formatting@1.0.17
+  - @remirror/icons@1.0.7
+  - @remirror/theme@1.1.5
+
+## 1.0.54
+
+> 2021-12-30
+
+### Patch Changes
+
+- Correct a document error about `CodeBlockExtension`'s option `toggleName`. Its default value should be `'paragraph'` instead of `undefined`.
+
+* Fix a potential issue that might cause invalid text selection when pressing `Backspace` instead a code block node.
+
+* Updated dependencies []:
+  - @remirror/extension-code-block@1.0.16
+  - @remirror/preset-wysiwyg@1.1.30
+
+## 1.0.53
+
+> 2021-12-17
+
+### Patch Changes
+
+- Fix types of copy and paste event handlers
+
+- Updated dependencies []:
+  - @remirror/extension-events@1.0.13
+  - @remirror/dom@1.0.15
+  - @remirror/extension-annotation@1.1.8
+  - @remirror/extension-link@1.1.11
+  - @remirror/extension-list@1.2.9
+  - @remirror/extension-mention@1.0.13
+  - @remirror/extension-mention-atom@1.0.14
+  - @remirror/extension-positioner@1.1.12
+  - @remirror/extension-yjs@1.0.16
+  - @remirror/preset-core@1.0.15
+  - @remirror/preset-wysiwyg@1.1.29
+
+## 1.0.52
+
+> 2021-12-15
+
+### Patch Changes
+
+- fix: prevent text loss when drag and dropping text containing links
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.10
+  - @remirror/preset-wysiwyg@1.1.28
+
+## 1.0.51
+
+> 2021-12-10
+
+### Patch Changes
+
+- Align left/right arrow style with other arrows
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.1.1
+  - @remirror/preset-wysiwyg@1.1.27
+
+## 1.0.50
+
+> 2021-12-10
+
+### Patch Changes
+
+- feat: support shortcut for left/right arrows
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.1.0
+  - @remirror/preset-wysiwyg@1.1.26
+
+## 1.0.49
+
+> 2021-12-09
+
+### Patch Changes
+
+- Fix an issue that causes the content below a list item is being deleted when deleting this list item by pressing Enter.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.8
+  - @remirror/preset-wysiwyg@1.1.25
+
+## 1.0.48
+
+> 2021-11-23
+
+### Patch Changes
+
+- Restore image dimensions correctly from the markup.
+
+- Updated dependencies []:
+  - @remirror/extension-image@1.0.20
+  - @remirror/preset-wysiwyg@1.1.24
+
+## 1.0.47
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix the browser exports paths in `package.json`.
+
+- Updated dependencies []:
+  - @remirror/extension-code-block@1.0.15
+  - @remirror/icons@1.0.6
+  - @remirror/pm@1.0.8
+  - @remirror/preset-wysiwyg@1.1.23
+  - @remirror/core@1.3.2
+  - @remirror/dom@1.0.14
+  - @remirror/extension-annotation@1.1.7
+  - @remirror/extension-bidi@1.0.12
+  - @remirror/extension-blockquote@1.0.13
+  - @remirror/extension-bold@1.0.12
+  - @remirror/extension-callout@1.0.13
+  - @remirror/extension-code@1.0.13
+  - @remirror/extension-codemirror5@1.0.12
+  - @remirror/extension-collaboration@1.0.12
+  - @remirror/extension-columns@1.0.12
+  - @remirror/extension-diff@1.0.12
+  - @remirror/extension-doc@1.0.13
+  - @remirror/extension-drop-cursor@1.0.12
+  - @remirror/extension-embed@1.1.16
+  - @remirror/extension-emoji@1.0.13
+  - @remirror/extension-epic-mode@1.0.12
+  - @remirror/extension-events@1.0.12
+  - @remirror/extension-font-family@1.0.12
+  - @remirror/extension-font-size@1.0.13
+  - @remirror/extension-gap-cursor@1.0.12
+  - @remirror/extension-hard-break@1.0.12
+  - @remirror/extension-heading@1.0.12
+  - @remirror/extension-history@1.0.12
+  - @remirror/extension-horizontal-rule@1.0.12
+  - @remirror/extension-image@1.0.19
+  - @remirror/extension-italic@1.0.12
+  - @remirror/extension-link@1.1.9
+  - @remirror/extension-list@1.2.7
+  - @remirror/extension-markdown@1.0.12
+  - @remirror/extension-mention@1.0.12
+  - @remirror/extension-mention-atom@1.0.13
+  - @remirror/extension-node-formatting@1.0.15
+  - @remirror/extension-paragraph@1.0.12
+  - @remirror/extension-placeholder@1.0.13
+  - @remirror/extension-positioner@1.1.11
+  - @remirror/extension-search@1.0.12
+  - @remirror/extension-shortcuts@1.0.6
+  - @remirror/extension-strike@1.0.12
+  - @remirror/extension-sub@1.0.12
+  - @remirror/extension-sup@1.0.12
+  - @remirror/extension-tables@1.0.13
+  - @remirror/extension-text@1.0.12
+  - @remirror/extension-text-case@1.0.12
+  - @remirror/extension-text-color@1.0.13
+  - @remirror/extension-text-highlight@1.0.13
+  - @remirror/extension-trailing-node@1.0.12
+  - @remirror/extension-underline@1.0.12
+  - @remirror/extension-whitespace@1.0.12
+  - @remirror/extension-yjs@1.0.15
+  - @remirror/preset-core@1.0.14
+  - @remirror/preset-formatting@1.0.16
+
+## 1.0.46
+
+> 2021-11-23
+
+### Patch Changes
+
+- Fix an issue that causes uploading files failed to be updated after a replace step.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.1
+  - @remirror/dom@1.0.13
+  - @remirror/extension-annotation@1.1.6
+  - @remirror/extension-bidi@1.0.11
+  - @remirror/extension-blockquote@1.0.12
+  - @remirror/extension-bold@1.0.11
+  - @remirror/extension-callout@1.0.12
+  - @remirror/extension-code@1.0.12
+  - @remirror/extension-code-block@1.0.14
+  - @remirror/extension-codemirror5@1.0.11
+  - @remirror/extension-collaboration@1.0.11
+  - @remirror/extension-columns@1.0.11
+  - @remirror/extension-diff@1.0.11
+  - @remirror/extension-doc@1.0.12
+  - @remirror/extension-drop-cursor@1.0.11
+  - @remirror/extension-embed@1.1.15
+  - @remirror/extension-emoji@1.0.12
+  - @remirror/extension-epic-mode@1.0.11
+  - @remirror/extension-events@1.0.11
+  - @remirror/extension-font-family@1.0.11
+  - @remirror/extension-font-size@1.0.12
+  - @remirror/extension-gap-cursor@1.0.11
+  - @remirror/extension-hard-break@1.0.11
+  - @remirror/extension-heading@1.0.11
+  - @remirror/extension-history@1.0.11
+  - @remirror/extension-horizontal-rule@1.0.11
+  - @remirror/extension-image@1.0.18
+  - @remirror/extension-italic@1.0.11
+  - @remirror/extension-link@1.1.8
+  - @remirror/extension-list@1.2.6
+  - @remirror/extension-markdown@1.0.11
+  - @remirror/extension-mention@1.0.11
+  - @remirror/extension-mention-atom@1.0.12
+  - @remirror/extension-node-formatting@1.0.14
+  - @remirror/extension-paragraph@1.0.11
+  - @remirror/extension-placeholder@1.0.12
+  - @remirror/extension-positioner@1.1.10
+  - @remirror/extension-search@1.0.11
+  - @remirror/extension-shortcuts@1.0.5
+  - @remirror/extension-strike@1.0.11
+  - @remirror/extension-sub@1.0.11
+  - @remirror/extension-sup@1.0.11
+  - @remirror/extension-tables@1.0.12
+  - @remirror/extension-text@1.0.11
+  - @remirror/extension-text-case@1.0.11
+  - @remirror/extension-text-color@1.0.12
+  - @remirror/extension-text-highlight@1.0.12
+  - @remirror/extension-trailing-node@1.0.11
+  - @remirror/extension-underline@1.0.11
+  - @remirror/extension-whitespace@1.0.11
+  - @remirror/extension-yjs@1.0.14
+  - @remirror/preset-core@1.0.13
+  - @remirror/preset-formatting@1.0.15
+  - @remirror/preset-wysiwyg@1.1.22
+  - @remirror/pm@1.0.7
+
+## 1.0.45
+
+> 2021-11-18
+
+### Patch Changes
+
+- fix: remove rules depending on capture groups
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.4
+  - @remirror/preset-wysiwyg@1.1.21
+
+## 1.0.44
+
+> 2021-11-17
+
+### Patch Changes
+
+- fix: removeFontSize should respect user text selection
+
+- Updated dependencies []:
+  - @remirror/extension-font-size@1.0.11
+  - @remirror/preset-formatting@1.0.14
+
+## 1.0.43
+
+> 2021-11-16
+
+### Patch Changes
+
+- Make extension-shortcuts package public
+
+- Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.3
+  - @remirror/preset-wysiwyg@1.1.20
+
+## 1.0.42
+
+> 2021-11-16
+
+### Patch Changes
+
+- Add support for keyboard shortcuts
+
+* Add keyboard shortcuts
+
+* Updated dependencies []:
+  - @remirror/extension-shortcuts@1.0.2
+  - @remirror/preset-wysiwyg@1.1.19
+
+## 1.0.41
+
+> 2021-11-16
+
+### Patch Changes
+
+- Fix an error when indenting the list.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.5
+  - @remirror/preset-wysiwyg@1.1.18
+
+## 1.0.40
+
+> 2021-11-11
+
+### Patch Changes
+
+- Add a new option `extractHref` to `ExtensionLink`. Users can use this option to customize the `href` attribute, for example `file://` and `tel:`.
+
+- Updated dependencies []:
+  - @remirror/extension-link@1.1.7
+  - @remirror/preset-wysiwyg@1.1.17
+
+## 1.0.39
+
+> 2021-11-10
+
+### Patch Changes
+
+- Add new method `hasHandlers` to extensions.
+
+- Updated dependencies []:
+  - @remirror/core@1.3.0
+  - @remirror/dom@1.0.12
+  - @remirror/extension-annotation@1.1.5
+  - @remirror/extension-bidi@1.0.10
+  - @remirror/extension-blockquote@1.0.11
+  - @remirror/extension-bold@1.0.10
+  - @remirror/extension-callout@1.0.11
+  - @remirror/extension-code@1.0.11
+  - @remirror/extension-code-block@1.0.13
+  - @remirror/extension-codemirror5@1.0.10
+  - @remirror/extension-collaboration@1.0.10
+  - @remirror/extension-columns@1.0.10
+  - @remirror/extension-diff@1.0.10
+  - @remirror/extension-doc@1.0.11
+  - @remirror/extension-drop-cursor@1.0.10
+  - @remirror/extension-embed@1.1.14
+  - @remirror/extension-emoji@1.0.11
+  - @remirror/extension-epic-mode@1.0.10
+  - @remirror/extension-events@1.0.10
+  - @remirror/extension-font-family@1.0.10
+  - @remirror/extension-font-size@1.0.10
+  - @remirror/extension-gap-cursor@1.0.10
+  - @remirror/extension-hard-break@1.0.10
+  - @remirror/extension-heading@1.0.10
+  - @remirror/extension-history@1.0.10
+  - @remirror/extension-horizontal-rule@1.0.10
+  - @remirror/extension-image@1.0.17
+  - @remirror/extension-italic@1.0.10
+  - @remirror/extension-link@1.1.6
+  - @remirror/extension-list@1.2.4
+  - @remirror/extension-markdown@1.0.10
+  - @remirror/extension-mention@1.0.10
+  - @remirror/extension-mention-atom@1.0.11
+  - @remirror/extension-node-formatting@1.0.13
+  - @remirror/extension-paragraph@1.0.10
+  - @remirror/extension-placeholder@1.0.11
+  - @remirror/extension-positioner@1.1.9
+  - @remirror/extension-search@1.0.10
+  - @remirror/extension-strike@1.0.10
+  - @remirror/extension-sub@1.0.10
+  - @remirror/extension-sup@1.0.10
+  - @remirror/extension-tables@1.0.11
+  - @remirror/extension-text@1.0.10
+  - @remirror/extension-text-case@1.0.10
+  - @remirror/extension-text-color@1.0.11
+  - @remirror/extension-text-highlight@1.0.11
+  - @remirror/extension-trailing-node@1.0.10
+  - @remirror/extension-underline@1.0.10
+  - @remirror/extension-whitespace@1.0.10
+  - @remirror/extension-yjs@1.0.13
+  - @remirror/preset-core@1.0.12
+  - @remirror/preset-formatting@1.0.13
+  - @remirror/preset-wysiwyg@1.1.16
+
+## 1.0.38
+
+> 2021-11-04
+
+### Patch Changes
+
+- Always reset regexp lastIndex before matching.
+
+- Updated dependencies []:
+  - @remirror/core-helpers@1.0.4
+  - @remirror/core@1.2.2
+  - @remirror/core-utils@1.1.3
+  - @remirror/dom@1.0.11
+  - @remirror/extension-annotation@1.1.4
+  - @remirror/extension-bidi@1.0.9
+  - @remirror/extension-blockquote@1.0.10
+  - @remirror/extension-bold@1.0.9
+  - @remirror/extension-callout@1.0.10
+  - @remirror/extension-code@1.0.10
+  - @remirror/extension-code-block@1.0.12
+  - @remirror/extension-codemirror5@1.0.9
+  - @remirror/extension-collaboration@1.0.9
+  - @remirror/extension-columns@1.0.9
+  - @remirror/extension-diff@1.0.9
+  - @remirror/extension-doc@1.0.10
+  - @remirror/extension-drop-cursor@1.0.9
+  - @remirror/extension-embed@1.1.13
+  - @remirror/extension-emoji@1.0.10
+  - @remirror/extension-epic-mode@1.0.9
+  - @remirror/extension-events@1.0.9
+  - @remirror/extension-font-family@1.0.9
+  - @remirror/extension-font-size@1.0.9
+  - @remirror/extension-gap-cursor@1.0.9
+  - @remirror/extension-hard-break@1.0.9
+  - @remirror/extension-heading@1.0.9
+  - @remirror/extension-history@1.0.9
+  - @remirror/extension-horizontal-rule@1.0.9
+  - @remirror/extension-image@1.0.16
+  - @remirror/extension-italic@1.0.9
+  - @remirror/extension-link@1.1.5
+  - @remirror/extension-list@1.2.3
+  - @remirror/extension-markdown@1.0.9
+  - @remirror/extension-mention@1.0.9
+  - @remirror/extension-mention-atom@1.0.10
+  - @remirror/extension-node-formatting@1.0.12
+  - @remirror/extension-paragraph@1.0.9
+  - @remirror/extension-placeholder@1.0.10
+  - @remirror/extension-positioner@1.1.8
+  - @remirror/extension-search@1.0.9
+  - @remirror/extension-strike@1.0.9
+  - @remirror/extension-sub@1.0.9
+  - @remirror/extension-sup@1.0.9
+  - @remirror/extension-tables@1.0.10
+  - @remirror/extension-text@1.0.9
+  - @remirror/extension-text-case@1.0.9
+  - @remirror/extension-text-color@1.0.10
+  - @remirror/extension-text-highlight@1.0.10
+  - @remirror/extension-trailing-node@1.0.9
+  - @remirror/extension-underline@1.0.9
+  - @remirror/extension-whitespace@1.0.9
+  - @remirror/extension-yjs@1.0.12
+  - @remirror/icons@1.0.5
+  - @remirror/pm@1.0.6
+  - @remirror/preset-core@1.0.11
+  - @remirror/preset-formatting@1.0.12
+  - @remirror/preset-wysiwyg@1.1.15
+
+## 1.0.37
+
+> 2021-11-04
+
+### Patch Changes
+
+- Fix an issue where the resizable view is too tall on a small viewpoint.
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.12
+  - @remirror/extension-image@1.0.15
+  - @remirror/preset-wysiwyg@1.1.14
+
 ## 1.0.36
 
 > 2021-10-24

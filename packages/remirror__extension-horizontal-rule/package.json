@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-horizontal-rule",
-  "version": "1.0.8",
+  "version": "1.0.17",
   "description": "Allow your users to divide their content with horizontal lines. Nice!",
   "keywords": [
     "remirror",
@@ -28,26 +28,26 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-horizontal-rule.cjs.js",
-  "module": "dist/remirror-extension-horizontal-rule.esm.js",
+  "main": "./dist/remirror-extension-horizontal-rule.cjs.js",
+  "module": "./dist/remirror-extension-horizontal-rule.esm.js",
   "browser": {
     "./dist/remirror-extension-horizontal-rule.cjs.js": "./dist/remirror-extension-horizontal-rule.browser.cjs.js",
     "./dist/remirror-extension-horizontal-rule.esm.js": "./dist/remirror-extension-horizontal-rule.browser.esm.js"
   },
-  "types": "dist/remirror-extension-horizontal-rule.cjs.d.ts",
+  "types": "./dist/remirror-extension-horizontal-rule.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.1",
-    "@remirror/messages": "^1.0.4"
+    "@remirror/core": "^1.3.6",
+    "@remirror/messages": "^1.0.6"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.14"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.4"
+    "@remirror/pm": "^1.0.10"
   },
   "publishConfig": {
     "access": "public"

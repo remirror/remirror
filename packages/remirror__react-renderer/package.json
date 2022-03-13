@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-renderer",
-  "version": "1.0.10",
+  "version": "1.0.18",
   "description": "Render the JSON output from your remirror editor as a react component",
   "keywords": [
     "remirror"
@@ -27,19 +27,19 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-react-renderer.cjs.js",
-  "module": "dist/remirror-react-renderer.esm.js",
+  "main": "./dist/remirror-react-renderer.cjs.js",
+  "module": "./dist/remirror-react-renderer.esm.js",
   "browser": {
     "./dist/remirror-react-renderer.cjs.js": "./dist/remirror-react-renderer.browser.cjs.js",
     "./dist/remirror-react-renderer.esm.js": "./dist/remirror-react-renderer.browser.esm.js"
   },
-  "types": "dist/remirror-react-renderer.cjs.d.ts",
+  "types": "./dist/remirror-react-renderer.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.2.1"
+    "@remirror/core": "^1.3.6"
   },
   "devDependencies": {
     "@types/react": "^17.0.14",
