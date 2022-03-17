@@ -1,5 +1,19 @@
 # @remirror/preset-react
 
+## 1.0.21
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/extension-placeholder@1.0.20
+  - @remirror/extension-react-component@1.1.8
+  - @remirror/extension-react-ssr@1.0.19
+
 ## 1.0.20
 
 > 2022-02-22

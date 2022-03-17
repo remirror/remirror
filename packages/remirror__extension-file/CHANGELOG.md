@@ -1,5 +1,18 @@
 # @remirror/extension-file
 
+## 0.3.16
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/react@1.0.28
+  - @remirror/react-components@1.0.27
+
 ## 0.3.15
 
 > 2022-03-06

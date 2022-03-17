@@ -1,5 +1,17 @@
 # @remirror/extension-text-highlight
 
+## 1.0.20
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/extension-text-color@1.0.20
+
 ## 1.0.19
 
 > 2022-02-22

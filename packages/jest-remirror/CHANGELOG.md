@@ -1,5 +1,18 @@
 # jest-remirror
 
+## 1.0.33
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/dom@1.0.24
+  - @remirror/preset-core@1.0.23
+
 ## 1.0.32
 
 > 2022-03-08

@@ -1,5 +1,16 @@
 # @remirror/extension-italic
 
+## 1.0.17
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+
 ## 1.0.16
 
 > 2022-02-22

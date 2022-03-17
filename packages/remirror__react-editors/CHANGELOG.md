@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.63
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - remirror@1.0.71
+  - @remirror/extension-react-tables@1.0.28
+  - @remirror/react@1.0.28
+
 ## 0.1.62
 
 > 2022-03-08

@@ -1,5 +1,23 @@
 # @remirror/react-hooks
 
+## 1.0.27
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/react-core@1.1.0
+  - @remirror/extension-emoji@1.0.20
+  - @remirror/extension-events@1.0.18
+  - @remirror/extension-history@1.0.17
+  - @remirror/extension-mention@1.0.18
+  - @remirror/extension-mention-atom@1.0.21
+  - @remirror/extension-positioner@1.2.1
+
 ## 1.0.26
 
 > 2022-03-06
