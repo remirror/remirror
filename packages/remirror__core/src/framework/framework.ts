@@ -460,10 +460,11 @@ export abstract class Framework<
   protected eventListenerProps(
     props: ListenerProps<Extension> = object(),
   ): RemirrorEventListenerProps<Extension> {
-    const { state, tr } = props;
+    const { state, tr, transactions } = props;
 
     return {
       tr,
+      transactions,
       internalUpdate: !tr,
       view: this.view,
       firstRender: this.#firstRender,

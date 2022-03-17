@@ -260,6 +260,16 @@ export interface RemirrorEventListenerProps<Extension extends AnyExtension>
   tr?: Transaction<GetSchema<Extension>>;
 
   /**
+   * When the state updates are not controlled and it was a transaction that
+   * caused the state to be updated this value captures all the transaction
+   * updates caused by prosemirror plugins hook state methods like
+   * `filterTransactions` and `appendTransactions`.
+   *
+   * This is for advanced users only.
+   */
+  transactions?: Array<Transaction<GetSchema<Extension>>>;
+
+  /**
    * A shorthand way of checking whether the update was triggered by editor
    * usage (internal) or overwriting the state.
    *
@@ -324,7 +334,17 @@ export interface TriggerChangeProps {
 
 export interface ListenerProps<Extension extends AnyExtension>
   extends Partial<EditorStateProps<GetSchema<Extension>>>,
-    Partial<TransactionProps<GetSchema<Extension>>> {}
+    Partial<TransactionProps<GetSchema<Extension>>> {
+  /**
+   * When the state updates are not controlled and it was a transaction that
+   * caused the state to be updated this value captures all the transaction
+   * updates caused by prosemirror plugins hook state methods like
+   * `filterTransactions` and `appendTransactions`.
+   *
+   * This is for advanced users only.
+   */
+  transactions?: Array<Transaction<GetSchema<Extension>>>;
+}
 
 export interface FrameworkEvents<Extension extends AnyExtension>
   extends Pick<ManagerEvents, 'destroy'> {

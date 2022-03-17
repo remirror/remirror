@@ -200,7 +200,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
         this.previousStateOverride = this.getState();
       }
 
-      this.onChange({ state, tr });
+      this.onChange({ state, tr, transactions });
 
       return;
     }
@@ -218,7 +218,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
     // If `transactions` is an empty array, that means the transaction was cancelled by `filterTransaction`.
     if (triggerChange && transactions?.length !== 0) {
       // Update the `onChange` handler before notifying the manager but only when a change should be triggered.
-      this.onChange({ state, tr });
+      this.onChange({ state, tr, transactions });
     }
 
     this.manager.onStateUpdate({ previousState: this.previousState, state, tr, transactions });
