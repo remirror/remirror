@@ -1,5 +1,22 @@
 # @remirror/extension-react-tables
 
+## 1.0.28
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/react-core@1.1.0
+  - @remirror/extension-positioner@1.2.1
+  - @remirror/extension-tables@1.0.20
+  - @remirror/preset-core@1.0.23
+  - @remirror/react-components@1.0.27
+  - @remirror/react-hooks@1.0.27
+
 ## 1.0.27
 
 > 2022-03-06

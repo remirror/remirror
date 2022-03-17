@@ -1,5 +1,17 @@
 # @remirror/extension-annotation
 
+## 1.1.18
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/extension-positioner@1.2.1
+
 ## 1.1.17
 
 > 2022-03-04

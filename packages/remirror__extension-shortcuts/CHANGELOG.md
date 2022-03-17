@@ -1,5 +1,16 @@
 # @remirror/extension-shortcuts
 
+## 1.1.6
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+
 ## 1.1.5
 
 > 2022-02-22

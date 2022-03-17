@@ -1,5 +1,25 @@
 # @remirror/react-core
 
+## 1.1.0
+
+> 2022-03-17
+
+### Minor Changes
+
+- Expose appended transactions via the onChange handler
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/extension-positioner@1.2.1
+  - @remirror/extension-react-component@1.1.8
+  - @remirror/extension-react-ssr@1.0.19
+  - @remirror/preset-core@1.0.23
+  - @remirror/preset-react@1.0.21
+  - @remirror/react-renderer@1.0.19
+  - @remirror/react-ssr@1.0.19
+
 ## 1.0.25
 
 > 2022-03-06

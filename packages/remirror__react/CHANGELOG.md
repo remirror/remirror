@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 1.0.28
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/react-core@1.1.0
+  - @remirror/extension-placeholder@1.0.20
+  - @remirror/extension-positioner@1.2.1
+  - @remirror/extension-react-component@1.1.8
+  - @remirror/extension-react-ssr@1.0.19
+  - @remirror/extension-react-tables@1.0.28
+  - @remirror/preset-react@1.0.21
+  - @remirror/react-components@1.0.27
+  - @remirror/react-hooks@1.0.27
+  - @remirror/react-renderer@1.0.19
+  - @remirror/react-ssr@1.0.19
+
 ## 1.0.27
 
 > 2022-03-06

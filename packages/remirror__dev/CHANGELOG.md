@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.0.28
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/react@1.0.28
+
 ## 1.0.27
 
 > 2022-03-06

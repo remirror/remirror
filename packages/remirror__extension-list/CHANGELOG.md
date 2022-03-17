@@ -1,5 +1,17 @@
 # @remirror/extension-list
 
+## 1.2.19
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/extension-events@1.0.18
+
 ## 1.2.18
 
 > 2022-03-02

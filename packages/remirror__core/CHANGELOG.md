@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 1.4.0
+
+> 2022-03-17
+
+### Minor Changes
+
+- Expose appended transactions via the onChange handler
+
 ## 1.3.6
 
 > 2022-02-22

@@ -1,5 +1,23 @@
 # @remirror/preset-core
 
+## 1.0.23
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/extension-doc@1.0.18
+  - @remirror/extension-events@1.0.18
+  - @remirror/extension-gap-cursor@1.0.17
+  - @remirror/extension-history@1.0.17
+  - @remirror/extension-paragraph@1.0.17
+  - @remirror/extension-positioner@1.2.1
+  - @remirror/extension-text@1.0.17
+
 ## 1.0.22
 
 > 2022-03-04

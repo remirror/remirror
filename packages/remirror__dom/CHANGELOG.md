@@ -1,5 +1,17 @@
 # @remirror/dom
 
+## 1.0.24
+
+> 2022-03-17
+
+### Patch Changes
+
+- Expose appended transactions via the onChange handler
+
+- Updated dependencies []:
+  - @remirror/core@1.4.0
+  - @remirror/preset-core@1.0.23
+
 ## 1.0.23
 
 > 2022-03-06
