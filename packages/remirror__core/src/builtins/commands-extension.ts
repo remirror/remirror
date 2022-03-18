@@ -407,26 +407,26 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    *
    * ```ts
    * // Set to the end of the document.
-   * commands.setSelection('end');
+   * commands.selectText('end');
    *
    * // Set the selection to the start of the document.
-   * commands.setSelection('start');
+   * commands.selectText('start');
    *
    * // Select all the text in the document.
-   * commands.setSelection('all')
+   * commands.selectText('all')
    *
    * // Select a range of text. It's up to you to make sure the selected
    * // range is valid.
-   * commands.setSelection({ from: 10, to: 15 });
+   * commands.selectText({ from: 10, to: 15 });
    *
    * // Specify the anchor and range in the selection.
-   * commands.setSelection({ anchor: 10, head: 15 });
+   * commands.selectText({ anchor: 10, head: 15 });
    *
    * // Set to a specific position.
-   * commands.setSelection(10);
+   * commands.selectText(10);
    *
    * // Use a ProseMirror selection
-   * commands.setSelection(new TextSelection(state.doc.resolve(10)))
+   * commands.selectText(new TextSelection(state.doc.resolve(10)))
    * ```
    *
    * Although this is called `selectText` you can provide your own selection
