@@ -26,8 +26,8 @@ export { Framework } from './framework';
 export type { AnyRemirrorManager, CreateEditorStateProps, ManagerEvents } from './manager';
 export { isRemirrorManager, RemirrorManager } from './manager';
 export type {
-  ApplyStateLifecycleProps,
   AppendLifecycleProps,
+  ApplyStateLifecycleProps,
   BaseExtensionOptions,
   ChangedOptions,
   CommandShape,

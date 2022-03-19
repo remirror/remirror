@@ -42,12 +42,12 @@ describe('helpers', () => {
 
   describe('`isViewEditable`', () => {
     it('returns true if the view is editable', () => {
-      const {helpers} = renderEditor([]);
+      const { helpers } = renderEditor([]);
       expect(helpers.isViewEditable()).toBeTrue();
     });
 
     it('returns false if the view is not editable', () => {
-      const {helpers} = renderEditor([], {props: {editable: false}});
+      const { helpers } = renderEditor([], { props: { editable: false } });
       expect(helpers.isViewEditable()).toBeFalse();
     });
   });
