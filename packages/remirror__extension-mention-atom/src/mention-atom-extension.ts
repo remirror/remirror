@@ -146,6 +146,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
 
     return {
       inline: true,
+      marks: '',
       selectable: this.options.selectable,
       draggable: this.options.draggable,
       atom: true,
