@@ -64,7 +64,7 @@ export class ItalicExtension extends MarkExtension {
           !fullMatch.startsWith('*') ? { fullMatch: fullMatch.slice(1), start: start + 1 } : {},
       }),
       markInputRule({
-        regexp: /(?:^|[^_])_([^_]+)_$/,
+        regexp: /(?:^|\W)_([^_]+)_$/,
         type: this.type,
         ignoreWhitespace: true,
         updateCaptured: ({ fullMatch, start }) => {
