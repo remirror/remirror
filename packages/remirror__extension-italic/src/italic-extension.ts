@@ -78,7 +78,7 @@ export class ItalicExtension extends MarkExtension {
 
   createPasteRules(): MarkPasteRule[] {
     return [
-      { type: 'mark', markType: this.type, regexp: /_([^_]+)_/g },
+      { type: 'mark', markType: this.type, regexp: /(?:^|\W)_([^_]+)_/g },
       { type: 'mark', markType: this.type, regexp: /\*([^*]+)\*/g },
     ];
   }
