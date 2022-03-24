@@ -24,6 +24,9 @@
       "path": "../../remirror__extension-codemirror6/src"
     },
     {
+      "path": "../../remirror__extension-count/src"
+    },
+    {
       "path": "../../remirror__extension-file/src"
     },
     {

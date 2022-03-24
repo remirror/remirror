@@ -1,0 +1,57 @@
+{
+  "name": "@remirror/extension-count",
+  "version": "1.0.1",
+  "description": "Count characters or words in your editor, and set a soft max length",
+  "keywords": [
+    "remirror",
+    "extension"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-count",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-count"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Will Hawker <w.hawker@hotmail.co.uk>"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-count.esm.js",
+      "require": "./dist/remirror-extension-count.cjs.js",
+      "browser": "./dist/remirror-extension-count.browser.esm.js",
+      "types": "./dist/remirror-extension-count.cjs.d.ts",
+      "default": "./dist/remirror-extension-count.esm.js"
+    },
+    "./package.json": "./package.json",
+    "./types/*": "./dist/declarations/src/*.d.ts"
+  },
+  "main": "./dist/remirror-extension-count.cjs.js",
+  "module": "./dist/remirror-extension-count.esm.js",
+  "browser": {
+    "./dist/remirror-extension-count.cjs.js": "./dist/remirror-extension-count.browser.cjs.js",
+    "./dist/remirror-extension-count.esm.js": "./dist/remirror-extension-count.browser.esm.js"
+  },
+  "types": "./dist/remirror-extension-count.cjs.d.ts",
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@remirror/core": "^1.3.5"
+  },
+  "devDependencies": {
+    "@remirror/pm": "^1.0.11"
+  },
+  "peerDependencies": {
+    "@remirror/pm": "^1.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "5 KB"
+  }
+}

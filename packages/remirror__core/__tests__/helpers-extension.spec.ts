@@ -22,12 +22,34 @@ describe('active', () => {
 });
 
 describe('helpers', () => {
-  it('`isSelectionEmpty`', () => {
-    const { add, nodes, helpers } = renderEditor([]);
-    const { p, doc } = nodes;
+  describe('`isSelectionEmpty`', () => {
+    it('returns true if the selection is empty', () => {
+      const { add, nodes, helpers } = renderEditor([]);
+      const { p, doc } = nodes;
 
-    add(doc(p('on<cursor>e')));
-    expect(helpers.isSelectionEmpty()).toBeTrue();
+      add(doc(p('on<cursor>e')));
+      expect(helpers.isSelectionEmpty()).toBeTrue();
+    });
+
+    it('returns false if the selection is not empty', () => {
+      const { add, nodes, helpers } = renderEditor([]);
+      const { p, doc } = nodes;
+
+      add(doc(p('on<start>e<end>')));
+      expect(helpers.isSelectionEmpty()).toBeFalse();
+    });
+  });
+
+  describe('`isViewEditable`', () => {
+    it('returns true if the view is editable', () => {
+      const { helpers } = renderEditor([]);
+      expect(helpers.isViewEditable()).toBeTrue();
+    });
+
+    it('returns false if the view is not editable', () => {
+      const { helpers } = renderEditor([], { props: { editable: false } });
+      expect(helpers.isViewEditable()).toBeFalse();
+    });
   });
 });
 

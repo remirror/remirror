@@ -3427,6 +3427,13 @@ button:active .remirror-menu-pane-shortcut,
 }
 
 /**
+ * Styles extracted from: packages/remirror__theme/src/extension-count-theme.ts
+ */
+.remirror-editor span.remirror-max-count-exceeded {
+  background-color: var(--rmr-hue-red-4);
+}
+
+/**
  * Styles extracted from: packages/remirror__theme/src/extension-emoji-theme.ts
  */
 .remirror-emoji-image {

@@ -1036,6 +1036,17 @@ importers:
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
+  packages/remirror__extension-count:
+    specifiers:
+      '@babel/runtime': ^7.13.10
+      '@remirror/core': ^1.3.5
+      '@remirror/pm': ^1.0.11
+    dependencies:
+      '@babel/runtime': 7.15.4
+      '@remirror/core': link:../remirror__core
+    devDependencies:
+      '@remirror/pm': link:../remirror__pm
+
   packages/remirror__extension-diff:
     specifiers:
       '@babel/runtime': ^7.13.10
@@ -2341,6 +2352,7 @@ importers:
       '@remirror/core': ^1.4.0
       '@remirror/dev': ^1.0.28
       '@remirror/extension-codemirror6': ^0.2.5
+      '@remirror/extension-count': ^1.0.1
       '@remirror/extension-file': ^0.3.16
       '@remirror/extension-mention': ^1.0.18
       '@remirror/extension-mention-atom': ^1.0.21
@@ -2373,6 +2385,7 @@ importers:
       postcss: '>= 8.0.0'
       postcss-nested: ^5.0.5
       react: ^17.0.2
+      react-circular-progressbar: ^2.0.4
       react-dom: ^17.0.2
       react-is: ^17.0.2
       reakit: ^1.3.8
@@ -2394,6 +2407,7 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/dev': link:../remirror__dev
       '@remirror/extension-codemirror6': link:../remirror__extension-codemirror6
+      '@remirror/extension-count': link:../remirror__extension-count
       '@remirror/extension-file': link:../remirror__extension-file
       '@remirror/extension-mention': link:../remirror__extension-mention
       '@remirror/extension-mention-atom': link:../remirror__extension-mention-atom
@@ -2425,6 +2439,7 @@ importers:
       postcss: 8.3.11
       postcss-nested: 5.0.6_postcss@8.3.11
       react: 17.0.2
+      react-circular-progressbar: 2.0.4_react@17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-is: 17.0.2
       reakit: 1.3.10_react-dom@17.0.2+react@17.0.2
@@ -12559,6 +12574,7 @@ packages:
   /chokidar/3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
+    requiresBuild: true
     dependencies:
       anymatch: 3.1.2
       braces: 3.0.2
@@ -19381,13 +19397,13 @@ packages:
   /jsonfile/2.4.0:
     resolution: {integrity: sha1-NzaitCi4e72gzIO1P6PWM6NcKug=}
     optionalDependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
     dev: false
 
   /jsonfile/3.0.1:
     resolution: {integrity: sha1-pezG9l9T9mLEQVx2daAzHQmS7GY=}
     optionalDependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
     dev: false
 
   /jsonfile/4.0.0:
@@ -19409,7 +19425,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
 
   /jsonparse/1.3.1:
     resolution: {integrity: sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=}
@@ -19540,7 +19556,7 @@ packages:
   /klaw/1.3.1:
     resolution: {integrity: sha1-QIhDO0azsbolnXh4XY6W9zugJDk=}
     optionalDependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
     dev: false
 
   /kleur/3.0.3:
@@ -23346,6 +23362,14 @@ packages:
       lodash.flow: 3.5.0
       pure-color: 1.3.0
     dev: true
+
+  /react-circular-progressbar/2.0.4_react@17.0.2:
+    resolution: {integrity: sha512-OfX0ThSxRYEVGaQSt0DlXfyl5w4DbXHsXetyeivmoQrh9xA9bzVPHNf8aAhOIiwiaxX2WYWpLDB3gcpsDJ9oww==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+    dependencies:
+      react: 17.0.2
+    dev: false
 
   /react-color/2.19.3_react@17.0.2:
     resolution: {integrity: sha512-LEeGE/ZzNLIsFWa1TMe8y5VYqr7bibneWmvJwm1pCn/eNmrabWDh659JSPn9BuaMpEfU83WTOJfnCcjDZwNQTA==}
@@ -28014,6 +28038,7 @@ packages:
   /ws/7.5.7:
     resolution: {integrity: sha512-KMvVuFzpKBuiIXW3E4u3mySRO2/mCHSyZDJQM5NQ9Q9KHWHWh0NHgfbRMLLrceUK5qAL4ytALJbpRMjixFZh8A==}
     engines: {node: '>=8.3.0'}
+    requiresBuild: true
     peerDependencies:
       bufferutil: ^4.0.1
       utf-8-validate: ^5.0.2

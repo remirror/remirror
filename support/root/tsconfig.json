@@ -168,6 +168,12 @@
       "path": "packages/remirror__extension-columns/src"
     },
     {
+      "path": "packages/remirror__extension-count/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-count/src"
+    },
+    {
       "path": "packages/remirror__extension-diff/__tests__"
     },
     {
