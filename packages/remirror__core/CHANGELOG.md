@@ -1,5 +1,15 @@
 # @remirror/core
 
+## 1.4.1
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
 ## 1.4.0
 
 > 2022-03-17

@@ -1,5 +1,73 @@
 # remirror
 
+## 1.0.72
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+* Add a new `CountExtension`, adding the ability to count words or characters in your editor, and set a soft max length
+
+* Updated dependencies []:
+  - @remirror/core@1.4.1
+  - @remirror/dom@1.0.25
+  - @remirror/extension-annotation@1.1.19
+  - @remirror/extension-bidi@1.0.18
+  - @remirror/extension-blockquote@1.0.21
+  - @remirror/extension-bold@1.0.18
+  - @remirror/extension-callout@1.0.21
+  - @remirror/extension-code@1.0.19
+  - @remirror/extension-code-block@1.0.24
+  - @remirror/extension-codemirror5@1.0.18
+  - @remirror/extension-collaboration@1.0.18
+  - @remirror/extension-columns@1.0.18
+  - @remirror/extension-diff@1.0.18
+  - @remirror/extension-doc@1.0.19
+  - @remirror/extension-drop-cursor@1.0.18
+  - @remirror/extension-embed@1.1.23
+  - @remirror/extension-emoji@1.0.21
+  - @remirror/extension-epic-mode@1.0.18
+  - @remirror/extension-events@1.0.19
+  - @remirror/extension-font-family@1.0.18
+  - @remirror/extension-font-size@1.0.20
+  - @remirror/extension-gap-cursor@1.0.18
+  - @remirror/extension-hard-break@1.0.18
+  - @remirror/extension-heading@1.0.18
+  - @remirror/extension-history@1.0.18
+  - @remirror/extension-horizontal-rule@1.0.19
+  - @remirror/extension-image@1.0.29
+  - @remirror/extension-italic@1.0.18
+  - @remirror/extension-link@1.1.17
+  - @remirror/extension-list@1.2.20
+  - @remirror/extension-markdown@1.0.18
+  - @remirror/extension-mention@1.0.19
+  - @remirror/extension-mention-atom@1.0.22
+  - @remirror/extension-node-formatting@1.0.21
+  - @remirror/extension-paragraph@1.0.18
+  - @remirror/extension-placeholder@1.0.21
+  - @remirror/extension-positioner@1.2.2
+  - @remirror/extension-search@1.0.18
+  - @remirror/extension-shortcuts@1.1.7
+  - @remirror/extension-strike@1.0.18
+  - @remirror/extension-sub@1.0.18
+  - @remirror/extension-sup@1.0.18
+  - @remirror/extension-tables@1.0.21
+  - @remirror/extension-text@1.0.18
+  - @remirror/extension-text-case@1.0.18
+  - @remirror/extension-text-color@1.0.21
+  - @remirror/extension-text-highlight@1.0.21
+  - @remirror/extension-trailing-node@1.0.18
+  - @remirror/extension-underline@1.0.18
+  - @remirror/extension-whitespace@1.0.18
+  - @remirror/extension-yjs@1.0.28
+  - @remirror/preset-core@1.0.24
+  - @remirror/preset-formatting@1.0.25
+  - @remirror/preset-wysiwyg@1.1.44
+
 ## 1.0.71
 
 > 2022-03-17

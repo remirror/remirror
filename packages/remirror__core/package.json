@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Where your quest to create a world class editing experience begins.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core",
   "repository": {

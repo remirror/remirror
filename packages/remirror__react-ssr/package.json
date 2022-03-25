@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-ssr",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Render the editor in an SSR environment",
   "keywords": [
     "remirror"
@@ -39,12 +39,12 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.0",
-    "@remirror/extension-react-ssr": "^1.0.19"
+    "@remirror/core": "^1.4.1",
+    "@remirror/extension-react-ssr": "^1.0.20"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.14",
-    "@remirror/react": "^1.0.28",
+    "@remirror/react": "^1.0.29",
     "@types/react": "^17.0.14",
     "@types/react-dom": "^17.0.9",
     "react": "^17.0.2",

@@ -1,5 +1,22 @@
 # @remirror/react-editors
 
+## 0.1.64
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+* Add a new `CountExtension`, adding the ability to count words or characters in your editor, and set a soft max length
+
+* Updated dependencies []:
+  - remirror@1.0.72
+  - @remirror/extension-react-tables@1.0.29
+  - @remirror/react@1.0.29
+
 ## 0.1.63
 
 > 2022-03-17

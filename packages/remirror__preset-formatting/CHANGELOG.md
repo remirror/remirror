@@ -1,5 +1,32 @@
 # @remirror/preset-formatting
 
+## 1.0.25
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+- Updated dependencies []:
+  - @remirror/core@1.4.1
+  - @remirror/extension-bold@1.0.18
+  - @remirror/extension-columns@1.0.18
+  - @remirror/extension-font-size@1.0.20
+  - @remirror/extension-heading@1.0.18
+  - @remirror/extension-italic@1.0.18
+  - @remirror/extension-node-formatting@1.0.21
+  - @remirror/extension-strike@1.0.18
+  - @remirror/extension-sub@1.0.18
+  - @remirror/extension-sup@1.0.18
+  - @remirror/extension-text-case@1.0.18
+  - @remirror/extension-text-color@1.0.21
+  - @remirror/extension-text-highlight@1.0.21
+  - @remirror/extension-underline@1.0.18
+  - @remirror/extension-whitespace@1.0.18
+
 ## 1.0.24
 
 > 2022-03-17

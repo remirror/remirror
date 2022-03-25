@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-collaboration",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Add collaboration to your remirror editor.",
   "keywords": [
     "remirror",
@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.0",
+    "@remirror/core": "^1.4.1",
     "@remirror/messages": "^1.0.6"
   },
   "devDependencies": {
