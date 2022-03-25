@@ -196,6 +196,8 @@ function supportRanges() {
         nodeName: 'BODY',
         ownerDocument: document,
       } as Node,
+      getClientRects: Element.prototype.getClientRects,
+      getBoundingClientRect: Element.prototype.getBoundingClientRect,
     } as any;
   }
 
