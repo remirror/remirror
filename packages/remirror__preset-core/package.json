@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-core",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "The core preset providing the functionality you need and want.",
   "keywords": [
     "remirror",
@@ -42,14 +42,14 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.0",
-    "@remirror/extension-doc": "^1.0.18",
-    "@remirror/extension-events": "^1.0.18",
-    "@remirror/extension-gap-cursor": "^1.0.17",
-    "@remirror/extension-history": "^1.0.17",
-    "@remirror/extension-paragraph": "^1.0.17",
-    "@remirror/extension-positioner": "^1.2.1",
-    "@remirror/extension-text": "^1.0.17"
+    "@remirror/core": "^1.4.1",
+    "@remirror/extension-doc": "^1.0.19",
+    "@remirror/extension-events": "^1.0.19",
+    "@remirror/extension-gap-cursor": "^1.0.18",
+    "@remirror/extension-history": "^1.0.18",
+    "@remirror/extension-paragraph": "^1.0.18",
+    "@remirror/extension-positioner": "^1.2.2",
+    "@remirror/extension-text": "^1.0.18"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.14"

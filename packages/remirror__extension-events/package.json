@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-events",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Manage your remirror editor dom events.",
   "keywords": [
     "remirror",
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.0",
+    "@remirror/core": "^1.4.1",
     "@remirror/messages": "^1.0.6"
   },
   "devDependencies": {

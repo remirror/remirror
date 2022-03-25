@@ -1,5 +1,20 @@
 # @remirror/extension-count
 
+## 1.0.2
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+* Add a new `CountExtension`, adding the ability to count words or characters in your editor, and set a soft max length
+
+* Updated dependencies []:
+  - @remirror/core@1.4.1
+
 ## 1.0.1
 
 > 2021-07-17

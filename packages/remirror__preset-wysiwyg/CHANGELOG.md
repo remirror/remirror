@@ -1,5 +1,41 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.44
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+* Add a new `CountExtension`, adding the ability to count words or characters in your editor, and set a soft max length
+
+* Updated dependencies []:
+  - @remirror/core@1.4.1
+  - @remirror/extension-bidi@1.0.18
+  - @remirror/extension-blockquote@1.0.21
+  - @remirror/extension-bold@1.0.18
+  - @remirror/extension-code@1.0.19
+  - @remirror/extension-code-block@1.0.24
+  - @remirror/extension-drop-cursor@1.0.18
+  - @remirror/extension-embed@1.1.23
+  - @remirror/extension-gap-cursor@1.0.18
+  - @remirror/extension-hard-break@1.0.18
+  - @remirror/extension-heading@1.0.18
+  - @remirror/extension-horizontal-rule@1.0.19
+  - @remirror/extension-image@1.0.29
+  - @remirror/extension-italic@1.0.18
+  - @remirror/extension-link@1.1.17
+  - @remirror/extension-list@1.2.20
+  - @remirror/extension-search@1.0.18
+  - @remirror/extension-shortcuts@1.1.7
+  - @remirror/extension-strike@1.0.18
+  - @remirror/extension-trailing-node@1.0.18
+  - @remirror/extension-underline@1.0.18
+  - @remirror/preset-core@1.0.24
+
 ## 1.1.43
 
 > 2022-03-17

@@ -1,5 +1,25 @@
 # @remirror/preset-core
 
+## 1.0.24
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+- Updated dependencies []:
+  - @remirror/core@1.4.1
+  - @remirror/extension-doc@1.0.19
+  - @remirror/extension-events@1.0.19
+  - @remirror/extension-gap-cursor@1.0.18
+  - @remirror/extension-history@1.0.18
+  - @remirror/extension-paragraph@1.0.18
+  - @remirror/extension-positioner@1.2.2
+  - @remirror/extension-text@1.0.18
+
 ## 1.0.23
 
 > 2022-03-17

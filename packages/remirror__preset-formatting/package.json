@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-formatting",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "A preset with all the formatting node and mark extensions included.",
   "keywords": [
     "remirror",
@@ -41,21 +41,21 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.0",
-    "@remirror/extension-bold": "^1.0.17",
-    "@remirror/extension-columns": "^1.0.17",
-    "@remirror/extension-font-size": "^1.0.19",
-    "@remirror/extension-heading": "^1.0.17",
-    "@remirror/extension-italic": "^1.0.17",
-    "@remirror/extension-node-formatting": "^1.0.20",
-    "@remirror/extension-strike": "^1.0.17",
-    "@remirror/extension-sub": "^1.0.17",
-    "@remirror/extension-sup": "^1.0.17",
-    "@remirror/extension-text-case": "^1.0.17",
-    "@remirror/extension-text-color": "^1.0.20",
-    "@remirror/extension-text-highlight": "^1.0.20",
-    "@remirror/extension-underline": "^1.0.17",
-    "@remirror/extension-whitespace": "^1.0.17"
+    "@remirror/core": "^1.4.1",
+    "@remirror/extension-bold": "^1.0.18",
+    "@remirror/extension-columns": "^1.0.18",
+    "@remirror/extension-font-size": "^1.0.20",
+    "@remirror/extension-heading": "^1.0.18",
+    "@remirror/extension-italic": "^1.0.18",
+    "@remirror/extension-node-formatting": "^1.0.21",
+    "@remirror/extension-strike": "^1.0.18",
+    "@remirror/extension-sub": "^1.0.18",
+    "@remirror/extension-sup": "^1.0.18",
+    "@remirror/extension-text-case": "^1.0.18",
+    "@remirror/extension-text-color": "^1.0.21",
+    "@remirror/extension-text-highlight": "^1.0.21",
+    "@remirror/extension-underline": "^1.0.18",
+    "@remirror/extension-whitespace": "^1.0.18"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.14"

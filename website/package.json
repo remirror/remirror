@@ -27,9 +27,9 @@
     "@fontsource/fira-code": "^4.5.0",
     "@fontsource/rubik": "^4.5.0",
     "@mdx-js/react": "^1.6.22",
-    "@remirror/dev": "^1.0.28",
-    "@remirror/react": "^1.0.28",
-    "@remirror/react-editors": "^0.1.63",
+    "@remirror/dev": "^1.0.29",
+    "@remirror/react": "^1.0.29",
+    "@remirror/react-editors": "^0.1.64",
     "@remirror/styles": "^1.1.3",
     "@types/react-syntax-highlighter": "^13.5.2",
     "create-context-state": "^1.0.1",
@@ -43,7 +43,7 @@
     "react-syntax-highlighter": "^15.4.3",
     "reakit": "^1.3.8",
     "remark-footnotes": "^3.0.0",
-    "remirror": "^1.0.71"
+    "remirror": "^1.0.72"
   },
   "devDependencies": {
     "@docusaurus/core": "^2.0.0-beta.8",

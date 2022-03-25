@@ -1,5 +1,28 @@
 # @remirror/react
 
+## 1.0.29
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.21
+  - @remirror/extension-positioner@1.2.2
+  - @remirror/extension-react-component@1.1.9
+  - @remirror/extension-react-ssr@1.0.20
+  - @remirror/extension-react-tables@1.0.29
+  - @remirror/preset-react@1.0.22
+  - @remirror/react-components@1.0.28
+  - @remirror/react-core@1.1.1
+  - @remirror/react-hooks@1.0.28
+  - @remirror/react-renderer@1.0.20
+  - @remirror/react-ssr@1.0.20
+
 ## 1.0.28
 
 > 2022-03-17

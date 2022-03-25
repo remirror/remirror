@@ -1,6 +1,6 @@
 {
   "name": "@remirror/dev",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "Development utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__dev",
   "repository": {
@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/react": "^1.0.28",
+    "@remirror/react": "^1.0.29",
     "@types/prosemirror-dev-tools": "^3.0.2",
     "prosemirror-dev-tools": "^3.1.0"
   },
