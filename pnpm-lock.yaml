@@ -1522,7 +1522,7 @@ importers:
       '@remirror/theme': ^1.2.1
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
-      jsx-dom: ^6.4.23
+      jsx-dom: ^7.0.2
       react: ^17.0.2
       react-dom: ^17.0.2
       y-webrtc: ^10.2.2
@@ -1542,7 +1542,7 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
       '@remirror/theme': link:../remirror__theme
-      jsx-dom: 6.4.23
+      jsx-dom: 7.0.4
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 17.0.33
@@ -19470,8 +19470,8 @@ packages:
       object.assign: 4.1.2
     dev: false
 
-  /jsx-dom/6.4.23:
-    resolution: {integrity: sha512-Y0ax82xa4nzqFdbUXs3ma2haDZy4pB638kMZsGRzZqdmtyzY2nAKs7Bh3DrLn0vqMuxmvZQ3g9hq3NtnI5yXtQ==}
+  /jsx-dom/7.0.4:
+    resolution: {integrity: sha512-CX5ayrg1/fvsXlXmff/ovhdFnA9iGAveATla1adsjsfd0c1XtBChK4ZoL0fT4euOuC4lTcGlNDfUf5Q0H1XJFw==}
     dependencies:
       csstype: 3.0.9
     dev: false
