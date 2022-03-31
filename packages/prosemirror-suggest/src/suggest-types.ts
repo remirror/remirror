@@ -285,6 +285,13 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
   multiline?: boolean;
 
   /**
+   * When true support matches using Unicode Regex.
+   *
+   * @default false
+   */
+  unicode?: boolean;
+
+  /**
    * Whether to capture the `char character as the first capture group.
    *
    * When this is set to true it will be the first matching group with
