@@ -58,7 +58,7 @@
     "@remirror/extension-whitespace": "^1.0.18"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.14"
+    "@remirror/pm": "^1.0.15"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.10"

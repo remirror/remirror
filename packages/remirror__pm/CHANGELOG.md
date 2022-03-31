@@ -1,5 +1,20 @@
 # @remirror/pm
 
+## 1.0.15
+
+> 2022-03-31
+
+### Patch Changes
+
+- Add support for Unicode Regexp in suggestion matching.
+
+  The change was required to support matching non-latin characters in `MentionAtomExtension` and `MentionExtension` i.e. by using `supportedCharacters: /\p{Letter}+/u` in `matchers` definition.
+
+  There is no need to update the code: changes are backwards compatible with no behavior change at all.
+
+- Updated dependencies []:
+  - prosemirror-suggest@1.1.0
+
 ## 1.0.14
 
 > 2022-03-08
