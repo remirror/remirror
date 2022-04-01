@@ -140,6 +140,14 @@ export class HelpersExtension extends PlainExtension {
     return isSelectionEmpty(state);
   }
 
+  /*
+   * Check if the document view is currently editable.
+   */
+  @helper()
+  isViewEditable(state: EditorState = this.store.getState()): Helper<boolean> {
+    return this.store.view.props.editable?.(state) ?? false;
+  }
+
   /**
    * Get the full JSON output for the ProseMirror editor state object.
    */

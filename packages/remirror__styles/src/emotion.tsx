@@ -3463,6 +3463,19 @@ export const ExtensionCodeBlockStyledComponent: ReturnType<typeof styled.div> = 
   ${extensionCodeBlockStyledCss}
 `;
 
+export const extensionCountStyledCss: ReturnType<typeof css> = css`
+  /**
+ * Styles extracted from: packages/remirror__theme/src/extension-count-theme.ts
+ */
+  .remirror-editor span.remirror-max-count-exceeded {
+    background-color: var(--rmr-hue-red-4);
+  }
+`;
+
+export const ExtensionCountStyledComponent: ReturnType<typeof styled.div> = styled.div`
+  ${extensionCountStyledCss}
+`;
+
 export const extensionEmojiStyledCss: ReturnType<typeof css> = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-emoji-theme.ts
@@ -4628,6 +4641,7 @@ export const allStyledCss: ReturnType<typeof css> = css`
   ${extensionBlockquoteStyledCss}
   ${extensionCalloutStyledCss}
   ${extensionCodeBlockStyledCss}
+  ${extensionCountStyledCss}
   ${extensionEmojiStyledCss}
   ${extensionFileStyledCss}
   ${extensionGapCursorStyledCss}
@@ -4649,6 +4663,7 @@ export const AllStyledComponent: ReturnType<typeof styled.div> = styled.div`
   ${extensionBlockquoteStyledCss}
   ${extensionCalloutStyledCss}
   ${extensionCodeBlockStyledCss}
+  ${extensionCountStyledCss}
   ${extensionEmojiStyledCss}
   ${extensionFileStyledCss}
   ${extensionGapCursorStyledCss}

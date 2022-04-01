@@ -41,10 +41,10 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.0"
+    "@remirror/core": "^1.4.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.14"
+    "@remirror/pm": "^1.0.15"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.1"

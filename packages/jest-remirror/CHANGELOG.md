@@ -1,5 +1,38 @@
 # jest-remirror
 
+## 1.0.35
+
+> 2022-03-31
+
+### Patch Changes
+
+- Add support for Unicode Regexp in suggestion matching.
+
+  The change was required to support matching non-latin characters in `MentionAtomExtension` and `MentionExtension` i.e. by using `supportedCharacters: /\p{Letter}+/u` in `matchers` definition.
+
+  There is no need to update the code: changes are backwards compatible with no behavior change at all.
+
+- Updated dependencies []:
+  - jest-prosemirror@1.0.20
+  - @remirror/pm@1.0.15
+
+## 1.0.34
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+* Add client rect methods when createRange is not available
+
+* Updated dependencies []:
+  - @remirror/core@1.4.1
+  - @remirror/dom@1.0.25
+  - @remirror/preset-core@1.0.24
+
 ## 1.0.33
 
 > 2022-03-17

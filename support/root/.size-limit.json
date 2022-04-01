@@ -248,6 +248,14 @@
     "gzip": true
   },
   {
+    "name": "@remirror/extension-count",
+    "limit": "5 KB",
+    "path": "packages/remirror__extension-count/dist/remirror-extension-count.browser.esm.js",
+    "ignore": ["@remirror/pm", "@remirror/core"],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-diff",
     "limit": "5 KB",
     "path": "packages/remirror__extension-diff/dist/remirror-extension-diff.browser.esm.js",

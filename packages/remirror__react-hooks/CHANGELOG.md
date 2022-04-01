@@ -1,5 +1,25 @@
 # @remirror/react-hooks
 
+## 1.0.28
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+- Updated dependencies []:
+  - @remirror/core@1.4.1
+  - @remirror/extension-emoji@1.0.21
+  - @remirror/extension-events@1.0.19
+  - @remirror/extension-history@1.0.18
+  - @remirror/extension-mention@1.0.19
+  - @remirror/extension-mention-atom@1.0.22
+  - @remirror/extension-positioner@1.2.2
+  - @remirror/react-core@1.1.1
+
 ## 1.0.27
 
 > 2022-03-17

@@ -1,0 +1,6 @@
+/**
+ * Styles extracted from: packages/remirror__theme/src/extension-count-theme.ts
+ */
+.remirror-editor span.remirror-max-count-exceeded {
+  background-color: var(--rmr-hue-red-4);
+}

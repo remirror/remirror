@@ -151,8 +151,16 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
   props: FindMatchProps<Schema>,
 ): SuggestMatch<Schema> | undefined {
   const { $pos, suggester } = props;
-  const { char, name, startOfLine, supportedCharacters, matchOffset, multiline, caseInsensitive } =
-    suggester;
+  const {
+    char,
+    name,
+    startOfLine,
+    supportedCharacters,
+    matchOffset,
+    multiline,
+    caseInsensitive,
+    unicode,
+  } = suggester;
 
   // Create the regular expression to match the text against
   const regexp = createRegexFromSuggester({
@@ -162,6 +170,7 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
     supportedCharacters,
     multiline,
     caseInsensitive,
+    unicode,
   });
 
   // All the text in the current node
@@ -604,7 +613,7 @@ export function getCharAsRegex(char: RegExp | string): RegExp {
 
 interface CreateRegExpFromSuggesterProps
   extends Pick<Required<Suggester>, 'startOfLine' | 'char' | 'supportedCharacters' | 'matchOffset'>,
-    Pick<Suggester, 'multiline' | 'caseInsensitive' | 'captureChar'> {}
+    Pick<Suggester, 'multiline' | 'caseInsensitive' | 'captureChar' | 'unicode'> {}
 
 /**
  * Create a regex expression which evaluate matches directly from the suggester
@@ -619,8 +628,9 @@ export function createRegexFromSuggester(props: CreateRegExpFromSuggesterProps):
     captureChar = true,
     caseInsensitive = false,
     multiline = false,
+    unicode = false,
   } = props;
-  const flags = `g${multiline ? 'm' : ''}${caseInsensitive ? 'i' : ''}`;
+  const flags = `g${multiline ? 'm' : ''}${caseInsensitive ? 'i' : ''}${unicode ? 'u' : ''}`;
   let charRegex = getCharAsRegex(char).source;
 
   if (captureChar) {
@@ -661,6 +671,7 @@ export const DEFAULT_SUGGESTER: PickPartial<Suggester<any>> = {
   emptySelectionsOnly: false,
   caseInsensitive: false,
   multiline: false,
+  unicode: false,
   captureChar: true,
 };
 

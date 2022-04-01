@@ -140,6 +140,42 @@ describe('suggester', () => {
       });
   });
 
+  it('should support unicode regex for character matches', () => {
+    const expected = 'michał';
+    const exit = jest.fn();
+    const onChange: SuggestChangeHandler = jest.fn((param) => {
+      const { exitReason, text: matchText, query: queryText, range } = param;
+
+      if (exitReason) {
+        exit(exitReason, matchText, queryText, range);
+      }
+    });
+    const plugin = suggest({
+      char: '@',
+      name: 'at',
+      onChange,
+      supportedCharacters: /\p{L}+/u,
+      unicode: true,
+    });
+
+    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+      .insertText('@')
+      .callback(() => {
+        expect(onChange).toHaveBeenCalledTimes(1);
+      })
+      .insertText(`${expected} `)
+      .callback(() => {
+        expect(onChange).toHaveBeenCalledTimes(8);
+        expect(exit).toHaveBeenCalledTimes(1);
+        expect(exit).toHaveBeenCalledWith(
+          ExitReason.MoveEnd,
+          { full: '@michał', partial: '@michał' },
+          { full: 'michał', partial: 'michał' },
+          { from: 1, cursor: 8, to: 8 },
+        );
+      });
+  });
+
   it('should not call `onChange` for the activation character when matchOffset is greater than 0', () => {
     const exit = jest.fn();
     const onChange: SuggestChangeHandler = jest.fn(({ exitReason }) => {

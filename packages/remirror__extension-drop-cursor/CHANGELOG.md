@@ -1,5 +1,18 @@
 # @remirror/extension-drop-cursor
 
+## 1.0.18
+
+> 2022-03-25
+
+### Patch Changes
+
+- Add an `isViewEditable` helper to determine if the view content is editable.
+
+  Expose the return type of `onAppendTransaction`
+
+- Updated dependencies []:
+  - @remirror/core@1.4.1
+
 ## 1.0.17
 
 > 2022-03-17

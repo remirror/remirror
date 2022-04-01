@@ -26,6 +26,7 @@ export { Framework } from './framework';
 export type { AnyRemirrorManager, CreateEditorStateProps, ManagerEvents } from './manager';
 export { isRemirrorManager, RemirrorManager } from './manager';
 export type {
+  AppendLifecycleProps,
   ApplyStateLifecycleProps,
   BaseExtensionOptions,
   ChangedOptions,
@@ -47,6 +48,7 @@ export type {
   OptionsOfConstructor,
   PickChanged,
   StateUpdateLifecycleProps,
+  TypedPropertyDescriptor,
   UpdateReason,
   UpdateReasonProps,
 } from './types';

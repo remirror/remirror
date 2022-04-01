@@ -24,8 +24,8 @@ export const PlainText = () => {
   return (
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state} autoFocus>
-        <EmojiPopupComponent />
         <EditorComponent />
+        <EmojiPopupComponent />
       </Remirror>
     </ThemeProvider>
   );
