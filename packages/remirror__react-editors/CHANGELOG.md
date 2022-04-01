@@ -1,5 +1,17 @@
 # @remirror/react-editors
 
+## 0.1.66
+
+> 2022-04-01
+
+### Patch Changes
+
+- Borders will be applied for table headers on hover of column controller
+
+- Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.30
+  - @remirror/react@1.0.30
+
 ## 0.1.65
 
 > 2022-03-31
