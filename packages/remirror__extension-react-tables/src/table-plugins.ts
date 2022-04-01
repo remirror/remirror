@@ -31,7 +31,11 @@ export function getTableStyle(attrs: ControllerStateValues): string {
   if (attrs.preselectColumn !== -1) {
     classNames = css`
       & table.${ExtensionTablesTheme.TABLE} tbody tr {
-        td:nth-child(${attrs.preselectColumn + 1}) {
+        th, td {
+          &:nth-child(${attrs.preselectColumn + 1}) {
+            ${preselectClass};
+          }
+       }
           ${preselectClass};
         }
         th.${ExtensionTablesTheme.TABLE_CONTROLLER}:nth-child(${attrs.preselectColumn + 1}) {
