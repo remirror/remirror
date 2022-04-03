@@ -390,7 +390,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.16.1
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.23.6
+      prosemirror-view: ^1.23.11
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -403,7 +403,7 @@ importers:
       '@types/prosemirror-view': 1.23.1
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.6
+      prosemirror-view: 1.23.11
 
   packages/prosemirror-resizable-view:
     specifiers:
@@ -413,13 +413,13 @@ importers:
       '@types/prosemirror-model': ^1.16.0
       '@types/prosemirror-view': ^1.23.1
       prosemirror-model: ^1.16.1
-      prosemirror-view: ^1.23.6
+      prosemirror-view: ^1.23.11
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@remirror/core-utils': link:../remirror__core-utils
       prosemirror-model: 1.16.1
-      prosemirror-view: 1.23.6
+      prosemirror-view: 1.23.11
     devDependencies:
       '@types/prosemirror-model': 1.16.0
       '@types/prosemirror-view': 1.23.1
@@ -437,7 +437,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.16.1
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.23.6
+      prosemirror-view: ^1.23.11
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -451,7 +451,7 @@ importers:
       '@types/prosemirror-view': 1.23.1
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.6
+      prosemirror-view: 1.23.11
 
   packages/prosemirror-trailing-node:
     specifiers:
@@ -465,7 +465,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.16.1
       prosemirror-state: ^1.3.4
-      prosemirror-view: ^1.23.6
+      prosemirror-view: ^1.23.11
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -478,7 +478,7 @@ importers:
       '@types/prosemirror-view': 1.23.1
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.6
+      prosemirror-view: 1.23.11
 
   packages/remirror:
     specifiers:
@@ -1818,7 +1818,7 @@ importers:
       prosemirror-tables: ^1.1.1
       prosemirror-trailing-node: ^1.0.7
       prosemirror-transform: ^1.3.3
-      prosemirror-view: ^1.23.6
+      prosemirror-view: ^1.23.11
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -1850,7 +1850,7 @@ importers:
       prosemirror-tables: 1.1.1
       prosemirror-trailing-node: link:../prosemirror-trailing-node
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.6
+      prosemirror-view: 1.23.11
 
   packages/remirror__preset-core:
     specifiers:
@@ -6497,7 +6497,7 @@ packages:
       jest-util: 27.3.1
       jest-validate: 27.3.1
       jest-watcher: 27.3.1
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       rimraf: 3.0.2
       slash: 3.0.0
       strip-ansi: 6.0.1
@@ -6615,7 +6615,7 @@ packages:
       jest-haste-map: 27.3.1
       jest-regex-util: 27.0.6
       jest-util: 27.3.1
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       pirates: 4.0.1
       slash: 3.0.0
       source-map: 0.6.1
@@ -12610,6 +12610,9 @@ packages:
   /ci-info/3.2.0:
     resolution: {integrity: sha512-dVqRX7fLUm8J6FgHJ418XuIgDLZDkYcDFTeL6TA2gt5WlIZUQrrH6EZrNClwT/H0FateUsZkGIOPRrLbP+PR9A==}
 
+  /ci-info/3.3.0:
+    resolution: {integrity: sha512-riT/3vI5YpVH6/qomlDnJow6TBee2PBKSEpx3O32EGPYbWGIRsIlGRms3Sm74wYE1JMo8RnO04Hb12+v1J5ICw==}
+
   /ci-job-number/1.2.2:
     resolution: {integrity: sha512-CLOGsVDrVamzv8sXJGaILUVI6dsuAkouJP/n6t+OxLPeeA4DDby7zn9SB6EUpa1H7oIKoE+rMmkW80zYsFfUjA==}
     dev: false
@@ -15689,7 +15692,7 @@ packages:
       '@nodelib/fs.walk': 1.2.8
       glob-parent: 5.1.2
       merge2: 1.4.1
-      micromatch: 4.0.4
+      micromatch: 4.0.5
 
   /fast-json-parse/1.0.3:
     resolution: {integrity: sha512-FRWsaZRWEJ1ESVNbDWmsAlqDk96gPQezzLghafp5J4GUKjbCz3OkAHuZs5TuPEtkbVQERysLp9xv6c24fBm8Aw==}
@@ -15982,7 +15985,7 @@ packages:
   /find-yarn-workspace-root2/1.2.16:
     resolution: {integrity: sha512-hr6hb1w8ePMpPVUK39S4RlwJzi+xPLuVuG8XlwXU3KD5Yn3qgBWVfy3AzNlDhWvE1EORCE65/Qm26rFQt3VLVA==}
     dependencies:
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       pkg-dir: 4.2.0
     dev: false
 
@@ -16257,7 +16260,7 @@ packages:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
     engines: {node: '>=6 <7 || >=8'}
     dependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
       jsonfile: 4.0.0
       universalify: 0.1.2
     dev: false
@@ -18487,7 +18490,7 @@ packages:
       '@jest/types': 27.2.5
       babel-jest: 27.3.1_@babel+core@7.15.8
       chalk: 4.1.2
-      ci-info: 3.2.0
+      ci-info: 3.3.0
       deepmerge: 4.2.2
       glob: 7.2.0
       graceful-fs: 4.2.9
@@ -18501,7 +18504,7 @@ packages:
       jest-runner: 27.3.1
       jest-util: 27.3.1
       jest-validate: 27.3.1
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       pretty-format: 27.3.1
     transitivePeerDependencies:
       - bufferutil
@@ -18628,12 +18631,12 @@ packages:
       '@types/node': 16.11.6
       anymatch: 3.1.2
       fb-watchman: 2.0.1
-      graceful-fs: 4.2.9
+      graceful-fs: 4.2.8
       jest-regex-util: 27.0.6
       jest-serializer: 27.0.6
       jest-util: 27.3.1
       jest-worker: 27.3.1
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       walker: 1.0.8
     optionalDependencies:
       fsevents: 2.3.2
@@ -18684,7 +18687,7 @@ packages:
     resolution: {integrity: sha512-Qczi5xnTNjkhcIB0Yy75Txt+Ez51xdhOxsukN7awzq2auZQGPHcQrJ623PZj0ECDEMOk2soxWx05EXdXGd1CbA==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
-      chalk: 4.1.2
+      chalk: 4.1.0
       jest-diff: 27.3.1
       jest-get-type: 27.3.1
       pretty-format: 27.3.1
@@ -18708,7 +18711,7 @@ packages:
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
       graceful-fs: 4.2.9
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       pretty-format: 26.6.2
       slash: 3.0.0
       stack-utils: 2.0.5
@@ -18723,7 +18726,7 @@ packages:
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
       graceful-fs: 4.2.9
-      micromatch: 4.0.4
+      micromatch: 4.0.5
       pretty-format: 27.3.1
       slash: 3.0.0
       stack-utils: 2.0.5
@@ -18891,7 +18894,7 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@types/node': 16.11.6
-      graceful-fs: 4.2.9
+      graceful-fs: 4.2.8
 
   /jest-snapshot/27.3.1:
     resolution: {integrity: sha512-APZyBvSgQgOT0XumwfFu7X3G5elj6TGhCBLbBdn3R1IzYustPGPE38F51dBWMQ8hRXa9je0vAdeVDtqHLvB6lg==}
@@ -18931,7 +18934,7 @@ packages:
       '@jest/types': 27.2.5
       '@types/node': 16.11.6
       chalk: 4.1.2
-      ci-info: 3.2.0
+      ci-info: 3.3.0
       graceful-fs: 4.2.9
       picomatch: 2.3.1
 
@@ -19425,7 +19428,7 @@ packages:
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.8
+      graceful-fs: 4.2.9
 
   /jsonparse/1.3.1:
     resolution: {integrity: sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=}
@@ -20471,7 +20474,6 @@ packages:
     dependencies:
       braces: 3.0.2
       picomatch: 2.3.1
-    dev: false
 
   /miller-rabin/4.0.1:
     resolution: {integrity: sha512-115fLhvZVqWwHPbClyntxEVfVDfl9DLLTuJvq3g2O/Oxi8AiNouAHvDSzHS0viUJc+V5vm3eq91Xwqn9dp4jRA==}
@@ -22971,7 +22973,7 @@ packages:
     dependencies:
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.6
+      prosemirror-view: 1.23.11
     dev: false
 
   /prosemirror-gapcursor/1.2.1:
@@ -22980,7 +22982,7 @@ packages:
       prosemirror-keymap: 1.1.5
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
-      prosemirror-view: 1.23.6
+      prosemirror-view: 1.23.11
     dev: false
 
   /prosemirror-history/1.2.0:
@@ -23036,7 +23038,7 @@ packages:
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
       prosemirror-transform: 1.3.3
-      prosemirror-view: 1.23.6
+      prosemirror-view: 1.23.11
     dev: false
 
   /prosemirror-test-builder/1.0.5:
@@ -23052,8 +23054,8 @@ packages:
     dependencies:
       prosemirror-model: 1.16.1
 
-  /prosemirror-view/1.23.6:
-    resolution: {integrity: sha512-B4DAzriNpI/AVoW0Lu6SVfX00jZZQxOVwdBQEjWlRbCdT9V0pvk4GQJ3JTFaib+b6BcPdRZ3MjWXz2xvV1rblA==}
+  /prosemirror-view/1.23.11:
+    resolution: {integrity: sha512-iBqsyrQZz9NYcJ13JC7sPZ+4PdbBbUXhs1qzbxkDQ2tplcVROwxmAn3bnxpVFst/guv+XFI5KTHHbw5stvKt0g==}
     dependencies:
       prosemirror-model: 1.16.1
       prosemirror-state: 1.3.4
