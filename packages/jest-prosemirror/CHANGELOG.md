@@ -1,5 +1,16 @@
 # jest-prosemirror
 
+## 1.0.21
+
+> 2022-04-04
+
+### Patch Changes
+
+- Update dependency prosemirror-view.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.16
+
 ## 1.0.20
 
 > 2022-03-31

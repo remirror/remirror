@@ -1,5 +1,13 @@
 # prosemirror-suggest
 
+## 1.1.1
+
+> 2022-04-04
+
+### Patch Changes
+
+- Update dependency prosemirror-view.
+
 ## 1.1.0
 
 > 2022-03-31

@@ -42,7 +42,7 @@
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.15"
+    "@remirror/pm": "^1.0.16"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.10"
