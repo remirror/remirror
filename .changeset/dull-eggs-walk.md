@@ -6,4 +6,4 @@
 '@remirror/pm': patch
 ---
 
-update prosemirror-view packages
+Update dependency prosemirror-view.
