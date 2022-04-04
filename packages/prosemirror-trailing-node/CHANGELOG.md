@@ -1,5 +1,13 @@
 # prosemirror-trailing-node
 
+## 1.0.8
+
+> 2022-04-04
+
+### Patch Changes
+
+- Update dependency prosemirror-view.
+
 ## 1.0.7
 
 > 2022-01-17

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-embed",
-  "version": "1.1.23",
+  "version": "1.1.24",
   "description": "Add embedded content into your editor",
   "keywords": [
     "remirror",
@@ -44,14 +44,14 @@
     "@remirror/core": "^1.4.1",
     "@remirror/messages": "^1.0.6",
     "@types/querystringify": "^2.0.0",
-    "prosemirror-resizable-view": "^1.1.11",
+    "prosemirror-resizable-view": "^1.1.12",
     "querystringify": "^2.2.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.15"
+    "@remirror/pm": "^1.0.16"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.11"
+    "@remirror/pm": "^1.0.16"
   },
   "publishConfig": {
     "access": "public"

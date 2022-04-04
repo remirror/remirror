@@ -1,5 +1,13 @@
 # prosemirror-paste-rules
 
+## 1.0.10
+
+> 2022-04-04
+
+### Patch Changes
+
+- Update dependency prosemirror-view.
+
 ## 1.0.9
 
 > 2022-03-01

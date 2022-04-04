@@ -48,7 +48,7 @@
     "@remirror/core": "^1.4.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.15"
+    "@remirror/pm": "^1.0.16"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.10"

@@ -1,5 +1,13 @@
 # prosemirror-resizable-view
 
+## 1.1.12
+
+> 2022-04-04
+
+### Patch Changes
+
+- Update dependency prosemirror-view.
+
 ## 1.1.11
 
 > 2022-02-22

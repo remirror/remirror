@@ -1,5 +1,17 @@
 # @remirror/react-editors
 
+## 0.1.68
+
+> 2022-04-04
+
+### Patch Changes
+
+- Update dependency prosemirror-view.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.16
+  - remirror@1.0.73
+
 ## 0.1.67
 
 > 2022-04-04
