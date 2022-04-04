@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.0.31
+
+> 2022-04-04
+
+### Patch Changes
+
+- deleted an incorrect preselectClass style on react-table-extension
+
+- Updated dependencies []:
+  - @remirror/react@1.0.31
+
 ## 1.0.30
 
 > 2022-04-01
