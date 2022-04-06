@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.69
+
+> 2022-04-06
+
+### Patch Changes
+
+- Fix a RangeError when the document is updated during the resizing.
+
+- Updated dependencies []:
+  - remirror@1.0.74
+
 ## 0.1.68
 
 > 2022-04-04
