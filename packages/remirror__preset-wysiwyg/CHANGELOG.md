@@ -1,5 +1,17 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.46
+
+> 2022-04-06
+
+### Patch Changes
+
+- Fix a RangeError when the document is updated during the resizing.
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.25
+  - @remirror/extension-image@1.0.31
+
 ## 1.1.45
 
 > 2022-04-04

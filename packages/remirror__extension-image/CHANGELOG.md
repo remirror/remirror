@@ -1,5 +1,16 @@
 # @remirror/extension-image
 
+## 1.0.31
+
+> 2022-04-06
+
+### Patch Changes
+
+- Fix a RangeError when the document is updated during the resizing.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.13
+
 ## 1.0.30
 
 > 2022-04-04

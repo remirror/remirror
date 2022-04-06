@@ -1,5 +1,13 @@
 # prosemirror-resizable-view
 
+## 1.1.13
+
+> 2022-04-06
+
+### Patch Changes
+
+- Fix a RangeError when the document is updated during the resizing.
+
 ## 1.1.12
 
 > 2022-04-04
