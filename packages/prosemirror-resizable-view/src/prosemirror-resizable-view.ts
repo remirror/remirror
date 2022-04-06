@@ -75,11 +75,11 @@ export abstract class ResizableNodeView implements NodeView {
     const handles = types.map((type) => new ResizableHandle(type));
 
     for (const handle of handles) {
-      const handler = (e: MouseEvent) => {
-        this.resizeHandler(e, view, getPos, handle);
+      const onMouseDown = (e: MouseEvent) => {
+        this.startResizing(e, view, getPos, handle);
       };
-      handle.dom.addEventListener('mousedown', handler);
-      this.#destroyList.push(() => handle.dom.removeEventListener('mousedown', handler));
+      handle.dom.addEventListener('mousedown', onMouseDown);
+      this.#destroyList.push(() => handle.dom.removeEventListener('mousedown', onMouseDown));
       outer.append(handle.dom);
     }
 
@@ -156,7 +156,7 @@ export abstract class ResizableNodeView implements NodeView {
     return outer;
   }
 
-  resizeHandler(
+  startResizing(
     e: MouseEvent,
     view: EditorView,
     getPos: () => number,
@@ -261,6 +261,8 @@ export abstract class ResizableNodeView implements NodeView {
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+    this.#destroyList.push(() => document.removeEventListener('mousemove', onMouseMove));
+    this.#destroyList.push(() => document.removeEventListener('mouseup', onMouseUp));
   }
 
   /**
