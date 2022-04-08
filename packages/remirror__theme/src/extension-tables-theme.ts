@@ -21,7 +21,80 @@ export const EDITOR = css`
       border-collapse: collapse;
       table-layout: fixed;
       width: 100%;
-      overflow: hidden;
+      overflow: visible;
+      margin-left: 40px;
+      margin-top: 40px;
+    }
+
+    table {
+      .grip-column {
+        /* usage of ::after for all of the table grips works around a bug in
+       * prosemirror-tables that causes Safari to hang when selecting a cell
+       * in an empty table:
+       * https://github.com/ProseMirror/prosemirror/issues/947 */
+        &::after {
+          content: '';
+          cursor: pointer;
+          position: absolute;
+          top: -16px;
+          left: 0;
+          width: 100%;
+          height: 12px;
+          background: red;
+          display: block;
+        }
+
+        &:hover::after {
+          background: yellow;
+        }
+        &.selected::after {
+          background: green;
+        }
+      }
+
+      .grip-row {
+        &::after {
+          content: '';
+          cursor: pointer;
+          position: absolute;
+          left: -16px;
+          top: 0;
+          height: 100%;
+          width: 12px;
+          background: red;
+          border-color: red;
+          display: block;
+        }
+
+        &:hover::after {
+          background: yellow;
+        }
+        &.selected::after {
+          background: red;
+        }
+      }
+
+      .grip-table {
+        &::after {
+          content: '';
+          cursor: pointer;
+          background: red;
+          width: 13px;
+          height: 13px;
+          border: 2px solid red;
+          position: absolute;
+          top: -18px;
+          left: -18px;
+          display: block;
+        }
+
+        &:hover::after {
+          background: yellow;
+        }
+        &.selected::after {
+          background: red;
+        }
+      }
     }
 
     td,
