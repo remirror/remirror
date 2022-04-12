@@ -7,15 +7,20 @@ title: 'useHelpers'
 
 ```tsx
 const allHelpers = useHelpers();
+const allHelpersWithUpdate = useHelpers(true);
 ```
 
 ## Parameters
 
-N/A
+`update` (Optional)
+
+> A boolean indicating whether this hook should trigger a component render when the editor state changes.
+>
+> Default false.
 
 ## Return value
 
-An object containing all the commands available in the editor.
+An object containing all the helpers available in the editor.
 
 ## Description
 
@@ -49,4 +54,16 @@ const onSave = useCallback(
 );
 
 useKeymap('Mod-s', onSave);
+```
+
+By passing true to `useHelpers` you can ensure your component uses the latest editor state. Be aware this has performance implications, e.g. triggering a React render on every key press.
+
+```tsx
+const { getJSON } = useHelpers(true);
+
+return (
+  <pre>
+    <code>{JSON.stringify(getJSON(), null, 2)}</code>
+  </pre>
+);
 ```
