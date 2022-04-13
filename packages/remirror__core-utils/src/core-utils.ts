@@ -712,7 +712,7 @@ export function getChangedRanges(
 
       rawRanges.push({ from, to });
     } else {
-      step.getMap().forEach((_, __, from, to) => {
+      step.getMap().forEach((from, to) => {
         rawRanges.push({ from, to });
       });
     }
@@ -731,11 +731,13 @@ export function getChangedRanges(
 
     if (noOverlap) {
       // Add the new range when no overlap is found.
+      const newFrom = tr.mapping.map(from, -1);
+      const newTo = tr.mapping.map(to);
       ranges.push({
-        from,
-        to,
-        prevFrom: tr.mapping.invert().map(from, -1),
-        prevTo: tr.mapping.invert().map(to),
+        from: newFrom,
+        to: newTo,
+        prevFrom: tr.mapping.invert().map(newFrom, -1),
+        prevTo: tr.mapping.invert().map(newTo),
       });
     } else if (lastRange) {
       // Update the lastRange's end value.

@@ -594,9 +594,9 @@ describe('getChangedNodeRanges', () => {
     expect(nodeRanges[0]?.startIndex).toBe(0);
     expect(nodeRanges[0]?.endIndex).toBe(1);
 
-    expect(nodeRanges[1]?.start).toBe(18);
+    expect(nodeRanges[1]?.start).toBe(23);
     expect(nodeRanges[1]?.end).toBe(40);
-    expect(nodeRanges[1]?.startIndex).toBe(2);
+    expect(nodeRanges[1]?.startIndex).toBe(3);
     expect(nodeRanges[1]?.endIndex).toBe(4);
   });
 });
