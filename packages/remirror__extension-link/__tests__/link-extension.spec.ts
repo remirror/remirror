@@ -104,6 +104,25 @@ describe('schema', () => {
   });
 });
 
+class NoMarkBlockExtension extends NodeExtension {
+  get name() {
+    return 'nomark' as const;
+  }
+
+  createTags() {
+    return [ExtensionTag.Block];
+  }
+
+  createNodeSpec(extra: ApplySchemaAttributes): NodeExtensionSpec {
+    return {
+      content: 'text*',
+      marks: '',
+      attrs: { ...extra.defaults() },
+      toDOM: (node) => ['div', extra.dom(node), 0],
+    };
+  }
+}
+
 function create(options: LinkOptions = {}) {
   const linkExtension = new LinkExtension(options);
 
@@ -119,7 +138,7 @@ function create(options: LinkOptions = {}) {
     linkExtension.addHandler('onUpdateLink', options.onUpdateLink);
   }
 
-  return renderEditor([linkExtension]);
+  return renderEditor([linkExtension, new NoMarkBlockExtension()]);
 }
 
 describe('commands', () => {
@@ -476,7 +495,7 @@ describe('plugin', () => {
 describe('autolinking', () => {
   let onUpdateLink = jest.fn(() => {});
   let editor = create({ autoLink: true, onUpdateLink });
-  let { doc, p } = editor.nodes;
+  let { doc, p, nomark } = editor.nodes;
   let { link } = editor.attributeMarks;
 
   beforeEach(() => {
@@ -485,7 +504,7 @@ describe('autolinking', () => {
     editor = create({ autoLink: true, onUpdateLink });
     ({
       attributeMarks: { link },
-      nodes: { doc, p },
+      nodes: { doc, p, nomark },
     } = editor);
   });
 
@@ -620,7 +639,7 @@ describe('autolinking', () => {
     });
   });
 
-  it('should be off by default', () => {
+  it('should not autolink or call onUpdateLink by default', () => {
     const editor = create({ onUpdateLink });
     const { doc, p } = editor.nodes;
 
@@ -629,16 +648,17 @@ describe('autolinking', () => {
 
     editor.insertText(' https://test.com ');
     expect(editor.doc).toEqualRemirrorDocument(doc(p('test.co https://test.com ')));
+
+    expect(onUpdateLink).not.toHaveBeenCalled();
   });
 
-  it('should not call the onUpdateLink handler when links are inserted using default settings', () => {
-    const editor = create({ onUpdateLink });
-    const { doc, p } = editor.nodes;
-
-    editor.add(doc(p('<cursor>'))).insertText('test.co');
-    expect(onUpdateLink).not.toHaveBeenCalled();
+  it('should not autolink or call onUpdateLink when mark is not allowed', () => {
+    editor.add(doc(nomark('<cursor>'))).insertText('test.co');
+    expect(editor.doc).toEqualRemirrorDocument(doc(nomark('test.co')));
 
     editor.insertText(' https://test.com ');
+    expect(editor.doc).toEqualRemirrorDocument(doc(nomark('test.co https://test.com ')));
+
     expect(onUpdateLink).not.toHaveBeenCalled();
   });
 
