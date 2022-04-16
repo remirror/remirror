@@ -13,9 +13,10 @@ test('it supports <ProsemirrorDevTools />', () => {
       <ProsemirrorDevTools />
     </Remirror>,
   );
-  const element = baseElement.querySelector('.__prosemirror-dev-tools__');
+  const element = baseElement.querySelector('.__prosemirror-dev-toolkit__');
 
   expect(element).toBeInTheDocument();
+  expect(element?.childNodes.length ?? 0).toBeGreaterThanOrEqual(1);
 });
 
 test('it unmounts <ProsemirrorDevTools />', () => {
@@ -32,7 +33,7 @@ test('it unmounts <ProsemirrorDevTools />', () => {
       <Component dev={false} />
     </Remirror>,
   );
-  const element = baseElement.querySelector('.__prosemirror-dev-tools__');
+  const element = baseElement.querySelector('.__prosemirror-dev-toolkit__');
 
-  expect(element).not.toBeInTheDocument();
+  expect(element?.childNodes.length ?? 0).toBe(0);
 });

@@ -18,7 +18,7 @@ For in depth usage with proper code example see the [docs](https://remirror.io)
 
 ### Prosemirror Dev Tools
 
-The following will render the development view in your editor. For more information on what's possible see the [docs][prosemirror-dev-tools].
+The following will render the development view in your editor. For more information on what's possible see the [docs][prosemirror-dev-toolkit].
 
 ```tsx
 import React from 'react';
@@ -26,22 +26,19 @@ import { BoldExtension } from 'remirror/extension/bold';
 import { ItalicExtension } from 'remirror/extension/italic';
 import { UnderlineExtension } from 'remirror/extension/underline';
 import { ProsemirrorDevTools } from '@remirror/dev';
-import { RemirrorProvider } from '@remirror/react';
-import { RemirrorProvider, useManager } from '@remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 const Editor = () => {
-  const manager = useManager([
-    new BoldExtension(),
-    new ItalicExtension(),
-    new UnderlineExtension(),
-  ]);
+  const manager = useRemirror({
+    extensions: () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()],
+  });
 
   return (
-    <RemirrorProvider manager={manager} autoRender={true}>
+    <Remirror manager={manager} autoRender={true}>
       <ProsemirrorDevTools />
-    </RemirrorProvider>
+    </Remirror>
   );
 };
 ```
 
-[prosemirror-dev-tools]: https://github.com/d4rkr00t/prosemirror-dev-tools
+[prosemirror-dev-toolkit]: https://github.com/TeemuKoivisto/prosemirror-dev-toolkit
