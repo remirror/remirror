@@ -66,15 +66,12 @@ This should be used with caution, especially with common keyboard shortcuts like
 `return next()` allows for composition (and improved readability), see [Composing key handlers](#composing-key-handlers) below.
 
 ```tsx
-const onSave = useCallback(
-  ({ state }) => {
-    console.log('Mod and S key pressed!');
+const onSave = useCallback(({ tr, state, dispatch, next }) => {
+  console.log('Mod and S key pressed!');
 
-    // Prevents any further key handlers from being run.
-    return true;
-  },
-  [getJSON],
-);
+  // Prevents any further key handlers from being run.
+  return true;
+}, []);
 
 useKeymap('Mod-s', onSave);
 ```
