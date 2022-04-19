@@ -1,6 +1,5 @@
-import applyDevTools from 'prosemirror-dev-tools';
+import { applyDevTools, removeDevTools } from 'prosemirror-dev-toolkit';
 import { useEffect } from 'react';
-import { unmountComponentAtNode } from 'react-dom';
 import { useRemirrorContext } from '@remirror/react';
 
 /**
@@ -11,7 +10,7 @@ import { useRemirrorContext } from '@remirror/react';
  * Make sure not to use this in production as it increase the bundle size quite
  * significantly.
  *
- * Built with https://github.com/d4rkr00t/prosemirror-dev-tools
+ * Built with https://github.com/TeemuKoivisto/prosemirror-dev-toolkit
  */
 export const ProsemirrorDevTools = (): null => {
   const { view } = useRemirrorContext();
@@ -20,17 +19,7 @@ export const ProsemirrorDevTools = (): null => {
     applyDevTools(view);
 
     return () => {
-      const node = document.querySelector('.__prosemirror-dev-tools__');
-
-      if (!node) {
-        return;
-      }
-
-      unmountComponentAtNode(node);
-
-      if (node.parentNode) {
-        node.remove();
-      }
+      removeDevTools();
     };
   }, [view]);
 

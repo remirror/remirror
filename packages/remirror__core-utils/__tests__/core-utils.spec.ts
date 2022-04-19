@@ -40,6 +40,7 @@ import {
   getMarkRanges,
   getRemirrorJSON,
   getSelectedWord,
+  getTextSelection,
   htmlToProsemirrorNode,
   isDocNode,
   isDocNodeEmpty,
@@ -594,10 +595,73 @@ describe('getChangedNodeRanges', () => {
     expect(nodeRanges[0]?.startIndex).toBe(0);
     expect(nodeRanges[0]?.endIndex).toBe(1);
 
-    expect(nodeRanges[1]?.start).toBe(18);
+    expect(nodeRanges[1]?.start).toBe(23);
     expect(nodeRanges[1]?.end).toBe(40);
-    expect(nodeRanges[1]?.startIndex).toBe(2);
+    expect(nodeRanges[1]?.startIndex).toBe(3);
     expect(nodeRanges[1]?.endIndex).toBe(4);
+  });
+
+  it('can understand insertions, modifications and complex changes', () => {
+    const { state } = createEditor(doc(p('start'), p('cha<start>n<end>ge'), p('end')));
+    const tr = state.tr;
+    tr.insertText('r')
+      .setSelection(TextSelection.create(tr.doc, tr.doc.nodeSize - 2))
+      .insert(tr.selection.from, p('a new paragraph'))
+      .setSelection(TextSelection.create(tr.doc, 1))
+      .insertText('abc');
+
+    const nodeRanges = getChangedNodeRanges(tr);
+
+    expect(nodeRanges).toHaveLength(3);
+    expect(nodeRanges[0]?.start).toBe(0);
+    expect(nodeRanges[0]?.end).toBe(10);
+    expect(nodeRanges[0]?.startIndex).toBe(0);
+    expect(nodeRanges[0]?.endIndex).toBe(1);
+
+    expect(nodeRanges[1]?.start).toBe(10);
+    expect(nodeRanges[1]?.end).toBe(18);
+    expect(nodeRanges[1]?.startIndex).toBe(1);
+    expect(nodeRanges[1]?.endIndex).toBe(2);
+
+    expect(nodeRanges[2]?.start).toBe(23);
+    expect(nodeRanges[2]?.end).toBe(40);
+    expect(nodeRanges[2]?.startIndex).toBe(3);
+    expect(nodeRanges[2]?.endIndex).toBe(4);
+  });
+
+  it('can understand insertions, replace steps and complex changes', () => {
+    const { state } = createEditor(doc(p('start'), p('<start>change<end>'), p('end')));
+    const tr = state.tr;
+    const { from } = getTextSelection(tr.selection, tr.doc);
+
+    tr.setBlockType(from, undefined, testSchema.nodes.heading)
+      .setSelection(TextSelection.create(tr.doc, tr.doc.nodeSize - 2))
+      .insert(tr.selection.from, p('a new paragraph'))
+      .setSelection(TextSelection.create(tr.doc, 1))
+      .insertText('abc');
+
+    const nodeRanges = getChangedNodeRanges(tr);
+
+    expect(nodeRanges).toHaveLength(4);
+    expect(nodeRanges[0]?.start).toBe(0);
+    expect(nodeRanges[0]?.end).toBe(10);
+    expect(nodeRanges[0]?.startIndex).toBe(0);
+    expect(nodeRanges[0]?.endIndex).toBe(1);
+
+    expect(nodeRanges[1]?.start).toBe(10);
+    expect(nodeRanges[1]?.end).toBe(18);
+    expect(nodeRanges[1]?.startIndex).toBe(1);
+    expect(nodeRanges[1]?.endIndex).toBe(2);
+
+    expect(nodeRanges[2]?.start).toBe(10);
+    expect(nodeRanges[2]?.end).toBe(18);
+    expect(nodeRanges[2]?.startIndex).toBe(1);
+    expect(nodeRanges[2]?.endIndex).toBe(2);
+
+    expect(nodeRanges[3]?.start).toBe(23);
+    expect(nodeRanges[3]?.end).toBe(40);
+    expect(nodeRanges[3]?.startIndex).toBe(3);
+    expect(nodeRanges[3]?.endIndex).toBe(4);
   });
 });
 

@@ -237,13 +237,11 @@ describe('getChangedNodes', () => {
       .insertText('abc');
     const nodes = getChangedNodes(tr);
 
-    expect(nodes).toHaveLength(3);
+    expect(nodes).toHaveLength(2);
     expect(nodes[0]?.pos).toBe(0);
     expect(nodes[0]?.node.type.name).toBe('paragraph');
 
-    expect(nodes[1]?.pos).toBe(18);
-
-    expect(nodes[2]?.pos).toBe(23);
+    expect(nodes[1]?.pos).toBe(23);
   });
 
   it('handles deletions', () => {
