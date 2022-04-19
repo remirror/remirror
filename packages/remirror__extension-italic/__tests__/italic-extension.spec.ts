@@ -127,7 +127,9 @@ describe('inputRules', () => {
     add(doc(p('**_italic bold<cursor>')))
       .insertText('_')
       .callback((content) => {
-        expect(content.doc).toEqualRemirrorDocument(doc(p('**', italic('italic bold'), '<cursor>')));
+        expect(content.doc).toEqualRemirrorDocument(
+          doc(p('**', italic('italic bold'), '<cursor>')),
+        );
       })
       .insertText('**')
       .callback((content) => {
