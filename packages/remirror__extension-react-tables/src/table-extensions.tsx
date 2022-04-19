@@ -60,11 +60,14 @@ export class TableExtension extends BaseTableExtension {
    * Add the table plugins to the editor.
    */
   createExternalPlugins(): ProsemirrorPlugin[] {
-    const plugins = [tableEditing(), createTableControllerPlugin()];
+    const plugins = [];
 
     if (this.options.resizable) {
+      // Add first to avoid highlighting cells while resizing
       plugins.push(columnResizing({ firstResizableColumn: 1 }));
     }
+
+    plugins.push(tableEditing(), createTableControllerPlugin());
 
     return plugins;
   }
