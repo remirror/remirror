@@ -106,11 +106,14 @@ export class TableExtension extends NodeExtension<TableOptions> {
    * Add the table plugins to the editor.
    */
   createExternalPlugins(): ProsemirrorPlugin[] {
-    const plugins = [tableEditing()];
+    const plugins = [];
 
     if (this.options.resizable) {
+      // Add first to avoid highlighting cells while resizing
       plugins.push(columnResizing({}));
     }
+
+    plugins.push(tableEditing());
 
     return plugins;
   }
