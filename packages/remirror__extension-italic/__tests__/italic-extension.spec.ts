@@ -76,6 +76,23 @@ describe('inputRules', () => {
       });
   });
 
+  it('should not make text italic within a word', () => {
+    const {
+      add,
+      nodes: { doc, p },
+    } = renderEditor([new ItalicExtension()]);
+
+    add(doc(p('<cursor>')))
+      .insertText('BBC_News')
+      .callback((content) => {
+        expect(content.doc).toEqualRemirrorDocument(doc(p('BBC_News')));
+      })
+      .insertText('_Labs')
+      .callback((content) => {
+        expect(content.doc).toEqualRemirrorDocument(doc(p('BBC_News_Labs')));
+      });
+  });
+
   it('supports nested input rule matches', () => {
     const {
       add,
@@ -97,6 +114,32 @@ describe('inputRules', () => {
       .insertText(' more')
       .callback((content) => {
         expect(content.doc).toEqualRemirrorDocument(doc(p(italic(bold('bold italic')), ' more')));
+      });
+  });
+
+  it('supports nested input rule matches (reversed)', () => {
+    const {
+      add,
+      nodes: { doc, p },
+      marks: { bold, italic },
+    } = renderEditor([new BoldExtension(), new ItalicExtension()]);
+
+    add(doc(p('**_italic bold<cursor>')))
+      .insertText('_')
+      .callback((content) => {
+        expect(content.doc).toEqualRemirrorDocument(
+          doc(p('**', italic('italic bold'), '<cursor>')),
+        );
+      })
+      .insertText('**')
+      .callback((content) => {
+        expect(content.doc).toEqualRemirrorDocument(
+          doc(p(bold(italic('italic bold')), '<cursor>')),
+        );
+      })
+      .insertText(' more')
+      .callback((content) => {
+        expect(content.doc).toEqualRemirrorDocument(doc(p(bold(italic('italic bold')), ' more')));
       });
   });
 });
