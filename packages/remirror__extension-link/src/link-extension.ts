@@ -541,7 +541,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
           // Find text that can be auto linked
           tr.doc.nodesBetween(from, to, (node, pos) => {
-            if (!node.isTextblock) {
+            if (!node.isTextblock || !node.type.allowsMarkType(this.type)) {
               return;
             }
 
