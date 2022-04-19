@@ -10,7 +10,13 @@ import {
   NodeExtensionSpec,
   prosemirrorNodeToHtml,
 } from 'remirror';
-import { createCoreManager, extractHref, LinkExtension, LinkOptions } from 'remirror/extensions';
+import {
+  BoldExtension,
+  createCoreManager,
+  extractHref,
+  LinkExtension,
+  LinkOptions,
+} from 'remirror/extensions';
 
 extensionValidityTest(LinkExtension);
 
@@ -119,7 +125,7 @@ function create(options: LinkOptions = {}) {
     linkExtension.addHandler('onUpdateLink', options.onUpdateLink);
   }
 
-  return renderEditor([linkExtension]);
+  return renderEditor([linkExtension, new BoldExtension()]);
 }
 
 describe('commands', () => {
@@ -476,8 +482,9 @@ describe('plugin', () => {
 describe('autolinking', () => {
   let onUpdateLink = jest.fn(() => {});
   let editor = create({ autoLink: true, onUpdateLink });
-  let { doc, p } = editor.nodes;
   let { link } = editor.attributeMarks;
+  let { doc, p } = editor.nodes;
+  let { bold } = editor.marks;
 
   beforeEach(() => {
     onUpdateLink = jest.fn(() => {});
@@ -486,6 +493,7 @@ describe('autolinking', () => {
     ({
       attributeMarks: { link },
       nodes: { doc, p },
+      marks: { bold },
     } = editor);
   });
 
@@ -790,6 +798,12 @@ describe('autolinking', () => {
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: 'mailto:user@example.com' })('user@example.com'))),
     );
+  });
+
+  it('works with other input rules', () => {
+    editor.add(doc(p('__bold_<cursor>'))).insertText('_');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p(bold('bold'))));
   });
 });
 
