@@ -73,4 +73,40 @@ const handleToggleBoldItalic = useCallback(() => {
 
 When using a **controlled** editor, multiple commands must be performed via _chained_ commands instead (via the `useChainedCommands` hook).
 
-See [potential pitfalls](https://remirror.io/docs/react/controlled/#potential-pitfalls) in the controlled editor documentation for a in-depth description of the problem.
+See [potential pitfalls](/docs/react/controlled/#potential-pitfalls) in the controlled editor documentation for a in-depth description of the problem.
+
+## Custom Dispatch (Advanced)
+
+`useCommands` exposes a command `customDispatch` that allows you to dispatch ProseMirror transactions directly to the editor.
+
+This allows you to write ad-hoc [command functions](/docs/getting-started/commands-and-helpers#how-this-works-advanced) that enable the bare-metal power of ProseMirror.
+
+```tsx
+const insertCustomText = (text = 'Powered by Remirror!') => {
+  return ({ tr, dispatch }) => {
+    if (!isTextSelection(tr.selection)) {
+      return false;
+    }
+
+    dispatch?.(tr.insertText(text));
+
+    return true;
+  };
+};
+
+const Button = () => {
+  const { customDispatch } = useCommands();
+
+  const handleClick = useCallback(() => {
+    customDispatch(insertCustomText());
+  }, [customDispatch]);
+
+  return <button onClick={handleClick}>Click me!</button>;
+};
+```
+
+:::tip
+
+Consider whether your custom commands might be better suited as proper commands surfaced by a [custom extension](/docs/getting-started/custom-extension).
+
+:::tip
