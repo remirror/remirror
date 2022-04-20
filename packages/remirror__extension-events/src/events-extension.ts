@@ -168,8 +168,14 @@ export type ClickMarkEventHandler = (
   event: MouseEvent,
   state: ClickMarkHandlerState,
 ) => boolean | undefined | void;
-export type ContextMenuEventHandler = (props: MouseEventHandlerProps) => boolean | undefined | void;
-export type HoverEventHandler = (props: HoverEventHandlerProps) => boolean | undefined | void;
+export type ContextMenuEventHandler = (
+  props: MouseEventHandlerProps,
+  state: ContextMenuEventHandlerState,
+) => boolean | undefined | void;
+export type HoverEventHandler = (
+  props: HoverEventHandlerProps,
+  state: HoverEventHandlerState,
+) => boolean | undefined | void;
 
 /**
  * The events extension which listens to events which occur within the
@@ -364,17 +370,22 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             return this.options.keyup(event) || false;
           },
 
-          mouseout: this.createMouseEventHandler(
-            (props) => this.options.hover({ ...props, hovering: false }) || false,
-          ),
+          mouseout: this.createMouseEventHandler((event, props) => {
+            const state = { ...props, hovering: false };
+            // TODO: Standardise to return ONLY the event, as first argument
+            return this.options.hover({ ...state, event }, state) || false;
+          }),
 
-          mouseover: this.createMouseEventHandler(
-            (props) => this.options.hover({ ...props, hovering: true }) || false,
-          ),
+          mouseover: this.createMouseEventHandler((event, props) => {
+            const state = { ...props, hovering: true };
+            // TODO: Standardise to return ONLY the event, as first argument
+            return this.options.hover({ ...state, event }, state) || false;
+          }),
 
-          contextmenu: this.createMouseEventHandler(
-            (props) => this.options.contextmenu(props) || false,
-          ),
+          contextmenu: this.createMouseEventHandler((event, props) => {
+            // TODO: Standardise to return ONLY the event, as first argument
+            return this.options.contextmenu({ ...props, event }, props) || false;
+          }),
 
           scroll: (_, event) => {
             return this.options.scroll(event) || false;
@@ -427,7 +438,9 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
     this.store.commands.emptyUpdate();
   }
 
-  private readonly createMouseEventHandler = (fn: (props: MouseEventHandlerProps) => boolean) => {
+  private readonly createMouseEventHandler = (
+    fn: (event: MouseEvent, props: MouseEventHandlerState) => boolean,
+  ) => {
     return (view: EditorView, event: MouseEvent) => {
       const eventPosition = getPositionFromEvent(view, event);
 
@@ -474,8 +487,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
         }
       }
 
-      return fn({
-        event,
+      return fn(event, {
         view,
         nodes,
         marks,
@@ -619,14 +631,14 @@ interface BaseEventState extends EditorViewProps, EditorStateProps {
   state: EditorState;
 }
 
-export interface HoverEventHandlerProps extends MouseEventHandlerProps {
+export interface HoverEventHandlerState extends MouseEventHandlerState {
   /**
    * This is true when hovering has started and false when hovering has ended.
    */
   hovering: boolean;
 }
 
-export interface MouseEventHandlerProps {
+export interface MouseEventHandlerState {
   /**
    * The editor view.
    */
@@ -646,11 +658,6 @@ export interface MouseEventHandlerProps {
   nodes: NodeWithPosition[];
 
   /**
-   * The event that triggered this.
-   */
-  event: MouseEvent;
-
-  /**
    * Return the mark range if it exists for the clicked position.
    *
    *
@@ -666,6 +673,18 @@ export interface MouseEventHandlerProps {
     nodeType: string | NodeType,
   ) => (NodeWithPosition & { isRoot: boolean }) | undefined | void;
 }
+
+export type ContextMenuEventHandlerState = MouseEventHandlerState;
+
+/**
+ * @deprecated use ({ event: MouseEvent }, props: MouseEventHandlerState) => boolean | undefined | void instead
+ */
+export type MouseEventHandlerProps = MouseEventHandlerState & { event: MouseEvent };
+
+/**
+ * @deprecated use ({ event: MouseEvent }, props: HoverEventHandlerState) => boolean | undefined | void instead
+ */
+export type HoverEventHandlerProps = HoverEventHandlerState & { event: MouseEvent };
 
 declare global {
   namespace Remirror {

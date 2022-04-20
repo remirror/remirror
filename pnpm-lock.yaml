@@ -835,13 +835,13 @@ importers:
       '@testing-library/react': ^12.0.0
       '@types/react': ^17.0.14
       '@types/react-dom': ^17.0.9
-      prosemirror-dev-toolkit: <1.0.0
+      prosemirror-dev-toolkit: ^0.0.10
       react: ^17.0.2
       react-dom: ^17.0.2
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/react': link:../remirror__react
-      prosemirror-dev-toolkit: 0.0.9
+      prosemirror-dev-toolkit: 0.0.10
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@testing-library/react': 12.1.2_react-dom@17.0.2+react@17.0.2
@@ -22904,8 +22904,8 @@ packages:
       prosemirror-transform: 1.3.3
     dev: false
 
-  /prosemirror-dev-toolkit/0.0.9:
-    resolution: {integrity: sha512-upcGOe5S2S2t0nhpFu8WQlC0HScLdtUvlZpNoDH4/ToxkoGpEACiLm0jMbuQ5ve8XfFYBLA7s6cpU/K8n15Bfg==}
+  /prosemirror-dev-toolkit/0.0.10:
+    resolution: {integrity: sha512-NvpgaVoJykz7iop+3k4P//GaZqUk9CDtv3qfmAWu/gLS1J08fETrycK7szTIL6sHRRpvyUikUCUdFbAwF3BMag==}
     dependencies:
       html: 1.0.0
       prosemirror-model: 1.16.1
