@@ -1,5 +1,17 @@
 # @remirror/extension-embed
 
+## 1.1.26
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.14
+  - @remirror/core@1.4.2
+
 ## 1.1.25
 
 > 2022-04-06

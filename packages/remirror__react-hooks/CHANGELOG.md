@@ -1,5 +1,40 @@
 # @remirror/react-hooks
 
+## 1.0.29
+
+> 2022-04-20
+
+### Patch Changes
+
+- Prevent marks in MentionAtom, to prevent input rules being triggered within the node
+
+* Fix an error with auto link preventing input rules at the end of a document
+
+- Create a "stepping stone" for future standardisation of useEvent types
+
+  Add a second parameter to handlers for `hover` and `contextmenu` types, so we can eventually standarise the hook to pass event as the first argument.
+
+  ```tsx
+  const handleHover = useCallback(({ event: MouseEvent }, props: HoverEventHandlerState) => {
+    const { getNode, hovering, ...rest } = props;
+    console.log('node', getNode(), 'is hovering', hovering, 'rest', rest);
+
+    return false;
+  }, []);
+
+  useEvent('hover', handleHover);
+  ```
+
+- Updated dependencies []:
+  - @remirror/extension-mention-atom@1.0.23
+  - @remirror/core@1.4.2
+  - @remirror/extension-emoji@1.0.22
+  - @remirror/extension-events@1.1.0
+  - @remirror/extension-history@1.0.19
+  - @remirror/extension-mention@1.0.20
+  - @remirror/extension-positioner@1.2.3
+  - @remirror/react-core@1.1.2
+
 ## 1.0.28
 
 > 2022-03-25

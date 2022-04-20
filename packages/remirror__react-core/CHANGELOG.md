@@ -1,5 +1,38 @@
 # @remirror/react-core
 
+## 1.1.2
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+* Create a "stepping stone" for future standardisation of useEvent types
+
+  Add a second parameter to handlers for `hover` and `contextmenu` types, so we can eventually standarise the hook to pass event as the first argument.
+
+  ```tsx
+  const handleHover = useCallback(({ event: MouseEvent }, props: HoverEventHandlerState) => {
+    const { getNode, hovering, ...rest } = props;
+    console.log('node', getNode(), 'is hovering', hovering, 'rest', rest);
+
+    return false;
+  }, []);
+
+  useEvent('hover', handleHover);
+  ```
+
+* Updated dependencies []:
+  - @remirror/core@1.4.2
+  - @remirror/extension-positioner@1.2.3
+  - @remirror/extension-react-component@1.1.10
+  - @remirror/extension-react-ssr@1.0.21
+  - @remirror/preset-core@1.0.25
+  - @remirror/preset-react@1.0.23
+  - @remirror/react-renderer@1.0.21
+  - @remirror/react-ssr@1.0.21
+
 ## 1.1.1
 
 > 2022-03-25

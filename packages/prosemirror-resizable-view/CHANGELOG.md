@@ -1,5 +1,16 @@
 # prosemirror-resizable-view
 
+## 1.1.14
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+- Updated dependencies []:
+  - @remirror/core-utils@1.1.8
+
 ## 1.1.13
 
 > 2022-04-06

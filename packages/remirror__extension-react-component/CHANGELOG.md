@@ -1,5 +1,16 @@
 # @remirror/extension-react-component
 
+## 1.1.10
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+- Updated dependencies []:
+  - @remirror/core@1.4.2
+
 ## 1.1.9
 
 > 2022-03-25

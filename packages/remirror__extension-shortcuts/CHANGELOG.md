@@ -1,5 +1,16 @@
 # @remirror/extension-shortcuts
 
+## 1.1.8
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+- Updated dependencies []:
+  - @remirror/core@1.4.2
+
 ## 1.1.7
 
 > 2022-03-25

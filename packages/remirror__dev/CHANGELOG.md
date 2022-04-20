@@ -1,5 +1,43 @@
 # @remirror/dev
 
+## 1.1.0
+
+> 2022-04-20
+
+### Minor Changes
+
+- Replace the underlying component of <ProsemirrorDevTools/> with prosemirror-dev-toolkit
+
+### Patch Changes
+
+- Reorder the external plugins of the tables extensions, to avoid highlighting cells while resizing.
+
+  Proposed by Pierre\_ on Discord
+
+* Prevent marks in MentionAtom, to prevent input rules being triggered within the node
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+* Create a "stepping stone" for future standardisation of useEvent types
+
+  Add a second parameter to handlers for `hover` and `contextmenu` types, so we can eventually standarise the hook to pass event as the first argument.
+
+  ```tsx
+  const handleHover = useCallback(({ event: MouseEvent }, props: HoverEventHandlerState) => {
+    const { getNode, hovering, ...rest } = props;
+    console.log('node', getNode(), 'is hovering', hovering, 'rest', rest);
+
+    return false;
+  }, []);
+
+  useEvent('hover', handleHover);
+  ```
+
+- Bump prosemirror-dev-toolkit to fix docs build error
+
+- Updated dependencies []:
+  - @remirror/react@1.0.32
+
 ## 1.0.31
 
 > 2022-04-04

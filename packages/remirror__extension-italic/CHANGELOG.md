@@ -1,5 +1,18 @@
 # @remirror/extension-italic
 
+## 1.0.19
+
+> 2022-04-20
+
+### Patch Changes
+
+- Prevent italic input rule activation in middle of words
+
+* Fix an error with auto link preventing input rules at the end of a document
+
+* Updated dependencies []:
+  - @remirror/core@1.4.2
+
 ## 1.0.18
 
 > 2022-03-25

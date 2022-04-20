@@ -1,5 +1,44 @@
 # @remirror/extension-react-tables
 
+## 1.0.32
+
+> 2022-04-20
+
+### Patch Changes
+
+- Reorder the external plugins of the tables extensions, to avoid highlighting cells while resizing.
+
+  Proposed by Pierre\_ on Discord
+
+* Prevent marks in MentionAtom, to prevent input rules being triggered within the node
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+* Create a "stepping stone" for future standardisation of useEvent types
+
+  Add a second parameter to handlers for `hover` and `contextmenu` types, so we can eventually standarise the hook to pass event as the first argument.
+
+  ```tsx
+  const handleHover = useCallback(({ event: MouseEvent }, props: HoverEventHandlerState) => {
+    const { getNode, hovering, ...rest } = props;
+    console.log('node', getNode(), 'is hovering', hovering, 'rest', rest);
+
+    return false;
+  }, []);
+
+  useEvent('hover', handleHover);
+  ```
+
+* Updated dependencies []:
+  - @remirror/extension-tables@1.0.22
+  - @remirror/react-components@1.0.29
+  - @remirror/react-hooks@1.0.29
+  - @remirror/core-utils@1.1.8
+  - @remirror/core@1.4.2
+  - @remirror/extension-positioner@1.2.3
+  - @remirror/preset-core@1.0.25
+  - @remirror/react-core@1.1.2
+
 ## 1.0.31
 
 > 2022-04-04
