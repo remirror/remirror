@@ -1,5 +1,17 @@
 # @remirror/extension-image
 
+## 1.0.32
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.14
+  - @remirror/core@1.4.2
+
 ## 1.0.31
 
 > 2022-04-06

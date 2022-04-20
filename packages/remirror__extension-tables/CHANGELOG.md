@@ -1,5 +1,20 @@
 # @remirror/extension-tabless
 
+## 1.0.22
+
+> 2022-04-20
+
+### Patch Changes
+
+- Reorder the external plugins of the tables extensions, to avoid highlighting cells while resizing.
+
+  Proposed by Pierre\_ on Discord
+
+* Fix an error with auto link preventing input rules at the end of a document
+
+* Updated dependencies []:
+  - @remirror/core@1.4.2
+
 ## 1.0.21
 
 > 2022-03-25

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-embed",
-  "version": "1.1.25",
+  "version": "1.1.26",
   "description": "Add embedded content into your editor",
   "keywords": [
     "remirror",
@@ -41,10 +41,10 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.1",
+    "@remirror/core": "^1.4.2",
     "@remirror/messages": "^1.0.6",
     "@types/querystringify": "^2.0.0",
-    "prosemirror-resizable-view": "^1.1.13",
+    "prosemirror-resizable-view": "^1.1.14",
     "querystringify": "^2.2.0"
   },
   "devDependencies": {

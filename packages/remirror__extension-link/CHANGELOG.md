@@ -1,5 +1,34 @@
 # @remirror/extension-link
 
+## 1.1.18
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+* Create a "stepping stone" for future standardisation of useEvent types
+
+  Add a second parameter to handlers for `hover` and `contextmenu` types, so we can eventually standarise the hook to pass event as the first argument.
+
+  ```tsx
+  const handleHover = useCallback(({ event: MouseEvent }, props: HoverEventHandlerState) => {
+    const { getNode, hovering, ...rest } = props;
+    console.log('node', getNode(), 'is hovering', hovering, 'rest', rest);
+
+    return false;
+  }, []);
+
+  useEvent('hover', handleHover);
+  ```
+
+- Prevent onUpdateLink from being called in nodes that disallow marks
+
+- Updated dependencies []:
+  - @remirror/core@1.4.2
+  - @remirror/extension-events@1.1.0
+
 ## 1.1.17
 
 > 2022-03-25

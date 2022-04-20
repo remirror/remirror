@@ -1,5 +1,13 @@
 # @remirror/core-utils
 
+## 1.1.8
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
 ## 1.1.7
 
 > 2022-02-22

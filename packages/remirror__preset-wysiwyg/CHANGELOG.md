@@ -1,5 +1,56 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.47
+
+> 2022-04-20
+
+### Patch Changes
+
+- Prevent italic input rule activation in middle of words
+
+* Fix an error with auto link preventing input rules at the end of a document
+
+- Create a "stepping stone" for future standardisation of useEvent types
+
+  Add a second parameter to handlers for `hover` and `contextmenu` types, so we can eventually standarise the hook to pass event as the first argument.
+
+  ```tsx
+  const handleHover = useCallback(({ event: MouseEvent }, props: HoverEventHandlerState) => {
+    const { getNode, hovering, ...rest } = props;
+    console.log('node', getNode(), 'is hovering', hovering, 'rest', rest);
+
+    return false;
+  }, []);
+
+  useEvent('hover', handleHover);
+  ```
+
+* Prevent onUpdateLink from being called in nodes that disallow marks
+
+* Updated dependencies []:
+  - @remirror/extension-italic@1.0.19
+  - @remirror/extension-link@1.1.18
+  - @remirror/core@1.4.2
+  - @remirror/extension-bidi@1.0.19
+  - @remirror/extension-blockquote@1.0.22
+  - @remirror/extension-bold@1.0.19
+  - @remirror/extension-code@1.0.20
+  - @remirror/extension-code-block@1.0.25
+  - @remirror/extension-drop-cursor@1.0.19
+  - @remirror/extension-embed@1.1.26
+  - @remirror/extension-gap-cursor@1.0.19
+  - @remirror/extension-hard-break@1.0.19
+  - @remirror/extension-heading@1.0.19
+  - @remirror/extension-horizontal-rule@1.0.20
+  - @remirror/extension-image@1.0.32
+  - @remirror/extension-list@1.2.21
+  - @remirror/extension-search@1.0.19
+  - @remirror/extension-shortcuts@1.1.8
+  - @remirror/extension-strike@1.0.19
+  - @remirror/extension-trailing-node@1.0.19
+  - @remirror/extension-underline@1.0.19
+  - @remirror/preset-core@1.0.25
+
 ## 1.1.46
 
 > 2022-04-06

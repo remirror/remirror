@@ -1,5 +1,95 @@
 # remirror
 
+## 1.0.75
+
+> 2022-04-20
+
+### Patch Changes
+
+- Prevent italic input rule activation in middle of words
+
+* Reorder the external plugins of the tables extensions, to avoid highlighting cells while resizing.
+
+  Proposed by Pierre\_ on Discord
+
+- Prevent marks in MentionAtom, to prevent input rules being triggered within the node
+
+* Fix an error with auto link preventing input rules at the end of a document
+
+- Create a "stepping stone" for future standardisation of useEvent types
+
+  Add a second parameter to handlers for `hover` and `contextmenu` types, so we can eventually standarise the hook to pass event as the first argument.
+
+  ```tsx
+  const handleHover = useCallback(({ event: MouseEvent }, props: HoverEventHandlerState) => {
+    const { getNode, hovering, ...rest } = props;
+    console.log('node', getNode(), 'is hovering', hovering, 'rest', rest);
+
+    return false;
+  }, []);
+
+  useEvent('hover', handleHover);
+  ```
+
+* Prevent onUpdateLink from being called in nodes that disallow marks
+
+* Updated dependencies []:
+  - @remirror/extension-italic@1.0.19
+  - @remirror/preset-formatting@1.0.26
+  - @remirror/preset-wysiwyg@1.1.47
+  - @remirror/extension-tables@1.0.22
+  - @remirror/extension-mention-atom@1.0.23
+  - @remirror/core-utils@1.1.8
+  - @remirror/extension-link@1.1.18
+  - @remirror/core@1.4.2
+  - @remirror/dom@1.0.26
+  - @remirror/extension-annotation@1.1.20
+  - @remirror/extension-bidi@1.0.19
+  - @remirror/extension-blockquote@1.0.22
+  - @remirror/extension-bold@1.0.19
+  - @remirror/extension-callout@1.0.22
+  - @remirror/extension-code@1.0.20
+  - @remirror/extension-code-block@1.0.25
+  - @remirror/extension-codemirror5@1.0.19
+  - @remirror/extension-collaboration@1.0.19
+  - @remirror/extension-columns@1.0.19
+  - @remirror/extension-diff@1.0.19
+  - @remirror/extension-doc@1.0.20
+  - @remirror/extension-drop-cursor@1.0.19
+  - @remirror/extension-embed@1.1.26
+  - @remirror/extension-emoji@1.0.22
+  - @remirror/extension-epic-mode@1.0.19
+  - @remirror/extension-events@1.1.0
+  - @remirror/extension-font-family@1.0.19
+  - @remirror/extension-font-size@1.0.21
+  - @remirror/extension-gap-cursor@1.0.19
+  - @remirror/extension-hard-break@1.0.19
+  - @remirror/extension-heading@1.0.19
+  - @remirror/extension-history@1.0.19
+  - @remirror/extension-horizontal-rule@1.0.20
+  - @remirror/extension-image@1.0.32
+  - @remirror/extension-list@1.2.21
+  - @remirror/extension-markdown@1.0.19
+  - @remirror/extension-mention@1.0.20
+  - @remirror/extension-node-formatting@1.0.22
+  - @remirror/extension-paragraph@1.0.19
+  - @remirror/extension-placeholder@1.0.22
+  - @remirror/extension-positioner@1.2.3
+  - @remirror/extension-search@1.0.19
+  - @remirror/extension-shortcuts@1.1.8
+  - @remirror/extension-strike@1.0.19
+  - @remirror/extension-sub@1.0.19
+  - @remirror/extension-sup@1.0.19
+  - @remirror/extension-text@1.0.19
+  - @remirror/extension-text-case@1.0.19
+  - @remirror/extension-text-color@1.0.22
+  - @remirror/extension-text-highlight@1.0.22
+  - @remirror/extension-trailing-node@1.0.19
+  - @remirror/extension-underline@1.0.19
+  - @remirror/extension-whitespace@1.0.19
+  - @remirror/extension-yjs@1.0.29
+  - @remirror/preset-core@1.0.25
+
 ## 1.0.74
 
 > 2022-04-06

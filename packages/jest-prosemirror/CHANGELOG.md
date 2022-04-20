@@ -1,5 +1,16 @@
 # jest-prosemirror
 
+## 1.0.22
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+- Updated dependencies []:
+  - @remirror/core-utils@1.1.8
+
 ## 1.0.21
 
 > 2022-04-04

@@ -1,5 +1,16 @@
 # @remirror/extension-codemirror6
 
+## 0.2.7
+
+> 2022-04-20
+
+### Patch Changes
+
+- Fix an error with auto link preventing input rules at the end of a document
+
+- Updated dependencies []:
+  - @remirror/core@1.4.2
+
 ## 0.2.6
 
 > 2022-03-25

@@ -1,5 +1,32 @@
 # @remirror/preset-formatting
 
+## 1.0.26
+
+> 2022-04-20
+
+### Patch Changes
+
+- Prevent italic input rule activation in middle of words
+
+* Fix an error with auto link preventing input rules at the end of a document
+
+* Updated dependencies []:
+  - @remirror/extension-italic@1.0.19
+  - @remirror/core@1.4.2
+  - @remirror/extension-bold@1.0.19
+  - @remirror/extension-columns@1.0.19
+  - @remirror/extension-font-size@1.0.21
+  - @remirror/extension-heading@1.0.19
+  - @remirror/extension-node-formatting@1.0.22
+  - @remirror/extension-strike@1.0.19
+  - @remirror/extension-sub@1.0.19
+  - @remirror/extension-sup@1.0.19
+  - @remirror/extension-text-case@1.0.19
+  - @remirror/extension-text-color@1.0.22
+  - @remirror/extension-text-highlight@1.0.22
+  - @remirror/extension-underline@1.0.19
+  - @remirror/extension-whitespace@1.0.19
+
 ## 1.0.25
 
 > 2022-03-25
