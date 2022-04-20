@@ -26,7 +26,7 @@ An object containing all the helpers available in the editor.
 
 This hooks exposes all the helpers from your chosen extensions (and those built in by default).
 
-For instance `getJSON` is provided by a built-in extension and always available. However `getMarkdown` would require the `MarkdownExtension` to be present.
+For instance `getJSON` is provided by a built-in extension and always available. However `getMarkdown` would require the [MarkdownExtension](/docs/extensions/markdown-extension) to be present.
 
 [Helpers](/docs/getting-started/commands-and-helpers#helpers) allow you to read editor state.
 

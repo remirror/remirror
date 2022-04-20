@@ -21,7 +21,7 @@ An object containing all the commands available in the editor.
 
 This hooks exposes all the commands from your chosen extensions (and those built in by default).
 
-For instance the command `selectText` is provided by a built-in extension and always available. However `toggleBold` would require the `BoldExtension` to be present.
+For instance the command `selectText` is provided by a built-in extension and always available. However `toggleBold` would require the [BoldExtension](/docs/extensions/bold-extension) to be present.
 
 [Commands](/docs/getting-started/commands-and-helpers#commands) allow you to modify editor state.
 
