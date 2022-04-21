@@ -666,3 +666,45 @@ describe('custom positions', () => {
     ]);
   });
 });
+
+describe('multiple editors', () => {
+  it('different editors should have different collections of annotations', () => {
+    const {
+      add: add1,
+      nodes: { p: p1, doc: doc1 },
+      commands: commands1,
+      helpers: helpers1,
+    } = create();
+
+    add1(doc1(p1('Some text in <start>editor 1<end>')));
+    commands1.addAnnotation({ id: 'editor-1-annotation' });
+
+    const {
+      add: add2,
+      nodes: { p: p2, doc: doc2 },
+      commands: commands2,
+      helpers: helpers2,
+    } = create();
+
+    add2(doc2(p2('Some other text in <start>editor 2<end>')));
+    commands2.addAnnotation({ id: 'editor-2-annotation' });
+
+    expect(helpers1.getAnnotations()).toEqual([
+      {
+        id: 'editor-1-annotation',
+        from: 14,
+        to: 22,
+        text: 'editor 1',
+      },
+    ]);
+
+    expect(helpers2.getAnnotations()).toEqual([
+      {
+        id: 'editor-2-annotation',
+        from: 20,
+        to: 28,
+        text: 'editor 2',
+      },
+    ]);
+  });
+});
