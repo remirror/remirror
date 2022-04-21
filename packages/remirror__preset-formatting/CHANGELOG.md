@@ -1,5 +1,30 @@
 # @remirror/preset-formatting
 
+## 1.0.27
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-bold@1.0.20
+  - @remirror/extension-columns@1.0.20
+  - @remirror/extension-font-size@1.0.22
+  - @remirror/extension-heading@1.0.20
+  - @remirror/extension-italic@1.0.20
+  - @remirror/extension-node-formatting@1.0.23
+  - @remirror/extension-strike@1.0.20
+  - @remirror/extension-sub@1.0.20
+  - @remirror/extension-sup@1.0.20
+  - @remirror/extension-text-case@1.0.20
+  - @remirror/extension-text-color@1.0.23
+  - @remirror/extension-text-highlight@1.0.23
+  - @remirror/extension-underline@1.0.20
+  - @remirror/extension-whitespace@1.0.20
+
 ## 1.0.26
 
 > 2022-04-20

@@ -1,5 +1,16 @@
 # @remirror/extension-events
 
+## 1.1.1
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+
 ## 1.1.0
 
 > 2022-04-20

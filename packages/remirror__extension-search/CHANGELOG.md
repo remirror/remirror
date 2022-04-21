@@ -1,5 +1,16 @@
 # @remirror/extension-search
 
+## 1.0.20
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+
 ## 1.0.19
 
 > 2022-04-20

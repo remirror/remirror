@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.71
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - remirror@1.0.76
+  - @remirror/extension-react-tables@1.0.33
+  - @remirror/react@1.0.33
+
 ## 0.1.70
 
 > 2022-04-20

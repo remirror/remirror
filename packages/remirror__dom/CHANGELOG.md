@@ -1,5 +1,17 @@
 # @remirror/dom
 
+## 1.0.27
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/preset-core@1.0.26
+
 ## 1.0.26
 
 > 2022-04-20

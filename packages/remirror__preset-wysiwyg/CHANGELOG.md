@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.48
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-bidi@1.0.20
+  - @remirror/extension-blockquote@1.0.23
+  - @remirror/extension-bold@1.0.20
+  - @remirror/extension-code@1.0.21
+  - @remirror/extension-code-block@1.0.26
+  - @remirror/extension-drop-cursor@1.0.20
+  - @remirror/extension-embed@1.1.27
+  - @remirror/extension-gap-cursor@1.0.20
+  - @remirror/extension-hard-break@1.0.20
+  - @remirror/extension-heading@1.0.20
+  - @remirror/extension-horizontal-rule@1.0.21
+  - @remirror/extension-image@1.0.33
+  - @remirror/extension-italic@1.0.20
+  - @remirror/extension-link@1.1.19
+  - @remirror/extension-list@1.2.22
+  - @remirror/extension-search@1.0.20
+  - @remirror/extension-shortcuts@1.1.9
+  - @remirror/extension-strike@1.0.20
+  - @remirror/extension-trailing-node@1.0.20
+  - @remirror/extension-underline@1.0.20
+  - @remirror/preset-core@1.0.26
+
 ## 1.1.47
 
 > 2022-04-20

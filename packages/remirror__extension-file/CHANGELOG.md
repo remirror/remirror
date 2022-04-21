@@ -1,5 +1,18 @@
 # @remirror/extension-file
 
+## 0.3.21
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/react@1.0.33
+  - @remirror/react-components@1.0.30
+
 ## 0.3.20
 
 > 2022-04-20

@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 1.4.3
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
 ## 1.4.2
 
 > 2022-04-20

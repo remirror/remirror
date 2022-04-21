@@ -1,5 +1,20 @@
 # @remirror/react-components
 
+## 1.0.30
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-positioner@1.2.4
+  - @remirror/extension-text-color@1.0.23
+  - @remirror/react-core@1.1.3
+  - @remirror/react-hooks@1.0.30
+
 ## 1.0.29
 
 > 2022-04-20
