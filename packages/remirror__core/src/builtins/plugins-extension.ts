@@ -198,7 +198,7 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
       const getter = this.getPluginStateCreator(key);
 
       extension.pluginKey = key;
-      extension.constructor.prototype.getPluginState = getter;
+      extension.getPluginState = getter;
 
       this.stateGetters.set(extension.name, getter);
       this.stateGetters.set(extension.constructor, getter);
