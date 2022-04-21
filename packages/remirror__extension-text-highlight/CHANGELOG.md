@@ -1,5 +1,17 @@
 # @remirror/extension-text-highlight
 
+## 1.0.23
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-text-color@1.0.23
+
 ## 1.0.22
 
 > 2022-04-20

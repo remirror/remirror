@@ -1,5 +1,23 @@
 # @remirror/react-hooks
 
+## 1.0.30
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-emoji@1.0.23
+  - @remirror/extension-events@1.1.1
+  - @remirror/extension-history@1.0.20
+  - @remirror/extension-mention@1.0.21
+  - @remirror/extension-mention-atom@1.0.24
+  - @remirror/extension-positioner@1.2.4
+  - @remirror/react-core@1.1.3
+
 ## 1.0.29
 
 > 2022-04-20

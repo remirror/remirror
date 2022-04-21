@@ -1,5 +1,23 @@
 # @remirror/react-core
 
+## 1.1.3
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-positioner@1.2.4
+  - @remirror/extension-react-component@1.1.11
+  - @remirror/extension-react-ssr@1.0.22
+  - @remirror/preset-core@1.0.26
+  - @remirror/preset-react@1.0.24
+  - @remirror/react-renderer@1.0.22
+  - @remirror/react-ssr@1.0.22
+
 ## 1.1.2
 
 > 2022-04-20

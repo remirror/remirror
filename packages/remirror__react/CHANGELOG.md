@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 1.0.33
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/extension-placeholder@1.0.23
+  - @remirror/extension-positioner@1.2.4
+  - @remirror/extension-react-component@1.1.11
+  - @remirror/extension-react-ssr@1.0.22
+  - @remirror/extension-react-tables@1.0.33
+  - @remirror/preset-react@1.0.24
+  - @remirror/react-components@1.0.30
+  - @remirror/react-core@1.1.3
+  - @remirror/react-hooks@1.0.30
+  - @remirror/react-renderer@1.0.22
+  - @remirror/react-ssr@1.0.22
+
 ## 1.0.32
 
 > 2022-04-20

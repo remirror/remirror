@@ -1,5 +1,17 @@
 # @remirror/extension-yjs
 
+## 1.0.30
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-annotation@1.1.21
+
 ## 1.0.29
 
 > 2022-04-20

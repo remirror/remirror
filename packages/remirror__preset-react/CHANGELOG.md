@@ -1,5 +1,19 @@
 # @remirror/preset-react
 
+## 1.0.24
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-placeholder@1.0.23
+  - @remirror/extension-react-component@1.1.11
+  - @remirror/extension-react-ssr@1.0.22
+
 ## 1.0.23
 
 > 2022-04-20

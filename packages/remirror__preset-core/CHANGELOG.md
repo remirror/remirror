@@ -1,5 +1,23 @@
 # @remirror/preset-core
 
+## 1.0.26
+
+> 2022-04-21
+
+### Patch Changes
+
+- Avoid adding `pluginState` to the constructor, as it leading to sharing between multiple instances
+
+- Updated dependencies []:
+  - @remirror/core@1.4.3
+  - @remirror/extension-doc@1.0.21
+  - @remirror/extension-events@1.1.1
+  - @remirror/extension-gap-cursor@1.0.20
+  - @remirror/extension-history@1.0.20
+  - @remirror/extension-paragraph@1.0.20
+  - @remirror/extension-positioner@1.2.4
+  - @remirror/extension-text@1.0.20
+
 ## 1.0.25
 
 > 2022-04-20
