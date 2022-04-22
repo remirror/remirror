@@ -1,5 +1,13 @@
 # @remirror/extension-codemirror6
 
+## 0.2.9
+
+> 2022-04-22
+
+### Patch Changes
+
+- Update dependencies.
+
 ## 0.2.8
 
 > 2022-04-21

@@ -27,7 +27,7 @@
     "@fontsource/fira-code": "^4.5.0",
     "@fontsource/rubik": "^4.5.0",
     "@mdx-js/react": "^1.6.22",
-    "@remirror/dev": "^1.1.1",
+    "@remirror/dev": "^1.1.2",
     "@remirror/react": "^1.0.33",
     "@remirror/react-editors": "^0.1.71",
     "@remirror/styles": "^1.1.3",

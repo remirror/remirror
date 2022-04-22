@@ -1,5 +1,13 @@
 # @remirror/dev
 
+## 1.1.2
+
+> 2022-04-22
+
+### Patch Changes
+
+- Update dependencies.
+
 ## 1.1.1
 
 > 2022-04-21
