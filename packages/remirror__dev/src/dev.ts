@@ -1,6 +1,6 @@
 import { applyDevTools, removeDevTools } from 'prosemirror-dev-toolkit';
 import { useEffect } from 'react';
-import { useRemirrorContext } from '@remirror/react';
+import { useRemirrorContext } from '@remirror/react-core';
 
 /**
  * A React component that should be placed within the remirror context and will
