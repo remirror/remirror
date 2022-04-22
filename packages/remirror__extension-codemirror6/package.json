@@ -42,9 +42,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@codemirror/language": "^0.19.7",
-    "@codemirror/state": "^0.19.6",
-    "@codemirror/view": "^0.19.37",
+    "@codemirror/language": "^0.20.0",
+    "@codemirror/state": "^0.20.0",
+    "@codemirror/view": "^0.20.2",
     "@remirror/core": "^1.4.3"
   },
   "devDependencies": {
