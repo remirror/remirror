@@ -7,7 +7,8 @@ import {
   EmojiSuggestHandlerProps,
   FlatEmoji,
 } from '@remirror/extension-emoji';
-import { useExtension, useHelpers } from '@remirror/react-core';
+import { useHelpers } from '@remirror/react-core';
+import { useExtensionCallback } from '@remirror/react-core/src/hooks';
 
 import {
   MenuNavigationOptions,
@@ -125,9 +126,11 @@ export function useEmoji(props: UseEmojiProps = {}): UseEmojiReturn {
   );
 
   // Add the change handler to the emoji state.
-  useExtension(EmojiExtension, ({ addHandler }) => addHandler('suggestEmoji', onChange), [
-    onChange,
-  ]);
+
+  useExtensionCallback(
+    EmojiExtension,
+    useCallback(({ addHandler }) => addHandler('suggestEmoji', onChange), [onChange]),
+  );
 
   return useMemo(() => ({ ...menu, state }), [menu, state]);
 }

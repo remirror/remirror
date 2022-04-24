@@ -19,6 +19,7 @@ export {
   useEditorView,
   useEffectWithWarning,
   useExtension,
+  useExtensionCallback,
   useForceUpdate,
   useHelpers,
   useI18n,

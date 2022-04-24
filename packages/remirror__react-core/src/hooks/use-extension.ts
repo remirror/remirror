@@ -1,4 +1,4 @@
-import { DependencyList, useMemo } from 'react';
+import { DependencyList, useEffect, useMemo } from 'react';
 import {
   AddHandler,
   AnyExtensionConstructor,
@@ -9,7 +9,6 @@ import {
   OptionsOfConstructor,
 } from '@remirror/core';
 
-import { useEffectWithWarning } from './use-effect-with-warning';
 import { useRemirrorContext } from './use-remirror-context';
 
 /**
@@ -71,7 +70,6 @@ import { useRemirrorContext } from './use-remirror-context';
  *       },
  *       [],
  *     ),
- *     [event, handler],
  *   );
  *
  *   return null;
@@ -90,8 +88,8 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  method: UseExtensionCallback<Type>,
-  dependencies: DependencyList,
+  memoizedCallback: UseExtensionCallback<Type>,
+  dependencies?: DependencyList,
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
@@ -105,21 +103,22 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   const { getExtension } = useRemirrorContext();
   const extension = useMemo(() => getExtension(Constructor), [Constructor, getExtension]);
   const deps = isFunction(optionsOrCallback)
-    ? [extension, ...dependencies]
+    ? [extension, optionsOrCallback, ...dependencies]
     : optionsOrCallback
     ? [extension, ...Object.values(optionsOrCallback)]
     : [];
 
   // Handle the case where an options object is passed in.
-  useEffectWithWarning(() => {
+  useEffect(() => {
     if (isFunction(optionsOrCallback) || !optionsOrCallback) {
       return;
     }
 
     extension.setOptions(optionsOrCallback);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
-  useEffectWithWarning(() => {
+  useEffect(() => {
     if (!isFunction(optionsOrCallback)) {
       return;
     }
@@ -129,6 +128,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
       addCustomHandler: extension.addCustomHandler.bind(extension),
       extension,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
   // Return early when more than one argument received.
@@ -137,6 +137,54 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   }
 
   return extension;
+}
+
+/**
+ * Dynamically add event handlers to your extension**.
+ *
+ * @remarks
+ *
+ * Compared to `useExtension`, this hook will provide better TypeScript support.
+ *
+ * Please note that every time the properties change your extension is updated.
+ * You will want to memoize or prevent needless updates somehow to the
+ * properties passed in.
+ *
+ * This is only available within the context of the `Remirror` it will
+ * throw an error otherwise.
+ *
+ * It can be used with three distinct call signatures.
+ *
+ * **Add event handlers to your extension**
+ *
+ * ```tsx
+ * import { useCallback } from 'react';
+ * import { HistoryExtension, HistoryOptions } from 'remirror/extensions';
+ * import { useExtension } from '@remirror/react';
+ *
+ * const Editor = ({ placeholder = 'Your magnum opus' }) => {
+ *   useExtension(
+ *     HistoryExtension,
+ *     useCallback(
+ *       ({ addHandler }) => {
+ *         return addHandler('onRedo', () => log('a redo just happened'));
+ *       },
+ *       [],
+ *     ),
+ *   );
+ *
+ *   return null;
+ * };
+ * ```
+ *
+ * These hooks can serve as the building blocks when customizing your editor
+ * experience with `remirror`.
+ */
+export function useExtensionCallback<Type extends AnyExtensionConstructor>(
+  Constructor: Type,
+  memoizedCallback: UseExtensionCallback<Type>,
+): void {
+  return useExtension(Constructor, memoizedCallback);
 }
 
 interface UseExtensionCallbackProps<Type extends AnyExtensionConstructor> {

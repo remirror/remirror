@@ -11,7 +11,7 @@ export function strictRender(
   ui: ReactElement,
   options?: Omit<RenderOptions, 'queries'>,
 ): RenderResult {
-  return originalRender(<StrictMode>{ui}</StrictMode>, options);
+  return originalRender(<StrictMode>{ui}</StrictMode>, { legacyRoot: true, ...options });
 }
 
 /**

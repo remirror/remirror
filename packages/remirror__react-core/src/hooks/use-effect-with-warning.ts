@@ -3,6 +3,8 @@ import { DependencyList, useEffect, useRef } from 'react';
 import warning from 'tiny-warning';
 
 /**
+ * @deprecated
+ *
  * A `useEffect` function which issues a warning when an update occurs with
  * dependencies which are deeply equal. This only happens `development`. In
  * production it aliases the `useEffect` hook.

@@ -1,5 +1,6 @@
+import { useCallback } from 'react';
 import { ExtensionPriority, KeyBindings, KeymapExtension } from '@remirror/core';
-import { useExtension } from '@remirror/react-core';
+import { useExtensionCallback } from '@remirror/react-core';
 
 /**
  * Add custom keyboard bindings to the editor instance.
@@ -34,9 +35,11 @@ import { useExtension } from '@remirror/react-core';
  * ```
  */
 export function useKeymaps(bindings: KeyBindings, priority = ExtensionPriority.Medium): void {
-  useExtension(
+  useExtensionCallback(
     KeymapExtension,
-    ({ addCustomHandler }) => addCustomHandler('keymap', [priority, bindings]),
-    [priority, bindings],
+    useCallback(
+      ({ addCustomHandler }) => addCustomHandler('keymap', [priority, bindings]),
+      [priority, bindings],
+    ),
   );
 }

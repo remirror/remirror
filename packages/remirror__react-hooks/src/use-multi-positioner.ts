@@ -1,4 +1,4 @@
-import { RefCallback, useMemo, useRef, useState } from 'react';
+import { RefCallback, useCallback, useMemo, useRef, useState } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
 import usePrevious from 'use-previous';
 import { omitUndefined } from '@remirror/core';
@@ -10,7 +10,7 @@ import {
   PositionerParam,
   PositionerPosition,
 } from '@remirror/extension-positioner';
-import { useExtension } from '@remirror/react-core';
+import { useExtensionCallback } from '@remirror/react-core';
 
 export interface UseMultiPositionerReturn extends PositionerPosition {
   /**
@@ -81,17 +81,17 @@ export function useMultiPositioner(
 
   positionerRef.current = positioner;
 
-  useExtension(
+  useExtensionCallback(
     PositionerExtension,
-    ({ addCustomHandler }) => {
+    useCallback(({ addCustomHandler }) => {
       const positioner = getPositioner(positionerRef.current);
       const dispose = addCustomHandler('positioner', positioner);
 
       setMemoizedPositioner(positioner);
 
       return dispose;
-    },
-    deps,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, deps),
   );
 
   // Add the positioner update handlers.
