@@ -7,7 +7,7 @@ import escape from 'jsesc';
 import ms from 'ms';
 import os from 'os';
 import path from 'path';
-import { FC, useEffect } from 'react';
+import { FC, PropsWithChildren, useEffect } from 'react';
 import useSetState from 'react-use/lib/useSetState';
 import rimraf from 'rimraf';
 import type { RollupOptions } from 'rollup';
@@ -190,7 +190,12 @@ function useBundleEditor(props: BundleEditorProps) {
 /**
  * Renders a loading line
  */
-const LoadingLine: FC<BundleEditorState & { value: Step }> = ({ step, error, value, children }) => {
+const LoadingLine: FC<PropsWithChildren<BundleEditorState & { value: Step }>> = ({
+  step,
+  error,
+  value,
+  children,
+}) => {
   if (step < value) {
     return null;
   }

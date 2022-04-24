@@ -1,4 +1,11 @@
-import { Children, cloneElement, ComponentType, createElement, JSXElementConstructor } from 'react';
+import {
+  Children,
+  cloneElement,
+  ComponentType,
+  createElement,
+  JSXElementConstructor,
+  PropsWithChildren,
+} from 'react';
 import {
   AnyExtension,
   EditorState,
@@ -194,7 +201,7 @@ function injectBrIntoEmptyParagraphs(element: JSX.Element) {
 }
 
 export interface ManagerStoreReactComponent {
-  Component: ComponentType<NodeViewComponentProps>;
+  Component: ComponentType<PropsWithChildren<NodeViewComponentProps>>;
   props: Omit<NodeViewComponentProps, 'node' | 'view'>;
 }
 

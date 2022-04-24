@@ -179,11 +179,7 @@ export class ReactSerializer<Extension extends AnyExtension> {
     if (managerStoreComponent) {
       const { Component, props } = managerStoreComponent;
 
-      return (
-        <Component {...props} node={node} view={this.#view}>
-          {children}
-        </Component>
-      );
+      return <Component>{children}</Component>;
     }
 
     return toDOM && ReactSerializer.renderSpec(toDOM(node), children);
