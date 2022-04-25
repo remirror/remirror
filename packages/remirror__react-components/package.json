@@ -63,9 +63,9 @@
     "multishift": "^1.0.6",
     "react-color": "^2.19.3",
     "react-popper": "^2.2.5",
-    "reakit": "^1.3.8",
-    "reakit-system-palette": "^0.14.1",
-    "reakit-utils": "^0.15.1",
+    "reakit": "^1.3.11",
+    "reakit-system-palette": "^0.14.2",
+    "reakit-utils": "^0.15.2",
     "use-isomorphic-layout-effect": "^1.1.1",
     "use-previous": "^1.1.0"
   },

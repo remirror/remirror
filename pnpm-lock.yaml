@@ -2060,9 +2060,9 @@ importers:
       react-color: ^2.19.3
       react-dom: ^18.0.0
       react-popper: ^2.2.5
-      reakit: ^1.3.8
-      reakit-system-palette: ^0.14.1
-      reakit-utils: ^0.15.1
+      reakit: ^1.3.11
+      reakit-system-palette: ^0.14.2
+      reakit-utils: ^0.15.2
       use-isomorphic-layout-effect: ^1.1.1
       use-previous: ^1.1.0
     dependencies:
@@ -2086,8 +2086,8 @@ importers:
       multishift: link:../multishift
       react-color: 2.19.3_react@18.0.0
       react-popper: 2.2.5_52d169cc650b8c6d44050451817d9fd9
-      reakit: 1.3.10_react-dom@18.0.0+react@18.0.0
-      reakit-system-palette: 0.14.2_acb96afc454468b5a1de19399f7ad39a
+      reakit: 1.3.11_react-dom@18.0.0+react@18.0.0
+      reakit-system-palette: 0.14.2_6ce68794d8a4199f38712f8527fc368a
       reakit-utils: 0.15.2_react-dom@18.0.0+react@18.0.0
       use-isomorphic-layout-effect: 1.1.1_@types+react@18.0.6+react@18.0.0
       use-previous: 1.1.0_@types+react@18.0.6+react@18.0.0
@@ -2385,7 +2385,7 @@ importers:
       react-circular-progressbar: ^2.0.4
       react-dom: ^18.0.0
       react-is: ^18.0.0
-      reakit: ^1.3.8
+      reakit: ^1.3.11
       refractor: ^3.3.1
       remirror: 1.0.76
       scripts: 0.0.1
@@ -2439,7 +2439,7 @@ importers:
       react-circular-progressbar: 2.0.4_react@18.0.0
       react-dom: 18.0.0_react@18.0.0
       react-is: 18.0.0
-      reakit: 1.3.10_react-dom@18.0.0+react@18.0.0
+      reakit: 1.3.11_react-dom@18.0.0+react@18.0.0
       refractor: 3.5.0
       remirror: link:../remirror
       scripts: link:../../support/scripts
@@ -2798,7 +2798,7 @@ importers:
       react-dom: ^18.0.0
       react-intersection-observer: ^9.0.0
       react-syntax-highlighter: ^15.5.0
-      reakit: ^1.3.8
+      reakit: ^1.3.11
       remark-footnotes: ^3.0.0
       remirror: ^1.0.76
     dependencies:
@@ -2823,7 +2823,7 @@ importers:
       react-dom: 18.0.0_react@18.0.0
       react-intersection-observer: 9.0.0_react@18.0.0
       react-syntax-highlighter: 15.5.0_react@18.0.0
-      reakit: 1.3.10_react-dom@18.0.0+react@18.0.0
+      reakit: 1.3.11_react-dom@18.0.0+react@18.0.0
       remark-footnotes: 3.0.0
       remirror: link:../packages/remirror
     devDependencies:
@@ -24802,7 +24802,7 @@ packages:
     resolution: {integrity: sha512-onYyVhBNr4CmAxFsKS7bz+uTLRakypIe4R+5A824vBSkQy/hB3fZepoVEf8OVAxzLvK+H/jm9TzpI3ETSm64Kg==}
     dev: true
 
-  /reakit-system-palette/0.14.2_acb96afc454468b5a1de19399f7ad39a:
+  /reakit-system-palette/0.14.2_6ce68794d8a4199f38712f8527fc368a:
     resolution: {integrity: sha512-vJlVBM+21xeJ8BuH+ck0wjLrzjEq6uG1Yj6jJoLT1a2F8kMSJNkZAhnXmlUgJgjLOOPYDpIhqcBQGGSGWxqudw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
@@ -24812,7 +24812,7 @@ packages:
       color: 3.1.3
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      reakit: 1.3.10_react-dom@18.0.0+react@18.0.0
+      reakit: 1.3.11_react-dom@18.0.0+react@18.0.0
       reakit-system: 0.15.2_react-dom@18.0.0+react@18.0.0
     dev: false
 
@@ -24848,8 +24848,8 @@ packages:
       - react-dom
     dev: false
 
-  /reakit/1.3.10_react-dom@18.0.0+react@18.0.0:
-    resolution: {integrity: sha512-HxHtnegMDwidGU4Ik/fKTZ3coihf4nKeycs0QSIFWcau77qL5wL6xnqZrAxcjjDDPOIANct3LxTiAlf+qGLOlw==}
+  /reakit/1.3.11_react-dom@18.0.0+react@18.0.0:
+    resolution: {integrity: sha512-mYxw2z0fsJNOQKAEn5FJCPTU3rcrY33YZ/HzoWqZX0G7FwySp1wkCYW79WhuYMNIUFQ8s3Baob1RtsEywmZSig==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
       react-dom: ^16.8.0 || ^17.0.0
