@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, PropsWithChildren, useEffect } from 'react';
 import { Dialog, DialogBackdrop, useDialogState } from 'reakit/Dialog';
 import usePrevious from 'use-previous';
 
@@ -13,7 +13,7 @@ interface ControlledDialogProps {
 /**
  * A controlled version of the Reakit `Dialog` component.
  */
-export const ControlledDialogComponent: FC<ControlledDialogProps> = (props) => {
+export const ControlledDialogComponent: FC<PropsWithChildren<ControlledDialogProps>> = (props) => {
   const { visible, children, backdrop = false, onUpdate } = props;
   const previousVisible = usePrevious(visible);
   const dialogState = useDialogState({ visible, modal: false });
@@ -54,7 +54,7 @@ export const ControlledDialogComponent: FC<ControlledDialogProps> = (props) => {
   return backdrop ? <DialogBackdrop {...dialogState}>{dialog}</DialogBackdrop> : dialog;
 };
 
-const Themed: FC<UseThemeProps> = (props) => {
+const Themed: FC<PropsWithChildren<UseThemeProps>> = (props) => {
   const { children, ...themeProps } = props;
   const { style, className } = useTheme(themeProps);
 
