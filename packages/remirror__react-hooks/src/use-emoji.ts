@@ -8,7 +8,7 @@ import {
   FlatEmoji,
 } from '@remirror/extension-emoji';
 import { useHelpers } from '@remirror/react-core';
-import { useExtensionCallback } from '@remirror/react-core/src/hooks';
+import { useExtensionCallback } from '@remirror/react-core';
 
 import {
   MenuNavigationOptions,
