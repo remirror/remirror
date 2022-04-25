@@ -13,7 +13,7 @@ function createChain() {
   const chain = RemirrorTestChain.create(manager);
   const { doc, p } = chain.nodes;
 
-  const Wrapper: FC = ({ children }) => {
+  const Wrapper: FC<{ children?: React.ReactNode }> = ({ children }) => {
     return (
       <Remirror manager={manager} initialContent={[doc(p('Initial content ')), 'end']} autoRender>
         {children}

@@ -32,7 +32,7 @@
       "path": "../../remirror/src"
     },
     {
-      "path": "../../remirror__react/src"
+      "path": "../../remirror__react-core/src"
     }
   ]
 }
