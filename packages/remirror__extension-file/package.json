@@ -56,10 +56,10 @@
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.10",
-    "@types/react": "^16.14.0 || ^17",
-    "@types/react-dom": "^16.9.0 || ^17",
-    "react": "^16.14.0 || ^17",
-    "react-dom": "^16.14.0 || ^17"
+    "@types/react": "^16.14.0 || ^17 || ^18",
+    "@types/react-dom": "^16.9.0 || ^17 || ^18",
+    "react": "^16.14.0 || ^17 || ^18",
+    "react-dom": "^16.14.0 || ^17 || ^18"
   },
   "peerDependenciesMeta": {
     "@types/react": {
