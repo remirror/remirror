@@ -1,5 +1,17 @@
 # @remirror/react-components
 
+## 1.0.31
+
+> 2022-04-25
+
+### Patch Changes
+
+- Fix a potential out of range error.
+
+- Updated dependencies []:
+  - multishift@1.0.7
+  - @remirror/react-hooks@1.0.31
+
 ## 1.0.30
 
 > 2022-04-21

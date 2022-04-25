@@ -1,5 +1,13 @@
 # multishift
 
+## 1.0.7
+
+> 2022-04-25
+
+### Patch Changes
+
+- Fix a potential out of range error.
+
 ## 1.0.6
 
 > 2022-01-03
