@@ -599,7 +599,9 @@ export function getHighlightedIndexes<Item = any>({
 
   const hoveredIndexes = isValidIndex(hoveredIndex) ? [hoveredIndex] : [];
 
-  return uniqueArray([...hoveredIndexes, ...indexes, ...groupIndexes], true);
+  return uniqueArray([...hoveredIndexes, ...indexes, ...groupIndexes], true).filter(
+    (index) => 0 <= index && index <= max,
+  );
 }
 
 /**
