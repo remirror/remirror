@@ -86,11 +86,13 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
           tag: 'iframe',
           getAttrs: (dom) => {
             const frameBorder = (dom as HTMLElement).getAttribute('frameborder');
+            const width = (dom as HTMLElement).getAttribute('width');
+            const height = (dom as HTMLElement).getAttribute('height');
             return {
               ...extra.parse(dom),
               type: (dom as HTMLElement).getAttribute('data-embed-type'),
-              height: (dom as HTMLElement).getAttribute('height'),
-              width: (dom as HTMLElement).getAttribute('width'),
+              height: height && Number.parseInt(height, 10),
+              width: width && Number.parseInt(width, 10),
               allowFullScreen:
                 (dom as HTMLElement).getAttribute('allowfullscreen') === 'false' ? false : true,
               frameBorder: frameBorder ? Number.parseInt(frameBorder, 10) : 0,
