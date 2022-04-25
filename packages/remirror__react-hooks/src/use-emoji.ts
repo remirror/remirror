@@ -7,8 +7,7 @@ import {
   EmojiSuggestHandlerProps,
   FlatEmoji,
 } from '@remirror/extension-emoji';
-import { useHelpers } from '@remirror/react-core';
-import { useExtensionCallback } from '@remirror/react-core';
+import { useExtensionCallback, useHelpers } from '@remirror/react-core';
 
 import {
   MenuNavigationOptions,
