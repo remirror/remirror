@@ -1,7 +1,7 @@
 import { ExampleProvider } from '@components';
-import { FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 
-const Root: FC = (props) => {
+const Root: FC<PropsWithChildren<object>> = (props) => {
   const { children } = props;
 
   return <ExampleProvider defaultLanguage='ts'>{children}</ExampleProvider>;

@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface StoryExampleProps {
-  story: React.ComponentType;
-  source: React.ComponentType;
+  story: React.ReactNode;
+  source: React.ReactNode;
 }
 
 export const StoryExample: React.FC<StoryExampleProps> = ({ story, source }) => {
