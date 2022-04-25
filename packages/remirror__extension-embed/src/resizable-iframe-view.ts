@@ -2,6 +2,7 @@ import { ResizableNodeView, ResizableRatioType } from 'prosemirror-resizable-vie
 import { Shape } from '@remirror/core';
 import { EditorView, NodeView, ProsemirrorNode } from '@remirror/pm';
 
+import type { IframeAttributes } from './iframe-extension';
 import { IframeOptions } from './iframe-types';
 
 /**
@@ -16,14 +17,16 @@ export class ResizableIframeView extends ResizableNodeView implements NodeView {
     getPos: () => number,
     iframeOptions: IframeOptions,
   ) {
-    const { width, height } = node.attrs;
+    const { width, height } = node.attrs as IframeAttributes;
+    const initialSize = width && height ? { width, height } : undefined;
+
     super({
       node,
       view,
       getPos,
       aspectRatio: ResizableRatioType.Flexible,
       options: iframeOptions,
-      initialSize: { width, height },
+      initialSize,
     });
     this.options = iframeOptions;
   }

@@ -26,9 +26,9 @@ import { ResizableIframeView } from './resizable-iframe-view';
 export type IframeAttributes = ProsemirrorAttributes<{
   src: string;
   frameBorder?: number | string;
-  allowFullScreen?: 'true';
-  width?: string | number;
-  height?: string | number;
+  allowFullScreen?: 'true' | boolean;
+  width?: number;
+  height?: number;
   type?: LiteralUnion<'youtube', string>;
 }>;
 
@@ -84,17 +84,19 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       parseDOM: [
         {
           tag: 'iframe',
-          getAttrs: (dom) => {
+          getAttrs: (dom): IframeAttributes => {
             const frameBorder = (dom as HTMLElement).getAttribute('frameborder');
+            const width = (dom as HTMLElement).getAttribute('width');
+            const height = (dom as HTMLElement).getAttribute('height');
             return {
               ...extra.parse(dom),
-              type: (dom as HTMLElement).getAttribute('data-embed-type'),
-              height: (dom as HTMLElement).getAttribute('height'),
-              width: (dom as HTMLElement).getAttribute('width'),
+              type: (dom as HTMLElement).getAttribute('data-embed-type') ?? undefined,
+              height: (height && Number.parseInt(height, 10)) || undefined,
+              width: (width && Number.parseInt(width, 10)) || undefined,
               allowFullScreen:
                 (dom as HTMLElement).getAttribute('allowfullscreen') === 'false' ? false : true,
               frameBorder: frameBorder ? Number.parseInt(frameBorder, 10) : 0,
-              src: (dom as HTMLElement).getAttribute('src'),
+              src: (dom as HTMLElement).getAttribute('src') ?? '',
             };
           },
         },
