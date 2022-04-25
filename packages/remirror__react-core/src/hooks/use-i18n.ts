@@ -58,6 +58,4 @@ export interface I18nProps {
    * @default [locale]
    */
   supportedLocales?: string[];
-
-  children?: React.ReactNode;
 }

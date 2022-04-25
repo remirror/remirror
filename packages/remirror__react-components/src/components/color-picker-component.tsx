@@ -4,7 +4,7 @@
  * A color picker component which is used for menus.
  */
 
-import type { FC } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import { useCallback } from 'react';
 import {
   Composite,
@@ -106,16 +106,24 @@ const ColorPickerHue = (props: ColorPickerHue) => {
   );
 };
 
-const Grid: FC<CompositeStateProps> = (props) => {
-  return <Composite role='grid' {...props.compositeState} />;
+const Grid: FC<PropsWithChildren<CompositeStateProps>> = (props) => {
+  return (
+    <Composite role='grid' {...props.compositeState}>
+      {props.children}
+    </Composite>
+  );
 };
 
 interface CompositeStateProps {
   compositeState: CompositeStateReturn;
 }
 
-const GridRow: FC<CompositeStateProps> = (props) => {
-  return <CompositeGroup role='row' {...props.compositeState} />;
+const GridRow: FC<PropsWithChildren<CompositeStateProps>> = (props) => {
+  return (
+    <CompositeGroup role='row' {...props.compositeState}>
+      {props.children}
+    </CompositeGroup>
+  );
 };
 
 interface GridCellProps extends CompositeStateProps {

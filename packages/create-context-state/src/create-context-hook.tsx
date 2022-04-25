@@ -96,7 +96,7 @@ export function createContextHook<
 }
 
 export type CreateContextReturn<Context extends object, Props extends object = object> = [
-  Provider: ComponentType<Props>,
+  Provider: ComponentType<PropsWithChildren<Props>>,
   hook: ContextHook<Context>,
   DefaultContext: ReactContext<Context | null>,
 ];
