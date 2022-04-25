@@ -1,5 +1,17 @@
 # @remirror/react-editors
 
+## 0.1.72
+
+> 2022-04-25
+
+### Patch Changes
+
+- Fix a potential out of range error.
+
+- Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.34
+  - @remirror/react@1.0.34
+
 ## 0.1.71
 
 > 2022-04-21

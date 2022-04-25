@@ -1,5 +1,17 @@
 # @remirror/extension-file
 
+## 0.3.22
+
+> 2022-04-25
+
+### Patch Changes
+
+- Fix a potential out of range error.
+
+- Updated dependencies []:
+  - @remirror/react@1.0.34
+  - @remirror/react-components@1.0.31
+
 ## 0.3.21
 
 > 2022-04-21
