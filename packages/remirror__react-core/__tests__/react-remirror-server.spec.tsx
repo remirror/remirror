@@ -155,15 +155,13 @@ describe('Remirror: Server', () => {
         manager={createReactManager(() => [new BoldExtension()])}
         insertPosition='start'
       >
-        {() => (
-          <div>
-            <div {...useRemirrorContext().getRootProps()} data-testid={wrapperId} />
-            <div data-testid={finalId}>
-              <p>inside the editor</p>
-            </div>
-            <div data-testid={outerId} />
+        <div>
+          <div {...useRemirrorContext().getRootProps()} data-testid={wrapperId} />
+          <div data-testid={finalId}>
+            <p>inside the editor</p>
           </div>
-        )}
+          <div data-testid={outerId} />
+        </div>
       </Remirror>,
     );
 
@@ -185,7 +183,7 @@ test('autoFocus', () => {
       manager={createReactManager([new BoldExtension()])}
       autoRender={true}
     >
-      {() => <Fragment />}
+      <Fragment />
     </Remirror>,
   );
 

@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, PropsWithChildren, useCallback, useMemo, useState } from 'react';
 import { IdentifierSchemaAttributes } from 'remirror';
 import {
   EmojiExtension,
@@ -64,7 +64,10 @@ function MentionComponent({ users, tags }: MentionComponentProps) {
   return <MentionAtomPopupComponent onChange={setMentionState} items={items} />;
 }
 
-export const SocialEditor: FC<SocialEditorProps> = ({ placeholder, ...props }) => {
+export const SocialEditor: FC<PropsWithChildren<SocialEditorProps>> = ({
+  placeholder,
+  ...props
+}) => {
   const extensions = useCallback(
     () => [
       new PlaceholderExtension({ placeholder }),
