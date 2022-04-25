@@ -2768,7 +2768,7 @@ importers:
       '@emotion/styled': ^11.3.0
       '@fontsource/fira-code': ^4.5.0
       '@fontsource/rubik': ^4.5.0
-      '@mdx-js/react': ^2.1.1
+      '@mdx-js/react': ^1.6.22
       '@remirror/dev': ^1.1.2
       '@remirror/react': ^1.0.33
       '@remirror/react-editors': ^0.1.71
@@ -2808,7 +2808,7 @@ importers:
       '@emotion/styled': 11.3.0_99a25a741794e3ab388a4f2d69525353
       '@fontsource/fira-code': 4.5.1
       '@fontsource/rubik': 4.5.0
-      '@mdx-js/react': 2.1.1_react@18.0.0
+      '@mdx-js/react': 1.6.22_react@18.0.0
       '@remirror/dev': link:../packages/remirror__dev
       '@remirror/react': link:../packages/remirror__react
       '@remirror/react-editors': link:../packages/remirror__react-editors
@@ -8362,17 +8362,6 @@ packages:
       react: ^16.13.1 || ^17.0.0
     dependencies:
       react: 18.0.0
-    dev: true
-
-  /@mdx-js/react/2.1.1_react@18.0.0:
-    resolution: {integrity: sha512-7zlZDf5xmWH8I0kFE4DG91COOkxjaW9DX5f1HWztZpFcVua2gJgMYfIkFaDpO/DH/tWi6Mz+OheW4194r15igg==}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      '@types/mdx': 2.0.1
-      '@types/react': 18.0.6
-      react: 18.0.0
-    dev: false
 
   /@mdx-js/util/1.6.22:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
@@ -11624,10 +11613,6 @@ packages:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
     dependencies:
       '@types/unist': 2.0.6
-
-  /@types/mdx/2.0.1:
-    resolution: {integrity: sha512-JPEv4iAl0I+o7g8yVWDwk30es8mfVrjkvh5UeVR2sYPpZCK44vrAPsbJpIS+rJAUxLgaSAMKTEH5Vn5qd9XsrQ==}
-    dev: false
 
   /@types/micromatch/4.0.2:
     resolution: {integrity: sha512-oqXqVb0ci19GtH0vOA/U2TmHTcRY9kuZl4mqUxe0QmJAlIW13kzhuK5pi1i9+ngav8FjpSb9FVS/GE00GLX1VA==}
