@@ -1,5 +1,18 @@
 # @remirror/react
 
+## 1.0.34
+
+> 2022-04-25
+
+### Patch Changes
+
+- Fix a potential out of range error.
+
+- Updated dependencies []:
+  - @remirror/extension-react-tables@1.0.34
+  - @remirror/react-components@1.0.31
+  - @remirror/react-hooks@1.0.31
+
 ## 1.0.33
 
 > 2022-04-21
