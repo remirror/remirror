@@ -1,5 +1,4 @@
 import { usePluginData } from '@docusaurus/useGlobalData';
-import useTheme from '@theme/hooks/useTheme';
 import { BaseProps, ExamplesPluginData } from 'docusaurus-plugin-examples/types';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
@@ -7,8 +6,6 @@ import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import markdown from 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import dracula from 'react-syntax-highlighter/dist/esm/styles/prism/dracula';
-import gh from 'react-syntax-highlighter/dist/esm/styles/prism/ghcolors';
 import { Tab, TabList, TabPanel, useTabState } from 'reakit/Tab';
 
 import { useExample } from './example-provider';
@@ -34,7 +31,6 @@ const languageMap = {
 
 export const ExampleSource = (props: SourceProps) => {
   const { name } = props;
-  const { isDarkTheme } = useTheme();
   const files = useExamplesPluginData({ name });
   const tabState = useTabState();
 
@@ -49,11 +45,7 @@ export const ExampleSource = (props: SourceProps) => {
       </TabList>
       {files.map((file) => (
         <TabPanel {...tabState} key={file.name}>
-          <SyntaxHighlighter
-            language={languageMap[file.extension]}
-            style={isDarkTheme ? dracula : gh}
-            showLineNumbers
-          >
+          <SyntaxHighlighter language={languageMap[file.extension]} showLineNumbers>
             {file.content}
           </SyntaxHighlighter>
         </TabPanel>
@@ -65,7 +57,7 @@ export const ExampleSource = (props: SourceProps) => {
 function useExamplesPluginData(props: BaseProps) {
   const { name } = props;
   const { language } = useExample();
-  const pluginData = usePluginData<ExamplesPluginData>('docusaurus-plugin-examples');
+  const pluginData = usePluginData('docusaurus-plugin-examples') as ExamplesPluginData;
 
   return pluginData[name]?.[language] ?? [];
 }
