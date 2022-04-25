@@ -1,5 +1,3 @@
-/// <reference types="@docusaurus/module-type-aliases" />
-
 // declare module '@docusaurus/Link' {
 //   import { ComponentType, AllHTMLAttributes } from 'react';
 
