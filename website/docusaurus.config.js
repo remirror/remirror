@@ -94,7 +94,6 @@ module.exports = {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
     },
-    googleAnalytics: { trackingID: 'UA-135738542-1', anonymizeIP: true },
   },
   presets: [
     [
@@ -119,6 +118,7 @@ module.exports = {
         theme: {
           customCss: [require.resolve('./styles.css'), require.resolve('remirror/styles/all.css')],
         },
+        googleAnalytics: { trackingID: 'UA-135738542-1', anonymizeIP: true },
       },
     ],
   ],
