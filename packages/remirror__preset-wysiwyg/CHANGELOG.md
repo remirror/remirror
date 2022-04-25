@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.49
+
+> 2022-04-25
+
+### Patch Changes
+
+- Fixes iframe dimensions not being preserved on content restored - https://github.com/remirror/remirror/issues/1615
+
+- Updated dependencies []:
+  - @remirror/extension-embed@1.1.28
+
 ## 1.1.48
 
 > 2022-04-21

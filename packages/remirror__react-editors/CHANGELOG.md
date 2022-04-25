@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.73
+
+> 2022-04-25
+
+### Patch Changes
+
+- Fixes iframe dimensions not being preserved on content restored - https://github.com/remirror/remirror/issues/1615
+
+- Updated dependencies []:
+  - remirror@1.0.77
+
 ## 0.1.72
 
 > 2022-04-25
