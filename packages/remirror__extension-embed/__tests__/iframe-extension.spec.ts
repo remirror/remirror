@@ -3,7 +3,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from 'remirror';
 import { createCoreManager } from 'remirror/extensions';
 
-import { IframeExtension, IframeOptions } from '../';
+import { IframeAttributes, IframeExtension, IframeOptions } from '../';
 
 extensionValidityTest(IframeExtension);
 
@@ -13,7 +13,12 @@ function create(options?: IframeOptions) {
 
 describe('schema', () => {
   const { schema } = createCoreManager([new IframeExtension()]);
-  const attributes = { src: 'https://awesome.com' };
+  const attributes: IframeAttributes = {
+    src: 'https://awesome.com',
+    width: 234,
+    height: 123,
+    enableResizing: true,
+  };
 
   const { iframe, p, doc } = pmBuild(schema, {
     iframe: { markType: 'iframe', ...attributes },
@@ -22,7 +27,9 @@ describe('schema', () => {
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(doc(p(iframe())))).toMatchInlineSnapshot(`
       <p>
-        <iframe class="remirror-iframe remirror-iframe-custom"
+        <iframe width="234"
+                height="123"
+                class="remirror-iframe remirror-iframe-custom"
                 src="https://awesome.com"
                 data-embed-type="custom"
                 allowfullscreen="true"
@@ -36,7 +43,7 @@ describe('schema', () => {
   it('parses the dom structure and finds itself', () => {
     const node = htmlToProsemirrorNode({
       schema,
-      content: `<iframe src="https://awesome.com" data-embed-type="custom" frameborder="0"></iframe>`,
+      content: `<iframe src="https://awesome.com" data-embed-type="custom" frameborder="0" height="123" width="234"></iframe>`,
     });
     const expected = doc(iframe());
 
