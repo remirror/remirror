@@ -1,5 +1,13 @@
 # @remirror/extension-embed
 
+## 1.1.28
+
+> 2022-04-25
+
+### Patch Changes
+
+- Fixes iframe dimensions not being preserved on content restored - https://github.com/remirror/remirror/issues/1615
+
 ## 1.1.27
 
 > 2022-04-21
