@@ -27,14 +27,11 @@ import { useExtension, UseExtensionCallback } from './use-extension';
  * import { HistoryExtension } from 'remirror/extensions';
  * import { useExtensionEvent } from '@remirror/react';
  *
- * const Editor = ({ placeholder = 'Your magnum opus' }) => {
+ * const RedoLogger = () => {
  *   useExtensionEvent(
  *     HistoryExtension,
  *     'onRedo',
- *     useCallback(
- *       () => log('a redo just happened'),
- *       [],
- *     ),
+ *     useCallback(() => log('a redo just happened'), []),
  *   );
  *
  *   return null;
