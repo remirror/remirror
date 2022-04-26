@@ -99,7 +99,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
     | UseExtensionCallback<Type>
     // eslint-disable-next-line unicorn/no-useless-undefined
     | undefined = undefined,
-  dependencies: DependencyList = [],
+  dependencies?: DependencyList | undefined,
 ): InstanceType<Type> | void {
   const { getExtension } = useRemirrorContext();
   const extension = useMemo(() => getExtension(Constructor), [Constructor, getExtension]);
