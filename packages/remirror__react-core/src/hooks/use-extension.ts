@@ -70,6 +70,7 @@ import { useRemirrorContext } from './use-remirror-context';
  *       },
  *       [],
  *     ),
+ *     [event, handler],
  *   );
  *
  *   return null;
@@ -89,7 +90,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
   memoizedCallback: UseExtensionCallback<Type>,
-  dependencies?: DependencyList,
+  dependencies: DependencyList,
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
