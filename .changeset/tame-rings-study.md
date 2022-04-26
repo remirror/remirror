@@ -2,9 +2,9 @@
 '@remirror/react-core': minor
 ---
 
-Add two new hook `useExtensionEvent` and `useExtensionCustomEvent`. You can use them to add event handlers to your extension. They are simpler and easier to use than the existed `useExtension` hook.
+Add a new hook `useExtensionEvent`. You can use it to add event handlers to your extension. It's simpler and easier to use than the existed `useExtension` hook.
 
-Both of them accept a extension class, a event name and a memoized handler. It's important to make sure that the handler is memoized to avoid needless updates.
+It accepts an extension class, an event name and a memoized handler. It's important to make sure that the handler is memoized to avoid needless updates.
 
 Here is an example of using `useExtensionEvent`:
 

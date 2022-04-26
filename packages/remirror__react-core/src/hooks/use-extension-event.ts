@@ -70,6 +70,8 @@ export function useExtensionEvent<
  *
  * These hooks can serve as the building blocks when customizing your editor
  * experience with `remirror`.
+ *
+ * @internal
  */
 export function useExtensionCustomEvent<
   Type extends AnyExtensionConstructor,
