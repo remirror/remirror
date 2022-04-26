@@ -20,6 +20,8 @@ export {
   useEffectWithWarning,
   useExtension,
   useExtensionCallback,
+  useExtensionCustomEvent,
+  useExtensionEvent,
   useForceUpdate,
   useHelpers,
   useI18n,
