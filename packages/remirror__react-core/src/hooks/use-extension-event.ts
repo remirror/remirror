@@ -8,7 +8,7 @@ import {
   OptionsOfConstructor,
 } from '@remirror/core';
 
-import { useExtension } from './use-extension';
+import { useExtension, UseExtensionCallback } from './use-extension';
 
 /**
  * Dynamically add event handlers to your extension.
@@ -52,11 +52,11 @@ export function useExtensionEvent<
   event: Key,
   memoizedHandler: Handler<GetHandler<OptionsOfConstructor<Type>>[Key]>,
 ): void {
-  return useExtension(
-    extension,
-    useCallback(({ addHandler }) => addHandler(event, memoizedHandler), [memoizedHandler, event]),
-    [],
+  const callback: UseExtensionCallback<Type> = useCallback(
+    ({ addHandler }) => addHandler(event, memoizedHandler),
+    [memoizedHandler, event],
   );
+  return useExtension(extension, callback);
 }
 
 /**
@@ -82,12 +82,9 @@ export function useExtensionCustomEvent<
   event: Key,
   memoizedCustomHandler: CustomHandler<GetCustomHandler<OptionsOfConstructor<Type>>[Key]>,
 ): void {
-  return useExtension(
-    extension,
-    useCallback(
-      ({ addCustomHandler }) => addCustomHandler(event, memoizedCustomHandler),
-      [memoizedCustomHandler, event],
-    ),
-    [],
+  const callback: UseExtensionCallback<Type> = useCallback(
+    ({ addCustomHandler }) => addCustomHandler(event, memoizedCustomHandler),
+    [memoizedCustomHandler, event],
   );
+  return useExtension(extension, callback);
 }

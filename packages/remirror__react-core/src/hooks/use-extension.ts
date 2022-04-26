@@ -90,7 +90,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
   memoizedCallback: UseExtensionCallback<Type>,
-  dependencies: DependencyList,
+  dependencies?: DependencyList,
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
@@ -103,11 +103,13 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 ): InstanceType<Type> | void {
   const { getExtension } = useRemirrorContext();
   const extension = useMemo(() => getExtension(Constructor), [Constructor, getExtension]);
-  const deps = isFunction(optionsOrCallback)
-    ? [extension, optionsOrCallback, ...dependencies]
-    : optionsOrCallback
-    ? [extension, ...Object.values(optionsOrCallback)]
-    : [];
+  let deps: unknown[];
+
+  if (isFunction(optionsOrCallback)) {
+    deps = dependencies ? [extension, ...dependencies] : [extension, optionsOrCallback];
+  } else {
+    deps = optionsOrCallback ? [extension, ...Object.values(optionsOrCallback)] : [];
+  }
 
   // Handle the case where an options object is passed in.
   useEffect(() => {
