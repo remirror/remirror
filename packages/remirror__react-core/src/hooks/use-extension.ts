@@ -85,12 +85,12 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 ): InstanceType<Type>;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  options: DynamicOptionsOfConstructor<Type>,
+  memoizedCallback: UseExtensionCallback<Type>,
+  dependencies?: DependencyList,
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  memoizedCallback: UseExtensionCallback<Type>,
-  dependencies?: DependencyList,
+  options: DynamicOptionsOfConstructor<Type>,
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
