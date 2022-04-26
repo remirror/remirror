@@ -19,7 +19,6 @@ export {
   useEditorView,
   useEffectWithWarning,
   useExtension,
-  useExtensionCallback,
   useExtensionCustomEvent,
   useExtensionEvent,
   useForceUpdate,

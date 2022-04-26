@@ -139,54 +139,6 @@ export function useExtension<Type extends AnyExtensionConstructor>(
   return extension;
 }
 
-/**
- * Dynamically add event handlers to your extension**.
- *
- * @remarks
- *
- * Compared to `useExtension`, this hook will provide better TypeScript support.
- *
- * Please note that every time the properties change your extension is updated.
- * You will want to memoize or prevent needless updates somehow to the
- * properties passed in.
- *
- * This is only available within the context of the `Remirror` it will
- * throw an error otherwise.
- *
- * It can be used with three distinct call signatures.
- *
- * **Add event handlers to your extension**
- *
- * ```tsx
- * import { useCallback } from 'react';
- * import { HistoryExtension, HistoryOptions } from 'remirror/extensions';
- * import { useExtension } from '@remirror/react';
- *
- * const Editor = ({ placeholder = 'Your magnum opus' }) => {
- *   useExtension(
- *     HistoryExtension,
- *     useCallback(
- *       ({ addHandler }) => {
- *         return addHandler('onRedo', () => log('a redo just happened'));
- *       },
- *       [],
- *     ),
- *   );
- *
- *   return null;
- * };
- * ```
- *
- * These hooks can serve as the building blocks when customizing your editor
- * experience with `remirror`.
- */
-export function useExtensionCallback<Type extends AnyExtensionConstructor>(
-  Constructor: Type,
-  memoizedCallback: UseExtensionCallback<Type>,
-): void {
-  return useExtension(Constructor, memoizedCallback);
-}
-
 interface UseExtensionCallbackProps<Type extends AnyExtensionConstructor> {
   /**
    * Add a handler to the the extension callback.
