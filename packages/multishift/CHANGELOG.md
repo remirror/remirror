@@ -1,5 +1,13 @@
 # multishift
 
+## 1.0.8
+
+> 2022-04-26
+
+### Patch Changes
+
+- Update dependencies.
+
 ## 1.0.7
 
 > 2022-04-25

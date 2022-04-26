@@ -1,5 +1,16 @@
 # @remirror/preset-react
 
+## 1.0.25
+
+> 2022-04-26
+
+### Patch Changes
+
+- Update dependencies.
+
+- Updated dependencies []:
+  - @remirror/extension-react-ssr@1.0.23
+
 ## 1.0.24
 
 > 2022-04-21
