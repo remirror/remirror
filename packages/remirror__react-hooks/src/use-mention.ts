@@ -7,7 +7,7 @@ import type {
 } from '@remirror/extension-mention';
 import { MentionExtension } from '@remirror/extension-mention';
 import { ChangeReason, ExitReason, SuggestChangeHandlerProps } from '@remirror/pm/suggest';
-import { useExtensionCallback, useHelpers } from '@remirror/react-core';
+import { useExtensionEvent, useHelpers } from '@remirror/react-core';
 
 import {
   MenuNavigationOptions,
@@ -188,10 +188,7 @@ export function useMention<Data extends MentionExtensionAttributes = MentionExte
   );
 
   // Add the handlers to the `MentionExtension`
-  useExtensionCallback(
-    MentionExtension,
-    useCallback(({ addHandler }) => addHandler('onChange', onChange), [onChange]),
-  );
+  useExtensionEvent(MentionExtension, 'onChange', onChange);
 
   return useMemo(() => ({ ...menu, state }), [menu, state]);
 }

@@ -1,4 +1,4 @@
-import { RefCallback, useCallback, useMemo, useRef, useState } from 'react';
+import { RefCallback, useMemo, useState } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
 import usePrevious from 'use-previous';
 import { omitUndefined } from '@remirror/core';
@@ -10,7 +10,7 @@ import {
   PositionerParam,
   PositionerPosition,
 } from '@remirror/extension-positioner';
-import { useExtensionCallback } from '@remirror/react-core';
+import { useExtensionCustomEvent } from '@remirror/react-core';
 
 export interface UseMultiPositionerReturn extends PositionerPosition {
   /**
@@ -74,25 +74,15 @@ export function useMultiPositioner(
   }
 
   const [state, setState] = useState<ElementsAddedProps[]>([]);
-  const [memoizedPositioner, setMemoizedPositioner] = useState(() => getPositioner(positioner));
   const [collectRefs, setCollectRefs] = useState<CollectElementRef[]>([]);
-  const positionerRef = useRef(positioner);
+  const memoizedPositioner = useMemo(
+    () => getPositioner(positioner),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    deps,
+  );
   const previousPositioner = usePrevious(memoizedPositioner);
 
-  positionerRef.current = positioner;
-
-  useExtensionCallback(
-    PositionerExtension,
-    useCallback(({ addCustomHandler }) => {
-      const positioner = getPositioner(positionerRef.current);
-      const dispose = addCustomHandler('positioner', positioner);
-
-      setMemoizedPositioner(positioner);
-
-      return dispose;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, deps),
-  );
+  useExtensionCustomEvent(PositionerExtension, 'positioner', memoizedPositioner);
 
   // Add the positioner update handlers.
   useLayoutEffect(() => {

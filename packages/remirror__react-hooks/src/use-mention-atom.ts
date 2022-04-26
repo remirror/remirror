@@ -5,7 +5,7 @@ import {
   MentionAtomNodeAttributes,
 } from '@remirror/extension-mention-atom';
 import { ChangeReason, SuggestChangeHandlerProps } from '@remirror/pm/suggest';
-import { useExtensionCallback, useHelpers } from '@remirror/react-core';
+import { useExtensionEvent, useHelpers } from '@remirror/react-core';
 
 import {
   MenuNavigationOptions,
@@ -158,10 +158,7 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
   );
 
   // Add the handlers to the `MentionExtension`
-  useExtensionCallback(
-    MentionAtomExtension,
-    useCallback(({ addHandler }) => addHandler('onChange', onChange), [onChange]),
-  );
+  useExtensionEvent(MentionAtomExtension, 'onChange', onChange);
 
   return useMemo(() => ({ ...menu, state }), [menu, state]);
 }
