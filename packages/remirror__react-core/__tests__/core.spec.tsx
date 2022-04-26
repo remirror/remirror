@@ -79,7 +79,9 @@ describe('basic functionality', () => {
     const { getByLabelText } = strictRender(
       <Remirror
         label={label}
-        {...handlers}
+        onChange={handlers.onChange}
+        onBlur={handlers.onBlur}
+        onFocus={handlers.onFocus}
         manager={createReactManager([], { stringHandler: 'html' })}
         autoRender='start'
       >

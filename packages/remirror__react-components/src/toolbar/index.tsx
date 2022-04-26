@@ -231,20 +231,17 @@ const BaseToolbarButton = (props: BaseToolbarButtonProps) => {
 
   return (
     <>
-      <TooltipReference {...tooltipState}>
-        {(props) => (
-          <ReakitToolbarItem
-            {...props}
-            {...toolbarState}
-            as={Button}
-            disabled={disabled}
-            focusable={focusable}
-            onClick={onClick}
-            className={cx(className, active && ComponentsTheme.BUTTON_ACTIVE)}
-          >
-            {children}
-          </ReakitToolbarItem>
-        )}
+      <TooltipReference {...tooltipState} as={Box}>
+        <ReakitToolbarItem
+          {...toolbarState}
+          as={Button}
+          disabled={disabled}
+          focusable={focusable}
+          onClick={onClick}
+          className={cx(className, active && ComponentsTheme.BUTTON_ACTIVE)}
+        >
+          {children}
+        </ReakitToolbarItem>
       </TooltipReference>
       {tooltip && (
         <Tooltip {...tooltipState} style={themeProps.style} className={cx(themeProps.className)}>

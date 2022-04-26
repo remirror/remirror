@@ -1,4 +1,4 @@
-import { cloneElement, createContext, ReactNode, useCallback, useContext } from 'react';
+import { createContext, ReactNode, useCallback, useContext } from 'react';
 import { MenuHTMLProps, MenuOptions } from 'reakit/Menu/Menu';
 import { MenuBarHTMLProps, MenuBarOptions } from 'reakit/Menu/MenuBar';
 import { MenuButtonHTMLProps, MenuButtonOptions } from 'reakit/Menu/MenuButton';
@@ -139,25 +139,12 @@ export function useMenuButtonProps(
 
   return {
     ...htmlProps,
-    children:
-      typeof children === 'function' ? (
-        (props: any) => {
-          const child = children(props);
-          return cloneElement(child, {
-            children: (
-              <>
-                {child.props.children}
-                {svg}
-              </>
-            ),
-          });
-        }
-      ) : (
-        <>
-          {children}
-          {svg}
-        </>
-      ),
+    children: (
+      <>
+        {children}
+        {svg}
+      </>
+    ),
     className: cx(
       ComponentsTheme.MENU_BUTTON,
       dir === 'left' ? ComponentsTheme.MENU_BUTTON_LEFT : ComponentsTheme.MENU_BUTTON_RIGHT,

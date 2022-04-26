@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { Fragment } from 'react';
+import { FC, Fragment } from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { CoreTheme } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
@@ -147,6 +147,11 @@ describe('Remirror: Server', () => {
   });
 
   it('prepends to the react element when insertPosition=start with getRootProps', () => {
+    const Editor: FC = () => {
+      const rootProps = useRemirrorContext().getRootProps();
+      return <div {...rootProps} data-testid={wrapperId} />;
+    };
+
     const reactString = renderToString(
       <Remirror
         {...handlers}
@@ -155,15 +160,13 @@ describe('Remirror: Server', () => {
         manager={createReactManager(() => [new BoldExtension()])}
         insertPosition='start'
       >
-        {() => (
-          <div>
-            <div {...useRemirrorContext().getRootProps()} data-testid={wrapperId} />
-            <div data-testid={finalId}>
-              <p>inside the editor</p>
-            </div>
-            <div data-testid={outerId} />
+        <div>
+          <Editor />
+          <div data-testid={finalId}>
+            <p>inside the editor</p>
           </div>
-        )}
+          <div data-testid={outerId} />
+        </div>
       </Remirror>,
     );
 
@@ -185,7 +188,7 @@ test('autoFocus', () => {
       manager={createReactManager([new BoldExtension()])}
       autoRender={true}
     >
-      {() => <Fragment />}
+      <Fragment />
     </Remirror>,
   );
 

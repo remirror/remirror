@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { PluginsExtension } from '@remirror/core';
 
-import { useExtension } from './use-extension';
+import { useExtensionEvent } from './use-extension-event';
 
 const noReason: UpdateReason = { doc: false, selection: false, storedMark: false };
 
@@ -11,27 +11,26 @@ const noReason: UpdateReason = { doc: false, selection: false, storedMark: false
 export function useUpdateReason(): UpdateReason {
   const [updateReason, setUpdateReason] = useState<UpdateReason>(noReason);
   // Attach the editor state handler to the instance of the remirror editor.
-  useExtension(
+  useExtensionEvent(
     PluginsExtension,
-    (p) =>
-      p.addHandler('applyState', ({ tr }) => {
-        const reason: UpdateReason = { ...noReason };
+    'applyState',
+    useCallback(({ tr }) => {
+      const reason: UpdateReason = { ...noReason };
 
-        if (tr.docChanged) {
-          reason.doc = true;
-        }
+      if (tr.docChanged) {
+        reason.doc = true;
+      }
 
-        if (tr.selectionSet) {
-          reason.selection = true;
-        }
+      if (tr.selectionSet) {
+        reason.selection = true;
+      }
 
-        if (tr.storedMarksSet) {
-          reason.storedMark = true;
-        }
+      if (tr.storedMarksSet) {
+        reason.storedMark = true;
+      }
 
-        setUpdateReason(reason);
-      }),
-    [],
+      setUpdateReason(reason);
+    }, []),
   );
 
   return updateReason;

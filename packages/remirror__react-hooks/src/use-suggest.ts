@@ -16,7 +16,11 @@ import type {
   Suggester,
   SuggestState,
 } from '@remirror/pm/suggest';
-import { useExtension, useRemirrorContext } from '@remirror/react-core';
+import {
+  useExtensionCustomEvent,
+  useExtensionEvent,
+  useRemirrorContext,
+} from '@remirror/react-core';
 
 /**
  * This hook allows you to dynamically create a suggester which can respond to
@@ -126,13 +130,15 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
   );
 
   // Attach the editor state handler to the instance of the remirror editor.
-  useExtension(PluginsExtension, (p) => p.addHandler('applyState', onApplyState), [onApplyState]);
+  useExtensionEvent(PluginsExtension, 'applyState', onApplyState);
 
   // Add the suggester to the editor via the `useExtension` hook.
-  useExtension(SuggestExtension, (p) => p.addCustomHandler('suggester', { ...props, onChange }), [
-    onChange,
-    ...Object.values(props),
-  ]);
+  const suggester: Suggester = useMemo(
+    () => ({ ...props, onChange }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [onChange, ...Object.values(props)],
+  );
+  useExtensionCustomEvent(SuggestExtension, 'suggester', suggester);
 
   return useMemo(
     () => ({

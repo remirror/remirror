@@ -1,6 +1,6 @@
 import '@remirror/styles/all.css';
 
-import { FC, useCallback } from 'react';
+import { FC, PropsWithChildren, useCallback } from 'react';
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';
 import { ExtensionPriority } from 'remirror';
@@ -43,7 +43,7 @@ export interface MarkdownEditorProps {
 /**
  * The editor which is used to create the annotation. Supports formatting.
  */
-export const MarkdownEditor: FC<MarkdownEditorProps> = ({
+export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   placeholder,
   initialContent,
   children,

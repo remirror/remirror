@@ -394,25 +394,22 @@ const BaseMenuPane = (props: BaseMenuPaneProps) => {
 
   return (
     <>
-      <TooltipReference {...tooltipState}>
-        {(props) => (
-          <ReakitMenuItem
-            {...props}
-            {...state}
-            role={role}
-            aria-checked={checked}
-            disabled={disabled}
-            focusable={focusable}
-            onClick={onClick}
-            className={cx(
-              className,
-              ComponentsTheme.MENU_PANE,
-              active && ComponentsTheme.MENU_PANE_ACTIVE,
-            )}
-          >
-            {children}
-          </ReakitMenuItem>
-        )}
+      <TooltipReference {...tooltipState} as={Box}>
+        <ReakitMenuItem
+          {...state}
+          role={role}
+          aria-checked={checked}
+          disabled={disabled}
+          focusable={focusable}
+          onClick={onClick}
+          className={cx(
+            className,
+            ComponentsTheme.MENU_PANE,
+            active && ComponentsTheme.MENU_PANE_ACTIVE,
+          )}
+        >
+          {children}
+        </ReakitMenuItem>
       </TooltipReference>
       {tooltip && (
         <Tooltip {...tooltipState} style={themeProps.style} className={cx(themeProps.className)}>

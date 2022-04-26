@@ -1,7 +1,7 @@
 import { Placement } from '@popperjs/core';
 import composeRefs from '@seznam/compose-react-refs';
 import { matchSorter } from 'match-sorter';
-import { FC, ReactChild, Ref, useMemo } from 'react';
+import { FC, PropsWithChildren, ReactChild, Ref, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useMenuState } from 'reakit/Menu';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
@@ -99,7 +99,9 @@ function useMemoizedPosition(props: UseMemoizedPositionProps) {
   return useMemo(() => ({ height, left, top, width }), [height, left, top, width]);
 }
 
-export const FloatingWrapper: FC<FloatingWrapperProps> = (props): JSX.Element => {
+export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
+  props,
+): JSX.Element => {
   const {
     containerClass,
     placement = 'right-end',

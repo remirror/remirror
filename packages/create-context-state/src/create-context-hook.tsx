@@ -3,6 +3,7 @@ import {
   Context as ReactContext,
   createContext,
   FC,
+  PropsWithChildren,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -78,9 +79,10 @@ import {
  * `useContext` hook.
  * @template Props - The optional props that are passed through to the `Provider`.
  */
-export function createContextHook<Context extends object, Props extends object = object>(
-  useHook: UseHook<Context, Props>,
-): CreateContextReturn<Context, Props> {
+export function createContextHook<
+  Context extends object,
+  Props extends PropsWithChildren<object> = PropsWithChildren<object>,
+>(useHook: UseHook<Context, Props>): CreateContextReturn<Context, Props> {
   const DefaultContext = createContext<Context | null>(null);
   const useHookContext = contextHookFactory(DefaultContext);
 
@@ -94,7 +96,7 @@ export function createContextHook<Context extends object, Props extends object =
 }
 
 export type CreateContextReturn<Context extends object, Props extends object = object> = [
-  Provider: ComponentType<Props>,
+  Provider: ComponentType<PropsWithChildren<Props>>,
   hook: ContextHook<Context>,
   DefaultContext: ReactContext<Context | null>,
 ];

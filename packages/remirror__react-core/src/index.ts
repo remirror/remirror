@@ -19,6 +19,8 @@ export {
   useEditorView,
   useEffectWithWarning,
   useExtension,
+  useExtensionCustomEvent,
+  useExtensionEvent,
   useForceUpdate,
   useHelpers,
   useI18n,

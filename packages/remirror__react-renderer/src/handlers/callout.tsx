@@ -27,11 +27,11 @@ export const Callout: FC<{
 
   return (
     <div {...dataAttrs}>
-      {emoji && (
+      {emoji ? (
         <div className='remirror-callout-emoji-wrapper'>
           <span>{emoji as string}</span>
         </div>
-      )}
+      ) : null}
       <div>{children}</div>
     </div>
   );

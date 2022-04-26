@@ -1,4 +1,4 @@
-import { DependencyList, useMemo } from 'react';
+import { DependencyList, useEffect, useMemo } from 'react';
 import {
   AddHandler,
   AnyExtensionConstructor,
@@ -9,7 +9,6 @@ import {
   OptionsOfConstructor,
 } from '@remirror/core';
 
-import { useEffectWithWarning } from './use-effect-with-warning';
 import { useRemirrorContext } from './use-remirror-context';
 
 /**
@@ -86,12 +85,12 @@ export function useExtension<Type extends AnyExtensionConstructor>(
 ): InstanceType<Type>;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  options: DynamicOptionsOfConstructor<Type>,
+  memoizedCallback: UseExtensionCallback<Type>,
+  dependencies?: DependencyList,
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  method: UseExtensionCallback<Type>,
-  dependencies: DependencyList,
+  options: DynamicOptionsOfConstructor<Type>,
 ): void;
 export function useExtension<Type extends AnyExtensionConstructor>(
   Constructor: Type,
@@ -100,26 +99,29 @@ export function useExtension<Type extends AnyExtensionConstructor>(
     | UseExtensionCallback<Type>
     // eslint-disable-next-line unicorn/no-useless-undefined
     | undefined = undefined,
-  dependencies: DependencyList = [],
+  dependencies?: DependencyList | undefined,
 ): InstanceType<Type> | void {
   const { getExtension } = useRemirrorContext();
   const extension = useMemo(() => getExtension(Constructor), [Constructor, getExtension]);
-  const deps = isFunction(optionsOrCallback)
-    ? [extension, ...dependencies]
-    : optionsOrCallback
-    ? [extension, ...Object.values(optionsOrCallback)]
-    : [];
+  let deps: unknown[];
+
+  if (isFunction(optionsOrCallback)) {
+    deps = dependencies ? [extension, ...dependencies] : [extension, optionsOrCallback];
+  } else {
+    deps = optionsOrCallback ? [extension, ...Object.values(optionsOrCallback)] : [];
+  }
 
   // Handle the case where an options object is passed in.
-  useEffectWithWarning(() => {
+  useEffect(() => {
     if (isFunction(optionsOrCallback) || !optionsOrCallback) {
       return;
     }
 
     extension.setOptions(optionsOrCallback);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
-  useEffectWithWarning(() => {
+  useEffect(() => {
     if (!isFunction(optionsOrCallback)) {
       return;
     }
@@ -129,6 +131,7 @@ export function useExtension<Type extends AnyExtensionConstructor>(
       addCustomHandler: extension.addCustomHandler.bind(extension),
       extension,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
   // Return early when more than one argument received.

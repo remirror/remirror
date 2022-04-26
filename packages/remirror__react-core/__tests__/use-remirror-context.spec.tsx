@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
-import { FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { BoldExtension } from 'remirror/extensions';
 import { act as renderAct, strictRender } from 'testing/react';
 import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
@@ -73,7 +73,7 @@ describe('useRemirrorContext', () => {
 function createTestChain() {
   const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
 
-  const Wrapper: FC = ({ children }) => {
+  const Wrapper: FC<PropsWithChildren<object>> = ({ children }) => {
     return (
       <Remirror manager={chain.manager} autoRender>
         {children}
