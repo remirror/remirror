@@ -1,5 +1,13 @@
 # @remirror/cli
 
+## 1.0.7
+
+> 2022-04-26
+
+### Patch Changes
+
+- Update dependencies.
+
 ## 1.0.6
 
 > 2022-01-03

@@ -1,5 +1,16 @@
 # @remirror/react-ssr
 
+## 1.0.23
+
+> 2022-04-26
+
+### Patch Changes
+
+- Update dependencies.
+
+- Updated dependencies []:
+  - @remirror/extension-react-ssr@1.0.23
+
 ## 1.0.22
 
 > 2022-04-21
