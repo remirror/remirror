@@ -329,4 +329,38 @@ describe('node', () => {
         });
     });
   });
+
+  describe('keybindings', () => {
+    it('inserts emoticons when hitting the enter key', () => {
+      const {
+        nodes: { doc, p },
+        add,
+        attributeNodes: { emoji },
+      } = create({ data });
+      const smileyFace = emoji({ code: '🙂' })();
+
+      add(doc(p(':)<cursor>')))
+        .press('Enter')
+        .callback(({ view }) => {
+          expect(view.state.doc).toEqualRemirrorDocument(doc(p(smileyFace), p()));
+        });
+    });
+
+    it('inserts emoticons and preserves text when hitting the enter key', () => {
+      const {
+        nodes: { doc, p },
+        add,
+        attributeNodes: { emoji },
+      } = create({ data });
+      const grinningFace = emoji({ code: '😀' })();
+
+      add(doc(p('Emoticons inserted with Enter key :-D<cursor>Makes me happy')))
+        .press('Enter')
+        .callback(({ view }) => {
+          expect(view.state.doc).toEqualRemirrorDocument(
+            doc(p('Emoticons inserted with Enter key ', grinningFace), p('Makes me happy')),
+          );
+        });
+    });
+  });
 });
