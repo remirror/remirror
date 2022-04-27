@@ -5,7 +5,7 @@ title: Create a manager
 
 # Creating a manager
 
-To initialise a Remirror editor we must first create a _manager_. The manager controls what your editor will be able to.
+To initialise a Remirror editor we must first create a _manager_. The manager controls what your editor will be able to do.
 
 ## Add extensions
 
@@ -81,7 +81,7 @@ With that, we have a manager and a prefilled state! Next up, we will use those t
 
 :::note
 
-HTML is a great format for demo code because it's compact and easy to read. It's less ideal for real applications because HTML can't capture all the nuances of the editor content. This means that you might loose data when persisting Remirror content to HTML.
+HTML is a great format for demo code because it's compact and easy to read. It's less ideal for real applications because HTML can't capture all the nuances of the editor content. This means that you might lose data when persisting Remirror content to HTML.
 
 Hence, you want to persist Remirror's native JSON format, and load this in your editor:
 
