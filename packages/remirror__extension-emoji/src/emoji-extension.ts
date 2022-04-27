@@ -9,11 +9,16 @@ import {
   CommandFunction,
   extension,
   ExtensionTag,
+  FromToProps,
   GetAttributes,
+  getMatchString,
   getTextSelection,
   InputRule,
   isElementDomNode,
   isString,
+  keyBinding,
+  KeyBindingProps,
+  LEAF_NODE_REPLACING_CHARACTER,
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
@@ -260,6 +265,36 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
 
       return true;
     };
+  }
+
+  @keyBinding({ shortcut: 'Enter' })
+  handleEnterKey({ tr, next }: KeyBindingProps): boolean {
+    const { $from, empty } = tr.selection;
+
+    if (!empty) {
+      return next();
+    }
+
+    // Try and find an emoticon in the last 5 characters
+    const textBeforeCursor = $from.parent.textBetween(
+      Math.max(0, $from.parentOffset - 5),
+      $from.parentOffset,
+      undefined,
+      LEAF_NODE_REPLACING_CHARACTER,
+    );
+    const match = textBeforeCursor.match(EMOTICON_REGEX);
+
+    if (match) {
+      const emoticon = getMatchString(match);
+      const selection: FromToProps = {
+        from: $from.pos - emoticon.length,
+        to: $from.pos,
+      };
+      // Replace the matching text with the emoticon
+      this.store.chain(tr).addEmoji(emoticon, { selection }).tr();
+    }
+
+    return next();
   }
 
   /**
