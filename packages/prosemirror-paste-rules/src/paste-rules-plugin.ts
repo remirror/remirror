@@ -269,8 +269,10 @@ export interface MarkPasteRule extends BaseContentPasteRule {
    * A function that transforms the match into the desired text value.
    *
    * Return an empty string to delete all content.
+   *
+   * Return `false` to invalidate the match.
    */
-  transformMatch?: (match: RegExpExecArray) => string | null | undefined;
+  transformMatch?: (match: RegExpExecArray) => string | null | undefined | false;
 }
 
 export interface NodePasteRule extends BaseContentPasteRule {
@@ -311,8 +313,10 @@ export interface TextPasteRule extends BaseRegexPasteRule {
    * A function that transforms the match into the desired text value.
    *
    * Return an empty string to delete all content.
+   *
+   * Return `false` to invalidate the match.
    */
-  transformMatch?: (match: RegExpExecArray) => string | null | undefined;
+  transformMatch?: (match: RegExpExecArray) => string | null | undefined | false;
 }
 
 export type FileHandlerProps = FilePasteHandlerProps | FileDropHandlerProps;
@@ -492,17 +496,23 @@ function markRuleTransformer(props: TransformerProps<MarkPasteRule>) {
   const { transformMatch, getAttributes, markType } = rule;
   const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
 
+  const text = textNode.text ?? '';
+  const mark = markType.create(attributes);
   const transformedCapturedValue = transformMatch?.(match);
 
-  // remove the text if transformMatch return
+  // remove the text if transformMatch returns empty text
   if (transformedCapturedValue === '') {
     return;
   }
 
-  const text = transformedCapturedValue ?? textNode.text ?? '';
-  const mark = markType.create(attributes);
+  // remove the mark if transformMatch returns false
+  if (transformedCapturedValue === false) {
+    nodes.push(schema.text(text, textNode.marks));
+    return;
+  }
+
   const marks = mark.addToSet(textNode.marks);
-  nodes.push(schema.text(text, marks));
+  nodes.push(schema.text(transformedCapturedValue ?? text, marks));
 }
 
 /**
@@ -513,8 +523,8 @@ function textRuleTransformer(props: TransformerProps<TextPasteRule>) {
   const { transformMatch } = rule;
   const transformedCapturedValue = transformMatch?.(match);
 
-  // remove the text if transformMatch return
-  if (transformedCapturedValue === '') {
+  // remove the text if transformMatch returns empty string or false
+  if (transformedCapturedValue === '' || transformedCapturedValue === false) {
     return;
   }
 
