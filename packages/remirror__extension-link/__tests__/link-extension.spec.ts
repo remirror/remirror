@@ -17,6 +17,7 @@ import {
   LinkExtension,
   LinkOptions,
   OrderedListExtension,
+  TOP_50_TLDS,
 } from 'remirror/extensions';
 
 extensionValidityTest(LinkExtension);
@@ -841,6 +842,161 @@ describe('autolinking', () => {
     editor.insertText(' ');
 
     expect(editor.doc).toEqualRemirrorDocument(doc(ol(li(p('Hello there friend and partner.')))));
+  });
+});
+
+describe('more auto link cases', () => {
+  let editor = create({ autoLink: true });
+  let { link } = editor.attributeMarks;
+  let { doc, p } = editor.nodes;
+
+  beforeEach(() => {
+    editor = create({ autoLink: true });
+    ({
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor);
+  });
+
+  it.each([
+    { input: 'google.com', expected: '//google.com' },
+    { input: 'www.google.com', expected: '//www.google.com' },
+    { input: 'http://github.com' },
+    { input: 'https://github.com/remirror/remirror' },
+
+    // with port
+    { input: 'time.google.com:123', expected: '//time.google.com:123' },
+
+    // with "#"
+    { input: "https://en.wikipedia.org/wiki/The_Power_of_the_Powerless#Havel's_greengrocer" },
+
+    // with '(' and ')'
+    { input: 'https://en.wikipedia.org/wiki/Specials_(Unicode_block)' },
+
+    // with "?"
+    { input: 'https://www.google.com/search?q=test' },
+
+    // with everything
+    {
+      input:
+        'https://github.com:443/remirror/remirror/commits/main?after=4dc93317d4b62f2d155865f7d2e721f05ddfdd61+34&branch=main&path%5B%5D=readme.md#repo-content-pjax-container',
+    },
+  ])('can auto link $input', ({ input, expected }) => {
+    editor.add(doc(p('<cursor>'))).insertText(input);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: expected ?? input })(input))),
+    );
+  });
+});
+
+describe('autolinking with allowed TLDs', () => {
+  const autoLinkAllowedTLDs = ['com', 'net'];
+  let editor = create({ autoLink: true, autoLinkAllowedTLDs });
+  let { link } = editor.attributeMarks;
+  let { doc, p } = editor.nodes;
+
+  beforeEach(() => {
+    editor = create({ autoLink: true, autoLinkAllowedTLDs });
+    ({
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor);
+  });
+
+  it('detects domains as auto link if the TLD is allowed', () => {
+    editor.add(doc(p('github<cursor>'))).insertText('.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//github.com' })('github.com'))),
+    );
+  });
+
+  it('detects domains as auto link if the TLD is allowed (.net)', () => {
+    editor.add(doc(p('docusign<cursor>'))).insertText('.net');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//docusign.net' })('docusign.net'))),
+    );
+  });
+
+  it('detects URLs without protocol as auto links if the TLD is allowed', () => {
+    editor.add(doc(p('<cursor>'))).insertText('github.com/remirror/remirror');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//github.com/remirror/remirror' })(
+            'github.com/remirror/remirror',
+          ),
+        ),
+      ),
+    );
+  });
+
+  it('detects URLs with protocol as auto links if the TLD is allowed', () => {
+    editor.add(doc(p('<cursor>'))).insertText('https://github.com/remirror/remirror');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: 'https://github.com/remirror/remirror' })(
+            'https://github.com/remirror/remirror',
+          ),
+        ),
+      ),
+    );
+  });
+
+  it('does NOT detect domains as auto link if the TLD is not allowed', () => {
+    editor.add(doc(p('remirror<cursor>'))).insertText('.io');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('remirror.io')));
+  });
+
+  it('does NOT detect URLs as auto link if the TLD is not allowed', () => {
+    editor.add(doc(p('<cursor>'))).insertText('https://en.wikipedia.org/wiki/TypeScript');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('https://en.wikipedia.org/wiki/TypeScript')));
+  });
+
+  it('detects only the TLD, not other parts of the URL', () => {
+    editor.add(doc(p('npmjs<cursor>'))).insertText('.org/package/asp.net');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('npmjs.org/package/asp.net')));
+  });
+
+  it('detects emails as auto link if the TLD is allowed', () => {
+    editor.add(doc(p('user@example<cursor>'))).insertText('.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: 'mailto:user@example.com' })('user@example.com'))),
+    );
+  });
+
+  it('does NOT detect emails as auto link if the TLD is not allowed', () => {
+    editor.add(doc(p('user@example<cursor>'))).insertText('.org');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('user@example.org')));
+  });
+
+  it('can extend the default list with additional items', () => {
+    expect(TOP_50_TLDS).not.toInclude('london');
+
+    const editor = renderEditor([
+      new LinkExtension({ autoLink: true, autoLinkAllowedTLDs: [...TOP_50_TLDS, 'london'] }),
+    ]);
+    const {
+      add,
+      nodes: { doc, p },
+      attributeMarks: { link },
+    } = editor;
+
+    add(doc(p('business<cursor>'))).insertText('.london');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//business.london' })('business.london'))),
+    );
   });
 });
 

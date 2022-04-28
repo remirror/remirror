@@ -1310,13 +1310,17 @@ importers:
       '@remirror/extension-events': ^1.1.1
       '@remirror/messages': ^1.0.6
       '@remirror/pm': ^1.0.17
+      '@types/extract-domain': 2.2.0
+      extract-domain: 2.2.1
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core': link:../remirror__core
       '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
+      extract-domain: 2.2.1
     devDependencies:
       '@remirror/pm': link:../remirror__pm
+      '@types/extract-domain': 2.2.0
 
   packages/remirror__extension-list:
     specifiers:
@@ -11407,6 +11411,10 @@ packages:
       '@types/qs': 6.9.7
       '@types/serve-static': 1.13.10
 
+  /@types/extract-domain/2.2.0:
+    resolution: {integrity: sha512-PdsKB8SBHnEPPdLywVCK5+FWkGM80pW4JJCO6YSlSJdD1VRhztVIzGqoO4I7X9iAi2huyAgJSUk06OMRMzjfkg==}
+    dev: true
+
   /@types/fluent-ffmpeg/2.1.18:
     resolution: {integrity: sha512-LTteOx3RUmnPlKkvhvW9aGOHdJYyEtIiRBVbYVO/zPU65ZYQelbPJ+zBBT+IXup7doMvxVstX7NMoUTWKZOhww==}
     dependencies:
@@ -17893,6 +17901,10 @@ packages:
       regex-not: 1.0.2
       snapdragon: 0.8.2
       to-regex: 3.0.2
+    dev: false
+
+  /extract-domain/2.2.1:
+    resolution: {integrity: sha512-lOq1adCJha0tFFBci4quxC4XLa6+Rs2WgAwTo9qbO9OsElvJmGgCvOzmHo/yg5CiqeP4+sHjkXYGkrCcIEprMg==}
     dev: false
 
   /extract-files/9.0.0:
