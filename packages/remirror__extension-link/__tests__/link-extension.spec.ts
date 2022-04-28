@@ -16,6 +16,7 @@ import {
   extractHref,
   LinkExtension,
   LinkOptions,
+  OrderedListExtension,
 } from 'remirror/extensions';
 
 extensionValidityTest(LinkExtension);
@@ -824,6 +825,22 @@ describe('autolinking', () => {
     editor.add(doc(p('__bold_<cursor>'))).insertText('_');
 
     expect(editor.doc).toEqualRemirrorDocument(doc(p(bold('bold'))));
+  });
+
+  it('does not interfere with input rules for ordered lists', () => {
+    const editor = renderEditor([
+      new LinkExtension({ autoLink: true }),
+      new OrderedListExtension(),
+    ]);
+    const { doc, p, orderedList: ol, listItem: li } = editor.nodes;
+
+    editor.add(doc(p('<cursor>Hello there friend and partner.'))).insertText('1.');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('1.Hello there friend and partner.')));
+
+    editor.insertText(' ');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(ol(li(p('Hello there friend and partner.')))));
   });
 });
 
