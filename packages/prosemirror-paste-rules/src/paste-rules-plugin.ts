@@ -97,9 +97,11 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
           }
 
           slice = new Slice(
-            regexPasteRuleHandler(slice.content, rule, view.state.schema),
-            slice.openStart,
-            slice.openEnd,
+            Fragment.fromArray(regexPasteRuleHandler(slice.content, rule, view.state.schema)),
+
+            // If we are using node rules, we don't need to keep the slice's open side for both side.
+            rule.type === 'node' ? 0 : slice.openStart,
+            rule.type === 'node' ? 0 : slice.openEnd,
           );
         }
 
@@ -392,7 +394,7 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
   transformer: Transformer<Rule>,
   schema: EditorSchema,
 ) {
-  return function handler(props: PasteRuleHandler<Rule>) {
+  return function handler(props: PasteRuleHandler<Rule>): ProsemirrorNode[] {
     const { fragment, rule, nodes } = props;
     const { regexp, ignoreWhitespace, ignoredMarks, ignoredNodes } = rule;
 
@@ -405,7 +407,15 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
 
       // When the current node is not a text node, recursively dive into it's child nodes.
       if (!child.isText) {
-        nodes.push(child.copy(handler({ fragment: child.content, rule, nodes: [] })));
+        const contentNodes = handler({ fragment: child.content, rule, nodes: [] });
+        const content = Fragment.fromArray(contentNodes);
+
+        if (child.type.validContent(content)) {
+          nodes.push(child.copy(content));
+        } else {
+          nodes.push(...contentNodes);
+        }
+
         return;
       }
 
@@ -469,7 +479,7 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
       }
     });
 
-    return Fragment.fromArray(nodes);
+    return nodes;
   };
 }
 
@@ -530,7 +540,7 @@ function regexPasteRuleHandler(
   fragment: Fragment,
   rule: RegexPasteRule,
   schema: EditorSchema,
-): Fragment {
+): ProsemirrorNode[] {
   const nodes: ProsemirrorNode[] = [];
 
   switch (rule.type) {
