@@ -1,6 +1,6 @@
 {
   "name": "jest-prosemirror",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Write expressive tests for your prosemirror editor",
   "keywords": [
     "jest",
@@ -61,7 +61,7 @@
     "@remirror/core-helpers": "^1.0.5",
     "@remirror/core-types": "^1.0.4",
     "@remirror/core-utils": "^1.1.8",
-    "@remirror/pm": "^1.0.16",
+    "@remirror/pm": "^1.0.17",
     "@testing-library/dom": "^8.13.0",
     "@types/prosemirror-schema-basic": "^1.0.2",
     "@types/prosemirror-test-builder": "^1.0.2",

@@ -1,5 +1,18 @@
 # @remirror/extension-file
 
+## 0.3.24
+
+> 2022-05-03
+
+### Patch Changes
+
+- Insert emoticons when hitting the Enter key (rather than requiring a space)
+
+- Updated dependencies []:
+  - @remirror/react@1.0.36
+  - @remirror/react-components@1.0.33
+  - @remirror/pm@1.0.17
+
 ## 0.3.23
 
 > 2022-04-26
