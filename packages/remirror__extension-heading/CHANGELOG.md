@@ -1,5 +1,16 @@
 # @remirror/extension-heading
 
+## 1.0.21
+
+> 2022-05-03
+
+### Patch Changes
+
+- Simplify the paste rule regex.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.17
+
 ## 1.0.20
 
 > 2022-04-21

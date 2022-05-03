@@ -1,5 +1,17 @@
 # jest-remirror
 
+## 1.0.40
+
+> 2022-05-03
+
+### Patch Changes
+
+- Paste multiple block nodes correctly.
+
+- Updated dependencies []:
+  - jest-prosemirror@1.0.24
+  - @remirror/pm@1.0.17
+
 ## 1.0.39
 
 > 2022-04-26

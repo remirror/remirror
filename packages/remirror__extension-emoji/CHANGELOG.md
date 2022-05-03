@@ -1,5 +1,16 @@
 # @remirror/extension-emoji
 
+## 1.0.24
+
+> 2022-05-03
+
+### Patch Changes
+
+- Insert emoticons when hitting the Enter key (rather than requiring a space)
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.17
+
 ## 1.0.23
 
 > 2022-04-21

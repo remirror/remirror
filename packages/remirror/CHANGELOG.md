@@ -1,5 +1,22 @@
 # remirror
 
+## 1.0.78
+
+> 2022-05-03
+
+### Patch Changes
+
+- Insert emoticons when hitting the Enter key (rather than requiring a space)
+
+* Simplify the paste rule regex.
+
+* Updated dependencies []:
+  - @remirror/extension-emoji@1.0.24
+  - @remirror/extension-heading@1.0.21
+  - @remirror/preset-formatting@1.0.28
+  - @remirror/preset-wysiwyg@1.1.50
+  - @remirror/pm@1.0.17
+
 ## 1.0.77
 
 > 2022-04-25

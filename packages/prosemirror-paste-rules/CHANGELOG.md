@@ -1,5 +1,13 @@
 # prosemirror-paste-rules
 
+## 1.0.11
+
+> 2022-05-03
+
+### Patch Changes
+
+- Paste multiple block nodes correctly.
+
 ## 1.0.10
 
 > 2022-04-04

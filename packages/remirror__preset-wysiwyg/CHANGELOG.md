@@ -1,5 +1,17 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.50
+
+> 2022-05-03
+
+### Patch Changes
+
+- Simplify the paste rule regex.
+
+- Updated dependencies []:
+  - @remirror/extension-heading@1.0.21
+  - @remirror/pm@1.0.17
+
 ## 1.1.49
 
 > 2022-04-25

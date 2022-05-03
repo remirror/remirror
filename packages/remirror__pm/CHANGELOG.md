@@ -1,5 +1,16 @@
 # @remirror/pm
 
+## 1.0.17
+
+> 2022-05-03
+
+### Patch Changes
+
+- Paste multiple block nodes correctly.
+
+- Updated dependencies []:
+  - prosemirror-paste-rules@1.0.11
+
 ## 1.0.16
 
 > 2022-04-04

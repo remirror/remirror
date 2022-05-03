@@ -1,5 +1,23 @@
 # @remirror/react-editors
 
+## 0.1.75
+
+> 2022-05-03
+
+### Patch Changes
+
+- Insert emoticons when hitting the Enter key (rather than requiring a space)
+
+* Simplify the paste rule regex.
+
+- Paste multiple block nodes correctly.
+
+- Updated dependencies []:
+  - remirror@1.0.78
+  - @remirror/extension-react-tables@1.0.36
+  - @remirror/react@1.0.36
+  - @remirror/pm@1.0.17
+
 ## 0.1.74
 
 > 2022-04-26
