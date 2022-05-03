@@ -3,6 +3,7 @@ import {
   doc,
   em,
   h1,
+  h2,
   hardBreak,
   p,
   schema,
@@ -268,12 +269,40 @@ describe('pasteRules', () => {
   describe('type: node', () => {
     it('can transform node matches', () => {
       const plugin = pasteRules([
-        { regexp: /# ([\s\w]+)$/, type: 'node', nodeType: schema.nodes.heading },
+        { regexp: /^# ([\s\w]+)$/, type: 'node', nodeType: schema.nodes.heading },
       ]);
       createEditor(doc(p('Hello <cursor>')), { plugins: [plugin] })
         .paste('# This is a heading')
         .callback((content) => {
           expect(content.doc).toEqualProsemirrorNode(doc(p('Hello '), h1('This is a heading')));
+        });
+    });
+
+    it('can transform multiple nodes', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /^# ([\s\w]+)$/,
+          type: 'node',
+          nodeType: schema.nodes.heading,
+          getAttributes: () => ({
+            level: 1,
+          }),
+        },
+        {
+          regexp: /^## ([\s\w]+)$/,
+          type: 'node',
+          nodeType: schema.nodes.heading,
+          getAttributes: () => ({
+            level: 2,
+          }),
+        },
+      ]);
+      createEditor(doc(p('Hello <cursor>')), { plugins: [plugin] })
+        .paste('# This is a heading\n\n## This is another heading')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p('Hello '), h1('This is a heading'), h2('This is another heading')),
+          );
         });
     });
 

@@ -140,7 +140,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
     return this.options.levels.map((level) => ({
       type: 'node',
       nodeType: this.type,
-      regexp: new RegExp(`^#{1,${level}}\\s([\\s\\w]+)$`),
+      regexp: new RegExp(`^#{${level}}\\s([\\s\\w]+)$`),
       getAttributes: () => ({ level }),
       startOfTextBlock: true,
     }));
