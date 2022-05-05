@@ -105,6 +105,40 @@ describe('pasteRules', () => {
         });
     });
 
+    it('can remove text matches', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /(@[a-z]+)/,
+          markType: schema.marks.strong,
+          transformMatch: () => '',
+          type: 'mark',
+        },
+      ]);
+      createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+        .paste(doc(p('Some @test @content'), p('should @be amazing')))
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p('Some  '), p('should  amazing')));
+        });
+    });
+
+    it('can keep text but not add mark', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /(@[a-z]+)/,
+          markType: schema.marks.strong,
+          transformMatch: () => false,
+          type: 'mark',
+        },
+      ]);
+      createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+        .paste(doc(p('Some @test @content'), p('should @be amazing')))
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p('Some @test @content'), p('should @be amazing')),
+          );
+        });
+    });
+
     it('should replace selection', () => {
       const plugin1 = pasteRules([
         {
@@ -249,6 +283,15 @@ describe('pasteRules', () => {
 
     it('can remove text matches', () => {
       const plugin = pasteRules([{ regexp: /(Hello)/, transformMatch: () => '', type: 'text' }]);
+      createEditor(doc(p('Hello <cursor>')), { plugins: [plugin] })
+        .paste('Hello')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(p('Hello ')));
+        });
+    });
+
+    it('can remove text matches by returning false', () => {
+      const plugin = pasteRules([{ regexp: /(Hello)/, transformMatch: () => false, type: 'text' }]);
       createEditor(doc(p('Hello <cursor>')), { plugins: [plugin] })
         .paste('Hello')
         .callback((content) => {

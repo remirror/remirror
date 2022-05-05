@@ -1,3 +1,4 @@
+import extractDomain from 'extract-domain';
 import {
   ApplySchemaAttributes,
   command,
@@ -23,6 +24,7 @@ import {
   isTextSelection,
   keyBinding,
   KeyBindingProps,
+  last,
   LiteralUnion,
   MarkExtension,
   MarkExtensionSpec,
@@ -42,11 +44,13 @@ import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
+import { TOP_50_TLDS } from './link-extension-utils';
+
 const UPDATE_LINK = 'updateLink';
 
 // Based on https://gist.github.com/dperini/729294
 const DEFAULT_AUTO_LINK_REGEX =
-  /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi;
+  /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?]\S*)?/gi;
 
 /**
  * Can be an empty string which sets url's to '//google.com'.
@@ -145,9 +149,40 @@ export interface LinkOptions {
    * value.
    *
    * @default
-   * /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}\.?(?::\d{2,5})?(?:[#/?]\S*)?/gi
+   * /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?]\S*)?/gi
    */
   autoLinkRegex?: Static<RegExp>;
+
+  /**
+   * An array of valid Top Level Domains (TLDs) to limit the scope of auto linking.
+   *
+   * @remarks
+   *
+   * The default autoLinkRegex does not limit the TLD of a URL for performance and maintenance reasons.
+   * This can lead to the auto link behaviour being overly aggressive.
+   *
+   * Defaults to the top 50 TLDs (as of May 2022).
+   *
+   * If you find this too permissive, you can override this with an array of your own TLDs.  i.e. you could use the top 10 TLDs.
+   *
+   * ['com', 'de', 'net', 'org', 'uk', 'cn', 'ga', 'nl', 'cf', 'ml']
+   *
+   * However, this would prevent auto linking to domains like remirror.io!
+   *
+   * For a complete list of TLDs, you could use an external package like "tlds" or "global-tld-list"
+   *
+   * Or to extend the default list you could
+   *
+   * ```ts
+   * import { LinkExtension, TOP_50_TLDS } from 'remirror/extensions';
+   * const extensions = () => [
+   *   new LinkExtension({ autoLinkAllowedTLDs: [...TOP_50_TLDS, 'london', 'tech'] })
+   * ];
+   * ```
+   *
+   * @default the top 50 TLDs by usage (May 2022)
+   */
+  autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
    * The default protocol to use when it can't be inferred.
@@ -201,6 +236,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     selectTextOnClick: false,
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
+    autoLinkAllowedTLDs: TOP_50_TLDS,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -390,9 +426,24 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         regexp: this.options.autoLinkRegex,
         markType: this.type,
         getAttributes: (url, isReplacement) => ({
-          href: getMatchString(url),
+          href: this.buildHref(getMatchString(url)),
           auto: !isReplacement,
         }),
+        transformMatch: (match) => {
+          const url = getMatchString(match);
+
+          if (!url) {
+            return false;
+          }
+
+          const href = this.buildHref(url);
+
+          if (!this.isValidTLD(href)) {
+            return false;
+          }
+
+          return url;
+        },
       },
     ];
   }
@@ -639,21 +690,46 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     const toAutoLink: FoundAutoLink[] = [];
 
     for (const match of findMatches(str, this.options.autoLinkRegex)) {
-      const text = match[0];
+      const text = getMatchString(match);
 
       if (!text) {
         continue;
       }
 
+      const href = this.buildHref(text);
+
+      if (!this.isValidTLD(href)) {
+        continue;
+      }
+
       toAutoLink.push({
         text,
-        href: this.buildHref(text),
+        href,
         start: match.index,
         end: match.index + text.length,
       });
     }
 
     return toAutoLink;
+  }
+
+  private isValidTLD(str: string): boolean {
+    const { autoLinkAllowedTLDs } = this.options;
+
+    if (autoLinkAllowedTLDs.length === 0) {
+      return true;
+    }
+
+    const domain = extractDomain(str);
+
+    if (domain === '') {
+      // Not a domain
+      return true;
+    }
+
+    const tld = last<string>(domain.split('.'));
+
+    return autoLinkAllowedTLDs.includes(tld);
   }
 }
 
