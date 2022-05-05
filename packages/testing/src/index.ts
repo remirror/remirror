@@ -76,6 +76,7 @@ class TestFramework extends Framework<any, any, any> {
         dispatchTransaction: this.dispatchTransaction,
         attributes: () => this.getAttributes(),
         editable: () => this.props.editable ?? true,
+        plugins: [],
       },
       this.props.forceEnvironment,
     );

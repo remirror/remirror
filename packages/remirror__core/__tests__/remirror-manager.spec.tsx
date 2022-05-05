@@ -81,6 +81,7 @@ describe('Manager', () => {
     view = new EditorView(document.createElement('div'), {
       state,
       editable: () => true,
+      plugins: [],
     });
     manager.addView(view);
   });
@@ -364,6 +365,7 @@ test('disposes of methods', () => {
   const view = new EditorView(document.createElement('div'), {
     state: framework.initialEditorState,
     editable: () => true,
+    plugins: [],
   });
 
   manager.attachFramework(framework, () => {});

@@ -27,6 +27,7 @@ test('createEditorView', () => {
       editable: () => {
         return true;
       },
+      plugins: [],
     },
   );
 
@@ -43,6 +44,7 @@ test('createEditorView:forceEnvironment', () => {
         editable: () => {
           return true;
         },
+        plugins: [],
       },
       'dom',
     ),
