@@ -111,6 +111,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
         dispatchTransaction: this.dispatchTransaction,
         attributes: () => this.getAttributes(),
         editable: () => this.props.editable ?? true,
+        plugins: [],
       },
       this.manager.settings.forceEnvironment,
     );

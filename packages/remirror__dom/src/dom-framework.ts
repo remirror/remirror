@@ -53,6 +53,7 @@ export class DomFramework<Extension extends AnyExtension> extends Framework<
       editable: () => {
         return this.props.editable ?? true;
       },
+      plugins: [],
     });
   }
 

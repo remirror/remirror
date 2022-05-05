@@ -98,6 +98,7 @@ export function createEditor<Schema extends EditorSchema = EditorSchema>(
   const state = createState(taggedDocument, [...plugins, inputRules({ rules })]);
   const view = new EditorView<Schema>(element, {
     state,
+    plugins: [],
     ...editorOptions,
   }) as TestEditorView<Schema>;
 
@@ -461,7 +462,7 @@ export interface ApplyReturn<Schema extends EditorSchema = EditorSchema>
   pass: boolean;
 }
 
-export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
+export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state' | 'plugins'> {
   /**
    * Whether to auto remove the editor from the dom after each test. It is
    * advisable to leave this unchanged.
