@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-link",
-  "version": "1.1.19",
+  "version": "1.2.0",
   "description": "Add links to your text editor.",
   "keywords": [
     "remirror",
@@ -46,11 +46,11 @@
     "extract-domain": "2.2.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.17",
+    "@remirror/pm": "^1.0.18",
     "@types/extract-domain": "2.2.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.10"
+    "@remirror/pm": "^1.0.18"
   },
   "publishConfig": {
     "access": "public"

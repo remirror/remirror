@@ -1,5 +1,17 @@
 # @remirror/extension-image
 
+## 1.0.34
+
+> 2022-05-05
+
+### Patch Changes
+
+- Update ProseMirror packages.
+
+- Updated dependencies []:
+  - prosemirror-resizable-view@1.1.15
+  - @remirror/pm@1.0.18
+
 ## 1.0.33
 
 > 2022-04-21

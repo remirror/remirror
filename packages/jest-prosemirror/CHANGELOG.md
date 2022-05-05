@@ -1,5 +1,22 @@
 # jest-prosemirror
 
+## 1.0.25
+
+> 2022-05-05
+
+### Patch Changes
+
+- Add a new option `selectionBuilder` in `YjsOptions`, which will be passed to `yCursorPlugin` directly.
+
+* Update ProseMirror packages.
+
+- Update `y-prosemirror` to `^1.0.19`.
+
+* Allow `transformMatch` to invalidate a paste rule by explicitly returning `false`
+
+* Updated dependencies []:
+  - @remirror/pm@1.0.18
+
 ## 1.0.24
 
 > 2022-05-03

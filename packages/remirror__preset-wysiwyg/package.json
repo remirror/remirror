@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "1.1.50",
+  "version": "1.1.51",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -48,14 +48,14 @@
     "@remirror/extension-code": "^1.0.21",
     "@remirror/extension-code-block": "^1.0.26",
     "@remirror/extension-drop-cursor": "^1.0.20",
-    "@remirror/extension-embed": "^1.1.28",
+    "@remirror/extension-embed": "^1.1.29",
     "@remirror/extension-gap-cursor": "^1.0.20",
     "@remirror/extension-hard-break": "^1.0.20",
     "@remirror/extension-heading": "^1.0.21",
     "@remirror/extension-horizontal-rule": "^1.0.21",
-    "@remirror/extension-image": "^1.0.33",
+    "@remirror/extension-image": "^1.0.34",
     "@remirror/extension-italic": "^1.0.20",
-    "@remirror/extension-link": "^1.1.19",
+    "@remirror/extension-link": "^1.2.0",
     "@remirror/extension-list": "^1.2.22",
     "@remirror/extension-search": "^1.0.20",
     "@remirror/extension-shortcuts": "^1.1.9",
@@ -65,10 +65,10 @@
     "@remirror/preset-core": "^1.0.26"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.17"
+    "@remirror/pm": "^1.0.18"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.17"
+    "@remirror/pm": "^1.0.18"
   },
   "publishConfig": {
     "access": "public"

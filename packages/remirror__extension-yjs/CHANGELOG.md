@@ -1,5 +1,16 @@
 # @remirror/extension-yjs
 
+## 1.0.31
+
+> 2022-05-05
+
+### Patch Changes
+
+- Update ProseMirror packages.
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.18
+
 ## 1.0.30
 
 > 2022-04-21

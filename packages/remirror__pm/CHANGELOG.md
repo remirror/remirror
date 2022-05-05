@@ -1,5 +1,20 @@
 # @remirror/pm
 
+## 1.0.18
+
+> 2022-05-05
+
+### Patch Changes
+
+- Update ProseMirror packages.
+
+* Allow `transformMatch` to invalidate a paste rule by explicitly returning `false`
+
+* Updated dependencies []:
+  - prosemirror-paste-rules@1.1.0
+  - prosemirror-suggest@1.1.2
+  - prosemirror-trailing-node@1.0.9
+
 ## 1.0.17
 
 > 2022-05-03

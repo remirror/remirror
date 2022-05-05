@@ -44,7 +44,7 @@
     "@remirror/messages": "^1.0.6"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.17"
+    "@remirror/pm": "^1.0.18"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.17"
