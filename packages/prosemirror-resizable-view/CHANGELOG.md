@@ -1,5 +1,13 @@
 # prosemirror-resizable-view
 
+## 1.1.15
+
+> 2022-05-05
+
+### Patch Changes
+
+- Update ProseMirror packages.
+
 ## 1.1.14
 
 > 2022-04-20

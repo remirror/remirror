@@ -1,5 +1,17 @@
 # prosemirror-paste-rules
 
+## 1.1.0
+
+> 2022-05-05
+
+### Minor Changes
+
+- Allow `transformMatch` to invalidate a paste rule by explicitly returning `false`
+
+### Patch Changes
+
+- Update ProseMirror packages.
+
 ## 1.0.11
 
 > 2022-05-03

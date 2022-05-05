@@ -1,5 +1,13 @@
 # prosemirror-trailing-node
 
+## 1.0.9
+
+> 2022-05-05
+
+### Patch Changes
+
+- Update ProseMirror packages.
+
 ## 1.0.8
 
 > 2022-04-04
