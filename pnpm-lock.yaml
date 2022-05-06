@@ -106,7 +106,6 @@ importers:
       ms.macro: ^2.0.0
       npm-run-all: ^4.1.5
       nyc: ^15.1.0
-      patch-package: github:remirror/patch-package#dist
       playwright: ^1.16.2
       playwright-testing-library: ^4.2.1
       prettier: ^2.3.2
@@ -218,7 +217,6 @@ importers:
       ms.macro: 2.0.0
       npm-run-all: 4.1.5
       nyc: 15.1.0
-      patch-package: github.com/remirror/patch-package/13efcef0a4e1ba5a2db2a41f0385699520ee2d69
       playwright: 1.16.2
       playwright-testing-library: 4.2.1_playwright@1.16.2
       prettier: 2.4.1
@@ -2633,7 +2631,6 @@ importers:
       mustache: ^4.2.0
       node-cleanup: ^2.1.2
       p-limit: ^3.1.0
-      patch-package: remirror/patch-package#dist
       postcss: '>= 8.0.0'
       postcss-loader: ^6.1.1
       postcss-nested: ^5.0.5
@@ -2706,7 +2703,6 @@ importers:
       mustache: 4.2.0
       node-cleanup: 2.1.2
       p-limit: 3.1.0
-      patch-package: github.com/remirror/patch-package/13efcef0a4e1ba5a2db2a41f0385699520ee2d69
       postcss: 8.3.11
       postcss-loader: 6.2.0_postcss@8.3.11
       postcss-nested: 5.0.6_postcss@8.3.11
@@ -11353,10 +11349,6 @@ packages:
     dependencies:
       '@types/node': 17.0.26
 
-  /@types/dashdash/1.14.1:
-    resolution: {integrity: sha512-3UAiw52g6LARDS9I5lpYwUzj/nBuMvor/0BWiza7ibuOIEaNIo+m3whnVBLLj/ue0DzlcX+96c24YdZCuDwOiQ==}
-    dev: false
-
   /@types/direction/1.0.0:
     resolution: {integrity: sha512-et1wmqXm/5smJ8lTJfBnwD12/2Y7eVJLKbuaRT0h2xaKAoo1h8Dz2Io22GObDLFwxY1ddXRTLH3Gq5v44Fl/2w==}
     dev: false
@@ -12567,10 +12559,6 @@ packages:
 
   /@xtuc/long/4.2.2:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
-
-  /@yarnpkg/lockfile/1.1.0:
-    resolution: {integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==}
-    dev: false
 
   /JSONStream/1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -16119,13 +16107,6 @@ packages:
       assert-plus: 1.0.0
     dev: false
 
-  /dashdash/2.0.0:
-    resolution: {integrity: sha512-ElMoAPlrzmF4l0OscF5pPBZv8LhUJBnwh7rHKllUOrwabAr47R1aQIIwC53rc59ycCb7k5Sj1/es+A3Bep/x5w==}
-    engines: {node: '>=10.x'}
-    dependencies:
-      assert-plus: 1.0.0
-    dev: false
-
   /data-uri-to-buffer/3.0.1:
     resolution: {integrity: sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==}
     engines: {node: '>= 6'}
@@ -18276,12 +18257,6 @@ packages:
     dependencies:
       fs-extra: 4.0.3
       micromatch: 3.1.10
-    dev: false
-
-  /find-yarn-workspace-root/2.0.0:
-    resolution: {integrity: sha512-1IMnbjt4KzsQfnhnzNd8wUEgXZ44IzZaZmnLYx7D5FZlaHt2gW20Cri8Q+E/t5tIj4+epTBub+2Zxu/vNILzqQ==}
-    dependencies:
-      micromatch: 4.0.5
     dev: false
 
   /find-yarn-workspace-root2/1.2.16:
@@ -21996,12 +21971,6 @@ packages:
   /kind-of/6.0.3:
     resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
     engines: {node: '>=0.10.0'}
-
-  /klaw-sync/6.0.0:
-    resolution: {integrity: sha512-nIeuVSzdCCs6TDPTqI8w1Yre34sSq7AkZ4B3sfOBbI2CgVSB4Du4aLQijFU2+lhAFCwt9+42Hel6lQNIv6AntQ==}
-    dependencies:
-      graceful-fs: 4.2.10
-    dev: false
 
   /klaw/1.3.1:
     resolution: {integrity: sha1-QIhDO0azsbolnXh4XY6W9zugJDk=}
@@ -27902,10 +27871,6 @@ packages:
       interpret: 1.4.0
       rechoir: 0.6.2
 
-  /shlex/2.1.0:
-    resolution: {integrity: sha512-Tk8PjohJbWpGu2NtAlsEi/9AS4GU2zW2ZWLFrWRDskZpSJmyBIU3nTkBtocxD90r3w4BwRevsNtIqIP9HMuYiQ==}
-    dev: false
-
   /shortid/2.2.16:
     resolution: {integrity: sha512-Ugt+GIZqvGXCIItnsL+lvFJOiN7RYqlGy7QE41O3YC1xbNSeDGIRO7xg2JJXIAj1cAGnOeC1r7/T9pgrtQbv4g==}
     dependencies:
@@ -31321,29 +31286,3 @@ packages:
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
-
-  github.com/remirror/patch-package/13efcef0a4e1ba5a2db2a41f0385699520ee2d69:
-    resolution: {tarball: https://codeload.github.com/remirror/patch-package/tar.gz/13efcef0a4e1ba5a2db2a41f0385699520ee2d69}
-    name: patch-package
-    version: 6.4.7
-    engines: {npm: '>5'}
-    hasBin: true
-    prepare: true
-    requiresBuild: true
-    dependencies:
-      '@types/dashdash': 1.14.1
-      '@yarnpkg/lockfile': 1.1.0
-      chalk: 2.4.2
-      cross-spawn: 6.0.5
-      dashdash: 2.0.0
-      find-yarn-workspace-root: 2.0.0
-      fs-extra: 7.0.1
-      is-ci: 2.0.0
-      klaw-sync: 6.0.0
-      open: 7.4.2
-      rimraf: 2.7.1
-      semver: 5.7.1
-      shlex: 2.1.0
-      slash: 2.0.0
-      tmp: 0.0.33
-    dev: false
