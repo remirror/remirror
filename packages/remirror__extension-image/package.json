@@ -32,8 +32,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-image.cjs.js",
-  "module": "./dist/remirror-extension-image.esm.js",
+  "main": "dist/remirror-extension-image.cjs.js",
+  "module": "dist/remirror-extension-image.esm.js",
   "browser": {
     "./dist/remirror-extension-image.cjs.js": "./dist/remirror-extension-image.browser.cjs.js",
     "./dist/remirror-extension-image.esm.js": "./dist/remirror-extension-image.browser.esm.js"

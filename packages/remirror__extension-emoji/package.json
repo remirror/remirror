@@ -32,8 +32,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-emoji.cjs.js",
-  "module": "./dist/remirror-extension-emoji.esm.js",
+  "main": "dist/remirror-extension-emoji.cjs.js",
+  "module": "dist/remirror-extension-emoji.esm.js",
   "browser": {
     "./dist/remirror-extension-emoji.cjs.js": "./dist/remirror-extension-emoji.browser.cjs.js",
     "./dist/remirror-extension-emoji.esm.js": "./dist/remirror-extension-emoji.browser.esm.js"

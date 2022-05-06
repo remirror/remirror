@@ -39,8 +39,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-code-block.cjs.js",
-  "module": "./dist/remirror-extension-code-block.esm.js",
+  "main": "dist/remirror-extension-code-block.cjs.js",
+  "module": "dist/remirror-extension-code-block.esm.js",
   "browser": {
     "./dist/remirror-extension-code-block.cjs.js": "./dist/remirror-extension-code-block.browser.cjs.js",
     "./dist/remirror-extension-code-block.esm.js": "./dist/remirror-extension-code-block.browser.esm.js"

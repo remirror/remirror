@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-horizontal-rule.cjs.js",
-  "module": "./dist/remirror-extension-horizontal-rule.esm.js",
+  "main": "dist/remirror-extension-horizontal-rule.cjs.js",
+  "module": "dist/remirror-extension-horizontal-rule.esm.js",
   "browser": {
     "./dist/remirror-extension-horizontal-rule.cjs.js": "./dist/remirror-extension-horizontal-rule.browser.cjs.js",
     "./dist/remirror-extension-horizontal-rule.esm.js": "./dist/remirror-extension-horizontal-rule.browser.esm.js"

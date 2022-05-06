@@ -33,8 +33,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-react-ssr.cjs.js",
-  "module": "./dist/remirror-extension-react-ssr.esm.js",
+  "main": "dist/remirror-extension-react-ssr.cjs.js",
+  "module": "dist/remirror-extension-react-ssr.esm.js",
   "browser": {
     "./dist/remirror-extension-react-ssr.cjs.js": "./dist/remirror-extension-react-ssr.browser.cjs.js",
     "./dist/remirror-extension-react-ssr.esm.js": "./dist/remirror-extension-react-ssr.browser.esm.js"

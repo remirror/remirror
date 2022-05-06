@@ -30,8 +30,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-bold.cjs.js",
-  "module": "./dist/remirror-extension-bold.esm.js",
+  "main": "dist/remirror-extension-bold.cjs.js",
+  "module": "dist/remirror-extension-bold.esm.js",
   "browser": {
     "./dist/remirror-extension-bold.cjs.js": "./dist/remirror-extension-bold.browser.cjs.js",
     "./dist/remirror-extension-bold.esm.js": "./dist/remirror-extension-bold.browser.esm.js"

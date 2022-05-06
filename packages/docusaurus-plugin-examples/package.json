@@ -34,8 +34,8 @@
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/docusaurus-plugin-examples.cjs.js",
-  "module": "./dist/docusaurus-plugin-examples.esm.js",
+  "main": "dist/docusaurus-plugin-examples.cjs.js",
+  "module": "dist/docusaurus-plugin-examples.esm.js",
   "types": "./dist/docusaurus-plugin-examples.cjs.d.ts",
   "files": [
     "src",

@@ -33,8 +33,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-icons.cjs.js",
-  "module": "./dist/remirror-icons.esm.js",
+  "main": "dist/remirror-icons.cjs.js",
+  "module": "dist/remirror-icons.esm.js",
   "browser": {
     "./dist/remirror-icons.cjs.js": "./dist/remirror-icons.browser.cjs.js",
     "./dist/remirror-icons.esm.js": "./dist/remirror-icons.browser.esm.js"

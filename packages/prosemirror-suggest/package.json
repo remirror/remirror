@@ -24,8 +24,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/prosemirror-suggest.cjs.js",
-  "module": "./dist/prosemirror-suggest.esm.js",
+  "main": "dist/prosemirror-suggest.cjs.js",
+  "module": "dist/prosemirror-suggest.esm.js",
   "browser": {
     "./dist/prosemirror-suggest.cjs.js": "./dist/prosemirror-suggest.browser.cjs.js",
     "./dist/prosemirror-suggest.esm.js": "./dist/prosemirror-suggest.browser.esm.js"

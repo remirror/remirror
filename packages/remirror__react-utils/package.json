@@ -30,8 +30,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-react-utils.cjs.js",
-  "module": "./dist/remirror-react-utils.esm.js",
+  "main": "dist/remirror-react-utils.cjs.js",
+  "module": "dist/remirror-react-utils.esm.js",
   "browser": {
     "./dist/remirror-react-utils.cjs.js": "./dist/remirror-react-utils.browser.cjs.js",
     "./dist/remirror-react-utils.esm.js": "./dist/remirror-react-utils.browser.esm.js"

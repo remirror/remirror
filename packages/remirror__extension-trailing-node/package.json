@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-trailing-node.cjs.js",
-  "module": "./dist/remirror-extension-trailing-node.esm.js",
+  "main": "dist/remirror-extension-trailing-node.cjs.js",
+  "module": "dist/remirror-extension-trailing-node.esm.js",
   "browser": {
     "./dist/remirror-extension-trailing-node.cjs.js": "./dist/remirror-extension-trailing-node.browser.cjs.js",
     "./dist/remirror-extension-trailing-node.esm.js": "./dist/remirror-extension-trailing-node.browser.esm.js"

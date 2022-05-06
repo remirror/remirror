@@ -29,8 +29,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-preset-wysiwyg.cjs.js",
-  "module": "./dist/remirror-preset-wysiwyg.esm.js",
+  "main": "dist/remirror-preset-wysiwyg.cjs.js",
+  "module": "dist/remirror-preset-wysiwyg.esm.js",
   "browser": {
     "./dist/remirror-preset-wysiwyg.cjs.js": "./dist/remirror-preset-wysiwyg.browser.cjs.js",
     "./dist/remirror-preset-wysiwyg.esm.js": "./dist/remirror-preset-wysiwyg.browser.esm.js"

@@ -55,8 +55,8 @@
     "./styles/*": "./styles/*",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror.cjs.js",
-  "module": "./dist/remirror.esm.js",
+  "main": "dist/remirror.cjs.js",
+  "module": "dist/remirror.esm.js",
   "browser": {
     "./dist/remirror.cjs.js": "./dist/remirror.browser.cjs.js",
     "./dist/remirror.esm.js": "./dist/remirror.browser.esm.js"

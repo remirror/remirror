@@ -30,8 +30,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-codemirror6.cjs.js",
-  "module": "./dist/remirror-extension-codemirror6.esm.js",
+  "main": "dist/remirror-extension-codemirror6.cjs.js",
+  "module": "dist/remirror-extension-codemirror6.esm.js",
   "browser": {
     "./dist/remirror-extension-codemirror6.cjs.js": "./dist/remirror-extension-codemirror6.browser.cjs.js",
     "./dist/remirror-extension-codemirror6.esm.js": "./dist/remirror-extension-codemirror6.browser.esm.js"

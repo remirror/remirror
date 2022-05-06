@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-font-size.cjs.js",
-  "module": "./dist/remirror-extension-font-size.esm.js",
+  "main": "dist/remirror-extension-font-size.cjs.js",
+  "module": "dist/remirror-extension-font-size.esm.js",
   "browser": {
     "./dist/remirror-extension-font-size.cjs.js": "./dist/remirror-extension-font-size.browser.cjs.js",
     "./dist/remirror-extension-font-size.esm.js": "./dist/remirror-extension-font-size.browser.esm.js"

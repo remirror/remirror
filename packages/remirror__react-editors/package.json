@@ -52,8 +52,8 @@
       "default": "./wysiwyg/dist/remirror-react-editors-wysiwyg.esm.js"
     }
   },
-  "main": "./dist/remirror-react-editors.cjs.js",
-  "module": "./dist/remirror-react-editors.esm.js",
+  "main": "dist/remirror-react-editors.cjs.js",
+  "module": "dist/remirror-react-editors.esm.js",
   "browser": {
     "./dist/remirror-react-editors.cjs.js": "./dist/remirror-react-editors.browser.cjs.js",
     "./dist/remirror-react-editors.esm.js": "./dist/remirror-react-editors.browser.esm.js"

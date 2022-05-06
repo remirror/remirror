@@ -135,8 +135,8 @@
       "default": "./view/dist/remirror-pm-view.esm.js"
     }
   },
-  "main": "./dist/remirror-pm.cjs.js",
-  "module": "./dist/remirror-pm.esm.js",
+  "main": "dist/remirror-pm.cjs.js",
+  "module": "dist/remirror-pm.esm.js",
   "browser": {
     "./dist/remirror-pm.cjs.js": "./dist/remirror-pm.browser.cjs.js",
     "./dist/remirror-pm.esm.js": "./dist/remirror-pm.browser.esm.js"

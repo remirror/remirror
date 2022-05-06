@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-markdown.cjs.js",
-  "module": "./dist/remirror-extension-markdown.esm.js",
+  "main": "dist/remirror-extension-markdown.cjs.js",
+  "module": "dist/remirror-extension-markdown.esm.js",
   "browser": {
     "./dist/remirror-extension-markdown.cjs.js": "./dist/remirror-extension-markdown.browser.cjs.js",
     "./dist/remirror-extension-markdown.esm.js": "./dist/remirror-extension-markdown.browser.esm.js"

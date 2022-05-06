@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-history.cjs.js",
-  "module": "./dist/remirror-extension-history.esm.js",
+  "main": "dist/remirror-extension-history.cjs.js",
+  "module": "dist/remirror-extension-history.esm.js",
   "browser": {
     "./dist/remirror-extension-history.cjs.js": "./dist/remirror-extension-history.browser.cjs.js",
     "./dist/remirror-extension-history.esm.js": "./dist/remirror-extension-history.browser.esm.js"

@@ -27,8 +27,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-messages.cjs.js",
-  "module": "./dist/remirror-messages.esm.js",
+  "main": "dist/remirror-messages.cjs.js",
+  "module": "dist/remirror-messages.esm.js",
   "browser": {
     "./dist/remirror-messages.cjs.js": "./dist/remirror-messages.browser.cjs.js",
     "./dist/remirror-messages.esm.js": "./dist/remirror-messages.browser.esm.js"

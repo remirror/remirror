@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-gap-cursor.cjs.js",
-  "module": "./dist/remirror-extension-gap-cursor.esm.js",
+  "main": "dist/remirror-extension-gap-cursor.cjs.js",
+  "module": "dist/remirror-extension-gap-cursor.esm.js",
   "browser": {
     "./dist/remirror-extension-gap-cursor.cjs.js": "./dist/remirror-extension-gap-cursor.browser.cjs.js",
     "./dist/remirror-extension-gap-cursor.esm.js": "./dist/remirror-extension-gap-cursor.browser.esm.js"

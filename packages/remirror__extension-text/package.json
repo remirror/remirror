@@ -30,8 +30,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-text.cjs.js",
-  "module": "./dist/remirror-extension-text.esm.js",
+  "main": "dist/remirror-extension-text.cjs.js",
+  "module": "dist/remirror-extension-text.esm.js",
   "browser": {
     "./dist/remirror-extension-text.cjs.js": "./dist/remirror-extension-text.browser.cjs.js",
     "./dist/remirror-extension-text.esm.js": "./dist/remirror-extension-text.browser.esm.js"

@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-shortcuts.cjs.js",
-  "module": "./dist/remirror-extension-shortcuts.esm.js",
+  "main": "dist/remirror-extension-shortcuts.cjs.js",
+  "module": "dist/remirror-extension-shortcuts.esm.js",
   "browser": {
     "./dist/remirror-extension-shortcuts.cjs.js": "./dist/remirror-extension-shortcuts.browser.cjs.js",
     "./dist/remirror-extension-shortcuts.esm.js": "./dist/remirror-extension-shortcuts.browser.esm.js"

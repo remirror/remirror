@@ -30,8 +30,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-preset-core.cjs.js",
-  "module": "./dist/remirror-preset-core.esm.js",
+  "main": "dist/remirror-preset-core.cjs.js",
+  "module": "dist/remirror-preset-core.esm.js",
   "browser": {
     "./dist/remirror-preset-core.cjs.js": "./dist/remirror-preset-core.browser.cjs.js",
     "./dist/remirror-preset-core.esm.js": "./dist/remirror-preset-core.browser.esm.js"

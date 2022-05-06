@@ -31,8 +31,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-drop-cursor.cjs.js",
-  "module": "./dist/remirror-extension-drop-cursor.esm.js",
+  "main": "dist/remirror-extension-drop-cursor.cjs.js",
+  "module": "dist/remirror-extension-drop-cursor.esm.js",
   "browser": {
     "./dist/remirror-extension-drop-cursor.cjs.js": "./dist/remirror-extension-drop-cursor.browser.cjs.js",
     "./dist/remirror-extension-drop-cursor.esm.js": "./dist/remirror-extension-drop-cursor.browser.esm.js"

@@ -24,8 +24,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-mention.cjs.js",
-  "module": "./dist/remirror-extension-mention.esm.js",
+  "main": "dist/remirror-extension-mention.cjs.js",
+  "module": "dist/remirror-extension-mention.esm.js",
   "browser": {
     "./dist/remirror-extension-mention.cjs.js": "./dist/remirror-extension-mention.browser.cjs.js",
     "./dist/remirror-extension-mention.esm.js": "./dist/remirror-extension-mention.browser.esm.js"

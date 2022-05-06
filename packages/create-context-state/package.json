@@ -27,8 +27,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/create-context-state.cjs.js",
-  "module": "./dist/create-context-state.esm.js",
+  "main": "dist/create-context-state.cjs.js",
+  "module": "dist/create-context-state.esm.js",
   "browser": {
     "./dist/create-context-state.cjs.js": "./dist/create-context-state.browser.cjs.js",
     "./dist/create-context-state.esm.js": "./dist/create-context-state.browser.esm.js"

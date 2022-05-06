@@ -24,8 +24,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-theme.cjs.js",
-  "module": "./dist/remirror-theme.esm.js",
+  "main": "dist/remirror-theme.cjs.js",
+  "module": "dist/remirror-theme.esm.js",
   "browser": {
     "./dist/remirror-theme.cjs.js": "./dist/remirror-theme.browser.cjs.js",
     "./dist/remirror-theme.esm.js": "./dist/remirror-theme.browser.esm.js"

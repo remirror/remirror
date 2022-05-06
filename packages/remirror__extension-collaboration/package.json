@@ -30,8 +30,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-collaboration.cjs.js",
-  "module": "./dist/remirror-extension-collaboration.esm.js",
+  "main": "dist/remirror-extension-collaboration.cjs.js",
+  "module": "dist/remirror-extension-collaboration.esm.js",
   "browser": {
     "./dist/remirror-extension-collaboration.cjs.js": "./dist/remirror-extension-collaboration.browser.cjs.js",
     "./dist/remirror-extension-collaboration.esm.js": "./dist/remirror-extension-collaboration.browser.esm.js"

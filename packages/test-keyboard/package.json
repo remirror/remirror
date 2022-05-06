@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/test-keyboard.cjs.js",
-  "module": "./dist/test-keyboard.esm.js",
+  "main": "dist/test-keyboard.cjs.js",
+  "module": "dist/test-keyboard.esm.js",
   "browser": {
     "./dist/test-keyboard.cjs.js": "./dist/test-keyboard.browser.cjs.js",
     "./dist/test-keyboard.esm.js": "./dist/test-keyboard.browser.esm.js"

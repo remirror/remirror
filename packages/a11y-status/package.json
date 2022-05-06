@@ -23,8 +23,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/a11y-status.cjs.js",
-  "module": "./dist/a11y-status.esm.js",
+  "main": "dist/a11y-status.cjs.js",
+  "module": "dist/a11y-status.esm.js",
   "browser": {
     "./dist/a11y-status.cjs.js": "./dist/a11y-status.browser.cjs.js",
     "./dist/a11y-status.esm.js": "./dist/a11y-status.browser.esm.js"

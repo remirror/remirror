@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-font-family.cjs.js",
-  "module": "./dist/remirror-extension-font-family.esm.js",
+  "main": "dist/remirror-extension-font-family.cjs.js",
+  "module": "dist/remirror-extension-font-family.esm.js",
   "browser": {
     "./dist/remirror-extension-font-family.cjs.js": "./dist/remirror-extension-font-family.browser.cjs.js",
     "./dist/remirror-extension-font-family.esm.js": "./dist/remirror-extension-font-family.browser.esm.js"

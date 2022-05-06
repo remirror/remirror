@@ -29,8 +29,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-preset-formatting.cjs.js",
-  "module": "./dist/remirror-preset-formatting.esm.js",
+  "main": "dist/remirror-preset-formatting.cjs.js",
+  "module": "dist/remirror-preset-formatting.esm.js",
   "browser": {
     "./dist/remirror-preset-formatting.cjs.js": "./dist/remirror-preset-formatting.browser.cjs.js",
     "./dist/remirror-preset-formatting.esm.js": "./dist/remirror-preset-formatting.browser.esm.js"

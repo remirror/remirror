@@ -30,8 +30,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-positioner.cjs.js",
-  "module": "./dist/remirror-extension-positioner.esm.js",
+  "main": "dist/remirror-extension-positioner.cjs.js",
+  "module": "dist/remirror-extension-positioner.esm.js",
   "browser": {
     "./dist/remirror-extension-positioner.cjs.js": "./dist/remirror-extension-positioner.browser.cjs.js",
     "./dist/remirror-extension-positioner.esm.js": "./dist/remirror-extension-positioner.browser.esm.js"

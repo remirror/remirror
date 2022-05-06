@@ -33,8 +33,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-react-tables.cjs.js",
-  "module": "./dist/remirror-extension-react-tables.esm.js",
+  "main": "dist/remirror-extension-react-tables.cjs.js",
+  "module": "dist/remirror-extension-react-tables.esm.js",
   "browser": {
     "./dist/remirror-extension-react-tables.cjs.js": "./dist/remirror-extension-react-tables.browser.cjs.js",
     "./dist/remirror-extension-react-tables.esm.js": "./dist/remirror-extension-react-tables.browser.esm.js"

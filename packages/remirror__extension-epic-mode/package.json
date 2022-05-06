@@ -33,8 +33,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-epic-mode.cjs.js",
-  "module": "./dist/remirror-extension-epic-mode.esm.js",
+  "main": "dist/remirror-extension-epic-mode.cjs.js",
+  "module": "dist/remirror-extension-epic-mode.esm.js",
   "browser": {
     "./dist/remirror-extension-epic-mode.cjs.js": "./dist/remirror-extension-epic-mode.browser.cjs.js",
     "./dist/remirror-extension-epic-mode.esm.js": "./dist/remirror-extension-epic-mode.browser.esm.js"
