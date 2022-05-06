@@ -21,7 +21,7 @@
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/storybook-react.cjs.js",
+  "main": "dist/storybook-react.cjs.js",
   "files": [
     "dist",
     "storybook-react-main"

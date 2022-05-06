@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-bidi.cjs.js",
-  "module": "./dist/remirror-extension-bidi.esm.js",
+  "main": "dist/remirror-extension-bidi.cjs.js",
+  "module": "dist/remirror-extension-bidi.esm.js",
   "browser": {
     "./dist/remirror-extension-bidi.cjs.js": "./dist/remirror-extension-bidi.browser.cjs.js",
     "./dist/remirror-extension-bidi.esm.js": "./dist/remirror-extension-bidi.browser.esm.js"

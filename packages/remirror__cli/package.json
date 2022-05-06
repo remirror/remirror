@@ -26,7 +26,7 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-cli.cjs.js",
+  "main": "dist/remirror-cli.cjs.js",
   "types": "./dist/remirror-cli.cjs.d.ts",
   "bin": {
     "remirror": "bin.js"

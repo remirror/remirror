@@ -42,10 +42,7 @@
     "publish-pr",
     "verdaccio-registry"
   ],
-  "scripts": {
-    "postinstall": "pnpm patch",
-    "patch": "patch-package"
-  },
+  "scripts": {},
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@changesets/get-dependents-graph": "^1.2.1",
@@ -103,7 +100,6 @@
     "mustache": "^4.2.0",
     "node-cleanup": "^2.1.2",
     "p-limit": "^3.1.0",
-    "patch-package": "remirror/patch-package#dist",
     "postcss": "^8.3.5",
     "postcss-loader": "^6.1.1",
     "postcss-nested": "^5.0.5",

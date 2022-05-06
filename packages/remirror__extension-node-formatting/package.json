@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-node-formatting.cjs.js",
-  "module": "./dist/remirror-extension-node-formatting.esm.js",
+  "main": "dist/remirror-extension-node-formatting.cjs.js",
+  "module": "dist/remirror-extension-node-formatting.esm.js",
   "browser": {
     "./dist/remirror-extension-node-formatting.cjs.js": "./dist/remirror-extension-node-formatting.browser.cjs.js",
     "./dist/remirror-extension-node-formatting.esm.js": "./dist/remirror-extension-node-formatting.browser.esm.js"

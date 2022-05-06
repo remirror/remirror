@@ -43,8 +43,8 @@
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/jest-prosemirror.cjs.js",
-  "module": "./dist/jest-prosemirror.esm.js",
+  "main": "dist/jest-prosemirror.cjs.js",
+  "module": "dist/jest-prosemirror.esm.js",
   "browser": {
     "./dist/jest-prosemirror.cjs.js": "./dist/jest-prosemirror.browser.cjs.js",
     "./dist/jest-prosemirror.esm.js": "./dist/jest-prosemirror.browser.esm.js"

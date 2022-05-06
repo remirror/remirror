@@ -29,8 +29,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/prosemirror-resizable-view.cjs.js",
-  "module": "./dist/prosemirror-resizable-view.esm.js",
+  "main": "dist/prosemirror-resizable-view.cjs.js",
+  "module": "dist/prosemirror-resizable-view.esm.js",
   "browser": {
     "./dist/prosemirror-resizable-view.cjs.js": "./dist/prosemirror-resizable-view.browser.cjs.js",
     "./dist/prosemirror-resizable-view.esm.js": "./dist/prosemirror-resizable-view.browser.esm.js"

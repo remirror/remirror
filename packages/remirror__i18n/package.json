@@ -42,8 +42,8 @@
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-i18n.cjs.js",
-  "module": "./dist/remirror-i18n.esm.js",
+  "main": "dist/remirror-i18n.cjs.js",
+  "module": "dist/remirror-i18n.esm.js",
   "browser": {
     "./dist/remirror-i18n.cjs.js": "./dist/remirror-i18n.browser.cjs.js",
     "./dist/remirror-i18n.esm.js": "./dist/remirror-i18n.browser.esm.js"

@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-blockquote.cjs.js",
-  "module": "./dist/remirror-extension-blockquote.esm.js",
+  "main": "dist/remirror-extension-blockquote.cjs.js",
+  "module": "dist/remirror-extension-blockquote.esm.js",
   "browser": {
     "./dist/remirror-extension-blockquote.cjs.js": "./dist/remirror-extension-blockquote.browser.cjs.js",
     "./dist/remirror-extension-blockquote.esm.js": "./dist/remirror-extension-blockquote.browser.esm.js"

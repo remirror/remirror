@@ -30,8 +30,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-paragraph.cjs.js",
-  "module": "./dist/remirror-extension-paragraph.esm.js",
+  "main": "dist/remirror-extension-paragraph.cjs.js",
+  "module": "dist/remirror-extension-paragraph.esm.js",
   "browser": {
     "./dist/remirror-extension-paragraph.cjs.js": "./dist/remirror-extension-paragraph.browser.cjs.js",
     "./dist/remirror-extension-paragraph.esm.js": "./dist/remirror-extension-paragraph.browser.esm.js"

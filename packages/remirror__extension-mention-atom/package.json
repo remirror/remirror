@@ -24,8 +24,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-mention-atom.cjs.js",
-  "module": "./dist/remirror-extension-mention-atom.esm.js",
+  "main": "dist/remirror-extension-mention-atom.cjs.js",
+  "module": "dist/remirror-extension-mention-atom.esm.js",
   "browser": {
     "./dist/remirror-extension-mention-atom.cjs.js": "./dist/remirror-extension-mention-atom.browser.cjs.js",
     "./dist/remirror-extension-mention-atom.esm.js": "./dist/remirror-extension-mention-atom.browser.esm.js"

@@ -27,8 +27,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-react-ssr.cjs.js",
-  "module": "./dist/remirror-react-ssr.esm.js",
+  "main": "dist/remirror-react-ssr.cjs.js",
+  "module": "dist/remirror-react-ssr.esm.js",
   "browser": {
     "./dist/remirror-react-ssr.cjs.js": "./dist/remirror-react-ssr.browser.cjs.js",
     "./dist/remirror-react-ssr.esm.js": "./dist/remirror-react-ssr.browser.esm.js"

@@ -24,8 +24,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-core-types.cjs.js",
-  "module": "./dist/remirror-core-types.esm.js",
+  "main": "dist/remirror-core-types.cjs.js",
+  "module": "dist/remirror-core-types.esm.js",
   "browser": {
     "./dist/remirror-core-types.cjs.js": "./dist/remirror-core-types.browser.cjs.js",
     "./dist/remirror-core-types.esm.js": "./dist/remirror-core-types.browser.esm.js"

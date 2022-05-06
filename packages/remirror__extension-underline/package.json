@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-underline.cjs.js",
-  "module": "./dist/remirror-extension-underline.esm.js",
+  "main": "dist/remirror-extension-underline.cjs.js",
+  "module": "dist/remirror-extension-underline.esm.js",
   "browser": {
     "./dist/remirror-extension-underline.cjs.js": "./dist/remirror-extension-underline.browser.cjs.js",
     "./dist/remirror-extension-underline.esm.js": "./dist/remirror-extension-underline.browser.esm.js"

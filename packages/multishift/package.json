@@ -23,8 +23,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/multishift.cjs.js",
-  "module": "./dist/multishift.esm.js",
+  "main": "dist/multishift.cjs.js",
+  "module": "dist/multishift.esm.js",
   "browser": {
     "./dist/multishift.cjs.js": "./dist/multishift.browser.cjs.js",
     "./dist/multishift.esm.js": "./dist/multishift.browser.esm.js"

@@ -28,8 +28,8 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/remirror-extension-italic.cjs.js",
-  "module": "./dist/remirror-extension-italic.esm.js",
+  "main": "dist/remirror-extension-italic.cjs.js",
+  "module": "dist/remirror-extension-italic.esm.js",
   "browser": {
     "./dist/remirror-extension-italic.cjs.js": "./dist/remirror-extension-italic.browser.cjs.js",
     "./dist/remirror-extension-italic.esm.js": "./dist/remirror-extension-italic.browser.esm.js"

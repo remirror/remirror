@@ -32,7 +32,7 @@
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "./dist/jest-remirror.cjs.js",
+  "main": "dist/jest-remirror.cjs.js",
   "types": "./dist/jest-remirror.cjs.d.ts",
   "files": [
     "dist",
