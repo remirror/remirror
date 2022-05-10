@@ -659,13 +659,7 @@
     "name": "@remirror/extension-yjs",
     "limit": "115 KB",
     "path": "packages/remirror__extension-yjs/dist/remirror-extension-yjs.browser.esm.js",
-    "ignore": [
-      "@remirror/pm",
-      "yjs",
-      "@remirror/core",
-      "@remirror/extension-annotation",
-      "@remirror/messages"
-    ],
+    "ignore": ["@remirror/pm", "yjs", "@remirror/core", "@remirror/messages"],
     "running": false,
     "gzip": true
   },

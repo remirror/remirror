@@ -45,7 +45,6 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^1.4.3",
-    "@remirror/extension-annotation": "^1.1.21",
     "@remirror/messages": "^1.0.6",
     "y-prosemirror": "^1.0.19",
     "y-protocols": "^1.0.5"
