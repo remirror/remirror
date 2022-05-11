@@ -1,5 +1,16 @@
 # remirror
 
+## 1.0.80
+
+> 2022-05-11
+
+### Patch Changes
+
+- Remove annotation support from yjs-extension
+
+- Updated dependencies []:
+  - @remirror/extension-yjs@2.0.0
+
 ## 1.0.79
 
 > 2022-05-05
