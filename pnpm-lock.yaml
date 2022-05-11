@@ -1734,7 +1734,6 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^1.4.3
-      '@remirror/extension-annotation': ^1.1.21
       '@remirror/messages': ^1.0.6
       '@remirror/pm': ^1.0.18
       y-prosemirror: ^1.0.19
@@ -1744,7 +1743,6 @@ importers:
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core': link:../remirror__core
-      '@remirror/extension-annotation': link:../remirror__extension-annotation
       '@remirror/messages': link:../remirror__messages
       y-prosemirror: 1.0.19_y-protocols@1.0.5+yjs@13.5.23
       y-protocols: 1.0.5
