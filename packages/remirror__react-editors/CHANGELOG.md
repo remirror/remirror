@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.77
+
+> 2022-05-11
+
+### Patch Changes
+
+- Remove annotation support from yjs-extension
+
+- Updated dependencies []:
+  - remirror@1.0.80
+
 ## 0.1.76
 
 > 2022-05-05
