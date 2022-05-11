@@ -20,9 +20,6 @@
       "path": "../../remirror__core/src"
     },
     {
-      "path": "../../remirror__extension-annotation/src"
-    },
-    {
       "path": "../../remirror__messages/src"
     }
   ]

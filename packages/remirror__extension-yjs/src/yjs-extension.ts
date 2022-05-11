@@ -1,10 +1,8 @@
 import {
-  absolutePositionToRelativePosition,
   defaultCursorBuilder,
   defaultDeleteFilter,
   defaultSelectionBuilder,
   redo,
-  relativePositionToAbsolutePosition,
   undo,
   yCursorPlugin,
   ySyncPlugin,
@@ -12,19 +10,12 @@ import {
   yUndoPlugin,
   yUndoPluginKey,
 } from 'y-prosemirror';
-import type {
-  Doc,
-  Map as YMap,
-  RelativePosition,
-  Transaction as YjsTransaction,
-  XmlFragment as YXmlFragment,
-} from 'yjs';
-import { transact, UndoManager } from 'yjs';
+import type { Doc } from 'yjs';
+import { UndoManager } from 'yjs';
 import {
   AcceptUndefined,
   command,
   convertCommand,
-  Dispose,
   EditorState,
   ErrorConstant,
   extension,
@@ -44,13 +35,6 @@ import {
   Shape,
   Static,
 } from '@remirror/core';
-import {
-  Annotation,
-  AnnotationExtension,
-  AnnotationStore,
-  OmitText,
-  OmitTextAndPosition,
-} from '@remirror/extension-annotation';
 import { ExtensionHistoryMessages as Messages } from '@remirror/messages';
 import { DecorationAttrs } from '@remirror/pm/view';
 
@@ -133,97 +117,6 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
   trackedOrigins?: Static<any[]>;
 }
 
-interface YjsAnnotationPosition {
-  from: RelativePosition;
-  to: RelativePosition;
-}
-
-/**
- * Data stored for annotations inside the Y.Doc
- *
- * Note that these fields are part of the API, and changes may require handling
- * older stored documents.
- */
-type StoredType<Type extends Annotation> = OmitTextAndPosition<Type> & YjsAnnotationPosition;
-
-class YjsAnnotationStore<Type extends Annotation> implements AnnotationStore<Type> {
-  type: YXmlFragment;
-  map: YMap<StoredType<Type>>;
-
-  constructor(
-    private readonly doc: Doc,
-    pmName: string,
-    mapName: string,
-    private readonly getMapping: () => /* ProsemirrorMapping */ any,
-  ) {
-    this.type = doc.getXmlFragment(pmName);
-    this.map = doc.getMap(mapName);
-  }
-
-  addAnnotation({ from, to, ...data }: OmitText<Type>): void {
-    // XXX: Why is this cast needed?
-    const storedData: StoredType<Type> = {
-      ...data,
-      from: this.absolutePositionToRelativePosition(from),
-      to: this.absolutePositionToRelativePosition(to),
-    } as StoredType<Type>;
-    this.map.set(data.id, storedData);
-  }
-
-  updateAnnotation(id: string, updateData: OmitTextAndPosition<Type>): void {
-    const existing = this.map.get(id);
-
-    if (!existing) {
-      return;
-    }
-
-    this.map.set(id, {
-      ...updateData,
-      from: existing.from,
-      to: existing.to,
-    });
-  }
-
-  removeAnnotations(ids: string[]): void {
-    transact(this.doc, () => {
-      ids.forEach((id) => this.map.delete(id));
-    });
-  }
-
-  setAnnotations(annotations: Array<OmitText<Type>>): void {
-    transact(this.doc, () => {
-      this.map.clear();
-      annotations.forEach((annotation) => this.addAnnotation(annotation));
-    });
-  }
-
-  formatAnnotations(): Array<OmitText<Type>> {
-    const result: Array<OmitText<Type>> = [];
-    this.map.forEach(({ from: relFrom, to: relTo, ...data }) => {
-      const from = this.relativePositionToAbsolutePosition(relFrom);
-      const to = this.relativePositionToAbsolutePosition(relTo);
-
-      if (!from || !to) {
-        return;
-      }
-
-      // XXX: Why is this cast needed?
-      result.push({ ...data, from, to } as unknown as OmitText<Type>);
-    });
-    return result;
-  }
-
-  private absolutePositionToRelativePosition(pos: number): RelativePosition {
-    const mapping = this.getMapping();
-    return absolutePositionToRelativePosition(pos, this.type, mapping);
-  }
-
-  private relativePositionToAbsolutePosition(relPos: RelativePosition): number | null {
-    const mapping = this.getMapping();
-    return relativePositionToAbsolutePosition(this.doc, this.type, relPos, mapping);
-  }
-}
-
 /**
  * The YJS extension is the recommended extension for creating a collaborative
  * editor.
@@ -269,35 +162,6 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     const state = this.store.getState();
     const { binding } = ySyncPluginKey.getState(state);
     return binding;
-  }
-
-  onView(): Dispose | void {
-    try {
-      const annotationStore = new YjsAnnotationStore(
-        this.provider.doc,
-        'prosemirror',
-        'annotations',
-        () => this.getBinding()?.mapping,
-      );
-      this.store.manager.getExtension(AnnotationExtension).setOptions({
-        getStore: () => annotationStore,
-      });
-
-      const handler = (_update: Uint8Array, _origin: any, _doc: Doc, yjsTr: YjsTransaction) => {
-        // Ignore own changes
-        if (yjsTr.local) {
-          return;
-        }
-
-        this.store.commands.redrawAnnotations?.();
-      };
-      this.provider.doc.on('update', handler);
-      return () => {
-        this.provider.doc.off('update', handler);
-      };
-    } catch {
-      // AnnotationExtension isn't present in editor
-    }
   }
 
   /**
