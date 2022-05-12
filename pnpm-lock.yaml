@@ -808,6 +808,7 @@ importers:
       domino: ^2.1.6
       jsdom: ^17.0.0
       min-document: ^2.19.0
+      parenthesis: ^3.1.8
     dependencies:
       '@babel/runtime': 7.15.4
       '@remirror/core-constants': link:../remirror__core-constants
@@ -817,6 +818,7 @@ importers:
       '@types/min-document': 2.19.0
       css-in-js-utils: 3.1.0
       min-document: 2.19.0
+      parenthesis: 3.1.8
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/jsdom': 16.2.13
@@ -24170,6 +24172,10 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       callsites: 3.1.0
+
+  /parenthesis/3.1.8:
+    resolution: {integrity: sha512-KF/U8tk54BgQewkJPvB4s/US3VQY68BRDpH638+7O/n58TpnwiwnOtGIOsT2/i+M78s61BBpeC83STB88d8sqw==}
+    dev: false
 
   /parse-asn1/5.1.6:
     resolution: {integrity: sha512-RnZRo1EPU6JBnra2vGHj0yhp6ebyjBZpmUCLHWiFhxlzvBCCpAuZ7elsBp1PVAbQN0/04VD/19rfzlBSwLstMw==}

@@ -42,7 +42,8 @@
     "@remirror/messages": "^1.0.6",
     "@types/min-document": "^2.19.0",
     "css-in-js-utils": "^3.1.0",
-    "min-document": "^2.19.0"
+    "min-document": "^2.19.0",
+    "parenthesis": "^3.1.8"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.18",
