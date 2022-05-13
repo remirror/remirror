@@ -3,6 +3,7 @@ import { extractPixelSize } from '../';
 afterEach(() => {
   window.document.documentElement.style.fontSize = '16px';
   window.document.body.textContent = '';
+  Object.assign(window, { innerWidth: 1024 });
 });
 
 test(`no unit conversion`, () => {
@@ -154,7 +155,14 @@ describe('CSS functions', () => {
 
     it(`mixed units`, () => {
       window.document.documentElement.style.fontSize = '16px';
-      expect(extractPixelSize('clamp(1rem, 10vw, 2rem)')).toBe(32);
+      expect(extractPixelSize('clamp(5rem, 10vw, 10rem)')).toBe(102.4);
+    });
+
+    it(`constrains values`, () => {
+      Object.assign(window, { innerWidth: 768 });
+      expect(extractPixelSize('clamp(5rem, 10vw, 10rem)')).toBe(80);
+      Object.assign(window, { innerWidth: 2048 });
+      expect(extractPixelSize('clamp(5rem, 10vw, 10rem)')).toBe(160);
     });
   });
 
