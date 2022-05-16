@@ -46,7 +46,7 @@
     "direction": "^1.0.4"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.18"
+    "@remirror/pm": "^1.0.19"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.10"

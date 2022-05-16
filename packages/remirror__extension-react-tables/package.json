@@ -61,7 +61,7 @@
     "jsx-dom": "^6.4.23"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.18",
+    "@remirror/pm": "^1.0.19",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",

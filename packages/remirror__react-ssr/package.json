@@ -43,7 +43,7 @@
     "@remirror/extension-react-ssr": "^1.0.23"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.18",
+    "@remirror/pm": "^1.0.19",
     "@remirror/react": "^1.0.36",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
