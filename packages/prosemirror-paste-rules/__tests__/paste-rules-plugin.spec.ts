@@ -1,4 +1,5 @@
 import {
+  blockquote,
   createEditor,
   doc,
   em,
@@ -362,6 +363,90 @@ describe('pasteRules', () => {
         .paste('---')
         .callback((content) => {
           expect(content.doc).toEqualProsemirrorNode(doc(p(hardBreak())));
+        });
+    });
+
+    it('can handle openStart and openEnd correctly', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /---/,
+          type: 'node',
+          nodeType: schema.nodes.hard_break,
+          getContent: () => {},
+        },
+        {
+          regexp: /===/,
+          type: 'node',
+          nodeType: schema.nodes.hard_break,
+          getContent: () => {},
+        },
+        {
+          regexp: /^# ([\s\w]+)$/,
+          type: 'node',
+          nodeType: schema.nodes.heading,
+          getAttributes: () => ({
+            level: 1,
+          }),
+        },
+      ]);
+      createEditor(doc(blockquote(p('A<cursor>Z'))), { plugins: [plugin] })
+        .paste('B')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(blockquote(p('ABZ'))));
+        })
+        // Pasting inline node(s) should keey openStart and openEnd
+        .paste('---')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(blockquote(p('AB', hardBreak(), 'Z'))));
+        })
+        .paste('C')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(doc(blockquote(p('AB', hardBreak(), 'CZ'))));
+        })
+        .paste('---===')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(blockquote(p('AB', hardBreak(), 'C', hardBreak(), hardBreak(), 'Z'))),
+          );
+        })
+        .paste('D')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(blockquote(p('AB', hardBreak(), 'C', hardBreak(), hardBreak(), 'D', 'Z'))),
+          );
+        })
+        // Pasting block node(s) should reset openStart and openEnd
+        .paste('# E\n# F\n---\n---===G\n# H')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(
+              blockquote(
+                p('AB', hardBreak(), 'C', hardBreak(), hardBreak(), 'D'),
+                h1('E'),
+                h1('F'),
+                p(hardBreak()),
+                p(hardBreak(), hardBreak(), 'G'),
+                h1('H'),
+                p('Z'),
+              ),
+            ),
+          );
+        })
+        .paste('I')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(
+              blockquote(
+                p('AB', hardBreak(), 'C', hardBreak(), hardBreak(), 'D'),
+                h1('E'),
+                h1('F'),
+                p(hardBreak()),
+                p(hardBreak(), hardBreak(), 'G'),
+                h1('H'),
+                p('IZ'),
+              ),
+            ),
+          );
         });
     });
 
