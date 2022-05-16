@@ -90,6 +90,16 @@ test('can be configured with attribute mark extensions', () => {
   expect(linkElement).toHaveTextContent(expected);
 });
 
+test('can throw error if received a non top level node', () => {
+  const {
+    nodes: { doc, p },
+    add,
+  } = renderEditor([]);
+
+  expect(() => add(doc(p('')))).not.toThrow();
+  expect(() => add(p(''))).toThrow();
+});
+
 const tripleClickMock = jest.fn(() => false);
 const doubleClickMock = jest.fn(() => false);
 const clickMock = jest.fn(() => false);

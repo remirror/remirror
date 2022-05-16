@@ -25,6 +25,7 @@ import {
   EditorState,
   getTextSelection,
   HelpersFromExtensions,
+  invariant,
   isFunction,
   isMarkExtension,
   isNodeExtension,
@@ -333,6 +334,12 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    * If content already exists it will be overwritten.
    */
   readonly add = (taggedDocument: TaggedProsemirrorNode<this['manager']['~Sch']>): this => {
+    const { schema } = taggedDocument.type;
+    invariant(taggedDocument.type === schema.topNodeType, {
+      message: `Expected a top level "${schema.topNodeType.name}" node but received a "${taggedDocument.type.name}" node`,
+      disableLogging: true,
+    });
+
     const { content } = taggedDocument;
     const { cursor, node, start, end, all, anchor, head, ...tags } = taggedDocument.tags;
     const view = this.view;
