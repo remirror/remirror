@@ -1,5 +1,23 @@
 # jest-remirror
 
+## 1.0.42
+
+> 2022-05-16
+
+### Patch Changes
+
+- Fix open depths in node paste rules.
+
+  When excuting a node paste rule, only reset open depths ([openStart](https://prosemirror.net/docs/ref/#model.Slice.openStart) and [openEnd](https://prosemirror.net/docs/ref/#model.Slice.openEnd)) when the node paste rule is actually applied and it's for a block node.
+
+  This patch will fix the extra paragraph after pasting text.
+
+* Throw error when receiving a non-top-level node.
+
+* Updated dependencies []:
+  - jest-prosemirror@1.0.26
+  - @remirror/pm@1.0.19
+
 ## 1.0.41
 
 > 2022-05-05

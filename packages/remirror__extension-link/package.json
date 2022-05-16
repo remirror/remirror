@@ -46,7 +46,7 @@
     "extract-domain": "2.2.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.18",
+    "@remirror/pm": "^1.0.19",
     "@types/extract-domain": "2.2.0"
   },
   "peerDependencies": {
