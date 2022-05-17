@@ -3,6 +3,7 @@ import { extractPixelSize } from '../';
 afterEach(() => {
   window.document.documentElement.style.fontSize = '16px';
   window.document.body.textContent = '';
+  Object.assign(window, { innerWidth: 1024 });
 });
 
 test(`no unit conversion`, () => {
@@ -108,5 +109,76 @@ describe(`viewport-relative units`, () => {
 
   it(`vmax unit conversion`, () => {
     expect(extractPixelSize('50vmax')).toBe(512);
+  });
+});
+
+describe('CSS functions', () => {
+  describe('min()', () => {
+    it(`pixels`, () => {
+      expect(extractPixelSize('min(1px, 2px)')).toBe(1);
+    });
+
+    it(`relative units`, () => {
+      window.document.documentElement.style.fontSize = '10px';
+      expect(extractPixelSize('min(5rem, 10rem)')).toBe(50);
+    });
+
+    it(`mixed units`, () => {
+      expect(extractPixelSize('min(50vh, 50vw)')).toBe(384);
+    });
+  });
+
+  describe('max()', () => {
+    it(`pixels`, () => {
+      expect(extractPixelSize('max(1px, 2px)')).toBe(2);
+    });
+
+    it(`relative units`, () => {
+      window.document.documentElement.style.fontSize = '10px';
+      expect(extractPixelSize('max(5rem, 10rem)')).toBe(100);
+    });
+
+    it(`mixed units`, () => {
+      expect(extractPixelSize('max(50vh, 50vw)')).toBe(512);
+    });
+  });
+
+  describe('clamp()', () => {
+    it(`pixels`, () => {
+      expect(extractPixelSize('clamp(1px, 2px, 3px)')).toBe(2);
+    });
+
+    it(`relative units`, () => {
+      window.document.documentElement.style.fontSize = '10px';
+      expect(extractPixelSize('clamp(1rem, 3rem, 10rem)')).toBe(30);
+    });
+
+    it(`mixed units`, () => {
+      window.document.documentElement.style.fontSize = '16px';
+      expect(extractPixelSize('clamp(5rem, 10vw, 10rem)')).toBe(102.4);
+    });
+
+    it(`constrains values`, () => {
+      Object.assign(window, { innerWidth: 768 });
+      expect(extractPixelSize('clamp(5rem, 10vw, 10rem)')).toBe(80);
+      Object.assign(window, { innerWidth: 2048 });
+      expect(extractPixelSize('clamp(5rem, 10vw, 10rem)')).toBe(160);
+    });
+  });
+
+  describe('nested functions', () => {
+    it(`pixels`, () => {
+      expect(extractPixelSize('max(1px, min(2px, 3px))')).toBe(2);
+    });
+
+    it(`relative units`, () => {
+      window.document.documentElement.style.fontSize = '10px';
+      expect(extractPixelSize('max(1rem, min(3rem, 10rem))')).toBe(30);
+    });
+
+    it(`mixed units`, () => {
+      window.document.documentElement.style.fontSize = '16px';
+      expect(extractPixelSize('max(1rem, min(10vw, 2rem))')).toBe(32);
+    });
   });
 });

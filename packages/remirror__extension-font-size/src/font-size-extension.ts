@@ -120,9 +120,15 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
   }
 
   private getFontSize(size: string) {
-    const { unit, roundingMultiple, max, min } = this.options;
+    const { unit, roundingMultiple, max, min, defaultSize } = this.options;
+    const fontSize = convertPixelsToDomUnit(size, unit, this.store.view?.dom);
+
+    if (Number.isNaN(fontSize)) {
+      return defaultSize || '1rem';
+    }
+
     const value = clamp({
-      value: round(convertPixelsToDomUnit(size, unit, this.store.view?.dom), roundingMultiple),
+      value: round(fontSize, roundingMultiple),
       max,
       min,
     });

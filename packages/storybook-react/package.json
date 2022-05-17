@@ -71,7 +71,9 @@
     "babel-loader": "^8.2.2",
     "codemirror": "^5.62.0",
     "create-context-state": "^1.0.1",
+    "diffable-html": "^4.1.0",
     "globby": "^11.0.4",
+    "html-escaper": "^3.0.3",
     "is-ci": "^3.0.0",
     "postcss": "^8.3.5",
     "postcss-nested": "^5.0.5",
@@ -88,6 +90,7 @@
     "yjs": "^13.5.23"
   },
   "devDependencies": {
+    "@types/html-escaper": "^3.0.0",
     "@types/node": "^16.3.3"
   },
   "@remirror": {

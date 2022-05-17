@@ -3,6 +3,7 @@ import type { Shape } from 'remirror';
 import {
   assert,
   capitalize,
+  clamp,
   clone,
   deepMerge,
   entries,
@@ -482,4 +483,50 @@ test('hasOwnProperty', () => {
 test('getLazyArray', () => {
   expect(getLazyArray(['a'])).toEqual(['a']);
   expect(getLazyArray(() => ['a'])).toEqual(['a']);
+});
+
+describe('clamp', () => {
+  it('should work with a `min`', () => {
+    expect(clamp({ min: 3, max: 5, value: 1 })).toBe(3);
+  });
+
+  it('should work with a `max`', () => {
+    expect(clamp({ min: 1, max: 3, value: 5 })).toBe(3);
+  });
+
+  it('should clamp negative numbers', () => {
+    expect(clamp({ min: -5, max: 5, value: -10 })).toBe(-5);
+    expect(clamp({ min: -5.5, max: 5.5, value: -10.2 })).toBe(-5.5);
+    expect(clamp({ min: -5, max: 5, value: Number.NEGATIVE_INFINITY })).toBe(-5);
+  });
+
+  it('should clamp positive numbers', () => {
+    expect(clamp({ min: -5, max: 5, value: 10 })).toBe(5);
+    expect(clamp({ min: -5.6, max: 5.4, value: 10.6 })).toBe(5.4);
+    expect(clamp({ min: -5, max: 5, value: Number.POSITIVE_INFINITY })).toBe(5);
+  });
+
+  it('should not alter negative numbers in range', () => {
+    expect(clamp({ min: -5, max: 5, value: -4 })).toBe(-4);
+    expect(clamp({ min: -5, max: 5, value: -5 })).toBe(-5);
+    expect(clamp({ min: -5.6, max: 5.6, value: -5.5 })).toBe(-5.5);
+  });
+
+  it('should not alter positive numbers in range', () => {
+    expect(clamp({ min: -5, max: 5, value: 4 })).toBe(4);
+    expect(clamp({ min: -5, max: 5, value: 5 })).toBe(5);
+    expect(clamp({ min: -5.1, max: 5.2, value: 4.5 })).toBe(4.5);
+  });
+
+  it('should not alter `0` in range', () => {
+    expect(clamp({ min: -5, max: 5, value: 0 })).toBe(0);
+  });
+
+  it('should clamp to `0`', () => {
+    expect(clamp({ min: 0, max: 5, value: -10 })).toBe(0);
+  });
+
+  it('should return `NaN` when `value` is `NaN`', () => {
+    expect(clamp({ min: -5, max: 5, value: Number.NaN })).toBe(Number.NaN);
+  });
 });
