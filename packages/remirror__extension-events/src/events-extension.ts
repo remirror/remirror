@@ -339,35 +339,35 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
         handleDOMEvents: {
           focus: (_, event) => {
-            return this.options.focus(event as FocusEvent) || false;
+            return this.options.focus(event) || false;
           },
 
           blur: (_, event) => {
-            return this.options.blur(event as FocusEvent) || false;
+            return this.options.blur(event) || false;
           },
 
           mousedown: (_, event) => {
             this.startMouseover();
-            return this.options.mousedown(event as MouseEvent) || false;
+            return this.options.mousedown(event) || false;
           },
 
           mouseup: (_, event) => {
             this.endMouseover();
-            return this.options.mouseup(event as MouseEvent) || false;
+            return this.options.mouseup(event) || false;
           },
 
           mouseleave: (_, event) => {
             this.mouseover = false;
-            return this.options.mouseleave(event as MouseEvent) || false;
+            return this.options.mouseleave(event) || false;
           },
 
           mouseenter: (_, event) => {
             this.mouseover = true;
-            return this.options.mouseenter(event as MouseEvent) || false;
+            return this.options.mouseenter(event) || false;
           },
 
           keyup: (_, event) => {
-            return this.options.keyup(event as KeyboardEvent) || false;
+            return this.options.keyup(event) || false;
           },
 
           mouseout: this.createMouseEventHandler((event, props) => {
@@ -389,11 +389,11 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
           },
 
           copy: (_, event) => {
-            return this.options.copy(event as ClipboardEvent) || false;
+            return this.options.copy(event) || false;
           },
 
           paste: (_, event) => {
-            return this.options.paste(event as ClipboardEvent) || false;
+            return this.options.paste(event) || false;
           },
         },
       },

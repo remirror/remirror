@@ -80,6 +80,9 @@
       "path": "../../remirror__extension-emoji/src"
     },
     {
+      "path": "../../remirror__extension-entity-reference/src"
+    },
+    {
       "path": "../../remirror__extension-epic-mode/src"
     },
     {

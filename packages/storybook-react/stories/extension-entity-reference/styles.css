@@ -1,0 +1,9 @@
+.active {
+  font-weight: bold;
+}
+.interesting {
+  background-color: lightblue;
+}
+.important {
+  background-color: lightred;
+}
