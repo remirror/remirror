@@ -1,5 +1,22 @@
 # @remirror/react-editors
 
+## 0.1.79
+
+> 2022-05-18
+
+### Patch Changes
+
+- Support font sizes using `min`, `max` or `clamp`. Avoid error if value cannot be parsed.
+
+* Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+- Fix paste of tables in React Tables extension
+
+- Updated dependencies []:
+  - remirror@1.0.81
+  - @remirror/extension-react-tables@1.0.37
+  - @remirror/react@1.0.37
+
 ## 0.1.78
 
 > 2022-05-16

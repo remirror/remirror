@@ -1,5 +1,18 @@
 # @remirror/extension-yjs
 
+## 2.0.1
+
+> 2022-05-18
+
+### Patch Changes
+
+- Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+* Fix paste of tables in React Tables extension
+
+* Updated dependencies []:
+  - @remirror/core@1.4.4
+
 ## 2.0.0
 
 > 2022-05-11

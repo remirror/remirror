@@ -1,5 +1,34 @@
 # @remirror/preset-formatting
 
+## 1.0.29
+
+> 2022-05-18
+
+### Patch Changes
+
+- Support font sizes using `min`, `max` or `clamp`. Avoid error if value cannot be parsed.
+
+* Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+- Fix paste of tables in React Tables extension
+
+- Updated dependencies []:
+  - @remirror/extension-font-size@1.0.23
+  - @remirror/core@1.4.4
+  - @remirror/extension-bold@1.0.21
+  - @remirror/extension-columns@1.0.21
+  - @remirror/extension-heading@1.0.22
+  - @remirror/extension-italic@1.0.21
+  - @remirror/extension-node-formatting@1.0.24
+  - @remirror/extension-strike@1.0.21
+  - @remirror/extension-sub@1.0.21
+  - @remirror/extension-sup@1.0.21
+  - @remirror/extension-text-case@1.0.21
+  - @remirror/extension-text-color@1.0.24
+  - @remirror/extension-text-highlight@1.0.24
+  - @remirror/extension-underline@1.0.21
+  - @remirror/extension-whitespace@1.0.21
+
 ## 1.0.28
 
 > 2022-05-03

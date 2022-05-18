@@ -1,5 +1,18 @@
 # prosemirror-resizable-view
 
+## 1.1.16
+
+> 2022-05-18
+
+### Patch Changes
+
+- Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+* Fix paste of tables in React Tables extension
+
+* Updated dependencies []:
+  - @remirror/core-utils@1.1.9
+
 ## 1.1.15
 
 > 2022-05-05

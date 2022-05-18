@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-codemirror6",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Add CodeMirror6 to your editor.",
   "keywords": [
     "remirror",
@@ -45,7 +45,7 @@
     "@codemirror/language": "^0.20.0",
     "@codemirror/state": "^0.20.0",
     "@codemirror/view": "^0.20.2",
-    "@remirror/core": "^1.4.3"
+    "@remirror/core": "^1.4.4"
   },
   "devDependencies": {
     "@remirror/pm": "^1.0.19"

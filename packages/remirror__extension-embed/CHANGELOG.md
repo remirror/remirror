@@ -1,5 +1,19 @@
 # @remirror/extension-embed
 
+## 1.1.30
+
+> 2022-05-18
+
+### Patch Changes
+
+- Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+* Fix paste of tables in React Tables extension
+
+* Updated dependencies []:
+  - prosemirror-resizable-view@1.1.16
+  - @remirror/core@1.4.4
+
 ## 1.1.29
 
 > 2022-05-05
