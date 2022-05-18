@@ -2,15 +2,19 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
+  composeTransactionSteps,
   convertCommand,
+  CreateExtensionPlugin,
   Decoration,
   EditorView,
   ExtensionPriority,
+  getChangedNodes,
   NodeExtension,
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorNode,
   ProsemirrorPlugin,
+  replaceNodeAtPosition,
 } from '@remirror/core';
 import type { CreateTableCommand, TableSchemaSpec } from '@remirror/extension-tables';
 import {
@@ -176,6 +180,40 @@ export class TableExtension extends BaseTableExtension {
   @command()
   addTableRowAfter(): CommandFunction {
     return convertCommand(addRowAfter);
+  }
+
+  createPlugin(): CreateExtensionPlugin<void> {
+    return {
+      appendTransaction: (transactions, prevState, state) => {
+        const composedTransaction = composeTransactionSteps(transactions, prevState);
+
+        const { schema, tr } = state;
+
+        const tableNodes = getChangedNodes(composedTransaction, {
+          predicate: ({ type }: ProsemirrorNode) => type === schema.nodes.table,
+        });
+
+        if (tableNodes.length === 0) {
+          return;
+        }
+
+        for (const { node: table, pos } of tableNodes) {
+          if (table.attrs.isControllersInjected) {
+            continue;
+          }
+
+          const controlledTable = injectControllers({
+            schema,
+            getMap: () => TableMap.get(table),
+            table,
+          });
+
+          replaceNodeAtPosition({ pos, tr, content: controlledTable });
+        }
+
+        return tr.steps.length > 0 ? tr : undefined;
+      },
+    };
   }
 }
 

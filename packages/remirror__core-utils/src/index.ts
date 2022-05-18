@@ -126,6 +126,7 @@ export {
   applyClonedTransaction,
   chainKeyBindingCommands,
   cloneTransaction,
+  composeTransactionSteps,
   containsAttributes,
   findElementAtPosition,
   findNodeAtPosition,

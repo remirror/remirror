@@ -21,6 +21,7 @@ import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 
 import {
   cloneTransaction,
+  composeTransactionSteps,
   containsAttributes,
   findElementAtPosition,
   findNodeAtSelection,
@@ -349,6 +350,57 @@ describe('cloneTransaction', () => {
 
       jest.advanceTimersByTime(20);
     });
+  });
+});
+
+describe('composeTransactionSteps', () => {
+  it('combines the steps of the given transactions', () => {
+    const { state } = createEditor(doc(p('one'), p('two')));
+    const tr1 = cloneTransaction(state.tr.replaceRangeWith(0, 5, p('ONE')));
+    const tr2 = cloneTransaction(state.tr.replaceRangeWith(5, 10, p('TWO')));
+
+    const composedTr = composeTransactionSteps([tr1, tr2], state);
+    expect(composedTr.steps).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "from": 0,
+          "slice": Object {
+            "content": Array [
+              Object {
+                "content": Array [
+                  Object {
+                    "text": "ONE",
+                    "type": "text",
+                  },
+                ],
+                "type": "paragraph",
+              },
+            ],
+          },
+          "stepType": "replace",
+          "to": 5,
+        },
+        Object {
+          "from": 5,
+          "slice": Object {
+            "content": Array [
+              Object {
+                "content": Array [
+                  Object {
+                    "text": "TWO",
+                    "type": "text",
+                  },
+                ],
+                "type": "paragraph",
+              },
+            ],
+          },
+          "stepType": "replace",
+          "to": 10,
+        },
+      ]
+    `);
+    expect(composedTr.doc).toEqualProsemirrorNode(doc(p('ONE'), p('TWO')));
   });
 });
 

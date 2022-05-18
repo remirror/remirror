@@ -3,6 +3,7 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
+  composeTransactionSteps,
   CreateExtensionPlugin,
   EditorState,
   extension,
@@ -556,12 +557,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         }
 
         // Create a single transaction, by combining all transactions
-        const composedTransaction = prevState.tr;
-        transactions.forEach((transaction) => {
-          transaction.steps.forEach((step) => {
-            composedTransaction.step(step);
-          });
-        });
+        const composedTransaction = composeTransactionSteps(transactions, prevState);
 
         const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
         const { mapping } = composedTransaction;

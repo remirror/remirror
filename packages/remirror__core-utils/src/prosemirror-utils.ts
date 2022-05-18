@@ -128,6 +128,24 @@ export function applyClonedTransaction(props: ApplyClonedTransactionProps): void
 }
 
 /**
+ * Returns a new transaction by combining all steps of the passed transactions onto the previous state
+ */
+export function composeTransactionSteps(
+  transactions: Transaction[],
+  oldState: EditorState,
+): Transaction {
+  const { tr } = oldState;
+
+  transactions.forEach((transaction) => {
+    transaction.steps.forEach((step) => {
+      tr.step(step);
+    });
+  });
+
+  return tr;
+}
+
+/**
  * Checks if the type a given `node` has a given `nodeType`.
  */
 export function markEqualsType<Schema extends EditorSchema = EditorSchema>(
