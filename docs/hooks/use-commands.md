@@ -71,7 +71,7 @@ const handleToggleBoldItalic = useCallback(() => {
 }, [toggleBold, toggleItalic]);
 ```
 
-When using a **controlled** editor, multiple commands must be performed via _chained_ commands instead (via the `useChainedCommands` hook).
+When using a **controlled** editor, multiple commands must be performed via _chained_ commands instead (via the [`useChainedCommands`](/docs/hooks/use-chained-commands) hook).
 
 See [potential pitfalls](/docs/react/controlled/#potential-pitfalls) in the controlled editor documentation for a in-depth description of the problem.
 
