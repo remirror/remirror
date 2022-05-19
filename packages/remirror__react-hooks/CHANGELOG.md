@@ -1,5 +1,25 @@
 # @remirror/react-hooks
 
+## 1.0.34
+
+> 2022-05-18
+
+### Patch Changes
+
+- Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+* Fix paste of tables in React Tables extension
+
+* Updated dependencies []:
+  - @remirror/core@1.4.4
+  - @remirror/extension-emoji@1.0.25
+  - @remirror/extension-events@1.1.2
+  - @remirror/extension-history@1.0.21
+  - @remirror/extension-mention@1.0.22
+  - @remirror/extension-mention-atom@1.0.25
+  - @remirror/extension-positioner@1.2.5
+  - @remirror/react-core@1.2.1
+
 ## 1.0.33
 
 > 2022-05-03

@@ -1,5 +1,25 @@
 # @remirror/preset-core
 
+## 1.0.27
+
+> 2022-05-18
+
+### Patch Changes
+
+- Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+* Fix paste of tables in React Tables extension
+
+* Updated dependencies []:
+  - @remirror/core@1.4.4
+  - @remirror/extension-doc@1.0.22
+  - @remirror/extension-events@1.1.2
+  - @remirror/extension-gap-cursor@1.0.21
+  - @remirror/extension-history@1.0.21
+  - @remirror/extension-paragraph@1.0.21
+  - @remirror/extension-positioner@1.2.5
+  - @remirror/extension-text@1.0.21
+
 ## 1.0.26
 
 > 2022-04-21

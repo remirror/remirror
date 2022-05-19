@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-text-highlight",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Add a color background to the selected text (or text within a specified range).",
   "keywords": [
     "remirror",
@@ -40,8 +40,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.3",
-    "@remirror/extension-text-color": "^1.0.23",
+    "@remirror/core": "^1.4.4",
+    "@remirror/extension-text-color": "^1.0.24",
     "@remirror/messages": "^1.0.6"
   },
   "devDependencies": {

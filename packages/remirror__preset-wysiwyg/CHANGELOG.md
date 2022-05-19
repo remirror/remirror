@@ -1,5 +1,39 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.52
+
+> 2022-05-18
+
+### Patch Changes
+
+- Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+* Fix paste of tables in React Tables extension
+
+* Updated dependencies []:
+  - @remirror/core@1.4.4
+  - @remirror/extension-bidi@1.0.21
+  - @remirror/extension-blockquote@1.0.24
+  - @remirror/extension-bold@1.0.21
+  - @remirror/extension-code@1.0.22
+  - @remirror/extension-code-block@1.0.27
+  - @remirror/extension-drop-cursor@1.0.21
+  - @remirror/extension-embed@1.1.30
+  - @remirror/extension-gap-cursor@1.0.21
+  - @remirror/extension-hard-break@1.0.21
+  - @remirror/extension-heading@1.0.22
+  - @remirror/extension-horizontal-rule@1.0.22
+  - @remirror/extension-image@1.0.35
+  - @remirror/extension-italic@1.0.21
+  - @remirror/extension-link@1.2.1
+  - @remirror/extension-list@1.2.23
+  - @remirror/extension-search@1.0.21
+  - @remirror/extension-shortcuts@1.1.10
+  - @remirror/extension-strike@1.0.21
+  - @remirror/extension-trailing-node@1.0.21
+  - @remirror/extension-underline@1.0.21
+  - @remirror/preset-core@1.0.27
+
 ## 1.1.51
 
 > 2022-05-05

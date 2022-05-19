@@ -1,5 +1,21 @@
 # jest-remirror
 
+## 1.0.43
+
+> 2022-05-18
+
+### Patch Changes
+
+- Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+* Fix paste of tables in React Tables extension
+
+* Updated dependencies []:
+  - jest-prosemirror@1.0.27
+  - @remirror/core@1.4.4
+  - @remirror/dom@1.0.28
+  - @remirror/preset-core@1.0.27
+
 ## 1.0.42
 
 > 2022-05-16

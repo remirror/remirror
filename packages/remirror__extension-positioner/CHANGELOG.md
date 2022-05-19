@@ -1,5 +1,19 @@
 # @remirror/extension-positioner
 
+## 1.2.5
+
+> 2022-05-18
+
+### Patch Changes
+
+- Add support for parsing CSS functions (`min,`max`and`clamp`) to`extractPixelSize`.
+
+* Fix paste of tables in React Tables extension
+
+* Updated dependencies []:
+  - @remirror/core@1.4.4
+  - @remirror/extension-events@1.1.2
+
 ## 1.2.4
 
 > 2022-04-21
