@@ -132,17 +132,21 @@ const docs = [
       .readdirSync(path.join(__dirname, '../docs/hooks'))
       .map((name) => `hooks/${name.replace(/\.mdx?$/, '')}`),
   },
-  {
+];
+
+if (getApiItems().length > 0) {
+  docs.push({
     type: 'category',
     label: 'API',
     collapsed: true,
     items: getApiItems(),
-  },
-  {
-    type: 'link',
-    label: 'Storybook',
-    href: 'https://remirror.vercel.app/',
-  },
-];
+  });
+}
+
+docs.push({
+  type: 'link',
+  label: 'Storybook',
+  href: 'https://remirror.vercel.app/',
+});
 
 exports.docs = docs;
