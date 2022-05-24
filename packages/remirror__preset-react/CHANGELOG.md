@@ -1,5 +1,23 @@
 # @remirror/preset-react
 
+## 1.0.27
+
+> 2022-05-24
+
+### Patch Changes
+
+- Add a built in extension allowing external code to subscribe to document changes.
+
+  ```ts
+  manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.4.5
+  - @remirror/extension-placeholder@1.0.25
+  - @remirror/extension-react-component@1.1.13
+  - @remirror/extension-react-ssr@1.0.25
+
 ## 1.0.26
 
 > 2022-05-18

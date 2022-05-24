@@ -1,5 +1,34 @@
 # @remirror/preset-formatting
 
+## 1.0.30
+
+> 2022-05-24
+
+### Patch Changes
+
+- Add a built in extension allowing external code to subscribe to document changes.
+
+  ```ts
+  manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.4.5
+  - @remirror/extension-bold@1.0.22
+  - @remirror/extension-columns@1.0.22
+  - @remirror/extension-font-size@1.0.24
+  - @remirror/extension-heading@1.0.23
+  - @remirror/extension-italic@1.0.22
+  - @remirror/extension-node-formatting@1.0.25
+  - @remirror/extension-strike@1.0.22
+  - @remirror/extension-sub@1.0.22
+  - @remirror/extension-sup@1.0.22
+  - @remirror/extension-text-case@1.0.22
+  - @remirror/extension-text-color@1.0.25
+  - @remirror/extension-text-highlight@1.0.25
+  - @remirror/extension-underline@1.0.22
+  - @remirror/extension-whitespace@1.0.22
+
 ## 1.0.29
 
 > 2022-05-18

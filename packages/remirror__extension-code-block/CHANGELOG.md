@@ -1,5 +1,20 @@
 # @remirror/extension-code-block
 
+## 1.0.28
+
+> 2022-05-24
+
+### Patch Changes
+
+- Add a built in extension allowing external code to subscribe to document changes.
+
+  ```ts
+  manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.4.5
+
 ## 1.0.27
 
 > 2022-05-18

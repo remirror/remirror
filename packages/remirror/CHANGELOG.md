@@ -1,5 +1,73 @@
 # remirror
 
+## 1.0.82
+
+> 2022-05-24
+
+### Patch Changes
+
+- Add a built in extension allowing external code to subscribe to document changes.
+
+  ```ts
+  manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.4.5
+  - @remirror/dom@1.0.29
+  - @remirror/extension-annotation@1.1.23
+  - @remirror/extension-bidi@1.0.22
+  - @remirror/extension-blockquote@1.0.25
+  - @remirror/extension-bold@1.0.22
+  - @remirror/extension-callout@1.0.25
+  - @remirror/extension-code@1.0.23
+  - @remirror/extension-code-block@1.0.28
+  - @remirror/extension-codemirror5@1.0.22
+  - @remirror/extension-collaboration@1.0.22
+  - @remirror/extension-columns@1.0.22
+  - @remirror/extension-diff@1.0.22
+  - @remirror/extension-doc@1.0.23
+  - @remirror/extension-drop-cursor@1.0.22
+  - @remirror/extension-embed@1.1.31
+  - @remirror/extension-emoji@1.0.26
+  - @remirror/extension-epic-mode@1.0.22
+  - @remirror/extension-events@1.1.3
+  - @remirror/extension-font-family@1.0.22
+  - @remirror/extension-font-size@1.0.24
+  - @remirror/extension-gap-cursor@1.0.22
+  - @remirror/extension-hard-break@1.0.22
+  - @remirror/extension-heading@1.0.23
+  - @remirror/extension-history@1.0.22
+  - @remirror/extension-horizontal-rule@1.0.23
+  - @remirror/extension-image@1.0.36
+  - @remirror/extension-italic@1.0.22
+  - @remirror/extension-link@1.2.2
+  - @remirror/extension-list@1.2.24
+  - @remirror/extension-markdown@1.0.22
+  - @remirror/extension-mention@1.0.23
+  - @remirror/extension-mention-atom@1.0.26
+  - @remirror/extension-node-formatting@1.0.25
+  - @remirror/extension-paragraph@1.0.22
+  - @remirror/extension-placeholder@1.0.25
+  - @remirror/extension-positioner@1.2.6
+  - @remirror/extension-search@1.0.22
+  - @remirror/extension-shortcuts@1.1.11
+  - @remirror/extension-strike@1.0.22
+  - @remirror/extension-sub@1.0.22
+  - @remirror/extension-sup@1.0.22
+  - @remirror/extension-tables@1.0.25
+  - @remirror/extension-text@1.0.22
+  - @remirror/extension-text-case@1.0.22
+  - @remirror/extension-text-color@1.0.25
+  - @remirror/extension-text-highlight@1.0.25
+  - @remirror/extension-trailing-node@1.0.22
+  - @remirror/extension-underline@1.0.22
+  - @remirror/extension-whitespace@1.0.22
+  - @remirror/extension-yjs@2.0.2
+  - @remirror/preset-core@1.0.28
+  - @remirror/preset-formatting@1.0.30
+  - @remirror/preset-wysiwyg@1.1.53
+
 ## 1.0.81
 
 > 2022-05-18
