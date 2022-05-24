@@ -33,20 +33,19 @@ import {
 } from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
+import { ReactEditorProps } from '../types';
+
 export default { title: 'Editors / Markdown' };
 
-export interface MarkdownEditorProps {
-  placeholder?: string;
-  initialContent?: string;
-}
+export interface MarkdownEditorProps extends Partial<Omit<ReactEditorProps, 'stringHandler'>> {}
 
 /**
  * The editor which is used to create the annotation. Supports formatting.
  */
 export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   placeholder,
-  initialContent,
   children,
+  ...rest
 }) => {
   const extensions = useCallback(
     () => [
@@ -83,7 +82,7 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   return (
     <AllStyledComponent>
       <ThemeProvider>
-        <Remirror manager={manager} autoFocus initialContent={initialContent}>
+        <Remirror manager={manager} autoFocus {...rest}>
           <Toolbar items={toolbarItems} refocusEditor label='Top Toolbar' />
           <EditorComponent />
           {children}

@@ -23,15 +23,16 @@ import { AllStyledComponent } from '@remirror/styles/emotion';
 
 import { BubbleMenu } from '../components/bubble-menu';
 import { TopToolbar } from '../components/top-toolbar';
+import { ReactEditorProps } from '../types';
 
 const extraAttributes: IdentifierSchemaAttributes[] = [
   { identifiers: ['mention', 'emoji'], attributes: { role: { default: 'presentation' } } },
   { identifiers: ['mention'], attributes: { href: { default: null } } },
 ];
 
-export interface SocialEditorProps extends Pick<MentionComponentProps, 'users' | 'tags'> {
-  placeholder?: string;
-}
+export interface SocialEditorProps
+  extends Partial<ReactEditorProps>,
+    Pick<MentionComponentProps, 'users' | 'tags'> {}
 
 interface MentionComponentProps<
   UserData extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
@@ -66,7 +67,11 @@ function MentionComponent({ users, tags }: MentionComponentProps) {
 
 export const SocialEditor: FC<PropsWithChildren<SocialEditorProps>> = ({
   placeholder,
-  ...props
+  stringHandler,
+  children,
+  users,
+  tags,
+  ...rest
 }) => {
   const extensions = useCallback(
     () => [
@@ -84,17 +89,16 @@ export const SocialEditor: FC<PropsWithChildren<SocialEditorProps>> = ({
     [placeholder],
   );
 
-  const { children } = props;
-  const { manager } = useRemirror({ extensions, extraAttributes });
+  const { manager } = useRemirror({ extensions, extraAttributes, stringHandler });
 
   return (
     <AllStyledComponent>
       <ThemeProvider>
-        <Remirror manager={manager}>
+        <Remirror manager={manager} {...rest}>
           <TopToolbar />
           <EditorComponent />
           <EmojiPopupComponent />
-          <MentionComponent {...props} />
+          <MentionComponent users={users} tags={tags} />
           <TableComponents />
           <BubbleMenu />
           {children}

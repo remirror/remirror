@@ -12,27 +12,27 @@ import { AllStyledComponent } from '@remirror/styles/emotion';
 
 import { BubbleMenu } from '../components/bubble-menu';
 import { TopToolbar } from '../components/top-toolbar';
+import { ReactEditorProps } from '../types';
 
-export interface WysiwygEditorProps {
-  placeholder?: string;
-}
+export interface WysiwygEditorProps extends Partial<ReactEditorProps> {}
 
 export const WysiwygEditor: FC<PropsWithChildren<WysiwygEditorProps>> = ({
   placeholder,
-  ...props
+  stringHandler,
+  children,
+  ...rest
 }) => {
   const extensions = useCallback(
     () => [new PlaceholderExtension({ placeholder }), new TableExtension(), ...wysiwygPreset()],
     [placeholder],
   );
 
-  const { children } = props;
-  const { manager } = useRemirror({ extensions });
+  const { manager } = useRemirror({ extensions, stringHandler });
 
   return (
     <AllStyledComponent>
       <ThemeProvider>
-        <Remirror manager={manager}>
+        <Remirror manager={manager} {...rest}>
           <TopToolbar />
           <EditorComponent />
           <BubbleMenu />
