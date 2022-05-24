@@ -99,7 +99,11 @@ const docs = [
   {
     type: 'category',
     label: 'Advanced',
-    items: ['advanced/creating-extensions', 'advanced/naming-conventions'],
+    items: [
+      'advanced/creating-extensions',
+      'advanced/naming-conventions',
+      'advanced/browser-support',
+    ],
   },
   'faq',
   {

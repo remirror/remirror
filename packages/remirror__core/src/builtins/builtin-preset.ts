@@ -4,6 +4,7 @@ import type { GetStaticAndDynamic, ValueOf } from '@remirror/core-types';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
 import { DecorationsExtension, DecorationsOptions } from './decorations-extension';
+import { DocChangedExtension } from './doc-changed-extension';
 import { HelpersExtension } from './helpers-extension';
 import { InputRulesExtension, InputRulesOptions } from './input-rules-extension';
 import { KeymapExtension, KeymapOptions } from './keymap-extension';
@@ -73,6 +74,7 @@ export function builtinPreset(options: GetStaticAndDynamic<BuiltinOptions> = {})
     new CommandsExtension(),
     new HelpersExtension(),
     new KeymapExtension(keymapOptions),
+    new DocChangedExtension(),
     new UploadExtension(),
     new DecorationsExtension(decorationsOptions),
   ];
@@ -90,6 +92,7 @@ export type BuiltinPreset =
   | CommandsExtension
   | HelpersExtension
   | KeymapExtension
+  | DocChangedExtension
   | UploadExtension
   | DecorationsExtension;
 

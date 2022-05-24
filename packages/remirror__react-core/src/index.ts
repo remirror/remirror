@@ -32,6 +32,8 @@ export {
   useSelectedText,
   useUpdateReason,
 } from './hooks';
+export type { OnChangeHTMLProps, OnChangeJSONProps } from './on-change';
+export { OnChangeHTML, OnChangeJSON } from './on-change';
 export { createReactManager } from './react-helpers';
 export type { RemirrorProps } from './react-remirror';
 export { EditorComponent, Remirror } from './react-remirror';

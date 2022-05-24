@@ -3,6 +3,7 @@ export * from './builtin-decorators';
 export * from './builtin-preset';
 export * from './commands-extension';
 export * from './decorations-extension';
+export * from './doc-changed-extension';
 export * from './helpers-extension';
 export * from './input-rules-extension';
 export * from './keymap-extension';

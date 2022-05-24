@@ -3,6 +3,7 @@ export * from './use-attrs';
 export * from './use-chained-commands';
 export * from './use-commands';
 export * from './use-current-selection';
+export * from './use-doc-changed';
 export * from './use-editor-dom-ref';
 export * from './use-editor-state';
 export * from './use-editor-view';
