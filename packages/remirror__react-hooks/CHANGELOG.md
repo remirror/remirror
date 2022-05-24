@@ -1,5 +1,66 @@
 # @remirror/react-hooks
 
+## 1.0.35
+
+> 2022-05-24
+
+### Patch Changes
+
+- Add a built in extension allowing external code to subscribe to document changes.
+
+  ```ts
+  manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
+  ```
+
+* Add a hook, and 2 React components to simplify subscribing to document changes.
+
+  Adds a `useDocChanged` hook, which when given a handler function, calls it with the transactions and state when document is changed.
+
+  ```js
+  import { useCallback } from 'react';
+  import { useDocChanged } from '@remirror/react';
+
+  useDocChanged(
+    useCallback(({ tr, transactions, state }) => {
+      console.log('Transaction', tr);
+      console.log('Transactions', transactions);
+      console.log('EditorState', state);
+    }, []),
+  );
+  ```
+
+  Also adds two React components, `OnChangeJSON` and `OnChangeHTML` which accept a handler function, which is called with the JSON or HTML serialisation of doc state, whenever the document is changed.
+
+  ```jsx
+  import { useCallback } from 'react';
+  import { OnChangeJSON, OnChangeHTML } from '@remirror/react';
+
+  const handleChangeJSON = useCallback((json) => {
+    console.log('JSON serialised state', json);
+  }, []);
+
+  const handleChangeHTML = useCallback((html) => {
+    console.log('HTML serialised state', html);
+  }, []);
+
+  return (
+    <Remirror manager={manager} autoRender>
+      <OnChangeJSON onChange={handleChangeJSON} />
+      <OnChangeHTML onChange={handleChangeHTML} />
+    </Remirror>
+  );
+  ```
+
+* Updated dependencies []:
+  - @remirror/core@1.4.5
+  - @remirror/extension-emoji@1.0.26
+  - @remirror/extension-events@1.1.3
+  - @remirror/extension-history@1.0.22
+  - @remirror/extension-mention@1.0.23
+  - @remirror/extension-mention-atom@1.0.26
+  - @remirror/extension-positioner@1.2.6
+  - @remirror/react-core@1.2.2
+
 ## 1.0.34
 
 > 2022-05-18

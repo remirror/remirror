@@ -1,5 +1,20 @@
 # @remirror/extension-embed
 
+## 1.1.31
+
+> 2022-05-24
+
+### Patch Changes
+
+- Add a built in extension allowing external code to subscribe to document changes.
+
+  ```ts
+  manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.4.5
+
 ## 1.1.30
 
 > 2022-05-18

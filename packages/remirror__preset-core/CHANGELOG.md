@@ -1,5 +1,27 @@
 # @remirror/preset-core
 
+## 1.0.28
+
+> 2022-05-24
+
+### Patch Changes
+
+- Add a built in extension allowing external code to subscribe to document changes.
+
+  ```ts
+  manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
+  ```
+
+- Updated dependencies []:
+  - @remirror/core@1.4.5
+  - @remirror/extension-doc@1.0.23
+  - @remirror/extension-events@1.1.3
+  - @remirror/extension-gap-cursor@1.0.22
+  - @remirror/extension-history@1.0.22
+  - @remirror/extension-paragraph@1.0.22
+  - @remirror/extension-positioner@1.2.6
+  - @remirror/extension-text@1.0.22
+
 ## 1.0.27
 
 > 2022-05-18
