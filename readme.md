@@ -122,26 +122,32 @@ Whatever you decide thanks for taking the time to explore the **remirror** proje
 <table>
   <tr>
     <td align="center">
+      <a href="https://www.hellobenefex.com/" rel="nofollow">
+        <img src="https://user-images.githubusercontent.com/2003804/170766938-b915e2a7-1b8c-47d3-861d-6037922416a9.jpeg" width="50" style="max-width: 100%;" alt="Benefex logo"><br>
+        <strong>Benefex</strong>
+      </a>
+    </td>
+    <td align="center">
       <a href="https://cobudget.com/" rel="nofollow">
-        <img src="https://user-images.githubusercontent.com/2003804/170274003-89c8ff79-c5b7-4a59-b78b-b540f2fe308e.jpeg" height="50" style="max-width: 100%;" alt="Cobudget logo"><br>
+        <img src="https://user-images.githubusercontent.com/2003804/170274003-89c8ff79-c5b7-4a59-b78b-b540f2fe308e.jpeg" width="50" style="max-width: 100%;" alt="Cobudget logo"><br>
         <strong>Cobudget</strong>
       </a>
     </td>
     <td align="center">
       <a href="https://eftax.co.jp/" rel="nofollow">
-        <img src="https://user-images.githubusercontent.com/2003804/170274006-133e9f20-1d01-47a1-92af-7cac9a8c2fb6.png" height="50" style="max-width: 100%;" alt="eftax logo"><br>
+        <img src="https://user-images.githubusercontent.com/2003804/170274006-133e9f20-1d01-47a1-92af-7cac9a8c2fb6.png" width="80" style="max-width: 100%;" alt="eftax logo"><br>
         <strong>eftax Co., Ltd.</strong>
       </a>
     </td>
     <td align="center">
       <a href="https://www.labkey.com/" rel="nofollow">
-        <img src="https://user-images.githubusercontent.com/2003804/170284116-672d0048-31aa-4b3c-8889-648ecc6e01b9.png" height="50" style="max-width: 100%;" alt="LabKey logo"><br>
+        <img src="https://user-images.githubusercontent.com/2003804/170284116-672d0048-31aa-4b3c-8889-648ecc6e01b9.png" width="50" style="max-width: 100%;" alt="LabKey logo"><br>
         <strong>LabKey</strong>
       </a>
     </td>
     <td align="center">
       <a href="https://www.onethread.app/" rel="nofollow">
-        <img src="https://user-images.githubusercontent.com/2003804/170278624-631b4030-1f5e-4fb9-832f-783d0806dd61.jpeg" height="50" style="max-width: 100%;" alt="Onethread logo"><br>
+        <img src="https://user-images.githubusercontent.com/2003804/170278624-631b4030-1f5e-4fb9-832f-783d0806dd61.jpeg" width="50" style="max-width: 100%;" alt="Onethread logo"><br>
         <strong>Onethread</strong>
       </a>
     </td>
