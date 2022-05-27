@@ -1,5 +1,16 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.54
+
+> 2022-05-27
+
+### Patch Changes
+
+- Return `false` when list indent and dedent commands won't work.
+
+- Updated dependencies []:
+  - @remirror/extension-list@1.2.25
+
 ## 1.1.53
 
 > 2022-05-24

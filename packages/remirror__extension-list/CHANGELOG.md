@@ -1,5 +1,13 @@
 # @remirror/extension-list
 
+## 1.2.25
+
+> 2022-05-27
+
+### Patch Changes
+
+- Return `false` when list indent and dedent commands won't work.
+
 ## 1.2.24
 
 > 2022-05-24

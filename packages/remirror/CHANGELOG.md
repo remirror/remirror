@@ -1,5 +1,21 @@
 # remirror
 
+## 1.0.83
+
+> 2022-05-27
+
+### Patch Changes
+
+- Make sure NodeFormattingExtension works well with list extensions for `Tab` and `Shift-Tab` shortcuts.
+
+* Return `false` when list indent and dedent commands won't work.
+
+* Updated dependencies []:
+  - @remirror/extension-node-formatting@1.0.26
+  - @remirror/preset-formatting@1.0.31
+  - @remirror/extension-list@1.2.25
+  - @remirror/preset-wysiwyg@1.1.54
+
 ## 1.0.82
 
 > 2022-05-24
