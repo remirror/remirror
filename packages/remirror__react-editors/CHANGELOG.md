@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.81
+
+> 2022-05-27
+
+### Patch Changes
+
+- Return `false` when list indent and dedent commands won't work.
+
+* Make sure NodeFormattingExtension works well with list extensions for `Tab` and `Shift-Tab` shortcuts.
+
+* Updated dependencies []:
+  - remirror@1.0.83
+
 ## 0.1.80
 
 > 2022-05-24
