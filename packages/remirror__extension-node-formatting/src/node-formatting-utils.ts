@@ -4,6 +4,7 @@ import {
   extractPixelSize,
   isNumber,
   last,
+  NodeType,
   NodeWithPosition,
   Shape,
   Static,
@@ -56,20 +57,51 @@ function createActiveCheck(
   };
 }
 
+function isValidNodeType(type: NodeType, included: string[], excluded: string[]): boolean {
+  if (excluded.includes(type.name)) {
+    return false;
+  }
+
+  return included.includes(type.name);
+}
+
 export function gatherNodes(
   state: Transaction | EditorState,
   included: string[],
   excluded: string[],
 ): NodeWithPosition[] {
   const gatheredNodes: NodeWithPosition[] = [];
+  const { $from, $to } = state.selection;
+  const range = $from.blockRange($to);
+
+  if (!range) {
+    return [];
+  }
+
+  const { parent, start, end } = range;
+  const isRangeEntireParentContent = parent.nodeSize - 2 === end - start;
+
+  if (isRangeEntireParentContent && isValidNodeType(parent.type, included, excluded)) {
+    return [
+      {
+        node: parent,
+        pos: start - 1,
+      },
+    ];
+  }
 
   // Gather the nodes to indent.
-  state.doc.nodesBetween(state.selection.from, state.selection.to, (node, pos) => {
-    if (excluded.includes(node.type.name) || !included.includes(node.type.name)) {
+  state.doc.nodesBetween(start, end, (node, pos) => {
+    if (pos < start || pos > end) {
       return;
     }
 
-    gatheredNodes.push({ node, pos });
+    if (isValidNodeType(node.type, included, excluded)) {
+      gatheredNodes.push({ node, pos });
+      return false;
+    }
+
+    return;
   });
 
   return gatheredNodes;

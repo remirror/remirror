@@ -3,6 +3,7 @@ import {
   command,
   CommandFunction,
   extension,
+  ExtensionPriority,
   ExtensionTag,
   IdentifierSchemaAttributes,
   isEmptyArray,
@@ -176,7 +177,9 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
    */
   @command(increaseIndentOptions)
   increaseIndent(): CommandFunction {
-    return this.setIndent('+1');
+    return (props) => {
+      return this.setIndent('+1')(props);
+    };
   }
 
   /**
@@ -184,7 +187,9 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
    */
   @command(decreaseIndentOptions)
   decreaseIndent(): CommandFunction {
-    return this.setIndent('-1');
+    return (props) => {
+      return this.setIndent('-1')(props);
+    };
   }
 
   @keyBinding({ shortcut: NamedShortcut.CenterAlignment, command: 'centerAlign' })
@@ -207,12 +212,22 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
     return this.rightAlign()(props);
   }
 
-  @keyBinding({ shortcut: NamedShortcut.IncreaseIndent, command: 'increaseIndent' })
+  @keyBinding({
+    shortcut: NamedShortcut.IncreaseIndent,
+    command: 'increaseIndent',
+    // Ensure this has lower priority than the indent keybinding in @remirror/extension-list
+    priority: ExtensionPriority.Low,
+  })
   increaseIndentShortcut(props: KeyBindingProps): boolean {
     return this.increaseIndent()(props);
   }
 
-  @keyBinding({ shortcut: NamedShortcut.DecreaseIndent, command: 'decreaseIndent' })
+  @keyBinding({
+    shortcut: NamedShortcut.DecreaseIndent,
+    command: 'decreaseIndent',
+    // Ensure this has higher priority than the dedent keybinding in @remirror/extension-list
+    priority: ExtensionPriority.Medium,
+  })
   decreaseIndentShortcut(props: KeyBindingProps): boolean {
     return this.decreaseIndent()(props);
   }
