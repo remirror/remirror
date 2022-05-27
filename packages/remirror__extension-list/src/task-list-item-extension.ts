@@ -87,12 +87,19 @@ export class TaskListItemExtension extends NodeExtension {
       mark.type = 'checkbox';
       mark.classList.add(ExtensionListTheme.LIST_ITEM_CHECKBOX);
       mark.contentEditable = 'false';
-      mark.addEventListener('click', () => {
+      mark.addEventListener('click', (e: MouseEvent) => {
+        if (!view.editable) {
+          e.preventDefault();
+        }
+      });
+      mark.addEventListener('change', () => {
         const pos = (getPos as () => number)();
         const $pos = view.state.doc.resolve(pos + 1);
         this.store.commands.toggleCheckboxChecked({ $pos });
-        return true;
       });
+
+      // Use the node as the source of truth of the checkbox state.
+      mark.checked = node.attrs.checked;
 
       return createCustomMarkListItemNodeView({
         node,
