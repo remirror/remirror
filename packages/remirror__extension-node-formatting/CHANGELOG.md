@@ -1,5 +1,13 @@
 # @remirror/extension-node-formatting
 
+## 1.0.26
+
+> 2022-05-27
+
+### Patch Changes
+
+- Make sure NodeFormattingExtension works well with list extensions for `Tab` and `Shift-Tab` shortcuts.
+
 ## 1.0.25
 
 > 2022-05-24
