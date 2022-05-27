@@ -3,8 +3,7 @@
 </p>
 
 <p align="center">
-  A <em>toolkit</em> for building <em>cross-platform</em> text editors
-  <br />in the <em>framework</em> of your choice.
+  A React <em>toolkit</em> for building <em>cross-platform</em> text editors, based on <a href="https://github.com/ProseMirror/prosemirror">ProseMirror</a>.
 </p>
 
 <br />
@@ -21,7 +20,7 @@
 
 <p align="center">
   <a href="https://unpkg.com/@remirror/core/dist/core.browser.esm.js">
-    <img src="https://img.shields.io/bundlephobia/minzip/@remirror/core/next" alt="Bundled sized of core [getJSON]brary" title="@remirror/core bundle size">
+    <img src="https://img.shields.io/bundlephobia/minzip/@remirror/core/next" alt="Bundled sized of core library" title="@remirror/core bundle size">
   </a>
   <a href="https://github.com/remirror/remirror/actions?query=workflow:ci">
     <img src="https://github.com/remirror/remirror/workflows/ci/badge.svg?branch=next" alt="Continuous integration badge for automatic releases" title="GitHub Actions CI Badge" />
@@ -39,7 +38,10 @@
     <img alt="Discord" src="https://img.shields.io/discord/726035064831344711" alt="Join our discord server" title="Discord server link" />
   </a>
   <a href="./packages/remirror/package.json">
-    <img src="https://img.shields.io/npm/v/remirror/next?style=flat">
+    <img src="https://img.shields.io/npm/v/remirror?style=flat" alt="Version" />
+  </a>
+  <a href="https://github.com/sponsors/remirror">
+    <img src="https://img.shields.io/badge/-Sponsor-7963d2" alt="Sponsor" />
   </a>
 </p>
 
@@ -47,37 +49,39 @@
 
 ## Introduction
 
-```tsx
+```jsx
 import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from '@remirror/react';
+import { Remirror, useRemirror, OnChangeJSON } from '@remirror/react';
 
 const extensions = () => [new BoldExtension(), new ItalicExtension(), new UnderlineExtension()];
 
-const Editor = () => {
-  const { manager, onChange, state } = useRemirror({
+const Editor = ({ onChange }) => {
+  const { manager, state } = useRemirror({
     extensions,
     content: '<p>Hi <strong>Friend</strong></p>',
     stringHandler: 'html',
     selection: 'end',
   });
 
-  return <Remirror onChange={onChange} manager={manager} initialContent={state} />;
+  return (
+    <Remirror manager={manager} initialContent={state}>
+      <OnChangeJSON onChange={onChange} />
+    </Remirror>
+  );
 };
 ```
 
 With this code snippet your editor now supports basic editing functionality.
+
+Alternatively, take a look at our [5 minute tutorial](https://remirror.io/docs/5-min-tutorial) to get up and running with an out-of-the-box WYSIWYG editor.
 
 <br />
 
 ## Installation
 
 ```bash
-yarn add remirror @remirror/react @remirror/pm # Yarn
-
-npm add remirror @remirror/react @remirror/pm # npm
-
-pnpm add remirror @remirror/react @remirror/pm # pnpm
+npm add remirror @remirror/react @remirror/pm
 ```
 
 If you run into any issues we recommend any of the following:
@@ -90,13 +94,68 @@ Whatever you decide thanks for taking the time to explore the **remirror** proje
 
 <br />
 
+## Our community
+
+### Sponsors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://www.nextapp.co/" rel="nofollow">
+        <img src="https://user-images.githubusercontent.com/2003804/170265084-f3f7a605-612d-4799-86dc-2f8f0b4a3c21.png" height="100" style="max-width: 100%;" alt="NEXT logo"><br>
+        <strong>NEXT</strong>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://reflect.app/" rel="nofollow">
+        <img src="https://user-images.githubusercontent.com/2003804/170265087-fb7bf84e-0413-49d5-8a30-15b71bc9055b.png" height="100" style="max-width: 100%;" alt="Reflect logo"><br>
+        <strong>Reflect</strong>
+      </a>
+    </td>
+  </tr>
+</table>
+
+**[Become a sponsor!](https://github.com/sponsors/remirror)**
+
+### Community spotlight
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://cobudget.com/" rel="nofollow">
+        <img src="https://user-images.githubusercontent.com/2003804/170274003-89c8ff79-c5b7-4a59-b78b-b540f2fe308e.jpeg" height="50" style="max-width: 100%;" alt="Cobudget logo"><br>
+        <strong>Cobudget</strong>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://eftax.co.jp/" rel="nofollow">
+        <img src="https://user-images.githubusercontent.com/2003804/170274006-133e9f20-1d01-47a1-92af-7cac9a8c2fb6.png" height="50" style="max-width: 100%;" alt="eftax logo"><br>
+        <strong>eftax Co., Ltd.</strong>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://www.labkey.com/" rel="nofollow">
+        <img src="https://user-images.githubusercontent.com/2003804/170284116-672d0048-31aa-4b3c-8889-648ecc6e01b9.png" height="50" style="max-width: 100%;" alt="LabKey logo"><br>
+        <strong>LabKey</strong>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://www.onethread.app/" rel="nofollow">
+        <img src="https://user-images.githubusercontent.com/2003804/170278624-631b4030-1f5e-4fb9-832f-783d0806dd61.jpeg" height="50" style="max-width: 100%;" alt="Onethread logo"><br>
+        <strong>Onethread</strong>
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Documentation
 
 View our documentation website [**here**][introduction].
 
 - [Introduction]
-- [Create an editor](https://remirror.io/docs/guide/create-editor)
-- [Extensions](https://remirror.io/docs/concepts/extension)
+- [Use an out-of-the-box editor](https://remirror.io/docs/5-min-tutorial)
+- [Create your own editor](https://remirror.io/docs/getting-started/installation)
+- [Extensions](https://remirror.io/docs/extensions/)
 - [Storybook]
 - [CodeSandbox starter](https://codesandbox.io/s/github/remirror/remirror-starter)
 
@@ -106,114 +165,22 @@ View our documentation website [**here**][introduction].
 
 - A11y focused and ARIA compatible.
 - I18n support via [lingui](https://github.com/lingui/js-lingui).
-- Collaborative editing with [yjs](https://github.com/yjs/yjs).
+- Great support for mobile devices.
+- Out-of-the-box editors, or create own by composing extensions.
+- Create your own extensions for bare-metal ProseMirror integration.
+- Collaborative editing with [yjs](https://github.com/yjs/yjs) or [prosemirror-collab](https://github.com/ProseMirror/prosemirror-collab).
 - 30+ extensions for creating fully customized editing experiences.
-- Zero configuration support for **Server Side Rendering (SSR)**.
-- Cross platform and cross-framework, with an Angular solution coming later this year.
-
-<br />
-
-## Prerequisites
-
-- [Typescript](https://www.typescriptlang.org/) `>= 4`
-- [pnpm](https://pnpm.js.org/en/installation) `>= 5.5`
+- TypeScript as a first class citizen for great developer experience.
 
 <br />
 
 ## Getting Started
 
-To add an editor to your codebase, first install the required dependencies.
-
-```bash
-# yarn
-yarn add remirror @remirror/react @remirror/pm
-
-# pnpm
-pnpm add remirror @remirror/react @remirror/pm
-
-# npm
-npm install remirror @remirror/react @remirror/pm
-```
-
-## Usage
-
-Once installed you will be able to add the following code which creates an editor with the bold extension active. Clicking the button when text is selected will toggle between bold.
-
-```tsx
-import React, { useCallback } from 'react';
-import { BoldExtension } from 'remirror/extensions';
-import {
-  EditorComponent,
-  Remirror,
-  useActive,
-  useCommands,
-  useHelpers,
-  useKeymap,
-  useRemirror,
-} from '@remirror/react';
-
-const Button = () => {
-  // Determines whether "bold" is active within the current text selection
-  const { bold } = useActive();
-  // Provides the ability to toggle bold on or off for the current selection
-  const { toggleBold } = useCommands();
-
-  return (
-    <button
-      onClick={() => toggleBold()}
-      disabled={toggleBold.enabled()}
-      style={{ fontWeight: bold() ? 'bold' : undefined }}
-    >
-      Bold
-    </button>
-  );
-};
-
-// Hooks can be added to the context without the need for creating custom components
-const hooks = [
-  () => {
-    const { getJSON } = useHelpers();
-
-    const onSave = useCallback(
-      (props) => {
-        const { state } = props;
-        saveToBackend(getJSON(state));
-
-        return true; // Prevents any further key handlers from being run.
-      },
-      [getJSON],
-    );
-
-    // "Mod" means platform agnostic modifier key - i.e. Ctrl on Windows, or Cmd on MacOS
-    useKeymap('Mod-s', onSave);
-  },
-];
-
-const Editor = () => {
-  const { manager, state } = useRemirror({ extensions: () => [new BoldExtension()] });
-
-  // The editor is built up like lego blocks of functionality within the editor
-  // provider.
-  return (
-    <Remirror manager={manager} initialContent={state} hooks={hooks}>
-      <Button />
-      <EditorComponent />
-    </Remirror>
-  );
-};
-```
-
-<br />
+See our [5 minute tutorial](https://remirror.io/docs/5-min-tutorial) to get started!
 
 ## Contributing
 
 Please read our [contribution guide] for details on our code of conduct, and the process for submitting pull requests. It also outlines the project structure so you can find help when navigating your way around the codebase.
-
-In addition each folder in this codebase includes a readme describing why it exists.
-
-You might also notice there are surprisingly few files in the root directory of this project. All the configuration files have been moved to the `support/root` directory and are symlinked to the root directory in a `preinstall` hook. For more information take a look at [folder](support/root) and [readme](support/root/readme.md).
-
-Finally you can keep track on what's being worked on via the [projects].
 
 <br />
 
