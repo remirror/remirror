@@ -42,13 +42,7 @@ Here's the **TypeScript** version which, as a bonus should pass type checks.
 
 ```tsx
 import React, { forwardRef, useImperativeHandle } from 'react';
-import {
-  ReactExtensions,
-  ReactFrameworkOutput,
-  ReactFrameworkOutput,
-  Remirror,
-  useRemirror,
-} from '@remirror/react';
+import { ReactExtensions, ReactFrameworkOutput, Remirror, useRemirror } from '@remirror/react';
 
 const extensions = () => [new BoldExtension()];
 type Extensions = ReactExtensions<BoldExtension>;
