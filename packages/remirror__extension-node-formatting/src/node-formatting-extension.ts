@@ -24,7 +24,6 @@ import {
   extractLineHeight,
   gatherNodes,
   increaseIndentOptions,
-  isSelectionInListItem,
   justifyAlignOptions,
   leftAlignOptions,
   NODE_INDENT_ATTRIBUTE,
@@ -53,7 +52,7 @@ import {
       '180px',
       '200px',
     ],
-    excludeNodes: ['bulletList', 'orderedList', 'taskList', 'listItem', 'taskListItem'],
+    excludeNodes: [],
   },
   staticKeys: ['indents'],
 })
@@ -175,34 +174,20 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
 
   /**
    * Increase the indentation level of the current block node, if applicable.
-   *
-   * @param options
-   * @param options.ignoreList If true, will not increase the indentation if currently in a list. Defaults to true.
    */
   @command(increaseIndentOptions)
-  increaseIndent({ ignoreList = true } = {}): CommandFunction {
+  increaseIndent(): CommandFunction {
     return (props) => {
-      if (ignoreList && isSelectionInListItem(props.state.selection)) {
-        return false;
-      }
-
       return this.setIndent('+1')(props);
     };
   }
 
   /**
    * Decrease the indentation of the current block node.
-   *
-   * @param options
-   * @param options.ignoreList If true, will not increase the indentation if currently in a list. Defaults to true.
    */
   @command(decreaseIndentOptions)
-  decreaseIndent({ ignoreList = true } = {}): CommandFunction {
+  decreaseIndent(): CommandFunction {
     return (props) => {
-      if (ignoreList && isSelectionInListItem(props.state.selection)) {
-        return false;
-      }
-
       return this.setIndent('-1')(props);
     };
   }
@@ -240,8 +225,8 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
   @keyBinding({
     shortcut: NamedShortcut.DecreaseIndent,
     command: 'decreaseIndent',
-    // Ensure this has lower priority than the dedent keybinding in @remirror/extension-list
-    priority: ExtensionPriority.Low,
+    // Ensure this has higher priority than the dedent keybinding in @remirror/extension-list
+    priority: ExtensionPriority.Medium,
   })
   decreaseIndentShortcut(props: KeyBindingProps): boolean {
     return this.decreaseIndent()(props);
