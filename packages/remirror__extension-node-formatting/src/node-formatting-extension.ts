@@ -3,6 +3,7 @@ import {
   command,
   CommandFunction,
   extension,
+  ExtensionPriority,
   ExtensionTag,
   IdentifierSchemaAttributes,
   isEmptyArray,
@@ -23,6 +24,7 @@ import {
   extractLineHeight,
   gatherNodes,
   increaseIndentOptions,
+  isSelectionInListItem,
   justifyAlignOptions,
   leftAlignOptions,
   NODE_INDENT_ATTRIBUTE,
@@ -51,7 +53,7 @@ import {
       '180px',
       '200px',
     ],
-    excludeNodes: [],
+    excludeNodes: ['bulletList', 'orderedList', 'taskList', 'listItem', 'taskListItem'],
   },
   staticKeys: ['indents'],
 })
@@ -173,18 +175,36 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
 
   /**
    * Increase the indentation level of the current block node, if applicable.
+   *
+   * @param options
+   * @param options.ignoreList If true, will not increase the indentation if currently in a list. Defaults to true.
    */
   @command(increaseIndentOptions)
-  increaseIndent(): CommandFunction {
-    return this.setIndent('+1');
+  increaseIndent({ ignoreList = true } = {}): CommandFunction {
+    return (props) => {
+      if (ignoreList && isSelectionInListItem(props.state.selection)) {
+        return false;
+      }
+
+      return this.setIndent('+1')(props);
+    };
   }
 
   /**
    * Decrease the indentation of the current block node.
+   *
+   * @param options
+   * @param options.ignoreList If true, will not increase the indentation if currently in a list. Defaults to true.
    */
   @command(decreaseIndentOptions)
-  decreaseIndent(): CommandFunction {
-    return this.setIndent('-1');
+  decreaseIndent({ ignoreList = true } = {}): CommandFunction {
+    return (props) => {
+      if (ignoreList && isSelectionInListItem(props.state.selection)) {
+        return false;
+      }
+
+      return this.setIndent('-1')(props);
+    };
   }
 
   @keyBinding({ shortcut: NamedShortcut.CenterAlignment, command: 'centerAlign' })
@@ -207,12 +227,22 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
     return this.rightAlign()(props);
   }
 
-  @keyBinding({ shortcut: NamedShortcut.IncreaseIndent, command: 'increaseIndent' })
+  @keyBinding({
+    shortcut: NamedShortcut.IncreaseIndent,
+    command: 'increaseIndent',
+    // Ensure this has lower priority than the indent keybinding in @remirror/extension-list
+    priority: ExtensionPriority.Low,
+  })
   increaseIndentShortcut(props: KeyBindingProps): boolean {
     return this.increaseIndent()(props);
   }
 
-  @keyBinding({ shortcut: NamedShortcut.DecreaseIndent, command: 'decreaseIndent' })
+  @keyBinding({
+    shortcut: NamedShortcut.DecreaseIndent,
+    command: 'decreaseIndent',
+    // Ensure this has lower priority than the dedent keybinding in @remirror/extension-list
+    priority: ExtensionPriority.Low,
+  })
   decreaseIndentShortcut(props: KeyBindingProps): boolean {
     return this.decreaseIndent()(props);
   }

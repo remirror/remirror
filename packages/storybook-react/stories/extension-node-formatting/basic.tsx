@@ -2,12 +2,12 @@ import 'remirror/styles/all.css';
 
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
-import { NodeFormattingExtension } from 'remirror/extensions';
+import { BulletListExtension, NodeFormattingExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
 const Basic: React.FC = () => {
   const { manager, state, onChange } = useRemirror({
-    extensions: () => [new NodeFormattingExtension()],
+    extensions: () => [new NodeFormattingExtension(), new BulletListExtension()],
     content: '<p>Click buttons to change alignment, indent,<br> and line height</p>',
     stringHandler: htmlToProsemirrorNode,
   });

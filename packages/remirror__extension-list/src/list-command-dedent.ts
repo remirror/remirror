@@ -146,7 +146,8 @@ export function dedentList(tr: Transaction): boolean {
 export const dedentListCommand: CommandFunction = ({ tr, dispatch }) => {
   if (dedentList(tr)) {
     dispatch?.(tr.scrollIntoView());
+    return true;
   }
 
-  return true;
+  return false;
 };
