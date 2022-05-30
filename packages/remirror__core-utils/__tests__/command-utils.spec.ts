@@ -4,6 +4,7 @@ import {
   codeBlock,
   createEditor,
   doc,
+  em,
   h1,
   p,
   schema,
@@ -13,61 +14,155 @@ import {
 import { removeMark, replaceText, toggleBlockItem, toggleWrap, updateMark } from '../';
 
 describe('removeMark', () => {
-  const type = schema.marks.strong;
+  describe('defined type', () => {
+    const type = schema.marks.strong;
 
-  it('removes the contained mark', () => {
-    const from = doc(p(strong('<start>bold<end>')));
-    const to = doc(p('bold'));
+    it('removes the contained mark', () => {
+      const from = doc(p(strong('<start>bold<end>')));
+      const to = doc(p('bold'));
 
-    expect(removeMark({ type })).toTransform({ from, to });
-  });
+      expect(removeMark({ type })).toTransform({ from, to });
+    });
 
-  it('removes the uncontained mark', () => {
-    const from = doc(p('Hel<start>lo ', strong('bo<end>ld')));
-    const to = doc(p('Hello bold'));
+    it('removes the uncontained mark', () => {
+      const from = doc(p('Hel<start>lo ', strong('bo<end>ld')));
+      const to = doc(p('Hello bold'));
 
-    expect(removeMark({ type })).toTransform({ from, to });
-  });
+      expect(removeMark({ type })).toTransform({ from, to });
+    });
 
-  it('leaves mark untouched when `expand` is `false`', () => {
-    const from = doc(p(strong('bo<cursor>ld')));
+    it('leaves mark untouched when `expand` is `false`', () => {
+      const from = doc(p(strong('bo<cursor>ld')));
 
-    expect(removeMark({ type, expand: false })).toTransform({ from });
-  });
+      expect(removeMark({ type, expand: false })).toTransform({ from });
+    });
 
-  it('removes mark when `expand` is `true`', () => {
-    const from = doc(p(strong('bo<cursor>ld')));
-    const to = doc(p('bold'));
+    it('removes mark when `expand` is `true`', () => {
+      const from = doc(p(strong('bo<cursor>ld')));
+      const to = doc(p('bold'));
 
-    expect(removeMark({ type })).toTransform({ from, to });
-  });
+      expect(removeMark({ type })).toTransform({ from, to });
+    });
 
-  it('removes the mark from a custom selection', () => {
-    const from = doc(p('start ', strong('bold'), ' and not<cursor>'));
-    const to = doc(p('start bold and not'));
+    it('removes the mark from a custom selection', () => {
+      const from = doc(p('start ', strong('bold'), ' and not<cursor>'));
+      const to = doc(p('start bold and not'));
 
-    expect(removeMark({ type, selection: { from: 7, to: 11 } })).toTransform({ from, to });
-    expect(removeMark({ type, selection: 8 })).toTransform({ from, to });
-    expect(removeMark({ type, selection: { from: 3, to: 7 } })).toTransform({
-      from,
+      expect(removeMark({ type, selection: { from: 7, to: 11 } })).toTransform({ from, to });
+      expect(removeMark({ type, selection: 8 })).toTransform({ from, to });
+      expect(removeMark({ type, selection: { from: 3, to: 7 } })).toTransform({
+        from,
+      });
+    });
+
+    it('does not mutate the provided transaction', () => {
+      const from = doc(p('start ', strong('bo<cursor>ld'), ' and not'));
+      const editor = createEditor(from);
+      const tr = editor.state.tr;
+      const view = editor.view;
+
+      removeMark({ type })({ state: editor.state, tr, view });
+      removeMark({ type })({ state: editor.state, tr, view });
+
+      // Make sure that no steps have been added when dispatch is not enabled.
+      expect(tr.steps).toHaveLength(0);
+
+      // Dispatch the transaction to make sure nothing has changed.
+      view.dispatch(tr);
+      expect(editor.view.state.doc).toEqualProsemirrorNode(from);
     });
   });
 
-  it('does not mutate the provided transaction', () => {
-    const from = doc(p('start ', strong('bo<cursor>ld'), ' and not'));
-    const editor = createEditor(from);
-    const tr = editor.state.tr;
-    const view = editor.view;
+  describe('null type (remove all)', () => {
+    it('removes the contained mark', () => {
+      const from = doc(p(em('<start>italic<end>')));
+      const to = doc(p('italic'));
 
-    removeMark({ type })({ state: editor.state, tr, view });
-    removeMark({ type })({ state: editor.state, tr, view });
+      expect(removeMark({ type: null })).toTransform({ from, to });
+    });
 
-    // Make sure that no steps have been added when dispatch is not enabled.
-    expect(tr.steps).toHaveLength(0);
+    it('removes all the contained marks', () => {
+      const from = doc(p(em('<start>italic ', strong('bold<end>'))));
+      const to = doc(p('italic bold'));
 
-    // Dispatch the transaction to make sure nothing has changed.
-    view.dispatch(tr);
-    expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+      expect(removeMark({ type: null })).toTransform({ from, to });
+    });
+
+    it('removes the uncontained mark', () => {
+      const from = doc(p('Hel<start>lo ', em('ita<end>lic')));
+      const to = doc(p('Hello italic'));
+
+      expect(removeMark({ type: null })).toTransform({ from, to });
+    });
+
+    it('removes all the uncontained marks when there are multiple marks', () => {
+      const from = doc(p('Hel<start>lo ', em('italic ', strong('bo<end>ld'))));
+      const to = doc(p('Hello italic bold'));
+
+      expect(removeMark({ type: null })).toTransform({ from, to });
+    });
+
+    it('removes all marks within the range of the largest mark', () => {
+      const from = doc(p('Hel<start>lo ', em('ita<end>lic ', strong('bold'))));
+      const to = doc(p('Hello italic bold'));
+
+      expect(removeMark({ type: null })).toTransform({ from, to });
+    });
+
+    it('leaves mark untouched when `expand` is `false`', () => {
+      const from = doc(p(em('italic ', strong('bo<cursor>ld'))));
+
+      expect(removeMark({ type: null, expand: false })).toTransform({ from });
+    });
+
+    it('removes mark when `expand` is `true`', () => {
+      const from = doc(p(em('italic')));
+      const to = doc(p('italic'));
+
+      expect(removeMark({ type: null })).toTransform({ from, to });
+    });
+
+    it('removes all marks when `expand` is `true` and multiple marks are present', () => {
+      const from = doc(p(em('italic ', strong('bo<cursor>ld'))));
+      const to = doc(p('italic bold'));
+
+      expect(removeMark({ type: null })).toTransform({ from, to });
+    });
+
+    it('removes all marks when `expand` is `true` within the range of the largest mark', () => {
+      const from = doc(p(em('ita<cursor>lic ', strong('bold'))));
+      const to = doc(p('italic bold'));
+
+      expect(removeMark({ type: null })).toTransform({ from, to });
+    });
+
+    it('removes the mark from a custom selection', () => {
+      const from = doc(p('start ', em('italic'), ' and not<cursor>'));
+      const to = doc(p('start italic and not'));
+
+      expect(removeMark({ type: null, selection: { from: 7, to: 11 } })).toTransform({ from, to });
+      expect(removeMark({ type: null, selection: 8 })).toTransform({ from, to });
+      expect(removeMark({ type: null, selection: { from: 3, to: 7 } })).toTransform({
+        from,
+      });
+    });
+
+    it('does not mutate the provided transaction', () => {
+      const from = doc(p('start ', em('ita<cursor>lic'), ' and not'));
+      const editor = createEditor(from);
+      const tr = editor.state.tr;
+      const view = editor.view;
+
+      removeMark({ type: null })({ state: editor.state, tr, view });
+      removeMark({ type: null })({ state: editor.state, tr, view });
+
+      // Make sure that no steps have been added when dispatch is not enabled.
+      expect(tr.steps).toHaveLength(0);
+
+      // Dispatch the transaction to make sure nothing has changed.
+      view.dispatch(tr);
+      expect(editor.view.state.doc).toEqualProsemirrorNode(from);
+    });
   });
 });
 
