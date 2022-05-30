@@ -211,3 +211,31 @@ describe('setContent', () => {
     expect(editor.state.doc).toEqualProsemirrorNode(doc(p('my content')));
   });
 });
+
+describe('removeMark', () => {
+  it('can remove a mark by named type', () => {
+    const editor = renderEditor([new BoldExtension(), new ItalicExtension()]);
+    const { doc, p } = editor.nodes;
+    const { bold, italic } = editor.marks;
+
+    editor.add(doc(p('<start>my ', bold('bold ', italic('italic')), ' content<end>')));
+
+    editor.commands.removeMark({ type: 'italic' });
+
+    expect(editor.state.doc).toEqualRemirrorDocument(
+      doc(p('my ', bold('bold italic'), ' content')),
+    );
+  });
+
+  it('can remove all marks by passing type === null', () => {
+    const editor = renderEditor([new BoldExtension(), new ItalicExtension()]);
+    const { doc, p } = editor.nodes;
+    const { bold, italic } = editor.marks;
+
+    editor.add(doc(p('<start>my ', bold('bold ', italic('italic')), ' content<end>')));
+
+    editor.commands.removeMark({ type: null });
+
+    expect(editor.state.doc).toEqualRemirrorDocument(doc(p('my bold italic content')));
+  });
+});

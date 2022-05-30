@@ -5,6 +5,7 @@ import type {
   CommandFunction,
   CommandFunctionProps,
   FromToProps,
+  MakeNullable,
   MarkType,
   MarkTypeProps,
   NodeType,
@@ -15,6 +16,7 @@ import type {
   Selection,
   Transaction,
 } from '@remirror/core-types';
+import { ResolvedPos } from '@remirror/core-types';
 import { TextSelection } from '@remirror/pm/state';
 import { findWrapping, liftTarget } from '@remirror/pm/transform';
 
@@ -395,7 +397,42 @@ export function replaceText(props: ReplaceTextProps): CommandFunction {
   };
 }
 
-export interface RemoveMarkProps extends MarkTypeProps {
+/**
+ * Retrieve the first mark at a given resolved position `$pos` or range
+ *
+ * @remarks
+ *
+ * If multiple marks are present, the returned mark will be the mark with highest priority.
+ *
+ * @param $pos - the resolved ProseMirror position
+ * @param $end - the end position to search until. When this is provided
+ * it will search for a mark until the `$end`. The first mark within
+ * the range will be returned.
+ */
+function getFirstMark($pos: ResolvedPos, $end?: ResolvedPos): MarkType | undefined {
+  // Get the start position of the current node that the `$pos` value was
+  // calculated for.
+  const start = $pos.parent.childAfter($pos.parentOffset);
+
+  // If the position provided was incorrect and no node exists for this start
+  // position exit early.
+  if (!start.node) {
+    return;
+  }
+
+  const { marks, nodeSize } = start.node;
+
+  if (marks[0]) {
+    return marks[0].type;
+  }
+
+  const startPos = $pos.start() + start.offset;
+  const endPos = startPos + nodeSize;
+
+  return getFirstMark($pos.doc.resolve(endPos + 1), $end);
+}
+
+export interface RemoveMarkProps extends MakeNullable<MarkTypeProps, 'type'> {
   /**
    * Whether to expand empty selections to the current mark range.
    *
@@ -423,21 +460,33 @@ export function removeMark(props: RemoveMarkProps): CommandFunction {
   return ({ dispatch, tr, state }) => {
     const { type, expand = true, range } = props;
     const selection = getTextSelection(props.selection ?? range ?? tr.selection, tr.doc);
-    const markType = isString(type) ? state.schema.marks[type] : type;
     let { from, to, $from, $to } = selection;
 
-    invariant(markType, {
-      code: ErrorConstant.SCHEMA,
-      message: `Mark type: ${type} does not exist on the current schema.`,
-    });
+    const markType = isString(type) ? state.schema.marks[type] : type;
 
-    const markRange = getMarkRange($from, markType, $to);
+    if (markType !== null) {
+      invariant(markType, {
+        code: ErrorConstant.SCHEMA,
+        message: `Mark type: ${type} does not exist on the current schema.`,
+      });
+    }
+
+    // If no mark type was supplied, get the first mark present on this node to determine a mark range
+    const rangeMark = markType ?? getFirstMark($from);
+
+    if (!rangeMark) {
+      return false;
+    }
+
+    const markRange = getMarkRange($from, rangeMark, $to);
 
     if (expand && markRange) {
       ({ from, to } = markRange);
     }
 
-    dispatch?.(tr.removeMark(from, isNumber(to) ? to : from, markType));
+    dispatch?.(
+      tr.removeMark(from, isNumber(to) ? to : from, isMarkType(markType) ? markType : undefined),
+    );
 
     return true;
   };
