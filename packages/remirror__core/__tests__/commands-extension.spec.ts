@@ -227,6 +227,32 @@ describe('removeMark', () => {
     );
   });
 
+  it('can remove multiple marks ranges by named type', () => {
+    const editor = renderEditor([new BoldExtension(), new ItalicExtension()]);
+    const { doc, p } = editor.nodes;
+    const { bold, italic } = editor.marks;
+
+    editor.add(
+      doc(
+        p(
+          '<start>my ',
+          bold('bold ', italic('italic')),
+          ' content ',
+          italic('with'),
+          ' a ',
+          bold('bold'),
+          ' suffix<end>',
+        ),
+      ),
+    );
+
+    editor.commands.removeMark({ type: 'bold' });
+
+    expect(editor.state.doc).toEqualRemirrorDocument(
+      doc(p('my bold ', italic('italic'), ' content ', italic('with'), ' a bold suffix')),
+    );
+  });
+
   it('can remove all marks by passing type === null', () => {
     const editor = renderEditor([new BoldExtension(), new ItalicExtension()]);
     const { doc, p } = editor.nodes;
@@ -237,5 +263,31 @@ describe('removeMark', () => {
     editor.commands.removeMark({ type: null });
 
     expect(editor.state.doc).toEqualRemirrorDocument(doc(p('my bold italic content')));
+  });
+
+  it('can remove multiple marks ranges when passing type === null', () => {
+    const editor = renderEditor([new BoldExtension(), new ItalicExtension()]);
+    const { doc, p } = editor.nodes;
+    const { bold, italic } = editor.marks;
+
+    editor.add(
+      doc(
+        p(
+          '<start>my ',
+          bold('bold ', italic('italic')),
+          ' content ',
+          italic('with'),
+          ' a ',
+          bold('bold'),
+          ' suffix<end>',
+        ),
+      ),
+    );
+
+    editor.commands.removeMark({ type: null });
+
+    expect(editor.state.doc).toEqualRemirrorDocument(
+      doc(p('my bold italic content with a bold suffix')),
+    );
   });
 });

@@ -1,5 +1,5 @@
 import { ErrorConstant } from '@remirror/core-constants';
-import { assertGet, invariant, isNumber, isString, object } from '@remirror/core-helpers';
+import { assertGet, clamp, invariant, isNumber, isString, object } from '@remirror/core-helpers';
 import type {
   AttributesProps,
   CommandFunction,
@@ -481,7 +481,8 @@ export function removeMark(props: RemoveMarkProps): CommandFunction {
     const markRange = getMarkRange($from, rangeMark, $to);
 
     if (expand && markRange) {
-      ({ from, to } = markRange);
+      from = clamp({ min: 0, value: markRange.from, max: from });
+      to = clamp({ min: markRange.to, value: to, max: tr.doc.nodeSize - 2 });
     }
 
     dispatch?.(
