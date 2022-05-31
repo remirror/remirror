@@ -1,5 +1,13 @@
 # @remirror/types
 
+## 1.0.0-beta.0
+
+> 2022-05-31
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
 ## 0.1.1
 
 > 2021-10-23

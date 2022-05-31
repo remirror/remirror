@@ -1,5 +1,16 @@
 # test-keyboard
 
+## 1.0.6-beta.0
+
+> 2022-05-31
+
+### Patch Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0-beta.0
+  - @remirror/core-types@2.0.0-beta.0
+
 ## 1.0.5
 
 > 2022-01-03

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/dev",
-  "version": "1.1.6",
+  "version": "2.0.0-beta.0",
   "description": "Development utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__dev",
   "repository": {
@@ -36,11 +36,11 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/react-core": "^1.2.3",
+    "@remirror/react-core": "^2.0.0-beta.0",
     "prosemirror-dev-toolkit": ">= 0.0.11 < 1.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.20",
+    "@remirror/pm": "^2.0.0-beta.0",
     "@testing-library/react": "^13.1.1",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
@@ -48,7 +48,7 @@
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.10",
+    "@remirror/pm": "^2.0.0-beta.0",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",

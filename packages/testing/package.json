@@ -47,10 +47,10 @@
     "@babel/runtime": "^7.13.10",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@react-spring/mock-raf": "^1.1.1",
-    "@remirror/core": "^1.4.6",
-    "@remirror/pm": "^1.0.20",
-    "@remirror/preset-core": "^1.0.29",
-    "@remirror/react": "^1.0.39",
+    "@remirror/core": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/preset-core": "^2.0.0-beta.0",
+    "@remirror/react": "^2.0.0-beta.0",
     "@testing-library/react": "^13.1.1",
     "@testing-library/react-hooks": "^8.0.0",
     "@types/fluent-ffmpeg": "^2.1.18",
@@ -74,7 +74,7 @@
     "playwright-testing-library": "^4.2.1",
     "react-test-renderer": "^18.0.0",
     "signal-exit": "^3.0.3",
-    "test-keyboard": "1.0.5"
+    "test-keyboard": "1.0.6-beta.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.6",

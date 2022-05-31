@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-hooks",
-  "version": "1.0.36",
+  "version": "2.0.0-beta.0",
   "description": "A selection of core hooks built for working within the editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-hooks",
   "repository": {
@@ -143,23 +143,23 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^1.4.6",
-    "@remirror/extension-emoji": "^1.0.27",
-    "@remirror/extension-events": "^1.1.4",
-    "@remirror/extension-history": "^1.0.23",
-    "@remirror/extension-mention": "^1.0.24",
-    "@remirror/extension-mention-atom": "^1.0.27",
-    "@remirror/extension-positioner": "^1.2.7",
-    "@remirror/i18n": "^1.0.8",
-    "@remirror/react-core": "^1.2.3",
-    "@remirror/react-utils": "^1.0.6",
-    "multishift": "^1.0.8",
+    "@remirror/core": "^2.0.0-beta.0",
+    "@remirror/extension-emoji": "^2.0.0-beta.0",
+    "@remirror/extension-events": "^2.0.0-beta.0",
+    "@remirror/extension-history": "^2.0.0-beta.0",
+    "@remirror/extension-mention": "^2.0.0-beta.0",
+    "@remirror/extension-mention-atom": "^2.0.0-beta.0",
+    "@remirror/extension-positioner": "^2.0.0-beta.0",
+    "@remirror/i18n": "^2.0.0-beta.0",
+    "@remirror/react-core": "^2.0.0-beta.0",
+    "@remirror/react-utils": "^2.0.0-beta.0",
+    "multishift": "^1.0.9-beta.0",
     "use-isomorphic-layout-effect": "^1.1.1",
     "use-previous": "^1.1.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.20",
-    "@remirror/react": "^1.0.39",
+    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/react": "^2.0.0-beta.0",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",
@@ -167,7 +167,7 @@
     "svgmoji": "^3.2.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.17",
+    "@remirror/pm": "^2.0.0-beta.0",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",

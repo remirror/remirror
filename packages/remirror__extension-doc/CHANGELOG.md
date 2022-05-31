@@ -1,5 +1,20 @@
 # @remirror/extension-doc
 
+## 2.0.0-beta.0
+
+> 2022-05-31
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.0
+  - @remirror/pm@2.0.0-beta.0
+  - @remirror/messages@2.0.0-beta.0
+
 ## 1.0.24
 
 > 2022-05-31
