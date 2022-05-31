@@ -90,6 +90,4 @@
 '@remirror/types': major
 ---
 
-ProseMirror is now a [native TypeScript project](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624). It comes with its own TypeScript declaration files, so we don't need to install `@types/prosemirror-*` packages anymore. If you have `@types/prosemirror-*` packages in your `package.json` file, you should remove them.
-
-To fit the new TypeScript definition, we've removed `Schema` from almost all generic types.
+Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
