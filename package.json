@@ -82,6 +82,7 @@
     "release": "pnpm if-publishable run-s release",
     "release:latest": "pnpm publish -r",
     "release:next": "pnpm publish -r --tag next",
+    "release:beta": "pnpm publish -r --tag beta",
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm symlink:root; pnpm install;",
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
