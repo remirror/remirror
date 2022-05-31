@@ -1,6 +1,13 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.3.0/schema.json",
-  "ignore": ["storybook-react", "support", "testing", "website", "docusaurus-plugin-examples"],
+  "ignore": [
+    "storybook-react",
+    "support",
+    "testing",
+    "website",
+    "docusaurus-plugin-examples",
+    "scripts"
+  ],
   "updateInternalDependencies": "patch",
   "commit": false,
   "linked": [],
