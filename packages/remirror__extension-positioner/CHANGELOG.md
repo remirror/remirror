@@ -1,5 +1,19 @@
 # @remirror/extension-positioner
 
+## 1.2.7
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/extension-events@1.1.4
+
 ## 1.2.6
 
 > 2022-05-24

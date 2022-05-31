@@ -1,5 +1,19 @@
 # @remirror/dom
 
+## 1.0.30
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/preset-core@1.0.29
+
 ## 1.0.29
 
 > 2022-05-24

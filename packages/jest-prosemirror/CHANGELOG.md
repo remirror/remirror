@@ -1,5 +1,18 @@
 # jest-prosemirror
 
+## 1.0.28
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core-utils@1.1.10
+
 ## 1.0.27
 
 > 2022-05-18

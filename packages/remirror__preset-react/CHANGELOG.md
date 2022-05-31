@@ -1,5 +1,21 @@
 # @remirror/preset-react
 
+## 1.0.28
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/extension-placeholder@1.0.26
+  - @remirror/extension-react-component@1.1.14
+  - @remirror/extension-react-ssr@1.0.26
+
 ## 1.0.27
 
 > 2022-05-24

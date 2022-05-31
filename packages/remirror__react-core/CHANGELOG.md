@@ -1,5 +1,25 @@
 # @remirror/react-core
 
+## 1.2.3
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/extension-positioner@1.2.7
+  - @remirror/extension-react-component@1.1.14
+  - @remirror/extension-react-ssr@1.0.26
+  - @remirror/preset-core@1.0.29
+  - @remirror/preset-react@1.0.28
+  - @remirror/react-renderer@1.0.26
+  - @remirror/react-ssr@1.0.26
+
 ## 1.2.2
 
 > 2022-05-24

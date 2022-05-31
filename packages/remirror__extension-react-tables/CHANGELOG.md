@@ -1,5 +1,25 @@
 # @remirror/extension-react-tables
 
+## 1.0.39
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/core-utils@1.1.10
+  - @remirror/extension-positioner@1.2.7
+  - @remirror/extension-tables@1.0.26
+  - @remirror/preset-core@1.0.29
+  - @remirror/react-components@1.0.36
+  - @remirror/react-core@1.2.3
+  - @remirror/react-hooks@1.0.36
+
 ## 1.0.38
 
 > 2022-05-24

@@ -1,5 +1,25 @@
 # @remirror/react-hooks
 
+## 1.0.36
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/extension-emoji@1.0.27
+  - @remirror/extension-events@1.1.4
+  - @remirror/extension-history@1.0.23
+  - @remirror/extension-mention@1.0.24
+  - @remirror/extension-mention-atom@1.0.27
+  - @remirror/extension-positioner@1.2.7
+  - @remirror/react-core@1.2.3
+
 ## 1.0.35
 
 > 2022-05-24

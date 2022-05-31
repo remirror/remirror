@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "Where your quest to create a world class editing experience begins.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core",
   "repository": {
@@ -41,7 +41,7 @@
     "@remirror/core-constants": "^1.0.2",
     "@remirror/core-helpers": "^1.0.5",
     "@remirror/core-types": "^1.0.4",
-    "@remirror/core-utils": "^1.1.9",
+    "@remirror/core-utils": "^1.1.10",
     "@remirror/i18n": "^1.0.8",
     "@remirror/icons": "^1.0.7",
     "@remirror/messages": "^1.0.6",
