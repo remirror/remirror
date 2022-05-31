@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PositionerPortal } from '@remirror/react-components';
 import { useCommands } from '@remirror/react-core';
-import { useEvent, usePositioner } from '@remirror/react-hooks';
+import { useEditorEvent, usePositioner } from '@remirror/react-hooks';
 import { ComponentsTheme } from '@remirror/theme';
 
 import { menuCellPositioner } from '../block-positioner';
@@ -142,7 +142,7 @@ const TableCellMenu: React.FC<TableCellMenuProps> = ({
   const [popupOpen, setPopupOpen] = useState(false);
 
   // Hide the popup when users click.
-  useEvent('mousedown', () => {
+  useEditorEvent('mousedown', () => {
     if (popupOpen) {
       setPopupOpen(false);
     }
