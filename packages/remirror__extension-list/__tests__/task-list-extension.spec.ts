@@ -1,6 +1,10 @@
+import { extensionValidityTest } from 'jest-remirror';
 import { htmlToProsemirrorNode } from '@remirror/core';
 
+import { TaskListItemExtension } from '../src';
 import { setupListEditor } from './list-setup';
+
+extensionValidityTest(TaskListItemExtension);
 
 describe('schema', () => {
   it('parses the dom structure and finds itself', () => {
