@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-markdown",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Generate markdown output from your editor",
   "keywords": [
     "remirror",
@@ -49,10 +49,10 @@
     "turndown-plugin-gfm": "^1.0.2"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.19"
+    "@remirror/pm": "^1.0.20"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.10"
+    "@remirror/pm": "^1.0.20"
   },
   "publishConfig": {
     "access": "public"

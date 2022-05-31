@@ -46,7 +46,7 @@
     "parenthesis": "^3.1.8"
   },
   "devDependencies": {
-    "@remirror/pm": "^1.0.19",
+    "@remirror/pm": "^1.0.20",
     "@types/jsdom": "^16.2.13",
     "@types/node": "^16.3.3",
     "domino": "^2.1.6",

@@ -1,5 +1,20 @@
 # jest-prosemirror
 
+## 1.0.29
+
+> 2022-05-31
+
+### Patch Changes
+
+- Lock ProseMirror pacakges to lower versions.
+
+  The latest ProseMirror includes the buit-in TypeScript declaration, which is incompatible with the TypeScript definition in Remirror v1.
+
+  See also: https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.20
+
 ## 1.0.28
 
 > 2022-05-31

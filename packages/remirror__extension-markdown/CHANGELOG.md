@@ -1,5 +1,16 @@
 # @remirror/extension-markdown
 
+## 1.0.24
+
+> 2022-05-31
+
+### Patch Changes
+
+- Fix rendering and parsing of tasklists in markdown
+
+- Updated dependencies []:
+  - @remirror/pm@1.0.20
+
 ## 1.0.23
 
 > 2022-05-31

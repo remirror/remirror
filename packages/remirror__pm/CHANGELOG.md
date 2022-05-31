@@ -1,5 +1,22 @@
 # @remirror/pm
 
+## 1.0.20
+
+> 2022-05-31
+
+### Patch Changes
+
+- Lock ProseMirror pacakges to lower versions.
+
+  The latest ProseMirror includes the buit-in TypeScript declaration, which is incompatible with the TypeScript definition in Remirror v1.
+
+  See also: https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624
+
+- Updated dependencies []:
+  - prosemirror-paste-rules@1.1.2
+  - prosemirror-suggest@1.1.3
+  - prosemirror-trailing-node@1.0.10
+
 ## 1.0.19
 
 > 2022-05-16
