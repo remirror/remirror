@@ -1,7 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.3.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "remirror/remirror" }],
-  "ignore": ["storybook-react", "support", "testing", "website"],
+  "ignore": ["storybook-react", "support", "testing", "website", "docusaurus-plugin-examples"],
   "updateInternalDependencies": "patch",
   "commit": false,
   "linked": [],
