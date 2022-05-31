@@ -15,7 +15,6 @@
     "strict": true,
     "resolveJsonModule": true,
     "preserveWatchOutput": true,
-    "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
 
     // "noImplicitOverride": true, // TODO add this in a PR.

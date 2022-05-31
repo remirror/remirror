@@ -16,7 +16,7 @@ import { findMatches, includes, isFunction, range, sort } from '@remirror/core-h
 /**
  * Create the paste plugin handler.
  */
-export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
+export function pasteRules(pasteRules: PasteRule[]): Plugin {
   const sortedPasteRules = sort(
     pasteRules,
     (a, z) => (z.priority ?? ExtensionPriority.Low) - (a.priority ?? ExtensionPriority.Low),
@@ -115,7 +115,9 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
       },
       handleDOMEvents: {
         // Handle paste for pasting content.
-        paste: (view, event) => {
+        paste: (view, clipboardEvent) => {
+          const event = clipboardEvent as ClipboardEvent;
+
           if (!view.props.editable?.(view.state)) {
             return false;
           }
@@ -153,7 +155,9 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin<void> {
         },
 
         // Handle drop for pasting content.
-        drop: (view, event) => {
+        drop: (view, dragEvent) => {
+          const event = dragEvent as DragEvent;
+
           if (!view.props.editable?.(view.state)) {
             return false;
           }

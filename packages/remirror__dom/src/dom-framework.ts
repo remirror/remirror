@@ -4,7 +4,6 @@ import {
   Framework,
   FrameworkOutput,
   FrameworkProps,
-  GetSchema,
   STATE_OVERRIDE,
   UpdateStateProps,
 } from '@remirror/core';
@@ -42,11 +41,8 @@ export class DomFramework<Extension extends AnyExtension> extends Framework<
   /**
    * Create the prosemirror `[[EditorView`]].
    */
-  protected createView(
-    state: EditorState<GetSchema<Extension>>,
-    element?: Element,
-  ): EditorView<GetSchema<Extension>> {
-    return new EditorView(element, {
+  protected createView(state: EditorState, element?: Element): EditorView {
+    return new EditorView(element ?? null, {
       state,
       dispatchTransaction: this.dispatchTransaction,
       attributes: () => this.getAttributes(),
@@ -72,7 +68,7 @@ export class DomFramework<Extension extends AnyExtension> extends Framework<
   /**
    * Responsible for managing state updates.
    */
-  protected updateState({ state, ...rest }: UpdateStateProps<GetSchema<Extension>>): void {
+  protected updateState({ state, ...rest }: UpdateStateProps): void {
     const { tr, transactions, triggerChange = true } = rest;
 
     // Check if this is a fresh update directly applied by the developer (without

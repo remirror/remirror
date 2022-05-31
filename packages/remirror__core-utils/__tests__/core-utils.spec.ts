@@ -7,7 +7,7 @@ import {
   doc,
   em,
   p,
-  pm,
+  pmBuild,
   schema as testSchema,
   strong,
   tableRow,
@@ -294,7 +294,7 @@ describe('isProsemirrorNode', () => {
 describe('getMarkAttributes', () => {
   it('returns correct mark attrs', () => {
     const attributes = object({ href: '/awesome', title: 'awesome' });
-    const { aHref } = pm.builders(testSchema, {
+    const { aHref } = pmBuild(testSchema, {
       aHref: { markType: 'link', ...attributes },
     });
     const { state, schema } = createEditor(doc(p('a link', aHref('linked <cursor>here'))));

@@ -1014,7 +1014,7 @@ describe('onClick', () => {
     const node = p('first ', linkMark);
     add(doc(node));
 
-    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {}, false));
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {} as MouseEvent, false));
     expect(onClick).toHaveBeenCalledTimes(1);
     expect(onClick).toHaveBeenCalledWith(
       {},
@@ -1026,7 +1026,7 @@ describe('onClick', () => {
       }),
     );
 
-    view.someProp('handleClick', (fn) => fn(view, 3, node, 1, {}, true));
+    view.someProp('handleClick', (fn) => fn(view, 3, {} as MouseEvent));
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
@@ -1044,13 +1044,13 @@ describe('onClick', () => {
     const node = p('first ', linkMark);
     add(doc(node));
 
-    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {}, false));
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {} as MouseEvent, false));
     // It doesn't select the text when the callback returns true.
     expect(view.state.selection.empty).toBeTrue();
 
     returnValue = false;
 
-    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {}, false));
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {} as MouseEvent, false));
     // It selects the text when the callback returns true.
     expect(view.state.selection.empty).toBeFalse();
   });

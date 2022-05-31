@@ -10,7 +10,7 @@ import * as PMView from 'prosemirror-view';
  *
  * The options are passed to the [[`suggest`]] method which uses them.
  */
-export interface Suggester<Schema extends EditorSchema = EditorSchema> {
+export interface Suggester {
   /**
    * The activation character(s) to match against.
    *
@@ -79,7 +79,7 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
    * It receives a parameters object with the `changeReason` or `exitReason` to
    * let you know whether the change was an exit and what caused the change.
    */
-  onChange: SuggestChangeHandler<Schema>;
+  onChange: SuggestChangeHandler;
 
   /**
    * The priority for this suggester.
@@ -230,10 +230,7 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
    * the checking the attributes of the direct parent node
    * `resolvedRange.$to.parent.attrs` to check if something is missing.
    */
-  isValidPosition?: (
-    resolvedRange: ResolvedRangeWithCursor<Schema>,
-    match: SuggestMatch<Schema>,
-  ) => boolean;
+  isValidPosition?: (resolvedRange: ResolvedRangeWithCursor, match: SuggestMatch) => boolean;
 
   /**
    * This is a utility option that may be necessary for you when building
@@ -260,7 +257,7 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
    *
    * @default null
    */
-  checkNextValidSelection?: CheckNextValidSelection<Schema> | null;
+  checkNextValidSelection?: CheckNextValidSelection | null;
 
   /**
    * Whether this suggester should only be valid for empty selections.
@@ -314,9 +311,9 @@ export interface Suggester<Schema extends EditorSchema = EditorSchema> {
  * @param matches - the possibly undefined exit and change matcher names. These
  * can be used to check if the name matches the current suggester.
  */
-export type CheckNextValidSelection<Schema extends EditorSchema = EditorSchema> = (
-  $pos: ResolvedPos<Schema>,
-  tr: Transaction<Schema>,
+export type CheckNextValidSelection = (
+  $pos: ResolvedPos,
+  tr: Transaction,
   matches: { change?: string; exit?: string },
 ) => Transaction | null | void;
 
@@ -327,9 +324,9 @@ export type CheckNextValidSelection<Schema extends EditorSchema = EditorSchema> 
  * @param match - the current active match
  * @param resolvedRange - the range of the match with each position resolved.
  */
-export type ShouldDisableDecorations = <Schema extends EditorSchema = EditorSchema>(
-  state: EditorState<Schema>,
-  match: Readonly<SuggestMatch<Schema>>,
+export type ShouldDisableDecorations = (
+  state: EditorState,
+  match: Readonly<SuggestMatch>,
 ) => boolean;
 
 /**
@@ -601,25 +598,25 @@ export interface RangeWithCursor {
   to: number;
 }
 
-export interface ResolvedRangeWithCursor<Schema extends EditorSchema = EditorSchema> {
+export interface ResolvedRangeWithCursor {
   /**
    * The absolute starting point of the matching string as a [resolved
    * position](https://prosemirror.net/docs/ref/#model.Resolved_Positions).
    */
-  $from: ResolvedPos<Schema>;
+  $from: ResolvedPos;
 
   /**
    * The current cursor position as a [resolved
    * position](https://prosemirror.net/docs/ref/#model.Resolved_Positions),
    * which may not be at the end of the full match.
    */
-  $cursor: ResolvedPos<Schema>;
+  $cursor: ResolvedPos;
 
   /**
    * The absolute end of the matching string as a [resolved
    * position](https://prosemirror.net/docs/ref/#model.Resolved_Positions).
    */
-  $to: ResolvedPos<Schema>;
+  $to: ResolvedPos;
 }
 
 /**
@@ -627,8 +624,7 @@ export interface ResolvedRangeWithCursor<Schema extends EditorSchema = EditorSch
  * as information of the suggester that created the match.
  *
  */
-export interface SuggestMatch<Schema extends EditorSchema = EditorSchema>
-  extends SuggesterProps<Schema> {
+export interface SuggestMatch extends SuggesterProps {
   /**
    * Range of current match; for example `@foo|bar` (where | is the cursor)
    * - `from` is the start (= 0)
@@ -689,11 +685,11 @@ export interface DocChangedProps {
 /**
  * A parameter builder interface describing match found by the suggest plugin.
  */
-export interface SuggestStateMatchProps<Schema extends EditorSchema = EditorSchema> {
+export interface SuggestStateMatchProps {
   /**
    * The match that will be triggered.
    */
-  match: SuggestMatch<Schema>;
+  match: SuggestMatch;
 }
 
 /**
@@ -740,12 +736,12 @@ export interface ReasonProps {
  * Exactly **ONE** will always be available. Unfortunately that's quite hard to
  * model in TypeScript without complicating all dependent types.
  */
-export interface SuggestChangeHandlerProps<Schema extends EditorSchema = EditorSchema>
-  extends SuggestMatchWithReason<Schema>,
-    EditorViewProps<Schema>,
+export interface SuggestChangeHandlerProps
+  extends SuggestMatchWithReason,
+    EditorViewProps,
     SuggestIgnoreProps,
     SuggestMarkProps,
-    Pick<Suggester<Schema>, 'name' | 'char'> {}
+    Pick<Suggester, 'name' | 'char'> {}
 
 /**
  * The type signature of the `onChange` handler method.
@@ -755,40 +751,38 @@ export interface SuggestChangeHandlerProps<Schema extends EditorSchema = EditorS
  * @param tr - the transaction that can be updated when `appendTransaction` is
  * set to true.
  */
-export type SuggestChangeHandler<Schema extends EditorSchema = EditorSchema> = (
-  changeDetails: SuggestChangeHandlerProps<Schema>,
-  tr: Transaction<Schema>,
+export type SuggestChangeHandler = (
+  changeDetails: SuggestChangeHandlerProps,
+  tr: Transaction,
 ) => void;
 
-export interface SuggesterProps<Schema extends EditorSchema = EditorSchema> {
+export interface SuggesterProps {
   /**
    * The suggester to use for finding matches.
    */
-  suggester: Required<Suggester<Schema>>;
+  suggester: Required<Suggester>;
 }
 
 /**
  * The matching suggester along with the reason, whether it is a `changeReason`
  * or an `exitReason`.
  */
-export interface SuggestMatchWithReason<Schema extends EditorSchema = EditorSchema>
-  extends SuggestMatch<Schema>,
-    ReasonProps {}
+export interface SuggestMatchWithReason extends SuggestMatch, ReasonProps {}
 
 /**
  * A mapping of the handler matches with their reasons for occurring within the
  * suggest state.
  */
-export interface SuggestReasonMap<Schema extends EditorSchema = EditorSchema> {
+export interface SuggestReasonMap {
   /**
    * Change reasons for triggering the change handler.
    */
-  change?: SuggestMatchWithReason<Schema>;
+  change?: SuggestMatchWithReason;
 
   /**
    * Exit reasons for triggering the change handler.
    */
-  exit?: SuggestMatchWithReason<Schema>;
+  exit?: SuggestMatchWithReason;
 }
 
 /**
@@ -816,16 +810,16 @@ export interface ReasonMatchProps {
  * occurred (i.e. change or exit see {@link SuggestReasonMap}) and the reason
  * for that that change. See {@link ExitReason} {@link ChangeReason}
  */
-export interface CompareMatchProps<Schema extends EditorSchema = EditorSchema> {
+export interface CompareMatchProps {
   /**
    * The initial match
    */
-  prev: SuggestMatch<Schema>;
+  prev: SuggestMatch;
 
   /**
    * The current match
    */
-  next: SuggestMatch<Schema>;
+  next: SuggestMatch;
 }
 
 /**
@@ -835,44 +829,44 @@ export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Ty
   [Key in Keys]+?: Type[Key];
 };
 
-export type EditorSchema = PMModel.Schema<string, string>;
+export type EditorSchema = PMModel.Schema;
 
-export type ProsemirrorNode<Schema extends EditorSchema = EditorSchema> = PMModel.Node<Schema>;
+export type ProsemirrorNode = PMModel.Node;
 
-export type Transaction<Schema extends EditorSchema = EditorSchema> = PMState.Transaction<Schema>;
+export type Transaction = PMState.Transaction;
 
 /**
  * A parameter builder interface containing the `tr` property.
  *
  * @template Schema - the underlying editor schema.
  */
-export interface TransactionProps<Schema extends EditorSchema = EditorSchema> {
+export interface TransactionProps {
   /**
    * The prosemirror transaction
    */
-  tr: Transaction<Schema>;
+  tr: Transaction;
 }
 
-export type EditorState<Schema extends EditorSchema = EditorSchema> = PMState.EditorState<Schema>;
+export type EditorState = PMState.EditorState;
 
 /**
  * A parameter builder interface containing the `state` property.
  *
  * @template Schema - the underlying editor schema.
  */
-export interface EditorStateProps<Schema extends EditorSchema = EditorSchema> {
+export interface EditorStateProps {
   /**
    * A snapshot of the prosemirror editor state.
    */
-  state: EditorState<Schema>;
+  state: EditorState;
 }
 
-export type ResolvedPos<Schema extends EditorSchema = EditorSchema> = PMModel.ResolvedPos<Schema>;
+export type ResolvedPos = PMModel.ResolvedPos;
 
 /**
  * @template Schema - the underlying editor schema.
  */
-export interface ResolvedPosProps<Schema extends EditorSchema = EditorSchema> {
+export interface ResolvedPosProps {
   /**
    * A prosemirror resolved pos with provides helpful context methods when
    * working with a position in the editor.
@@ -880,7 +874,7 @@ export interface ResolvedPosProps<Schema extends EditorSchema = EditorSchema> {
    * In prosemirror suggest this always uses the lower bound of the text
    * selection.
    */
-  $pos: ResolvedPos<Schema>;
+  $pos: ResolvedPos;
 }
 
 export interface TextProps {
@@ -890,23 +884,23 @@ export interface TextProps {
   text: string;
 }
 
-export type EditorView<Schema extends EditorSchema = EditorSchema> = PMView.EditorView<Schema>;
+export type EditorView = PMView.EditorView;
 
 /**
  * A parameter builder interface containing the `view` property.
  *
  * @template Schema - the underlying editor schema.
  */
-export interface EditorViewProps<Schema extends EditorSchema = EditorSchema> {
+export interface EditorViewProps {
   /**
    * An instance of the ProseMirror editor `view`.
    */
-  view: EditorView<Schema>;
+  view: EditorView;
 }
 
-export interface SelectionProps<Schema extends EditorSchema = EditorSchema> {
+export interface SelectionProps {
   /**
    * The text editor selection
    */
-  selection: PMState.Selection<Schema>;
+  selection: PMState.Selection;
 }

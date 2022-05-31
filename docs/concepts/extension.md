@@ -48,7 +48,7 @@ This handler is called when the `RemirrorManager` is first created. Since it is 
 ### `onView`
 
 ```ts
-function onView(view: EditorView<EditorSchema>): void;
+function onView(view: EditorView): void;
 ```
 
 This lifecycle method is called when the `EditorView` is first added by the UI layer. This is the lifecycle method where commands and editor helpers are added.

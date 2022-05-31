@@ -11,7 +11,6 @@ import {
 import type {
   AddIgnoredProps,
   CompareMatchProps,
-  EditorSchema,
   EditorState,
   EditorStateProps,
   EditorView,
@@ -35,14 +34,12 @@ import {
 /**
  * The `prosemirror-suggest` state which manages the list of suggesters.
  */
-export class SuggestState<Schema extends EditorSchema = EditorSchema> {
+export class SuggestState {
   /**
    * Create an instance of the SuggestState class.
    */
-  static create<Schema extends EditorSchema = EditorSchema>(
-    suggesters: Array<Suggester<Schema>>,
-  ): SuggestState<Schema> {
-    return new SuggestState<Schema>(suggesters);
+  static create(suggesters: Suggester[]): SuggestState {
+    return new SuggestState(suggesters);
   }
 
   /**
@@ -58,27 +55,27 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * The suggesters that have been registered for the suggesters plugin.
    */
-  #suggesters: Array<Required<Suggester<Schema>>>;
+  #suggesters: Array<Required<Suggester>>;
 
   /**
    * Keeps track of the current state.
    */
-  #next?: Readonly<SuggestMatch<Schema>>;
+  #next?: Readonly<SuggestMatch>;
 
   /**
    * Holds onto the previous active state.
    */
-  #prev?: Readonly<SuggestMatch<Schema>>;
+  #prev?: Readonly<SuggestMatch>;
 
   /**
    * The handler matches which are passed into the `onChange` handler.
    */
-  #handlerMatches: SuggestReasonMap<Schema> = object();
+  #handlerMatches: SuggestReasonMap = object();
 
   /**
    * Holds a copy of the view
    */
-  private view!: EditorView<Schema>;
+  private view!: EditorView;
 
   /**
    * The set of ignored decorations
@@ -119,7 +116,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * Returns the current active suggester state field if one exists
    */
-  get match(): Readonly<SuggestMatch<Schema>> | undefined {
+  get match(): Readonly<SuggestMatch> | undefined {
     return this.#next
       ? this.#next
       : this.#prev && this.#handlerMatches.exit
@@ -140,7 +137,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * `regex` and the order in which they are passed in. Earlier suggesters are
    * prioritized.
    */
-  constructor(suggesters: Array<Suggester<Schema>>) {
+  constructor(suggesters: Suggester[]) {
     const mapper = createSuggesterMapper();
     this.#suggesters = suggesters.map(mapper);
     this.#suggesters = sort(this.#suggesters, (a, b) => b.priority - a.priority);
@@ -149,7 +146,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * Initialize the SuggestState with a view which is stored for use later.
    */
-  init(view: EditorView<Schema>): this {
+  init(view: EditorView): this {
     this.view = view;
     return this;
   }
@@ -166,7 +163,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * Create the props which should be passed into each action handler
    */
-  private createProps(match: SuggestMatch<Schema>): SuggestChangeHandlerProps<Schema> {
+  private createProps(match: SuggestMatch): SuggestChangeHandlerProps {
     const { name, char } = match.suggester;
 
     return {
@@ -196,7 +193,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * Find the next text selection from the current selection.
    */
-  readonly findNextTextSelection = (selection: Selection<Schema>): TextSelection<Schema> | void => {
+  readonly findNextTextSelection = (selection: Selection): TextSelection | void => {
     const doc = selection.$from.doc;
 
     // Make sure the position doesn't exceed the bounds of the document.
@@ -210,7 +207,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     // Ignore non-text selections and null / undefined values. This is needed
     // for TS mainly, since the `true` in the `Selection.findFrom` method means
     // only `TextSelection` instances will be returned.
-    if (!isTextSelection<Schema>(nextSelection)) {
+    if (!isTextSelection(nextSelection)) {
       return;
     }
 
@@ -224,7 +221,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    *
    * @internal
    */
-  updateWithNextSelection(tr: Transaction<Schema>): void {
+  updateWithNextSelection(tr: Transaction): void {
     // Get the position furthest along in the editor to pass back to suggesters
     // which have the handler.
     const nextSelection = this.findNextTextSelection(tr.selection);
@@ -247,7 +244,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    *
    * @internal
    */
-  changeHandler(tr: Transaction<Schema>, appendTransaction: boolean): void {
+  changeHandler(tr: Transaction, appendTransaction: boolean): void {
     const { change, exit } = this.#handlerMatches;
     const match = this.match;
 
@@ -315,7 +312,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * Update the current ignored decorations based on the latest changes to the
    * prosemirror document.
    */
-  private mapIgnoredDecorations(tr: Transaction<Schema>) {
+  private mapIgnoredDecorations(tr: Transaction) {
     // Map over and update the ignored decorations.
     const ignored = this.#ignored.map(tr.mapping, tr.doc);
     const decorations = ignored.find();
@@ -374,6 +371,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
       from,
       to,
       { nodeName: suggester.ignoredTag, ...attributes },
+      // @ts-expect-error: TS types here don't allow us to set custom properties
       { name, specific, char: suggester.char },
     );
 
@@ -429,10 +427,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * TODO add logic here to decide whether to ignore a match based on the active
    * node, or mark.
    */
-  private shouldIgnoreMatch<Schema extends EditorSchema = EditorSchema>({
-    range,
-    suggester: { name },
-  }: SuggestMatch<Schema>) {
+  private shouldIgnoreMatch({ range, suggester: { name } }: SuggestMatch) {
     const decorations = this.#ignored.find();
 
     const shouldIgnore = decorations.some(({ spec, from }) => {
@@ -459,7 +454,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * Update the next state value.
    */
-  private updateReasons(props: UpdateReasonsProps<Schema>) {
+  private updateReasons(props: UpdateReasonsProps) {
     const { $pos, state } = props;
     const docChanged = this.#docChanged;
     const suggesters = this.#suggesters;
@@ -479,10 +474,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * A helper method to check is a match exists for the provided suggester name
    * at the provided position.
    */
-  readonly findMatchAtPosition = (
-    $pos: ResolvedPos<Schema>,
-    name?: string,
-  ): SuggestMatch<Schema> | undefined => {
+  readonly findMatchAtPosition = ($pos: ResolvedPos, name?: string): SuggestMatch | undefined => {
     const suggesters = name
       ? this.#suggesters.filter((suggester) => suggester.name === name)
       : this.#suggesters;
@@ -493,7 +485,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
   /**
    * Add a new suggest or replace it if it already exists.
    */
-  addSuggester(suggester: Suggester<Schema>): () => void {
+  addSuggester(suggester: Suggester): () => void {
     const previous = this.#suggesters.find((item) => item.name === suggester.name);
     const mapper = createSuggesterMapper();
 
@@ -520,7 +512,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     this.clearIgnored(name);
   }
 
-  toJSON(): SuggestMatch<Schema> | undefined {
+  toJSON(): SuggestMatch | undefined {
     return this.match;
   }
 
@@ -529,7 +521,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    *
    * @param - params
    */
-  apply(props: TransactionProps<Schema> & EditorStateProps<Schema>): this {
+  apply(props: TransactionProps & EditorStateProps): this {
     const { exit, change } = this.#handlerMatches;
 
     if (this.#lastChangeFromAppend) {
@@ -569,7 +561,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
    * Handle the decorations which wrap the mention while it is active and not
    * yet complete.
    */
-  createDecorations(state: EditorState<Schema>): DecorationSet<Schema> {
+  createDecorations(state: EditorState): DecorationSet {
     const match = this.match;
 
     if (!isValidMatch(match)) {
@@ -599,6 +591,7 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
               nodeName: suggestTag,
               class: name ? `${suggestClassName} suggest-${name}` : suggestClassName,
             },
+            // @ts-expect-error: TS types here don't allow us to set custom properties
             { name },
           ),
         ]);
@@ -613,9 +606,9 @@ export class SuggestState<Schema extends EditorSchema = EditorSchema> {
     this.#lastChangeFromAppend = true;
   };
 }
-interface UpdateReasonsProps<Schema extends EditorSchema = EditorSchema>
-  extends EditorStateProps<Schema>,
-    ResolvedPosProps<Schema>,
+interface UpdateReasonsProps
+  extends EditorStateProps,
+    ResolvedPosProps,
     Partial<CompareMatchProps> {}
 
 /**
@@ -625,9 +618,7 @@ interface UpdateReasonsProps<Schema extends EditorSchema = EditorSchema>
 function createSuggesterMapper() {
   const names = new Set<string>();
 
-  return <Schema extends EditorSchema = EditorSchema>(
-    suggester: Suggester<Schema>,
-  ): Required<Suggester<Schema>> => {
+  return (suggester: Suggester): Required<Suggester> => {
     if (names.has(suggester.name)) {
       throw new Error(
         `A suggester already exists with the name '${suggester.name}'. The name provided must be unique.`,

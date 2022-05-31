@@ -59,13 +59,13 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
           tag: `span[${TEXT_HIGHLIGHT_ATTRIBUTE}]`,
           getAttrs: (dom) => {
             if (!isElementDomNode(dom)) {
-              return;
+              return null;
             }
 
             const highlight = dom.getAttribute(TEXT_HIGHLIGHT_ATTRIBUTE);
 
             if (!highlight) {
-              return;
+              return null;
             }
 
             return { ...extra.parse(dom), highlight };
@@ -75,13 +75,13 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
           tag: `span[${TEXT_HIGHLIGHT_ATTRIBUTE}]`,
           getAttrs: (dom) => {
             if (!isElementDomNode(dom)) {
-              return;
+              return null;
             }
 
             const highlight = dom.getAttribute(TEXT_HIGHLIGHT_ATTRIBUTE);
 
             if (!highlight) {
-              return;
+              return null;
             }
 
             return { ...extra.parse(dom), highlight };
@@ -93,7 +93,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
           priority: ExtensionPriority.Low,
           getAttrs: (highlight) => {
             if (!isString(highlight)) {
-              return;
+              return null;
             }
 
             return { highlight };

@@ -54,7 +54,7 @@ export class TableExtension extends BaseTableExtension {
       node: ProsemirrorNode,
       view: EditorView,
       getPos: boolean | (() => number),
-      decorations: Decoration[],
+      decorations: readonly Decoration[],
     ) => {
       return new TableView(node, 10, decorations, view, getPos as () => number);
     };
@@ -182,7 +182,7 @@ export class TableExtension extends BaseTableExtension {
     return convertCommand(addRowAfter);
   }
 
-  createPlugin(): CreateExtensionPlugin<void> {
+  createPlugin(): CreateExtensionPlugin {
     return {
       appendTransaction: (transactions, prevState, state) => {
         const composedTransaction = composeTransactionSteps(transactions, prevState);

@@ -74,13 +74,13 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
           tag: `span[${FONT_SIZE_ATTRIBUTE}]`,
           getAttrs: (dom) => {
             if (!isElementDomNode(dom)) {
-              return;
+              return null;
             }
 
             let size = dom.getAttribute(FONT_SIZE_ATTRIBUTE);
 
             if (!size) {
-              return;
+              return null;
             }
 
             size = `${convertPixelsToDomUnit(size, this.options.unit, dom)}${this.options.unit}`;
@@ -94,7 +94,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
           priority: ExtensionPriority.Low,
           getAttrs: (size) => {
             if (!isString(size)) {
-              return;
+              return null;
             }
 
             size = this.getFontSize(size);

@@ -1,10 +1,7 @@
-import pm, {
-  MarkTypeAttributes,
-  NodeTypeAttributes,
-  TaggedProsemirrorNode,
-} from 'prosemirror-test-builder';
+import * as pm from 'prosemirror-test-builder';
+import { MarkBuilder, NodeBuilder } from 'prosemirror-test-builder';
 import { Cast, isNumber, keys } from '@remirror/core-helpers';
-import type { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
+import type { EditorSchema, ProsemirrorNode, ProsemirrorPlugin } from '@remirror/core-types';
 import { GapCursor } from '@remirror/pm/gapcursor';
 import {
   AllSelection,
@@ -16,7 +13,7 @@ import {
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 
 import { schema } from './jest-prosemirror-schema';
-import type { TaggedDocProps } from './jest-prosemirror-types';
+import type { TaggedDocProps, TaggedProsemirrorNode } from './jest-prosemirror-types';
 
 /**
  * Table specific cell resolution
@@ -24,7 +21,7 @@ import type { TaggedDocProps } from './jest-prosemirror-types';
  * @param taggedDoc
  * @param [tag]
  */
-function resolveCell(taggedDoc: TaggedProsemirrorNode, tag?: number) {
+function resolveCell(taggedDoc: ProsemirrorNode, tag?: number) {
   if (!tag) {
     return null;
   }
@@ -32,8 +29,7 @@ function resolveCell(taggedDoc: TaggedProsemirrorNode, tag?: number) {
   return cellAround(taggedDoc.resolve(tag));
 }
 
-interface CreateTextSelectionProps<Schema extends EditorSchema = EditorSchema>
-  extends TaggedDocProps<Schema> {
+interface CreateTextSelectionProps extends TaggedDocProps {
   start: number;
   end?: number;
 }
@@ -46,14 +42,10 @@ interface CreateTextSelectionProps<Schema extends EditorSchema = EditorSchema>
  * @param param.start
  * @param param.end
  */
-function createTextSelection<Schema extends EditorSchema = EditorSchema>({
-  taggedDoc,
-  start,
-  end,
-}: CreateTextSelectionProps<Schema>) {
+function createTextSelection({ taggedDoc, start, end }: CreateTextSelectionProps) {
   const $start = taggedDoc.resolve(start);
   const $end = end && start <= end ? taggedDoc.resolve(end) : taggedDoc.resolve($start.end());
-  return new TextSelection<Schema>($start, $end);
+  return new TextSelection($start, $end);
 }
 
 const supportedTags = new Set(['cursor', 'node', 'start', 'end', 'anchor', 'all', 'gap']);
@@ -63,8 +55,9 @@ const supportedTags = new Set(['cursor', 'node', 'start', 'end', 'anchor', 'all'
  *
  * @param taggedDoc
  */
-export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode): boolean {
-  return keys(taggedDoc.tag).some((tag) => supportedTags.has(tag));
+export function taggedDocHasSelection(taggedDoc: ProsemirrorNode): boolean {
+  const tag = (taggedDoc as TaggedProsemirrorNode)?.tag ?? {};
+  return keys(tag).some((tag) => supportedTags.has(tag));
 }
 
 /**
@@ -74,26 +67,26 @@ export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode): boolean
  *
  * @param taggedDoc
  */
-export function initSelection<Schema extends EditorSchema = EditorSchema>(
-  taggedDoc: TaggedProsemirrorNode<Schema>,
-): Selection<Schema> | null {
-  const { cursor, node, start, end, anchor, head, all, gap } = taggedDoc.tag;
+export function initSelection(taggedDoc: ProsemirrorNode): Selection | undefined {
+  const tag = (taggedDoc as TaggedProsemirrorNode)?.tag ?? {};
+
+  const { cursor, node, start, end, anchor, head, all, gap } = tag;
 
   if (isNumber(all)) {
-    return new AllSelection<Schema>(taggedDoc);
+    return new AllSelection(taggedDoc);
   }
 
   if (isNumber(node)) {
-    return NodeSelection.create<Schema>(taggedDoc, taggedDoc.resolve(node).before());
+    return NodeSelection.create(taggedDoc, taggedDoc.resolve(node).before());
   }
 
   if (isNumber(cursor)) {
-    return new TextSelection<Schema>(taggedDoc.resolve(cursor));
+    return new TextSelection(taggedDoc.resolve(cursor));
   }
 
   if (isNumber(gap)) {
     const $pos = taggedDoc.resolve(gap);
-    return new GapCursor($pos, $pos);
+    return new GapCursor($pos);
   }
 
   if (isNumber(anchor) && isNumber(head)) {
@@ -108,13 +101,11 @@ export function initSelection<Schema extends EditorSchema = EditorSchema>(
     const $anchor = resolveCell(taggedDoc, anchor);
 
     if ($anchor) {
-      return Cast<Selection<Schema>>(
-        new CellSelection<Schema>($anchor, resolveCell(taggedDoc, head) ?? undefined),
-      );
+      return Cast<Selection>(new CellSelection($anchor, resolveCell(taggedDoc, head) ?? undefined));
     }
   }
 
-  return null;
+  return undefined;
 }
 
 /**
@@ -122,9 +113,7 @@ export function initSelection<Schema extends EditorSchema = EditorSchema>(
  *
  * @param taggedDoc
  */
-export function selectionFor<Schema extends EditorSchema = EditorSchema>(
-  taggedDoc: TaggedProsemirrorNode<Schema>,
-): Selection<Schema> {
+export function selectionFor(taggedDoc: ProsemirrorNode): Selection {
   return initSelection(taggedDoc) ?? Selection.atStart(taggedDoc);
 }
 
@@ -133,10 +122,10 @@ export function selectionFor<Schema extends EditorSchema = EditorSchema>(
  *
  * @param taggedDoc
  */
-export function createState<Schema extends EditorSchema = EditorSchema>(
-  taggedDoc: TaggedProsemirrorNode<Schema>,
+export function createState(
+  taggedDoc: ProsemirrorNode,
   plugins: ProsemirrorPlugin[] = [],
-): EditorState<Schema> {
+): EditorState {
   return EditorState.create({
     doc: taggedDoc,
     selection: initSelection(taggedDoc),
@@ -144,6 +133,26 @@ export function createState<Schema extends EditorSchema = EditorSchema>(
     plugins,
   });
 }
+
+interface NodeTypeAttributes extends Record<string, any> {
+  nodeType: string;
+}
+
+interface MarkTypeAttributes extends Record<string, any> {
+  markType: string;
+}
+
+type Builder = <
+  Types extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
+    string,
+    NodeTypeAttributes | MarkTypeAttributes
+  >,
+>(
+  testSchema: EditorSchema,
+  names: Types,
+) => {
+  [Name in keyof Types]: Types[Name] extends NodeTypeAttributes ? NodeBuilder : MarkBuilder;
+};
 
 /**
  * A short hand way for building prosemirror test builders with the core nodes already provided
@@ -156,14 +165,12 @@ export function createState<Schema extends EditorSchema = EditorSchema>(
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function pmBuild<
-  Type extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
+  Types extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
     string,
     NodeTypeAttributes | MarkTypeAttributes
   >,
-  Nodes extends string = string,
-  Marks extends string = string,
->(testSchema: EditorSchema<Nodes, Marks>, names: Type) {
-  return pm.builders(testSchema, {
+>(testSchema: EditorSchema, names: Types) {
+  return (pm.builders as unknown as Builder)(testSchema, {
     doc: { nodeType: 'doc' },
     p: { nodeType: 'paragraph' },
     text: { nodeType: 'text' },
@@ -171,7 +178,7 @@ export function pmBuild<
   });
 }
 
-const built = pm.builders(schema, {
+const built = pmBuild(schema, {
   doc: { nodeType: 'doc' },
   p: { nodeType: 'paragraph' },
   text: { nodeType: 'text' },
@@ -208,37 +215,44 @@ export const {
   atomInline,
   blockquote,
   code,
-  containerWithRestrictedContent,
   doc,
   em,
-  link,
+  a: link,
   p,
-  paragraph,
+  p: paragraph,
   strong,
   table,
   td,
   text,
   th,
   tr,
-  horizontalRule,
   h1,
   h2,
   h3,
   h4,
   h5,
   h6,
-  table_cell: tableCell,
-  table_header: tableHeaderCell,
-  table_row: tableRow,
-  code_block: codeBlock,
-  hard_break: hardBreak,
-  image,
-  heading,
+  td: tableCell,
+  th: tableHeaderCell,
+  tr: tableRow,
 } = built;
 
-export const tdEmpty = td(p());
-export const thEmpty = th(p());
-export const tdCursor = td(p('<cursor>'));
-export const thCursor = th(p('<cursor>'));
+const b = built as any;
+
+export const code_block: NodeBuilder = b.code_block;
+export const pre: NodeBuilder = b.pre;
+export const img: NodeBuilder = b.img;
+export const hr: NodeBuilder = b.hr;
+export const br: NodeBuilder = b.br;
+export const codeBlock: NodeBuilder = b.code_block;
+export const hardBreak: NodeBuilder = b.hard_break;
+export const heading: NodeBuilder = b.heading;
+export const horizontalRule: NodeBuilder = b.horizontalRule;
+export const image: NodeBuilder = b.image;
+
+export const tdEmpty: ProsemirrorNode = td(p());
+export const thEmpty: ProsemirrorNode = th(p());
+export const tdCursor: ProsemirrorNode = td(p('<cursor>'));
+export const thCursor: ProsemirrorNode = th(p('<cursor>'));
 
 export { pm };

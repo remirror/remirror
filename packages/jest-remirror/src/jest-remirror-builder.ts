@@ -170,8 +170,7 @@ export function coerce(props: CoerceProps): SequenceReturn {
   return sequence(...flattenArray<TaggedContentItem>(taggedContent));
 }
 
-interface NodeFactoryProps<Schema extends EditorSchema = EditorSchema>
-  extends BaseFactoryProps<Schema> {
+interface NodeFactoryProps extends BaseFactoryProps {
   /**
    * The marks which wrap this node.
    */
@@ -183,9 +182,7 @@ type NodeFactory = (...content: TaggedContentWithText[]) => TaggedProsemirrorNod
 /**
  * Create a builder function for nodes.
  */
-export function nodeFactory<Schema extends EditorSchema = EditorSchema>(
-  props: NodeFactoryProps<Schema>,
-): NodeFactory {
+export function nodeFactory(props: NodeFactoryProps): NodeFactory {
   const { name, schema, attrs, marks } = props;
   const nodeBuilder = hasOwnProperty(schema.nodes, name) ? schema.nodes[name] : undefined;
 
@@ -249,7 +246,7 @@ export function fragment(...content: TaggedContentWithText[]): TaggedContentWith
 }
 
 export function slice(schema: EditorSchema) {
-  return (...content: TaggedContentWithText[]): Slice<EditorSchema> =>
+  return (...content: TaggedContentWithText[]): Slice =>
     new Slice(Fragment.from(coerce({ content, schema }).nodes), 0, 0);
 }
 

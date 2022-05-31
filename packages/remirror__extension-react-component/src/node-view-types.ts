@@ -101,7 +101,7 @@ export interface NodeViewComponentProps extends EditorViewProps, NodeWithAttribu
   /**
    * The decorations which are currently applied to the ReactNodeView.
    */
-  decorations: Decoration[];
+  decorations: readonly Decoration[];
 }
 
 /**

@@ -89,7 +89,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
           tag: `span[${EMOJI_DATA_ATTRIBUTE}`,
           getAttrs: (node) => {
             if (!isElementDomNode(node)) {
-              return;
+              return null;
             }
 
             const code = node.getAttribute(EMOJI_DATA_ATTRIBUTE);

@@ -567,6 +567,6 @@ describe('calculateItemRange', () => {
       ),
     );
     const range = calculateItemRange(editor.state.selection);
-    expect(range).toBeUndefined();
+    expect(range).toBeNull();
   });
 });

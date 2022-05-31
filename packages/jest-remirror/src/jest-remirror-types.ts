@@ -8,8 +8,7 @@ import type {
 import type { DomFrameworkProps } from '@remirror/dom';
 import type { CreateCoreManagerOptions } from '@remirror/preset-core';
 
-export interface BaseFactoryProps<Schema extends EditorSchema = EditorSchema>
-  extends Partial<AttributesProps> {
+export interface BaseFactoryProps extends Partial<AttributesProps> {
   /**
    * The name of the node or mark
    */
@@ -18,7 +17,7 @@ export interface BaseFactoryProps<Schema extends EditorSchema = EditorSchema>
   /**
    * The editor schema
    */
-  schema: Schema;
+  schema: EditorSchema;
 }
 
 /**
@@ -77,8 +76,7 @@ export class TagTracker {
 /**
  * A standard ProseMirror Node that also tracks tags.
  */
-export interface TaggedProsemirrorNode<Schema extends EditorSchema = EditorSchema>
-  extends ProsemirrorNode<Schema> {
+export interface TaggedProsemirrorNode extends ProsemirrorNode {
   tags: Tags;
 }
 

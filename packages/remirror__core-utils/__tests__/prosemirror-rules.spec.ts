@@ -23,7 +23,7 @@ describe('markInputRule', () => {
       view,
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const parameters = [view, from, to, '~'];
+    const parameters = [view, from, to, '~'] as const;
 
     view.someProp('handleTextInput', (f) => {
       f(...parameters);
@@ -40,7 +40,7 @@ describe('markInputRule', () => {
       view,
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const parameters = [view, from, to, '@'];
+    const parameters = [view, from, to, '@'] as const;
     view.someProp('handleTextInput', (f) => {
       const value = f(...parameters);
 
@@ -66,10 +66,9 @@ describe('nodeInputRule', () => {
       view,
     } = createEditor(doc(p(), p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const parameters = [view, from, to, '~'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...parameters);
+      f(view, from, to, '~');
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p(), horizontalRule()));
@@ -83,9 +82,8 @@ describe('nodeInputRule', () => {
       view,
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const parameters = [view, from, to, '@'];
     view.someProp('handleTextInput', (f) => {
-      const value = f(...parameters);
+      const value = f(view, from, to, '@');
 
       expect(value).toBe(false);
 
@@ -108,10 +106,9 @@ describe('plainInputRule', () => {
       view,
     } = createEditor(doc(p('ab<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const parameters = [view, from, to, 'c'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...parameters);
+      f(view, from, to, 'c');
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABC')));
@@ -129,10 +126,9 @@ describe('plainInputRule', () => {
       view,
     } = createEditor(doc(p('ab<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const parameters = [view, from, to, 'c'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...parameters);
+      f(view, from, to, 'c');
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABC ')));
@@ -150,10 +146,9 @@ describe('plainInputRule', () => {
       view,
     } = createEditor(doc(p('abcxy<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const parameters = [view, from, to, 'z'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...parameters);
+      f(view, from, to, 'z');
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABCxyz')));
@@ -170,10 +165,9 @@ describe('plainInputRule', () => {
       view,
     } = createEditor(doc(p('ab<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const parameters = [view, from, to, 'c'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...parameters);
+      f(view, from, to, 'c');
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p('')));

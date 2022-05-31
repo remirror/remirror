@@ -121,7 +121,7 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
 
       // Dynamically add the attribute specific shortcut to the array of
       // attribute shortcuts.
-      attrShortcuts.push({ attrs: { level }, shortcut: fn(shortcut)[0] as string });
+      attrShortcuts.push({ attrs: { level }, shortcut: fn(shortcut)[0] });
     }
 
     commandsExtension.updateDecorated('toggleHeading', { shortcut: attrShortcuts });

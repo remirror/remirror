@@ -1,4 +1,4 @@
-import { EditorSchema, EditorView, NodeView, range, throttle, Transaction } from '@remirror/core';
+import { EditorView, NodeView, range, throttle, Transaction } from '@remirror/core';
 import { Node as ProsemirrorNode } from '@remirror/pm/model';
 import { TableMap, updateColumnsOnResize } from '@remirror/pm/tables';
 import { Decoration } from '@remirror/pm/view';
@@ -9,7 +9,7 @@ import { ReactTableNodeAttrs } from '../table-extensions';
 import { h } from '../utils/dom';
 import { setNodeAttrs } from '../utils/prosemirror';
 
-export class TableView<Schema extends EditorSchema = EditorSchema> implements NodeView<Schema> {
+export class TableView implements NodeView {
   readonly root: HTMLElement;
   readonly table: HTMLElement;
   readonly colgroup: HTMLElement;
@@ -33,7 +33,7 @@ export class TableView<Schema extends EditorSchema = EditorSchema> implements No
   constructor(
     public node: ProsemirrorNode,
     public cellMinWidth: number,
-    public decorations: Decoration[],
+    public decorations: readonly Decoration[],
     public view: EditorView,
     public getPos: () => number,
   ) {
@@ -72,7 +72,7 @@ export class TableView<Schema extends EditorSchema = EditorSchema> implements No
     document.addEventListener('mousemove', this.handleMouseMove);
   }
 
-  update(node: ProsemirrorNode, decorations: Decoration[]): boolean {
+  update(node: ProsemirrorNode, decorations: readonly Decoration[]): boolean {
     // console.debug(`[TableView] update`);
 
     if (node.type !== this.node.type) {

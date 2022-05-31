@@ -22,6 +22,7 @@ import {
   ChainedFromExtensions,
   CommandFunctionProps,
   CommandsFromExtensions,
+  EditorSchema,
   EditorState,
   getTextSelection,
   HelpersFromExtensions,
@@ -153,35 +154,35 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
   /**
    * The editor view.
    */
-  get view(): TestEditorView<this['manager']['~Sch']> {
-    return this.manager.view as TestEditorView<this['manager']['~Sch']>;
+  get view(): TestEditorView {
+    return this.manager.view as TestEditorView;
   }
 
   /**
    * The editor state.
    */
-  get state(): EditorState<this['manager']['~Sch']> {
+  get state(): EditorState {
     return this.view.state;
   }
 
   /**
    * The editor state.
    */
-  get tr(): Transaction<this['manager']['~Sch']> {
+  get tr(): Transaction {
     return this.view.state.tr;
   }
 
   /**
    * The editor schema.
    */
-  get schema(): this['manager']['~Sch'] {
+  get schema(): EditorSchema {
     return this.manager.schema;
   }
 
   /**
    * The root node for the editor.
    */
-  get doc(): ProsemirrorNode<this['manager']['~Sch']> {
+  get doc(): ProsemirrorNode {
     return this.state.doc;
   }
 
@@ -267,7 +268,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    * The dom node holding the view.
    */
   get dom(): HTMLElement {
-    return this.view.dom as HTMLElement;
+    return this.view.dom;
   }
 
   /**
@@ -333,7 +334,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    *
    * If content already exists it will be overwritten.
    */
-  readonly add = (taggedDocument: TaggedProsemirrorNode<this['manager']['~Sch']>): this => {
+  readonly add = (taggedDocument: TaggedProsemirrorNode): this => {
     const { schema } = taggedDocument.type;
     invariant(taggedDocument.type === schema.topNodeType, {
       message: `Expected a top level "${schema.topNodeType.name}" node but received a "${taggedDocument.type.name}" node`,
@@ -376,7 +377,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
   /**
    * Alias for add.
    */
-  readonly overwrite = (taggedDocument: TaggedProsemirrorNode<this['manager']['~Sch']>): this => {
+  readonly overwrite = (taggedDocument: TaggedProsemirrorNode): this => {
     return this.add(taggedDocument);
   };
 

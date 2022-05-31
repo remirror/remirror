@@ -60,7 +60,6 @@ describe('tags', () => {
     expect(ExtensionTag.Awesome).toBe('awesome');
     // @ts-expect-error
     const editor = renderEditor([new InvalidExtension()]);
-    // @ts-expect-error
     expect(editor.manager.nodes['invalid'].group).toBe('awesome');
 
     // @ts-expect-error

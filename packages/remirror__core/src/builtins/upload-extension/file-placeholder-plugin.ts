@@ -11,7 +11,7 @@ interface UploadPlaceholderPluginData {
 const key = new PluginKey<UploadPlaceholderPluginData>('remirroFilePlaceholderPlugin');
 
 export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginData> {
-  return new Plugin<UploadPlaceholderPluginData>({
+  const plugin: Plugin<UploadPlaceholderPluginData> = new Plugin<UploadPlaceholderPluginData>({
     key: key,
     state: {
       init(): UploadPlaceholderPluginData {
@@ -21,11 +21,12 @@ export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginD
         // Adjust decoration positions to changes made by the transaction
         set = set.map(tr.mapping, tr.doc);
         // See if the transaction adds or removes any placeholders
-        const action = tr.getMeta(this) as PlaceholderPluginAction | null;
+        const action = tr.getMeta(plugin) as PlaceholderPluginAction | null;
 
         if (action) {
           if (action.type === ActionType.ADD_PLACEHOLDER) {
             const widget = document.createElement('placeholder');
+            // @ts-expect-error: TS types here don't allow us to set custom properties
             const deco = Decoration.widget(action.pos, widget, { id: action.id });
             set = set.add(tr.doc, [deco]);
             payloads.set(action.id, action.payload);
@@ -40,10 +41,11 @@ export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginD
     },
     props: {
       decorations(state) {
-        return this.getState(state).set;
+        return plugin.getState(state)?.set ?? null;
       },
     },
   });
+  return plugin;
 }
 
 /**

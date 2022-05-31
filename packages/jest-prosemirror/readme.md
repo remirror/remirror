@@ -263,13 +263,13 @@ Simulate a keypress which is run through the editor's key handlers.
 
 **`char`** - the character to type
 
-#### fire - `(params: Omit<FireEventAtPositionParameter<Schema>, 'view'>) => ReturnType<typeof createEditor>`
+#### fire - `(params: Omit<FireEventAtPositionParameter, 'view'>) => ReturnType<typeof createEditor>`
 
 Fire an event in the editor. This api is not the most well tested and can be quite flakey.
 
 **`params`** - the fire event parameters
 
-#### callback - `(fn: (content: ReturnValueCallbackParameter<Schema>) => void) => ReturnType<typeof createEditor>`
+#### callback - `(fn: (content: ReturnValueCallbackParameter) => void) => ReturnType<typeof createEditor>`
 
 Callback function which receives the `start`, `end`, `state`, `view`, `schema` and `selection` properties and allows for easier testing of the current state of the editor.
 

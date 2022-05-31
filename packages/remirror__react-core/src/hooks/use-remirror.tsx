@@ -3,7 +3,6 @@ import {
   AnyExtension,
   CreateEditorStateProps,
   EditorState,
-  GetSchema,
   InvalidContentHandler,
   RemirrorEventListener,
   RemirrorManager,
@@ -89,7 +88,7 @@ export interface UseRemirrorReturn<Extension extends AnyExtension> {
    * properties. If none were passed in then the state is created from the
    * default empty doc node as defined by the editor Schema.
    */
-  state: EditorState<GetSchema<Extension>>;
+  state: EditorState;
 
   /**
    * A function to update the state when you intend to make the editor
@@ -116,7 +115,7 @@ export interface UseRemirrorReturn<Extension extends AnyExtension> {
    * }
    * ```
    */
-  setState: (state: EditorState<GetSchema<Extension>>) => void;
+  setState: (state: EditorState) => void;
 
   /**
    * Syntactic sugar for using the `setState` method directly on the `<Remirror

@@ -42,7 +42,7 @@ import {
 import type { CreateEventHandlers } from '@remirror/extension-events';
 import { undoDepth } from '@remirror/pm/history';
 import { MarkPasteRule } from '@remirror/pm/paste-rules';
-import { TextSelection } from '@remirror/pm/state';
+import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
 import { TOP_50_TLDS } from './link-extension-utils';
@@ -66,7 +66,7 @@ interface FoundAutoLink {
 }
 
 interface EventMeta {
-  selection: TextSelection;
+  selection: Selection;
   range: FromToProps | undefined;
   doc: ProsemirrorNode;
   attrs: LinkAttributes;

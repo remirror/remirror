@@ -215,7 +215,7 @@ function createCell(props: CreateCellProps) {
  * dispatch(tr.replaceSelectionWith(table).scrollIntoView());
  * ```
  */
-export function createTable(props: CreateTableProps): ProsemirrorNode<EditorSchema> {
+export function createTable(props: CreateTableProps): ProsemirrorNode {
   const { schema, cellContent, columnsCount = 3, rowsCount = 3, withHeaderRow = true } = props;
   const {
     cell: tableCell,

@@ -20,16 +20,13 @@ const state = EditorState.create({
 });
 
 test('createEditorView', () => {
-  const view = createEditorView(
-    { mount: minDocument.createElement('div') },
-    {
-      state,
-      editable: () => {
-        return true;
-      },
-      plugins: [],
+  const view = createEditorView(minDocument.createElement('div'), {
+    state,
+    editable: () => {
+      return true;
     },
-  );
+    plugins: [],
+  });
 
   expect(view.destroy).toBeFunction();
   expect(view.state).toBe(state);
@@ -38,7 +35,7 @@ test('createEditorView', () => {
 test('createEditorView:forceEnvironment', () => {
   expect(() =>
     createEditorView(
-      { mount: minDocument.createElement('div') },
+      minDocument.createElement('div'),
       {
         state,
         editable: () => {

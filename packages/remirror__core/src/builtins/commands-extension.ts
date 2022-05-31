@@ -13,7 +13,6 @@ import type {
   CommandFunction,
   CommandFunctionProps,
   DispatchFunction,
-  EditorSchema,
   EmptyShape,
   Fragment,
   FromToProps,
@@ -177,7 +176,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   /**
    * Attach commands once the view is attached.
    */
-  onView(view: EditorView<EditorSchema>): void {
+  onView(view: EditorView): void {
     const { extensions, helpers } = this.store;
     const commands: Record<string, CommandShape> = object();
     const names = new Set<string>();
@@ -759,7 +758,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       }
 
       requestAnimationFrame(() => {
-        (view.dom as HTMLElement).blur();
+        view.dom.blur();
       });
 
       return position ? this.selectText(position)(props) : true;
@@ -1023,7 +1022,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       return;
     }
 
-    (this.store.view.dom as HTMLElement).focus();
+    this.store.view.dom.focus();
   }
 
   /**

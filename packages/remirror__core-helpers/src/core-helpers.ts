@@ -778,7 +778,7 @@ export function clamp({ min, max, value }: ClampProps): number {
  * Get the last element of the array.
  */
 export function last<Type>(array: Type[]): Type {
-  return array[array.length - 1] as Type;
+  return array[array.length - 1];
 }
 
 /**

@@ -1,11 +1,6 @@
-import type {
-  CreateExtensionPlugin,
-  EditorState,
-  Helper,
-  Static,
-  Transaction,
-} from '@remirror/core';
+import type { EditorState, Helper, Static, Transaction } from '@remirror/core';
 import { extension, findMatches, helper, PlainExtension } from '@remirror/core';
+import { Plugin } from '@remirror/pm/state';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import {
@@ -138,10 +133,10 @@ export class CountExtension extends PlainExtension<CountOptions> {
     ]);
   }
 
-  createPlugin(): CreateExtensionPlugin<CountPluginState> {
+  createExternalPlugins(): Plugin[] {
     const { maximum } = this.options;
 
-    return {
+    const plugin: Plugin<CountPluginState> = new Plugin<CountPluginState>({
       state: {
         init: (_, state: EditorState) => {
           if (this.isCountValid(state)) {
@@ -177,10 +172,11 @@ export class CountExtension extends PlainExtension<CountOptions> {
       },
       props: {
         decorations(state: EditorState) {
-          return this.getState(state).decorationSet;
+          return plugin.getState(state)?.decorationSet ?? null;
         },
       },
-    };
+    });
+    return [plugin];
   }
 }
 

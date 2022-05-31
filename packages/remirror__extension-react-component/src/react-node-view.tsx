@@ -63,7 +63,7 @@ export class ReactNodeView implements NodeView {
   /**
    * The decorations in the most recent update.
    */
-  #decorations: Decoration[] = [];
+  #decorations: readonly Decoration[] = [];
 
   /**
    * The editor this nodeView belongs to.
@@ -100,7 +100,7 @@ export class ReactNodeView implements NodeView {
     return this.#selected;
   }
 
-  #contentDOM?: Node | undefined;
+  #contentDOM?: HTMLElement | undefined;
 
   /**
    * The wrapper for the content dom. Created from the node spec `toDOM` method.
@@ -116,7 +116,7 @@ export class ReactNodeView implements NodeView {
    *
    * In order to make use of this in a
    */
-  public get contentDOM(): Node | undefined {
+  public get contentDOM(): HTMLElement | undefined {
     return this.#contentDOM;
   }
 
@@ -198,7 +198,9 @@ export class ReactNodeView implements NodeView {
   /**
    * The element that will contain the content for this element.
    */
-  private createContentDom(): { wrapper: HTMLElement; contentDOM?: Node | null } | undefined {
+  private createContentDom():
+    | { wrapper: HTMLElement; contentDOM?: HTMLElement | null }
+    | undefined {
     if (this.#node.isLeaf) {
       return;
     }
@@ -307,7 +309,7 @@ export class ReactNodeView implements NodeView {
   /**
    * This is called whenever the node is called.
    */
-  update(node: ProsemirrorNode, decorations: Decoration[]): boolean {
+  update(node: ProsemirrorNode, decorations: readonly Decoration[]): boolean {
     if (!isNodeOfType({ types: this.#node.type, node })) {
       return false;
     }

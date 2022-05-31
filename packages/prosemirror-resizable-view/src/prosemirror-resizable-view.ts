@@ -330,12 +330,16 @@ function sameMarkup(node1: ProsemirrorNode, node2: ProsemirrorNode, ignoreAttrs:
     deltaAttrs[attr] = null;
   }
 
+  // @ts-expect-error: node should be immutable
   node1.attrs = { ...node1Attrs, ...deltaAttrs };
+  // @ts-expect-error: node should be immutable
   node2.attrs = { ...node2Attrs, ...deltaAttrs };
 
   const same = node1.sameMarkup(node2);
 
+  // @ts-expect-error: node should be immutable
   node1.attrs = node1Attrs;
+  // @ts-expect-error: node should be immutable
   node2.attrs = node2Attrs;
 
   return same;

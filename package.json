@@ -256,7 +256,6 @@
       {
         "groupName": "prosemirror packages",
         "matchPackagePatterns": [
-          "@types/prosemirror.*",
           "^prosemirror.*"
         ],
         "rangeStrategy": "bump",

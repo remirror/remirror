@@ -3,7 +3,6 @@ import { includes, isObject, isString } from '@remirror/core-helpers';
 
 import type {
   CompareMatchProps,
-  EditorSchema,
   SelectionProps,
   SuggestMatch,
   SuggestReasonMap,
@@ -14,19 +13,17 @@ import { ChangeReason, ExitReason } from './suggest-types';
 /**
  * Is this a change in the current suggestion (added or deleted characters)?
  */
-export function isChange<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchProps<Schema>>,
-): compare is CompareMatchProps<Schema> {
+export function isChange(compare: Partial<CompareMatchProps>): compare is CompareMatchProps {
   return !!(compare.prev && compare.next && compare.prev.text.full !== compare.next.text.full);
 }
 
 /**
  * Is this is a repetition of the same check?
  */
-export function isIdentical<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchProps<Schema>>,
-  match: SuggestReasonMap<Schema>,
-): compare is CompareMatchProps<Schema> {
+export function isIdentical(
+  compare: Partial<CompareMatchProps>,
+  match: SuggestReasonMap,
+): compare is CompareMatchProps {
   return !!(
     compare.prev &&
     compare.next &&
@@ -40,9 +37,7 @@ export function isIdentical<Schema extends EditorSchema = EditorSchema>(
  * Has the cursor moved within the current suggestion (added or deleted
  * characters)?
  */
-export function isMove<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchProps<Schema>>,
-): compare is CompareMatchProps<Schema> {
+export function isMove(compare: Partial<CompareMatchProps>): compare is CompareMatchProps {
   return !!(
     compare.prev &&
     compare.next &&
@@ -53,27 +48,25 @@ export function isMove<Schema extends EditorSchema = EditorSchema>(
 /**
  * Are we entering a new suggestion?
  */
-export function isEntry<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchProps<Schema>>,
-): compare is Pick<CompareMatchProps<Schema>, 'next'> {
+export function isEntry(
+  compare: Partial<CompareMatchProps>,
+): compare is Pick<CompareMatchProps, 'next'> {
   return !!(!compare.prev && compare.next);
 }
 
 /**
  * Are we exiting a suggestion?
  */
-export function isExit<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchProps<Schema>>,
-): compare is Pick<CompareMatchProps<Schema>, 'prev'> {
+export function isExit(
+  compare: Partial<CompareMatchProps>,
+): compare is Pick<CompareMatchProps, 'prev'> {
   return !!(compare.prev && !compare.next);
 }
 
 /**
  * Is this a jump from one suggestion to another?
  */
-export function isJump<Schema extends EditorSchema = EditorSchema>(
-  compare: Partial<CompareMatchProps<Schema>>,
-): compare is CompareMatchProps<Schema> {
+export function isJump(compare: Partial<CompareMatchProps>): compare is CompareMatchProps {
   return !!(compare.prev && compare.next && compare.prev.range.from !== compare.next.range.from);
 }
 
@@ -152,26 +145,22 @@ const changeJump = [ChangeReason.JumpBackward, ChangeReason.JumpForward] as cons
 /**
  * Checks to see if this is a jump reason.
  */
-export function isJumpReason<Schema extends EditorSchema = EditorSchema>(
-  map: SuggestReasonMap<Schema>,
-): map is Required<SuggestReasonMap<Schema>> {
+export function isJumpReason(map: SuggestReasonMap): map is Required<SuggestReasonMap> {
   return includes(exitJump, map.exit?.exitReason) || includes(changeJump, map.change?.changeReason);
 }
 
 /**
  * True when the match is currently active (i.e. it's query has a value)
  */
-export function isValidMatch<Schema extends EditorSchema = EditorSchema>(
-  match: SuggestMatch<Schema> | undefined,
-): match is SuggestMatch<Schema> {
+export function isValidMatch(match: SuggestMatch | undefined): match is SuggestMatch {
   return !!(match && match.query.full.length >= match.suggester.matchOffset);
 }
 
 /**
  * True when the current selection is outside the match.
  */
-export function selectionOutsideMatch<Schema extends EditorSchema = EditorSchema>(
-  props: Partial<SuggestStateMatchProps<Schema>> & SelectionProps<Schema>,
+export function selectionOutsideMatch(
+  props: Partial<SuggestStateMatchProps> & SelectionProps,
 ): boolean {
   const { match, selection } = props;
   return !!match && (selection.from < match.range.from || selection.from > match.range.to);
@@ -182,8 +171,6 @@ export function selectionOutsideMatch<Schema extends EditorSchema = EditorSchema
  *
  * @param value - the value to check
  */
-export function isTextSelection<Schema extends EditorSchema = EditorSchema>(
-  value: unknown,
-): value is TextSelection<Schema> {
+export function isTextSelection(value: unknown): value is TextSelection {
   return isObject(value) && value instanceof TextSelection;
 }
