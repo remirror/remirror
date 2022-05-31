@@ -1,5 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`commands.insertMarkdown can insert lists 1`] = `
+<div
+  aria-label=""
+  aria-multiline="true"
+  class="ProseMirror remirror-editor"
+  contenteditable="true"
+  role="textbox"
+  translate="no"
+>
+  <p>
+    Bullet list
+  </p>
+  <ul>
+    <li>
+      <p>
+        Item 1
+      </p>
+    </li>
+    <li>
+      <p>
+        Item 2
+      </p>
+    </li>
+  </ul>
+  <p>
+    Ordered list
+  </p>
+  <ol>
+    <li>
+      <p>
+        Item 1
+      </p>
+    </li>
+    <li>
+      <p>
+        Item 2
+      </p>
+    </li>
+  </ol>
+  <p>
+    Task list
+  </p>
+  <ul
+    data-task-list=""
+  >
+    <li
+      class="remirror-list-item-with-custom-mark"
+      data-checked=""
+      data-task-list-item=""
+    >
+      <label
+        class="remirror-list-item-marker-container"
+      >
+        <input
+          class="remirror-list-item-checkbox"
+          type="checkbox"
+        />
+      </label>
+      <div>
+        <p>
+          Item 1
+        </p>
+      </div>
+    </li>
+    <li
+      class="remirror-list-item-with-custom-mark"
+      data-task-list-item=""
+    >
+      <label
+        class="remirror-list-item-marker-container"
+      >
+        <input
+          class="remirror-list-item-checkbox"
+          type="checkbox"
+        />
+      </label>
+      <div>
+        <p>
+          Item 2
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
 exports[`commands.insertMarkdown can insert marks 1`] = `
 <div
   aria-label=""

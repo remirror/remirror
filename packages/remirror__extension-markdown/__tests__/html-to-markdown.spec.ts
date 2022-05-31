@@ -4,11 +4,15 @@ const casesArray = [
   ['strike', '<strike>Lorem ipsum</strike>', '~Lorem ipsum~'],
   ['s', '<s>Lorem ipsum</s>', '~Lorem ipsum~'],
   ['del', '<del>Lorem ipsum</del>', '~Lorem ipsum~'],
-  ['unchecked inputs', '<ul><li><input type="checkbox">Check Me!</li></ul>', '*   [ ] Check Me!'],
+  [
+    'unchecked inputs',
+    '<ul data-task-list><li data-task-list-item><p>Check Me!</p></li></ul>',
+    '- [ ] Check Me!',
+  ],
   [
     'checked inputs',
-    '<ul><li><input type="checkbox" checked="">Checked!</li></ul>',
-    '*   [x] Checked!',
+    '<ul data-task-list><li data-task-list-item data-checked><p>Checked!</p></li></ul>',
+    '- [x] Checked!',
   ],
   [
     'basic table',
