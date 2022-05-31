@@ -45,6 +45,7 @@ export class NodeViewsExtension extends PlainExtension {
     }
 
     return {
+      // @ts-expect-error: the `nodeViews` seems to get the wrong type. https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624/26
       props: { nodeViews },
     };
   }

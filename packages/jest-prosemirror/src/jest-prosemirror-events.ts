@@ -356,10 +356,10 @@ interface EventProperties {
 type EventMap = Record<EventType, EventProperties>;
 const eventMap: EventMap = rawEventMap as EventMap;
 
-export const createEvents = <CreatedEvent extends Event>(
+export function createEvents<CreatedEvent extends Event>(
   event: EventType,
   options: Shape,
-): CreatedEvent[] => {
+): CreatedEvent[] {
   const { Constructor, defaultProperties } =
     event in eventMap
       ? eventMap[event]
@@ -389,4 +389,4 @@ export const createEvents = <CreatedEvent extends Event>(
   EventConstructor = (window[Constructor as keyof Window] || Event) as unknown as any;
 
   return [new EventConstructor(eventName, properties)];
-};
+}

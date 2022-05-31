@@ -57,13 +57,13 @@ export class TextColorExtension extends MarkExtension<TextColorOptions> {
           tag: `span[${TEXT_COLOR_ATTRIBUTE}]`,
           getAttrs: (dom) => {
             if (!isElementDomNode(dom)) {
-              return;
+              return null;
             }
 
             const color = dom.getAttribute(TEXT_COLOR_ATTRIBUTE);
 
             if (!color) {
-              return;
+              return null;
             }
 
             return { ...extra.parse(dom), color };
@@ -75,7 +75,7 @@ export class TextColorExtension extends MarkExtension<TextColorOptions> {
           priority: ExtensionPriority.Low,
           getAttrs: (color) => {
             if (!isString(color)) {
-              return;
+              return null;
             }
 
             return { color };

@@ -126,7 +126,7 @@ function createDecorationSet(props: SharedProps) {
   const { emptyNodeClass, placeholder } = extension.options;
 
   if (!empty) {
-    return;
+    return null;
   }
 
   const decorations: Decoration[] = [];

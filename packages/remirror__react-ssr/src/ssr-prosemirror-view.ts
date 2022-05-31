@@ -1,6 +1,5 @@
 import {
   Cast,
-  EditorSchema,
   EditorState,
   getDocument,
   RenderEnvironment,
@@ -12,15 +11,15 @@ import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 /**
  * A mock editor view used only when prosemirror is running on the server
  */
-export class EditorViewSSR<Schema extends EditorSchema = EditorSchema> {
-  state: EditorState<Schema>;
+export class EditorViewSSR {
+  state: EditorState;
   dom: Element;
   dragging = null;
   root: Document | DocumentFragment;
 
   constructor(
     _place: Node | ((p: Node) => void) | { mount: Node } | undefined,
-    props: DirectEditorProps<Schema>,
+    props: DirectEditorProps,
   ) {
     const doc = getDocument('ssr');
 
@@ -29,8 +28,8 @@ export class EditorViewSSR<Schema extends EditorSchema = EditorSchema> {
     this.state = props.state;
   }
 
-  update(_props: DirectEditorProps<Schema>): void {}
-  setProps(_props: DirectEditorProps<Schema>): void {}
+  update(_props: DirectEditorProps): void {}
+  setProps(_props: DirectEditorProps): void {}
   updateState(_state: EditorState): void {}
   someProps(_propName: string, f?: (prop: any) => any): any {
     return f ? f(null) : null;
@@ -78,11 +77,11 @@ export class EditorViewSSR<Schema extends EditorSchema = EditorSchema> {
  * @param props
  * @param forceEnvironment
  */
-export function createEditorView<Schema extends EditorSchema = EditorSchema>(
-  place: Node | ((p: Node) => void) | { mount: Node } | undefined,
-  props: DirectEditorProps<Schema>,
+export function createEditorView(
+  place: Node | ((p: HTMLElement) => void) | null,
+  props: DirectEditorProps,
   forceEnvironment?: RenderEnvironment,
-): EditorView<Schema> {
+): EditorView {
   const Constructor = shouldUseDomEnvironment(forceEnvironment)
     ? EditorView
     : Cast<typeof EditorView>(EditorViewSSR);

@@ -339,35 +339,35 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
         handleDOMEvents: {
           focus: (_, event) => {
-            return this.options.focus(event) || false;
+            return this.options.focus(event as FocusEvent) || false;
           },
 
           blur: (_, event) => {
-            return this.options.blur(event) || false;
+            return this.options.blur(event as FocusEvent) || false;
           },
 
           mousedown: (_, event) => {
             this.startMouseover();
-            return this.options.mousedown(event) || false;
+            return this.options.mousedown(event as MouseEvent) || false;
           },
 
           mouseup: (_, event) => {
             this.endMouseover();
-            return this.options.mouseup(event) || false;
+            return this.options.mouseup(event as MouseEvent) || false;
           },
 
           mouseleave: (_, event) => {
             this.mouseover = false;
-            return this.options.mouseleave(event) || false;
+            return this.options.mouseleave(event as MouseEvent) || false;
           },
 
           mouseenter: (_, event) => {
             this.mouseover = true;
-            return this.options.mouseenter(event) || false;
+            return this.options.mouseenter(event as MouseEvent) || false;
           },
 
           keyup: (_, event) => {
-            return this.options.keyup(event) || false;
+            return this.options.keyup(event as KeyboardEvent) || false;
           },
 
           mouseout: this.createMouseEventHandler((event, props) => {
@@ -392,11 +392,11 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
           },
 
           copy: (_, event) => {
-            return this.options.copy(event) || false;
+            return this.options.copy(event as ClipboardEvent) || false;
           },
 
           paste: (_, event) => {
-            return this.options.paste(event) || false;
+            return this.options.paste(event as ClipboardEvent) || false;
           },
         },
       },
@@ -441,7 +441,8 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
   private readonly createMouseEventHandler = (
     fn: (event: MouseEvent, props: MouseEventHandlerState) => boolean,
   ) => {
-    return (view: EditorView, event: MouseEvent) => {
+    return (view: EditorView, mouseEvent: Event) => {
+      const event = mouseEvent as MouseEvent;
       const eventPosition = getPositionFromEvent(view, event);
 
       if (!eventPosition) {

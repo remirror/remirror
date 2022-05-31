@@ -14,7 +14,6 @@ import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates'
 import type {
   CompareMatchProps,
   DocChangedProps,
-  EditorSchema,
   EditorStateProps,
   MakeOptional,
   ReasonProps,
@@ -30,15 +29,12 @@ import type {
 } from './suggest-types';
 import { ChangeReason, ExitReason } from './suggest-types';
 
-type CreateMatchWithReasonProps<Schema extends EditorSchema = EditorSchema> =
-  SuggestStateMatchProps<Schema> & ReasonProps;
+type CreateMatchWithReasonProps = SuggestStateMatchProps & ReasonProps;
 
 /**
  * Small utility method for creating a match with the reason property available.
  */
-function createMatchWithReason<Schema extends EditorSchema = EditorSchema>(
-  props: CreateMatchWithReasonProps<Schema>,
-) {
+function createMatchWithReason(props: CreateMatchWithReasonProps) {
   const { match, changeReason, exitReason } = props;
 
   return {
@@ -79,15 +75,13 @@ function isPrefixValid(prefix: string, options: IsPrefixValidOptions) {
  *
  * @param props - see [[`FindPositionProps`]]
  */
-function findPosition<Schema extends EditorSchema = EditorSchema>(
-  props: FindPositionProps<Schema>,
-): SuggestMatch<Schema> | undefined {
+function findPosition(props: FindPositionProps): SuggestMatch | undefined {
   const { text, regexp, $pos, suggester } = props;
 
   // The starting position for matches
   const start = $pos.start();
 
-  let position: SuggestMatch<Schema> | undefined;
+  let position: SuggestMatch | undefined;
 
   findMatches(text, regexp).forEach((match) => {
     // Check the character before the current match to ensure it is not one of
@@ -140,16 +134,13 @@ function findPosition<Schema extends EditorSchema = EditorSchema>(
   return position;
 }
 
-type FindMatchProps<Schema extends EditorSchema = EditorSchema> = ResolvedPosProps<Schema> &
-  SuggesterProps<Schema>;
+type FindMatchProps = ResolvedPosProps & SuggesterProps;
 
 /**
  * Checks if any matches exist at the current selection so that the suggesters
  * can be activated or deactivated.
  */
-function findMatch<Schema extends EditorSchema = EditorSchema>(
-  props: FindMatchProps<Schema>,
-): SuggestMatch<Schema> | undefined {
+function findMatch(props: FindMatchProps): SuggestMatch | undefined {
   const { $pos, suggester } = props;
   const {
     char,
@@ -177,7 +168,7 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
   const text = $pos.doc.textBetween($pos.before(), $pos.end(), NULL_CHARACTER, NULL_CHARACTER);
 
   // Find the position and return it
-  return findPosition<Schema>({
+  return findPosition({
     suggester,
     text,
     regexp,
@@ -187,8 +178,7 @@ function findMatch<Schema extends EditorSchema = EditorSchema>(
   });
 }
 
-type RecheckMatchProps<Schema extends EditorSchema = EditorSchema> =
-  SuggestStateMatchProps<Schema> & EditorStateProps<Schema>;
+type RecheckMatchProps = SuggestStateMatchProps & EditorStateProps;
 
 /**
  * Checks the provided match and generates a new match. This is useful for
@@ -197,9 +187,7 @@ type RecheckMatchProps<Schema extends EditorSchema = EditorSchema> =
  * If the match still exists and it is different then it's likely a split has
  * occurred.
  */
-function recheckMatch<Schema extends EditorSchema = EditorSchema>(
-  props: RecheckMatchProps<Schema>,
-) {
+function recheckMatch(props: RecheckMatchProps) {
   const { state, match } = props;
   try {
     // Wrapped in try/catch because it's possible for everything to be deleted
@@ -213,11 +201,7 @@ function recheckMatch<Schema extends EditorSchema = EditorSchema>(
   }
 }
 
-type CreateInsertReasonProps<Schema extends EditorSchema = EditorSchema> = MakeOptional<
-  CompareMatchProps<Schema>,
-  'next'
-> &
-  EditorStateProps<Schema>;
+type CreateInsertReasonProps = MakeOptional<CompareMatchProps, 'next'> & EditorStateProps;
 
 /**
  * Check whether the insert action occurred at the end, in the middle or caused
@@ -226,9 +210,7 @@ type CreateInsertReasonProps<Schema extends EditorSchema = EditorSchema> = MakeO
  * Prev refers to the original previous and next refers to the updated version
  * after the split
  */
-function createInsertReason<Schema extends EditorSchema = EditorSchema>(
-  props: CreateInsertReasonProps<Schema>,
-): SuggestReasonMap<Schema> {
+function createInsertReason(props: CreateInsertReasonProps): SuggestReasonMap {
   const { prev, next, state } = props;
 
   // Has the text been removed? TODO how to tests for deletions mid document?
@@ -266,17 +248,14 @@ function createInsertReason<Schema extends EditorSchema = EditorSchema>(
   return {};
 }
 
-type FindJumpReasonProps<Schema extends EditorSchema = EditorSchema> = CompareMatchProps<Schema> &
-  EditorStateProps<Schema>;
+type FindJumpReasonProps = CompareMatchProps & EditorStateProps;
 
 /**
  * Find the reason for the Jump between two suggesters.
  */
-function findJumpReason<Schema extends EditorSchema = EditorSchema>(
-  props: FindJumpReasonProps<Schema>,
-): SuggestReasonMap<Schema> {
+function findJumpReason(props: FindJumpReasonProps): SuggestReasonMap {
   const { prev, next, state } = props;
-  const value: SuggestReasonMap<Schema> = object();
+  const value: SuggestReasonMap = object();
 
   const updatedPrevious = recheckMatch({ state, match: prev });
 
@@ -300,8 +279,7 @@ function findJumpReason<Schema extends EditorSchema = EditorSchema>(
   };
 }
 
-type FindExitReasonProps<Schema extends EditorSchema = EditorSchema> =
-  SuggestStateMatchProps<Schema> & EditorStateProps<Schema> & ResolvedPosProps<Schema>;
+type FindExitReasonProps = SuggestStateMatchProps & EditorStateProps & ResolvedPosProps;
 
 /**
  * Find the reason for the exit.
@@ -309,9 +287,7 @@ type FindExitReasonProps<Schema extends EditorSchema = EditorSchema> =
  * This provides some context and helps sets up a helper command with sane
  * defaults.
  */
-function findExitReason<Schema extends EditorSchema = EditorSchema>(
-  props: FindExitReasonProps<Schema>,
-) {
+function findExitReason(props: FindExitReasonProps) {
   const { match, state, $pos } = props;
   const { selection } = state;
   const updatedPrevious = recheckMatch({ match, state });
@@ -339,13 +315,11 @@ function findExitReason<Schema extends EditorSchema = EditorSchema>(
   return {};
 }
 
-interface FindFromSuggestersProps<Schema extends EditorSchema = EditorSchema>
-  extends ResolvedPosProps<Schema>,
-    DocChangedProps {
+interface FindFromSuggestersProps extends ResolvedPosProps, DocChangedProps {
   /**
    * The matchers to search through.
    */
-  suggesters: Array<Required<Suggester<Schema>>>;
+  suggesters: Array<Required<Suggester>>;
 
   /**
    * When `true` the selection is empty.
@@ -353,31 +327,26 @@ interface FindFromSuggestersProps<Schema extends EditorSchema = EditorSchema>
   selectionEmpty: boolean;
 }
 
-interface FindPositionProps<Schema extends EditorSchema = EditorSchema>
+interface FindPositionProps
   extends Pick<Suggester, 'name' | 'char'>,
     TextProps,
-    SuggesterProps<Schema>,
-    ResolvedPosProps<Schema> {
+    SuggesterProps,
+    ResolvedPosProps {
   /**
    * The regexp to use
    */
   regexp: RegExp;
 }
 
-type FindReasonProps<Schema extends EditorSchema = EditorSchema> = EditorStateProps<Schema> &
-  ResolvedPosProps<Schema> &
-  Partial<CompareMatchProps<Schema>> &
-  object;
+type FindReasonProps = EditorStateProps & ResolvedPosProps & Partial<CompareMatchProps> & object;
 
 /**
  * Creates an array of the actions taken based on the current prev and next
  * state field
  */
-export function findReason<Schema extends EditorSchema = EditorSchema>(
-  props: FindReasonProps<Schema>,
-): SuggestReasonMap<Schema> {
+export function findReason(props: FindReasonProps): SuggestReasonMap {
   const { prev, next, state, $pos } = props;
-  const value: SuggestReasonMap<Schema> = object();
+  const value: SuggestReasonMap = object();
 
   if (!prev && !next) {
     return value;
@@ -449,8 +418,8 @@ function hasParentNode($pos: ResolvedPos, types: string[]): boolean {
  * In reality I should also check for each position within the range to see if a
  * target mark is active but I won't for now.
  */
-export function markActiveInRange<Schema extends EditorSchema = EditorSchema>(
-  resolvedRange: Omit<ResolvedRangeWithCursor<Schema>, '$cursor'>,
+export function markActiveInRange(
+  resolvedRange: Omit<ResolvedRangeWithCursor, '$cursor'>,
   marks: string[],
 ): boolean {
   const { $from, $to } = resolvedRange;
@@ -471,8 +440,8 @@ export function markActiveInRange<Schema extends EditorSchema = EditorSchema>(
  * Check if the entire matching range `from` the start point all the way through
  * `to` the end point, has any of the provided marks that span it.
  */
-export function rangeHasMarks<Schema extends EditorSchema = EditorSchema>(
-  resolvedRange: Omit<ResolvedRangeWithCursor<Schema>, '$cursor'>,
+export function rangeHasMarks(
+  resolvedRange: Omit<ResolvedRangeWithCursor, '$cursor'>,
   marks: string[],
 ): boolean {
   const { $from, $to } = resolvedRange;
@@ -486,10 +455,7 @@ export function rangeHasMarks<Schema extends EditorSchema = EditorSchema>(
 /**
  * Check if the provided position has the given marks.
  */
-export function positionHasMarks<Schema extends EditorSchema = EditorSchema>(
-  $pos: ResolvedPos<Schema>,
-  marks: string[],
-): boolean {
+export function positionHasMarks($pos: ResolvedPos, marks: string[]): boolean {
   // Get the set of marks for the current `$pos` which is used to check firstly
   // whether the set of marks is valid, and secondly whether the set of marks
   // includes any invalid marks.
@@ -501,9 +467,9 @@ export function positionHasMarks<Schema extends EditorSchema = EditorSchema>(
 /**
  * Checks if the suggester is in an invalid position.
  */
-function isPositionValidForSuggester<Schema extends EditorSchema = EditorSchema>(
-  suggester: Required<Suggester<Schema>>,
-  resolvedRange: ResolvedRangeWithCursor<Schema>,
+function isPositionValidForSuggester(
+  suggester: Required<Suggester>,
+  resolvedRange: ResolvedRangeWithCursor,
 ): boolean {
   const { $cursor } = resolvedRange;
   const { validMarks, validNodes, invalidMarks, invalidNodes } = suggester;
@@ -535,9 +501,7 @@ function isPositionValidForSuggester<Schema extends EditorSchema = EditorSchema>
 /**
  * Find a match for the provided matchers.
  */
-export function findFromSuggesters<Schema extends EditorSchema = EditorSchema>(
-  props: FindFromSuggestersProps<Schema>,
-): SuggestMatch<Schema> | undefined {
+export function findFromSuggesters(props: FindFromSuggestersProps): SuggestMatch | undefined {
   const { suggesters, $pos, selectionEmpty } = props;
 
   // Find the first match and break when done
@@ -548,21 +512,21 @@ export function findFromSuggesters<Schema extends EditorSchema = EditorSchema>(
     }
 
     try {
-      const match = findMatch<Schema>({ suggester, $pos });
+      const match = findMatch({ suggester, $pos });
 
       if (!match) {
         continue;
       }
 
       // The resolved positions where `to` represents the cursor position.
-      const resolvedRange: ResolvedRangeWithCursor<Schema> = {
+      const resolvedRange: ResolvedRangeWithCursor = {
         $from: $pos.doc.resolve(match.range.from),
         $to: $pos.doc.resolve(match.range.to),
         $cursor: $pos,
       };
 
       if (
-        isPositionValidForSuggester<Schema>(suggester, resolvedRange) &&
+        isPositionValidForSuggester(suggester, resolvedRange) &&
         suggester.isValidPosition(resolvedRange, match)
       ) {
         return match;
@@ -649,7 +613,7 @@ export function createRegexFromSuggester(props: CreateRegExpFromSuggesterProps):
 /**
  * The default value for the suggester.
  */
-export const DEFAULT_SUGGESTER: PickPartial<Suggester<any>> = {
+export const DEFAULT_SUGGESTER: PickPartial<Suggester> = {
   appendTransaction: false,
   priority: 50,
   ignoredTag: 'span',
@@ -684,8 +648,6 @@ export const IGNORE_SUGGEST_META_KEY = '__ignore_prosemirror_suggest_update__';
 /**
  * Takes the passed through `suggester` and adds all the missing default values.
  */
-export function getSuggesterWithDefaults<Schema extends EditorSchema = EditorSchema>(
-  suggester: Suggester<Schema>,
-): Required<Suggester<Schema>> {
+export function getSuggesterWithDefaults(suggester: Suggester): Required<Suggester> {
   return { ...DEFAULT_SUGGESTER, ...suggester };
 }

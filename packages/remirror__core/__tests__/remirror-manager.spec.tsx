@@ -329,7 +329,7 @@ describe('options', () => {
   });
 
   it('can add additional nodeViews', () => {
-    const custom: NodeViewMethod = jest.fn(() => ({}));
+    const custom: NodeViewMethod = jest.fn(() => ({})) as unknown as NodeViewMethod;
     const nodeViews: Record<string, NodeViewMethod> = { custom };
     const manager = createCoreManager([], { nodeViews });
 

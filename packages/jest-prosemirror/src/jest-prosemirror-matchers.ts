@@ -1,4 +1,3 @@
-import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import stringifyObject from 'stringify-object';
 import { isEmptyObject, isString } from '@remirror/core-helpers';
 import type {
@@ -6,12 +5,13 @@ import type {
   ObjectMark,
   ProsemirrorCommandFunction,
   ProsemirrorNode as _ProsemirrorNode,
+  ProsemirrorNode,
   RemirrorJSON,
 } from '@remirror/core-types';
 
 import { apply } from './jest-prosemirror-editor';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-prosemirror-messages';
-import type { CommandTransformation } from './jest-prosemirror-types';
+import type { CommandTransformation, TaggedProsemirrorNode } from './jest-prosemirror-types';
 
 export const prosemirrorMatchers: jest.ExpectExtendMap = {
   toTransformNode(
@@ -88,8 +88,8 @@ export const prosemirrorMatchers: jest.ExpectExtendMap = {
 
   toEqualProsemirrorNode(
     this: jest.MatcherUtils,
-    actual: TaggedProsemirrorNode,
-    expected: TaggedProsemirrorNode,
+    actual: ProsemirrorNode,
+    expected: ProsemirrorNode,
   ) {
     const actualJSON = actual.toJSON() as RemirrorJSON;
     const expectedJSON = expected.toJSON() as RemirrorJSON;

@@ -11,7 +11,6 @@ import type {
   AttributesProps,
   CommandFunction,
   CommandFunctionProps,
-  EditorSchema,
   FromToProps,
   MarkType,
   MarkTypeProps,
@@ -43,7 +42,7 @@ interface DelayedCommandProps<Value> {
   /**
    * Called when the provided promise resolves.
    */
-  onDone: CommandFunction<EditorSchema, { value: Value }>;
+  onDone: CommandFunction<{ value: Value }>;
 
   /**
    * Called when the promise fails. This could be used to cleanup the active
@@ -112,8 +111,8 @@ export function delayedCommand<Value>({
 export type DelayedPromiseCreator<Value> = (props: CommandFunctionProps) => Promise<Value>;
 
 export class DelayedCommand<Value> {
-  private readonly failureHandlers: Array<CommandFunction<EditorSchema, { error: any }>> = [];
-  private readonly successHandlers: Array<CommandFunction<EditorSchema, { value: Value }>> = [];
+  private readonly failureHandlers: Array<CommandFunction<{ error: any }>> = [];
+  private readonly successHandlers: Array<CommandFunction<{ value: Value }>> = [];
   private readonly validateHandlers: CommandFunction[] = [];
 
   constructor(private readonly promiseCreator: DelayedPromiseCreator<Value>) {}
@@ -130,10 +129,7 @@ export class DelayedCommand<Value> {
   /**
    * Add a success callback to the handler.
    */
-  success(
-    handler: CommandFunction<EditorSchema, { value: Value }>,
-    method: 'push' | 'unshift' = 'push',
-  ): this {
+  success(handler: CommandFunction<{ value: Value }>, method: 'push' | 'unshift' = 'push'): this {
     this.successHandlers[method](handler);
     return this;
   }
@@ -141,10 +137,7 @@ export class DelayedCommand<Value> {
   /**
    * Add a failure callback to the handler.
    */
-  failure(
-    handler: CommandFunction<EditorSchema, { error: any }>,
-    method: 'push' | 'unshift' = 'push',
-  ): this {
+  failure(handler: CommandFunction<{ error: any }>, method: 'push' | 'unshift' = 'push'): this {
     this.failureHandlers[method](handler);
     return this;
   }
@@ -214,9 +207,7 @@ export class DelayedCommand<Value> {
   };
 }
 
-export interface ToggleMarkProps<Schema extends EditorSchema = EditorSchema>
-  extends MarkTypeProps<Schema>,
-    Partial<AttributesProps> {
+export interface ToggleMarkProps extends MarkTypeProps, Partial<AttributesProps> {
   /**
    * @deprecated use `selection` property instead.
    */
@@ -272,7 +263,7 @@ export function toggleMark(props: ToggleMarkProps): CommandFunction {
 /**
  * Verifies that the mark type can be applied to the current document.
  */
-function markApplies(type: MarkType, doc: ProsemirrorNode, ranges: SelectionRange[]) {
+function markApplies(type: MarkType, doc: ProsemirrorNode, ranges: readonly SelectionRange[]) {
   for (const { $from, $to } of ranges) {
     let markIsAllowed = $from.depth === 0 ? doc.type.allowsMarkType(type) : false;
 

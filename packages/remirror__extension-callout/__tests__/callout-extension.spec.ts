@@ -1,16 +1,15 @@
-import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { htmlToProsemirrorNode, ProsemirrorNode, prosemirrorNodeToHtml } from 'remirror';
-import { createCoreManager } from 'remirror/extensions';
 
 import { CalloutExtension } from '../';
 
 extensionValidityTest(CalloutExtension);
 
 describe('schema', () => {
-  const { schema } = createCoreManager([new CalloutExtension()]);
-
-  const { callout, doc, p } = pmBuild(schema, {});
+  const {
+    nodes: { callout, doc, p },
+    schema,
+  } = renderEditor([new CalloutExtension()]);
 
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(callout(p('Hello friend!')))).toMatchInlineSnapshot(`
@@ -34,10 +33,9 @@ describe('schema', () => {
 });
 
 test('supports extra attributes', () => {
-  const { schema } = createCoreManager([
-    new CalloutExtension({ extraAttributes: { 'data-custom': 'hello-world' } }),
-  ]);
-  const { callout, p } = pmBuild(schema, {});
+  const {
+    nodes: { callout, p },
+  } = renderEditor([new CalloutExtension({ extraAttributes: { 'data-custom': 'hello-world' } })]);
 
   expect(prosemirrorNodeToHtml(callout(p('friend!')))).toMatchInlineSnapshot(`
     <div data-custom="hello-world"

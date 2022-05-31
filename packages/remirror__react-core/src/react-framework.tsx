@@ -6,7 +6,6 @@ import {
   Framework,
   FrameworkOptions,
   FrameworkProps,
-  GetSchema,
   invariant,
   isArray,
   object,
@@ -103,9 +102,9 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
   /**
    * Create the prosemirror editor view.
    */
-  protected createView(state: EditorState<GetSchema<Extension>>): EditorView<GetSchema<Extension>> {
-    return createEditorView<GetSchema<Extension>>(
-      undefined,
+  protected createView(state: EditorState): EditorView {
+    return createEditorView(
+      null,
       {
         state,
         dispatchTransaction: this.dispatchTransaction,
@@ -179,7 +178,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
    * Updates the state either by calling `onChange` when it exists or
    * directly setting the internal state via a `setState` call.
    */
-  protected updateState({ state, ...rest }: UpdateStateProps<GetSchema<Extension>>): void {
+  protected updateState({ state, ...rest }: UpdateStateProps): void {
     const { triggerChange = true, tr, transactions } = rest;
 
     if (this.props.state) {
@@ -229,10 +228,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
    * Update the controlled state when the value changes and notify the extension
    * of this update.
    */
-  updateControlledState(
-    state: EditorState<GetSchema<Extension>>,
-    previousState?: EditorState<GetSchema<Extension>>,
-  ): void {
+  updateControlledState(state: EditorState, previousState?: EditorState): void {
     this.previousStateOverride = previousState;
 
     // Mark this as a state override so that extensions and plugins know to
@@ -397,7 +393,7 @@ export interface ReactFrameworkProps<Extension extends AnyExtension>
    * - **Use chained commands** - These can help resolve the above limitation
    *   for handling multiple updates.
    */
-  state?: EditorState<GetSchema<Extension>> | null;
+  state?: EditorState | null;
 
   /**
    * Set to true to ignore the hydration warning for a mismatch between the

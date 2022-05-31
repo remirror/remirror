@@ -1,4 +1,4 @@
-import { NodeType, Schema as EditorSchema } from 'prosemirror-model';
+import { NodeType } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { includes, uniqueArray } from '@remirror/core-helpers';
 
@@ -37,9 +37,7 @@ const trailingNodePluginKey = new PluginKey<boolean>('trailingNode');
  *
  * @param options - the options that can be provided to this plugin.
  */
-export function trailingNode<
-  Schema extends EditorSchema<string, string> = EditorSchema<string, string>,
->(options?: TrailingNodePluginOptions): Plugin<boolean, Schema> {
+export function trailingNode(options?: TrailingNodePluginOptions): Plugin<boolean> {
   const { ignoredNodes = [], nodeName = 'paragraph' } = options ?? {};
 
   // The names of the nodes for which this rule should not be applied.
@@ -52,7 +50,7 @@ export function trailingNode<
   // them.
   let types: NodeType[];
 
-  return new Plugin<boolean, Schema>({
+  return new Plugin<boolean>({
     key: trailingNodePluginKey,
     appendTransaction(_, __, state) {
       const { doc, tr } = state;

@@ -17,11 +17,11 @@ import type { ProsemirrorAttributes } from '@remirror/types';
  *
  * @template Schema - the underlying editor schema.
  */
-export interface EditorViewProps<Schema extends EditorSchema = EditorSchema> {
+export interface EditorViewProps {
   /**
    * An instance of the Prosemirror editor `view`.
    */
-  view: EditorView<Schema>;
+  view: EditorView;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface EditorViewProps<Schema extends EditorSchema = EditorSchema> {
  * @template Nodes - the names of the nodes within the editor schema.
  * @template Marks - the names of the marks within the editor schema.
  */
-export interface SchemaProps<Nodes extends string = string, Marks extends string = string> {
+export interface SchemaProps {
   /**
    * Each Remirror Editor has an automatically generated schema associated with
    * it. The schema is a ProseMirror primitive which describes the kind of nodes
@@ -41,7 +41,7 @@ export interface SchemaProps<Nodes extends string = string, Marks extends string
    *
    * Read more about it [here](https://prosemirror.net/docs/guide/#schema).
    */
-  schema: EditorSchema<Nodes, Marks>;
+  schema: EditorSchema;
 }
 
 /**
@@ -49,19 +49,19 @@ export interface SchemaProps<Nodes extends string = string, Marks extends string
  *
  * @template Schema - the underlying editor schema.
  */
-export interface EditorStateProps<Schema extends EditorSchema = EditorSchema> {
+export interface EditorStateProps {
   /**
    * A snapshot of the prosemirror editor state.
    */
-  state: EditorState<Schema>;
+  state: EditorState;
 }
 
-export interface TrStateProps<Schema extends EditorSchema = EditorSchema> {
+export interface TrStateProps {
   /**
    * The shared types between a state and a transaction. Allows for commands to
    * operate on either a state object or a transaction object.
    */
-  trState: EditorState<Schema> | Transaction<Schema>;
+  trState: EditorState | Transaction;
 }
 
 /**
@@ -94,11 +94,11 @@ export interface AttributesProps {
  *
  * @template Schema - the underlying editor schema.
  */
-export interface NodeTypeProps<Schema extends EditorSchema = EditorSchema> {
+export interface NodeTypeProps {
   /**
    * A prosemirror node type instance.
    */
-  type: NodeType<Schema> | string;
+  type: NodeType | string;
 }
 
 /**
@@ -111,11 +111,11 @@ export interface NodeTypeProps<Schema extends EditorSchema = EditorSchema> {
  *
  * @template Schema - the underlying editor schema.
  */
-export interface NodeTypesProps<Schema extends EditorSchema = EditorSchema> {
+export interface NodeTypesProps {
   /**
    * The prosemirror node types to use.
    */
-  types: NodeType<Schema> | string | Array<NodeType<Schema> | string>;
+  types: NodeType | string | Array<NodeType | string>;
 }
 
 /**
@@ -128,11 +128,11 @@ export interface NodeTypesProps<Schema extends EditorSchema = EditorSchema> {
  *
  * @template Schema - the underlying editor schema.
  */
-export interface MarkTypesProps<Schema extends EditorSchema = EditorSchema> {
+export interface MarkTypesProps {
   /**
    * The prosemirror node types to use.
    */
-  types: MarkType<Schema> | Array<MarkType<Schema>>;
+  types: MarkType | MarkType[];
 }
 
 /**
@@ -140,18 +140,18 @@ export interface MarkTypesProps<Schema extends EditorSchema = EditorSchema> {
  *
  * @template Schema - the underlying editor schema.
  */
-export interface MarkTypeProps<Schema extends EditorSchema = EditorSchema> {
+export interface MarkTypeProps {
   /**
    * The prosemirror mark type instance.
    */
-  type: MarkType<Schema> | string;
+  type: MarkType | string;
 }
 
-export interface ProsemirrorNodeProps<Schema extends EditorSchema = EditorSchema> {
+export interface ProsemirrorNodeProps {
   /**
    * The prosemirror node
    */
-  node: ProsemirrorNode<Schema>;
+  node: ProsemirrorNode;
 }
 
 export type NodeWithAttributes<Attributes extends object = object> = ProsemirrorNode & {
@@ -176,21 +176,21 @@ export interface MarkWithAttributesProps<Attributes extends object = object> {
   mark: MarkWithAttributes<Attributes>;
 }
 
-export interface OptionalProsemirrorNodeProps<Schema extends EditorSchema = EditorSchema> {
+export interface OptionalProsemirrorNodeProps {
   /**
    * The nullable prosemirror node which may or may not exist. Please note that
    * the `find` will fail if this does not exists.
    *
    * To prevent cryptic errors this should always be the `doc` node.
    */
-  node: ProsemirrorNode<Schema> | null | undefined;
+  node: ProsemirrorNode | null | undefined;
 }
 
-export interface OptionalMarkProps<Schema extends EditorSchema = EditorSchema> {
+export interface OptionalMarkProps {
   /**
    * The nullable prosemirror mark which may or may not exist.
    */
-  mark: Mark<Schema> | null | undefined;
+  mark: Mark | null | undefined;
 }
 
 export interface PosProps {
@@ -200,11 +200,11 @@ export interface PosProps {
   pos: number;
 }
 
-export interface TransactionProps<Schema extends EditorSchema = EditorSchema> {
+export interface TransactionProps {
   /**
    * The prosemirror transaction
    */
-  tr: Transaction<Schema>;
+  tr: Transaction;
 }
 
 /**
@@ -212,10 +212,7 @@ export interface TransactionProps<Schema extends EditorSchema = EditorSchema> {
  *
  * Can be used to update the transaction and customise commands.
  */
-export type TransactionTransformer<Schema extends EditorSchema = EditorSchema> = (
-  tr: Transaction<Schema>,
-  state: EditorState<Schema>,
-) => Transaction<Schema>;
+export type TransactionTransformer = (tr: Transaction, state: EditorState) => Transaction;
 
 export interface RangeProps {
   /**
@@ -224,12 +221,12 @@ export interface RangeProps {
   range: FromToProps;
 }
 
-export interface ResolvedPosProps<Schema extends EditorSchema = EditorSchema> {
+export interface ResolvedPosProps {
   /**
    * A prosemirror resolved pos with provides helpful context methods when working with
    * a position in the editor.
    */
-  $pos: ResolvedPos<Schema>;
+  $pos: ResolvedPos;
 }
 
 export interface TextProps {
@@ -239,11 +236,11 @@ export interface TextProps {
   text: string;
 }
 
-export interface SelectionProps<Schema extends EditorSchema = EditorSchema> {
+export interface SelectionProps {
   /**
    * The text editor selection
    */
-  selection: Selection<Schema>;
+  selection: Selection;
 }
 
 export interface PredicateProps<Type> {

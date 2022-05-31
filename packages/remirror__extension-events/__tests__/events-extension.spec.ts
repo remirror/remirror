@@ -77,7 +77,7 @@ describe('events', () => {
 
     // JSDOM doesn't pass events through so the only way to simulate is to
     // directly simulate the `handleClick` prop.
-    view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {}, true));
+    view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {} as MouseEvent, true));
     expect(clickHandler).toHaveBeenCalled();
   });
 
@@ -89,7 +89,7 @@ describe('events', () => {
     const node = p('first');
 
     expect(() =>
-      editor.view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {}, true)),
+      editor.view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {} as MouseEvent, true)),
     ).not.toThrow();
   });
 

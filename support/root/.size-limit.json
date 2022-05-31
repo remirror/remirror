@@ -28,9 +28,6 @@
     "limit": "10 KB",
     "path": "packages/prosemirror-paste-rules/dist/prosemirror-paste-rules.browser.esm.js",
     "ignore": [
-      "@types/prosemirror-model",
-      "@types/prosemirror-state",
-      "@types/prosemirror-view",
       "prosemirror-model",
       "prosemirror-state",
       "prosemirror-view",
@@ -53,9 +50,6 @@
     "limit": "10 KB",
     "path": "packages/prosemirror-suggest/dist/prosemirror-suggest.browser.esm.js",
     "ignore": [
-      "@types/prosemirror-model",
-      "@types/prosemirror-state",
-      "@types/prosemirror-view",
       "prosemirror-model",
       "prosemirror-state",
       "prosemirror-view",
@@ -71,9 +65,6 @@
     "limit": "10 KB",
     "path": "packages/prosemirror-trailing-node/dist/prosemirror-trailing-node.browser.esm.js",
     "ignore": [
-      "@types/prosemirror-model",
-      "@types/prosemirror-state",
-      "@types/prosemirror-view",
       "prosemirror-model",
       "prosemirror-state",
       "prosemirror-view",

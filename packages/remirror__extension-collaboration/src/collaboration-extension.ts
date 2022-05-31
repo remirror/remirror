@@ -2,7 +2,6 @@ import {
   command,
   CommandFunction,
   debounce,
-  EditorSchema,
   EditorState,
   extension,
   Handler,
@@ -109,9 +108,9 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
 
 export interface Sendable {
   version: number;
-  steps: Array<Step<EditorSchema>>;
+  steps: readonly Step[];
   clientID: number | string;
-  origins: Transaction[];
+  origins: readonly Transaction[];
 }
 
 export interface JSONSendable extends Omit<Sendable, 'steps' | 'origins'> {

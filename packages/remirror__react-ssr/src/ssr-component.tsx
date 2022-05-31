@@ -1,16 +1,9 @@
-import type {
-  AnyExtension,
-  EditorStateProps,
-  GetSchema,
-  RemirrorManager,
-  Shape,
-} from '@remirror/core';
+import type { AnyExtension, EditorStateProps, RemirrorManager, Shape } from '@remirror/core';
 
 import { ReactSerializer } from './react-serializer';
 import { mapProps } from './ssr-utils';
 
-export interface RemirrorSSRProps<Extension extends AnyExtension>
-  extends EditorStateProps<GetSchema<Extension>> {
+export interface RemirrorSSRProps<Extension extends AnyExtension> extends EditorStateProps {
   /**
    * The attributes to pass into the root div element.
    */

@@ -3,7 +3,6 @@ import type {
   CommandFunction,
   ConditionalPick,
   ConditionalReturnPick,
-  EditorSchema,
   Flavoring,
   LiteralUnion,
   NonChainableCommandFunction,
@@ -327,14 +326,6 @@ export type GetNodeNameUnion<
   Extension extends AnyExtension,
   Expanded extends AnyExtension = GetExtensions<Extension>,
 > = Expanded extends AnyNodeExtension ? Expanded['name'] : never;
-
-/**
- * Gets the editor schema from an extension union.
- */
-export type GetSchema<Extension extends AnyExtension> = EditorSchema<
-  LiteralUnion<GetNodeNameUnion<Extension>, string>,
-  LiteralUnion<GetMarkNameUnion<Extension>, string>
->;
 
 declare global {
   namespace Remirror {

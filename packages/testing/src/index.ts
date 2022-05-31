@@ -70,7 +70,7 @@ class TestFramework extends Framework<any, any, any> {
 
   createView(state: EditorState, element?: HTMLElement): EditorView {
     return createEditorView(
-      element,
+      element ?? null,
       {
         state,
         dispatchTransaction: this.dispatchTransaction,

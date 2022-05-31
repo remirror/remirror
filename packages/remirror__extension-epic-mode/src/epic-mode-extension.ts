@@ -211,7 +211,7 @@ export class EpicModePluginState {
       const magnitude = (this.#shakeTime / this.#shakeTimeMax) * this.options.shakeIntensity;
       const shakeX = randomInt(-magnitude, magnitude);
       const shakeY = randomInt(-magnitude, magnitude);
-      (this.view.dom as HTMLElement).style.transform = `translate(${shakeX}px,${shakeY}px)`;
+      this.view.dom.style.transform = `translate(${shakeX}px,${shakeY}px)`;
     }
 
     this.drawParticles();

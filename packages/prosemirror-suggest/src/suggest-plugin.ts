@@ -1,7 +1,7 @@
 import { Plugin } from 'prosemirror-state';
 
 import { suggestPluginKey, SuggestState } from './suggest-state';
-import type { EditorSchema, EditorState, Suggester, Transaction } from './suggest-types';
+import type { EditorState, Suggester, Transaction } from './suggest-types';
 import { IGNORE_SUGGEST_META_KEY } from './suggest-utils';
 
 /**
@@ -9,9 +9,7 @@ import { IGNORE_SUGGEST_META_KEY } from './suggest-utils';
  *
  * @param state - the editor state.
  */
-export function getSuggestPluginState<Schema extends EditorSchema = EditorSchema>(
-  state: EditorState<Schema>,
-): SuggestState {
+export function getSuggestPluginState(state: EditorState): SuggestState {
   return suggestPluginKey.getState(state);
 }
 
@@ -21,10 +19,7 @@ export function getSuggestPluginState<Schema extends EditorSchema = EditorSchema
  *
  * Will return a function for disposing of the added suggester.
  */
-export function addSuggester<Schema extends EditorSchema = EditorSchema>(
-  state: EditorState<Schema>,
-  suggester: Suggester,
-): () => void {
+export function addSuggester(state: EditorState, suggester: Suggester): () => void {
   return getSuggestPluginState(state).addSuggester(suggester);
 }
 
@@ -43,10 +38,7 @@ export function ignoreUpdateForSuggest(tr: Transaction): void {
  * Remove a suggester if it exists. Pass in the name or the full suggester
  * object.
  */
-export function removeSuggester<Schema extends EditorSchema = EditorSchema>(
-  state: EditorState<Schema>,
-  suggester: Suggester | string,
-): void {
+export function removeSuggester(state: EditorState, suggester: Suggester | string): void {
   return getSuggestPluginState(state).removeSuggester(suggester);
 }
 
@@ -65,13 +57,11 @@ export function removeSuggester<Schema extends EditorSchema = EditorSchema>(
  * @param suggesters - a list of suggesters in the order they should be
  * evaluated.
  */
-export function suggest<Schema extends EditorSchema = EditorSchema>(
-  ...suggesters: Array<Suggester<Schema>>
-): Plugin<SuggestState<Schema>, Schema> {
+export function suggest(...suggesters: Suggester[]): Plugin<SuggestState> {
   // Create the initial plugin state for the suggesters.
   const pluginState = SuggestState.create(suggesters);
 
-  return new Plugin<SuggestState<Schema>, Schema>({
+  return new Plugin<SuggestState>({
     key: suggestPluginKey,
 
     // Handle the plugin view

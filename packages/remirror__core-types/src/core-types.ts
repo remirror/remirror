@@ -4,7 +4,6 @@ import type {
 } from '@remirror/core-constants';
 import type {
   CommandFunctionProps,
-  EditorSchema,
   EditorState,
   EditorView,
   Mark,
@@ -81,14 +80,9 @@ export interface GetAttributesProps {
  *
  * @template Schema - the underlying editor schema.
  */
-export type RemirrorContentType<Schema extends EditorSchema = EditorSchema> =
-  | string
-  | RemirrorJSON
-  | ProsemirrorNode<Schema>
-  | EditorState<Schema>;
+export type RemirrorContentType = string | RemirrorJSON | ProsemirrorNode | EditorState;
 
-export interface KeyBindingProps<Schema extends EditorSchema = EditorSchema>
-  extends CommandFunctionProps<Schema> {
+export interface KeyBindingProps extends CommandFunctionProps {
   /**
    * A method to run the next (lower priority) command in the chain of
    * keybindings.
@@ -111,9 +105,7 @@ export interface KeyBindingProps<Schema extends EditorSchema = EditorSchema>
 /**
  * The command function passed to any of the keybindings.
  */
-export type KeyBindingCommandFunction<Schema extends EditorSchema = EditorSchema> = (
-  params: KeyBindingProps<Schema>,
-) => boolean;
+export type KeyBindingCommandFunction = (params: KeyBindingProps) => boolean;
 
 /**
  * Some commonly used keybinding names to help with auto complete.
@@ -153,15 +145,10 @@ export type KeyBindingNames =
  * proceeding (lower priority) extension. The act of calling the `next` method
  * will prevent the default flow from executing.
  */
-export type KeyBindings<Schema extends EditorSchema = EditorSchema> = Partial<
-  Record<KeyBindingNames, KeyBindingCommandFunction<Schema>>
-> &
-  Record<string, KeyBindingCommandFunction<Schema>>;
+export type KeyBindings = Partial<Record<KeyBindingNames, KeyBindingCommandFunction>> &
+  Record<string, KeyBindingCommandFunction>;
 
-export type ProsemirrorKeyBindings<Schema extends EditorSchema = EditorSchema> = Record<
-  string,
-  ProsemirrorCommandFunction<Schema>
->;
+export type ProsemirrorKeyBindings = Record<string, ProsemirrorCommandFunction>;
 
 export interface DOMCompatibleAttributes {
   [attribute: string]: string | number | undefined;
@@ -283,7 +270,7 @@ export type NodeViewMethod<View extends NodeView = NodeView> = (
   node: ProsemirrorNode,
   view: EditorView,
   getPos: (() => number) | boolean,
-  decorations: Decoration[],
+  decorations: readonly Decoration[],
 ) => View;
 
 /**

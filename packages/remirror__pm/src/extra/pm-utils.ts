@@ -4,7 +4,6 @@ import { invariant, object } from '@remirror/core-helpers';
 import type { EditorState, Transaction } from '../state';
 import type {
   CommandFunction,
-  EditorSchema,
   NonChainableCommandFunction,
   ProsemirrorCommandFunction,
 } from './pm-types';
@@ -19,10 +18,7 @@ import type {
  * This should not be used other than for passing to `prosemirror-*` library
  * commands.
  */
-export function chainableEditorState<Schema extends EditorSchema = EditorSchema>(
-  tr: Transaction<Schema>,
-  state: EditorState<Schema>,
-): EditorState<Schema> {
+export function chainableEditorState(tr: Transaction, state: EditorState): EditorState {
   // Get the prototype of the state which is used to allow this chainable editor
   // state to pass `instanceof` checks.
   const proto = Object.getPrototypeOf(state);
@@ -79,10 +75,9 @@ export function chainableEditorState<Schema extends EditorSchema = EditorSchema>
  * It extracts all the public APIs of the state object and assigns the
  * chainable transaction to the `state.tr` property to support chaining.
  */
-export function convertCommand<
-  Schema extends EditorSchema = EditorSchema,
-  Extra extends object = object,
->(commandFunction: ProsemirrorCommandFunction<Schema>): CommandFunction<Schema, Extra> {
+export function convertCommand<Extra extends object = object>(
+  commandFunction: ProsemirrorCommandFunction,
+): CommandFunction<Extra> {
   return ({ state, dispatch, view, tr }) =>
     commandFunction(chainableEditorState(tr, state), dispatch, view);
 }
@@ -97,17 +92,16 @@ export function convertCommand<
  * const command = nonChainable(({ state, dispatch }) => {...});
  * ```
  */
-export function nonChainable<
-  Schema extends EditorSchema = EditorSchema,
-  Extra extends object = object,
->(commandFunction: CommandFunction<Schema, Extra>): NonChainableCommandFunction<Schema, Extra> {
+export function nonChainable<Extra extends object = object>(
+  commandFunction: CommandFunction<Extra>,
+): NonChainableCommandFunction<Extra> {
   return ((props) => {
     invariant(props.dispatch === undefined || props.dispatch === props.view?.dispatch, {
       code: ErrorConstant.NON_CHAINABLE_COMMAND,
     });
 
     return commandFunction(props);
-  }) as NonChainableCommandFunction<Schema, Extra>;
+  }) as NonChainableCommandFunction<Extra>;
 }
 
 /**
@@ -115,10 +109,9 @@ export function nonChainable<
  * multiple commands to be chained together and runs until one of them returns
  * true.
  */
-export function chainCommands<
-  Schema extends EditorSchema = EditorSchema,
-  Extra extends object = object,
->(...commands: Array<CommandFunction<Schema, Extra>>): CommandFunction<Schema, Extra> {
+export function chainCommands<Extra extends object = object>(
+  ...commands: Array<CommandFunction<Extra>>
+): CommandFunction<Extra> {
   return ({ state, dispatch, view, tr, ...rest }) => {
     for (const element of commands) {
       if (element({ state, dispatch, view, tr, ...(rest as Extra) })) {

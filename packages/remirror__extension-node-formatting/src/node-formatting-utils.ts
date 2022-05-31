@@ -171,13 +171,13 @@ export function extractLineHeight(lineHeight: string | number | null): number | 
   const percentMatch = lineHeightStr.match(PERCENT_REGEX);
 
   if (percentMatch) {
-    return Number.parseFloat(percentMatch[1] as string) / 100;
+    return Number.parseFloat(percentMatch[1]) / 100;
   }
 
   const numberMatch = lineHeightStr.match(NUMERIC_REGEX);
 
   if (numberMatch) {
-    return Number.parseFloat(numberMatch[0] as string);
+    return Number.parseFloat(numberMatch[0]);
   }
 
   return null;

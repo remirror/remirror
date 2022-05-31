@@ -1,7 +1,6 @@
 import type { ClassName } from '@linaria/core/types/cx';
 import type { Unsubscribe } from 'nanoevents';
 import type {
-  EditorSchema,
   EditorState,
   EditorStateProps,
   EditorViewProps,
@@ -15,7 +14,7 @@ import type {
 import type { DirectEditorProps } from '@remirror/pm/view';
 
 import type { UpdatableViewProps } from '../builtins';
-import type { AnyExtension, AnyExtensionConstructor, GetSchema } from '../extension';
+import type { AnyExtension, AnyExtensionConstructor } from '../extension';
 import type { ManagerEvents, RemirrorManager } from '../manager';
 import type { FocusType } from '../types';
 
@@ -28,7 +27,7 @@ export interface BaseFramework<Extension extends AnyExtension> {
   /**
    * The state that is initially passed into the editor.
    */
-  initialEditorState: EditorState<GetSchema<Extension>>;
+  initialEditorState: EditorState;
 
   /**
    * The minimum required output from the framework.
@@ -48,7 +47,7 @@ export interface FrameworkOptions<
   /**
    * The initial editor state
    */
-  initialEditorState: EditorState<GetSchema<Extension>>;
+  initialEditorState: EditorState;
 
   /**
    * A method for getting the passed in props.
@@ -138,7 +137,7 @@ export interface FrameworkProps<Extension extends AnyExtension> {
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction?: TransactionTransformer<GetSchema<Extension>>;
+  onDispatchTransaction?: TransactionTransformer;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -203,13 +202,13 @@ export interface FrameworkOutput<Extension extends AnyExtension>
    * A getter function for the current editor state. It's a wrapper around
    * `view.state`.
    */
-  getState: () => EditorState<GetSchema<Extension>>;
+  getState: () => EditorState;
 
   /**
    * A getter function for the previous prosemirror editor state. It can be used
    * to check what's changed between states.
    */
-  getPreviousState: () => EditorState<GetSchema<Extension>>;
+  getPreviousState: () => EditorState;
 
   /**
    * Get an extension by it's constructor.
@@ -236,15 +235,15 @@ export interface FrameworkOutput<Extension extends AnyExtension>
   blur: (position?: PrimitiveSelection) => void;
 }
 
-export type CreateStateFromContent<Extension extends AnyExtension> = (
+export type CreateStateFromContent = (
   content: RemirrorContentType,
   selection?: PrimitiveSelection,
-) => EditorState<GetSchema<Extension>>;
+) => EditorState;
 
 export interface RemirrorEventListenerProps<Extension extends AnyExtension>
-  extends EditorStateProps<GetSchema<Extension>>,
+  extends EditorStateProps,
     Remirror.ListenerProperties<Extension>,
-    EditorViewProps<GetSchema<Extension>> {
+    EditorViewProps {
   /**
    * The original transaction which caused this state update.
    *
@@ -257,7 +256,7 @@ export interface RemirrorEventListenerProps<Extension extends AnyExtension>
    * - Was ths change caused by an updated selection? `tr.selectionSet`
    * - `tr.steps` can be inspected for further granularity.
    */
-  tr?: Transaction<GetSchema<Extension>>;
+  tr?: Transaction;
 
   /**
    * When the state updates are not controlled and it was a transaction that
@@ -267,7 +266,7 @@ export interface RemirrorEventListenerProps<Extension extends AnyExtension>
    *
    * This is for advanced users only.
    */
-  transactions?: Array<Transaction<GetSchema<Extension>>>;
+  transactions?: readonly Transaction[];
 
   /**
    * A shorthand way of checking whether the update was triggered by editor
@@ -288,12 +287,12 @@ export interface RemirrorEventListenerProps<Extension extends AnyExtension>
   /**
    * The previous state.
    */
-  previousState: EditorState<GetSchema<Extension>>;
+  previousState: EditorState;
 
   /**
    * Manually create a new state object with the desired content.
    */
-  createStateFromContent: CreateStateFromContent<Extension>;
+  createStateFromContent: CreateStateFromContent;
 }
 
 export type RemirrorEventListener<Extension extends AnyExtension> = (
@@ -308,9 +307,9 @@ export interface PlaceholderConfig extends TextProps {
   className: string;
 }
 
-export interface UpdateStateProps<Schema extends EditorSchema = EditorSchema>
-  extends Partial<TransactionProps<Schema>>,
-    EditorStateProps<Schema>,
+export interface UpdateStateProps
+  extends Partial<TransactionProps>,
+    EditorStateProps,
     TriggerChangeProps {
   /**
    * When the state updates are not controlled and it was a transaction that
@@ -320,7 +319,7 @@ export interface UpdateStateProps<Schema extends EditorSchema = EditorSchema>
    *
    * This is for advanced users only.
    */
-  transactions?: Array<Transaction<Schema>>;
+  transactions?: readonly Transaction[];
 }
 
 export interface TriggerChangeProps {
@@ -332,9 +331,7 @@ export interface TriggerChangeProps {
   triggerChange?: boolean;
 }
 
-export interface ListenerProps<Extension extends AnyExtension>
-  extends Partial<EditorStateProps<GetSchema<Extension>>>,
-    Partial<TransactionProps<GetSchema<Extension>>> {
+export interface ListenerProps extends Partial<EditorStateProps>, Partial<TransactionProps> {
   /**
    * When the state updates are not controlled and it was a transaction that
    * caused the state to be updated this value captures all the transaction
@@ -343,7 +340,7 @@ export interface ListenerProps<Extension extends AnyExtension>
    *
    * This is for advanced users only.
    */
-  transactions?: Array<Transaction<GetSchema<Extension>>>;
+  transactions?: readonly Transaction[];
 }
 
 export interface FrameworkEvents<Extension extends AnyExtension>

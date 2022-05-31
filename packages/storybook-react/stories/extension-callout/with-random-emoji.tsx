@@ -21,7 +21,7 @@ const RandomEmoji: React.FC = () => {
   const choiceRandomEmoji = useCallback((currEmoji: string): string => {
     const availableEmojis = ['😭', '😊', '🥰', '😂', '🙄', '😫', '🤔', '😌', '😍', '🤣'];
     const nextEmoji = availableEmojis[Math.floor(Math.random() * availableEmojis.length)];
-    return currEmoji === nextEmoji ? choiceRandomEmoji(currEmoji) : nextEmoji!;
+    return currEmoji === nextEmoji ? choiceRandomEmoji(currEmoji) : nextEmoji;
   }, []);
 
   const handleClickEmoji = useCallback(

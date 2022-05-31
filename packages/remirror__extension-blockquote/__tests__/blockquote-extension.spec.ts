@@ -1,6 +1,4 @@
-import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { createCoreManager } from 'remirror/extensions';
 import { htmlToProsemirrorNode, prosemirrorNodeToHtml } from '@remirror/core';
 
 import { BlockquoteExtension } from '../';
@@ -8,9 +6,10 @@ import { BlockquoteExtension } from '../';
 extensionValidityTest(BlockquoteExtension);
 
 describe('schema', () => {
-  const { schema } = createCoreManager([new BlockquoteExtension()]);
-
-  const { blockquote, doc, p } = pmBuild(schema, {});
+  const {
+    nodes: { blockquote, doc, p },
+    schema,
+  } = renderEditor([new BlockquoteExtension()]);
 
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(blockquote(p('Hello friend!')))).toMatchInlineSnapshot(`
@@ -34,10 +33,11 @@ describe('schema', () => {
 });
 
 test('supports extra attributes', () => {
-  const { schema } = createCoreManager([
+  const {
+    nodes: { blockquote, p },
+  } = renderEditor([
     new BlockquoteExtension({ extraAttributes: { 'data-custom': 'hello-world' } }),
   ]);
-  const { blockquote, p } = pmBuild(schema, {});
 
   expect(prosemirrorNodeToHtml(blockquote(p('friend!')))).toMatchInlineSnapshot(`
     <blockquote data-custom="hello-world">

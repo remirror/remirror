@@ -161,12 +161,9 @@ const REVERT_STEP_TYPE = 'RevertSetDocAttribute';
  * This is required as mentioned in this discussion
  * https://discuss.prosemirror.net/t/changing-doc-attrs/784/17
  */
-export class SetDocAttributeStep<Schema extends EditorSchema = EditorSchema> extends Step<Schema> {
-  static fromJSON<Schema extends EditorSchema = EditorSchema>(
-    _: Schema,
-    json: SetDocAttrStepJSONValue,
-  ): SetDocAttributeStep<Schema> {
-    return new SetDocAttributeStep<Schema>(json.key, json.value, json.stepType);
+export class SetDocAttributeStep extends Step {
+  static fromJSON(_: EditorSchema, json: SetDocAttrStepJSONValue): SetDocAttributeStep {
+    return new SetDocAttributeStep(json.key, json.value, json.stepType);
   }
 
   /**
@@ -198,7 +195,7 @@ export class SetDocAttributeStep<Schema extends EditorSchema = EditorSchema> ext
     this.value = value;
   }
 
-  apply(doc: Node): StepResult<Schema> {
+  apply(doc: Node): StepResult {
     this.previous = doc.attrs[this.key];
 
     const attrs = {
@@ -209,7 +206,7 @@ export class SetDocAttributeStep<Schema extends EditorSchema = EditorSchema> ext
     return StepResult.ok(doc.type.create(attrs, doc.content, doc.marks));
   }
 
-  invert(): SetDocAttributeStep<Schema> {
+  invert(): SetDocAttributeStep {
     return new SetDocAttributeStep(this.key, this.previous, REVERT_STEP_TYPE);
   }
 

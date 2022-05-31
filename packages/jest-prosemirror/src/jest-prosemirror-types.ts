@@ -1,12 +1,11 @@
-import type { TaggedProsemirrorNode } from 'prosemirror-test-builder';
-import type { EditorSchema } from '@remirror/core-types';
+import type { ProsemirrorNode } from '@remirror/core-types';
 import type { EditorView } from '@remirror/pm/view';
 
 /**
  * Tests that a command run transform the nodes from one state to another.
  * The second state is optional if nothing has changed.
  */
-export interface CommandTransformation<Schema extends EditorSchema = EditorSchema> {
+export interface CommandTransformation {
   /**
    * The initial prosemirror node.
    *
@@ -16,7 +15,7 @@ export interface CommandTransformation<Schema extends EditorSchema = EditorSchem
    * const from = doc(p('Hello ', strong('Friend')));
    * ```
    */
-  from: TaggedProsemirrorNode<Schema>;
+  from: ProsemirrorNode;
 
   /**
    * The output of the command transformation.
@@ -30,28 +29,34 @@ export interface CommandTransformation<Schema extends EditorSchema = EditorSchem
    * This is optional and can be omitted if the transformation doesn't produce
    * any results.
    */
-  to?: TaggedProsemirrorNode<Schema>;
+  to?: ProsemirrorNode;
 }
 
-export interface TaggedDocProps<Schema extends EditorSchema = EditorSchema> {
+export interface TaggedDocProps {
   /**
    * A tagged ProsemirrorNode which can hold cursor information from the passed in text.
    */
-  taggedDoc: TaggedProsemirrorNode<Schema>;
+  taggedDoc: ProsemirrorNode;
 }
 
-export interface TestEditorView<Schema extends EditorSchema = EditorSchema>
-  extends EditorView<Schema> {
+export interface TestEditorView extends EditorView {
   dispatchEvent: (event: string | CustomEvent | { type: string }) => void;
   domObserver: {
     flush: () => void;
   };
 }
 
-export interface TestEditorViewProps<Schema extends EditorSchema = EditorSchema> {
+export interface TestEditorViewProps {
   /**
    * An instance of the test editor view which allows for dispatching events
    * and also containers TaggedProsemirrorNodes
    */
-  view: TestEditorView<Schema>;
+  view: TestEditorView;
 }
+
+interface TaggedFlatObject {
+  tag: Record<string, number>;
+  flat: Array<TaggedProsemirrorNode | TaggedFlatObject>;
+}
+
+export interface TaggedProsemirrorNode extends TaggedFlatObject, ProsemirrorNode {}

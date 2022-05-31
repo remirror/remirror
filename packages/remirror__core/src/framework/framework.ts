@@ -22,7 +22,7 @@ import type {
 } from '@remirror/core-types';
 
 import type { BuiltinPreset, UpdatableViewProps } from '../builtins';
-import type { AnyExtension, CommandsFromExtensions, GetSchema } from '../extension';
+import type { AnyExtension, CommandsFromExtensions } from '../extension';
 import type { RemirrorManager } from '../manager';
 import type { FocusType, StateUpdateLifecycleProps } from '../types';
 import type {
@@ -58,13 +58,6 @@ export abstract class Framework<
 > implements BaseFramework<Extension>
 {
   /**
-   * The schema available via the provided extensions.
-   *
-   * @internal
-   */
-  ['~Sch']: GetSchema<Extension>;
-
-  /**
    * A unique ID for the editor which can also be used as a key in frameworks
    * that need it.
    */
@@ -78,12 +71,12 @@ export abstract class Framework<
   /**
    * The private reference to the previous state.
    */
-  #previousState: EditorState<this['~Sch']> | undefined;
+  #previousState: EditorState | undefined;
 
   /**
    * A previous state that can be overridden by the framework implementation.
    */
-  protected previousStateOverride?: EditorState<this['~Sch']>;
+  protected previousStateOverride?: EditorState;
 
   /**
    * True when this is the first render.
@@ -153,7 +146,7 @@ export abstract class Framework<
    * returning the current state. For the first render the previous state and
    * current state will always be equal.
    */
-  protected get previousState(): EditorState<this['~Sch']> {
+  protected get previousState(): EditorState {
     return this.previousStateOverride ?? this.#previousState ?? this.initialEditorState;
   }
 
@@ -167,7 +160,7 @@ export abstract class Framework<
   /**
    * The ProseMirror [[`EditorView`]].
    */
-  protected get view(): EditorView<this['~Sch']> {
+  protected get view(): EditorView {
     return this.manager.view;
   }
 
@@ -181,12 +174,12 @@ export abstract class Framework<
     return this.#uid;
   }
 
-  #initialEditorState: EditorState<this['~Sch']>;
+  #initialEditorState: EditorState;
 
   /**
    * The initial editor state from when the editor was first created.
    */
-  get initialEditorState(): EditorState<this['~Sch']> {
+  get initialEditorState(): EditorState {
     return this.#initialEditorState;
   }
 
@@ -237,22 +230,18 @@ export abstract class Framework<
   /**
    * Retrieve the editor state.
    */
-  protected readonly getState = (): EditorState<this['~Sch']> =>
-    this.view.state ?? this.initialEditorState;
+  protected readonly getState = (): EditorState => this.view.state ?? this.initialEditorState;
 
   /**
    * Retrieve the previous editor state.
    */
-  protected readonly getPreviousState = (): EditorState<this['~Sch']> => this.previousState;
+  protected readonly getPreviousState = (): EditorState => this.previousState;
 
   /**
    * This method must be implement by the extending framework class. It returns
    * an [[`EditorView`]] which is added to the [[`RemirrorManager`]].
    */
-  protected abstract createView(
-    state: EditorState<this['~Sch']>,
-    element?: Element,
-  ): EditorView<this['~Sch']>;
+  protected abstract createView(state: EditorState, element?: Element): EditorView;
 
   /**
    * This is used to implement how the state updates are used within your
@@ -260,7 +249,7 @@ export abstract class Framework<
    *
    * It must be implemented.
    */
-  protected abstract updateState(props: UpdateStateProps<this['~Sch']>): void;
+  protected abstract updateState(props: UpdateStateProps): void;
 
   /**
    * Update the view props.
@@ -390,7 +379,7 @@ export abstract class Framework<
   /**
    * Use this method in the `onUpdate` event to run all change handlers.
    */
-  readonly onChange = (props: ListenerProps<Extension> = object()): void => {
+  readonly onChange = (props: ListenerProps = object()): void => {
     const onChangeProps = this.eventListenerProps(props);
 
     if (this.#firstRender) {
@@ -458,7 +447,7 @@ export abstract class Framework<
    * `onChange`
    */
   protected eventListenerProps(
-    props: ListenerProps<Extension> = object(),
+    props: ListenerProps = object(),
   ): RemirrorEventListenerProps<Extension> {
     const { state, tr, transactions } = props;
 
@@ -475,10 +464,7 @@ export abstract class Framework<
     };
   }
 
-  protected readonly createStateFromContent: CreateStateFromContent<Extension> = (
-    content,
-    selection,
-  ) => {
+  protected readonly createStateFromContent: CreateStateFromContent = (content, selection) => {
     return this.manager.createState({ content, selection });
   };
 

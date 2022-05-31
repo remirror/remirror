@@ -59,7 +59,7 @@ describe('onClick', () => {
     const node = p('first ', atMention);
     add(doc(node));
 
-    view.someProp('handleClickOn', (fn) => fn(view, 8, atMention, 8, {}, true));
+    view.someProp('handleClickOn', (fn) => fn(view, 8, atMention, 8, {} as MouseEvent, true));
     expect(clickHandler).toHaveBeenCalledTimes(1);
     expect(clickHandler).toHaveBeenCalledWith(
       {},
@@ -69,7 +69,7 @@ describe('onClick', () => {
       }),
     );
 
-    view.someProp('handleClick', (fn) => fn(view, 2, node, 1, {}, true));
+    view.someProp('handleClick', (fn) => fn(view, 2, {} as MouseEvent));
     expect(clickHandler).toHaveBeenCalledTimes(1);
   });
 });

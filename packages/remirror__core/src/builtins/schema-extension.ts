@@ -49,7 +49,6 @@ import {
   extension,
   GetMarkNameUnion,
   GetNodeNameUnion,
-  GetSchema,
   isMarkExtension,
   isNodeExtension,
   PlainExtension,
@@ -1218,7 +1217,7 @@ declare global {
       /**
        * The schema created by this extension manager.
        */
-      schema: GetSchema<Extension>;
+      schema: EditorSchema;
 
       /**
        * The name of the default block node. This is used by all internal

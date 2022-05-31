@@ -121,14 +121,14 @@ export function isIdentifierOfType(
  *
  * @param value - the value to check
  */
-export function isNodeType(value: unknown): value is NodeType<EditorSchema> {
+export function isNodeType(value: unknown): value is NodeType {
   return isObject(value) && value instanceof NodeType;
 }
 
 /**
  * Get the node type from a potential string value.
  */
-export function getNodeType(type: string | NodeType, schema: EditorSchema): NodeType<EditorSchema> {
+export function getNodeType(type: string | NodeType, schema: EditorSchema): NodeType {
   return isString(type) ? assertGet(schema.nodes, type) : type;
 }
 
@@ -137,14 +137,14 @@ export function getNodeType(type: string | NodeType, schema: EditorSchema): Node
  *
  * @param value - the value to check
  */
-export function isMarkType(value: unknown): value is MarkType<EditorSchema> {
+export function isMarkType(value: unknown): value is MarkType {
   return isObject(value) && value instanceof MarkType;
 }
 
 /**
  * Get the mark type from a potential string value.
  */
-export function getMarkType(type: string | MarkType, schema: EditorSchema): MarkType<EditorSchema> {
+export function getMarkType(type: string | MarkType, schema: EditorSchema): MarkType {
   return isString(type) ? assertGet(schema.marks, type) : type;
 }
 
@@ -171,7 +171,7 @@ export function isProsemirrorFragment(value: unknown): value is Fragment {
  *
  * @param value - the value to check
  */
-export function isProsemirrorMark(value: unknown): value is Mark<EditorSchema> {
+export function isProsemirrorMark(value: unknown): value is Mark {
   return isObject(value) && value instanceof Mark;
 }
 
@@ -180,7 +180,7 @@ export function isProsemirrorMark(value: unknown): value is Mark<EditorSchema> {
  *
  * @param value - the value to check
  */
-export function isEditorState(value: unknown): value is PMEditorState<EditorSchema> {
+export function isEditorState(value: unknown): value is PMEditorState {
   return isObject(value) && value instanceof PMEditorState;
 }
 
@@ -189,7 +189,7 @@ export function isEditorState(value: unknown): value is PMEditorState<EditorSche
  *
  * @param value - the value to check
  */
-export function isTransaction(value: unknown): value is PMTransaction<EditorSchema> {
+export function isTransaction(value: unknown): value is PMTransaction {
   return isObject(value) && value instanceof PMTransaction;
 }
 
@@ -207,7 +207,7 @@ export function isEditorSchema(value: unknown): value is EditorSchema {
  *
  * @param value - the value to check
  */
-export function isTextSelection(value: unknown): value is TextSelection<EditorSchema> {
+export function isTextSelection(value: unknown): value is TextSelection {
   return isObject(value) && value instanceof TextSelection;
 }
 
@@ -216,7 +216,7 @@ export function isTextSelection(value: unknown): value is TextSelection<EditorSc
  *
  * @param value - the value to check
  */
-export function isAllSelection(value: unknown): value is AllSelection<EditorSchema> {
+export function isAllSelection(value: unknown): value is AllSelection {
   return isObject(value) && value instanceof AllSelection;
 }
 
@@ -234,7 +234,7 @@ export function isSelection(value: unknown): value is Selection {
  *
  * @param value - the value to check
  */
-export function isResolvedPos(value: unknown): value is PMResolvedPos<EditorSchema> {
+export function isResolvedPos(value: unknown): value is PMResolvedPos {
   return isObject(value) && value instanceof PMResolvedPos;
 }
 
@@ -287,7 +287,7 @@ export function rangeHasMark(props: RangeHasMarkProps): boolean {
  *
  * @param value - the value to check
  */
-export function isNodeSelection(value: unknown): value is NodeSelection<EditorSchema> {
+export function isNodeSelection(value: unknown): value is NodeSelection {
   return isObject(value) && value instanceof NodeSelection;
 }
 
@@ -1035,12 +1035,9 @@ export function isAnchorHeadObject(value: unknown): value is AnchorHeadProps {
 }
 
 /**
- * Get the nearest valid text selection to the provided selection parameter.
+ * Get the nearest valid selection to the provided selection parameter.
  */
-export function getTextSelection(
-  selection: PrimitiveSelection,
-  doc: ProsemirrorNode,
-): TextSelection {
+export function getTextSelection(selection: PrimitiveSelection, doc: ProsemirrorNode): Selection {
   const max = doc.nodeSize - 2;
   const min = 0;
   let pos: number | FromToProps | AnchorHeadProps;
@@ -1256,7 +1253,7 @@ export interface CustomDocumentProps {
 export function prosemirrorNodeToDom(
   node: ProsemirrorNode,
   document = getDocument(),
-): DocumentFragment {
+): DocumentFragment | HTMLElement {
   const fragment = isDocNode(node, node.type.schema) ? node.content : Fragment.from(node);
   return DOMSerializer.fromSchema(node.type.schema).serializeFragment(fragment, { document });
 }
