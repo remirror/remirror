@@ -1,6 +1,6 @@
 {
   "name": "@remirror/i18n",
-  "version": "1.0.8",
+  "version": "2.0.0-beta.0",
   "description": "Supported internationalization and locales for the remirror editor.",
   "keywords": [
     "remirror",
@@ -58,7 +58,7 @@
     "@babel/runtime": "^7.13.10",
     "@lingui/core": "^3.10.4",
     "@lingui/detect-locale": "^3.10.4",
-    "@remirror/core-helpers": "^1.0.5",
+    "@remirror/core-helpers": "^2.0.0-beta.0",
     "make-plural": "^6.2.1"
   },
   "publishConfig": {

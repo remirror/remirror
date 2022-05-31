@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-constants",
-  "version": "1.0.2",
+  "version": "2.0.0-beta.0",
   "description": "The core constants used throughout the remirror codebase",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core-constants",
   "repository": {

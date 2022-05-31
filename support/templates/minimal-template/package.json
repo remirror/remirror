@@ -1,6 +1,6 @@
 {
   "name": "@remirror/minimal-template",
-  "version": "0.0.2",
+  "version": "0.0.3-beta.0",
   "private": true,
   "description": "TEMPLATE_DESCRIPTION",
   "keywords": [
@@ -40,7 +40,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^1.0.5"
+    "@remirror/core-helpers": "^2.0.0-beta.0"
   },
   "publishConfig": {
     "access": "public"

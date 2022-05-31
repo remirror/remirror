@@ -88,6 +88,8 @@
 '@remirror/styles': major
 '@remirror/theme': major
 '@remirror/types': major
+'multishift': patch
+'test-keyboard': patch
 ---
 
 Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.

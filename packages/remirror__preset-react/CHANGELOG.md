@@ -1,5 +1,23 @@
 # @remirror/preset-react
 
+## 2.0.0-beta.0
+
+> 2022-05-31
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.0
+  - @remirror/extension-placeholder@2.0.0-beta.0
+  - @remirror/extension-react-component@2.0.0-beta.0
+  - @remirror/pm@2.0.0-beta.0
+  - @remirror/extension-react-ssr@2.0.0-beta.0
+  - @remirror/react-utils@2.0.0-beta.0
+
 ## 1.0.28
 
 > 2022-05-31
