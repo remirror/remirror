@@ -75,10 +75,11 @@ function cell(content: string, node: Node) {
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingStyle: 'atx' })
   .addRule('taskListItems', {
     filter: (node) => {
-      return (node as HTMLInputElement).type === 'checkbox' && node.parentNode?.nodeName === 'LI';
+      return node.nodeName === 'LI' && node.hasAttribute('data-task-list-item');
     },
-    replacement: (_, node) => {
-      return `${(node as HTMLInputElement).checked ? '[x]' : '[ ]'} `;
+    replacement: (content, node) => {
+      const isChecked = (node as HTMLElement).hasAttribute('data-checked');
+      return `- ${isChecked ? '[x]' : '[ ]'} ${content.trimStart()}`;
     },
   })
   .addRule('tableCell', {

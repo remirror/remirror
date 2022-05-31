@@ -1,5 +1,12 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import { BoldExtension, HeadingExtension, ItalicExtension } from 'remirror/extensions';
+import {
+  BoldExtension,
+  BulletListExtension,
+  HeadingExtension,
+  ItalicExtension,
+  OrderedListExtension,
+  TaskListExtension,
+} from 'remirror/extensions';
 
 import { MarkdownExtension } from '../';
 
@@ -69,6 +76,67 @@ describe('commands.insertMarkdown', () => {
     expect(editor.dom).toMatchSnapshot();
   });
 
+  it('can insert lists', () => {
+    const editor = renderEditor([
+      new BulletListExtension(),
+      new OrderedListExtension(),
+      new TaskListExtension(),
+      new MarkdownExtension(),
+    ]);
+    const { doc, p, bulletList: ul, orderedList: ol, taskList, listItem: li } = editor.nodes;
+    const { taskListItem } = editor.attributeNodes;
+
+    editor.add(doc(p('<cursor>')));
+
+    // Intentionally the same as the output from getMarkdown helper
+    const tabSpace = `    `;
+    const markdown = `Bullet list
+
+*   Item 1
+${tabSpace}
+*   Item 2
+${tabSpace}
+
+Ordered list
+
+1.  Item 1
+${tabSpace}
+2.  Item 2
+${tabSpace}
+
+Task list
+
+- [x] Item 1
+
+- [ ] Item 2`;
+
+    editor.chain.insertMarkdown(markdown).selectText('end').run();
+    const expected = doc(
+      //
+      p('Bullet list'),
+      ul(
+        //
+        li(p('Item 1')),
+        li(p('Item 2')),
+      ),
+      p('Ordered list'),
+      ol(
+        //
+        li(p('Item 1')),
+        li(p('Item 2')),
+      ),
+      p('Task list'),
+      taskList(
+        //
+        taskListItem({ checked: true })(p('Item 1')),
+        taskListItem({ checked: false })(p('Item 2')),
+      ),
+    );
+
+    expect(editor.state.doc).toEqualProsemirrorNode(expected);
+    expect(editor.dom).toMatchSnapshot();
+  });
+
   it('does not replace marks', () => {
     const editor = renderEditor([new BoldExtension(), new MarkdownExtension()]);
     const { doc, p } = editor.nodes;
@@ -94,5 +162,65 @@ describe('commands.insertMarkdown', () => {
       .run();
     expect(editor.state.doc).toEqualProsemirrorNode(doc(p('Content '), p(bold('is bold.'))));
     expect(editor.dom).toMatchSnapshot();
+  });
+});
+
+describe('helpers.getMarkdown', () => {
+  it('returns the expected markdown content for lists', () => {
+    const editor = renderEditor([
+      new BulletListExtension(),
+      new OrderedListExtension(),
+      new TaskListExtension(),
+      new MarkdownExtension(),
+    ]);
+    const { doc, p, bulletList: ul, orderedList: ol, taskList, listItem: li } = editor.nodes;
+    const { taskListItem } = editor.attributeNodes;
+
+    editor.add(
+      doc(
+        //
+        p('Bullet list'),
+        ul(
+          //
+          li(p('Item 1')),
+          li(p('Item 2')),
+        ),
+        p('Ordered list'),
+        ol(
+          //
+          li(p('Item 1')),
+          li(p('Item 2')),
+        ),
+        p('Task list'),
+        taskList(
+          //
+          taskListItem({ checked: true })(p('Item 1')),
+          taskListItem({ checked: false })(p('Item 2')),
+        ),
+      ),
+    );
+
+    const tabSpace = `    `;
+    const expectedMarkdown = `Bullet list
+
+*   Item 1
+${tabSpace}
+*   Item 2
+${tabSpace}
+
+Ordered list
+
+1.  Item 1
+${tabSpace}
+2.  Item 2
+${tabSpace}
+
+Task list
+
+- [x] Item 1
+
+- [ ] Item 2`;
+
+    expect(editor.helpers.getMarkdown()).toEqual(expectedMarkdown);
   });
 });
