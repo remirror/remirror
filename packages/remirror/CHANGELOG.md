@@ -1,5 +1,26 @@
 # remirror
 
+## 1.0.85
+
+> 2022-05-31
+
+### Patch Changes
+
+- Lock ProseMirror pacakges to lower versions.
+
+  The latest ProseMirror includes the buit-in TypeScript declaration, which is incompatible with the TypeScript definition in Remirror v1.
+
+  See also: https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624
+
+* Fix rendering and parsing of tasklists in markdown
+
+* Updated dependencies []:
+  - @remirror/pm@1.0.20
+  - @remirror/extension-embed@1.1.33
+  - @remirror/extension-image@1.0.38
+  - @remirror/preset-wysiwyg@1.1.56
+  - @remirror/extension-markdown@1.0.24
+
 ## 1.0.84
 
 > 2022-05-31
