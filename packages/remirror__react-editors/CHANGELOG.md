@@ -1,5 +1,22 @@
 # @remirror/react-editors
 
+## 0.1.82
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+- Prevent checkbox toggle when view is not editable
+
+- Updated dependencies []:
+  - remirror@1.0.84
+  - @remirror/extension-react-tables@1.0.39
+  - @remirror/react@1.0.39
+
 ## 0.1.81
 
 > 2022-05-27

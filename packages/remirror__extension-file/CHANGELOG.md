@@ -1,5 +1,20 @@
 # @remirror/extension-file
 
+## 0.3.27
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/react@1.0.39
+  - @remirror/react-components@1.0.36
+
 ## 0.3.26
 
 > 2022-05-24

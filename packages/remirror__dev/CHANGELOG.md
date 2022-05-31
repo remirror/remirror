@@ -1,5 +1,18 @@
 # @remirror/dev
 
+## 1.1.6
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/react-core@1.2.3
+
 ## 1.1.5
 
 > 2022-05-24

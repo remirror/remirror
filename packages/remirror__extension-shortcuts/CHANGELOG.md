@@ -1,5 +1,18 @@
 # @remirror/extension-shortcuts
 
+## 1.1.12
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+
 ## 1.1.11
 
 > 2022-05-24

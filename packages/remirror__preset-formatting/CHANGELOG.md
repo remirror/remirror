@@ -1,5 +1,32 @@
 # @remirror/preset-formatting
 
+## 1.0.32
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/extension-bold@1.0.23
+  - @remirror/extension-columns@1.0.23
+  - @remirror/extension-font-size@1.0.25
+  - @remirror/extension-heading@1.0.24
+  - @remirror/extension-italic@1.0.23
+  - @remirror/extension-node-formatting@1.0.27
+  - @remirror/extension-strike@1.0.23
+  - @remirror/extension-sub@1.0.23
+  - @remirror/extension-sup@1.0.23
+  - @remirror/extension-text-case@1.0.23
+  - @remirror/extension-text-color@1.0.26
+  - @remirror/extension-text-highlight@1.0.26
+  - @remirror/extension-underline@1.0.23
+  - @remirror/extension-whitespace@1.0.23
+
 ## 1.0.31
 
 > 2022-05-27

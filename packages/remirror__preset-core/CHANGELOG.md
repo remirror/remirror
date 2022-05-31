@@ -1,5 +1,25 @@
 # @remirror/preset-core
 
+## 1.0.29
+
+> 2022-05-31
+
+### Patch Changes
+
+- Add the ability to remove all marks via the `removeMark` command, by passing `{ type: null }`
+
+* Fix `removeMark` to support multiple mark ranges
+
+* Updated dependencies []:
+  - @remirror/core@1.4.6
+  - @remirror/extension-doc@1.0.24
+  - @remirror/extension-events@1.1.4
+  - @remirror/extension-gap-cursor@1.0.23
+  - @remirror/extension-history@1.0.23
+  - @remirror/extension-paragraph@1.0.23
+  - @remirror/extension-positioner@1.2.7
+  - @remirror/extension-text@1.0.23
+
 ## 1.0.28
 
 > 2022-05-24
