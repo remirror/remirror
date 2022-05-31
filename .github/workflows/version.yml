@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+      - v2
 
   pull_request:
     branches:
       - main
+      - v2
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
@@ -49,7 +51,7 @@ jobs:
 
       - name: create versions
         uses: changesets/action@master
-        if: github.ref == 'refs/heads/main'
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v2' }}
         with:
           version: pnpm version:ci
           commit: 'chore(changeset): version update'
