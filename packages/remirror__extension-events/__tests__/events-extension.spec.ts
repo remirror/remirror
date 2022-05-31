@@ -1,13 +1,7 @@
 import { fireEvent } from '@testing-library/dom';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import {
-  ContextMenuEventHandlerState,
-  EventsExtension,
-  HoverEventHandlerProps,
-  HoverEventHandlerState,
-  MouseEventHandlerProps,
-} from '../';
+import { ContextMenuEventHandlerState, EventsExtension, HoverEventHandlerState } from '../';
 
 extensionValidityTest(EventsExtension);
 
@@ -93,32 +87,9 @@ describe('events', () => {
     ).not.toThrow();
   });
 
-  it('responds to legacy editor `hover` events', () => {
-    const eventsExtension = new EventsExtension();
-    const hoverHandler = jest.fn((_: HoverEventHandlerProps) => true);
-    const editor = renderEditor([eventsExtension]);
-    const { doc, p } = editor.nodes;
-    eventsExtension.addHandler('hover', hoverHandler);
-
-    editor.add(doc(p('first')));
-    fireEvent.mouseOver(editor.dom.querySelector('p') as Element);
-
-    expect(hoverHandler).toHaveBeenCalledTimes(1);
-    expect(hoverHandler.mock.calls[0]?.[0]?.event).toBeInstanceOf(Event);
-    expect(hoverHandler.mock.calls[0]?.[0]?.getNode).toBeFunction();
-    expect(hoverHandler.mock.calls[0]?.[0]).toHaveProperty('hovering', true);
-
-    fireEvent.mouseOut(editor.dom.querySelector('p') as Element);
-
-    expect(hoverHandler).toHaveBeenCalledTimes(2);
-    expect(hoverHandler.mock.calls[1]?.[0]?.event).toBeInstanceOf(Event);
-    expect(hoverHandler.mock.calls[1]?.[0]?.getNode).toBeFunction();
-    expect(hoverHandler.mock.calls[1]?.[0]).toHaveProperty('hovering', false);
-  });
-
   it('responds to editor `hover` events', () => {
     const eventsExtension = new EventsExtension();
-    const hoverHandler = jest.fn((_: { event: MouseEvent }, __: HoverEventHandlerState) => true);
+    const hoverHandler = jest.fn((_: MouseEvent, __: HoverEventHandlerState) => true);
     const editor = renderEditor([eventsExtension]);
     const { doc, p } = editor.nodes;
     eventsExtension.addHandler('hover', hoverHandler);
@@ -127,7 +98,7 @@ describe('events', () => {
     fireEvent.mouseOver(editor.dom.querySelector('p') as Element);
 
     expect(hoverHandler).toHaveBeenCalledTimes(1);
-    expect(hoverHandler.mock.calls[0]?.[0]?.event).toBeInstanceOf(Event);
+    expect(hoverHandler.mock.calls[0]?.[0]).toBeInstanceOf(Event);
     expect(hoverHandler.mock.calls[0]?.[1]).not.toHaveProperty('event');
     expect(hoverHandler.mock.calls[0]?.[1]?.getNode).toBeFunction();
     expect(hoverHandler.mock.calls[0]?.[1]).toHaveProperty('hovering', true);
@@ -135,32 +106,15 @@ describe('events', () => {
     fireEvent.mouseOut(editor.dom.querySelector('p') as Element);
 
     expect(hoverHandler).toHaveBeenCalledTimes(2);
-    expect(hoverHandler.mock.calls[1]?.[0]?.event).toBeInstanceOf(Event);
+    expect(hoverHandler.mock.calls[1]?.[0]).toBeInstanceOf(Event);
     expect(hoverHandler.mock.calls[1]?.[1]).not.toHaveProperty('event');
     expect(hoverHandler.mock.calls[1]?.[1]?.getNode).toBeFunction();
     expect(hoverHandler.mock.calls[1]?.[1]).toHaveProperty('hovering', false);
   });
 
-  it('responds to legacy editor `contextmenu` events', () => {
-    const eventsExtension = new EventsExtension();
-    const contextMenuHandler = jest.fn((_: MouseEventHandlerProps) => true);
-    const editor = renderEditor([eventsExtension]);
-    const { doc, p } = editor.nodes;
-    eventsExtension.addHandler('contextmenu', contextMenuHandler);
-
-    editor.add(doc(p('first')));
-    fireEvent.contextMenu(editor.dom.querySelector('p') as Element);
-
-    expect(contextMenuHandler).toHaveBeenCalledTimes(1);
-    expect(contextMenuHandler.mock.calls[0]?.[0]?.event).toBeInstanceOf(Event);
-    expect(contextMenuHandler.mock.calls[0]?.[0]?.getNode).toBeFunction();
-  });
-
   it('responds to editor `contextmenu` events', () => {
     const eventsExtension = new EventsExtension();
-    const contextMenuHandler = jest.fn(
-      (_: { event: MouseEvent }, __: ContextMenuEventHandlerState) => true,
-    );
+    const contextMenuHandler = jest.fn((_: MouseEvent, __: ContextMenuEventHandlerState) => true);
     const editor = renderEditor([eventsExtension]);
     const { doc, p } = editor.nodes;
     eventsExtension.addHandler('contextmenu', contextMenuHandler);
@@ -169,7 +123,7 @@ describe('events', () => {
     fireEvent.contextMenu(editor.dom.querySelector('p') as Element);
 
     expect(contextMenuHandler).toHaveBeenCalledTimes(1);
-    expect(contextMenuHandler.mock.calls[0]?.[0]?.event).toBeInstanceOf(Event);
+    expect(contextMenuHandler.mock.calls[0]?.[0]).toBeInstanceOf(Event);
     expect(contextMenuHandler.mock.calls[0]?.[1]).not.toHaveProperty('event');
     expect(contextMenuHandler.mock.calls[0]?.[1]?.getNode).toBeFunction();
   });
