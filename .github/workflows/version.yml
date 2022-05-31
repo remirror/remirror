@@ -50,7 +50,7 @@ jobs:
         run: pnpm version:pr
 
       - name: create versions
-        uses: changesets/action@master
+        uses: changesets/action@v1
         if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v2' }}
         with:
           version: pnpm version:ci
