@@ -1,9 +1,9 @@
 ---
 hide_title: true
-title: Render static HTML
+title: Read only/Static rendering
 ---
 
-# Render static HTML
+# Read only/Static rendering
 
 In most cases, users view the Remirror document directly in the editor. Yet, there are use cases where creating and viewing the document are distinct, e.g.:
 

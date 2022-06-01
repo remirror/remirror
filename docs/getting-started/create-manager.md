@@ -120,6 +120,6 @@ const { manager, state } = useRemirror({
 
 Initial content is only supported in uncontrolled components (which is recommended for most use cases).
 
-You can find the docs for creating controlled components [here](../react/controlled.md).
+You can find the docs for creating controlled components [here](../controlled-editor.md).
 
 :::note

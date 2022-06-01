@@ -1,9 +1,9 @@
 ---
 hide_title: true
-title: Controlled
+title: Controlled Editor
 ---
 
-# Controlled
+# Controlled Editor
 
 There are times when you will want complete control over the content in your editor. For this reason remirror supports **controlled editors**. Setting up your editor like this is more complicated due to the asynchronous nature of react updates versus the synchronous nature of ProseMirror `dispatch`. It's easy to get yourself in trouble without taking care to understand the concepts. If in doubt, start with an uncontrolled editor and upgrade to **controlled** once you're more comfortable with `remirror`.
 
