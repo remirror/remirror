@@ -9,7 +9,7 @@ import {
   isFunction,
   StateUpdateLifecycleProps,
 } from '@remirror/core';
-import type { HoverEventHandlerProps, MouseEventHandlerProps } from '@remirror/extension-events';
+import type { HoverEventHandlerState, MouseEventHandlerState } from '@remirror/extension-events';
 
 /**
  * The events that can trigger a positioner update.
@@ -154,13 +154,13 @@ export interface BasePositionerProps extends Omit<StateUpdateLifecycleProps, 'pr
    * The hover event information. This is only present when the update was
    * triggered by a hover event.
    */
-  hover?: Except<HoverEventHandlerProps, 'view'>;
+  hover?: Except<HoverEventHandlerState, 'view'>;
 
   /**
    * The contextmenu event information. This is only present when the update was
    * triggered by a contextmenu event.
    */
-  contextmenu?: Except<MouseEventHandlerProps, 'view'>;
+  contextmenu?: Except<MouseEventHandlerState, 'view'>;
 }
 
 export interface ElementsAddedProps {
