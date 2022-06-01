@@ -79,7 +79,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
           tag: `span[${idAttr}]`,
           getAttrs: (dom) => {
             if (!isElementDomNode(dom)) {
-              return;
+              return null;
             }
 
             const tagsStr = dom.getAttribute(tagsAttr);
@@ -145,14 +145,13 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
       const newDisjointHighlight = this.type.create(newHighlight);
       try {
         tr = tr.addMark(from, to, newDisjointHighlight);
-      } catch (error) {
+      } catch (error: any) {
         throw new Error(
           `Can't add highlight ${JSON.stringify(
             newDisjointHighlight,
           )} to range {from: ${from}, to: ${to}}`,
           error,
         );
-        return false;
       }
 
       dispatch?.(tr);
@@ -177,14 +176,13 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
       try {
         tr = tr.removeMark(from, to, highlightToRemove);
         tr = tr.addMark(from, to, highlightToAdd);
-      } catch (error) {
+      } catch (error: any) {
         throw new Error(
           `Can't update highlight ${JSON.stringify(
             disjointHighlight,
           )} to range {from: ${from}, to: ${to}}`,
           error,
         );
-        return false;
       }
 
       dispatch?.(tr);
@@ -203,14 +201,13 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
 
       try {
         tr = tr.removeMark(from, to, this.type.create(disjointHighlight));
-      } catch (error) {
+      } catch (error: any) {
         throw new Error(
           `Can't remove highlight ${JSON.stringify(
             disjointHighlight,
           )} to range {from: ${from}, to: ${from}}`,
           error,
         );
-        return false;
       }
       dispatch?.(tr);
       return true;

@@ -28,7 +28,7 @@ export const decorateHighlights = (highlights: HighlightAttrs[][]): Decoration[]
       tags.push(...highlight.tags);
     }
 
-    const specs = { tags: tags, id: uniqueId() };
+    const specs: any = { tags: tags, id: uniqueId() };
     // Add decoration to all inline nodes in the given range.
     return Decoration.inline(from, to, { style }, specs);
   });
