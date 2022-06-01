@@ -116,7 +116,7 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin {
       handleDOMEvents: {
         // Handle paste for pasting content.
         paste: (view, clipboardEvent) => {
-          const event = clipboardEvent;
+          const event = clipboardEvent as ClipboardEvent;
 
           if (!view.props.editable?.(view.state)) {
             return false;
@@ -156,7 +156,7 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin {
 
         // Handle drop for pasting content.
         drop: (view, dragEvent) => {
-          const event = dragEvent;
+          const event = dragEvent as DragEvent;
 
           if (!view.props.editable?.(view.state)) {
             return false;
