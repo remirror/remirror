@@ -44,7 +44,7 @@
     "@remirror/core-helpers": "^2.0.0-beta.0",
     "@remirror/core-utils": "^2.0.0-beta.0",
     "prosemirror-model": "^1.17.0",
-    "prosemirror-view": "^1.24.1"
+    "prosemirror-view": "^1.25.0"
   },
   "devDependencies": {},
   "publishConfig": {
