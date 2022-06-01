@@ -16,10 +16,10 @@ The easiest option is to set the editor as read-only:
 
 ```tsx
 import React from 'react';
-import {Remirror} from 'packages/remirror__react/dist/remirror-react.cjs';
+import { Remirror } from '@remirror/react';
 
 const Editor = () => {
-  return <Remirror editable={false}/>;
+  return <Remirror editable={false} />;
 };
 ```
 
