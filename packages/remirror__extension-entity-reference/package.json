@@ -22,7 +22,7 @@
       "import": "./dist/remirror-extension-entity-reference.esm.js",
       "require": "./dist/remirror-extension-entity-reference.cjs.js",
       "browser": "./dist/remirror-extension-entity-reference.browser.esm.js",
-      "types": "./dist/remirror-entity-reference.cjs.d.ts",
+      "types": "./dist/remirror-extension-entity-reference.cjs.d.ts",
       "default": "./dist/remirror-extension-entity-reference.esm.js"
     },
     "./package.json": "./package.json",
@@ -34,7 +34,7 @@
     "./dist/remirror-extension-entity-reference.cjs.js": "./dist/remirror-extension-entity-reference.browser.cjs.js",
     "./dist/remirror-extension-entity-reference.esm.js": "./dist/remirror-extension-entity-reference.browser.esm.js"
   },
-  "types": "dist/remirror-entity-reference.cjs.d.ts",
+  "types": "dist/remirror-extension-entity-reference.cjs.d.ts",
   "files": [
     "dist"
   ],
