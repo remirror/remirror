@@ -17,7 +17,7 @@ This page contains the documented errors that occur while using `remirror`. Curr
 
 > Unknown Error
 
-Sooo, this is embarassing. Something happened and we're not quite sure why. Your best course of action is to open an [issue](https://github.com/remirror/remirror/issues/new?template=bug_report.md) explaining what you're seeing.
+Sooo, this is embarrassing. Something happened and we're not quite sure why. Your best course of action is to open an [issue](https://github.com/remirror/remirror/issues/new?template=bug_report.md) explaining what you're seeing.
 
 ### RMR0002
 

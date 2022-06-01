@@ -1,9 +1,9 @@
 ---
 hide_title: true
-title: Sharing editor context
+title: Updating editor externally
 ---
 
-# Sharing editor context
+# Updating editor externally
 
 ## Extract context as a `ref`
 
