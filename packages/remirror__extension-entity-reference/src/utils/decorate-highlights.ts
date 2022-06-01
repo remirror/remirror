@@ -1,7 +1,7 @@
 /**
  * Helper function to add decorations for each highlight and also handles
  */
-import { uniqueId } from 'remirror';
+import { uniqueId } from '@remirror/core';
 import { Decoration } from '@remirror/pm/view';
 
 import { HighlightAttrs } from '../types';

@@ -1,4 +1,3 @@
-import { uniqueId } from 'remirror';
 import {
   ApplySchemaAttributes,
   command,
@@ -15,6 +14,7 @@ import {
   MarkSpecOverride,
   PrimitiveSelection,
   ProsemirrorNode,
+  uniqueId,
   within,
 } from '@remirror/core';
 import { EditorState } from '@remirror/pm/state';
