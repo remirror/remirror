@@ -1,9 +1,9 @@
 ---
 hide_title: true
-title: Controlled
+title: Controlled Editor
 ---
 
-# Controlled
+# Controlled Editor
 
 There are times when you will want complete control over the content in your editor. For this reason remirror supports **controlled editors**. Setting up your editor like this is more complicated due to the asynchronous nature of react updates versus the synchronous nature of ProseMirror `dispatch`. It's easy to get yourself in trouble without taking care to understand the concepts. If in doubt, start with an uncontrolled editor and upgrade to **controlled** once you're more comfortable with `remirror`.
 
@@ -11,8 +11,8 @@ Get started by creating the editor below, which is currently uncontrolled.
 
 ```tsx
 import React from 'react';
-import { BoldExtension } from 'remirror/extensions';
-import { Remirror, useRemirror } from '@remirror/react';
+import {BoldExtension} from 'packages/remirror/extensions/dist/remirror-extensions.cjs';
+import {Remirror, useRemirror} from 'packages/remirror__react/dist/remirror-react.cjs';
 
 // This is a function that returns the list of extensions and presets we want to
 // use. It's helpful to set up this way since the template can be reused
@@ -23,9 +23,9 @@ const extensions = () => [new BoldExtension()];
 // the context and state of the rendered editor.
 const Editor = () => {
   // A convenient hooks for creating the manager in a react editor.
-  const { manager } = useRemirror({ extensions });
+  const {manager} = useRemirror({extensions});
 
-  return <Remirror manager={manager} />;
+  return <Remirror manager={manager}/>;
 };
 ```
 

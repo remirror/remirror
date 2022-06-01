@@ -73,14 +73,18 @@ const docs = [
     ],
   },
   {
-    type: 'category',
-    label: 'React',
-    collapsed: false,
-    items: ['react/controlled', 'react/hooks', 'react/refs', 'react/static-html'],
+    type: 'link',
+    label: 'Storybook',
+    href: 'https://remirror.vercel.app/',
   },
   {
     type: 'category',
-    label: 'Core',
+    label: 'Showcase',
+    items: ['showcase/richtext', 'showcase/markdown', 'showcase/social'],
+  },
+  {
+    type: 'category',
+    label: 'Core concepts',
     items: [
       'concepts/extension',
       'concepts/remirror-manager',
@@ -93,13 +97,28 @@ const docs = [
   },
   {
     type: 'category',
-    label: 'Showcase',
-    items: ['showcase/social', 'showcase/richtext', 'showcase/markdown'],
+    label: 'Extensions',
+    collapsed: true,
+    items: fs
+      .readdirSync(path.join(__dirname, '../docs/extensions'))
+      .sort((a, b) => (a === 'index.md' ? -1 : 0))
+      .map((name) => `extensions/${name.replace(/\.mdx?$/, '')}`),
   },
+  {
+    type: 'category',
+    label: 'Hooks',
+    collapsed: true,
+    items: fs
+      .readdirSync(path.join(__dirname, '../docs/hooks'))
+      .map((name) => `hooks/${name.replace(/\.mdx?$/, '')}`),
+  },
+  'controlled-editor',
+  'static-rendering',
   {
     type: 'category',
     label: 'Advanced',
     items: [
+      'advanced/updating-editor-externally',
       'advanced/creating-extensions',
       'advanced/naming-conventions',
       'advanced/browser-support',
@@ -111,31 +130,6 @@ const docs = [
     label: 'More',
     items: ['contributing', 'tooling', 'errors', 'projects'],
   },
-  {
-    type: 'category',
-    label: 'Extensions',
-    collapsed: true,
-    items: fs
-      .readdirSync(path.join(__dirname, '../docs/extensions'))
-      .sort((a, b) => (a === 'index.md' ? -1 : 0))
-      .map((name) => `extensions/${name.replace(/\.mdx?$/, '')}`),
-  },
-  {
-    type: 'category',
-    label: 'Commands',
-    collapsed: true,
-    items: fs
-      .readdirSync(path.join(__dirname, '../docs/commands'))
-      .map((name) => `commands/${name.replace(/\.mdx?$/, '')}`),
-  },
-  {
-    type: 'category',
-    label: 'Hooks',
-    collapsed: true,
-    items: fs
-      .readdirSync(path.join(__dirname, '../docs/hooks'))
-      .map((name) => `hooks/${name.replace(/\.mdx?$/, '')}`),
-  },
 ];
 
 if (getApiItems().length > 0) {
@@ -146,11 +140,5 @@ if (getApiItems().length > 0) {
     items: getApiItems(),
   });
 }
-
-docs.push({
-  type: 'link',
-  label: 'Storybook',
-  href: 'https://remirror.vercel.app/',
-});
 
 exports.docs = docs;

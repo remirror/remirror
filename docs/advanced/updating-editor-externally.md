@@ -1,9 +1,9 @@
 ---
 hide_title: true
-title: Sharing editor context
+title: Updating editor externally
 ---
 
-# Sharing editor context
+# Updating editor externally
 
 ## Extract context as a `ref`
 
@@ -41,27 +41,32 @@ const EditorWithRef = forwardRef((_, ref) => {
 Here's the **TypeScript** version which, as a bonus should pass type checks.
 
 ```tsx
-import React, { forwardRef, useImperativeHandle } from 'react';
-import { ReactExtensions, ReactFrameworkOutput, Remirror, useRemirror } from '@remirror/react';
+import React, {forwardRef, useImperativeHandle} from 'react';
+import {
+    ReactExtensions,
+    ReactFrameworkOutput,
+    Remirror,
+    useRemirror
+} from 'packages/remirror__react/dist/remirror-react.cjs';
 
 const extensions = () => [new BoldExtension()];
 type Extensions = ReactExtensions<BoldExtension>;
 
 const EditorWithRef = forwardRef<ReactFrameworkOutput<Extensions>>((_, ref) => {
-  const { manager, state, setState, getContext } = useRemirror({ extensions });
+    const {manager, state, setState, getContext} = useRemirror({extensions});
 
-  useImperativeHandle(ref, () => getContext(), [getContext]);
+    useImperativeHandle(ref, () => getContext(), [getContext]);
 
-  // Add the state and create an `onChange` handler for the state.
-  return (
-    <Remirror
-      manager={manager}
-      state={state}
-      onChange={(parameter) => {
-        // Update the state to the latest value.
-        setState(parameter.state);
-      }}
-    />
-  );
+    // Add the state and create an `onChange` handler for the state.
+    return (
+        <Remirror
+            manager={manager}
+            state={state}
+            onChange={(parameter) => {
+                // Update the state to the latest value.
+                setState(parameter.state);
+            }}
+        />
+    );
 });
 ```
