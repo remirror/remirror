@@ -10,7 +10,7 @@ import { HighlightMarkMetaData } from '../types';
  * the length of the nodes text.
  */
 
-const isHighlightMark = (mark: Mark) => mark.type.name === 'highlight-mark';
+const isHighlightMark = (mark: Mark) => mark.type.name === 'entityReference';
 
 export const getDisjoinedHighlightsFromNode = (node: Node, pos: number): HighlightMarkMetaData[] =>
   node.marks.filter(isHighlightMark).map((h) => ({

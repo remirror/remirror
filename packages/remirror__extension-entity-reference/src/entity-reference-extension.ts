@@ -23,9 +23,9 @@ import { DecorationSet } from '@remirror/pm/view';
 
 import {
   ActionType,
+  EntityReferenceOptions,
+  EntityReferencePluginState,
   HighlightMarkMetaData,
-  HighlightMarkOptions,
-  HighlightMarkPluginState,
   Range,
 } from './types';
 import { decorateHighlights } from './utils/decorate-highlights';
@@ -36,13 +36,13 @@ import { joinDisjoinedHighlights } from './utils/joined-highlights';
  *  Required props to create highlight marks decorations.
  */
 interface StateProps {
-  extension: HighlightMarkExtension;
+  extension: EntityReferenceExtension;
   state: EditorState;
 }
 
 const getHighlightMarksFromPluginState = (props: StateProps) => {
   const { extension, state } = props;
-  const { highlightMarks } = extension.pluginKey.getState(state) as HighlightMarkPluginState;
+  const { highlightMarks } = extension.pluginKey.getState(state) as EntityReferencePluginState;
   return highlightMarks;
 };
 
@@ -57,16 +57,16 @@ const createDecorationSet = (props: StateProps) => {
   return DecorationSet.create(state.doc, extension.options.getStyle(highlightMarks));
 };
 
-@extension<HighlightMarkOptions>({
+@extension<EntityReferenceOptions>({
   defaultOptions: {
     getStyle: decorateHighlights,
     blockSeparator: undefined,
     createId: uniqueId,
   },
 })
-export class HighlightMarkExtension extends MarkExtension<HighlightMarkOptions> {
+export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptions> {
   get name(): string {
-    return 'highlight-mark' as const;
+    return 'entityReference' as const;
   }
 
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
@@ -115,11 +115,11 @@ export class HighlightMarkExtension extends MarkExtension<HighlightMarkOptions> 
   }
 
   @command()
-  addHighlight(): CommandFunction {
+  addHighlight(id?: string): CommandFunction {
     return ({ state, tr, dispatch }) => {
       const { from, to } = state.selection;
       const newHighlight = {
-        id: this.options.createId ? this.options.createId() : uniqueId(),
+        id: id ?? this.options.createId ? this.options.createId() : uniqueId(),
       };
       const newHighlightMark = this.type.create(newHighlight);
       try {
@@ -164,7 +164,7 @@ export class HighlightMarkExtension extends MarkExtension<HighlightMarkOptions> 
   redrawHighlights(): CommandFunction {
     return ({ tr, dispatch }) => {
       dispatch?.(
-        tr.setMeta(HighlightMarkExtension.name, {
+        tr.setMeta(EntityReferenceExtension.name, {
           type: ActionType.REDRAW_HIGHLIGHTS,
         }),
       );

@@ -2,7 +2,11 @@ import 'remirror/styles/all.css';
 import './styles.css';
 
 import { cx, htmlToProsemirrorNode, uniqueId } from 'remirror';
-import { EntityReferenceExtension, findMinMaxRange, HighlightAttrs } from 'remirror/extensions';
+import {
+  EntityReferenceExtension,
+  findMinMaxRange,
+  HighlightMarkMetaData,
+} from 'remirror/extensions';
 import { Decoration } from '@remirror/pm/view';
 import { Remirror, ThemeProvider, useCommands, useHelpers, useRemirror } from '@remirror/react';
 
@@ -11,7 +15,7 @@ const ALL_HIGHLIGHT_TYPES: HighlightTypes[] = ['important', 'interesting'];
 
 const allHighlights = new Map<string, HighlightTypes>();
 
-export const decorateHighlights = (highlights: HighlightAttrs[][]): Decoration[] => {
+export const decorateHighlights = (highlights: HighlightMarkMetaData[][]): Decoration[] => {
   const decorations = highlights.map((overlappingHighlights) => {
     const types = new Set(overlappingHighlights.map((h) => allHighlights.get(h.id)));
     // Mix colors to allow for overlapping highlights
@@ -53,11 +57,13 @@ const Buttons = () => {
           if (!active) {
             // Add highlight
             const id = uniqueId();
-            commands.addHighlight(['TO-BE-REMOVED'], () => id);
+            commands.addHighlight(id);
             allHighlights.set(id, type);
           } else {
             // Remove highlight
-            highlightsOfType.forEach(commands.removeHighlight);
+            highlightsOfType.forEach((highlight) => {
+              commands.removeHighlight(highlight.id, highlight);
+            });
           }
         };
         return (

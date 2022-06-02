@@ -27,7 +27,7 @@ export interface HighlightMarkMetaData extends Range {
 
 export type OmitId<Type extends HighlightMarkMetaData> = Omit<Type, 'id'>;
 
-export interface HighlightMarkOptions {
+export interface EntityReferenceOptions {
   /**
    * Method to calculate styles
    *
@@ -41,6 +41,6 @@ export interface HighlightMarkOptions {
   createId?: () => string;
 }
 
-export interface HighlightMarkPluginState extends Required<HighlightMarkOptions> {
+export interface EntityReferencePluginState extends Required<EntityReferenceOptions> {
   highlightMarks: HighlightMarkMetaData[][];
 }
