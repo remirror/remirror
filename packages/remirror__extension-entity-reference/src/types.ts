@@ -4,33 +4,30 @@ import type { AcceptUndefined } from '@remirror/core';
 export enum ActionType {
   REDRAW_HIGHLIGHTS,
 }
-
-export interface HighlightAttrs {
+export interface Range {
   /**
-   * Document position where the highlight mark starts
+   * Document position where the range starts
    */
   from: number;
   /**
-   * Document position where the highlight mark ends
+   * Document position where the range ends
    */
   to: number;
+}
+export interface HighlightMarkMetaData extends Range {
   /**
    * Unique identifier of the highlight mark
    */
   id: string;
-  /**
-   * Tag Ids of the highlight mark
-   */
-  tags: string[];
   /**
    * Text content of the node
    */
   text: string;
 }
 
-export type OmitId<Type extends HighlightAttrs> = Omit<Type, 'id'>;
+export type OmitId<Type extends HighlightMarkMetaData> = Omit<Type, 'id'>;
 
-export interface HighlightOptions {
+export interface HighlightMarkOptions {
   /**
    * Method to calculate styles
    *
@@ -39,10 +36,11 @@ export interface HighlightOptions {
    * This can be used e.g. to assign different shades of a color depending on
    * the amount of highlight marks in a segment.
    */
-  getStyle?: (highlights: HighlightAttrs[][]) => Decoration[];
+  getStyle?: (highlightMarks: HighlightMarkMetaData[][]) => Decoration[];
   blockSeparator?: AcceptUndefined<string>;
+  createId?: () => string;
 }
 
-export interface HighlightPluginState extends Required<HighlightOptions> {
-  disjointHighlights: HighlightAttrs[][];
+export interface HighlightMarkPluginState extends Required<HighlightMarkOptions> {
+  highlightMarks: HighlightMarkMetaData[][];
 }

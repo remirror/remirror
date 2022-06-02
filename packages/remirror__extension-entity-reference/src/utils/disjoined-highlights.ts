@@ -1,6 +1,6 @@
 import { Mark, Node } from '@remirror/pm/model';
 
-import { HighlightAttrs } from '../types';
+import { HighlightMarkMetaData } from '../types';
 
 /**
  * Get all disjoined highlight attributes from a single node. When an inline
@@ -10,13 +10,12 @@ import { HighlightAttrs } from '../types';
  * the length of the nodes text.
  */
 
-const isHighlight = (mark: Mark) => mark.type.name === 'entityReference';
+const isHighlightMark = (mark: Mark) => mark.type.name === 'highlight-mark';
 
-export const getDisjoinedHighlightsFromNode = (node: Node, pos: number): HighlightAttrs[] =>
-  node.marks.filter(isHighlight).map((h) => ({
+export const getDisjoinedHighlightsFromNode = (node: Node, pos: number): HighlightMarkMetaData[] =>
+  node.marks.filter(isHighlightMark).map((h) => ({
     from: pos,
     to: pos + Math.max(node.textContent.length, 1),
     id: h.attrs.id,
-    tags: h.attrs.tags,
     text: node.textContent,
   }));

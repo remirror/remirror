@@ -3,98 +3,88 @@ import {
   command,
   CommandFunction,
   CreateExtensionPlugin,
+  EditorState,
   extension,
   getTextSelection,
   Helper,
   helper,
-  isElementDomNode,
   Mark,
   MarkExtension,
   MarkExtensionSpec,
   MarkSpecOverride,
   PrimitiveSelection,
   ProsemirrorNode,
+  Transaction,
   uniqueId,
   within,
 } from '@remirror/core';
-import { EditorState } from '@remirror/pm/state';
+import { Node } from '@remirror/pm/model';
 import { DecorationSet } from '@remirror/pm/view';
 
 import {
   ActionType,
-  HighlightAttrs,
-  HighlightOptions as EntityReferenceOptions,
-  HighlightPluginState,
+  HighlightMarkMetaData,
+  HighlightMarkOptions,
+  HighlightMarkPluginState,
+  Range,
 } from './types';
 import { decorateHighlights } from './utils/decorate-highlights';
 import { getDisjoinedHighlightsFromNode } from './utils/disjoined-highlights';
 import { joinDisjoinedHighlights } from './utils/joined-highlights';
 
-export type { HighlightAttrs } from './types';
-
 /**
  *  Required props to create highlight marks decorations.
  */
-interface DecorationProps {
-  extension: EntityReferenceExtension;
+interface StateProps {
+  extension: HighlightMarkExtension;
   state: EditorState;
 }
+
+const getHighlightMarksFromPluginState = (props: StateProps) => {
+  const { extension, state } = props;
+  const { highlightMarks } = extension.pluginKey.getState(state) as HighlightMarkPluginState;
+  return highlightMarks;
+};
 
 /**
  * Creates a decoration set from the passed through state.
  *
  * @param props - see [[`DecorationProps`]]
  */
-const createDecorationSet = (props: DecorationProps) => {
+const createDecorationSet = (props: StateProps) => {
   const { extension, state } = props;
-  const { disjointHighlights } = extension.pluginKey.getState(state) as HighlightPluginState;
-  return DecorationSet.create(state.doc, extension.options.getStyle(disjointHighlights));
+  const highlightMarks = getHighlightMarksFromPluginState(props);
+  return DecorationSet.create(state.doc, extension.options.getStyle(highlightMarks));
 };
-@extension<EntityReferenceOptions>({
+
+@extension<HighlightMarkOptions>({
   defaultOptions: {
     getStyle: decorateHighlights,
     blockSeparator: undefined,
+    createId: uniqueId,
   },
 })
-export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptions> {
+export class HighlightMarkExtension extends MarkExtension<HighlightMarkOptions> {
   get name(): string {
-    return 'entityReference' as const;
+    return 'highlight-mark' as const;
   }
 
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
-    const idAttr = `id`;
-    const tagsAttr = `tags`;
+    const idAttr = `data-highlight`;
 
     return {
       ...override,
       excludes: '',
-      inclusive: false,
       attrs: {
         ...extra.defaults(),
         id: { default: '' },
-        tags: { default: [] },
       },
-      parseDOM: [
-        {
-          tag: `span[${idAttr}]`,
-          getAttrs: (dom) => {
-            if (!isElementDomNode(dom)) {
-              return null;
-            }
-
-            const tagsStr = dom.getAttribute(tagsAttr);
-            return {
-              id: dom.getAttribute(idAttr),
-              tags: tagsStr ? JSON.parse(tagsStr) : tagsStr,
-            };
-          },
-        },
-      ],
+      // Note that we don't implement `ParseDom`.
+      // The reasoning behind this is to disable pasting (parsing) the highlight marks in the editor.
       toDOM: (mark: Mark) => [
         'span',
         {
           [idAttr]: mark.attrs.id,
-          [tagsAttr]: JSON.stringify(mark.attrs.tags),
         },
         0,
       ],
@@ -107,18 +97,17 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   createPlugin(): CreateExtensionPlugin {
     return {
       state: {
-        init: (_, state) => {
-          const disjointHighlights = this.getDisjoinedHighlights(state.doc);
-          return { disjointHighlights };
+        init: (_: { [key: string]: any }, state: EditorState) => {
+          const highlightMarks = this.getDisjoinedHighlights(state.doc);
+          return { highlightMarks };
         },
-        apply: (_tr, _prevState, _oldState, newState) => {
-          const disjointHighlights = this.getDisjoinedHighlights(newState.doc);
-          const highlights = this.getHighlights();
-          return { disjointHighlights, highlights };
+        apply: (_tr: Transaction, _value: any, _oldState: EditorState, newState: EditorState) => {
+          const highlightMarks = this.getDisjoinedHighlights(newState.doc);
+          return { highlightMarks };
         },
       },
       props: {
-        decorations: (state) => {
+        decorations: (state: EditorState) => {
           return createDecorationSet({ state, extension: this });
         },
       },
@@ -126,60 +115,19 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   @command()
-  addHighlight(
-    tags: string[],
-    /** VisibleForTesting */
-    createId = uniqueId,
-  ): CommandFunction {
+  addHighlight(): CommandFunction {
     return ({ state, tr, dispatch }) => {
-      if (tags.length === 0) {
-        // Highlights can't be added without specifying tags`);
-        return false;
-      }
-
       const { from, to } = state.selection;
       const newHighlight = {
-        id: createId(),
-        tags,
+        id: this.options.createId ? this.options.createId() : uniqueId(),
       };
-      const newDisjointHighlight = this.type.create(newHighlight);
+      const newHighlightMark = this.type.create(newHighlight);
       try {
-        tr = tr.addMark(from, to, newDisjointHighlight);
+        tr = tr.addMark(from, to, newHighlightMark);
       } catch (error: any) {
         throw new Error(
           `Can't add highlight ${JSON.stringify(
-            newDisjointHighlight,
-          )} to range {from: ${from}, to: ${to}}`,
-          error,
-        );
-      }
-
-      dispatch?.(tr);
-      return true;
-    };
-  }
-  // https://discuss.prosemirror.net/t/updating-mark-attributes/776/4
-
-  @command()
-  updateHighlight(disjointHighlight: HighlightAttrs, tags: string[]): CommandFunction {
-    return (props) => {
-      let { tr } = props;
-      const { dispatch } = props;
-      const { from, to } = disjointHighlight;
-
-      const updatedHighlight = {
-        ...disjointHighlight,
-        tags,
-      };
-      const highlightToRemove = this.type.create(disjointHighlight);
-      const highlightToAdd = this.type.create(updatedHighlight);
-      try {
-        tr = tr.removeMark(from, to, highlightToRemove);
-        tr = tr.addMark(from, to, highlightToAdd);
-      } catch (error: any) {
-        throw new Error(
-          `Can't update highlight ${JSON.stringify(
-            disjointHighlight,
+            newHighlightMark,
           )} to range {from: ${from}, to: ${to}}`,
           error,
         );
@@ -191,21 +139,19 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   @command()
-  removeHighlight(disjointHighlight: HighlightAttrs): CommandFunction {
+  removeHighlight(highlightMarkId: string, range: Range): CommandFunction {
     return ({ tr, dispatch }) => {
-      const { id, from, to } = disjointHighlight;
+      const { from, to } = range;
 
-      if (!id) {
+      if (!highlightMarkId) {
         throw new Error(`Highlight can't be removed without specifying tags its ID!`);
       }
 
       try {
-        tr = tr.removeMark(from, to, this.type.create(disjointHighlight));
+        tr = tr.removeMark(from, to, this.type.create({ id: highlightMarkId }));
       } catch (error: any) {
         throw new Error(
-          `Can't remove highlight ${JSON.stringify(
-            disjointHighlight,
-          )} to range {from: ${from}, to: ${from}}`,
+          `Can't remove highlight ${highlightMarkId} to range {from: ${from}, to: ${from}}`,
           error,
         );
       }
@@ -218,7 +164,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   redrawHighlights(): CommandFunction {
     return ({ tr, dispatch }) => {
       dispatch?.(
-        tr.setMeta(EntityReferenceExtension.name, {
+        tr.setMeta(HighlightMarkExtension.name, {
           type: ActionType.REDRAW_HIGHLIGHTS,
         }),
       );
@@ -231,9 +177,9 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
    * Get all disjoined highlight attributes from the document.
    */
   @helper()
-  getDisjoinedHighlights(doc: ProsemirrorNode): Helper<HighlightAttrs[][]> {
-    const disjoinedHighlights: HighlightAttrs[][] = [];
-    doc.descendants((node, pos) => {
+  getDisjoinedHighlights(doc: ProsemirrorNode): Helper<HighlightMarkMetaData[][]> {
+    const disjoinedHighlights: HighlightMarkMetaData[][] = [];
+    doc.descendants((node: Node, pos: number) => {
       const subDisjoinedHighlights = getDisjoinedHighlightsFromNode(node, pos);
 
       if (subDisjoinedHighlights.length === 0) {
@@ -258,10 +204,12 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
    * `joinDisjoinedHighlights`.
    */
   @helper()
-  getHighlights(): Helper<HighlightAttrs[]> {
-    const doc = this.store.getState().doc;
-    const highlightsToJoin = this.getDisjoinedHighlights(doc).flat();
-    return joinDisjoinedHighlights(highlightsToJoin);
+  getHighlights(): Helper<HighlightMarkMetaData[]> {
+    const highlightMarks = getHighlightMarksFromPluginState({
+      extension: this,
+      state: this.store.getState(),
+    }).flat();
+    return joinDisjoinedHighlights(highlightMarks);
   }
 
   /**
@@ -271,15 +219,18 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
    * @returns all highlights at a specific position in the editor.
    *
    * In order to use this helper make sure you have the
-   * [[`HighlightExtension`]] added to your editor.
+   * [[`HighlightMarkExtension`]] added to your editor.
    */
   @helper()
-  getHighlightsAt(pos?: PrimitiveSelection, includeEdges = true): Helper<HighlightAttrs[]> {
+  getHighlightsAt(pos?: PrimitiveSelection, includeEdges = true): Helper<HighlightMarkMetaData[]> {
     const state = this.store.getState();
     const { doc, selection } = state;
     const { from, to } = getTextSelection(pos ?? selection, doc);
-    const disjointedHighlights = this.getDisjoinedHighlights(doc).flat();
 
+    const disjointedHighlights = getHighlightMarksFromPluginState({
+      extension: this,
+      state,
+    }).flat();
     // Find highlights for which a part is at the requested position
     const highlightIdsInPos = new Set(
       disjointedHighlights
@@ -303,6 +254,6 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
     );
 
     // Find the highlights belonging to the matching disjoint highlights
-    return this.getHighlights().filter((h) => highlightIdsInPos.has(h.id));
+    return joinDisjoinedHighlights(disjointedHighlights).filter((h) => highlightIdsInPos.has(h.id));
   }
 }
