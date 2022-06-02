@@ -119,7 +119,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
     return ({ state, tr, dispatch }) => {
       const { from, to } = state.selection;
       const newHighlight = {
-        id: id ?? this.options.createId ? this.options.createId() : uniqueId(),
+        id: id ?? (this.options.createId ? this.options.createId() : uniqueId()),
       };
       const newHighlightMark = this.type.create(newHighlight);
       try {
@@ -128,8 +128,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
         throw new Error(
           `Can't add highlight ${JSON.stringify(
             newHighlightMark,
-          )} to range {from: ${from}, to: ${to}}`,
-          error,
+          )} to range {from: ${from}, to: ${to}}: ${error.message}`,
         );
       }
 
@@ -151,8 +150,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
         tr = tr.removeMark(from, to, this.type.create({ id: highlightMarkId }));
       } catch (error: any) {
         throw new Error(
-          `Can't remove highlight ${highlightMarkId} to range {from: ${from}, to: ${from}}`,
-          error,
+          `Can't remove highlight ${highlightMarkId} to range {from: ${from}, to: ${from}}: : ${error.message}`,
         );
       }
       dispatch?.(tr);
