@@ -66,7 +66,7 @@ jobs:
 
       - name: deploy storybook for production
         uses: amondnet/vercel-action@v20
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/v1-hotfix'
         with:
           working-directory: ./packages/storybook-react/storybook-static
           vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
