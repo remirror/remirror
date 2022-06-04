@@ -17,7 +17,7 @@ jobs:
   deploy_docs:
     timeout-minutes: 90
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.event.pull_request
+    if: github.ref == 'refs/heads/v1-hotfix' || github.event.pull_request
 
     steps:
       - name: checkout code repository
