@@ -3,10 +3,11 @@ name: storybook
 on:
   push:
     branches:
-      - main
+      - v1-hotfix
   pull_request:
     types: [opened, synchronize]
     branches:
+      - v1-hotfix
       - main
 
 env:
