@@ -7,10 +7,12 @@ on:
   push:
     branches:
       - main
+      - v1-hotfix
 
   pull_request:
     branches:
       - main
+      - v1-hotfix
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
