@@ -64,7 +64,7 @@ jobs:
         uses: nwtgck/actions-netlify@develop
         with:
           publish-dir: './website/build'
-          production-branch: main
+          production-branch: v1-hotfix
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
         env:
