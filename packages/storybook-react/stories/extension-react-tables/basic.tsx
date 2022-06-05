@@ -36,6 +36,13 @@ const CommandMenu: React.FC = () => {
         </button>
         <button
           onMouseDown={(event) => event.preventDefault()}
+          data-testid='btn-3-3-headers'
+          onClick={() => createTable({ rowsCount: 3, columnsCount: 3, withHeaderRow: true })}
+        >
+          insert a 3*3 table with headers
+        </button>
+        <button
+          onMouseDown={(event) => event.preventDefault()}
           data-testid='btn-4-10'
           onClick={() => createTable({ rowsCount: 10, columnsCount: 4, withHeaderRow: false })}
         >
