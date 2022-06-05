@@ -206,7 +206,7 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
         return !isControllerHeadingRow(r);
       });
 
-      return isHeadingRow(rows[0]);
+      return isHeadingRow(rows[0] as any);
     },
 
     replacement: (content) => {
