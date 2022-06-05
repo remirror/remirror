@@ -306,7 +306,7 @@ export class TableControllerCellExtension extends NodeExtension {
       attrs: cellAttrs,
       tableRole: 'header_cell',
       toDOM() {
-        return ['th', 0];
+        return ['th', { 'data-controller-cell': '' }, 0];
       },
       allowGapCursor: false,
     };
