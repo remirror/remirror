@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "description": "Hooks and components for consuming `remirror` with your fave framework `React`.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react",
   "repository": {
@@ -40,7 +40,7 @@
     "@remirror/extension-positioner": "^1.2.7",
     "@remirror/extension-react-component": "^1.1.14",
     "@remirror/extension-react-ssr": "^1.0.26",
-    "@remirror/extension-react-tables": "^1.0.40",
+    "@remirror/extension-react-tables": "^1.0.41",
     "@remirror/preset-react": "^1.0.28",
     "@remirror/react-components": "^1.0.36",
     "@remirror/react-core": "^1.2.3",

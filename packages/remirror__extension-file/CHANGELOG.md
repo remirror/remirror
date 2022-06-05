@@ -1,5 +1,15 @@
 # @remirror/extension-file
 
+## 0.3.29
+
+> 2022-06-05
+
+### Patch Changes
+
+- Fix rendering of basic tables, and React tables as Markdown
+- Updated dependencies
+  - @remirror/react@1.0.41
+
 ## 0.3.28
 
 > 2022-06-05
