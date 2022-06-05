@@ -39,6 +39,9 @@ const TableControllerCell = ({
     {
       contentEditable: 'false',
       className: `${ExtensionTablesTheme.TABLE_CONTROLLER} ${ExtensionTablesTheme.CONTROLLERS_TOGGLE}`,
+      dataset: {
+        controllerCell: '',
+      },
       ...events,
     },
     wrapper,

@@ -54,6 +54,21 @@ const casesArray = [
     '<table><thead><tr><th>Heading</th></tr></thead><tbody><tr><th>Cell</th></tr></tbody></table>',
     '| Heading |\n| --- |\n| Cell |',
   ],
+  [
+    'nested tables',
+    '<table><tbody><tr><th>Heading</th></tr><tr><td><table><tbody><tr><th>Heading</th></tr><tr><td>Content</td></tr></tbody></table></td></tr></tbody></table>',
+    '| Heading |\n| --- |\n| <table><tbody><tr><th>Heading</th></tr><tr><td>Content</td></tr></tbody></table> |',
+  ],
+  [
+    'react table basic',
+    '<table><tbody><tr><th data-controller-cell></th><th data-controller-cell></th></tr><tr><th data-controller-cell></th><th>Heading</th></tr><tr><th data-controller-cell></th><td>Cell</td></tr></tbody></table>',
+    '| Heading |\n| --- |\n| Cell |',
+  ],
+  [
+    'react table with multiple columns and rows',
+    '<table><tbody><tr><th data-controller-cell></th><th data-controller-cell></th><th data-controller-cell></th></tr><tr><th data-controller-cell></th><th>Column 1</th><th>Column 2</th></tr><tr><th data-controller-cell></th><td>Row 1, Column 1</td><td>Row 1, Column 2</td></tr><tr><th data-controller-cell></th><td>Row 2, Column 1</td><td>Row 2, Column 2</td></tr></tbody></table>',
+    '| Column 1 | Column 2 |\n| --- | --- |\n| Row 1, Column 1 | Row 1, Column 2 |\n| Row 2, Column 1 | Row 2, Column 2 |',
+  ],
   // TODO fix this edge case.
   // [
   //   'empty head',
