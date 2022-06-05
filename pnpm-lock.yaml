@@ -110,7 +110,7 @@ importers:
       playwright-testing-library: ^4.2.1
       prettier: ^2.3.2
       prettier-plugin-packagejson: ^2.2.13
-      remirror: 1.0.85
+      remirror: 1.0.86
       rimraf: ^3.0.2
       size-limit: ^5.0.5
       snapshot-diff: ^0.9.0
@@ -514,7 +514,7 @@ importers:
       '@remirror/extension-italic': ^1.0.23
       '@remirror/extension-link': ^1.2.3
       '@remirror/extension-list': ^1.2.26
-      '@remirror/extension-markdown': ^1.0.24
+      '@remirror/extension-markdown': ^1.0.25
       '@remirror/extension-mention': ^1.0.24
       '@remirror/extension-mention-atom': ^1.0.27
       '@remirror/extension-node-formatting': ^1.0.27
@@ -1158,7 +1158,7 @@ importers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^1.4.6
       '@remirror/pm': ^1.0.20
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@remirror/react-components': ^1.0.36
       '@remirror/theme': ^1.2.1
       '@types/react': ^18.0.6
@@ -1462,7 +1462,7 @@ importers:
       '@remirror/core': ^1.4.6
       '@remirror/messages': ^1.0.6
       '@remirror/pm': ^1.0.20
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
       nanoevents: ^5.1.13
@@ -1488,7 +1488,7 @@ importers:
       '@remirror/extension-react-component': ^1.1.14
       '@remirror/messages': ^1.0.6
       '@remirror/pm': ^1.0.20
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@remirror/react-utils': ^1.0.6
       '@types/react': ^18.0.6
       react: ^18.0.0
@@ -2002,7 +2002,7 @@ importers:
       '@remirror/extension-positioner': ^1.2.7
       '@remirror/extension-react-component': ^1.1.14
       '@remirror/extension-react-ssr': ^1.0.26
-      '@remirror/extension-react-tables': ^1.0.39
+      '@remirror/extension-react-tables': ^1.0.40
       '@remirror/preset-react': ^1.0.28
       '@remirror/react-components': ^1.0.36
       '@remirror/react-core': ^1.2.3
@@ -2046,7 +2046,7 @@ importers:
       '@remirror/icons': ^1.0.7
       '@remirror/messages': ^1.0.6
       '@remirror/pm': ^1.0.20
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@remirror/react-core': ^1.2.3
       '@remirror/react-hooks': ^1.0.36
       '@remirror/react-utils': ^1.0.6
@@ -2112,7 +2112,7 @@ importers:
       '@remirror/pm': ^1.0.20
       '@remirror/preset-core': ^1.0.29
       '@remirror/preset-react': ^1.0.28
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@remirror/react-renderer': ^1.0.26
       '@remirror/react-ssr': ^1.0.26
       '@remirror/react-utils': ^1.0.6
@@ -2161,9 +2161,9 @@ importers:
       '@babel/runtime': ^7.13.10
       '@emotion/css': ^11.1.3
       '@remirror/core-helpers': ^1.0.5
-      '@remirror/extension-react-tables': ^1.0.39
+      '@remirror/extension-react-tables': ^1.0.40
       '@remirror/pm': ^1.0.20
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@remirror/styles': ^1.1.3
       '@svgmoji/noto': ^3.2.0
       '@types/react': ^18.0.6
@@ -2173,7 +2173,7 @@ importers:
       react: ^18.0.0
       react-dom: ^18.0.0
       refractor: ^3.3.1
-      remirror: 1.0.85
+      remirror: 1.0.86
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.15.4
@@ -2207,7 +2207,7 @@ importers:
       '@remirror/extension-positioner': ^1.2.7
       '@remirror/i18n': ^1.0.8
       '@remirror/pm': ^1.0.20
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@remirror/react-core': ^1.2.3
       '@remirror/react-utils': ^1.0.6
       '@types/react': ^18.0.6
@@ -2261,7 +2261,7 @@ importers:
       '@remirror/core': ^1.4.6
       '@remirror/extension-react-ssr': ^1.0.26
       '@remirror/pm': ^1.0.20
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
       react: ^18.0.0
@@ -2352,14 +2352,14 @@ importers:
       '@remirror/dev': ^1.1.6
       '@remirror/extension-codemirror6': ^0.2.12
       '@remirror/extension-count': ^1.0.7
-      '@remirror/extension-file': ^0.3.27
+      '@remirror/extension-file': ^0.3.28
       '@remirror/extension-mention': ^1.0.24
       '@remirror/extension-mention-atom': ^1.0.27
-      '@remirror/extension-react-tables': ^1.0.39
+      '@remirror/extension-react-tables': ^1.0.40
       '@remirror/messages': ^1.0.6
       '@remirror/pm': ^1.0.20
-      '@remirror/react': ^1.0.39
-      '@remirror/react-editors': ^0.1.83
+      '@remirror/react': ^1.0.40
+      '@remirror/react-editors': ^0.1.84
       '@remirror/styles': ^1.1.3
       '@storybook/addon-controls': ^6.3.12
       '@storybook/addons': ^6.3.4
@@ -2392,7 +2392,7 @@ importers:
       react-is: ^18.0.0
       reakit: ^1.3.11
       refractor: ^3.3.1
-      remirror: 1.0.85
+      remirror: 1.0.86
       scripts: 0.0.1
       svgmoji: ^3.2.0
       y-webrtc: ^10.2.2
@@ -2475,7 +2475,7 @@ importers:
       '@remirror/core': ^1.4.6
       '@remirror/pm': ^1.0.20
       '@remirror/preset-core': ^1.0.29
-      '@remirror/react': ^1.0.39
+      '@remirror/react': ^1.0.40
       '@testing-library/react': ^13.1.1
       '@testing-library/react-hooks': ^8.0.0
       '@types/fluent-ffmpeg': ^2.1.18
@@ -2776,8 +2776,8 @@ importers:
       '@fontsource/rubik': ^4.5.0
       '@mdx-js/react': ^1.6.22
       '@remirror/dev': ^1.1.6
-      '@remirror/react': ^1.0.39
-      '@remirror/react-editors': ^0.1.83
+      '@remirror/react': ^1.0.40
+      '@remirror/react-editors': ^0.1.84
       '@remirror/styles': ^1.1.3
       '@tsconfig/docusaurus': ^1.0.5
       '@types/react': ^18.0.6
@@ -2806,7 +2806,7 @@ importers:
       react-syntax-highlighter: ^15.5.0
       reakit: ^1.3.11
       remark-footnotes: ^3.0.0
-      remirror: ^1.0.85
+      remirror: ^1.0.86
     dependencies:
       '@babel/runtime': 7.15.4
       '@emotion/css': 11.5.0_@babel+core@7.15.8
@@ -6863,7 +6863,7 @@ packages:
     peerDependencies:
       react: '*'
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.0.11
       prop-types: 15.8.1
     dev: false
 
@@ -6872,7 +6872,7 @@ packages:
     peerDependencies:
       react: '*'
     dependencies:
-      '@types/react': 18.0.9
+      '@types/react': 18.0.11
       prop-types: 15.8.1
       react: 18.0.0
     dev: true
@@ -11969,19 +11969,19 @@ packages:
       '@types/react': 18.0.6
     dev: false
 
+  /@types/react/18.0.11:
+    resolution: {integrity: sha512-JxSwm54IgMW4XTR+zFF5QpNx4JITmFbB4WHR2J0vg9RpjNeyqEMlODXsD2e64br6GX70TL0UYjZJETpyyC1WdA==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.2
+      csstype: 3.1.0
+
   /@types/react/18.0.6:
     resolution: {integrity: sha512-bPqwzJRzKtfI0mVYr5R+1o9BOE8UEXefwc1LwcBtfnaAn6OoqMhLa/91VA8aeWfDPJt1kHvYKI8RHcQybZLHHA==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
       csstype: 3.0.9
-
-  /@types/react/18.0.9:
-    resolution: {integrity: sha512-9bjbg1hJHUm4De19L1cHiW0Jvx3geel6Qczhjd0qY5VKVE2X5+x77YxAepuCwVh4vrgZJdgEJw48zrhRIeF4Nw==}
-    dependencies:
-      '@types/prop-types': 15.7.5
-      '@types/scheduler': 0.16.2
-      csstype: 3.1.0
 
   /@types/reactcss/1.2.6:
     resolution: {integrity: sha512-qaIzpCuXNWomGR1Xq8SCFTtF4v8V27Y6f+b9+bzHiv087MylI/nTCqqdChNeWS7tslgROmYB7yeiruWX7WnqNg==}
@@ -23741,7 +23741,7 @@ packages:
     dev: false
 
   /object-assign/4.1.1:
-    resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
+    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
 
   /object-copy/0.1.0:
