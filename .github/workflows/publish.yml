@@ -60,7 +60,7 @@ jobs:
       - name: create release for @remirror/react
         uses: ncipollo/release-action@v1
         with:
-          commit: main
+          commit: v1-hotfix
           tag: '@remirror/react@${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].body }}'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -75,7 +75,7 @@ jobs:
       - name: create release for @remirror/pm
         uses: ncipollo/release-action@v1
         with:
-          commit: main
+          commit: v1-hotfix
           tag: '@remirror/pm@${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].body }}'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -91,7 +91,7 @@ jobs:
       - name: create release for remirror
         uses: ncipollo/release-action@v1
         with:
-          commit: main
+          commit: v1-hotfix
           tag: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].body }}'
           token: ${{ secrets.GITHUB_TOKEN }}
