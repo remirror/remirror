@@ -50,7 +50,7 @@
     "@remirror/core": "^1.4.6",
     "@remirror/pm": "^1.0.20",
     "@remirror/preset-core": "^1.0.29",
-    "@remirror/react": "^1.0.39",
+    "@remirror/react": "^1.0.40",
     "@testing-library/react": "^13.1.1",
     "@testing-library/react-hooks": "^8.0.0",
     "@types/fluent-ffmpeg": "^2.1.18",
