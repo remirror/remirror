@@ -8,6 +8,7 @@ import {
   Decoration,
   EditorView,
   ExtensionPriority,
+  findChildren,
   getChangedNodes,
   NodeExtension,
   NodeSpecOverride,
@@ -103,9 +104,9 @@ export class TableExtension extends BaseTableExtension {
     return [new TableRowExtension({ priority: ExtensionPriority.Low })];
   }
 
-  onView(): void {
+  onView(view: EditorView): void {
     // We have multiple node types which share a eom table_row in this
-    // extentison. In order to make the function `tableNodeTypes` from
+    // extension. In order to make the function `tableNodeTypes` from
     // `prosemirror-extension-tables` return the correct node type, we
     // need to overwrite `schema.cached.tableNodeTypes`.
     const schema = this.store.schema;
@@ -115,6 +116,34 @@ export class TableExtension extends BaseTableExtension {
       table: schema.nodes.table,
       header_cell: schema.nodes.tableHeaderCell,
     };
+
+    const {
+      dispatch,
+      state: { doc, tr },
+    } = view;
+
+    const tableNodes = findChildren({
+      node: doc,
+      predicate: ({ node: { type, attrs } }) => {
+        return type === schema.nodes.table && attrs.isControllersInjected === false;
+      },
+    });
+
+    if (tableNodes.length === 0) {
+      return;
+    }
+
+    for (const { node: table, pos } of tableNodes) {
+      const controlledTable = injectControllers({
+        schema,
+        getMap: () => TableMap.get(table),
+        table,
+      });
+
+      replaceNodeAtPosition({ pos, tr, content: controlledTable });
+    }
+
+    dispatch(tr.setMeta('addToHistory', false));
   }
 
   /**
