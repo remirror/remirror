@@ -1,4 +1,4 @@
-name: publish
+name: publish-v1
 
 on:
   workflow_run:
@@ -47,7 +47,7 @@ jobs:
       - name: publish npm release
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > $HOME/.npmrc
-          pnpm release
+          pnpm release:latest
           rm $HOME/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
