@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-markdown",
-  "version": "1.0.26",
+  "version": "1.0.25",
   "description": "Generate markdown output from your editor",
   "keywords": [
     "remirror",
