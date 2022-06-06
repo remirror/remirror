@@ -169,11 +169,11 @@ export type ClickMarkEventHandler = (
   state: ClickMarkHandlerState,
 ) => boolean | undefined | void;
 export type ContextMenuEventHandler = (
-  props: MouseEventHandlerProps,
+  event: MouseEvent,
   state: ContextMenuEventHandlerState,
 ) => boolean | undefined | void;
 export type HoverEventHandler = (
-  props: HoverEventHandlerProps,
+  event: MouseEvent,
   state: HoverEventHandlerState,
 ) => boolean | undefined | void;
 
@@ -372,19 +372,16 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
           mouseout: this.createMouseEventHandler((event, props) => {
             const state = { ...props, hovering: false };
-            // TODO: Standardise to return ONLY the event, as first argument
-            return this.options.hover({ ...state, event }, state) || false;
+            return this.options.hover(event, state) || false;
           }),
 
           mouseover: this.createMouseEventHandler((event, props) => {
             const state = { ...props, hovering: true };
-            // TODO: Standardise to return ONLY the event, as first argument
-            return this.options.hover({ ...state, event }, state) || false;
+            return this.options.hover(event, state) || false;
           }),
 
           contextmenu: this.createMouseEventHandler((event, props) => {
-            // TODO: Standardise to return ONLY the event, as first argument
-            return this.options.contextmenu({ ...props, event }, props) || false;
+            return this.options.contextmenu(event, props) || false;
           }),
 
           scroll: (_, event) => {
@@ -676,16 +673,6 @@ export interface MouseEventHandlerState {
 }
 
 export type ContextMenuEventHandlerState = MouseEventHandlerState;
-
-/**
- * @deprecated use ({ event: MouseEvent }, props: MouseEventHandlerState) => boolean | undefined | void instead
- */
-export type MouseEventHandlerProps = MouseEventHandlerState & { event: MouseEvent };
-
-/**
- * @deprecated use ({ event: MouseEvent }, props: HoverEventHandlerState) => boolean | undefined | void instead
- */
-export type HoverEventHandlerProps = HoverEventHandlerState & { event: MouseEvent };
 
 declare global {
   namespace Remirror {

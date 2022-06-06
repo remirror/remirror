@@ -1,6 +1,6 @@
 import { HoverEventHandler } from '@remirror/extension-events';
 
-import { useEvent } from './use-event';
+import { useEditorEvent } from './use-editor-event';
 
 /**
  * A hook which listens to hover events.
@@ -9,5 +9,5 @@ import { useEvent } from './use-event';
  * directly touched by the `hover: true` or `hover: false` event.
  */
 export function useHover(handler: HoverEventHandler): void {
-  useEvent('hover', handler);
+  useEditorEvent('hover', handler);
 }

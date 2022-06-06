@@ -29,6 +29,12 @@
       "browser": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.browser.esm.js",
       "default": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.esm.js"
     },
+    "./use-editor-event": {
+      "import": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.esm.js",
+      "require": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.cjs.js",
+      "browser": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.browser.esm.js",
+      "default": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.esm.js"
+    },
     "./use-editor-focus": {
       "import": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.esm.js",
       "require": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs.js",
@@ -42,12 +48,6 @@
       "browser": "./use-emoji/dist/remirror-react-hooks-use-emoji.browser.esm.js",
       "types": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs.d.ts",
       "default": "./use-emoji/dist/remirror-react-hooks-use-emoji.esm.js"
-    },
-    "./use-event": {
-      "import": "./use-event/dist/remirror-react-hooks-use-event.esm.js",
-      "require": "./use-event/dist/remirror-react-hooks-use-event.cjs.js",
-      "browser": "./use-event/dist/remirror-react-hooks-use-event.browser.esm.js",
-      "default": "./use-event/dist/remirror-react-hooks-use-event.esm.js"
     },
     "./use-history": {
       "import": "./use-history/dist/remirror-react-hooks-use-history.esm.js",
@@ -129,7 +129,7 @@
     "use-context-menu",
     "use-editor-focus",
     "use-emoji",
-    "use-event",
+    "use-editor-event",
     "use-history",
     "use-hover",
     "use-keymap",
@@ -199,7 +199,7 @@
       "use-context-menu.ts",
       "use-editor-focus.ts",
       "use-emoji.ts",
-      "use-event.ts",
+      "use-editor-event.ts",
       "use-history.ts",
       "use-hover.ts",
       "use-keymap.ts",

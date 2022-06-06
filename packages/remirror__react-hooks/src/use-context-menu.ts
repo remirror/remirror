@@ -1,6 +1,6 @@
 import { ContextMenuEventHandler } from '@remirror/extension-events';
 
-import { useEvent } from './use-event';
+import { useEditorEvent } from './use-editor-event';
 
 /**
  * A hook which listens to context menu events.
@@ -10,5 +10,5 @@ import { useEvent } from './use-event';
  * replace the default context menu with your own version.
  */
 export function useContextMenu(handler: ContextMenuEventHandler): void {
-  useEvent('contextmenu', handler);
+  useEditorEvent('contextmenu', handler);
 }

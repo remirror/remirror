@@ -1,18 +1,12 @@
 ---
 hide_title: true
-title: 'useEvent'
+title: 'useEditorEvent'
 ---
 
-# `useEvent` (v1 only)
-
-:::danger v2 breaking change!
-
-This hook was renamed to [`useEditorEvent`](/docs/hooks/use-editor-event)
-
-:::danger
+# `useEditorEvent`
 
 ```tsx
-useEvent(event, handler);
+useEditorEvent(event, handler);
 ```
 
 ## Parameters
@@ -64,12 +58,12 @@ const handleMouseDown = useCallback((event) => {
   return false;
 }, []);
 
-useEvent('mousedown', handleMouseDown);
+useEditorEvent('mousedown', handleMouseDown);
 ```
 
 :::tip
 
-`useEvent` is syntax sugar, it is a specialised application of the `useExtension` hook.
+`useEditorEvent` is syntax sugar, it is a specialised application of the `useExtension` hook.
 
 ```tsx
 useExtension(
@@ -113,7 +107,7 @@ Unless listed in the exceptions below, the event handlers have the signature.
 
 ### Exceptions
 
-`click` and `clickMark` have a second parameter, an object with helper methods to interrogate the source of the event.
+`click`, `clickMark`, `contextmenu` and `hover` have a second parameter, an object with helper methods to interrogate the source of the event.
 
 ```tsx
 const handleClick = useCallback((event, props) => {
@@ -123,34 +117,9 @@ const handleClick = useCallback((event, props) => {
   return false;
 }, []);
 
-useEvent('click', handleClick);
+useEditorEvent('click', handleClick);
 ```
 
 `textinput`, has no associated event, and instead provides a `from` and `to` position, and the added `text`.
 
 `({ from, to, text }) => boolean`
-
-:::warning
-
-The following events will be standardized in a future release of Remirror.
-
-:::warning
-
-Two outliers are the `contextmenu` and `hover` events, for historical reasons they return a helper object as **_both_** the first and second parameter. The **first** parameter only has an `event` property to expose the browser event.
-
-This behaviour is standardized in Remirror v2, to return just the `event` object as the first argument, and the helper object as the second argument.
-
-To ease your future migration path, use the pattern below - where we deconstruct `event` from the first argument, and use the second argument helper.
-
-```tsx
-const handleHover = useCallback(({ event }, props) => {
-  const { getNode, hovering, ...rest } = props;
-  console.log('node', getNode(), 'is hovering', hovering, 'rest', rest);
-
-  return false;
-}, []);
-
-useEvent('hover', handleHover);
-```
-
-This means when migrating to v2, all you would need to do is to replace `{ event }` with `event`, to migrate your code.

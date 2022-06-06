@@ -117,11 +117,11 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
         this.onScroll();
         return false;
       },
-      hover: (hover) => {
+      hover: (_, hover) => {
         this.positioner(this.getBaseProps('hover', { hover }));
         return false;
       },
-      contextmenu: (contextmenu) => {
+      contextmenu: (_, contextmenu) => {
         this.positioner(this.getBaseProps('contextmenu', { contextmenu }));
         return false;
       },
