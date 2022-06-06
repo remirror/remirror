@@ -1,13 +1,5 @@
 # @remirror/extension-markdown
 
-## 1.0.26
-
-> 2022-06-05
-
-### Patch Changes
-
-- Fix rendering of basic tables, and React tables as Markdown
-
 ## 1.0.25
 
 > 2022-06-05

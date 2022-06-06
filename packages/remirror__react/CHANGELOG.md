@@ -1,15 +1,5 @@
 # @remirror/react
 
-## 1.0.41
-
-> 2022-06-05
-
-### Patch Changes
-
-- Fix rendering of basic tables, and React tables as Markdown
-- Updated dependencies
-  - @remirror/extension-react-tables@1.0.41
-
 ## 1.0.40
 
 > 2022-06-05
