@@ -6,10 +6,12 @@ import {
   convertCommand,
   CreateExtensionPlugin,
   Decoration,
+  DOMCompatibleAttributes,
   EditorView,
   ExtensionPriority,
   findChildren,
   getChangedNodes,
+  isElementDomNode,
   NodeExtension,
   NodeSpecOverride,
   NodeViewMethod,
@@ -87,9 +89,29 @@ export class TableExtension extends BaseTableExtension {
       },
       content: 'tableRow+',
       tableRole: 'table',
-      parseDOM: [{ tag: 'table', getAttrs: extra.parse }],
+      parseDOM: [
+        {
+          tag: 'table',
+          getAttrs: (node) => {
+            if (!isElementDomNode(node)) {
+              return {};
+            }
+
+            return {
+              ...extra.parse(node),
+              isControllersInjected: node.hasAttribute('data-controllers-injected'),
+            };
+          },
+        },
+      ],
       toDOM(node) {
-        return ['table', ['tbody', extra.dom(node), 0]];
+        const controllerAttrs: DOMCompatibleAttributes = {};
+
+        if (node.attrs.isControllersInjected) {
+          controllerAttrs['data-controllers-injected'] = '';
+        }
+
+        return ['table', { ...extra.dom(node), ...controllerAttrs }, ['tbody', 0]];
       },
       allowGapCursor: false,
     };
@@ -269,6 +291,7 @@ export class TableRowExtension extends BaseTableRowExtension {
   createExtensions() {
     return [
       new TableCellExtension({ priority: ExtensionPriority.Low }),
+      new TableControllerCellExtension({ priority: ExtensionPriority.Medium }),
       new TableHeaderCellExtension({ priority: ExtensionPriority.Low }),
     ];
   }
@@ -287,10 +310,6 @@ export class TableHeaderCellExtension extends BaseTableHeaderCellExtension {
     spec.allowGapCursor = false;
 
     return spec;
-  }
-
-  createExtensions() {
-    return [new TableControllerCellExtension({ priority: ExtensionPriority.Low })];
   }
 }
 
@@ -334,6 +353,7 @@ export class TableControllerCellExtension extends NodeExtension {
       content: 'block*',
       attrs: cellAttrs,
       tableRole: 'header_cell',
+      parseDOM: [{ tag: 'th[data-controller-cell]' }],
       toDOM() {
         return ['th', { 'data-controller-cell': '' }, 0];
       },

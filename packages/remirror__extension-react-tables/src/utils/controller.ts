@@ -29,6 +29,11 @@ export function injectControllers({
 
   const oldRows = oldTable.content;
   oldRows.forEach((oldRow) => {
+    if (oldRow.content.child(0).type === schema.nodes.tableControllerCell) {
+      newRowsArray.push(oldRow.copy());
+      return;
+    }
+
     const oldCells = oldRow.content;
     const newCells = Fragment.from(controllerCell).append(oldCells);
     const newRow = oldRow.copy(newCells);

@@ -1,4 +1,5 @@
 import {
+  AnyExtension,
   ApplySchemaAttributes,
   command,
   CommandFunction,
@@ -90,7 +91,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
    * Create the table extensions. Set the priority to low so that they appear
    * lower down in the node list.
    */
-  createExtensions() {
+  createExtensions(): AnyExtension[] {
     return [new TableRowExtension({ priority: ExtensionPriority.Low })];
   }
 
@@ -336,7 +337,7 @@ export class TableRowExtension extends NodeExtension {
    * `TableHeaderCellExtension`. This is placed here so that this extension can
    * be tested independently from the `TableExtension`.
    */
-  createExtensions() {
+  createExtensions(): AnyExtension[] {
     return [
       new TableCellExtension({ priority: ExtensionPriority.Low }),
       new TableHeaderCellExtension({ priority: ExtensionPriority.Low }),
