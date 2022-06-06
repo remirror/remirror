@@ -5,11 +5,13 @@ on:
     branches:
       - main
       - v2
+      - v1-hotfix
 
   pull_request:
     branches:
       - main
       - v2
+      - v1-hotfix
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
