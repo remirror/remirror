@@ -1,5 +1,4 @@
 import {
-  AnyExtension,
   ApplySchemaAttributes,
   command,
   CommandFunction,
@@ -91,7 +90,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
    * Create the table extensions. Set the priority to low so that they appear
    * lower down in the node list.
    */
-  createExtensions(): AnyExtension[] {
+  createExtensions() {
     return [new TableRowExtension({ priority: ExtensionPriority.Low })];
   }
 
@@ -337,7 +336,9 @@ export class TableRowExtension extends NodeExtension {
    * `TableHeaderCellExtension`. This is placed here so that this extension can
    * be tested independently from the `TableExtension`.
    */
-  createExtensions(): AnyExtension[] {
+  createExtensions(): Array<
+    TableCellExtension | TableHeaderCellExtension | TableControllerCellExtension
+  > {
     return [
       new TableCellExtension({ priority: ExtensionPriority.Low }),
       new TableHeaderCellExtension({ priority: ExtensionPriority.Low }),
@@ -374,6 +375,22 @@ export class TableHeaderCellExtension extends NodeExtension {
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): TableSchemaSpec {
     return createTableNodeSchema(extra, override).tableHeaderCell;
+  }
+}
+
+/**
+ * This is not used in the basic table extension, but is required for this React Tables extension that extends this
+ */
+@extension({ defaultPriority: ExtensionPriority.Low })
+export class TableControllerCellExtension extends NodeExtension {
+  get name() {
+    return 'tableControllerCell' as const;
+  }
+
+  createNodeSpec(_: ApplySchemaAttributes, __: NodeSpecOverride): TableSchemaSpec {
+    return {
+      tableRole: 'header_cell',
+    };
   }
 }
 

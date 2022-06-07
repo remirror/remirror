@@ -12,7 +12,6 @@ import {
   findChildren,
   getChangedNodes,
   isElementDomNode,
-  NodeExtension,
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorNode,
@@ -24,6 +23,7 @@ import {
   createTable,
   createTableOptions,
   TableCellExtension as BaseTableCellExtension,
+  TableControllerCellExtension as BaseTableControllerCellExtension,
   TableExtension as BaseTableExtension,
   TableHeaderCellExtension as BaseTableHeaderCellExtension,
   TableRowExtension as BaseTableRowExtension,
@@ -332,11 +332,7 @@ export interface ReactTableControllerCellAttrs {
   background: null | string;
 }
 
-export class TableControllerCellExtension extends NodeExtension {
-  get name() {
-    return 'tableControllerCell' as const;
-  }
-
+export class TableControllerCellExtension extends BaseTableControllerCellExtension {
   createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
     const cellAttrs = {
       ...extra.defaults(),
