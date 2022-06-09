@@ -235,24 +235,26 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
       state,
     }).flat();
     // Find entityReferences for which a part is at the requested position
-    const entityReferenceIdsInPos = new Set(disjointedEntityReferences
-      .filter((entityReference) => {
-        if (
-          within(from, entityReference.from, entityReference.to) ||
-          within(to, entityReference.from, entityReference.to) ||
-          within(entityReference.from, from, to) ||
-          within(entityReference.to, from, to)
-        ) {
-          if (includeEdges) {
-            return true;
-          } else if (entityReference.from !== from && entityReference.to !== to) {
-            return true;
+    const entityReferenceIdsInPos = new Set(
+      disjointedEntityReferences
+        .filter((entityReference) => {
+          if (
+            within(from, entityReference.from, entityReference.to) ||
+            within(to, entityReference.from, entityReference.to) ||
+            within(entityReference.from, from, to) ||
+            within(entityReference.to, from, to)
+          ) {
+            if (includeEdges) {
+              return true;
+            } else if (entityReference.from !== from && entityReference.to !== to) {
+              return true;
+            }
           }
-        }
 
-        return false;
-      })
-      .map((h) => h.id));
+          return false;
+        })
+        .map((h) => h.id),
+    );
 
     // Find the entityReferences belonging to the matching disjoint entityReferences
     return joinDisjoinedEntityReferences(disjointedEntityReferences).filter((h) =>

@@ -12,15 +12,15 @@ import { EntityReferenceMetaData } from '../types';
  */
 
 export function getDisjoinedEntityReferencesFromNode(
-	node: Node,
-	pos: number,
-	markTypeName: string,
+  node: Node,
+  pos: number,
+  markTypeName: string,
 ): EntityReferenceMetaData[] {
-	const isEntityReference = (mark: Mark) => mark.type.name === markTypeName;
-	return node.marks.filter(isEntityReference).map(h => ({
-		from: pos,
-		to: pos + Math.max(node.textContent.length, 1),
-		id: h.attrs.id,
-		text: node.textContent,
-	}));
+  const isEntityReference = (mark: Mark) => mark.type.name === markTypeName;
+  return node.marks.filter(isEntityReference).map((mark: Mark) => ({
+    from: pos,
+    to: pos + Math.max(node.textContent.length, 1),
+    id: mark.attrs.id,
+    text: node.textContent,
+  }));
 }
