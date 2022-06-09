@@ -1,5 +1,18 @@
 # jest-remirror
 
+## 1.0.47
+
+> 2022-06-09
+
+### Patch Changes
+
+- Fix version of prosemirror-tables to future proof against type updates
+- Fix the version of prosemirror-test-builder, as 1.2.0 contains breaking change of default export
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@1.0.21
+  - jest-prosemirror@1.0.30
+
 ## 1.0.46
 
 > 2022-05-31

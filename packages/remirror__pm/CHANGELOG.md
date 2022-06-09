@@ -1,5 +1,13 @@
 # @remirror/pm
 
+## 1.0.21
+
+> 2022-06-09
+
+### Patch Changes
+
+- Fix version of prosemirror-tables to future proof against type updates
+
 ## 1.0.20
 
 > 2022-05-31

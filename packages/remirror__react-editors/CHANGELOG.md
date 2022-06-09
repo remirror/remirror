@@ -1,5 +1,15 @@
 # @remirror/react-editors
 
+## 0.1.85
+
+> 2022-06-09
+
+### Patch Changes
+
+- Fix version of prosemirror-tables to future proof against type updates
+- Updated dependencies
+  - @remirror/pm@1.0.21
+
 ## 0.1.84
 
 > 2022-06-05
