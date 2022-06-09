@@ -2,7 +2,7 @@ import { Decoration } from 'remirror';
 import type { AcceptUndefined } from '@remirror/core';
 
 export enum ActionType {
-  REDRAW_HIGHLIGHTS,
+  REDRAW_ENTITY_REFERENCES,
 }
 export interface Range {
   /**
@@ -14,9 +14,9 @@ export interface Range {
    */
   to: number;
 }
-export interface HighlightMarkMetaData extends Range {
+export interface EntityReferenceMetaData extends Range {
   /**
-   * Unique identifier of the highlight mark
+   * Unique identifier of the entity references
    */
   id: string;
   /**
@@ -25,7 +25,7 @@ export interface HighlightMarkMetaData extends Range {
   text: string;
 }
 
-export type OmitId<Type extends HighlightMarkMetaData> = Omit<Type, 'id'>;
+export type OmitId<Type extends EntityReferenceMetaData> = Omit<Type, 'id'>;
 
 export interface EntityReferenceOptions {
   /**
@@ -34,13 +34,13 @@ export interface EntityReferenceOptions {
    * @remarks
    *
    * This can be used e.g. to assign different shades of a color depending on
-   * the amount of highlight marks in a segment.
+   * the amount of entity references in a segment.
    */
-  getStyle?: (highlightMarks: HighlightMarkMetaData[][]) => Decoration[];
+  getStyle?: (entityReferences: EntityReferenceMetaData[][]) => Decoration[];
   blockSeparator?: AcceptUndefined<string>;
   createId?: () => string;
 }
 
 export interface EntityReferencePluginState extends Required<EntityReferenceOptions> {
-  highlightMarks: HighlightMarkMetaData[][];
+  entityReferences: EntityReferenceMetaData[][];
 }

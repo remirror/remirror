@@ -23,27 +23,26 @@ import { DecorationSet } from '@remirror/pm/view';
 
 import {
   ActionType,
+  EntityReferenceMetaData,
   EntityReferenceOptions,
   EntityReferencePluginState,
-  HighlightMarkMetaData,
-  Range,
 } from './types';
-import { decorateHighlights } from './utils/decorate-highlights';
-import { getDisjoinedHighlightsFromNode } from './utils/disjoined-highlights';
-import { joinDisjoinedHighlights } from './utils/joined-highlights';
+import { decorateEntityReferences } from './utils/decorate-entity-references';
+import { getDisjoinedEntityReferencesFromNode } from './utils/disjoined-entity-references';
+import { joinDisjoinedEntityReferences } from './utils/joined-entity-references';
 
 /**
- *  Required props to create highlight marks decorations.
+ *  Required props to create entityReference marks decorations.
  */
 interface StateProps {
   extension: EntityReferenceExtension;
   state: EditorState;
 }
 
-const getHighlightMarksFromPluginState = (props: StateProps) => {
+const getEntityReferencesFromPluginState = (props: StateProps) => {
   const { extension, state } = props;
-  const { highlightMarks } = extension.pluginKey.getState(state) as EntityReferencePluginState;
-  return highlightMarks;
+  const { entityReferences } = extension.pluginKey.getState(state) as EntityReferencePluginState;
+  return entityReferences;
 };
 
 /**
@@ -53,24 +52,24 @@ const getHighlightMarksFromPluginState = (props: StateProps) => {
  */
 const createDecorationSet = (props: StateProps) => {
   const { extension, state } = props;
-  const highlightMarks = getHighlightMarksFromPluginState(props);
-  return DecorationSet.create(state.doc, extension.options.getStyle(highlightMarks));
+  const entityReferences = getEntityReferencesFromPluginState(props);
+  return DecorationSet.create(state.doc, extension.options.getStyle(entityReferences));
 };
 
 @extension<EntityReferenceOptions>({
   defaultOptions: {
-    getStyle: decorateHighlights,
+    getStyle: decorateEntityReferences,
     blockSeparator: undefined,
     createId: uniqueId,
   },
 })
 export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptions> {
   get name(): string {
-    return 'entityReference' as const;
+    return 'entity-reference' as const;
   }
 
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
-    const idAttr = `data-highlight`;
+    const idAttr = `data-entityReference`;
 
     return {
       ...override,
@@ -80,7 +79,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
         id: { default: '' },
       },
       // Note that we don't implement `ParseDom`.
-      // The reasoning behind this is to disable pasting (parsing) the highlight marks in the editor.
+      // The reasoning behind this is to disable pasting (parsing) the entityReference marks in the editor.
       toDOM: (mark: Mark) => [
         'span',
         {
@@ -98,12 +97,12 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
     return {
       state: {
         init: (_: { [key: string]: any }, state: EditorState) => {
-          const highlightMarks = this.getDisjoinedHighlights(state.doc);
-          return { highlightMarks };
+          const entityReferences = this.getDisjoinedEntityReferences(state.doc);
+          return { entityReferences };
         },
         apply: (_tr: Transaction, _value: any, _oldState: EditorState, newState: EditorState) => {
-          const highlightMarks = this.getDisjoinedHighlights(newState.doc);
-          return { highlightMarks };
+          const entityReferences = this.getDisjoinedEntityReferences(newState.doc);
+          return { entityReferences };
         },
       },
       props: {
@@ -115,19 +114,19 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   @command()
-  addHighlight(id?: string): CommandFunction {
+  addEntityReference(id?: string): CommandFunction {
     return ({ state, tr, dispatch }) => {
       const { from, to } = state.selection;
-      const newHighlight = {
-        id: id ?? (this.options.createId ? this.options.createId() : uniqueId()),
-      };
-      const newHighlightMark = this.type.create(newHighlight);
+      const newId = id ?? (this.options.createId ? this.options.createId() : uniqueId());
+      const newMark = this.type.create({
+        id: newId,
+      });
       try {
-        tr = tr.addMark(from, to, newHighlightMark);
+        tr = tr.addMark(from, to, newMark);
       } catch (error: any) {
         throw new Error(
-          `Can't add highlight ${JSON.stringify(
-            newHighlightMark,
+          `Can't add entityReference ${JSON.stringify(
+            newMark,
           )} to range {from: ${from}, to: ${to}}: ${error.message}`,
         );
       }
@@ -138,20 +137,19 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   @command()
-  removeHighlight(highlightMarkId: string, range: Range): CommandFunction {
+  removeEntityReference(entityReferenceId: string): CommandFunction {
     return ({ tr, dispatch }) => {
-      const { from, to } = range;
-
-      if (!highlightMarkId) {
-        throw new Error(`Highlight can't be removed without specifying tags its ID!`);
+      if (!entityReferenceId) {
+        throw new Error(`EntityReference can't be removed without specifying tags its ID!`);
       }
 
+      const singleMark = this.type.create({ id: entityReferenceId });
       try {
-        tr = tr.removeMark(from, to, this.type.create({ id: highlightMarkId }));
+        // Remove all entityReference marks with id=entityReferenceId in all the document
+        // Getting the last position https://discuss.prosemirror.net/t/getting-the-last-node-and-its-pos-in-the-document/3091
+        tr = tr.removeMark(1, tr.doc.content.size, singleMark);
       } catch (error: any) {
-        throw new Error(
-          `Can't remove highlight ${highlightMarkId} to range {from: ${from}, to: ${from}}: : ${error.message}`,
-        );
+        throw new Error(`Can't remove entityReference ${entityReferenceId}: ${error.message}`);
       }
       dispatch?.(tr);
       return true;
@@ -159,11 +157,11 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   @command()
-  redrawHighlights(): CommandFunction {
+  redrawEntityReferences(): CommandFunction {
     return ({ tr, dispatch }) => {
       dispatch?.(
         tr.setMeta(EntityReferenceExtension.name, {
-          type: ActionType.REDRAW_HIGHLIGHTS,
+          type: ActionType.REDRAW_ENTITY_REFERENCES,
         }),
       );
 
@@ -172,86 +170,93 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   /**
-   * Get all disjoined highlight attributes from the document.
+   * Get all disjoined entityReference attributes from the document.
    */
   @helper()
-  getDisjoinedHighlights(doc: ProsemirrorNode): Helper<HighlightMarkMetaData[][]> {
-    const disjoinedHighlights: HighlightMarkMetaData[][] = [];
+  getDisjoinedEntityReferences(doc: ProsemirrorNode): Helper<EntityReferenceMetaData[][]> {
+    const disjoinedEntityReferences: EntityReferenceMetaData[][] = [];
     doc.descendants((node: Node, pos: number) => {
-      const subDisjoinedHighlights = getDisjoinedHighlightsFromNode(node, pos);
+      const subDisjoinedEntityReferences = getDisjoinedEntityReferencesFromNode(
+        node,
+        pos,
+        this.name,
+      );
 
-      if (subDisjoinedHighlights.length === 0) {
+      if (subDisjoinedEntityReferences.length === 0) {
         return true;
       }
 
-      disjoinedHighlights.push(subDisjoinedHighlights);
+      disjoinedEntityReferences.push(subDisjoinedEntityReferences);
       return true;
     });
-    return disjoinedHighlights;
+    return disjoinedEntityReferences;
   }
 
   /**
-   * Disjoined highlights are analog to ProseMirror's marks. When adding a mark
+   * Disjoined entityReferences are analog to ProseMirror's marks. When adding a mark
    * that spans two (or more) nodes (like paragraphs), it will be stored as two
    * (or more) marks on each node separately. The same is true for disjoined
-   * highlights. Therefore, a highlight that spans multiple paragraphs is
-   * internally stored as multiple marks (all having the same highlight ID as
+   * entityReferences. Therefore, a entityReference that spans multiple paragraphs is
+   * internally stored as multiple marks (all having the same entityReference ID as
    * attribute).
    *
-   * To get the actual highlights (for which each highlight ID is unique), call
-   * `joinDisjoinedHighlights`.
+   * To get the actual entityReferences (for which each entityReference ID is unique), call
+   * `joinDisjoinedEntityReferences`.
    */
   @helper()
-  getHighlights(): Helper<HighlightMarkMetaData[]> {
-    const highlightMarks = getHighlightMarksFromPluginState({
+  getEntityReferences(): Helper<EntityReferenceMetaData[]> {
+    const entityReferences = getEntityReferencesFromPluginState({
       extension: this,
       state: this.store.getState(),
     }).flat();
-    return joinDisjoinedHighlights(highlightMarks);
+    return joinDisjoinedEntityReferences(entityReferences);
   }
 
   /**
-   * @param pos - the position in the root document to find highlight marks.
-   * @param includeEdges - whether to match highlights that start or end exactly on the given pos
+   * @param pos - the position in the root document to find entityReference marks.
+   * @param includeEdges - whether to match entityReferences that start or end exactly on the given pos
    *
-   * @returns all highlights at a specific position in the editor.
+   * @returns all entityReferences at a specific position in the editor.
    *
    * In order to use this helper make sure you have the
-   * [[`HighlightMarkExtension`]] added to your editor.
+   * [[`EntityReferenceExtension`]] added to your editor.
    */
   @helper()
-  getHighlightsAt(pos?: PrimitiveSelection, includeEdges = true): Helper<HighlightMarkMetaData[]> {
+  getEntityReferencesAt(
+    pos?: PrimitiveSelection,
+    includeEdges = true,
+  ): Helper<EntityReferenceMetaData[]> {
     const state = this.store.getState();
     const { doc, selection } = state;
     const { from, to } = getTextSelection(pos ?? selection, doc);
 
-    const disjointedHighlights = getHighlightMarksFromPluginState({
+    const disjointedEntityReferences = getEntityReferencesFromPluginState({
       extension: this,
       state,
     }).flat();
-    // Find highlights for which a part is at the requested position
-    const highlightIdsInPos = new Set(
-      disjointedHighlights
-        .filter((highlight) => {
-          if (
-            within(from, highlight.from, highlight.to) ||
-            within(to, highlight.from, highlight.to) ||
-            within(highlight.from, from, to) ||
-            within(highlight.to, from, to)
-          ) {
-            if (includeEdges) {
-              return true;
-            } else if (highlight.from !== from && highlight.to !== to) {
-              return true;
-            }
+    // Find entityReferences for which a part is at the requested position
+    const entityReferenceIdsInPos = new Set(disjointedEntityReferences
+      .filter((entityReference) => {
+        if (
+          within(from, entityReference.from, entityReference.to) ||
+          within(to, entityReference.from, entityReference.to) ||
+          within(entityReference.from, from, to) ||
+          within(entityReference.to, from, to)
+        ) {
+          if (includeEdges) {
+            return true;
+          } else if (entityReference.from !== from && entityReference.to !== to) {
+            return true;
           }
+        }
 
-          return false;
-        })
-        .map((h) => h.id),
+        return false;
+      })
+      .map((h) => h.id));
+
+    // Find the entityReferences belonging to the matching disjoint entityReferences
+    return joinDisjoinedEntityReferences(disjointedEntityReferences).filter((h) =>
+      entityReferenceIdsInPos.has(h.id),
     );
-
-    // Find the highlights belonging to the matching disjoint highlights
-    return joinDisjoinedHighlights(disjointedHighlights).filter((h) => highlightIdsInPos.has(h.id));
   }
 }
