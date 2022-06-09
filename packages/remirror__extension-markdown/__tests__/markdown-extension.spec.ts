@@ -5,8 +5,10 @@ import {
   HeadingExtension,
   ItalicExtension,
   OrderedListExtension,
+  TableExtension,
   TaskListExtension,
 } from 'remirror/extensions';
+import { TableExtension as ReactTableExtension } from '@remirror/extension-react-tables';
 
 import { MarkdownExtension } from '../';
 
@@ -161,6 +163,99 @@ Task list
       .selectText('end')
       .run();
     expect(editor.state.doc).toEqualProsemirrorNode(doc(p('Content '), p(bold('is bold.'))));
+    expect(editor.dom).toMatchSnapshot();
+  });
+
+  it('can insert basic tables from markdown', () => {
+    const editor = renderEditor([new TableExtension(), new MarkdownExtension()]);
+    const { doc, p, table, tableRow: tr, tableHeaderCell: th, tableCell: td } = editor.nodes;
+
+    editor.add(doc(p('<cursor>')));
+
+    const markdown = `
+| Column 1 | Column 2 |
+| --- | --- |
+| Row 1, Column 1 | Row 1, Column 2 |
+| Row 2, Column 1 | Row 2, Column 2 |`;
+
+    editor.chain.insertMarkdown(markdown).selectText('end').run();
+    expect(editor.state.doc).toEqualProsemirrorNode(
+      doc(
+        //
+        table(
+          tr(
+            //
+            th(p('Column 1')),
+            th(p('Column 2')),
+          ),
+          tr(
+            //
+            td(p('Row 1, Column 1')),
+            td(p('Row 1, Column 2')),
+          ),
+          tr(
+            //
+            td(p('Row 2, Column 1')),
+            td(p('Row 2, Column 2')),
+          ),
+        ),
+      ),
+    );
+    expect(editor.dom).toMatchSnapshot();
+  });
+
+  it('can insert react tables from markdown', () => {
+    const editor = renderEditor([new ReactTableExtension(), new MarkdownExtension()]);
+    const {
+      doc,
+      p,
+      tableRow: tr,
+      tableHeaderCell: th,
+      tableCell: td,
+      tableControllerCell: tcc,
+    } = editor.nodes;
+    const { table } = editor.attributeNodes;
+
+    editor.add(doc(p('<cursor>')));
+
+    const markdown = `
+| Column 1 | Column 2 |
+| --- | --- |
+| Row 1, Column 1 | Row 1, Column 2 |
+| Row 2, Column 1 | Row 2, Column 2 |`;
+
+    editor.chain.insertMarkdown(markdown).selectText('end').run();
+    expect(editor.state.doc).toEqualProsemirrorNode(
+      doc(
+        //
+        table({ isControllersInjected: true })(
+          tr(
+            //
+            tcc(),
+            tcc(),
+            tcc(),
+          ),
+          tr(
+            //
+            tcc(),
+            th(p('Column 1')),
+            th(p('Column 2')),
+          ),
+          tr(
+            //
+            tcc(),
+            td(p('Row 1, Column 1')),
+            td(p('Row 1, Column 2')),
+          ),
+          tr(
+            //
+            tcc(),
+            td(p('Row 2, Column 1')),
+            td(p('Row 2, Column 2')),
+          ),
+        ),
+      ),
+    );
     expect(editor.dom).toMatchSnapshot();
   });
 });
