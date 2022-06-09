@@ -36,13 +36,15 @@ export interface RemirrorPortalsProps {
  * passed through to the `RemirrorPortals` component.
  */
 export function usePortals(portalContainer: PortalContainer): Array<[HTMLElement, MountedPortal]> {
-  const [portals, setPortals] = useState(() => [...portalContainer.portals.entries()]);
+  // eslint-disable-next-line unicorn/prefer-spread
+  const [portals, setPortals] = useState(() => Array.from(portalContainer.portals.entries()));
 
   // Dispose of all portals.
   useEffect(() => {
     // Auto disposed when the component un-mounts.
     return portalContainer.on((portalMap) => {
-      setPortals([...portalMap.entries()]);
+      // eslint-disable-next-line unicorn/prefer-spread
+      setPortals(Array.from(portalMap.entries()));
     });
   }, [portalContainer]);
 
