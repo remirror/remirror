@@ -4,8 +4,8 @@ import './styles.css';
 import { cx, htmlToProsemirrorNode, uniqueId } from 'remirror';
 import {
   EntityReferenceExtension,
+  EntityReferenceMetaData,
   findMinMaxRange,
-  HighlightMarkMetaData,
 } from 'remirror/extensions';
 import { Decoration } from '@remirror/pm/view';
 import { Remirror, ThemeProvider, useCommands, useHelpers, useRemirror } from '@remirror/react';
@@ -15,7 +15,7 @@ const ALL_HIGHLIGHT_TYPES: HighlightTypes[] = ['important', 'interesting'];
 
 const allHighlights = new Map<string, HighlightTypes>();
 
-export const decorateHighlights = (highlights: HighlightMarkMetaData[][]): Decoration[] => {
+export const decorateHighlights = (highlights: EntityReferenceMetaData[][]): Decoration[] => {
   const decorations = highlights.map((overlappingHighlights) => {
     const types = new Set(overlappingHighlights.map((h) => allHighlights.get(h.id)));
     // Mix colors to allow for overlapping highlights
@@ -41,9 +41,9 @@ const extensions = () => [
 ];
 
 const Buttons = () => {
-  const { getHighlightsAt } = useHelpers<EntityReferenceExtension>(true);
+  const { getEntityReferencesAt } = useHelpers<EntityReferenceExtension>(true);
   const commands = useCommands<EntityReferenceExtension>();
-  const highlightsAt = getHighlightsAt();
+  const highlightsAt = getEntityReferencesAt();
   return (
     <>
       {ALL_HIGHLIGHT_TYPES.map((type) => {
@@ -57,12 +57,12 @@ const Buttons = () => {
           if (!active) {
             // Add highlight
             const id = uniqueId();
-            commands.addHighlight(id);
+            commands.addEntityReference(id);
             allHighlights.set(id, type);
           } else {
             // Remove highlight
             highlightsOfType.forEach((highlight) => {
-              commands.removeHighlight(highlight.id, highlight);
+              commands.removeEntityReference(highlight.id);
             });
           }
         };
