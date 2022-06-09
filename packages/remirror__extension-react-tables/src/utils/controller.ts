@@ -5,7 +5,7 @@ import { cellAround, CellSelection, TableMap } from '@remirror/pm/tables';
 
 import { domCellAround } from '../table-column-resizing';
 import { ReactTableNodeAttrs } from '../table-extensions';
-import { setControllerPluginMeta } from '../table-plugins';
+import { resetControllerPluginMeta, setControllerPluginMeta } from '../table-plugins';
 import { Events } from '../utils/jsx';
 import { cellSelectionToSelection } from '../utils/prosemirror';
 import { repeat } from './array';
@@ -91,7 +91,7 @@ export function createControllerEvents({
       }
     },
     onMouseLeave: () => {
-      resetControllerPluginMeta(view);
+      resetPreselection(view);
     },
   };
 }
@@ -171,15 +171,8 @@ export function setPredelete(view: EditorView, value: boolean): void {
   view.dispatch(setControllerPluginMeta(view.state.tr, { predelete: value }));
 }
 
-function resetControllerPluginMeta(view: EditorView): void {
-  view.dispatch(
-    setControllerPluginMeta(view.state.tr, {
-      preselectRow: -1,
-      preselectColumn: -1,
-      preselectTable: false,
-      predelete: false,
-    }),
-  );
+function resetPreselection(view: EditorView): void {
+  view.dispatch(resetControllerPluginMeta(view.state.tr));
 }
 
 function getCellIndex(map: TableMap, rowIndex: number, colIndex: number): number {

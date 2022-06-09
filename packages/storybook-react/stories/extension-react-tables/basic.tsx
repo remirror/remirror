@@ -123,7 +123,7 @@ const Table = ({
   children?: React.ReactElement;
   extensions: () => AnyExtension[];
 }): JSX.Element => {
-  const { manager, state } = useRemirror({ extensions, core: { excludeExtensions: ['history'] } });
+  const { manager, state } = useRemirror({ extensions });
 
   return (
     <ThemeProvider>
