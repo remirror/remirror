@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 0.1.86
+
+> 2022-06-10
+
+### Patch Changes
+
+- Fix "entries is not iterable error" for React portals
+- Updated dependencies
+  - @remirror/extension-react-tables@1.0.41
+  - @remirror/react@1.0.41
+
 ## 0.1.85
 
 > 2022-06-09

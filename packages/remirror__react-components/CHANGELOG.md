@@ -1,5 +1,16 @@
 # @remirror/react-components
 
+## 1.0.37
+
+> 2022-06-10
+
+### Patch Changes
+
+- Fix "entries is not iterable error" for React portals
+- Updated dependencies
+  - @remirror/react-core@1.2.4
+  - @remirror/react-hooks@1.0.37
+
 ## 1.0.36
 
 > 2022-05-31

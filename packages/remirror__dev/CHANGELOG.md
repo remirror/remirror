@@ -1,5 +1,15 @@
 # @remirror/dev
 
+## 1.1.7
+
+> 2022-06-10
+
+### Patch Changes
+
+- Fix "entries is not iterable error" for React portals
+- Updated dependencies
+  - @remirror/react-core@1.2.4
+
 ## 1.1.6
 
 > 2022-05-31
