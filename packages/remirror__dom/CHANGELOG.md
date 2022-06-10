@@ -1,5 +1,15 @@
 # @remirror/dom
 
+## 1.0.31
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/preset-core@1.0.30
+
 ## 1.0.30
 
 > 2022-05-31

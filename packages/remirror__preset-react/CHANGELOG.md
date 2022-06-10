@@ -1,5 +1,15 @@
 # @remirror/preset-react
 
+## 1.0.30
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/extension-placeholder@1.0.27
+
 ## 1.0.29
 
 > 2022-06-10

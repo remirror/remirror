@@ -1,5 +1,15 @@
 # @remirror/extension-image
 
+## 1.0.39
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/theme@1.2.2
+
 ## 1.0.38
 
 > 2022-05-31

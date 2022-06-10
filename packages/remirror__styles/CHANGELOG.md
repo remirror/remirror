@@ -1,5 +1,13 @@
 # @remirror/styles
 
+## 1.1.4
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+
 ## 1.1.3
 
 > 2022-02-09

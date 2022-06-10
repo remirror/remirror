@@ -1,5 +1,15 @@
 # @remirror/extension-text-highlight
 
+## 1.0.27
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/extension-text-color@1.0.27
+
 ## 1.0.26
 
 > 2022-05-31

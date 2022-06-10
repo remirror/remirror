@@ -1,5 +1,19 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.57
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/extension-blockquote@1.0.27
+  - @remirror/extension-code-block@1.0.30
+  - @remirror/extension-image@1.0.39
+  - @remirror/extension-list@1.2.27
+  - @remirror/preset-core@1.0.30
+
 ## 1.1.56
 
 > 2022-05-31

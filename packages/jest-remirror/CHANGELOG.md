@@ -1,5 +1,16 @@
 # jest-remirror
 
+## 1.0.48
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/dom@1.0.31
+  - @remirror/preset-core@1.0.30
+
 ## 1.0.47
 
 > 2022-06-09
