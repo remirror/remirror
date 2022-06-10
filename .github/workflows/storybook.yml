@@ -3,11 +3,11 @@ name: storybook
 on:
   push:
     branches:
-      - v1-hotfix
+      - v1
   pull_request:
     types: [opened, synchronize]
     branches:
-      - v1-hotfix
+      - v1
       - main
 
 env:
@@ -66,7 +66,7 @@ jobs:
 
       - name: deploy storybook for production
         uses: amondnet/vercel-action@v20
-        if: github.ref == 'refs/heads/v1-hotfix'
+        if: github.ref == 'refs/heads/v1'
         with:
           working-directory: ./packages/storybook-react/storybook-static
           vercel-token: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
