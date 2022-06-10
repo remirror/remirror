@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  assert,
   command,
   CommandFunction,
   CreateExtensionPlugin,
@@ -8,6 +9,7 @@ import {
   getTextSelection,
   Helper,
   helper,
+  isElementDomNode,
   Mark,
   MarkExtension,
   MarkExtensionSpec,
@@ -21,12 +23,7 @@ import {
 import { Node } from '@remirror/pm/model';
 import { DecorationSet } from '@remirror/pm/view';
 
-import {
-  ActionType,
-  EntityReferenceMetaData,
-  EntityReferenceOptions,
-  EntityReferencePluginState,
-} from './types';
+import { EntityReferenceMetaData, EntityReferenceOptions } from './types';
 import { decorateEntityReferences } from './utils/decorate-entity-references';
 import { getDisjoinedEntityReferencesFromNode } from './utils/disjoined-entity-references';
 import { joinDisjoinedEntityReferences } from './utils/joined-entity-references';
@@ -39,9 +36,13 @@ interface StateProps {
   state: EditorState;
 }
 
-const getEntityReferencesFromPluginState = (props: StateProps) => {
+interface EntityReferenceState {
+  entityReferences: { [key: string]: any };
+}
+
+const getEntityReferencesFromPluginState = (props: StateProps): EntityReferenceMetaData[][] => {
   const { extension, state } = props;
-  const { entityReferences } = extension.pluginKey.getState(state) as EntityReferencePluginState;
+  const { entityReferences } = extension.getPluginState(state);
   return entityReferences;
 };
 
@@ -60,7 +61,6 @@ const createDecorationSet = (props: StateProps) => {
   defaultOptions: {
     getStyle: decorateEntityReferences,
     blockSeparator: undefined,
-    createId: uniqueId,
   },
 })
 export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptions> {
@@ -69,8 +69,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
-    const idAttr = `data-entityReference`;
-
+    const idAttr = `data-entity-reference`;
     return {
       ...override,
       excludes: '',
@@ -78,14 +77,27 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
         ...extra.defaults(),
         id: { default: '' },
       },
-      // Note that we don't implement `ParseDom`.
-      // The reasoning behind this is to disable pasting (parsing) the entityReference marks in the editor.
       toDOM: (mark: Mark) => [
         'span',
         {
+          ...extra.dom(mark),
           [idAttr]: mark.attrs.id,
         },
         0,
+      ],
+      parseDOM: [
+        {
+          tag: `span[${idAttr}]`,
+          getAttrs: (node) => {
+            if (!isElementDomNode(node)) {
+              return false;
+            }
+
+            const id = node.getAttribute(idAttr);
+            return { ...extra.parse(node), id };
+          },
+        },
+        ...(override.parseDOM ?? []),
       ],
     };
   }
@@ -93,7 +105,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   /**
    * Create the extension plugin for inserting decorations into the editor.
    */
-  createPlugin(): CreateExtensionPlugin {
+  createPlugin(): CreateExtensionPlugin<EntityReferenceState> {
     return {
       state: {
         init: (_: { [key: string]: any }, state: EditorState) => {
@@ -117,10 +129,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   addEntityReference(id?: string): CommandFunction {
     return ({ state, tr, dispatch }) => {
       const { from, to } = state.selection;
-      const newId = id ?? (this.options.createId ? this.options.createId() : uniqueId());
-      const newMark = this.type.create({
-        id: newId,
-      });
+      const newMark = this.type.create({ id: id ?? uniqueId() });
       try {
         tr = tr.addMark(from, to, newMark);
       } catch (error: any) {
@@ -139,9 +148,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   @command()
   removeEntityReference(entityReferenceId: string): CommandFunction {
     return ({ tr, dispatch }) => {
-      if (!entityReferenceId) {
-        throw new Error(`EntityReference can't be removed without specifying tags its ID!`);
-      }
+      assert(entityReferenceId, `EntityReference can't be removed without specifying tags its ID!`);
 
       const singleMark = this.type.create({ id: entityReferenceId });
       try {
@@ -152,19 +159,6 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
         throw new Error(`Can't remove entityReference ${entityReferenceId}: ${error.message}`);
       }
       dispatch?.(tr);
-      return true;
-    };
-  }
-
-  @command()
-  redrawEntityReferences(): CommandFunction {
-    return ({ tr, dispatch }) => {
-      dispatch?.(
-        tr.setMeta(EntityReferenceExtension.name, {
-          type: ActionType.REDRAW_ENTITY_REFERENCES,
-        }),
-      );
-
       return true;
     };
   }
@@ -214,18 +208,12 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
 
   /**
    * @param pos - the position in the root document to find entityReference marks.
-   * @param includeEdges - whether to match entityReferences that start or end exactly on the given pos
    *
    * @returns all entityReferences at a specific position in the editor.
    *
-   * In order to use this helper make sure you have the
-   * [[`EntityReferenceExtension`]] added to your editor.
    */
   @helper()
-  getEntityReferencesAt(
-    pos?: PrimitiveSelection,
-    includeEdges = true,
-  ): Helper<EntityReferenceMetaData[]> {
+  getEntityReferencesAt(pos?: PrimitiveSelection): Helper<EntityReferenceMetaData[]> {
     const state = this.store.getState();
     const { doc, selection } = state;
     const { from, to } = getTextSelection(pos ?? selection, doc);
@@ -244,18 +232,13 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
             within(entityReference.from, from, to) ||
             within(entityReference.to, from, to)
           ) {
-            if (includeEdges) {
-              return true;
-            } else if (entityReference.from !== from && entityReference.to !== to) {
-              return true;
-            }
+            return true;
           }
 
           return false;
         })
         .map((h) => h.id),
     );
-
     // Find the entityReferences belonging to the matching disjoint entityReferences
     return joinDisjoinedEntityReferences(disjointedEntityReferences).filter((h) =>
       entityReferenceIdsInPos.has(h.id),

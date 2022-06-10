@@ -19,9 +19,6 @@ export const decorateEntityReferences = (
     const notBlue = 200 * (1 - backgroundShade) + 55;
     // We must set padding to have the decoration claim the same height as the mark
     const style = `background: rgb(${notBlue}, ${notBlue}, 255);padding: 6px 0;`;
-    // ProseMirror would remove all entity references with matching specs
-    // (not considering the current selection). So, we need a key to uniquely
-    // identify decorations.
     const [from, to] = findMinMaxRange(overlappingEntityReferences);
 
     const specs = {

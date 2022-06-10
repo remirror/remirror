@@ -1,9 +1,6 @@
 import { Decoration } from 'remirror';
 import type { AcceptUndefined } from '@remirror/core';
 
-export enum ActionType {
-  REDRAW_ENTITY_REFERENCES,
-}
 export interface Range {
   /**
    * Document position where the range starts
@@ -38,7 +35,6 @@ export interface EntityReferenceOptions {
    */
   getStyle?: (entityReferences: EntityReferenceMetaData[][]) => Decoration[];
   blockSeparator?: AcceptUndefined<string>;
-  createId?: () => string;
 }
 
 export interface EntityReferencePluginState extends Required<EntityReferenceOptions> {
