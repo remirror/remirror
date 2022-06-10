@@ -1,5 +1,13 @@
 # @remirror/extension-react-component
 
+## 1.1.15
+
+> 2022-06-10
+
+### Patch Changes
+
+- Fix "entries is not iterable error" for React portals
+
 ## 1.1.14
 
 > 2022-05-31

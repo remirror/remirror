@@ -1,5 +1,22 @@
 # @remirror/react
 
+## 1.0.41
+
+> 2022-06-10
+
+### Patch Changes
+
+- Fix "entries is not iterable error" for React portals
+- Updated dependencies
+  - @remirror/extension-react-component@1.1.15
+  - @remirror/extension-react-ssr@1.0.27
+  - @remirror/extension-react-tables@1.0.41
+  - @remirror/preset-react@1.0.29
+  - @remirror/react-components@1.0.37
+  - @remirror/react-core@1.2.4
+  - @remirror/react-hooks@1.0.37
+  - @remirror/react-ssr@1.0.27
+
 ## 1.0.40
 
 > 2022-06-05

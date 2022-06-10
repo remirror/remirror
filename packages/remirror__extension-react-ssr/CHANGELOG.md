@@ -1,5 +1,15 @@
 # @remirror/extension-react-ssr
 
+## 1.0.27
+
+> 2022-06-10
+
+### Patch Changes
+
+- Fix "entries is not iterable error" for React portals
+- Updated dependencies
+  - @remirror/extension-react-component@1.1.15
+
 ## 1.0.26
 
 > 2022-05-31
