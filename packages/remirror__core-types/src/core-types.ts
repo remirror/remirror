@@ -211,6 +211,7 @@ export interface NodeExtensionSpec
       | 'parseDOM'
       | 'toDebugString'
       | 'allowGapCursor'
+      | 'leafText'
     >
   > {
   /**
