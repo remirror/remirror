@@ -22,5 +22,5 @@ runs:
       shell: bash
 
     - name: install dependencies
-      run: pnpm install
+      run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 pnpm install
       shell: bash
