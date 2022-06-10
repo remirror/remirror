@@ -13,29 +13,16 @@
   "contributors": [
     "Ocavue <ocavue@gmail.com>"
   ],
-  "exports": {
-    ".": {
-      "require": "./dist/remirror-cli.cjs.js",
-      "default": "./dist/remirror-cli.cjs.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
-  "main": "dist/remirror-cli.cjs.js",
   "bin": {
     "remirror-cli": "bin.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "commander": "^9.3.0"
+  },
   "devDependencies": {
-    "commander": "^9.3.0",
     "tsx": "^3.4.2"
   },
   "peerDependencies": {
     "tsx": "^3.4.2"
-  },
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts"
-    ]
   }
 }

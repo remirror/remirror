@@ -251,7 +251,6 @@
       "packages/prosemirror-suggest",
       "packages/prosemirror-trailing-node",
       "packages/remirror",
-      "packages/remirror__cli",
       "packages/remirror__core-constants",
       "packages/remirror__core-helpers",
       "packages/remirror__core-types",
