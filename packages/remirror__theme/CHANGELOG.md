@@ -1,5 +1,13 @@
 # @remirror/theme
 
+## 1.2.2
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+
 ## 1.2.1
 
 > 2022-02-09

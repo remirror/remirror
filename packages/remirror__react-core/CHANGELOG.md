@@ -1,5 +1,18 @@
 # @remirror/react-core
 
+## 1.2.5
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/theme@1.2.2
+  - @remirror/extension-positioner@1.2.8
+  - @remirror/preset-core@1.0.30
+  - @remirror/preset-react@1.0.30
+
 ## 1.2.4
 
 > 2022-06-10

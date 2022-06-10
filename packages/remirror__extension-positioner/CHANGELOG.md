@@ -1,5 +1,15 @@
 # @remirror/extension-positioner
 
+## 1.2.8
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/theme@1.2.2
+
 ## 1.2.7
 
 > 2022-05-31

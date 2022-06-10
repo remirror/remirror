@@ -1,5 +1,18 @@
 # @remirror/react-editors
 
+## 0.1.87
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/styles@1.1.4
+  - remirror@1.0.87
+  - @remirror/extension-react-tables@1.0.42
+  - @remirror/react@1.0.42
+
 ## 0.1.86
 
 > 2022-06-10

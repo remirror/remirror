@@ -1,5 +1,18 @@
 # @remirror/react-hooks
 
+## 1.0.38
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/extension-emoji@1.0.28
+  - @remirror/extension-mention-atom@1.0.28
+  - @remirror/extension-positioner@1.2.8
+  - @remirror/react-core@1.2.5
+
 ## 1.0.37
 
 > 2022-06-10

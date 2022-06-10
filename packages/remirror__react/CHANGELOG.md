@@ -1,5 +1,21 @@
 # @remirror/react
 
+## 1.0.42
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/extension-placeholder@1.0.27
+  - @remirror/extension-positioner@1.2.8
+  - @remirror/extension-react-tables@1.0.42
+  - @remirror/preset-react@1.0.30
+  - @remirror/react-components@1.0.38
+  - @remirror/react-core@1.2.5
+  - @remirror/react-hooks@1.0.38
+
 ## 1.0.41
 
 > 2022-06-10

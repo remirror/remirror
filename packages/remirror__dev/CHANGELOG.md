@@ -1,5 +1,15 @@
 # @remirror/dev
 
+## 1.1.8
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/react-core@1.2.5
+
 ## 1.1.7
 
 > 2022-06-10

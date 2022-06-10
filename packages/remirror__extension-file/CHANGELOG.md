@@ -1,5 +1,17 @@
 # @remirror/extension-file
 
+## 0.3.30
+
+> 2022-06-10
+
+### Patch Changes
+
+- Update styles and themes, which are missing count extension
+- Updated dependencies
+  - @remirror/theme@1.2.2
+  - @remirror/react@1.0.42
+  - @remirror/react-components@1.0.38
+
 ## 0.3.29
 
 > 2022-06-10
