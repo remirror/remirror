@@ -3,16 +3,24 @@
 const prefix = '[remirror-cli]';
 
 export const logger = {
+  debug: (...args: any[]) => {
+    console.debug(prefix, 'DEBUG', ...args);
+  },
   log: (...args: any[]) => {
     return logger.info(...args);
   },
   info: (...args: any[]) => {
-    console.log(prefix, 'info', ...args);
+    console.log(prefix, 'INFO', ...args);
   },
   warn: (...args: any[]) => {
-    console.warn(prefix, 'warn', ...args);
+    console.warn(prefix, 'WARN', ...args);
   },
   error: (...args: any[]) => {
-    console.warn(prefix, 'error', ...args);
+    console.warn(prefix, 'ERROR', ...args);
+  },
+  assert: (condition: unknown, message = '') => {
+    if (!condition) {
+      throw new Error(`${prefix} Assertion failed${message ? `: ${message}` : ''}`);
+    }
   },
 };

@@ -18,16 +18,13 @@
     "Ocavue <ocavue@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
-    ".": {
-      "import": "./dist/remirror-extension-file.esm.js",
-      "require": "./dist/remirror-extension-file.cjs.js",
-      "browser": "./dist/remirror-extension-file.browser.esm.js",
-      "types": "./dist/remirror-extension-file.cjs.d.ts",
-      "default": "./dist/remirror-extension-file.esm.js"
-    },
     "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    ".": {
+      "import": "./dist/remirror-extension-file.js",
+      "default": "./dist/remirror-extension-file.js"
+    }
   },
   "main": "dist/remirror-extension-file.cjs.js",
   "module": "dist/remirror-extension-file.esm.js",

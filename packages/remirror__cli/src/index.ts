@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 
+import { build } from './commands/build';
 import { foo } from './commands/foo';
 
 export async function main() {
@@ -14,6 +15,8 @@ export async function main() {
     .option('--first', 'display just the first substring')
     .option('-s, --separator <char>', 'separator character', ',')
     .action(foo);
+
+  program.command('build').description('Build a NPM package').action(build);
 
   program.parse();
 }
