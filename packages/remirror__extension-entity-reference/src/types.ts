@@ -1,17 +1,7 @@
-import { Decoration } from 'remirror';
+import { Decoration, FromToProps } from 'remirror';
 import type { AcceptUndefined } from '@remirror/core';
 
-export interface Range {
-  /**
-   * Document position where the range starts
-   */
-  from: number;
-  /**
-   * Document position where the range ends
-   */
-  to: number;
-}
-export interface EntityReferenceMetaData extends Range {
+export interface EntityReferenceMetaData extends FromToProps {
   /**
    * Unique identifier of the entity references
    */

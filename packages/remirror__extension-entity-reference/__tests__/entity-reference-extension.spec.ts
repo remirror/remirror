@@ -81,7 +81,6 @@ describe('EntityReference marks', () => {
   });
 
   it('Can overlap completely with other entityReferences', () => {
-    const DUMMY_TEXT = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
     add(doc(p(DUMMY_TEXT)));
 
     selectText({ from: 1, to: 74 });

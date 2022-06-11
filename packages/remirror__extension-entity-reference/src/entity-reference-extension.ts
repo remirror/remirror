@@ -112,7 +112,12 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
           const entityReferences = this.getDisjoinedEntityReferences(state.doc);
           return { entityReferences };
         },
-        apply: (_tr: Transaction, _value: any, _oldState: EditorState, newState: EditorState) => {
+        apply: (
+          _tr: Transaction,
+          _value: EntityReferenceState,
+          _oldState: EditorState,
+          newState: EditorState,
+        ) => {
           const entityReferences = this.getDisjoinedEntityReferences(newState.doc);
           return { entityReferences };
         },
