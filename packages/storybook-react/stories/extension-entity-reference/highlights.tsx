@@ -1,7 +1,7 @@
 import 'remirror/styles/all.css';
 import './styles.css';
 
-import { cx, htmlToProsemirrorNode, uniqueId } from 'remirror';
+import { cx, uniqueId } from 'remirror';
 import {
   EntityReferenceExtension,
   EntityReferenceMetaData,
@@ -85,7 +85,7 @@ const Highlights = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
     extensions: extensions,
     content: '<p>Highlight important and interesting text</p>',
-    stringHandler: htmlToProsemirrorNode,
+    stringHandler: 'html',
   });
 
   return (
