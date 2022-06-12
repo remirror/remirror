@@ -18,6 +18,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/remirror-preset-wysiwyg.js",
@@ -69,6 +70,5 @@
   "@remirror": {
     "sizeLimit": "130 KB"
   },
-  "rn:dev": "src/index.ts",
-  "type": "module"
+  "rn:dev": "src/index.ts"
 }

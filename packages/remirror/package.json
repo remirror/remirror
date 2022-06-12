@@ -23,6 +23,7 @@
     "ocavue "
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/remirror.js",
@@ -154,6 +155,5 @@
       "icons.ts"
     ]
   },
-  "rn:dev": "src/index.ts",
-  "type": "module"
+  "rn:dev": "src/index.ts"
 }

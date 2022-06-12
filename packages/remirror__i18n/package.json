@@ -17,6 +17,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": true,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/remirror-i18n.js",
@@ -63,6 +64,5 @@
       "en/index.ts"
     ]
   },
-  "rn:dev": "src/index.ts",
-  "type": "module"
+  "rn:dev": "src/index.ts"
 }

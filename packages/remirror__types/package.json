@@ -16,6 +16,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/remirror-types.js",
@@ -38,6 +39,5 @@
   },
   "@remirror": {
     "sizeLimit": "0 KB"
-  },
-  "type": "module"
+  }
 }

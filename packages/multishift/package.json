@@ -12,6 +12,7 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/multishift.js",
@@ -58,6 +59,5 @@
   "@remirror": {
     "sizeLimit": "20 KB"
   },
-  "rn:dev": "src/index.ts",
-  "type": "module"
+  "rn:dev": "src/index.ts"
 }

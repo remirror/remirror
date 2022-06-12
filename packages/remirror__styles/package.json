@@ -13,6 +13,25 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "./emotion": {
+      "import": "./emotion/dist/remirror-styles-emotion.js",
+      "types": "./dist-types/emotion.d.ts",
+      "default": "./emotion/dist/remirror-styles-emotion.js"
+    },
+    "./styled-components": {
+      "import": "./styled-components/dist/remirror-styles-styled-components.js",
+      "types": "./dist-types/styled-components.d.ts",
+      "default": "./styled-components/dist/remirror-styles-styled-components.js"
+    },
+    "./dom": {
+      "import": "./dom/dist/remirror-styles-dom.js",
+      "types": "./dist-types/dom.d.ts",
+      "default": "./dom/dist/remirror-styles-dom.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "*.css",
     "dist",
@@ -71,24 +90,5 @@
       "dom.tsx"
     ]
   },
-  "rn:dev": "src/index.ts",
-  "type": "module",
-  "exports": {
-    "./emotion": {
-      "import": "./emotion/dist/remirror-styles-emotion.js",
-      "types": "./dist-types/emotion.d.ts",
-      "default": "./emotion/dist/remirror-styles-emotion.js"
-    },
-    "./styled-components": {
-      "import": "./styled-components/dist/remirror-styles-styled-components.js",
-      "types": "./dist-types/styled-components.d.ts",
-      "default": "./styled-components/dist/remirror-styles-styled-components.js"
-    },
-    "./dom": {
-      "import": "./dom/dist/remirror-styles-dom.js",
-      "types": "./dist-types/dom.d.ts",
-      "default": "./dom/dist/remirror-styles-dom.js"
-    },
-    "./package.json": "./package.json"
-  }
+  "rn:dev": "src/index.ts"
 }

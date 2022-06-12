@@ -23,6 +23,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/remirror-react-editors.js",
@@ -100,6 +101,5 @@
       "social/index.ts",
       "wysiwyg/index.ts"
     ]
-  },
-  "type": "module"
+  }
 }

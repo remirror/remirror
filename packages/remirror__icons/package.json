@@ -16,6 +16,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     "./all": {
       "import": "./all/dist/remirror-icons-all.js",
@@ -52,6 +53,5 @@
       "index.ts"
     ]
   },
-  "rn:dev": "src/index.ts",
-  "type": "module"
+  "rn:dev": "src/index.ts"
 }

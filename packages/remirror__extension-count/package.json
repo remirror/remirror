@@ -17,6 +17,7 @@
     "Will Hawker <w.hawker@hotmail.co.uk>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-count.js",
@@ -46,6 +47,5 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "type": "module"
+  }
 }

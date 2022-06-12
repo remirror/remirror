@@ -18,6 +18,7 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/jest-prosemirror.js",
@@ -89,6 +90,5 @@
       "serializer.ts"
     ]
   },
-  "rn:dev": "src/index.ts",
-  "type": "module"
+  "rn:dev": "src/index.ts"
 }

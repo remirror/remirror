@@ -18,6 +18,7 @@
     "Ocavue <ocavue@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/prosemirror-resizable-view.js",
@@ -44,6 +45,5 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "type": "module"
+  }
 }

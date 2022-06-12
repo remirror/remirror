@@ -17,6 +17,7 @@
     "Will Hawker <w.hawker@hotmail.co.uk>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-callout.js",
@@ -49,6 +50,5 @@
   "@remirror": {
     "sizeLimit": "15 KB"
   },
-  "rn:dev": "src/index.ts",
-  "type": "module"
+  "rn:dev": "src/index.ts"
 }

@@ -16,6 +16,7 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/create-context-state.js",
@@ -53,6 +54,5 @@
   "@remirror": {
     "sizeLimit": "1.5 KB"
   },
-  "rn:dev": "src/index.ts",
-  "type": "module"
+  "rn:dev": "src/index.ts"
 }

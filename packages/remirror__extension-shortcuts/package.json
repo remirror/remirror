@@ -17,6 +17,7 @@
     "Ronny Roeller <ronny@nextapp.co>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-shortcuts.js",
@@ -46,6 +47,5 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "type": "module"
+  }
 }
