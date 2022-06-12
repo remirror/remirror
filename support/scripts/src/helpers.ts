@@ -258,7 +258,19 @@ export async function getTypedPackagesWithPath(relative = false): Promise<Record
   const packages = await getAllDependencies();
 
   // Get the packages which have a `types` field.
-  const tsPackages = packages.filter((pkg) => pkg.types);
+  const tsPackages = packages.filter((pkg) => {
+    if (pkg.types) {
+      return true;
+    }
+
+    for (const exportSubpath of Object.values(pkg.exports ?? {})) {
+      if ((exportSubpath as any).types) {
+        return true;
+      }
+    }
+
+    return false;
+  });
 
   /**
    * The typed packages to be returned.

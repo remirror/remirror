@@ -51,6 +51,9 @@
       "path": "../../remirror__react-editors/src"
     },
     {
+      "path": "../../remirror__styles/src"
+    },
+    {
       "path": "../../create-context-state/src"
     },
     {

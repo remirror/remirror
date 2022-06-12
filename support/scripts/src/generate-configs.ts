@@ -369,6 +369,10 @@ async function resolveTsConfigMeta(
   const { './': main, src, ...rest } = mergedMeta;
   const references: TsConfigJson.References[] = [];
 
+  if (pkg.name === '@remirror/react-editors') {
+    console.log('[resolveTsConfigMeta]', { dependencies });
+  }
+
   if (src !== false) {
     const filepath = path.join(pkg.location, 'src', tsconfigFileName);
 
@@ -549,6 +553,11 @@ async function generatePackageTsConfigs() {
     promises.push(
       limit(async () => {
         const tsconfigFiles = await resolveTsConfigMeta(pkg, dependencies, types);
+
+        if (pkg.name === '@remirror/react-editors') {
+          console.info('tsconfigFiles:');
+          console.dir(tsconfigFiles, { depth: 10 });
+        }
 
         for (const tsconfig of tsconfigFiles) {
           if (!tsconfig.shouldReference) {
