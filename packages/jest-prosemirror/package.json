@@ -31,7 +31,7 @@
       "default": "./environment/dist/jest-prosemirror-environment.js"
     },
     "./serializer": {
-      "import": "./serializer/dist/jest-prosemirror-serializer.js",
+      "require": "./serializer/dist/jest-prosemirror-serializer.js",
       "types": "./dist-types/serializer.d.ts",
       "default": "./serializer/dist/jest-prosemirror-serializer.js"
     },
@@ -87,7 +87,7 @@
     "entrypoints": [
       "index.ts",
       "environment.ts",
-      "serializer.ts"
+      "serializer.cts"
     ]
   },
   "rn:dev": "src/index.ts"

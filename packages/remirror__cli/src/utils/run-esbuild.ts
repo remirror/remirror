@@ -6,12 +6,13 @@ import path from 'node:path';
 import { logger } from '../logger';
 import { removeFileExt } from './remove-file-ext';
 
-export async function runEsbuild(pkg: Package, options: { inFile: string; outFile: string }) {
-  logger.debug(
-    `running esbuild for package ${pkg.packageJson.name}: ${options.inFile} => ${options.outFile}`,
-  );
+export async function runEsbuild(
+  pkg: Package,
+  { inFile, outFile, format }: { inFile: string; outFile: string; format: 'esm' | 'cjs' },
+) {
+  logger.debug(`running esbuild for package ${pkg.packageJson.name}: ${inFile} => ${outFile}`);
 
-  const { base: outFileName, dir: outDir } = path.parse(options.outFile);
+  const { base: outFileName, dir: outDir } = path.parse(outFile);
   const outFileNameWithoutExt = removeFileExt(outFileName);
 
   const externals = Object.keys({
@@ -23,11 +24,11 @@ export async function runEsbuild(pkg: Package, options: { inFile: string; outFil
 
   const result = await build({
     plugins: [nodeExternalsPlugin()],
-    splitting: true,
-    entryPoints: { [outFileNameWithoutExt]: options.inFile },
+    splitting: format === 'cjs' ? false : true,
+    entryPoints: { [outFileNameWithoutExt]: inFile },
     outdir: outDir,
     bundle: true,
-    format: 'esm',
+    format: format,
     sourcemap: true,
     platform: nodePackages.has(pkg.packageJson.name) ? 'node' : 'browser',
     keepNames: true,

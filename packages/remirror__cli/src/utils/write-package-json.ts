@@ -21,5 +21,5 @@ export async function writePackageJson(dirPath: string, packageJson: any) {
   }
 
   logger.debug(`writing package.json to ${packageJsonPath}`);
-  await writePackage(packageJsonPath, packageJson);
+  await writePackage(packageJsonPath, packageJson, { indent: '  ' });
 }

@@ -37,17 +37,20 @@ interface EntryPoint {
   // This entry is a "main" entry point or a "subpath" entry point.
   isMain: boolean;
 
-  // The absolute path to the entry file.
+  // The absolute path to the entry file. Usually ends with `.ts` or `.tsx`.
   // e.g. /projects/remirror/packages/remirror__extension-foo/src/submodule/index.tsx
   inFile: string;
 
-  // The absolute path to the output file.
+  // The absolute path to the output file. Usually ends with `.js`.
   // e.g. /projects/remirror/packages/remirror__extension-foo/submodule/dist/remirror-extension-foo.js
   outFile: string;
 
   // The relative path to the output file.
   // e.g. ".", "./subpath", "./subpath/subpath"
   subpath: string;
+
+  // The format of the input file. Mostly `esm`.
+  format: 'cjs' | 'esm';
 }
 
 /**
@@ -82,7 +85,9 @@ async function parseEntryPoints(pkg: Package): Promise<EntryPoint[]> {
 
     const outFile = path.resolve(pkg.dir, subpath, 'dist', `${entryPointName}.js`);
 
-    entryPoints.push({ isMain, inFile, outFile, subpath });
+    const cjs = /\.c[jt]sx?$/.test(inFile);
+
+    entryPoints.push({ isMain, inFile, outFile, subpath, format: cjs ? 'cjs' : 'esm' });
   }
 
   return entryPoints;
@@ -127,7 +132,7 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
     const outFileRelativeToPkgDir = `./${path.relative(pkg.dir, entryPoint.outFile)}`;
 
     exports[entryPoint.subpath] = {
-      import: outFileRelativeToPkgDir,
+      [entryPoint.format === 'cjs' ? 'require' : 'import']: outFileRelativeToPkgDir,
       types: dtsFileRelativeToPkgDir,
       default: outFileRelativeToPkgDir,
     };
@@ -139,8 +144,8 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
   const mainExport = exports['.'];
 
   if (mainExport) {
-    packageJson.main = mainExport.import;
-    packageJson.module = mainExport.import;
+    packageJson.main = mainExport.default;
+    packageJson.module = mainExport.default;
     packageJson.types = mainExport.types;
   }
 
@@ -167,7 +172,7 @@ async function writeSubpathPackageJson(pkg: Package, entryPoint: EntryPoint) {
   const outFileRelativeToSubpath = `./${path.relative(subpathDir, entryPoint.outFile)}`;
 
   const packageJson = {
-    type: 'module',
+    type: entryPoint.format === 'cjs' ? 'commonjs' : 'module',
     main: outFileRelativeToSubpath,
     module: outFileRelativeToSubpath,
     types: dtsFileRelativeToSubpath,
