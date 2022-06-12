@@ -373,7 +373,12 @@ async function resolveTsConfigMeta(
     const filepath = path.join(pkg.location, 'src', tsconfigFileName);
 
     // Collect all the references need for the current package.
-    for (const dependency of Object.keys(pkg.dependencies ?? {})) {
+    for (const dependency of Object.keys({
+      ...pkg.dependencies,
+      // ...pkg.devDependencies,
+      ...pkg.peerDependencies,
+      ...pkg.optionalDependencies,
+    })) {
       const dependencyPath = dependencies[dependency];
 
       // Check if the dependency is one of the internal workspace dependencies.

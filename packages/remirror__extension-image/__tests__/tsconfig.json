@@ -42,6 +42,9 @@
     },
     {
       "path": "../../prosemirror-resizable-view/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }

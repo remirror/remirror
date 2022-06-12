@@ -45,6 +45,9 @@
     },
     {
       "path": "../../remirror__react-utils/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }

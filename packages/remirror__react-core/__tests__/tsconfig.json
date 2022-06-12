@@ -66,6 +66,9 @@
     },
     {
       "path": "../../create-context-state/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }
