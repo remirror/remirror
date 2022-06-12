@@ -1,6 +1,6 @@
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
-import path from 'node:path';
+import path from 'node:path/posix';
 
 import { logger } from '../logger';
 import { runEsbuild, runEsbuildV2 } from '../utils/esbuild';
@@ -105,7 +105,7 @@ async function buildPackageV2(pkg: Package) {
   const promises: Array<Promise<unknown>> = [];
 
   // writeSubpathPackageJsons();
-  // writeMainPackageJson();
+  promises.push(writeMainPackageJson(pkg, entryPoints));
 
   for (const entryPoint of entryPoints) {
     promises.push(runEsbuildV2(pkg, entryPoint));
@@ -193,4 +193,36 @@ async function validEntryPoint(pkg: Package, entryPoint: string) {
     await fileExists(absFilePath),
     "entry point file doesn't exist: ${absFilePath}. Please check your package.json",
   );
+}
+
+async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
+  const packageJson = pkg.packageJson as any;
+
+  const exports: any = {};
+
+  for (const entryPoint of entryPoints) {
+    const relativeSrcInFile = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
+    const relativeDtsFile = `./${path.join(
+      'dist-types',
+      `${removeFileExt(relativeSrcInFile)}.d.ts`,
+    )}`;
+
+    const relativeOutFile = `./${path.relative(pkg.dir, entryPoint.outFile)}`;
+
+    exports[entryPoint.subpath] = {
+      import: relativeOutFile,
+      types: relativeDtsFile,
+      default: relativeOutFile,
+    };
+  }
+
+  exports['./package.json'] = './package.json';
+
+  packageJson.type = 'module';
+  packageJson.main = exports['.']?.import;
+  packageJson.module = exports['.']?.import;
+  delete packageJson.browser;
+  packageJson.exports = exports;
+
+  writePackageJson(pkg.dir, packageJson);
 }
