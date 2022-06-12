@@ -1,10 +1,6 @@
 {
-  "main": "dist/remirror-pm-gapcursor.cjs.js",
-  "module": "dist/remirror-pm-gapcursor.esm.js",
-  "browser": {
-    "./dist/remirror-pm-gapcursor.cjs.js": "./dist/remirror-pm-gapcursor.browser.cjs.js",
-    "./dist/remirror-pm-gapcursor.esm.js": "./dist/remirror-pm-gapcursor.browser.esm.js"
-  },
-  "types": "dist/remirror-pm-gapcursor.cjs.d.ts",
-  "rn:dev": "../src/gapcursor.ts"
+  "type": "module",
+  "main": "./dist/remirror-pm-gapcursor.js",
+  "module": "./dist/remirror-pm-gapcursor.js",
+  "types": "./../dist-types/gapcursor.d.ts"
 }

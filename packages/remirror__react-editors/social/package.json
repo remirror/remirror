@@ -1,8 +1,6 @@
 {
-  "main": "dist/remirror-react-editors-social.cjs.js",
-  "module": "dist/remirror-react-editors-social.esm.js",
-  "browser": {
-    "./dist/remirror-react-editors-social.cjs.js": "./dist/remirror-react-editors-social.browser.cjs.js",
-    "./dist/remirror-react-editors-social.esm.js": "./dist/remirror-react-editors-social.browser.esm.js"
-  }
+  "type": "module",
+  "main": "./dist/remirror-react-editors-social.js",
+  "module": "./dist/remirror-react-editors-social.js",
+  "types": "./../dist-types/social/index.d.ts"
 }

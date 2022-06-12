@@ -1,5 +1,6 @@
 {
   "type": "module",
   "main": "./dist/remirror-extension-code-block-formatter.js",
-  "module": "./dist/remirror-extension-code-block-formatter.js"
+  "module": "./dist/remirror-extension-code-block-formatter.js",
+  "types": "./../dist-types/formatter.d.ts"
 }

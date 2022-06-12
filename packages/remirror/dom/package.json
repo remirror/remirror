@@ -1,10 +1,6 @@
 {
-  "main": "dist/remirror-dom.cjs.js",
-  "module": "dist/remirror-dom.esm.js",
-  "browser": {
-    "./dist/remirror-dom.cjs.js": "./dist/remirror-dom.browser.cjs.js",
-    "./dist/remirror-dom.esm.js": "./dist/remirror-dom.browser.esm.js"
-  },
-  "types": "dist/remirror-dom.cjs.d.ts",
-  "rn:dev": "../src/dom.ts"
+  "type": "module",
+  "main": "./dist/remirror-dom.js",
+  "module": "./dist/remirror-dom.js",
+  "types": "./../dist-types/dom.d.ts"
 }

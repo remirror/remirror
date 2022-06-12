@@ -28,13 +28,13 @@ async function buildPackage(pkg: Package) {
 
   const promises: Array<Promise<unknown>> = [];
 
-  // writeSubpathPackageJsons();
-
   for (const entryPoint of entryPoints) {
     promises.push(runEsbuild(pkg, entryPoint));
   }
 
-  // runTsc();
+  for (const entryPoint of entryPoints) {
+    promises.push(writeSubpathPackageJson(pkg, entryPoint));
+  }
 
   await Promise.all(promises);
 }
@@ -124,33 +124,59 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
   const exports: any = {};
 
   for (const entryPoint of entryPoints) {
-    const relativeSrcInFile = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
-    const relativeDtsFile = `./${path.join(
+    const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
+    const dtsFileRelativeToPkgDir = `./${path.join(
       'dist-types',
-      `${removeFileExt(relativeSrcInFile)}.d.ts`,
+      `${removeFileExt(inFileRelativeToSrc)}.d.ts`,
     )}`;
 
-    const relativeOutFile = `./${path.relative(pkg.dir, entryPoint.outFile)}`;
+    const outFileRelativeToPkgDir = `./${path.relative(pkg.dir, entryPoint.outFile)}`;
 
     exports[entryPoint.subpath] = {
-      import: relativeOutFile,
-      types: relativeDtsFile,
-      default: relativeOutFile,
+      import: outFileRelativeToPkgDir,
+      types: dtsFileRelativeToPkgDir,
+      default: outFileRelativeToPkgDir,
     };
   }
 
   exports['./package.json'] = './package.json';
 
   packageJson.type = 'module';
-  const main = exports['.']?.import;
+  const importPath = exports['.']?.import;
 
-  if (main) {
-    packageJson.main = main;
-    packageJson.module = main;
+  if (importPath) {
+    packageJson.main = importPath;
+    packageJson.module = importPath;
   }
 
   delete packageJson.browser;
   packageJson.exports = exports;
 
-  writePackageJson(pkg.dir, packageJson);
+  await writePackageJson(pkg.dir, packageJson);
+}
+
+async function writeSubpathPackageJson(pkg: Package, entryPoint: EntryPoint) {
+  if (entryPoint.isMain) {
+    return;
+  }
+
+  const subpathDir = path.resolve(entryPoint.outFile, '..', '..');
+
+  const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
+  const dtsFile = `${path.join(
+    pkg.dir,
+    'dist-types',
+    `${removeFileExt(inFileRelativeToSrc)}.d.ts`,
+  )}`;
+  const dtsFileRelativeToSubpath = `./${path.relative(subpathDir, dtsFile)}`;
+  const outFileRelativeToSubpath = `./${path.relative(subpathDir, entryPoint.outFile)}`;
+
+  const packageJson = {
+    type: 'module',
+    main: outFileRelativeToSubpath,
+    module: outFileRelativeToSubpath,
+    types: dtsFileRelativeToSubpath,
+  };
+
+  await writePackageJson(subpathDir, packageJson);
 }

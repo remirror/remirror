@@ -1,9 +1,6 @@
 {
-  "main": "dist/remirror-react-hooks-use-positioner.cjs.js",
-  "module": "dist/remirror-react-hooks-use-positioner.esm.js",
-  "browser": {
-    "./dist/remirror-react-hooks-use-positioner.cjs.js": "./dist/remirror-react-hooks-use-positioner.browser.cjs.js",
-    "./dist/remirror-react-hooks-use-positioner.esm.js": "./dist/remirror-react-hooks-use-positioner.browser.esm.js"
-  },
-  "types": "dist/remirror-react-hooks-use-positioner.cjs.d.ts"
+  "type": "module",
+  "main": "./dist/remirror-react-hooks-use-positioner.js",
+  "module": "./dist/remirror-react-hooks-use-positioner.js",
+  "types": "./../dist-types/use-positioner.d.ts"
 }
