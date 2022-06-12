@@ -449,7 +449,9 @@ if (process.env.FULL_ESLINT_CHECK) {
     '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
     '@typescript-eslint/restrict-plus-operands': 'warn',
     '@typescript-eslint/no-misused-promises': 'warn',
-    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+
+    // TODO: re-enable the following rule again. -- ocavue 2022-06-12
+    // '@typescript-eslint/no-unnecessary-type-assertion': 'error',
   };
 
   const rulesOff = {};
