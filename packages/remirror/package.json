@@ -154,6 +154,5 @@
       "extensions.ts",
       "icons.ts"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

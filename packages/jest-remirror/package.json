@@ -86,6 +86,5 @@
       "index.ts",
       "environment.ts"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

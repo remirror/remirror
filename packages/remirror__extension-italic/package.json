@@ -48,6 +48,5 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

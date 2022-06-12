@@ -49,6 +49,5 @@
     "entrypoints": [
       "index.ts"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

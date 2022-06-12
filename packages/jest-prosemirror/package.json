@@ -89,6 +89,5 @@
       "environment.ts",
       "serializer.cts"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

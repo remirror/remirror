@@ -112,6 +112,5 @@
       "playwright/index.ts",
       "react.tsx"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

@@ -96,6 +96,5 @@
       "index.ts",
       "all-icons.ts"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

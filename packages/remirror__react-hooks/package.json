@@ -182,6 +182,5 @@
       "use-positioner.ts",
       "use-suggest.ts"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

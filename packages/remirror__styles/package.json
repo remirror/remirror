@@ -89,6 +89,5 @@
       "styled-components.tsx",
       "dom.tsx"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }
