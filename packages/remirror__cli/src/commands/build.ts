@@ -3,10 +3,10 @@ import glob from 'fast-glob';
 import path from 'node:path/posix';
 
 import { logger } from '../logger';
-import { runEsbuild, runEsbuildV2 } from '../utils/esbuild';
 import { fileExists } from '../utils/file-exists';
 import { listPackages } from '../utils/list-packages';
 import { removeFileExt } from '../utils/remove-file-ext';
+import { runEsbuild } from '../utils/run-esbuild';
 import { slugify } from '../utils/slugify';
 import { writePackageJson } from '../utils/write-package-json';
 
@@ -16,84 +16,10 @@ export async function build() {
 
   const packages = await listPackages({ isPrivate: false });
 
-  return Promise.all(packages.map(buildPackageV2));
+  return Promise.all(packages.map(buildPackage));
 }
 
 async function buildPackage(pkg: Package) {
-  const packageName = pkg.packageJson.name;
-  const slugifyedPackageName = slugify(packageName);
-
-  // An array of all the files to be built. e.g. ['index.ts', 'extra.ts']
-  const entryPoints: string[] = (pkg.packageJson as any)?.preconstruct?.entrypoints ?? ['index.ts'];
-
-  entryPoints.sort();
-
-  const subModules = entryPoints.map((entryPoint) => {
-    const entryPointId = path.parse(entryPoint).name;
-
-    const inFile = path.join(pkg.dir, 'src', entryPoint);
-
-    const isIndex = entryPointId === 'index';
-
-    if (isIndex) {
-      const entryPointName = slugifyedPackageName;
-      const distDir = path.join(pkg.dir, 'dist');
-      return { isIndex, inFile, entryPointName, entryPointId, distDir };
-    } else {
-      logger.assert(slugify(entryPointId) === entryPointId);
-      const entryPointName = `${slugifyedPackageName}-${entryPointId}`;
-      const distDir = path.join(pkg.dir, entryPointId, 'dist');
-      return { isIndex, inFile, entryPointName, entryPointId, distDir };
-    }
-  });
-
-  const promises: Array<Promise<unknown>> = subModules.map(async (config) => {
-    logger.debug(`start building ${config.inFile} => ${config.distDir}`);
-
-    await runEsbuild({
-      entryPoints: { [config.entryPointName]: config.inFile },
-      outdir: config.distDir,
-    });
-
-    if (!config.isIndex) {
-      await writePackageJson(path.resolve(config.distDir, '..'), {
-        type: 'module',
-        main: `./dist/${config.entryPointName}.js`,
-        module: `./dist/${config.entryPointName}.js`,
-      });
-    }
-  });
-
-  const packageJson = pkg.packageJson as any;
-
-  const exports: any = {
-    './package.json': './package.json',
-  };
-
-  for (const { isIndex, entryPointName, entryPointId, distDir } of subModules) {
-    const relativedJsPath = `./${path.join(
-      path.relative(pkg.dir, distDir),
-      `${entryPointName}.js`,
-    )}`;
-    exports[isIndex ? '.' : `./${entryPointId}`] = {
-      import: relativedJsPath,
-      default: relativedJsPath,
-    };
-  }
-
-  // packageJson.exports = exports;
-  packageJson.type = 'module';
-  packageJson.main = exports['.']['import'];
-  packageJson.module = exports['.']['import'];
-  packageJson.exports = exports;
-
-  logger.assert(packageJson.module);
-  promises.push(writePackageJson(pkg.dir, packageJson));
-
-  return Promise.all(promises);
-}
-
-async function buildPackageV2(pkg: Package) {
   logger.info(`building ${pkg.packageJson.name}`);
 
   const entryPoints = await parseEntryPoints(pkg);
@@ -105,7 +31,7 @@ async function buildPackageV2(pkg: Package) {
   // writeSubpathPackageJsons();
 
   for (const entryPoint of entryPoints) {
-    promises.push(runEsbuildV2(pkg, entryPoint));
+    promises.push(runEsbuild(pkg, entryPoint));
   }
 
   // runTsc();
