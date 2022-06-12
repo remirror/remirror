@@ -22,7 +22,7 @@
   },
   "main": "./dist/a11y-status.js",
   "module": "./dist/a11y-status.js",
-  "types": "./dist/a11y-status.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

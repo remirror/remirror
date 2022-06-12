@@ -29,7 +29,7 @@
   },
   "main": "./dist/remirror-react-utils.js",
   "module": "./dist/remirror-react-utils.js",
-  "types": "./dist/remirror-react-utils.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

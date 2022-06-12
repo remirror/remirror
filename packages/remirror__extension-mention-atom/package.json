@@ -23,7 +23,7 @@
   },
   "main": "./dist/remirror-extension-mention-atom.js",
   "module": "./dist/remirror-extension-mention-atom.js",
-  "types": "./dist/remirror-extension-mention-atom.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

@@ -23,7 +23,7 @@
   },
   "main": "./dist/remirror-extension-mention.js",
   "module": "./dist/remirror-extension-mention.js",
-  "types": "./dist/remirror-extension-mention.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

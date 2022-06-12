@@ -22,7 +22,7 @@
   },
   "main": "./dist/multishift.js",
   "module": "./dist/multishift.js",
-  "types": "./dist/multishift.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

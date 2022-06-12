@@ -30,7 +30,7 @@
   },
   "main": "./dist/remirror-extension-drop-cursor.js",
   "module": "./dist/remirror-extension-drop-cursor.js",
-  "types": "./dist/remirror-extension-drop-cursor.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

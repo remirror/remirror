@@ -29,7 +29,7 @@
   },
   "main": "./dist/remirror-extension-paragraph.js",
   "module": "./dist/remirror-extension-paragraph.js",
-  "types": "./dist/remirror-extension-paragraph.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

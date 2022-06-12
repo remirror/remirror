@@ -31,7 +31,7 @@
   },
   "main": "./dist/remirror-extension-image.js",
   "module": "./dist/remirror-extension-image.js",
-  "types": "./dist/remirror-extension-image.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

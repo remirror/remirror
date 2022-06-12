@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-text-highlight.js",
   "module": "./dist/remirror-extension-text-highlight.js",
-  "types": "./dist/remirror-extension-text-highlight.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

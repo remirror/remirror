@@ -29,7 +29,7 @@
   },
   "main": "./dist/remirror-extension-text.js",
   "module": "./dist/remirror-extension-text.js",
-  "types": "./dist/remirror-extension-text.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

@@ -30,7 +30,7 @@
   },
   "main": "./dist/remirror-extension-list.js",
   "module": "./dist/remirror-extension-list.js",
-  "types": "./dist/remirror-extension-list.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

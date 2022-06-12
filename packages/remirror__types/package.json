@@ -26,7 +26,7 @@
   },
   "main": "./dist/remirror-types.js",
   "module": "./dist/remirror-types.js",
-  "types": "./dist/remirror-types.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

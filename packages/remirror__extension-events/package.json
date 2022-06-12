@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-events.js",
   "module": "./dist/remirror-extension-events.js",
-  "types": "./dist/remirror-extension-events.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

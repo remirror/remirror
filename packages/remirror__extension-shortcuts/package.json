@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-shortcuts.js",
   "module": "./dist/remirror-extension-shortcuts.js",
-  "types": "./dist/remirror-extension-shortcuts.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

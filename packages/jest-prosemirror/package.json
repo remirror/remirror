@@ -38,7 +38,7 @@
   },
   "main": "./dist/jest-prosemirror.js",
   "module": "./dist/jest-prosemirror.js",
-  "types": "./dist/jest-prosemirror.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
     "environment",

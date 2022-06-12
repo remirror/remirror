@@ -31,7 +31,7 @@
   },
   "main": "./dist/remirror-icons.js",
   "module": "./dist/remirror-icons.js",
-  "types": "./dist/remirror-icons.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "all",
     "dist"

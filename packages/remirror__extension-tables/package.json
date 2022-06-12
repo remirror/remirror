@@ -32,7 +32,7 @@
   },
   "main": "./dist/remirror-extension-tables.js",
   "module": "./dist/remirror-extension-tables.js",
-  "types": "./dist/remirror-extension-tables.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

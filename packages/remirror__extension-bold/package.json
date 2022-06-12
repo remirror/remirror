@@ -29,7 +29,7 @@
   },
   "main": "./dist/remirror-extension-bold.js",
   "module": "./dist/remirror-extension-bold.js",
-  "types": "./dist/remirror-extension-bold.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-whitespace.js",
   "module": "./dist/remirror-extension-whitespace.js",
-  "types": "./dist/remirror-extension-whitespace.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

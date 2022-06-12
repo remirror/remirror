@@ -28,7 +28,7 @@
   },
   "main": "./dist/remirror-extension-sup.js",
   "module": "./dist/remirror-extension-sup.js",
-  "types": "./dist/remirror-extension-sup.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

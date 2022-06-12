@@ -27,7 +27,7 @@
   },
   "main": "./dist/test-keyboard.js",
   "module": "./dist/test-keyboard.js",
-  "types": "./dist/test-keyboard.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "environment.d.ts",
     "environment.js",

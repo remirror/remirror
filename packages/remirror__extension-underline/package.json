@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-underline.js",
   "module": "./dist/remirror-extension-underline.js",
-  "types": "./dist/remirror-extension-underline.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

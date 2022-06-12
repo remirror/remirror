@@ -32,7 +32,7 @@
   },
   "main": "./dist/remirror-extension-epic-mode.js",
   "module": "./dist/remirror-extension-epic-mode.js",
-  "types": "./dist/remirror-extension-epic-mode.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

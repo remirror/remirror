@@ -23,7 +23,7 @@
   },
   "main": "./dist/remirror-core-constants.js",
   "module": "./dist/remirror-core-constants.js",
-  "types": "./dist/remirror-core-constants.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

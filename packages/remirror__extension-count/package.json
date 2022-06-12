@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-count.js",
   "module": "./dist/remirror-extension-count.js",
-  "types": "./dist/remirror-extension-count.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

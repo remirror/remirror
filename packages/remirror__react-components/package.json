@@ -28,7 +28,7 @@
   },
   "main": "./dist/remirror-react-components.js",
   "module": "./dist/remirror-react-components.js",
-  "types": "./dist/remirror-react-components.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "all-icons",
     "style",

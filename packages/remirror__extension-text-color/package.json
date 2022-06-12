@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-text-color.js",
   "module": "./dist/remirror-extension-text-color.js",
-  "types": "./dist/remirror-extension-text-color.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

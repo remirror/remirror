@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-trailing-node.js",
   "module": "./dist/remirror-extension-trailing-node.js",
-  "types": "./dist/remirror-extension-trailing-node.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

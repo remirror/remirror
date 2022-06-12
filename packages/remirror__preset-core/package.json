@@ -29,7 +29,7 @@
   },
   "main": "./dist/remirror-preset-core.js",
   "module": "./dist/remirror-preset-core.js",
-  "types": "./dist/remirror-preset-core.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

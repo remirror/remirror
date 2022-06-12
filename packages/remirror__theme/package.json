@@ -23,7 +23,7 @@
   },
   "main": "./dist/remirror-theme.js",
   "module": "./dist/remirror-theme.js",
-  "types": "./dist/remirror-theme.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "style",
     "dist"

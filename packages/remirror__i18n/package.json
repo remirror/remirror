@@ -37,7 +37,7 @@
   },
   "main": "./dist/remirror-i18n.js",
   "module": "./dist/remirror-i18n.js",
-  "types": "./dist/remirror-i18n.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
     "plurals",

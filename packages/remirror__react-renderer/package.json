@@ -26,7 +26,7 @@
   },
   "main": "./dist/remirror-react-renderer.js",
   "module": "./dist/remirror-react-renderer.js",
-  "types": "./dist/remirror-react-renderer.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

@@ -28,7 +28,7 @@
   },
   "main": "./dist/remirror-preset-wysiwyg.js",
   "module": "./dist/remirror-preset-wysiwyg.js",
-  "types": "./dist/remirror-preset-wysiwyg.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

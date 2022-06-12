@@ -23,7 +23,7 @@
   },
   "main": "./dist/prosemirror-paste-rules.js",
   "module": "./dist/prosemirror-paste-rules.js",
-  "types": "./dist/prosemirror-paste-rules.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

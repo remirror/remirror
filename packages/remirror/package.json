@@ -48,7 +48,7 @@
   },
   "main": "./dist/remirror.js",
   "module": "./dist/remirror.js",
-  "types": "./dist/remirror.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
     "dom",

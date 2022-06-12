@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-font-family.js",
   "module": "./dist/remirror-extension-font-family.js",
-  "types": "./dist/remirror-extension-font-family.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

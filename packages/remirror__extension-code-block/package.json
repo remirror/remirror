@@ -38,7 +38,7 @@
   },
   "main": "./dist/remirror-extension-code-block.js",
   "module": "./dist/remirror-extension-code-block.js",
-  "types": "./dist/remirror-extension-code-block.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "formatter",
     "dist"

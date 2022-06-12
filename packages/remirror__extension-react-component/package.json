@@ -28,7 +28,7 @@
   },
   "main": "./dist/remirror-extension-react-component.js",
   "module": "./dist/remirror-extension-react-component.js",
-  "types": "./dist/remirror-extension-react-component.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-hard-break.js",
   "module": "./dist/remirror-extension-hard-break.js",
-  "types": "./dist/remirror-extension-hard-break.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

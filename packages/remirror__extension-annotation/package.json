@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-annotation.js",
   "module": "./dist/remirror-extension-annotation.js",
-  "types": "./dist/remirror-extension-annotation.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

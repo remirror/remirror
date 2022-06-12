@@ -48,7 +48,7 @@
   },
   "main": "./dist/remirror-react-editors.js",
   "module": "./dist/remirror-react-editors.js",
-  "types": "./dist/remirror-react-editors.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
     "markdown",

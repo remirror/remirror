@@ -31,7 +31,7 @@
   },
   "main": "./dist/remirror-extension-yjs.js",
   "module": "./dist/remirror-extension-yjs.js",
-  "types": "./dist/remirror-extension-yjs.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

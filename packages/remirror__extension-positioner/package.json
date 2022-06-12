@@ -29,7 +29,7 @@
   },
   "main": "./dist/remirror-extension-positioner.js",
   "module": "./dist/remirror-extension-positioner.js",
-  "types": "./dist/remirror-extension-positioner.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

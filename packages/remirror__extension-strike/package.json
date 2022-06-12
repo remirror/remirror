@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-strike.js",
   "module": "./dist/remirror-extension-strike.js",
-  "types": "./dist/remirror-extension-strike.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

@@ -31,7 +31,7 @@
   },
   "main": "./dist/remirror-extension-emoji.js",
   "module": "./dist/remirror-extension-emoji.js",
-  "types": "./dist/remirror-extension-emoji.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
     "apple"

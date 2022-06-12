@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-columns.js",
   "module": "./dist/remirror-extension-columns.js",
-  "types": "./dist/remirror-extension-columns.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-bidi.js",
   "module": "./dist/remirror-extension-bidi.js",
-  "types": "./dist/remirror-extension-bidi.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

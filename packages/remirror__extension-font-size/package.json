@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-font-size.js",
   "module": "./dist/remirror-extension-font-size.js",
-  "types": "./dist/remirror-extension-font-size.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

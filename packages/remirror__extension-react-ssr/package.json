@@ -32,7 +32,7 @@
   },
   "main": "./dist/remirror-extension-react-ssr.js",
   "module": "./dist/remirror-extension-react-ssr.js",
-  "types": "./dist/remirror-extension-react-ssr.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

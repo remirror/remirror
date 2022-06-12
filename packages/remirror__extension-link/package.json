@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-link.js",
   "module": "./dist/remirror-extension-link.js",
-  "types": "./dist/remirror-extension-link.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

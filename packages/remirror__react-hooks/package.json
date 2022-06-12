@@ -93,7 +93,7 @@
   },
   "main": "./dist/remirror-react-hooks.js",
   "module": "./dist/remirror-react-hooks.js",
-  "types": "./dist/remirror-react-hooks.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
     "use-context-menu",

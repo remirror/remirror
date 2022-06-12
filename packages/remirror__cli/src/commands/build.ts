@@ -142,11 +142,12 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
   exports['./package.json'] = './package.json';
 
   packageJson.type = 'module';
-  const importPath = exports['.']?.import;
+  const mainExport = exports['.'];
 
-  if (importPath) {
-    packageJson.main = importPath;
-    packageJson.module = importPath;
+  if (mainExport) {
+    packageJson.main = mainExport.import;
+    packageJson.module = mainExport.import;
+    packageJson.types = mainExport.types;
   }
 
   delete packageJson.browser;

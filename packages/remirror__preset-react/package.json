@@ -30,7 +30,7 @@
   },
   "main": "./dist/remirror-preset-react.js",
   "module": "./dist/remirror-preset-react.js",
-  "types": "./dist/remirror-preset-react.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

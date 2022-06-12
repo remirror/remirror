@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-markdown.js",
   "module": "./dist/remirror-extension-markdown.js",
-  "types": "./dist/remirror-extension-markdown.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

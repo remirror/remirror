@@ -23,7 +23,7 @@
   },
   "main": "./dist/remirror-dev.js",
   "module": "./dist/remirror-dev.js",
-  "types": "./dist/remirror-dev.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

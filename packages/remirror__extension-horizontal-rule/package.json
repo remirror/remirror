@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-horizontal-rule.js",
   "module": "./dist/remirror-extension-horizontal-rule.js",
-  "types": "./dist/remirror-extension-horizontal-rule.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

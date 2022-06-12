@@ -23,7 +23,7 @@
   },
   "main": "./dist/prosemirror-suggest.js",
   "module": "./dist/prosemirror-suggest.js",
-  "types": "./dist/prosemirror-suggest.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

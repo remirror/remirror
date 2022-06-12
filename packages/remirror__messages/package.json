@@ -26,7 +26,7 @@
   },
   "main": "./dist/remirror-messages.js",
   "module": "./dist/remirror-messages.js",
-  "types": "./dist/remirror-messages.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

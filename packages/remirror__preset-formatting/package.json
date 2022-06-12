@@ -28,7 +28,7 @@
   },
   "main": "./dist/remirror-preset-formatting.js",
   "module": "./dist/remirror-preset-formatting.js",
-  "types": "./dist/remirror-preset-formatting.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

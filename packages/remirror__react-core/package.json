@@ -23,7 +23,7 @@
   },
   "main": "./dist/remirror-react-core.js",
   "module": "./dist/remirror-react-core.js",
-  "types": "./dist/remirror-react-core.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

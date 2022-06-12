@@ -23,7 +23,7 @@
   },
   "main": "./dist/remirror-core-helpers.js",
   "module": "./dist/remirror-core-helpers.js",
-  "types": "./dist/remirror-core-helpers.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-blockquote.js",
   "module": "./dist/remirror-extension-blockquote.js",
-  "types": "./dist/remirror-extension-blockquote.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

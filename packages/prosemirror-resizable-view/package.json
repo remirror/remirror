@@ -28,7 +28,7 @@
   },
   "main": "./dist/prosemirror-resizable-view.js",
   "module": "./dist/prosemirror-resizable-view.js",
-  "types": "./dist/prosemirror-resizable-view.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],

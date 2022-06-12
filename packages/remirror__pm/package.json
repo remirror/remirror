@@ -103,7 +103,7 @@
   },
   "main": "./dist/remirror-pm.js",
   "module": "./dist/remirror-pm.js",
-  "types": "./dist/remirror-pm.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
     "collab",

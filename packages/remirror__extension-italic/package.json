@@ -27,7 +27,7 @@
   },
   "main": "./dist/remirror-extension-italic.js",
   "module": "./dist/remirror-extension-italic.js",
-  "types": "./dist/remirror-extension-italic.cjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist"
   ],
