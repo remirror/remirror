@@ -285,5 +285,8 @@
     "rangeStrategy": "replace",
     "prConcurrentLimit": 1,
     "dependencyDashboard": true
+  },
+  "devDependencies": {
+    "sort-keys": "^4.2.0"
   }
 }

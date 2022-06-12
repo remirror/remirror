@@ -1,6 +1,7 @@
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
 import path from 'node:path/posix';
+import sortKeys from 'sort-keys';
 
 import { logger } from '../logger';
 import { fileExists } from './file-exists';
@@ -121,7 +122,7 @@ async function validEntryPoint(pkg: Package, entryPoint: string) {
 async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
   const packageJson = pkg.packageJson as any;
 
-  const exports: any = {};
+  let exports: any = {};
 
   for (const entryPoint of entryPoints) {
     const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
@@ -139,6 +140,7 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
     };
   }
 
+  exports = sortKeys(exports);
   exports['./package.json'] = './package.json';
 
   packageJson.type = 'module';

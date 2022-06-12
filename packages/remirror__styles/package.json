@@ -15,6 +15,11 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
+    "./dom": {
+      "import": "./dom/dist/remirror-styles-dom.js",
+      "types": "./dist-types/dom.d.ts",
+      "default": "./dom/dist/remirror-styles-dom.js"
+    },
     "./emotion": {
       "import": "./emotion/dist/remirror-styles-emotion.js",
       "types": "./dist-types/emotion.d.ts",
@@ -24,11 +29,6 @@
       "import": "./styled-components/dist/remirror-styles-styled-components.js",
       "types": "./dist-types/styled-components.d.ts",
       "default": "./styled-components/dist/remirror-styles-styled-components.js"
-    },
-    "./dom": {
-      "import": "./dom/dist/remirror-styles-dom.js",
-      "types": "./dist-types/dom.d.ts",
-      "default": "./dom/dist/remirror-styles-dom.js"
     },
     "./package.json": "./package.json"
   },

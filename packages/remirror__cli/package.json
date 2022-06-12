@@ -29,7 +29,8 @@
   },
   "devDependencies": {
     "@types/node": "^16.3.3",
-    "@types/prettier": "^2.3.2"
+    "@types/prettier": "^2.3.2",
+    "sort-keys": "^4.2.0"
   },
   "peerDependencies": {
     "tsx": "^3.4.2"

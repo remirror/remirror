@@ -24,15 +24,15 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    "./formatter": {
-      "import": "./formatter/dist/remirror-extension-code-block-formatter.js",
-      "types": "./dist-types/formatter.d.ts",
-      "default": "./formatter/dist/remirror-extension-code-block-formatter.js"
-    },
     ".": {
       "import": "./dist/remirror-extension-code-block.js",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-code-block.js"
+    },
+    "./formatter": {
+      "import": "./formatter/dist/remirror-extension-code-block-formatter.js",
+      "types": "./dist-types/formatter.d.ts",
+      "default": "./formatter/dist/remirror-extension-code-block-formatter.js"
     },
     "./package.json": "./package.json"
   },

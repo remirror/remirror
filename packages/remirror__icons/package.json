@@ -18,15 +18,15 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    "./all": {
-      "import": "./all/dist/remirror-icons-all.js",
-      "types": "./dist-types/all.d.ts",
-      "default": "./all/dist/remirror-icons-all.js"
-    },
     ".": {
       "import": "./dist/remirror-icons.js",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-icons.js"
+    },
+    "./all": {
+      "import": "./all/dist/remirror-icons-all.js",
+      "types": "./dist-types/all.d.ts",
+      "default": "./all/dist/remirror-icons-all.js"
     },
     "./package.json": "./package.json"
   },

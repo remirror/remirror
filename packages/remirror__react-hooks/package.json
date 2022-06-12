@@ -25,6 +25,11 @@
       "types": "./dist-types/use-context-menu.d.ts",
       "default": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.js"
     },
+    "./use-editor-event": {
+      "import": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.js",
+      "types": "./dist-types/use-editor-event.d.ts",
+      "default": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.js"
+    },
     "./use-editor-focus": {
       "import": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.js",
       "types": "./dist-types/use-editor-focus.d.ts",
@@ -34,11 +39,6 @@
       "import": "./use-emoji/dist/remirror-react-hooks-use-emoji.js",
       "types": "./dist-types/use-emoji.d.ts",
       "default": "./use-emoji/dist/remirror-react-hooks-use-emoji.js"
-    },
-    "./use-editor-event": {
-      "import": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.js",
-      "types": "./dist-types/use-editor-event.d.ts",
-      "default": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.js"
     },
     "./use-history": {
       "import": "./use-history/dist/remirror-react-hooks-use-history.js",
@@ -60,15 +60,15 @@
       "types": "./dist-types/use-keymaps.d.ts",
       "default": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.js"
     },
-    "./use-mention-atom": {
-      "import": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.js",
-      "types": "./dist-types/use-mention-atom.d.ts",
-      "default": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.js"
-    },
     "./use-mention": {
       "import": "./use-mention/dist/remirror-react-hooks-use-mention.js",
       "types": "./dist-types/use-mention.d.ts",
       "default": "./use-mention/dist/remirror-react-hooks-use-mention.js"
+    },
+    "./use-mention-atom": {
+      "import": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.js",
+      "types": "./dist-types/use-mention-atom.d.ts",
+      "default": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.js"
     },
     "./use-menu-navigation": {
       "import": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.js",
