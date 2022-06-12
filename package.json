@@ -42,7 +42,7 @@
     "fix": "run-s -c intl fix:*",
     "fix:build": "preconstruct fix",
     "fix:config": "pnpm generate:ts",
-    "fix:css": "node support/scripts/check-styles --fix",
+    "fix:css": "tsx support/scripts/src/check-styles --fix",
     "fix:es": "pnpm lint:es -- --fix",
     "fix:exports": "node support/scripts/generate-configs --exports",
     "fix:md": "pnpm lint:md -- --fix",
