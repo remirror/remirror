@@ -76,6 +76,32 @@ describe('EntityReference marks', () => {
 
     const createdEntityReferences = helpers.getEntityReferences();
     expect(createdEntityReferences).toHaveLength(2);
+    expect(createdEntityReferences[0]).toMatchInlineSnapshot(
+      {
+        id: expect.any(String),
+      },
+      `
+      Object {
+        "from": 1,
+        "id": Any<String>,
+        "text": "Lorem Ipsum is simply dummy text of t",
+        "to": 38,
+      }
+    `,
+    );
+    expect(createdEntityReferences[0]).toMatchInlineSnapshot(
+      {
+        id: expect.any(String),
+      },
+      `
+      Object {
+        "from": 1,
+        "id": Any<String>,
+        "text": "Lorem Ipsum is simply dummy text of t",
+        "to": 38,
+      }
+    `,
+    );
 
     expect(createdEntityReferences).toEqual(uniqueArray(createdEntityReferences));
   });
@@ -91,6 +117,32 @@ describe('EntityReference marks', () => {
 
     const createdEntityReferences = helpers.getEntityReferences();
     expect(createdEntityReferences).toHaveLength(2);
+    expect(createdEntityReferences[0]).toMatchInlineSnapshot(
+      {
+        id: expect.any(String),
+      },
+      `
+      Object {
+        "from": 20,
+        "id": Any<String>,
+        "text": "ly dummy text of the",
+        "to": 40,
+      }
+    `,
+    );
+    expect(createdEntityReferences[1]).toMatchInlineSnapshot(
+      {
+        id: expect.any(String),
+      },
+      `
+      Object {
+        "from": 1,
+        "id": Any<String>,
+        "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+        "to": 74,
+      }
+    `,
+    );
     expect(createdEntityReferences).toEqual(uniqueArray(createdEntityReferences));
   });
 
@@ -102,6 +154,19 @@ describe('EntityReference marks', () => {
 
     const createdEntityReferences = helpers.getEntityReferences();
     expect(createdEntityReferences).toHaveLength(1);
+    expect(createdEntityReferences[0]).toMatchInlineSnapshot(
+      {
+        id: expect.any(String),
+      },
+      `
+      Object {
+        "from": 1,
+        "id": Any<String>,
+        "text": "orem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "to": 74,
+      }
+    `,
+    );
   });
 
   it('Removes entityReference', () => {

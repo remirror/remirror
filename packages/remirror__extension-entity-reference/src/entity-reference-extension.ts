@@ -232,16 +232,12 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
     const entityReferenceIdsInPos = new Set(
       disjointedEntityReferences
         .filter((entityReference) => {
-          if (
+          return (
             within(from, entityReference.from, entityReference.to) ||
             within(to, entityReference.from, entityReference.to) ||
             within(entityReference.from, from, to) ||
             within(entityReference.to, from, to)
-          ) {
-            return true;
-          }
-
-          return false;
+          );
         })
         .map((h) => h.id),
     );
