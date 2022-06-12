@@ -102,14 +102,15 @@ async function buildPackageV2(pkg: Package) {
 
   const entryPoints = await parseEntryPoints(pkg);
 
+  await writeMainPackageJson(pkg, entryPoints);
+
   const promises: Array<Promise<unknown>> = [];
 
   // writeSubpathPackageJsons();
-  promises.push(writeMainPackageJson(pkg, entryPoints));
 
-  for (const entryPoint of entryPoints) {
-    promises.push(runEsbuildV2(pkg, entryPoint));
-  }
+  // for (const entryPoint of entryPoints) {
+  //   promises.push(runEsbuildV2(pkg, entryPoint));
+  // }
 
   // runTsc();
 

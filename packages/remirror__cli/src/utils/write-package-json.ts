@@ -1,6 +1,6 @@
 import fastDeepEqual from 'fast-deep-equal';
-import fs from 'node:fs/promises';
 import path from 'node:path';
+import { writePackage } from 'write-pkg';
 
 import { logger } from '../logger';
 import { readPackageJson } from './read-package-json';
@@ -21,7 +21,5 @@ export async function writePackageJson(dirPath: string, packageJson: any) {
   }
 
   logger.debug(`writing package.json to ${packageJsonPath}`);
-  const packageJsonStr = `${JSON.stringify(packageJson, null, 2)}\n`;
-  logger.debug(`package.json content: ${packageJsonStr}`);
-  await fs.writeFile(packageJsonPath, packageJsonStr, { encoding: 'utf-8' });
+  await writePackage(packageJsonPath, packageJson);
 }
