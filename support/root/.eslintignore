@@ -35,3 +35,4 @@ website/build
 docs/api/
 docs/examples/
 website/extension-examples/
+*.api.md
