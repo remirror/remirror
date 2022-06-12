@@ -113,10 +113,6 @@ interface EntryPoint {
   // This entry is a "main" entry point or a "subpath" entry point.
   isMain: boolean;
 
-  // // The absolute path to the package root.
-  // // e.g. /projects/remirror/packages/remirror__extension-foo
-  // dir: string;
-
   // The absolute path to the entry file.
   // e.g. /projects/remirror/packages/remirror__extension-foo/src/submodule/index.tsx
   inFile: string;
@@ -124,6 +120,10 @@ interface EntryPoint {
   // The absolute path to the output file.
   // e.g. /projects/remirror/packages/remirror__extension-foo/submodule/dist/remirror-extension-foo.js
   outFile: string;
+
+  // The relative path to the output file.
+  // e.g. ".", "./subpath", "./subpath/subpath"
+  subpath: string;
 }
 
 /**
@@ -146,19 +146,19 @@ async function parseEntryPoints(pkg: Package): Promise<EntryPoint[]> {
   for (const file of entryPointFiles) {
     const inFile = path.join(pkg.dir, 'src', file);
 
-    let targetDir = `./${removeFileExt(file)}`;
+    let subpath = `./${removeFileExt(file)}`;
 
-    if (targetDir.endsWith('/index')) {
-      targetDir = targetDir.slice(0, -6);
+    if (subpath.endsWith('/index')) {
+      subpath = subpath.slice(0, -6);
     }
 
-    const isMain = targetDir === '.';
+    const isMain = subpath === '.';
 
-    const entryPointName = slugify(`${pkg.packageJson.name}-${isMain ? '' : targetDir}`);
+    const entryPointName = slugify(`${pkg.packageJson.name}-${isMain ? '' : subpath}`);
 
-    const outFile = path.resolve(pkg.dir, targetDir, 'dist', `${entryPointName}.js`);
+    const outFile = path.resolve(pkg.dir, subpath, 'dist', `${entryPointName}.js`);
 
-    entryPoints.push({ isMain, inFile, outFile });
+    entryPoints.push({ isMain, inFile, outFile, subpath });
   }
 
   return entryPoints;
