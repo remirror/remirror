@@ -108,9 +108,9 @@ async function buildPackageV2(pkg: Package) {
 
   // writeSubpathPackageJsons();
 
-  // for (const entryPoint of entryPoints) {
-  //   promises.push(runEsbuildV2(pkg, entryPoint));
-  // }
+  for (const entryPoint of entryPoints) {
+    promises.push(runEsbuildV2(pkg, entryPoint));
+  }
 
   // runTsc();
 
@@ -220,8 +220,13 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
   exports['./package.json'] = './package.json';
 
   packageJson.type = 'module';
-  packageJson.main = exports['.']?.import;
-  packageJson.module = exports['.']?.import;
+  const main = exports['.']?.import;
+
+  if (main) {
+    packageJson.main = main;
+    packageJson.module = main;
+  }
+
   delete packageJson.browser;
   packageJson.exports = exports;
 
