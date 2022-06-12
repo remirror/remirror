@@ -1,4 +1,3 @@
-import chokidar from 'chokidar';
 import path from 'node:path';
 
 import { logger } from '../logger';
@@ -35,6 +34,7 @@ export async function watch() {
     }
   };
 
+  const chokidar = await import('chokidar');
   const watcher = chokidar.watch(getRoot(), {
     ignored: ['**/{.git,node_modules,dist,dist-types}/**'],
     ignoreInitial: true,
