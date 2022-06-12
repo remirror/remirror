@@ -24,3 +24,7 @@ runs:
     - name: install dependencies
       run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 pnpm install
       shell: bash
+
+    - name: build packages
+      run: pnpm remirror-cli build
+      shell: bash
