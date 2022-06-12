@@ -1,6 +1,6 @@
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
-import path from 'node:path/posix';
+import path from 'node:path';
 import sortKeys from 'sort-keys';
 
 import { logger } from '../logger';
