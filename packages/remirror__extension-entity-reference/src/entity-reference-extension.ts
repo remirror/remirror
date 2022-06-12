@@ -21,6 +21,7 @@ import {
   within,
 } from '@remirror/core';
 import { Node } from '@remirror/pm/model';
+import { EditorStateConfig } from '@remirror/pm/state';
 import { DecorationSet } from '@remirror/pm/view';
 
 import { EntityReferenceMetaData, EntityReferenceOptions } from './types';
@@ -108,7 +109,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   createPlugin(): CreateExtensionPlugin<EntityReferenceState> {
     return {
       state: {
-        init: (_: { [key: string]: any }, state: EditorState) => {
+        init: (_: EditorStateConfig, state: EditorState): EntityReferenceState => {
           const entityReferences = this.getDisjoinedEntityReferences(state.doc);
           return { entityReferences };
         },
@@ -117,7 +118,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
           _value: EntityReferenceState,
           _oldState: EditorState,
           newState: EditorState,
-        ) => {
+        ): EntityReferenceState => {
           const entityReferences = this.getDisjoinedEntityReferences(newState.doc);
           return { entityReferences };
         },
