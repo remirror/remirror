@@ -3,6 +3,8 @@ import { Command } from 'commander';
 import { build } from './commands/build';
 import { watch } from './commands/watch';
 
+const nonTsCheckNotice = `Notice that this command won't bundle .d.ts files nor check TypeScript typings. You will need to run "pnpm -w typecheck" to do that.`;
+
 export async function main() {
   const program = new Command();
 
@@ -10,19 +12,13 @@ export async function main() {
 
   program
     .command('build')
-    .description(
-      `Build all NPM packages in current monorepo.
-
-Notice that this command will not bundle .d.ts files for you nor check TypeScript typings. You will need to run "pnpm -w typecheck" to do that.`,
-    )
+    .description(`Build all NPM packages in current monorepo.\n${nonTsCheckNotice}`)
     .action(build);
 
   program
     .command('watch')
     .description(
-      `Watch files and build NPM packages when files change in current monorepo.
-
-Notice that this command will not bundle .d.ts files for you nor check TypeScript typings. You will need to run "pnpm -w typecheck" to do that.`,
+      `Watch files and build NPM packages when files change in current monorepo.\n${nonTsCheckNotice}`,
     )
     .action(watch);
 
