@@ -40,7 +40,6 @@ import type {
   RemirrorContentType,
   RemirrorIdentifierShape,
   RemirrorJSON,
-  RenderEnvironment,
   ResolvedPos,
   SchemaProps,
   Selection,
@@ -1195,18 +1194,13 @@ export function createDocumentNode(props: CreateDocumentNodeProps): ProsemirrorN
 /**
  * Checks which environment should be used. Returns true when we are in the dom
  * environment.
- *
- * @param forceEnvironment - force a specific environment to override the
- * outcome
  */
-export function shouldUseDomEnvironment(forceEnvironment?: RenderEnvironment): boolean {
-  return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
+export function shouldUseDomEnvironment(): boolean {
+  return environment.isBrowser;
 }
 
 /**
  * Retrieves the document based on the environment we are currently in.
- *
- * @param forceEnvironment - force a specific environment
  */
 export function getDocument(): Document {
   if (typeof document !== 'undefined') {

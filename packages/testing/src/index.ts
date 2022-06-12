@@ -69,17 +69,13 @@ class TestFramework extends Framework<any, any, any> {
   updateState() {}
 
   createView(state: EditorState, element?: HTMLElement): EditorView {
-    return createEditorView(
-      element ?? null,
-      {
-        state,
-        dispatchTransaction: this.dispatchTransaction,
-        attributes: () => this.getAttributes(),
-        editable: () => this.props.editable ?? true,
-        plugins: [],
-      },
-      this.props.forceEnvironment,
-    );
+    return createEditorView(element ?? null, {
+      state,
+      dispatchTransaction: this.dispatchTransaction,
+      attributes: () => this.getAttributes(),
+      editable: () => this.props.editable ?? true,
+      plugins: [],
+    });
   }
 
   get frameworkOutput() {

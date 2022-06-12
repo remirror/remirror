@@ -31,19 +31,3 @@ test('createEditorView', () => {
   expect(view.destroy).toBeFunction();
   expect(view.state).toBe(state);
 });
-
-test('createEditorView:forceEnvironment', () => {
-  expect(() =>
-    createEditorView(
-      minDocument.createElement('div'),
-      {
-        state,
-        editable: () => {
-          return true;
-        },
-        plugins: [],
-      },
-      'dom',
-    ),
-  ).toThrow();
-});

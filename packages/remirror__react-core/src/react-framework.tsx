@@ -321,10 +321,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
     const { insertPosition = 'end', suppressHydrationWarning } = this.props;
     const children = isArray(child) ? child : [child];
 
-    if (
-      shouldUseDomEnvironment(this.manager.settings.forceEnvironment) &&
-      (!suppressHydrationWarning || this.shouldRenderClient)
-    ) {
+    if (shouldUseDomEnvironment() && (!suppressHydrationWarning || this.shouldRenderClient)) {
       return children;
     }
 
@@ -341,10 +338,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
   renderSsr = (): ReactNode => {
     const { suppressHydrationWarning, editable } = this.props;
 
-    if (
-      shouldUseDomEnvironment(this.manager.settings.forceEnvironment) &&
-      (!suppressHydrationWarning || this.shouldRenderClient)
-    ) {
+    if (shouldUseDomEnvironment() && (!suppressHydrationWarning || this.shouldRenderClient)) {
       return null;
     }
 

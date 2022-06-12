@@ -24,7 +24,6 @@ import type {
   PrimitiveSelection,
   ProsemirrorNode,
   RemirrorContentType,
-  RenderEnvironment,
   Replace,
   Simplify,
   Transaction,
@@ -364,7 +363,7 @@ export class RemirrorManager<Extension extends AnyExtension> {
    * The document to use for rendering and outputting HTML.
    */
   get document(): Document {
-    return this.#settings.document ?? getDocument(this.#settings.forceEnvironment);
+    return this.#settings.document ?? getDocument();
   }
 
   /**
@@ -1055,15 +1054,6 @@ declare global {
        * See [[`fromHTML`]] for an example of how this could work.
        */
       stringHandler?: keyof Remirror.StringHandlers | StringHandler;
-
-      /**
-       * By default remirror will work out whether this is a dom environment or
-       * server environment for SSR rendering. You can override this behaviour here
-       * when required.
-       *
-       * @default undefined
-       */
-      forceEnvironment?: RenderEnvironment;
 
       /**
        * The default named selection. This is used when `manager.createState` is
