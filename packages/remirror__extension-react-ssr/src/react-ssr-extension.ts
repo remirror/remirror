@@ -86,7 +86,6 @@ export class ReactSsrExtension extends PlainExtension<ReactSsrOptions> {
           Component: extension.ReactComponent,
           props: {
             decorations: [],
-            environment: 'ssr',
             forwardRef: () => {},
             getPosition: () => 0,
             selected: false,

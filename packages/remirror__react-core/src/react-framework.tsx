@@ -103,17 +103,13 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
    * Create the prosemirror editor view.
    */
   protected createView(state: EditorState): EditorView {
-    return createEditorView(
-      null,
-      {
-        state,
-        dispatchTransaction: this.dispatchTransaction,
-        attributes: () => this.getAttributes(),
-        editable: () => this.props.editable ?? true,
-        plugins: [],
-      },
-      this.manager.settings.forceEnvironment,
-    );
+    return createEditorView(null, {
+      state,
+      dispatchTransaction: this.dispatchTransaction,
+      attributes: () => this.getAttributes(),
+      editable: () => this.props.editable ?? true,
+      plugins: [],
+    });
   }
 
   /**
