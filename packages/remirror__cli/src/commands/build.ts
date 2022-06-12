@@ -3,7 +3,7 @@ import glob from 'fast-glob';
 import path from 'node:path';
 
 import { logger } from '../logger';
-import { runEsbuild } from '../utils/esbuild';
+import { runEsbuild, runEsbuildV2 } from '../utils/esbuild';
 import { fileExists } from '../utils/file-exists';
 import { listPackages } from '../utils/list-packages';
 import { removeFileExt } from '../utils/remove-file-ext';
@@ -101,12 +101,19 @@ async function buildPackageV2(pkg: Package) {
   logger.info(`building ${pkg.packageJson.name}`);
 
   const entryPoints = await parseEntryPoints(pkg);
-  console.log(entryPoints);
+
+  const promises: Array<Promise<unknown>> = [];
 
   // writeSubpathPackageJsons();
   // writeMainPackageJson();
-  // runEsbuild();
+
+  for (const entryPoint of entryPoints) {
+    promises.push(runEsbuildV2(pkg, entryPoint));
+  }
+
   // runTsc();
+
+  await Promise.all(promises);
 }
 
 interface EntryPoint {

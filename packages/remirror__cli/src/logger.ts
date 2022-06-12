@@ -16,7 +16,7 @@ export const logger = {
     console.warn(prefix, 'WARN', ...args);
   },
   error: (...args: any[]) => {
-    console.warn(prefix, 'ERROR', ...args);
+    console.error(prefix, 'ERROR', ...args);
   },
   assert: (condition: unknown, message = '') => {
     if (!condition) {
