@@ -1,7 +1,6 @@
 import { Command } from 'commander';
 
 import { build } from './commands/build';
-import { foo } from './commands/foo';
 
 export async function main() {
   const program = new Command();
@@ -9,14 +8,13 @@ export async function main() {
   program.name('remirror-cli').description('CLI for internal development in the remirror monorepo');
 
   program
-    .command('foo')
-    .description('Split a string into substrings and display as an array')
-    .argument('<string>', 'string to split')
-    .option('--first', 'display just the first substring')
-    .option('-s, --separator <char>', 'separator character', ',')
-    .action(foo);
+    .command('build')
+    .description(
+      `Build all NPM packages in current monorepo.
 
-  program.command('build').description('Build a NPM package').action(build);
+Notice that this command will not bundle .d.ts files for you nor check TypeScript typings. You will need to run "pnpm -w typecheck" to do that.`,
+    )
+    .action(build);
 
   program.parse();
 }

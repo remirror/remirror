@@ -16,7 +16,7 @@ export async function build() {
 
   const packages = await listPackages({ isPrivate: false });
 
-  return Promise.all(packages.map(buildPackage));
+  await Promise.all(packages.map(buildPackage));
 }
 
 async function buildPackage(pkg: Package) {
