@@ -21,21 +21,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-bold.esm.js",
-      "require": "./dist/remirror-extension-bold.cjs.js",
-      "browser": "./dist/remirror-extension-bold.browser.esm.js",
-      "types": "./dist/remirror-extension-bold.cjs.d.ts",
-      "default": "./dist/remirror-extension-bold.esm.js"
+      "import": "./dist/remirror-extension-bold.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-bold.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-bold.cjs.js",
-  "module": "dist/remirror-extension-bold.esm.js",
-  "browser": {
-    "./dist/remirror-extension-bold.cjs.js": "./dist/remirror-extension-bold.browser.cjs.js",
-    "./dist/remirror-extension-bold.esm.js": "./dist/remirror-extension-bold.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-bold.js",
+  "module": "./dist/remirror-extension-bold.js",
   "types": "./dist/remirror-extension-bold.cjs.d.ts",
   "files": [
     "dist"
@@ -57,5 +50,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

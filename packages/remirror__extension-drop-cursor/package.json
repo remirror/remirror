@@ -22,21 +22,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-drop-cursor.esm.js",
-      "require": "./dist/remirror-extension-drop-cursor.cjs.js",
-      "browser": "./dist/remirror-extension-drop-cursor.browser.esm.js",
-      "types": "./dist/remirror-extension-drop-cursor.cjs.d.ts",
-      "default": "./dist/remirror-extension-drop-cursor.esm.js"
+      "import": "./dist/remirror-extension-drop-cursor.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-drop-cursor.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-drop-cursor.cjs.js",
-  "module": "dist/remirror-extension-drop-cursor.esm.js",
-  "browser": {
-    "./dist/remirror-extension-drop-cursor.cjs.js": "./dist/remirror-extension-drop-cursor.browser.cjs.js",
-    "./dist/remirror-extension-drop-cursor.esm.js": "./dist/remirror-extension-drop-cursor.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-drop-cursor.js",
+  "module": "./dist/remirror-extension-drop-cursor.js",
   "types": "./dist/remirror-extension-drop-cursor.cjs.d.ts",
   "files": [
     "dist"
@@ -58,5 +51,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

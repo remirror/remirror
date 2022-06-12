@@ -14,21 +14,14 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/multishift.esm.js",
-      "require": "./dist/multishift.cjs.js",
-      "browser": "./dist/multishift.browser.esm.js",
-      "types": "./dist/multishift.cjs.d.ts",
-      "default": "./dist/multishift.esm.js"
+      "import": "./dist/multishift.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/multishift.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/multishift.cjs.js",
-  "module": "dist/multishift.esm.js",
-  "browser": {
-    "./dist/multishift.cjs.js": "./dist/multishift.browser.cjs.js",
-    "./dist/multishift.esm.js": "./dist/multishift.browser.esm.js"
-  },
+  "main": "./dist/multishift.js",
+  "module": "./dist/multishift.js",
   "types": "./dist/multishift.cjs.d.ts",
   "files": [
     "dist"
@@ -65,5 +58,6 @@
   "@remirror": {
     "sizeLimit": "20 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

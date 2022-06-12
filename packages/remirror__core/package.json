@@ -15,21 +15,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-core.esm.js",
-      "require": "./dist/remirror-core.cjs.js",
-      "browser": "./dist/remirror-core.browser.esm.js",
-      "types": "./dist/remirror-core.cjs.d.ts",
-      "default": "./dist/remirror-core.esm.js"
+      "import": "./dist/remirror-core.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-core.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-core.cjs.js",
-  "module": "dist/remirror-core.esm.js",
-  "browser": {
-    "./dist/remirror-core.cjs.js": "./dist/remirror-core.browser.cjs.js",
-    "./dist/remirror-core.esm.js": "./dist/remirror-core.browser.esm.js"
-  },
+  "main": "./dist/remirror-core.js",
+  "module": "./dist/remirror-core.js",
   "types": "./dist/remirror-core.cjs.d.ts",
   "files": [
     "style",
@@ -69,5 +62,6 @@
       }
     }
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

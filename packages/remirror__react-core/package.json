@@ -15,21 +15,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-react-core.esm.js",
-      "require": "./dist/remirror-react-core.cjs.js",
-      "browser": "./dist/remirror-react-core.browser.esm.js",
-      "types": "./dist/remirror-react-core.cjs.d.ts",
-      "default": "./dist/remirror-react-core.esm.js"
+      "import": "./dist/remirror-react-core.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-react-core.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-react-core.cjs.js",
-  "module": "dist/remirror-react-core.esm.js",
-  "browser": {
-    "./dist/remirror-react-core.cjs.js": "./dist/remirror-react-core.browser.cjs.js",
-    "./dist/remirror-react-core.esm.js": "./dist/remirror-react-core.browser.esm.js"
-  },
+  "main": "./dist/remirror-react-core.js",
+  "module": "./dist/remirror-react-core.js",
   "types": "./dist/remirror-react-core.cjs.d.ts",
   "files": [
     "dist"
@@ -92,5 +85,6 @@
       }
     }
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

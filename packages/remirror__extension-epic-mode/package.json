@@ -24,21 +24,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-epic-mode.esm.js",
-      "require": "./dist/remirror-extension-epic-mode.cjs.js",
-      "browser": "./dist/remirror-extension-epic-mode.browser.esm.js",
-      "types": "./dist/remirror-extension-epic-mode.cjs.d.ts",
-      "default": "./dist/remirror-extension-epic-mode.esm.js"
+      "import": "./dist/remirror-extension-epic-mode.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-epic-mode.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-epic-mode.cjs.js",
-  "module": "dist/remirror-extension-epic-mode.esm.js",
-  "browser": {
-    "./dist/remirror-extension-epic-mode.cjs.js": "./dist/remirror-extension-epic-mode.browser.cjs.js",
-    "./dist/remirror-extension-epic-mode.esm.js": "./dist/remirror-extension-epic-mode.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-epic-mode.js",
+  "module": "./dist/remirror-extension-epic-mode.js",
   "types": "./dist/remirror-extension-epic-mode.cjs.d.ts",
   "files": [
     "dist"
@@ -60,5 +53,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

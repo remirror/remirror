@@ -15,21 +15,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/prosemirror-paste-rules.esm.js",
-      "require": "./dist/prosemirror-paste-rules.cjs.js",
-      "browser": "./dist/prosemirror-paste-rules.browser.esm.js",
-      "types": "./dist/prosemirror-paste-rules.cjs.d.ts",
-      "default": "./dist/prosemirror-paste-rules.esm.js"
+      "import": "./dist/prosemirror-paste-rules.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/prosemirror-paste-rules.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/prosemirror-paste-rules.cjs.js",
-  "module": "dist/prosemirror-paste-rules.esm.js",
-  "browser": {
-    "./dist/prosemirror-paste-rules.cjs.js": "./dist/prosemirror-paste-rules.browser.cjs.js",
-    "./dist/prosemirror-paste-rules.esm.js": "./dist/prosemirror-paste-rules.browser.esm.js"
-  },
+  "main": "./dist/prosemirror-paste-rules.js",
+  "module": "./dist/prosemirror-paste-rules.js",
   "types": "./dist/prosemirror-paste-rules.cjs.d.ts",
   "files": [
     "dist"
@@ -57,5 +50,6 @@
   "@remirror": {
     "sizeLimit": "10 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

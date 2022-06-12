@@ -20,21 +20,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-preset-formatting.esm.js",
-      "require": "./dist/remirror-preset-formatting.cjs.js",
-      "browser": "./dist/remirror-preset-formatting.browser.esm.js",
-      "types": "./dist/remirror-preset-formatting.cjs.d.ts",
-      "default": "./dist/remirror-preset-formatting.esm.js"
+      "import": "./dist/remirror-preset-formatting.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-preset-formatting.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-preset-formatting.cjs.js",
-  "module": "dist/remirror-preset-formatting.esm.js",
-  "browser": {
-    "./dist/remirror-preset-formatting.cjs.js": "./dist/remirror-preset-formatting.browser.cjs.js",
-    "./dist/remirror-preset-formatting.esm.js": "./dist/remirror-preset-formatting.browser.esm.js"
-  },
+  "main": "./dist/remirror-preset-formatting.js",
+  "module": "./dist/remirror-preset-formatting.js",
   "types": "./dist/remirror-preset-formatting.cjs.d.ts",
   "files": [
     "dist"
@@ -69,5 +62,6 @@
   "@remirror": {
     "sizeLimit": "10 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

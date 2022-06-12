@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-columns.esm.js",
-      "require": "./dist/remirror-extension-columns.cjs.js",
-      "browser": "./dist/remirror-extension-columns.browser.esm.js",
-      "types": "./dist/remirror-extension-columns.cjs.d.ts",
-      "default": "./dist/remirror-extension-columns.esm.js"
+      "import": "./dist/remirror-extension-columns.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-columns.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-columns.cjs.js",
-  "module": "dist/remirror-extension-columns.esm.js",
-  "browser": {
-    "./dist/remirror-extension-columns.cjs.js": "./dist/remirror-extension-columns.browser.cjs.js",
-    "./dist/remirror-extension-columns.esm.js": "./dist/remirror-extension-columns.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-columns.js",
+  "module": "./dist/remirror-extension-columns.js",
   "types": "./dist/remirror-extension-columns.cjs.d.ts",
   "files": [
     "dist"
@@ -55,5 +48,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

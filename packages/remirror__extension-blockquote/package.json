@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-blockquote.esm.js",
-      "require": "./dist/remirror-extension-blockquote.cjs.js",
-      "browser": "./dist/remirror-extension-blockquote.browser.esm.js",
-      "types": "./dist/remirror-extension-blockquote.cjs.d.ts",
-      "default": "./dist/remirror-extension-blockquote.esm.js"
+      "import": "./dist/remirror-extension-blockquote.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-blockquote.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-blockquote.cjs.js",
-  "module": "dist/remirror-extension-blockquote.esm.js",
-  "browser": {
-    "./dist/remirror-extension-blockquote.cjs.js": "./dist/remirror-extension-blockquote.browser.cjs.js",
-    "./dist/remirror-extension-blockquote.esm.js": "./dist/remirror-extension-blockquote.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-blockquote.js",
+  "module": "./dist/remirror-extension-blockquote.js",
   "types": "./dist/remirror-extension-blockquote.cjs.d.ts",
   "files": [
     "dist"
@@ -56,5 +49,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

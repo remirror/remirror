@@ -14,21 +14,14 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/a11y-status.esm.js",
-      "require": "./dist/a11y-status.cjs.js",
-      "browser": "./dist/a11y-status.browser.esm.js",
-      "types": "./dist/a11y-status.cjs.d.ts",
-      "default": "./dist/a11y-status.esm.js"
+      "import": "./dist/a11y-status.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/a11y-status.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/a11y-status.cjs.js",
-  "module": "dist/a11y-status.esm.js",
-  "browser": {
-    "./dist/a11y-status.cjs.js": "./dist/a11y-status.browser.cjs.js",
-    "./dist/a11y-status.esm.js": "./dist/a11y-status.browser.esm.js"
-  },
+  "main": "./dist/a11y-status.js",
+  "module": "./dist/a11y-status.js",
   "types": "./dist/a11y-status.cjs.d.ts",
   "files": [
     "dist"
@@ -44,5 +37,6 @@
   "@remirror": {
     "sizeLimit": "1 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

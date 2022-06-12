@@ -21,21 +21,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-codemirror6.esm.js",
-      "require": "./dist/remirror-extension-codemirror6.cjs.js",
-      "browser": "./dist/remirror-extension-codemirror6.browser.esm.js",
-      "types": "./dist/remirror-extension-codemirror6.cjs.d.ts",
-      "default": "./dist/remirror-extension-codemirror6.esm.js"
+      "import": "./dist/remirror-extension-codemirror6.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-codemirror6.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-codemirror6.cjs.js",
-  "module": "dist/remirror-extension-codemirror6.esm.js",
-  "browser": {
-    "./dist/remirror-extension-codemirror6.cjs.js": "./dist/remirror-extension-codemirror6.browser.cjs.js",
-    "./dist/remirror-extension-codemirror6.esm.js": "./dist/remirror-extension-codemirror6.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-codemirror6.js",
+  "module": "./dist/remirror-extension-codemirror6.js",
   "types": "./dist/remirror-extension-codemirror6.cjs.d.ts",
   "files": [
     "dist"
@@ -59,5 +52,6 @@
   "@remirror": {
     "sizeLimit": "60 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

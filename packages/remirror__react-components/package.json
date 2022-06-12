@@ -15,27 +15,19 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-react-components.esm.js",
-      "require": "./dist/remirror-react-components.cjs.js",
-      "browser": "./dist/remirror-react-components.browser.esm.js",
-      "types": "./dist/remirror-react-components.cjs.d.ts",
-      "default": "./dist/remirror-react-components.esm.js"
+      "import": "./dist/remirror-react-components.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-react-components.js"
     },
     "./all-icons": {
-      "import": "./all-icons/dist/remirror-react-components-all-icons.esm.js",
-      "require": "./all-icons/dist/remirror-react-components-all-icons.cjs.js",
-      "browser": "./all-icons/dist/remirror-react-components-all-icons.browser.esm.js",
-      "default": "./all-icons/dist/remirror-react-components-all-icons.esm.js"
+      "import": "./all-icons/dist/remirror-react-components-all-icons.js",
+      "types": "./dist-types/all-icons.d.ts",
+      "default": "./all-icons/dist/remirror-react-components-all-icons.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-react-components.cjs.js",
-  "module": "dist/remirror-react-components.esm.js",
-  "browser": {
-    "./dist/remirror-react-components.cjs.js": "./dist/remirror-react-components.browser.cjs.js",
-    "./dist/remirror-react-components.esm.js": "./dist/remirror-react-components.browser.esm.js"
-  },
+  "main": "./dist/remirror-react-components.js",
+  "module": "./dist/remirror-react-components.js",
   "types": "./dist/remirror-react-components.cjs.d.ts",
   "files": [
     "all-icons",
@@ -104,5 +96,6 @@
       "all-icons.ts"
     ]
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

@@ -21,21 +21,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-paragraph.esm.js",
-      "require": "./dist/remirror-extension-paragraph.cjs.js",
-      "browser": "./dist/remirror-extension-paragraph.browser.esm.js",
-      "types": "./dist/remirror-extension-paragraph.cjs.d.ts",
-      "default": "./dist/remirror-extension-paragraph.esm.js"
+      "import": "./dist/remirror-extension-paragraph.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-paragraph.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-paragraph.cjs.js",
-  "module": "dist/remirror-extension-paragraph.esm.js",
-  "browser": {
-    "./dist/remirror-extension-paragraph.cjs.js": "./dist/remirror-extension-paragraph.browser.cjs.js",
-    "./dist/remirror-extension-paragraph.esm.js": "./dist/remirror-extension-paragraph.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-paragraph.js",
+  "module": "./dist/remirror-extension-paragraph.js",
   "types": "./dist/remirror-extension-paragraph.cjs.d.ts",
   "files": [
     "dist"
@@ -57,5 +50,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

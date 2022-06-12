@@ -18,21 +18,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-types.esm.js",
-      "require": "./dist/remirror-types.cjs.js",
-      "browser": "./dist/remirror-types.browser.esm.js",
-      "types": "./dist/remirror-types.cjs.d.ts",
-      "default": "./dist/remirror-types.esm.js"
+      "import": "./dist/remirror-types.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-types.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-types.cjs.js",
-  "module": "dist/remirror-types.esm.js",
-  "browser": {
-    "./dist/remirror-types.cjs.js": "./dist/remirror-types.browser.cjs.js",
-    "./dist/remirror-types.esm.js": "./dist/remirror-types.browser.esm.js"
-  },
+  "main": "./dist/remirror-types.js",
+  "module": "./dist/remirror-types.js",
   "types": "./dist/remirror-types.cjs.d.ts",
   "files": [
     "dist"
@@ -45,5 +38,6 @@
   },
   "@remirror": {
     "sizeLimit": "0 KB"
-  }
+  },
+  "type": "module"
 }

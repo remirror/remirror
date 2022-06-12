@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-diff.esm.js",
-      "require": "./dist/remirror-extension-diff.cjs.js",
-      "browser": "./dist/remirror-extension-diff.browser.esm.js",
-      "types": "./dist/remirror-extension-diff.cjs.d.ts",
-      "default": "./dist/remirror-extension-diff.esm.js"
+      "import": "./dist/remirror-extension-diff.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-diff.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-diff.cjs.js",
-  "module": "dist/remirror-extension-diff.esm.js",
-  "browser": {
-    "./dist/remirror-extension-diff.cjs.js": "./dist/remirror-extension-diff.browser.cjs.js",
-    "./dist/remirror-extension-diff.esm.js": "./dist/remirror-extension-diff.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-diff.js",
+  "module": "./dist/remirror-extension-diff.js",
   "types": "./dist/remirror-extension-diff.cjs.d.ts",
   "files": [
     "dist"
@@ -55,5 +48,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

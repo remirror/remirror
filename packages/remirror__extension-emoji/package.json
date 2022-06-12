@@ -23,21 +23,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-emoji.esm.js",
-      "require": "./dist/remirror-extension-emoji.cjs.js",
-      "browser": "./dist/remirror-extension-emoji.browser.esm.js",
-      "types": "./dist/remirror-extension-emoji.cjs.d.ts",
-      "default": "./dist/remirror-extension-emoji.esm.js"
+      "import": "./dist/remirror-extension-emoji.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-emoji.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-emoji.cjs.js",
-  "module": "dist/remirror-extension-emoji.esm.js",
-  "browser": {
-    "./dist/remirror-extension-emoji.cjs.js": "./dist/remirror-extension-emoji.browser.cjs.js",
-    "./dist/remirror-extension-emoji.esm.js": "./dist/remirror-extension-emoji.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-emoji.js",
+  "module": "./dist/remirror-extension-emoji.js",
   "types": "./dist/remirror-extension-emoji.cjs.d.ts",
   "files": [
     "dist",
@@ -69,5 +62,6 @@
   "@remirror": {
     "sizeLimit": "60 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

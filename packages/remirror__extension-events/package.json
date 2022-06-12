@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-events.esm.js",
-      "require": "./dist/remirror-extension-events.cjs.js",
-      "browser": "./dist/remirror-extension-events.browser.esm.js",
-      "types": "./dist/remirror-extension-events.cjs.d.ts",
-      "default": "./dist/remirror-extension-events.esm.js"
+      "import": "./dist/remirror-extension-events.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-events.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-events.cjs.js",
-  "module": "dist/remirror-extension-events.esm.js",
-  "browser": {
-    "./dist/remirror-extension-events.cjs.js": "./dist/remirror-extension-events.browser.cjs.js",
-    "./dist/remirror-extension-events.esm.js": "./dist/remirror-extension-events.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-events.js",
+  "module": "./dist/remirror-extension-events.js",
   "types": "./dist/remirror-extension-events.cjs.d.ts",
   "files": [
     "dist"
@@ -55,5 +48,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

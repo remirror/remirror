@@ -11,7 +11,7 @@ export async function writePackageJson(dirPath: string, packageJson: any) {
   let existedPackageJson: any = null;
 
   try {
-    existedPackageJson = readPackageJson(dirPath);
+    existedPackageJson = await readPackageJson(dirPath);
   } catch {
     // ignore
   }

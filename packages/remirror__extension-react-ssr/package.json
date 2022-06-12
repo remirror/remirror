@@ -24,21 +24,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-react-ssr.esm.js",
-      "require": "./dist/remirror-extension-react-ssr.cjs.js",
-      "browser": "./dist/remirror-extension-react-ssr.browser.esm.js",
-      "types": "./dist/remirror-extension-react-ssr.cjs.d.ts",
-      "default": "./dist/remirror-extension-react-ssr.esm.js"
+      "import": "./dist/remirror-extension-react-ssr.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-react-ssr.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-react-ssr.cjs.js",
-  "module": "dist/remirror-extension-react-ssr.esm.js",
-  "browser": {
-    "./dist/remirror-extension-react-ssr.cjs.js": "./dist/remirror-extension-react-ssr.browser.cjs.js",
-    "./dist/remirror-extension-react-ssr.esm.js": "./dist/remirror-extension-react-ssr.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-react-ssr.js",
+  "module": "./dist/remirror-extension-react-ssr.js",
   "types": "./dist/remirror-extension-react-ssr.cjs.d.ts",
   "files": [
     "dist"
@@ -72,5 +65,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

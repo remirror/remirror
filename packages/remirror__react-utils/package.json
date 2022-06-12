@@ -21,21 +21,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-react-utils.esm.js",
-      "require": "./dist/remirror-react-utils.cjs.js",
-      "browser": "./dist/remirror-react-utils.browser.esm.js",
-      "types": "./dist/remirror-react-utils.cjs.d.ts",
-      "default": "./dist/remirror-react-utils.esm.js"
+      "import": "./dist/remirror-react-utils.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-react-utils.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-react-utils.cjs.js",
-  "module": "dist/remirror-react-utils.esm.js",
-  "browser": {
-    "./dist/remirror-react-utils.cjs.js": "./dist/remirror-react-utils.browser.cjs.js",
-    "./dist/remirror-react-utils.esm.js": "./dist/remirror-react-utils.browser.esm.js"
-  },
+  "main": "./dist/remirror-react-utils.js",
+  "module": "./dist/remirror-react-utils.js",
   "types": "./dist/remirror-react-utils.cjs.d.ts",
   "files": [
     "dist"
@@ -65,5 +58,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

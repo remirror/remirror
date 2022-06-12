@@ -25,42 +25,29 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror.esm.js",
-      "require": "./dist/remirror.cjs.js",
-      "browser": "./dist/remirror.browser.esm.js",
-      "types": "./dist/remirror.cjs.d.ts",
-      "default": "./dist/remirror.esm.js"
+      "import": "./dist/remirror.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror.js"
     },
     "./dom": {
-      "import": "./dom/dist/remirror-dom.esm.js",
-      "require": "./dom/dist/remirror-dom.cjs.js",
-      "browser": "./dom/dist/remirror-dom.browser.esm.js",
-      "types": "./dom/dist/remirror-dom.cjs.d.ts",
-      "default": "./dom/dist/remirror-dom.esm.js"
+      "import": "./dom/dist/remirror-dom.js",
+      "types": "./dist-types/dom.d.ts",
+      "default": "./dom/dist/remirror-dom.js"
     },
     "./extensions": {
-      "import": "./extensions/dist/remirror-extensions.esm.js",
-      "require": "./extensions/dist/remirror-extensions.cjs.js",
-      "browser": "./extensions/dist/remirror-extensions.browser.esm.js",
-      "types": "./extensions/dist/remirror-extensions.cjs.d.ts",
-      "default": "./extensions/dist/remirror-extensions.esm.js"
+      "import": "./extensions/dist/remirror-extensions.js",
+      "types": "./dist-types/extensions.d.ts",
+      "default": "./extensions/dist/remirror-extensions.js"
     },
     "./icons": {
-      "import": "./icons/dist/remirror-icons.esm.js",
-      "require": "./icons/dist/remirror-icons.cjs.js",
-      "browser": "./icons/dist/remirror-icons.browser.esm.js",
-      "default": "./icons/dist/remirror-icons.esm.js"
+      "import": "./icons/dist/remirror-icons.js",
+      "types": "./dist-types/icons.d.ts",
+      "default": "./icons/dist/remirror-icons.js"
     },
-    "./package.json": "./package.json",
-    "./styles/*": "./styles/*",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror.cjs.js",
-  "module": "dist/remirror.esm.js",
-  "browser": {
-    "./dist/remirror.cjs.js": "./dist/remirror.browser.cjs.js",
-    "./dist/remirror.esm.js": "./dist/remirror.browser.esm.js"
-  },
+  "main": "./dist/remirror.js",
+  "module": "./dist/remirror.js",
   "types": "./dist/remirror.cjs.d.ts",
   "files": [
     "dist",
@@ -167,5 +154,6 @@
       "icons.ts"
     ]
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

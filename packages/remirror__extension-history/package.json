@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-history.esm.js",
-      "require": "./dist/remirror-extension-history.cjs.js",
-      "browser": "./dist/remirror-extension-history.browser.esm.js",
-      "types": "./dist/remirror-extension-history.cjs.d.ts",
-      "default": "./dist/remirror-extension-history.esm.js"
+      "import": "./dist/remirror-extension-history.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-history.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-history.cjs.js",
-  "module": "dist/remirror-extension-history.esm.js",
-  "browser": {
-    "./dist/remirror-extension-history.cjs.js": "./dist/remirror-extension-history.browser.cjs.js",
-    "./dist/remirror-extension-history.esm.js": "./dist/remirror-extension-history.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-history.js",
+  "module": "./dist/remirror-extension-history.js",
   "types": "./dist/remirror-extension-history.cjs.d.ts",
   "files": [
     "dist"
@@ -55,5 +48,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

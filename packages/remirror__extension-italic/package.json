@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-italic.esm.js",
-      "require": "./dist/remirror-extension-italic.cjs.js",
-      "browser": "./dist/remirror-extension-italic.browser.esm.js",
-      "types": "./dist/remirror-extension-italic.cjs.d.ts",
-      "default": "./dist/remirror-extension-italic.esm.js"
+      "import": "./dist/remirror-extension-italic.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-italic.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-italic.cjs.js",
-  "module": "dist/remirror-extension-italic.esm.js",
-  "browser": {
-    "./dist/remirror-extension-italic.cjs.js": "./dist/remirror-extension-italic.browser.cjs.js",
-    "./dist/remirror-extension-italic.esm.js": "./dist/remirror-extension-italic.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-italic.js",
+  "module": "./dist/remirror-extension-italic.js",
   "types": "./dist/remirror-extension-italic.cjs.d.ts",
   "files": [
     "dist"
@@ -55,5 +48,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

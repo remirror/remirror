@@ -20,35 +20,24 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/jest-prosemirror.esm.js",
-      "require": "./dist/jest-prosemirror.cjs.js",
-      "browser": "./dist/jest-prosemirror.browser.esm.js",
-      "types": "./dist/jest-prosemirror.cjs.d.ts",
-      "default": "./dist/jest-prosemirror.esm.js"
+      "import": "./dist/jest-prosemirror.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/jest-prosemirror.js"
     },
     "./environment": {
-      "import": "./environment/dist/jest-prosemirror-environment.esm.js",
-      "require": "./environment/dist/jest-prosemirror-environment.cjs.js",
-      "browser": "./environment/dist/jest-prosemirror-environment.browser.esm.js",
-      "types": "./environment/dist/jest-prosemirror-environment.cjs.d.ts",
-      "default": "./environment/dist/jest-prosemirror-environment.esm.js"
+      "import": "./environment/dist/jest-prosemirror-environment.js",
+      "types": "./dist-types/environment.d.ts",
+      "default": "./environment/dist/jest-prosemirror-environment.js"
     },
-    "./package.json": "./package.json",
     "./serializer": {
-      "import": "./serializer/dist/jest-prosemirror-serializer.esm.js",
-      "require": "./serializer/dist/jest-prosemirror-serializer.cjs.js",
-      "browser": "./serializer/dist/jest-prosemirror-serializer.browser.esm.js",
-      "types": "./serializer/dist/jest-prosemirror-serializer.cjs.d.ts",
-      "default": "./serializer/dist/jest-prosemirror-serializer.esm.js"
+      "import": "./serializer/dist/jest-prosemirror-serializer.js",
+      "types": "./dist-types/serializer.d.ts",
+      "default": "./serializer/dist/jest-prosemirror-serializer.js"
     },
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/jest-prosemirror.cjs.js",
-  "module": "dist/jest-prosemirror.esm.js",
-  "browser": {
-    "./dist/jest-prosemirror.cjs.js": "./dist/jest-prosemirror.browser.cjs.js",
-    "./dist/jest-prosemirror.esm.js": "./dist/jest-prosemirror.browser.esm.js"
-  },
+  "main": "./dist/jest-prosemirror.js",
+  "module": "./dist/jest-prosemirror.js",
   "types": "./dist/jest-prosemirror.cjs.d.ts",
   "files": [
     "dist",
@@ -100,5 +89,6 @@
       "serializer.ts"
     ]
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

@@ -15,21 +15,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-core-constants.esm.js",
-      "require": "./dist/remirror-core-constants.cjs.js",
-      "browser": "./dist/remirror-core-constants.browser.esm.js",
-      "types": "./dist/remirror-core-constants.cjs.d.ts",
-      "default": "./dist/remirror-core-constants.esm.js"
+      "import": "./dist/remirror-core-constants.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-core-constants.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-core-constants.cjs.js",
-  "module": "dist/remirror-core-constants.esm.js",
-  "browser": {
-    "./dist/remirror-core-constants.cjs.js": "./dist/remirror-core-constants.browser.cjs.js",
-    "./dist/remirror-core-constants.esm.js": "./dist/remirror-core-constants.browser.esm.js"
-  },
+  "main": "./dist/remirror-core-constants.js",
+  "module": "./dist/remirror-core-constants.js",
   "types": "./dist/remirror-core-constants.cjs.d.ts",
   "files": [
     "dist"
@@ -43,5 +36,6 @@
   "@remirror": {
     "sizeLimit": "2 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

@@ -24,21 +24,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-tables.esm.js",
-      "require": "./dist/remirror-extension-tables.cjs.js",
-      "browser": "./dist/remirror-extension-tables.browser.esm.js",
-      "types": "./dist/remirror-extension-tables.cjs.d.ts",
-      "default": "./dist/remirror-extension-tables.esm.js"
+      "import": "./dist/remirror-extension-tables.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-tables.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-tables.cjs.js",
-  "module": "dist/remirror-extension-tables.esm.js",
-  "browser": {
-    "./dist/remirror-extension-tables.cjs.js": "./dist/remirror-extension-tables.browser.cjs.js",
-    "./dist/remirror-extension-tables.esm.js": "./dist/remirror-extension-tables.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-tables.js",
+  "module": "./dist/remirror-extension-tables.js",
   "types": "./dist/remirror-extension-tables.cjs.d.ts",
   "files": [
     "dist"
@@ -61,5 +54,6 @@
   "@remirror": {
     "sizeLimit": "10 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

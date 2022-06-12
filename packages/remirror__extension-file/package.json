@@ -20,18 +20,15 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    "./package.json": "./package.json",
     ".": {
       "import": "./dist/remirror-extension-file.js",
+      "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-file.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-file.cjs.js",
-  "module": "dist/remirror-extension-file.esm.js",
-  "browser": {
-    "./dist/remirror-extension-file.cjs.js": "./dist/remirror-extension-file.browser.cjs.js",
-    "./dist/remirror-extension-file.esm.js": "./dist/remirror-extension-file.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-file.js",
+  "module": "./dist/remirror-extension-file.js",
   "types": "./dist/remirror-extension-file.cjs.d.ts",
   "files": [
     "dist"

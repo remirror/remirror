@@ -25,39 +25,29 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-react-editors.esm.js",
-      "require": "./dist/remirror-react-editors.cjs.js",
-      "browser": "./dist/remirror-react-editors.browser.esm.js",
-      "types": "./dist/remirror-react-editors.cjs.d.ts",
-      "default": "./dist/remirror-react-editors.esm.js"
+      "import": "./dist/remirror-react-editors.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-react-editors.js"
     },
     "./markdown": {
-      "import": "./markdown/dist/remirror-react-editors-markdown.esm.js",
-      "require": "./markdown/dist/remirror-react-editors-markdown.cjs.js",
-      "browser": "./markdown/dist/remirror-react-editors-markdown.browser.esm.js",
-      "default": "./markdown/dist/remirror-react-editors-markdown.esm.js"
+      "import": "./markdown/dist/remirror-react-editors-markdown.js",
+      "types": "./dist-types/markdown/index.d.ts",
+      "default": "./markdown/dist/remirror-react-editors-markdown.js"
     },
-    "./package.json": "./package.json",
     "./social": {
-      "import": "./social/dist/remirror-react-editors-social.esm.js",
-      "require": "./social/dist/remirror-react-editors-social.cjs.js",
-      "browser": "./social/dist/remirror-react-editors-social.browser.esm.js",
-      "default": "./social/dist/remirror-react-editors-social.esm.js"
+      "import": "./social/dist/remirror-react-editors-social.js",
+      "types": "./dist-types/social/index.d.ts",
+      "default": "./social/dist/remirror-react-editors-social.js"
     },
-    "./types/*": "./dist/declarations/src/*.d.ts",
     "./wysiwyg": {
-      "import": "./wysiwyg/dist/remirror-react-editors-wysiwyg.esm.js",
-      "require": "./wysiwyg/dist/remirror-react-editors-wysiwyg.cjs.js",
-      "browser": "./wysiwyg/dist/remirror-react-editors-wysiwyg.browser.esm.js",
-      "default": "./wysiwyg/dist/remirror-react-editors-wysiwyg.esm.js"
-    }
+      "import": "./wysiwyg/dist/remirror-react-editors-wysiwyg.js",
+      "types": "./dist-types/wysiwyg/index.d.ts",
+      "default": "./wysiwyg/dist/remirror-react-editors-wysiwyg.js"
+    },
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-react-editors.cjs.js",
-  "module": "dist/remirror-react-editors.esm.js",
-  "browser": {
-    "./dist/remirror-react-editors.cjs.js": "./dist/remirror-react-editors.browser.cjs.js",
-    "./dist/remirror-react-editors.esm.js": "./dist/remirror-react-editors.browser.esm.js"
-  },
+  "main": "./dist/remirror-react-editors.js",
+  "module": "./dist/remirror-react-editors.js",
   "types": "./dist/remirror-react-editors.cjs.d.ts",
   "files": [
     "dist",
@@ -110,5 +100,6 @@
       "social/index.ts",
       "wysiwyg/index.ts"
     ]
-  }
+  },
+  "type": "module"
 }

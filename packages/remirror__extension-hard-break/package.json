@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-hard-break.esm.js",
-      "require": "./dist/remirror-extension-hard-break.cjs.js",
-      "browser": "./dist/remirror-extension-hard-break.browser.esm.js",
-      "types": "./dist/remirror-extension-hard-break.cjs.d.ts",
-      "default": "./dist/remirror-extension-hard-break.esm.js"
+      "import": "./dist/remirror-extension-hard-break.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-hard-break.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-hard-break.cjs.js",
-  "module": "dist/remirror-extension-hard-break.esm.js",
-  "browser": {
-    "./dist/remirror-extension-hard-break.cjs.js": "./dist/remirror-extension-hard-break.browser.cjs.js",
-    "./dist/remirror-extension-hard-break.esm.js": "./dist/remirror-extension-hard-break.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-hard-break.js",
+  "module": "./dist/remirror-extension-hard-break.js",
   "types": "./dist/remirror-extension-hard-break.cjs.d.ts",
   "files": [
     "dist"
@@ -55,5 +48,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

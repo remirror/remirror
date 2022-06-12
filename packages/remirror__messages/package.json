@@ -18,21 +18,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-messages.esm.js",
-      "require": "./dist/remirror-messages.cjs.js",
-      "browser": "./dist/remirror-messages.browser.esm.js",
-      "types": "./dist/remirror-messages.cjs.d.ts",
-      "default": "./dist/remirror-messages.esm.js"
+      "import": "./dist/remirror-messages.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-messages.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-messages.cjs.js",
-  "module": "dist/remirror-messages.esm.js",
-  "browser": {
-    "./dist/remirror-messages.cjs.js": "./dist/remirror-messages.browser.cjs.js",
-    "./dist/remirror-messages.esm.js": "./dist/remirror-messages.browser.esm.js"
-  },
+  "main": "./dist/remirror-messages.js",
+  "module": "./dist/remirror-messages.js",
   "types": "./dist/remirror-messages.cjs.d.ts",
   "files": [
     "dist"
@@ -48,5 +41,6 @@
   "@remirror": {
     "sizeLimit": "50 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

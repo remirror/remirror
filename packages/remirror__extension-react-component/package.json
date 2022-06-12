@@ -20,21 +20,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-react-component.esm.js",
-      "require": "./dist/remirror-extension-react-component.cjs.js",
-      "browser": "./dist/remirror-extension-react-component.browser.esm.js",
-      "types": "./dist/remirror-extension-react-component.cjs.d.ts",
-      "default": "./dist/remirror-extension-react-component.esm.js"
+      "import": "./dist/remirror-extension-react-component.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-react-component.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-react-component.cjs.js",
-  "module": "dist/remirror-extension-react-component.esm.js",
-  "browser": {
-    "./dist/remirror-extension-react-component.cjs.js": "./dist/remirror-extension-react-component.browser.cjs.js",
-    "./dist/remirror-extension-react-component.esm.js": "./dist/remirror-extension-react-component.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-react-component.js",
+  "module": "./dist/remirror-extension-react-component.js",
   "types": "./dist/remirror-extension-react-component.cjs.d.ts",
   "files": [
     "dist"
@@ -74,5 +67,6 @@
   "@remirror": {
     "sizeLimit": "10 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

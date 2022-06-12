@@ -15,132 +15,94 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-pm.esm.js",
-      "require": "./dist/remirror-pm.cjs.js",
-      "browser": "./dist/remirror-pm.browser.esm.js",
-      "types": "./dist/remirror-pm.cjs.d.ts",
-      "default": "./dist/remirror-pm.esm.js"
+      "import": "./dist/remirror-pm.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-pm.js"
     },
     "./collab": {
-      "import": "./collab/dist/remirror-pm-collab.esm.js",
-      "require": "./collab/dist/remirror-pm-collab.cjs.js",
-      "browser": "./collab/dist/remirror-pm-collab.browser.esm.js",
-      "default": "./collab/dist/remirror-pm-collab.esm.js"
+      "import": "./collab/dist/remirror-pm-collab.js",
+      "types": "./dist-types/collab.d.ts",
+      "default": "./collab/dist/remirror-pm-collab.js"
     },
     "./commands": {
-      "import": "./commands/dist/remirror-pm-commands.esm.js",
-      "require": "./commands/dist/remirror-pm-commands.cjs.js",
-      "browser": "./commands/dist/remirror-pm-commands.browser.esm.js",
-      "types": "./commands/dist/remirror-pm-commands.cjs.d.ts",
-      "default": "./commands/dist/remirror-pm-commands.esm.js"
+      "import": "./commands/dist/remirror-pm-commands.js",
+      "types": "./dist-types/commands.d.ts",
+      "default": "./commands/dist/remirror-pm-commands.js"
     },
     "./dropcursor": {
-      "import": "./dropcursor/dist/remirror-pm-dropcursor.esm.js",
-      "require": "./dropcursor/dist/remirror-pm-dropcursor.cjs.js",
-      "browser": "./dropcursor/dist/remirror-pm-dropcursor.browser.esm.js",
-      "types": "./dropcursor/dist/remirror-pm-dropcursor.cjs.d.ts",
-      "default": "./dropcursor/dist/remirror-pm-dropcursor.esm.js"
+      "import": "./dropcursor/dist/remirror-pm-dropcursor.js",
+      "types": "./dist-types/dropcursor.d.ts",
+      "default": "./dropcursor/dist/remirror-pm-dropcursor.js"
     },
     "./gapcursor": {
-      "import": "./gapcursor/dist/remirror-pm-gapcursor.esm.js",
-      "require": "./gapcursor/dist/remirror-pm-gapcursor.cjs.js",
-      "browser": "./gapcursor/dist/remirror-pm-gapcursor.browser.esm.js",
-      "types": "./gapcursor/dist/remirror-pm-gapcursor.cjs.d.ts",
-      "default": "./gapcursor/dist/remirror-pm-gapcursor.esm.js"
+      "import": "./gapcursor/dist/remirror-pm-gapcursor.js",
+      "types": "./dist-types/gapcursor.d.ts",
+      "default": "./gapcursor/dist/remirror-pm-gapcursor.js"
     },
     "./history": {
-      "import": "./history/dist/remirror-pm-history.esm.js",
-      "require": "./history/dist/remirror-pm-history.cjs.js",
-      "browser": "./history/dist/remirror-pm-history.browser.esm.js",
-      "types": "./history/dist/remirror-pm-history.cjs.d.ts",
-      "default": "./history/dist/remirror-pm-history.esm.js"
+      "import": "./history/dist/remirror-pm-history.js",
+      "types": "./dist-types/history.d.ts",
+      "default": "./history/dist/remirror-pm-history.js"
     },
     "./inputrules": {
-      "import": "./inputrules/dist/remirror-pm-inputrules.esm.js",
-      "require": "./inputrules/dist/remirror-pm-inputrules.cjs.js",
-      "browser": "./inputrules/dist/remirror-pm-inputrules.browser.esm.js",
-      "types": "./inputrules/dist/remirror-pm-inputrules.cjs.d.ts",
-      "default": "./inputrules/dist/remirror-pm-inputrules.esm.js"
+      "import": "./inputrules/dist/remirror-pm-inputrules.js",
+      "types": "./dist-types/inputrules.d.ts",
+      "default": "./inputrules/dist/remirror-pm-inputrules.js"
     },
     "./keymap": {
-      "import": "./keymap/dist/remirror-pm-keymap.esm.js",
-      "require": "./keymap/dist/remirror-pm-keymap.cjs.js",
-      "browser": "./keymap/dist/remirror-pm-keymap.browser.esm.js",
-      "types": "./keymap/dist/remirror-pm-keymap.cjs.d.ts",
-      "default": "./keymap/dist/remirror-pm-keymap.esm.js"
+      "import": "./keymap/dist/remirror-pm-keymap.js",
+      "types": "./dist-types/keymap.d.ts",
+      "default": "./keymap/dist/remirror-pm-keymap.js"
     },
     "./model": {
-      "import": "./model/dist/remirror-pm-model.esm.js",
-      "require": "./model/dist/remirror-pm-model.cjs.js",
-      "browser": "./model/dist/remirror-pm-model.browser.esm.js",
-      "types": "./model/dist/remirror-pm-model.cjs.d.ts",
-      "default": "./model/dist/remirror-pm-model.esm.js"
+      "import": "./model/dist/remirror-pm-model.js",
+      "types": "./dist-types/model.d.ts",
+      "default": "./model/dist/remirror-pm-model.js"
     },
-    "./package.json": "./package.json",
     "./paste-rules": {
-      "import": "./paste-rules/dist/remirror-pm-paste-rules.esm.js",
-      "require": "./paste-rules/dist/remirror-pm-paste-rules.cjs.js",
-      "browser": "./paste-rules/dist/remirror-pm-paste-rules.browser.esm.js",
-      "types": "./paste-rules/dist/remirror-pm-paste-rules.cjs.d.ts",
-      "default": "./paste-rules/dist/remirror-pm-paste-rules.esm.js"
+      "import": "./paste-rules/dist/remirror-pm-paste-rules.js",
+      "types": "./dist-types/paste-rules.d.ts",
+      "default": "./paste-rules/dist/remirror-pm-paste-rules.js"
     },
     "./schema-list": {
-      "import": "./schema-list/dist/remirror-pm-schema-list.esm.js",
-      "require": "./schema-list/dist/remirror-pm-schema-list.cjs.js",
-      "browser": "./schema-list/dist/remirror-pm-schema-list.browser.esm.js",
-      "types": "./schema-list/dist/remirror-pm-schema-list.cjs.d.ts",
-      "default": "./schema-list/dist/remirror-pm-schema-list.esm.js"
+      "import": "./schema-list/dist/remirror-pm-schema-list.js",
+      "types": "./dist-types/schema-list.d.ts",
+      "default": "./schema-list/dist/remirror-pm-schema-list.js"
     },
     "./state": {
-      "import": "./state/dist/remirror-pm-state.esm.js",
-      "require": "./state/dist/remirror-pm-state.cjs.js",
-      "browser": "./state/dist/remirror-pm-state.browser.esm.js",
-      "types": "./state/dist/remirror-pm-state.cjs.d.ts",
-      "default": "./state/dist/remirror-pm-state.esm.js"
+      "import": "./state/dist/remirror-pm-state.js",
+      "types": "./dist-types/state.d.ts",
+      "default": "./state/dist/remirror-pm-state.js"
     },
     "./suggest": {
-      "import": "./suggest/dist/remirror-pm-suggest.esm.js",
-      "require": "./suggest/dist/remirror-pm-suggest.cjs.js",
-      "browser": "./suggest/dist/remirror-pm-suggest.browser.esm.js",
-      "types": "./suggest/dist/remirror-pm-suggest.cjs.d.ts",
-      "default": "./suggest/dist/remirror-pm-suggest.esm.js"
+      "import": "./suggest/dist/remirror-pm-suggest.js",
+      "types": "./dist-types/suggest.d.ts",
+      "default": "./suggest/dist/remirror-pm-suggest.js"
     },
     "./tables": {
-      "import": "./tables/dist/remirror-pm-tables.esm.js",
-      "require": "./tables/dist/remirror-pm-tables.cjs.js",
-      "browser": "./tables/dist/remirror-pm-tables.browser.esm.js",
-      "types": "./tables/dist/remirror-pm-tables.cjs.d.ts",
-      "default": "./tables/dist/remirror-pm-tables.esm.js"
+      "import": "./tables/dist/remirror-pm-tables.js",
+      "types": "./dist-types/tables.d.ts",
+      "default": "./tables/dist/remirror-pm-tables.js"
     },
     "./trailing-node": {
-      "import": "./trailing-node/dist/remirror-pm-trailing-node.esm.js",
-      "require": "./trailing-node/dist/remirror-pm-trailing-node.cjs.js",
-      "browser": "./trailing-node/dist/remirror-pm-trailing-node.browser.esm.js",
-      "types": "./trailing-node/dist/remirror-pm-trailing-node.cjs.d.ts",
-      "default": "./trailing-node/dist/remirror-pm-trailing-node.esm.js"
+      "import": "./trailing-node/dist/remirror-pm-trailing-node.js",
+      "types": "./dist-types/trailing-node.d.ts",
+      "default": "./trailing-node/dist/remirror-pm-trailing-node.js"
     },
     "./transform": {
-      "import": "./transform/dist/remirror-pm-transform.esm.js",
-      "require": "./transform/dist/remirror-pm-transform.cjs.js",
-      "browser": "./transform/dist/remirror-pm-transform.browser.esm.js",
-      "types": "./transform/dist/remirror-pm-transform.cjs.d.ts",
-      "default": "./transform/dist/remirror-pm-transform.esm.js"
+      "import": "./transform/dist/remirror-pm-transform.js",
+      "types": "./dist-types/transform.d.ts",
+      "default": "./transform/dist/remirror-pm-transform.js"
     },
-    "./types/*": "./dist/declarations/src/*.d.ts",
     "./view": {
-      "import": "./view/dist/remirror-pm-view.esm.js",
-      "require": "./view/dist/remirror-pm-view.cjs.js",
-      "browser": "./view/dist/remirror-pm-view.browser.esm.js",
-      "types": "./view/dist/remirror-pm-view.cjs.d.ts",
-      "default": "./view/dist/remirror-pm-view.esm.js"
-    }
+      "import": "./view/dist/remirror-pm-view.js",
+      "types": "./dist-types/view.d.ts",
+      "default": "./view/dist/remirror-pm-view.js"
+    },
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-pm.cjs.js",
-  "module": "dist/remirror-pm.esm.js",
-  "browser": {
-    "./dist/remirror-pm.cjs.js": "./dist/remirror-pm.browser.cjs.js",
-    "./dist/remirror-pm.esm.js": "./dist/remirror-pm.browser.esm.js"
-  },
+  "main": "./dist/remirror-pm.js",
+  "module": "./dist/remirror-pm.js",
   "types": "./dist/remirror-pm.cjs.d.ts",
   "files": [
     "dist",
@@ -206,5 +168,6 @@
       "view.ts"
     ]
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

@@ -24,22 +24,20 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    "./package.json": "./package.json",
     "./formatter": {
       "import": "./formatter/dist/remirror-extension-code-block-formatter.js",
+      "types": "./dist-types/formatter.d.ts",
       "default": "./formatter/dist/remirror-extension-code-block-formatter.js"
     },
     ".": {
-      "default": "./dist/remirror-extension-code-block.js",
-      "import": "./dist/remirror-extension-code-block.js"
-    }
+      "import": "./dist/remirror-extension-code-block.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-code-block.js"
+    },
+    "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-code-block.js",
   "module": "./dist/remirror-extension-code-block.js",
-  "browser": {
-    "./dist/remirror-extension-code-block.cjs.js": "./dist/remirror-extension-code-block.browser.cjs.js",
-    "./dist/remirror-extension-code-block.esm.js": "./dist/remirror-extension-code-block.browser.esm.js"
-  },
   "types": "./dist/remirror-extension-code-block.cjs.d.ts",
   "files": [
     "formatter",

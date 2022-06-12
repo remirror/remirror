@@ -23,21 +23,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-image.esm.js",
-      "require": "./dist/remirror-extension-image.cjs.js",
-      "browser": "./dist/remirror-extension-image.browser.esm.js",
-      "types": "./dist/remirror-extension-image.cjs.d.ts",
-      "default": "./dist/remirror-extension-image.esm.js"
+      "import": "./dist/remirror-extension-image.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-image.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-image.cjs.js",
-  "module": "dist/remirror-extension-image.esm.js",
-  "browser": {
-    "./dist/remirror-extension-image.cjs.js": "./dist/remirror-extension-image.browser.cjs.js",
-    "./dist/remirror-extension-image.esm.js": "./dist/remirror-extension-image.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-image.js",
+  "module": "./dist/remirror-extension-image.js",
   "types": "./dist/remirror-extension-image.cjs.d.ts",
   "files": [
     "dist"
@@ -61,5 +54,6 @@
   "@remirror": {
     "sizeLimit": "20 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

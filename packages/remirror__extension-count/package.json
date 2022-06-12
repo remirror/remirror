@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-count.esm.js",
-      "require": "./dist/remirror-extension-count.cjs.js",
-      "browser": "./dist/remirror-extension-count.browser.esm.js",
-      "types": "./dist/remirror-extension-count.cjs.d.ts",
-      "default": "./dist/remirror-extension-count.esm.js"
+      "import": "./dist/remirror-extension-count.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-count.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-count.cjs.js",
-  "module": "dist/remirror-extension-count.esm.js",
-  "browser": {
-    "./dist/remirror-extension-count.cjs.js": "./dist/remirror-extension-count.browser.cjs.js",
-    "./dist/remirror-extension-count.esm.js": "./dist/remirror-extension-count.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-count.js",
+  "module": "./dist/remirror-extension-count.js",
   "types": "./dist/remirror-extension-count.cjs.d.ts",
   "files": [
     "dist"
@@ -53,5 +46,6 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  }
+  },
+  "type": "module"
 }

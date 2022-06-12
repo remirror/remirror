@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-font-family.esm.js",
-      "require": "./dist/remirror-extension-font-family.cjs.js",
-      "browser": "./dist/remirror-extension-font-family.browser.esm.js",
-      "types": "./dist/remirror-extension-font-family.cjs.d.ts",
-      "default": "./dist/remirror-extension-font-family.esm.js"
+      "import": "./dist/remirror-extension-font-family.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-font-family.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-font-family.cjs.js",
-  "module": "dist/remirror-extension-font-family.esm.js",
-  "browser": {
-    "./dist/remirror-extension-font-family.cjs.js": "./dist/remirror-extension-font-family.browser.cjs.js",
-    "./dist/remirror-extension-font-family.esm.js": "./dist/remirror-extension-font-family.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-font-family.js",
+  "module": "./dist/remirror-extension-font-family.js",
   "types": "./dist/remirror-extension-font-family.cjs.d.ts",
   "files": [
     "dist"
@@ -55,5 +48,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

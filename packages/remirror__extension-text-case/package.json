@@ -19,21 +19,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-text-case.esm.js",
-      "require": "./dist/remirror-extension-text-case.cjs.js",
-      "browser": "./dist/remirror-extension-text-case.browser.esm.js",
-      "types": "./dist/remirror-extension-text-case.cjs.d.ts",
-      "default": "./dist/remirror-extension-text-case.esm.js"
+      "import": "./dist/remirror-extension-text-case.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-text-case.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-text-case.cjs.js",
-  "module": "dist/remirror-extension-text-case.esm.js",
-  "browser": {
-    "./dist/remirror-extension-text-case.cjs.js": "./dist/remirror-extension-text-case.browser.cjs.js",
-    "./dist/remirror-extension-text-case.esm.js": "./dist/remirror-extension-text-case.browser.esm.js"
-  },
+  "main": "./dist/remirror-extension-text-case.js",
+  "module": "./dist/remirror-extension-text-case.js",
   "types": "./dist/remirror-extension-text-case.cjs.d.ts",
   "files": [
     "dist"
@@ -55,5 +48,6 @@
   "@remirror": {
     "sizeLimit": "5 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

@@ -15,21 +15,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/prosemirror-suggest.esm.js",
-      "require": "./dist/prosemirror-suggest.cjs.js",
-      "browser": "./dist/prosemirror-suggest.browser.esm.js",
-      "types": "./dist/prosemirror-suggest.cjs.d.ts",
-      "default": "./dist/prosemirror-suggest.esm.js"
+      "import": "./dist/prosemirror-suggest.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/prosemirror-suggest.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/prosemirror-suggest.cjs.js",
-  "module": "dist/prosemirror-suggest.esm.js",
-  "browser": {
-    "./dist/prosemirror-suggest.cjs.js": "./dist/prosemirror-suggest.browser.cjs.js",
-    "./dist/prosemirror-suggest.esm.js": "./dist/prosemirror-suggest.browser.esm.js"
-  },
+  "main": "./dist/prosemirror-suggest.js",
+  "module": "./dist/prosemirror-suggest.js",
   "types": "./dist/prosemirror-suggest.cjs.d.ts",
   "files": [
     "dist"
@@ -58,5 +51,6 @@
   "@remirror": {
     "sizeLimit": "10 KB"
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module"
 }

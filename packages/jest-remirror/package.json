@@ -20,19 +20,18 @@
   ],
   "exports": {
     ".": {
-      "require": "./dist/jest-remirror.cjs.js",
-      "types": "./dist/jest-remirror.cjs.d.ts",
-      "default": "./dist/jest-remirror.cjs.js"
+      "import": "./dist/jest-remirror.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/jest-remirror.js"
     },
     "./environment": {
-      "require": "./environment/dist/jest-remirror-environment.cjs.js",
-      "types": "./environment/dist/jest-remirror-environment.cjs.d.ts",
-      "default": "./environment/dist/jest-remirror-environment.cjs.js"
+      "import": "./environment/dist/jest-remirror-environment.js",
+      "types": "./dist-types/environment.d.ts",
+      "default": "./environment/dist/jest-remirror-environment.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/jest-remirror.cjs.js",
+  "main": "./dist/jest-remirror.js",
   "types": "./dist/jest-remirror.cjs.d.ts",
   "files": [
     "dist",
@@ -86,5 +85,7 @@
       "environment.ts"
     ]
   },
-  "rn:dev": "src/index.ts"
+  "rn:dev": "src/index.ts",
+  "type": "module",
+  "module": "./dist/jest-remirror.js"
 }
