@@ -55,7 +55,7 @@
     "generate:exports": "pnpm run fix:exports -- --force",
     "generate:icons": "node support/scripts/generate-icons",
     "generate:intl": "node support/scripts/generate-intl",
-    "generate:ts": "node support/scripts/generate-configs --ts-packages",
+    "generate:ts": "tsx support/scripts/src/generate-configs --ts-packages",
     "generate:website-examples": "node support/scripts/generate-website-examples",
     "if-clean": "node support/scripts/run-if-clean",
     "if-config": "node support/scripts/run-if-config",
