@@ -4,10 +4,10 @@ const delay = 300;
 
 export class DebounceExecutor {
   private timer: ReturnType<typeof setTimeout> | undefined;
-  private keys: Set<string>;
+  private readonly keys: Set<string>;
   private busy = false;
 
-  constructor(private fn: (key: string) => Promise<void>) {
+  constructor(private readonly fn: (key: string) => Promise<void>) {
     this.keys = new Set();
   }
 
