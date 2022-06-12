@@ -1,9 +1,12 @@
 import { Package } from '@manypkg/get-packages';
+import glob from 'fast-glob';
 import path from 'node:path';
 
 import { logger } from '../logger';
 import { runEsbuild } from '../utils/esbuild';
+import { fileExists } from '../utils/file-exists';
 import { listPackages } from '../utils/list-packages';
+import { removeFileExt } from '../utils/remove-file-ext';
 import { slugify } from '../utils/slugify';
 import { writePackageJson } from '../utils/write-package-json';
 
@@ -11,12 +14,12 @@ export async function build() {
   const cwd = process.cwd();
   logger.debug(`current working directory: ${cwd}`);
 
-  const packages = await listPackages();
+  const packages = await listPackages({ isPrivate: false });
 
   for (const pkg of packages) {
-    if (pkg.dir === cwd) {
-      await buildPackage(pkg);
-    }
+    // if (pkg.dir === cwd) {
+    await buildPackageV2(pkg);
+    // }
   }
 }
 
@@ -92,4 +95,95 @@ async function buildPackage(pkg: Package) {
   promises.push(writePackageJson(pkg.dir, packageJson));
 
   return Promise.all(promises);
+}
+
+async function buildPackageV2(pkg: Package) {
+  logger.info(`building ${pkg.packageJson.name}`);
+
+  const entryPoints = await parseEntryPoints(pkg);
+  console.log(entryPoints);
+
+  // writeSubpathPackageJsons();
+  // writeMainPackageJson();
+  // runEsbuild();
+  // runTsc();
+}
+
+interface EntryPoint {
+  // This entry is a "main" entry point or a "subpath" entry point.
+  isMain: boolean;
+
+  // // The absolute path to the package root.
+  // // e.g. /projects/remirror/packages/remirror__extension-foo
+  // dir: string;
+
+  // The absolute path to the entry file.
+  // e.g. /projects/remirror/packages/remirror__extension-foo/src/submodule/index.tsx
+  inFile: string;
+
+  // The absolute path to the output file.
+  // e.g. /projects/remirror/packages/remirror__extension-foo/submodule/dist/remirror-extension-foo.js
+  outFile: string;
+}
+
+/**
+ * Parse a package.json file and return all entry points in this packages.
+ */
+async function parseEntryPoints(pkg: Package): Promise<EntryPoint[]> {
+  const entryPointFiles = await findEntryPoints(pkg);
+
+  logger.assert(
+    entryPointFiles.length > 0,
+    `failed to find any entry point for package ${pkg.packageJson.name} at ${pkg.dir}`,
+  );
+
+  for (const entryPointFile of entryPointFiles) {
+    await validEntryPoint(pkg, entryPointFile);
+  }
+
+  const entryPoints: EntryPoint[] = [];
+
+  for (const file of entryPointFiles) {
+    const inFile = path.join(pkg.dir, 'src', file);
+
+    let targetDir = `./${removeFileExt(file)}`;
+
+    if (targetDir.endsWith('/index')) {
+      targetDir = targetDir.slice(0, -6);
+    }
+
+    const isMain = targetDir === '.';
+
+    const entryPointName = slugify(`${pkg.packageJson.name}-${isMain ? '' : targetDir}`);
+
+    const outFile = path.resolve(pkg.dir, targetDir, 'dist', `${entryPointName}.js`);
+
+    entryPoints.push({ isMain, inFile, outFile });
+  }
+
+  return entryPoints;
+}
+
+/**
+ * Returns an array of all entry points in the given package.
+ * A entry point is a relative path to the `src/` directory.
+ */
+async function findEntryPoints(pkg: Package): Promise<string[]> {
+  const entryPoints: string[] = (pkg.packageJson as any)?.preconstruct?.entrypoints;
+
+  if (entryPoints) {
+    return entryPoints;
+  }
+
+  return await glob(['index.ts', 'index.tsx', 'index.mjs', 'index.cjs', 'index.js'], {
+    cwd: path.join(pkg.dir, 'src'),
+  });
+}
+
+async function validEntryPoint(pkg: Package, entryPoint: string) {
+  const absFilePath = path.resolve(pkg.dir, 'src', entryPoint);
+  logger.assert(
+    await fileExists(absFilePath),
+    "entry point file doesn't exist: ${absFilePath}. Please check your package.json",
+  );
 }

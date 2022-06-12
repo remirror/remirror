@@ -161,10 +161,10 @@
   "@remirror": {},
   "preconstruct": {
     "entrypoints": [
+      "index.ts",
       "dom.ts",
       "extensions.ts",
-      "icons.ts",
-      "index.ts"
+      "icons.ts"
     ]
   },
   "rn:dev": "src/index.ts"
