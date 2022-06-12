@@ -1,4 +1,4 @@
-import refractor from 'refractor/core';
+import refractor from 'refractor/core.js';
 import {
   ApplySchemaAttributes,
   assertGet,

@@ -1,7 +1,9 @@
 const path = require('path');
 const glob = require('globby');
 const isCI = require('is-ci');
+
 const root = path.join(__dirname, '..', '..');
+
 const babelConfig = require(path.join(root, 'packages', 'storybook-react', '.babelrc.js'));
 
 const stories = glob.sync(`packages/storybook-react/stories/**/*.stories.(tsx)`, {
