@@ -4,6 +4,10 @@ const prefix = '[remirror-cli]';
 
 export const logger = {
   debug: (...args: any[]) => {
+    if (!process.env.DEBUG) {
+      return;
+    }
+
     console.debug(prefix, 'DEBUG', ...args);
   },
   log: (...args: any[]) => {

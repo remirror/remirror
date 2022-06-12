@@ -16,11 +16,7 @@ export async function build() {
 
   const packages = await listPackages({ isPrivate: false });
 
-  for (const pkg of packages) {
-    // if (pkg.dir === cwd) {
-    await buildPackageV2(pkg);
-    // }
-  }
+  return Promise.all(packages.map(buildPackageV2));
 }
 
 async function buildPackage(pkg: Package) {

@@ -24,6 +24,8 @@ export async function runEsbuild(options: Pick<BuildOptions, 'entryPoints' | 'ou
 }
 
 export async function runEsbuildV2(pkg: Package, options: { inFile: string; outFile: string }) {
+  logger.debug(`running esbuild ${pkg.packageJson.name}: ${options.inFile} => ${options.outFile}`);
+
   const { base: outFileName, dir: outDir } = path.parse(options.outFile);
   const outFileNameWithoutExt = removeFileExt(outFileName);
 
