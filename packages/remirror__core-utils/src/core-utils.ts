@@ -1204,35 +1204,18 @@ export function shouldUseDomEnvironment(forceEnvironment?: RenderEnvironment): b
 }
 
 /**
- * Get the document implementation within a node environment. This is only
- * included in the build when using node.
- */
-function getDocumentForNodeEnvironment() {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { JSDOM } = require('jsdom');
-    return new JSDOM('').window.document;
-  } catch {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('domino').createDocument();
-    } catch {
-      return require('min-document');
-    }
-  }
-}
-
-/**
  * Retrieves the document based on the environment we are currently in.
  *
  * @param forceEnvironment - force a specific environment
  */
-export function getDocument(forceEnvironment?: RenderEnvironment): Document {
+export function getDocument(): Document {
   if (typeof document !== 'undefined') {
     return document;
   }
 
-  return shouldUseDomEnvironment(forceEnvironment) ? document : getDocumentForNodeEnvironment();
+  throw new Error(
+    'Unable to retrieve the document. Please ensure that you are running in a browser or you have Node.js based DOM environment configurated (i.e. JSDOM, domino, min-document etc.)',
+  );
 }
 
 export interface CustomDocumentProps {
