@@ -1100,10 +1100,12 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^2.0.0-beta.0
+      '@remirror/extension-positioner': ^2.0.0-beta.0
       '@remirror/pm': ^2.0.0-beta.0
     dependencies:
       '@babel/runtime': 7.17.9
       '@remirror/core': link:../remirror__core
+      '@remirror/extension-positioner': link:../remirror__extension-positioner
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 

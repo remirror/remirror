@@ -18,6 +18,9 @@
   "references": [
     {
       "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-positioner/src"
     }
   ]
 }
