@@ -8,7 +8,12 @@ const nonTsCheckNotice = `Notice that this command won't bundle .d.ts files nor 
 export async function main() {
   const program = new Command();
 
-  program.name('remirror-cli').description('CLI for internal development in the remirror monorepo');
+  program
+    .name('remirror-cli')
+    .description(
+      'CLI for internal development in the remirror monorepo.\n' +
+        '(Set the environment variable DEBUG as `yes` to see more log',
+    );
 
   program
     .command('build')
