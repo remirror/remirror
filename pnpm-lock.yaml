@@ -468,6 +468,7 @@ importers:
       '@remirror/extension-drop-cursor': ^2.0.0-beta.0
       '@remirror/extension-embed': ^2.0.0-beta.0
       '@remirror/extension-emoji': ^2.0.0-beta.0
+      '@remirror/extension-entity-reference': ^2.0.0-beta.0
       '@remirror/extension-epic-mode': ^2.0.0-beta.0
       '@remirror/extension-events': ^2.0.0-beta.0
       '@remirror/extension-font-family': ^2.0.0-beta.0
@@ -538,6 +539,7 @@ importers:
       '@remirror/extension-drop-cursor': link:../remirror__extension-drop-cursor
       '@remirror/extension-embed': link:../remirror__extension-embed
       '@remirror/extension-emoji': link:../remirror__extension-emoji
+      '@remirror/extension-entity-reference': link:../remirror__extension-entity-reference
       '@remirror/extension-epic-mode': link:../remirror__extension-epic-mode
       '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/extension-font-family': link:../remirror__extension-font-family
@@ -1091,6 +1093,19 @@ importers:
       emojibase-regex: 6.0.0
       escape-string-regexp: 4.0.0
       svgmoji: 3.2.0
+    devDependencies:
+      '@remirror/pm': link:../remirror__pm
+
+  packages/remirror__extension-entity-reference:
+    specifiers:
+      '@babel/runtime': ^7.13.10
+      '@remirror/core': ^2.0.0-beta.0
+      '@remirror/extension-positioner': ^2.0.0-beta.0
+      '@remirror/pm': ^2.0.0-beta.0
+    dependencies:
+      '@babel/runtime': 7.17.9
+      '@remirror/core': link:../remirror__core
+      '@remirror/extension-positioner': link:../remirror__extension-positioner
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
@@ -2295,6 +2310,7 @@ importers:
       '@remirror/dev': ^2.0.0-beta.0
       '@remirror/extension-codemirror6': ^1.0.0-beta.0
       '@remirror/extension-count': ^2.0.0-beta.0
+      '@remirror/extension-entity-reference': ^2.0.0-beta.0
       '@remirror/extension-file': ^1.0.0-beta.0
       '@remirror/extension-mention': ^2.0.0-beta.0
       '@remirror/extension-mention-atom': ^2.0.0-beta.0
@@ -2353,6 +2369,7 @@ importers:
       '@remirror/dev': link:../remirror__dev
       '@remirror/extension-codemirror6': link:../remirror__extension-codemirror6
       '@remirror/extension-count': link:../remirror__extension-count
+      '@remirror/extension-entity-reference': link:../remirror__extension-entity-reference
       '@remirror/extension-file': link:../remirror__extension-file
       '@remirror/extension-mention': link:../remirror__extension-mention
       '@remirror/extension-mention-atom': link:../remirror__extension-mention-atom
@@ -12156,7 +12173,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001332
+      caniuse-lite: 1.0.30001341
       electron-to-chromium: 1.4.118
       escalade: 3.1.1
       node-releases: 2.0.3
@@ -12541,6 +12558,9 @@ packages:
 
   /caniuse-lite/1.0.30001332:
     resolution: {integrity: sha512-10T30NYOEQtN6C11YGg411yebhvpnC6Z102+B95eAsN0oB6KUs01ivE8u+G6FMIRtIrVlYXhL+LUwQ3/hXwDWw==}
+
+  /caniuse-lite/1.0.30001341:
+    resolution: {integrity: sha512-2SodVrFFtvGENGCv0ChVJIDQ0KPaS1cg7/qtfMaICgeMolDdo/Z2OD32F0Aq9yl6F4YFwGPBS5AaPqNYiW4PoA==}
 
   /capture-stack-trace/1.0.1:
     resolution: {integrity: sha512-mYQLZnx5Qt1JgB1WEiMCf2647plpGeQ2NMR/5L0HNZzGQo4fuSPnK+wjfPnKZV0aiJDgzmWqqkV/g7JD+DW0qw==}

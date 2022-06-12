@@ -45,6 +45,7 @@
     "@remirror/dev": "^2.0.0-beta.0",
     "@remirror/extension-codemirror6": "^1.0.0-beta.0",
     "@remirror/extension-count": "^2.0.0-beta.0",
+    "@remirror/extension-entity-reference": "^2.0.0-beta.0",
     "@remirror/extension-file": "^1.0.0-beta.0",
     "@remirror/extension-mention": "^2.0.0-beta.0",
     "@remirror/extension-mention-atom": "^2.0.0-beta.0",

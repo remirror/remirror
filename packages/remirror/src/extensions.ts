@@ -14,6 +14,7 @@ export * from '@remirror/extension-doc';
 export * from '@remirror/extension-drop-cursor';
 export * from '@remirror/extension-embed';
 export * from '@remirror/extension-emoji';
+export * from '@remirror/extension-entity-reference';
 export * from '@remirror/extension-epic-mode';
 export * from '@remirror/extension-events';
 export * from '@remirror/extension-font-family';
