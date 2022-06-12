@@ -4,6 +4,7 @@ import path from 'node:path/posix';
 
 import { logger } from '../logger';
 import { fileExists } from './file-exists';
+import { getRoot } from './get-root';
 import { removeFileExt } from './remove-file-ext';
 import { runEsbuild } from './run-esbuild';
 import { slugify } from './slugify';
@@ -151,6 +152,15 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
 
   delete packageJson.browser;
   packageJson.exports = exports;
+
+  const root = getRoot();
+  const relativeDir = path.relative(root, pkg.dir);
+  packageJson.homepage = `https://github.com/remirror/remirror/tree/HEAD/${relativeDir}`;
+  packageJson.repository = {
+    type: 'git',
+    url: 'https://github.com/remirror/remirror.git',
+    directory: relativeDir,
+  };
 
   await writePackageJson(pkg.dir, packageJson);
 }
