@@ -20,7 +20,7 @@ export async function build() {
 }
 
 async function buildPackage(pkg: Package) {
-  logger.info(`building ${pkg.packageJson.name}`);
+  logger.info(`bundling ${pkg.packageJson.name}`);
 
   const entryPoints = await parseEntryPoints(pkg);
 
@@ -37,6 +37,7 @@ async function buildPackage(pkg: Package) {
   }
 
   await Promise.all(promises);
+  logger.info(`success to bundle ${pkg.packageJson.name}`);
 }
 
 interface EntryPoint {
