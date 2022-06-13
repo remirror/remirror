@@ -123,6 +123,8 @@ export class AnnotationState<Type extends Annotation = Annotation> {
         }))
         // Remove annotations for which all containing content was deleted
         .filter((annotation) => annotation.to !== annotation.from);
+      // Update the store with the updated annotation positions, and the remove ones
+      this.store.setAnnotations(this.annotations);
       this.decorationSet = this.decorationSet.map(tr.mapping, tr.doc);
     }
 
