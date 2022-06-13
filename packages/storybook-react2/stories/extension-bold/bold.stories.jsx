@@ -1,5 +1,5 @@
-import { BoldButton } from './basic';
+import Basic from './basic';
 
-export default { title: 'Bold' };
+export default { title: 'Extensions / Bold' };
 
-export { BoldButton };
+export { Basic };

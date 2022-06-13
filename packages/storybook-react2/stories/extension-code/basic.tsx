@@ -4,7 +4,7 @@ import './styles.css';
 import React from 'react';
 import { cx, htmlToProsemirrorNode } from 'remirror';
 import { CodeExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
+import { Remirror, useActive, useCommands, useRemirror } from '@remirror/react';
 
 const extensions = () => [new CodeExtension()];
 
@@ -30,17 +30,17 @@ const Basic = (): JSX.Element => {
   });
 
   return (
-    <ThemeProvider>
-      <Remirror
-        manager={manager}
-        autoFocus
-        onChange={onChange}
-        initialContent={state}
-        autoRender='end'
-      >
-        <CodeButton />
-      </Remirror>
-    </ThemeProvider>
+    // <ThemeProvider>
+    <Remirror
+      manager={manager}
+      autoFocus
+      onChange={onChange}
+      initialContent={state}
+      autoRender='end'
+    >
+      <CodeButton />
+    </Remirror>
+    // </ThemeProvider>
   );
 };
 
