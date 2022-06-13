@@ -1,22 +1,23 @@
 import 'remirror/styles/all.css';
 import './styles.css';
 
+import React from 'react';
 import { cx, htmlToProsemirrorNode } from 'remirror';
-import { BoldExtension } from 'remirror/extensions';
+import { CodeExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
 
-const extensions = () => [new BoldExtension()];
+const extensions = () => [new CodeExtension()];
 
-const BoldButton = () => {
+const CodeButton = () => {
   const commands = useCommands();
   const active = useActive(true);
   return (
     <button
       onMouseDown={(event) => event.preventDefault()}
-      onClick={() => commands.toggleBold()}
-      className={cx(active.bold() && 'active')}
+      onClick={() => commands.toggleCode()}
+      className={cx(active.code() && 'active')}
     >
-      Bold
+      Code
     </button>
   );
 };
@@ -24,7 +25,7 @@ const BoldButton = () => {
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
     extensions: extensions,
-    content: '<p>Text in <b>bold</b></p>',
+    content: '<p>Text as <code>code</code>.</p>',
     stringHandler: htmlToProsemirrorNode,
   });
 
@@ -37,7 +38,7 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <BoldButton />
+        <CodeButton />
       </Remirror>
     </ThemeProvider>
   );

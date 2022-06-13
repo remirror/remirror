@@ -1,3 +1,4 @@
+import React from 'react';
 import { act, strictRender } from 'testing/react';
 import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
 

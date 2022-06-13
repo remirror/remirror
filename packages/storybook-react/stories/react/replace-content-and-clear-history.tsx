@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCallback } from 'react';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 

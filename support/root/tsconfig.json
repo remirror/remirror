@@ -546,6 +546,9 @@
       "path": "packages/storybook-react/src"
     },
     {
+      "path": "packages/storybook-react2/src"
+    },
+    {
       "path": "packages/test-keyboard/__tests__"
     },
     {

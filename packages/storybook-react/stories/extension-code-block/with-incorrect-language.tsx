@@ -1,3 +1,4 @@
+import React from 'react';
 import javascript from 'refractor/lang/javascript';
 import typescript from 'refractor/lang/typescript';
 import { CodeBlockExtension } from 'remirror/extensions';

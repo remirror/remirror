@@ -1,3 +1,4 @@
+import React from 'react';
 import css from 'refractor/lang/css';
 import javascript from 'refractor/lang/javascript';
 import json from 'refractor/lang/json';

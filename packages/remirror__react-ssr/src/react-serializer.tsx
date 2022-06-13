@@ -1,3 +1,4 @@
+import React from 'react';
 import { createElement, Fragment, ReactNode } from 'react';
 import {
   AnyExtension,

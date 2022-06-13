@@ -32,6 +32,18 @@
     "e2e:watch": "E2E_SERVER=storybook-react pnpm -w e2e:watch",
     "start": "start-storybook -p 6006 -c ./"
   },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@codemirror/basic-setup": "^0.20.0",
@@ -90,6 +102,7 @@
     "yjs": "^13.5.23"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.16.7",
     "@types/html-escaper": "^3.0.0",
     "@types/node": "^16.3.3"
   },

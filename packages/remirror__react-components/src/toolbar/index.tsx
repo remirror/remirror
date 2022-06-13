@@ -4,6 +4,7 @@
  * The builtin toolbars for use with remirror.
  */
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
+import React from 'react';
 import { useCallback } from 'react';
 import { Box } from 'reakit/Box';
 import { Button } from 'reakit/Button';

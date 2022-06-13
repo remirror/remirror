@@ -1,5 +1,6 @@
 import { usePluginData } from '@docusaurus/useGlobalData';
 import { BaseProps, ExamplesPluginData } from 'docusaurus-plugin-examples/types';
+import React from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
 import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';

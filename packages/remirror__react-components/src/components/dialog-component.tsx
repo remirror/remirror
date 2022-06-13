@@ -1,3 +1,4 @@
+import React from 'react';
 import { FC, PropsWithChildren, useEffect } from 'react';
 import { Dialog, DialogBackdrop, useDialogState } from 'reakit/Dialog';
 import usePrevious from 'use-previous';

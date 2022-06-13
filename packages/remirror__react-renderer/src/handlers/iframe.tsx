@@ -1,3 +1,4 @@
+import React from 'react';
 import { FC } from 'react';
 import { Literal, RemirrorJSON } from '@remirror/core';
 

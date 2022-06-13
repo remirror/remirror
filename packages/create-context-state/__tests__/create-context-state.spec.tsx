@@ -1,3 +1,4 @@
+import React from 'react';
 import { useMemo } from 'react';
 import { act, fireEvent, render } from 'testing/react';
 

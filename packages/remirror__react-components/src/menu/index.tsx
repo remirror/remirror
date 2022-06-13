@@ -3,8 +3,8 @@
  *
  * The builtin menus.
  */
-
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
+import React from 'react';
 import { forwardRef, useEffect, useRef } from 'react';
 import { Box } from 'reakit/Box';
 import type { MenuBarStateReturn, MenuStateReturn } from 'reakit/Menu';

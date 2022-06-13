@@ -1,3 +1,4 @@
+import React from 'react';
 import { useMemo } from 'react';
 import { LinkExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';

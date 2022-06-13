@@ -1,4 +1,5 @@
 import { RemirrorTestChain } from 'jest-remirror';
+import React from 'react';
 import { docNodeBasicJSON } from 'testing';
 import { strictRender } from 'testing/react';
 import type { RemirrorJSON } from '@remirror/core';

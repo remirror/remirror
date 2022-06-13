@@ -1,3 +1,4 @@
+import React from 'react';
 import { wysiwygPreset } from 'remirror/extensions';
 import {
   ComponentItem,

@@ -1,5 +1,6 @@
 import 'remirror/styles/extension-file.css';
 
+import React from 'react';
 import { useCallback } from 'react';
 import { DropCursorExtension } from 'remirror/extensions';
 import { createSlowFileUploader, FileExtension } from '@remirror/extension-file';

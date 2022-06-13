@@ -1,4 +1,5 @@
 import { ExampleProvider } from '@components';
+import React from 'react';
 import { FC, PropsWithChildren } from 'react';
 
 const Root: FC<PropsWithChildren<object>> = (props) => {

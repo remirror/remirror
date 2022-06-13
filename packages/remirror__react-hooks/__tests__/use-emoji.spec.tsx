@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
+import React from 'react';
 import { FC } from 'react';
 import { EmojiExtension } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';

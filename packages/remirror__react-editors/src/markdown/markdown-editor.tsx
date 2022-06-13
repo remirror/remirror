@@ -1,5 +1,6 @@
 import '@remirror/styles/all.css';
 
+import React from 'react';
 import { FC, PropsWithChildren, useCallback } from 'react';
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';

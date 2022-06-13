@@ -1,3 +1,4 @@
+import React from 'react';
 import { FC, PropsWithChildren, useCallback } from 'react';
 import { PlaceholderExtension, wysiwygPreset } from 'remirror/extensions';
 import { TableExtension } from '@remirror/extension-react-tables';

@@ -3,8 +3,8 @@
  *
  * A color picker component which is used for menus.
  */
-
 import type { FC, PropsWithChildren } from 'react';
+import React from 'react';
 import { useCallback } from 'react';
 import {
   Composite,

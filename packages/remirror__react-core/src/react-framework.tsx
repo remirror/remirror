@@ -1,4 +1,5 @@
 import composeRefs from '@seznam/compose-react-refs';
+import React from 'react';
 import { Dispatch, ReactNode, Ref, SetStateAction } from 'react';
 import {
   AnyExtension,
