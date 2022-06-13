@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "1.0.87",
+  "version": "1.0.88",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -77,7 +77,7 @@
     "@remirror/core-types": "^1.0.4",
     "@remirror/core-utils": "^1.1.10",
     "@remirror/dom": "^1.0.31",
-    "@remirror/extension-annotation": "^1.1.25",
+    "@remirror/extension-annotation": "^1.1.26",
     "@remirror/extension-bidi": "^1.0.23",
     "@remirror/extension-blockquote": "^1.0.27",
     "@remirror/extension-bold": "^1.0.23",
