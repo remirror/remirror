@@ -1,5 +1,13 @@
 # @remirror/extension-annotation
 
+## 1.1.26
+
+> 2022-06-13
+
+### Patch Changes
+
+- Update annotation store after mapping positions. Fixes #1665
+
 ## 1.1.25
 
 > 2022-06-10
