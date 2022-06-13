@@ -1,5 +1,8 @@
 module.exports = {
-  stories: ['../stories/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: [
+    '../stories/**/introduction.stories.@(js|jsx|ts|tsx)',
+    '../stories/**/bold.stories.@(js|jsx|ts|tsx)',
+  ],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -14,5 +17,8 @@ module.exports = {
   ],
   core: {
     builder: 'webpack5',
+  },
+  features: {
+    storyStoreV7: true,
   },
 };
