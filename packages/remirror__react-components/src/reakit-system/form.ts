@@ -41,11 +41,10 @@ export function useFormMessageOptions({
   unstable_system: system = {},
   ...options
 }: BootstrapFormMessageOptions): BootstrapFormMessageOptions {
-  const isInvalid = Boolean(unstable_getIn(options.errors, options.name));
   return {
     unstable_system: {
       ...system,
-      palette: isInvalid ? 'danger' : system.palette || 'success',
+      palette: system.palette || 'success',
     },
     ...options,
   };
@@ -73,11 +72,8 @@ export function useFormGroupOptions({
   unstable_system: { fill = 'outline', ...system } = {},
   ...options
 }: BootstrapFormGroupOptions): BootstrapFormGroupOptions {
-  const isInvalid = Boolean(
-    unstable_getIn(options.touched, options.name) && unstable_getIn(options.errors, options.name),
-  );
   return {
-    unstable_system: { fill, ...system, palette: isInvalid ? 'danger' : system.palette },
+    unstable_system: { fill, ...system, palette: system.palette },
     ...options,
   };
 }
