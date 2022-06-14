@@ -130,7 +130,7 @@ async function validEntryPoint(pkg: Package, entryPoint: string) {
 async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
   const packageJson = pkg.packageJson as any;
 
-  let exports: any = {};
+  let exports: any = { ...packageJson.exports };
 
   for (const entryPoint of entryPoints) {
     const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
