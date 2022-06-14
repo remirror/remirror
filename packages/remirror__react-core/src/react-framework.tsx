@@ -1,4 +1,3 @@
-import composeRefs from '@seznam/compose-react-refs';
 import React from 'react';
 import { Dispatch, ReactNode, Ref, SetStateAction } from 'react';
 import {
@@ -20,6 +19,7 @@ import { ReactPlaceholderExtension } from '@remirror/preset-react';
 import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
 import { addKeyToElement } from '@remirror/react-utils';
 
+import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
 import type { GetRootPropsConfig, ReactFrameworkOutput, RefKeyRootProps } from './react-types';
 
 export class ReactFramework<Extension extends AnyExtension> extends Framework<

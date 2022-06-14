@@ -1,5 +1,4 @@
 import { Placement } from '@popperjs/core';
-import composeRefs from '@seznam/compose-react-refs';
 import { matchSorter } from 'match-sorter';
 import React from 'react';
 import { FC, PropsWithChildren, ReactChild, Ref, useMemo } from 'react';
@@ -18,6 +17,7 @@ import {
 } from '@remirror/react-hooks';
 import { ComponentsTheme, ExtensionPositionerTheme } from '@remirror/theme';
 
+import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
 import { MenuComponent } from './menu';
 import {
   ComponentItem,

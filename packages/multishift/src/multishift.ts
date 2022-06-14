@@ -1,4 +1,3 @@
-import composeRefs from '@seznam/compose-react-refs';
 import {
   ChangeEvent,
   HTMLProps,
@@ -19,6 +18,7 @@ import {
   object,
 } from '@remirror/core-helpers';
 
+import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
 import { Actions } from './multishift-action-creators';
 import {
   SPECIAL_INPUT_KEYS,
