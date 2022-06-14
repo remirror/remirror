@@ -123,7 +123,7 @@ Whatever you decide thanks for taking the time to explore the **remirror** proje
   <tr>
     <td align="center">
       <a href="https://www.hellobenefex.com/" rel="nofollow">
-        <img src="https://user-images.githubusercontent.com/2003804/170766938-b915e2a7-1b8c-47d3-861d-6037922416a9.jpeg" width="50" style="max-width: 100%;" alt="Benefex logo"><br>
+        <img src="https://user-images.githubusercontent.com/2003804/173526360-6f432f7b-014f-44b6-ac8d-cbb03e5bd6e2.png" width="80" style="max-width: 100%;" alt="Benefex logo"><br>
         <strong>Benefex</strong>
       </a>
     </td>
