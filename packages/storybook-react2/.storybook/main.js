@@ -33,7 +33,7 @@ module.exports = {
 
     // Disable fullySpecified
     config.resolve.fullySpecified = false;
-    console.log('config:', config);
+    // console.log('config:', config);
 
     // // Make whatever fine-grained changes you need
     // config.module.rules.push({

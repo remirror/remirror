@@ -2,7 +2,7 @@ import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import typescriptPlugin from 'prettier/parser-typescript';
 import { formatWithCursor } from 'prettier/standalone';
-import refractor from 'refractor/core';
+import refractor from 'refractor/core.js';
 import graphql from 'refractor/lang/graphql';
 import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';

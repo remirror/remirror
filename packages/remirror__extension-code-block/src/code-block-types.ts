@@ -1,4 +1,4 @@
-import type { RefractorSyntax } from 'refractor/core';
+import type { RefractorSyntax } from 'refractor/core.js';
 import type { ProsemirrorAttributes, Static, StringKey } from '@remirror/core';
 import { ExtensionCodeBlockTheme } from '@remirror/theme';
 
