@@ -6,18 +6,18 @@
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import React from 'react';
 import { useCallback } from 'react';
-import { Box } from 'reakit/Box';
-import { Button } from 'reakit/Button';
-import { Group } from 'reakit/Group';
+import { Box } from 'reakit';
+import { Button } from 'reakit';
+import { Group } from 'reakit';
 import {
   Toolbar as ReakitToolbar,
   ToolbarItem as ReakitToolbarItem,
   ToolbarSeparator as ReakitToolbarSeparator,
   ToolbarStateReturn,
   useToolbarState,
-} from 'reakit/Toolbar';
-import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
-import { VisuallyHidden } from 'reakit/VisuallyHidden';
+} from 'reakit';
+import { Tooltip, TooltipReference, useTooltipState } from 'reakit';
+import { VisuallyHidden } from 'reakit';
 import {
   AnyExtension,
   CommandDecoratorMessageProps,

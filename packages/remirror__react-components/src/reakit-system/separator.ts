@@ -1,4 +1,4 @@
-import { SeparatorHTMLProps, SeparatorOptions } from 'reakit/Separator/Separator';
+import { SeparatorHTMLProps, SeparatorOptions } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

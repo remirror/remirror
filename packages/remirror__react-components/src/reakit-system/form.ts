@@ -1,13 +1,10 @@
-import { unstable_FormHTMLProps, unstable_FormOptions } from 'reakit/Form/Form';
-import { unstable_FormGroupHTMLProps, unstable_FormGroupOptions } from 'reakit/Form/FormGroup';
-import { unstable_FormInputOptions } from 'reakit/Form/FormInput';
-import { unstable_FormLabelHTMLProps, unstable_FormLabelOptions } from 'reakit/Form/FormLabel';
-import {
-  unstable_FormMessageHTMLProps,
-  unstable_FormMessageOptions,
-} from 'reakit/Form/FormMessage';
-import { unstable_FormRemoveButtonOptions } from 'reakit/Form/FormRemoveButton';
-import { unstable_getIn } from 'reakit/Form/utils/getIn';
+import { unstable_FormHTMLProps, unstable_FormOptions } from 'reakit';
+import { unstable_FormGroupHTMLProps, unstable_FormGroupOptions } from 'reakit';
+import { unstable_FormInputOptions } from 'reakit';
+import { unstable_FormLabelHTMLProps, unstable_FormLabelOptions } from 'reakit';
+import { unstable_FormMessageHTMLProps, unstable_FormMessageOptions } from 'reakit';
+import { unstable_FormRemoveButtonOptions } from 'reakit';
+import { unstable_getIn } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

@@ -9,7 +9,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import useEffectOnce from 'react-use/lib/useEffectOnce';
+import { useEffectOnce } from 'react-use';
 import {
   debounce,
   includes,

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from 'reakit/Button';
-import { Checkbox } from 'reakit/Checkbox';
+import { Button } from 'reakit';
+import { Checkbox } from 'reakit';
 
 import { useExample } from './example-provider';
 

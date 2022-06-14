@@ -7,7 +7,7 @@ import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import markdown from 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import { Tab, TabList, TabPanel, useTabState } from 'reakit/Tab';
+import { Tab, TabList, TabPanel, useTabState } from 'reakit';
 
 import { useExample } from './example-provider';
 

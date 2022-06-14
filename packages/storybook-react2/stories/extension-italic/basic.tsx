@@ -1,5 +1,5 @@
-import 'remirror/styles/all.css';
-import './styles.css';
+// import 'remirror/styles/all.css';
+// import './styles.css';
 
 import React from 'react';
 import { cx, htmlToProsemirrorNode } from 'remirror';
