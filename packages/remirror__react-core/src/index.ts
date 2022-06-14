@@ -17,7 +17,6 @@ export {
   useEditorDomRef,
   useEditorState,
   useEditorView,
-  useEffectWithWarning,
   useExtension,
   useExtensionCustomEvent,
   useExtensionEvent,
