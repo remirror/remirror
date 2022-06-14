@@ -4,7 +4,6 @@ import { unstable_FormInputOptions } from 'reakit';
 import { unstable_FormLabelHTMLProps, unstable_FormLabelOptions } from 'reakit';
 import { unstable_FormMessageHTMLProps, unstable_FormMessageOptions } from 'reakit';
 import { unstable_FormRemoveButtonOptions } from 'reakit';
-import { unstable_getIn } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
@@ -25,14 +24,11 @@ export function useFormInputOptions({
   unstable_system: { fill = 'outline', ...system } = {},
   ...options
 }: BootstrapFormInputOptions): BootstrapFormInputOptions {
-  const isInvalid = Boolean(
-    unstable_getIn(options.touched, options.name) && unstable_getIn(options.errors, options.name),
-  );
   return {
     unstable_system: {
       fill,
       ...system,
-      palette: isInvalid ? 'danger' : system.palette,
+      palette: system.palette,
     },
     ...options,
   };

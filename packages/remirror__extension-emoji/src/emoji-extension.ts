@@ -1,6 +1,6 @@
-import EMOJI_REGEX from 'emojibase-regex/emoji';
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
-import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
+import EMOJI_REGEX from 'emojibase-regex/emoji.js';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon.js';
+import SHORTCODE_REGEX from 'emojibase-regex/shortcode.js';
 import escapeStringRegex from 'escape-string-regexp';
 import { Moji, SpriteCollection } from 'svgmoji';
 import {
