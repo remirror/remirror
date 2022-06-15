@@ -15,6 +15,7 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
+    "./*": "./*",
     "./dom": {
       "import": "./dom/dist/remirror-styles-dom.js",
       "types": "./dist-types/dom.d.ts",
