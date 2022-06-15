@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { UploadContext } from '@remirror/core';
 import { NodeViewComponentProps, useCommands } from '@remirror/react';
-import {
-  CloseLineIcon as StopIcon,
-  DeleteBin6LineIcon as DeleteIcon,
-  DownloadLineIcon as DownloadIcon,
-  File2LineIcon as FileIcon,
-} from '@remirror/react-components/all-icons';
 import { ExtensionFileTheme } from '@remirror/theme';
 
 import type { FileAttributes } from './file-extension';
+import { DeleteIcon, DownloadIcon, FileIcon, StopIcon } from './file-icons';
 
 export type FileComponentProps = NodeViewComponentProps & {
   context?: UploadContext;

@@ -1,4 +1,5 @@
 import { BaseProps } from 'docusaurus-plugin-examples/types';
+import React from 'react';
 
 import { ExampleIFrame } from './example-iframe-component';
 import { ExampleSource } from './example-source-component';

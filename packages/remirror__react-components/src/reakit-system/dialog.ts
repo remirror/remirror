@@ -1,5 +1,5 @@
-import { DialogHTMLProps, DialogOptions } from 'reakit/Dialog/Dialog';
-import { DialogBackdropHTMLProps, DialogBackdropOptions } from 'reakit/Dialog/DialogBackdrop';
+import { DialogHTMLProps, DialogOptions } from 'reakit';
+import { DialogBackdropHTMLProps, DialogBackdropOptions } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

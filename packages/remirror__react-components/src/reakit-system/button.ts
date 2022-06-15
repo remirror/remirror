@@ -1,4 +1,4 @@
-import { ButtonHTMLProps, ButtonOptions } from 'reakit/Button/Button';
+import { ButtonHTMLProps, ButtonOptions } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

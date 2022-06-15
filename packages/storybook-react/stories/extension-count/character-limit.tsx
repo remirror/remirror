@@ -1,6 +1,7 @@
 import 'remirror/styles/all.css';
 import 'react-circular-progressbar/dist/styles.css';
 
+import React from 'react';
 import { FC } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { CountExtension } from '@remirror/extension-count';

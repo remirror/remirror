@@ -4,7 +4,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "jsx": "react-jsxdev",
+    "jsx": "react",
     "types": ["node", "jest"],
     "moduleResolution": "node",
     "useDefineForClassFields": true,

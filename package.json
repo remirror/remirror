@@ -134,9 +134,9 @@
     "@linaria/cli": "3.0.0-beta.13",
     "@linaria/shaker": "3.0.0-beta.13",
     "@linaria/webpack-loader": "3.0.0-beta.13",
-    "@lingui/cli": "^3.12.1",
-    "@lingui/macro": "^3.12.1",
-    "@lingui/react": "^3.13.2",
+    "@lingui/cli": "^3.13.3",
+    "@lingui/macro": "^3.13.3",
+    "@lingui/react": "^3.13.3",
     "@manypkg/cli": "^0.19.0",
     "@microsoft/api-documenter": "^7.17.10",
     "@microsoft/api-extractor": "^7.18.17",
@@ -237,7 +237,6 @@
   "preconstruct": {
     "packages": [
       "packages/docusaurus-plugin-examples",
-      "packages/storybook-react",
       "packages/testing",
       "support/actions",
       "support/scripts",

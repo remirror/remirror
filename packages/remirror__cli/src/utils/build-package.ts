@@ -7,6 +7,7 @@ import { logger } from '../logger';
 import { fileExists } from './file-exists';
 import { getRoot } from './get-root';
 import { removeFileExt } from './remove-file-ext';
+import { runCustomScript } from './run-custom-script';
 import { runEsbuild } from './run-esbuild';
 import { slugify } from './slugify';
 import { writePackageJson } from './write-package-json';
@@ -23,8 +24,15 @@ export async function buildPackage(pkg: Package) {
 
   const promises: Array<Promise<unknown>> = [];
 
-  for (const entryPoint of entryPoints) {
-    promises.push(runEsbuild(pkg, entryPoint));
+  const buildScript = (pkg.packageJson as any)?.scripts?.build;
+
+  if (buildScript) {
+    logger.info(`building ${pkg.packageJson.name} with its custom build script`);
+    promises.push(runCustomScript(pkg, 'build'));
+  } else {
+    for (const entryPoint of entryPoints) {
+      promises.push(runEsbuild(pkg, entryPoint));
+    }
   }
 
   for (const entryPoint of entryPoints) {
@@ -122,7 +130,7 @@ async function validEntryPoint(pkg: Package, entryPoint: string) {
 async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
   const packageJson = pkg.packageJson as any;
 
-  let exports: any = {};
+  let exports: any = { ...packageJson.exports };
 
   for (const entryPoint of entryPoints) {
     const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);

@@ -1,4 +1,4 @@
-import refractor, { RefractorNode } from 'refractor/core';
+import refractor, { RefractorNode } from 'refractor/core.js';
 import {
   ApplySchemaAttributes,
   CommandFunction,

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import type { AnyExtension } from 'remirror';
 import { YjsExtension } from 'remirror/extensions';

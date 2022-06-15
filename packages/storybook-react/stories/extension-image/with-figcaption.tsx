@@ -1,5 +1,6 @@
 import 'remirror/styles/all.css';
 
+import React from 'react';
 import { ApplySchemaAttributes, NodeExtensionSpec, NodeSpecOverride } from 'remirror';
 import { ImageExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';

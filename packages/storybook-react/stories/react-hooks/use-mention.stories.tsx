@@ -1,5 +1,6 @@
 import './use-mention-atom-styles.css';
 
+import React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { cx } from 'remirror';
 import {

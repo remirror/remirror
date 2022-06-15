@@ -1,5 +1,6 @@
 import 'remirror/styles/all.css';
 
+import React from 'react';
 import { FC, useEffect } from 'react';
 import { AnnotationExtension, createCenteredAnnotationPositioner } from 'remirror/extensions';
 import {

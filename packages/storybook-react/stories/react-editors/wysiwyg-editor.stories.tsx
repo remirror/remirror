@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCallback } from 'react';
 import { WysiwygEditor } from '@remirror/react-editors/wysiwyg';
 

@@ -1,5 +1,6 @@
 import 'remirror/styles/all.css';
 
+import React from 'react';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 function Editor({ initialText }: { initialText: string }): JSX.Element {

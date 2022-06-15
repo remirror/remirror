@@ -1,8 +1,9 @@
 import '@remirror/styles/all.css';
 
+import React from 'react';
 import { FC, PropsWithChildren, useCallback } from 'react';
-import jsx from 'refractor/lang/jsx';
-import typescript from 'refractor/lang/typescript';
+import jsx from 'refractor/lang/jsx.js';
+import typescript from 'refractor/lang/typescript.js';
 import { ExtensionPriority } from 'remirror';
 import {
   BlockquoteExtension,

@@ -1,4 +1,5 @@
 import { extensionValidityTest, RemirrorTestChain } from 'jest-remirror';
+import React from 'react';
 import { ComponentType } from 'react';
 import { command, CommandFunction } from 'remirror';
 import { act, render, strictRender } from 'testing/react';

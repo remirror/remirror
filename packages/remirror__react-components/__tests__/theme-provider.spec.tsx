@@ -1,3 +1,4 @@
+import React from 'react';
 import { strictRender } from 'testing/react';
 
 import { ThemeProvider } from '../';

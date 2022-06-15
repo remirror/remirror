@@ -45,7 +45,8 @@
       "types": "./dist-types/icons.d.ts",
       "default": "./icons/dist/remirror-icons.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./styles/*": "./styles/*"
   },
   "main": "./dist/remirror.js",
   "module": "./dist/remirror.js",

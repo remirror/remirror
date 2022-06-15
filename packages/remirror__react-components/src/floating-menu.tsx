@@ -1,9 +1,9 @@
 import { Placement } from '@popperjs/core';
-import composeRefs from '@seznam/compose-react-refs';
 import { matchSorter } from 'match-sorter';
+import React from 'react';
 import { FC, PropsWithChildren, ReactChild, Ref, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { useMenuState } from 'reakit/Menu';
+import { useMenuState } from 'reakit';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { cx, Except } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
@@ -17,6 +17,7 @@ import {
 } from '@remirror/react-hooks';
 import { ComponentsTheme, ExtensionPositionerTheme } from '@remirror/theme';
 
+import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
 import { MenuComponent } from './menu';
 import {
   ComponentItem,

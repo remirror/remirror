@@ -1,3 +1,4 @@
+import React from 'react';
 import { ComponentType, FC, useEffect } from 'react';
 import { cx, isEmptyArray } from '@remirror/core';
 import { ReactComponentMessages as Messages } from '@remirror/messages';

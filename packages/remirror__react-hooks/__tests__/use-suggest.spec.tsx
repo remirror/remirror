@@ -1,4 +1,5 @@
 import { RemirrorTestChain } from 'jest-remirror';
+import React from 'react';
 import { FC } from 'react';
 import { act, DefaultEditor, strictRender } from 'testing/react';
 import type { RemirrorManager } from '@remirror/core';

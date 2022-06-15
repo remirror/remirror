@@ -1,3 +1,4 @@
+import React from 'react';
 import { FC, Fragment } from 'react';
 import { isEmptyArray, isString, object, RemirrorJSON } from '@remirror/core';
 

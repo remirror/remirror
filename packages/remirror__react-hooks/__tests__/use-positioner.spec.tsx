@@ -1,3 +1,4 @@
+import React from 'react';
 import { FC } from 'react';
 import { strictRender } from 'testing/react';
 import { defaultAbsolutePosition } from '@remirror/extension-positioner';

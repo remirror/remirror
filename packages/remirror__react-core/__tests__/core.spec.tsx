@@ -1,5 +1,6 @@
 import { axe } from 'jest-axe';
 import { RemirrorTestChain } from 'jest-remirror';
+import React from 'react';
 import { useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import { hideConsoleError, rafMock } from 'testing';

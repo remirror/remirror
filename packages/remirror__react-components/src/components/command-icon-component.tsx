@@ -1,4 +1,5 @@
-import { Box } from 'reakit/Box';
+import React from 'react';
+import { Box } from 'reakit';
 import { CommandUiIcon, isString } from '@remirror/core';
 import { CoreIcon } from '@remirror/icons';
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCallback } from 'react';
 import { SocialEditor } from '@remirror/react-editors/social';
 

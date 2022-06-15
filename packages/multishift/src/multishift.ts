@@ -1,4 +1,3 @@
-import composeRefs from '@seznam/compose-react-refs';
 import {
   ChangeEvent,
   HTMLProps,
@@ -9,7 +8,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import useEffectOnce from 'react-use/lib/useEffectOnce';
+import { useEffectOnce } from 'react-use';
 import {
   debounce,
   includes,
@@ -19,6 +18,7 @@ import {
   object,
 } from '@remirror/core-helpers';
 
+import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
 import { Actions } from './multishift-action-creators';
 import {
   SPECIAL_INPUT_KEYS,

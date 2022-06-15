@@ -1,5 +1,6 @@
 import 'remirror/styles/all.css';
 
+import React from 'react';
 import { AnnotationExtension, PlaceholderExtension, YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';
 import * as Y from 'yjs';

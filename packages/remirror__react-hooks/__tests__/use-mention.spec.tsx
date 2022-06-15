@@ -1,4 +1,5 @@
 import { RemirrorTestChain } from 'jest-remirror';
+import React from 'react';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { assertGet } from 'remirror';
 import { act, DefaultEditor, strictRender } from 'testing/react';

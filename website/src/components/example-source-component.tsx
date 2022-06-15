@@ -1,12 +1,13 @@
 import { usePluginData } from '@docusaurus/useGlobalData';
 import { BaseProps, ExamplesPluginData } from 'docusaurus-plugin-examples/types';
+import React from 'react';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
 import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 import markdown from 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
 import markup from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import { Tab, TabList, TabPanel, useTabState } from 'reakit/Tab';
+import { Tab, TabList, TabPanel, useTabState } from 'reakit';
 
 import { useExample } from './example-provider';
 
