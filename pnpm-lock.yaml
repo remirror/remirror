@@ -1915,7 +1915,6 @@ importers:
       '@remirror/react-core': ^2.0.0-beta.0
       '@remirror/react-hooks': ^2.0.0-beta.0
       '@remirror/react-renderer': ^2.0.0-beta.0
-      '@remirror/react-ssr': ^2.0.0-beta.0
       '@remirror/react-utils': ^2.0.0-beta.0
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
@@ -1933,7 +1932,6 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
       '@remirror/react-renderer': link:../remirror__react-renderer
-      '@remirror/react-ssr': link:../remirror__react-ssr
       '@remirror/react-utils': link:../remirror__react-utils
     devDependencies:
       '@types/react': 18.0.9
@@ -2021,7 +2019,6 @@ importers:
       '@remirror/preset-react': ^2.0.0-beta.0
       '@remirror/react': ^2.0.0-beta.0
       '@remirror/react-renderer': ^2.0.0-beta.0
-      '@remirror/react-ssr': ^2.0.0-beta.0
       '@remirror/react-utils': ^2.0.0-beta.0
       '@remirror/theme': ^2.0.0-beta.0
       '@seznam/compose-react-refs': ^1.0.6
@@ -2045,7 +2042,6 @@ importers:
       '@remirror/preset-core': link:../remirror__preset-core
       '@remirror/preset-react': link:../remirror__preset-react
       '@remirror/react-renderer': link:../remirror__react-renderer
-      '@remirror/react-ssr': link:../remirror__react-ssr
       '@remirror/react-utils': link:../remirror__react-utils
       '@remirror/theme': link:../remirror__theme
       '@seznam/compose-react-refs': 1.0.6
