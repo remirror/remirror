@@ -15,7 +15,7 @@ import _rm from 'rimraf';
 import { debounce } from 'throttle-debounce';
 import { Logger } from 'tslog';
 import { promisify } from 'util';
-import { PackageJson, TsConfigJson } from '@remirror/types';
+import type { PackageJson, TsConfigJson } from '@remirror/types';
 
 /**
  * The `camelCased` argument passed to the cli.
