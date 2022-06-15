@@ -93,8 +93,7 @@
   },
   "preconstruct": {
     "entrypoints": [
-      "index.ts",
-      "all-icons.ts"
+      "index.ts"
     ]
   }
 }
