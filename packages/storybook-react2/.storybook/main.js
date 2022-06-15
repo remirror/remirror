@@ -51,7 +51,7 @@ module.exports = {
     // '../stories/react-components/floating-menu.stories.tsx',
     // '../stories/react-components/mention-atom-popup.stories.tsx',
     // '../stories/react-components/toolbar.stories.tsx',
-    // '../stories/react-editors/markdown-editor.stories.tsx',
+    '../stories/react-editors/markdown-editor.stories.tsx',
     // '../stories/react-editors/social-editor.stories.tsx',
     // '../stories/react-editors/wysiwyg-editor.stories.tsx',
     // '../stories/react-hooks/use-mention-atom.stories.tsx',

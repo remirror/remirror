@@ -3,9 +3,9 @@ import '@remirror/styles/all.css';
 import { css } from '@emotion/css';
 import { createContextState } from 'create-context-state';
 import React from 'react';
-import jsx from 'refractor/lang/jsx';
-import md from 'refractor/lang/markdown';
-import typescript from 'refractor/lang/typescript';
+import jsx from 'refractor/lang/jsx.js';
+import md from 'refractor/lang/markdown.js';
+import typescript from 'refractor/lang/typescript.js';
 import { ExtensionPriority, getThemeVar } from 'remirror';
 import {
   BlockquoteExtension,

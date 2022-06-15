@@ -1,6 +1,6 @@
 import React from 'react';
-import javascript from 'refractor/lang/javascript';
-import typescript from 'refractor/lang/typescript';
+import javascript from 'refractor/lang/javascript.js';
+import typescript from 'refractor/lang/typescript.js';
 import { CodeBlockExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 

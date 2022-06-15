@@ -2,7 +2,7 @@ import { css } from '@emotion/css';
 import prettyPrint from 'diffable-html';
 import { escape } from 'html-escaper';
 import React, { useCallback, useEffect, useState } from 'react';
-import markup from 'refractor/lang/markup';
+import markup from 'refractor/lang/markup.js';
 import { CodeBlockExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 

@@ -14,8 +14,8 @@ export interface CodeBlockOptions {
    * @remarks
    *
    * ```ts
-   * import jsx from 'refractor/lang/jsx'
-   * import typescript from 'refractor/lang/typescript'
+   * import jsx from 'refractor/lang/jsx.js'
+   * import typescript from 'refractor/lang/typescript.js'
    * ```
    *
    * And pass them into the config when initializing this extension.
