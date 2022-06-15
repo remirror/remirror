@@ -1236,7 +1236,7 @@ export function prosemirrorNodeToDom(
 }
 
 function elementFromString(html: string, document?: Document): HTMLElement {
-  const parser = new (((document ?? getDocument()) as any)?.defaultView ?? window).DOMParser();
+  const parser = new ((document || getDocument())?.defaultView ?? window).DOMParser();
   return parser.parseFromString(`<body>${html}</body>`, 'text/html').body;
 }
 
@@ -1310,7 +1310,7 @@ export function htmlToProsemirrorNode(props: FragmentStringHandlerOptions): Frag
 export function htmlToProsemirrorNode(props: NodeStringHandlerOptions): ProsemirrorNode;
 export function htmlToProsemirrorNode(props: StringHandlerOptions): ProsemirrorNode | Fragment {
   const { content, schema, document, fragment = false, ...parseOptions } = props;
-  const element = elementFromString(content);
+  const element = elementFromString(content, document);
   const parser = PMDomParser.fromSchema(schema);
 
   return fragment
