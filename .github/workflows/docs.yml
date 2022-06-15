@@ -50,7 +50,7 @@ jobs:
           key: ${{ runner.os }}-docusaurus-v1
 
       - name: generate .d.ts files
-        run: pnpm build
+        run: pnpm typecheck
 
       - name: generate api markdown files
         run: pnpm api
