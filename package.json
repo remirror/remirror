@@ -10,8 +10,8 @@
   "scripts": {
     "api": "tsx support/scripts/src/generate-api && api-documenter generate -i ./support/api -o ./docs/api",
     "browser:coverage": "browserslist --coverage",
-    "build": "run-p build:core css:copy",
-    "build:core": "preconstruct fix && preconstruct build",
+    "build": "run-p build:core css:copy typecheck",
+    "build:core": "preconstruct fix && preconstruct build && remirror-cli build",
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct fix && preconstruct dev",
     "build:docs": "run-s docs:prod docs:redirects",
