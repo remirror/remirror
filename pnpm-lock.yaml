@@ -2364,133 +2364,6 @@ importers:
       '@storybook/theming': 6.5.8_react-dom@18.0.0+react@18.0.0
       postcss: 8.4.14
 
-  packages/storybook-react2:
-    specifiers:
-      '@babel/runtime': ^7.13.10
-      '@codemirror/basic-setup': ^0.20.0
-      '@codemirror/language-data': ^0.20.0
-      '@codemirror/theme-one-dark': ^0.20.0
-      '@codemirror/view': ^0.20.2
-      '@emotion/css': ^11.1.3
-      '@joeattardi/emoji-button': ^4.6.0
-      '@popperjs/core': ^2.9.2
-      '@remirror/core': ^2.0.0-beta.0
-      '@remirror/dev': ^2.0.0-beta.0
-      '@remirror/extension-codemirror6': ^1.0.0-beta.0
-      '@remirror/extension-count': ^2.0.0-beta.0
-      '@remirror/extension-file': ^1.0.0-beta.0
-      '@remirror/extension-mention': ^2.0.0-beta.0
-      '@remirror/extension-mention-atom': ^2.0.0-beta.0
-      '@remirror/extension-react-tables': ^2.0.0-beta.0
-      '@remirror/messages': ^2.0.0-beta.0
-      '@remirror/pm': ^2.0.0-beta.0
-      '@remirror/react': ^2.0.0-beta.0
-      '@remirror/react-editors': ^1.0.0-beta.0
-      '@remirror/styles': ^2.0.0-beta.0
-      '@storybook/addon-actions': ^6.5.8
-      '@storybook/addon-controls': ^6.5.8
-      '@storybook/addon-essentials': ^6.5.8
-      '@storybook/addon-links': ^6.5.8
-      '@storybook/addon-postcss': ^2.0.0
-      '@storybook/addons': ^6.5.8
-      '@storybook/builder-webpack5': ^6.5.8
-      '@storybook/cli': ^6.5.8
-      '@storybook/components': ^6.5.8
-      '@storybook/core': ^6.5.8
-      '@storybook/manager-webpack5': ^6.5.8
-      '@storybook/node-logger': ^6.5.8
-      '@storybook/react': ^6.5.8
-      '@storybook/theming': ^6.5.8
-      '@svgmoji/blob': ^3.1.0
-      '@types/codemirror': ^5.60.2
-      '@types/react': ^18.0.6
-      '@types/react-dom': ^18.0.2
-      '@types/refractor': ^3.0.2
-      '@types/webpack': ^5.28.0
-      autoprefixer: ^10.3.1
-      babel-loader: ^8.2.2
-      codemirror: ^5.62.0
-      create-context-state: ^1.0.1
-      diffable-html: ^4.1.0
-      globby: ^11.0.4
-      html-escaper: ^3.0.3
-      is-ci: ^3.0.0
-      postcss: '>= 8.0.0'
-      react: ^18.0.0
-      react-circular-progressbar: ^2.0.4
-      react-dom: ^18.0.0
-      react-is: ^18.0.0
-      reakit: ^1.3.11
-      refractor: ^3.3.1
-      remirror: 2.0.0-beta.0
-      scripts: 0.0.1
-      svgmoji: ^3.2.0
-      y-webrtc: ^10.2.2
-      yjs: ^13.5.23
-    dependencies:
-      '@babel/runtime': 7.17.9
-      '@codemirror/basic-setup': 0.20.0
-      '@codemirror/language-data': 0.20.0
-      '@codemirror/theme-one-dark': 0.20.0
-      '@codemirror/view': 0.20.2
-      '@emotion/css': 11.5.0_@babel+core@7.18.2
-      '@joeattardi/emoji-button': 4.6.0
-      '@popperjs/core': 2.10.2
-      '@remirror/core': link:../remirror__core
-      '@remirror/dev': link:../remirror__dev
-      '@remirror/extension-codemirror6': link:../remirror__extension-codemirror6
-      '@remirror/extension-count': link:../remirror__extension-count
-      '@remirror/extension-file': link:../remirror__extension-file
-      '@remirror/extension-mention': link:../remirror__extension-mention
-      '@remirror/extension-mention-atom': link:../remirror__extension-mention-atom
-      '@remirror/extension-react-tables': link:../remirror__extension-react-tables
-      '@remirror/messages': link:../remirror__messages
-      '@remirror/pm': link:../remirror__pm
-      '@remirror/react': link:../remirror__react
-      '@remirror/react-editors': link:../remirror__react-editors
-      '@remirror/styles': link:../remirror__styles
-      '@svgmoji/blob': 3.2.0
-      '@types/codemirror': 5.60.5
-      '@types/react': 18.0.9
-      '@types/react-dom': 18.0.2
-      '@types/refractor': 3.0.2
-      '@types/webpack': 5.28.0
-      autoprefixer: 10.4.5_postcss@8.4.14
-      babel-loader: 8.2.5_@babel+core@7.18.2
-      codemirror: 5.63.3
-      create-context-state: link:../create-context-state
-      diffable-html: 4.1.0
-      globby: 11.1.0
-      html-escaper: 3.0.3
-      is-ci: 3.0.1
-      react: 18.0.0
-      react-circular-progressbar: 2.0.4_react@18.0.0
-      react-dom: 18.0.0_react@18.0.0
-      react-is: 18.0.0
-      reakit: 1.3.11_react-dom@18.0.0+react@18.0.0
-      refractor: 3.6.0
-      remirror: link:../remirror
-      scripts: link:../../support/scripts
-      svgmoji: 3.2.0
-      y-webrtc: 10.2.2
-      yjs: 13.5.23
-    devDependencies:
-      '@storybook/addon-actions': 6.5.8_react-dom@18.0.0+react@18.0.0
-      '@storybook/addon-controls': 6.5.8_d0ef1faf74c0bfca284634bf69606dc0
-      '@storybook/addon-essentials': 6.5.8_d459d1b93a4951ab00dcde767179b0f9
-      '@storybook/addon-links': 6.5.8_react-dom@18.0.0+react@18.0.0
-      '@storybook/addon-postcss': 2.0.0
-      '@storybook/addons': 6.5.8_react-dom@18.0.0+react@18.0.0
-      '@storybook/builder-webpack5': 6.5.8_d0ef1faf74c0bfca284634bf69606dc0
-      '@storybook/cli': 6.5.8_d0ef1faf74c0bfca284634bf69606dc0
-      '@storybook/components': 6.5.8_react-dom@18.0.0+react@18.0.0
-      '@storybook/core': 6.5.8_a6587dc93bb595735579dd2974bacc73
-      '@storybook/manager-webpack5': 6.5.8_d0ef1faf74c0bfca284634bf69606dc0
-      '@storybook/node-logger': 6.5.8
-      '@storybook/react': 6.5.8_67616ae3c27e8d3b360df2f02b6005c4
-      '@storybook/theming': 6.5.8_react-dom@18.0.0+react@18.0.0
-      postcss: 8.4.14
-
   packages/test-keyboard:
     specifiers:
       '@babel/runtime': ^7.13.10
@@ -8361,19 +8234,6 @@ packages:
       ts-dedent: 2.2.0
     dev: true
 
-  /@storybook/addon-postcss/2.0.0:
-    resolution: {integrity: sha512-Nt82A7e9zJH4+A+VzLKKswUfru+T6FJTakj4dccP0i8DSn7a0CkzRPrLuZBq8tg4voV6gD74bcDf3gViCVBGtA==}
-    engines: {node: '>=10', yarn: ^1.17.0}
-    dependencies:
-      '@storybook/node-logger': 6.5.8
-      css-loader: 3.6.0
-      postcss: 8.4.14
-      postcss-loader: 4.3.0_postcss@8.4.14
-      style-loader: 1.3.0
-    transitivePeerDependencies:
-      - webpack
-    dev: true
-
   /@storybook/addon-toolbars/6.5.8_react-dom@18.0.0+react@18.0.0:
     resolution: {integrity: sha512-16eRbbtn4/cH1xU8JlPZRdShwUwSsPcqpyH1JNl+rgYQ6SaSNq3aO/jDFeQe93guSD0YPRWHz8dKtn6OxVeozQ==}
     peerDependencies:
@@ -13926,27 +13786,6 @@ packages:
     dependencies:
       hyphenate-style-name: 1.0.4
     dev: false
-
-  /css-loader/3.6.0:
-    resolution: {integrity: sha512-M5lSukoWi1If8dhQAUCvj4H8vUt3vOnwbQBH9DdTm/s4Ym2B/3dPMtYZeJmq7Q3S3Pa+I94DcZ7pc9bP14cWIQ==}
-    engines: {node: '>= 8.9.0'}
-    peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
-    dependencies:
-      camelcase: 5.3.1
-      cssesc: 3.0.0
-      icss-utils: 4.1.1
-      loader-utils: 1.4.0
-      normalize-path: 3.0.0
-      postcss: 8.4.14
-      postcss-modules-extract-imports: 2.0.0
-      postcss-modules-local-by-default: 3.0.3
-      postcss-modules-scope: 2.2.0
-      postcss-modules-values: 3.0.0
-      postcss-value-parser: 4.2.0
-      schema-utils: 2.7.1
-      semver: 6.3.0
-    dev: true
 
   /css-loader/3.6.0_webpack@4.46.0:
     resolution: {integrity: sha512-M5lSukoWi1If8dhQAUCvj4H8vUt3vOnwbQBH9DdTm/s4Ym2B/3dPMtYZeJmq7Q3S3Pa+I94DcZ7pc9bP14cWIQ==}
@@ -22985,21 +22824,6 @@ packages:
       resolve: 1.20.0
     dev: true
 
-  /postcss-loader/4.3.0_postcss@8.4.14:
-    resolution: {integrity: sha512-M/dSoIiNDOo8Rk0mUqoj4kpGq91gcxCfb9PoyZVdZ76/AuhxylHDYZblNE8o+EQ9AMSASeMFEKxZf5aU6wlx1Q==}
-    engines: {node: '>= 10.13.0'}
-    peerDependencies:
-      postcss: ^7.0.0 || ^8.0.1
-      webpack: ^4.0.0 || ^5.0.0
-    dependencies:
-      cosmiconfig: 7.0.1
-      klona: 2.0.5
-      loader-utils: 2.0.0
-      postcss: 8.4.14
-      schema-utils: 3.1.1
-      semver: 7.3.7
-    dev: true
-
   /postcss-loader/4.3.0_postcss@8.4.14+webpack@4.46.0:
     resolution: {integrity: sha512-M/dSoIiNDOo8Rk0mUqoj4kpGq91gcxCfb9PoyZVdZ76/AuhxylHDYZblNE8o+EQ9AMSASeMFEKxZf5aU6wlx1Q==}
     engines: {node: '>= 10.13.0'}
@@ -26548,16 +26372,6 @@ packages:
   /strip-json-comments/3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
-
-  /style-loader/1.3.0:
-    resolution: {integrity: sha512-V7TCORko8rs9rIqkSrlMfkqA63DfoGBBJmK1kKGCcSi+BWb4cqz0SRsnp4l6rU5iwOEd0/2ePv68SV22VXon4Q==}
-    engines: {node: '>= 8.9.0'}
-    peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
-    dependencies:
-      loader-utils: 2.0.0
-      schema-utils: 2.7.1
-    dev: true
 
   /style-loader/1.3.0_webpack@4.46.0:
     resolution: {integrity: sha512-V7TCORko8rs9rIqkSrlMfkqA63DfoGBBJmK1kKGCcSi+BWb4cqz0SRsnp4l6rU5iwOEd0/2ePv68SV22VXon4Q==}
