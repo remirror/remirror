@@ -4,7 +4,6 @@ import {
   ReactComponentExtension,
   ReactComponentOptions,
 } from '@remirror/extension-react-component';
-import { ReactSsrOptions } from '@remirror/extension-react-ssr';
 
 const DEFAULT_OPTIONS = {
   ...PlaceholderExtension.defaultOptions,
@@ -13,10 +12,7 @@ const DEFAULT_OPTIONS = {
 
 const STATIC_KEYS = [...PlaceholderExtension.staticKeys, ...ReactComponentExtension.staticKeys];
 
-export interface ReactExtensionOptions
-  extends ReactSsrOptions,
-    PlaceholderOptions,
-    ReactComponentOptions {}
+export interface ReactExtensionOptions extends PlaceholderOptions, ReactComponentOptions {}
 
 /**
  * This extension supplies all required extensions for the functionality of the

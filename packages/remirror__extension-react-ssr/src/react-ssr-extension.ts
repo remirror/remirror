@@ -1,16 +1,6 @@
 import { ComponentType, PropsWithChildren } from 'react';
-import { AnyExtension, EditorState, Static } from '@remirror/core';
+import { AnyExtension, EditorState } from '@remirror/core';
 import type { NodeViewComponentProps } from '@remirror/extension-react-component';
-
-export interface ReactSsrOptions {
-  /**
-   * The transformers that will be automatically used in the editor for properly
-   * rendering ssr.
-   *
-   * @default 'DEFAULT_TRANSFORMATIONS'
-   */
-  transformers?: Static<SsrTransformer[]>;
-}
 
 export type SsrTransformer = (element: JSX.Element, state?: EditorState) => JSX.Element;
 
