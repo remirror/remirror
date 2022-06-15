@@ -36,9 +36,6 @@
       "path": "../../packages/create-context-state/src"
     },
     {
-      "path": "../../packages/docusaurus-plugin-examples/src"
-    },
-    {
       "path": "../../packages/remirror/src"
     }
   ]
