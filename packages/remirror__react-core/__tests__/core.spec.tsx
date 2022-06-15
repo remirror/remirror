@@ -36,27 +36,6 @@ test('should be called via a render prop', () => {
   expect(editorNode).toHaveAttribute('role', 'textbox');
 });
 
-test('can `suppressHydrationWarning` without breaking', () => {
-  const { getByLabelText } = strictRender(
-    <Remirror
-      manager={createReactManager([])}
-      label={label}
-      {...handlers}
-      suppressHydrationWarning={true}
-      autoRender='start'
-    />,
-  );
-
-  expect(handlers.onChange).toHaveBeenCalledWith(expect.any(Object));
-  expect(handlers.onChange.mock.calls[0][0].helpers.getText()).toBe('');
-  expect(handlers.onChange.mock.calls[0][0].helpers.getJSON().type).toBe('doc');
-  expect(handlers.onChange.mock.calls[0][0].helpers.getHTML().type).toBeUndefined();
-
-  const editorNode = getByLabelText(label);
-
-  expect(editorNode).toHaveAttribute('role', 'textbox');
-});
-
 describe('basic functionality', () => {
   hideConsoleError(true);
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
 import usePrevious from 'use-previous';
 import { AnyExtension, ErrorConstant, invariant, isArray, isNullOrUndefined } from '@remirror/core';
@@ -23,7 +23,7 @@ export function useReactFramework<Extension extends AnyExtension>(
   props: ReactFrameworkProps<Extension>,
 ): ReactFrameworkOutput<Extension> {
   const { manager, state } = props;
-  const { placeholder, editable, suppressHydrationWarning } = props;
+  const { placeholder, editable } = props;
   const firstUpdate = useRef(true);
 
   // Update the placeholder on first render.
@@ -43,22 +43,15 @@ export function useReactFramework<Extension extends AnyExtension>(
   const initialEditorState = state
     ? state
     : manager.createState({ content: initialContent, selection: initialSelection });
-  const [shouldRenderClient, setShouldRenderClient] = useState<boolean | undefined>(
-    suppressHydrationWarning ? false : undefined,
-  );
 
   // Create the framework which manages the connection between the `@remirror/core`
   // and React.
   const framework: ReactFramework<Extension> = useFramework<Extension>({
     initialEditorState,
-    setShouldRenderClient,
     getProps: () => props,
-    getShouldRenderClient: () => shouldRenderClient,
   });
 
   useEffect(() => {
-    framework.onMount();
-
     return () => {
       framework.destroy();
     };
