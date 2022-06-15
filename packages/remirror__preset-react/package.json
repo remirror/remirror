@@ -40,7 +40,6 @@
     "@remirror/core": "^2.0.0-beta.0",
     "@remirror/extension-placeholder": "^2.0.0-beta.0",
     "@remirror/extension-react-component": "^2.0.0-beta.0",
-    "@remirror/extension-react-ssr": "^2.0.0-beta.0",
     "@remirror/react-utils": "^2.0.0-beta.0"
   },
   "devDependencies": {
