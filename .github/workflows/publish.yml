@@ -41,9 +41,6 @@ jobs:
       - name: build project
         run: pnpm build
 
-      - name: generate .d.ts files
-        run: pnpm typecheck
-
       - name: publish npm release
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > $HOME/.npmrc

@@ -58,9 +58,6 @@ jobs:
       - name: build project
         run: pnpm build
 
-      - name: generate .d.ts files
-        run: pnpm typecheck
-
       - name: mutate package.json files
         uses: ./support/actions/pr
         id: mutate
