@@ -34,8 +34,9 @@
   "module": "./dist/remirror-extension-emoji.js",
   "types": "./dist-types/index.d.ts",
   "files": [
+    "apple",
     "dist",
-    "apple"
+    "dist-types"
   ],
   "scripts": {
     "build:custom": "node ./build.js"

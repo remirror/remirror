@@ -26,7 +26,8 @@
   "module": "./dist/remirror-extension-mention.js",
   "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",

@@ -26,8 +26,9 @@
   "module": "./dist/remirror-core.js",
   "types": "./dist-types/index.d.ts",
   "files": [
-    "style",
-    "dist"
+    "dist",
+    "dist-types",
+    "style"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",

@@ -26,19 +26,20 @@
       "types": "./dist-types/emotion.d.ts",
       "default": "./emotion/dist/remirror-styles-emotion.js"
     },
+    "./package.json": "./package.json",
     "./styled-components": {
       "import": "./styled-components/dist/remirror-styles-styled-components.js",
       "types": "./dist-types/styled-components.d.ts",
       "default": "./styled-components/dist/remirror-styles-styled-components.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
   "files": [
     "*.css",
     "dist",
+    "dist-types",
+    "dom",
     "emotion",
-    "styled-components",
-    "dom"
+    "styled-components"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10"

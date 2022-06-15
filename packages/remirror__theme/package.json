@@ -26,8 +26,9 @@
   "module": "./dist/remirror-theme.js",
   "types": "./dist-types/index.d.ts",
   "files": [
-    "style",
-    "dist"
+    "dist",
+    "dist-types",
+    "style"
   ],
   "scripts": {
     "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es"

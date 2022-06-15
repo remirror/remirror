@@ -29,20 +29,21 @@
       "types": "./dist-types/en/index.d.ts",
       "default": "./en/dist/remirror-i18n-en.js"
     },
+    "./package.json": "./package.json",
     "./plurals": {
       "import": "./plurals/dist/remirror-i18n-plurals.js",
       "types": "./dist-types/plurals.d.ts",
       "default": "./plurals/dist/remirror-i18n-plurals.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
   "main": "./dist/remirror-i18n.js",
   "module": "./dist/remirror-i18n.js",
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
-    "plurals",
-    "en"
+    "dist-types",
+    "en",
+    "plurals"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",

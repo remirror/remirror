@@ -32,8 +32,9 @@
   "types": "./dist-types/index.d.ts",
   "files": [
     "all-icons",
-    "style",
-    "dist"
+    "dist",
+    "dist-types",
+    "style"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",

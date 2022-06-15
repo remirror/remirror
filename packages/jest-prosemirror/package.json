@@ -30,18 +30,19 @@
       "types": "./dist-types/environment.d.ts",
       "default": "./environment/dist/jest-prosemirror-environment.js"
     },
+    "./package.json": "./package.json",
     "./serializer": {
       "require": "./serializer/dist/jest-prosemirror-serializer.js",
       "types": "./dist-types/serializer.d.ts",
       "default": "./serializer/dist/jest-prosemirror-serializer.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
   "main": "./dist/jest-prosemirror.js",
   "module": "./dist/jest-prosemirror.js",
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "environment",
     "serializer"
   ],

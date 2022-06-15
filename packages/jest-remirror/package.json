@@ -36,6 +36,7 @@
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "environment"
   ],
   "dependencies": {

@@ -29,7 +29,8 @@
   "module": "./dist/remirror-types.js",
   "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "type-fest": "^1.2.2"

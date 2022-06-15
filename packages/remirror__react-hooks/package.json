@@ -20,6 +20,7 @@
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-react-hooks.js"
     },
+    "./package.json": "./package.json",
     "./use-context-menu": {
       "import": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.js",
       "types": "./dist-types/use-context-menu.d.ts",
@@ -89,24 +90,24 @@
       "import": "./use-suggest/dist/remirror-react-hooks-use-suggest.js",
       "types": "./dist-types/use-suggest.d.ts",
       "default": "./use-suggest/dist/remirror-react-hooks-use-suggest.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
   "main": "./dist/remirror-react-hooks.js",
   "module": "./dist/remirror-react-hooks.js",
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "use-context-menu",
+    "use-editor-event",
     "use-editor-focus",
     "use-emoji",
-    "use-editor-event",
     "use-history",
     "use-hover",
     "use-keymap",
     "use-keymaps",
-    "use-mention-atom",
     "use-mention",
+    "use-mention-atom",
     "use-menu-navigation",
     "use-multi-positioner",
     "use-positioner",

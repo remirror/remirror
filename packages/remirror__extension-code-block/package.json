@@ -40,8 +40,9 @@
   "module": "./dist/remirror-extension-code-block.js",
   "types": "./dist-types/index.d.ts",
   "files": [
-    "formatter",
-    "dist"
+    "dist",
+    "dist-types",
+    "formatter"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",

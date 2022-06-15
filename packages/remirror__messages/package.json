@@ -29,7 +29,8 @@
   "module": "./dist/remirror-messages.js",
   "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "scripts": {
     "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es"

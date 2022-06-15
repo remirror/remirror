@@ -26,8 +26,9 @@
   "module": "./dist/remirror-core-types.js",
   "types": "./dist-types/index.d.ts",
   "files": [
+    "base",
     "dist",
-    "base"
+    "dist-types"
   ],
   "dependencies": {
     "@remirror/core-constants": "^2.0.0-beta.0",

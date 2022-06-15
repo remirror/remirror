@@ -31,6 +31,7 @@
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "style"
   ],
   "dependencies": {

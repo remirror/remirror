@@ -163,6 +163,19 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
   delete packageJson.browser;
   packageJson.exports = exports;
 
+  // Update `files`
+  const files: string[] = packageJson.files ?? [];
+
+  for (const dir of ['dist', 'dist-types']) {
+    if (!files.includes(dir)) {
+      files.push(dir);
+    }
+  }
+
+  files.sort();
+  packageJson.files = files;
+
+  // Update `homepage` and `repository`
   const root = getRoot();
   const relativeDir = path.relative(root, pkg.dir);
   packageJson.homepage = `https://github.com/remirror/remirror/tree/HEAD/${relativeDir}`;

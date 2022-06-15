@@ -30,9 +30,10 @@
   "module": "./dist/test-keyboard.js",
   "types": "./dist-types/index.d.ts",
   "files": [
+    "dist",
+    "dist-types",
     "environment.d.ts",
-    "environment.js",
-    "dist"
+    "environment.js"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",

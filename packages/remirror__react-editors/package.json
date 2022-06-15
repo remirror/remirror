@@ -35,6 +35,7 @@
       "types": "./dist-types/markdown/index.d.ts",
       "default": "./markdown/dist/remirror-react-editors-markdown.js"
     },
+    "./package.json": "./package.json",
     "./social": {
       "import": "./social/dist/remirror-react-editors-social.js",
       "types": "./dist-types/social/index.d.ts",
@@ -44,14 +45,14 @@
       "import": "./wysiwyg/dist/remirror-react-editors-wysiwyg.js",
       "types": "./dist-types/wysiwyg/index.d.ts",
       "default": "./wysiwyg/dist/remirror-react-editors-wysiwyg.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
   "main": "./dist/remirror-react-editors.js",
   "module": "./dist/remirror-react-editors.js",
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "markdown",
     "social",
     "wysiwyg"

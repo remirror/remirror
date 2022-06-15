@@ -60,6 +60,7 @@
       "types": "./dist-types/model.d.ts",
       "default": "./model/dist/remirror-pm-model.js"
     },
+    "./package.json": "./package.json",
     "./paste-rules": {
       "import": "./paste-rules/dist/remirror-pm-paste-rules.js",
       "types": "./dist-types/paste-rules.d.ts",
@@ -99,16 +100,16 @@
       "import": "./view/dist/remirror-pm-view.js",
       "types": "./dist-types/view.d.ts",
       "default": "./view/dist/remirror-pm-view.js"
-    },
-    "./package.json": "./package.json"
+    }
   },
   "main": "./dist/remirror-pm.js",
   "module": "./dist/remirror-pm.js",
   "types": "./dist-types/index.d.ts",
   "files": [
-    "dist",
     "collab",
     "commands",
+    "dist",
+    "dist-types",
     "dropcursor",
     "gapcursor",
     "history",

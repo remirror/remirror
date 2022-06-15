@@ -52,6 +52,7 @@
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "dom",
     "extensions",
     "icons",
