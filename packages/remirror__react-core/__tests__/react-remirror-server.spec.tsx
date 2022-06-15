@@ -17,7 +17,7 @@ const handlers = {
   onFirstRender: jest.fn(),
 };
 
-describe('Remirror: Server', () => {
+describe.skip('Remirror: Server', () => {
   it('can render in a node server environment', () => {
     const mock = jest.fn();
 
@@ -177,7 +177,7 @@ describe('Remirror: Server', () => {
   });
 });
 
-test('autoFocus', () => {
+test.skip('autoFocus', () => {
   const reactString = renderToString(
     <Remirror
       {...handlers}
