@@ -1,5 +1,4 @@
-import React from 'react';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { SocialEditor } from '@remirror/react-editors/social';
 
 import { useHelpers, useRemirrorContext } from '../../../remirror__react-core/src';

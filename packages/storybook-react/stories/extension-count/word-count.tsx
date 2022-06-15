@@ -1,7 +1,6 @@
 import 'remirror/styles/all.css';
 
-import React from 'react';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { CountExtension } from '@remirror/extension-count';
 import { Remirror, ThemeProvider, useHelpers, useRemirror } from '@remirror/react';
 

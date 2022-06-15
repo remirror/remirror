@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { AnyExtension } from 'remirror';
 import { YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';

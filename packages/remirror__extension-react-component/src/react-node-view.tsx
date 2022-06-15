@@ -1,5 +1,4 @@
-import React from 'react';
-import { ComponentType, FunctionComponent, RefCallback } from 'react';
+import React, { ComponentType, FunctionComponent, RefCallback } from 'react';
 import {
   Decoration,
   EditorView,

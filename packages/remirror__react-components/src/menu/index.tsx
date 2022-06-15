@@ -4,11 +4,9 @@
  * The builtin menus.
  */
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
-import React from 'react';
-import { forwardRef, useEffect, useRef } from 'react';
-import { Box } from 'reakit';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import type { MenuBarStateReturn, MenuStateReturn } from 'reakit';
-import {
+import { Box ,
   Menu as ReakitMenu,
   MenuBar as ReakitMenuBar,
   MenuButton as ReakitMenuButton,
@@ -17,8 +15,7 @@ import {
   MenuSeparator,
   useMenuBarState,
   useMenuState,
-} from 'reakit';
-import { Tooltip, TooltipReference, useTooltipState } from 'reakit';
+, Tooltip, TooltipReference, useTooltipState } from 'reakit';
 import type { AnyExtension, CommandDecoratorMessageProps } from '@remirror/core';
 import { cx, ErrorConstant, includes, invariant, isString } from '@remirror/core';
 import {

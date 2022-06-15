@@ -1,7 +1,6 @@
 import Link from '@docusaurus/Link';
 import isAbsoluteURL from 'is-absolute-url';
-import React from 'react';
-import { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 
 import styles from './components.module.css';
 import { ExternalIcon } from './external-icon';

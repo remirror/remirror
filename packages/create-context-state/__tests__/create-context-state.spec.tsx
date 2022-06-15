@@ -1,5 +1,4 @@
-import React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { act, fireEvent, render } from 'testing/react';
 
 import { createContextState } from '../';

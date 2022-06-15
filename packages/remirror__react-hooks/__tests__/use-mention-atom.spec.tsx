@@ -1,6 +1,5 @@
 import { RemirrorTestChain } from 'jest-remirror';
-import React from 'react';
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { assertGet } from 'remirror';
 import { act, DefaultEditor, render, strictRender } from 'testing/react';
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';

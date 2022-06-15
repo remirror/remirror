@@ -1,5 +1,4 @@
-import React from 'react';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { MentionAtomExtension, PlaceholderExtension } from 'remirror/extensions';
 import {
   EditorComponent,

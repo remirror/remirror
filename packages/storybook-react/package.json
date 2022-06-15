@@ -40,7 +40,6 @@
     "@remirror/react": "^2.0.0-beta.0",
     "@remirror/react-editors": "^1.0.0-beta.0",
     "@remirror/styles": "^2.0.0-beta.0",
-
     "@svgmoji/blob": "^3.1.0",
     "@types/codemirror": "^5.60.2",
     "@types/react": "^18.0.6",
@@ -66,28 +65,21 @@
     "svgmoji": "^3.2.0",
     "y-webrtc": "^10.2.2",
     "yjs": "^13.5.23"
-
   },
   "devDependencies": {
-
-
+    "@storybook/addon-actions": "^6.5.8",
     "@storybook/addon-controls": "^6.5.8",
+    "@storybook/addon-essentials": "^6.5.8",
+    "@storybook/addon-links": "^6.5.8",
     "@storybook/addons": "^6.5.8",
+    "@storybook/builder-webpack5": "^6.5.8",
     "@storybook/cli": "^6.5.8",
     "@storybook/components": "^6.5.8",
     "@storybook/core": "^6.5.8",
-    "@storybook/react": "^6.5.8",
-    "@storybook/theming": "^6.5.8",
-
-    "@storybook/addon-actions": "^6.5.8",
-    "@storybook/addon-essentials": "^6.5.8",
-    "@storybook/addon-links": "^6.5.8",
-    "@storybook/builder-webpack5": "^6.5.8",
     "@storybook/manager-webpack5": "^6.5.8",
     "@storybook/node-logger": "^6.5.8",
-    "@types/react": "^18.0.6",
-    "@types/react-dom": "^18.0.2",
-    "postcss": "^8"
-
+    "@storybook/react": "^6.5.8",
+    "@storybook/theming": "^6.5.8",
+    "postcss": "^8.3.5"
   }
 }

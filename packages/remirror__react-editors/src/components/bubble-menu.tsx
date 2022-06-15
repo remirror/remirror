@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { ComponentItem, FloatingToolbar, ToolbarItemUnion } from '@remirror/react';
 
 const floatingToolbarItems: ToolbarItemUnion[] = [

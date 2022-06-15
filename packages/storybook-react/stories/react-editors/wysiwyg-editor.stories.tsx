@@ -1,5 +1,4 @@
-import React from 'react';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { WysiwygEditor } from '@remirror/react-editors/wysiwyg';
 
 import { useHelpers, useRemirrorContext } from '../../../remirror__react-core/src';

@@ -1,7 +1,6 @@
 import 'remirror/styles/all.css';
 
-import React from 'react';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { CalloutExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';

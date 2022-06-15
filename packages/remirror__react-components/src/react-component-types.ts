@@ -1,6 +1,5 @@
 import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
-import type { MenuStateReturn } from 'reakit';
-import type { ToolbarItem as ReakitToolbarItem, ToolbarStateReturn } from 'reakit';
+import type { MenuStateReturn, ToolbarItem as ReakitToolbarItem, ToolbarStateReturn } from 'reakit';
 import type { AnyExtension, ProsemirrorAttributes } from '@remirror/core';
 import type { CoreIcon } from '@remirror/icons';
 import type { ReactFrameworkOutput } from '@remirror/react-core';

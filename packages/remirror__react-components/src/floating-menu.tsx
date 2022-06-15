@@ -1,7 +1,6 @@
 import { Placement } from '@popperjs/core';
 import { matchSorter } from 'match-sorter';
-import React from 'react';
-import { FC, PropsWithChildren, ReactChild, Ref, useMemo } from 'react';
+import React, { FC, PropsWithChildren, ReactChild, Ref, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useMenuState } from 'reakit';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';

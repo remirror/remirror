@@ -10,8 +10,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { shallowEqual } from 'reakit-utils';
-import { isUA } from 'reakit-utils';
+import { isUA, shallowEqual } from 'reakit-utils';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
 
 const isSafari = isUA('Mac') && !isUA('Chrome') && isUA('Safari');

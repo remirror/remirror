@@ -1,7 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
-import React from 'react';
-import { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { BoldExtension } from 'remirror/extensions';
 import { act as renderAct, strictRender } from 'testing/react';
 import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';

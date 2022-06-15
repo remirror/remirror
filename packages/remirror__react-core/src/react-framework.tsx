@@ -1,5 +1,4 @@
-import React from 'react';
-import { Dispatch, ReactNode, Ref, SetStateAction } from 'react';
+import React, { Dispatch, ReactNode, Ref, SetStateAction } from 'react';
 import {
   AnyExtension,
   ErrorConstant,

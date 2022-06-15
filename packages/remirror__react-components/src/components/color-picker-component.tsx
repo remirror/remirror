@@ -4,16 +4,17 @@
  * A color picker component which is used for menus.
  */
 import type { FC, PropsWithChildren } from 'react';
-import React from 'react';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import {
   Composite,
   CompositeGroup,
   CompositeItem,
   CompositeStateReturn,
+  Tooltip,
+  TooltipReference,
   useCompositeState,
+  useTooltipState,
 } from 'reakit';
-import { Tooltip, TooltipReference, useTooltipState } from 'reakit';
 import { cx } from '@remirror/core';
 import { HuePalette, Palette, palette as defaultPalette } from '@remirror/extension-text-color';
 import { useI18n } from '@remirror/react-core';

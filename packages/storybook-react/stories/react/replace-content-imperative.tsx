@@ -1,5 +1,4 @@
-import React from 'react';
-import { forwardRef, Ref, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, Ref, useImperativeHandle, useRef } from 'react';
 import { Remirror, ThemeProvider, useRemirror, useRemirrorContext } from '@remirror/react';
 
 const DOC = {

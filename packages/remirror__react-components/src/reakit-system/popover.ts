@@ -1,5 +1,9 @@
-import { PopoverHTMLProps, PopoverOptions } from 'reakit';
-import { PopoverArrowHTMLProps, PopoverArrowOptions } from 'reakit';
+import {
+  PopoverArrowHTMLProps,
+  PopoverArrowOptions,
+  PopoverHTMLProps,
+  PopoverOptions,
+} from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC, Fragment } from 'react';
+import React, { FC, Fragment } from 'react';
 import { isEmptyArray, isString, object, RemirrorJSON } from '@remirror/core';
 
 import { Callout, CodeBlock, TextHandler } from './handlers';

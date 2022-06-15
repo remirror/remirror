@@ -1,7 +1,6 @@
 import 'remirror/styles/extension-file.css';
 
-import React from 'react';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { DropCursorExtension } from 'remirror/extensions';
 import { FileExtension } from '@remirror/extension-file';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';

@@ -1,7 +1,6 @@
 import 'remirror/styles/all.css';
 
-import React from 'react';
-import { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { uniqueId } from 'remirror';
 import {
   AnnotationExtension,

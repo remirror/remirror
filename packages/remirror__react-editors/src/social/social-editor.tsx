@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC, PropsWithChildren, useCallback, useMemo, useState } from 'react';
+import React, { FC, PropsWithChildren, useCallback, useMemo, useState } from 'react';
 import { IdentifierSchemaAttributes } from 'remirror';
 import {
   EmojiExtension,

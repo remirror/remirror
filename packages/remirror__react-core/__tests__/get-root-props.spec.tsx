@@ -1,6 +1,5 @@
 import { axe } from 'jest-axe';
-import React from 'react';
-import { forwardRef, FunctionComponent, RefAttributes } from 'react';
+import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 import { RenderResult, strictRender } from 'testing/react';
 
 import { createReactManager, Remirror, useRemirrorContext } from '../';

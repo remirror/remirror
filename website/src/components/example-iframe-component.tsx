@@ -1,7 +1,6 @@
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import { BaseProps } from 'docusaurus-plugin-examples/types';
-import React from 'react';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface IFrameProps extends Pick<BaseProps, 'name'> {}
