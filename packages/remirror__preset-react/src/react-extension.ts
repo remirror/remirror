@@ -1,22 +1,20 @@
 import { extension, ExtensionPriority, OnSetOptionsProps, PlainExtension } from '@remirror/core';
-import { PlaceholderOptions } from '@remirror/extension-placeholder';
+import { PlaceholderExtension, PlaceholderOptions } from '@remirror/extension-placeholder';
 import {
   ReactComponentExtension,
   ReactComponentOptions,
 } from '@remirror/extension-react-component';
 import { ReactSsrExtension, ReactSsrOptions } from '@remirror/extension-react-ssr';
 
-import { ReactPlaceholderExtension } from './react-placeholder-extension';
-
 const DEFAULT_OPTIONS = {
   ...ReactSsrExtension.defaultOptions,
-  ...ReactPlaceholderExtension.defaultOptions,
+  ...PlaceholderExtension.defaultOptions,
   ...ReactComponentExtension.defaultOptions,
 };
 
 const STATIC_KEYS = [
   ...ReactSsrExtension.staticKeys,
-  ...ReactPlaceholderExtension.staticKeys,
+  ...PlaceholderExtension.staticKeys,
   ...ReactComponentExtension.staticKeys,
 ];
 
@@ -43,7 +41,7 @@ export class ReactExtension extends PlainExtension<ReactExtensionOptions> {
 
   protected onSetOptions(props: OnSetOptionsProps<ReactExtensionOptions>): void {
     const { pickChanged } = props;
-    this.getExtension(ReactPlaceholderExtension).setOptions(pickChanged(['placeholder']));
+    this.getExtension(PlaceholderExtension).setOptions(pickChanged(['placeholder']));
   }
 
   createExtensions() {
@@ -60,7 +58,7 @@ export class ReactExtension extends PlainExtension<ReactExtensionOptions> {
 
     return [
       new ReactSsrExtension({ transformers }),
-      new ReactPlaceholderExtension({
+      new PlaceholderExtension({
         emptyNodeClass,
         placeholder,
         priority: ExtensionPriority.Medium,

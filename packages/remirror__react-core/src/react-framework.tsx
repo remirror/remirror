@@ -12,7 +12,7 @@ import {
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
-import { ReactPlaceholderExtension } from '@remirror/preset-react';
+import { PlaceholderExtension } from '@remirror/preset-react';
 
 import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
 import type { GetRootPropsConfig, ReactFrameworkOutput, RefKeyRootProps } from './react-types';
@@ -54,7 +54,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
     }
 
     this.manager
-      .getExtension(ReactPlaceholderExtension)
+      .getExtension(PlaceholderExtension)
       .setOptions({ placeholder: this.props.placeholder ?? '' });
   }
 
