@@ -1,5 +1,4 @@
-import { Mark } from 'remirror';
-import { Node } from '@remirror/pm/model';
+import type { Mark, Node } from '@remirror/pm/model';
 
 import { EntityReferenceMetaData } from '../types';
 
