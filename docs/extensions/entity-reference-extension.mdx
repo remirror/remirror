@@ -1,0 +1,49 @@
+---
+hide_title: true
+title: 'EntityReferenceExtension'
+---
+
+import Highlights from '../../website/extension-examples/extension-entity-reference/highlights';
+
+# `EntityReferenceExtension`
+
+## Summary
+
+This extension allows to reference external entities in the content of your editor.
+
+### Use cases
+
+This extension enables use cases like:
+
+- **Comment** content in the editor: A piece of text points to a comment (external entity).
+- **Highlight** content: A piece of text points to a highlight (external entity), which can have shared meta data like color, tags, etc.
+
+### Comparision to similar extensions
+
+There are multiple Remirror extensions that serve similar use cases. Here is an overview when to use which:
+
+- [`TextHighlightExtension`](./text-highlight-extension): Suitable for simple highlighting of text with a color
+- [`EntityReferenceExtension`](./entity-reference-extension): Use when the marked text has meta data, e.g. the text of a comment or tags assigned to highlighted text
+- [`AnnotationExtension`](./annotation-extension): Generally avoid using annotations, and use instead `EntityReferenceExtension`. See this [blog post](/blog/annotation-issues) for an in-depth discussion of issues with annotations.
+
+## Usage
+
+### Installation
+
+This extension is installed for you when you install the main `remirror` package.
+
+You can use the imports in the following way:
+
+```ts
+import { EntityReferenceExtension } from 'remirror/extensions';
+```
+
+The extension is provided by the `@remirror/extension-entity-reference` package.
+
+### Examples
+
+<Highlights />
+
+## API
+
+- [EntityReferenceExtension](../api/extension-entity-reference)

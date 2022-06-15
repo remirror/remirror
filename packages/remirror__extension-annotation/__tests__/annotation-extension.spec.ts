@@ -376,6 +376,100 @@ describe('helpers', () => {
 
       expect(helpers.getAnnotations()[0]?.text).toBe('Hello<NEWLINE>World');
     });
+
+    it('maps annotations positions on doc change', () => {
+      const {
+        add,
+        helpers,
+        nodes: { p, doc },
+        commands,
+        view,
+      } = create();
+
+      add(doc(p('This is my <start>annotated<end> text.')));
+      commands.addAnnotation({ id: '1' });
+      expect(helpers.getAnnotations()).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "from": 12,
+            "id": "1",
+            "text": "annotated",
+            "to": 21,
+          },
+        ]
+      `);
+
+      commands.insertText(' edited', { from: 11 });
+      expect(helpers.getAnnotations()).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "from": 19,
+            "id": "1",
+            "text": "annotated",
+            "to": 28,
+          },
+        ]
+      `);
+
+      expect(view.state.doc).toEqualRemirrorDocument(doc(p('This is my edited annotated text.')));
+    });
+
+    it('removes delete annotations', () => {
+      const {
+        add,
+        helpers,
+        nodes: { p, doc },
+        commands,
+        view,
+      } = create();
+
+      add(doc(p('This is my <start>annotated<end> text.')));
+      commands.addAnnotation({ id: '1' });
+      expect(helpers.getAnnotations()).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "from": 12,
+            "id": "1",
+            "text": "annotated",
+            "to": 21,
+          },
+        ]
+      `);
+
+      commands.delete({ from: 11, to: 21 });
+      expect(helpers.getAnnotations()).toEqual([]);
+
+      expect(view.state.doc).toEqualRemirrorDocument(doc(p('This is my text.')));
+    });
+
+    it('removes delete annotations permanently', () => {
+      const {
+        add,
+        helpers,
+        nodes: { p, doc },
+        commands,
+      } = create();
+
+      add(doc(p('This is my <start>annotated<end> text.')));
+      commands.addAnnotation({ id: '1' });
+
+      // Remove annotation by deleting it from the document
+      commands.delete({ from: 11, to: 21 });
+
+      commands.selectText({ from: 1, to: 5 });
+      commands.addAnnotation({ id: '2' });
+
+      expect(helpers.getAnnotations()).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "from": 1,
+            "id": "2",
+            "text": "This",
+            "to": 5,
+          },
+        ]
+      `);
+    });
   });
 
   describe('#getAnnotationsAt', () => {

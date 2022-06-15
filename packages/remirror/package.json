@@ -81,6 +81,7 @@
     "@remirror/extension-drop-cursor": "^2.0.0-beta.0",
     "@remirror/extension-embed": "^2.0.0-beta.0",
     "@remirror/extension-emoji": "^2.0.0-beta.0",
+    "@remirror/extension-entity-reference": "^2.0.0-beta.0",
     "@remirror/extension-epic-mode": "^2.0.0-beta.0",
     "@remirror/extension-events": "^2.0.0-beta.0",
     "@remirror/extension-font-family": "^2.0.0-beta.0",

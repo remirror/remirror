@@ -26,6 +26,9 @@
       "path": "../../remirror__extension-count/src"
     },
     {
+      "path": "../../remirror__extension-entity-reference/src"
+    },
+    {
       "path": "../../remirror__extension-file/src"
     },
     {

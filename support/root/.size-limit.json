@@ -287,6 +287,14 @@
     "gzip": true
   },
   {
+    "name": "@remirror/extension-entity-reference",
+    "limit": "5 KB",
+    "path": "packages/remirror__extension-entity-reference/dist/remirror-extension-entity-reference.browser.esm.js",
+    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/extension-positioner"],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-epic-mode",
     "limit": "5 KB",
     "path": "packages/remirror__extension-epic-mode/dist/remirror-extension-epic-mode.js",
