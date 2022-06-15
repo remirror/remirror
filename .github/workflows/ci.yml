@@ -86,7 +86,7 @@ jobs:
       - name: typecheck project
         run: pnpm typecheck
 
-  # Unit test and update coverage report
+  # Unit test
   unit_test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -115,14 +115,14 @@ jobs:
       - name: run unit tests
         run: pnpm test
 
-      - name: publish code coverage report
-        uses: paambaati/codeclimate-action@v2.7.5
-        if: github.ref == 'refs/heads/main'
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: 'echo Coverage'
-          debug: false
+      # - name: publish code coverage report
+      #   uses: paambaati/codeclimate-action@v2.7.5
+      #   if: github.ref == 'refs/heads/main'
+      #   env:
+      #     CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      #   with:
+      #     coverageCommand: 'echo Coverage'
+      #     debug: false
 
   # Build the project and run tests on built files.
   build_test:
