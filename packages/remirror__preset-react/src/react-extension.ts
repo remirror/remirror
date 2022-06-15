@@ -4,19 +4,14 @@ import {
   ReactComponentExtension,
   ReactComponentOptions,
 } from '@remirror/extension-react-component';
-import { ReactSsrExtension, ReactSsrOptions } from '@remirror/extension-react-ssr';
+import { ReactSsrOptions } from '@remirror/extension-react-ssr';
 
 const DEFAULT_OPTIONS = {
-  ...ReactSsrExtension.defaultOptions,
   ...PlaceholderExtension.defaultOptions,
   ...ReactComponentExtension.defaultOptions,
 };
 
-const STATIC_KEYS = [
-  ...ReactSsrExtension.staticKeys,
-  ...PlaceholderExtension.staticKeys,
-  ...ReactComponentExtension.staticKeys,
-];
+const STATIC_KEYS = [...PlaceholderExtension.staticKeys, ...ReactComponentExtension.staticKeys];
 
 export interface ReactExtensionOptions
   extends ReactSsrOptions,
@@ -46,7 +41,6 @@ export class ReactExtension extends PlainExtension<ReactExtensionOptions> {
 
   createExtensions() {
     const {
-      transformers,
       emptyNodeClass,
       placeholder,
       defaultBlockNode,
@@ -57,7 +51,6 @@ export class ReactExtension extends PlainExtension<ReactExtensionOptions> {
     } = this.options;
 
     return [
-      new ReactSsrExtension({ transformers }),
       new PlaceholderExtension({
         emptyNodeClass,
         placeholder,
