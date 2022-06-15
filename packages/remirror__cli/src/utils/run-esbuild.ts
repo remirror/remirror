@@ -32,7 +32,6 @@ export async function runEsbuild(
     format: format,
     sourcemap: true,
     platform: nodePackages.has(pkg.packageJson.name) ? 'node' : 'browser',
-    keepNames: true,
     external: externals,
   });
 
