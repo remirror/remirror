@@ -1,5 +1,4 @@
-import { Decoration, FromToProps } from 'remirror';
-import type { AcceptUndefined } from '@remirror/core';
+import type { AcceptUndefined, Decoration, FromToProps } from '@remirror/core';
 
 export interface EntityReferenceMetaData extends FromToProps {
   /**
