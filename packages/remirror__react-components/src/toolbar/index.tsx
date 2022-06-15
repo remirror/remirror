@@ -5,13 +5,20 @@
  */
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import React, { useCallback } from 'react';
-import { Box , Button , Group ,
+import {
+  Box,
+  Button,
+  Group,
   Toolbar as ReakitToolbar,
   ToolbarItem as ReakitToolbarItem,
   ToolbarSeparator as ReakitToolbarSeparator,
   ToolbarStateReturn,
+  Tooltip,
+  TooltipReference,
   useToolbarState,
-, Tooltip, TooltipReference, useTooltipState , VisuallyHidden } from 'reakit';
+  useTooltipState,
+  VisuallyHidden,
+} from 'reakit';
 import {
   AnyExtension,
   CommandDecoratorMessageProps,

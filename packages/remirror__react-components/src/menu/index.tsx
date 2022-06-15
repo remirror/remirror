@@ -6,16 +6,20 @@
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import React, { forwardRef, useEffect, useRef } from 'react';
 import type { MenuBarStateReturn, MenuStateReturn } from 'reakit';
-import { Box ,
+import {
+  Box,
   Menu as ReakitMenu,
   MenuBar as ReakitMenuBar,
   MenuButton as ReakitMenuButton,
   MenuGroup as ReakitMenuGroup,
   MenuItem as ReakitMenuItem,
   MenuSeparator,
+  Tooltip,
+  TooltipReference,
   useMenuBarState,
   useMenuState,
-, Tooltip, TooltipReference, useTooltipState } from 'reakit';
+  useTooltipState,
+} from 'reakit';
 import type { AnyExtension, CommandDecoratorMessageProps } from '@remirror/core';
 import { cx, ErrorConstant, includes, invariant, isString } from '@remirror/core';
 import {
