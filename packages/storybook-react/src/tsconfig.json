@@ -9,8 +9,7 @@
   "compilerOptions": {
     "types": [],
     "declaration": false,
-    "noEmit": true,
-    "allowJs": true
+    "noEmit": true
   },
   "include": ["./"],
   "references": [

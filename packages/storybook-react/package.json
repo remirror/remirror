@@ -2,35 +2,9 @@
   "name": "storybook-react",
   "version": "0.0.0",
   "private": true,
-  "description": "The storybook configuration for the remirror project.",
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/storybook-react",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/remirror/remirror.git",
-    "directory": "packages/storybook-react"
-  },
-  "exports": {
-    ".": {
-      "require": "./dist/storybook-react.cjs.js",
-      "default": "./dist/storybook-react.cjs.js"
-    },
-    "./package.json": "./package.json",
-    "./storybook-react-main": {
-      "require": "./storybook-react-main/dist/storybook-react-storybook-react-main.cjs.js",
-      "default": "./storybook-react-main/dist/storybook-react-storybook-react-main.cjs.js"
-    },
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
-  "main": "dist/storybook-react.cjs.js",
-  "files": [
-    "dist",
-    "storybook-react-main"
-  ],
   "scripts": {
-    "build": "build-storybook -c ./",
-    "e2e": "E2E_SERVER=storybook-react pnpm -w e2e",
-    "e2e:watch": "E2E_SERVER=storybook-react pnpm -w e2e:watch",
-    "start": "start-storybook -p 6006 -c ./"
+    "build-storybook": "build-storybook",
+    "storybook": "start-storybook -p 6006"
   },
   "browserslist": {
     "production": [
@@ -66,13 +40,7 @@
     "@remirror/react": "^2.0.0-beta.0",
     "@remirror/react-editors": "^1.0.0-beta.0",
     "@remirror/styles": "^2.0.0-beta.0",
-    "@storybook/addon-controls": "^6.5.8",
-    "@storybook/addons": "^6.5.8",
-    "@storybook/cli": "^6.5.8",
-    "@storybook/components": "^6.5.8",
-    "@storybook/core": "^6.5.8",
-    "@storybook/react": "^6.5.8",
-    "@storybook/theming": "^6.5.8",
+
     "@svgmoji/blob": "^3.1.0",
     "@types/codemirror": "^5.60.2",
     "@types/react": "^18.0.6",
@@ -87,8 +55,6 @@
     "globby": "^11.0.4",
     "html-escaper": "^3.0.3",
     "is-ci": "^3.0.0",
-    "postcss": "^8.3.5",
-    "postcss-nested": "^5.0.5",
     "react": "^18.0.0",
     "react-circular-progressbar": "^2.0.4",
     "react-dom": "^18.0.0",
@@ -100,33 +66,28 @@
     "svgmoji": "^3.2.0",
     "y-webrtc": "^10.2.2",
     "yjs": "^13.5.23"
+
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.16.7",
-    "@types/html-escaper": "^3.0.0",
-    "@types/node": "^16.3.3"
-  },
-  "@remirror": {
-    "tsconfigs": {
-      "src": {
-        "compilerOptions": {
-          "allowJs": true
-        }
-      },
-      "./": {
-        "include": [
-          "src",
-          ".babelrc.js",
-          "main.ts",
-          "stories"
-        ]
-      }
-    }
-  },
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts",
-      "storybook-react-main.ts"
-    ]
+
+
+    "@storybook/addon-controls": "^6.5.8",
+    "@storybook/addons": "^6.5.8",
+    "@storybook/cli": "^6.5.8",
+    "@storybook/components": "^6.5.8",
+    "@storybook/core": "^6.5.8",
+    "@storybook/react": "^6.5.8",
+    "@storybook/theming": "^6.5.8",
+
+    "@storybook/addon-actions": "^6.5.8",
+    "@storybook/addon-essentials": "^6.5.8",
+    "@storybook/addon-links": "^6.5.8",
+    "@storybook/builder-webpack5": "^6.5.8",
+    "@storybook/manager-webpack5": "^6.5.8",
+    "@storybook/node-logger": "^6.5.8",
+    "@types/react": "^18.0.6",
+    "@types/react-dom": "^18.0.2",
+    "postcss": "^8"
+
   }
 }

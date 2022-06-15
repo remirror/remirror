@@ -1,6 +1,8 @@
 // import 'remirror/styles/all.css';
 // import './styles.css';
 
+import React from 'react';
+
 import { asyncFunc } from './async-func';
 
 // import { cx, htmlToProsemirrorNode } from 'remirror';
