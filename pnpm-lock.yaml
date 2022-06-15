@@ -1828,7 +1828,6 @@ importers:
       '@remirror/core': ^2.0.0-beta.0
       '@remirror/extension-placeholder': ^2.0.0-beta.0
       '@remirror/extension-react-component': ^2.0.0-beta.0
-      '@remirror/extension-react-ssr': ^2.0.0-beta.0
       '@remirror/pm': ^2.0.0-beta.0
       '@remirror/react-utils': ^2.0.0-beta.0
       '@types/react': ^18.0.6
@@ -1840,7 +1839,6 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/extension-placeholder': link:../remirror__extension-placeholder
       '@remirror/extension-react-component': link:../remirror__extension-react-component
-      '@remirror/extension-react-ssr': link:../remirror__extension-react-ssr
       '@remirror/react-utils': link:../remirror__react-utils
     devDependencies:
       '@remirror/pm': link:../remirror__pm
@@ -1908,7 +1906,6 @@ importers:
       '@remirror/extension-placeholder': ^2.0.0-beta.0
       '@remirror/extension-positioner': ^2.0.0-beta.0
       '@remirror/extension-react-component': ^2.0.0-beta.0
-      '@remirror/extension-react-ssr': ^2.0.0-beta.0
       '@remirror/extension-react-tables': ^2.0.0-beta.0
       '@remirror/preset-react': ^2.0.0-beta.0
       '@remirror/react-components': ^2.0.0-beta.0
@@ -1925,7 +1922,6 @@ importers:
       '@remirror/extension-placeholder': link:../remirror__extension-placeholder
       '@remirror/extension-positioner': link:../remirror__extension-positioner
       '@remirror/extension-react-component': link:../remirror__extension-react-component
-      '@remirror/extension-react-ssr': link:../remirror__extension-react-ssr
       '@remirror/extension-react-tables': link:../remirror__extension-react-tables
       '@remirror/preset-react': link:../remirror__preset-react
       '@remirror/react-components': link:../remirror__react-components
@@ -2012,7 +2008,6 @@ importers:
       '@remirror/core': ^2.0.0-beta.0
       '@remirror/extension-positioner': ^2.0.0-beta.0
       '@remirror/extension-react-component': ^2.0.0-beta.0
-      '@remirror/extension-react-ssr': ^2.0.0-beta.0
       '@remirror/i18n': ^2.0.0-beta.0
       '@remirror/pm': ^2.0.0-beta.0
       '@remirror/preset-core': ^2.0.0-beta.0
@@ -2037,7 +2032,6 @@ importers:
       '@remirror/core': link:../remirror__core
       '@remirror/extension-positioner': link:../remirror__extension-positioner
       '@remirror/extension-react-component': link:../remirror__extension-react-component
-      '@remirror/extension-react-ssr': link:../remirror__extension-react-ssr
       '@remirror/i18n': link:../remirror__i18n
       '@remirror/preset-core': link:../remirror__preset-core
       '@remirror/preset-react': link:../remirror__preset-react
