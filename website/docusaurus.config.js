@@ -125,14 +125,14 @@ module.exports = {
   plugins: [
     path.join(__dirname, 'plugins', 'basic-plugin.js'),
     require.resolve('@docusaurus/plugin-ideal-image'),
-    [
-      'docusaurus-plugin-examples',
-      {
-        path: path.join(__dirname, 'examples'),
-        include: ['*.{js,jsx,ts,tsx}'],
-        exclude: ['*.test.{js,jsx,ts,tsx}'],
-      },
-    ],
+    // [
+    //   'docusaurus-plugin-examples',
+    //   {
+    //     path: path.join(__dirname, 'examples'),
+    //     include: ['*.{js,jsx,ts,tsx}'],
+    //     exclude: ['*.test.{js,jsx,ts,tsx}'],
+    //   },
+    // ],
   ],
   stylesheets: [
     'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap',
