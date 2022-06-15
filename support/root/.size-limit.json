@@ -742,7 +742,6 @@
       "@remirror/core",
       "@remirror/extension-placeholder",
       "@remirror/extension-react-component",
-      "@remirror/extension-react-ssr",
       "@remirror/react-utils"
     ],
     "running": false,
