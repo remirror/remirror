@@ -1,8 +1,7 @@
-import React from 'react';
 /**
  * @jest-environment node
  */
-import { FC, Fragment } from 'react';
+import React, { FC, Fragment } from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { CoreTheme } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
