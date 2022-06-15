@@ -5,7 +5,6 @@
   "keywords": [
     "prosemirror",
     "react",
-    "ssr",
     "text editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/jest-remirror",
