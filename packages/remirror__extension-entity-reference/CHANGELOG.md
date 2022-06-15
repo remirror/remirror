@@ -1,4 +1,4 @@
-# @remirror/entity-reference
+# @remirror/extension-entity-reference
 
 ## 1.0.1
 
