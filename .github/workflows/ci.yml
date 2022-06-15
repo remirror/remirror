@@ -156,7 +156,9 @@ jobs:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build project
-        run: pnpm build
+        run:
+          pnpm build
+          pnpm typecheck
 
       - name: run unit tests with built code
         run: pnpm test:build
