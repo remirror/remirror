@@ -38,7 +38,6 @@
     "@remirror/preset-core": "^2.0.0-beta.0",
     "@remirror/preset-react": "^2.0.0-beta.0",
     "@remirror/react-renderer": "^2.0.0-beta.0",
-    "@remirror/react-ssr": "^2.0.0-beta.0",
     "@remirror/react-utils": "^2.0.0-beta.0",
     "@remirror/theme": "^2.0.0-beta.0",
     "@seznam/compose-react-refs": "^1.0.6",
