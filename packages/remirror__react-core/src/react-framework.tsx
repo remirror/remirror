@@ -11,9 +11,8 @@ import {
   UpdateStateProps,
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
-import type { EditorView } from '@remirror/pm/view';
+import { EditorView } from '@remirror/pm/view';
 import { ReactPlaceholderExtension } from '@remirror/preset-react';
-import { createEditorView } from '@remirror/react-ssr';
 
 import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
 import type { GetRootPropsConfig, ReactFrameworkOutput, RefKeyRootProps } from './react-types';
@@ -72,7 +71,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
    * Create the prosemirror editor view.
    */
   protected createView(state: EditorState): EditorView {
-    return createEditorView(null, {
+    return new EditorView(null, {
       state,
       dispatchTransaction: this.dispatchTransaction,
       attributes: () => this.getAttributes(),

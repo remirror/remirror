@@ -1113,7 +1113,7 @@ declare global {
 
       /**
        * The root document to be used for the editor. This is mainly used for
-       * SSR.
+       * non-browser environment.
        */
       readonly document: Document;
 
