@@ -1,5 +1,4 @@
 export * from '@remirror/extension-react-component';
-export * from '@remirror/extension-react-ssr';
 export * from '@remirror/extension-react-tables';
 export * from '@remirror/preset-react';
 export * from '@remirror/react-components';
