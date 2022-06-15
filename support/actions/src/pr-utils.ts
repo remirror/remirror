@@ -1,7 +1,6 @@
 import { getParameters } from 'codesandbox/lib/api/define';
 import got from 'got';
 import { parse } from 'semver';
-import { isNumber } from '@remirror/core-helpers';
 
 export function createSandboxUrl(version: string, extension: 'js' | 'tsx' = 'js') {
   const parameters = getParameters({
@@ -126,5 +125,5 @@ export async function getBuildNumber(tag: string): Promise<number> {
   const { prerelease } = parsed;
   const [, value] = prerelease;
 
-  return isNumber(value) ? value + 1 : 1;
+  return typeof value === 'number' ? value + 1 : 1;
 }
