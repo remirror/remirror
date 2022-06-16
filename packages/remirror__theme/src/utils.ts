@@ -64,7 +64,7 @@ export type RemirrorThemeType = DeepPartial<Remirror.Theme>;
  * Get the remirror variable from the keys to access it in the theme object.
  */
 function getCustomPropertyName(keys: string[]) {
-  return `--rmr-${keys.map(kebabCase).join('-')}`;
+  return `--rmr-${keys.map((key) => kebabCase(key)).join('-')}`;
 }
 
 /**
