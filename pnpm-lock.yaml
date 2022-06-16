@@ -2219,7 +2219,6 @@ importers:
       '@babel/runtime': ^7.13.10
       '@linaria/core': 3.0.0-beta.13
       '@remirror/core-types': ^2.0.0-beta.0
-      case-anything: ^2.1.10
       color2k: ^1.2.4
       csstype: ^3.0.7
       rollup: ^2.75.6
@@ -2227,7 +2226,6 @@ importers:
       '@babel/runtime': 7.18.3
       '@linaria/core': 3.0.0-beta.13
       '@remirror/core-types': link:../remirror__core-types
-      case-anything: 2.1.10
       color2k: 1.2.4
       csstype: 3.1.0
     devDependencies:
