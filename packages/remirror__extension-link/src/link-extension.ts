@@ -185,6 +185,8 @@ export interface LinkOptions {
    */
   autoLinkAllowedTLDs?: Static<string[]>;
 
+  autoLinkAfter?: Static<RegExp>;
+
   /**
    * The default protocol to use when it can't be inferred.
    *
@@ -238,6 +240,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
+    autoLinkAfter: undefined,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -437,9 +440,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          const href = this.buildHref(url);
-
-          if (!this.isValidTLD(href)) {
+          if (!this.isValidHref(url)) {
             return false;
           }
 
@@ -573,8 +574,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
 
             newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
+              const wasLink = this.isValidHref(prevMark.text);
+              const isLink = this.isValidHref(newMark.text);
 
               if (wasLink && !isLink) {
                 removeLink({ from: newMark.from, to: newMark.to }).tr();
@@ -682,11 +683,37 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return linkMarks;
   }
 
+  isValidHref(url: string): boolean {
+    if (!this._autoLinkRegexNonGlobal?.test(url)) {
+      return false;
+    }
+
+    const href = this.buildHref(url);
+
+    if (!this.isValidTLD(href)) {
+      return false;
+    }
+
+    return true;
+  }
+
   private findAutoLinks(str: string): FoundAutoLink[] {
     const toAutoLink: FoundAutoLink[] = [];
 
-    for (const match of findMatches(str, this.options.autoLinkRegex)) {
-      const text = getMatchString(match);
+    const { autoLinkAfter, autoLinkRegex } = this.options;
+
+    let matcher = autoLinkRegex;
+
+    if (autoLinkAfter) {
+      matcher = new RegExp(autoLinkRegex.source + autoLinkAfter.source, 'gm');
+    }
+
+    for (const match of findMatches(str, matcher)) {
+      let text = getMatchString(match);
+
+      if (autoLinkAfter) {
+        text = text.slice(0, -1);
+      }
 
       if (!text) {
         continue;
@@ -694,7 +721,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
       const href = this.buildHref(text);
 
-      if (!this.isValidTLD(href)) {
+      if (!this.isValidHref(text)) {
         continue;
       }
 

@@ -14,11 +14,13 @@ import {
   BoldExtension,
   createCoreManager,
   extractHref,
-  LinkExtension,
-  LinkOptions,
+  //LinkExtension,
+  //LinkOptions,
   OrderedListExtension,
   TOP_50_TLDS,
 } from 'remirror/extensions';
+
+import { LinkExtension, LinkOptions } from '../src/link-extension';
 
 extensionValidityTest(LinkExtension);
 
@@ -886,6 +888,77 @@ describe('more auto link cases', () => {
 
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: expected ?? input })(input))),
+    );
+  });
+});
+
+describe('autolinking after special trigger character detected', () => {
+  const editor = create({
+    autoLink: true,
+    autoLinkAllowedTLDs: TOP_50_TLDS,
+    autoLinkAfter: /[\t\n ),.\]]/g,
+  });
+  const { link } = editor.attributeMarks;
+  const { doc, p } = editor.nodes;
+
+  it('should just create a link mark after one of the trigger character is detected', () => {
+    editor.add(doc(p('google'))).insertText('.com');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google', '.com')));
+
+    editor.add(doc(p('google'))).insertText('.com ');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), ' ')),
+    );
+
+    editor.add(doc(p('google'))).insertText('.com.');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), '.')),
+    );
+
+    editor.add(doc(p('google'))).insertText('.com,');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), ',')),
+    );
+
+    editor.add(doc(p('google'))).insertText('.com ');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), ' ')),
+    );
+
+    editor.add(doc(p('google'))).insertText('.com)');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), ')')),
+    );
+
+    editor.add(doc(p('google'))).insertText('.com]');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), ']')),
+    );
+
+    editor.add(doc(p('google'))).insertText('.com.]');
+
+    editor.add(doc(p('window.co'))).insertText('mmand');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('window.command')));
+
+    editor.add(doc(p('window.co'))).insertText('m mand');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//window.com' })('window.com'), ' mand')),
+    );
+  });
+
+  it('should just create a link mark after one of the trigger character is detected pasting text', () => {
+    editor.add(doc(p('window.co'))).paste('mmand');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('window.command')));
+    editor.add(doc(p('window.co'))).paste('m mand');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//window.com' })('window.com'), ' mand')),
+    );
+  });
+
+  it('shouldnt affect link detection while pasting links with the new `autoLinkAfter` property', () => {
+    editor.add(doc(p('<cursor>'))).paste('google.com');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'))),
     );
   });
 });
