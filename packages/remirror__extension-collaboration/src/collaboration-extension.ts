@@ -2,6 +2,7 @@ import {
   command,
   CommandFunction,
   debounce,
+  DebouncedFunction,
   EditorState,
   extension,
   Handler,
@@ -39,8 +40,10 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     return 'collaboration' as const;
   }
 
+  private _getSendableSteps?: DebouncedFunction<(state: EditorState) => void>;
+
   protected init(): void {
-    this.getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps.bind(this));
+    this._getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps.bind(this));
   }
 
   /**
@@ -73,6 +76,23 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     };
   }
 
+  @command()
+  cancelSendableSteps(): CommandFunction {
+    return () => {
+      this._getSendableSteps?.cancel();
+      return true;
+    };
+  }
+
+  @command()
+  flushSendableSteps(): CommandFunction {
+    return ({ state }) => {
+      this._getSendableSteps?.cancel();
+      this.getSendableSteps(state);
+      return true;
+    };
+  }
+
   createExternalPlugins(): ProsemirrorPlugin[] {
     const { version, clientID } = this.options;
 
@@ -85,7 +105,11 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
   }
 
   onStateUpdate(props: StateUpdateLifecycleProps): void {
-    this.getSendableSteps(props.state);
+    this._getSendableSteps?.(props.state);
+  }
+
+  onDestroy(): void {
+    this.store.commands.flushSendableSteps();
   }
 
   /**
