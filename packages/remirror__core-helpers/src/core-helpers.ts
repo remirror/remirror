@@ -1053,5 +1053,9 @@ export {
   snakeCase,
   spaceCase,
 } from 'case-anything';
+export type {
+  debounce as DebouncedFunction,
+  throttle as ThrottledFunction,
+} from 'throttle-debounce';
 export { debounce, throttle } from 'throttle-debounce';
 export { omit, pick };
