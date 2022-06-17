@@ -1,5 +1,16 @@
 # @remirror/extension-shortcuts
 
+## 1.1.13
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core@1.4.7
+  - @remirror/pm@1.0.22
+
 ## 1.1.12
 
 > 2022-05-31

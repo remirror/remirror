@@ -1,5 +1,15 @@
 # prosemirror-paste-rules
 
+## 1.1.3
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core-helpers@1.0.6
+
 ## 1.1.2
 
 > 2022-05-31

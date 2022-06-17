@@ -1,5 +1,23 @@
 # @remirror/extension-collaboration
 
+## 1.1.0
+
+> 2022-06-17
+
+### Minor Changes
+
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core@1.4.7
+  - @remirror/messages@1.0.7
+  - @remirror/pm@1.0.22
+
 ## 1.0.23
 
 > 2022-05-31

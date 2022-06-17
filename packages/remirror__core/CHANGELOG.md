@@ -1,5 +1,20 @@
 # @remirror/core
 
+## 1.4.7
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core-helpers@1.0.6
+  - @remirror/core-utils@1.1.11
+  - @remirror/i18n@1.0.9
+  - @remirror/icons@1.0.8
+  - @remirror/messages@1.0.7
+  - @remirror/pm@1.0.22
+
 ## 1.4.6
 
 > 2022-05-31

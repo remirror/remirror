@@ -1,5 +1,17 @@
 # @remirror/dom
 
+## 1.0.32
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core@1.4.7
+  - @remirror/pm@1.0.22
+  - @remirror/preset-core@1.0.31
+
 ## 1.0.31
 
 > 2022-06-10

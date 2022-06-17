@@ -1,5 +1,24 @@
 # @remirror/react-editors
 
+## 0.1.89
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@1.0.6
+  - remirror@1.0.89
+  - @remirror/extension-react-tables@1.0.43
+  - @remirror/pm@1.0.22
+  - @remirror/react@1.0.43
+
 ## 0.1.88
 
 > 2022-06-13

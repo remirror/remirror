@@ -1,5 +1,18 @@
 # jest-prosemirror
 
+## 1.0.31
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core-helpers@1.0.6
+  - @remirror/core-utils@1.1.11
+  - @remirror/pm@1.0.22
+  - test-keyboard@1.0.6
+
 ## 1.0.30
 
 > 2022-06-09
