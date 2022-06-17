@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 1.1.58
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core@1.4.7
+  - @remirror/extension-bidi@1.0.24
+  - @remirror/extension-blockquote@1.0.28
+  - @remirror/extension-bold@1.0.24
+  - @remirror/extension-code@1.0.25
+  - @remirror/extension-code-block@1.0.31
+  - @remirror/extension-drop-cursor@1.0.24
+  - @remirror/extension-embed@1.1.34
+  - @remirror/extension-gap-cursor@1.0.24
+  - @remirror/extension-hard-break@1.0.24
+  - @remirror/extension-heading@1.0.25
+  - @remirror/extension-horizontal-rule@1.0.25
+  - @remirror/extension-image@1.0.40
+  - @remirror/extension-italic@1.0.24
+  - @remirror/extension-link@1.2.4
+  - @remirror/extension-list@1.2.28
+  - @remirror/extension-search@1.0.24
+  - @remirror/extension-shortcuts@1.1.13
+  - @remirror/extension-strike@1.0.24
+  - @remirror/extension-trailing-node@1.0.24
+  - @remirror/extension-underline@1.0.24
+  - @remirror/pm@1.0.22
+  - @remirror/preset-core@1.0.31
+
 ## 1.1.57
 
 > 2022-06-10

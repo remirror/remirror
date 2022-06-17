@@ -1,5 +1,19 @@
 # jest-remirror
 
+## 1.0.49
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - jest-prosemirror@1.0.31
+  - @remirror/core@1.4.7
+  - @remirror/dom@1.0.32
+  - @remirror/pm@1.0.22
+  - @remirror/preset-core@1.0.31
+
 ## 1.0.48
 
 > 2022-06-10

@@ -1,5 +1,17 @@
 # @remirror/extension-emoji
 
+## 1.0.29
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core@1.4.7
+  - @remirror/messages@1.0.7
+  - @remirror/pm@1.0.22
+
 ## 1.0.28
 
 > 2022-06-10

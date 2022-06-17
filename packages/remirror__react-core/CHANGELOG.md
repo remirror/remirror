@@ -1,5 +1,25 @@
 # @remirror/react-core
 
+## 1.2.6
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core@1.4.7
+  - @remirror/extension-positioner@1.2.9
+  - @remirror/extension-react-component@1.1.16
+  - @remirror/extension-react-ssr@1.0.28
+  - @remirror/i18n@1.0.9
+  - @remirror/pm@1.0.22
+  - @remirror/preset-core@1.0.31
+  - @remirror/preset-react@1.0.31
+  - @remirror/react-renderer@1.0.27
+  - @remirror/react-ssr@1.0.28
+  - @remirror/react-utils@1.0.7
+
 ## 1.2.5
 
 > 2022-06-10

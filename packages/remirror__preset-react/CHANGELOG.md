@@ -1,5 +1,20 @@
 # @remirror/preset-react
 
+## 1.0.31
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core@1.4.7
+  - @remirror/extension-placeholder@1.0.28
+  - @remirror/extension-react-component@1.1.16
+  - @remirror/extension-react-ssr@1.0.28
+  - @remirror/pm@1.0.22
+  - @remirror/react-utils@1.0.7
+
 ## 1.0.30
 
 > 2022-06-10

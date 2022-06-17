@@ -1,5 +1,18 @@
 # @remirror/pm
 
+## 1.0.22
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core-helpers@1.0.6
+  - prosemirror-paste-rules@1.1.3
+  - prosemirror-suggest@1.1.4
+  - prosemirror-trailing-node@1.0.11
+
 ## 1.0.21
 
 > 2022-06-09

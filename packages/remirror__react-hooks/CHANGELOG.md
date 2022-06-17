@@ -1,5 +1,26 @@
 # @remirror/react-hooks
 
+## 1.0.39
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - multishift@1.0.9
+  - @remirror/core@1.4.7
+  - @remirror/extension-emoji@1.0.29
+  - @remirror/extension-events@1.1.5
+  - @remirror/extension-history@1.0.24
+  - @remirror/extension-mention@1.0.25
+  - @remirror/extension-mention-atom@1.0.29
+  - @remirror/extension-positioner@1.2.9
+  - @remirror/i18n@1.0.9
+  - @remirror/pm@1.0.22
+  - @remirror/react-core@1.2.6
+  - @remirror/react-utils@1.0.7
+
 ## 1.0.38
 
 > 2022-06-10

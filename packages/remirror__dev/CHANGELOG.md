@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 1.1.9
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/pm@1.0.22
+  - @remirror/react-core@1.2.6
+
 ## 1.1.8
 
 > 2022-06-10

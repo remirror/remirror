@@ -1,5 +1,15 @@
 # @remirror/i18n
 
+## 1.0.9
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core-helpers@1.0.6
+
 ## 1.0.8
 
 > 2022-01-03

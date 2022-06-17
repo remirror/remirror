@@ -1,5 +1,25 @@
 # @remirror/extension-react-tables
 
+## 1.0.43
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - @remirror/core@1.4.7
+  - @remirror/core-utils@1.1.11
+  - @remirror/extension-positioner@1.2.9
+  - @remirror/extension-tables@1.0.28
+  - @remirror/icons@1.0.8
+  - @remirror/messages@1.0.7
+  - @remirror/pm@1.0.22
+  - @remirror/preset-core@1.0.31
+  - @remirror/react-components@1.0.39
+  - @remirror/react-core@1.2.6
+  - @remirror/react-hooks@1.0.39
+
 ## 1.0.42
 
 > 2022-06-10

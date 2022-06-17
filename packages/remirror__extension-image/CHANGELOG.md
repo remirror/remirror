@@ -1,5 +1,18 @@
 # @remirror/extension-image
 
+## 1.0.40
+
+> 2022-06-17
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+  - prosemirror-resizable-view@1.1.19
+  - @remirror/core@1.4.7
+  - @remirror/messages@1.0.7
+  - @remirror/pm@1.0.22
+
 ## 1.0.39
 
 > 2022-06-10
