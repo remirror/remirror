@@ -2,6 +2,7 @@ import {
   command,
   CommandFunction,
   debounce,
+  DebouncedFunction,
   EditorState,
   extension,
   Handler,
@@ -39,8 +40,10 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     return 'collaboration' as const;
   }
 
+  private _getSendableSteps?: DebouncedFunction<(state: EditorState) => void>;
+
   protected init(): void {
-    this.getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps);
+    this._getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps.bind(this));
   }
 
   /**
@@ -73,6 +76,23 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     };
   }
 
+  @command()
+  cancelSendableSteps(): CommandFunction {
+    return () => {
+      this._getSendableSteps?.cancel();
+      return true;
+    };
+  }
+
+  @command()
+  flushSendableSteps(): CommandFunction {
+    return ({ state }) => {
+      this._getSendableSteps?.cancel();
+      this.getSendableSteps(state);
+      return true;
+    };
+  }
+
   createExternalPlugins(): ProsemirrorPlugin[] {
     const { version, clientID } = this.options;
 
@@ -85,14 +105,18 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
   }
 
   onStateUpdate(props: StateUpdateLifecycleProps): void {
-    this.getSendableSteps(props.state);
+    this._getSendableSteps?.(props.state);
+  }
+
+  onDestroy(): void {
+    this.store.commands.flushSendableSteps();
   }
 
   /**
    * This passes the sendable steps into the `onSendableReceived` handler defined in the
    * options when there is something to send.
    */
-  private getSendableSteps = (state: EditorState) => {
+  private getSendableSteps(state: EditorState) {
     const sendable = sendableSteps(state);
 
     if (sendable) {
@@ -103,7 +127,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
       };
       this.options.onSendableReceived({ sendable, jsonSendable });
     }
-  };
+  }
 }
 
 export interface Sendable {
@@ -168,11 +192,15 @@ export interface CollaborationOptions {
   onSendableReceived: Handler<(props: OnSendableReceivedProps) => void>;
 }
 
+export interface StepWithClientId extends Step {
+  clientID: number | string;
+}
+
 export type CollaborationAttributes = ProsemirrorAttributes<{
   /**
-   * TODO give this some better types
+   * The steps to confirm, combined with the clientID of the user who created the change
    */
-  steps: any[];
+  steps: StepWithClientId[];
 
   /**
    * The version of the document that these steps were added to.
