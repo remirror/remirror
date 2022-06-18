@@ -1,10 +1,8 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { CollaborationExtension, CollaborationOptions } from '../';
+import { CollaborationExtension, CollaborationOptions } from '../src';
 
 extensionValidityTest(CollaborationExtension, { clientID: 'abc' });
-
-jest.useFakeTimers('modern');
 
 function create(options: Partial<CollaborationOptions> = {}) {
   const collabExtension = new CollaborationExtension({
@@ -20,6 +18,10 @@ function create(options: Partial<CollaborationOptions> = {}) {
 }
 
 describe('getSendableSteps', () => {
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+  });
+
   afterAll(() => {
     jest.useRealTimers();
   });
