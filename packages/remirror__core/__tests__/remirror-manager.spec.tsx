@@ -24,9 +24,9 @@ import { EditorView } from '@remirror/pm/view';
 describe('Manager', () => {
   let state: EditorState;
 
-  const innerMock = jest.fn();
-  const mock = jest.fn((_: ProsemirrorAttributes) => innerMock);
-  const getInformation = jest.fn(() => 'information');
+  const innerMock: any = jest.fn();
+  const mock: any = jest.fn((_: ProsemirrorAttributes) => innerMock);
+  const getInformation: any = jest.fn(() => 'information');
 
   class DummyExtension extends PlainExtension {
     get name() {

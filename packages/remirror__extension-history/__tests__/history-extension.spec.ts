@@ -50,7 +50,7 @@ describe('commands', () => {
 });
 
 describe('`getState` and `getDispatch`', () => {
-  const dispatcher = jest.fn();
+  const dispatcher: any = jest.fn();
   let state: EditorState;
   const getState: () => EditorState = jest.fn(() => state);
   const mocks = {

@@ -10,7 +10,7 @@ import { useKeymaps } from '../use-keymaps';
 describe('useKeymaps', () => {
   it('captures keymaps in correct order', () => {
     const editor = RemirrorTestChain.create(createReactManager([], { stringHandler: 'html' }));
-    const mock = jest.fn((_: number) => false);
+    const mock: any = jest.fn((_: number) => false);
     const HooksComponent = () => {
       useKeymaps({ Enter: () => mock(1) });
       useKeymaps({ Enter: () => mock(2) });
@@ -35,7 +35,7 @@ describe('useKeymaps', () => {
 
   it('prioritizes the keymaps', () => {
     const editor = RemirrorTestChain.create(createReactManager([], { stringHandler: 'html' }));
-    const mock = jest.fn((_: number) => false);
+    const mock: any = jest.fn((_: number) => false);
     const HooksComponent = () => {
       useKeymaps({ Enter: () => mock(1) }, ExtensionPriority.Default);
       useKeymaps({ Enter: () => mock(2) }, ExtensionPriority.Highest);
@@ -60,7 +60,7 @@ describe('useKeymaps', () => {
 
   it('responds to events in strict mode with a controlled editor', () => {
     const chain = RemirrorTestChain.create(createReactManager([], { stringHandler: 'html' }));
-    const mockSubmit = jest.fn();
+    const mockSubmit: any = jest.fn();
 
     const Component = () => {
       const { manager, onChange, state } = useRemirror({

@@ -26,7 +26,7 @@ describe('configuration', () => {
   });
 
   it('calls the destroy provider', () => {
-    const destroyProvider = jest.fn(defaultDestroyProvider);
+    const destroyProvider: any = jest.fn(defaultDestroyProvider);
     const { manager } = create({ destroyProvider });
 
     manager.destroy();
@@ -41,8 +41,8 @@ describe('configuration', () => {
     const { manager } = create();
     const extension = manager.getExtension(YjsExtension);
 
-    const getProvider = jest.fn(() => provider);
-    const destroyProvider = jest.fn(defaultDestroyProvider);
+    const getProvider: any = jest.fn(() => provider);
+    const destroyProvider: any = jest.fn(defaultDestroyProvider);
 
     extension.setOptions({ getProvider, destroyProvider });
     expect(extension.options.getProvider).toBe(getProvider);

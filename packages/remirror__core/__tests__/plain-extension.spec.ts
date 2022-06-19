@@ -50,7 +50,7 @@ test('isOfType', () => {
 describe('Handlers', () => {
   it('supports simple handlers', () => {
     const testExtension = new TestExtension();
-    const changeHandler = jest.fn(() => {});
+    const changeHandler: any = jest.fn(() => {});
 
     const dispose = testExtension.addHandler('onChange', changeHandler);
     testExtension.options.onChange();
@@ -65,9 +65,9 @@ describe('Handlers', () => {
 
   it('supports early return values', () => {
     const testExtension = new TestExtension();
-    const firstHandler = jest.fn(() => false);
-    const secondHandler = jest.fn(() => true);
-    const thirdHandler = jest.fn(() => false);
+    const firstHandler: any = jest.fn(() => false);
+    const secondHandler: any = jest.fn(() => true);
+    const thirdHandler: any = jest.fn(() => false);
 
     testExtension.addHandler('custom', firstHandler);
     const dispose = testExtension.addHandler('custom', secondHandler);
@@ -93,9 +93,9 @@ describe('Handlers', () => {
 
   it('supports early return function values', () => {
     const testExtension = new TestExtension();
-    const firstHandler = jest.fn(() => false);
-    const secondHandler = jest.fn(() => true);
-    const thirdHandler = jest.fn(() => false);
+    const firstHandler: any = jest.fn(() => false);
+    const secondHandler: any = jest.fn(() => true);
+    const thirdHandler: any = jest.fn(() => false);
 
     testExtension.addHandler('onEscape', firstHandler);
     const dispose = testExtension.addHandler('onEscape', secondHandler);
@@ -121,9 +121,9 @@ describe('Handlers', () => {
 
   it('supports the `__ALL__` default return value', () => {
     const testExtension = new TestExtension();
-    const firstHandler = jest.fn(() => 'asdf');
-    const secondHandler = jest.fn(() => '123');
-    const thirdHandler = jest.fn(() => 'asf');
+    const firstHandler: any = jest.fn(() => 'asdf');
+    const secondHandler: any = jest.fn(() => '123');
+    const thirdHandler: any = jest.fn(() => 'asf');
 
     testExtension.addHandler('onTextInput', firstHandler);
     const dispose = testExtension.addHandler('onTextInput', secondHandler);
@@ -150,9 +150,9 @@ describe('Handlers', () => {
   it('supports prioritization', () => {
     const values: number[] = [];
     const testExtension = new TestExtension();
-    const one = jest.fn(() => values.push(1));
-    const two = jest.fn(() => values.push(2));
-    const three = jest.fn(() => values.push(3));
+    const one: any = jest.fn(() => values.push(1));
+    const two: any = jest.fn(() => values.push(2));
+    const three: any = jest.fn(() => values.push(3));
 
     testExtension.addHandler('onChange', one, ExtensionPriority.Lowest);
     testExtension.addHandler('onChange', two);
@@ -166,9 +166,9 @@ describe('Handlers', () => {
 
   it('supports reducer functions', () => {
     const testExtension = new TestExtension();
-    const firstHandler = jest.fn(() => 10);
-    const secondHandler = jest.fn(() => 100);
-    const thirdHandler = jest.fn(() => 1);
+    const firstHandler: any = jest.fn(() => 10);
+    const secondHandler: any = jest.fn(() => 100);
+    const thirdHandler: any = jest.fn(() => 1);
 
     testExtension.addHandler('incrementer', firstHandler);
     const dispose = testExtension.addHandler('incrementer', secondHandler);

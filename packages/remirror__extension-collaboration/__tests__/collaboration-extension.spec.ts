@@ -75,7 +75,7 @@ describe('getSendableSteps', () => {
   ];
 
   it('should debounce calls to the onSendableReceived handler', () => {
-    const handleSendableReceived = jest.fn();
+    const handleSendableReceived: any = jest.fn();
 
     const {
       nodes: { doc, p },
@@ -105,7 +105,7 @@ describe('getSendableSteps', () => {
   });
 
   it('should allow me to flush the steps on demand', () => {
-    const handleSendableReceived = jest.fn();
+    const handleSendableReceived: any = jest.fn();
 
     const {
       nodes: { doc, p },

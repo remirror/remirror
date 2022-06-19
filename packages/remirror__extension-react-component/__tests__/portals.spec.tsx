@@ -8,10 +8,10 @@ import { MountedPortal, PortalContainer, RemirrorPortals, usePortals } from '../
 test('PortalContainer', () => {
   const portalContainer = new PortalContainer();
 
-  const mockListener = jest.fn();
+  const mockListener: any = jest.fn();
   portalContainer.on(mockListener);
 
-  const mockRender = jest.fn(() => <div data-testid='test' />);
+  const mockRender: any = jest.fn(() => <div data-testid='test' />);
   const element = document.createElement('span');
   document.body.append(element);
   portalContainer.render({ Component: mockRender, container: element });
@@ -27,7 +27,7 @@ test('PortalContainer', () => {
 test('usePortals', () => {
   const container = document.createElement('span');
   const portalContainer = new PortalContainer();
-  const mock = jest.fn();
+  const mock: any = jest.fn();
 
   const Component = () => {
     const portals = usePortals(portalContainer);

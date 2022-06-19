@@ -101,9 +101,9 @@ test('can throw error if received a non top level node', () => {
   expect(() => add(p(''))).toThrow();
 });
 
-const tripleClickMock = jest.fn(() => false);
-const doubleClickMock = jest.fn(() => false);
-const clickMock = jest.fn(() => false);
+const tripleClickMock: any = jest.fn(() => false);
+const doubleClickMock: any = jest.fn(() => false);
+const clickMock: any = jest.fn(() => false);
 
 class CustomExtension extends PlainExtension {
   get name() {

@@ -98,7 +98,7 @@ describe('`createSuggesters`', () => {
   const label = `@${id}`;
 
   it('uses default noop callbacks and does nothing', () => {
-    const noop = jest.fn();
+    const noop: any = jest.fn();
     const { add, doc, p, extension } = create(options);
     extension.addHandler('onChange', noop);
 
@@ -110,7 +110,7 @@ describe('`createSuggesters`', () => {
       });
   });
 
-  const change = jest.fn();
+  const change: any = jest.fn();
 
   // The default `onChange` handler. Make sure to include this in future work.
   const onChange: MentionChangeHandler = jest.fn((props, command) => {
@@ -380,7 +380,7 @@ describe('onClick', () => {
   const { add, doc, p, mention, view, extension } = create(options);
 
   it('responds to clicks', () => {
-    const clickHandler = jest.fn(() => true);
+    const clickHandler: any = jest.fn(() => true);
     extension.addHandler('onClick', clickHandler);
     const atMention = mention({ id: '@hello', name: 'at', label: '@hello' })('@hello');
     const node = p('first ', atMention);

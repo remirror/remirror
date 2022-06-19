@@ -28,7 +28,7 @@ export function hideConsoleError(hide: boolean): { spy: jest.SpyInstance } {
   // The following code mocks the console.error so that tests with expected
   // failures that log to the console can be run without making the test logs
   // ugly and messy.
-  const ref = { spy: jest.spyOn(console, 'error') };
+  const ref = { spy: jest.spyOn(console, 'error') as any };
 
   beforeEach(() => {
     if (!hide) {

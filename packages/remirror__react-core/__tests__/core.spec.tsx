@@ -39,7 +39,7 @@ describe('basic functionality', () => {
   hideConsoleError(true);
 
   it('should allow text input and fire all handlers', () => {
-    const setContent = jest.fn();
+    const setContent: any = jest.fn();
 
     const Component = () => {
       setContent.mockImplementation(useRemirrorContext().setContent);
@@ -344,7 +344,7 @@ test('`focus` should be chainable', () => {
 describe('onChange', () => {
   it('updates values', () => {
     const chain = RemirrorTestChain.create(createReactManager(() => []));
-    const mock = jest.fn();
+    const mock: any = jest.fn();
 
     const Component = () => {
       const { manager } = useRemirror({ extensions: chain.manager });
@@ -372,7 +372,7 @@ describe('onChange', () => {
 
   it('updates values in `StrictMode`', () => {
     const chain = RemirrorTestChain.create(createReactManager(() => []));
-    const mock = jest.fn();
+    const mock: any = jest.fn();
 
     const Component = () => {
       const { manager } = useRemirror({ extensions: chain.manager });

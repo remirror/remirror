@@ -35,7 +35,7 @@ describe('useRemirrorContext', () => {
   it('can listen to updates with handler', () => {
     const { chain, wrapper } = createTestChain();
     const { doc, p } = chain.nodes;
-    const mock = jest.fn();
+    const mock: any = jest.fn();
     renderHook(() => useRemirrorContext<BoldExtension>(mock), { wrapper });
     act(() => {
       chain.overwrite(doc(p('Welcome <start>friend<end>')));
@@ -44,7 +44,7 @@ describe('useRemirrorContext', () => {
   });
 
   it('should auto update when in strict mode', () => {
-    const mock = jest.fn();
+    const mock: any = jest.fn();
     const HookComponent: FC = () => {
       useRemirrorContext({ autoUpdate: true });
       mock();

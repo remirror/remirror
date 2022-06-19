@@ -9,7 +9,7 @@ import { KeymapExtension } from '../';
 extensionValidityTest(KeymapExtension);
 
 test('supports custom keymaps', () => {
-  const mock = jest.fn();
+  const mock: any = jest.fn();
   const {
     manager,
     add,

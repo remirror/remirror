@@ -20,7 +20,7 @@ const handlers = {
 
 describe.skip('Remirror: Server', () => {
   it('can render in a node server environment', () => {
-    const mock = jest.fn();
+    const mock: any = jest.fn();
 
     const Component = () => {
       const context = useRemirrorContext();

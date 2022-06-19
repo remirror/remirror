@@ -320,7 +320,7 @@ function createEditor(controlled = false) {
     query: string;
   }
 
-  const getItems = jest.fn((parameter?: GetItemsProps) => {
+  const getItems: any = jest.fn((parameter?: GetItemsProps) => {
     if (!parameter) {
       return [];
     }
