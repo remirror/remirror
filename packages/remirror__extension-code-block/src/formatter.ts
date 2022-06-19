@@ -13,7 +13,7 @@ import markdownPlugin from 'prettier/parser-markdown';
 import cssPlugin from 'prettier/parser-postcss';
 import typescriptPlugin from 'prettier/parser-typescript';
 import yamlPlugin from 'prettier/parser-yaml';
-import { formatWithCursor } from 'prettier/standalone';
+import { default as Prettier } from 'prettier/standalone';
 
 import type { FormattedContent, FormatterProps } from './code-block-types';
 
@@ -56,7 +56,7 @@ interface FormatCodeProps {
  * Wrapper around the prettier formatWithCursor.
  */
 function formatCode({ parser, source, cursorOffset }: FormatCodeProps) {
-  return formatWithCursor(source, {
+  return Prettier.formatWithCursor(source, {
     ...options,
     cursorOffset,
     plugins,

@@ -1,5 +1,6 @@
-import { BoldExtension } from 'remirror/extensions';
 import { jest } from '@jest/globals';
+import { BoldExtension } from 'remirror/extensions';
+
 import { createDomEditor, createDomManager } from '../';
 
 test('can be added to the dom', () => {

@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC, useState } from 'react';
 import {
@@ -40,7 +41,7 @@ describe('Remirror Controlled Component', () => {
     const value = manager.createState({
       content: '<p>This is the initial value</p>',
     });
-    const onChange = jest.fn();
+    const onChange: any = jest.fn();
 
     const { getByRole } = strictRender(
       <Remirror

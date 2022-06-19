@@ -1,6 +1,6 @@
 import { getParameters } from 'codesandbox/lib/api/define';
 import got from 'got';
-import { parse } from 'semver';
+import { default as semver } from 'semver';
 
 export function createSandboxUrl(version: string, extension: 'js' | 'tsx' = 'js') {
   const parameters = getParameters({
@@ -116,7 +116,7 @@ export async function getBuildNumber(tag: string): Promise<number> {
   }>();
 
   const version = json.version;
-  const parsed = parse(version);
+  const parsed = semver.parse(version);
 
   if (!parsed) {
     return 1;

@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { createEditor, doc, p } from 'jest-prosemirror';
 import {
   isRemirrorManager,

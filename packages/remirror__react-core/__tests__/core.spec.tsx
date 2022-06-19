@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { useState } from 'react';
 import { hideConsoleError, rafMock } from 'testing';
@@ -13,9 +14,9 @@ import {
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
 const handlers = {
-  onChange: jest.fn(),
-  onBlur: jest.fn(),
-  onFocus: jest.fn(),
+  onChange: jest.fn() as any,
+  onBlur: jest.fn() as any,
+  onFocus: jest.fn() as any,
 };
 
 test('should be called via a render prop', () => {

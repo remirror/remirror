@@ -1,10 +1,10 @@
+import { jest } from '@jest/globals';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC, PropsWithChildren } from 'react';
 import { BoldExtension } from 'remirror/extensions';
 import { act as renderAct, strictRender } from 'testing/react';
 import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
-import { jest } from '@jest/globals';
 
 describe('useRemirrorContext', () => {
   it('returns the provider context', () => {
