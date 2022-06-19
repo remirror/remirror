@@ -1,12 +1,13 @@
 /**
  * @jest-environment node
  */
+import { jest } from '@jest/globals';
 import React, { FC, Fragment } from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { CoreTheme } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
 import { docNodeBasicJSON, docNodeSimpleJSON } from 'testing';
-import { jest } from '@jest/globals';
+
 import { createReactManager, Remirror, useRemirrorContext } from '../';
 
 const label = 'Remirror editor';

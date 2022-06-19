@@ -1,9 +1,9 @@
+import { jest } from '@jest/globals';
 import { axe } from 'jest-axe';
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 import { RenderResult, strictRender } from 'testing/react';
 
 import { createReactManager, Remirror, useRemirrorContext } from '../';
-import { jest } from '@jest/globals';
 
 const mock = jest.fn();
 

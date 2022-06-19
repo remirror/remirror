@@ -567,9 +567,6 @@
       "path": "support/scripts/src"
     },
     {
-      "path": "support/templates/extension-template/__tests__"
-    },
-    {
       "path": "support/templates/extension-template/src"
     },
     {
