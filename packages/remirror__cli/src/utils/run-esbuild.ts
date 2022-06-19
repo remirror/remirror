@@ -6,7 +6,7 @@ import path from 'node:path';
 import { logger } from '../logger';
 import { removeFileExt } from './remove-file-ext';
 
-const dependenciesToBundle = /(svgmoji|lingui|emojibase|react-use)/;
+const dependenciesToBundle = /(lingui|emojibase|react-use)/;
 
 export async function runEsbuild(
   pkg: Package,
