@@ -2,7 +2,7 @@ import EMOJI_REGEX from 'emojibase-regex/emoji.js';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon.js';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode.js';
 import escapeStringRegex from 'escape-string-regexp';
-import { Moji, SpriteCollection } from 'svgmoji';
+import { Moji } from 'svgmoji';
 import {
   ApplySchemaAttributes,
   command,
@@ -65,7 +65,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
     return (this._moji ??= isString(this.options.moji)
       ? new DefaultMoji[this.options.moji]({
           data: this.options.data,
-          type: SpriteCollection.All,
+          type: 'all',
           fallback: this.options.fallback,
         })
       : this.options.moji);
