@@ -1,7 +1,7 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { CollaborationExtension, CollaborationOptions } from '../src';
-
+import { jest } from '@jest/globals';
 extensionValidityTest(CollaborationExtension, { clientID: 'abc' });
 
 function create(options: Partial<CollaborationOptions> = {}) {

@@ -19,7 +19,7 @@ import {
   OrderedListExtension,
   TOP_50_TLDS,
 } from 'remirror/extensions';
-
+import { jest } from '@jest/globals';
 extensionValidityTest(LinkExtension);
 
 const href = 'https://test.com';

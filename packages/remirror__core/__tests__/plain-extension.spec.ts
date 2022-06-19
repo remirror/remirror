@@ -1,7 +1,7 @@
 import { BoldExtension } from 'remirror/extensions';
 import { ExtensionPriority } from '@remirror/core-constants';
 import type { Handler } from '@remirror/core-types';
-
+import { jest } from '@jest/globals';
 import { extension, PlainExtension } from '../';
 
 interface TestOptions {

@@ -5,7 +5,7 @@
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "react",
-    "types": ["node", "jest"],
+    "types": ["node", "@jest/globals"],
     "moduleResolution": "node",
     "useDefineForClassFields": true,
     "sourceMap": true,

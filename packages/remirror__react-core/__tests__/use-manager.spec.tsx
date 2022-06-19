@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import React from 'react';
 import { act as renderAct, render } from 'testing/react';
 import type { AnyRemirrorManager } from '@remirror/core';

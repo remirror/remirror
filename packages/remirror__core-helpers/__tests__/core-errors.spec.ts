@@ -1,6 +1,6 @@
 import { hideConsoleError } from 'testing';
 import { ErrorConstant } from '@remirror/core-constants';
-
+import { jest } from '@jest/globals';
 import { freeze, invariant, RemirrorError } from '../';
 
 const env = process.env.NODE_ENV;

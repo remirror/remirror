@@ -1,10 +1,10 @@
-import { toHaveNoViolations } from 'jest-axe';
+import { default as JestAxe } from 'jest-axe';
 import { setupProsemirrorEnvironment } from 'jest-prosemirror';
 import { ignoreJSDOMWarnings, setupRemirrorEnvironment } from 'jest-remirror';
 
-require('@testing-library/jest-dom/extend-expect');
+import('@testing-library/jest-dom/extend-expect');
 
-expect.extend(toHaveNoViolations);
+expect.extend(JestAxe.toHaveNoViolations);
 
 /* Add matchers for jest-prosemirror */
 setupProsemirrorEnvironment();

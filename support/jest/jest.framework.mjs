@@ -2,9 +2,9 @@
 /// <reference path="../../globals.d.ts" />
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="jest-extended" />
-
+// @ts-expect-error
 import diffHtml from 'diffable-html';
-import * as matchers from 'jest-extended';
+import { default as matchers } from 'jest-extended';
 import { prosemirrorSerializer } from 'jest-prosemirror';
 
 /* Make unhandledRejection errors easier to debug */
@@ -26,21 +26,16 @@ expect.addSnapshotSerializer({
     const trimmed = object.trim();
     return trimmed.length > 2 && trimmed.startsWith('<') && trimmed.endsWith('>');
   },
-  serialize: (val: string) => {
+  serialize: (val) => {
     return diffHtml(val).trim();
   },
 });
 
 expect.addSnapshotSerializer(prosemirrorSerializer);
 
-interface PuppeteerHtml {
-  _: 'HTML';
-  html: string;
-}
-
 expect.addSnapshotSerializer({
   test: (val) => val?._ === 'HTML',
-  serialize(val: PuppeteerHtml) {
+  serialize(val) {
     return diffHtml(val.html).trim();
   },
 });

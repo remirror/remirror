@@ -1,6 +1,6 @@
 import type { SyntheticEvent } from 'react';
 import { object } from '@remirror/core-helpers';
-
+import { jest } from '@jest/globals';
 import { callAllEventHandlers } from '../src/multishift-utils';
 
 describe('callAllEventHandlers', () => {

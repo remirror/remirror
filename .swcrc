@@ -1,0 +1,11 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "jsx": true,
+      "decorators": true,
+      "decoratorsBeforeExport": true
+    },
+    "target": "es2020"
+  }
+}
