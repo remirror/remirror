@@ -1,8 +1,8 @@
 import React, { FC, PropsWithChildren, useEffect } from 'react';
 import { Dialog, DialogBackdrop, useDialogState } from 'reakit';
-import usePrevious from 'use-previous';
 
 import { useTheme, UseThemeProps } from '../providers';
+import { usePrevious } from './use-previous';
 
 interface ControlledDialogProps {
   visible: boolean;

@@ -3,7 +3,6 @@ import { matchSorter } from 'match-sorter';
 import React, { FC, PropsWithChildren, ReactChild, Ref, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useMenuState } from 'reakit';
-import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import { cx, Except } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
@@ -17,6 +16,7 @@ import {
 import { ComponentsTheme, ExtensionPositionerTheme } from '@remirror/theme';
 
 import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
+import { useIsomorphicLayoutEffect } from './components/use-isomorphic-layout-effect';
 import { MenuComponent } from './menu';
 import {
   ComponentItem,

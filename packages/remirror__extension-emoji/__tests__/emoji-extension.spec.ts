@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import data from 'svgmoji/emoji.json';
 import { KeymapExtension, object } from '@remirror/core';

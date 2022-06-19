@@ -2,7 +2,6 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { ApplySchemaAttributes, extension, ExtensionTag, mutateTag, NodeExtension } from 'remirror';
 import { hideConsoleError } from 'testing';
 
-import { jest } from '@jest/globals';
 import { TagsExtension } from '../';
 
 // Hides console messages

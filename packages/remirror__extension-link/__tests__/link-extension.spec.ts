@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import {
@@ -19,7 +20,7 @@ import {
   OrderedListExtension,
   TOP_50_TLDS,
 } from 'remirror/extensions';
-import { jest } from '@jest/globals';
+
 extensionValidityTest(LinkExtension);
 
 const href = 'https://test.com';

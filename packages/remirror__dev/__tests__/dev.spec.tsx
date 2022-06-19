@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import React from 'react';
 import { strictRender } from 'testing/react';
 import { createReactManager, Remirror } from '@remirror/react-core';

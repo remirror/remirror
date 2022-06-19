@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
 import React from 'react';
 import { act, strictRender } from 'testing/react';

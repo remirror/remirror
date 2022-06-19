@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC } from 'react';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';

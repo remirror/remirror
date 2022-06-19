@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { createEditor, doc, h1, p, strong } from 'jest-prosemirror';
 import { Transaction } from 'prosemirror-state';
 

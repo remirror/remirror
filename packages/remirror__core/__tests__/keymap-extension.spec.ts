@@ -2,7 +2,7 @@ import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { ExtensionPriority } from 'remirror';
 import { CodeExtension, HeadingExtension } from 'remirror/extensions';
 import { TextSelection } from '@remirror/pm/state';
-
+import { jest } from '@jest/globals';
 import { KeymapExtension } from '../';
 
 extensionValidityTest(KeymapExtension);

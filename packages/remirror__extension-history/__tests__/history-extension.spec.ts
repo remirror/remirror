@@ -1,6 +1,7 @@
+import { jest } from '@jest/globals';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import type { EditorState } from '@remirror/core';
-import { jest } from '@jest/globals';
+
 import { HistoryExtension } from '../';
 
 extensionValidityTest(HistoryExtension);

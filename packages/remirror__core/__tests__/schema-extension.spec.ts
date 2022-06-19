@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { schema } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { values } from 'remirror';

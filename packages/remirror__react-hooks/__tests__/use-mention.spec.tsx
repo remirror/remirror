@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { assertGet } from 'remirror';

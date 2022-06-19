@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import createMockRaf from '@react-spring/mock-raf';
 import diff from 'jest-diff';
 import {

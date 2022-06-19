@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef } from 'react';
 import useLayoutEffect from 'use-isomorphic-layout-effect';
-import usePrevious from 'use-previous';
 import { AnyExtension, ErrorConstant, invariant, isArray, isNullOrUndefined } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
 
 import { ReactFramework, ReactFrameworkOptions, ReactFrameworkProps } from '../react-framework';
 import type { ReactFrameworkOutput } from '../react-types';
+import { usePrevious } from './use-previous';
 
 /**
  * The hook responsible for providing the editor context when the `Remirror`

@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { fireEvent } from '@testing-library/dom';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
