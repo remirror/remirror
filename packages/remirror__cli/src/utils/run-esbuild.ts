@@ -6,6 +6,8 @@ import path from 'node:path';
 import { logger } from '../logger';
 import { removeFileExt } from './remove-file-ext';
 
+const dependenciesToBundle = /(svgmoji|lingui|emojibase|react-use)/;
+
 export async function runEsbuild(
   pkg: Package,
   { inFile, outFile, format }: { inFile: string; outFile: string; format: 'esm' | 'cjs' },
@@ -20,7 +22,7 @@ export async function runEsbuild(
     ...pkg.packageJson.devDependencies,
     ...pkg.packageJson.peerDependencies,
     ...pkg.packageJson.optionalDependencies,
-  });
+  }).filter((name) => !dependenciesToBundle.test(name));
 
   const result = await build({
     plugins: [nodeExternalsPlugin()],
