@@ -10,10 +10,6 @@ const dependencies = Object.keys({
 
 export default defineConfig({
   external: dependencies,
-  onwarn(warning, warn) {
-    // skip certain warnings
-    if (warning.code === 'UNUSED_EXTERNAL_IMPORT') {
-      return;
-    }
-  },
+  // Remove unneeded imports
+  treeshake: { moduleSideEffects: false },
 });
