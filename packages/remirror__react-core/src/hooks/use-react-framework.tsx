@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef } from 'react';
-import useLayoutEffect from 'use-isomorphic-layout-effect';
 import { AnyExtension, ErrorConstant, invariant, isArray, isNullOrUndefined } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
 
 import { ReactFramework, ReactFrameworkOptions, ReactFrameworkProps } from '../react-framework';
 import type { ReactFrameworkOutput } from '../react-types';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
 import { usePrevious } from './use-previous';
 
 /**
@@ -97,7 +97,7 @@ function useControlledEditor<Extension extends AnyExtension>(
   const previousValue = usePrevious(state);
 
   // Using layout effect for synchronous updates.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Check if the update is valid based on current value.
     const validUpdate = state
       ? isControlledRef.current === true
