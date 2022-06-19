@@ -2,7 +2,7 @@ import EMOJI_REGEX from 'emojibase-regex/emoji.js';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon.js';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode.js';
 import escapeStringRegex from 'escape-string-regexp';
-import { Moji } from 'svgmoji';
+import type { Moji } from 'svgmoji';
 import {
   ApplySchemaAttributes,
   command,
