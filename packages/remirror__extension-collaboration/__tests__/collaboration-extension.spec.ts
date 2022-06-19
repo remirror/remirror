@@ -19,7 +19,7 @@ function create(options: Partial<CollaborationOptions> = {}) {
 
 describe('getSendableSteps', () => {
   beforeAll(() => {
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
   });
 
   afterAll(() => {
