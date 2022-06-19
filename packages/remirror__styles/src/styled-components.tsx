@@ -2,7 +2,10 @@
  * AUTO GENERATED FILE - TO UPDATE RUN: `pnpm run fix:css`
  */
 
-import styled, { css } from 'styled-components';
+import { defaultImport } from 'default-import';
+import StyledComponents, { css } from 'styled-components';
+
+const styled = defaultImport(StyledComponents);
 
 export const componentsStyledCss: ReturnType<typeof css> = css`
   /**
