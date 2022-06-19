@@ -1,7 +1,5 @@
-import { axe } from 'jest-axe';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { useState } from 'react';
-import { renderToString } from 'react-dom/server';
 import { hideConsoleError, rafMock } from 'testing';
 import { act, fireEvent, render, strictRender } from 'testing/react';
 import {
@@ -38,14 +36,6 @@ test('should be called via a render prop', () => {
 
 describe('basic functionality', () => {
   hideConsoleError(true);
-
-  it('is accessible', async () => {
-    const results = await axe(
-      renderToString(<Remirror manager={createReactManager([])} autoRender='start' />),
-    );
-
-    expect(results).toHaveNoViolations();
-  });
 
   it('should allow text input and fire all handlers', () => {
     const setContent = jest.fn();

@@ -6,10 +6,6 @@
 import diffHtml from 'diffable-html';
 import * as matchers from 'jest-extended';
 import { prosemirrorSerializer } from 'jest-prosemirror';
-import { getSnapshotDiffSerializer, toMatchDiffSnapshot } from 'snapshot-diff';
-
-expect.addSnapshotSerializer(getSnapshotDiffSerializer());
-expect.extend({ toMatchDiffSnapshot });
 
 /* Make unhandledRejection errors easier to debug */
 process.on('unhandledRejection', (reason) => {

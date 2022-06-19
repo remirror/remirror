@@ -53,6 +53,8 @@
     "@remirror/react": "^2.0.0-beta.0",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
+    "jsdom": "^17.0.0",
+    "@types/jsdom": "^16.2.13",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

@@ -59,7 +59,7 @@ describe('dynamic schema attributes', () => {
     // Nothing should have changed.
     expect(mark.marks).toHaveBeenCalledTimes(1);
     expect(mark.paragraph).toHaveBeenCalledTimes(4);
-    expect(outerHtml).toMatchDiffSnapshot(editor.dom.outerHTML);
+    expect(outerHtml).toMatchSnapshot(editor.dom.outerHTML);
   });
 });
 
