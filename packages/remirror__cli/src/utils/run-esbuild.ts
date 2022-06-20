@@ -30,7 +30,7 @@ export async function runEsbuild(
     entryPoints: { [outFileNameWithoutExt]: inFile },
     outdir: outDir,
     bundle: true,
-    target: 'es2020',
+    target: 'es2019',
     format: format,
     sourcemap: true,
     platform: nodePackages.has(pkg.packageJson.name) ? 'node' : 'browser',
