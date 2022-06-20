@@ -20,26 +20,21 @@
     "Ocavue <ocavue@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-list.esm.js",
-      "require": "./dist/remirror-extension-list.cjs.js",
-      "browser": "./dist/remirror-extension-list.browser.esm.js",
-      "types": "./dist/remirror-extension-list.cjs.d.ts",
-      "default": "./dist/remirror-extension-list.esm.js"
+      "import": "./dist/remirror-extension-list.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-list.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-list.cjs.js",
-  "module": "dist/remirror-extension-list.esm.js",
-  "browser": {
-    "./dist/remirror-extension-list.cjs.js": "./dist/remirror-extension-list.browser.cjs.js",
-    "./dist/remirror-extension-list.esm.js": "./dist/remirror-extension-list.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-list.cjs.d.ts",
+  "main": "./dist/remirror-extension-list.js",
+  "module": "./dist/remirror-extension-list.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -59,6 +54,5 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

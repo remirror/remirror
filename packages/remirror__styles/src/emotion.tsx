@@ -3,7 +3,10 @@
  */
 
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import emotionStyled from '@emotion/styled';
+import { defaultImport } from 'default-import';
+
+const styled = defaultImport(emotionStyled);
 
 export const componentsStyledCss: ReturnType<typeof css> = css`
   /**

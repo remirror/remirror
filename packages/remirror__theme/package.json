@@ -13,41 +13,43 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-theme.esm.js",
-      "require": "./dist/remirror-theme.cjs.js",
-      "browser": "./dist/remirror-theme.browser.esm.js",
-      "types": "./dist/remirror-theme.cjs.d.ts",
-      "default": "./dist/remirror-theme.esm.js"
+      "import": "./dist/remirror-theme.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-theme.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-theme.cjs.js",
-  "module": "dist/remirror-theme.esm.js",
-  "browser": {
-    "./dist/remirror-theme.cjs.js": "./dist/remirror-theme.browser.cjs.js",
-    "./dist/remirror-theme.esm.js": "./dist/remirror-theme.browser.esm.js"
-  },
-  "types": "./dist/remirror-theme.cjs.d.ts",
+  "main": "./dist/remirror-theme.js",
+  "module": "./dist/remirror-theme.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "style",
-    "dist"
+    "dist",
+    "dist-types",
+    "style"
   ],
+  "scripts": {
+    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es"
+  },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@linaria/core": "3.0.0-beta.13",
     "@remirror/core-types": "^2.0.0-beta.0",
-    "case-anything": "^1.1.3",
     "color2k": "^1.2.4",
     "csstype": "^3.0.7"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-transform-typescript": "^7.15.8",
+    "rollup": "^2.75.6"
   },
   "publishConfig": {
     "access": "public"
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

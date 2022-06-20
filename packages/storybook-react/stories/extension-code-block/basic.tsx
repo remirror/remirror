@@ -1,8 +1,9 @@
-import css from 'refractor/lang/css';
-import javascript from 'refractor/lang/javascript';
-import json from 'refractor/lang/json';
-import markdown from 'refractor/lang/markdown';
-import typescript from 'refractor/lang/typescript';
+import React from 'react';
+import css from 'refractor/lang/css.js';
+import javascript from 'refractor/lang/javascript.js';
+import json from 'refractor/lang/json.js';
+import markdown from 'refractor/lang/markdown.js';
+import typescript from 'refractor/lang/typescript.js';
 import { CodeBlockExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 

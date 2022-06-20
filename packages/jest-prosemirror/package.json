@@ -18,40 +18,31 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/jest-prosemirror.esm.js",
-      "require": "./dist/jest-prosemirror.cjs.js",
-      "browser": "./dist/jest-prosemirror.browser.esm.js",
-      "types": "./dist/jest-prosemirror.cjs.d.ts",
-      "default": "./dist/jest-prosemirror.esm.js"
+      "import": "./dist/jest-prosemirror.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/jest-prosemirror.js"
     },
     "./environment": {
-      "import": "./environment/dist/jest-prosemirror-environment.esm.js",
-      "require": "./environment/dist/jest-prosemirror-environment.cjs.js",
-      "browser": "./environment/dist/jest-prosemirror-environment.browser.esm.js",
-      "types": "./environment/dist/jest-prosemirror-environment.cjs.d.ts",
-      "default": "./environment/dist/jest-prosemirror-environment.esm.js"
+      "import": "./environment/dist/jest-prosemirror-environment.js",
+      "types": "./dist-types/environment.d.ts",
+      "default": "./environment/dist/jest-prosemirror-environment.js"
     },
     "./package.json": "./package.json",
     "./serializer": {
-      "import": "./serializer/dist/jest-prosemirror-serializer.esm.js",
-      "require": "./serializer/dist/jest-prosemirror-serializer.cjs.js",
-      "browser": "./serializer/dist/jest-prosemirror-serializer.browser.esm.js",
-      "types": "./serializer/dist/jest-prosemirror-serializer.cjs.d.ts",
-      "default": "./serializer/dist/jest-prosemirror-serializer.esm.js"
-    },
-    "./types/*": "./dist/declarations/src/*.d.ts"
+      "require": "./serializer/dist/jest-prosemirror-serializer.js",
+      "types": "./dist-types/serializer.d.ts",
+      "default": "./serializer/dist/jest-prosemirror-serializer.js"
+    }
   },
-  "main": "dist/jest-prosemirror.cjs.js",
-  "module": "dist/jest-prosemirror.esm.js",
-  "browser": {
-    "./dist/jest-prosemirror.cjs.js": "./dist/jest-prosemirror.browser.cjs.js",
-    "./dist/jest-prosemirror.esm.js": "./dist/jest-prosemirror.browser.esm.js"
-  },
-  "types": "./dist/jest-prosemirror.cjs.d.ts",
+  "main": "./dist/jest-prosemirror.js",
+  "module": "./dist/jest-prosemirror.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "environment",
     "serializer"
   ],
@@ -65,7 +56,7 @@
     "@testing-library/dom": "^8.13.0",
     "@types/stringify-object": "^3.3.1",
     "chalk": "^4.1.0",
-    "jest-matcher-utils": "^27.0.6",
+    "jest-matcher-utils": "^28.1.1",
     "prosemirror-schema-basic": "^1.2.0",
     "prosemirror-tables": "^1.1.1",
     "prosemirror-test-builder": "^1.1.0",
@@ -73,7 +64,7 @@
     "test-keyboard": "1.0.6-beta.0"
   },
   "devDependencies": {
-    "jest": "^27.0.6"
+    "jest": "^28.1.1"
   },
   "peerDependencies": {
     "jest": ">= 24"
@@ -97,8 +88,7 @@
     "entrypoints": [
       "index.ts",
       "environment.ts",
-      "serializer.ts"
+      "serializer.cts"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

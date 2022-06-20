@@ -5,7 +5,6 @@
   "keywords": [
     "prosemirror",
     "react",
-    "ssr",
     "text editor"
   ],
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/jest-remirror",
@@ -18,24 +17,26 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/jest-remirror.cjs.js",
-      "types": "./dist/jest-remirror.cjs.d.ts",
-      "default": "./dist/jest-remirror.cjs.js"
+      "import": "./dist/jest-remirror.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/jest-remirror.js"
     },
     "./environment": {
-      "require": "./environment/dist/jest-remirror-environment.cjs.js",
-      "types": "./environment/dist/jest-remirror-environment.cjs.d.ts",
-      "default": "./environment/dist/jest-remirror-environment.cjs.js"
+      "import": "./environment/dist/jest-remirror-environment.js",
+      "types": "./dist-types/environment.d.ts",
+      "default": "./environment/dist/jest-remirror-environment.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/jest-remirror.cjs.js",
-  "types": "./dist/jest-remirror.cjs.d.ts",
+  "main": "./dist/jest-remirror.js",
+  "module": "./dist/jest-remirror.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "environment"
   ],
   "dependencies": {
@@ -47,14 +48,13 @@
     "@testing-library/dom": "^8.13.0",
     "@types/sanitize-html": "^2.3.2",
     "jest-prosemirror": "^2.0.0-beta.0",
-    "jest-snapshot": "^27.0.6",
     "mutationobserver-shim": "^0.3.7",
     "sanitize-html": "^2.4.0",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
     "@types/node": "^16.3.3",
-    "jest": "^27.0.6"
+    "jest": "^28.1.1"
   },
   "peerDependencies": {
     "@types/node": "*",
@@ -85,6 +85,5 @@
       "index.ts",
       "environment.ts"
     ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

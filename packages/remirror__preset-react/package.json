@@ -20,33 +20,27 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-preset-react.esm.js",
-      "require": "./dist/remirror-preset-react.cjs.js",
-      "browser": "./dist/remirror-preset-react.browser.esm.js",
-      "types": "./dist/remirror-preset-react.cjs.d.ts",
-      "default": "./dist/remirror-preset-react.esm.js"
+      "import": "./dist/remirror-preset-react.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-preset-react.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-preset-react.cjs.js",
-  "module": "dist/remirror-preset-react.esm.js",
-  "browser": {
-    "./dist/remirror-preset-react.cjs.js": "./dist/remirror-preset-react.browser.cjs.js",
-    "./dist/remirror-preset-react.esm.js": "./dist/remirror-preset-react.browser.esm.js"
-  },
-  "types": "./dist/remirror-preset-react.cjs.d.ts",
+  "main": "./dist/remirror-preset-react.js",
+  "module": "./dist/remirror-preset-react.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^2.0.0-beta.0",
     "@remirror/extension-placeholder": "^2.0.0-beta.0",
     "@remirror/extension-react-component": "^2.0.0-beta.0",
-    "@remirror/extension-react-ssr": "^2.0.0-beta.0",
     "@remirror/react-utils": "^2.0.0-beta.0"
   },
   "devDependencies": {
@@ -76,6 +70,5 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

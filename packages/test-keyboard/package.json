@@ -17,28 +17,23 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/test-keyboard.esm.js",
-      "require": "./dist/test-keyboard.cjs.js",
-      "browser": "./dist/test-keyboard.browser.esm.js",
-      "types": "./dist/test-keyboard.cjs.d.ts",
-      "default": "./dist/test-keyboard.esm.js"
+      "import": "./dist/test-keyboard.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/test-keyboard.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/test-keyboard.cjs.js",
-  "module": "dist/test-keyboard.esm.js",
-  "browser": {
-    "./dist/test-keyboard.cjs.js": "./dist/test-keyboard.browser.cjs.js",
-    "./dist/test-keyboard.esm.js": "./dist/test-keyboard.browser.esm.js"
-  },
-  "types": "./dist/test-keyboard.cjs.d.ts",
+  "main": "./dist/test-keyboard.js",
+  "module": "./dist/test-keyboard.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
+    "dist",
+    "dist-types",
     "environment.d.ts",
-    "environment.js",
-    "dist"
+    "environment.js"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -50,6 +45,5 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

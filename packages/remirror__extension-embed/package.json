@@ -18,26 +18,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-embed.esm.js",
-      "require": "./dist/remirror-extension-embed.cjs.js",
-      "browser": "./dist/remirror-extension-embed.browser.esm.js",
-      "types": "./dist/remirror-extension-embed.cjs.d.ts",
-      "default": "./dist/remirror-extension-embed.esm.js"
+      "import": "./dist/remirror-extension-embed.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-embed.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-embed.cjs.js",
-  "module": "dist/remirror-extension-embed.esm.js",
-  "browser": {
-    "./dist/remirror-extension-embed.cjs.js": "./dist/remirror-extension-embed.browser.cjs.js",
-    "./dist/remirror-extension-embed.esm.js": "./dist/remirror-extension-embed.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-embed.cjs.d.ts",
+  "main": "./dist/remirror-extension-embed.js",
+  "module": "./dist/remirror-extension-embed.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -58,6 +53,5 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

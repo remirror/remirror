@@ -1,5 +1,5 @@
 import type { ChangeEvent, HTMLProps, KeyboardEvent } from 'react';
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createMarkPositioner, LinkExtension, ShortcutHandlerProps } from 'remirror/extensions';
 import {
   ComponentItem,

@@ -1,5 +1,5 @@
-import { RoleHTMLProps } from 'reakit/Role/Role';
-import { PaletteRoleOptions } from 'reakit-system-palette/Role';
+import { RoleHTMLProps } from 'reakit';
+import { PaletteRoleOptions } from 'reakit-system-palette';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

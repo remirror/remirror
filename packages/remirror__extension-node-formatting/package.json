@@ -17,26 +17,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-node-formatting.esm.js",
-      "require": "./dist/remirror-extension-node-formatting.cjs.js",
-      "browser": "./dist/remirror-extension-node-formatting.browser.esm.js",
-      "types": "./dist/remirror-extension-node-formatting.cjs.d.ts",
-      "default": "./dist/remirror-extension-node-formatting.esm.js"
+      "import": "./dist/remirror-extension-node-formatting.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-node-formatting.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-node-formatting.cjs.js",
-  "module": "dist/remirror-extension-node-formatting.esm.js",
-  "browser": {
-    "./dist/remirror-extension-node-formatting.cjs.js": "./dist/remirror-extension-node-formatting.browser.cjs.js",
-    "./dist/remirror-extension-node-formatting.esm.js": "./dist/remirror-extension-node-formatting.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-node-formatting.cjs.d.ts",
+  "main": "./dist/remirror-extension-node-formatting.js",
+  "module": "./dist/remirror-extension-node-formatting.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -54,6 +49,5 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

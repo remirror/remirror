@@ -1,4 +1,3 @@
-import { kebabCase } from 'case-anything';
 import { darken, lighten, readableColor, transparentize } from 'color2k';
 import type * as CSS from 'csstype';
 import type { DeepPartial, DeepString } from '@remirror/core-types';
@@ -60,11 +59,18 @@ export type Hue = [Color, Color, Color, Color, Color, Color, Color, Color, Color
  */
 export type RemirrorThemeType = DeepPartial<Remirror.Theme>;
 
+function simpleKebabCase(str: string) {
+  return str
+    .replace(/([a-z])([\dA-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase();
+}
+
 /**
  * Get the remirror variable from the keys to access it in the theme object.
  */
 function getCustomPropertyName(keys: string[]) {
-  return `--rmr-${keys.map(kebabCase).join('-')}`;
+  return `--rmr-${keys.map(simpleKebabCase).join('-')}`;
 }
 
 /**

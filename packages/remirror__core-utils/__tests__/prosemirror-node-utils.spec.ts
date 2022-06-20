@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import {
   atomInline,
   createEditor,
@@ -49,9 +50,9 @@ describe('findChildren', () => {
 
     expect(mock).toHaveBeenCalledTimes(3);
 
-    mock.mock.calls.forEach(([item]) => {
+    for (const [item] of mock.mock.calls as any) {
       expect(item.node.type.name).toBe('paragraph');
-    });
+    }
   });
 
   it('should return an empty array if `predicate` returns falsy', () => {

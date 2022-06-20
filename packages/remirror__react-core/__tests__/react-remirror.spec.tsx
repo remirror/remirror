@@ -1,5 +1,6 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { docNodeBasicJSON } from 'testing';
 import { fireEvent, strictRender } from 'testing/react';

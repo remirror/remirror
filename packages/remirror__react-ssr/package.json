@@ -16,26 +16,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-react-ssr.esm.js",
-      "require": "./dist/remirror-react-ssr.cjs.js",
-      "browser": "./dist/remirror-react-ssr.browser.esm.js",
-      "types": "./dist/remirror-react-ssr.cjs.d.ts",
-      "default": "./dist/remirror-react-ssr.esm.js"
+      "import": "./dist/remirror-react-ssr.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-react-ssr.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-react-ssr.cjs.js",
-  "module": "dist/remirror-react-ssr.esm.js",
-  "browser": {
-    "./dist/remirror-react-ssr.cjs.js": "./dist/remirror-react-ssr.browser.cjs.js",
-    "./dist/remirror-react-ssr.esm.js": "./dist/remirror-react-ssr.browser.esm.js"
-  },
-  "types": "./dist/remirror-react-ssr.cjs.d.ts",
+  "main": "./dist/remirror-react-ssr.js",
+  "module": "./dist/remirror-react-ssr.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -67,6 +62,5 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

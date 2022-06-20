@@ -18,26 +18,21 @@
     "Ocavue <ocavue@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/prosemirror-resizable-view.esm.js",
-      "require": "./dist/prosemirror-resizable-view.cjs.js",
-      "browser": "./dist/prosemirror-resizable-view.browser.esm.js",
-      "types": "./dist/prosemirror-resizable-view.cjs.d.ts",
-      "default": "./dist/prosemirror-resizable-view.esm.js"
+      "import": "./dist/prosemirror-resizable-view.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/prosemirror-resizable-view.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/prosemirror-resizable-view.cjs.js",
-  "module": "dist/prosemirror-resizable-view.esm.js",
-  "browser": {
-    "./dist/prosemirror-resizable-view.cjs.js": "./dist/prosemirror-resizable-view.browser.cjs.js",
-    "./dist/prosemirror-resizable-view.esm.js": "./dist/prosemirror-resizable-view.browser.esm.js"
-  },
-  "types": "./dist/prosemirror-resizable-view.cjs.d.ts",
+  "main": "./dist/prosemirror-resizable-view.js",
+  "module": "./dist/prosemirror-resizable-view.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -46,7 +41,6 @@
     "prosemirror-model": "^1.18.0",
     "prosemirror-view": "^1.26.0"
   },
-  "devDependencies": {},
   "publishConfig": {
     "access": "public"
   },

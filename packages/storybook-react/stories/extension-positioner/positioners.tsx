@@ -3,7 +3,7 @@ import './styles.css';
 
 import { Placement } from '@popperjs/core';
 import { Annotations, BaseStory } from '@storybook/addons';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import type { PositionerParam } from 'remirror/extensions';
 import { FloatingWrapper, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 

@@ -17,26 +17,22 @@
     "NEXT <open-source@nextapp.co>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-entity-reference.esm.js",
-      "require": "./dist/remirror-extension-entity-reference.cjs.js",
-      "browser": "./dist/remirror-extension-entity-reference.browser.esm.js",
-      "types": "./dist/remirror-extension-entity-reference.cjs.d.ts",
-      "default": "./dist/remirror-extension-entity-reference.esm.js"
+      "import": "./dist/remirror-extension-entity-reference.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-entity-reference.js"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/remirror-extension-entity-reference.cjs.js",
-  "module": "dist/remirror-extension-entity-reference.esm.js",
-  "browser": {
-    "./dist/remirror-extension-entity-reference.cjs.js": "./dist/remirror-extension-entity-reference.browser.cjs.js",
-    "./dist/remirror-extension-entity-reference.esm.js": "./dist/remirror-extension-entity-reference.browser.esm.js"
-  },
-  "types": "dist/remirror-extension-entity-reference.cjs.d.ts",
+  "main": "./dist/remirror-extension-entity-reference.js",
+  "module": "./dist/remirror-extension-entity-reference.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",

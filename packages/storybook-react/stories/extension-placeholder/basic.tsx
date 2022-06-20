@@ -1,6 +1,6 @@
 import './styles.css';
 
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { PlaceholderExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 

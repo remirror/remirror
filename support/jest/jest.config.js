@@ -13,17 +13,23 @@ module.exports = {
     __E2E__: false,
   },
   transform: {
-    '^.+\\.(js|jsx|ts|tsx|mjs)$': [require.resolve('babel-jest'), { rootMode: 'upward' }],
+    '^.+\\.(js|jsx|ts|tsx|mjs)$': ['@swc/jest'],
   },
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   transformIgnorePatterns: ['node_modules(?!/(.+/)*(lib0|y-protocols)[@/])'],
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
   testRegex: '/__tests__/.*\\.spec\\.tsx?$',
   setupFilesAfterEnv: [
-    jestSupportDir('jest.framework.ts'),
-    jestSupportDir('jest.framework.dom.ts'),
+    jestSupportDir('jest.framework.mjs'),
+    jestSupportDir('jest.framework.dom.mjs'),
   ],
   cacheDirectory: baseDir('.jest', TEST_BUILD ? 'build' : 'aliased'),
   errorOnDeprecated: true,
   testEnvironment: 'jsdom',
+
+  // Limit the resources we used, to avoid out-of-memory errors, expecially for
+  // the CI environment.
+  maxConcurrency: 1,
+  maxWorkers: '50%',
 };

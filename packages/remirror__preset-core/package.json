@@ -19,26 +19,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-preset-core.esm.js",
-      "require": "./dist/remirror-preset-core.cjs.js",
-      "browser": "./dist/remirror-preset-core.browser.esm.js",
-      "types": "./dist/remirror-preset-core.cjs.d.ts",
-      "default": "./dist/remirror-preset-core.esm.js"
+      "import": "./dist/remirror-preset-core.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-preset-core.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-preset-core.cjs.js",
-  "module": "dist/remirror-preset-core.esm.js",
-  "browser": {
-    "./dist/remirror-preset-core.cjs.js": "./dist/remirror-preset-core.browser.cjs.js",
-    "./dist/remirror-preset-core.esm.js": "./dist/remirror-preset-core.browser.esm.js"
-  },
-  "types": "./dist/remirror-preset-core.cjs.d.ts",
+  "main": "./dist/remirror-preset-core.js",
+  "module": "./dist/remirror-preset-core.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -62,6 +57,5 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

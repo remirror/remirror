@@ -19,26 +19,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-collaboration.esm.js",
-      "require": "./dist/remirror-extension-collaboration.cjs.js",
-      "browser": "./dist/remirror-extension-collaboration.browser.esm.js",
-      "types": "./dist/remirror-extension-collaboration.cjs.d.ts",
-      "default": "./dist/remirror-extension-collaboration.esm.js"
+      "import": "./dist/remirror-extension-collaboration.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-collaboration.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-collaboration.cjs.js",
-  "module": "dist/remirror-extension-collaboration.esm.js",
-  "browser": {
-    "./dist/remirror-extension-collaboration.cjs.js": "./dist/remirror-extension-collaboration.browser.cjs.js",
-    "./dist/remirror-extension-collaboration.esm.js": "./dist/remirror-extension-collaboration.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-collaboration.cjs.d.ts",
+  "main": "./dist/remirror-extension-collaboration.js",
+  "module": "./dist/remirror-extension-collaboration.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -56,6 +51,5 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

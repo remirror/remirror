@@ -1,3 +1,4 @@
+import React from 'react';
 import type { AnyExtension, EditorStateProps, RemirrorManager, Shape } from '@remirror/core';
 
 import { ReactSerializer } from './react-serializer';

@@ -1,4 +1,4 @@
-import { CompositeItemHTMLProps, CompositeItemOptions } from 'reakit/Composite/CompositeItem';
+import { CompositeItemHTMLProps, CompositeItemOptions } from 'reakit';
 
 import { BootstrapRoleOptions } from './role';
 

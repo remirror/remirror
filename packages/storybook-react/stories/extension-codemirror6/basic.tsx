@@ -2,6 +2,7 @@ import './styles.css';
 
 import { languages } from '@codemirror/language-data';
 import { oneDark } from '@codemirror/theme-one-dark';
+import React from 'react';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';

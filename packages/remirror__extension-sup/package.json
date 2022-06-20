@@ -18,26 +18,21 @@
     "Christopher Manouvrier <cmanou@mac.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-sup.esm.js",
-      "require": "./dist/remirror-extension-sup.cjs.js",
-      "browser": "./dist/remirror-extension-sup.browser.esm.js",
-      "types": "./dist/remirror-extension-sup.cjs.d.ts",
-      "default": "./dist/remirror-extension-sup.esm.js"
+      "import": "./dist/remirror-extension-sup.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-sup.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-sup.cjs.js",
-  "module": "dist/remirror-extension-sup.esm.js",
-  "browser": {
-    "./dist/remirror-extension-sup.cjs.js": "./dist/remirror-extension-sup.browser.cjs.js",
-    "./dist/remirror-extension-sup.esm.js": "./dist/remirror-extension-sup.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-sup.cjs.d.ts",
+  "main": "./dist/remirror-extension-sup.js",
+  "module": "./dist/remirror-extension-sup.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -55,6 +50,5 @@
   },
   "meta": {
     "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

@@ -40,7 +40,6 @@ import type {
   RemirrorContentType,
   RemirrorIdentifierShape,
   RemirrorJSON,
-  RenderEnvironment,
   ResolvedPos,
   SchemaProps,
   Selection,
@@ -1195,44 +1194,22 @@ export function createDocumentNode(props: CreateDocumentNodeProps): ProsemirrorN
 /**
  * Checks which environment should be used. Returns true when we are in the dom
  * environment.
- *
- * @param forceEnvironment - force a specific environment to override the
- * outcome
  */
-export function shouldUseDomEnvironment(forceEnvironment?: RenderEnvironment): boolean {
-  return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
+export function shouldUseDomEnvironment(): boolean {
+  return environment.isBrowser;
 }
 
 /**
- * Get the document implementation within a node environment. This is only
- * included in the build when using node.
+ * Retrieves the document and throws an error in a non-browser environment.
  */
-function getDocumentForNodeEnvironment() {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { JSDOM } = require('jsdom');
-    return new JSDOM('').window.document;
-  } catch {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('domino').createDocument();
-    } catch {
-      return require('min-document');
-    }
-  }
-}
-
-/**
- * Retrieves the document based on the environment we are currently in.
- *
- * @param forceEnvironment - force a specific environment
- */
-export function getDocument(forceEnvironment?: RenderEnvironment): Document {
+export function getDocument(): Document {
   if (typeof document !== 'undefined') {
     return document;
   }
 
-  return shouldUseDomEnvironment(forceEnvironment) ? document : getDocumentForNodeEnvironment();
+  throw new Error(
+    'Unable to retrieve the document from the global scope. Maybe you are running Remirror in a non-browser environment? If you are using Node.js, you can install JSDOM or similar to create a fake document and pass that document to Remirror.',
+  );
 }
 
 export interface CustomDocumentProps {
@@ -1259,7 +1236,7 @@ export function prosemirrorNodeToDom(
 }
 
 function elementFromString(html: string, document?: Document): HTMLElement {
-  const parser = new (((document ?? getDocument()) as any)?.defaultView ?? window).DOMParser();
+  const parser = new ((document || getDocument())?.defaultView ?? window).DOMParser();
   return parser.parseFromString(`<body>${html}</body>`, 'text/html').body;
 }
 
@@ -1333,7 +1310,7 @@ export function htmlToProsemirrorNode(props: FragmentStringHandlerOptions): Frag
 export function htmlToProsemirrorNode(props: NodeStringHandlerOptions): ProsemirrorNode;
 export function htmlToProsemirrorNode(props: StringHandlerOptions): ProsemirrorNode | Fragment {
   const { content, schema, document, fragment = false, ...parseOptions } = props;
-  const element = elementFromString(content);
+  const element = elementFromString(content, document);
   const parser = PMDomParser.fromSchema(schema);
 
   return fragment

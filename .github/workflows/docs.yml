@@ -26,15 +26,13 @@ jobs:
           fetch-depth: 0
 
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -44,13 +42,13 @@ jobs:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: setup docusaurus caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: website/node_modules/.cache
           key: ${{ runner.os }}-docusaurus-v1
 
       - name: generate .d.ts files
-        run: pnpm build
+        run: pnpm typecheck
 
       - name: generate api markdown files
         run: pnpm api

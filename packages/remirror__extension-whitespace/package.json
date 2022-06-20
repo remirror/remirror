@@ -17,26 +17,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-whitespace.esm.js",
-      "require": "./dist/remirror-extension-whitespace.cjs.js",
-      "browser": "./dist/remirror-extension-whitespace.browser.esm.js",
-      "types": "./dist/remirror-extension-whitespace.cjs.d.ts",
-      "default": "./dist/remirror-extension-whitespace.esm.js"
+      "import": "./dist/remirror-extension-whitespace.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-whitespace.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-whitespace.cjs.js",
-  "module": "dist/remirror-extension-whitespace.esm.js",
-  "browser": {
-    "./dist/remirror-extension-whitespace.cjs.js": "./dist/remirror-extension-whitespace.browser.cjs.js",
-    "./dist/remirror-extension-whitespace.esm.js": "./dist/remirror-extension-whitespace.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-whitespace.cjs.d.ts",
+  "main": "./dist/remirror-extension-whitespace.js",
+  "module": "./dist/remirror-extension-whitespace.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
@@ -54,6 +49,5 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

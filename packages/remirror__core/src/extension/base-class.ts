@@ -41,6 +41,7 @@ import type {
   UndefinedFlipPartialAndRequired,
   ValidOptions,
 } from '@remirror/core-types';
+import { environment } from '@remirror/core-utils';
 
 import { getChangedOptions } from '../helpers';
 import type { OnSetOptionsProps } from '../types';
@@ -243,7 +244,7 @@ export abstract class BaseClass<
    * Throw an error if non dynamic keys are updated.
    */
   private ensureAllKeysAreDynamic(update: GetPartialDynamic<Options>) {
-    if (process.env.NODE_ENV === 'production') {
+    if (environment.isProduction) {
       return;
     }
 

@@ -68,11 +68,3 @@ manager.store.chain
   .updateCodeBlock({ language: 'js', codeMirrorConfig: { lineNumbers: true } })
   .run();
 ```
-
-There is an async version of codemirror available .
-
-```ts
-import { loadCodeMirror } from '@remirror/extension-codemirror5';
-
-await loadCodeMirror();
-```

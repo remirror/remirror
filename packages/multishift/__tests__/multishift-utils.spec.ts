@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import type { SyntheticEvent } from 'react';
 import { object } from '@remirror/core-helpers';
 
@@ -9,8 +10,8 @@ describe('callAllEventHandlers', () => {
   });
 
   const args = [object<SyntheticEvent>(), 1, '2', true] as const;
-  const handler1 = jest.fn();
-  const handler2 = jest.fn();
+  const handler1: any = jest.fn();
+  const handler2: any = jest.fn();
 
   it('calls each handler with the given arguments', () => {
     const result = callAllEventHandlers(handler1, handler2);
@@ -35,7 +36,7 @@ describe('callAllEventHandlers', () => {
   });
 
   it('stops when handler returns true', () => {
-    const handler = jest.fn(() => {
+    const handler: any = jest.fn(() => {
       return true;
     });
     const result = callAllEventHandlers(handler, handler1, handler2);

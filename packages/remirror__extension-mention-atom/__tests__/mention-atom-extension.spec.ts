@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { createCoreManager } from 'remirror/extensions';
@@ -53,7 +54,7 @@ describe('onClick', () => {
   const { add, doc, p, mentionAtom, view, extension } = create(options);
 
   it('responds to clicks', () => {
-    const clickHandler = jest.fn(() => true);
+    const clickHandler: any = jest.fn(() => true);
     extension.addHandler('onClick', clickHandler);
     const atMention = mentionAtom({ id: '@hello', name: 'at', label: '@hello' })();
     const node = p('first ', atMention);

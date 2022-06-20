@@ -1,6 +1,6 @@
 import { render as originalRender, RenderOptions, RenderResult } from '@testing-library/react';
 import * as hooks from '@testing-library/react-hooks';
-import { FC, ReactElement, StrictMode } from 'react';
+import React, { FC, ReactElement, StrictMode } from 'react';
 import TestRenderer from 'react-test-renderer';
 import { useRemirrorContext } from '@remirror/react';
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { AnyExtension } from 'remirror';
 import { TableExtension } from '@remirror/extension-react-tables';
 import {

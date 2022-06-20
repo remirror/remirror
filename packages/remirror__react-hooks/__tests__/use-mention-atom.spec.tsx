@@ -1,5 +1,6 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { assertGet } from 'remirror';
 import { act, DefaultEditor, render, strictRender } from 'testing/react';
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
@@ -319,7 +320,7 @@ function createEditor(controlled = false) {
     query: string;
   }
 
-  const getItems = jest.fn((parameter?: GetItemsProps) => {
+  const getItems: any = jest.fn((parameter?: GetItemsProps) => {
     if (!parameter) {
       return [];
     }

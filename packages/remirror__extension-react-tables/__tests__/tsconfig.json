@@ -63,6 +63,9 @@
     },
     {
       "path": "../../remirror__theme/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }
