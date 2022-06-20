@@ -31,7 +31,6 @@ export function simpleMockFn<T extends FunctionLike>(implementation: T): Mock<T>
     return calledTimes > 0;
   };
 
-  mocked.name = implementation.name;
   mocked.getCalledTimes = getCalledTimes;
   mocked.getCalled = getCalled;
 
