@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import {
   AnyExtensionConstructor,
   BaseExtensionOptions,
@@ -82,7 +81,9 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
     const extension = new Extension(options);
 
     if (isNodeExtension(extension)) {
-      it('creates a valid node spec', () => {
+      it('creates a valid node spec', async () => {
+        const { jest } = await import('@jest/globals');
+
         const extraAttributes = {
           defaults: jest.fn(() => ({})),
           dom: jest.fn(() => ({})),
@@ -107,7 +108,9 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
     }
 
     if (isMarkExtension(extension)) {
-      it('creates a valid mark spec', () => {
+      it('creates a valid mark spec', async () => {
+        const { jest } = await import('@jest/globals');
+
         const extraAttributes = {
           defaults: jest.fn(() => ({})),
           dom: jest.fn(() => ({})),
