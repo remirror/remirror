@@ -30,6 +30,6 @@ module.exports = {
 
   // Limit the resources we used, to avoid out-of-memory errors, expecially for
   // the CI environment.
-  maxConcurrency: 3,
+  maxConcurrency: 1,
   maxWorkers: '50%',
 };
