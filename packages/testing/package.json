@@ -10,6 +10,7 @@
     "directory": "packages/testing"
   },
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/testing.js",
@@ -108,6 +109,5 @@
       "playwright/index.ts",
       "react.tsx"
     ]
-  },
-  "type": "module"
+  }
 }
