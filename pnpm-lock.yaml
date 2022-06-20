@@ -890,6 +890,7 @@ importers:
       '@remirror/pm': ^2.0.0-beta.0
       '@types/codemirror': ^5.60.2
       codemirror: ^5.62.0
+      default-import: ^1.1.1
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/core': link:../remirror__core
@@ -898,6 +899,7 @@ importers:
       '@remirror/pm': link:../remirror__pm
       '@types/codemirror': 5.60.5
       codemirror: 5.63.3
+      default-import: 1.1.1
 
   packages/remirror__extension-codemirror6:
     specifiers:
@@ -14458,7 +14460,6 @@ packages:
   /default-import/1.1.1:
     resolution: {integrity: sha512-CUFKx88ZyLFX8VEtwk9Cbgp2uxrretCzoZxB1qC7Ade22KaCytxmR3CLo0kVcM1mQ9ibUKeK1/whra5P8Ef1Ig==}
     engines: {node: '>=14'}
-    dev: false
 
   /default-require-extensions/3.0.0:
     resolution: {integrity: sha512-ek6DpXq/SCpvjhpFsLFRVtIxJCRw6fUR42lYMVZuUMK7n8eMz4Uh5clckdBjEpLhn/gEBZo7hDJnJcwdKLKQjg==}
