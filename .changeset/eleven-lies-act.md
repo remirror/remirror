@@ -90,6 +90,7 @@
 '@remirror/types': major
 'multishift': patch
 'test-keyboard': patch
+'@remirror/extension-entity-reference': patch
 ---
 
 Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.

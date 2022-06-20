@@ -1,5 +1,46 @@
 # @remirror/react-editors
 
+## 1.0.0-beta.1
+
+> 2022-06-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Transform a hard break into `\n` in `Node.textContent`.
+- Update ProseMirror packages to latest versions.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - remirror@2.0.0-beta.1
+  - @remirror/extension-react-tables@2.0.0-beta.1
+  - @remirror/react@2.0.0-beta.1
+  - @remirror/core-helpers@2.0.0-beta.1
+  - @remirror/pm@2.0.0-beta.1
+  - @remirror/styles@2.0.0-beta.1
+  - create-context-state@2.0.0-beta.0
+
 ## 1.0.0-beta.0
 
 > 2022-05-31

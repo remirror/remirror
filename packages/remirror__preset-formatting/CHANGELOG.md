@@ -1,5 +1,40 @@
 # @remirror/preset-formatting
 
+## 2.0.0-beta.1
+
+> 2022-06-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.1
+  - @remirror/extension-bold@2.0.0-beta.1
+  - @remirror/extension-columns@2.0.0-beta.1
+  - @remirror/extension-font-size@2.0.0-beta.1
+  - @remirror/extension-heading@2.0.0-beta.1
+  - @remirror/extension-italic@2.0.0-beta.1
+  - @remirror/extension-node-formatting@2.0.0-beta.1
+  - @remirror/extension-strike@2.0.0-beta.1
+  - @remirror/extension-sub@2.0.0-beta.1
+  - @remirror/extension-sup@2.0.0-beta.1
+  - @remirror/extension-text-case@2.0.0-beta.1
+  - @remirror/extension-text-color@2.0.0-beta.1
+  - @remirror/extension-text-highlight@2.0.0-beta.1
+  - @remirror/extension-underline@2.0.0-beta.1
+  - @remirror/extension-whitespace@2.0.0-beta.1
+  - @remirror/pm@2.0.0-beta.1
+
 ## 2.0.0-beta.0
 
 > 2022-05-31

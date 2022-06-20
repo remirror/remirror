@@ -1,5 +1,36 @@
 # @remirror/extension-file
 
+## 1.0.0-beta.1
+
+> 2022-06-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/react@2.0.0-beta.1
+  - @remirror/react-components@2.0.0-beta.1
+  - @remirror/core@2.0.0-beta.1
+  - @remirror/pm@2.0.0-beta.1
+  - @remirror/theme@2.0.0-beta.1
+
 ## 1.0.0-beta.0
 
 > 2022-05-31
