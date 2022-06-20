@@ -2452,8 +2452,10 @@ importers:
 
   support:
     specifiers:
+      default-import: ^1.1.1
       diffable-html: ^4.1.0
     dependencies:
+      default-import: 1.1.1
       diffable-html: 4.1.0
 
   support/actions:

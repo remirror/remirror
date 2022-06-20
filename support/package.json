@@ -11,6 +11,7 @@
   },
   "main": "index.js",
   "dependencies": {
+    "default-import": "^1.1.1",
     "diffable-html": "^4.1.0"
   },
   "@remirror": {

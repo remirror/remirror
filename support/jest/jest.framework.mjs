@@ -2,17 +2,20 @@
 /// <reference path="../../globals.d.ts" />
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="jest-extended" />
-// @ts-expect-error
+
+import { defaultImport } from 'default-import';
 import diffHtml from 'diffable-html';
-import { default as matchers } from 'jest-extended';
+import JestExtended from 'jest-extended';
 import { prosemirrorSerializer } from 'jest-prosemirror';
+
+const jestExtendedMatchers = defaultImport(JestExtended);
 
 /* Make unhandledRejection errors easier to debug */
 process.on('unhandledRejection', (reason) => {
   console.error('REJECTION', reason);
 });
 
-expect.extend(matchers);
+expect.extend(jestExtendedMatchers);
 
 /**
  * Serializer for HTML content.
