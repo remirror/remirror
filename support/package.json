@@ -12,7 +12,7 @@
   "main": "index.js",
   "dependencies": {
     "default-import": "^1.1.1",
-    "diffable-html": "^4.1.0"
+    "diffable-html": "^5.0.0"
   },
   "@remirror": {
     "tsconfigs": {

@@ -51,7 +51,7 @@
     "babel-loader": "^8.2.2",
     "codemirror": "^5.62.0",
     "create-context-state": "^2.0.0-beta.0",
-    "diffable-html": "^4.1.0",
+    "diffable-html": "^5.0.0",
     "globby": "^11.0.4",
     "html-escaper": "^3.0.3",
     "is-ci": "^3.0.0",
