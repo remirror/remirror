@@ -59,6 +59,7 @@ const DEFAULT_AUTO_LINK_REGEX =
 export type DefaultProtocol = 'http:' | 'https:' | '' | string;
 
 interface FoundAutoLink {
+  deletedCharacters: number;
   href: string;
   text: string;
   start: number;
@@ -185,6 +186,22 @@ export interface LinkOptions {
    */
   autoLinkAllowedTLDs?: Static<string[]>;
 
+  /**
+   * A regex that will be placed at the end of `autoLinkRegex` in order to create the link mark
+   * only after finding a `trigger character`, this is useful for those users who don't want to have the link style applied
+   * while writing but after pressing a special key or combination of keys.
+   *
+   * ```ts
+   *  import { LinkExtension } from 'remirror/extensions;
+   *  const extensions = () => {
+   *    new LinkExtension({ autoLinkAfter: /\s/ })
+   *  }
+   * ```
+   *
+   * In the previous example, the link mark will appear only after detecting a valid link followed by any space character.
+   *
+   * It is possible to declare a combination of keys if needed or a set of different keys, this will depend on the regex.
+   */
   autoLinkAfter?: Static<RegExp>;
 
   /**
@@ -440,7 +457,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          if (!this.isValidHref(url)) {
+          const href = this.buildHref(url);
+
+          if (!this.isValidTLD(href)) {
             return false;
           }
 
@@ -574,8 +593,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
 
             newMarks.forEach((newMark) => {
-              const wasLink = this.isValidHref(prevMark.text);
-              const isLink = this.isValidHref(newMark.text);
+              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
+              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
 
               if (wasLink && !isLink) {
                 removeLink({ from: newMark.from, to: newMark.to }).tr();
@@ -607,7 +626,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                   within(link.from, from, to) ||
                   within(link.to, from, to) ||
                   within(from, link.from, link.to) ||
-                  within(to, link.from, link.to)
+                  within(to, link.from, link.to) ||
+                  (this.options.autoLinkAfter &&
+                    !!link.deletedCharacters &&
+                    within(link.to + link.deletedCharacters, from, to))
                 );
               })
               .filter((link) => {
@@ -683,20 +705,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return linkMarks;
   }
 
-  isValidHref(url: string): boolean {
-    if (!this._autoLinkRegexNonGlobal?.test(url)) {
-      return false;
-    }
-
-    const href = this.buildHref(url);
-
-    if (!this.isValidTLD(href)) {
-      return false;
-    }
-
-    return true;
-  }
-
   private findAutoLinks(str: string): FoundAutoLink[] {
     const toAutoLink: FoundAutoLink[] = [];
 
@@ -704,15 +712,23 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
     let matcher = autoLinkRegex;
 
+    // if autoLinkAfter has value we're merging both regexp in one, in order to find matches considering the trigger character
     if (autoLinkAfter) {
-      matcher = new RegExp(autoLinkRegex.source + autoLinkAfter.source, 'gm');
+      matcher = new RegExp(autoLinkRegex.source + autoLinkAfter.source, 'gi');
     }
 
     for (const match of findMatches(str, matcher)) {
       let text = getMatchString(match);
+      let deletedCharacters = text.length;
 
+      // if autoLinkAfter has value we want to remove the trigger character from the link mark
       if (autoLinkAfter) {
-        text = text.slice(0, -1);
+        const triggerCharacters = new RegExp(`${autoLinkAfter.source}(?!\\S)`, 'g');
+
+        if (triggerCharacters) {
+          text = text.replace(triggerCharacters, '');
+          deletedCharacters = deletedCharacters - text.length;
+        }
       }
 
       if (!text) {
@@ -721,11 +737,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
       const href = this.buildHref(text);
 
-      if (!this.isValidHref(text)) {
+      if (!this.isValidTLD(href)) {
         continue;
       }
 
       toAutoLink.push({
+        deletedCharacters: autoLinkAfter ? deletedCharacters : 0,
         text,
         href,
         start: match.index,

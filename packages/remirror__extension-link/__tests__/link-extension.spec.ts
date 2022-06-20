@@ -892,7 +892,7 @@ describe('more auto link cases', () => {
   });
 });
 
-describe('autolinking after special trigger character detected', () => {
+describe('autolinking after one special trigger character detected', () => {
   const editor = create({
     autoLink: true,
     autoLinkAllowedTLDs: TOP_50_TLDS,
@@ -901,9 +901,9 @@ describe('autolinking after special trigger character detected', () => {
   const { link } = editor.attributeMarks;
   const { doc, p } = editor.nodes;
 
-  it('should just create a link mark after one of the trigger character is detected', () => {
+  it('should only create a link mark if a trigger character is detected', () => {
     editor.add(doc(p('google'))).insertText('.com');
-    expect(editor.doc).toEqualRemirrorDocument(doc(p('google', '.com')));
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google.com')));
 
     editor.add(doc(p('google'))).insertText('.com ');
     expect(editor.doc).toEqualRemirrorDocument(
@@ -920,11 +920,6 @@ describe('autolinking after special trigger character detected', () => {
       doc(p(link({ auto: true, href: '//google.com' })('google.com'), ',')),
     );
 
-    editor.add(doc(p('google'))).insertText('.com ');
-    expect(editor.doc).toEqualRemirrorDocument(
-      doc(p(link({ auto: true, href: '//google.com' })('google.com'), ' ')),
-    );
-
     editor.add(doc(p('google'))).insertText('.com)');
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: '//google.com' })('google.com'), ')')),
@@ -936,6 +931,9 @@ describe('autolinking after special trigger character detected', () => {
     );
 
     editor.add(doc(p('google'))).insertText('.com.]');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), '.]')),
+    );
 
     editor.add(doc(p('window.co'))).insertText('mmand');
     expect(editor.doc).toEqualRemirrorDocument(doc(p('window.command')));
@@ -955,10 +953,65 @@ describe('autolinking after special trigger character detected', () => {
     );
   });
 
-  it('shouldnt affect link detection while pasting links with the new `autoLinkAfter` property', () => {
+  it('should not affect link detection while pasting links with `autoLinkAfter` property', () => {
     editor.add(doc(p('<cursor>'))).paste('google.com');
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: '//google.com' })('google.com'))),
+    );
+  });
+});
+
+describe('autolinking after more than one special trigger character was found', () => {
+  const editor = create({
+    autoLink: true,
+    autoLinkAllowedTLDs: TOP_50_TLDS,
+    autoLinkAfter: /(] )/g,
+  });
+  const { link } = editor.attributeMarks;
+  const { doc, p } = editor.nodes;
+
+  it('should only create a link mark if more than one of the trigger character is detected', () => {
+    editor.add(doc(p('google'))).insertText('.com');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google.com')));
+
+    editor.add(doc(p('google'))).insertText('.com]');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google.com]')));
+
+    editor.add(doc(p('google'))).insertText('.com ');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google.com ')));
+
+    editor.add(doc(p('google'))).insertText('.com] ');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), '] ')),
+    );
+  });
+});
+
+describe('autolinking after more than one special trigger character was found (More examples)', () => {
+  const editor = create({
+    autoLink: true,
+    autoLinkAllowedTLDs: TOP_50_TLDS,
+    autoLinkAfter: /(]. )/g,
+  });
+  const { link } = editor.attributeMarks;
+  const { doc, p } = editor.nodes;
+
+  it('should only create a link mark if more than one of the trigger character is detected', () => {
+    editor.add(doc(p('google'))).insertText('.com');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google.com')));
+
+    editor.add(doc(p('google'))).insertText('.com]');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google.com]')));
+
+    editor.add(doc(p('google'))).insertText('.com ');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google.com ')));
+
+    editor.add(doc(p('google'))).insertText('.com].');
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('google.com].')));
+
+    editor.add(doc(p('google'))).insertText('.com]. ');
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//google.com' })('google.com'), ']. ')),
     );
   });
 });
