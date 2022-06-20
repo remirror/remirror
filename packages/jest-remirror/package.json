@@ -48,7 +48,6 @@
     "@testing-library/dom": "^8.13.0",
     "@types/sanitize-html": "^2.3.2",
     "jest-prosemirror": "^2.0.0-beta.0",
-    "jest-snapshot": "^28.1.1",
     "mutationobserver-shim": "^0.3.7",
     "sanitize-html": "^2.4.0",
     "tiny-warning": "^1.0.3"
