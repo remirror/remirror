@@ -86,7 +86,7 @@
     "storybook:start": "manypkg run packages/storybook-react start",
     "symlink:root": "node support/scripts/symlink-root.mjs",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --verbose",
-    "test:build": "cross-env NODE_OPTIONS=--experimental-vm-modules TEST_BUILD=true jest --verbose --coverage=false",
+    "test:build": "cross-env NODE_OPTIONS='--experimental-vm-modules --max_old_space_size=7680' TEST_BUILD=true jest --verbose --coverage=false",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch --verbose=false --coverage=false",
     "ts": "node -r ./support/scripts/babel-register.js",
     "typecheck": "tsc -b",
