@@ -4,12 +4,12 @@ import { logger } from '../logger';
 import { buildPackage } from '../utils/build-package';
 import { DebounceExecutor } from '../utils/debounce-executor';
 import { getRoot } from '../utils/get-root';
-import { listPackages } from '../utils/list-packages';
+import { listPackagesToBuild } from '../utils/list-packages';
 
 export async function watch() {
   logger.debug(`current working directory: ${process.cwd()}`);
 
-  const packages = await listPackages({ isPrivate: false });
+  const packages = await listPackagesToBuild();
 
   logger.info('Building all packages...');
   try {

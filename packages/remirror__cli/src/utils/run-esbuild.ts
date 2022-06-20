@@ -45,6 +45,7 @@ export async function runEsbuild(
 // TODO: don't use an array like this.
 const nodePackages = new Set([
   'jest-remirror',
+  'testing',
 
   // Runtime `process.env.NODE_ENV` is needed in the following two packages.
   '@remirror/core-utils',

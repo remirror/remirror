@@ -20,3 +20,20 @@ export async function listPackages({ isPrivate = null }: { isPrivate?: boolean |
     }
   });
 }
+
+export async function listPackagesToBuild() {
+  // The following packages are still handled by the old build system (preconstruct)
+  const excutedPackageNames = new Set([
+    'docusaurus-plugin-examples',
+    '@remirror/cli',
+    'storybook-react',
+    'support',
+    'actions',
+    'scripts',
+    '@remirror/extension-template',
+    '@remirror/minimal-template',
+    '@remirror/preset-template',
+    'website',
+  ]);
+  return (await listPackages()).filter((pkg) => !excutedPackageNames.has(pkg.packageJson.name));
+}

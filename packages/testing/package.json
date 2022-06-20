@@ -12,34 +12,29 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/testing.esm.js",
-      "require": "./dist/testing.cjs.js",
-      "browser": "./dist/testing.esm.js",
-      "types": "./dist/testing.cjs.d.ts",
-      "default": "./dist/testing.esm.js"
+      "import": "./dist/testing.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/testing.js"
     },
     "./package.json": "./package.json",
     "./playwright": {
-      "import": "./playwright/dist/testing-playwright.esm.js",
-      "require": "./playwright/dist/testing-playwright.cjs.js",
-      "browser": "./playwright/dist/testing-playwright.esm.js",
-      "types": "./playwright/dist/testing-playwright.cjs.d.ts",
-      "default": "./playwright/dist/testing-playwright.esm.js"
+      "import": "./playwright/dist/testing-playwright.js",
+      "types": "./dist-types/playwright/index.d.ts",
+      "default": "./playwright/dist/testing-playwright.js"
     },
     "./react": {
-      "import": "./react/dist/testing-react.esm.js",
-      "require": "./react/dist/testing-react.cjs.js",
-      "browser": "./react/dist/testing-react.esm.js",
-      "types": "./react/dist/testing-react.cjs.d.ts",
-      "default": "./react/dist/testing-react.esm.js"
+      "import": "./react/dist/testing-react.js",
+      "types": "./dist-types/react.d.ts",
+      "default": "./react/dist/testing-react.js"
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
-  "main": "dist/testing.cjs.js",
-  "module": "dist/testing.esm.js",
-  "types": "./dist/testing.cjs.d.ts",
+  "main": "./dist/testing.js",
+  "module": "./dist/testing.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "playwright",
     "react"
   ],
@@ -113,5 +108,6 @@
       "playwright/index.ts",
       "react.tsx"
     ]
-  }
+  },
+  "type": "module"
 }
