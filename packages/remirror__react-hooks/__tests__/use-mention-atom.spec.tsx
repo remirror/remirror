@@ -62,11 +62,12 @@ describe('useMentionAtom', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <span role="presentation"
-              href="//test.com/aa"
-              class="remirror-mention-atom remirror-mention-atom-at"
-              data-mention-atom-id="aa"
-              data-mention-atom-name="at"
+        <span
+          role="presentation"
+          href="//test.com/aa"
+          class="remirror-mention-atom remirror-mention-atom-at"
+          data-mention-atom-id="aa"
+          data-mention-atom-name="at"
         >
           @aa
         </span>
@@ -99,11 +100,12 @@ describe('useMentionAtom', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <span role="presentation"
-              href="//test.com/aa"
-              class="remirror-mention-atom remirror-mention-atom-at"
-              data-mention-atom-id="aa"
-              data-mention-atom-name="at"
+        <span
+          role="presentation"
+          href="//test.com/aa"
+          class="remirror-mention-atom remirror-mention-atom-at"
+          data-mention-atom-id="aa"
+          data-mention-atom-name="at"
         >
           @aa
         </span>
@@ -204,11 +206,12 @@ describe('useMentionAtom', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <span role="presentation"
-              href="//test.com/aa"
-              class="remirror-mention-atom remirror-mention-atom-tag"
-              data-mention-atom-id="aa"
-              data-mention-atom-name="tag"
+        <span
+          role="presentation"
+          href="//test.com/aa"
+          class="remirror-mention-atom remirror-mention-atom-tag"
+          data-mention-atom-id="aa"
+          data-mention-atom-name="tag"
         >
           #AAi
         </span>

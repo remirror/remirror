@@ -14,8 +14,9 @@ describe('ThemeProvider', () => {
     );
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
-      <div style="--rmr-color-background: red; --rmr-color-muted: orange; --rmr-font-size-default: 20;"
-           class="remirror-theme"
+      <div
+        style="--rmr-color-background: red; --rmr-color-muted: orange; --rmr-font-size-default: 20;"
+        class="remirror-theme"
       >
         Content
       </div>
@@ -33,8 +34,9 @@ describe('ThemeProvider', () => {
     );
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
-      <span style="--rmr-color-background: red; --rmr-color-muted: orange; --rmr-font-size-default: 20;"
-            class="remirror-theme"
+      <span
+        style="--rmr-color-background: red; --rmr-color-muted: orange; --rmr-font-size-default: 20;"
+        class="remirror-theme"
       >
         Content
       </span>

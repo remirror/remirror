@@ -21,9 +21,10 @@ describe('schema', () => {
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(p(mentionAtom()))).toMatchInlineSnapshot(`
       <p>
-        <span class="remirror-mention-atom remirror-mention-atom-testing"
-              data-mention-atom-id="test"
-              data-mention-atom-name="testing"
+        <span
+          class="remirror-mention-atom remirror-mention-atom-testing"
+          data-mention-atom-id="test"
+          data-mention-atom-name="testing"
         >
           @test
         </span>

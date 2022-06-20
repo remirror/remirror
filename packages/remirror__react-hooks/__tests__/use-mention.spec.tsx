@@ -54,11 +54,12 @@ describe('useMention', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <a role="presentation"
-           href="//test.com/aa"
-           class="mention mention-at"
-           data-mention-id="aa"
-           data-mention-name="at"
+        <a
+          role="presentation"
+          href="//test.com/aa"
+          class="mention mention-at"
+          data-mention-id="aa"
+          data-mention-name="at"
         >
           @aa
         </a>
@@ -95,11 +96,12 @@ describe('useMention', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <a role="presentation"
-           href="//test.com/aa"
-           class="mention mention-at"
-           data-mention-id="aa"
-           data-mention-name="at"
+        <a
+          role="presentation"
+          href="//test.com/aa"
+          class="mention mention-at"
+          data-mention-id="aa"
+          data-mention-name="at"
         >
           @aa
         </a>
@@ -122,11 +124,12 @@ describe('useMention', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         ab Initial content
-        <a role="presentation"
-           href="/a"
-           class="mention mention-at"
-           data-mention-id="a"
-           data-mention-name="at"
+        <a
+          role="presentation"
+          href="/a"
+          class="mention mention-at"
+          data-mention-id="a"
+          data-mention-name="at"
         >
           @a
         </a>
@@ -202,11 +205,12 @@ describe('useMention', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <a role="presentation"
-           href="//test.com/aa"
-           class="mention mention-tag"
-           data-mention-id="aa"
-           data-mention-name="tag"
+        <a
+          role="presentation"
+          href="//test.com/aa"
+          class="mention mention-tag"
+          data-mention-id="aa"
+          data-mention-name="tag"
         >
           #AAi
         </a>
