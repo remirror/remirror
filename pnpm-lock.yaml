@@ -2381,6 +2381,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@ffmpeg-installer/ffmpeg': ^1.1.0
+      '@jest/globals': ^28.1.1
       '@react-spring/mock-raf': ^1.1.1
       '@remirror/core': ^2.0.0-beta.0
       '@remirror/pm': ^2.0.0-beta.0
@@ -2415,6 +2416,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.18.3
       '@ffmpeg-installer/ffmpeg': 1.1.0
+      '@jest/globals': 28.1.1
       '@react-spring/mock-raf': 1.1.1
       '@remirror/core': link:../remirror__core
       '@remirror/pm': link:../remirror__pm
