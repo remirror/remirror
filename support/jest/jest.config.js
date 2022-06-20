@@ -12,8 +12,6 @@ module.exports = {
     __TEST__: true,
     __E2E__: false,
   },
-  maxConcurrency: 3,
-  maxWorkers: '50%',
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['@swc/jest'],
   },
@@ -29,4 +27,9 @@ module.exports = {
   cacheDirectory: baseDir('.jest', TEST_BUILD ? 'build' : 'aliased'),
   errorOnDeprecated: true,
   testEnvironment: 'jsdom',
+
+  // Limit the resources we used, to avoid out-of-memory errors, expecially for
+  // the CI environment.
+  maxConcurrency: 3,
+  maxWorkers: '50%',
 };
