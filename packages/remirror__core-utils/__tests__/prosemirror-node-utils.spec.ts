@@ -39,7 +39,7 @@ describe('findChildren', () => {
   });
 
   it('should perform the provided action for truthy matches', () => {
-    const mock: any = jest.fn();
+    const mock = jest.fn();
     const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
 
     findChildren({
@@ -50,7 +50,7 @@ describe('findChildren', () => {
 
     expect(mock).toHaveBeenCalledTimes(3);
 
-    for (const item of mock.mock.calls) {
+    for (const [item] of mock.mock.calls as any) {
       expect(item.node.type.name).toBe('paragraph');
     }
   });
