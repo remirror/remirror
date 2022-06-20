@@ -19,8 +19,10 @@ export default ref;
  * Load codemirror asynchronously for SSR support.
  */
 export async function loadCodeMirror(): Promise<void> {
-  const { default: CodeMirror } = await import('codemirror');
-  ref.CodeMirror = CodeMirror;
+  if (typeof document === 'undefined') {
+    const { default: CodeMirror } = await import('codemirror');
+    ref.CodeMirror = CodeMirror;
 
-  await import('codemirror/mode/meta');
+    await import('codemirror/mode/meta');
+  }
 }
