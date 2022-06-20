@@ -46,8 +46,9 @@ describe('Callout', () => {
     const { container } = strictRender(<Callout node={json} markMap={{}} />);
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
-      <div data-callout-type="info"
-           data-callout-emoji="ℹ️"
+      <div
+        data-callout-type="info"
+        data-callout-emoji="ℹ️"
       >
         <div class="remirror-callout-emoji-wrapper">
           <span>

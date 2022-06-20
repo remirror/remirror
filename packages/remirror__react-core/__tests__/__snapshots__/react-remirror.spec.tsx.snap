@@ -5,12 +5,13 @@ exports[`\`autoRender\` renders at the end 1`] = `
   Hello
 </div>
 <div class="remirror-editor-wrapper">
-  <div contenteditable="true"
-       translate="no"
-       role="textbox"
-       aria-multiline="true"
-       aria-label
-       class="ProseMirror remirror-editor"
+  <div
+    contenteditable="true"
+    translate="no"
+    role="textbox"
+    aria-multiline="true"
+    aria-label
+    class="ProseMirror remirror-editor"
   >
     <p class="remirror-is-empty">
       <br class="ProseMirror-trailingBreak">
@@ -21,12 +22,13 @@ exports[`\`autoRender\` renders at the end 1`] = `
 
 exports[`\`autoRender\` renders at the start 1`] = `
 <div class="remirror-editor-wrapper">
-  <div contenteditable="true"
-       translate="no"
-       role="textbox"
-       aria-multiline="true"
-       aria-label
-       class="ProseMirror remirror-editor"
+  <div
+    contenteditable="true"
+    translate="no"
+    role="textbox"
+    aria-multiline="true"
+    aria-label
+    class="ProseMirror remirror-editor"
   >
     <p class="remirror-is-empty">
       <br class="ProseMirror-trailingBreak">
@@ -40,12 +42,13 @@ exports[`\`autoRender\` renders at the start 1`] = `
 
 exports[`\`autoRender\` renders at the start: when set to true 1`] = `
 <div class="remirror-editor-wrapper">
-  <div contenteditable="true"
-       translate="no"
-       role="textbox"
-       aria-multiline="true"
-       aria-label
-       class="ProseMirror remirror-editor"
+  <div
+    contenteditable="true"
+    translate="no"
+    role="textbox"
+    aria-multiline="true"
+    aria-label
+    class="ProseMirror remirror-editor"
   >
     <p class="remirror-is-empty">
       <br class="ProseMirror-trailingBreak">
@@ -59,12 +62,13 @@ exports[`\`autoRender\` renders at the start: when set to true 1`] = `
 
 exports[`\`autoRender\` renders by default with no children 1`] = `
 <div class="remirror-editor-wrapper">
-  <div contenteditable="true"
-       translate="no"
-       role="textbox"
-       aria-multiline="true"
-       aria-label
-       class="ProseMirror remirror-editor"
+  <div
+    contenteditable="true"
+    translate="no"
+    role="textbox"
+    aria-multiline="true"
+    aria-label
+    class="ProseMirror remirror-editor"
   >
     <p class="remirror-is-empty">
       <br class="ProseMirror-trailingBreak">

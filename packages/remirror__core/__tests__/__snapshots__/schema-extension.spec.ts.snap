@@ -36,12 +36,13 @@ Array [
 `;
 
 exports[`dynamic schema attributes should dynamically add attributes when configured 1`] = `
-<div contenteditable="true"
-     translate="no"
-     role="textbox"
-     aria-multiline="true"
-     aria-label
-     class="ProseMirror remirror-editor"
+<div
+  contenteditable="true"
+  translate="no"
+  role="textbox"
+  aria-multiline="true"
+  aria-label
+  class="ProseMirror remirror-editor"
 >
   <h1>
     This is a heading
@@ -71,12 +72,13 @@ exports[`dynamic schema attributes should dynamically add attributes when config
 </strong><br class="ProseMirror-trailingBreak"></p><p id="2">
 <br class="ProseMirror-trailingBreak"></p><p id="3">
 <br class="ProseMirror-trailingBreak"></p><p id="4"><br class="ProseMirror-trailingBreak"></p></div> 1`] = `
-<div contenteditable="true"
-     translate="no"
-     role="textbox"
-     aria-multiline="true"
-     aria-label
-     class="ProseMirror remirror-editor"
+<div
+  contenteditable="true"
+  translate="no"
+  role="textbox"
+  aria-multiline="true"
+  aria-label
+  class="ProseMirror remirror-editor"
 >
   <h1>
     This is a heading

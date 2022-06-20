@@ -21,9 +21,10 @@ describe('createIFrameHandler', () => {
     const { container } = strictRender(<IFrame node={JSON} markMap={{}} />);
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
-      <iframe src="https://www.youtube-nocookie.com/embed/ew-mIOGJls0?"
-              frameborder="0"
-              allowfullscreen
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/ew-mIOGJls0?"
+        frameborder="0"
+        allowfullscreen
       >
       </iframe>
     `);
@@ -34,10 +35,11 @@ describe('createIFrameHandler', () => {
     const { container } = strictRender(<IFrame node={JSON} markMap={{}} />);
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
-      <iframe src="https://www.youtube-nocookie.com/embed/ew-mIOGJls0?"
-              frameborder="0"
-              width="100%"
-              allowfullscreen
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/ew-mIOGJls0?"
+        frameborder="0"
+        width="100%"
+        allowfullscreen
       >
       </iframe>
     `);

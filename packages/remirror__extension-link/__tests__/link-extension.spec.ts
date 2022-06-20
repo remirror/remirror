@@ -1077,8 +1077,9 @@ describe('spanning', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         Paragraph with
-        <a href="//test.com"
-           rel="noopener noreferrer nofollow"
+        <a
+          href="//test.com"
+          rel="noopener noreferrer nofollow"
         >
           a
           <span class="selection">
