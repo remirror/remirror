@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "main": "./dist/remirror-react-components-all-icons.js",
+  "module": "./dist/remirror-react-components-all-icons.js",
+  "types": "./../dist-types/all-icons.d.ts"
+}
