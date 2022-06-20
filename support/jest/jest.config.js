@@ -12,6 +12,8 @@ module.exports = {
     __TEST__: true,
     __E2E__: false,
   },
+  maxConcurrency: 3,
+  maxWorkers: '50%',
   transform: {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['@swc/jest'],
   },
