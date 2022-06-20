@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-editors",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "A showcase of possible react editors built with remirror.",
   "keywords": [
     "remirror",
@@ -59,16 +59,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^2.0.0-beta.0",
-    "@remirror/extension-react-tables": "^2.0.0-beta.0",
-    "@remirror/pm": "^2.0.0-beta.0",
-    "@remirror/react": "^2.0.0-beta.0",
-    "@remirror/styles": "^2.0.0-beta.0",
+    "@remirror/core-helpers": "^2.0.0-beta.1",
+    "@remirror/extension-react-tables": "^2.0.0-beta.1",
+    "@remirror/pm": "^2.0.0-beta.1",
+    "@remirror/react": "^2.0.0-beta.1",
+    "@remirror/styles": "^2.0.0-beta.1",
     "@svgmoji/noto": "^3.2.0",
     "@types/refractor": "^3.0.2",
-    "create-context-state": "^1.0.1",
+    "create-context-state": "^2.0.0-beta.0",
     "refractor": "^3.3.1",
-    "remirror": "2.0.0-beta.0",
+    "remirror": "2.0.0-beta.1",
     "svgmoji": "^3.2.0"
   },
   "devDependencies": {
