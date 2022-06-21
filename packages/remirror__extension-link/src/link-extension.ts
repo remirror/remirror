@@ -188,8 +188,7 @@ export interface LinkOptions {
 
   /**
    * A regex that will be placed at the end of `autoLinkRegex` in order to create the link mark
-   * only after finding a `trigger character`, this is useful for those users who don't want to have the link style applied
-   * while writing but after pressing a special key or combination of keys.
+   * only after finding a `trigger character`, this is useful for those users who don't want to have the link * style applied while writing but after pressing a special key or combination of keys.
    *
    * ```ts
    *  import { LinkExtension } from 'remirror/extensions;

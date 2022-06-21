@@ -14,13 +14,11 @@ import {
   BoldExtension,
   createCoreManager,
   extractHref,
-  //LinkExtension,
-  //LinkOptions,
+  LinkExtension,
+  LinkOptions,
   OrderedListExtension,
   TOP_50_TLDS,
 } from 'remirror/extensions';
-
-import { LinkExtension, LinkOptions } from '../src/link-extension';
 
 extensionValidityTest(LinkExtension);
 
