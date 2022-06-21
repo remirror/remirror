@@ -1183,3 +1183,94 @@ describe('target', () => {
     expect(editor.doc).toEqualRemirrorDocument(doc(p(link('test'))));
   });
 });
+
+describe('adjacent punctuations', () => {
+  it('should not include trailing `?` in the link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('remirror.io?test=true');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//remirror.io?test=true' })('remirror.io?test=true'))),
+    );
+
+    editor.selectText(23).backspace(10).insertText('?');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//remirror.io' })('remirror.io'), '?')),
+    );
+  });
+
+  it('should include trailing `?` in the link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+        adjacentPunctuations: ['.'],
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('remirror.io?test=true');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//remirror.io?test=true' })('remirror.io?test=true'))),
+    );
+
+    editor.selectText(23).backspace(10).insertText('?');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//remirror.io?' })('remirror.io?'))),
+    );
+  });
+
+  it('should not remove link if "." is added before link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('remirror.io')
+      .selectText(0)
+      .insertText('.');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('.', link({ auto: true, href: '//remirror.io' })('remirror.io'))),
+    );
+  });
+
+  it('should not include surrounding `"` in the link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('"remirror.io"');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('"', link({ auto: true, href: '//remirror.io' })('remirror.io'), '"')),
+    );
+  });
+});

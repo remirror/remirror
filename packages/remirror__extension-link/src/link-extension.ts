@@ -45,7 +45,7 @@ import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
-import { TOP_50_TLDS } from './link-extension-utils';
+import { DEFAULT_ADJACENT_PUNCTUATIONS, TOP_50_TLDS } from './link-extension-utils';
 
 const UPDATE_LINK = 'updateLink';
 
@@ -186,6 +186,23 @@ export interface LinkOptions {
   autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
+   * Adjacent punctuations that are exluded from a link
+   *
+   * To extend the default list you could
+   *
+   * ```ts
+   * import { LinkExtension, DEFAULT_ADJACENT_PUNCTUATIONS } from 'remirror/extensions';
+   * const extensions = () => [
+   *   new LinkExtension({ adjacentPunctuations: [...DEFAULT_ADJACENT_PUNCTUATIONS, ')'] })
+   * ];
+   * ```
+   *
+   * @default
+   * ',', '.', '!', '?', ':', ';', "'", '"'
+   */
+  adjacentPunctuations?: string[];
+
+  /**
    * The default protocol to use when it can't be inferred.
    *
    * @default ''
@@ -238,6 +255,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
+    adjacentPunctuations: DEFAULT_ADJACENT_PUNCTUATIONS,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -608,22 +626,24 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               .reduce<FoundAutoLink[]>((foundAutoLinks, match) => {
                 let text = getMatchString(match);
 
-                // Remove trailing punctuations from links
+                const punctuations = this.options.adjacentPunctuations;
+                const textStartsWithPunctuation = punctuations.includes(text[0]);
+                const textEndsWithPunctuation = punctuations.includes(text[text.length - 1]);
+
+                // Remove adjacent punctuations from links
                 text = text.slice(
-                  0,
-                  [',', '.', '!', '?', ':', ';'].includes(text[text.length - 1]) ? -1 : undefined,
+                  textStartsWithPunctuation ? 1 : 0,
+                  textEndsWithPunctuation ? -1 : undefined,
                 );
 
                 const href = this.buildHref(text);
 
+                const start = match.index + (textStartsWithPunctuation ? 1 : 0);
+                const end = match.index + text.length + (textStartsWithPunctuation ? 1 : 0);
+
                 // Remove links that are no longer valid in the match
                 if (!this.isValidUrl(text) || !this.isValidTLD(href)) {
-                  const link = this.getLinkMarksInRange(
-                    doc,
-                    match.index,
-                    match.index + text.length,
-                    true,
-                  )[0];
+                  const link = this.getLinkMarksInRange(doc, start, end, true)[0];
 
                   if (!link) {
                     return foundAutoLinks;
@@ -648,8 +668,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                   {
                     text,
                     href,
-                    start: match.index,
-                    end: match.index + text.length,
+                    start,
+                    end,
                   },
                 ];
               }, [])

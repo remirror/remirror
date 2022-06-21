@@ -53,3 +53,5 @@ export const TOP_50_TLDS = [
   'no',
   'cyou',
 ];
+
+export const DEFAULT_ADJACENT_PUNCTUATIONS = [',', '.', '!', '?', ':', ';', "'", '"'];
