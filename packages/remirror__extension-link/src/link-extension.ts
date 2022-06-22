@@ -155,6 +155,25 @@ export interface LinkOptions {
   autoLinkRegex?: Static<RegExp>;
 
   /**
+   * Custom link validation function
+   *
+   * Replaces matching against the RegExp with the autoLinkRegex matcher
+   *
+   * ```ts
+   * import { LinkExtension } from 'remirror/extensions';
+   * import LinkifyIt from "linkify-it";
+   * const extensions = () => [
+   *   new LinkExtension({ autoLinkValidationFunction: (url?: string): boolean => {
+   *      return linkify.test(url)
+   *   }})
+   * ];
+   * ```
+   *
+   * @default null
+   */
+  autoLinkValidationFunction?: ((url?: string) => boolean) | null;
+
+  /**
    * An array of valid Top Level Domains (TLDs) to limit the scope of auto linking.
    *
    * @remarks
@@ -254,6 +273,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     selectTextOnClick: false,
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
+    autoLinkValidationFunction: null,
     autoLinkAllowedTLDs: TOP_50_TLDS,
     adjacentPunctuations: DEFAULT_ADJACENT_PUNCTUATIONS,
     defaultTarget: null,
@@ -762,7 +782,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   }
 
   private isValidUrl(url: string) {
-    return this._autoLinkRegexNonGlobal?.test(url);
+    if (typeof this.options.autoLinkValidationFunction !== 'function') {
+      return this._autoLinkRegexNonGlobal?.test(url);
+    }
+
+    return this.options.autoLinkValidationFunction(url);
   }
 
   private isValidTLD(str: string): boolean {

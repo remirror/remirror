@@ -1274,3 +1274,31 @@ describe('adjacent punctuations', () => {
     );
   });
 });
+
+describe('custom auto link validation function', () => {
+  it('should only validate "remirror-test.io"', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+        autoLinkValidationFunction: (url) => url === 'remirror-test.io',
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('remirror.io test.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('remirror.io test.com')));
+
+    editor.selectText(21).press('Enter').insertText('remirror-test.io');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p('remirror.io test.com'),
+        p(link({ auto: true, href: '//remirror-test.io' })('remirror-test.io')),
+      ),
+    );
+  });
+});
