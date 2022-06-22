@@ -696,6 +696,26 @@ describe('autolinking', () => {
     );
   });
 
+  it('detects seperating two links', () => {
+    editor.add(doc(p('<cursor>'))).insertText('github.comremirror.io');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//github.comremirror.io' })('github.comremirror.io'))),
+    );
+
+    editor.selectText(11).insertText(' ');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//github.com' })('github.com'),
+          ' ',
+          link({ auto: true, href: '//remirror.io' })('remirror.io'),
+        ),
+      ),
+    );
+  });
+
   it('supports deleting selected to to invalidate the match', () => {
     editor
       .add(doc(p('<cursor>')))
@@ -720,6 +740,30 @@ describe('autolinking', () => {
 
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('supports detecting added adjacent text nodes', () => {
+    editor.add(doc(p('window.co')));
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//window.co' })('window.co'))),
+    );
+
+    editor.insertText('nfirm');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('window.confirm')));
+  });
+
+  it('supports detecting removed adjacent text nodes', () => {
+    editor.add(doc(p('window.confirm')));
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('window.confirm')));
+
+    editor.backspace(5);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//window.co' })('window.co'))),
     );
   });
 

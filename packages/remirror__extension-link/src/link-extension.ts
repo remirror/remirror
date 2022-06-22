@@ -443,6 +443,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
+          if (!this.isValidUrl(url)) {
+            return false;
+          }
+
           return url;
         },
       },
@@ -560,21 +564,27 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         const composedTransaction = composeTransactionSteps(transactions, prevState);
 
         const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
-        const { mapping } = composedTransaction;
         const { tr, doc } = state;
 
         const { updateLink, removeLink } = this.store.chain(tr);
 
+        const { mapping } = composedTransaction;
+
         changes.forEach(({ from, to, prevFrom, prevTo }) => {
-          // Remove auto links that are no longer valid
+          // Remove auto links that are no longer valid after they have been split
           this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
             const newFrom = mapping.map(prevMark.from);
             const newTo = mapping.map(prevMark.to);
             const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
 
             newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
+              // If link was not split we don't need to remove it at this point
+              if (newMark.text.split(/\s/g).length < 2) {
+                return;
+              }
+
+              const wasLink = this.isValidUrl(prevMark.text);
+              const isLink = this.isValidUrl(newMark.text);
 
               if (wasLink && !isLink) {
                 removeLink({ from: newMark.from, to: newMark.to }).tr();
@@ -593,7 +603,56 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
-            this.findAutoLinks(nodeText)
+
+            findMatches(nodeText, new RegExp(/(\S)+/, 'gm'))
+              .reduce<FoundAutoLink[]>((foundAutoLinks, match) => {
+                let text = getMatchString(match);
+
+                // Remove trailing punctuations from links
+                text = text.slice(
+                  0,
+                  [',', '.', '!', '?', ':', ';'].includes(text[text.length - 1]) ? -1 : undefined,
+                );
+
+                const href = this.buildHref(text);
+
+                // Remove links that are no longer valid in the match
+                if (!this.isValidUrl(text) || !this.isValidTLD(href)) {
+                  const link = this.getLinkMarksInRange(
+                    doc,
+                    match.index,
+                    match.index + text.length,
+                    true,
+                  )[0];
+
+                  if (!link) {
+                    return foundAutoLinks;
+                  }
+
+                  // Don't remove valid links
+                  if (
+                    link.text !== text &&
+                    this.isValidUrl(link.text) &&
+                    !nodeText.includes(link.text)
+                  ) {
+                    return foundAutoLinks;
+                  }
+
+                  removeLink({ from: link.from, to: link.to }).tr();
+
+                  return foundAutoLinks;
+                }
+
+                return [
+                  ...foundAutoLinks,
+                  {
+                    text,
+                    href,
+                    start: match.index,
+                    end: match.index + text.length,
+                  },
+                ];
+              }, [])
               // calculate link position
               .map((link) => ({
                 ...link,
@@ -682,31 +741,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return linkMarks;
   }
 
-  private findAutoLinks(str: string): FoundAutoLink[] {
-    const toAutoLink: FoundAutoLink[] = [];
-
-    for (const match of findMatches(str, this.options.autoLinkRegex)) {
-      const text = getMatchString(match);
-
-      if (!text) {
-        continue;
-      }
-
-      const href = this.buildHref(text);
-
-      if (!this.isValidTLD(href)) {
-        continue;
-      }
-
-      toAutoLink.push({
-        text,
-        href,
-        start: match.index,
-        end: match.index + text.length,
-      });
-    }
-
-    return toAutoLink;
+  private isValidUrl(url: string) {
+    return this._autoLinkRegexNonGlobal?.test(url);
   }
 
   private isValidTLD(str: string): boolean {
