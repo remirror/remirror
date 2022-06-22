@@ -22,7 +22,7 @@ jobs:
     if: ${{ false == contains(github.ref, 'changeset') && github.repository == 'remirror/remirror' }}
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
           token: ${{ secrets.REMIRROR_BOT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
