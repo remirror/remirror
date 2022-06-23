@@ -211,4 +211,21 @@ describe('EntityReference marks', () => {
       expect(entityReferences).toHaveLength(2);
     });
   });
+
+  describe('getEntityReferenceId', () => {
+    it('Returns entityReference by Id', () => {
+      add(doc(p('testing text')));
+      const entityReference = {
+        id: 'testId',
+        from: 1,
+        to: 8,
+        text: 'testing',
+      };
+      selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+      const entityReferenceFromDoc = helpers.getEntityReferenceById(entityReference.id);
+
+      expect(entityReferenceFromDoc).toEqual(entityReference);
+    });
+  });
 });

@@ -21,7 +21,7 @@ import {
   within,
 } from '@remirror/core';
 import { Node } from '@remirror/pm/model';
-import { EditorStateConfig } from '@remirror/pm/state';
+import { EditorStateConfig, TextSelection } from '@remirror/pm/state';
 import { DecorationSet } from '@remirror/pm/view';
 
 import { EntityReferenceMetaData, EntityReferenceOptions } from './types';
@@ -170,6 +170,34 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   /**
+   * Dispatch a transaction that selects the range of the entity reference then scrolls to it.
+   *
+   * @param entityReferenceId - The entity's reference Id.
+   *
+   * @returns True if the scrolling was applied, else it returns false
+   *
+   */
+  @command()
+  scrollToEntityReference(entityReferenceId: string): CommandFunction {
+    return ({ tr, dispatch }) => {
+      const entityReference = this.store.helpers.getEntityReferenceById(entityReferenceId);
+
+      if (!entityReference) {
+        return false;
+      }
+
+      const { doc } = tr;
+      const resolvedFrom = doc.resolve(entityReference.from);
+      const resolvedTo = doc.resolve(entityReference.to);
+      const entityReferenceSelection = new TextSelection(resolvedFrom, resolvedTo);
+      // Select range and scroll into it
+      tr.setSelection(entityReferenceSelection).scrollIntoView();
+      dispatch?.(tr);
+      return true;
+    };
+  }
+
+  /**
    * Get all disjoined entityReference attributes from the document.
    */
   @helper()
@@ -210,6 +238,23 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
       state: this.store.getState(),
     }).flat();
     return joinDisjoinedEntityReferences(entityReferences);
+  }
+
+  /**
+   * @param entityReferenceId - The entity's reference Id.
+   *
+   * @returns EntityReference attributes from the editor's content, undefined if it doesn't exist.
+   *
+   */
+  @helper()
+  getEntityReferenceById(entityReferenceId: string): Helper<EntityReferenceMetaData | undefined> {
+    const entityReferences = getEntityReferencesFromPluginState({
+      extension: this,
+      state: this.store.getState(),
+    }).flat();
+    return joinDisjoinedEntityReferences(entityReferences).find(
+      (entityReference) => entityReference.id === entityReferenceId,
+    );
   }
 
   /**
