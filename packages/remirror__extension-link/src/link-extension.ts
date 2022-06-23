@@ -45,7 +45,7 @@ import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
-import { TOP_50_TLDS } from './link-extension-utils';
+import { DEFAULT_ADJACENT_PUNCTUATIONS, isBalanced, TOP_50_TLDS } from './link-extension-utils';
 
 const UPDATE_LINK = 'updateLink';
 
@@ -186,6 +186,23 @@ export interface LinkOptions {
   autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
+   * Adjacent punctuations that are exluded from a link
+   *
+   * To extend the default list you could
+   *
+   * ```ts
+   * import { LinkExtension, DEFAULT_ADJACENT_PUNCTUATIONS } from 'remirror/extensions';
+   * const extensions = () => [
+   *   new LinkExtension({ adjacentPunctuations: [...DEFAULT_ADJACENT_PUNCTUATIONS, ')'] })
+   * ];
+   * ```
+   *
+   * @default
+   * [ ',', '.', '!', '?', ':', ';', "'", '"', '(', ')', '[', ']' ]
+   */
+  adjacentPunctuations?: string[];
+
+  /**
    * The default protocol to use when it can't be inferred.
    *
    * @default ''
@@ -238,6 +255,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
+    adjacentPunctuations: DEFAULT_ADJACENT_PUNCTUATIONS,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -443,6 +461,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
+          if (!this.isValidUrl(url)) {
+            return false;
+          }
+
           return url;
         },
       },
@@ -560,21 +582,27 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         const composedTransaction = composeTransactionSteps(transactions, prevState);
 
         const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
-        const { mapping } = composedTransaction;
         const { tr, doc } = state;
 
         const { updateLink, removeLink } = this.store.chain(tr);
 
+        const { mapping } = composedTransaction;
+
         changes.forEach(({ from, to, prevFrom, prevTo }) => {
-          // Remove auto links that are no longer valid
+          // Remove auto links that are no longer valid after they have been split
           this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
             const newFrom = mapping.map(prevMark.from);
             const newTo = mapping.map(prevMark.to);
             const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
 
             newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
+              // If link was not split we don't need to remove it at this point
+              if (newMark.text.split(/\s/g).length < 2) {
+                return;
+              }
+
+              const wasLink = this.isValidUrl(prevMark.text);
+              const isLink = this.isValidUrl(newMark.text);
 
               if (wasLink && !isLink) {
                 removeLink({ from: newMark.from, to: newMark.to }).tr();
@@ -593,7 +621,86 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
-            this.findAutoLinks(nodeText)
+
+            const foundAutoLinks: FoundAutoLink[] = [];
+
+            for (const match of findMatches(nodeText, new RegExp(/(\S)+/, 'gm'))) {
+              let text = getMatchString(match);
+
+              // Checking for surrounding punctuations so we can slice them from the link
+              const punctuations = this.options.adjacentPunctuations;
+              const punctuationStart = punctuations.includes(text[0] || '') ? 1 : 0;
+              const punctuationEnd = (() => {
+                const endsWithPunctuation = (txt: string) =>
+                  punctuations.includes(txt[txt.length - 1] || '');
+
+                try {
+                  // Check if punctuation is part of the URL
+                  const { pathname: p, search: s } = new URL(
+                    ['http://', 'https://', 'ftp://'].some((protocol) => text.startsWith(protocol))
+                      ? text
+                      : `https://${text}`,
+                  );
+
+                  if (s && endsWithPunctuation(s)) {
+                    return !isBalanced(p) ? -1 : undefined;
+                  }
+
+                  if (p !== '/' && endsWithPunctuation(p)) {
+                    return !isBalanced(p) ? -1 : undefined;
+                  }
+
+                  if (endsWithPunctuation(text)) {
+                    return -1;
+                  }
+                } catch {
+                  if (endsWithPunctuation(text)) {
+                    return -1;
+                  }
+                }
+
+                return;
+              })();
+
+              // Remove adjacent punctuations from links
+              text = text.slice(punctuationStart, punctuationEnd);
+
+              const href = this.buildHref(text);
+
+              const start = match.index + punctuationStart;
+              const end = match.index + text.length + punctuationStart;
+
+              // Remove links that are no longer valid in the match
+              if (!this.isValidUrl(text) || !this.isValidTLD(href)) {
+                const link = this.getLinkMarksInRange(doc, start, end, true)[0];
+
+                if (!link) {
+                  continue;
+                }
+
+                // Don't remove valid links
+                if (
+                  link.text !== text &&
+                  this.isValidUrl(link.text) &&
+                  !nodeText.includes(link.text)
+                ) {
+                  continue;
+                }
+
+                removeLink({ from: link.from, to: link.to }).tr();
+
+                continue;
+              }
+
+              foundAutoLinks.push({
+                text,
+                href,
+                start,
+                end,
+              });
+            }
+
+            foundAutoLinks
               // calculate link position
               .map((link) => ({
                 ...link,
@@ -682,31 +789,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return linkMarks;
   }
 
-  private findAutoLinks(str: string): FoundAutoLink[] {
-    const toAutoLink: FoundAutoLink[] = [];
-
-    for (const match of findMatches(str, this.options.autoLinkRegex)) {
-      const text = getMatchString(match);
-
-      if (!text) {
-        continue;
-      }
-
-      const href = this.buildHref(text);
-
-      if (!this.isValidTLD(href)) {
-        continue;
-      }
-
-      toAutoLink.push({
-        text,
-        href,
-        start: match.index,
-        end: match.index + text.length,
-      });
-    }
-
-    return toAutoLink;
+  private isValidUrl(url: string) {
+    return this._autoLinkRegexNonGlobal?.test(url);
   }
 
   private isValidTLD(str: string): boolean {

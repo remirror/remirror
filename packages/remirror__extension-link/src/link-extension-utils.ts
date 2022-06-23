@@ -53,3 +53,43 @@ export const TOP_50_TLDS = [
   'no',
   'cyou',
 ];
+
+export const DEFAULT_ADJACENT_PUNCTUATIONS = [
+  ',',
+  '.',
+  '!',
+  '?',
+  ':',
+  ';',
+  "'",
+  '"',
+  '(',
+  ')',
+  '[',
+  ']',
+];
+
+export const isBalanced = (input: string) => {
+  const brackets = '[]{}()<>';
+  const stack = [];
+
+  for (const bracket of input) {
+    const index = brackets.indexOf(bracket);
+
+    if (index === -1) {
+      continue;
+    }
+
+    if (index % 2 === 0) {
+      stack.push(index + 1);
+
+      continue;
+    }
+
+    if (stack.length === 0 || stack.pop() !== index) {
+      return false;
+    }
+  }
+
+  return stack.length === 0;
+};
