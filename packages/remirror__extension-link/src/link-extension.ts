@@ -640,7 +640,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               const matchStart = match.index;
               const matchEnd = matchStart + matchedText.length;
 
-              // IF no link is in range we check the for a possible URL in the matchedText
+              // IF no link is in range we check for a possible URL in the matchedText
               const linkInMatchRange = this.getLinkMarksInRange(
                 doc,
                 matchStart,
