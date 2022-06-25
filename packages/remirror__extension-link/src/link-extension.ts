@@ -648,6 +648,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                 true,
               )[0] || { ...this.findURL(matchedText), from: 0, to: 0 };
 
+              // Skip if no valid link is in the match
+              if (!linkInMatchRange.text && !new RegExp('^[0-9|-]+$').test(matchedText)) {
+                continue;
+              }
+
               const { url: text, sliceStart } = this.getTrimmedUrl({
                 url: linkInMatchRange.text,
                 text: matchedText,
