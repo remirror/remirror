@@ -54,27 +54,18 @@ export const TOP_50_TLDS = [
   'cyou',
 ];
 
-export const DEFAULT_ADJACENT_PUNCTUATIONS = [
-  ',',
-  '.',
-  '!',
-  '?',
-  ':',
-  ';',
-  "'",
-  '"',
-  '(',
-  ')',
-  '[',
-  ']',
-];
+/** Including single and double quotation */
+export const SENTENCE_PUNCTUATIONS = ['!', '?', "'", ',', '.', ':', ';', '"'];
+
+export const DEFAULT_ADJACENT_PUNCTUATIONS = [...SENTENCE_PUNCTUATIONS, '(', ')', '[', ']'];
+
+const PAIR_PUNCTUATIONS = '[]{}()';
 
 export const isBalanced = (input: string): boolean => {
-  const brackets = '[]{}()<>';
   const stack = [];
 
-  for (const bracket of input) {
-    const index = brackets.indexOf(bracket);
+  for (const character of input) {
+    const index = PAIR_PUNCTUATIONS.indexOf(character);
 
     if (index === -1) {
       continue;

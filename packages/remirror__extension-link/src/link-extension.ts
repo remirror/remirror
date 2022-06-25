@@ -1,5 +1,4 @@
 import extractDomain from 'extract-domain';
-import { url } from 'inspector';
 import {
   ApplySchemaAttributes,
   command,
@@ -52,6 +51,7 @@ import {
   getAdjacentCharCount,
   getBalancedIndex,
   isBalanced,
+  SENTENCE_PUNCTUATIONS,
   TOP_50_TLDS,
 } from './link-extension-utils';
 
@@ -639,6 +639,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
               const matchStart = match.index;
               const matchEnd = matchStart + matchedText.length;
+
+              // IF no link is in range we check the for a possible URL in the matchedText
               const linkInMatchRange = this.getLinkMarksInRange(
                 doc,
                 matchStart,
@@ -885,7 +887,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       if (decoded && decoded !== '/' && endsWithPunctuation(decoded)) {
         const balancedIndex = adjacentCharCount ? adjacentCharCount + 1 : -1;
         // Including single and double quotation
-        const hasTrailingSentencePunctuation = ['!', '?', "'", ',', '.', ':', ';', '"'].includes(
+        const hasTrailingSentencePunctuation = SENTENCE_PUNCTUATIONS.includes(
           decoded[decoded.length - 1] || '',
         );
         const index = hasTrailingSentencePunctuation ? -1 : undefined;
