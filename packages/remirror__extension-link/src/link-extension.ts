@@ -57,6 +57,8 @@ import {
 
 const UPDATE_LINK = 'updateLink';
 
+const MIN_LINK_LENGTH = 4;
+
 // Based on https://gist.github.com/dperini/729294
 const DEFAULT_AUTO_LINK_REGEX =
   /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?]\S*)?/gi;
@@ -633,7 +635,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
               // Skip if URL doesn't have minimum length
               // TODO: Could make this configurable
-              if (matchedText.length < 4) {
+              if (matchedText.length < MIN_LINK_LENGTH) {
                 continue;
               }
 
@@ -800,17 +802,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   }
 
   private findURL(input: string): { text: string } {
-    if (input.length < 5) {
-      return {
-        text: '',
-      };
-    }
-
     // Collect all possible URL strings
     const combinations = [];
 
     for (let i = 0; i < input.length; i++) {
       for (let j = i + 1; j < input.length + 1; j++) {
+        const combination = input.slice(i, j);
+
+        if (combination.length < MIN_LINK_LENGTH) {
+          continue;
+        }
+
         combinations.push(input.slice(i, j));
       }
     }
@@ -818,7 +820,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     const url = combinations
       // Assuming the longest string is the URL we are looking for
       .sort((a, b) => b.length - a.length)
-      .find((str) => this.isValidUrl(createNewURL(str)?.href || ''));
+      .find((str) => this.isValidUrl(str));
 
     return {
       text: url || '',
