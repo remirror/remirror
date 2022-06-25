@@ -1,7 +1,9 @@
+import React from 'react';
+
 import { LinkExtension, PlaceholderExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-const TriggerCharacter = (): JSX.Element => {
+const TriggerCharacter = (): React.ReactNode => {
   const { manager, state } = useRemirror({
     extensions: () => [
       new LinkExtension({ autoLink: true, autoLinkAfter: /[\t\n ),.\]]/g }),
