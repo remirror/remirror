@@ -114,3 +114,15 @@ describe('toEqualRemirrorDocument', () => {
     expect(newState.doc.content.child(0)).not.toEqualRemirrorDocument(oldNode);
   });
 });
+
+describe('toEqualRemirrorState', () => {
+  it('should not match for different selection', () => {
+    const {
+      nodes: { doc, p },
+      add,
+    } = renderEditor([]);
+    const { state } = add(doc(p('Foo <start>bar<end>')));
+    expect(state).toEqualRemirrorState(doc(p('Foo <start>bar<end>')));
+    expect(state).not.toEqualRemirrorState(doc(p('Foo <cursor>bar')));
+  });
+});

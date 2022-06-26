@@ -1,5 +1,12 @@
 import type { TestEditorViewProps } from 'jest-prosemirror';
-import { isObject, isProsemirrorNode, SchemaProps } from '@remirror/core';
+import {
+  isNumber,
+  isObject,
+  isProsemirrorNode,
+  ProsemirrorNode,
+  SchemaProps,
+} from '@remirror/core';
+import { AllSelection, NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 
 import { coerce, offsetTags } from './jest-remirror-builder';
 import type { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
@@ -57,4 +64,28 @@ export function replaceSelection(props: InsertProps): Tags {
  */
 export function isTaggedNode(value: unknown): value is TaggedProsemirrorNode {
   return isProsemirrorNode(value) && isObject((value as any).tags);
+}
+
+export function createSelectionFromTaggedDocument(
+  doc: ProsemirrorNode,
+  tags: Tags,
+): Selection | null {
+  const { cursor, node, start, end, all, anchor, head } = tags;
+
+  if (isNumber(cursor)) {
+    return TextSelection.near(doc.resolve(cursor));
+  } else if (isNumber(start)) {
+    return TextSelection.between(
+      doc.resolve(start),
+      doc.resolve(isNumber(end) && start <= end ? end : doc.resolve(start).end()),
+    );
+  } else if (isNumber(head) && isNumber(anchor)) {
+    return TextSelection.between(doc.resolve(head), doc.resolve(anchor));
+  } else if (isNumber(node)) {
+    return NodeSelection.create(doc, doc.resolve(node).before());
+  } else if (isNumber(all)) {
+    return new AllSelection(doc);
+  }
+
+  return null;
 }
