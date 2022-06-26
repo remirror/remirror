@@ -10,10 +10,9 @@ import { removeFileExt } from './remove-file-ext';
 // with ESM import syntax.
 // As a workaround, we need to bundle the code from them into our own packages,
 // They can be removed from this list once their maintainers fix these issues:
-// https://github.com/lingui/js-lingui/issues/1254
 // https://github.com/svgmoji/svgmoji/issues/24
 // https://github.com/streamich/react-use/issues/2353
-const dependenciesToBundle = /(lingui|emojibase|svgmoji|react-use)/;
+const dependenciesToBundle = /(emojibase|svgmoji|react-use)/;
 
 export async function runEsbuild(
   pkg: Package,

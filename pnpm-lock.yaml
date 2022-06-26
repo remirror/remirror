@@ -33,9 +33,9 @@ importers:
       '@linaria/cli': 3.0.0-beta.13
       '@linaria/shaker': 3.0.0-beta.13
       '@linaria/webpack-loader': 3.0.0-beta.13
-      '@lingui/cli': ^3.13.3
-      '@lingui/macro': ^3.13.3
-      '@lingui/react': ^3.13.3
+      '@lingui/cli': ^3.14.0
+      '@lingui/macro': ^3.14.0
+      '@lingui/react': ^3.14.0
       '@manypkg/cli': ^0.19.0
       '@microsoft/api-documenter': ^7.17.10
       '@microsoft/api-extractor': ^7.18.17
@@ -146,9 +146,9 @@ importers:
       '@linaria/cli': 3.0.0-beta.13_@babel+core@7.18.2
       '@linaria/shaker': 3.0.0-beta.13_@babel+core@7.18.2
       '@linaria/webpack-loader': 3.0.0-beta.13_@babel+core@7.18.2
-      '@lingui/cli': 3.13.3_45f039559b5a6eb21431c93e5ab235d1
-      '@lingui/macro': 3.13.3_90047c4d0ff479e498768c3a7d8d87c8
-      '@lingui/react': 3.13.3
+      '@lingui/cli': 3.14.0_45f039559b5a6eb21431c93e5ab235d1
+      '@lingui/macro': 3.14.0_5312bcb717c91da3574854e49b1f7bd3
+      '@lingui/react': 3.14.0
       '@manypkg/cli': 0.19.0
       '@microsoft/api-documenter': 7.17.10
       '@microsoft/api-extractor': 7.18.17
@@ -1678,14 +1678,14 @@ importers:
   packages/remirror__i18n:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@lingui/core': ^3.13.3
-      '@lingui/detect-locale': ^3.13.3
+      '@lingui/core': ^3.14.0
+      '@lingui/detect-locale': ^3.14.0
       '@remirror/core-helpers': ^2.0.0-beta.2
       make-plural: ^6.2.1
     dependencies:
       '@babel/runtime': 7.18.3
-      '@lingui/core': 3.13.3
-      '@lingui/detect-locale': 3.13.3
+      '@lingui/core': 3.14.0
+      '@lingui/detect-locale': 3.14.0
       '@remirror/core-helpers': link:../remirror__core-helpers
       make-plural: 6.2.2
 
@@ -1702,13 +1702,13 @@ importers:
       '@babel/cli': ^7.17.10
       '@babel/preset-typescript': ^7.17.12
       '@babel/runtime': ^7.13.10
-      '@lingui/core': ^3.13.3
+      '@lingui/core': ^3.14.0
       '@remirror/core-helpers': ^2.0.0-beta.2
       babel-plugin-macros: ^3.1.0
       rollup: ^2.75.6
     dependencies:
       '@babel/runtime': 7.18.3
-      '@lingui/core': 3.13.3
+      '@lingui/core': 3.14.0
       '@remirror/core-helpers': link:../remirror__core-helpers
     devDependencies:
       '@babel/cli': 7.17.10_@babel+core@7.18.2
@@ -1938,7 +1938,7 @@ importers:
   packages/remirror__react-components:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@lingui/core': ^3.13.3
+      '@lingui/core': ^3.14.0
       '@popperjs/core': ^2.9.2
       '@remirror/core': ^2.0.0-beta.2
       '@remirror/extension-positioner': ^2.0.0-beta.2
@@ -1968,7 +1968,7 @@ importers:
       reakit-utils: ^0.15.2
     dependencies:
       '@babel/runtime': 7.18.3
-      '@lingui/core': 3.13.3
+      '@lingui/core': 3.14.0
       '@popperjs/core': 2.10.2
       '@remirror/core': link:../remirror__core
       '@remirror/extension-positioner': link:../remirror__extension-positioner
@@ -2502,7 +2502,7 @@ importers:
       '@changesets/types': ^5.0.0
       '@changesets/write': ^0.1.8
       '@linaria/babel-preset': 3.0.0-beta.13
-      '@lingui/core': ^3.13.3
+      '@lingui/core': ^3.14.0
       '@manypkg/get-packages': ^1.1.3
       '@microsoft/api-extractor': ^7.18.17
       '@microsoft/tsdoc': ^0.14.1
@@ -2574,7 +2574,7 @@ importers:
       '@changesets/types': 5.0.0
       '@changesets/write': 0.1.8
       '@linaria/babel-preset': 3.0.0-beta.13_@babel+core@7.18.2
-      '@lingui/core': 3.13.3
+      '@lingui/core': 3.14.0
       '@manypkg/get-packages': 1.1.3
       '@microsoft/api-extractor': 7.18.17
       '@microsoft/tsdoc': 0.14.1
@@ -6882,20 +6882,20 @@ packages:
       - supports-color
     dev: false
 
-  /@lingui/babel-plugin-extract-messages/3.13.3_typescript@4.5.5:
-    resolution: {integrity: sha512-s5onRmsR7Y5J8c5yJIZaf1kW+gqV+yece1mYoHHVGlJjEh8id0mksVMj8IrUtkwE4JhUxSCxfRNoloGulaAyqw==}
+  /@lingui/babel-plugin-extract-messages/3.14.0_typescript@4.5.5:
+    resolution: {integrity: sha512-4lcDgVdjYiObuFdDwnAG3jJxS+d3YLq4i7qywlHgjIqteKUH01S3paJRXhZaPvLGl56HarSq0kt8Pymxw8lOrA==}
     engines: {node: '>=10.0.0'}
     dependencies:
       '@babel/generator': 7.18.2
       '@babel/runtime': 7.18.3
-      '@lingui/conf': 3.13.3_typescript@4.5.5
+      '@lingui/conf': 3.14.0_typescript@4.5.5
       mkdirp: 1.0.4
     transitivePeerDependencies:
       - typescript
     dev: false
 
-  /@lingui/cli/3.13.3_45f039559b5a6eb21431c93e5ab235d1:
-    resolution: {integrity: sha512-6AswBsIAn3+JZj9hhqcKjPGpBPnM8m7TT235iQiWHHbq11DDh1l0eH6KTCqCaWW9nIALWgxmI/03zCInRTrzRQ==}
+  /@lingui/cli/3.14.0_45f039559b5a6eb21431c93e5ab235d1:
+    resolution: {integrity: sha512-QZURsIf7A97tf28b/ffpeL0DekA6tBmcwnj4FBui1SbQqJw1d4IPg2bUM5VRn3/25vhqpi9Uhx5m9x7Vv8QfCQ==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     peerDependencies:
@@ -6908,8 +6908,8 @@ packages:
       '@babel/plugin-syntax-jsx': 7.17.12_@babel+core@7.18.2
       '@babel/runtime': 7.18.3
       '@babel/types': 7.18.4
-      '@lingui/babel-plugin-extract-messages': 3.13.3_typescript@4.5.5
-      '@lingui/conf': 3.13.3_typescript@4.5.5
+      '@lingui/babel-plugin-extract-messages': 3.14.0_typescript@4.5.5
+      '@lingui/conf': 3.14.0_typescript@4.5.5
       babel-plugin-macros: 3.1.0
       bcp-47: 1.0.8
       chalk: 4.1.2
@@ -6937,8 +6937,8 @@ packages:
       typescript: 4.5.5
     dev: false
 
-  /@lingui/conf/3.13.3_typescript@4.5.5:
-    resolution: {integrity: sha512-UmGx/5rtSvb2S+RFYjQGiux5Xh5xvVICss4ONf8eU4Xm8jUvjtErTXVSF3GAhCI2aC/R3bZJZf0uSj7LbsrOiw==}
+  /@lingui/conf/3.14.0_typescript@4.5.5:
+    resolution: {integrity: sha512-5GMAbIRad9FavqYsfZCRAwjcOLzE7tONDJe9lSYE5SSJbbG01RI5kR5P0B84DUhTI6cGXau+1dAcP9K+JbEx+g==}
     engines: {node: '>=10.0.0'}
     dependencies:
       '@babel/runtime': 7.18.3
@@ -6951,8 +6951,8 @@ packages:
       - typescript
     dev: false
 
-  /@lingui/core/3.13.3:
-    resolution: {integrity: sha512-3rQDIC7PtPfUuZCSNfU0nziWNMlGk3JhpxENzGrlt1M8w5RHson89Mk1Ce/how+hWzFpumCQDWLDDhyRPpydbg==}
+  /@lingui/core/3.14.0:
+    resolution: {integrity: sha512-ertREq9oi9B/umxpd/pInm9uFO8FLK2/0FXfDmMqvH5ydswWn/c9nY5YO4W1h4/8LWO45mewypOIyjoue4De1w==}
     engines: {node: '>=10.0.0'}
     dependencies:
       '@babel/runtime': 7.18.3
@@ -6960,13 +6960,13 @@ packages:
       messageformat-parser: 4.1.3
     dev: false
 
-  /@lingui/detect-locale/3.13.3:
-    resolution: {integrity: sha512-GhJKjnpGh5N0Y96XJNjeGOEiVyO7b0Kwddv8cY5ORA0yS0+gCETAdlECeP0YrJBrzIVUeddpQTyaexAUDmeY+A==}
+  /@lingui/detect-locale/3.14.0:
+    resolution: {integrity: sha512-IELWULt9I+iyVlxGES21cXoOwTcPSIisElAmr3/KJlqvJ9zXT3s4w4Jxw9j5oHJjdxBDRkifwpnVmGd57wrmzg==}
     engines: {node: '>=10.0.0'}
     dev: false
 
-  /@lingui/macro/3.13.3_90047c4d0ff479e498768c3a7d8d87c8:
-    resolution: {integrity: sha512-nPldmgPGNfGTVW3TTkSZiaPI5jDQKwv/Hfmjzwo/VzfXpcjxoqz0oDGQBx8mbdKcMgpq+g6fV2Y5aCosTazdqg==}
+  /@lingui/macro/3.14.0_5312bcb717c91da3574854e49b1f7bd3:
+    resolution: {integrity: sha512-NxTRrhrZ/cUO9PX/4vWys90Ku58+ExxHuE30IuDnnDldWhWlOdycmjDt9tB+yIiUdFym/veSxBs+h114FzG5mA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       '@lingui/core': ^3.13.0
@@ -6974,22 +6974,22 @@ packages:
       babel-plugin-macros: "2 ||\_3"
     dependencies:
       '@babel/runtime': 7.18.3
-      '@lingui/conf': 3.13.3_typescript@4.5.5
-      '@lingui/react': 3.13.3
+      '@lingui/conf': 3.14.0_typescript@4.5.5
+      '@lingui/react': 3.14.0
       babel-plugin-macros: 3.1.0
       ramda: 0.27.1
     transitivePeerDependencies:
       - typescript
     dev: false
 
-  /@lingui/react/3.13.3:
-    resolution: {integrity: sha512-sCCI5xMcUY9b6w2lwbwy6iHpo1Fb9TDcjcHAD2KI5JueLH+WWQG66tIHiVAlSsQ+hmQ9Tt+f86H05JQEiDdIvg==}
+  /@lingui/react/3.14.0:
+    resolution: {integrity: sha512-ow9Mtru7f0T2S9AwnPWRejppcucCW0LmoDR3P4wqHjL+eH5f8a6nxd2doxGieC91/2i4qqW88y4K/zXJxwRSQw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.18.3
-      '@lingui/core': 3.13.3
+      '@lingui/core': 3.14.0
     dev: false
 
   /@manypkg/cli/0.19.0:
