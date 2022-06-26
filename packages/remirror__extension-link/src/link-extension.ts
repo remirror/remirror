@@ -50,6 +50,7 @@ import {
   DEFAULT_ADJACENT_PUNCTUATIONS,
   getAdjacentCharCount,
   getBalancedIndex,
+  getTrailingPunctuationIndex,
   isBalanced,
   SENTENCE_PUNCTUATIONS,
   TOP_50_TLDS,
@@ -892,14 +893,23 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       }
 
       if (decoded && decoded !== '/' && endsWithPunctuation(decoded)) {
-        const balancedIndex = adjacentCharCount ? adjacentCharCount + 1 : -1;
-        // Including single and double quotation
-        const hasTrailingSentencePunctuation = SENTENCE_PUNCTUATIONS.includes(
+        const index = adjacentCharCount ? adjacentCharCount + 1 : -1;
+        const balancedIndex = !isBalanced(decoded) ? getBalancedIndex(decoded, index) : 0;
+        const trailingPunctuationIndex = SENTENCE_PUNCTUATIONS.includes(
           decoded[decoded.length - 1] || '',
-        );
-        const index = hasTrailingSentencePunctuation ? -1 : undefined;
+        )
+          ? getTrailingPunctuationIndex(decoded, index)
+          : 0;
 
-        return !isBalanced(decoded) ? getBalancedIndex(decoded, balancedIndex) : index;
+        if (balancedIndex < 0) {
+          return balancedIndex;
+        }
+
+        if (trailingPunctuationIndex < 0) {
+          return trailingPunctuationIndex;
+        }
+
+        return;
       }
 
       if (adjacentCharCount && !this.isValidUrl(text)) {

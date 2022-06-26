@@ -95,6 +95,16 @@ export const getBalancedIndex = (string: string, index: number): number => {
   return index;
 };
 
+export const getTrailingPunctuationIndex = (string: string, index: number): number => {
+  const newString = string.slice(0, index);
+
+  if (SENTENCE_PUNCTUATIONS.includes(newString[newString.length - 1] || '')) {
+    return getTrailingPunctuationIndex(string, --index);
+  }
+
+  return index;
+};
+
 export const getAdjacentCharCount = ({
   direction,
   input,
