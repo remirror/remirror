@@ -910,12 +910,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       let decoded;
 
       try {
-        decoded = decodeURI(pathname + search);
+        decoded = decodeURI(pathname.slice(1) + search);
       } catch {
-        decoded = pathname + search;
+        decoded = pathname.slice(1) + search;
       }
 
-      if (decoded && decoded !== '/' && endsWithPunctuation(decoded)) {
+      if (decoded && endsWithPunctuation(decoded)) {
         const index = -1;
         const balancedIndex = !isBalanced(decoded) ? getBalancedIndex(decoded, index) : 0;
         const trailingPunctuationIndex = SENTENCE_PUNCTUATIONS.includes(
