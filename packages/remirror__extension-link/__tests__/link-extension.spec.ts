@@ -1329,6 +1329,42 @@ describe('adjacent punctuations', () => {
     );
   });
 
+  it('should not include surrounding `((("")))` in the link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('((("remirror.io")))');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('((("', link({ auto: true, href: '//remirror.io' })('remirror.io'), '")))')),
+    );
+  });
+
+  it('should not include surrounding `((("")))` in the link - URL path', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('((("remirror.io/test")))');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('((("', link({ auto: true, href: '//remirror.io/test' })('remirror.io/test'), '")))')),
+    );
+  });
+
   it('should not include surrounding `,` in the link - URL path', () => {
     const editor = renderEditor([
       new LinkExtension({

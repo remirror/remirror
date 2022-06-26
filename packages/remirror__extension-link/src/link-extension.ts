@@ -925,6 +925,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           : 0;
 
         if (balancedIndex < 0) {
+          const balanced = decoded.slice(0, balancedIndex);
+
+          if (SENTENCE_PUNCTUATIONS.includes(balanced[balanced.length - 1] || '')) {
+            return getTrailingPunctuationIndex(balanced, index) + balancedIndex;
+          }
           return balancedIndex;
         }
 
