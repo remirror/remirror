@@ -1,5 +1,53 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.0-beta.3
+
+> 2022-06-26
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- Update ProseMirror packages to latest versions.
+- Transform a hard break into `\n` in `Node.textContent`.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.3
+  - @remirror/core@2.0.0-beta.3
+  - @remirror/extension-blockquote@2.0.0-beta.3
+  - @remirror/extension-heading@2.0.0-beta.3
+  - @remirror/extension-image@2.0.0-beta.3
+  - @remirror/extension-link@2.0.0-beta.3
+  - @remirror/extension-list@2.0.0-beta.3
+  - @remirror/extension-bidi@2.0.0-beta.3
+  - @remirror/extension-bold@2.0.0-beta.3
+  - @remirror/extension-code@2.0.0-beta.3
+  - @remirror/extension-code-block@2.0.0-beta.3
+  - @remirror/extension-drop-cursor@2.0.0-beta.3
+  - @remirror/extension-embed@2.0.0-beta.3
+  - @remirror/extension-gap-cursor@2.0.0-beta.3
+  - @remirror/extension-hard-break@2.0.0-beta.3
+  - @remirror/extension-horizontal-rule@2.0.0-beta.3
+  - @remirror/extension-italic@2.0.0-beta.3
+  - @remirror/extension-search@2.0.0-beta.3
+  - @remirror/extension-shortcuts@2.0.0-beta.3
+  - @remirror/extension-strike@2.0.0-beta.3
+  - @remirror/extension-trailing-node@2.0.0-beta.3
+  - @remirror/extension-underline@2.0.0-beta.3
+  - @remirror/preset-core@2.0.0-beta.3
+
 ## 2.0.0-beta.2
 
 > 2022-06-26
