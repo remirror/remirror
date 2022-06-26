@@ -108,16 +108,18 @@
     "@remirror/extension-entity-reference": "2.0.0-beta.0"
   },
   "changesets": [
-    "beige-tools-kick",
-    "blue-sheep-crash",
-    "eighty-moons-brush",
-    "fluffy-points-fly",
-    "grumpy-insects-kneel",
-    "plenty-ants-bathe",
-    "purple-monkeys-swim",
-    "rare-carrots-melt",
-    "soft-guests-itch",
-    "stupid-rocks-wink",
-    "tame-beers-walk"
+    "angry-islands-fold",
+    "cyan-maps-trade",
+    "eighty-garlics-pull",
+    "gorgeous-meals-heal",
+    "kind-pots-cheat",
+    "light-dragons-search",
+    "nervous-chicken-wonder",
+    "ninety-cameras-serve",
+    "sharp-cups-tap",
+    "six-cameras-notice",
+    "smart-lemons-warn",
+    "strong-cobras-guess",
+    "tall-oranges-know"
   ]
 }

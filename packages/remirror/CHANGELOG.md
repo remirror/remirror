@@ -1,5 +1,97 @@
 # remirror
 
+## 2.0.0-beta.3
+
+> 2022-06-26
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- Update ProseMirror packages to latest versions.
+- Transform a hard break into `\n` in `Node.textContent`.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.3
+  - @remirror/core@2.0.0-beta.3
+  - @remirror/core-helpers@2.0.0-beta.3
+  - @remirror/core-types@2.0.0-beta.3
+  - @remirror/core-utils@2.0.0-beta.3
+  - @remirror/dom@2.0.0-beta.3
+  - @remirror/extension-annotation@2.0.0-beta.3
+  - @remirror/extension-blockquote@2.0.0-beta.3
+  - @remirror/extension-callout@2.0.0-beta.3
+  - @remirror/extension-collaboration@2.0.0-beta.3
+  - @remirror/extension-doc@2.0.0-beta.3
+  - @remirror/extension-emoji@2.0.0-beta.3
+  - @remirror/extension-epic-mode@2.0.0-beta.3
+  - @remirror/extension-events@2.0.0-beta.3
+  - @remirror/extension-font-size@2.0.0-beta.3
+  - @remirror/extension-heading@2.0.0-beta.3
+  - @remirror/extension-image@2.0.0-beta.3
+  - @remirror/extension-link@2.0.0-beta.3
+  - @remirror/extension-list@2.0.0-beta.3
+  - @remirror/extension-mention@2.0.0-beta.3
+  - @remirror/extension-mention-atom@2.0.0-beta.3
+  - @remirror/extension-node-formatting@2.0.0-beta.3
+  - @remirror/extension-placeholder@2.0.0-beta.3
+  - @remirror/extension-tables@2.0.0-beta.3
+  - @remirror/extension-text-color@2.0.0-beta.3
+  - @remirror/extension-text-highlight@2.0.0-beta.3
+  - @remirror/core-constants@2.0.0-beta.3
+  - @remirror/extension-bidi@2.0.0-beta.3
+  - @remirror/extension-bold@2.0.0-beta.3
+  - @remirror/extension-code@2.0.0-beta.3
+  - @remirror/extension-code-block@2.0.0-beta.3
+  - @remirror/extension-codemirror5@2.0.0-beta.3
+  - @remirror/extension-columns@2.0.0-beta.3
+  - @remirror/extension-diff@2.0.0-beta.3
+  - @remirror/extension-drop-cursor@2.0.0-beta.3
+  - @remirror/extension-embed@2.0.0-beta.3
+  - @remirror/extension-font-family@2.0.0-beta.3
+  - @remirror/extension-gap-cursor@2.0.0-beta.3
+  - @remirror/extension-hard-break@2.0.0-beta.3
+  - @remirror/extension-history@2.0.0-beta.3
+  - @remirror/extension-horizontal-rule@2.0.0-beta.3
+  - @remirror/extension-italic@2.0.0-beta.3
+  - @remirror/extension-markdown@2.0.0-beta.3
+  - @remirror/extension-paragraph@2.0.0-beta.3
+  - @remirror/extension-positioner@2.0.0-beta.3
+  - @remirror/extension-search@2.0.0-beta.3
+  - @remirror/extension-shortcuts@2.0.0-beta.3
+  - @remirror/extension-strike@2.0.0-beta.3
+  - @remirror/extension-sub@2.0.0-beta.3
+  - @remirror/extension-sup@2.0.0-beta.3
+  - @remirror/extension-text@2.0.0-beta.3
+  - @remirror/extension-text-case@2.0.0-beta.3
+  - @remirror/extension-trailing-node@2.0.0-beta.3
+  - @remirror/extension-underline@2.0.0-beta.3
+  - @remirror/extension-whitespace@2.0.0-beta.3
+  - @remirror/extension-yjs@3.0.0-beta.3
+  - @remirror/icons@2.0.0-beta.3
+  - @remirror/preset-core@2.0.0-beta.3
+  - @remirror/preset-formatting@2.0.0-beta.3
+  - @remirror/preset-wysiwyg@2.0.0-beta.3
+  - @remirror/theme@2.0.0-beta.3
+  - @remirror/extension-entity-reference@2.0.0-beta.3
+
 ## 2.0.0-beta.2
 
 > 2022-06-26

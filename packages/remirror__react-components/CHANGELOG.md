@@ -1,5 +1,45 @@
 # @remirror/react-components
 
+## 2.0.0-beta.3
+
+> 2022-06-26
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.3
+  - @remirror/core@2.0.0-beta.3
+  - @remirror/extension-text-color@2.0.0-beta.3
+  - @remirror/react-core@2.0.0-beta.3
+  - @remirror/react-hooks@2.0.0-beta.3
+  - @remirror/extension-positioner@2.0.0-beta.3
+  - @remirror/i18n@2.0.0-beta.3
+  - @remirror/icons@2.0.0-beta.3
+  - @remirror/messages@2.0.0-beta.3
+  - @remirror/react-utils@2.0.0-beta.3
+  - @remirror/theme@2.0.0-beta.3
+  - multishift@2.0.0-beta.3
+  - create-context-state@2.0.0-beta.2
+
 ## 2.0.0-beta.2
 
 > 2022-06-26
