@@ -38,7 +38,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@lingui/core": "^3.13.3",
+    "@lingui/core": "^3.14.0",
     "@popperjs/core": "^2.9.2",
     "@remirror/core": "^2.0.0-beta.2",
     "@remirror/extension-positioner": "^2.0.0-beta.2",
