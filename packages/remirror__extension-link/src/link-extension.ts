@@ -916,7 +916,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       }
 
       if (decoded && decoded !== '/' && endsWithPunctuation(decoded)) {
-        const index = adjacentCharCount ? adjacentCharCount + 1 : -1;
+        const index = -1;
         const balancedIndex = !isBalanced(decoded) ? getBalancedIndex(decoded, index) : 0;
         const trailingPunctuationIndex = SENTENCE_PUNCTUATIONS.includes(
           decoded[decoded.length - 1] || '',
@@ -935,7 +935,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         return;
       }
 
-      if (adjacentCharCount && !this.isValidUrl(text)) {
+      if (adjacentCharCount && !this.isValidUrl(text.slice(startIndex))) {
         return (
           adjacentCharCount +
           // Adjust index when switching to longer TLD e.g '.co'  to '.com'

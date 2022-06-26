@@ -807,6 +807,16 @@ describe('autolinking', () => {
     );
   });
 
+  it('responds to joing text', () => {
+    editor.add(doc(p(link({ auto: true, href: '//test.co/is' })('test.co/is'), ' testing')));
+
+    editor.selectText(12).backspace();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.co/istesting' })('test.co/istesting'))),
+    );
+  });
+
   it('can respond to `Enter` key presses', () => {
     editor
       .add(doc(p('<cursor>')))
