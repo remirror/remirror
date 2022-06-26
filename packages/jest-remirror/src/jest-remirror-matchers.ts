@@ -219,6 +219,7 @@ declare global {
        *   expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
        *   expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
        * });
+       * ```
        */
       toEqualRemirrorState: (builder: TaggedProsemirrorNode) => R;
     }
