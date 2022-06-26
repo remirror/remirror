@@ -795,6 +795,18 @@ describe('autolinking', () => {
     );
   });
 
+  it('can respond to inserted space seperating the link', () => {
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('test.co/istesting')
+      .selectText(11)
+      .insertText(' ');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.co/is' })('test.co/is'), ' testing')),
+    );
+  });
+
   it('can respond to `Enter` key presses', () => {
     editor
       .add(doc(p('<cursor>')))

@@ -643,13 +643,36 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               const matchStart = match.index;
               const matchEnd = matchStart + matchedText.length;
 
-              // IF no link is in range we check for a possible URL in the matchedText
-              const linkInMatchRange = this.getLinkMarksInRange(
-                doc,
-                matchStart,
-                matchEnd,
-                true,
-              )[0] || { ...this.findURL(matchedText), from: 0, to: 0 };
+              const linkInMatchRange = (() => {
+                // First, try to get existing mark in range
+                const link = this.getLinkMarksInRange(doc, matchStart, matchEnd, true)[0];
+
+                // If no mark is in range try to find a URL in the matched text
+                if (!link) {
+                  return { ...this.findURL(matchedText) };
+                }
+
+                const split = link.text.split(' ');
+
+                // If the tail of a link has been split off get the head part
+                if (split.length === 2) {
+                  return {
+                    from: link.from,
+                    text: split[0],
+                    to: link.to - (split[1].length + 1),
+                  };
+                }
+
+                return {
+                  from: link.from,
+                  text: link.text,
+                  to: link.to,
+                };
+              })();
+
+              if (!linkInMatchRange) {
+                continue;
+              }
 
               // Skip if no valid link is in the match
               if (!linkInMatchRange.text && !new RegExp('^[0-9|-]+$').test(matchedText)) {
