@@ -5,8 +5,6 @@ import { createSelectionFromTaggedDocument } from './jest-remirror-utils';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
   toContainRemirrorDocument(state: EditorState, value: TaggedProsemirrorNode) {
-    const expected = value?.toJSON?.();
-
     if (!isProsemirrorNode(value)) {
       return {
         pass: false,
@@ -27,6 +25,8 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
         message: () => 'Expected both values to be using the same schema.',
       };
     }
+
+    const expected = value?.toJSON?.();
 
     const pass = this.equals(state.doc.content.child(0).toJSON(), expected);
     const message = pass
@@ -55,6 +55,27 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
   },
 
   toEqualRemirrorState(state: EditorState, value: TaggedProsemirrorNode) {
+    if (!isProsemirrorNode(value)) {
+      return {
+        pass: false,
+        message: () => 'The expected value should be an instance of ProsemirrorNode.',
+      };
+    }
+
+    if (!isEditorState(state)) {
+      return {
+        pass: false,
+        message: () => 'Expected the value passed in to be an EditorState',
+      };
+    }
+
+    if (value.type.schema !== state.schema) {
+      return {
+        pass: false,
+        message: () => 'Expected both values to be using the same schema.',
+      };
+    }
+
     const expectedDocument = value?.toJSON?.();
     const expectedSelection = createSelectionFromTaggedDocument(
       state.doc,
@@ -97,25 +118,21 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
           `Expected JSON value of document to not contain:\n  ${this.utils.printExpected(
             value,
           )}\n` +
+          `Actual JSON value of document:\n  ${this.utils.printReceived(state.doc)}\n` +
           `Expected JSON value of selection to not contain:\n  ${this.utils.printExpected(
             expectedSelection,
           )}\n` +
-          `Actual JSON value of document:\n  ${this.utils.printReceived(
-            state.doc.content.child(0),
-          )}\n` +
           `Actual JSON value of selection:\n  ${this.utils.printReceived(state.selection)}\n`
       : () => {
-          const diffString = this.utils.diff(value, state.doc.content.child(0), {
+          const diffString = this.utils.diff(value, state.doc, {
             expand: this.expand,
           });
           return (
             `${this.utils.matcherHint('.toContainRemirrorDocument')}\n\n` +
             `Expected JSON value of document to contain:\n${this.utils.printExpected(value)}\n` +
-            `Expected JSON value of document to contain:\n${this.utils.printExpected(
+            `Actual JSON value of document:\n  ${this.utils.printReceived(state.doc)}\n` +
+            `Expected JSON value of selection to contain:\n${this.utils.printExpected(
               expectedSelection,
-            )}\n` +
-            `Actual JSON value of document:\n  ${this.utils.printReceived(
-              state.doc.content.child(0),
             )}\n` +
             `Actual JSON value of selection:\n  ${this.utils.printReceived(state.selection)}` +
             `${diffString ? `\n\nDifference:\n\n${diffString}` : ''}`
@@ -202,6 +219,7 @@ declare global {
        *   expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
        *   expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
        * });
+       * ```
        */
       toEqualRemirrorState: (builder: TaggedProsemirrorNode) => R;
     }
