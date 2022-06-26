@@ -466,12 +466,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          const href = this.buildHref(url);
-
-          if (!this.isValidTLD(href)) {
-            return false;
-          }
-
           if (!this.isValidUrl(url)) {
             return false;
           }
@@ -649,7 +643,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
                 // If no mark is in range try to find a URL in the matched text
                 if (!link) {
-                  return { ...this.findURL(matchedText) };
+                  return { text: this.findURL(matchedText) };
                 }
 
                 const split = link.text.split(' ');
@@ -687,10 +681,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               const end = match.index + text.length + sliceStart;
               const start = matchStart + sliceStart;
 
-              const href = this.buildHref(text);
-
               // Remove links that are no longer valid in the match
-              if (!this.isValidUrl(text) || !this.isValidTLD(href)) {
+              if (!this.isValidUrl(text)) {
                 if (!linkInMatchRange || !linkInMatchRange.from) {
                   continue;
                 }
@@ -707,7 +699,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
               foundAutoLinks.push({
                 text,
-                href,
+                href: this.buildHref(text),
                 start,
                 end,
               });
@@ -803,7 +795,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   }
 
   private isValidUrl(url: string) {
-    return this._autoLinkRegexNonGlobal?.test(url);
+    const href = this.buildHref(url);
+
+    return this.isValidTLD(href) && this._autoLinkRegexNonGlobal?.test(url);
   }
 
   private isValidTLD(str: string): boolean {
@@ -825,30 +819,18 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return autoLinkAllowedTLDs.includes(tld);
   }
 
-  private findURL(input: string): { text: string } {
-    // Collect all possible URL strings
-    const combinations = [];
+  private findURL(input: string): string | undefined {
+    for (const match of findMatches(input, this.options.autoLinkRegex)) {
+      const text = getMatchString(match);
 
-    for (let i = 0; i < input.length; i++) {
-      for (let j = i + 1; j < input.length + 1; j++) {
-        const combination = input.slice(i, j);
-
-        if (combination.length < MIN_LINK_LENGTH) {
-          continue;
-        }
-
-        combinations.push(input.slice(i, j));
+      if (!text || !this.isValidUrl(text)) {
+        continue;
       }
+
+      return text;
     }
 
-    const url = combinations
-      // Assuming the longest string is the URL we are looking for
-      .sort((a, b) => b.length - a.length)
-      .find((str) => this.isValidUrl(str));
-
-    return {
-      text: url || '',
-    };
+    return;
   }
 
   private includesPunctuations(input = '') {
@@ -930,6 +912,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           if (SENTENCE_PUNCTUATIONS.includes(balanced[balanced.length - 1] || '')) {
             return getTrailingPunctuationIndex(balanced, index) + balancedIndex;
           }
+
           return balancedIndex;
         }
 
