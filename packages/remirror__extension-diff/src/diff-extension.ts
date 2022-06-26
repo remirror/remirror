@@ -106,10 +106,10 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
           return this.getPluginState<DiffPluginState>(state).decorations;
         },
         handleDOMEvents: {
-          mouseover: (view, event) => {
+          mouseover: (view, event: Event) => {
             return this.handlerMouseOver(view, event);
           },
-          mouseleave: (view, event) => {
+          mouseleave: (view, event: Event) => {
             return this.handleMouseLeave(view, event);
           },
         },

@@ -338,35 +338,35 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
         },
 
         handleDOMEvents: {
-          focus: (_, event) => {
+          focus: (_, event: Event) => {
             return this.options.focus(event as FocusEvent) || false;
           },
 
-          blur: (_, event) => {
+          blur: (_, event: Event) => {
             return this.options.blur(event as FocusEvent) || false;
           },
 
-          mousedown: (_, event) => {
+          mousedown: (_, event: Event) => {
             this.startMouseover();
             return this.options.mousedown(event as MouseEvent) || false;
           },
 
-          mouseup: (_, event) => {
+          mouseup: (_, event: Event) => {
             this.endMouseover();
             return this.options.mouseup(event as MouseEvent) || false;
           },
 
-          mouseleave: (_, event) => {
+          mouseleave: (_, event: Event) => {
             this.mouseover = false;
             return this.options.mouseleave(event as MouseEvent) || false;
           },
 
-          mouseenter: (_, event) => {
+          mouseenter: (_, event: Event) => {
             this.mouseover = true;
             return this.options.mouseenter(event as MouseEvent) || false;
           },
 
-          keyup: (_, event) => {
+          keyup: (_, event: Event) => {
             return this.options.keyup(event as KeyboardEvent) || false;
           },
 
@@ -384,15 +384,15 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             return this.options.contextmenu(event, props) || false;
           }),
 
-          scroll: (_, event) => {
+          scroll: (_, event: Event) => {
             return this.options.scroll(event) || false;
           },
 
-          copy: (_, event) => {
+          copy: (_, event: Event) => {
             return this.options.copy(event as ClipboardEvent) || false;
           },
 
-          paste: (_, event) => {
+          paste: (_, event: Event) => {
             return this.options.paste(event as ClipboardEvent) || false;
           },
         },
