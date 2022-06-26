@@ -80,7 +80,7 @@ export function createSelectionFromTaggedDocument(
       doc.resolve(isNumber(end) && start <= end ? end : doc.resolve(start).end()),
     );
   } else if (isNumber(head) && isNumber(anchor)) {
-    return TextSelection.between(doc.resolve(head), doc.resolve(anchor));
+    return TextSelection.between(doc.resolve(anchor), doc.resolve(head));
   } else if (isNumber(node)) {
     return NodeSelection.create(doc, doc.resolve(node).before());
   } else if (isNumber(all)) {
