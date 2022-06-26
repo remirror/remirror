@@ -228,4 +228,33 @@ describe('EntityReference marks', () => {
       expect(entityReferenceFromDoc).toEqual(entityReference);
     });
   });
+
+  describe('scrollIntoEntityReference', () => {
+    it('returns correct range when the selection is not empty', () => {
+      const editor = add(doc(p(DUMMY_TEXT)));
+      const entityReference = {
+        id: 'testId',
+        from: 3,
+        to: 8,
+        text: 'testing',
+      };
+      commands.selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+
+      // Fire an update to remove the current range selection.
+      // The cursor will be placed at the anchor of the current range selection.
+      // in this case the anchor is 3.
+      editor.commands.emptySelection();
+
+      expect(editor.state.selection.from).toBe(entityReference.from);
+      expect(editor.state.selection.to).toBe(entityReference.from);
+      expect(editor.state.selection.to).not.toBe(entityReference.to);
+
+      const selected = commands.scrollToEntityReference(entityReference.id);
+
+      expect(selected).toBeTrue();
+      expect(editor.state.selection.from).toBe(entityReference.from);
+      expect(editor.state.selection.to).toBe(entityReference.to);
+    });
+  });
 });
