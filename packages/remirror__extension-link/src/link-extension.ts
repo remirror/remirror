@@ -637,9 +637,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
             newMarks.forEach((newMark) => {
               const wasLink = this.isValidUrl(prevMark.text);
-              const isLink =
-                this.isValidUrl(newMark.text) &&
-                this.getTrimmedUrl({ text: newMark.text, url: newMark.text }).url === newMark.text;
+              const isLink = this.isValidUrl(
+                this.getTrimmedUrl({ text: newMark.text, url: newMark.text }).url,
+              );
 
               if (wasLink && !isLink) {
                 removeLink({ from: newMark.from, to: newMark.to }).tr();
@@ -717,15 +717,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                 from: pos + link.start + 1,
                 to: pos + link.end + 1,
               }))
-              .filter((link) => {
-                // Determine if found link is within the changed range
-                return (
-                  within(link.from, from, to) ||
-                  within(link.to, from, to) ||
-                  within(from, link.from, link.to) ||
-                  within(to, link.from, link.to)
-                );
-              })
               .filter((link) => {
                 // Avoid overwriting manually created links
                 const marks = this.getLinkMarksInRange(tr.doc, link.from, link.to, false);
@@ -841,7 +832,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   private hasAdjacentPunctuation(input = '') {
     return {
       head: this.options.adjacentPunctuations.includes(input[0] || ''),
-      tail: this.options.adjacentPunctuations.includes(input[input.length - 1] || ''),
+      tail: this.options.adjacentPunctuations.includes(input.slice(-1)),
     };
   }
 
@@ -902,16 +893,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       if (decoded && endsWithPunctuation(decoded)) {
         const index = -1;
         const balancedIndex = !isBalanced(decoded) ? getBalancedIndex(decoded, index) : 0;
-        const trailingPunctuationIndex = SENTENCE_PUNCTUATIONS.includes(
-          decoded[decoded.length - 1] || '',
-        )
+        const trailingPunctuationIndex = SENTENCE_PUNCTUATIONS.includes(decoded.slice(-1))
           ? getTrailingPunctuationIndex(decoded, index)
           : 0;
 
         if (balancedIndex < 0) {
           const balanced = decoded.slice(0, balancedIndex);
 
-          if (SENTENCE_PUNCTUATIONS.includes(balanced[balanced.length - 1] || '')) {
+          if (SENTENCE_PUNCTUATIONS.includes(balanced.slice(-1))) {
             return getTrailingPunctuationIndex(balanced, index) + balancedIndex;
           }
 

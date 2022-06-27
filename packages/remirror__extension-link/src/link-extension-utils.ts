@@ -98,7 +98,7 @@ export const getBalancedIndex = (input: string, index: number): number => {
 export const getTrailingPunctuationIndex = (input: string, index: number): number => {
   const newString = input.slice(0, index);
 
-  if (SENTENCE_PUNCTUATIONS.includes(newString[newString.length - 1] || '')) {
+  if (SENTENCE_PUNCTUATIONS.includes(newString.slice(-1))) {
     return getTrailingPunctuationIndex(input, --index);
   }
 
