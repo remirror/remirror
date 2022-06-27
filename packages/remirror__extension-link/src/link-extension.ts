@@ -37,7 +37,6 @@ import {
   removeMark,
   Static,
   updateMark,
-  within,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
 import { undoDepth } from '@remirror/pm/history';
@@ -46,7 +45,6 @@ import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
 import {
-  addProtocol,
   createNewURL,
   DEFAULT_ADJACENT_PUNCTUATIONS,
   getAdjacentCharCount,
