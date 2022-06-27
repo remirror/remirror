@@ -85,21 +85,21 @@ export const isBalanced = (input: string): boolean => {
   return stack.length === 0;
 };
 
-export const getBalancedIndex = (string: string, index: number): number => {
-  const newString = string.slice(0, index);
+export const getBalancedIndex = (input: string, index: number): number => {
+  const newString = input.slice(0, index);
 
   if (!isBalanced(newString)) {
-    return getBalancedIndex(string, --index);
+    return getBalancedIndex(input, --index);
   }
 
   return index;
 };
 
-export const getTrailingPunctuationIndex = (string: string, index: number): number => {
-  const newString = string.slice(0, index);
+export const getTrailingPunctuationIndex = (input: string, index: number): number => {
+  const newString = input.slice(0, index);
 
   if (SENTENCE_PUNCTUATIONS.includes(newString[newString.length - 1] || '')) {
-    return getTrailingPunctuationIndex(string, --index);
+    return getTrailingPunctuationIndex(input, --index);
   }
 
   return index;
@@ -123,13 +123,14 @@ export const getAdjacentCharCount = ({
   return;
 };
 
+export const addProtocol = (input: string) =>
+  ['http://', 'https://', 'ftp://'].some((protocol) => input.startsWith(protocol))
+    ? input
+    : `https://${input}`;
+
 export const createNewURL = (input: string) => {
   try {
-    return new URL(
-      ['http://', 'https://', 'ftp://'].some((protocol) => input.startsWith(protocol))
-        ? input
-        : `https://${input}`,
-    );
+    return new URL(addProtocol(input));
   } catch {
     return;
   }

@@ -46,6 +46,7 @@ import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
 import {
+  addProtocol,
   createNewURL,
   DEFAULT_ADJACENT_PUNCTUATIONS,
   getAdjacentCharCount,
@@ -587,13 +588,48 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         const composedTransaction = composeTransactionSteps(transactions, prevState);
 
         const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
+        const { mapping } = composedTransaction;
         const { tr, doc } = state;
 
         const { updateLink, removeLink } = this.store.chain(tr);
 
-        const { mapping } = composedTransaction;
+        const removeLinkInRange = ({
+          end,
+          nodeText,
+          start,
+        }: {
+          start: number;
+          end: number;
+          nodeText: string;
+        }) => {
+          const linkInRange = this.getLinkMarksInRange(doc, start, end, true)[0];
 
-        changes.forEach(({ from, to, prevFrom, prevTo }) => {
+          if (!linkInRange) {
+            return;
+          }
+
+          // If the tail of a link has been separated by a space we keep the head part
+          const split = linkInRange.text.split(' ');
+          const { from, to } =
+            split.length === 2
+              ? {
+                  from: linkInRange.from,
+                  to: linkInRange.to - (split?.[1]?.length || 0 + 1),
+                }
+              : {
+                  from: linkInRange.from,
+                  to: linkInRange.to,
+                };
+
+          // Don't remove link if moved into anoter node
+          if (!nodeText.includes(linkInRange.text)) {
+            return;
+          }
+
+          removeLink({ from, to: to }).tr();
+        };
+
+        changes.forEach(({ from, prevFrom, prevTo, to }) => {
           // Remove auto links that are no longer valid after they have been split
           this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
             const newFrom = mapping.map(prevMark.from);
@@ -636,72 +672,41 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
               const matchStart = match.index;
               const matchEnd = matchStart + matchedText.length;
-
-              const linkInMatchRange = (() => {
-                // First, try to get existing mark in range
-                const link = this.getLinkMarksInRange(doc, matchStart, matchEnd, true)[0];
-
-                // If no mark is in range try to find a URL in the matched text
-                if (!link) {
-                  return { text: this.findURL(matchedText) };
-                }
-
-                const split = link.text.split(' ');
-
-                // If the tail of a link has been split off get the head part
-                if (split.length === 2) {
-                  return {
-                    from: link.from,
-                    text: split[0],
-                    to: link.to - (split[1].length + 1),
-                  };
-                }
-
-                return {
-                  from: link.from,
-                  text: link.text,
-                  to: link.to,
-                };
-              })();
-
-              if (!linkInMatchRange) {
-                continue;
-              }
+              const urlInMatchRange = this.findURL(matchedText);
 
               // Skip if no valid link is in the match
-              if (!linkInMatchRange.text && !new RegExp('^[0-9|-]+$').test(matchedText)) {
+              if (!urlInMatchRange && !new RegExp('^[0-9|-]+$').test(matchedText)) {
+                // Remove invalid link
+                removeLinkInRange({
+                  end: matchEnd,
+                  nodeText,
+                  start: matchStart,
+                });
+
                 continue;
               }
 
-              const { url: text, sliceStart } = this.getTrimmedUrl({
-                url: linkInMatchRange.text,
+              const { sliceStart, url: text } = this.getTrimmedUrl({
                 text: matchedText,
+                url: urlInMatchRange,
               });
 
-              const end = match.index + text.length + sliceStart;
-              const start = matchStart + sliceStart;
-
-              // Remove links that are no longer valid in the match
+              // Remove link that is no longer valid in the match
               if (!this.isValidUrl(text)) {
-                if (!linkInMatchRange || !linkInMatchRange.from) {
-                  continue;
-                }
-
-                // Don't remove link if moved into anoter node
-                if (!nodeText.includes(linkInMatchRange.text)) {
-                  continue;
-                }
-
-                removeLink({ from: linkInMatchRange.from, to: linkInMatchRange.to }).tr();
+                removeLinkInRange({
+                  end: matchEnd,
+                  nodeText,
+                  start: matchStart,
+                });
 
                 continue;
               }
 
               foundAutoLinks.push({
-                text,
+                end: match.index + text.length + sliceStart,
                 href: this.buildHref(text),
-                start,
-                end,
+                start: matchStart + sliceStart,
+                text,
               });
             }
 
@@ -726,17 +731,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                 const marks = this.getLinkMarksInRange(tr.doc, link.from, link.to, false);
                 return marks.length === 0;
               })
-              .forEach(({ from, to, href, text }) => {
-                const attrs = { href, auto: true };
+              .forEach(({ from, href, text, to }) => {
+                const attrs = { auto: true, href };
                 const range = { from, to };
                 updateLink(attrs, range).tr();
                 onUpdateCallbacks.push({ attrs, range, text });
               });
           });
 
-          onUpdateCallbacks.forEach(({ range, attrs, text }) => {
+          onUpdateCallbacks.forEach(({ attrs, range, text }) => {
             const { doc, selection } = tr;
-            this.options.onUpdateLink(text, { doc, selection, range, attrs });
+            this.options.onUpdateLink(text, { attrs, doc, range, selection });
           });
         });
 
@@ -821,34 +826,31 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
   private findURL(input: string): string | undefined {
     for (const match of findMatches(input, this.options.autoLinkRegex)) {
-      const text = getMatchString(match);
+      const urlMatch = getMatchString(match);
 
-      if (!text || !this.isValidUrl(text)) {
+      if (!this.isValidUrl(urlMatch)) {
         continue;
       }
 
-      return text;
+      return urlMatch;
     }
 
     return;
   }
 
-  private includesPunctuations(input = '') {
+  private hasAdjacentPunctuation(input = '') {
     return {
       head: this.options.adjacentPunctuations.includes(input[0] || ''),
       tail: this.options.adjacentPunctuations.includes(input[input.length - 1] || ''),
     };
   }
 
+  /** Slice leading and trailing non URL parts */
   private getTrimmedUrl({ url, text }: { url?: string; text: string }) {
     const sliceStart = url ? this.getURLStartIndex({ url, text }) : 0;
-
     const sliceEnd = url ? this.getURLEndIndex({ url, startIndex: sliceStart, text }) : undefined;
 
-    // Slice leading and trailing non URL parts
-    const trimmed = text.slice(sliceStart, sliceEnd);
-
-    return { url: trimmed, sliceStart, sliceEnd };
+    return { url: text.slice(sliceStart, sliceEnd), sliceStart, sliceEnd };
   }
 
   private getURLStartIndex({ url, text }: { url?: string; text: string }) {
@@ -863,7 +865,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     }
 
     // Check for leading punctuation
-    return this.includesPunctuations(text).head ? 1 : 0;
+    return this.hasAdjacentPunctuation(text).head ? 1 : 0;
   }
 
   private getURLEndIndex({
@@ -879,7 +881,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
     // Check for trailing punctuation and adjacent characters
     if (newUrl) {
-      const endsWithPunctuation = (input: string) => this.includesPunctuations(input).tail;
+      const endsWithPunctuation = (input: string) => this.hasAdjacentPunctuation(input).tail;
 
       const adjacentCharCount = getAdjacentCharCount({
         direction: 1,
