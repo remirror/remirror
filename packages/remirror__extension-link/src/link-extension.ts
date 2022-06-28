@@ -624,7 +624,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
           onUpdateCallbacks.forEach(({ range, attrs, text }) => {
             const { doc, selection } = tr;
-            this.options.onUpdateLink(text, { doc, selection, range, attrs });
+
+            // Push to the end of the execution queue to prevent possible DOMException
+            setTimeout(() => {
+              this.options.onUpdateLink(text, { doc, selection, range, attrs });
+            }, 0);
           });
         });
 
