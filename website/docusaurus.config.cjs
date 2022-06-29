@@ -1,7 +1,10 @@
+// @ts-check
+
 const fs = require('fs');
 const path = require('path');
 const pkg = require('./package.json');
 
+/** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Remirror',
   tagline: pkg.description,
@@ -139,6 +142,17 @@ const config = {
     //   },
     // ],
   ],
+
+  // https://github.com/facebook/docusaurus/issues/4765#issuecomment-841135926
+  webpack: {
+    jsLoader: (isServer) => ({
+      loader: require.resolve('esbuild-loader'),
+      options: {
+        loader: 'tsx',
+        target: isServer ? 'node12' : 'es2017',
+      },
+    }),
+  },
 };
 
 module.exports = config;
