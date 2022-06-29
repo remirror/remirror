@@ -516,7 +516,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           if (this.options.selectTextOnClick) {
             const $start = doc.resolve(range.from);
             const $end = doc.resolve(range.to);
-            const transaction = tr.setSelection(new TextSelection($start, $end));
+            const transaction = tr.setSelection(TextSelection.between($start, $end));
 
             view.dispatch(transaction);
           }
