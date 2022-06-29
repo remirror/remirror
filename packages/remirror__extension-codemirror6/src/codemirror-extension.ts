@@ -103,7 +103,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
         type: this.type,
         beforeDispatch: ({ tr, start }) => {
           const $pos = tr.doc.resolve(start);
-          tr.setSelection(new TextSelection($pos));
+          tr.setSelection(TextSelection.near($pos));
         },
         getAttributes: getAttributes,
       }),
@@ -144,7 +144,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
     tr.replaceWith(pos, end, this.type.create({ language }));
 
     // Set the selection to within the codeBlock
-    tr.setSelection(TextSelection.create(tr.doc, pos + 1));
+    tr.setSelection(TextSelection.near(tr.doc.resolve(pos + 1)));
 
     if (dispatch) {
       dispatch(tr);
