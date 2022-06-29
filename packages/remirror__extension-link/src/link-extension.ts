@@ -296,9 +296,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             // e.g [test](//test.com) - not "auto link"
             // e.g [test.com](//test.com) - "auto link"
             const auto =
-              node.hasAttribute(AUTO_ATTRIBUTE) ||
-              href === text ||
-              href?.replace(`${this.options.defaultProtocol}//`, '') === text;
+              this.options.autoLink &&
+              (node.hasAttribute(AUTO_ATTRIBUTE) ||
+                href === text ||
+                href?.replace(`${this.options.defaultProtocol}//`, '') === text);
 
             return {
               ...extra.parse(node),
