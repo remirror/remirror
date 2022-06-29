@@ -1200,15 +1200,40 @@ export function shouldUseDomEnvironment(): boolean {
 }
 
 /**
- * Retrieves the document and throws an error in a non-browser environment.
+ * Retrieves the document from global scope and throws an error in a non-browser
+ * environment.
+ *
+ * @internal
  */
 export function getDocument(): Document {
   if (typeof document !== 'undefined') {
     return document;
   }
 
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { JSDOM } = require('jsdom');
+    return new JSDOM().window.document;
+  } catch {
+    // ignore
+  }
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require('domino').createDocument();
+  } catch {
+    // ignore
+  }
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require('min-document');
+  } catch {
+    // ignore
+  }
+
   throw new Error(
-    'Unable to retrieve the document from the global scope. Maybe you are running Remirror in a non-browser environment? If you are using Node.js, you can install JSDOM or similar to create a fake document and pass that document to Remirror.',
+    'Unable to retrieve the document from the global scope. Maybe you are running Remirror in a non-browser environment? If you are using Node.js, you can install JSDOM or similar to create a fake document and pass it to Remirror.',
   );
 }
 
