@@ -1,6 +1,5 @@
 import '../example.css';
 
-import React from 'react';
 import { useHelpers } from '@remirror/react';
 import { MarkdownEditor } from '@remirror/react-editors/markdown';
 

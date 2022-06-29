@@ -95,44 +95,44 @@ module.exports = {
       darkTheme: darkCodeTheme,
     },
   },
-  // presets: [
-  //   [
-  //     '@docusaurus/preset-classic',
-  //     {
-  //       docs: {
-  //         path: path.join(__dirname, '../docs'),
-  //         sidebarPath: require.resolve('./sidebar.js'),
-  //         editUrl: ({ version, versionDocsDirPath, docPath, permalink, locale }) => {
-  //           // API documents are generated, so they won't have urls for directly edit.
-  //           if (permalink.startsWith('/docs/api')) {
-  //             return;
-  //           }
+  presets: [
+    [
+      '@docusaurus/preset-classic',
+      {
+        docs: {
+          path: path.join(__dirname, '../docs'),
+          sidebarPath: require.resolve('./sidebar.js'),
+          editUrl: ({ version, versionDocsDirPath, docPath, permalink, locale }) => {
+            // API documents are generated, so they won't have urls for directly edit.
+            if (permalink.startsWith('/docs/api')) {
+              return;
+            }
 
-  //           return 'https://github.com/remirror/remirror/edit/HEAD/website/';
-  //         },
-  //       },
-  //       blog: {
-  //         showReadingTime: true,
-  //         editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/blog/',
-  //       },
-  //       theme: {
-  //         customCss: [require.resolve('./styles.css'), require.resolve('remirror/styles/all.css')],
-  //       },
-  //       googleAnalytics: { trackingID: 'UA-135738542-1', anonymizeIP: true },
-  //     },
-  //   ],
-  // ],
+            return 'https://github.com/remirror/remirror/edit/HEAD/website/';
+          },
+        },
+        blog: {
+          showReadingTime: true,
+          editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/blog/',
+        },
+        theme: {
+          customCss: [require.resolve('./styles.css'), require.resolve('remirror/styles/all.css')],
+        },
+        googleAnalytics: { trackingID: 'UA-135738542-1', anonymizeIP: true },
+      },
+    ],
+  ],
   plugins: [
-    // path.join(__dirname, 'plugins', 'basic-plugin.js'),
+    path.join(__dirname, 'plugins', 'basic-plugin.js'),
     require.resolve('@docusaurus/plugin-ideal-image'),
-    // [
-    //   'docusaurus-plugin-examples',
-    //   {
-    //     path: path.join(__dirname, 'examples'),
-    //     include: ['*.{js,jsx,ts,tsx}'],
-    //     exclude: ['*.test.{js,jsx,ts,tsx}'],
-    //   },
-    // ],
+    [
+      'docusaurus-plugin-examples',
+      {
+        path: path.join(__dirname, 'examples'),
+        include: ['*.{js,jsx,ts,tsx}'],
+        exclude: ['*.test.{js,jsx,ts,tsx}'],
+      },
+    ],
   ],
   stylesheets: [
     'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap',
