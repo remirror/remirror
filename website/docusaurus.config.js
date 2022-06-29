@@ -1,10 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const pkg = require('./package.json');
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-module.exports = {
+const config = {
   title: 'Remirror',
   tagline: pkg.description,
   url: 'https://remirror.io',
@@ -14,8 +12,7 @@ module.exports = {
   projectName: 'remirror', // Usually your repo name.
   onBrokenLinks: 'warn',
   themeConfig: {
-    image:
-      'https://repository-images.githubusercontent.com/166780923/eb30b500-a97f-11ea-8508-32089c11e24c',
+    image: 'img/logo-dark.png',
     colorMode: {
       // "light" | "dark"
       defaultMode: 'light',
@@ -23,11 +20,15 @@ module.exports = {
       // Hides the switch in the navbar
       // Useful if you want to support a single color mode
       disableSwitch: false,
-
-      // Should we use the prefers-color-scheme media-query,
-      // using user system preferences, instead of the hardcoded defaultMode
-      // respectPrefersColorScheme: true,
     },
+    // announcementBar: {
+    //   id: 'support_us',
+    //   content:
+    //     'We are looking to revamp our docs, please fill <a target="_blank" rel="noopener noreferrer" href="#">this survey</a>',
+    //   backgroundColor: '#fafbfc',
+    //   textColor: '#091E42',
+    //   isCloseable: false,
+    // },
     navbar: {
       logo: {
         alt: 'Remirror Logo',
@@ -40,8 +41,17 @@ module.exports = {
           label: 'Docs',
           position: 'right',
         },
-        { to: '/blog', label: 'Blog', position: 'right' },
-        { href: 'https://discord.gg/C4cfrMK', label: 'Chat', position: 'right' },
+        {
+          to: 'blog',
+          activeBasePath: 'blog',
+          label: 'Blog',
+          position: 'right',
+        },
+        {
+          href: 'https://remirror.io/chat',
+          label: 'Chat',
+          position: 'right',
+        },
         {
           href: 'https://github.com/remirror/remirror',
           label: 'GitHub',
@@ -69,14 +79,13 @@ module.exports = {
         {
           title: 'Community',
           items: [
-            { label: 'Discord', to: '/chat' },
+            { label: 'Discord', href: 'https://remirror.io/chat' },
             { label: 'Twitter', href: 'https://twitter.com/@remirrorio' },
           ],
         },
         {
           title: 'More',
           items: [
-            { label: 'Blog', to: 'blog' },
             { label: 'GitHub', href: 'https://github.com/remirror/remirror' },
             {
               html: `
@@ -88,11 +97,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} KickJump Ltd. Built with Docusaurus`,
-    },
-    prism: {
-      theme: lightCodeTheme,
-      darkTheme: darkCodeTheme,
+      copyright: `Copyright © ${new Date().getFullYear()} Remirror Contributors. Built with Docusaurus`,
     },
   },
   presets: [
@@ -108,33 +113,32 @@ module.exports = {
               return;
             }
 
-            return 'https://github.com/remirror/remirror/edit/HEAD/website/';
+            return `https://github.com/remirror/remirror/edit/main/docs/${docPath}`;
           },
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/remirror/remirror/edit/HEAD/website/blog/',
+          editUrl: 'https://github.com/remirror/remirror/edit/main/website/',
         },
         theme: {
           customCss: [require.resolve('./styles.css'), require.resolve('remirror/styles/all.css')],
         },
-        googleAnalytics: { trackingID: 'UA-135738542-1', anonymizeIP: true },
+        // googleAnalytics: { trackingID: 'UA-135738542-1', anonymizeIP: true },
       },
     ],
   ],
   plugins: [
-    path.join(__dirname, 'plugins', 'basic-plugin.js'),
-    require.resolve('@docusaurus/plugin-ideal-image'),
-    [
-      'docusaurus-plugin-examples',
-      {
-        path: path.join(__dirname, 'examples'),
-        include: ['*.{js,jsx,ts,tsx}'],
-        exclude: ['*.test.{js,jsx,ts,tsx}'],
-      },
-    ],
-  ],
-  stylesheets: [
-    'https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap',
+    // path.join(__dirname, 'plugins', 'basic-plugin.js'),
+    // require.resolve('@docusaurus/plugin-ideal-image'),
+    // [
+    //   'docusaurus-plugin-examples',
+    //   {
+    //     path: path.join(__dirname, 'examples'),
+    //     include: ['*.{js,jsx,ts,tsx}'],
+    //     exclude: ['*.test.{js,jsx,ts,tsx}'],
+    //   },
+    // ],
   ],
 };
+
+module.exports = config;
