@@ -106,7 +106,7 @@ const config = {
       {
         docs: {
           path: path.join(__dirname, '../docs'),
-          sidebarPath: require.resolve('./sidebar.js'),
+          sidebarPath: require.resolve('./sidebar.cjs'),
           editUrl: ({ version, versionDocsDirPath, docPath, permalink, locale }) => {
             // API documents are generated, so they won't have urls for directly edit.
             if (permalink.startsWith('/docs/api')) {
