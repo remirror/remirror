@@ -1,5 +1,36 @@
 # @remirror/extension-collaboration
 
+## 2.0.0-beta.4
+
+> 2022-06-29
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+### Patch Changes
+
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.4
+  - @remirror/core@2.0.0-beta.4
+  - @remirror/messages@2.0.0-beta.4
+
 ## 2.0.0-beta.3
 
 > 2022-06-26

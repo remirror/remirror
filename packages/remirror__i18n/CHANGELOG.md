@@ -1,5 +1,22 @@
 # @remirror/i18n
 
+## 2.0.0-beta.4
+
+> 2022-06-29
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0-beta.4
+
 ## 2.0.0-beta.3
 
 > 2022-06-26
