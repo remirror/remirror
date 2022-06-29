@@ -828,7 +828,9 @@ export function getSelectedGroup(
   let { from, to } = state.selection;
 
   const getChar = (start: number, end: number) =>
-    getTextContentFromSlice(TextSelection.create(state.doc, start, end).content());
+    getTextContentFromSlice(
+      TextSelection.between(state.doc.resolve(start), state.doc.resolve(end)).content(),
+    );
 
   for (
     let char = getChar(from - 1, from);
@@ -1072,7 +1074,7 @@ export function getTextSelection(selection: PrimitiveSelection, doc: Prosemirror
     const anchor = clampToDocument(pos.anchor);
     const head = clampToDocument(pos.head);
 
-    return TextSelection.create(doc, anchor, head);
+    return TextSelection.between(doc.resolve(anchor), doc.resolve(head));
   }
 
   // In this case assume that `from` is the fixed anchor and `to` is the movable
@@ -1080,7 +1082,7 @@ export function getTextSelection(selection: PrimitiveSelection, doc: Prosemirror
   const anchor = clampToDocument(pos.from);
   const head = clampToDocument(pos.to);
 
-  return TextSelection.create(doc, anchor, head);
+  return TextSelection.between(doc.resolve(anchor), doc.resolve(head));
 }
 
 /**
