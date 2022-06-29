@@ -56,7 +56,6 @@ function getApiItems() {
   return apiItems;
 }
 
-/** @type import('@docusaurus/plugin-content-docs/lib/types').SidebarItem[] */
 const docs = [
   'introduction',
   '5-min-tutorial',
@@ -77,11 +76,11 @@ const docs = [
     label: 'Storybook',
     href: 'https://remirror.vercel.app/',
   },
-  {
-    type: 'category',
-    label: 'Showcase',
-    items: ['showcase/richtext', 'showcase/markdown', 'showcase/social'],
-  },
+  // {
+  //   type: 'category',
+  //   label: 'Showcase',
+  //   items: ['showcase/richtext', 'showcase/markdown', 'showcase/social'],
+  // },
   {
     type: 'category',
     label: 'Core concepts',
@@ -141,4 +140,4 @@ if (getApiItems().length > 0) {
   });
 }
 
-exports.docs = docs;
+module.exports.docs = docs;
