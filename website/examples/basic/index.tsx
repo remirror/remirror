@@ -1,5 +1,6 @@
 import '../example.css';
 
+import React from 'react';
 import {
   BoldExtension,
   ItalicExtension,
