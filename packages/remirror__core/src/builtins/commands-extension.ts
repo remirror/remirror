@@ -425,7 +425,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
    * commands.selectText(10);
    *
    * // Use a ProseMirror selection
-   * commands.selectText(new TextSelection(state.doc.resolve(10)))
+   * commands.selectText(TextSelection.near(state.doc.resolve(10)))
    * ```
    *
    * Although this is called `selectText` you can provide your own selection
@@ -602,7 +602,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
         return false;
       }
 
-      dispatch?.(tr.setSelection(TextSelection.create(tr.doc, tr.selection.anchor)));
+      dispatch?.(tr.setSelection(TextSelection.near(tr.selection.$anchor)));
       return true;
     };
   }

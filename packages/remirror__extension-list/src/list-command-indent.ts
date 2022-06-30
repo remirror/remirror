@@ -137,8 +137,8 @@ export function indentList(tr: Transaction): boolean {
 
   tr.setSelection(
     previousList === selectedList
-      ? TextSelection.create(tr.doc, $from.pos, $to.pos)
-      : TextSelection.create(tr.doc, $from.pos - 2, $to.pos - 2),
+      ? TextSelection.between(tr.doc.resolve($from.pos), tr.doc.resolve($to.pos))
+      : TextSelection.between(tr.doc.resolve($from.pos - 2), tr.doc.resolve($to.pos - 2)),
   );
 
   return true;
