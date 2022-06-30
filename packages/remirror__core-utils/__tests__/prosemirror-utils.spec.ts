@@ -29,14 +29,12 @@ import {
   findParentNode,
   findParentNodeOfType,
   findPositionOfNodeAfter,
-  findPositionOfNodeBefore,
   findSelectedNodeOfType,
   hasTransactionChanged,
   isNodeActive,
   isNodeOfType,
   isSelectionEmpty,
   removeNodeAtPosition,
-  removeNodeBefore,
   schemaToJSON,
 } from '../';
 
