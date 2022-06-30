@@ -559,7 +559,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-table-size-editor-cell-selected {
-    background: var(--rmr-color-selection-background);
+    background: var(--rmr-color-table-selected-border);
     border-color: var(--rmr-color-border);
   }
 

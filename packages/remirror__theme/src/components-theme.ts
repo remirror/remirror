@@ -558,7 +558,7 @@ export const TABLE_SIZE_EDITOR_CELL = css`
 `;
 
 export const TABLE_SIZE_EDITOR_CELL_SELECTED = css`
-  background: ${getThemeVar('color', 'selection', 'background')};
+  background: ${getThemeVar('color', 'table', 'selected', 'border')};
   border-color: ${getThemeVar('color', 'border')};
 `;
 
