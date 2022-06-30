@@ -304,6 +304,8 @@ export function findParentNodeOfType(
  * ```
  *
  * @param selection - the prosemirror selection
+ *
+ * @deprecated This util is hard to use and not that useful
  */
 export function findPositionOfNodeBefore(
   value: Selection | ResolvedPos | EditorState | Transaction,
@@ -347,6 +349,8 @@ export function findPositionOfNodeBefore(
  * ```
  *
  * @param tr
+ *
+ * @deprecated This util is hard to use and not that useful
  */
 export function removeNodeBefore(tr: Transaction): Transaction {
   const result = findPositionOfNodeBefore(tr.selection);
@@ -433,6 +437,8 @@ interface FindParentNodeProps extends StateSelectionPosProps {
  * ```
  *
  * @param selection - the prosemirror selection
+ *
+ * @deprecated This util is hard to use and not that useful
  */
 export function findPositionOfNodeAfter(
   value: Selection | ResolvedPos | EditorState,
@@ -475,6 +481,8 @@ export function findPositionOfNodeAfter(
  * ```
  *
  * @param tr
+ *
+ * @deprecated This util is hard to use and not that useful
  */
 export function removeNodeAfter(tr: Transaction): Transaction {
   const result = findPositionOfNodeAfter(tr.selection);

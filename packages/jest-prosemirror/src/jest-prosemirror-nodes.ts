@@ -81,7 +81,7 @@ export function initSelection(taggedDoc: ProsemirrorNode): Selection | undefined
   }
 
   if (isNumber(cursor)) {
-    return new TextSelection(taggedDoc.resolve(cursor));
+    return TextSelection.near(taggedDoc.resolve(cursor));
   }
 
   if (isNumber(gap)) {

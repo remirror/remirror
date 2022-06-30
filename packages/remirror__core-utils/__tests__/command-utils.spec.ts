@@ -199,12 +199,10 @@ describe('replaceText', () => {
   });
 
   it('can append text', () => {
-    const from = doc(p('Ignore'), '<cursor>');
+    const from = doc(p('Ignore'), p('<cursor>'));
     const to = doc(p('Ignore'), p('Content '));
 
-    expect(
-      replaceText({ appendText: ' ', type: schema.nodes.paragraph, content: 'Content' }),
-    ).toTransform({
+    expect(replaceText({ appendText: ' ', content: 'Content' })).toTransform({
       from,
       to,
     });

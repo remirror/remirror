@@ -72,106 +72,6 @@ describe('removeNodeAtPosition', () => {
   });
 });
 
-describe('removeNodeBefore', () => {
-  it('does nothing if there is no nodeBefore', () => {
-    const {
-      state: { tr },
-    } = createEditor(doc(p('<cursor>')));
-    const steps = tr.steps;
-
-    removeNodeBefore(tr);
-    expect(steps).toBe(tr.steps);
-  });
-
-  it('supports removing tables', () => {
-    const {
-      state: { tr },
-    } = createEditor(doc(p('one'), table(row(tdEmpty), row(tdEmpty)), '<cursor>', p('two')));
-    removeNodeBefore(tr);
-
-    expect(tr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
-  });
-
-  it('supports removing blockquotes', () => {
-    const {
-      state: { tr },
-    } = createEditor(doc(p('one'), blockquote(p('')), '<cursor>', p('two')));
-    removeNodeBefore(tr);
-
-    expect(tr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
-  });
-
-  it('supports removing leaf nodes (atom)', () => {
-    const {
-      state: { tr },
-    } = createEditor(doc(p('one'), atomBlock(), '<cursor>', p('two')));
-    removeNodeBefore(tr);
-
-    expect(tr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
-  });
-});
-
-describe('findPositionOfNodeBefore', () => {
-  it('returns `undefined` when none exists', () => {
-    const {
-      state: { selection },
-    } = createEditor(doc(p('<cursor>')));
-    const result = findPositionOfNodeBefore(selection);
-
-    expect(result).toBeUndefined();
-  });
-
-  it('supports tables', () => {
-    const node = table(row(tdEmpty), row(tdEmpty));
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), node, '<cursor>'));
-    const result = findPositionOfNodeBefore(selection);
-
-    expect(result).toEqual({ pos: 6, start: 7, end: 20, depth: 1, node });
-  });
-
-  it('supports blockquotes', () => {
-    const node = blockquote(p(''));
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), node, '<cursor>'));
-    const position = findPositionOfNodeBefore(selection);
-
-    expect(position).toEqual({ pos: 6, start: 7, end: 10, depth: 1, node });
-  });
-
-  it('supports nested leaf nodes', () => {
-    const node = atomBlock();
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), table(row(td(p('1'), node, '<cursor>')))));
-    const position = findPositionOfNodeBefore(selection);
-
-    expect(position).toEqual({ pos: 12, start: 13, end: 13, depth: 4, node });
-  });
-
-  it('supports non-nested leaf nodes', () => {
-    const node = atomBlock();
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), node, '<cursor>'));
-    const position = findPositionOfNodeBefore(selection);
-
-    expect(position).toEqual({ pos: 6, start: 7, end: 7, depth: 1, node });
-  });
-
-  it('supports leaf nodes with with nested inline atom nodes', () => {
-    const node = atomContainer(atomBlock());
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), node, '<cursor>'));
-    const position = findPositionOfNodeBefore(selection);
-
-    expect(position).toEqual({ pos: 6, start: 7, end: 9, depth: 1, node });
-  });
-});
-
 describe('findPositionOfNodeAfter', () => {
   it('returns `undefined` when none exists', () => {
     const {
@@ -184,20 +84,16 @@ describe('findPositionOfNodeAfter', () => {
 
   it('supports tables', () => {
     const node = table(row(tdEmpty), row(tdEmpty));
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), '<cursor>', node));
-    const result = findPositionOfNodeAfter(selection);
+    const { state } = createEditor(doc(p('abcd'), node));
+    const position = findPositionOfNodeAfter(state.doc.resolve(6));
 
-    expect(result).toEqual({ pos: 6, start: 7, end: 20, depth: 1, node });
+    expect(position).toEqual({ pos: 6, start: 7, end: 20, depth: 1, node });
   });
 
   it('supports blockquotes', () => {
     const node = blockquote(p(''));
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), '<cursor>', node));
-    const position = findPositionOfNodeAfter(selection);
+    const { state } = createEditor(doc(p('abcd'), node));
+    const position = findPositionOfNodeAfter(state.doc.resolve(6));
 
     expect(position).toEqual({ pos: 6, start: 7, end: 10, depth: 1, node });
   });
@@ -214,20 +110,16 @@ describe('findPositionOfNodeAfter', () => {
 
   it('supports non-nested leaf nodes', () => {
     const node = atomBlock();
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), '<cursor>', node));
-    const position = findPositionOfNodeAfter(selection);
+    const { state } = createEditor(doc(p('abcd'), node));
+    const position = findPositionOfNodeAfter(state.doc.resolve(6));
 
     expect(position).toEqual({ pos: 6, start: 7, end: 7, depth: 1, node });
   });
 
   it('supports leaf nodes with with nested inline atom nodes', () => {
     const node = atomContainer(atomBlock());
-    const {
-      state: { selection },
-    } = createEditor(doc(p('abcd'), '<cursor>', node));
-    const position = findPositionOfNodeAfter(selection);
+    const { state } = createEditor(doc(p('abcd'), node));
+    const position = findPositionOfNodeAfter(state.doc.resolve(6));
 
     expect(position).toEqual({ pos: 6, start: 7, end: 9, depth: 1, node });
   });
@@ -483,7 +375,7 @@ describe('findParentNodeOfType', () => {
 describe('nodeActive', () => {
   it('shows active when within an active region', () => {
     const { state, schema: sch } = createEditor(
-      doc(p('Something', blockquote('is <cursor>in blockquote'))),
+      doc(p('Something', blockquote(p('is <cursor>in blockquote')))),
     );
 
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeTrue();
