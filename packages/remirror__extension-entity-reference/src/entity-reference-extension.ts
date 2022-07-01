@@ -180,7 +180,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   @command()
   scrollToEntityReference(entityReferenceId: string): CommandFunction {
     return ({ tr, dispatch }) => {
-      const entityReference = this.store.helpers.getEntityReferenceById(entityReferenceId);
+      const entityReference = this.getEntityReferenceById(entityReferenceId);
 
       if (!entityReference) {
         return false;
