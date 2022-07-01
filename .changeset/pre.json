@@ -108,19 +108,21 @@
     "@remirror/extension-entity-reference": "2.0.0-beta.0"
   },
   "changesets": [
-    "afraid-cheetahs-push",
-    "angry-drinks-trade",
-    "angry-planets-look",
-    "chatty-gorillas-raise",
-    "chilled-scissors-tease",
-    "early-colts-appear",
-    "nasty-frogs-grab",
-    "real-phones-bow",
-    "seven-pumpkins-confess",
-    "silly-lemons-argue",
-    "tall-countries-teach",
-    "tame-apples-reflect",
-    "tender-poets-move",
-    "young-ducks-wink"
+    "cold-bugs-lay",
+    "cool-rockets-pump",
+    "dry-jars-fix",
+    "dull-toes-promise",
+    "five-lobsters-prove",
+    "hot-rabbits-perform",
+    "itchy-needles-jump",
+    "light-cameras-beam",
+    "many-students-laugh",
+    "metal-peaches-fly",
+    "nine-camels-brake",
+    "seven-guests-relate",
+    "six-nails-lay",
+    "spicy-dolls-wash",
+    "strong-wasps-bow",
+    "wild-bottles-collect"
   ]
 }

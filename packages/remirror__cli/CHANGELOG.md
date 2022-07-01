@@ -1,5 +1,14 @@
 # @remirror/cli
 
+## 1.0.0-beta.4
+
+> 2022-07-01
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
 ## 1.0.0-beta.3
 
 > 2022-06-29

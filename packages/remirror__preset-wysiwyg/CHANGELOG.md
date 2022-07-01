@@ -1,5 +1,67 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.0-beta.5
+
+> 2022-07-01
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Update ProseMirror packages to latest versions.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- SSR features are removed.
+- Transform a hard break into `\n` in `Node.textContent`.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.5
+  - @remirror/extension-bidi@2.0.0-beta.5
+  - @remirror/extension-blockquote@2.0.0-beta.5
+  - @remirror/extension-bold@2.0.0-beta.5
+  - @remirror/extension-code@2.0.0-beta.5
+  - @remirror/extension-code-block@2.0.0-beta.5
+  - @remirror/extension-drop-cursor@2.0.0-beta.5
+  - @remirror/extension-embed@2.0.0-beta.5
+  - @remirror/extension-gap-cursor@2.0.0-beta.5
+  - @remirror/extension-hard-break@2.0.0-beta.5
+  - @remirror/extension-heading@2.0.0-beta.5
+  - @remirror/extension-horizontal-rule@2.0.0-beta.5
+  - @remirror/extension-image@2.0.0-beta.5
+  - @remirror/extension-italic@2.0.0-beta.5
+  - @remirror/extension-link@2.0.0-beta.5
+  - @remirror/extension-list@2.0.0-beta.5
+  - @remirror/extension-search@2.0.0-beta.5
+  - @remirror/extension-shortcuts@2.0.0-beta.5
+  - @remirror/extension-strike@2.0.0-beta.5
+  - @remirror/extension-trailing-node@2.0.0-beta.5
+  - @remirror/extension-underline@2.0.0-beta.5
+  - @remirror/preset-core@2.0.0-beta.5
+  - @remirror/pm@2.0.0-beta.5
+
 ## 2.0.0-beta.4
 
 > 2022-06-29

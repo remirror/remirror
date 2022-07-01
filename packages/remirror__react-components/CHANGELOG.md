@@ -1,5 +1,59 @@
 # @remirror/react-components
 
+## 2.0.0-beta.5
+
+> 2022-07-01
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- SSR features are removed.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.5
+  - @remirror/extension-positioner@2.0.0-beta.5
+  - @remirror/extension-text-color@2.0.0-beta.5
+  - @remirror/react-core@2.0.0-beta.5
+  - @remirror/react-hooks@2.0.0-beta.5
+  - multishift@2.0.0-beta.5
+  - @remirror/i18n@2.0.0-beta.5
+  - @remirror/icons@2.0.0-beta.5
+  - @remirror/messages@2.0.0-beta.5
+  - @remirror/pm@2.0.0-beta.5
+  - @remirror/react-utils@2.0.0-beta.5
+  - @remirror/theme@2.0.0-beta.5
+  - create-context-state@2.0.0-beta.4
+
 ## 2.0.0-beta.4
 
 > 2022-06-29
