@@ -53,7 +53,7 @@ export interface FileOptions {
 }
 
 /**
- * Adds a file node to the editor
+ * Add a `file` node to the editor.
  */
 @extension<FileOptions>({
   defaultOptions: {
