@@ -1,5 +1,6 @@
 import type { LanguageDescription } from '@codemirror/language';
 import { Extension as CodeMirrorExtension } from '@codemirror/state';
+import { ProsemirrorAttributes } from '@remirror/core';
 
 export interface CodeMirrorExtensionOptions {
   /**
@@ -34,4 +35,14 @@ export interface CodeMirrorExtensionOptions {
    * @default "paragraph"
    */
   toggleName?: string;
+}
+
+export interface CodeMirrorExtensionAttributes extends ProsemirrorAttributes {
+  /**
+   * A string to represent the language matching the language name or alias in
+   * [`LanguageDescription`](https://codemirror.net/docs/ref/#language.LanguageDescription)
+   *
+   * @default ''
+   */
+  language?: string;
 }
