@@ -1,5 +1,21 @@
 # @remirror/extension-template
 
+## 2.0.0-beta.5
+
+> 2022-07-01
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.5
+  - @remirror/pm@2.0.0-beta.5
+
 ## 2.0.0-beta.4
 
 > 2022-06-29

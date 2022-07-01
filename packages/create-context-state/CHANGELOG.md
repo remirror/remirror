@@ -1,5 +1,13 @@
 # create-context-state
 
+## 2.0.0-beta.4
+
+> 2022-07-01
+
+### Major Changes
+
+- Migrate to pure ESM!
+
 ## 2.0.0-beta.3
 
 > 2022-06-29

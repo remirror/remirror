@@ -1,5 +1,111 @@
 # remirror
 
+## 2.0.0-beta.5
+
+> 2022-07-01
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Update ProseMirror packages to latest versions.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- SSR features are removed.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Transform a hard break into `\n` in `Node.textContent`.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-utils@2.0.0-beta.5
+  - @remirror/core@2.0.0-beta.5
+  - @remirror/dom@2.0.0-beta.5
+  - @remirror/extension-annotation@2.0.0-beta.5
+  - @remirror/extension-bidi@2.0.0-beta.5
+  - @remirror/extension-blockquote@2.0.0-beta.5
+  - @remirror/extension-bold@2.0.0-beta.5
+  - @remirror/extension-callout@2.0.0-beta.5
+  - @remirror/extension-code@2.0.0-beta.5
+  - @remirror/extension-code-block@2.0.0-beta.5
+  - @remirror/extension-codemirror5@2.0.0-beta.5
+  - @remirror/extension-collaboration@2.0.0-beta.5
+  - @remirror/extension-columns@2.0.0-beta.5
+  - @remirror/extension-diff@2.0.0-beta.5
+  - @remirror/extension-doc@2.0.0-beta.5
+  - @remirror/extension-drop-cursor@2.0.0-beta.5
+  - @remirror/extension-embed@2.0.0-beta.5
+  - @remirror/extension-emoji@2.0.0-beta.5
+  - @remirror/extension-entity-reference@2.0.0-beta.5
+  - @remirror/extension-epic-mode@2.0.0-beta.5
+  - @remirror/extension-events@2.0.0-beta.5
+  - @remirror/extension-font-family@2.0.0-beta.5
+  - @remirror/extension-font-size@2.0.0-beta.5
+  - @remirror/extension-gap-cursor@2.0.0-beta.5
+  - @remirror/extension-hard-break@2.0.0-beta.5
+  - @remirror/extension-heading@2.0.0-beta.5
+  - @remirror/extension-history@2.0.0-beta.5
+  - @remirror/extension-horizontal-rule@2.0.0-beta.5
+  - @remirror/extension-image@2.0.0-beta.5
+  - @remirror/extension-italic@2.0.0-beta.5
+  - @remirror/extension-link@2.0.0-beta.5
+  - @remirror/extension-list@2.0.0-beta.5
+  - @remirror/extension-markdown@2.0.0-beta.5
+  - @remirror/extension-mention@2.0.0-beta.5
+  - @remirror/extension-mention-atom@2.0.0-beta.5
+  - @remirror/extension-node-formatting@2.0.0-beta.5
+  - @remirror/extension-paragraph@2.0.0-beta.5
+  - @remirror/extension-placeholder@2.0.0-beta.5
+  - @remirror/extension-positioner@2.0.0-beta.5
+  - @remirror/extension-search@2.0.0-beta.5
+  - @remirror/extension-shortcuts@2.0.0-beta.5
+  - @remirror/extension-strike@2.0.0-beta.5
+  - @remirror/extension-sub@2.0.0-beta.5
+  - @remirror/extension-sup@2.0.0-beta.5
+  - @remirror/extension-tables@2.0.0-beta.5
+  - @remirror/extension-text@2.0.0-beta.5
+  - @remirror/extension-text-case@2.0.0-beta.5
+  - @remirror/extension-text-color@2.0.0-beta.5
+  - @remirror/extension-text-highlight@2.0.0-beta.5
+  - @remirror/extension-trailing-node@2.0.0-beta.5
+  - @remirror/extension-underline@2.0.0-beta.5
+  - @remirror/extension-whitespace@2.0.0-beta.5
+  - @remirror/extension-yjs@3.0.0-beta.5
+  - @remirror/preset-core@2.0.0-beta.5
+  - @remirror/preset-formatting@2.0.0-beta.5
+  - @remirror/preset-wysiwyg@2.0.0-beta.5
+  - @remirror/core-helpers@2.0.0-beta.5
+  - @remirror/icons@2.0.0-beta.5
+  - @remirror/pm@2.0.0-beta.5
+  - @remirror/theme@2.0.0-beta.5
+  - @remirror/core-constants@2.0.0-beta.5
+  - @remirror/core-types@2.0.0-beta.5
+
 ## 2.0.0-beta.4
 
 > 2022-06-29
