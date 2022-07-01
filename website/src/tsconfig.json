@@ -21,6 +21,9 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../packages/remirror__core/src"
+    },
+    {
       "path": "../../packages/remirror__dev/src"
     },
     {
