@@ -4,7 +4,6 @@
   "initialVersions": {
     "a11y-status": "1.0.0",
     "create-context-state": "1.0.1",
-    "docusaurus-plugin-examples": "0.0.0",
     "jest-prosemirror": "1.0.29",
     "jest-remirror": "1.0.46",
     "multishift": "1.0.8",

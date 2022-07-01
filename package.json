@@ -235,7 +235,6 @@
   },
   "preconstruct": {
     "packages": [
-      "packages/docusaurus-plugin-examples",
       "support/actions",
       "support/scripts",
       "support/templates/*"

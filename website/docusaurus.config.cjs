@@ -131,16 +131,7 @@ const config = {
     ],
   ],
   plugins: [
-    // path.join(__dirname, 'plugins', 'basic-plugin.js'),
     // require.resolve('@docusaurus/plugin-ideal-image'),
-    // [
-    //   'docusaurus-plugin-examples',
-    //   {
-    //     path: path.join(__dirname, 'examples'),
-    //     include: ['*.{js,jsx,ts,tsx}'],
-    //     exclude: ['*.test.{js,jsx,ts,tsx}'],
-    //   },
-    // ],
   ],
 
   // https://github.com/facebook/docusaurus/issues/4765#issuecomment-841135926
