@@ -241,13 +241,10 @@ describe('EntityReference marks', () => {
       commands.selectText({ from: entityReference.from, to: entityReference.to });
       commands.addEntityReference(entityReference.id);
 
-      // Fire an update to remove the current range selection.
-      // The cursor will be placed at the anchor of the current range selection.
-      // in this case the anchor is 3.
-      editor.commands.emptySelection();
+      // Fire an update to remove the current range selection and select all the document instead.
+      editor.commands.selectAll();
 
-      expect(editor.state.selection.from).toBe(entityReference.from);
-      expect(editor.state.selection.to).toBe(entityReference.from);
+      expect(editor.state.selection.from).not.toBe(entityReference.from);
       expect(editor.state.selection.to).not.toBe(entityReference.to);
 
       const selected = commands.scrollToEntityReference(entityReference.id);

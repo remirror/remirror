@@ -192,7 +192,6 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
       const entityReferenceSelection = TextSelection.between(resolvedFrom, resolvedTo);
       // Select range and scroll into it
       dispatch?.(tr.setSelection(entityReferenceSelection).scrollIntoView());
-      dispatch?.(tr);
       return true;
     };
   }
