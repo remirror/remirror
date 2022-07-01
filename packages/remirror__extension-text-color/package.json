@@ -39,7 +39,7 @@
     "@remirror/i18n": "^2.0.0-beta.5",
     "@remirror/messages": "^2.0.0-beta.5",
     "@remirror/theme": "^2.0.0-beta.5",
-    "color2k": "^1.2.4"
+    "color2k": "^2.0.0"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.0-beta.5"
