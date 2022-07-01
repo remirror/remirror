@@ -440,12 +440,6 @@ export const defaultRemirrorTheme: Remirror.Theme = {
     shadow3,
     backdrop: transparentize(foreground, 0.1),
     outline: transparentize(primary, 0.6),
-    selection: {
-      background: 'Highlight',
-      shadow: 'inherit',
-      text: 'HighlightText',
-      caret: 'inherit',
-    },
     table: {
       default: {
         border: lighten(foreground, 0.8),
@@ -639,15 +633,6 @@ declare global {
       outline: Color;
       active: NamedColor;
       hover: NamedColor;
-      /**
-       * The configuration for the selected text.
-       */
-      selection: {
-        background: Color;
-        text: Color;
-        shadow: Color;
-        caret: Color;
-      };
       /**
        * The configuration for the table.
        */
