@@ -614,7 +614,7 @@ importers:
       '@remirror/icons': ^2.0.0-beta.5
       '@remirror/messages': ^2.0.0-beta.5
       '@remirror/pm': ^2.0.0-beta.5
-      nanoevents: ^5.1.13
+      nanoevents: ^7.0.1
       tiny-warning: ^1.0.3
     dependencies:
       '@babel/runtime': 7.18.3
@@ -626,7 +626,7 @@ importers:
       '@remirror/i18n': link:../remirror__i18n
       '@remirror/icons': link:../remirror__icons
       '@remirror/messages': link:../remirror__messages
-      nanoevents: 5.1.13
+      nanoevents: 7.0.1
       tiny-warning: 1.0.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
@@ -1067,7 +1067,7 @@ importers:
       '@remirror/theme': ^2.0.0-beta.5
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
-      nanoevents: ^5.1.13
+      nanoevents: ^7.0.1
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
@@ -1076,7 +1076,7 @@ importers:
       '@remirror/react': link:../remirror__react
       '@remirror/react-components': link:../remirror__react-components
       '@remirror/theme': link:../remirror__theme
-      nanoevents: 5.1.13
+      nanoevents: 7.0.1
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 18.0.14
@@ -1349,14 +1349,14 @@ importers:
       '@remirror/messages': ^2.0.0-beta.5
       '@remirror/pm': ^2.0.0-beta.5
       '@remirror/theme': ^2.0.0-beta.5
-      nanoevents: ^5.1.13
+      nanoevents: ^7.0.1
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/core': link:../remirror__core
       '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
-      nanoevents: 5.1.13
+      nanoevents: 7.0.1
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
@@ -1369,14 +1369,14 @@ importers:
       '@remirror/react': ^2.0.0-beta.5
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
-      nanoevents: ^5.1.13
+      nanoevents: ^7.0.1
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
-      nanoevents: 5.1.13
+      nanoevents: 7.0.1
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
@@ -1427,7 +1427,7 @@ importers:
       '@remirror/theme': ^2.0.0-beta.5
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
-      jsx-dom: ^6.4.23
+      jsx-dom: ^7.0.4
       react: ^18.0.0
       react-dom: ^18.0.0
       y-webrtc: ^10.2.2
@@ -1447,7 +1447,7 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
       '@remirror/theme': link:../remirror__theme
-      jsx-dom: 6.4.23
+      jsx-dom: 7.0.4
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 18.0.14
@@ -12402,7 +12402,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.5
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -20275,8 +20275,8 @@ packages:
       object.assign: 4.1.2
     dev: false
 
-  /jsx-dom/6.4.23:
-    resolution: {integrity: sha512-Y0ax82xa4nzqFdbUXs3ma2haDZy4pB638kMZsGRzZqdmtyzY2nAKs7Bh3DrLn0vqMuxmvZQ3g9hq3NtnI5yXtQ==}
+  /jsx-dom/7.0.4:
+    resolution: {integrity: sha512-CX5ayrg1/fvsXlXmff/ovhdFnA9iGAveATla1adsjsfd0c1XtBChK4ZoL0fT4euOuC4lTcGlNDfUf5Q0H1XJFw==}
     dependencies:
       csstype: 3.1.0
     dev: false
@@ -21596,9 +21596,9 @@ packages:
     resolution: {integrity: sha512-2nMHqg1x5PU+unxX7PGY7AuYxl2qDx7PSrTRjizr8sxdd3l/3hBuWWaki62qmtYm2U5i4Z5E7GbjlyDFhs9/EQ==}
     dev: true
 
-  /nanoevents/5.1.13:
-    resolution: {integrity: sha512-JFAeG9fp0QZnRoESHjkbVFbZ9BkOXkkagUVwZVo/pkSX+Fq1VKlY+5og/8X9CYc6C7vje/CV+bwJ5M2X0+IY9Q==}
-    engines: {node: '>=6.0.0'}
+  /nanoevents/7.0.1:
+    resolution: {integrity: sha512-o6lpKiCxLeijK4hgsqfR6CNToPyRU3keKyyI6uwuHRvpRTbZ0wXw51WRgyldVugZqoJfkGFrjrIenYH3bfEO3Q==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     dev: false
 
   /nanoid/2.1.11:
@@ -23616,17 +23616,6 @@ packages:
 
   /promise-inflight/1.0.1:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-
-  /promise-inflight/1.0.1_bluebird@3.7.2:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
-    dependencies:
-      bluebird: 3.7.2
-    dev: true
 
   /promise-retry/1.1.1:
     resolution: {integrity: sha1-ZznpaOMFHaIM5kl/srUPaRHfPW0=}
