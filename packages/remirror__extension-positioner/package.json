@@ -41,7 +41,7 @@
     "@remirror/extension-events": "^2.0.0-beta.5",
     "@remirror/messages": "^2.0.0-beta.5",
     "@remirror/theme": "^2.0.0-beta.5",
-    "nanoevents": "^5.1.13"
+    "nanoevents": "^7.0.1"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.0-beta.5"
