@@ -1,31 +1,15 @@
 import { Placement } from '@popperjs/core';
-import { matchSorter } from 'match-sorter';
 import React, { FC, PropsWithChildren, ReactChild, Ref, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { useMenuState } from 'reakit';
-import { cx, Except } from '@remirror/core';
+import { cx } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
 import { useHelpers } from '@remirror/react-core';
-import {
-  useEditorFocus,
-  UseEditorFocusProps,
-  usePositioner,
-  useSuggest,
-} from '@remirror/react-hooks';
+import { useEditorFocus, UseEditorFocusProps, usePositioner } from '@remirror/react-hooks';
 import { ComponentsTheme, ExtensionPositionerTheme } from '@remirror/theme';
 
 import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
-import { useIsomorphicLayoutEffect } from './components/use-isomorphic-layout-effect';
-import { MenuComponent } from './menu';
-import {
-  ComponentItem,
-  MenuActionItemUnion,
-  MenuCommandPaneItem,
-  MenuPaneItem,
-  ToolbarItem,
-} from './react-component-types';
-import { Toolbar } from './toolbar';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
 import { usePopper } from './use-popper';
 
 interface BaseFloatingPositioner extends UseEditorFocusProps {
@@ -175,40 +159,6 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
   );
 };
 
-interface FloatingToolbarProps extends Except<ToolbarItem, 'type'>, FloatingWrapperProps {}
-
-export const FloatingToolbar = (props: FloatingToolbarProps): JSX.Element => {
-  const {
-    placement,
-    positioner,
-    animated = 200,
-    animatedClass = ComponentsTheme.ANIMATED_POPOVER,
-    containerClass,
-    blurOnInactive,
-    enabled,
-    floatingLabel,
-    ignoredElements,
-    ...toolbarProps
-  } = props;
-  const floatingWrapperProps = {
-    placement,
-    positioner,
-    animated,
-    animatedClass,
-    containerClass,
-    blurOnInactive,
-    enabled,
-    floatingLabel,
-    ignoredElements,
-  };
-
-  return (
-    <FloatingWrapper {...floatingWrapperProps}>
-      <Toolbar {...toolbarProps} refocusEditor={false} />
-    </FloatingWrapper>
-  );
-};
-
 export interface PositionerComponentProps {
   children: ReactChild;
 }
@@ -223,53 +173,53 @@ export const PositionerPortal: FC<PositionerComponentProps> = (props) => {
   return createPortal(<>{props.children}</>, container);
 };
 
-interface FloatingActionsMenuProps extends Partial<FloatingWrapperProps> {
-  actions: MenuActionItemUnion[];
-}
+// interface FloatingActionsMenuProps extends Partial<FloatingWrapperProps> {
+//   actions: MenuActionItemUnion[];
+// }
 
 /**
  * Respond to user queries in the editor.
  */
-export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Element => {
-  const {
-    actions,
-    animated = false,
-    placement = 'right-end',
-    positioner = 'nearestWord',
-    blurOnInactive,
-    ignoredElements,
-    enabled = true,
-    ...floatingWrapperProps
-  } = props;
-  const { change } = useSuggest({ char: '/', name: 'actions-dropdown', matchOffset: 0 });
-  const query = change?.query.full;
-  const menuState = useMenuState({ unstable_virtual: true, wrap: true, loop: true });
-
-  const items = (
-    query
-      ? matchSorter(actions, query, {
-          keys: ['tags', 'description', (item) => item.description?.replace(/\W/g, '') ?? ''],
-          threshold: matchSorter.rankings.CONTAINS,
-        })
-      : actions
-  ).map<MenuPaneItem | MenuCommandPaneItem>((item) =>
-    item.type === ComponentItem.MenuAction
-      ? { ...item, type: ComponentItem.MenuPane }
-      : { ...item, type: ComponentItem.MenuCommandPane },
-  );
-
-  return (
-    <FloatingWrapper
-      enabled={!!query}
-      positioner={positioner}
-      placement={placement}
-      animated={animated}
-      blurOnInactive={blurOnInactive}
-      ignoredElements={ignoredElements}
-      {...floatingWrapperProps}
-    >
-      <div style={{ width: 50, height: 50, background: 'red' }} />
-      <MenuComponent open={!!query && enabled} items={items} menuState={menuState} />
-    </FloatingWrapper>
-  );
-};
+// export const FloatingActionsMenu = (props: FloatingActionsMenuProps): JSX.Element => {
+//   const {
+//     actions,
+//     animated = false,
+//     placement = 'right-end',
+//     positioner = 'nearestWord',
+//     blurOnInactive,
+//     ignoredElements,
+//     enabled = true,
+//     ...floatingWrapperProps
+//   } = props;
+//   const { change } = useSuggest({ char: '/', name: 'actions-dropdown', matchOffset: 0 });
+//   const query = change?.query.full;
+//   const menuState = useMenuState({ unstable_virtual: true, wrap: true, loop: true });
+//
+//   const items = (
+//     query
+//       ? matchSorter(actions, query, {
+//           keys: ['tags', 'description', (item) => item.description?.replace(/\W/g, '') ?? ''],
+//           threshold: matchSorter.rankings.CONTAINS,
+//         })
+//       : actions
+//   ).map<MenuPaneItem | MenuCommandPaneItem>((item) =>
+//     item.type === ComponentItem.MenuAction
+//       ? { ...item, type: ComponentItem.MenuPane }
+//       : { ...item, type: ComponentItem.MenuCommandPane },
+//   );
+//
+//   return (
+//     <FloatingWrapper
+//       enabled={!!query}
+//       positioner={positioner}
+//       placement={placement}
+//       animated={animated}
+//       blurOnInactive={blurOnInactive}
+//       ignoredElements={ignoredElements}
+//       {...floatingWrapperProps}
+//     >
+//       <div style={{ width: 50, height: 50, background: 'red' }} />
+//       <MenuComponent open={!!query && enabled} items={items} menuState={menuState} />
+//     </FloatingWrapper>
+//   );
+// };

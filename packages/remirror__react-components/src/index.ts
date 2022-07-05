@@ -1,9 +1,8 @@
-export * from './components';
+export * from './button-groups';
+export * from './buttons';
 export * from './floating-menu';
 export * from './icons/icons-base';
-export * from './menu';
+export * from './menus';
+export * from './popups';
 export * from './providers';
-export * from './react-component-types';
 export * from './toolbar';
-export type { ButtonProps } from 'reakit';
-export { Button } from 'reakit';
