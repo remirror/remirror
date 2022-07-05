@@ -699,6 +699,38 @@ describe('autolinking', () => {
     );
   });
 
+  it('should create auto link if href equals text content', () => {
+    const editor = renderEditor([new LinkExtension({ autoLink: true })]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.chain.insertHtml('<a href="//test.com">test.com</a>').run();
+
+    editor.selectText(5).insertText('er');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//tester.com' })('tester.com'))),
+    );
+  });
+
+  it('should not create auto link if href does not equal text content', () => {
+    const editor = renderEditor([new LinkExtension({ autoLink: true })]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.chain.insertHtml('<a href="//test.com">test</a>').run();
+
+    editor.selectText(5).insertText('er');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: false, href: '//test.com' })('test'), 'er')),
+    );
+  });
+
   it('supports deleting selected to to invalidate the match', () => {
     editor
       .add(doc(p('<cursor>')))
