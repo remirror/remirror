@@ -211,4 +211,47 @@ describe('EntityReference marks', () => {
       expect(entityReferences).toHaveLength(2);
     });
   });
+
+  describe('getEntityReferenceId', () => {
+    it('Returns entityReference by Id', () => {
+      add(doc(p('testing text')));
+      const entityReference = {
+        id: 'testId',
+        from: 1,
+        to: 8,
+        text: 'testing',
+      };
+      selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+      const entityReferenceFromDoc = helpers.getEntityReferenceById(entityReference.id);
+
+      expect(entityReferenceFromDoc).toEqual(entityReference);
+    });
+  });
+
+  describe('scrollIntoEntityReference', () => {
+    it('returns correct range when the selection is not empty', () => {
+      const editor = add(doc(p(DUMMY_TEXT)));
+      const entityReference = {
+        id: 'testId',
+        from: 3,
+        to: 8,
+        text: 'testing',
+      };
+      commands.selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+
+      // Fire an update to remove the current range selection and select all the document instead.
+      editor.commands.selectAll();
+
+      expect(editor.state.selection.from).not.toBe(entityReference.from);
+      expect(editor.state.selection.to).not.toBe(entityReference.to);
+
+      const selected = commands.scrollToEntityReference(entityReference.id);
+
+      expect(selected).toBeTrue();
+      expect(editor.state.selection.from).toBe(entityReference.from);
+      expect(editor.state.selection.to).toBe(entityReference.to);
+    });
+  });
 });
