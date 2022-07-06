@@ -743,6 +743,127 @@ describe('autolinking', () => {
     );
   });
 
+  it('should only update first link', () => {
+    editor.add(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+
+    editor.selectText(9).insertText('m');
+
+    expect(onUpdateLink).toHaveBeenCalledTimes(1);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//first.com' })('first.com'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+  });
+
+  it('should update first link once after stepping out of link node', () => {
+    editor.add(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+
+    editor.selectText(9).insertText('m');
+
+    expect(onUpdateLink).toHaveBeenCalledTimes(1);
+
+    editor.insertText('!');
+
+    expect(onUpdateLink).toHaveBeenCalledTimes(2);
+
+    editor.insertText('!');
+
+    expect(onUpdateLink).toHaveBeenCalledTimes(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//first.com' })('first.com'),
+          '!! ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+  });
+
+  it('should only update second link', () => {
+    editor.add(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+
+    editor.backspace();
+
+    expect(onUpdateLink).toHaveBeenCalledTimes(1);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.co' })('second.co'),
+        ),
+      ),
+    );
+  });
+
+  it('should update second link once after stepping out of link node', () => {
+    editor.add(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+
+    editor.backspace();
+
+    expect(onUpdateLink).toHaveBeenCalledTimes(1);
+
+    editor.insertText(' ');
+
+    expect(onUpdateLink).toHaveBeenCalledTimes(2);
+
+    editor.insertText('Test');
+
+    expect(onUpdateLink).toHaveBeenCalledTimes(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.co' })('second.co'),
+          ' Test',
+        ),
+      ),
+    );
+  });
+
   it('supports detecting changed TLD in qoutes', () => {
     editor.add(doc(p('<cursor>'))).insertText('"test.co"');
 

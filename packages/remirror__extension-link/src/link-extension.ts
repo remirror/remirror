@@ -37,6 +37,7 @@ import {
   removeMark,
   Static,
   updateMark,
+  within,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
 import { undoDepth } from '@remirror/pm/history';
@@ -671,6 +672,18 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               const matchStart = match.index;
               const matchEnd = matchStart + matchedText.length;
               const urlInMatchRange = this.findURL(matchedText);
+              const linkMarkInRange = this.getLinkMarksInRange(doc, matchStart, matchEnd, true)[0];
+
+              // Don't update existing links that are not in selection range
+              if (
+                linkMarkInRange &&
+                urlInMatchRange &&
+                (linkMarkInRange.to >= to ||
+                  !within(from, linkMarkInRange.from, linkMarkInRange.to)) &&
+                linkMarkInRange.mark.attrs.href === this.buildHref(urlInMatchRange)
+              ) {
+                continue;
+              }
 
               // Skip if no valid link is in the match
               if (!urlInMatchRange && !new RegExp('^[0-9|-]+$').test(matchedText)) {
