@@ -622,6 +622,10 @@ describe('autolinking', () => {
   });
 
   it('calls the onUpdateLink handler when auto linking', () => {
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((requestCallback) => {
+      requestCallback(1);
+      return 1;
+    });
     let editorText = 'test.co';
     editor.add(doc(p('<cursor>'))).insertText(editorText);
 
