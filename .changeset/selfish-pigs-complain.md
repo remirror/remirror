@@ -2,6 +2,4 @@
 '@remirror/extension-link': patch
 ---
 
-push onUpdateLink to the end of the execution queu to prevent possible DOMException
-
-Failed to execute 'collapse' on 'Selection' if prev node size is larger than current.
+Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
