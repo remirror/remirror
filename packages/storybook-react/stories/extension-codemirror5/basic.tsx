@@ -5,6 +5,7 @@ import 'codemirror/mode/yaml/yaml';
 import 'codemirror/theme/nord.css';
 
 import CodeMirror from 'codemirror';
+import React from 'react';
 import { CodeMirrorExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 

@@ -64,8 +64,9 @@ describe('commands', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         An
-        <span style="background: rgb(215, 215, 255);"
-              class="updated"
+        <span
+          style="background: rgb(215, 215, 255);"
+          class="updated"
         >
           important
         </span>
@@ -302,8 +303,9 @@ describe('styling', () => {
 
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <p>
-        <span class="custom-annotation"
-              style="background: rgb(215, 215, 255);"
+        <span
+          class="custom-annotation"
+          style="background: rgb(215, 215, 255);"
         >
           Hello
         </span>
@@ -600,13 +602,15 @@ describe('custom annotations', () => {
         <span style="background: rgb(215, 215, 255);">
           Hell
         </span>
-        <span class="custom"
-              style="background: rgb(175, 175, 255);"
+        <span
+          class="custom"
+          style="background: rgb(175, 175, 255);"
         >
           o
         </span>
-        <span class="custom"
-              style="background: rgb(215, 215, 255);"
+        <span
+          class="custom"
+          style="background: rgb(215, 215, 255);"
         >
           my frie
         </span>

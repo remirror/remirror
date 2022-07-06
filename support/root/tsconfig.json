@@ -15,9 +15,6 @@
       "path": "packages/create-context-state/src"
     },
     {
-      "path": "packages/docusaurus-plugin-examples/src"
-    },
-    {
       "path": "packages/jest-prosemirror/__tests__"
     },
     {
@@ -151,6 +148,9 @@
     },
     {
       "path": "packages/remirror__extension-codemirror5/src"
+    },
+    {
+      "path": "packages/remirror__extension-codemirror6/__tests__"
     },
     {
       "path": "packages/remirror__extension-codemirror6/src"
@@ -516,9 +516,6 @@
       "path": "packages/remirror__react-renderer/src"
     },
     {
-      "path": "packages/remirror__react-ssr/__tests__"
-    },
-    {
       "path": "packages/remirror__react-ssr/src"
     },
     {
@@ -568,9 +565,6 @@
     },
     {
       "path": "support/scripts/src"
-    },
-    {
-      "path": "support/templates/extension-template/__tests__"
     },
     {
       "path": "support/templates/extension-template/src"

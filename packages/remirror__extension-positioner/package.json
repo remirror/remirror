@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-positioner",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.5",
   "description": "Reposition your elements with every state update.",
   "keywords": [
     "remirror",
@@ -19,46 +19,40 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-positioner.esm.js",
-      "require": "./dist/remirror-extension-positioner.cjs.js",
-      "browser": "./dist/remirror-extension-positioner.browser.esm.js",
-      "types": "./dist/remirror-extension-positioner.cjs.d.ts",
-      "default": "./dist/remirror-extension-positioner.esm.js"
+      "import": "./dist/remirror-extension-positioner.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-positioner.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-positioner.cjs.js",
-  "module": "dist/remirror-extension-positioner.esm.js",
-  "browser": {
-    "./dist/remirror-extension-positioner.cjs.js": "./dist/remirror-extension-positioner.browser.cjs.js",
-    "./dist/remirror-extension-positioner.esm.js": "./dist/remirror-extension-positioner.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-positioner.cjs.d.ts",
+  "main": "./dist/remirror-extension-positioner.js",
+  "module": "./dist/remirror-extension-positioner.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.0",
-    "@remirror/extension-events": "^2.0.0-beta.0",
-    "@remirror/messages": "^2.0.0-beta.0",
-    "@remirror/theme": "^2.0.0-beta.0",
-    "nanoevents": "^5.1.13"
+    "@remirror/core": "^2.0.0-beta.5",
+    "@remirror/extension-events": "^2.0.0-beta.5",
+    "@remirror/messages": "^2.0.0-beta.5",
+    "@remirror/theme": "^2.0.0-beta.5",
+    "nanoevents": "^7.0.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0"
+    "@remirror/pm": "^2.0.0-beta.5"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0"
+    "@remirror/pm": "^2.0.0-beta.5"
   },
   "publishConfig": {
     "access": "public"
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

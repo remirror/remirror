@@ -1,7 +1,6 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
+import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { WysiwygEditor } from '@remirror/react-editors/wysiwyg';
-
-import { useHelpers, useRemirrorContext } from '../../../remirror__react-core/src';
 
 export default { title: 'Editors / Wysiwyg' };
 

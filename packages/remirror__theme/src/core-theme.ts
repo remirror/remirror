@@ -1,7 +1,5 @@
 import { css } from '@linaria/core';
 
-import { getThemeVar } from './utils';
-
 /**
  * This is compiled into the class name `remirror-editor` and the css is
  * automatically generated and placed into the `@remirror/styles/core.css` via
@@ -35,14 +33,6 @@ export const EDITOR = css`
 
     hr {
       border-color: #2e2e2e;
-    }
-
-    ::selection,
-    .selection {
-      background: ${getThemeVar('color', 'selection', 'background')};
-      color: ${getThemeVar('color', 'selection', 'text')};
-      caret-color: ${getThemeVar('color', 'selection', 'caret')};
-      text-shadow: ${getThemeVar('color', 'selection', 'shadow')};
     }
 
     /* Protect against generic img rules. See also https://github.com/ProseMirror/prosemirror-view/commit/aaa50d592074c8063fc2ef77907ab6d0373822fb */

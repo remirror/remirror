@@ -1,7 +1,6 @@
-import { axe } from 'jest-axe';
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
-import { useState } from 'react';
-import { renderToString } from 'react-dom/server';
+import React, { useState } from 'react';
 import { hideConsoleError, rafMock } from 'testing';
 import { act, fireEvent, render, strictRender } from 'testing/react';
 import {
@@ -15,9 +14,9 @@ import {
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
 const handlers = {
-  onChange: jest.fn(),
-  onBlur: jest.fn(),
-  onFocus: jest.fn(),
+  onChange: jest.fn() as any,
+  onBlur: jest.fn() as any,
+  onFocus: jest.fn() as any,
 };
 
 test('should be called via a render prop', () => {
@@ -36,40 +35,11 @@ test('should be called via a render prop', () => {
   expect(editorNode).toHaveAttribute('role', 'textbox');
 });
 
-test('can `suppressHydrationWarning` without breaking', () => {
-  const { getByLabelText } = strictRender(
-    <Remirror
-      manager={createReactManager([])}
-      label={label}
-      {...handlers}
-      suppressHydrationWarning={true}
-      autoRender='start'
-    />,
-  );
-
-  expect(handlers.onChange).toHaveBeenCalledWith(expect.any(Object));
-  expect(handlers.onChange.mock.calls[0][0].helpers.getText()).toBe('');
-  expect(handlers.onChange.mock.calls[0][0].helpers.getJSON().type).toBe('doc');
-  expect(handlers.onChange.mock.calls[0][0].helpers.getHTML().type).toBeUndefined();
-
-  const editorNode = getByLabelText(label);
-
-  expect(editorNode).toHaveAttribute('role', 'textbox');
-});
-
 describe('basic functionality', () => {
   hideConsoleError(true);
 
-  it('is accessible', async () => {
-    const results = await axe(
-      renderToString(<Remirror manager={createReactManager([])} autoRender='start' />),
-    );
-
-    expect(results).toHaveNoViolations();
-  });
-
   it('should allow text input and fire all handlers', () => {
-    const setContent = jest.fn();
+    const setContent: any = jest.fn();
 
     const Component = () => {
       setContent.mockImplementation(useRemirrorContext().setContent);
@@ -374,7 +344,7 @@ test('`focus` should be chainable', () => {
 describe('onChange', () => {
   it('updates values', () => {
     const chain = RemirrorTestChain.create(createReactManager(() => []));
-    const mock = jest.fn();
+    const mock: any = jest.fn();
 
     const Component = () => {
       const { manager } = useRemirror({ extensions: chain.manager });
@@ -402,7 +372,7 @@ describe('onChange', () => {
 
   it('updates values in `StrictMode`', () => {
     const chain = RemirrorTestChain.create(createReactManager(() => []));
-    const mock = jest.fn();
+    const mock: any = jest.fn();
 
     const Component = () => {
       const { manager } = useRemirror({ extensions: chain.manager });

@@ -258,8 +258,6 @@ let config = {
     // React Rules
 
     'react/no-multi-comp': 'off',
-    'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/display-name': 'warn',
     'react/no-unescaped-entities': 'error',
@@ -449,7 +447,9 @@ if (process.env.FULL_ESLINT_CHECK) {
     '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
     '@typescript-eslint/restrict-plus-operands': 'warn',
     '@typescript-eslint/no-misused-promises': 'warn',
-    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+
+    // TODO: re-enable the following rule again. -- ocavue 2022-06-12
+    // '@typescript-eslint/no-unnecessary-type-assertion': 'error',
   };
 
   const rulesOff = {};
@@ -521,6 +521,8 @@ if (process.env.FULL_ESLINT_CHECK) {
           '@typescript-eslint/no-unused-vars-experimental': 'off',
           '@typescript-eslint/no-unused-vars': 'off',
           'react-hooks/rules-of-hooks': 'off',
+          'react/jsx-uses-react': 'off',
+          'react/react-in-jsx-scope': 'off',
         },
       },
     ],

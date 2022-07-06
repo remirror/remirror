@@ -1,5 +1,4 @@
-import { TabHTMLProps, TabOptions } from 'reakit/Tab/Tab';
-import { TabListHTMLProps, TabListOptions } from 'reakit/Tab/TabList';
+import { TabHTMLProps, TabListHTMLProps, TabListOptions, TabOptions } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

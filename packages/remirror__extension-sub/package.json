@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-sub",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.5",
   "description": "Add subscript formatting to your text editor.",
   "keywords": [
     "remirror",
@@ -18,43 +18,37 @@
     "Christopher Manouvrier <cmanou@mac.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-sub.esm.js",
-      "require": "./dist/remirror-extension-sub.cjs.js",
-      "browser": "./dist/remirror-extension-sub.browser.esm.js",
-      "types": "./dist/remirror-extension-sub.cjs.d.ts",
-      "default": "./dist/remirror-extension-sub.esm.js"
+      "import": "./dist/remirror-extension-sub.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-sub.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-sub.cjs.js",
-  "module": "dist/remirror-extension-sub.esm.js",
-  "browser": {
-    "./dist/remirror-extension-sub.cjs.js": "./dist/remirror-extension-sub.browser.cjs.js",
-    "./dist/remirror-extension-sub.esm.js": "./dist/remirror-extension-sub.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-sub.cjs.d.ts",
+  "main": "./dist/remirror-extension-sub.js",
+  "module": "./dist/remirror-extension-sub.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.0",
-    "@remirror/messages": "^2.0.0-beta.0"
+    "@remirror/core": "^2.0.0-beta.5",
+    "@remirror/messages": "^2.0.0-beta.5"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0"
+    "@remirror/pm": "^2.0.0-beta.5"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0"
+    "@remirror/pm": "^2.0.0-beta.5"
   },
   "publishConfig": {
     "access": "public"
   },
   "meta": {
     "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

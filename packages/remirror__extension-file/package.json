@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-file",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.5",
   "description": "",
   "keywords": [
     "remirror",
@@ -18,44 +18,39 @@
     "Ocavue <ocavue@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-file.esm.js",
-      "require": "./dist/remirror-extension-file.cjs.js",
-      "browser": "./dist/remirror-extension-file.browser.esm.js",
-      "types": "./dist/remirror-extension-file.cjs.d.ts",
-      "default": "./dist/remirror-extension-file.esm.js"
+      "import": "./dist/remirror-extension-file.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-file.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-file.cjs.js",
-  "module": "dist/remirror-extension-file.esm.js",
-  "browser": {
-    "./dist/remirror-extension-file.cjs.js": "./dist/remirror-extension-file.browser.cjs.js",
-    "./dist/remirror-extension-file.esm.js": "./dist/remirror-extension-file.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-file.cjs.d.ts",
+  "main": "./dist/remirror-extension-file.js",
+  "module": "./dist/remirror-extension-file.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.0",
-    "@remirror/react": "^2.0.0-beta.0",
-    "@remirror/react-components": "^2.0.0-beta.0",
-    "@remirror/theme": "^2.0.0-beta.0",
-    "nanoevents": "^5.1.13"
+    "@remirror/core": "^2.0.0-beta.5",
+    "@remirror/react": "^2.0.0-beta.5",
+    "@remirror/react-components": "^2.0.0-beta.5",
+    "@remirror/theme": "^2.0.0-beta.5",
+    "nanoevents": "^7.0.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.5",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.5",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",
@@ -80,6 +75,5 @@
   },
   "@remirror": {
     "sizeLimit": "30 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

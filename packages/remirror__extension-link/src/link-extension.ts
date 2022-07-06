@@ -319,7 +319,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const href = node.getAttribute('href');
-            const auto = node.hasAttribute(AUTO_ATTRIBUTE);
+            const text = node.textContent;
+
+            // If link text content equals href value we "auto link"
+            // e.g [test](//test.com) - not "auto link"
+            // e.g [test.com](//test.com) - "auto link"
+            const auto =
+              this.options.autoLink &&
+              (node.hasAttribute(AUTO_ATTRIBUTE) ||
+                href === text ||
+                href?.replace(`${this.options.defaultProtocol}//`, '') === text);
+
             return {
               ...extra.parse(node),
               href,
@@ -543,7 +553,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           if (this.options.selectTextOnClick) {
             const $start = doc.resolve(range.from);
             const $end = doc.resolve(range.to);
-            const transaction = tr.setSelection(new TextSelection($start, $end));
+            const transaction = tr.setSelection(TextSelection.between($start, $end));
 
             view.dispatch(transaction);
           }

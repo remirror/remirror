@@ -1,6 +1,7 @@
 import '../example.css';
 
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import React from 'react';
 import { SocialEditor } from '@remirror/react-editors/social';
 
 const ALL_USERS = [

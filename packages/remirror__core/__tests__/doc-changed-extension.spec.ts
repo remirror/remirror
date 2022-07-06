@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
 import { DocChangedExtension } from '../';
@@ -5,7 +6,7 @@ import { DocChangedExtension } from '../';
 extensionValidityTest(DocChangedExtension);
 
 test('calls the docChanged handler when the document is changed', () => {
-  const mock = jest.fn();
+  const mock: any = jest.fn();
   const {
     manager,
     add,
@@ -28,7 +29,7 @@ test('calls the docChanged handler when the document is changed', () => {
 });
 
 test('does not call the docChanged handler when the selection is changed', () => {
-  const mock = jest.fn();
+  const mock: any = jest.fn();
   const {
     manager,
     add,

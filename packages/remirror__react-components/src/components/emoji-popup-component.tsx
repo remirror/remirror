@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { cx } from '@remirror/core';
 import { FlatEmojiWithUrl, useEmoji } from '@remirror/react-hooks';
 import { ExtensionEmojiTheme } from '@remirror/theme';

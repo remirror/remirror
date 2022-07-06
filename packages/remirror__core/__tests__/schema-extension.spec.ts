@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { schema } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { values } from 'remirror';
@@ -59,7 +60,7 @@ describe('dynamic schema attributes', () => {
     // Nothing should have changed.
     expect(mark.marks).toHaveBeenCalledTimes(1);
     expect(mark.paragraph).toHaveBeenCalledTimes(4);
-    expect(outerHtml).toMatchDiffSnapshot(editor.dom.outerHTML);
+    expect(outerHtml).toMatchSnapshot(editor.dom.outerHTML);
   });
 });
 

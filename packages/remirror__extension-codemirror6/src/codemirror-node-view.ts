@@ -191,7 +191,7 @@ export class CodeMirror6NodeView implements NodeView {
   private asProseMirrorSelection(doc: ProsemirrorNode) {
     const start = this.getPos() + 1;
     const { anchor, head } = this.cm.state.selection.main;
-    return TextSelection.create(doc, anchor + start, head + start);
+    return TextSelection.between(doc.resolve(anchor + start), doc.resolve(head + start));
   }
 
   /**

@@ -4,31 +4,18 @@
  * Generate configuration files for `sizeLimit` and package `tsconfig`'s.
  */
 
-import { getPackages } from '@manypkg/get-packages';
 import chalk from 'chalk';
 import fs, { readdir } from 'fs-extra';
-import globby from 'globby';
 import os from 'os';
 import pLimit from 'p-limit';
 import path from 'path';
-import sortKeys from 'sort-keys';
 import writeJSON from 'write-json-file';
-import {
-  assertGet,
-  deepMerge,
-  invariant,
-  isEmptyObject,
-  isPlainObject,
-  isString,
-  object,
-  omitUndefined,
-} from '@remirror/core-helpers';
+import { assertGet, deepMerge, invariant, isEmptyObject, isString } from '@remirror/core-helpers';
 import type { PackageJson, TsConfigJson } from '@remirror/types';
 
 import {
   baseDir,
   cliArgs,
-  compareOutput,
   formatFiles,
   getAllDependencies,
   getRelativePathFromJson,
@@ -53,105 +40,6 @@ const PATH = {
 // A list of all the generated files which will be prettified at the end of the
 // process.
 const filesToPrettify: string[] = [];
-
-type Exports = Record<string, ExportField>;
-type ExportField = { [Key in PackageJson.ExportCondition | 'types']?: string } | string;
-
-/**
- * Generate the exports within the packages.
- *
- * TODO support `typeVersions` field https://github.com/sandersn/downlevel-dts
- */
-async function generateExports() {
-  log.info(chalk`\n{blue Running script for package.json {bold.grey exports} field}`);
-
-  // The following are used for running checks.
-  const actual: Record<string, unknown> = object();
-  const expected: Record<string, unknown> = object();
-
-  // Get all the packages in the `pnpm` monorepo.
-  const packages = await getAllDependencies({ excludeSupport: true });
-
-  // All the files to update with the new exports object.
-  const files: Array<[location: string, json: PackageJson]> = [];
-
-  for (const pkg of packages) {
-    if (!pkg.main) {
-      continue;
-    }
-
-    const { location, ...packageJson } = pkg;
-    const name = pkg.name;
-    const exportsObject = object<any>();
-
-    // Reset the exports field so that outdated references aren't persisted.
-    packageJson.exports = exportsObject;
-
-    // Track the actual stored expected for comparison with the expected.
-    actual[name] = JSON.stringify(pkg.exports, null, 2) ?? '';
-
-    const subPackages = await globby('**/package.json', {
-      cwd: location,
-      ignore: ['**/node_modules/**'],
-      onlyFiles: true,
-      absolute: true,
-    });
-
-    for (const subPackage of subPackages) {
-      const subPackageJson: PackageJson = require(subPackage);
-      const relativePath = prefixRelativePath(path.relative(location, path.dirname(subPackage)));
-
-      augmentExportsObject(packageJson, relativePath, subPackageJson);
-    }
-
-    // `styles` contains CSS files without a package.json. Webpack 5 needs this
-    // to import CSS files. See also https://github.com/remirror/remirror/pull/1123
-    if (pkg.name === 'remirror') {
-      exportsObject['./styles/*'] = './styles/*';
-    }
-
-    // Make sure the keys are sorted for the exports.
-    packageJson.exports = sortKeys(exportsObject) ?? '';
-
-    // Track the generated exports object for testing.
-    expected[name] = JSON.stringify(packageJson.exports, null, 2);
-    files.push([path.join(location, 'package.json'), packageJson]);
-  }
-
-  let error: Error | undefined;
-
-  try {
-    log.info('\nChecking the generated exports');
-    compareOutput(actual, expected);
-    log.info(chalk`\n{green The generated {bold exports} are valid for all packages.}`);
-
-    if (!cliArgs.force) {
-      return;
-    }
-
-    log.info(chalk`\n\nForcing update: {yellow \`--force\`} flag applied.\n\n`);
-  } catch (error_: any) {
-    error = error_;
-    log.error('\n', error?.message);
-  }
-
-  if (cliArgs.check && error) {
-    process.exit(1);
-  }
-
-  if (cliArgs.check) {
-    return;
-  }
-
-  log.info('\nWriting updates to file system.');
-
-  await Promise.all(
-    files.map(async ([filepath, json]) => {
-      filesToPrettify.push(path.relative(process.cwd(), filepath));
-      await writeJSON(filepath, json);
-    }),
-  );
-}
 
 /**
  * Make sure that "main", "module" and "types" fields within the packages are
@@ -205,44 +93,6 @@ function prefixRelativePath<Type extends string | undefined>(path: Type): Type {
   }
 
   return path.startsWith('.') ? path : (`./${path}` as Type);
-}
-
-/**
- * Add the path with relevant fields to the export field of the provided
- * `package.json` object.
- */
-function augmentExportsObject(rootJson: PackageJson, filepath: string, subJson: PackageJson) {
-  filepath = filepath || '.';
-  const browserPath = getBrowserPath(subJson);
-  const field: ExportField = {
-    import: prefixRelativePath(subJson.module ? path.join(filepath, subJson.module) : undefined),
-    require: prefixRelativePath(subJson.main ? path.join(filepath, subJson.main) : undefined),
-    browser: prefixRelativePath(browserPath ? path.join(filepath, browserPath) : undefined),
-
-    // Experimental since this is not currently resolved by TypeScript.
-    types: prefixRelativePath(subJson.types ? path.join(filepath, subJson.types) : undefined),
-  };
-  field.default = field.import || field.require;
-
-  let exportsObject: Exports;
-
-  if (isPlainObject(rootJson.exports)) {
-    exportsObject = rootJson.exports as Exports;
-  } else {
-    exportsObject = object();
-    rootJson.exports = exportsObject as PackageJson.Exports;
-  }
-
-  if (!rootJson.exports || isString(rootJson.exports)) {
-    rootJson.exports = {};
-  }
-
-  exportsObject[filepath] = omitUndefined(field);
-
-  if (filepath === '.') {
-    exportsObject['./package.json'] = './package.json';
-    exportsObject['./types/*'] = './dist/declarations/src/*.d.ts';
-  }
 }
 
 /**
@@ -523,7 +373,12 @@ async function resolveTsConfigMeta(
     const filepath = path.join(pkg.location, 'src', tsconfigFileName);
 
     // Collect all the references need for the current package.
-    for (const dependency of Object.keys(pkg.dependencies ?? {})) {
+    for (const dependency of Object.keys({
+      ...pkg.dependencies,
+      // ...pkg.devDependencies,
+      ...pkg.peerDependencies,
+      ...pkg.optionalDependencies,
+    })) {
       const dependencyPath = dependencies[dependency];
 
       // Check if the dependency is one of the internal workspace dependencies.
@@ -744,37 +599,6 @@ async function generatePackageTsConfigs() {
 }
 
 /**
- * Generate "repository" and "homepage" for every package.
- */
-async function generatePackageJsonConfigs() {
-  log.info(chalk`\n{blue Running script for package.json {bold.grey exports} field}`);
-
-  const root = baseDir();
-  const packages = await getPackages(root);
-
-  await Promise.all(
-    packages.packages.map((pkg) => {
-      const relativeDir = path.relative(root, pkg.dir);
-      return writeJSON(
-        path.join(pkg.dir, 'package.json'),
-        {
-          ...pkg.packageJson,
-          repository: {
-            type: 'git',
-            url: 'https://github.com/remirror/remirror.git',
-            directory: relativeDir,
-          },
-          homepage: `https://github.com/remirror/remirror/tree/HEAD/${relativeDir}`,
-        },
-        {
-          indent: 2,
-        },
-      );
-    }),
-  );
-}
-
-/**
  * The runner that runs when this is actioned.
  */
 async function main() {
@@ -784,12 +608,6 @@ async function main() {
   } else if (cliArgs.tsPackages) {
     // Run when flag `--ts-packages` is used.
     await Promise.all([generatePackageTsConfigs()]);
-  } else if (cliArgs.packageJson) {
-    // Run when flag `--package-json` is used.
-    await Promise.all([generatePackageJsonConfigs()]);
-  } else if (cliArgs.exports) {
-    // Run when `--exports` is used
-    await Promise.all([generateExports()]);
   } else if (cliArgs.entryPoint) {
     // Run when `--entry-point` is used
     await Promise.all([generateEntryPoint()]);

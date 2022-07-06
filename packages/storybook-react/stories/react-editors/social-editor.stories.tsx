@@ -1,7 +1,6 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
+import { useHelpers, useRemirrorContext } from '@remirror/react';
 import { SocialEditor } from '@remirror/react-editors/social';
-
-import { useHelpers, useRemirrorContext } from '../../../remirror__react-core/src';
 
 export default { title: 'Editors / Social' };
 

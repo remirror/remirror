@@ -371,7 +371,6 @@ export class SuggestState {
       from,
       to,
       { nodeName: suggester.ignoredTag, ...attributes },
-      // @ts-expect-error: TS types here don't allow us to set custom properties
       { name, specific, char: suggester.char },
     );
 
@@ -591,7 +590,6 @@ export class SuggestState {
               nodeName: suggestTag,
               class: name ? `${suggestClassName} suggest-${name}` : suggestClassName,
             },
-            // @ts-expect-error: TS types here don't allow us to set custom properties
             { name },
           ),
         ]);

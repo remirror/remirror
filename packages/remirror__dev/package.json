@@ -1,6 +1,6 @@
 {
   "name": "@remirror/dev",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.5",
   "description": "Development utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__dev",
   "repository": {
@@ -13,34 +13,29 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-dev.esm.js",
-      "require": "./dist/remirror-dev.cjs.js",
-      "browser": "./dist/remirror-dev.browser.esm.js",
-      "types": "./dist/remirror-dev.cjs.d.ts",
-      "default": "./dist/remirror-dev.esm.js"
+      "import": "./dist/remirror-dev.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-dev.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-dev.cjs.js",
-  "module": "dist/remirror-dev.esm.js",
-  "browser": {
-    "./dist/remirror-dev.cjs.js": "./dist/remirror-dev.browser.cjs.js",
-    "./dist/remirror-dev.esm.js": "./dist/remirror-dev.browser.esm.js"
-  },
-  "types": "./dist/remirror-dev.cjs.d.ts",
+  "main": "./dist/remirror-dev.js",
+  "module": "./dist/remirror-dev.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/react-core": "^2.0.0-beta.0",
+    "@remirror/react-core": "^2.0.0-beta.5",
     "prosemirror-dev-toolkit": ">= 0.0.11 < 1.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.5",
     "@testing-library/react": "^13.1.1",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
@@ -48,7 +43,7 @@
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.5",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",
@@ -64,6 +59,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

@@ -60,6 +60,9 @@
     },
     {
       "path": "../../remirror__extension-whitespace/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }

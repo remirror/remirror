@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import {
@@ -150,7 +151,7 @@ function create(options: LinkOptions = {}) {
 }
 
 describe('commands', () => {
-  let onUpdateLink = jest.fn(() => {});
+  let onUpdateLink: any = jest.fn(() => {});
   let {
     add,
     attributeMarks: { link },
@@ -434,7 +435,7 @@ describe('commands', () => {
 });
 
 describe('keys', () => {
-  const onShortcut = jest.fn(() => {});
+  const onShortcut: any = jest.fn(() => {});
 
   it('responds to Mod-k', () => {
     const {
@@ -490,7 +491,9 @@ describe('plugin', () => {
     } = create({ openLinkOnClick: true });
     const testLink = link({ href });
 
-    jest.spyOn(global, 'open').mockImplementation();
+    jest.spyOn(global, 'open').mockImplementation(() => {
+      return null;
+    });
 
     add(doc(p(testLink('Li<cursor>nk'))))
       .fire({ event: 'click' })
@@ -501,7 +504,7 @@ describe('plugin', () => {
 });
 
 describe('autolinking', () => {
-  let onUpdateLink = jest.fn(() => {});
+  let onUpdateLink: any = jest.fn(() => {});
   let editor = create({ autoLink: true, onUpdateLink });
   let { link } = editor.attributeMarks;
   let { doc, p, nomark } = editor.nodes;
@@ -693,6 +696,38 @@ describe('autolinking', () => {
 
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: '//githubstatus.com' })('githubstatus.com'))),
+    );
+  });
+
+  it('should create auto link if href equals text content', () => {
+    const editor = renderEditor([new LinkExtension({ autoLink: true })]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.chain.insertHtml('<a href="//test.com">test.com</a>').run();
+
+    editor.selectText(5).insertText('er');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//tester.com' })('tester.com'))),
+    );
+  });
+
+  it('should not create auto link if href does not equal text content', () => {
+    const editor = renderEditor([new LinkExtension({ autoLink: true })]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.chain.insertHtml('<a href="//test.com">test</a>').run();
+
+    editor.selectText(5).insertText('er');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: false, href: '//test.com' })('test'), 'er')),
     );
   });
 
@@ -1222,7 +1257,7 @@ describe('autolinking with allowed TLDs', () => {
 
 describe('onClick', () => {
   it('responds to clicks', () => {
-    const onClick = jest.fn(() => false);
+    const onClick: any = jest.fn(() => false);
     const {
       view,
       add,
@@ -1252,7 +1287,7 @@ describe('onClick', () => {
 
   it('can override further options when false is returned', () => {
     let returnValue = true;
-    const onClick = jest.fn(() => returnValue);
+    const onClick: any = jest.fn(() => returnValue);
     const {
       view,
       add,
@@ -1294,8 +1329,9 @@ describe('spanning', () => {
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         Paragraph with
-        <a href="//test.com"
-           rel="noopener noreferrer nofollow"
+        <a
+          href="//test.com"
+          rel="noopener noreferrer nofollow"
         >
           a
           <span class="selection">

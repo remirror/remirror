@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { ComponentItem, Toolbar, ToolbarItemUnion } from '@remirror/react';
 
 const toolbarItems: ToolbarItemUnion[] = [

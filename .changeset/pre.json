@@ -4,7 +4,6 @@
   "initialVersions": {
     "a11y-status": "1.0.0",
     "create-context-state": "1.0.1",
-    "docusaurus-plugin-examples": "0.0.0",
     "jest-prosemirror": "1.0.29",
     "jest-remirror": "1.0.46",
     "multishift": "1.0.8",
@@ -104,7 +103,25 @@
     "@remirror/extension-template": "1.0.1",
     "@remirror/minimal-template": "0.0.2",
     "@remirror/preset-template": "1.0.1",
-    "website": "0.0.0"
+    "website": "0.0.0",
+    "@remirror/extension-entity-reference": "2.0.0-beta.0"
   },
-  "changesets": ["tasty-seals-remain"]
+  "changesets": [
+    "cold-bugs-lay",
+    "cool-rockets-pump",
+    "dry-jars-fix",
+    "dull-toes-promise",
+    "five-lobsters-prove",
+    "hot-rabbits-perform",
+    "itchy-needles-jump",
+    "light-cameras-beam",
+    "many-students-laugh",
+    "metal-peaches-fly",
+    "nine-camels-brake",
+    "seven-guests-relate",
+    "six-nails-lay",
+    "spicy-dolls-wash",
+    "strong-wasps-bow",
+    "wild-bottles-collect"
+  ]
 }

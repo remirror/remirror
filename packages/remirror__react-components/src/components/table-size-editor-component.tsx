@@ -4,9 +4,8 @@
  * A grid size component for creating a table of a specific size into the
  * editor.
  */
-
 import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
-import { createRef, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { createRef, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { clamp, cx } from '@remirror/core';
 import { Rect } from '@remirror/extension-positioner';
 import { ComponentsTheme } from '@remirror/theme';

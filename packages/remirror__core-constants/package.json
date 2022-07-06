@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-constants",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.5",
   "description": "The core constants used throughout the remirror codebase",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core-constants",
   "repository": {
@@ -13,26 +13,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-core-constants.esm.js",
-      "require": "./dist/remirror-core-constants.cjs.js",
-      "browser": "./dist/remirror-core-constants.browser.esm.js",
-      "types": "./dist/remirror-core-constants.cjs.d.ts",
-      "default": "./dist/remirror-core-constants.esm.js"
+      "import": "./dist/remirror-core-constants.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-core-constants.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-core-constants.cjs.js",
-  "module": "dist/remirror-core-constants.esm.js",
-  "browser": {
-    "./dist/remirror-core-constants.cjs.js": "./dist/remirror-core-constants.browser.cjs.js",
-    "./dist/remirror-core-constants.esm.js": "./dist/remirror-core-constants.browser.esm.js"
-  },
-  "types": "./dist/remirror-core-constants.cjs.d.ts",
+  "main": "./dist/remirror-core-constants.js",
+  "module": "./dist/remirror-core-constants.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10"
@@ -42,6 +37,5 @@
   },
   "@remirror": {
     "sizeLimit": "2 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

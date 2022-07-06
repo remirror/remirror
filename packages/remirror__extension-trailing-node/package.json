@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-trailing-node",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.5",
   "description": "Make sure there's always space to type in your editor.",
   "keywords": [
     "remirror",
@@ -17,43 +17,37 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-trailing-node.esm.js",
-      "require": "./dist/remirror-extension-trailing-node.cjs.js",
-      "browser": "./dist/remirror-extension-trailing-node.browser.esm.js",
-      "types": "./dist/remirror-extension-trailing-node.cjs.d.ts",
-      "default": "./dist/remirror-extension-trailing-node.esm.js"
+      "import": "./dist/remirror-extension-trailing-node.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-trailing-node.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-extension-trailing-node.cjs.js",
-  "module": "dist/remirror-extension-trailing-node.esm.js",
-  "browser": {
-    "./dist/remirror-extension-trailing-node.cjs.js": "./dist/remirror-extension-trailing-node.browser.cjs.js",
-    "./dist/remirror-extension-trailing-node.esm.js": "./dist/remirror-extension-trailing-node.browser.esm.js"
-  },
-  "types": "./dist/remirror-extension-trailing-node.cjs.d.ts",
+  "main": "./dist/remirror-extension-trailing-node.js",
+  "module": "./dist/remirror-extension-trailing-node.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.0",
-    "@remirror/messages": "^2.0.0-beta.0"
+    "@remirror/core": "^2.0.0-beta.5",
+    "@remirror/messages": "^2.0.0-beta.5"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0"
+    "@remirror/pm": "^2.0.0-beta.5"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0"
+    "@remirror/pm": "^2.0.0-beta.5"
   },
   "publishConfig": {
     "access": "public"
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

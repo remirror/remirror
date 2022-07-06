@@ -1,5 +1,227 @@
 # jest-remirror
 
+## 2.0.0-beta.5
+
+> 2022-07-01
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Update ProseMirror packages to latest versions.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update prosemirror packages.
+- SSR features are removed.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - jest-prosemirror@2.0.0-beta.5
+  - @remirror/core@2.0.0-beta.5
+  - @remirror/dom@2.0.0-beta.5
+  - @remirror/preset-core@2.0.0-beta.5
+  - @remirror/pm@2.0.0-beta.5
+
+## 2.0.0-beta.4
+
+> 2022-06-29
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Update prosemirror packages.
+- SSR features are removed.
+- Update ProseMirror packages to latest versions.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.4
+  - jest-prosemirror@2.0.0-beta.4
+  - @remirror/core@2.0.0-beta.4
+  - @remirror/dom@2.0.0-beta.4
+  - @remirror/preset-core@2.0.0-beta.4
+
+## 2.0.0-beta.3
+
+> 2022-06-26
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Update prosemirror packages.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- Update ProseMirror packages to latest versions.
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.3
+  - jest-prosemirror@2.0.0-beta.3
+  - @remirror/core@2.0.0-beta.3
+  - @remirror/dom@2.0.0-beta.3
+  - @remirror/preset-core@2.0.0-beta.3
+
+## 2.0.0-beta.2
+
+> 2022-06-26
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Update prosemirror packages.
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - jest-prosemirror@2.0.0-beta.2
+  - @remirror/core@2.0.0-beta.2
+  - @remirror/dom@2.0.0-beta.2
+  - @remirror/pm@2.0.0-beta.2
+  - @remirror/preset-core@2.0.0-beta.2
+
+## 2.0.0-beta.1
+
+> 2022-06-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Update ProseMirror packages to latest versions.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/dom@2.0.0-beta.1
+  - @remirror/preset-core@2.0.0-beta.1
+  - @remirror/core@2.0.0-beta.1
+  - jest-prosemirror@2.0.0-beta.1
+  - @remirror/pm@2.0.0-beta.1
+
 ## 2.0.0-beta.0
 
 > 2022-05-31

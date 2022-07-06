@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { EmojiExtension, PlaceholderExtension } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
 import {

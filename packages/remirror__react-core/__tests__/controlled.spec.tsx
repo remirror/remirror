@@ -1,5 +1,6 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import {
   AnyExtension,
   EditorState,
@@ -40,7 +41,7 @@ describe('Remirror Controlled Component', () => {
     const value = manager.createState({
       content: '<p>This is the initial value</p>',
     });
-    const onChange = jest.fn();
+    const onChange: any = jest.fn();
 
     const { getByRole } = strictRender(
       <Remirror
@@ -64,7 +65,7 @@ describe('Remirror Controlled Component', () => {
     const value = chain.manager.createState({
       content: '<p>Not terrible</p>',
     });
-    const onChange = jest.fn();
+    const onChange: any = jest.fn();
 
     strictRender(
       <Remirror
@@ -86,7 +87,7 @@ describe('Remirror Controlled Component', () => {
     const value = chain.manager.createState({
       content: '<p>Not terrible</p>',
     });
-    const onChange = jest.fn();
+    const onChange: any = jest.fn();
 
     const { rerender } = strictRender(
       <Remirror
@@ -192,7 +193,7 @@ describe('Remirror Controlled Component', () => {
       content: '<p>some content</p>',
     });
 
-    const set = jest.fn();
+    const set: any = jest.fn();
 
     const Component = () => {
       const [state, setState] = useState(value);
@@ -226,7 +227,7 @@ describe('Remirror Controlled Component', () => {
       content: '<p>some content</p>',
     });
 
-    const set = jest.fn();
+    const set: any = jest.fn();
 
     const Component = () => {
       const [state, setState] = useState();
@@ -254,7 +255,7 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('notifies extensions of state updates via `manager.onStateUpdate`', () => {
-    const mock = jest.fn();
+    const mock: any = jest.fn();
 
     class UpdateExtension extends PlainExtension {
       get name() {
@@ -461,7 +462,7 @@ test('support for rendering a nested controlled editor in strict mode', () => {
 
 describe('onChange', () => {
   let chain = RemirrorTestChain.create(createReactManager([], { stringHandler: 'html' }));
-  const mock = jest.fn();
+  const mock: any = jest.fn();
 
   const Component = () => {
     const { manager, state, setState } = useRemirror({

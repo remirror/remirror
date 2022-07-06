@@ -1,4 +1,4 @@
-import { TooltipHTMLProps, TooltipOptions } from 'reakit/Tooltip/Tooltip';
+import { TooltipHTMLProps, TooltipOptions } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

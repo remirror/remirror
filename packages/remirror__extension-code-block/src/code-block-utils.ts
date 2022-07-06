@@ -1,4 +1,4 @@
-import refractor, { RefractorNode } from 'refractor/core';
+import refractor, { RefractorNode } from 'refractor/core.js';
 import {
   ApplySchemaAttributes,
   CommandFunction,
@@ -320,7 +320,9 @@ export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
       const anchor = start + cursorOffset;
       const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
 
-      tr.setSelection(TextSelection.create(tr.doc, anchor, head));
+      tr.setSelection(
+        TextSelection.between(tr.doc.resolve(anchor), tr.doc.resolve(head ?? anchor)),
+      );
 
       if (dispatch) {
         dispatch(tr);

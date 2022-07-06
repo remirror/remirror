@@ -1,12 +1,21 @@
-import { createContext, ReactNode, useCallback, useContext } from 'react';
-import { MenuHTMLProps, MenuOptions } from 'reakit/Menu/Menu';
-import { MenuBarHTMLProps, MenuBarOptions } from 'reakit/Menu/MenuBar';
-import { MenuButtonHTMLProps, MenuButtonOptions } from 'reakit/Menu/MenuButton';
-import { MenuGroupHTMLProps, MenuGroupOptions } from 'reakit/Menu/MenuGroup';
-import { MenuItemHTMLProps, MenuItemOptions } from 'reakit/Menu/MenuItem';
-import { MenuItemCheckboxHTMLProps, MenuItemCheckboxOptions } from 'reakit/Menu/MenuItemCheckbox';
-import { MenuItemRadioHTMLProps, MenuItemRadioOptions } from 'reakit/Menu/MenuItemRadio';
-import { MenuStateReturn } from 'reakit/Menu/MenuState';
+import React, { createContext, ReactNode, useCallback, useContext } from 'react';
+import {
+  MenuBarHTMLProps,
+  MenuBarOptions,
+  MenuButtonHTMLProps,
+  MenuButtonOptions,
+  MenuGroupHTMLProps,
+  MenuGroupOptions,
+  MenuHTMLProps,
+  MenuItemCheckboxHTMLProps,
+  MenuItemCheckboxOptions,
+  MenuItemHTMLProps,
+  MenuItemOptions,
+  MenuItemRadioHTMLProps,
+  MenuItemRadioOptions,
+  MenuOptions,
+  MenuStateReturn,
+} from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

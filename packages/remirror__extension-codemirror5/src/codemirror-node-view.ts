@@ -141,11 +141,11 @@ export class CodeMirrorNodeView implements NodeView {
    * ProseMirror selection. Because CodeMirror uses a line/column based indexing
    * system, `indexFromPos` is used to convert to an actual character index.
    */
-  asProseMirrorSelection(doc: ProsemirrorNode): TextSelection {
+  asProseMirrorSelection(doc: ProsemirrorNode): Selection {
     const offset = this.#getPos() + 1;
     const anchor = this.#cm.indexFromPos(this.#cm.getCursor('anchor')) + offset;
     const head = this.#cm.indexFromPos(this.#cm.getCursor('head')) + offset;
-    return TextSelection.create(doc, anchor, head);
+    return TextSelection.between(doc.resolve(anchor), doc.resolve(head));
   }
 
   /**

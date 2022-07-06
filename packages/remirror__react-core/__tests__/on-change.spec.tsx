@@ -1,12 +1,13 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
+import React from 'react';
 import { docNodeBasicJSON } from 'testing';
 import { strictRender } from 'testing/react';
-import type { RemirrorJSON } from '@remirror/core';
 
 import { createReactManager, OnChangeHTML, OnChangeJSON, Remirror } from '../';
 
 test('calls the onChange handler on document change with JSON serialized state', () => {
-  const mock = jest.fn<void, RemirrorJSON[]>();
+  const mock: any = jest.fn();
 
   const manager = createReactManager([]);
   const chain = RemirrorTestChain.create(manager);
@@ -57,7 +58,7 @@ test('calls the onChange handler on document change with JSON serialized state',
 });
 
 test('calls the onChange handler on document change with HTML serialized state', () => {
-  const mock = jest.fn<void, string[]>();
+  const mock: any = jest.fn();
 
   const manager = createReactManager([]);
   const chain = RemirrorTestChain.create(manager);

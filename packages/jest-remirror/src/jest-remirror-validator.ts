@@ -17,6 +17,7 @@ import {
 } from '@remirror/core';
 
 import { renderEditor } from './jest-remirror-editor';
+import { simpleMockFn } from './simple-mock';
 
 /**
  * Test that your extension is valid.
@@ -81,11 +82,11 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
     const extension = new Extension(options);
 
     if (isNodeExtension(extension)) {
-      it('creates a valid node spec', () => {
+      it('creates a valid node spec', async () => {
         const extraAttributes = {
-          defaults: jest.fn(() => ({})),
-          dom: jest.fn(() => ({})),
-          parse: jest.fn(() => ({})),
+          defaults: simpleMockFn(() => ({})),
+          dom: simpleMockFn(() => ({})),
+          parse: simpleMockFn(() => ({})),
         };
 
         const spec = extension.createNodeSpec(extraAttributes, {});
@@ -101,16 +102,16 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
           return;
         }
 
-        expect(extraAttributes.defaults).toHaveBeenCalled();
+        expect(extraAttributes.defaults.getCalled()).toBe(true);
       });
     }
 
     if (isMarkExtension(extension)) {
-      it('creates a valid mark spec', () => {
+      it('creates a valid mark spec', async () => {
         const extraAttributes = {
-          defaults: jest.fn(() => ({})),
-          dom: jest.fn(() => ({})),
-          parse: jest.fn(() => ({})),
+          defaults: simpleMockFn(() => ({})),
+          dom: simpleMockFn(() => ({})),
+          parse: simpleMockFn(() => ({})),
         };
 
         const spec = extension.createMarkSpec(extraAttributes, {});
@@ -126,7 +127,7 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
           return;
         }
 
-        expect(extraAttributes.defaults).toHaveBeenCalled();
+        expect(extraAttributes.defaults.getCalled()).toBe(true);
       });
     }
   });

@@ -199,7 +199,9 @@ interface DispatchTextSelectionProps extends TestEditorViewProps {
 export function dispatchTextSelection(props: DispatchTextSelectionProps): void {
   const { view, start, end } = props;
   const { state } = view;
-  const tr = state.tr.setSelection(TextSelection.create(state.doc, start, end));
+  const tr = state.tr.setSelection(
+    TextSelection.between(state.doc.resolve(start), state.doc.resolve(end ?? start)),
+  );
 
   view.dispatch(tr);
 }
@@ -212,7 +214,9 @@ interface DispatchAnchorTextSelectionProps extends TestEditorViewProps, AnchorHe
 export function dispatchAnchorTextSelection(props: DispatchAnchorTextSelectionProps): void {
   const { view, anchor, head } = props;
   const { state } = view;
-  const tr = state.tr.setSelection(TextSelection.create(state.doc, anchor, head));
+  const tr = state.tr.setSelection(
+    TextSelection.between(state.doc.resolve(anchor), state.doc.resolve(head)),
+  );
 
   view.dispatch(tr);
 }

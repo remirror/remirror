@@ -181,7 +181,7 @@ export function splitListItem(
 
         if (newListItem) {
           tr.insert(newListItemStartPos, newListItem);
-          tr.setSelection(TextSelection.create(tr.doc, newListItemStartPos + 1));
+          tr.setSelection(TextSelection.near(tr.doc.resolve(newListItemStartPos + 1)));
         }
 
         tr.delete($from.pos, $to.pos);
@@ -458,7 +458,7 @@ export function wrapSelectedItems({
   }
 
   tr.setSelection(
-    new TextSelection(
+    TextSelection.between(
       tr.doc.resolve(atStart ? from : from + 2),
       tr.doc.resolve(atStart ? to : to + 2),
     ),

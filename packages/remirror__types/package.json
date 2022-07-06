@@ -1,6 +1,6 @@
 {
   "name": "@remirror/types",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.5",
   "description": "Base types used throughout the remirror packages.",
   "keywords": [
     "remirror"
@@ -16,26 +16,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-types.esm.js",
-      "require": "./dist/remirror-types.cjs.js",
-      "browser": "./dist/remirror-types.browser.esm.js",
-      "types": "./dist/remirror-types.cjs.d.ts",
-      "default": "./dist/remirror-types.esm.js"
+      "import": "./dist/remirror-types.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-types.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-types.cjs.js",
-  "module": "dist/remirror-types.esm.js",
-  "browser": {
-    "./dist/remirror-types.cjs.js": "./dist/remirror-types.browser.cjs.js",
-    "./dist/remirror-types.esm.js": "./dist/remirror-types.browser.esm.js"
-  },
-  "types": "./dist/remirror-types.cjs.d.ts",
+  "main": "./dist/remirror-types.js",
+  "module": "./dist/remirror-types.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "type-fest": "^1.2.2"

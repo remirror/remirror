@@ -1,6 +1,6 @@
 {
   "name": "create-context-state",
-  "version": "1.0.1",
+  "version": "2.0.0-beta.4",
   "description": "Create a context hook and provider for managing the state of your react application",
   "keywords": [
     "remirror"
@@ -16,26 +16,21 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/create-context-state.esm.js",
-      "require": "./dist/create-context-state.cjs.js",
-      "browser": "./dist/create-context-state.browser.esm.js",
-      "types": "./dist/create-context-state.cjs.d.ts",
-      "default": "./dist/create-context-state.esm.js"
+      "import": "./dist/create-context-state.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/create-context-state.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/create-context-state.cjs.js",
-  "module": "dist/create-context-state.esm.js",
-  "browser": {
-    "./dist/create-context-state.cjs.js": "./dist/create-context-state.browser.cjs.js",
-    "./dist/create-context-state.esm.js": "./dist/create-context-state.browser.esm.js"
-  },
-  "types": "./dist/create-context-state.cjs.d.ts",
+  "main": "./dist/create-context-state.js",
+  "module": "./dist/create-context-state.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10"
@@ -59,6 +54,5 @@
   },
   "@remirror": {
     "sizeLimit": "1.5 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

@@ -13,7 +13,6 @@ import pLimit from 'p-limit';
 import path from 'path';
 import { parse } from 'semver';
 import writeJSON from 'write-json-file';
-import { invariant } from '@remirror/core-helpers';
 
 import { baseDir, getAllDependencies } from './helpers';
 
@@ -72,7 +71,10 @@ export async function mutatePackageVersions(prerelease: string) {
  */
 function getPreReleaseVersion(version: string | undefined, prerelease: string) {
   const semver = parse(version);
-  invariant(semver, { message: 'Invalid version provided' });
+
+  if (!semver) {
+    throw new Error(`Invalid version provided: ${version}`);
+  }
 
   return `0.0.0-${prerelease}`;
 }

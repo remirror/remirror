@@ -1,5 +1,5 @@
 /**
- * AUTO GENERATED FILE - TO UPDATE RUN: `pnpm run fix:css`
+ * AUTO GENERATED FILE - TO UPDATE RUN: `pnpm -w run fix:css`
  */
 
 import { css } from '@emotion/css';
@@ -559,7 +559,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-table-size-editor-cell-selected {
-    background: var(--rmr-color-selection-background);
+    background: var(--rmr-color-table-selected-border);
     border-color: var(--rmr-color-border);
   }
 
@@ -615,21 +615,6 @@ export const coreStyledCss: ReturnType<typeof css> = css`
 
   .remirror-editor.ProseMirror hr {
     border-color: #2e2e2e;
-  }
-
-  .remirror-editor.ProseMirror ::-moz-selection {
-    background: var(--rmr-color-selection-background);
-    color: var(--rmr-color-selection-text);
-    caret-color: var(--rmr-color-selection-caret);
-    text-shadow: var(--rmr-color-selection-shadow);
-  }
-
-  .remirror-editor.ProseMirror ::selection,
-  .remirror-editor.ProseMirror .selection {
-    background: var(--rmr-color-selection-background);
-    color: var(--rmr-color-selection-text);
-    caret-color: var(--rmr-color-selection-caret);
-    text-shadow: var(--rmr-color-selection-shadow);
   }
 
   /* Protect against generic img rules. See also https://github.com/ProseMirror/prosemirror-view/commit/aaa50d592074c8063fc2ef77907ab6d0373822fb */
@@ -4307,10 +4292,6 @@ export const themeStyledCss: ReturnType<typeof css> = css`
     --rmr-color-shadow-3: rgba(10, 31, 68, 0.12);
     --rmr-color-backdrop: rgba(0, 0, 0, 0.9);
     --rmr-color-outline: rgba(121, 99, 210, 0.4);
-    --rmr-color-selection-background: Highlight;
-    --rmr-color-selection-shadow: inherit;
-    --rmr-color-selection-text: HighlightText;
-    --rmr-color-selection-caret: inherit;
     --rmr-color-table-default-border: hsla(0, 0%, 80%, 1);
     --rmr-color-table-default-cell: hsla(0, 0%, 40%, 1);
     --rmr-color-table-default-controller: #dee2e6;

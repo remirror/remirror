@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { BoldExtension } from 'remirror/extensions';
 
 import { createDomEditor, createDomManager } from '../';
@@ -7,7 +8,7 @@ test('can be added to the dom', () => {
   document.body.append(element);
   const manager = createDomManager([new BoldExtension()]);
   const editor = createDomEditor({ manager, element });
-  const mock = jest.fn();
+  const mock: any = jest.fn();
 
   editor.addHandler('updated', mock);
   editor.commands.insertText('Hello test');

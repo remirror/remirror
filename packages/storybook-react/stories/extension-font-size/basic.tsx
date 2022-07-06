@@ -1,5 +1,6 @@
 import 'remirror/styles/all.css';
 
+import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { FontSizeExtension } from 'remirror/extensions';
 import {

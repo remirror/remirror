@@ -1,6 +1,6 @@
 {
   "name": "@remirror/messages",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.5",
   "description": "Internalization strings which are used throughout the remirror core codebase.",
   "keywords": [
     "remirror"
@@ -16,37 +16,40 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-messages.esm.js",
-      "require": "./dist/remirror-messages.cjs.js",
-      "browser": "./dist/remirror-messages.browser.esm.js",
-      "types": "./dist/remirror-messages.cjs.d.ts",
-      "default": "./dist/remirror-messages.esm.js"
+      "import": "./dist/remirror-messages.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-messages.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-messages.cjs.js",
-  "module": "dist/remirror-messages.esm.js",
-  "browser": {
-    "./dist/remirror-messages.cjs.js": "./dist/remirror-messages.browser.cjs.js",
-    "./dist/remirror-messages.esm.js": "./dist/remirror-messages.browser.esm.js"
-  },
-  "types": "./dist/remirror-messages.cjs.d.ts",
+  "main": "./dist/remirror-messages.js",
+  "module": "./dist/remirror-messages.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
+  "scripts": {
+    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es"
+  },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@lingui/core": "^3.10.4",
-    "@remirror/core-helpers": "^2.0.0-beta.0"
+    "@lingui/core": "^3.14.0",
+    "@remirror/core-helpers": "^2.0.0-beta.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/preset-typescript": "^7.17.12",
+    "babel-plugin-macros": "^3.1.0",
+    "rollup": "^2.75.6"
   },
   "publishConfig": {
     "access": "public"
   },
   "@remirror": {
     "sizeLimit": "50 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

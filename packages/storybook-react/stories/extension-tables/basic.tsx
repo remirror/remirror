@@ -1,3 +1,4 @@
+import React from 'react';
 import { HeadingExtension, TableExtension, TextColorExtension } from 'remirror/extensions';
 import {
   EditorComponent,
