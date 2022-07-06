@@ -622,13 +622,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               });
           });
 
-          onUpdateCallbacks.forEach(({ range, attrs, text }) => {
-            const { doc, selection } = tr;
-
-            // Push to the end of the execution queue to prevent possible DOMException
-            setTimeout(() => {
-              this.options.onUpdateLink(text, { doc, selection, range, attrs });
-            }, 0);
+          window.requestAnimationFrame(() => {
+            onUpdateCallbacks.forEach(({ attrs, range, text }) => {
+              const { doc, selection } = tr;
+              this.options.onUpdateLink(text, { attrs, doc, range, selection });
+            });
           });
         });
 
