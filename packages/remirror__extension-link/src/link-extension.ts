@@ -632,9 +632,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               });
           });
 
-          onUpdateCallbacks.forEach(({ range, attrs, text }) => {
-            const { doc, selection } = tr;
-            this.options.onUpdateLink(text, { doc, selection, range, attrs });
+          window.requestAnimationFrame(() => {
+            onUpdateCallbacks.forEach(({ attrs, range, text }) => {
+              const { doc, selection } = tr;
+              this.options.onUpdateLink(text, { attrs, doc, range, selection });
+            });
           });
         });
 
