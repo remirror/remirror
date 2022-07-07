@@ -23,14 +23,6 @@ export const EDITOR = css`
       position: relative;
     }
 
-    &[contenteditable='false'] {
-      white-space: normal;
-    }
-
-    &[contenteditable='true'] {
-      white-space: pre-wrap;
-    }
-
     hr {
       border-color: #2e2e2e;
     }
