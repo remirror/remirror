@@ -51,7 +51,7 @@ const UPDATE_LINK = 'updateLink';
 
 // Based on https://gist.github.com/dperini/729294
 const DEFAULT_AUTO_LINK_REGEX =
-  /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?]\S*)?/gi;
+  /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:(?:\/[^\s#?]*\w)+)?(?:(?:\?[^\s#]*\w)?(?:#\S*\w)?|\/)/gi;
 
 /**
  * Can be an empty string which sets url's to '//google.com'.
@@ -150,7 +150,7 @@ export interface LinkOptions {
    * value.
    *
    * @default
-   * /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?]\S*)?/gi
+   * /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:(?:\/[^\s#?]*\w)+)?(?:(?:\?[^\s#]*\w)?(?:#\S*\w)?|\/)/gi
    */
   autoLinkRegex?: Static<RegExp>;
 
@@ -252,12 +252,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return 'link' as const;
   }
 
-  /**
-   * The autoLinkRegex option with the global flag removed, ensure no "lastIndex" state is maintained over multiple matches
-   * @private
-   */
-  private _autoLinkRegexNonGlobal: RegExp | undefined = undefined;
-
   createTags() {
     return [ExtensionTag.Link, ExtensionTag.ExcludeInputRules];
   }
@@ -326,15 +320,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         return ['a', attrs, 0];
       },
     };
-  }
-
-  onCreate(): void {
-    const { autoLinkRegex } = this.options;
-    // Remove the global flag from autoLinkRegex, and wrap in start (^) and end ($) terminator to test for exact match
-    this._autoLinkRegexNonGlobal = new RegExp(
-      `^${autoLinkRegex.source}$`,
-      autoLinkRegex.flags.replace('g', ''),
-    );
   }
 
   /**
@@ -571,33 +556,42 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
         const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
         const { mapping } = composedTransaction;
-        const { tr, doc } = state;
+        const { tr } = state;
 
         const { updateLink, removeLink } = this.store.chain(tr);
 
         changes.forEach(({ from, to, prevFrom, prevTo }) => {
-          // Remove auto links that are no longer valid
-          this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
-            const newFrom = mapping.map(prevMark.from);
-            const newTo = mapping.map(prevMark.to);
-            const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
+          // If range is zero length, look for link mark in previous position
+          if (prevFrom === prevTo || from === to) {
+            prevFrom = Math.max(0, prevFrom - 1);
+          }
 
-            newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
+          // Figure out where all the links from the previous state are now
+          const mappedPrevMarks = this.getLinkMarksInRange(
+            prevState.doc,
+            prevFrom,
+            prevTo,
+            true,
+          ).map((prevMark) => ({
+            ...prevMark,
+            from: mapping.map(prevMark.from),
+            to: mapping.map(prevMark.to),
+          }));
 
-              if (wasLink && !isLink) {
-                removeLink({ from: newMark.from, to: newMark.to }).tr();
-              }
-            });
+          // Remove previous links in this changed range
+          mappedPrevMarks.forEach(({ from, to }) => {
+            removeLink({ from, to }).tr();
           });
+
+          // Find the lowest position of a mark that might have been altered
+          const minFrom = Math.min(from, ...mappedPrevMarks.map((p) => p.from));
 
           // Store all the callbacks we need to make
           const onUpdateCallbacks: Array<Pick<EventMeta, 'range' | 'attrs'> & { text: string }> =
             [];
 
           // Find text that can be auto linked
-          tr.doc.nodesBetween(from, to, (node, pos) => {
+          tr.doc.nodesBetween(minFrom, to, (node, pos) => {
             if (!node.isTextblock || !node.type.allowsMarkType(this.type)) {
               return;
             }
@@ -613,9 +607,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               .filter((link) => {
                 // Determine if found link is within the changed range
                 return (
-                  within(link.from, from, to) ||
-                  within(link.to, from, to) ||
-                  within(from, link.from, link.to) ||
+                  within(link.from, minFrom, to) ||
+                  within(link.to, minFrom, to) ||
+                  within(minFrom, link.from, link.to) ||
                   within(to, link.from, link.to)
                 );
               })
@@ -633,9 +627,16 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           });
 
           window.requestAnimationFrame(() => {
-            onUpdateCallbacks.forEach(({ attrs, range, text }) => {
+            onUpdateCallbacks.forEach(({ range, attrs, text }) => {
               const { doc, selection } = tr;
-              this.options.onUpdateLink(text, { attrs, doc, range, selection });
+              const previouslyExisted = mappedPrevMarks.find((mark) => {
+                return mark.from === range?.from && mark.text === text;
+              });
+
+              // If mark previously existed, don't trigger an update
+              if (!previouslyExisted) {
+                this.options.onUpdateLink(text, { doc, selection, range, attrs });
+              }
             });
           });
         });
