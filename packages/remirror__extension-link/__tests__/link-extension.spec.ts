@@ -625,10 +625,12 @@ describe('autolinking', () => {
   });
 
   it('calls the onUpdateLink handler when auto linking', () => {
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((requestCallback) => {
-      requestCallback(1);
-      return 1;
-    });
+    jest
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((requestCallback: FrameRequestCallback) => {
+        requestCallback(1);
+        return 1;
+      });
     let editorText = 'test.co';
     editor.add(doc(p('<cursor>'))).insertText(editorText);
 
@@ -783,6 +785,12 @@ describe('autolinking', () => {
   });
 
   it('should only update first link', () => {
+    jest
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((requestCallback: FrameRequestCallback) => {
+        requestCallback(1);
+        return 1;
+      });
     editor.add(
       doc(
         p(
@@ -809,6 +817,12 @@ describe('autolinking', () => {
   });
 
   it('should update first link once after stepping out of link node', () => {
+    jest
+      .spyOn(window, 'requestAnimationFrame')
+      .mockImplementation((requestCallback: FrameRequestCallback) => {
+        requestCallback(1);
+        return 1;
+      });
     editor.add(
       doc(
         p(
