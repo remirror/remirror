@@ -2,9 +2,9 @@ import 'remirror/styles/all.css';
 import './styles.css';
 
 import React from 'react';
-import { cx, htmlToProsemirrorNode } from 'remirror';
+import { htmlToProsemirrorNode } from 'remirror';
 import { SearchExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 
 const extensions = () => [
   new SearchExtension({
