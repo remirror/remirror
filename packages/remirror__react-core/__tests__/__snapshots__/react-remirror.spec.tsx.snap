@@ -11,9 +11,13 @@ exports[`\`autoRender\` renders at the end 1`] = `
     role="textbox"
     aria-multiline="true"
     aria-label
+    aria-placeholder
     class="ProseMirror remirror-editor"
   >
-    <p class="remirror-is-empty">
+    <p
+      data-placeholder
+      class="remirror-is-empty"
+    >
       <br class="ProseMirror-trailingBreak">
     </p>
   </div>
@@ -28,9 +32,13 @@ exports[`\`autoRender\` renders at the start 1`] = `
     role="textbox"
     aria-multiline="true"
     aria-label
+    aria-placeholder
     class="ProseMirror remirror-editor"
   >
-    <p class="remirror-is-empty">
+    <p
+      data-placeholder
+      class="remirror-is-empty"
+    >
       <br class="ProseMirror-trailingBreak">
     </p>
   </div>
@@ -48,9 +56,13 @@ exports[`\`autoRender\` renders at the start: when set to true 1`] = `
     role="textbox"
     aria-multiline="true"
     aria-label
+    aria-placeholder
     class="ProseMirror remirror-editor"
   >
-    <p class="remirror-is-empty">
+    <p
+      data-placeholder
+      class="remirror-is-empty"
+    >
       <br class="ProseMirror-trailingBreak">
     </p>
   </div>
@@ -68,9 +80,13 @@ exports[`\`autoRender\` renders by default with no children 1`] = `
     role="textbox"
     aria-multiline="true"
     aria-label
+    aria-placeholder
     class="ProseMirror remirror-editor"
   >
-    <p class="remirror-is-empty">
+    <p
+      data-placeholder
+      class="remirror-is-empty"
+    >
       <br class="ProseMirror-trailingBreak">
     </p>
   </div>

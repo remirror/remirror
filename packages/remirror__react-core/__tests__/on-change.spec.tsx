@@ -22,6 +22,10 @@ test('calls the onChange handler on document change with JSON serialized state',
 
   chain.add(doc(p('This<cursor>')));
 
+  expect(mock).not.toHaveBeenCalled();
+
+  chain.insertText(' change');
+
   const json1 = {
     type: 'doc',
     content: [
@@ -30,7 +34,7 @@ test('calls the onChange handler on document change with JSON serialized state',
         content: [
           {
             type: 'text',
-            text: 'This',
+            text: 'This change',
           },
         ],
       },
@@ -38,7 +42,7 @@ test('calls the onChange handler on document change with JSON serialized state',
   };
   expect(mock).toHaveBeenCalledWith(json1);
 
-  chain.insertText(' change');
+  chain.insertText(' again');
 
   const json2 = {
     type: 'doc',
@@ -48,7 +52,7 @@ test('calls the onChange handler on document change with JSON serialized state',
         content: [
           {
             type: 'text',
-            text: 'This change',
+            text: 'This change again',
           },
         ],
       },
@@ -73,9 +77,13 @@ test('calls the onChange handler on document change with HTML serialized state',
 
   chain.add(doc(p('This<cursor>')));
 
-  expect(mock).toHaveBeenCalledWith(`<p>This</p>`);
+  expect(mock).not.toHaveBeenCalled();
 
   chain.insertText(' change');
 
   expect(mock).toHaveBeenCalledWith(`<p>This change</p>`);
+
+  chain.insertText(' again');
+
+  expect(mock).toHaveBeenCalledWith(`<p>This change again</p>`);
 });
