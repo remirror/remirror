@@ -26,6 +26,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: rlespinasse/github-slug-action@v4
+
+      - name: 'print current git reference after'
+        run: |
+          echo "${{ env.GITHUB_REF_SLUG }}"
+
       - name: setup caching
         uses: actions/cache@v3
         with:
@@ -60,7 +66,7 @@ jobs:
           production-branch: v1
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
-          alias: ${{ github.head_ref }}
+          alias: '${{ env.GITHUB_REF_SLUG }}'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NEXT_NETLIFY_SITE_ID }}
