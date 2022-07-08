@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { AnyExtension, ErrorConstant, invariant, isArray, isNullOrUndefined } from '@remirror/core';
+import { AnyExtension, ErrorConstant, invariant, isArray } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
 
 import { ReactFramework, ReactFrameworkOptions, ReactFrameworkProps } from '../react-framework';
@@ -24,16 +24,16 @@ export function useReactFramework<Extension extends AnyExtension>(
 ): ReactFrameworkOutput<Extension> {
   const { manager, state } = props;
   const { placeholder, editable } = props;
-  const firstUpdate = useRef(true);
-
-  // Update the placeholder on first render.
-  if (firstUpdate.current && !isNullOrUndefined(placeholder)) {
-    manager.getExtension(ReactExtension).setOptions({ placeholder });
-  }
 
   // Keep the placeholder updated
   useEffect(() => {
-    manager.getExtension(ReactExtension).setOptions({ placeholder });
+    // Only update the placeholder if the passed placeholder is not null or
+    // undefined, which is the default value for this prop. By doing that, we
+    // can make sure that if a PlaceholderExtension is provided in the extension
+    // list, we won't override its options.
+    if (placeholder != null) {
+      manager.getExtension(ReactExtension).setOptions({ placeholder });
+    }
   }, [placeholder, manager]);
 
   const fallback = manager.createEmptyDoc();
