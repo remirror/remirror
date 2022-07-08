@@ -1,0 +1,8 @@
+.my-custom-highlighted-class {
+  background-color: yellow;
+  outline: 2px solid black;
+}
+
+.my-custom-search-class {
+  background-color: yellow;
+}
