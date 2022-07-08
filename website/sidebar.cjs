@@ -76,11 +76,11 @@ const docs = [
     label: 'Storybook',
     href: 'https://remirror.vercel.app/',
   },
-  // {
-  //   type: 'category',
-  //   label: 'Showcase',
-  //   items: ['showcase/richtext', 'showcase/markdown', 'showcase/social'],
-  // },
+  {
+    type: 'category',
+    label: 'Showcase',
+    items: ['showcase/richtext', 'showcase/markdown', 'showcase/social'],
+  },
   {
     type: 'category',
     label: 'Core concepts',
