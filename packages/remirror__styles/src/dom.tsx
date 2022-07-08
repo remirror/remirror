@@ -605,14 +605,6 @@ export const coreStyledCss: ReturnType<typeof css> = css`
     position: relative;
   }
 
-  .remirror-editor.ProseMirror[contenteditable='false'] {
-    white-space: normal;
-  }
-
-  .remirror-editor.ProseMirror[contenteditable='true'] {
-    white-space: pre-wrap;
-  }
-
   .remirror-editor.ProseMirror hr {
     border-color: #2e2e2e;
   }
