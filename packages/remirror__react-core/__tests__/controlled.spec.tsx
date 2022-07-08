@@ -55,7 +55,7 @@ describe('Remirror Controlled Component', () => {
 
     expect(getByRole('textbox')).toMatchSnapshot();
 
-    expect(onChange).toHaveBeenCalledTimes(2);
+    expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange.mock.calls[0][0].firstRender).toBeTrue();
   });
 
@@ -299,8 +299,8 @@ describe('Remirror Controlled Component', () => {
       chain.commands.insertText('First text update');
     });
 
-    expect(mock).toHaveBeenCalledTimes(3);
-    const { state, previousState } = mock.mock.calls[2][0];
+    expect(mock).toHaveBeenCalledTimes(2);
+    const { state, previousState } = mock.mock.calls[1][0];
 
     expect(state).toBe(chain.state);
     expect(state).not.toBe(previousState);
@@ -493,7 +493,7 @@ describe('onChange', () => {
       });
     }
 
-    expect(mock).toHaveBeenCalledTimes(9);
+    expect(mock).toHaveBeenCalledTimes(8);
     expect(mock).toHaveBeenLastCalledWith('Amazing!');
   });
 
@@ -506,7 +506,7 @@ describe('onChange', () => {
       });
     }
 
-    expect(mock).toHaveBeenCalledTimes(9);
+    expect(mock).toHaveBeenCalledTimes(8);
     expect(mock).toHaveBeenLastCalledWith('Amazing!');
   });
 });
