@@ -28,7 +28,7 @@ jobs:
 
       - uses: rlespinasse/github-slug-action@v4
 
-      - name: "print current git reference after"
+      - name: 'print current git reference after'
         run: |
           echo "${{ env.GITHUB_REF_SLUG }}"
 
@@ -62,11 +62,11 @@ jobs:
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop
         with:
-          publish-dir: "./website/build"
+          publish-dir: './website/build'
           production-branch: v1
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}"
-          alias: "${{ env.GITHUB_REF_SLUG }}"
+          deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
+          alias: '${{ env.GITHUB_REF_SLUG }}'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NEXT_NETLIFY_SITE_ID }}
