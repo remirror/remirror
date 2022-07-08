@@ -50,7 +50,7 @@ export class ReactExtension extends PlainExtension<ReactExtensionOptions> {
       new PlaceholderExtension({
         emptyNodeClass,
         placeholder,
-        priority: ExtensionPriority.Medium,
+        priority: ExtensionPriority.Low,
       }),
       new ReactComponentExtension({
         defaultBlockNode,
