@@ -1,5 +1,52 @@
 # @remirror/preset-core
 
+## 2.0.0-beta.6
+
+> 2022-07-08
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- Try to require JSDOM implicitly in node environment.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-positioner@2.0.0-beta.6
+  - @remirror/pm@2.0.0-beta.6
+  - @remirror/core@2.0.0-beta.6
+  - @remirror/extension-doc@2.0.0-beta.6
+  - @remirror/extension-events@2.0.0-beta.6
+  - @remirror/extension-gap-cursor@2.0.0-beta.6
+  - @remirror/extension-history@2.0.0-beta.6
+  - @remirror/extension-paragraph@2.0.0-beta.6
+  - @remirror/extension-text@2.0.0-beta.6
+
 ## 2.0.0-beta.5
 
 > 2022-07-01
