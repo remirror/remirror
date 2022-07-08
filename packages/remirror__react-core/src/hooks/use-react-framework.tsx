@@ -24,6 +24,7 @@ export function useReactFramework<Extension extends AnyExtension>(
 ): ReactFrameworkOutput<Extension> {
   const { manager, state } = props;
   const { placeholder, editable } = props;
+
   const firstUpdate = useRef(true);
 
   // Update the placeholder on first render.
@@ -33,6 +34,14 @@ export function useReactFramework<Extension extends AnyExtension>(
 
   // Keep the placeholder updated
   useEffect(() => {
+    // Only update the placeholder if the passed placeholder is not null or
+    // undefined, which is the default value for this prop. By doing that, we
+    // can make sure that if a PlaceholderExtension is provided in the extension
+    // list, we won't override its options.
+    if (placeholder == null) {
+      return;
+    }
+
     manager.getExtension(ReactExtension).setOptions({ placeholder });
   }, [placeholder, manager]);
 
