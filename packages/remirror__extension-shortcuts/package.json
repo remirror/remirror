@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-shortcuts",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.6",
   "description": "Replace characters with keyboard shortcuts",
   "keywords": [
     "remirror",
@@ -35,13 +35,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.5"
+    "@remirror/core": "^2.0.0-beta.6"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.5"
+    "@remirror/pm": "^2.0.0-beta.6"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.5"
+    "@remirror/pm": "^2.0.0-beta.6"
   },
   "publishConfig": {
     "access": "public"

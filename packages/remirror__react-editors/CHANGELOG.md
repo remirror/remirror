@@ -1,5 +1,74 @@
 # @remirror/react-editors
 
+## 1.0.0-beta.6
+
+> 2022-07-08
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Update jsx-dom to v7.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- SSR features are removed.
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Transform a hard break into `\n` in `Node.textContent`.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Try to require JSDOM implicitly in node environment.
+- When href equals text content, treat the link as an auto link (if enabled)
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Update prosemirror packages.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/styles@2.0.0-beta.6
+  - remirror@2.0.0-beta.6
+  - @remirror/extension-react-tables@2.0.0-beta.6
+  - @remirror/react@2.0.0-beta.6
+  - @remirror/pm@2.0.0-beta.6
+  - @remirror/core-helpers@2.0.0-beta.6
+  - create-context-state@2.0.0-beta.5
+
 ## 1.0.0-beta.5
 
 > 2022-07-01
