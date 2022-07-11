@@ -270,7 +270,7 @@ importers:
       jest: ^28.1.1
       jest-matcher-utils: ^28.1.1
       prosemirror-schema-basic: ^1.2.0
-      prosemirror-tables: ^1.1.2
+      prosemirror-tables: ^1.2.1
       prosemirror-test-builder: ^1.1.0
       stringify-object: ^3.3.0
       test-keyboard: 2.0.0-beta.6
@@ -286,7 +286,7 @@ importers:
       chalk: 4.1.2
       jest-matcher-utils: 28.1.1
       prosemirror-schema-basic: 1.2.0
-      prosemirror-tables: 1.1.2
+      prosemirror-tables: 1.2.1
       prosemirror-test-builder: 1.1.0
       stringify-object: 3.3.0
       test-keyboard: link:../test-keyboard
@@ -1715,7 +1715,7 @@ importers:
       prosemirror-schema-list: ^1.2.0
       prosemirror-state: ^1.4.1
       prosemirror-suggest: ^2.0.0-beta.6
-      prosemirror-tables: ^1.1.2
+      prosemirror-tables: ^1.2.1
       prosemirror-trailing-node: ^2.0.0-beta.6
       prosemirror-transform: ^1.6.0
       prosemirror-view: ^1.26.5
@@ -1735,7 +1735,7 @@ importers:
       prosemirror-schema-list: 1.2.0
       prosemirror-state: 1.4.1
       prosemirror-suggest: link:../prosemirror-suggest
-      prosemirror-tables: 1.1.2
+      prosemirror-tables: 1.2.1
       prosemirror-trailing-node: link:../prosemirror-trailing-node
       prosemirror-transform: 1.6.0
       prosemirror-view: 1.26.5
@@ -23783,8 +23783,8 @@ packages:
       prosemirror-model: 1.18.1
       prosemirror-transform: 1.6.0
 
-  /prosemirror-tables/1.1.2:
-    resolution: {integrity: sha512-u2Rsx2s62bXU9VTSNi3oriwBpABE8XuiwXCelkkdjSMlR2Xr3JDt5t+yJy9EfItqruFEJcm8jCqfB3zv0akFeA==}
+  /prosemirror-tables/1.2.1:
+    resolution: {integrity: sha512-G3r9kmkhox3gPmJkzLTHCaU67cNMr+3UCQMuLNIrOfCwfCq2FDx6cqg2i4KlX8c8HDYt3Qw4Q16F2J60m01loA==}
     dependencies:
       prosemirror-keymap: 1.2.0
       prosemirror-model: 1.18.1
