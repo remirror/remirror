@@ -1,5 +1,68 @@
 # jest-remirror
 
+## 2.0.0-beta.7
+
+> 2022-07-11
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- SSR features are removed.
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Update ProseMirror packages to latest versions.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update prosemirror packages.
+- Update ProseMirror packages.
+- Try to require JSDOM implicitly in node environment.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.7
+  - @remirror/dom@2.0.0-beta.7
+  - @remirror/preset-core@2.0.0-beta.7
+  - @remirror/pm@2.0.0-beta.7
+  - jest-prosemirror@2.0.0-beta.7
+
 ## 2.0.0-beta.6
 
 > 2022-07-08

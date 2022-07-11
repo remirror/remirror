@@ -1,5 +1,118 @@
 # remirror
 
+## 2.0.0-beta.7
+
+> 2022-07-11
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- SSR features are removed.
+- When href equals text content, treat the link as an auto link (if enabled)
+- Update ProseMirror packages to latest versions.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Try to require JSDOM implicitly in node environment.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Transform a hard break into `\n` in `Node.textContent`.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.7
+  - @remirror/dom@2.0.0-beta.7
+  - @remirror/extension-annotation@2.0.0-beta.7
+  - @remirror/extension-bidi@2.0.0-beta.7
+  - @remirror/extension-blockquote@2.0.0-beta.7
+  - @remirror/extension-bold@2.0.0-beta.7
+  - @remirror/extension-callout@2.0.0-beta.7
+  - @remirror/extension-code@2.0.0-beta.7
+  - @remirror/extension-code-block@2.0.0-beta.7
+  - @remirror/extension-codemirror5@2.0.0-beta.7
+  - @remirror/extension-collaboration@2.0.0-beta.7
+  - @remirror/extension-columns@2.0.0-beta.7
+  - @remirror/extension-diff@2.0.0-beta.7
+  - @remirror/extension-doc@2.0.0-beta.7
+  - @remirror/extension-drop-cursor@2.0.0-beta.7
+  - @remirror/extension-embed@2.0.0-beta.7
+  - @remirror/extension-emoji@2.0.0-beta.7
+  - @remirror/extension-entity-reference@2.0.0-beta.7
+  - @remirror/extension-epic-mode@2.0.0-beta.7
+  - @remirror/extension-events@2.0.0-beta.7
+  - @remirror/extension-font-family@2.0.0-beta.7
+  - @remirror/extension-font-size@2.0.0-beta.7
+  - @remirror/extension-gap-cursor@2.0.0-beta.7
+  - @remirror/extension-hard-break@2.0.0-beta.7
+  - @remirror/extension-heading@2.0.0-beta.7
+  - @remirror/extension-history@2.0.0-beta.7
+  - @remirror/extension-horizontal-rule@2.0.0-beta.7
+  - @remirror/extension-image@2.0.0-beta.7
+  - @remirror/extension-italic@2.0.0-beta.7
+  - @remirror/extension-link@2.0.0-beta.7
+  - @remirror/extension-list@2.0.0-beta.7
+  - @remirror/extension-markdown@2.0.0-beta.7
+  - @remirror/extension-mention@2.0.0-beta.7
+  - @remirror/extension-mention-atom@2.0.0-beta.7
+  - @remirror/extension-node-formatting@2.0.0-beta.7
+  - @remirror/extension-paragraph@2.0.0-beta.7
+  - @remirror/extension-placeholder@2.0.0-beta.7
+  - @remirror/extension-positioner@2.0.0-beta.7
+  - @remirror/extension-search@2.0.0-beta.7
+  - @remirror/extension-shortcuts@2.0.0-beta.7
+  - @remirror/extension-strike@2.0.0-beta.7
+  - @remirror/extension-sub@2.0.0-beta.7
+  - @remirror/extension-sup@2.0.0-beta.7
+  - @remirror/extension-tables@2.0.0-beta.7
+  - @remirror/extension-text@2.0.0-beta.7
+  - @remirror/extension-text-case@2.0.0-beta.7
+  - @remirror/extension-text-color@2.0.0-beta.7
+  - @remirror/extension-text-highlight@2.0.0-beta.7
+  - @remirror/extension-trailing-node@2.0.0-beta.7
+  - @remirror/extension-underline@2.0.0-beta.7
+  - @remirror/extension-whitespace@2.0.0-beta.7
+  - @remirror/extension-yjs@3.0.0-beta.7
+  - @remirror/preset-core@2.0.0-beta.7
+  - @remirror/preset-formatting@2.0.0-beta.7
+  - @remirror/preset-wysiwyg@2.0.0-beta.7
+  - @remirror/pm@2.0.0-beta.7
+  - @remirror/theme@2.0.0-beta.7
+  - @remirror/core-constants@2.0.0-beta.7
+  - @remirror/core-helpers@2.0.0-beta.7
+  - @remirror/core-types@2.0.0-beta.7
+  - @remirror/core-utils@2.0.0-beta.7
+  - @remirror/icons@2.0.0-beta.7
+
 ## 2.0.0-beta.6
 
 > 2022-07-08
