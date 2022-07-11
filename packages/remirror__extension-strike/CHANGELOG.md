@@ -1,5 +1,31 @@
 # @remirror/extension-strike
 
+## 2.0.0-beta.7
+
+> 2022-07-11
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- SSR features are removed.
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.7
+  - @remirror/pm@2.0.0-beta.7
+  - @remirror/messages@2.0.0-beta.7
+
 ## 2.0.0-beta.6
 
 > 2022-07-08
