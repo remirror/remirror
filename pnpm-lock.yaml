@@ -253,7 +253,7 @@ importers:
       '@babel/runtime': 7.18.3
     devDependencies:
       '@testing-library/react': 13.1.1_react@18.0.0
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
 
   packages/jest-prosemirror:
@@ -270,7 +270,7 @@ importers:
       jest: ^28.1.1
       jest-matcher-utils: ^28.1.1
       prosemirror-schema-basic: ^1.2.0
-      prosemirror-tables: ^1.1.1
+      prosemirror-tables: ^1.2.1
       prosemirror-test-builder: ^1.1.0
       stringify-object: ^3.3.0
       test-keyboard: 2.0.0-beta.6
@@ -286,7 +286,7 @@ importers:
       chalk: 4.1.2
       jest-matcher-utils: 28.1.1
       prosemirror-schema-basic: 1.2.0
-      prosemirror-tables: 1.1.1
+      prosemirror-tables: 1.2.1
       prosemirror-test-builder: 1.1.0
       stringify-object: 3.3.0
       test-keyboard: link:../test-keyboard
@@ -352,7 +352,7 @@ importers:
       w3c-keyname: 2.2.4
     devDependencies:
       '@testing-library/react': 13.1.1_react@18.0.0
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
 
   packages/prosemirror-paste-rules:
@@ -363,7 +363,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.18.1
       prosemirror-state: ^1.4.1
-      prosemirror-view: ^1.26.3
+      prosemirror-view: ^1.26.5
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/core-constants': link:../remirror__core-constants
@@ -372,7 +372,7 @@ importers:
     devDependencies:
       prosemirror-model: 1.18.1
       prosemirror-state: 1.4.1
-      prosemirror-view: 1.26.3
+      prosemirror-view: 1.26.5
 
   packages/prosemirror-resizable-view:
     specifiers:
@@ -380,13 +380,13 @@ importers:
       '@remirror/core-helpers': ^2.0.0-beta.6
       '@remirror/core-utils': ^2.0.0-beta.6
       prosemirror-model: ^1.18.1
-      prosemirror-view: ^1.26.3
+      prosemirror-view: ^1.26.5
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@remirror/core-utils': link:../remirror__core-utils
       prosemirror-model: 1.18.1
-      prosemirror-view: 1.26.3
+      prosemirror-view: 1.26.5
 
   packages/prosemirror-suggest:
     specifiers:
@@ -397,7 +397,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.18.1
       prosemirror-state: ^1.4.1
-      prosemirror-view: ^1.26.3
+      prosemirror-view: ^1.26.5
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/core-constants': link:../remirror__core-constants
@@ -407,7 +407,7 @@ importers:
     devDependencies:
       prosemirror-model: 1.18.1
       prosemirror-state: 1.4.1
-      prosemirror-view: 1.26.3
+      prosemirror-view: 1.26.5
 
   packages/prosemirror-trailing-node:
     specifiers:
@@ -417,7 +417,7 @@ importers:
       escape-string-regexp: ^4.0.0
       prosemirror-model: ^1.18.1
       prosemirror-state: ^1.4.1
-      prosemirror-view: ^1.26.3
+      prosemirror-view: ^1.26.5
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/core-constants': link:../remirror__core-constants
@@ -426,7 +426,7 @@ importers:
     devDependencies:
       prosemirror-model: 1.18.1
       prosemirror-state: 1.4.1
-      prosemirror-view: 1.26.3
+      prosemirror-view: 1.26.5
 
   packages/remirror:
     specifiers:
@@ -723,17 +723,17 @@ importers:
       '@testing-library/react': ^13.1.1
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
-      prosemirror-dev-toolkit: '>= 0.0.11 < 1.0.0'
+      prosemirror-dev-toolkit: ^1.0.0
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/react-core': link:../remirror__react-core
-      prosemirror-dev-toolkit: 0.0.11
+      prosemirror-dev-toolkit: 1.0.0
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@testing-library/react': 13.1.1_react-dom@18.0.0+react@18.0.0
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -1079,7 +1079,7 @@ importers:
       nanoevents: 7.0.1
     devDependencies:
       '@remirror/pm': link:../remirror__pm
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -1380,7 +1380,7 @@ importers:
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -1405,7 +1405,7 @@ importers:
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
 
   packages/remirror__extension-react-tables:
@@ -1450,7 +1450,7 @@ importers:
       jsx-dom: 7.0.4
     devDependencies:
       '@remirror/pm': link:../remirror__pm
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -1715,10 +1715,10 @@ importers:
       prosemirror-schema-list: ^1.2.0
       prosemirror-state: ^1.4.1
       prosemirror-suggest: ^2.0.0-beta.6
-      prosemirror-tables: ^1.1.1
+      prosemirror-tables: ^1.2.1
       prosemirror-trailing-node: ^2.0.0-beta.6
       prosemirror-transform: ^1.6.0
-      prosemirror-view: ^1.26.3
+      prosemirror-view: ^1.26.5
     dependencies:
       '@babel/runtime': 7.18.3
       '@remirror/core-constants': link:../remirror__core-constants
@@ -1735,10 +1735,10 @@ importers:
       prosemirror-schema-list: 1.2.0
       prosemirror-state: 1.4.1
       prosemirror-suggest: link:../prosemirror-suggest
-      prosemirror-tables: 1.1.1
+      prosemirror-tables: 1.2.1
       prosemirror-trailing-node: link:../prosemirror-trailing-node
       prosemirror-transform: 1.6.0
-      prosemirror-view: 1.26.3
+      prosemirror-view: 1.26.5
 
   packages/remirror__preset-core:
     specifiers:
@@ -1824,7 +1824,7 @@ importers:
       '@remirror/react-utils': link:../remirror__react-utils
     devDependencies:
       '@remirror/pm': link:../remirror__pm
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -1912,7 +1912,7 @@ importers:
       '@remirror/react-renderer': link:../remirror__react-renderer
       '@remirror/react-utils': link:../remirror__react-utils
     devDependencies:
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -1975,7 +1975,7 @@ importers:
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -2025,7 +2025,7 @@ importers:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
       '@types/jsdom': 16.2.13
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       jsdom: 17.0.0
       react: 18.0.0
@@ -2065,7 +2065,7 @@ importers:
       svgmoji: 3.2.0
     devDependencies:
       '@emotion/css': 11.5.0_@babel+core@7.18.2
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -2106,12 +2106,12 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-utils': link:../remirror__react-utils
       multishift: link:../multishift
-      use-isomorphic-layout-effect: 1.1.1_14bff716542e931973b613f50c6609f2
-      use-previous: 1.1.0_14bff716542e931973b613f50c6609f2
+      use-isomorphic-layout-effect: 1.1.1_6117da77cd3b6b401e4daff8ae989aad
+      use-previous: 1.1.0_6117da77cd3b6b401e4daff8ae989aad
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -2127,7 +2127,7 @@ importers:
       '@babel/runtime': 7.18.3
       '@remirror/core': link:../remirror__core
     devDependencies:
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
 
   packages/remirror__react-ssr:
@@ -2148,7 +2148,7 @@ importers:
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -2167,7 +2167,7 @@ importers:
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@remirror/core-types': link:../remirror__core-types
     devDependencies:
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
 
   packages/remirror__styles:
@@ -2186,9 +2186,9 @@ importers:
       default-import: 1.1.1
     devDependencies:
       '@emotion/css': 11.5.0_@babel+core@7.18.2
-      '@emotion/react': 11.9.0_3c92bbb5e9f447c74715d34cbae1ef23
-      '@emotion/styled': 11.3.0_739cf664b822e0891235a93a83ea667b
-      '@types/react': 18.0.14
+      '@emotion/react': 11.9.0_f3e8c37d0c079d91108ed31316b251ca
+      '@emotion/styled': 11.3.0_fb264d77decc950fa982ea19937217d0
+      '@types/react': 18.0.15
       '@types/styled-components': 5.1.15
       react: 18.0.0
       styled-components: 5.3.3_react@18.0.0
@@ -2310,7 +2310,7 @@ importers:
       '@remirror/styles': link:../remirror__styles
       '@svgmoji/blob': 3.2.0
       '@types/codemirror': 5.60.5
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       '@types/refractor': 3.0.2
       '@types/webpack': 5.28.0_@swc+core@1.2.204
@@ -2405,7 +2405,7 @@ importers:
       '@remirror/preset-core': link:../remirror__preset-core
       '@remirror/react': link:../remirror__react
       '@testing-library/react': 13.1.1_react@18.0.0
-      '@testing-library/react-hooks': 8.0.0_355722e1c3256d3469e592dbf5754d28
+      '@testing-library/react-hooks': 8.0.0_c1fa3cb753776c72390d349e4b1cd54e
       '@types/fluent-ffmpeg': 2.1.18
       '@types/min-document': 2.19.0
       '@types/react-test-renderer': 18.0.0
@@ -2429,7 +2429,7 @@ importers:
       signal-exit: 3.0.7
       test-keyboard: link:../test-keyboard
     devDependencies:
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
 
   support:
@@ -2707,8 +2707,8 @@ importers:
     dependencies:
       '@babel/runtime': 7.18.3
       '@emotion/css': 11.5.0_@babel+core@7.18.2
-      '@emotion/react': 11.9.0_3c92bbb5e9f447c74715d34cbae1ef23
-      '@emotion/styled': 11.3.0_739cf664b822e0891235a93a83ea667b
+      '@emotion/react': 11.9.0_f3e8c37d0c079d91108ed31316b251ca
+      '@emotion/styled': 11.3.0_fb264d77decc950fa982ea19937217d0
       '@fontsource/fira-code': 4.5.1
       '@fontsource/rubik': 4.5.0
       '@mdx-js/react': 1.6.22_react@18.0.0
@@ -2737,13 +2737,13 @@ importers:
       '@docusaurus/plugin-content-docs': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/plugin-ideal-image': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/plugin-sitemap': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
-      '@docusaurus/preset-classic': 2.0.0-beta.21_fe525f9c3cbb21ba46ee8719d1eeca92
+      '@docusaurus/preset-classic': 2.0.0-beta.21_843e9cbf1340bc558bee0fe0c0c52e38
       '@docusaurus/theme-classic': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/theme-common': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/theme-live-codeblock': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/types': 2.0.0-beta.21_caaf169d5cb91f3004a3f33c2dcdb4de
       '@tsconfig/docusaurus': 1.0.6
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       '@types/react-helmet': 6.1.5
       '@types/react-router-dom': 5.3.3
@@ -4858,7 +4858,7 @@ packages:
     resolution: {integrity: sha512-bh5IskwkkodbvC0FzSg1AxMykfDl95hebEKwxNoq4e5QaGzOXSBgW8+jnMFZ7JU4sTBiB04vZWoUSzNrPboLZA==}
     dev: true
 
-  /@docsearch/react/3.1.0_237a765b70771c70d209203c98bd4516:
+  /@docsearch/react/3.1.0_5c0ae146579744f001b6734b6de3341a:
     resolution: {integrity: sha512-bjB6ExnZzf++5B7Tfoi6UXgNwoUnNOfZ1NyvnvPhWgCMy5V/biAtLL4o7owmZSYdAKeFSvZ5Lxm0is4su/dBWg==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 19.0.0'
@@ -4867,7 +4867,7 @@ packages:
     dependencies:
       '@algolia/autocomplete-core': 1.6.3
       '@docsearch/css': 3.1.0
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       algoliasearch: 4.13.1
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
@@ -5202,7 +5202,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-debug/2.0.0-beta.21_fe525f9c3cbb21ba46ee8719d1eeca92:
+  /@docusaurus/plugin-debug/2.0.0-beta.21_843e9cbf1340bc558bee0fe0c0c52e38:
     resolution: {integrity: sha512-P54J4q4ecsyWW0Jy4zbimSIHna999AfbxpXGmF1IjyHrjoA3PtuakV1Ai51XrGEAaIq9q6qMQkEhbUd3CffGAw==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -5214,7 +5214,7 @@ packages:
       fs-extra: 10.1.0
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      react-json-view: 1.21.3_237a765b70771c70d209203c98bd4516
+      react-json-view: 1.21.3_5c0ae146579744f001b6734b6de3341a
       tslib: 2.4.0
     transitivePeerDependencies:
       - '@parcel/css'
@@ -5363,7 +5363,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/preset-classic/2.0.0-beta.21_fe525f9c3cbb21ba46ee8719d1eeca92:
+  /@docusaurus/preset-classic/2.0.0-beta.21_843e9cbf1340bc558bee0fe0c0c52e38:
     resolution: {integrity: sha512-KvBnIUu7y69pNTJ9UhX6SdNlK6prR//J3L4rhN897tb8xx04xHHILlPXko2Il+C3Xzgh3OCgyvkoz9K6YlFTDw==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -5374,13 +5374,13 @@ packages:
       '@docusaurus/plugin-content-blog': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/plugin-content-docs': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/plugin-content-pages': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
-      '@docusaurus/plugin-debug': 2.0.0-beta.21_fe525f9c3cbb21ba46ee8719d1eeca92
+      '@docusaurus/plugin-debug': 2.0.0-beta.21_843e9cbf1340bc558bee0fe0c0c52e38
       '@docusaurus/plugin-google-analytics': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/plugin-google-gtag': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/plugin-sitemap': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/theme-classic': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/theme-common': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
-      '@docusaurus/theme-search-algolia': 2.0.0-beta.21_fe525f9c3cbb21ba46ee8719d1eeca92
+      '@docusaurus/theme-search-algolia': 2.0.0-beta.21_843e9cbf1340bc558bee0fe0c0c52e38
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
     transitivePeerDependencies:
@@ -5541,14 +5541,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/theme-search-algolia/2.0.0-beta.21_fe525f9c3cbb21ba46ee8719d1eeca92:
+  /@docusaurus/theme-search-algolia/2.0.0-beta.21_843e9cbf1340bc558bee0fe0c0c52e38:
     resolution: {integrity: sha512-T1jKT8MVSSfnztSqeebUOpWHPoHKtwDXtKYE0xC99JWoZ+mMfv8AFhVSoSddn54jLJjV36mxg841eHQIySMCpQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docsearch/react': 3.1.0_237a765b70771c70d209203c98bd4516
+      '@docsearch/react': 3.1.0_5c0ae146579744f001b6734b6de3341a
       '@docusaurus/core': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
       '@docusaurus/logger': 2.0.0-beta.21
       '@docusaurus/plugin-content-docs': 2.0.0-beta.21_2445bc361f6266ac155e99ff74e6126a
@@ -5742,7 +5742,7 @@ packages:
   /@emotion/memoize/0.7.5:
     resolution: {integrity: sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==}
 
-  /@emotion/react/11.9.0_3c92bbb5e9f447c74715d34cbae1ef23:
+  /@emotion/react/11.9.0_f3e8c37d0c079d91108ed31316b251ca:
     resolution: {integrity: sha512-lBVSF5d0ceKtfKCDQJveNAtkC7ayxpVlgOohLgXqRwqWr9bOf4TZAFFyIcNngnV6xK6X4x2ZeXq7vliHkoVkxQ==}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -5761,7 +5761,7 @@ packages:
       '@emotion/serialize': 1.0.3
       '@emotion/utils': 1.1.0
       '@emotion/weak-memoize': 0.2.5
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       hoist-non-react-statics: 3.3.2
       react: 18.0.0
 
@@ -5777,7 +5777,7 @@ packages:
   /@emotion/sheet/1.1.0:
     resolution: {integrity: sha512-u0AX4aSo25sMAygCuQTzS+HsImZFuS8llY8O7b9MDRzbJM0kVJlAz6KNDqcG7pOuQZJmj/8X/rAW+66kMnMW+g==}
 
-  /@emotion/styled/11.3.0_739cf664b822e0891235a93a83ea667b:
+  /@emotion/styled/11.3.0_fb264d77decc950fa982ea19937217d0:
     resolution: {integrity: sha512-fUoLcN3BfMiLlRhJ8CuPUMEyKkLEoM+n+UyAbnqGEsCd5IzKQ7VQFLtzpJOaCD2/VR2+1hXQTnSZXVJeiTNltA==}
     peerDependencies:
       '@babel/core': ^7.0.0
@@ -5794,10 +5794,10 @@ packages:
       '@babel/runtime': 7.18.3
       '@emotion/babel-plugin': 11.9.2_@babel+core@7.18.2
       '@emotion/is-prop-valid': 1.1.0
-      '@emotion/react': 11.9.0_3c92bbb5e9f447c74715d34cbae1ef23
+      '@emotion/react': 11.9.0_f3e8c37d0c079d91108ed31316b251ca
       '@emotion/serialize': 1.0.3
       '@emotion/utils': 1.1.0
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
 
   /@emotion/stylis/0.8.5:
@@ -9563,7 +9563,7 @@ packages:
       react-error-boundary: 3.1.4
     dev: false
 
-  /@testing-library/react-hooks/8.0.0_355722e1c3256d3469e592dbf5754d28:
+  /@testing-library/react-hooks/8.0.0_c1fa3cb753776c72390d349e4b1cd54e:
     resolution: {integrity: sha512-uZqcgtcUUtw7Z9N32W13qQhVAD+Xki2hxbTR461MKax8T6Jr8nsUvZB+vcBTkzY2nFvsUet434CsgF0ncW2yFw==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -9580,7 +9580,7 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.18.3
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
       react-error-boundary: 3.1.4_react@18.0.0
       react-test-renderer: 18.0.0_react@18.0.0
@@ -10129,7 +10129,6 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.0
-    dev: true
 
   /@types/reactcss/1.2.6:
     resolution: {integrity: sha512-qaIzpCuXNWomGR1Xq8SCFTtF4v8V27Y6f+b9+bzHiv087MylI/nTCqqdChNeWS7tslgROmYB7yeiruWX7WnqNg==}
@@ -17939,7 +17938,7 @@ packages:
     dev: true
 
   /html/1.0.0:
-    resolution: {integrity: sha1-pUT6nqVJK/s6LMqCEKEL57WvH2E=}
+    resolution: {integrity: sha512-lw/7YsdKiP3kk5PnR1INY17iJuzdAtJewxr14ozKJWbbR97znovZ0mh+WEMZ8rjc3lgTK+ID/htTjuyGKB52Kw==}
     hasBin: true
     dependencies:
       concat-stream: 1.6.2
@@ -23712,8 +23711,8 @@ packages:
       prosemirror-transform: 1.6.0
     dev: false
 
-  /prosemirror-dev-toolkit/0.0.11:
-    resolution: {integrity: sha512-opNxZ2WlPPrHb6ugZa9y+4H4zpYuHdgyFHMbEO2vmdRPhA+fYJUeQJ1DNJg/guLwF7vJL39DuykJJ5RQGWwFVg==}
+  /prosemirror-dev-toolkit/1.0.0:
+    resolution: {integrity: sha512-Ui+ol8o9gNI+dGq6Vz4Z1sog3RAQp0TiWpPZL4KOTuwJQTte4BE4iCSTXay/L6orrH6BAE1sP1WseNcVf4q0AA==}
     dependencies:
       html: 1.0.0
       prosemirror-model: 1.18.1
@@ -23725,7 +23724,7 @@ packages:
     dependencies:
       prosemirror-state: 1.4.1
       prosemirror-transform: 1.6.0
-      prosemirror-view: 1.26.3
+      prosemirror-view: 1.26.5
     dev: false
 
   /prosemirror-gapcursor/1.3.1:
@@ -23734,7 +23733,7 @@ packages:
       prosemirror-keymap: 1.2.0
       prosemirror-model: 1.18.1
       prosemirror-state: 1.4.1
-      prosemirror-view: 1.26.3
+      prosemirror-view: 1.26.5
     dev: false
 
   /prosemirror-history/1.3.0:
@@ -23784,14 +23783,14 @@ packages:
       prosemirror-model: 1.18.1
       prosemirror-transform: 1.6.0
 
-  /prosemirror-tables/1.1.1:
-    resolution: {integrity: sha512-LmCz4jrlqQZRsYRDzCRYf/pQ5CUcSOyqZlAj5kv67ZWBH1SVLP2U9WJEvQfimWgeRlIz0y0PQVqO1arRm1+woA==}
+  /prosemirror-tables/1.2.1:
+    resolution: {integrity: sha512-G3r9kmkhox3gPmJkzLTHCaU67cNMr+3UCQMuLNIrOfCwfCq2FDx6cqg2i4KlX8c8HDYt3Qw4Q16F2J60m01loA==}
     dependencies:
       prosemirror-keymap: 1.2.0
       prosemirror-model: 1.18.1
       prosemirror-state: 1.4.1
       prosemirror-transform: 1.6.0
-      prosemirror-view: 1.26.3
+      prosemirror-view: 1.26.5
     dev: false
 
   /prosemirror-test-builder/1.1.0:
@@ -23807,8 +23806,8 @@ packages:
     dependencies:
       prosemirror-model: 1.18.1
 
-  /prosemirror-view/1.26.3:
-    resolution: {integrity: sha512-349cR05mXW67xhzmrP1ddEyOCyEuOCkLeo17Bwgw8dWWdGYwT6oTAGJuk/hdc3OSTIUpUPjHLvE4mjP45IIkTg==}
+  /prosemirror-view/1.26.5:
+    resolution: {integrity: sha512-SO+AX6WwdbJZHVvuloXI0qfO+YJAnZAat8qrYwfiqTQwL/FewLUnr0m3EXZ6a60hQs8/Q/lzeJXiFR/dOPaaKQ==}
     dependencies:
       prosemirror-model: 1.18.1
       prosemirror-state: 1.4.1
@@ -24308,7 +24307,7 @@ packages:
   /react-is/18.0.0:
     resolution: {integrity: sha512-yUcBYdBBbo3QiPsgYDcfQcIkGZHfxOaoE6HLSnr1sPzMhdyxusbfKOSUbSd/ocGi32dxcj366PsTj+5oggeKKw==}
 
-  /react-json-view/1.21.3_237a765b70771c70d209203c98bd4516:
+  /react-json-view/1.21.3_5c0ae146579744f001b6734b6de3341a:
     resolution: {integrity: sha512-13p8IREj9/x/Ye4WI/JpjhoIwuzEgUAtgJZNBJckfzJt1qyh24BdTm6UQNGnyTq9dapQdrqvquZTo3dz1X6Cjw==}
     peerDependencies:
       react: ^17.0.0 || ^16.3.0 || ^15.5.4
@@ -24319,7 +24318,7 @@ packages:
       react-base16-styling: 0.6.0
       react-dom: 18.0.0_react@18.0.0
       react-lifecycles-compat: 3.0.4
-      react-textarea-autosize: 8.3.3_14bff716542e931973b613f50c6609f2
+      react-textarea-autosize: 8.3.3_6117da77cd3b6b401e4daff8ae989aad
     transitivePeerDependencies:
       - '@types/react'
       - encoding
@@ -24463,7 +24462,7 @@ packages:
       scheduler: 0.21.0
     dev: false
 
-  /react-textarea-autosize/8.3.3_14bff716542e931973b613f50c6609f2:
+  /react-textarea-autosize/8.3.3_6117da77cd3b6b401e4daff8ae989aad:
     resolution: {integrity: sha512-2XlHXK2TDxS6vbQaoPbMOfQ8GK7+irc2fVK6QFIcC8GOnH3zI/v481n+j1L0WaPVvKxwesnY93fEfH++sus2rQ==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -24472,7 +24471,7 @@ packages:
       '@babel/runtime': 7.18.3
       react: 18.0.0
       use-composed-ref: 1.1.0_react@18.0.0
-      use-latest: 1.2.0_14bff716542e931973b613f50c6609f2
+      use-latest: 1.2.0_6117da77cd3b6b401e4daff8ae989aad
     transitivePeerDependencies:
       - '@types/react'
     dev: true
@@ -27854,7 +27853,7 @@ packages:
       ts-essentials: 2.0.12
     dev: true
 
-  /use-isomorphic-layout-effect/1.1.1_14bff716542e931973b613f50c6609f2:
+  /use-isomorphic-layout-effect/1.1.1_6117da77cd3b6b401e4daff8ae989aad:
     resolution: {integrity: sha512-L7Evj8FGcwo/wpbv/qvSfrkHFtOpCzvM5yl2KVyDJoylVuSvzphiiasmjgQPttIGBAy2WKiBNR98q8w7PiNgKQ==}
     peerDependencies:
       '@types/react': '*'
@@ -27863,10 +27862,10 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
 
-  /use-latest/1.2.0_14bff716542e931973b613f50c6609f2:
+  /use-latest/1.2.0_6117da77cd3b6b401e4daff8ae989aad:
     resolution: {integrity: sha512-d2TEuG6nSLKQLAfW3By8mKr8HurOlTkul0sOpxbClIv4SQ4iOd7BYr7VIzdbktUCnv7dua/60xzd8igMU6jmyw==}
     peerDependencies:
       '@types/react': '*'
@@ -27875,18 +27874,18 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.0.14
+      '@types/react': 18.0.15
       react: 18.0.0
-      use-isomorphic-layout-effect: 1.1.1_14bff716542e931973b613f50c6609f2
+      use-isomorphic-layout-effect: 1.1.1_6117da77cd3b6b401e4daff8ae989aad
     dev: true
 
-  /use-previous/1.1.0_14bff716542e931973b613f50c6609f2:
+  /use-previous/1.1.0_6117da77cd3b6b401e4daff8ae989aad:
     resolution: {integrity: sha512-t6ltKuYIpvcqD+VBnlUOaT+N94bN7HwUdB1u7rSpCIh9XvMJQIjsw/G8DoJlSDh029khFQ2L8q88oUWfKoWy5w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0
     dependencies:
       react: 18.0.0
-      use-isomorphic-layout-effect: 1.1.1_14bff716542e931973b613f50c6609f2
+      use-isomorphic-layout-effect: 1.1.1_6117da77cd3b6b401e4daff8ae989aad
     transitivePeerDependencies:
       - '@types/react'
     dev: false

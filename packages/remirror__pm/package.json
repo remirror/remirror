@@ -141,10 +141,10 @@
     "prosemirror-schema-list": "^1.2.0",
     "prosemirror-state": "^1.4.1",
     "prosemirror-suggest": "^2.0.0-beta.6",
-    "prosemirror-tables": "^1.1.1",
+    "prosemirror-tables": "^1.2.1",
     "prosemirror-trailing-node": "^2.0.0-beta.6",
     "prosemirror-transform": "^1.6.0",
-    "prosemirror-view": "^1.26.3"
+    "prosemirror-view": "^1.26.5"
   },
   "publishConfig": {
     "access": "public"
