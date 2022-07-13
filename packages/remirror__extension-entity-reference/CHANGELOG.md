@@ -1,5 +1,48 @@
 # @remirror/extension-entity-reference
 
+## 2.0.0-beta.8
+
+> 2022-07-13
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- SSR features are removed.
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Try to require JSDOM implicitly in node environment.
+- add helper to get shortest entity reference
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-positioner@2.0.0-beta.8
+  - @remirror/pm@2.0.0-beta.8
+  - @remirror/core@2.0.0-beta.8
+
 ## 2.0.0-beta.7
 
 > 2022-07-11

@@ -1,5 +1,78 @@
 # @remirror/react-editors
 
+## 1.0.0-beta.8
+
+> 2022-07-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update prosemirror packages.
+- Update ProseMirror packages to latest versions.
+- Transform a hard break into `\n` in `Node.textContent`.
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- SSR features are removed.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Update jsx-dom to v7.
+- When href equals text content, treat the link as an auto link (if enabled)
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Try to require JSDOM implicitly in node environment.
+- Update ProseMirror packages.
+- add helper to get shortest entity reference
+- Expose the return type of the throttle and debounce helpers
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/styles@2.0.0-beta.8
+  - remirror@2.0.0-beta.8
+  - @remirror/extension-react-tables@2.0.0-beta.8
+  - @remirror/react@2.0.0-beta.8
+  - @remirror/pm@2.0.0-beta.8
+  - @remirror/core-helpers@2.0.0-beta.8
+  - create-context-state@2.0.0-beta.7
+
 ## 1.0.0-beta.7
 
 > 2022-07-11

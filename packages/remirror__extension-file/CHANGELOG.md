@@ -1,5 +1,60 @@
 # @remirror/extension-file
 
+## 1.0.0-beta.8
+
+> 2022-07-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- SSR features are removed.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Update jsx-dom to v7.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/theme@2.0.0-beta.8
+  - @remirror/react@2.0.0-beta.8
+  - @remirror/react-components@2.0.0-beta.8
+  - @remirror/pm@2.0.0-beta.8
+  - @remirror/core@2.0.0-beta.8
+
 ## 1.0.0-beta.7
 
 > 2022-07-11

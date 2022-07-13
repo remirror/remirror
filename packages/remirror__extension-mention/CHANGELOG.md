@@ -1,5 +1,34 @@
 # @remirror/extension-mention
 
+## 2.0.0-beta.8
+
+> 2022-07-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- SSR features are removed.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.8
+  - @remirror/core@2.0.0-beta.8
+  - @remirror/extension-events@2.0.0-beta.8
+  - @remirror/messages@2.0.0-beta.8
+
 ## 2.0.0-beta.7
 
 > 2022-07-11
