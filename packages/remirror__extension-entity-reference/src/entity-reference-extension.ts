@@ -62,6 +62,7 @@ const createDecorationSet = (props: StateProps) => {
   defaultOptions: {
     getStyle: decorateEntityReferences,
     blockSeparator: undefined,
+    onClickMark: () => {},
   },
 })
 export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptions> {
