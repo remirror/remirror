@@ -322,7 +322,7 @@ describe('pasteRules', () => {
         });
     });
 
-    it('can transform multiple nodes', () => {
+    it('can transform multiple block nodes', () => {
       const plugin = pasteRules([
         {
           regexp: /^# ([\s\w]+)$/,
@@ -346,6 +346,35 @@ describe('pasteRules', () => {
         .callback((content) => {
           expect(content.doc).toEqualProsemirrorNode(
             doc(p('Hello '), h1('This is a heading'), h2('This is another heading')),
+          );
+        });
+    });
+
+    it('can transform multiple inline nodes', () => {
+      const inlineEmoji = schema.nodes.atomInline;
+      const plugin = pasteRules([
+        {
+          regexp: /[😊😠😢😂]/u,
+          type: 'node',
+          nodeType: inlineEmoji,
+          getContent: () => {},
+          getAttributes: (match) => {
+            return { code: match[0] };
+          },
+        },
+      ]);
+      createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+        .paste('A😊B😠C')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p('A', inlineEmoji.create(), 'B', inlineEmoji.create(), 'C')),
+          );
+        });
+      createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+        .paste('😊😠')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p(inlineEmoji.create(), inlineEmoji.create())),
           );
         });
     });

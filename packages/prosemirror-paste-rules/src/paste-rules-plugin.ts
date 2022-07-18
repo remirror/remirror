@@ -467,7 +467,7 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
         const start = match.index;
         const end = start + fullValue.length;
 
-        if (start > 0) {
+        if (start > pos) {
           nodes.push(child.cut(pos, start));
         }
 
