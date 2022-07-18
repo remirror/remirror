@@ -20,6 +20,7 @@ import {
   uniqueId,
   within,
 } from '@remirror/core';
+import type { CreateEventHandlers } from '@remirror/extension-events';
 import { Node } from '@remirror/pm/model';
 import { EditorStateConfig, TextSelection } from '@remirror/pm/state';
 import { DecorationSet } from '@remirror/pm/view';
@@ -101,6 +102,37 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
         },
         ...(override.parseDOM ?? []),
       ],
+    };
+  }
+
+  /**
+   * Track click events passed through to the editor.
+   */
+  createEventHandlers(): CreateEventHandlers {
+    return {
+      /**
+       * listens to click events and call the "onClickMark" handler with any of:
+       * 1. no argument if the text clicked is not an highlight mark
+       * 2. the id of the clicked highlight mark
+       * 3. id of the shortest highlight mark in case of overlapping highlights
+       */
+      clickMark: (_event, clickState) => {
+        const { markRanges } = clickState;
+
+        if (markRanges.length === 0) {
+          return this.options.onClickMark();
+        }
+
+        let shortestMark = markRanges[0];
+
+        markRanges.forEach((mark) => {
+          if (mark.to - mark.from < shortestMark.to - shortestMark.from) {
+            shortestMark = mark;
+          }
+        });
+
+        return this.options.onClickMark(shortestMark.mark.attrs.id);
+      },
     };
   }
 
