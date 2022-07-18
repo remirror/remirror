@@ -1,3 +1,5 @@
+import 'remirror/styles/all.css';
+
 import React, { useCallback } from 'react';
 import { EmojiExtension, PlaceholderExtension } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
