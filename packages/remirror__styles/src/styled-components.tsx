@@ -3968,9 +3968,9 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     fill: #ffffff;
   }
 
-  .remirror-table-delete-row-column-inner-button {
-    top: calc(var(--remirror-table-delete-button-y) - 9px);
-    left: calc(var(--remirror-table-delete-button-x) - 9px);
+  .remirror-table-delete-inner-button {
+    border: none;
+    padding: 0;
     width: 18px;
     height: 18px;
 
@@ -3982,13 +3982,24 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     transition: background-color 150ms ease;
   }
 
-  .remirror-table-delete-row-column-inner-button:hover {
+  .remirror-table-delete-inner-button:hover {
     background-color: #ff7884;
+  }
+
+  .remirror-table-delete-table-inner-button {
+    top: calc(var(--remirror-table-delete-button-y) - 9px);
+    left: calc(var(--remirror-table-delete-button-x) - 9px);
+  }
+
+  .remirror-table-delete-row-column-inner-button {
+    top: calc(var(--remirror-table-delete-row-column-button-y) - 9px);
+    left: calc(var(--remirror-table-delete-row-column-button-x) - 9px);
   }
 
   .remirror-table-with-controllers {
     /* Space for marks */
     margin-top: 40px;
+    margin-bottom: 40px;
 
     /* To make controller's 'height: 100%' works, table must set its own height. */
     height: 1px;
@@ -4202,16 +4213,29 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     background-color: var(--rmr-color-table-selected-controller);
   }
 
-  /* Styles for predelete */
-
-  .remirror-table-show-predelete th.selectedCell.selectedCell.remirror-table-controller {
-    background-color: var(--rmr-color-table-predelete-controller);
+  .remirror-table-preselect-all {
   }
 
-  .remirror-table-show-predelete th.selectedCell.selectedCell,
-  .remirror-table-show-predelete td.selectedCell.selectedCell {
-    border-color: var(--rmr-color-table-predelete-border);
-    background-color: var(--rmr-color-table-predelete-cell);
+  /* Styles for predelete */
+
+  .remirror-table-show-predelete th.selectedCell.remirror-table-controller,
+  .remirror-table-show-predelete td.selectedCell {
+    border-color: var(--rmr-color-table-predelete-border) !important;
+    background-color: var(--rmr-color-table-predelete-cell) !important;
+  }
+
+  .remirror-table-show-predelete th.selectedCell.remirror-table-controller {
+    background-color: var(--rmr-color-table-predelete-controller) !important;
+  }
+
+  .remirror-table-show-predelete.remirror-table-preselect-all th.remirror-table-controller,
+  .remirror-table-show-predelete.remirror-table-preselect-all td {
+    border-color: var(--rmr-color-table-predelete-border) !important;
+    background-color: var(--rmr-color-table-predelete-cell) !important;
+  }
+
+  .remirror-table-show-predelete.remirror-table-preselect-all th.remirror-table-controller {
+    background-color: var(--rmr-color-table-predelete-controller) !important;
   }
 `;
 

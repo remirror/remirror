@@ -18,7 +18,7 @@ export function addColumn(
   { map, tableStart, table }: { map: TableMap; tableStart: number; table: ProsemirrorNode },
   col: number,
 ): Transaction {
-  const refColumn: number = col < map.width - 1 ? 0 : -1;
+  const refColumn: number = col < map.width ? 0 : -1;
 
   for (let row = 0; row < map.height; row++) {
     const index = row * map.width + col;

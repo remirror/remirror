@@ -47,7 +47,15 @@ export class TableView implements NodeView {
       { className: ExtensionTablesTheme.TABLE_COLGROUP },
       ...range(this.map.width).map(() => h('col')),
     );
-    this.table = h('table', { className: ExtensionTablesTheme.TABLE }, this.colgroup, this.tbody);
+    this.table = h(
+      'table',
+      {
+        className: ExtensionTablesTheme.TABLE,
+        dataset: { controllersInjected: '' },
+      },
+      this.colgroup,
+      this.tbody,
+    );
     this.insertButtonWrapper = h('div');
     this.root = h('div', null, this.table, this.insertButtonWrapper);
 

@@ -1,6 +1,6 @@
 import React, { CSSProperties, MouseEventHandler, useCallback } from 'react';
 import type { EditorView, FindProsemirrorNodeResult } from '@remirror/core';
-import { findParentNodeOfType, isElementDomNode } from '@remirror/core';
+import { cx, findParentNodeOfType, isElementDomNode } from '@remirror/core';
 import {
   defaultAbsolutePosition,
   hasStateChanged,
@@ -115,6 +115,11 @@ export interface TableDeleteRowColumnInnerButtonProps {
   onClick: MouseEventHandler;
 
   /**
+   * The action when the mouse is pressed on the button.
+   */
+  onMouseDown: MouseEventHandler;
+
+  /**
    * The action when the mouse is over the button.
    */
   onMouseOver: MouseEventHandler;
@@ -128,29 +133,31 @@ export interface TableDeleteRowColumnInnerButtonProps {
 export const TableDeleteRowColumnInnerButton: React.FC<TableDeleteRowColumnInnerButtonProps> = ({
   position,
   onClick,
+  onMouseDown,
   onMouseOver,
   onMouseOut,
 }) => {
   const size = 18;
   return (
-    <div
+    <button
       ref={position.ref}
-      onMouseDown={(e) => {
-        // onClick doesn't work. I don't know why.
-        onClick(e);
-      }}
+      onClick={onClick}
+      onMouseDown={onMouseDown}
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
       style={
         {
-          '--remirror-table-delete-button-y': `${position.y}px`,
-          '--remirror-table-delete-button-x': `${position.x}px`,
+          '--remirror-table-delete-row-column-button-y': `${position.y}px`,
+          '--remirror-table-delete-row-column-button-x': `${position.x}px`,
         } as CSSProperties
       }
-      className={ExtensionTablesTheme.TABLE_DELETE_ROW_COLUMN_INNER_BUTTON}
+      className={cx(
+        ExtensionTablesTheme.TABLE_DELETE_INNER_BUTTON,
+        ExtensionTablesTheme.TABLE_DELETE_ROW_COLUMN_INNER_BUTTON,
+      )}
     >
       <Icon name='closeFill' size={size} color={'#ffffff'} />
-    </div>
+    </button>
   );
 };
 
@@ -196,11 +203,16 @@ export const TableDeleteRowColumnButton: React.FC<TableDeleteRowColumnButtonProp
 
   Component = Component ?? TableDeleteRowColumnInnerButton;
 
+  const handleMouseDown: MouseEventHandler = useCallback((e) => {
+    e.preventDefault();
+  }, []);
+
   return (
     <PositionerPortal>
       <Component
         position={position}
         onClick={handleClick}
+        onMouseDown={handleMouseDown}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       />

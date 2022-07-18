@@ -269,9 +269,9 @@ export const TABLE_INSERT_BUTTON = css`
   }
 ` as `remirror-table-insert-button`;
 
-export const TABLE_DELETE_ROW_COLUMN_INNER_BUTTON = css`
-  top: calc(var(--remirror-table-delete-button-y) - 9px);
-  left: calc(var(--remirror-table-delete-button-x) - 9px);
+export const TABLE_DELETE_INNER_BUTTON = css`
+  border: none;
+  padding: 0;
   width: 18px;
   height: 18px;
 
@@ -284,11 +284,22 @@ export const TABLE_DELETE_ROW_COLUMN_INNER_BUTTON = css`
   &:hover {
     background-color: #ff7884;
   }
+` as 'remirror-table-delete-inner-button';
+
+export const TABLE_DELETE_TABLE_INNER_BUTTON = css`
+  top: calc(var(--remirror-table-delete-button-y) - 9px);
+  left: calc(var(--remirror-table-delete-button-x) - 9px);
+` as 'remirror-table-delete-row-column-inner-button';
+
+export const TABLE_DELETE_ROW_COLUMN_INNER_BUTTON = css`
+  top: calc(var(--remirror-table-delete-row-column-button-y) - 9px);
+  left: calc(var(--remirror-table-delete-row-column-button-x) - 9px);
 ` as 'remirror-table-delete-row-column-inner-button';
 
 export const TABLE_WITH_CONTROLLERS = css`
   /* Space for marks */
   margin-top: 40px;
+  margin-bottom: 40px;
 
   /* To make controller's 'height: 100%' works, table must set its own height. */
   height: 1px;
@@ -344,15 +355,29 @@ export const TABLE_TBODY_WITH_CONTROLLERS = css`
   }
 ` as 'remirror-table-tbody-with-controllers';
 
+export const TABLE_PRESELECT_ALL = css`
+  & {
+  }
+` as 'remirror-table-preselect-all';
+
 export const TABLE_SHOW_PREDELETE = css`
   /* Styles for predelete */
   & {
-    th.${SELECTED_CELL}.${SELECTED_CELL}.${TABLE_CONTROLLER} {
-      background-color: ${getThemeVar('color', 'table', 'predelete', 'controller')};
+    th.${SELECTED_CELL}.${TABLE_CONTROLLER}, td.${SELECTED_CELL} {
+      border-color: ${getThemeVar('color', 'table', 'predelete', 'border')} !important;
+      background-color: ${getThemeVar('color', 'table', 'predelete', 'cell')} !important;
     }
-    th.${SELECTED_CELL}.${SELECTED_CELL}, td.${SELECTED_CELL}.${SELECTED_CELL} {
-      border-color: ${getThemeVar('color', 'table', 'predelete', 'border')};
-      background-color: ${getThemeVar('color', 'table', 'predelete', 'cell')};
+    th.${SELECTED_CELL}.${TABLE_CONTROLLER} {
+      background-color: ${getThemeVar('color', 'table', 'predelete', 'controller')} !important;
+    }
+  }
+  &.${TABLE_PRESELECT_ALL} {
+    th.${TABLE_CONTROLLER}, td {
+      border-color: ${getThemeVar('color', 'table', 'predelete', 'border')} !important;
+      background-color: ${getThemeVar('color', 'table', 'predelete', 'cell')} !important;
+    }
+    th.${TABLE_CONTROLLER} {
+      background-color: ${getThemeVar('color', 'table', 'predelete', 'controller')} !important;
     }
   }
 ` as 'remirror-table-show-predelete';
