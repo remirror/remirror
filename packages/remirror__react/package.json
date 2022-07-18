@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.9",
   "description": "Hooks and components for consuming `remirror` with your fave framework `React`.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react",
   "repository": {
@@ -31,16 +31,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/extension-placeholder": "^2.0.0-beta.8",
-    "@remirror/extension-positioner": "^2.0.0-beta.8",
-    "@remirror/extension-react-component": "^2.0.0-beta.8",
-    "@remirror/extension-react-tables": "^2.0.0-beta.8",
-    "@remirror/preset-react": "^2.0.0-beta.8",
-    "@remirror/react-components": "^2.0.0-beta.8",
-    "@remirror/react-core": "^2.0.0-beta.8",
-    "@remirror/react-hooks": "^2.0.0-beta.8",
-    "@remirror/react-renderer": "^2.0.0-beta.8",
-    "@remirror/react-utils": "^2.0.0-beta.8"
+    "@remirror/extension-placeholder": "^2.0.0-beta.9",
+    "@remirror/extension-positioner": "^2.0.0-beta.9",
+    "@remirror/extension-react-component": "^2.0.0-beta.9",
+    "@remirror/extension-react-tables": "^2.0.0-beta.9",
+    "@remirror/preset-react": "^2.0.0-beta.9",
+    "@remirror/react-components": "^2.0.0-beta.9",
+    "@remirror/react-core": "^2.0.0-beta.9",
+    "@remirror/react-hooks": "^2.0.0-beta.9",
+    "@remirror/react-renderer": "^2.0.0-beta.9",
+    "@remirror/react-utils": "^2.0.0-beta.9"
   },
   "devDependencies": {
     "@types/react": "^18.0.6",

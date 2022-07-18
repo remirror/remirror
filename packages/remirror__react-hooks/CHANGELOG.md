@@ -1,5 +1,64 @@
 # @remirror/react-hooks
 
+## 2.0.0-beta.9
+
+> 2022-07-18
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- SSR features are removed.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.9
+  - @remirror/extension-emoji@2.0.0-beta.9
+  - @remirror/extension-events@2.0.0-beta.9
+  - @remirror/extension-mention@2.0.0-beta.9
+  - @remirror/extension-mention-atom@2.0.0-beta.9
+  - @remirror/pm@2.0.0-beta.9
+  - @remirror/react-core@2.0.0-beta.9
+  - @remirror/extension-history@2.0.0-beta.9
+  - @remirror/extension-positioner@2.0.0-beta.9
+  - @remirror/i18n@2.0.0-beta.9
+  - @remirror/react-utils@2.0.0-beta.9
+  - multishift@2.0.0-beta.9
+
 ## 2.0.0-beta.8
 
 > 2022-07-13

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-annotation",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.9",
   "description": "This extension allows to annotate the content in your editor",
   "keywords": [
     "remirror",
@@ -35,15 +35,15 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.8",
-    "@remirror/extension-positioner": "^2.0.0-beta.8",
-    "@remirror/messages": "^2.0.0-beta.8"
+    "@remirror/core": "^2.0.0-beta.9",
+    "@remirror/extension-positioner": "^2.0.0-beta.9",
+    "@remirror/messages": "^2.0.0-beta.9"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.8"
+    "@remirror/pm": "^2.0.0-beta.9"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.8"
+    "@remirror/pm": "^2.0.0-beta.9"
   },
   "publishConfig": {
     "access": "public"
