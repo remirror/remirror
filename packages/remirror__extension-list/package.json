@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-list",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.9",
   "description": "The list extensions.",
   "keywords": [
     "remirror",
@@ -38,16 +38,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.8",
-    "@remirror/extension-events": "^2.0.0-beta.8",
-    "@remirror/messages": "^2.0.0-beta.8",
-    "@remirror/theme": "^2.0.0-beta.8"
+    "@remirror/core": "^2.0.0-beta.9",
+    "@remirror/extension-events": "^2.0.0-beta.9",
+    "@remirror/messages": "^2.0.0-beta.9",
+    "@remirror/theme": "^2.0.0-beta.9"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.8"
+    "@remirror/pm": "^2.0.0-beta.9"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.8"
+    "@remirror/pm": "^2.0.0-beta.9"
   },
   "publishConfig": {
     "access": "public"
