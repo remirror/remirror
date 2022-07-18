@@ -1,16 +1,18 @@
+import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { createCoreManager } from 'remirror/extensions';
 import { prosemirrorNodeToHtml, uniqueArray } from '@remirror/core';
 
 import { EntityReferenceExtension } from '../';
+import { EntityReferenceOptions } from '../src/types';
 
 extensionValidityTest(EntityReferenceExtension);
 
 const DUMMY_TEXT = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
 
-function create() {
-  return renderEditor([new EntityReferenceExtension()]);
+function create(options: EntityReferenceOptions = {}) {
+  return renderEditor([new EntityReferenceExtension(options)]);
 }
 
 let {
@@ -19,6 +21,7 @@ let {
   selectText,
   commands,
   helpers,
+  view,
 } = create();
 
 beforeEach(() => {
@@ -28,6 +31,7 @@ beforeEach(() => {
     selectText,
     helpers,
     commands,
+    view,
   } = create());
 });
 
@@ -252,6 +256,57 @@ describe('EntityReference marks', () => {
       expect(selected).toBeTrue();
       expect(editor.state.selection.from).toBe(entityReference.from);
       expect(editor.state.selection.to).toBe(entityReference.to);
+    });
+  });
+
+  describe('onClickMark', () => {
+    const onClickMark: any = jest.fn(() => false);
+
+    beforeEach(() => {
+      ({
+        add,
+        nodes: { doc, p },
+        selectText,
+        helpers,
+        commands,
+        view,
+      } = create({ onClickMark }));
+    });
+
+    it('responds to mark clicks and passes mark id if click is a mark', () => {
+      const node = doc(p('testing text'));
+      add(node);
+      const entityReference = {
+        id: 'testId',
+        from: 1,
+        to: 8,
+        text: 'testing',
+      };
+
+      selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+
+      view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {} as MouseEvent, false));
+      expect(onClickMark).toHaveBeenCalledTimes(1);
+      expect(onClickMark).toHaveBeenCalledWith(entityReference.id);
+    });
+
+    it('responds to clicks and passes no argument if click is not a mark', () => {
+      const node = doc(p('testing text'));
+      add(node);
+      const entityReference = {
+        id: 'testId',
+        from: 1,
+        to: 8,
+        text: 'testing',
+      };
+
+      selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+
+      view.someProp('handleClickOn', (fn) => fn(view, 9, node, 1, {} as MouseEvent, false));
+      expect(onClickMark).toHaveBeenCalledTimes(1);
+      expect(onClickMark).toHaveBeenCalledWith();
     });
   });
 });
