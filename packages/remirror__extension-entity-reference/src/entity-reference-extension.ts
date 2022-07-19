@@ -6,6 +6,7 @@ import {
   CreateExtensionPlugin,
   EditorState,
   extension,
+  GetMarkRange,
   getTextSelection,
   Helper,
   helper,
@@ -29,6 +30,7 @@ import { EntityReferenceMetaData, EntityReferenceOptions } from './types';
 import { decorateEntityReferences } from './utils/decorate-entity-references';
 import { getDisjoinedEntityReferencesFromNode } from './utils/disjoined-entity-references';
 import { joinDisjoinedEntityReferences } from './utils/joined-entity-references';
+import { getShortestEntityReference } from './utils/shortest-entity-reference';
 
 /**
  *  Required props to create entityReference marks decorations.
@@ -112,24 +114,20 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
     return {
       /**
        * listens to click events and call the "onClickMark" handler with any of:
-       * 1. no argument if the text clicked is not an highlight mark
-       * 2. the id of the clicked highlight mark
-       * 3. id of the shortest highlight mark in case of overlapping highlights
+       * 1. no argument if the text clicked is not an entity reference
+       * 2. the id of the clicked entity reference
+       * 3. id of the shortest entity reference in case of overlapping entities
        */
       clickMark: (_event, clickState) => {
         const { markRanges } = clickState;
 
-        if (markRanges.length === 0) {
+        const entityReferences = markRanges.filter(({ mark }) => mark.type.name === this.name);
+
+        if (entityReferences.length === 0) {
           return this.options.onClickMark();
         }
 
-        let shortestMark = markRanges[0];
-
-        markRanges.forEach((mark) => {
-          if (mark.to - mark.from < shortestMark.to - shortestMark.from) {
-            shortestMark = mark;
-          }
-        });
+        const shortestMark = getShortestEntityReference(entityReferences) as GetMarkRange;
 
         return this.options.onClickMark(shortestMark.mark.attrs.id);
       },
