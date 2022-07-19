@@ -1,5 +1,74 @@
 # @remirror/react-components
 
+## 2.0.0-beta.10
+
+> 2022-07-19
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.10
+  - multishift@2.0.0-beta.10
+  - @remirror/core@2.0.0-beta.10
+  - @remirror/extension-positioner@2.0.0-beta.10
+  - @remirror/extension-text-color@2.0.0-beta.10
+  - @remirror/i18n@2.0.0-beta.10
+  - @remirror/icons@2.0.0-beta.10
+  - @remirror/messages@2.0.0-beta.10
+  - @remirror/react-core@2.0.0-beta.10
+  - @remirror/react-hooks@2.0.0-beta.10
+  - @remirror/react-utils@2.0.0-beta.10
+  - @remirror/theme@2.0.0-beta.10
+  - create-context-state@2.0.0-beta.9
+
 ## 2.0.0-beta.9
 
 > 2022-07-18
