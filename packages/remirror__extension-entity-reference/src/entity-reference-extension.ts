@@ -6,6 +6,7 @@ import {
   CreateExtensionPlugin,
   EditorState,
   extension,
+  GetMarkRange,
   getTextSelection,
   Helper,
   helper,
@@ -20,6 +21,7 @@ import {
   uniqueId,
   within,
 } from '@remirror/core';
+import type { CreateEventHandlers } from '@remirror/extension-events';
 import { Node } from '@remirror/pm/model';
 import { EditorStateConfig, TextSelection } from '@remirror/pm/state';
 import { DecorationSet } from '@remirror/pm/view';
@@ -28,6 +30,7 @@ import { EntityReferenceMetaData, EntityReferenceOptions } from './types';
 import { decorateEntityReferences } from './utils/decorate-entity-references';
 import { getDisjoinedEntityReferencesFromNode } from './utils/disjoined-entity-references';
 import { joinDisjoinedEntityReferences } from './utils/joined-entity-references';
+import { getShortestEntityReference } from './utils/shortest-entity-reference';
 
 /**
  *  Required props to create entityReference marks decorations.
@@ -62,6 +65,7 @@ const createDecorationSet = (props: StateProps) => {
   defaultOptions: {
     getStyle: decorateEntityReferences,
     blockSeparator: undefined,
+    onClickMark: () => {},
   },
 })
 export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptions> {
@@ -100,6 +104,33 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
         },
         ...(override.parseDOM ?? []),
       ],
+    };
+  }
+
+  /**
+   * Track click events passed through to the editor.
+   */
+  createEventHandlers(): CreateEventHandlers {
+    return {
+      /**
+       * listens to click events and call the "onClickMark" handler with any of:
+       * 1. no argument if the text clicked is not an entity reference
+       * 2. the id of the clicked entity reference
+       * 3. id of the shortest entity reference in case of overlapping entities
+       */
+      clickMark: (_event, clickState) => {
+        const { markRanges } = clickState;
+
+        const entityReferences = markRanges.filter(({ mark }) => mark.type.name === this.name);
+
+        if (entityReferences.length === 0) {
+          return this.options.onClickMark();
+        }
+
+        const shortestMark = getShortestEntityReference(entityReferences) as GetMarkRange;
+
+        return this.options.onClickMark(shortestMark.mark.attrs.id);
+      },
     };
   }
 

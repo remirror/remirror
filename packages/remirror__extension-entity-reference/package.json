@@ -37,6 +37,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^2.0.0-beta.9",
+    "@remirror/extension-events": "^2.0.0-beta.9",
     "@remirror/extension-positioner": "^2.0.0-beta.9"
   },
   "devDependencies": {
