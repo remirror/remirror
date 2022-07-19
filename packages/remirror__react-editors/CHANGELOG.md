@@ -1,5 +1,89 @@
 # @remirror/react-editors
 
+## 1.0.0-beta.10
+
+> 2022-07-19
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update prosemirror packages.
+- Expose the return type of the throttle and debounce helpers
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Update jsx-dom to v7.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- add helper to get shortest entity reference
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- When href equals text content, treat the link as an auto link (if enabled)
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Transform a hard break into `\n` in `Node.textContent`.
+- SSR features are removed.
+- Update ProseMirror packages.
+- Update ProseMirror packages to latest versions.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.10
+  - @remirror/core-helpers@2.0.0-beta.10
+  - remirror@2.0.0-beta.10
+  - @remirror/extension-react-tables@2.0.0-beta.10
+  - @remirror/react@2.0.0-beta.10
+  - @remirror/styles@2.0.0-beta.10
+  - create-context-state@2.0.0-beta.9
+
 ## 1.0.0-beta.9
 
 > 2022-07-18

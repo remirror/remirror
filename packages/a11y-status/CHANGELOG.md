@@ -1,5 +1,13 @@
 # a11y-status
 
+## 2.0.0-beta.9
+
+> 2022-07-19
+
+### Major Changes
+
+- Migrate to pure ESM!
+
 ## 2.0.0-beta.8
 
 > 2022-07-18

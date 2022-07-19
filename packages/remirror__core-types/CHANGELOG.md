@@ -1,5 +1,27 @@
 # @remirror/core-types
 
+## 2.0.0-beta.10
+
+> 2022-07-19
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.10
+  - @remirror/core-constants@2.0.0-beta.10
+  - @remirror/types@1.0.0-beta.10
+
 ## 2.0.0-beta.9
 
 > 2022-07-18
