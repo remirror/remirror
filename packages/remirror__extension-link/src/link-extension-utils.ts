@@ -85,53 +85,27 @@ export const isBalanced = (input: string): boolean => {
   return stack.length === 0;
 };
 
-export const getBalancedIndex = (input: string, index: number): number => {
-  const newString = input.slice(0, index);
+export const getBalancedIndex = (input: string, index: number): number =>
+  !isBalanced(input.slice(0, index)) ? getBalancedIndex(input, --index) : index;
 
-  if (!isBalanced(newString)) {
-    return getBalancedIndex(input, --index);
-  }
+export const getTrailingPunctuationIndex = (input: string, index: number): number =>
+  SENTENCE_PUNCTUATIONS.includes(input.slice(0, index).slice(-1))
+    ? getTrailingPunctuationIndex(input, --index)
+    : index;
 
-  return index;
-};
-
-export const getTrailingPunctuationIndex = (input: string, index: number): number => {
-  const newString = input.slice(0, index);
-
-  if (SENTENCE_PUNCTUATIONS.includes(newString.slice(-1))) {
-    return getTrailingPunctuationIndex(input, --index);
-  }
-
-  return index;
-};
-
-export const getAdjacentCharCount = ({
-  direction,
+export const getTrailingCharIndex = ({
+  adjacentPunctuations,
   input,
-  url,
+  url = '',
 }: {
-  direction: 0 | 1;
+  adjacentPunctuations: typeof DEFAULT_ADJACENT_PUNCTUATIONS;
   input: string;
-  url: string | undefined;
-}) => {
-  const length = ((url && input.split(url)[direction]) || '').length;
+  url: string;
+}): number | undefined =>
+  (input.split(url)[1] || '').length * -1 ||
+  (adjacentPunctuations.includes(input.slice(-1)) ? -1 : undefined);
 
-  if (length > 1) {
-    return Math.abs(length) * (direction === 1 ? -1 : 1);
-  }
-
-  return;
-};
-
-export const addProtocol = (input: string) =>
+export const addProtocol = (input: string, defaultProtocol?: string): string =>
   ['http://', 'https://', 'ftp://'].some((protocol) => input.startsWith(protocol))
     ? input
-    : `https://${input}`;
-
-export const createNewURL = (input: string) => {
-  try {
-    return new URL(addProtocol(input));
-  } catch {
-    return;
-  }
-};
+    : `${defaultProtocol && defaultProtocol.length > 0 ? defaultProtocol : 'https:'}//${input}`;

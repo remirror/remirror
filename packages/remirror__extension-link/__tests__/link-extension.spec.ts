@@ -737,7 +737,7 @@ describe('autolinking', () => {
     );
   });
 
-  it('detects seperating two links', () => {
+  it('detects seperating two links by entering a space', () => {
     editor.add(doc(p('<cursor>'))).insertText('github.comremirror.io');
 
     expect(editor.doc).toEqualRemirrorDocument(
@@ -753,6 +753,20 @@ describe('autolinking', () => {
           ' ',
           link({ auto: true, href: '//remirror.io' })('remirror.io'),
         ),
+      ),
+    );
+  });
+
+  it('detects seperating two links by `Enter` key press', () => {
+    editor
+      .add(doc(p('test.coremirror.io')))
+      .selectText(8)
+      .press('Enter');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(link({ auto: true, href: '//test.co' })('test.co')),
+        p(link({ auto: true, href: '//remirror.io' })('remirror.io')),
       ),
     );
   });
@@ -1079,6 +1093,61 @@ describe('autolinking', () => {
 
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p('remirror.i ', link({ auto: true, href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('does not create a link if not in selection range - edit text after', () => {
+    editor.add(doc(p('remirror.io tester'))).backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('remirror.io', ' test')));
+  });
+
+  it('does not create a link if not in selection range - edit text before', () => {
+    editor
+      .add(doc(p('tester remirror.io')))
+      .selectText(7)
+      .backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test', ' remirror.io')));
+  });
+
+  it('does not create a link if not in selection range - create link after', () => {
+    editor
+      .add(doc(p('remirror.io test ')))
+      .backspace()
+      .insertText('.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('remirror.io ', link({ auto: true, href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('does not create a link if not in selection range - create link before', () => {
+    editor
+      .add(doc(p('test remirror.io')))
+      .selectText(5)
+      .insertText('.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.com' })('test.com'), ' remirror.io')),
+    );
+  });
+
+  it('allows creating identical links', () => {
+    editor
+      .add(doc(p(link({ auto: true, href: '//test.com' })('test.com'))))
+      .press('Enter')
+      .insertText('test.com test.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(link({ auto: true, href: '//test.com' })('test.com')),
+        p(
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: '//test.com' })('test.com'),
+        ),
+      ),
     );
   });
 
@@ -1635,6 +1704,27 @@ describe('adjacent punctuations', () => {
     );
   });
 
+  it('should remove unbalanced parts - URL path', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('remirror.io/test(balance))')
+      .backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//remirror.io/test' })('remirror.io/test'), '(balance')),
+    );
+  });
+
   it('should check for balanced braces - URL query', () => {
     const editor = renderEditor([
       new LinkExtension({
@@ -1655,6 +1745,27 @@ describe('adjacent punctuations', () => {
           ')',
         ),
       ),
+    );
+  });
+
+  it('should remove unbalanced parts - URL query', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('remirror.io?test=(balance))')
+      .backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//remirror.io?test=' })('remirror.io?test='), '(balance')),
     );
   });
 });
