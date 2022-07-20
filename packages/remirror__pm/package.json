@@ -138,13 +138,13 @@
     "prosemirror-keymap": "^1.2.0",
     "prosemirror-model": "^1.18.1",
     "prosemirror-paste-rules": "^2.0.0-beta.11",
-    "prosemirror-schema-list": "^1.2.0",
+    "prosemirror-schema-list": "^1.2.1",
     "prosemirror-state": "^1.4.1",
     "prosemirror-suggest": "^2.0.0-beta.11",
-    "prosemirror-tables": "^1.2.1",
+    "prosemirror-tables": "^1.2.4",
     "prosemirror-trailing-node": "^2.0.0-beta.11",
     "prosemirror-transform": "^1.6.0",
-    "prosemirror-view": "^1.26.5"
+    "prosemirror-view": "^1.27.0"
   },
   "publishConfig": {
     "access": "public"
