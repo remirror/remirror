@@ -6,7 +6,6 @@ import {
   CreateExtensionPlugin,
   EditorState,
   extension,
-  GetMarkRange,
   getTextSelection,
   Helper,
   helper,
@@ -30,7 +29,6 @@ import { EntityReferenceMetaData, EntityReferenceOptions } from './types';
 import { decorateEntityReferences } from './utils/decorate-entity-references';
 import { getDisjoinedEntityReferencesFromNode } from './utils/disjoined-entity-references';
 import { joinDisjoinedEntityReferences } from './utils/joined-entity-references';
-import { getShortestEntityReference } from './utils/shortest-entity-reference';
 
 /**
  *  Required props to create entityReference marks decorations.
@@ -118,18 +116,14 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
        * 2. the id of the clicked entity reference
        * 3. id of the shortest entity reference in case of overlapping entities
        */
-      clickMark: (_event, clickState) => {
-        const { markRanges } = clickState;
-
-        const entityReferences = markRanges.filter(({ mark }) => mark.type.name === this.name);
+      click: (_event, clickState) => {
+        const entityReferences = this.getEntityReferencesAt(clickState.pos);
 
         if (entityReferences.length === 0) {
           return this.options.onClickMark();
         }
 
-        const shortestMark = getShortestEntityReference(entityReferences) as GetMarkRange;
-
-        return this.options.onClickMark(shortestMark.mark.attrs.id);
+        return this.options.onClickMark(entityReferences);
       },
     };
   }

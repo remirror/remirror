@@ -288,7 +288,7 @@ describe('EntityReference marks', () => {
 
       view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {} as MouseEvent, false));
       expect(onClickMark).toHaveBeenCalledTimes(1);
-      expect(onClickMark).toHaveBeenCalledWith(entityReference.id);
+      expect(onClickMark).toHaveBeenCalledWith([entityReference]);
     });
 
     it('responds to clicks and passes no argument if click is not a mark', () => {
