@@ -1,5 +1,67 @@
 # @remirror/preset-formatting
 
+## 2.0.0-beta.12
+
+> 2022-07-20
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.12
+  - @remirror/extension-bold@2.0.0-beta.12
+  - @remirror/extension-columns@2.0.0-beta.12
+  - @remirror/extension-font-size@2.0.0-beta.12
+  - @remirror/extension-heading@2.0.0-beta.12
+  - @remirror/extension-italic@2.0.0-beta.12
+  - @remirror/extension-node-formatting@2.0.0-beta.12
+  - @remirror/extension-strike@2.0.0-beta.12
+  - @remirror/extension-sub@2.0.0-beta.12
+  - @remirror/extension-sup@2.0.0-beta.12
+  - @remirror/extension-text-case@2.0.0-beta.12
+  - @remirror/extension-text-color@2.0.0-beta.12
+  - @remirror/extension-text-highlight@2.0.0-beta.12
+  - @remirror/extension-underline@2.0.0-beta.12
+  - @remirror/extension-whitespace@2.0.0-beta.12
+  - @remirror/pm@2.0.0-beta.12
+
 ## 2.0.0-beta.11
 
 > 2022-07-20

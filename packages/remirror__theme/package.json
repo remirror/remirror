@@ -1,6 +1,6 @@
 {
   "name": "@remirror/theme",
-  "version": "2.0.0-beta.11",
+  "version": "2.0.0-beta.12",
   "description": "The configurable theme for the remirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__theme",
   "repository": {
@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@linaria/core": "3.0.0-beta.13",
-    "@remirror/core-types": "^2.0.0-beta.11",
+    "@remirror/core-types": "^2.0.0-beta.12",
     "color2k": "^2.0.0",
     "csstype": "^3.0.7"
   },

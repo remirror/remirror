@@ -1,5 +1,24 @@
 # @remirror/preset-template
 
+## 2.0.0-beta.12
+
+> 2022-07-20
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.12
+  - @remirror/pm@2.0.0-beta.12
+
 ## 2.0.0-beta.11
 
 > 2022-07-20
