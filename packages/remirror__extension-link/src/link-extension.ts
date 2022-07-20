@@ -45,9 +45,22 @@ import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
-import { TOP_50_TLDS } from './link-extension-utils';
+import {
+  addProtocol,
+  DEFAULT_ADJACENT_PUNCTUATIONS,
+  getBalancedIndex,
+  getTrailingCharIndex,
+  getTrailingPunctuationIndex,
+  isBalanced,
+  SENTENCE_PUNCTUATIONS,
+  TOP_50_TLDS,
+} from './link-extension-utils';
 
 const UPDATE_LINK = 'updateLink';
+
+const MIN_LINK_LENGTH = 4;
+
+const NON_WHITESPACE_REGEX = /\S+/gm;
 
 // Based on https://gist.github.com/dperini/729294
 const DEFAULT_AUTO_LINK_REGEX =
@@ -186,6 +199,23 @@ export interface LinkOptions {
   autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
+   * Adjacent punctuations that are exluded from a link
+   *
+   * To extend the default list you could
+   *
+   * ```ts
+   * import { LinkExtension, DEFAULT_ADJACENT_PUNCTUATIONS } from 'remirror/extensions';
+   * const extensions = () => [
+   *   new LinkExtension({ adjacentPunctuations: [...DEFAULT_ADJACENT_PUNCTUATIONS, ')'] })
+   * ];
+   * ```
+   *
+   * @default
+   * [ ',', '.', '!', '?', ':', ';', "'", '"', '(', ')', '[', ']' ]
+   */
+  adjacentPunctuations?: string[];
+
+  /**
    * The default protocol to use when it can't be inferred.
    *
    * @default ''
@@ -238,6 +268,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
+    adjacentPunctuations: DEFAULT_ADJACENT_PUNCTUATIONS,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -290,7 +321,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const href = node.getAttribute('href');
-            const auto = node.hasAttribute(AUTO_ATTRIBUTE);
+            const text = node.textContent;
+
+            // If link text content equals href value we "auto link"
+            // e.g [test](//test.com) - not "auto link"
+            // e.g [test.com](//test.com) - "auto link"
+            const auto =
+              this.options.autoLink &&
+              (node.hasAttribute(AUTO_ATTRIBUTE) ||
+                href === text ||
+                href?.replace(`${this.options.defaultProtocol}//`, '') === text);
+
             return {
               ...extra.parse(node),
               href,
@@ -437,9 +478,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          const href = this.buildHref(url);
-
-          if (!this.isValidTLD(href)) {
+          if (!this.isValidUrl(url)) {
             return false;
           }
 
@@ -516,7 +555,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           if (this.options.selectTextOnClick) {
             const $start = doc.resolve(range.from);
             const $end = doc.resolve(range.to);
-            const transaction = tr.setSelection(new TextSelection($start, $end));
+            const transaction = tr.setSelection(TextSelection.between($start, $end));
 
             view.dispatch(transaction);
           }
@@ -560,28 +599,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         const composedTransaction = composeTransactionSteps(transactions, prevState);
 
         const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
-        const { mapping } = composedTransaction;
         const { tr, doc } = state;
 
         const { updateLink, removeLink } = this.store.chain(tr);
 
-        changes.forEach(({ from, to, prevFrom, prevTo }) => {
-          // Remove auto links that are no longer valid
-          this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
-            const newFrom = mapping.map(prevMark.from);
-            const newTo = mapping.map(prevMark.to);
-            const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
-
-            newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
-
-              if (wasLink && !isLink) {
-                removeLink({ from: newMark.from, to: newMark.to }).tr();
-              }
-            });
-          });
-
+        changes.forEach(({ from, to }) => {
           // Store all the callbacks we need to make
           const onUpdateCallbacks: Array<Pick<EventMeta, 'range' | 'attrs'> & { text: string }> =
             [];
@@ -593,7 +615,78 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
-            this.findAutoLinks(nodeText)
+
+            const foundAutoLinks: FoundAutoLink[] = [];
+
+            for (const match of findMatches(nodeText, NON_WHITESPACE_REGEX)) {
+              const matchedText = getMatchString(match);
+
+              // Skip if URL doesn't have minimum length
+              // TODO: Could make this configurable
+              if (matchedText.length < MIN_LINK_LENGTH) {
+                continue;
+              }
+
+              const matchStart = match.index;
+              const matchEnd = matchStart + matchedText.length;
+              const urlInMatchedText = this.findURLInString(matchedText);
+              const linkMarkInRange = this.getLinkMarksInRange(
+                doc,
+                pos + matchStart,
+                pos + matchEnd,
+                true,
+              )[0];
+              const href = (urlInMatchedText && this.buildHref(urlInMatchedText.url)) || '';
+              const positionStart = pos + matchStart + (urlInMatchedText?.startIndex || 0);
+              const positionEnd = positionStart + href.length;
+
+              const unbalancedLinkUpdated = urlInMatchedText
+                ? linkMarkInRange &&
+                  !isBalanced(linkMarkInRange.text) &&
+                  isBalanced(linkMarkInRange.mark.attrs.href)
+                : false;
+
+              const outsideSelectionRange = urlInMatchedText
+                ? positionEnd < to + (from === to ? 1 : -1) ||
+                  positionStart > from - (from === to ? 1 : 0) ||
+                  (linkMarkInRange &&
+                    (linkMarkInRange.to >= to ||
+                      !within(from, linkMarkInRange.from, linkMarkInRange.to)))
+                : false;
+
+              const isExistingLinkTextNotEqualHref =
+                urlInMatchedText && linkMarkInRange
+                  ? linkMarkInRange.mark.attrs.href !== href ||
+                    linkMarkInRange.mark.attrs.href !== this.buildHref(linkMarkInRange.text)
+                  : false;
+
+              if (!urlInMatchedText) {
+                linkMarkInRange &&
+                  removeLink({ from: linkMarkInRange.from, to: linkMarkInRange.to }).tr();
+                continue;
+              }
+
+              if (isExistingLinkTextNotEqualHref) {
+                removeLink({ from: linkMarkInRange.from, to: linkMarkInRange.to }).tr();
+              }
+
+              if (
+                outsideSelectionRange &&
+                !isExistingLinkTextNotEqualHref &&
+                !unbalancedLinkUpdated
+              ) {
+                continue;
+              }
+
+              foundAutoLinks.push({
+                end: match.index + urlInMatchedText.url.length + urlInMatchedText.startIndex,
+                href,
+                start: matchStart + urlInMatchedText.startIndex,
+                text: urlInMatchedText.url,
+              });
+            }
+
+            foundAutoLinks
               // calculate link position
               .map((link) => ({
                 ...link,
@@ -601,30 +694,23 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                 to: pos + link.end + 1,
               }))
               .filter((link) => {
-                // Determine if found link is within the changed range
-                return (
-                  within(link.from, from, to) ||
-                  within(link.to, from, to) ||
-                  within(from, link.from, link.to) ||
-                  within(to, link.from, link.to)
-                );
-              })
-              .filter((link) => {
                 // Avoid overwriting manually created links
                 const marks = this.getLinkMarksInRange(tr.doc, link.from, link.to, false);
                 return marks.length === 0;
               })
-              .forEach(({ from, to, href, text }) => {
-                const attrs = { href, auto: true };
+              .forEach(({ from, href, text, to }) => {
+                const attrs = { auto: true, href };
                 const range = { from, to };
                 updateLink(attrs, range).tr();
                 onUpdateCallbacks.push({ attrs, range, text });
               });
           });
 
-          onUpdateCallbacks.forEach(({ range, attrs, text }) => {
-            const { doc, selection } = tr;
-            this.options.onUpdateLink(text, { doc, selection, range, attrs });
+          window.requestAnimationFrame(() => {
+            onUpdateCallbacks.forEach(({ attrs, range, text }) => {
+              const { doc, selection } = tr;
+              this.options.onUpdateLink(text, { attrs, doc, range, selection });
+            });
           });
         });
 
@@ -682,31 +768,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return linkMarks;
   }
 
-  private findAutoLinks(str: string): FoundAutoLink[] {
-    const toAutoLink: FoundAutoLink[] = [];
+  private isValidUrl(url: string) {
+    const href = this.buildHref(url);
 
-    for (const match of findMatches(str, this.options.autoLinkRegex)) {
-      const text = getMatchString(match);
-
-      if (!text) {
-        continue;
-      }
-
-      const href = this.buildHref(text);
-
-      if (!this.isValidTLD(href)) {
-        continue;
-      }
-
-      toAutoLink.push({
-        text,
-        href,
-        start: match.index,
-        end: match.index + text.length,
-      });
-    }
-
-    return toAutoLink;
+    return this.isValidTLD(href) && this._autoLinkRegexNonGlobal?.test(url);
   }
 
   private isValidTLD(str: string): boolean {
@@ -726,6 +791,55 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     const tld = last<string>(domain.split('.'));
 
     return autoLinkAllowedTLDs.includes(tld);
+  }
+
+  private findURLInString(input: string): { url: string; startIndex: number } | undefined {
+    const urlMatch = findMatches(input, this.options.autoLinkRegex)[0];
+
+    if (!urlMatch) {
+      return;
+    }
+
+    const url = input.slice(urlMatch.index, this.getURLEndIndex(input, getMatchString(urlMatch)));
+
+    if (!this.isValidUrl(url)) {
+      return;
+    }
+
+    return { url, startIndex: urlMatch.index };
+  }
+
+  private getURLEndIndex(input: string, url: string) {
+    const domain = extractDomain(addProtocol(input, this.options.defaultProtocol));
+
+    if (domain.length === 0) {
+      return;
+    }
+
+    const path = input.slice(domain.length + input.indexOf(domain)).slice(1);
+
+    if (!path) {
+      return getTrailingCharIndex({
+        adjacentPunctuations: this.options.adjacentPunctuations,
+        input,
+        url,
+      });
+    }
+
+    const index = -1;
+    const balancedIndex = !isBalanced(path) ? getBalancedIndex(path, index) : 0;
+
+    if (balancedIndex < 0) {
+      const balanced = path.slice(0, balancedIndex);
+
+      return SENTENCE_PUNCTUATIONS.includes(balanced.slice(-1))
+        ? getTrailingPunctuationIndex(balanced, index) + balancedIndex
+        : balancedIndex;
+    }
+
+    return SENTENCE_PUNCTUATIONS.includes(path.slice(-1))
+      ? getTrailingPunctuationIndex(path, index)
+      : undefined;
   }
 }
 
