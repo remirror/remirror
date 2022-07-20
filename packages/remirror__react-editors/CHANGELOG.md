@@ -1,5 +1,95 @@
 # @remirror/react-editors
 
+## 1.0.0-beta.12
+
+> 2022-07-20
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Update jsx-dom to v7.
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Update ProseMirror dependencies.
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- SSR features are removed.
+- Update pnpm-lock.yaml
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Transform a hard break into `\n` in `Node.textContent`.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- When href equals text content, treat the link as an auto link (if enabled)
+- Update ProseMirror packages.
+- add helper to get shortest entity reference
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Try to require JSDOM implicitly in node environment.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Update prosemirror packages.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.0-beta.12
+  - @remirror/react@2.0.0-beta.12
+  - create-context-state@2.0.0-beta.11
+  - remirror@2.0.0-beta.12
+  - @remirror/core-helpers@2.0.0-beta.12
+  - @remirror/pm@2.0.0-beta.12
+  - @remirror/styles@2.0.0-beta.12
+
 ## 1.0.0-beta.11
 
 > 2022-07-20
