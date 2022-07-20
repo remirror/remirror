@@ -1,5 +1,14 @@
 # @remirror/core-constants
 
+## 2.0.0-beta.11
+
+> 2022-07-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
 ## 2.0.0-beta.10
 
 > 2022-07-19

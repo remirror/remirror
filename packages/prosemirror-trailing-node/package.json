@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-trailing-node",
-  "version": "2.0.0-beta.10",
+  "version": "2.0.0-beta.11",
   "description": "A trailing node plugin for the prosemirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-trailing-node",
   "repository": {
@@ -31,8 +31,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-constants": "^2.0.0-beta.10",
-    "@remirror/core-helpers": "^2.0.0-beta.10",
+    "@remirror/core-constants": "^2.0.0-beta.11",
+    "@remirror/core-helpers": "^2.0.0-beta.11",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
