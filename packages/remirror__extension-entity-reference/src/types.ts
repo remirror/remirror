@@ -24,7 +24,7 @@ export interface EntityReferenceOptions {
    */
   getStyle?: (entityReferences: EntityReferenceMetaData[][]) => Decoration[];
   blockSeparator?: AcceptUndefined<string>;
-  onClickMark?: (id?: string) => void;
+  onClickMark?: (entityReferences?: EntityReferenceMetaData[]) => void;
 }
 
 export interface EntityReferencePluginState extends Required<EntityReferenceOptions> {

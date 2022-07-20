@@ -290,7 +290,12 @@
     "name": "@remirror/extension-entity-reference",
     "limit": "5 KB",
     "path": "packages/remirror__extension-entity-reference/dist/remirror-extension-entity-reference.js",
-    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/extension-positioner"],
+    "ignore": [
+      "@remirror/pm",
+      "@remirror/core",
+      "@remirror/extension-events",
+      "@remirror/extension-positioner"
+    ],
     "running": false,
     "gzip": true
   },
