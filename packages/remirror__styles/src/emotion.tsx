@@ -1,9 +1,12 @@
 /**
- * AUTO GENERATED FILE - TO UPDATE RUN: `pnpm run fix:css`
+ * AUTO GENERATED FILE - TO UPDATE RUN: `pnpm -w run fix:css`
  */
 
 import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import emotionStyled from '@emotion/styled';
+import { defaultImport } from 'default-import';
+
+const styled = defaultImport(emotionStyled);
 
 export const componentsStyledCss: ReturnType<typeof css> = css`
   /**
@@ -558,7 +561,7 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-table-size-editor-cell-selected {
-    background: var(--rmr-color-selection-background);
+    background: var(--rmr-color-table-selected-border);
     border-color: var(--rmr-color-border);
   }
 
@@ -608,31 +611,8 @@ export const coreStyledCss: ReturnType<typeof css> = css`
     position: relative;
   }
 
-  .remirror-editor.ProseMirror[contenteditable='false'] {
-    white-space: normal;
-  }
-
-  .remirror-editor.ProseMirror[contenteditable='true'] {
-    white-space: pre-wrap;
-  }
-
   .remirror-editor.ProseMirror hr {
     border-color: #2e2e2e;
-  }
-
-  .remirror-editor.ProseMirror ::-moz-selection {
-    background: var(--rmr-color-selection-background);
-    color: var(--rmr-color-selection-text);
-    caret-color: var(--rmr-color-selection-caret);
-    text-shadow: var(--rmr-color-selection-shadow);
-  }
-
-  .remirror-editor.ProseMirror ::selection,
-  .remirror-editor.ProseMirror .selection {
-    background: var(--rmr-color-selection-background);
-    color: var(--rmr-color-selection-text);
-    caret-color: var(--rmr-color-selection-caret);
-    text-shadow: var(--rmr-color-selection-shadow);
   }
 
   /* Protect against generic img rules. See also https://github.com/ProseMirror/prosemirror-view/commit/aaa50d592074c8063fc2ef77907ab6d0373822fb */
@@ -3989,9 +3969,9 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     fill: #ffffff;
   }
 
-  .remirror-table-delete-row-column-inner-button {
-    top: calc(var(--remirror-table-delete-button-y) - 9px);
-    left: calc(var(--remirror-table-delete-button-x) - 9px);
+  .remirror-table-delete-inner-button {
+    border: none;
+    padding: 0;
     width: 18px;
     height: 18px;
 
@@ -4003,13 +3983,24 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     transition: background-color 150ms ease;
   }
 
-  .remirror-table-delete-row-column-inner-button:hover {
+  .remirror-table-delete-inner-button:hover {
     background-color: #ff7884;
+  }
+
+  .remirror-table-delete-table-inner-button {
+    top: calc(var(--remirror-table-delete-button-y) - 9px);
+    left: calc(var(--remirror-table-delete-button-x) - 9px);
+  }
+
+  .remirror-table-delete-row-column-inner-button {
+    top: calc(var(--remirror-table-delete-row-column-button-y) - 9px);
+    left: calc(var(--remirror-table-delete-row-column-button-x) - 9px);
   }
 
   .remirror-table-with-controllers {
     /* Space for marks */
     margin-top: 40px;
+    margin-bottom: 40px;
 
     /* To make controller's 'height: 100%' works, table must set its own height. */
     height: 1px;
@@ -4223,16 +4214,29 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
     background-color: var(--rmr-color-table-selected-controller);
   }
 
-  /* Styles for predelete */
-
-  .remirror-table-show-predelete th.selectedCell.selectedCell.remirror-table-controller {
-    background-color: var(--rmr-color-table-predelete-controller);
+  .remirror-table-preselect-all {
   }
 
-  .remirror-table-show-predelete th.selectedCell.selectedCell,
-  .remirror-table-show-predelete td.selectedCell.selectedCell {
-    border-color: var(--rmr-color-table-predelete-border);
-    background-color: var(--rmr-color-table-predelete-cell);
+  /* Styles for predelete */
+
+  .remirror-table-show-predelete th.selectedCell.remirror-table-controller,
+  .remirror-table-show-predelete td.selectedCell {
+    border-color: var(--rmr-color-table-predelete-border) !important;
+    background-color: var(--rmr-color-table-predelete-cell) !important;
+  }
+
+  .remirror-table-show-predelete th.selectedCell.remirror-table-controller {
+    background-color: var(--rmr-color-table-predelete-controller) !important;
+  }
+
+  .remirror-table-show-predelete.remirror-table-preselect-all th.remirror-table-controller,
+  .remirror-table-show-predelete.remirror-table-preselect-all td {
+    border-color: var(--rmr-color-table-predelete-border) !important;
+    background-color: var(--rmr-color-table-predelete-cell) !important;
+  }
+
+  .remirror-table-show-predelete.remirror-table-preselect-all th.remirror-table-controller {
+    background-color: var(--rmr-color-table-predelete-controller) !important;
   }
 `;
 
@@ -4378,10 +4382,6 @@ export const themeStyledCss: ReturnType<typeof css> = css`
     --rmr-color-shadow-3: rgba(10, 31, 68, 0.12);
     --rmr-color-backdrop: rgba(0, 0, 0, 0.9);
     --rmr-color-outline: rgba(121, 99, 210, 0.4);
-    --rmr-color-selection-background: Highlight;
-    --rmr-color-selection-shadow: inherit;
-    --rmr-color-selection-text: HighlightText;
-    --rmr-color-selection-caret: inherit;
     --rmr-color-table-default-border: hsla(0, 0%, 80%, 1);
     --rmr-color-table-default-cell: hsla(0, 0%, 40%, 1);
     --rmr-color-table-default-controller: #dee2e6;

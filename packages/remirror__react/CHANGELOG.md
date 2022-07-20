@@ -1,5 +1,488 @@
 # @remirror/react
 
+## 2.0.0-beta.10
+
+> 2022-07-19
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Update jsx-dom to v7.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-placeholder@2.0.0-beta.10
+  - @remirror/extension-positioner@2.0.0-beta.10
+  - @remirror/extension-react-component@2.0.0-beta.10
+  - @remirror/extension-react-tables@2.0.0-beta.10
+  - @remirror/preset-react@2.0.0-beta.10
+  - @remirror/react-components@2.0.0-beta.10
+  - @remirror/react-core@2.0.0-beta.10
+  - @remirror/react-hooks@2.0.0-beta.10
+  - @remirror/react-renderer@2.0.0-beta.10
+  - @remirror/react-utils@2.0.0-beta.10
+
+## 2.0.0-beta.9
+
+> 2022-07-18
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update jsx-dom to v7.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- SSR features are removed.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.0-beta.9
+  - @remirror/extension-placeholder@2.0.0-beta.9
+  - @remirror/extension-react-component@2.0.0-beta.9
+  - @remirror/react-core@2.0.0-beta.9
+  - @remirror/react-hooks@2.0.0-beta.9
+  - @remirror/extension-positioner@2.0.0-beta.9
+  - @remirror/preset-react@2.0.0-beta.9
+  - @remirror/react-components@2.0.0-beta.9
+  - @remirror/react-renderer@2.0.0-beta.9
+  - @remirror/react-utils@2.0.0-beta.9
+
+## 2.0.0-beta.8
+
+> 2022-07-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- SSR features are removed.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Update jsx-dom to v7.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-placeholder@2.0.0-beta.8
+  - @remirror/extension-positioner@2.0.0-beta.8
+  - @remirror/extension-react-tables@2.0.0-beta.8
+  - @remirror/preset-react@2.0.0-beta.8
+  - @remirror/react-components@2.0.0-beta.8
+  - @remirror/react-core@2.0.0-beta.8
+  - @remirror/react-hooks@2.0.0-beta.8
+  - @remirror/extension-react-component@2.0.0-beta.8
+  - @remirror/react-renderer@2.0.0-beta.8
+  - @remirror/react-utils@2.0.0-beta.8
+
+## 2.0.0-beta.7
+
+> 2022-07-11
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- SSR features are removed.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Update jsx-dom to v7.
+- Try to require JSDOM implicitly in node environment.
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-placeholder@2.0.0-beta.7
+  - @remirror/extension-positioner@2.0.0-beta.7
+  - @remirror/extension-react-component@2.0.0-beta.7
+  - @remirror/extension-react-tables@2.0.0-beta.7
+  - @remirror/preset-react@2.0.0-beta.7
+  - @remirror/react-components@2.0.0-beta.7
+  - @remirror/react-core@2.0.0-beta.7
+  - @remirror/react-hooks@2.0.0-beta.7
+  - @remirror/react-renderer@2.0.0-beta.7
+  - @remirror/react-utils@2.0.0-beta.7
+
+## 2.0.0-beta.6
+
+> 2022-07-08
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Expose the return type of the throttle and debounce helpers
+- Update jsx-dom to v7.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- SSR features are removed.
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Try to require JSDOM implicitly in node environment.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-placeholder@2.0.0-beta.6
+  - @remirror/extension-positioner@2.0.0-beta.6
+  - @remirror/extension-react-tables@2.0.0-beta.6
+  - @remirror/preset-react@2.0.0-beta.6
+  - @remirror/react-components@2.0.0-beta.6
+  - @remirror/react-core@2.0.0-beta.6
+  - @remirror/react-hooks@2.0.0-beta.6
+  - @remirror/extension-react-component@2.0.0-beta.6
+  - @remirror/react-renderer@2.0.0-beta.6
+  - @remirror/react-utils@2.0.0-beta.6
+
+## 2.0.0-beta.5
+
+> 2022-07-01
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- SSR features are removed.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-placeholder@2.0.0-beta.5
+  - @remirror/extension-positioner@2.0.0-beta.5
+  - @remirror/extension-react-component@2.0.0-beta.5
+  - @remirror/extension-react-tables@2.0.0-beta.5
+  - @remirror/preset-react@2.0.0-beta.5
+  - @remirror/react-components@2.0.0-beta.5
+  - @remirror/react-core@2.0.0-beta.5
+  - @remirror/react-hooks@2.0.0-beta.5
+  - @remirror/react-renderer@2.0.0-beta.5
+  - @remirror/react-utils@2.0.0-beta.5
+
+## 2.0.0-beta.4
+
+> 2022-06-29
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- SSR features are removed.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-placeholder@2.0.0-beta.4
+  - @remirror/extension-positioner@2.0.0-beta.4
+  - @remirror/extension-react-component@2.0.0-beta.4
+  - @remirror/extension-react-tables@2.0.0-beta.4
+  - @remirror/preset-react@2.0.0-beta.4
+  - @remirror/react-components@2.0.0-beta.4
+  - @remirror/react-core@2.0.0-beta.4
+  - @remirror/react-hooks@2.0.0-beta.4
+  - @remirror/react-renderer@2.0.0-beta.4
+  - @remirror/react-utils@2.0.0-beta.4
+
+## 2.0.0-beta.3
+
+> 2022-06-26
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-placeholder@2.0.0-beta.3
+  - @remirror/extension-react-component@2.0.0-beta.3
+  - @remirror/extension-react-tables@2.0.0-beta.3
+  - @remirror/react-core@2.0.0-beta.3
+  - @remirror/react-hooks@2.0.0-beta.3
+  - @remirror/extension-positioner@2.0.0-beta.3
+  - @remirror/preset-react@2.0.0-beta.3
+  - @remirror/react-components@2.0.0-beta.3
+  - @remirror/react-renderer@2.0.0-beta.3
+  - @remirror/react-utils@2.0.0-beta.3
+
+## 2.0.0-beta.2
+
+> 2022-06-26
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.0-beta.2
+  - @remirror/react-hooks@2.0.0-beta.2
+  - @remirror/react-components@2.0.0-beta.2
+  - @remirror/extension-placeholder@2.0.0-beta.2
+  - @remirror/extension-positioner@2.0.0-beta.2
+  - @remirror/extension-react-component@2.0.0-beta.2
+  - @remirror/preset-react@2.0.0-beta.2
+  - @remirror/react-core@2.0.0-beta.2
+  - @remirror/react-renderer@2.0.0-beta.2
+  - @remirror/react-utils@2.0.0-beta.2
+
+## 2.0.0-beta.1
+
+> 2022-06-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-positioner@2.0.0-beta.1
+  - @remirror/extension-react-tables@2.0.0-beta.1
+  - @remirror/react-components@2.0.0-beta.1
+  - @remirror/react-core@2.0.0-beta.1
+  - @remirror/react-hooks@2.0.0-beta.1
+  - @remirror/extension-placeholder@2.0.0-beta.1
+  - @remirror/extension-react-component@2.0.0-beta.1
+  - @remirror/preset-react@2.0.0-beta.1
+  - @remirror/react-renderer@2.0.0-beta.1
+  - @remirror/react-utils@2.0.0-beta.1
+
 ## 2.0.0-beta.0
 
 > 2022-05-31

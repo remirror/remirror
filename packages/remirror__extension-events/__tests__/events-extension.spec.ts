@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { fireEvent } from '@testing-library/dom';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
@@ -8,7 +9,7 @@ extensionValidityTest(EventsExtension);
 describe('events', () => {
   it('responds to editor `focus` events', () => {
     const eventsExtension = new EventsExtension();
-    const focusHandler = jest.fn(() => true);
+    const focusHandler: any = jest.fn(() => true);
     const editor = renderEditor([eventsExtension]);
     const { doc, p } = editor.nodes;
     eventsExtension.addHandler('focus', focusHandler);
@@ -21,7 +22,7 @@ describe('events', () => {
 
   it('responds to editor `blur` events', () => {
     const eventsExtension = new EventsExtension();
-    const blurHandler = jest.fn(() => true);
+    const blurHandler: any = jest.fn(() => true);
     const editor = renderEditor([eventsExtension]);
     const { doc, p } = editor.nodes;
     eventsExtension.addHandler('blur', blurHandler);
@@ -34,7 +35,7 @@ describe('events', () => {
 
   it('responds to editor `mousedown` events', () => {
     const eventsExtension = new EventsExtension();
-    const mouseDownHandler = jest.fn(() => true);
+    const mouseDownHandler: any = jest.fn(() => true);
     const editor = renderEditor([eventsExtension]);
     const { doc, p } = editor.nodes;
     eventsExtension.addHandler('mousedown', mouseDownHandler);
@@ -47,7 +48,7 @@ describe('events', () => {
 
   it('responds to editor `mouseup` events', () => {
     const eventsExtension = new EventsExtension();
-    const mouseUpHandler = jest.fn(() => true);
+    const mouseUpHandler: any = jest.fn(() => true);
     const editor = renderEditor([eventsExtension]);
     const { doc, p } = editor.nodes;
     eventsExtension.addHandler('mouseup', mouseUpHandler);
@@ -60,7 +61,7 @@ describe('events', () => {
 
   it('responds to editor `click` events', () => {
     const eventsExtension = new EventsExtension();
-    const clickHandler = jest.fn(() => true);
+    const clickHandler: any = jest.fn(() => true);
     const editor = renderEditor([eventsExtension]);
     const { view, add } = editor;
     const { doc, p } = editor.nodes;
@@ -89,7 +90,7 @@ describe('events', () => {
 
   it('responds to editor `hover` events', () => {
     const eventsExtension = new EventsExtension();
-    const hoverHandler = jest.fn((_: MouseEvent, __: HoverEventHandlerState) => true);
+    const hoverHandler: any = jest.fn((_: MouseEvent, __: HoverEventHandlerState) => true);
     const editor = renderEditor([eventsExtension]);
     const { doc, p } = editor.nodes;
     eventsExtension.addHandler('hover', hoverHandler);
@@ -114,7 +115,9 @@ describe('events', () => {
 
   it('responds to editor `contextmenu` events', () => {
     const eventsExtension = new EventsExtension();
-    const contextMenuHandler = jest.fn((_: MouseEvent, __: ContextMenuEventHandlerState) => true);
+    const contextMenuHandler: any = jest.fn(
+      (_: MouseEvent, __: ContextMenuEventHandlerState) => true,
+    );
     const editor = renderEditor([eventsExtension]);
     const { doc, p } = editor.nodes;
     eventsExtension.addHandler('contextmenu', contextMenuHandler);

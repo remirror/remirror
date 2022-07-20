@@ -184,15 +184,13 @@ describe('replaceText', () => {
   });
 
   it('can specify from and to', () => {
-    const from = doc(p('Ignore'), '<cursor>');
-    const to = doc(p('Ignore'), h1('Content'));
-
+    const from = doc(p('<cursor>Ignore'), p(''));
+    const to = doc(p('Ignore'), p('Content'));
     expect(
       replaceText({
         appendText: '',
-        type: schema.nodes.heading,
         content: 'Content',
-        range: { from: 8, to: 8 },
+        range: { from: 9, to: 9 },
       }),
     ).toTransform({
       from,
@@ -201,12 +199,10 @@ describe('replaceText', () => {
   });
 
   it('can append text', () => {
-    const from = doc(p('Ignore'), '<cursor>');
+    const from = doc(p('Ignore'), p('<cursor>'));
     const to = doc(p('Ignore'), p('Content '));
 
-    expect(
-      replaceText({ appendText: ' ', type: schema.nodes.paragraph, content: 'Content' }),
-    ).toTransform({
+    expect(replaceText({ appendText: ' ', content: 'Content' })).toTransform({
       from,
       to,
     });
@@ -266,8 +262,8 @@ describe('toggleWrap', () => {
   });
 
   it('lifts the node when already wrapped', () => {
-    const from = doc(p(blockquote('Lift <cursor>me')));
-    const to = doc(blockquote('Lift me'));
+    const from = doc(blockquote(blockquote(p('Lift <cursor>me'))));
+    const to = doc(blockquote(p('Lift me')));
 
     expect(toggleWrap(schema.nodes.blockquote)).toTransform({ from, to });
   });

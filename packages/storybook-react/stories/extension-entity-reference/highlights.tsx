@@ -1,6 +1,7 @@
 import 'remirror/styles/all.css';
 import './styles.css';
 
+import React from 'react';
 import { cx, uniqueId } from 'remirror';
 import {
   EntityReferenceExtension,

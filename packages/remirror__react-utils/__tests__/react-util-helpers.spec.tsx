@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { getElementProps, isReactDOMElement, isReactFragment } from '../';
 
 test('getElementProps', () => {

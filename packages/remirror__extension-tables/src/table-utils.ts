@@ -111,7 +111,7 @@ export function createTableNodeSchema(
       tableRole: 'table',
       parseDOM: [{ tag: 'table', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],
       toDOM(node) {
-        return ['table', ['tbody', extra.dom(node), 0]];
+        return ['table', extra.dom(node), ['tbody', 0]];
       },
     },
 

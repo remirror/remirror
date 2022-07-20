@@ -1,12 +1,13 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
+import React from 'react';
 import { docNodeBasicJSON } from 'testing';
 import { strictRender } from 'testing/react';
-import type { RemirrorJSON } from '@remirror/core';
 
 import { createReactManager, OnChangeHTML, OnChangeJSON, Remirror } from '../';
 
 test('calls the onChange handler on document change with JSON serialized state', () => {
-  const mock = jest.fn<void, RemirrorJSON[]>();
+  const mock: any = jest.fn();
 
   const manager = createReactManager([]);
   const chain = RemirrorTestChain.create(manager);
@@ -21,25 +22,11 @@ test('calls the onChange handler on document change with JSON serialized state',
 
   chain.add(doc(p('This<cursor>')));
 
-  const json1 = {
-    type: 'doc',
-    content: [
-      {
-        type: 'paragraph',
-        content: [
-          {
-            type: 'text',
-            text: 'This',
-          },
-        ],
-      },
-    ],
-  };
-  expect(mock).toHaveBeenCalledWith(json1);
+  expect(mock).not.toHaveBeenCalled();
 
   chain.insertText(' change');
 
-  const json2 = {
+  const json1 = {
     type: 'doc',
     content: [
       {
@@ -53,11 +40,29 @@ test('calls the onChange handler on document change with JSON serialized state',
       },
     ],
   };
+  expect(mock).toHaveBeenCalledWith(json1);
+
+  chain.insertText(' again');
+
+  const json2 = {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: 'This change again',
+          },
+        ],
+      },
+    ],
+  };
   expect(mock).toHaveBeenCalledWith(json2);
 });
 
 test('calls the onChange handler on document change with HTML serialized state', () => {
-  const mock = jest.fn<void, string[]>();
+  const mock: any = jest.fn();
 
   const manager = createReactManager([]);
   const chain = RemirrorTestChain.create(manager);
@@ -72,9 +77,13 @@ test('calls the onChange handler on document change with HTML serialized state',
 
   chain.add(doc(p('This<cursor>')));
 
-  expect(mock).toHaveBeenCalledWith(`<p>This</p>`);
+  expect(mock).not.toHaveBeenCalled();
 
   chain.insertText(' change');
 
   expect(mock).toHaveBeenCalledWith(`<p>This change</p>`);
+
+  chain.insertText(' again');
+
+  expect(mock).toHaveBeenCalledWith(`<p>This change again</p>`);
 });

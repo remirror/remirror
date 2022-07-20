@@ -1,6 +1,7 @@
 export type { TableOptions } from './table-extensions';
 export {
   TableCellExtension,
+  TableControllerCellExtension,
   TableExtension,
   TableHeaderCellExtension,
   TableRowExtension,

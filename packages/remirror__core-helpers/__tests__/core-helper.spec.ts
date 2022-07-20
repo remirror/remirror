@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import type { Shape } from 'remirror';
 
 import {
@@ -116,7 +117,7 @@ test('startCase', () => {
 });
 
 test('uniqueId', () => {
-  jest.useFakeTimers('modern');
+  jest.useFakeTimers();
   jest.setSystemTime(1_593_617_844_370);
   expect(uniqueId()).toMatchInlineSnapshot(`"kc3ix2fn"`);
   expect(uniqueId()).not.toBe(uniqueId());

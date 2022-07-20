@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import {
   createEditor,
   doc,
@@ -11,7 +12,7 @@ import { markInputRule, nodeInputRule, plainInputRule } from '../';
 
 describe('markInputRule', () => {
   it('should wrap matched content with the specified mark type', () => {
-    const getAttributes = jest.fn(() => ({ 'data-testid': 'awesome' }));
+    const getAttributes: any = jest.fn(() => ({ 'data-testid': 'awesome' }));
     const rule = markInputRule({
       regexp: /~([^~]+)~$/,
       type: testSchema.marks.strong,
@@ -55,7 +56,7 @@ describe('markInputRule', () => {
 
 describe('nodeInputRule', () => {
   it('should wrap matched content with the specified node type', () => {
-    const getAttributes = jest.fn(() => ({ 'data-testid': 'awesome' }));
+    const getAttributes: any = jest.fn(() => ({ 'data-testid': 'awesome' }));
     const rule = nodeInputRule({
       regexp: /~([^~]+)~$/,
       type: testSchema.nodes.horizontalRule,

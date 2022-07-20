@@ -1,1 +1,1 @@
-export { palette } from 'reakit-system-palette/palette';
+export { palette } from 'reakit-system-palette';

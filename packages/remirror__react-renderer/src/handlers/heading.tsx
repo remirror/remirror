@@ -1,4 +1,4 @@
-import { createElement, FC } from 'react';
+import React, { createElement, FC } from 'react';
 import { RemirrorJSON } from '@remirror/core';
 
 import { MarkMap } from '../types';

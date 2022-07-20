@@ -1,0 +1,4 @@
+/* Custom styling for GapCursor */
+.remirror-editor.ProseMirror .ProseMirror-gapcursor:after {
+  border-top-color: red;
+}

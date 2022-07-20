@@ -18,6 +18,9 @@
   "references": [
     {
       "path": "../../remirror__react-core/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }

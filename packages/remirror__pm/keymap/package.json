@@ -1,10 +1,6 @@
 {
-  "main": "dist/remirror-pm-keymap.cjs.js",
-  "module": "dist/remirror-pm-keymap.esm.js",
-  "browser": {
-    "./dist/remirror-pm-keymap.cjs.js": "./dist/remirror-pm-keymap.browser.cjs.js",
-    "./dist/remirror-pm-keymap.esm.js": "./dist/remirror-pm-keymap.browser.esm.js"
-  },
-  "types": "dist/remirror-pm-keymap.cjs.d.ts",
-  "rn:dev": "../src/keymap.ts"
+  "type": "module",
+  "main": "./dist/remirror-pm-keymap.js",
+  "module": "./dist/remirror-pm-keymap.js",
+  "types": "./../dist-types/keymap.d.ts"
 }

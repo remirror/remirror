@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-react",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.10",
   "description": "The core preset providing the functionality you need and want.",
   "keywords": [
     "remirror",
@@ -20,44 +20,38 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-preset-react.esm.js",
-      "require": "./dist/remirror-preset-react.cjs.js",
-      "browser": "./dist/remirror-preset-react.browser.esm.js",
-      "types": "./dist/remirror-preset-react.cjs.d.ts",
-      "default": "./dist/remirror-preset-react.esm.js"
+      "import": "./dist/remirror-preset-react.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-preset-react.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-preset-react.cjs.js",
-  "module": "dist/remirror-preset-react.esm.js",
-  "browser": {
-    "./dist/remirror-preset-react.cjs.js": "./dist/remirror-preset-react.browser.cjs.js",
-    "./dist/remirror-preset-react.esm.js": "./dist/remirror-preset-react.browser.esm.js"
-  },
-  "types": "./dist/remirror-preset-react.cjs.d.ts",
+  "main": "./dist/remirror-preset-react.js",
+  "module": "./dist/remirror-preset-react.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.0",
-    "@remirror/extension-placeholder": "^2.0.0-beta.0",
-    "@remirror/extension-react-component": "^2.0.0-beta.0",
-    "@remirror/extension-react-ssr": "^2.0.0-beta.0",
-    "@remirror/react-utils": "^2.0.0-beta.0"
+    "@remirror/core": "^2.0.0-beta.10",
+    "@remirror/extension-placeholder": "^2.0.0-beta.10",
+    "@remirror/extension-react-component": "^2.0.0-beta.10",
+    "@remirror/react-utils": "^2.0.0-beta.10"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.10",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.10",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",
@@ -76,6 +70,5 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

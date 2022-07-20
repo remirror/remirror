@@ -9,8 +9,7 @@
   "compilerOptions": {
     "types": [],
     "declaration": false,
-    "noEmit": true,
-    "allowJs": true
+    "noEmit": true
   },
   "include": ["./"],
   "references": [
@@ -52,6 +51,9 @@
     },
     {
       "path": "../../remirror__react-editors/src"
+    },
+    {
+      "path": "../../remirror__styles/src"
     },
     {
       "path": "../../create-context-state/src"

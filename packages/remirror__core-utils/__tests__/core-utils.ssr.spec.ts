@@ -10,18 +10,14 @@ import { htmlToProsemirrorNode } from '../';
 describe('htmlToProsemirrorNode', () => {
   const content = `<p>Hello</p>`;
 
-  it('transform html into a prosemirror node', () => {
-    expect(htmlToProsemirrorNode({ content: content, schema: testSchema })).toEqualProsemirrorNode(
-      doc(p('Hello')),
-    );
-  });
-
   it('allows for a custom document to be passed in', () => {
+    const document = new JSDOM().window.document;
+    expect(!!document).toBeTrue();
     expect(
       htmlToProsemirrorNode({
         content: content,
         schema: testSchema,
-        document: new JSDOM().window.document,
+        document: document,
       }),
     ).toEqualProsemirrorNode(doc(p('Hello')));
   });

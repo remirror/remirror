@@ -2,7 +2,6 @@ import {
   Cast,
   EditorState,
   getDocument,
-  RenderEnvironment,
   shouldUseDomEnvironment,
   Transaction,
 } from '@remirror/core';
@@ -21,7 +20,7 @@ export class EditorViewSSR {
     _place: Node | ((p: Node) => void) | { mount: Node } | undefined,
     props: DirectEditorProps,
   ) {
-    const doc = getDocument('ssr');
+    const doc = getDocument();
 
     this.root = doc;
     this.dom = doc.createElement('div');
@@ -75,14 +74,12 @@ export class EditorViewSSR {
  *
  * @param place
  * @param props
- * @param forceEnvironment
  */
 export function createEditorView(
   place: Node | ((p: HTMLElement) => void) | null,
   props: DirectEditorProps,
-  forceEnvironment?: RenderEnvironment,
 ): EditorView {
-  const Constructor = shouldUseDomEnvironment(forceEnvironment)
+  const Constructor = shouldUseDomEnvironment()
     ? EditorView
     : Cast<typeof EditorView>(EditorViewSSR);
   return new Constructor(place, props);

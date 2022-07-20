@@ -1,8 +1,6 @@
 {
-  "main": "dist/remirror-pm-collab.cjs.js",
-  "module": "dist/remirror-pm-collab.esm.js",
-  "browser": {
-    "./dist/remirror-pm-collab.cjs.js": "./dist/remirror-pm-collab.browser.cjs.js",
-    "./dist/remirror-pm-collab.esm.js": "./dist/remirror-pm-collab.browser.esm.js"
-  }
+  "type": "module",
+  "main": "./dist/remirror-pm-collab.js",
+  "module": "./dist/remirror-pm-collab.js",
+  "types": "./../dist-types/collab.d.ts"
 }

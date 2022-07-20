@@ -50,7 +50,9 @@ export interface UpdateMarkProps extends Partial<RangeProps>, Partial<Attributes
 export function updateMark(props: UpdateMarkProps): CommandFunction {
   return ({ dispatch, tr }) => {
     const { type, attrs = object(), appendText, range } = props;
-    const selection = range ? TextSelection.create(tr.doc, range.from, range.to) : tr.selection;
+    const selection = range
+      ? TextSelection.between(tr.doc.resolve(range.from), tr.doc.resolve(range.to))
+      : tr.selection;
     const { $from, from, to } = selection;
     let applicable = $from.depth === 0 ? tr.doc.type.allowsMarkType(type) : false;
 
@@ -327,9 +329,9 @@ export function preserveSelection(selection: Selection, tr: Transaction): void {
 
   if (empty) {
     // Update the transaction with the new text selection.
-    tr.setSelection(TextSelection.create(tr.doc, head));
+    tr.setSelection(TextSelection.near(tr.doc.resolve(head)));
   } else {
-    tr.setSelection(TextSelection.create(tr.doc, anchor, head));
+    tr.setSelection(TextSelection.between(tr.doc.resolve(anchor), tr.doc.resolve(head)));
   }
 }
 

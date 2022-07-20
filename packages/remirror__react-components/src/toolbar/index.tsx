@@ -4,19 +4,21 @@
  * The builtin toolbars for use with remirror.
  */
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
-import { useCallback } from 'react';
-import { Box } from 'reakit/Box';
-import { Button } from 'reakit/Button';
-import { Group } from 'reakit/Group';
+import React, { useCallback } from 'react';
 import {
+  Box,
+  Button,
+  Group,
   Toolbar as ReakitToolbar,
   ToolbarItem as ReakitToolbarItem,
   ToolbarSeparator as ReakitToolbarSeparator,
   ToolbarStateReturn,
+  Tooltip,
+  TooltipReference,
   useToolbarState,
-} from 'reakit/Toolbar';
-import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
-import { VisuallyHidden } from 'reakit/VisuallyHidden';
+  useTooltipState,
+  VisuallyHidden,
+} from 'reakit';
 import {
   AnyExtension,
   CommandDecoratorMessageProps,

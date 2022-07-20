@@ -3,22 +3,23 @@
  *
  * The builtin menus.
  */
-
 import type { MouseEvent as ReactMouseEvent, ReactNode } from 'react';
-import { forwardRef, useEffect, useRef } from 'react';
-import { Box } from 'reakit/Box';
-import type { MenuBarStateReturn, MenuStateReturn } from 'reakit/Menu';
+import React, { forwardRef, useEffect, useRef } from 'react';
+import type { MenuBarStateReturn, MenuStateReturn } from 'reakit';
 import {
+  Box,
   Menu as ReakitMenu,
   MenuBar as ReakitMenuBar,
   MenuButton as ReakitMenuButton,
   MenuGroup as ReakitMenuGroup,
   MenuItem as ReakitMenuItem,
   MenuSeparator,
+  Tooltip,
+  TooltipReference,
   useMenuBarState,
   useMenuState,
-} from 'reakit/Menu';
-import { Tooltip, TooltipReference, useTooltipState } from 'reakit/Tooltip';
+  useTooltipState,
+} from 'reakit';
 import type { AnyExtension, CommandDecoratorMessageProps } from '@remirror/core';
 import { cx, ErrorConstant, includes, invariant, isString } from '@remirror/core';
 import {

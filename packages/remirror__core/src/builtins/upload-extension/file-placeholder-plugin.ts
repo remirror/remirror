@@ -26,7 +26,6 @@ export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginD
         if (action) {
           if (action.type === ActionType.ADD_PLACEHOLDER) {
             const widget = document.createElement('placeholder');
-            // @ts-expect-error: TS types here don't allow us to set custom properties
             const deco = Decoration.widget(action.pos, widget, { id: action.id });
             set = set.add(tr.doc, [deco]);
             payloads.set(action.id, action.payload);

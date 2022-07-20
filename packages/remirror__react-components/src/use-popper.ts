@@ -10,9 +10,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import { isUA } from 'reakit-utils/dom';
-import { shallowEqual } from 'reakit-utils/shallowEqual';
-import useLayoutEffect from 'use-isomorphic-layout-effect';
+import { isUA, shallowEqual } from 'reakit-utils';
+
+import { useIsomorphicLayoutEffect } from './components/use-isomorphic-layout-effect';
 
 const isSafari = isUA('Mac') && !isUA('Chrome') && isUA('Safari');
 
@@ -153,7 +153,7 @@ export function usePopper(props: UsePopperProps = {}): PopperStateReturn {
     }
   }, []);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (referenceRef.current && popperRef.current) {
       popper.current = createPopper(referenceRef.current, popperRef.current, {
         // https://popper.js.org/docs/v2/constructors/#options

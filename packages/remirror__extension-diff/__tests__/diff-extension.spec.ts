@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { entries, GetHandler } from '@remirror/core';
 

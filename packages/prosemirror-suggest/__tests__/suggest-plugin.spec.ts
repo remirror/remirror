@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { createEditor, doc, h1, p, strong } from 'jest-prosemirror';
 import { Transaction } from 'prosemirror-state';
 
@@ -7,7 +8,7 @@ import { addSuggester, ChangeReason, ExitReason, suggest } from '../';
 describe('suggester', () => {
   it('should call `onChange`', () => {
     const expected = 'suggest';
-    const exit = jest.fn();
+    const exit: any = jest.fn();
     const onChange: SuggestChangeHandler = jest.fn((param) => {
       const { exitReason, text: matchText, query: queryText, range } = param;
 
@@ -37,7 +38,7 @@ describe('suggester', () => {
 
   it('supports `textBefore` and `textAfter` `onChange`', () => {
     const expected = 'suggest';
-    const exit = jest.fn();
+    const exit: any = jest.fn();
     const onChange: SuggestChangeHandler = jest.fn((param) => {
       const { exitReason, textBefore, textAfter } = param;
 
@@ -55,9 +56,9 @@ describe('suggester', () => {
   });
 
   it('supports priority', () => {
-    const _1 = jest.fn();
-    const _2 = jest.fn();
-    const _3 = jest.fn();
+    const _1: any = jest.fn();
+    const _2: any = jest.fn();
+    const _3: any = jest.fn();
     const plugin = suggest(
       { char: '@', name: '3', onChange: _3, supportedCharacters: /[1-3]+/, priority: 10 },
       { char: '@', name: '2', onChange: _2, supportedCharacters: /[12]+/, priority: 20 },
@@ -107,7 +108,7 @@ describe('suggester', () => {
 
   it('supports regex for character matches', () => {
     const expected = 'suggest';
-    const exit = jest.fn();
+    const exit: any = jest.fn();
     const onChange: SuggestChangeHandler = jest.fn((param) => {
       const { exitReason, text: matchText, query: queryText, range } = param;
 
@@ -115,7 +116,7 @@ describe('suggester', () => {
         exit(exitReason, matchText, queryText, range);
       }
     });
-    const at = jest.fn();
+    const at: any = jest.fn();
 
     const plugin = suggest(
       { char: '@', name: 'at', onChange: at, matchOffset: 0 },
@@ -142,7 +143,7 @@ describe('suggester', () => {
 
   it('should support unicode regex for character matches', () => {
     const expected = 'michał';
-    const exit = jest.fn();
+    const exit: any = jest.fn();
     const onChange: SuggestChangeHandler = jest.fn((param) => {
       const { exitReason, text: matchText, query: queryText, range } = param;
 
@@ -177,7 +178,7 @@ describe('suggester', () => {
   });
 
   it('should not call `onChange` for the activation character when matchOffset is greater than 0', () => {
-    const exit = jest.fn();
+    const exit: any = jest.fn();
     const onChange: SuggestChangeHandler = jest.fn(({ exitReason }) => {
       if (exitReason) {
         exit(exitReason);
@@ -199,7 +200,7 @@ describe('suggester', () => {
   });
 
   it('responds to different kinds of exits', () => {
-    const exit = jest.fn();
+    const exit: any = jest.fn();
     const onChange: SuggestChangeHandler = jest.fn(({ exitReason, range }) => {
       if (exitReason) {
         exit(exitReason, range);
@@ -250,8 +251,8 @@ describe('suggester', () => {
   });
 
   it('calls the correct handlers when jumping between two suggesters', () => {
-    const change1 = jest.fn();
-    const exit1 = jest.fn();
+    const change1: any = jest.fn();
+    const exit1: any = jest.fn();
     const onChange1: SuggestChangeHandler = jest.fn(({ exitReason, changeReason }) => {
       if (exitReason) {
         exit1(exitReason);
@@ -260,8 +261,8 @@ describe('suggester', () => {
       }
     });
 
-    const change2 = jest.fn();
-    const exit2 = jest.fn();
+    const change2: any = jest.fn();
+    const exit2: any = jest.fn();
     const onChange2: SuggestChangeHandler = jest.fn(({ exitReason, changeReason }) => {
       if (exitReason) {
         exit2(exitReason);
@@ -296,8 +297,8 @@ describe('suggester', () => {
 
 describe('Suggest Ignore', () => {
   it('should ignore matches when called', () => {
-    const change = jest.fn();
-    const exit = jest.fn();
+    const change: any = jest.fn();
+    const exit: any = jest.fn();
     const onChange: SuggestChangeHandler = jest.fn(
       ({ exitReason, range, addIgnored, suggester }) => {
         if (exitReason) {
@@ -336,7 +337,7 @@ describe('Suggest Ignore', () => {
       tag: (_name?: string) => {},
     };
 
-    const exitAt = jest.fn();
+    const exitAt: any = jest.fn();
     const onChangeAt: SuggestChangeHandler = jest.fn(
       ({ exitReason, range, addIgnored, suggester, clearIgnored }) => {
         if (exitReason) {
@@ -348,7 +349,7 @@ describe('Suggest Ignore', () => {
       },
     );
 
-    const exitTag = jest.fn();
+    const exitTag: any = jest.fn();
     const onChangeTag: SuggestChangeHandler = jest.fn(
       ({ exitReason, range, addIgnored, suggester, clearIgnored }) => {
         if (exitReason) {
@@ -399,7 +400,7 @@ describe('Suggest Ignore', () => {
 });
 
 test('addSuggester', () => {
-  const exit = jest.fn();
+  const exit: any = jest.fn();
   const onChange: SuggestChangeHandler = jest.fn(({ exitReason, range }) => {
     if (exitReason) {
       exit(exitReason, range);
@@ -520,7 +521,7 @@ describe('validity', () => {
 });
 
 test('should support whitespace characters in `supportedCharacters`', () => {
-  const exit = jest.fn();
+  const exit: any = jest.fn();
   const onChange: SuggestChangeHandler = jest.fn((param) => {
     const { exitReason, text: matchText, query: queryText, range } = param;
 
@@ -551,8 +552,8 @@ test('should support whitespace characters in `supportedCharacters`', () => {
 describe('checkNextValidSelection', () => {
   it('updates the next selection', () => {
     const mocks = {
-      checkNextValidSelection: jest.fn(),
-      onChange: jest.fn(),
+      checkNextValidSelection: jest.fn() as any,
+      onChange: jest.fn() as any,
     };
 
     const plugin = suggest({ char: '@', name: 'at', invalidMarks: ['strong'], ...mocks });
@@ -573,8 +574,8 @@ describe('checkNextValidSelection', () => {
 
   it('is not called when selecting `all`', () => {
     const mocks = {
-      checkNextValidSelection: jest.fn(),
-      onChange: jest.fn(),
+      checkNextValidSelection: jest.fn() as any,
+      onChange: jest.fn() as any,
     };
 
     const plugin = suggest({ char: '@', name: 'at', invalidMarks: ['strong'], ...mocks });
@@ -590,8 +591,8 @@ describe('checkNextValidSelection', () => {
 
   it('is not called when selecting `node`', () => {
     const mocks = {
-      checkNextValidSelection: jest.fn(),
-      onChange: jest.fn(),
+      checkNextValidSelection: jest.fn() as any,
+      onChange: jest.fn() as any,
     };
 
     const plugin = suggest({ char: '@', name: 'at', invalidMarks: ['strong'], ...mocks });

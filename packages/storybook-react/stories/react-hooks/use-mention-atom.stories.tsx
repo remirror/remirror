@@ -1,6 +1,6 @@
 import './use-mention-atom-styles.css';
 
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { cx, htmlToProsemirrorNode } from 'remirror';
 import {
   MentionAtomExtension,

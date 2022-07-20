@@ -1,5 +1,167 @@
 # @remirror/preset-template
 
+## 2.0.0-beta.10
+
+> 2022-07-19
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.10
+  - @remirror/core@2.0.0-beta.10
+
+## 2.0.0-beta.9
+
+> 2022-07-18
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.9
+  - @remirror/pm@2.0.0-beta.9
+
+## 2.0.0-beta.8
+
+> 2022-07-13
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.8
+  - @remirror/core@2.0.0-beta.8
+
+## 2.0.0-beta.7
+
+> 2022-07-11
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.7
+  - @remirror/pm@2.0.0-beta.7
+
+## 2.0.0-beta.6
+
+> 2022-07-08
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.6
+  - @remirror/core@2.0.0-beta.6
+
+## 2.0.0-beta.5
+
+> 2022-07-01
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.5
+  - @remirror/pm@2.0.0-beta.5
+
+## 2.0.0-beta.4
+
+> 2022-06-29
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.4
+  - @remirror/core@2.0.0-beta.4
+
+## 2.0.0-beta.3
+
+> 2022-06-26
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.3
+  - @remirror/core@2.0.0-beta.3
+
+## 2.0.0-beta.2
+
+> 2022-06-26
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.2
+  - @remirror/pm@2.0.0-beta.2
+
+## 2.0.0-beta.1
+
+> 2022-06-20
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.1
+  - @remirror/pm@2.0.0-beta.1
+
 ## 2.0.0-beta.0
 
 > 2022-05-31
