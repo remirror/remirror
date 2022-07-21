@@ -1,6 +1,6 @@
 import { darken, lighten, readableColor, transparentize } from 'color2k';
 import type * as CSS from 'csstype';
-import type { DeepPartial, DeepString } from '@remirror/core-types';
+import type { DeepPartial } from '@remirror/core-types';
 
 export interface CSSProperties extends CSS.Properties {
   [key: string]: any;
@@ -80,53 +80,6 @@ function getVar(keys: string[]) {
   return `var(${getCustomPropertyName(keys)})`;
 }
 
-function keyCapturingProxy<Type extends object>(getter: (obj: Type) => string): string[] {
-  const keys: string[] = [];
-
-  function createProxy(obj: any): Type {
-    /**
-     * Track the number of times this has been called. This proxy only supports
-     * simple getters which access the keys only without any extra functionality.
-     */
-    let called = false;
-
-    return new Proxy(obj, {
-      get: (_, key) => {
-        if (called) {
-          throw new Error(`Must only access the key once. ${key.toString()}`);
-        }
-
-        called = true;
-        keys.push(key as string);
-        return createProxy({});
-      },
-
-      set: (_, key) => {
-        throw new Error(`Setters are not allowed for this object. ${key.toString()}`);
-        // invariant(false, { message: `Setters are not allowed for this object. ${key.toString()}` });
-      },
-    });
-  }
-
-  getter(createProxy({}));
-
-  return keys;
-}
-
-/**
- * Get the theme custom property wrapped in a `var`.
- *
- * ```ts
- * import { getTheme } from '@remirror/theme';
- * getTheme((t) => t.color.primary.text) => `var(--rmr-color-primary-text)`
- * ```
- *
- * @deprecated use getThemeVar instead
- */
-export function getTheme(getter: (theme: DeepString<Remirror.Theme>) => string): string {
-  return getVar(keyCapturingProxy(getter));
-}
-
 /**
  * Get the theme custom property wrapped in a `var`.
  *
@@ -157,20 +110,6 @@ export function getThemeVar<
 
 export function getThemeVar(...args: Array<string | number>): string {
   return getVar(args.map((p) => p.toString()));
-}
-
-/**
- * Get the name of the theme property.
- *
- * ```ts
- * import {getThemeProps} from '@remirror/theme';
- * getThemeProps((t) => t.color.primary.text) => `--rmr-color-primary-text`
- * ```
- *
- * @deprecated use getThemeVarName instead
- */
-export function getThemeProps(getter: (theme: DeepString<Remirror.Theme>) => string): string {
-  return getCustomPropertyName(keyCapturingProxy(getter));
 }
 
 /**

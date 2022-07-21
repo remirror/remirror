@@ -26,8 +26,6 @@ export type {
 export {
   createThemeVariables,
   defaultRemirrorTheme,
-  getTheme,
-  getThemeProps,
   getThemeVar,
   getThemeVarName,
 } from './utils';
