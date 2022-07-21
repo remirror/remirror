@@ -116,6 +116,18 @@ export class TextColorExtension extends MarkExtension<TextColorOptions> {
   }
 
   /**
+   * Get the color for the selection
+   */
+  @helper()
+  getTextColorForSelection(selection?: Selection): Helper<string> {
+    if (!selection) return this.options.defaultColor;
+
+    const state = this.store.getState();
+    const textMarkInfo = getMarkRange(selection.$from, this.type);
+    if (!textMarkInfo) return  this.options.defaultColor;
+    return textMarkInfo.mark.attrs.color;
+  }
+  /**
    * Get the color from the provided string. The string can be a computed
    * property as well.
    */
