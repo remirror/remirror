@@ -392,15 +392,15 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
    * Remove the link at the current selection
    */
   @command()
-  removeLink(range?: FromToProps): CommandFunction {
+  removeLink(selection?: FromToProps): CommandFunction {
     return (props) => {
       const { tr } = props;
 
-      if (!isMarkActive({ trState: tr, type: this.type, ...range })) {
+      if (!isMarkActive({ trState: tr, type: this.type, ...selection })) {
         return false;
       }
 
-      return removeMark({ type: this.type, expand: true, range })(props);
+      return removeMark({ type: this.type, expand: true, selection })(props);
     };
   }
 

@@ -454,7 +454,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
    */
   @command()
   removeMention({ range }: Partial<RangeProps> = {}): CommandFunction {
-    const value = removeMark({ type: this.type, expand: true, range });
+    const value = removeMark({ type: this.type, expand: true, selection: range });
 
     return value;
   }

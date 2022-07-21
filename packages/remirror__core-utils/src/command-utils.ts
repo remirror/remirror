@@ -4,7 +4,6 @@ import type {
   AttributesProps,
   CommandFunction,
   CommandFunctionProps,
-  FromToProps,
   MakeNullable,
   MarkType,
   MarkTypeProps,
@@ -438,11 +437,6 @@ export interface RemoveMarkProps extends MakeNullable<MarkTypeProps, 'type'> {
   expand?: boolean;
 
   /**
-   * @deprecated use `selection` property instead.
-   */
-  range?: FromToProps;
-
-  /**
    * The selection to apply to the command.
    */
   selection?: PrimitiveSelection;
@@ -455,8 +449,8 @@ export interface RemoveMarkProps extends MakeNullable<MarkTypeProps, 'type'> {
  */
 export function removeMark(props: RemoveMarkProps): CommandFunction {
   return ({ dispatch, tr, state }) => {
-    const { type, expand = true, range } = props;
-    const selection = getTextSelection(props.selection ?? range ?? tr.selection, tr.doc);
+    const { type, expand = true } = props;
+    const selection = getTextSelection(props.selection ?? tr.selection, tr.doc);
     let { from, to, $from, $to } = selection;
 
     const markType = isString(type) ? state.schema.marks[type] : type;
