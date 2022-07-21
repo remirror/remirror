@@ -209,11 +209,6 @@ export class DelayedCommand<Value> {
 
 export interface ToggleMarkProps extends MarkTypeProps, Partial<AttributesProps> {
   /**
-   * @deprecated use `selection` property instead.
-   */
-  range?: FromToProps;
-
-  /**
    * The selection point for toggling the chosen mark.
    */
   selection?: PrimitiveSelection;
@@ -233,10 +228,10 @@ export interface ToggleMarkProps extends MarkTypeProps, Partial<AttributesProps>
  * - Acts on the transaction rather than the state to allow for commands to be
  *   chained together.
  * - Uses the ONE parameter function signature for compatibility with remirror.
- * - Supports passing a custom range.
+ * - Supports passing a custom selection.
  */
 export function toggleMark(props: ToggleMarkProps): CommandFunction {
-  const { type, attrs, range, selection } = props;
+  const { type, attrs, selection } = props;
 
   return (props) => {
     const { dispatch, tr, state } = props;
@@ -247,9 +242,9 @@ export function toggleMark(props: ToggleMarkProps): CommandFunction {
       message: `Mark type: ${type} does not exist on the current schema.`,
     });
 
-    if (range || selection) {
-      const { from, to } = getTextSelection(selection ?? range ?? tr.selection, tr.doc);
-      isMarkActive({ trState: tr, type, ...range })
+    if (selection) {
+      const { from, to } = getTextSelection(selection ?? tr.selection, tr.doc);
+      isMarkActive({ trState: tr, type, from, to })
         ? dispatch?.(tr.removeMark(from, to, markType))
         : dispatch?.(tr.addMark(from, to, markType.create(attrs)));
 
