@@ -102,7 +102,7 @@ export const getTrailingCharIndex = ({
   input: string;
   url: string;
 }): number | undefined =>
-  (input.split(url)[1] || '').length * -1 ||
+  input.slice(input.indexOf(url) + url.length).length * -1 ||
   (adjacentPunctuations.includes(input.slice(-1)) ? -1 : undefined);
 
 export const addProtocol = (input: string, defaultProtocol?: string): string =>

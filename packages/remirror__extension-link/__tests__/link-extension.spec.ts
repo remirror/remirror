@@ -1133,6 +1133,113 @@ describe('autolinking', () => {
     );
   });
 
+  it('should create links without a space between links - two links', () => {
+    editor.add(doc(p('test"test.com'))).insertText('"test.co"test');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          'test"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"',
+          link({ auto: true, href: '//test.co' })('test.co'),
+          '"test',
+        ),
+      ),
+    );
+  });
+
+  it('should create links without a space between links - four links', () => {
+    editor.add(doc(p('test"test.com'))).insertText('"remirror.io"test"test.com"github.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          'test"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"',
+          link({ auto: true, href: '//remirror.io' })('remirror.io'),
+          '"test"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"',
+          link({ auto: true, href: '//github.com' })('github.com'),
+        ),
+      ),
+    );
+  });
+
+  it('should create links with the same URL without a space between links', () => {
+    editor.add(doc(p('test"test.com'))).insertText('"test.com"test');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          'test"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"test',
+        ),
+      ),
+    );
+  });
+
+  it('should only update edited link when multiple links are not separated by a space - second link', () => {
+    editor.add(doc(p('test"test.com'))).insertText('"test.co');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          'test"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"',
+          link({ auto: true, href: '//test.co' })('test.co'),
+        ),
+      ),
+    );
+
+    editor.insertText('m');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          'test"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+        ),
+      ),
+    );
+  });
+
+  it('should only update edited link when multiple links are not separated by a space - first link', () => {
+    editor
+      .add(doc(p('test"test.com')))
+      .insertText('"remirror.io"test')
+      .selectText(14)
+      .backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p('test"test.c', '"', link({ auto: true, href: '//remirror.io' })('remirror.io'), '"test'),
+      ),
+    );
+
+    editor.insertText('om');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          'test"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"',
+          link({ auto: true, href: '//remirror.io' })('remirror.io'),
+          '"test',
+        ),
+      ),
+    );
+  });
+
   it('allows creating identical links', () => {
     editor
       .add(doc(p(link({ auto: true, href: '//test.com' })('test.com'))))

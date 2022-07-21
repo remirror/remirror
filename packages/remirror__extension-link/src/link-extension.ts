@@ -94,6 +94,8 @@ export interface ShortcutHandlerProps extends FromToProps {
   activeLink: ShortcutHandlerActiveLink | undefined;
 }
 
+type FoundUrls = Array<{ url: string; startIndex: number } | undefined>;
+
 type LinkTarget = LiteralUnion<'_blank' | '_self' | '_parent' | '_top', string> | null;
 
 export interface LinkOptions {
@@ -199,7 +201,7 @@ export interface LinkOptions {
   autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
-   * Adjacent punctuations that are exluded from a link
+   * Adjacent punctuations that are excluded from a link
    *
    * To extend the default list you could
    *
@@ -627,82 +629,102 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                 continue;
               }
 
-              const matchStart = match.index;
-              const matchEnd = matchStart + matchedText.length;
-              const urlInMatchedText = this.findURLInString(matchedText);
-              const linkMarkInRange = this.getLinkMarksInRange(
-                doc,
-                pos + matchStart,
-                pos + matchEnd,
-                true,
-              )[0];
-              const href = (urlInMatchedText && this.buildHref(urlInMatchedText.url)) || '';
-              const positionStart = pos + matchStart + (urlInMatchedText?.startIndex || 0);
+              const urlsInMatchedText = this.findURLsInString(matchedText);
 
-              const unbalancedLinkUpdated = urlInMatchedText
-                ? linkMarkInRange &&
-                  !isBalanced(linkMarkInRange.text) &&
-                  isBalanced(linkMarkInRange.mark.attrs.href)
-                : false;
+              this.findURLsInString(matchedText).forEach((urlInMatchedText) => {
+                const matchStart = match.index;
+                const matchEnd = matchStart + matchedText.length;
 
-              const outsideSelectionRange = urlInMatchedText
-                ? positionStart + href.length < to + (from === to ? 1 : -1) ||
-                  positionStart > from - (from === to ? 1 : 0) ||
-                  (linkMarkInRange &&
-                    (linkMarkInRange.to >= to ||
-                      !within(from, linkMarkInRange.from, linkMarkInRange.to)))
-                : false;
+                const linkMarkInRange = this.getLinkMarksInRange(
+                  doc,
+                  pos +
+                    matchStart +
+                    (urlInMatchedText && urlsInMatchedText.length > 1
+                      ? urlInMatchedText?.startIndex
+                      : 0),
+                  pos + matchEnd,
+                  true,
+                );
+                const linkMarkInRangeCount = linkMarkInRange.length;
+                const href = (urlInMatchedText && this.buildHref(urlInMatchedText.url)) || '';
+                const positionStart = pos + matchStart + (urlInMatchedText?.startIndex || 0);
 
-              const isExistingLinkTextNotEqualHref =
-                urlInMatchedText && linkMarkInRange
-                  ? // checking if the new `href` matches existing link href
-                    linkMarkInRange.mark.attrs.href !== href ||
-                    linkMarkInRange.mark.attrs.href !== this.buildHref(linkMarkInRange.text)
+                const unbalancedLinkUpdated = urlInMatchedText
+                  ? linkMarkInRangeCount &&
+                    !isBalanced(linkMarkInRange[linkMarkInRangeCount - 1].text) &&
+                    isBalanced(linkMarkInRange[linkMarkInRangeCount - 1].mark.attrs.href)
                   : false;
 
-              if (!urlInMatchedText) {
-                // If we have an existing link we can assume the link is not valid and remove ii
-                linkMarkInRange &&
-                  removeLink({ from: linkMarkInRange.from, to: linkMarkInRange.to }).tr();
+                const outsideSelectionRange = urlInMatchedText
+                  ? positionStart + href.length < to + (from === to ? 1 : -1) ||
+                    positionStart > from - (from === to ? 1 : 0) ||
+                    (linkMarkInRangeCount &&
+                      linkMarkInRange.some(
+                        (link) => link.to >= to || !within(from, link.from, link.to),
+                      )) ||
+                    false
+                  : false;
 
-                // If no existing link and urlInMatchedText we skip this iteration
-                continue;
-              }
+                const isExistingLinkTextNotEqualHref =
+                  urlInMatchedText && linkMarkInRangeCount
+                    ? // checking if the new `href` matches existing link href
+                      linkMarkInRange.filter(
+                        (link) =>
+                          link.mark.attrs.href !== href ||
+                          link.mark.attrs.href !== this.buildHref(link.text),
+                      )
+                    : [];
 
-              // If the link text does not match the link href we remove the existing link
-              if (isExistingLinkTextNotEqualHref) {
-                linkMarkInRange &&
-                  removeLink({ from: linkMarkInRange.from, to: linkMarkInRange.to }).tr();
-              }
+                if (!urlInMatchedText) {
+                  // If we have an existing link we can assume the link is not valid and remove ii
+                  linkMarkInRangeCount &&
+                    removeLink({
+                      from: linkMarkInRange[linkMarkInRangeCount - 1].from,
+                      to: linkMarkInRange[linkMarkInRangeCount - 1].to,
+                    }).tr();
 
-              if (
-                // If outside the selection range we skip this iteration
-                outsideSelectionRange &&
-                // unless the link needed to be updated outside of the range e.g. link was balanced
-                !unbalancedLinkUpdated &&
-                // with a valid link, and href equals text.
-                !isExistingLinkTextNotEqualHref
-              ) {
-                continue;
-              }
+                  // If no existing link and urlInMatchedText we skip this iteration
+                  return;
+                }
 
-              // Avoid overwriting manually created links
-              if (
-                this.getLinkMarksInRange(
-                  tr.doc,
-                  positionStart + 1,
-                  positionStart + urlInMatchedText.url.length + 1,
-                  false,
-                ).length > 0
-              ) {
-                continue;
-              }
+                // If the link text does not match the link href we remove the existing link
+                isExistingLinkTextNotEqualHref.forEach(({ from, to }) =>
+                  removeLink({
+                    from,
+                    to,
+                  }).tr(),
+                );
 
-              foundAutoLinks.push({
-                to: positionStart + urlInMatchedText.url.length + 1,
-                href,
-                from: positionStart + 1,
-                text: urlInMatchedText.url,
+                if (
+                  // If outside the selection range we skip this iteration
+                  outsideSelectionRange &&
+                  // unless the link needed to be updated outside of the range e.g. link was balanced
+                  !unbalancedLinkUpdated &&
+                  // with a valid link, and href equals text.
+                  isExistingLinkTextNotEqualHref.length === 0 &&
+                  urlsInMatchedText.length < 2
+                ) {
+                  return;
+                }
+
+                // Avoid overwriting manually created links
+                if (
+                  this.getLinkMarksInRange(
+                    tr.doc,
+                    positionStart + 1,
+                    positionStart + urlInMatchedText.url.length + 1,
+                    false,
+                  ).length > 0
+                ) {
+                  return;
+                }
+
+                foundAutoLinks.push({
+                  to: positionStart + urlInMatchedText.url.length + 1,
+                  href,
+                  from: positionStart + 1,
+                  text: urlInMatchedText.url,
+                });
               });
             }
 
@@ -801,22 +823,32 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return autoLinkAllowedTLDs.includes(tld);
   }
 
-  private findURLInString(input: string): { url: string; startIndex: number } | undefined {
-    const urlMatch = findMatches(input, this.options.autoLinkRegex)[0];
+  private findURLsInString(input: string): FoundUrls {
+    const foundUrls: FoundUrls = [];
+    let temp = input;
 
-    if (!urlMatch) {
-      return;
+    for (const match of findMatches(input, this.options.autoLinkRegex)) {
+      const matchString = getMatchString(match);
+
+      // Slice adjacent characters from url
+      const url = input.slice(match.index, this.getURLEndIndex(temp, matchString));
+
+      // Remove previous links from input string
+      temp = temp.slice(temp.indexOf(matchString) + matchString.length);
+
+      // Confirm URL is valid
+      if (!this.isValidUrl(url)) {
+        continue;
+      }
+
+      foundUrls.push({ url, startIndex: match.index });
     }
 
-    // Slice adjacent charcters from urls
-    const url = input.slice(urlMatch.index, this.getURLEndIndex(input, getMatchString(urlMatch)));
-
-    // Confirm URL is valid
-    if (!this.isValidUrl(url)) {
-      return;
+    if (foundUrls.length === 0) {
+      foundUrls.push(undefined);
     }
 
-    return { url, startIndex: urlMatch.index };
+    return foundUrls;
   }
 
   private getURLEndIndex(input: string, url: string) {
@@ -828,7 +860,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
     const path = input.slice(domain.length + input.indexOf(domain)).slice(1);
 
-    if (!path) {
+    // URL API could better determine a valid path but using extractDomain appears to do the job
+    // Need to make sure that path does not include "."
+    if (!path || path.includes('.')) {
       // Return index to remove adjacent punctuation
       return getTrailingCharIndex({
         adjacentPunctuations: this.options.adjacentPunctuations,
@@ -851,7 +885,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         : balancedIndex;
     }
 
-    // Return index to remove trailing charchters
+    // Return index to remove trailing characters
     return SENTENCE_PUNCTUATIONS.includes(path.slice(-1))
       ? getTrailingPunctuationIndex(path, index)
       : undefined;
