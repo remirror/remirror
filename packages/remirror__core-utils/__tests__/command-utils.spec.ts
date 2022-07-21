@@ -190,7 +190,7 @@ describe('replaceText', () => {
       replaceText({
         appendText: '',
         content: 'Content',
-        range: { from: 9, to: 9 },
+        selection: { from: 9, to: 9 },
       }),
     ).toTransform({
       from,

@@ -286,11 +286,6 @@ export interface ReplaceTextProps extends Partial<AttributesProps> {
   keepSelection?: boolean;
 
   /**
-   * @deprecated - use `selection` instead.
-   */
-  range?: FromToProps;
-
-  /**
    * The selected part of the document to replace.
    */
   selection?: PrimitiveSelection;
@@ -341,11 +336,11 @@ export function preserveSelection(selection: Selection, tr: Transaction): void {
  * @param props - see [[`ReplaceTextProps`]]
  */
 export function replaceText(props: ReplaceTextProps): CommandFunction {
-  const { attrs = {}, appendText = '', content = '', keepSelection = false, range } = props;
+  const { attrs = {}, appendText = '', content = '', keepSelection = false } = props;
 
   return ({ state, tr, dispatch }) => {
     const schema = state.schema;
-    const selection = getTextSelection(props.selection ?? range ?? tr.selection, tr.doc);
+    const selection = getTextSelection(props.selection ?? tr.selection, tr.doc);
     const index = selection.$from.index();
     const { from, to, $from } = selection;
 

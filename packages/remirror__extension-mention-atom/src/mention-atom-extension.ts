@@ -199,7 +199,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
   }
 
   /**
-   * Creates a mention atom at the  the provided range.
+   * Creates a mention atom at the provided range.
    *
    * A variant of this method is provided to the `onChange` handler for this
    * extension.
@@ -225,7 +225,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
       type: this.type,
       appendText: getAppendText(appendText, this.options.appendText),
       attrs: { name, ...rest },
-      range,
+      selection: { from: range.from, to: range.to },
     });
   }
 

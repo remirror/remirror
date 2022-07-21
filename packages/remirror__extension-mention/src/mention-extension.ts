@@ -517,7 +517,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
         type: this.type,
         attrs: { ...attributes, name },
         appendText: getAppendText(appendText, matcher.appendText),
-        range: range ? { from, to: replacementType === 'full' ? range.to || to : to } : undefined,
+        selection: range ? { from, to: replacementType === 'full' ? range.to || to : to } : undefined,
         content: attributes.label,
       })(props);
     };
