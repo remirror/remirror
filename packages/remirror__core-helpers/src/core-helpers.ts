@@ -248,6 +248,8 @@ export function isNull(value: unknown): value is null {
  *
  * @deprecated Due to the current build process stripping out classes
  *
+ * TODO: Validate whether ESM build would allow this method to work
+ *
  * @param value - the value to check
  *
  */
