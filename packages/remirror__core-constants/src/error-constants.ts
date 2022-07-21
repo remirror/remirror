@@ -7,12 +7,6 @@
  * reference the errors within search engines.
  */
 export enum ErrorConstant {
-  /** An error occurred in production. Details shall be hidden.
-   *
-   * @deprecated - We don't hide the error details in production anymore.
-   */
-  PROD = 'RMR0000',
-
   /** An error happened but we're not quite sure why. */
   UNKNOWN = 'RMR0001',
 
