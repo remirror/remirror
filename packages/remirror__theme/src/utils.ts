@@ -88,25 +88,25 @@ function getVar(keys: string[]) {
  * getThemeVar('color', 'primary', 'text') => `var(--rmr-color-primary-text)`
  * ```
  */
-export function getThemeVar<TKey1 extends keyof Remirror.Theme>(t1: TKey1): string;
+export function getThemeVar<Key1 extends keyof Remirror.Theme>(t1: Key1): string;
 
 export function getThemeVar<
-  TKey1 extends keyof Remirror.Theme,
-  TKey2 extends keyof Remirror.Theme[TKey1],
->(t1: TKey1, t2: TKey2): string;
+  Key1 extends keyof Remirror.Theme,
+  Key2 extends keyof Remirror.Theme[Key1],
+>(t1: Key1, t2: Key2): string;
 
 export function getThemeVar<
-  TKey1 extends keyof Remirror.Theme,
-  TKey2 extends keyof Remirror.Theme[TKey1],
-  TKey3 extends keyof Remirror.Theme[TKey1][TKey2],
->(t1: TKey1, t2: TKey2, t3: TKey3): string;
+  Key1 extends keyof Remirror.Theme,
+  Key2 extends keyof Remirror.Theme[Key1],
+  Key3 extends keyof Remirror.Theme[Key1][Key2],
+>(t1: Key1, t2: Key2, t3: Key3): string;
 
 export function getThemeVar<
-  TKey1 extends keyof Remirror.Theme,
-  TKey2 extends keyof Remirror.Theme[TKey1],
-  TKey3 extends keyof Remirror.Theme[TKey1][TKey2],
-  TKey4 extends keyof Remirror.Theme[TKey1][TKey2][TKey3],
->(t1: TKey1, t2: TKey2, t3: TKey3, t4: TKey4): string;
+  Key1 extends keyof Remirror.Theme,
+  Key2 extends keyof Remirror.Theme[Key1],
+  Key3 extends keyof Remirror.Theme[Key1][Key2],
+  Key4 extends keyof Remirror.Theme[Key1][Key2][Key3],
+>(t1: Key1, t2: Key2, t3: Key3, t4: Key4): string;
 
 export function getThemeVar(...args: Array<string | number>): string {
   return getVar(args.map((p) => p.toString()));
@@ -120,25 +120,25 @@ export function getThemeVar(...args: Array<string | number>): string {
  * getThemeVarName('color', 'primary', 'text') => `--rmr-color-primary-text`
  * ```
  */
-export function getThemeVarName<TKey1 extends keyof Remirror.Theme>(t1: TKey1): string;
+export function getThemeVarName<Key1 extends keyof Remirror.Theme>(t1: Key1): string;
 
 export function getThemeVarName<
-  TKey1 extends keyof Remirror.Theme,
-  TKey2 extends keyof Remirror.Theme[TKey1],
->(t1: TKey1, t2: TKey2): string;
+  Key1 extends keyof Remirror.Theme,
+  Key2 extends keyof Remirror.Theme[Key1],
+>(t1: Key1, t2: Key2): string;
 
 export function getThemeVarName<
-  TKey1 extends keyof Remirror.Theme,
-  TKey2 extends keyof Remirror.Theme[TKey1],
-  TKey3 extends keyof Remirror.Theme[TKey1][TKey2],
->(t1: TKey1, t2: TKey2, t3: TKey3): string;
+  Key1 extends keyof Remirror.Theme,
+  Key2 extends keyof Remirror.Theme[Key1],
+  Key3 extends keyof Remirror.Theme[Key1][Key2],
+>(t1: Key1, t2: Key2, t3: Key3): string;
 
 export function getThemeVarName<
-  TKey1 extends keyof Remirror.Theme,
-  TKey2 extends keyof Remirror.Theme[TKey1],
-  TKey3 extends keyof Remirror.Theme[TKey1][TKey2],
-  TKey4 extends keyof Remirror.Theme[TKey1][TKey2][TKey3],
->(t1: TKey1, t2: TKey2, t3: TKey3, t4: TKey4): string;
+  Key1 extends keyof Remirror.Theme,
+  Key2 extends keyof Remirror.Theme[Key1],
+  Key3 extends keyof Remirror.Theme[Key1][Key2],
+  Key4 extends keyof Remirror.Theme[Key1][Key2][Key3],
+>(t1: Key1, t2: Key2, t3: Key3, t4: Key4): string;
 
 export function getThemeVarName(...args: Array<string | number>): string {
   return getCustomPropertyName(args.map((p) => p.toString()));
