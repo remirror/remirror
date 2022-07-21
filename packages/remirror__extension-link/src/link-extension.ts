@@ -85,11 +85,6 @@ type LinkTarget = LiteralUnion<'_blank' | '_self' | '_parent' | '_top', string> 
 
 export interface LinkOptions {
   /**
-   * @deprecated use `onShortcut` instead
-   */
-  onActivateLink?: Handler<(selectedText: string) => void>;
-
-  /**
    * Called when the user activates the keyboard shortcut.
    *
    * It is called with the active link in the selected range, if it exists.
@@ -129,13 +124,6 @@ export interface LinkOptions {
    * `mailto:` prefix if needed.
    */
   extractHref?: Static<(props: { url: string; defaultProtocol: DefaultProtocol }) => string>;
-
-  /**
-   * Whether the link is opened when being clicked.
-   *
-   * @deprecated use `onClick` handler instead.
-   */
-  openLinkOnClick?: boolean;
 
   /**
    * Whether automatic links should be created.
@@ -235,7 +223,6 @@ export type LinkAttributes = ProsemirrorAttributes<{
     autoLink: false,
     defaultProtocol: '',
     selectTextOnClick: false,
-    openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
     defaultTarget: null,
@@ -244,7 +231,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
   },
   staticKeys: ['autoLinkRegex'],
   handlerKeyOptions: { onClick: { earlyReturnValue: true } },
-  handlerKeys: ['onActivateLink', 'onShortcut', 'onUpdateLink', 'onClick'],
+  handlerKeys: ['onShortcut', 'onUpdateLink', 'onClick'],
   defaultPriority: ExtensionPriority.Medium,
 })
 export class LinkExtension extends MarkExtension<LinkOptions> {
@@ -328,7 +315,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   }
 
   /**
-   * Add a handler to the `onActivateLink` to capture when .
+   * Create a link at the given selection. If the selection is empty expand it to the active mark
+   * or whole word
    */
   @keyBinding({ shortcut: NamedShortcut.InsertLink })
   shortcut({ tr }: KeyBindingProps): boolean {
@@ -357,7 +345,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       selectedText = tr.doc.textBetween(from, to);
     }
 
-    this.options.onActivateLink(selectedText);
     this.options.onShortcut({
       activeLink: mark
         ? { attrs: mark.mark.attrs as LinkAttributes, from: mark.from, to: mark.to }
@@ -469,20 +456,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           return true;
         }
 
-        let handled = false;
-
-        if (this.options.openLinkOnClick) {
-          handled = true;
-          const href = attrs.href;
-          window.open(href, '_blank');
-        }
-
         if (this.options.selectTextOnClick) {
-          handled = true;
           this.store.commands.selectText(markRange);
+          return false;
         }
 
-        return handled;
+        return false;
       },
     };
   }
@@ -497,7 +476,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return {
       props: {
         handleClick: (view, pos) => {
-          if (!this.options.selectTextOnClick && !this.options.openLinkOnClick) {
+          if (!this.options.selectTextOnClick) {
             return false;
           }
 
@@ -506,11 +485,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
           if (!range) {
             return false;
-          }
-
-          if (this.options.openLinkOnClick) {
-            const href = range.mark.attrs.href;
-            window.open(href, '_blank');
           }
 
           if (this.options.selectTextOnClick) {
