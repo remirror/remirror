@@ -160,7 +160,7 @@ describe('commands', () => {
       const { build, add, view, commands, doc, p } = setup();
 
       add(doc(p('text<cursor>')));
-      expect(commands.createTable.isEnabled()).toBe(true);
+      expect(commands.createTable.enabled()).toBe(true);
       commands.createTable({ columnsCount: 2, rowsCount: 2, withHeaderRow: false });
 
       expect(view.state.doc).toEqualRemirrorDocument(doc(p('text'), build(['', ''], ['', ''])));
@@ -170,7 +170,7 @@ describe('commands', () => {
       const { add, view, commands, doc, p } = setup();
 
       add(doc(p('<start>text<end>')));
-      expect(commands.createTable.isEnabled({})).toBe(false);
+      expect(commands.createTable.enabled({})).toBe(false);
       commands.createTable({ columnsCount: 2, rowsCount: 2, withHeaderRow: false });
 
       expect(view.state.doc).toEqualRemirrorDocument(doc(p('text')));

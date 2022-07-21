@@ -202,7 +202,7 @@ For example, `prosemirror-history` provides the `undo` and `redo` commands. Whil
 
 Are we undoing the current transaction or last action before this transaction? It's not clear what the expected behavior should be in every situation.
 
-There are also commands like `fixTables` from `prosemirror-tables` which are also non-chainable. The command uses `state.tr` to check if any of the tables need fixing. If they do, it dispatches them, if they don't it doesn't. Unfortunately this breaks the `isEnabled` command checks which rely on the `Transaction` not being updated unless a dispatch is provided.
+There are also commands like `fixTables` from `prosemirror-tables` which are also non-chainable. The command uses `state.tr` to check if any of the tables need fixing. If they do, it dispatches them, if they don't it doesn't. Unfortunately this breaks the `enabled` command checks which rely on the `Transaction` not being updated unless a dispatch is provided.
 
 As a result remirror also supports declaring commands as non-chainable.
 

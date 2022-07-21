@@ -115,7 +115,7 @@ const MenuCommandPane = (props: MenuCommandPaneProps): JSX.Element => {
     return <span>Not found: {commandName}</span>;
   }
 
-  const enabled = commands[commandName]?.isEnabled(attrs) ?? false;
+  const enabled = commands[commandName]?.enabled(attrs) ?? false;
   const isActive = active[options.name]?.(attrs) ?? false;
   const commandProps: CommandDecoratorMessageProps = { active: isActive, attrs, enabled, t };
   const label = getCommandOptionValue(options.label, commandProps);

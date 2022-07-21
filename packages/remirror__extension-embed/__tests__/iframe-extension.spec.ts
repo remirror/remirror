@@ -70,9 +70,9 @@ describe('commands', () => {
       });
   });
 
-  it('`addIframe.isEnabled()` - returns true', () => {
+  it('`addIframe.enabled()` - returns true', () => {
     const { commands } = add(doc(p('add an iframe here <cursor>')));
-    expect(commands.addIframe.isEnabled({ src: '' })).toBe(true);
+    expect(commands.addIframe.enabled({ src: '' })).toBe(true);
   });
 
   it('`addYouTubeVideo` - creates an iframe', () => {
@@ -95,8 +95,8 @@ describe('commands', () => {
       });
   });
 
-  it('`addYouTubeVideo.isEnabled()` - returns true', () => {
+  it('`addYouTubeVideo.enabled()` - returns true', () => {
     const { commands } = add(doc(p('add an iframe here <cursor>')));
-    expect(commands.addYouTubeVideo.isEnabled({ video: '' })).toBe(true);
+    expect(commands.addYouTubeVideo.enabled({ video: '' })).toBe(true);
   });
 });

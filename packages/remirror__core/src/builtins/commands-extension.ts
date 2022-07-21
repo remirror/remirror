@@ -1145,7 +1145,6 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
   ): CommandShape {
     const unchainedCommand: CommandShape = this.unchainedFactory({ command }) as any;
     unchainedCommand.enabled = this.unchainedFactory({ command, shouldDispatch: false });
-    unchainedCommand.isEnabled = unchainedCommand.enabled;
     unchainedCommand.original = command;
     unchainedCommand.active = active;
 
@@ -1240,7 +1239,7 @@ interface UnchainedFactoryProps {
   command: ExtensionCommandFunction;
 
   /**
-   * When false the dispatch is not provided (making this an `isEnabled` check).
+   * When false the dispatch is not provided (making this an `enabled` check).
    *
    * @default true
    */
@@ -1298,7 +1297,7 @@ declare global {
        * is already available by the commands.
        *
        * ```ts
-       * if (commands.toggleBold.isEnabled()) {
+       * if (commands.toggleBold.enabled()) {
        *   commands.toggleBold();
        * }
        * ```

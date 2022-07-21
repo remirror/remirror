@@ -108,7 +108,7 @@ const ToolbarCommandButton = (props: ToolbarCommandButtonProps) => {
     return <></>;
   }
 
-  const enabled = commands[name]?.isEnabled(attrs) ?? false;
+  const enabled = commands[name]?.enabled(attrs) ?? false;
   const isActive = active[options.name]?.(attrs) ?? false;
   const commandProps: CommandDecoratorMessageProps = { active: isActive, attrs, enabled, t };
   const description = getCommandOptionValue(options.description, commandProps);
