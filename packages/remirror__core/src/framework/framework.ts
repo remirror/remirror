@@ -492,10 +492,6 @@ export abstract class Framework<
       ...this.manager.store,
       addHandler: this.addHandler,
 
-      // Commands
-      focus: this.focus,
-      blur: this.blur,
-
       // Properties
       uid: this.#uid,
       view: this.view,

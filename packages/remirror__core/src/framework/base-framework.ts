@@ -216,23 +216,6 @@ export interface FrameworkOutput<Extension extends AnyExtension>
   getExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
     Constructor: ExtensionConstructor,
   ) => InstanceType<ExtensionConstructor>;
-
-  /**
-   * Focus the editor at the `start` | `end` a specific position or at a valid
-   * range between `{ from, to }`.
-   *
-   * @deprecated This method may be removed in the future and it is advisable to
-   * use `commands.focus()`.
-   */
-  focus: (position?: FocusType) => void;
-
-  /**
-   * Blur the editor.
-   *
-   * @deprecated This method may be removed in the future and it is advisable to
-   * use `commands.blur()`.
-   */
-  blur: (position?: PrimitiveSelection) => void;
 }
 
 export type CreateStateFromContent = (
