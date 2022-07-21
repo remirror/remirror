@@ -639,8 +639,8 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     options: InsertNodeOptions = {},
   ): CommandFunction {
     return ({ dispatch, tr, state }) => {
-      const { attrs, range, selection, replaceEmptyParentBlock = false } = options;
-      const { from, to, $from } = getTextSelection(selection ?? range ?? tr.selection, tr.doc);
+      const { attrs, selection, replaceEmptyParentBlock = false } = options;
+      const { from, to, $from } = getTextSelection(selection ?? tr.selection, tr.doc);
 
       if (isProsemirrorNode(node) || isProsemirrorFragment(node)) {
         const pos = $from.before($from.depth);
@@ -1178,11 +1178,6 @@ export interface InsertNodeOptions {
    * The content to insert.
    */
   content?: Fragment | ProsemirrorNode | ProsemirrorNode[] | string;
-
-  /**
-   * @deprecated use selection property instead.
-   */
-  range?: FromToProps;
 
   /**
    * Set the selection where the command should occur.
