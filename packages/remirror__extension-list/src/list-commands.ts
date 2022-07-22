@@ -1,10 +1,8 @@
 import {
-  AnyExtension,
   chainableEditorState,
   CommandFunction,
   CommandFunctionProps,
   DispatchFunction,
-  ExtensionTag,
   findParentNode,
   FindProsemirrorNodeResult,
   getNodeType,
@@ -15,7 +13,7 @@ import {
 } from '@remirror/core';
 import { joinBackward } from '@remirror/pm/commands';
 import { Fragment, NodeRange, ResolvedPos, Slice } from '@remirror/pm/model';
-import { liftListItem, sinkListItem, wrapInList } from '@remirror/pm/schema-list';
+import { liftListItem, wrapInList } from '@remirror/pm/schema-list';
 import { EditorState, Selection, TextSelection, Transaction } from '@remirror/pm/state';
 import { canJoin, canSplit, ReplaceAroundStep } from '@remirror/pm/transform';
 
@@ -225,88 +223,6 @@ export function splitListItem(
 
 type TypeAfter = { type: NodeType; attrs: ProsemirrorAttributes } | null | undefined;
 type TypesAfter = TypeAfter[];
-
-/**
- * Get all list item node type names in currect schema
- */
-function getAllListItemNames(allExtensions: AnyExtension[]): string[] {
-  return allExtensions
-    .filter((extension) => extension.tags.includes(ExtensionTag.ListItemNode))
-    .map((extension) => extension.name);
-}
-
-/**
- * Get all list item node types from current selection. Sort from deepest to root.
- *
- * @deprecated
- */
-function getOrderedListItemTypes(
-  listItemNames: string[],
-  state: EditorState,
-): Map<string, NodeType> {
-  const { $from, $to } = state.selection;
-  const sharedDepth = $from.sharedDepth($to.pos);
-  const listItemTypes = new Map<string, NodeType>();
-
-  for (let depth = sharedDepth; depth >= 0; depth--) {
-    const type = $from.node(depth).type;
-
-    if (listItemNames.includes(type.name) && !listItemTypes.has(type.name)) {
-      listItemTypes.set(type.name, type);
-    }
-  }
-
-  return listItemTypes;
-}
-
-/**
- * Create a command to sink the list item around the selection down into an
- * inner list. Use this function if you get multiple list item nodes in your
- * schema.
- *
- * @deprecated use `indentList` instead.
- */
-export function sharedSinkListItem(allExtensions: AnyExtension[]): CommandFunction {
-  const listItemNames = getAllListItemNames(allExtensions);
-
-  return ({ dispatch, state }) => {
-    const listItemTypes = getOrderedListItemTypes(listItemNames, state);
-
-    for (const type of listItemTypes.values()) {
-      if (sinkListItem(type)(state, dispatch)) {
-        return true;
-      }
-    }
-
-    // if current selection is inside at lease one list item node, then we
-    // always return true.
-    return listItemTypes.size > 0;
-  };
-}
-
-/**
- * Create a command to lift the list item around the selection up intoa wrapping
- * list. Use this function if you get multiple list item nodes in your schema.
- *
- * @deprecated use `dedentList` instead.
- */
-export function sharedLiftListItem(allExtensions: AnyExtension[]): CommandFunction {
-  const listItemNames = getAllListItemNames(allExtensions);
-
-  return ({ dispatch, state }) => {
-    const listItemTypes = getOrderedListItemTypes(listItemNames, state);
-
-    for (const type of listItemTypes.values()) {
-      if (liftListItem(type)(state, dispatch)) {
-        return true;
-      }
-    }
-
-    // if current selection is inside at lease one list item node, then we
-    // always return true.
-    return listItemTypes.size > 0;
-  };
-}
 
 /**
  * Change a bullet list into a task list or vice versa. These lists use different type of list items,
@@ -602,9 +518,6 @@ export function liftListItemOutOfList(itemType: NodeType): CommandFunction {
   };
 }
 
-/**
- * @deprecated
- */
 function getItemRange(itemType: NodeType, selection: Selection) {
   const { $from, $to } = selection;
 
