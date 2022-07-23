@@ -1,4 +1,4 @@
-import { ComponentType, FunctionComponent, RefCallback } from 'react';
+import React, { ComponentType, FunctionComponent, RefCallback } from 'react';
 import {
   Decoration,
   EditorView,
@@ -278,7 +278,6 @@ export class ReactNodeView implements NodeView {
 
     return (
       <ReactComponent
-        environment='dom'
         updateAttributes={this.updateAttributes}
         selected={this.selected}
         view={this.#view}

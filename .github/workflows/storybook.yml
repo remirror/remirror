@@ -20,20 +20,18 @@ jobs:
 
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           # Uses node 14 to allow nullish coalescing in `.js` files
           node-version: 14
@@ -51,7 +49,7 @@ jobs:
           pnpm storybook:build
 
       - name: deploy storybook for pull request
-        uses: amondnet/vercel-action@v20
+        uses: amondnet/vercel-action@v25.1.0
         if: github.ref != 'refs/heads/main' && github.event.pull_request.head.repo.full_name == github.repository # don't run this job from a fork repository
         with:
           working-directory: ./packages/storybook-react/storybook-static
@@ -65,7 +63,7 @@ jobs:
             pr{{PR_NUMBER}}-remirror-ocavue.vercel.app
 
       - name: deploy storybook for production
-        uses: amondnet/vercel-action@v20
+        uses: amondnet/vercel-action@v25.1.0
         if: github.ref == 'refs/heads/v1'
         with:
           working-directory: ./packages/storybook-react/storybook-static

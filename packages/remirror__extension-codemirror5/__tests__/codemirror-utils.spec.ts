@@ -1,9 +1,16 @@
-import { loadCodeMirror } from '../src/codemirror-ref';
+import 'codemirror/mode/meta';
+
+import CodeMirrorPackage from 'codemirror';
+import { defaultImport } from 'default-import';
+
+import ref from '../src/codemirror-ref';
 import { parseLanguageToMode } from '../src/codemirror-utils';
+
+const CodeMirror = defaultImport(CodeMirrorPackage);
 
 describe('parseLanguageToMode', () => {
   beforeAll(async () => {
-    await loadCodeMirror();
+    ref.CodeMirror = CodeMirror;
   });
 
   for (const [inputLanguage, expectedMode] of [

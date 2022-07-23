@@ -4,6 +4,7 @@ exports[`Remirror Controlled Component can override updates to the editor state 
 <div
   aria-label="Remirror editor"
   aria-multiline="true"
+  aria-placeholder=""
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -22,6 +23,7 @@ exports[`Remirror Controlled Component overrides initial content 1`] = `
 <div
   aria-label="Remirror editor"
   aria-multiline="true"
+  aria-placeholder=""
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -37,6 +39,7 @@ exports[`Remirror Controlled Component responds to updates to the editor state 1
 <div
   aria-label="Remirror editor"
   aria-multiline="true"
+  aria-placeholder=""
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"
@@ -52,6 +55,7 @@ exports[`Remirror Controlled Component should set the initial value 1`] = `
 <div
   aria-label="Remirror editor"
   aria-multiline="true"
+  aria-placeholder=""
   class="ProseMirror remirror-editor"
   contenteditable="true"
   role="textbox"

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - v1
+      - main
   pull_request:
     types: [opened, synchronize]
     branches:
@@ -17,24 +18,28 @@ jobs:
   deploy_docs:
     timeout-minutes: 90
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/v1' || github.event.pull_request
+    if: github.ref == 'refs/heads/v1' || github.ref == 'refs/heads/main' || github.event.pull_request
 
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
+      - uses: rlespinasse/github-slug-action@v4
+
+      - name: 'print current git reference after'
+        run: |
+          echo "${{ env.GITHUB_REF_SLUG }}"
+
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -43,14 +48,8 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: setup docusaurus caching
-        uses: actions/cache@v2
-        with:
-          path: website/node_modules/.cache
-          key: ${{ runner.os }}-docusaurus-v1
-
       - name: generate .d.ts files
-        run: pnpm build
+        run: pnpm typecheck
 
       - name: generate api markdown files
         run: pnpm api
@@ -67,7 +66,7 @@ jobs:
           production-branch: v1
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
-          alias: ${{ github.head_ref }}
+          alias: '${{ env.GITHUB_REF_SLUG }}'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NEXT_NETLIFY_SITE_ID }}

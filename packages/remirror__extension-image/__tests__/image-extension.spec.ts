@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { DelayedPromiseCreator } from 'remirror';
 import { delay } from 'testing';

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-ssr",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.10",
   "description": "Render the editor in an SSR environment",
   "keywords": [
     "remirror"
@@ -16,42 +16,37 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-react-ssr.esm.js",
-      "require": "./dist/remirror-react-ssr.cjs.js",
-      "browser": "./dist/remirror-react-ssr.browser.esm.js",
-      "types": "./dist/remirror-react-ssr.cjs.d.ts",
-      "default": "./dist/remirror-react-ssr.esm.js"
+      "import": "./dist/remirror-react-ssr.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-react-ssr.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-react-ssr.cjs.js",
-  "module": "dist/remirror-react-ssr.esm.js",
-  "browser": {
-    "./dist/remirror-react-ssr.cjs.js": "./dist/remirror-react-ssr.browser.cjs.js",
-    "./dist/remirror-react-ssr.esm.js": "./dist/remirror-react-ssr.browser.esm.js"
-  },
-  "types": "./dist/remirror-react-ssr.cjs.d.ts",
+  "main": "./dist/remirror-react-ssr.js",
+  "module": "./dist/remirror-react-ssr.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.0",
-    "@remirror/extension-react-ssr": "^2.0.0-beta.0"
+    "@remirror/core": "^2.0.0-beta.10",
+    "@remirror/extension-react-ssr": "^2.0.0-beta.10"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0",
-    "@remirror/react": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.10",
+    "@remirror/react": "^2.0.0-beta.10",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0",
+    "@remirror/pm": "^2.0.0-beta.10",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",
@@ -67,6 +62,5 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

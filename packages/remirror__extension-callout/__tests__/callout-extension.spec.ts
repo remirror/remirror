@@ -38,8 +38,9 @@ test('supports extra attributes', () => {
   } = renderEditor([new CalloutExtension({ extraAttributes: { 'data-custom': 'hello-world' } })]);
 
   expect(prosemirrorNodeToHtml(callout(p('friend!')))).toMatchInlineSnapshot(`
-    <div data-custom="hello-world"
-         data-callout-type="info"
+    <div
+      data-custom="hello-world"
+      data-callout-type="info"
     >
       <p>
         friend!
@@ -169,20 +170,21 @@ describe('commands', () => {
 
       commands.updateCallout({ emoji: '😭' });
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <div data-callout-type="warning"
-           data-callout-emoji="😭"
-      >
-        <div class="remirror-callout-emoji-wrapper">
-          <span>
-            😭
-          </span>
+        <div
+          data-callout-type="warning"
+          data-callout-emoji="😭"
+        >
+          <div class="remirror-callout-emoji-wrapper">
+            <span>
+              😭
+            </span>
+          </div>
+          <div>
+            <p>
+              This is a callout
+            </p>
+          </div>
         </div>
-        <div>
-          <p>
-            This is a callout
-          </p>
-        </div>
-      </div>
       `);
       expect(view.state.doc).toEqualRemirrorDocument(
         doc(callout({ type: 'warning', emoji: '😭' })(p('This is a callout'))),
@@ -194,20 +196,21 @@ describe('commands', () => {
 
       commands.updateCallout({ type: 'info', emoji: '😭' });
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-      <div data-callout-type="info"
-           data-callout-emoji="😭"
-      >
-        <div class="remirror-callout-emoji-wrapper">
-          <span>
-            😭
-          </span>
+        <div
+          data-callout-type="info"
+          data-callout-emoji="😭"
+        >
+          <div class="remirror-callout-emoji-wrapper">
+            <span>
+              😭
+            </span>
+          </div>
+          <div>
+            <p>
+              This is a callout
+            </p>
+          </div>
         </div>
-        <div>
-          <p>
-            This is a callout
-          </p>
-        </div>
-      </div>
       `);
       expect(view.state.doc).toEqualRemirrorDocument(
         doc(callout({ type: 'info', emoji: '😭' })(p('This is a callout'))),
@@ -472,21 +475,22 @@ describe('emoji', () => {
       add(doc(callout({ type: 'info', emoji: '🦦' })(p(`This is a callout<cursor>`))));
 
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <div data-callout-type="info"
-               data-callout-emoji="🦦"
-          >
-            <div class="remirror-callout-emoji-wrapper">
-              <span>
-                🦦
-              </span>
-            </div>
-            <div>
-              <p>
-                This is a callout
-              </p>
-            </div>
+        <div
+          data-callout-type="info"
+          data-callout-emoji="🦦"
+        >
+          <div class="remirror-callout-emoji-wrapper">
+            <span>
+              🦦
+            </span>
           </div>
-        `);
+          <div>
+            <p>
+              This is a callout
+            </p>
+          </div>
+        </div>
+      `);
     });
   });
 
@@ -501,21 +505,22 @@ describe('emoji', () => {
     it('render emoji', () => {
       add(doc(callout({ type: 'info' })(p(`This is a callout<cursor>`))));
       expect(view.dom.innerHTML).toMatchInlineSnapshot(`
-          <div data-callout-type="info"
-               data-callout-emoji="💓"
-          >
-            <div class="remirror-callout-emoji-wrapper">
-              <span>
-                💓
-              </span>
-            </div>
-            <div>
-              <p>
-                This is a callout
-              </p>
-            </div>
+        <div
+          data-callout-type="info"
+          data-callout-emoji="💓"
+        >
+          <div class="remirror-callout-emoji-wrapper">
+            <span>
+              💓
+            </span>
           </div>
-        `);
+          <div>
+            <p>
+              This is a callout
+            </p>
+          </div>
+        </div>
+      `);
     });
   });
 });

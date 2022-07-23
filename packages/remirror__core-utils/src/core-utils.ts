@@ -40,7 +40,6 @@ import type {
   RemirrorContentType,
   RemirrorIdentifierShape,
   RemirrorJSON,
-  RenderEnvironment,
   ResolvedPos,
   SchemaProps,
   Selection,
@@ -829,7 +828,9 @@ export function getSelectedGroup(
   let { from, to } = state.selection;
 
   const getChar = (start: number, end: number) =>
-    getTextContentFromSlice(TextSelection.create(state.doc, start, end).content());
+    getTextContentFromSlice(
+      TextSelection.between(state.doc.resolve(start), state.doc.resolve(end)).content(),
+    );
 
   for (
     let char = getChar(from - 1, from);
@@ -1073,7 +1074,7 @@ export function getTextSelection(selection: PrimitiveSelection, doc: Prosemirror
     const anchor = clampToDocument(pos.anchor);
     const head = clampToDocument(pos.head);
 
-    return TextSelection.create(doc, anchor, head);
+    return TextSelection.between(doc.resolve(anchor), doc.resolve(head));
   }
 
   // In this case assume that `from` is the fixed anchor and `to` is the movable
@@ -1081,7 +1082,7 @@ export function getTextSelection(selection: PrimitiveSelection, doc: Prosemirror
   const anchor = clampToDocument(pos.from);
   const head = clampToDocument(pos.to);
 
-  return TextSelection.create(doc, anchor, head);
+  return TextSelection.between(doc.resolve(anchor), doc.resolve(head));
 }
 
 /**
@@ -1195,44 +1196,47 @@ export function createDocumentNode(props: CreateDocumentNodeProps): ProsemirrorN
 /**
  * Checks which environment should be used. Returns true when we are in the dom
  * environment.
- *
- * @param forceEnvironment - force a specific environment to override the
- * outcome
  */
-export function shouldUseDomEnvironment(forceEnvironment?: RenderEnvironment): boolean {
-  return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
+export function shouldUseDomEnvironment(): boolean {
+  return environment.isBrowser;
 }
 
 /**
- * Get the document implementation within a node environment. This is only
- * included in the build when using node.
- */
-function getDocumentForNodeEnvironment() {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { JSDOM } = require('jsdom');
-    return new JSDOM('').window.document;
-  } catch {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return require('domino').createDocument();
-    } catch {
-      return require('min-document');
-    }
-  }
-}
-
-/**
- * Retrieves the document based on the environment we are currently in.
+ * Retrieves the document from global scope and throws an error in a non-browser
+ * environment.
  *
- * @param forceEnvironment - force a specific environment
+ * @internal
  */
-export function getDocument(forceEnvironment?: RenderEnvironment): Document {
+export function getDocument(): Document {
   if (typeof document !== 'undefined') {
     return document;
   }
 
-  return shouldUseDomEnvironment(forceEnvironment) ? document : getDocumentForNodeEnvironment();
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { JSDOM } = require('jsdom');
+    return new JSDOM().window.document;
+  } catch {
+    // ignore
+  }
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require('domino').createDocument();
+  } catch {
+    // ignore
+  }
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require('min-document');
+  } catch {
+    // ignore
+  }
+
+  throw new Error(
+    'Unable to retrieve the document from the global scope. Maybe you are running Remirror in a non-browser environment? If you are using Node.js, you can install JSDOM or similar to create a fake document and pass it to Remirror.',
+  );
 }
 
 export interface CustomDocumentProps {
@@ -1259,7 +1263,7 @@ export function prosemirrorNodeToDom(
 }
 
 function elementFromString(html: string, document?: Document): HTMLElement {
-  const parser = new (((document ?? getDocument()) as any)?.defaultView ?? window).DOMParser();
+  const parser = new ((document || getDocument())?.defaultView ?? window).DOMParser();
   return parser.parseFromString(`<body>${html}</body>`, 'text/html').body;
 }
 
@@ -1333,7 +1337,7 @@ export function htmlToProsemirrorNode(props: FragmentStringHandlerOptions): Frag
 export function htmlToProsemirrorNode(props: NodeStringHandlerOptions): ProsemirrorNode;
 export function htmlToProsemirrorNode(props: StringHandlerOptions): ProsemirrorNode | Fragment {
   const { content, schema, document, fragment = false, ...parseOptions } = props;
-  const element = elementFromString(content);
+  const element = elementFromString(content, document);
   const parser = PMDomParser.fromSchema(schema);
 
   return fragment

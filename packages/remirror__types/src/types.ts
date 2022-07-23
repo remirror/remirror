@@ -359,13 +359,6 @@ export type ProsemirrorAttributes<Extra extends object = object> = Record<string
  */
 
 /**
- * The render environment which is either on the server (ssr) or in the dom.
- *
- * This is used to force a certain environment to override checks
- */
-export type RenderEnvironment = 'ssr' | 'dom';
-
-/**
  * Checks the type provided and if it has any properties which are required it
  * will return the `Then` type. When none of the properties are required it will
  * return the `Else` type.

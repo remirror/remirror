@@ -1,4 +1,4 @@
-import { InputHTMLProps, InputOptions } from 'reakit/Input/Input';
+import { InputHTMLProps, InputOptions } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

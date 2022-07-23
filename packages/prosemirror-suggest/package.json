@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-suggest",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.10",
   "description": "Primitives for building your prosemirror suggestion and autocomplete functionality",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-suggest",
   "repository": {
@@ -13,38 +13,33 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/prosemirror-suggest.esm.js",
-      "require": "./dist/prosemirror-suggest.cjs.js",
-      "browser": "./dist/prosemirror-suggest.browser.esm.js",
-      "types": "./dist/prosemirror-suggest.cjs.d.ts",
-      "default": "./dist/prosemirror-suggest.esm.js"
+      "import": "./dist/prosemirror-suggest.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/prosemirror-suggest.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/prosemirror-suggest.cjs.js",
-  "module": "dist/prosemirror-suggest.esm.js",
-  "browser": {
-    "./dist/prosemirror-suggest.cjs.js": "./dist/prosemirror-suggest.browser.cjs.js",
-    "./dist/prosemirror-suggest.esm.js": "./dist/prosemirror-suggest.browser.esm.js"
-  },
-  "types": "./dist/prosemirror-suggest.cjs.d.ts",
+  "main": "./dist/prosemirror-suggest.js",
+  "module": "./dist/prosemirror-suggest.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-constants": "^2.0.0-beta.0",
-    "@remirror/core-helpers": "^2.0.0-beta.0",
-    "@remirror/types": "^1.0.0-beta.0",
+    "@remirror/core-constants": "^2.0.0-beta.10",
+    "@remirror/core-helpers": "^2.0.0-beta.10",
+    "@remirror/types": "^1.0.0-beta.10",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "prosemirror-model": "^1.18.0",
-    "prosemirror-state": "^1.4.0",
-    "prosemirror-view": "^1.26.0"
+    "prosemirror-model": "^1.18.1",
+    "prosemirror-state": "^1.4.1",
+    "prosemirror-view": "^1.26.5"
   },
   "peerDependencies": {
     "prosemirror-model": "^1",
@@ -57,6 +52,5 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

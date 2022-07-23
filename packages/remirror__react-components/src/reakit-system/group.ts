@@ -1,4 +1,4 @@
-import { GroupHTMLProps, GroupOptions } from 'reakit/Group/Group';
+import { GroupHTMLProps, GroupOptions } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

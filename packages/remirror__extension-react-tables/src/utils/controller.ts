@@ -5,7 +5,7 @@ import { cellAround, CellSelection, TableMap } from '@remirror/pm/tables';
 
 import { domCellAround } from '../table-column-resizing';
 import { ReactTableNodeAttrs } from '../table-extensions';
-import { setControllerPluginMeta } from '../table-plugins';
+import { resetControllerPluginMeta, setControllerPluginMeta } from '../table-plugins';
 import { Events } from '../utils/jsx';
 import { cellSelectionToSelection } from '../utils/prosemirror';
 import { repeat } from './array';
@@ -29,6 +29,11 @@ export function injectControllers({
 
   const oldRows = oldTable.content;
   oldRows.forEach((oldRow) => {
+    if (oldRow.content.child(0).type === schema.nodes.tableControllerCell) {
+      newRowsArray.push(oldRow.copy());
+      return;
+    }
+
     const oldCells = oldRow.content;
     const newCells = Fragment.from(controllerCell).append(oldCells);
     const newRow = oldRow.copy(newCells);
@@ -86,7 +91,7 @@ export function createControllerEvents({
       }
     },
     onMouseLeave: () => {
-      resetControllerPluginMeta(view);
+      resetPreselection(view);
     },
   };
 }
@@ -166,15 +171,8 @@ export function setPredelete(view: EditorView, value: boolean): void {
   view.dispatch(setControllerPluginMeta(view.state.tr, { predelete: value }));
 }
 
-function resetControllerPluginMeta(view: EditorView): void {
-  view.dispatch(
-    setControllerPluginMeta(view.state.tr, {
-      preselectRow: -1,
-      preselectColumn: -1,
-      preselectTable: false,
-      predelete: false,
-    }),
-  );
+function resetPreselection(view: EditorView): void {
+  view.dispatch(resetControllerPluginMeta(view.state.tr));
 }
 
 function getCellIndex(map: TableMap, rowIndex: number, colIndex: number): number {

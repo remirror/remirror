@@ -374,7 +374,6 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
     const element = createElement?.(this.store.view, pos) ?? document.createElement(nodeName);
     element.classList.add(className);
     const decoration = Decoration.widget(pos, element, {
-      // @ts-expect-error: TS types here don't allow us to set custom properties
       id,
       __type,
       type,
@@ -406,7 +405,6 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
       const element = document.createElement(nodeName);
       element.classList.add(className);
       decoration = Decoration.widget(from, element, {
-        // @ts-expect-error: TS types here don't allow us to set custom properties
         id,
         type,
         __type,
@@ -419,7 +417,6 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
         to,
         { nodeName, class: className },
         {
-          // @ts-expect-error: TS types here don't allow us to set custom properties
           id,
           __type,
         },

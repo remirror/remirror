@@ -24,6 +24,7 @@ function generateExampleContent(relativePath: string): string {
 
 // @ts-nocheck
 
+import React from 'react';
 import CodeBlock from '@theme/CodeBlock';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/${relativePath}';

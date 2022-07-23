@@ -1,11 +1,15 @@
 import type { LanguageDescription, LanguageSupport } from '@codemirror/language';
 import {
   ApplySchemaAttributes,
+  command,
+  CommandFunction,
   EditorView,
   extension,
+  findParentNodeOfType,
   GetAttributes,
   InputRule,
   isElementDomNode,
+  isEqual,
   isTextSelection,
   keyBinding,
   KeyBindingProps,
@@ -16,11 +20,12 @@ import {
   NodeViewMethod,
   PrioritizedKeyBindings,
   ProsemirrorNode,
+  setBlockType,
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
 
 import { CodeMirror6NodeView } from './codemirror-node-view';
-import { CodeMirrorExtensionOptions } from './codemirror-types';
+import { CodeMirrorExtensionAttributes, CodeMirrorExtensionOptions } from './codemirror-types';
 import { arrowHandler } from './codemirror-utils';
 
 @extension<CodeMirrorExtensionOptions>({
@@ -103,7 +108,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
         type: this.type,
         beforeDispatch: ({ tr, start }) => {
           const $pos = tr.doc.resolve(start);
-          tr.setSelection(new TextSelection($pos));
+          tr.setSelection(TextSelection.near($pos));
         },
         getAttributes: getAttributes,
       }),
@@ -144,7 +149,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
     tr.replaceWith(pos, end, this.type.create({ language }));
 
     // Set the selection to within the codeBlock
-    tr.setSelection(TextSelection.create(tr.doc, pos + 1));
+    tr.setSelection(TextSelection.near(tr.doc.resolve(pos + 1)));
 
     if (dispatch) {
       dispatch(tr);
@@ -182,5 +187,48 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
     }
 
     return language.support || language.load();
+  }
+
+  /**
+   * Creates a CodeMirror block at the current position.
+   *
+   * ```ts
+   * commands.createCodeMirror({ language: 'js' });
+   * ```
+   */
+  @command()
+  createCodeMirror(attributes: CodeMirrorExtensionAttributes): CommandFunction {
+    return setBlockType(this.type, attributes);
+  }
+
+  /**
+   * Update the code block at the current position. Primarily this is used
+   * to change the language.
+   *
+   * ```ts
+   * if (commands.updateCodeMirror.isEnabled()) {
+   *   commands.updateCodeMirror({ language: 'markdown' });
+   * }
+   * ```
+   */
+  @command()
+  updateCodeMirror(attributes: CodeMirrorExtensionAttributes): CommandFunction {
+    const type = this.type;
+    return ({ state, dispatch, tr }) => {
+      const parent = findParentNodeOfType({ types: type, selection: state.selection });
+
+      if (!parent || isEqual(attributes, parent.node.attrs)) {
+        // Do nothing since the attrs are the same
+        return false;
+      }
+
+      tr.setNodeMarkup(parent.pos, type, { ...parent.node.attrs, ...attributes });
+
+      if (dispatch) {
+        dispatch(tr);
+      }
+
+      return true;
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { ToolbarHTMLProps, ToolbarOptions } from 'reakit/Toolbar/Toolbar';
+import { ToolbarHTMLProps, ToolbarOptions } from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 

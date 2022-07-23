@@ -6,10 +6,12 @@ import {
   convertCommand,
   CreateExtensionPlugin,
   Decoration,
+  DOMCompatibleAttributes,
   EditorView,
   ExtensionPriority,
+  findChildren,
   getChangedNodes,
-  NodeExtension,
+  isElementDomNode,
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorNode,
@@ -21,6 +23,7 @@ import {
   createTable,
   createTableOptions,
   TableCellExtension as BaseTableCellExtension,
+  TableControllerCellExtension as BaseTableControllerCellExtension,
   TableExtension as BaseTableExtension,
   TableHeaderCellExtension as BaseTableHeaderCellExtension,
   TableRowExtension as BaseTableRowExtension,
@@ -86,9 +89,29 @@ export class TableExtension extends BaseTableExtension {
       },
       content: 'tableRow+',
       tableRole: 'table',
-      parseDOM: [{ tag: 'table', getAttrs: extra.parse }],
+      parseDOM: [
+        {
+          tag: 'table',
+          getAttrs: (node) => {
+            if (!isElementDomNode(node)) {
+              return {};
+            }
+
+            return {
+              ...extra.parse(node),
+              isControllersInjected: node.hasAttribute('data-controllers-injected'),
+            };
+          },
+        },
+      ],
       toDOM(node) {
-        return ['table', ['tbody', extra.dom(node), 0]];
+        const controllerAttrs: DOMCompatibleAttributes = {};
+
+        if (node.attrs.isControllersInjected) {
+          controllerAttrs['data-controllers-injected'] = '';
+        }
+
+        return ['table', { ...extra.dom(node), ...controllerAttrs }, ['tbody', 0]];
       },
       allowGapCursor: false,
     };
@@ -103,9 +126,9 @@ export class TableExtension extends BaseTableExtension {
     return [new TableRowExtension({ priority: ExtensionPriority.Low })];
   }
 
-  onView(): void {
+  onView(view: EditorView): void {
     // We have multiple node types which share a eom table_row in this
-    // extentison. In order to make the function `tableNodeTypes` from
+    // extension. In order to make the function `tableNodeTypes` from
     // `prosemirror-extension-tables` return the correct node type, we
     // need to overwrite `schema.cached.tableNodeTypes`.
     const schema = this.store.schema;
@@ -115,6 +138,34 @@ export class TableExtension extends BaseTableExtension {
       table: schema.nodes.table,
       header_cell: schema.nodes.tableHeaderCell,
     };
+
+    const {
+      dispatch,
+      state: { doc, tr },
+    } = view;
+
+    const tableNodes = findChildren({
+      node: doc,
+      predicate: ({ node: { type, attrs } }) => {
+        return type === schema.nodes.table && attrs.isControllersInjected === false;
+      },
+    });
+
+    if (tableNodes.length === 0) {
+      return;
+    }
+
+    for (const { node: table, pos } of tableNodes) {
+      const controlledTable = injectControllers({
+        schema,
+        getMap: () => TableMap.get(table),
+        table,
+      });
+
+      replaceNodeAtPosition({ pos, tr, content: controlledTable });
+    }
+
+    dispatch(tr.setMeta('addToHistory', false));
   }
 
   /**
@@ -240,6 +291,7 @@ export class TableRowExtension extends BaseTableRowExtension {
   createExtensions() {
     return [
       new TableCellExtension({ priority: ExtensionPriority.Low }),
+      new TableControllerCellExtension({ priority: ExtensionPriority.Medium }),
       new TableHeaderCellExtension({ priority: ExtensionPriority.Low }),
     ];
   }
@@ -258,10 +310,6 @@ export class TableHeaderCellExtension extends BaseTableHeaderCellExtension {
     spec.allowGapCursor = false;
 
     return spec;
-  }
-
-  createExtensions() {
-    return [new TableControllerCellExtension({ priority: ExtensionPriority.Low })];
   }
 }
 
@@ -284,11 +332,7 @@ export interface ReactTableControllerCellAttrs {
   background: null | string;
 }
 
-export class TableControllerCellExtension extends NodeExtension {
-  get name() {
-    return 'tableControllerCell' as const;
-  }
-
+export class TableControllerCellExtension extends BaseTableControllerCellExtension {
   createNodeSpec(extra: ApplySchemaAttributes): TableSchemaSpec {
     const cellAttrs = {
       ...extra.defaults(),
@@ -305,6 +349,7 @@ export class TableControllerCellExtension extends NodeExtension {
       content: 'block*',
       attrs: cellAttrs,
       tableRole: 'header_cell',
+      parseDOM: [{ tag: 'th[data-controller-cell]' }],
       toDOM() {
         return ['th', { 'data-controller-cell': '' }, 0];
       },

@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import {
@@ -25,9 +26,10 @@ describe('schema', () => {
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(p(mention(attributes.label)))).toMatchInlineSnapshot(`
       <p>
-        <a class="mention mention-testing"
-           data-mention-id="test"
-           data-mention-name="testing"
+        <a
+          class="mention mention-testing"
+          data-mention-id="test"
+          data-mention-name="testing"
         >
           @test
         </a>
@@ -97,7 +99,7 @@ describe('`createSuggesters`', () => {
   const label = `@${id}`;
 
   it('uses default noop callbacks and does nothing', () => {
-    const noop = jest.fn();
+    const noop: any = jest.fn();
     const { add, doc, p, extension } = create(options);
     extension.addHandler('onChange', noop);
 
@@ -109,7 +111,7 @@ describe('`createSuggesters`', () => {
       });
   });
 
-  const change = jest.fn();
+  const change: any = jest.fn();
 
   // The default `onChange` handler. Make sure to include this in future work.
   const onChange: MentionChangeHandler = jest.fn((props, command) => {
@@ -379,7 +381,7 @@ describe('onClick', () => {
   const { add, doc, p, mention, view, extension } = create(options);
 
   it('responds to clicks', () => {
-    const clickHandler = jest.fn(() => true);
+    const clickHandler: any = jest.fn(() => true);
     extension.addHandler('onClick', clickHandler);
     const atMention = mention({ id: '@hello', name: 'at', label: '@hello' })('@hello');
     const node = p('first ', atMention);

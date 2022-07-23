@@ -1,5 +1,289 @@
 # jest-prosemirror
 
+## 2.0.0-beta.10
+
+> 2022-07-19
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update prosemirror packages.
+- Expose the return type of the throttle and debounce helpers
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Update ProseMirror packages.
+- Update ProseMirror packages to latest versions.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.10
+  - @remirror/core-helpers@2.0.0-beta.10
+  - @remirror/core-utils@2.0.0-beta.10
+  - test-keyboard@2.0.0-beta.10
+  - @remirror/core-types@2.0.0-beta.10
+  - @remirror/core-constants@2.0.0-beta.10
+
+## 2.0.0-beta.9
+
+> 2022-07-18
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update ProseMirror packages to latest versions.
+- Update prosemirror packages.
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Update ProseMirror packages.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0-beta.9
+  - @remirror/core-types@2.0.0-beta.9
+  - @remirror/core-utils@2.0.0-beta.9
+  - @remirror/pm@2.0.0-beta.9
+  - @remirror/core-constants@2.0.0-beta.9
+  - test-keyboard@2.0.0-beta.9
+
+## 2.0.0-beta.8
+
+> 2022-07-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update prosemirror packages.
+- Update ProseMirror packages to latest versions.
+- Try to require JSDOM implicitly in node environment.
+- Update ProseMirror packages.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.8
+  - @remirror/core-helpers@2.0.0-beta.8
+  - @remirror/core-types@2.0.0-beta.8
+  - @remirror/core-utils@2.0.0-beta.8
+  - @remirror/core-constants@2.0.0-beta.8
+  - test-keyboard@2.0.0-beta.8
+
+## 2.0.0-beta.7
+
+> 2022-07-11
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Update ProseMirror packages to latest versions.
+- Update prosemirror packages.
+- Update ProseMirror packages.
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.7
+  - @remirror/core-constants@2.0.0-beta.7
+  - @remirror/core-helpers@2.0.0-beta.7
+  - @remirror/core-types@2.0.0-beta.7
+  - @remirror/core-utils@2.0.0-beta.7
+  - test-keyboard@2.0.0-beta.7
+
+## 2.0.0-beta.6
+
+> 2022-07-08
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Update prosemirror packages.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.6
+  - @remirror/core-helpers@2.0.0-beta.6
+  - @remirror/core-utils@2.0.0-beta.6
+  - test-keyboard@2.0.0-beta.6
+  - @remirror/core-constants@2.0.0-beta.6
+  - @remirror/core-types@2.0.0-beta.6
+
+## 2.0.0-beta.5
+
+> 2022-07-01
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Try to require JSDOM implicitly in node environment.
+- Expose the return type of the throttle and debounce helpers
+- Update ProseMirror packages to latest versions.
+- Update prosemirror packages.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-utils@2.0.0-beta.5
+  - @remirror/core-helpers@2.0.0-beta.5
+  - @remirror/pm@2.0.0-beta.5
+  - test-keyboard@2.0.0-beta.5
+  - @remirror/core-constants@2.0.0-beta.5
+  - @remirror/core-types@2.0.0-beta.5
+
+## 2.0.0-beta.4
+
+> 2022-06-29
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update prosemirror packages.
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.4
+  - @remirror/core-helpers@2.0.0-beta.4
+  - @remirror/core-utils@2.0.0-beta.4
+  - test-keyboard@2.0.0-beta.4
+  - @remirror/core-types@2.0.0-beta.4
+  - @remirror/core-constants@2.0.0-beta.4
+
+## 2.0.0-beta.3
+
+> 2022-06-26
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update prosemirror packages.
+- Expose the return type of the throttle and debounce helpers
+- Update ProseMirror packages to latest versions.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.3
+  - @remirror/core-helpers@2.0.0-beta.3
+  - @remirror/core-types@2.0.0-beta.3
+  - @remirror/core-utils@2.0.0-beta.3
+  - @remirror/core-constants@2.0.0-beta.3
+  - test-keyboard@2.0.0-beta.3
+
+## 2.0.0-beta.2
+
+> 2022-06-26
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Update prosemirror packages.
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-constants@2.0.0-beta.2
+  - @remirror/core-helpers@2.0.0-beta.2
+  - @remirror/core-types@2.0.0-beta.2
+  - @remirror/core-utils@2.0.0-beta.2
+  - @remirror/pm@2.0.0-beta.2
+  - test-keyboard@2.0.0-beta.2
+
+## 2.0.0-beta.1
+
+> 2022-06-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Expose the return type of the throttle and debounce helpers
+- Update ProseMirror packages to latest versions.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0-beta.1
+  - @remirror/core-utils@2.0.0-beta.1
+  - @remirror/pm@2.0.0-beta.1
+  - test-keyboard@2.0.0-beta.1
+  - @remirror/core-types@2.0.0-beta.1
+  - @remirror/core-constants@2.0.0-beta.1
+
 ## 2.0.0-beta.0
 
 > 2022-05-31

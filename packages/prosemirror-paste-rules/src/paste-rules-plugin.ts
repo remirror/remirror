@@ -115,7 +115,7 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin {
       },
       handleDOMEvents: {
         // Handle paste for pasting content.
-        paste: (view, clipboardEvent) => {
+        paste: (view, clipboardEvent: Event) => {
           const event = clipboardEvent as ClipboardEvent;
 
           if (!view.props.editable?.(view.state)) {
@@ -155,7 +155,7 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin {
         },
 
         // Handle drop for pasting content.
-        drop: (view, dragEvent) => {
+        drop: (view, dragEvent: Event) => {
           const event = dragEvent as DragEvent;
 
           if (!view.props.editable?.(view.state)) {
@@ -467,7 +467,7 @@ function createPasteRuleHandler<Rule extends RegexPasteRule>(
         const start = match.index;
         const end = start + fullValue.length;
 
-        if (start > 0) {
+        if (start > pos) {
           nodes.push(child.cut(pos, start));
         }
 

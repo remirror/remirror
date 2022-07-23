@@ -1,14 +1,14 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import typescriptPlugin from 'prettier/parser-typescript';
-import { formatWithCursor } from 'prettier/standalone';
-import refractor from 'refractor/core';
-import graphql from 'refractor/lang/graphql';
-import javascript from 'refractor/lang/javascript';
-import markdown from 'refractor/lang/markdown';
-import tsx from 'refractor/lang/tsx';
-import typescript from 'refractor/lang/typescript';
-import yaml from 'refractor/lang/yaml';
+import { default as Prettier } from 'prettier/standalone';
+import refractor from 'refractor/core.js';
+import graphql from 'refractor/lang/graphql.js';
+import javascript from 'refractor/lang/javascript.js';
+import markdown from 'refractor/lang/markdown.js';
+import tsx from 'refractor/lang/tsx.js';
+import typescript from 'refractor/lang/typescript.js';
+import yaml from 'refractor/lang/yaml.js';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -338,7 +338,7 @@ describe('commands', () => {
   describe('formatCodeBlock', () => {
     function formatter({ cursorOffset, language, source }: FormatterProps) {
       if (getLanguage({ fallback: 'text', language }) === 'typescript') {
-        return formatWithCursor(source, {
+        return Prettier.formatWithCursor(source, {
           cursorOffset,
           plugins: [typescriptPlugin],
           parser: 'typescript',

@@ -21,6 +21,9 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../packages/remirror__core/src"
+    },
+    {
       "path": "../../packages/remirror__dev/src"
     },
     {
@@ -30,10 +33,10 @@
       "path": "../../packages/remirror__react-editors/src"
     },
     {
-      "path": "../../packages/create-context-state/src"
+      "path": "../../packages/remirror__styles/src"
     },
     {
-      "path": "../../packages/docusaurus-plugin-examples/src"
+      "path": "../../packages/create-context-state/src"
     },
     {
       "path": "../../packages/remirror/src"

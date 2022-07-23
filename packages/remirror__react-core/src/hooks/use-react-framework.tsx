@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import useLayoutEffect from 'use-isomorphic-layout-effect';
-import usePrevious from 'use-previous';
+import { useEffect, useMemo, useRef } from 'react';
 import { AnyExtension, ErrorConstant, invariant, isArray, isNullOrUndefined } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
 
 import { ReactFramework, ReactFrameworkOptions, ReactFrameworkProps } from '../react-framework';
 import type { ReactFrameworkOutput } from '../react-types';
+import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
+import { usePrevious } from './use-previous';
 
 /**
  * The hook responsible for providing the editor context when the `Remirror`
@@ -23,7 +23,8 @@ export function useReactFramework<Extension extends AnyExtension>(
   props: ReactFrameworkProps<Extension>,
 ): ReactFrameworkOutput<Extension> {
   const { manager, state } = props;
-  const { placeholder, editable, suppressHydrationWarning } = props;
+  const { placeholder, editable } = props;
+
   const firstUpdate = useRef(true);
 
   // Update the placeholder on first render.
@@ -33,6 +34,14 @@ export function useReactFramework<Extension extends AnyExtension>(
 
   // Keep the placeholder updated
   useEffect(() => {
+    // Only update the placeholder if the passed placeholder is not null or
+    // undefined, which is the default value for this prop. By doing that, we
+    // can make sure that if a PlaceholderExtension is provided in the extension
+    // list, we won't override its options.
+    if (placeholder == null) {
+      return;
+    }
+
     manager.getExtension(ReactExtension).setOptions({ placeholder });
   }, [placeholder, manager]);
 
@@ -43,22 +52,15 @@ export function useReactFramework<Extension extends AnyExtension>(
   const initialEditorState = state
     ? state
     : manager.createState({ content: initialContent, selection: initialSelection });
-  const [shouldRenderClient, setShouldRenderClient] = useState<boolean | undefined>(
-    suppressHydrationWarning ? false : undefined,
-  );
 
   // Create the framework which manages the connection between the `@remirror/core`
   // and React.
   const framework: ReactFramework<Extension> = useFramework<Extension>({
     initialEditorState,
-    setShouldRenderClient,
     getProps: () => props,
-    getShouldRenderClient: () => shouldRenderClient,
   });
 
   useEffect(() => {
-    framework.onMount();
-
     return () => {
       framework.destroy();
     };
@@ -104,7 +106,7 @@ function useControlledEditor<Extension extends AnyExtension>(
   const previousValue = usePrevious(state);
 
   // Using layout effect for synchronous updates.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // Check if the update is valid based on current value.
     const validUpdate = state
       ? isControlledRef.current === true

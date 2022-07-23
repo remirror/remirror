@@ -1,5 +1,6 @@
 {
-  "main": "dist/testing-react.cjs.js",
-  "module": "dist/testing-react.esm.js",
-  "types": "dist/testing-react.cjs.d.ts"
+  "type": "module",
+  "main": "./dist/testing-react.js",
+  "module": "./dist/testing-react.js",
+  "types": "./../dist-types/react.d.ts"
 }

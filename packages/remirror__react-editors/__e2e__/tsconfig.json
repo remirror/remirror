@@ -42,6 +42,9 @@
       "path": "../../remirror__react/src"
     },
     {
+      "path": "../../remirror__styles/src"
+    },
+    {
       "path": "../../create-context-state/src"
     },
     {

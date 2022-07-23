@@ -140,7 +140,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
         type: this.type,
         beforeDispatch: ({ tr, start }) => {
           const $pos = tr.doc.resolve(start);
-          tr.setSelection(new TextSelection($pos));
+          tr.setSelection(TextSelection.near($pos));
         },
         getAttributes: (match) => {
           const { defaultType, validTypes } = this.options;
@@ -222,7 +222,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       tr.replace(pos, end, slice);
 
       // Set the selection to within the callout
-      tr.setSelection(TextSelection.create(tr.doc, pos + 1));
+      tr.setSelection(TextSelection.near(tr.doc.resolve(pos + 1)));
       dispatch(tr);
     }
 
@@ -270,7 +270,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
     if (node.type !== this.type && previousNode.type === this.type) {
       const { content, nodeSize } = node;
       tr.delete(pos, pos + nodeSize);
-      tr.setSelection(TextSelection.create(tr.doc, previousPosition - 1));
+      tr.setSelection(TextSelection.near(tr.doc.resolve(previousPosition - 1)));
       tr.insert(previousPosition - 1, content);
 
       if (dispatch) {

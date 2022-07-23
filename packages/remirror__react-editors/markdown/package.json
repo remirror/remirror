@@ -1,8 +1,6 @@
 {
-  "main": "dist/remirror-react-editors-markdown.cjs.js",
-  "module": "dist/remirror-react-editors-markdown.esm.js",
-  "browser": {
-    "./dist/remirror-react-editors-markdown.cjs.js": "./dist/remirror-react-editors-markdown.browser.cjs.js",
-    "./dist/remirror-react-editors-markdown.esm.js": "./dist/remirror-react-editors-markdown.browser.esm.js"
-  }
+  "type": "module",
+  "main": "./dist/remirror-react-editors-markdown.js",
+  "module": "./dist/remirror-react-editors-markdown.js",
+  "types": "./../dist-types/markdown/index.d.ts"
 }

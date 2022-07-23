@@ -1,6 +1,7 @@
 import 'remirror/styles/all.css';
 import './styles.css';
 
+import React from 'react';
 import { cx, htmlToProsemirrorNode } from 'remirror';
 import { StrikeExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';

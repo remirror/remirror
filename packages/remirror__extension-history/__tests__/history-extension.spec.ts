@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import type { EditorState } from '@remirror/core';
 
@@ -49,7 +50,7 @@ describe('commands', () => {
 });
 
 describe('`getState` and `getDispatch`', () => {
-  const dispatcher = jest.fn();
+  const dispatcher: any = jest.fn();
   let state: EditorState;
   const getState: () => EditorState = jest.fn(() => state);
   const mocks = {

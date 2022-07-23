@@ -1,10 +1,9 @@
+import { jest } from '@jest/globals';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { CollaborationExtension, CollaborationOptions } from '../';
+import { CollaborationExtension, CollaborationOptions } from '../src';
 
 extensionValidityTest(CollaborationExtension, { clientID: 'abc' });
-
-jest.useFakeTimers('modern');
 
 function create(options: Partial<CollaborationOptions> = {}) {
   const collabExtension = new CollaborationExtension({
@@ -20,6 +19,10 @@ function create(options: Partial<CollaborationOptions> = {}) {
 }
 
 describe('getSendableSteps', () => {
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
   afterAll(() => {
     jest.useRealTimers();
   });
@@ -72,7 +75,7 @@ describe('getSendableSteps', () => {
   ];
 
   it('should debounce calls to the onSendableReceived handler', () => {
-    const handleSendableReceived = jest.fn();
+    const handleSendableReceived: any = jest.fn();
 
     const {
       nodes: { doc, p },
@@ -102,7 +105,7 @@ describe('getSendableSteps', () => {
   });
 
   it('should allow me to flush the steps on demand', () => {
-    const handleSendableReceived = jest.fn();
+    const handleSendableReceived: any = jest.fn();
 
     const {
       nodes: { doc, p },

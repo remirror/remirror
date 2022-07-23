@@ -1,13 +1,15 @@
-import { unstable_FormHTMLProps, unstable_FormOptions } from 'reakit/Form/Form';
-import { unstable_FormGroupHTMLProps, unstable_FormGroupOptions } from 'reakit/Form/FormGroup';
-import { unstable_FormInputOptions } from 'reakit/Form/FormInput';
-import { unstable_FormLabelHTMLProps, unstable_FormLabelOptions } from 'reakit/Form/FormLabel';
 import {
+  unstable_FormGroupHTMLProps,
+  unstable_FormGroupOptions,
+  unstable_FormHTMLProps,
+  unstable_FormInputOptions,
+  unstable_FormLabelHTMLProps,
+  unstable_FormLabelOptions,
   unstable_FormMessageHTMLProps,
   unstable_FormMessageOptions,
-} from 'reakit/Form/FormMessage';
-import { unstable_FormRemoveButtonOptions } from 'reakit/Form/FormRemoveButton';
-import { unstable_getIn } from 'reakit/Form/utils/getIn';
+  unstable_FormOptions,
+  unstable_FormRemoveButtonOptions,
+} from 'reakit';
 import { cx } from '@remirror/core';
 import { ComponentsTheme } from '@remirror/theme';
 
@@ -28,14 +30,11 @@ export function useFormInputOptions({
   unstable_system: { fill = 'outline', ...system } = {},
   ...options
 }: BootstrapFormInputOptions): BootstrapFormInputOptions {
-  const isInvalid = Boolean(
-    unstable_getIn(options.touched, options.name) && unstable_getIn(options.errors, options.name),
-  );
   return {
     unstable_system: {
       fill,
       ...system,
-      palette: isInvalid ? 'danger' : system.palette,
+      palette: system.palette,
     },
     ...options,
   };
@@ -48,11 +47,10 @@ export function useFormMessageOptions({
   unstable_system: system = {},
   ...options
 }: BootstrapFormMessageOptions): BootstrapFormMessageOptions {
-  const isInvalid = Boolean(unstable_getIn(options.errors, options.name));
   return {
     unstable_system: {
       ...system,
-      palette: isInvalid ? 'danger' : system.palette || 'success',
+      palette: system.palette || 'success',
     },
     ...options,
   };
@@ -80,11 +78,8 @@ export function useFormGroupOptions({
   unstable_system: { fill = 'outline', ...system } = {},
   ...options
 }: BootstrapFormGroupOptions): BootstrapFormGroupOptions {
-  const isInvalid = Boolean(
-    unstable_getIn(options.touched, options.name) && unstable_getIn(options.errors, options.name),
-  );
   return {
-    unstable_system: { fill, ...system, palette: isInvalid ? 'danger' : system.palette },
+    unstable_system: { fill, ...system, palette: system.palette },
     ...options,
   };
 }

@@ -1,10 +1,6 @@
 import { prettyDOM } from '@testing-library/dom';
 import {
   backspace,
-  dispatchAllSelection,
-  dispatchAnchorTextSelection,
-  dispatchCellSelection,
-  dispatchNodeSelection,
   dispatchTextSelection,
   fireEventAtPosition,
   FireProps,
@@ -30,7 +26,6 @@ import {
   isFunction,
   isMarkExtension,
   isNodeExtension,
-  isNumber,
   object,
   pick,
   PrimitiveSelection,
@@ -53,7 +48,7 @@ import type {
   TaggedProsemirrorNode,
   Tags,
 } from './jest-remirror-types';
-import { replaceSelection } from './jest-remirror-utils';
+import { createSelectionFromTaggedDocument, replaceSelection } from './jest-remirror-utils';
 
 const elements = new Set<Element>();
 
@@ -347,28 +342,17 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
 
     this.#tags = tags;
 
-    // Add the text to the dom
+    // Set the document content
     const tr = this.tr.replaceWith(0, this.doc.nodeSize - 2, content);
 
     tr.setMeta('addToHistory', false);
     view.dispatch(tr);
 
-    if (isNumber(cursor)) {
-      dispatchTextSelection({ view, start: cursor });
-    } else if (isNumber(start)) {
-      dispatchTextSelection({
-        view,
-        start,
-        end: isNumber(end) && start <= end ? end : taggedDocument.resolve(start).end(),
-      });
-    } else if (isNumber(head) && isNumber(anchor)) {
-      dispatchAnchorTextSelection({ view, anchor, head });
-    } else if (isNumber(node)) {
-      dispatchNodeSelection({ view, pos: node });
-    } else if (isNumber(all)) {
-      dispatchAllSelection(view);
-    } else if (isNumber(anchor)) {
-      dispatchCellSelection({ view, pos: anchor });
+    // Set the selection
+    const selection = createSelectionFromTaggedDocument(view.state.doc, taggedDocument.tags);
+
+    if (selection) {
+      view.dispatch(view.state.tr.setSelection(selection));
     }
 
     return this;

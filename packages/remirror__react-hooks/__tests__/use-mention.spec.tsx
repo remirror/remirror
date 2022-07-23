@@ -1,5 +1,6 @@
+import { jest } from '@jest/globals';
 import { RemirrorTestChain } from 'jest-remirror';
-import { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { assertGet } from 'remirror';
 import { act, DefaultEditor, strictRender } from 'testing/react';
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
@@ -53,11 +54,12 @@ describe('useMention', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <a role="presentation"
-           href="//test.com/aa"
-           class="mention mention-at"
-           data-mention-id="aa"
-           data-mention-name="at"
+        <a
+          role="presentation"
+          href="//test.com/aa"
+          class="mention mention-at"
+          data-mention-id="aa"
+          data-mention-name="at"
         >
           @aa
         </a>
@@ -94,11 +96,12 @@ describe('useMention', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <a role="presentation"
-           href="//test.com/aa"
-           class="mention mention-at"
-           data-mention-id="aa"
-           data-mention-name="at"
+        <a
+          role="presentation"
+          href="//test.com/aa"
+          class="mention mention-at"
+          data-mention-id="aa"
+          data-mention-name="at"
         >
           @aa
         </a>
@@ -121,11 +124,12 @@ describe('useMention', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         ab Initial content
-        <a role="presentation"
-           href="/a"
-           class="mention mention-at"
-           data-mention-id="a"
-           data-mention-name="at"
+        <a
+          role="presentation"
+          href="/a"
+          class="mention mention-at"
+          data-mention-id="a"
+          data-mention-name="at"
         >
           @a
         </a>
@@ -201,11 +205,12 @@ describe('useMention', () => {
     expect(editor.innerHTML).toMatchInlineSnapshot(`
       <p>
         Initial content
-        <a role="presentation"
-           href="//test.com/aa"
-           class="mention mention-tag"
-           data-mention-id="aa"
-           data-mention-name="tag"
+        <a
+          role="presentation"
+          href="//test.com/aa"
+          class="mention mention-tag"
+          data-mention-id="aa"
+          data-mention-name="tag"
         >
           #AAi
         </a>
@@ -294,7 +299,7 @@ function createEditor() {
     query: string;
   }
 
-  const getItems = jest.fn((parameter?: GetItemsProps) => {
+  const getItems: any = jest.fn((parameter?: GetItemsProps) => {
     if (!parameter) {
       return [];
     }

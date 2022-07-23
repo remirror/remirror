@@ -17,10 +17,16 @@ export default ref;
 
 /**
  * Load codemirror asynchronously for SSR support.
+ *
+ * @deprecated Please pass the CodeMirror instance to the CodeMirrorExtension
+ * manually. Runtime dynamic imports can be different based on your
+ * environment and bundler.
  */
 export async function loadCodeMirror(): Promise<void> {
-  const { default: CodeMirror } = await import('codemirror');
-  ref.CodeMirror = CodeMirror;
+  if (typeof document === 'undefined') {
+    const { default: CodeMirror } = await import('codemirror');
+    ref.CodeMirror = CodeMirror;
 
-  await import('codemirror/mode/meta');
+    await import('codemirror/mode/meta');
+  }
 }

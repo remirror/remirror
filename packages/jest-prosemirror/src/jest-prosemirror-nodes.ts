@@ -45,7 +45,7 @@ interface CreateTextSelectionProps extends TaggedDocProps {
 function createTextSelection({ taggedDoc, start, end }: CreateTextSelectionProps) {
   const $start = taggedDoc.resolve(start);
   const $end = end && start <= end ? taggedDoc.resolve(end) : taggedDoc.resolve($start.end());
-  return new TextSelection($start, $end);
+  return TextSelection.between($start, $end);
 }
 
 const supportedTags = new Set(['cursor', 'node', 'start', 'end', 'anchor', 'all', 'gap']);
@@ -81,7 +81,7 @@ export function initSelection(taggedDoc: ProsemirrorNode): Selection | undefined
   }
 
   if (isNumber(cursor)) {
-    return new TextSelection(taggedDoc.resolve(cursor));
+    return TextSelection.near(taggedDoc.resolve(cursor));
   }
 
   if (isNumber(gap)) {
@@ -90,7 +90,7 @@ export function initSelection(taggedDoc: ProsemirrorNode): Selection | undefined
   }
 
   if (isNumber(anchor) && isNumber(head)) {
-    return TextSelection.create(taggedDoc, anchor, head);
+    return TextSelection.between(taggedDoc.resolve(anchor), taggedDoc.resolve(head));
   }
 
   if (isNumber(start)) {

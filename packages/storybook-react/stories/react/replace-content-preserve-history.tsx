@@ -1,3 +1,4 @@
+import React from 'react';
 import { Remirror, ThemeProvider, useRemirror, useRemirrorContext } from '@remirror/react';
 
 const DOC = {
