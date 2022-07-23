@@ -37,7 +37,6 @@ import {
   removeMark,
   Static,
   updateMark,
-  within,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
 import { undoDepth } from '@remirror/pm/history';
@@ -45,9 +44,22 @@ import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
-import { TOP_50_TLDS } from './link-extension-utils';
+import {
+  addProtocol,
+  DEFAULT_ADJACENT_PUNCTUATIONS,
+  getBalancedIndex,
+  getTrailingCharIndex,
+  getTrailingPunctuationIndex,
+  isBalanced,
+  SENTENCE_PUNCTUATIONS,
+  TOP_50_TLDS,
+} from './link-extension-utils';
 
 const UPDATE_LINK = 'updateLink';
+
+const MIN_LINK_LENGTH = 4;
+
+const NON_WHITESPACE_REGEX = /\S+/gm;
 
 // Based on https://gist.github.com/dperini/729294
 const DEFAULT_AUTO_LINK_REGEX =
@@ -80,6 +92,8 @@ export interface ShortcutHandlerProps extends FromToProps {
   selectedText: string;
   activeLink: ShortcutHandlerActiveLink | undefined;
 }
+
+type FoundLinks = Array<{ text: string; startIndex: number } | undefined>;
 
 type LinkTarget = LiteralUnion<'_blank' | '_self' | '_parent' | '_top', string> | null;
 
@@ -186,6 +200,23 @@ export interface LinkOptions {
   autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
+   * Adjacent punctuations that are excluded from a link
+   *
+   * To extend the default list you could
+   *
+   * ```ts
+   * import { LinkExtension, DEFAULT_ADJACENT_PUNCTUATIONS } from 'remirror/extensions';
+   * const extensions = () => [
+   *   new LinkExtension({ adjacentPunctuations: [...DEFAULT_ADJACENT_PUNCTUATIONS, ')'] })
+   * ];
+   * ```
+   *
+   * @default
+   * [ ',', '.', '!', '?', ':', ';', "'", '"', '(', ')', '[', ']' ]
+   */
+  adjacentPunctuations?: string[];
+
+  /**
    * The default protocol to use when it can't be inferred.
    *
    * @default ''
@@ -238,6 +269,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
+    adjacentPunctuations: DEFAULT_ADJACENT_PUNCTUATIONS,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -290,7 +322,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const href = node.getAttribute('href');
-            const auto = node.hasAttribute(AUTO_ATTRIBUTE);
+            const text = node.textContent;
+
+            // If link text content equals href value we "auto link"
+            // e.g [test](//test.com) - not "auto link"
+            // e.g [test.com](//test.com) - "auto link"
+            const auto =
+              this.options.autoLink &&
+              (node.hasAttribute(AUTO_ATTRIBUTE) ||
+                href === text ||
+                href?.replace(`${this.options.defaultProtocol}//`, '') === text);
+
             return {
               ...extra.parse(node),
               href,
@@ -437,9 +479,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          const href = this.buildHref(url);
-
-          if (!this.isValidTLD(href)) {
+          if (!this.isValidUrl(url)) {
             return false;
           }
 
@@ -516,7 +556,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           if (this.options.selectTextOnClick) {
             const $start = doc.resolve(range.from);
             const $end = doc.resolve(range.to);
-            const transaction = tr.setSelection(new TextSelection($start, $end));
+            const transaction = tr.setSelection(TextSelection.between($start, $end));
 
             view.dispatch(transaction);
           }
@@ -560,28 +600,11 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         const composedTransaction = composeTransactionSteps(transactions, prevState);
 
         const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
-        const { mapping } = composedTransaction;
         const { tr, doc } = state;
 
         const { updateLink, removeLink } = this.store.chain(tr);
 
-        changes.forEach(({ from, to, prevFrom, prevTo }) => {
-          // Remove auto links that are no longer valid
-          this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
-            const newFrom = mapping.map(prevMark.from);
-            const newTo = mapping.map(prevMark.to);
-            const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
-
-            newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
-
-              if (wasLink && !isLink) {
-                removeLink({ from: newMark.from, to: newMark.to }).tr();
-              }
-            });
-          });
-
+        changes.forEach(({ from, to }) => {
           // Store all the callbacks we need to make
           const onUpdateCallbacks: Array<Pick<EventMeta, 'range' | 'attrs'> & { text: string }> =
             [];
@@ -593,38 +616,103 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
-            this.findAutoLinks(nodeText)
-              // calculate link position
-              .map((link) => ({
-                ...link,
-                from: pos + link.start + 1,
-                to: pos + link.end + 1,
-              }))
-              .filter((link) => {
-                // Determine if found link is within the changed range
-                return (
-                  within(link.from, from, to) ||
-                  within(link.to, from, to) ||
-                  within(from, link.from, link.to) ||
-                  within(to, link.from, link.to)
+
+            const foundAutoLinks: FoundAutoLink[] = [];
+
+            // Links are most likely separated by a space
+            // If links are not separated by space we can make other assumptions
+            // like only the last link can have a URL path
+            for (const match of findMatches(nodeText, NON_WHITESPACE_REGEX)) {
+              const matchedText = getMatchString(match);
+
+              // Skip if URL doesn't have minimum length
+              // TODO: Could make this configurable
+              if (matchedText.length < MIN_LINK_LENGTH) {
+                continue;
+              }
+
+              // Unless links are not separated by space this should only return one link
+              this.findLinksInString(matchedText).forEach((link) => {
+                const matchStart = match.index;
+                const matchEnd = matchStart + matchedText.length;
+
+                const linkMarkInRange = this.getLinkMarksInRange(
+                  doc,
+                  pos + matchStart + (link?.startIndex || 0),
+                  pos + matchEnd,
+                  true,
                 );
-              })
-              .filter((link) => {
+                const lastLinkMarkInRange = linkMarkInRange[linkMarkInRange.length - 1];
+
+                const href = (link && this.buildHref(link.text)) || '';
+                const start = pos + matchStart + 1 + (link?.startIndex || 0);
+                const end = start + (link?.text.length || 0);
+
+                // If separating a string by `Enter` key press is detected,
+                // we consider the previous node still in selection range
+                const outsideSelectionRange = (end < to || start > from) && to - from !== 2;
+
+                const notValidAutoLinks = linkMarkInRange.filter(
+                  (link) =>
+                    !this.isValidUrl(link.text) ||
+                    // checking if the new `href` matches existing link href
+                    link.mark.attrs.href !== this.buildHref(link.text) ||
+                    // If not outside selection range existing link should match link
+                    (end === link.to && start + 1 === link.from && link.mark.attrs.href !== href),
+                );
+
+                if (!link) {
+                  // If we have an existing link we can assume the link is not valid and remove ii
+                  lastLinkMarkInRange &&
+                    removeLink({
+                      from: lastLinkMarkInRange.from,
+                      to: lastLinkMarkInRange.to,
+                    }).tr();
+
+                  return;
+                }
+
+                // Remove not valid existing links
+                notValidAutoLinks.forEach(({ from, to }) =>
+                  removeLink({
+                    from,
+                    to,
+                  }).tr(),
+                );
+
+                // Don't update or create a link outside the selection range,
+                // unless the existing link is not a valid "auto link"
+                if (outsideSelectionRange && notValidAutoLinks.length === 0) {
+                  return;
+                }
+
                 // Avoid overwriting manually created links
-                const marks = this.getLinkMarksInRange(tr.doc, link.from, link.to, false);
-                return marks.length === 0;
-              })
-              .forEach(({ from, to, href, text }) => {
-                const attrs = { href, auto: true };
-                const range = { from, to };
-                updateLink(attrs, range).tr();
-                onUpdateCallbacks.push({ attrs, range, text });
+                if (this.getLinkMarksInRange(tr.doc, start + 1, end, false).length > 0) {
+                  return;
+                }
+
+                foundAutoLinks.push({
+                  href,
+                  start,
+                  end,
+                  text: link.text,
+                });
               });
+            }
+
+            foundAutoLinks.forEach(({ href, text, start, end }) => {
+              const attrs = { auto: true, href };
+              const range = { from: start, to: end };
+              updateLink(attrs, range).tr();
+              onUpdateCallbacks.push({ attrs, range, text });
+            });
           });
 
-          onUpdateCallbacks.forEach(({ range, attrs, text }) => {
-            const { doc, selection } = tr;
-            this.options.onUpdateLink(text, { doc, selection, range, attrs });
+          window.requestAnimationFrame(() => {
+            onUpdateCallbacks.forEach(({ attrs, range, text }) => {
+              const { doc, selection } = tr;
+              this.options.onUpdateLink(text, { attrs, doc, range, selection });
+            });
           });
         });
 
@@ -682,31 +770,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return linkMarks;
   }
 
-  private findAutoLinks(str: string): FoundAutoLink[] {
-    const toAutoLink: FoundAutoLink[] = [];
+  private isValidUrl(url: string) {
+    const href = this.buildHref(url);
 
-    for (const match of findMatches(str, this.options.autoLinkRegex)) {
-      const text = getMatchString(match);
-
-      if (!text) {
-        continue;
-      }
-
-      const href = this.buildHref(text);
-
-      if (!this.isValidTLD(href)) {
-        continue;
-      }
-
-      toAutoLink.push({
-        text,
-        href,
-        start: match.index,
-        end: match.index + text.length,
-      });
-    }
-
-    return toAutoLink;
+    return this.isValidTLD(href) && this._autoLinkRegexNonGlobal?.test(url);
   }
 
   private isValidTLD(str: string): boolean {
@@ -726,6 +793,78 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     const tld = last<string>(domain.split('.'));
 
     return autoLinkAllowedTLDs.includes(tld);
+  }
+
+  private findLinksInString(input: string): FoundLinks {
+    const foundLinks: FoundLinks = [];
+    let temp = input;
+
+    // Fuzzy match valid links
+    for (const match of findMatches(input, this.options.autoLinkRegex)) {
+      const matchString = getMatchString(match);
+
+      // Slice adjacent characters
+      const text = input.slice(match.index, this.getURLEndIndex(temp, matchString));
+
+      // Remove previous links from input string
+      temp = temp.slice(temp.indexOf(matchString) + matchString.length);
+
+      // Test if link is valid
+      if (!this.isValidUrl(text)) {
+        continue;
+      }
+
+      foundLinks.push({ text, startIndex: match.index });
+    }
+
+    if (foundLinks.length === 0) {
+      foundLinks.push(undefined);
+    }
+
+    return foundLinks;
+  }
+
+  private getURLEndIndex(input: string, url: string) {
+    const domain = extractDomain(addProtocol(input, this.options.defaultProtocol));
+
+    if (domain.length === 0) {
+      return;
+    }
+
+    const path = input.slice(domain.length + input.indexOf(domain)).slice(1);
+
+    // URL API could better determine a valid path but using extractDomain appears to do the job
+    // Need to make sure that path does not include "."
+    if (!path || path.includes('.')) {
+      // Return index to remove adjacent punctuation
+      return getTrailingCharIndex({
+        adjacentPunctuations: this.options.adjacentPunctuations,
+        input,
+        url,
+      });
+    }
+
+    // A URL with a path or search query is slightly more ambiguous
+    const index = -1;
+    const balancedPathIndex = !isBalanced(path) ? getBalancedIndex(path, index) : 0;
+
+    // Balanced part of path
+    const balanced = path.slice(0, balancedPathIndex);
+    // Imbalanced part of path
+    const imbalanced = path.replace(balanced, '');
+
+    const balanceIndex = ![
+      ...imbalanced.slice((!isBalanced(imbalanced) ? getBalancedIndex(imbalanced, index) : 0) + 1),
+    ].some((char) => ![')', ']', '}'].includes(char) && !SENTENCE_PUNCTUATIONS.includes(char))
+      ? balancedPathIndex
+      : undefined;
+
+    const balancedPath = balanceIndex ? balanced : balanced + imbalanced;
+
+    // Return index to remove trailing characters
+    return SENTENCE_PUNCTUATIONS.includes(balancedPath.slice(-1))
+      ? getTrailingPunctuationIndex(balancedPath, index) + (balanceIndex || 0)
+      : balanceIndex;
   }
 }
 
