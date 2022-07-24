@@ -59,6 +59,8 @@ const UPDATE_LINK = 'updateLink';
 
 const MIN_LINK_LENGTH = 4;
 
+const WHITESPACE_REGEX = /\s/g;
+
 const NON_WHITESPACE_REGEX = /\S+/gm;
 
 // Based on https://gist.github.com/dperini/729294
@@ -69,13 +71,6 @@ const DEFAULT_AUTO_LINK_REGEX =
  * Can be an empty string which sets url's to '//google.com'.
  */
 export type DefaultProtocol = 'http:' | 'https:' | '' | string;
-
-interface FoundAutoLink {
-  href: string;
-  text: string;
-  start: number;
-  end: number;
-}
 
 interface EventMeta {
   selection: Selection;
@@ -621,6 +616,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               }
             });
           });
+
           // Store all the callbacks we need to make
           const onUpdateCallbacks: Array<Pick<EventMeta, 'range' | 'attrs'> & { text: string }> =
             [];
@@ -633,8 +629,6 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
             const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
 
-            const foundAutoLinks: FoundAutoLink[] = [];
-
             // Links are most likely separated by a space
             // If links are not separated by space we can make other assumptions
             // like only the last link can have a URL path
@@ -644,7 +638,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               const positionEnd = positionStart + matchedText.length;
 
               // If separating a string by `Enter` key press is detected,
-              // we consider the previous node still in selection range
+              // we consider the previous node still in the changed range.
               const hasNewNode = to - from === 2;
 
               if (positionStart > from && !hasNewNode) {
@@ -671,24 +665,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                 const start = positionStart + 1 + (link?.startIndex || 0);
                 const end = start + (link?.text.length || 0);
 
-                const outsideSelectionRange = (end < to || start > from) && !hasNewNode;
-
-                const notValidAutoLinks = linkMarkInRange.filter(({ mark, text, from, to }) => {
-                  return (
-                    // Outside edited range and found link is not an update to existing link
-                    !(link && end < from && !link.text.includes(text)) &&
-                    // Existing link is not valid
-                    (!this.isValidUrl(text) ||
-                      // checking if the new `href` matches existing link href
-                      mark.attrs.href !== this.buildHref(text) ||
-                      // If not outside selection range existing link should match link
-                      (end === to && start === from && mark.attrs.href !== href))
-                  );
-                });
+                const attrs = { auto: true, href };
+                const range = { from: start, to: end };
 
                 if (!link) {
-                  // If we have an existing link we can assume the link is not valid and remove ii
+                  // If we have an existing link we can assume the link is not valid and remove It,
                   lastLinkMarkInRange &&
+                    // unless the link text contains a space and we will update or remove it later
+                    !WHITESPACE_REGEX.test(lastLinkMarkInRange.text) &&
                     removeLink({
                       from: lastLinkMarkInRange.from,
                       to: lastLinkMarkInRange.to,
@@ -697,40 +681,35 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                   return;
                 }
 
-                // Remove not valid existing links
-                notValidAutoLinks.forEach(({ from, to }) =>
-                  removeLink({
-                    from,
-                    to,
-                  }).tr(),
-                );
-
-                // Don't update or create a link outside the selection range,
-                // unless the existing link is not a valid "auto link"
-                if (outsideSelectionRange && notValidAutoLinks.length === 0) {
-                  return;
-                }
-
                 // Avoid overwriting manually created links
                 if (this.getLinkMarksInRange(tr.doc, start + 1, end, false).length > 0) {
                   return;
                 }
 
-                foundAutoLinks.push({
-                  href,
-                  start,
-                  end,
-                  text: link.text,
-                });
+                if (
+                  // Don't update or create a link outside the changed range,
+                  (end < to || start > from) &&
+                  // unless link is not in the same node,
+                  !hasNewNode &&
+                  // or the existing link is not a valid "auto link".
+                  !linkMarkInRange.some(({ mark, text, from, to }) => {
+                    return (
+                      // Outside changed range and found link is not an updated existing link.
+                      !(link && end < from && !link.text.includes(text)) &&
+                      // Check if the new `href` matches existing link href
+                      (mark.attrs.href !== this.buildHref(text) ||
+                        // If not outside changed range existing link should match link
+                        (end === to && start === from && mark.attrs.href !== href))
+                    );
+                  })
+                ) {
+                  return;
+                }
+
+                updateLink(attrs, range).tr();
+                onUpdateCallbacks.push({ attrs, range, text: link.text });
               });
             }
-
-            foundAutoLinks.forEach(({ href, text, start, end }) => {
-              const attrs = { auto: true, href };
-              const range = { from: start, to: end };
-              updateLink(attrs, range).tr();
-              onUpdateCallbacks.push({ attrs, range, text });
-            });
           });
 
           window.requestAnimationFrame(() => {
@@ -825,7 +804,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     let temp = input;
 
     // Fuzzy match valid links
-    for (const match of findMatches(input, this.options.autoLinkRegex)) {
+    for (const match of findMatches(temp, this.options.autoLinkRegex)) {
       const matchString = getMatchString(match);
 
       // Slice adjacent characters
