@@ -600,11 +600,27 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         const composedTransaction = composeTransactionSteps(transactions, prevState);
 
         const changes = getChangedRanges(composedTransaction, [ReplaceAroundStep, ReplaceStep]);
+        const { mapping } = composedTransaction;
         const { tr, doc } = state;
 
         const { updateLink, removeLink } = this.store.chain(tr);
 
-        changes.forEach(({ from, to }) => {
+        changes.forEach(({ from, to, prevFrom, prevTo }) => {
+          // Remove auto links that are no longer valid
+          this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
+            const newFrom = mapping.map(prevMark.from);
+            const newTo = mapping.map(prevMark.to);
+            const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
+
+            newMarks.forEach((newMark) => {
+              const wasLink = this.isValidUrl(prevMark.text);
+              const isLink = this.isValidUrl(newMark.text);
+
+              if (wasLink && !isLink) {
+                removeLink({ from: newMark.from, to: newMark.to }).tr();
+              }
+            });
+          });
           // Store all the callbacks we need to make
           const onUpdateCallbacks: Array<Pick<EventMeta, 'range' | 'attrs'> & { text: string }> =
             [];
@@ -624,6 +640,16 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             // like only the last link can have a URL path
             for (const match of findMatches(nodeText, NON_WHITESPACE_REGEX)) {
               const matchedText = getMatchString(match);
+              const positionStart = pos + match.index || 0;
+              const positionEnd = positionStart + matchedText.length;
+
+              // If separating a string by `Enter` key press is detected,
+              // we consider the previous node still in selection range
+              const hasNewNode = to - from === 2;
+
+              if (positionStart > from && !hasNewNode) {
+                continue;
+              }
 
               // Skip if URL doesn't have minimum length
               // TODO: Could make this configurable
@@ -633,33 +659,32 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
               // Unless links are not separated by space this should only return one link
               this.findLinksInString(matchedText).forEach((link) => {
-                const matchStart = match.index;
-                const matchEnd = matchStart + matchedText.length;
-
                 const linkMarkInRange = this.getLinkMarksInRange(
                   doc,
-                  pos + matchStart + (link?.startIndex || 0),
-                  pos + matchEnd,
+                  positionStart + (link?.startIndex || 0),
+                  positionEnd,
                   true,
                 );
                 const lastLinkMarkInRange = linkMarkInRange[linkMarkInRange.length - 1];
 
                 const href = (link && this.buildHref(link.text)) || '';
-                const start = pos + matchStart + 1 + (link?.startIndex || 0);
+                const start = positionStart + 1 + (link?.startIndex || 0);
                 const end = start + (link?.text.length || 0);
 
-                // If separating a string by `Enter` key press is detected,
-                // we consider the previous node still in selection range
-                const outsideSelectionRange = (end < to || start > from) && to - from !== 2;
+                const outsideSelectionRange = (end < to || start > from) && !hasNewNode;
 
-                const notValidAutoLinks = linkMarkInRange.filter(
-                  (link) =>
-                    !this.isValidUrl(link.text) ||
-                    // checking if the new `href` matches existing link href
-                    link.mark.attrs.href !== this.buildHref(link.text) ||
-                    // If not outside selection range existing link should match link
-                    (end === link.to && start + 1 === link.from && link.mark.attrs.href !== href),
-                );
+                const notValidAutoLinks = linkMarkInRange.filter(({ mark, text, from, to }) => {
+                  return (
+                    // Outside edited range and found link is not an update to existing link
+                    !(link && end < from && !link.text.includes(text)) &&
+                    // Existing link is not valid
+                    (!this.isValidUrl(text) ||
+                      // checking if the new `href` matches existing link href
+                      mark.attrs.href !== this.buildHref(text) ||
+                      // If not outside selection range existing link should match link
+                      (end === to && start === from && mark.attrs.href !== href))
+                  );
+                });
 
                 if (!link) {
                   // If we have an existing link we can assume the link is not valid and remove ii

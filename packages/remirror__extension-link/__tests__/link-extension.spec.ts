@@ -1181,20 +1181,28 @@ describe('autolinking', () => {
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p('test"', link({ auto: true, href: '//test.com' })('test.com'), '"remirror.io"test')),
     );
+
+    editor.backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test"test.c"remirror.io"test')));
   });
 
   it('should only update edited link when multiple links are not separated by a space - second link', () => {
-    editor.add(doc(p('test"test.com"', link({ auto: true, href: '//test.co' })('test.co'))));
+    editor.add(doc(p('test"testy.com"', link({ auto: true, href: '//test.co' })('test.co'))));
 
     expect(editor.doc).toEqualRemirrorDocument(
-      doc(p('test"test.com"', link({ auto: true, href: '//test.co' })('test.co'))),
+      doc(p('test"testy.com"', link({ auto: true, href: '//test.co' })('test.co'))),
     );
 
     editor.insertText('m');
 
     expect(editor.doc).toEqualRemirrorDocument(
-      doc(p('test"test.com"', link({ auto: true, href: '//test.com' })('test.com'))),
+      doc(p('test"testy.com"', link({ auto: true, href: '//test.com' })('test.com'))),
     );
+
+    editor.backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test"testy.com"test.c')));
   });
 
   it('allows creating identical links in different parent nodes', () => {
