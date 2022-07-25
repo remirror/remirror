@@ -66,7 +66,8 @@ const DEFAULT_AUTO_LINK_REGEX =
  */
 export type DefaultProtocol = 'http:' | 'https:' | '' | string;
 
-interface FoundAutoLinks extends Array<{ text: string; startIndex: number } | undefined> {}
+interface FoundAutoLinks
+  extends Array<{ text: string; href: string; startIndex: number } | undefined> {}
 
 interface EventMeta {
   selection: Selection;
@@ -623,14 +624,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
             const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
 
+            const positionStart = pos;
+            const positionEnd = positionStart + node.nodeSize;
+
+            // If a string is separated into two nodes by `Enter` key press,
+            // we consider both to be in the changed range.
+            const hasNewNode = to - from === 2;
+
             this.findAutoLinks(nodeText).forEach((link) => {
-              const positionStart = pos;
-              const positionEnd = positionStart + node.nodeSize;
-
-              // If a string is separated into two nodes by `Enter` key press,
-              // we consider both to be in the changed range.
-              const hasNewNode = to - from === 2;
-
               const linkMarkInRange = this.getLinkMarksInRange(
                 doc,
                 positionStart + (link?.startIndex || 0),
@@ -640,7 +641,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
               const lastLinkMarkInRange = linkMarkInRange[linkMarkInRange.length - 1];
 
               const text = link?.text || '';
-              const href = this.buildHref(text);
+              const href = link?.href || '';
               const start = positionStart + 1 + (link?.startIndex || 0);
               const end = start + text.length;
 
@@ -766,16 +767,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
       // Slice adjacent characters and spaces of the link text
       const text = input.slice(match.index, this.getLinkEndIndex(temp, link)).split(' ')[0];
+      const href = this.buildHref(text);
 
       // Remove previous links from input string
       temp = temp.slice(temp.indexOf(link) + link.length);
 
       // Test if link text is a valid URL
-      if (!this.isValidUrl(text)) {
+      if (!this.isValidUrl(text, href)) {
         continue;
       }
 
-      foundLinks.push({ text, startIndex: match.index });
+      foundLinks.push({ text, href, startIndex: match.index });
     }
 
     if (foundLinks.length === 0) {
@@ -804,10 +806,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return autoLinkAllowedTLDs.includes(tld);
   }
 
-  private isValidUrl(url: string) {
-    const href = this.buildHref(url);
-
-    return this.isValidTLD(href) && this._autoLinkRegexNonGlobal?.test(url);
+  private isValidUrl(text: string, href?: string) {
+    return (
+      this.isValidTLD(href || this.buildHref(text)) && this._autoLinkRegexNonGlobal?.test(text)
+    );
   }
 
   private getLinkEndIndex(input: string, url: string) {
