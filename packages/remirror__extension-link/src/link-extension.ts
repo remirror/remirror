@@ -66,8 +66,7 @@ const DEFAULT_AUTO_LINK_REGEX =
  */
 export type DefaultProtocol = 'http:' | 'https:' | '' | string;
 
-interface FoundAutoLinks
-  extends Array<{ text: string; href: string; startIndex: number } | undefined> {}
+interface FoundAutoLinks extends Array<{ text: string; href: string; startIndex: number }> {}
 
 interface EventMeta {
   selection: Selection;
@@ -631,24 +630,22 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             // we consider both to be in the changed range.
             const hasNewNode = to - from === 2;
 
-            this.findAutoLinks(nodeText).forEach((link) => {
+            this.findAutoLinks(nodeText).forEach(({ text, href, startIndex }) => {
               const linkMarkInRange = this.getLinkMarksInRange(
                 doc,
-                positionStart + (link?.startIndex || 0),
+                positionStart + startIndex,
                 positionEnd,
                 true,
               );
               const lastLinkMarkInRange = linkMarkInRange[linkMarkInRange.length - 1];
 
-              const text = link?.text || '';
-              const href = link?.href || '';
-              const start = positionStart + 1 + (link?.startIndex || 0);
+              const start = positionStart + 1 + startIndex;
               const end = start + text.length;
 
               const attrs = { auto: true, href };
               const range = { from: start, to: end };
 
-              if (!link) {
+              if (text.length === 0) {
                 // If we have an existing link we can assume the link is not valid and remove It,
                 lastLinkMarkInRange &&
                   removeLink({
@@ -772,7 +769,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       // Remove previous links from input string
       temp = temp.slice(temp.indexOf(link) + link.length);
 
-      // Test if link text is a valid URL
+      // Test if link is a valid URL
       if (!this.isValidUrl(text, href)) {
         continue;
       }
@@ -780,8 +777,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       foundLinks.push({ text, href, startIndex: match.index });
     }
 
+    // If no valid link was found we potentially need to remove an existing auto link.
     if (foundLinks.length === 0) {
-      foundLinks.push(undefined);
+      foundLinks.push({ text: '', href: '', startIndex: 0 });
     }
 
     return foundLinks;
