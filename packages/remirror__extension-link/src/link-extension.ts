@@ -37,7 +37,6 @@ import {
   removeMark,
   Static,
   updateMark,
-  within,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
 import { undoDepth } from '@remirror/pm/history';
@@ -45,7 +44,16 @@ import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
-import { TOP_50_TLDS } from './link-extension-utils';
+import {
+  addProtocol,
+  DEFAULT_ADJACENT_PUNCTUATIONS,
+  getBalancedIndex,
+  getTrailingCharIndex,
+  getTrailingPunctuationIndex,
+  isBalanced,
+  SENTENCE_PUNCTUATIONS,
+  TOP_50_TLDS,
+} from './link-extension-utils';
 
 const UPDATE_LINK = 'updateLink';
 
@@ -58,12 +66,7 @@ const DEFAULT_AUTO_LINK_REGEX =
  */
 export type DefaultProtocol = 'http:' | 'https:' | '' | string;
 
-interface FoundAutoLink {
-  href: string;
-  text: string;
-  start: number;
-  end: number;
-}
+interface FoundAutoLinks extends Array<{ text: string; startIndex: number } | undefined> {}
 
 interface EventMeta {
   selection: Selection;
@@ -186,6 +189,23 @@ export interface LinkOptions {
   autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
+   * Adjacent punctuations that are excluded from a link
+   *
+   * To extend the default list you could
+   *
+   * ```ts
+   * import { LinkExtension, DEFAULT_ADJACENT_PUNCTUATIONS } from 'remirror/extensions';
+   * const extensions = () => [
+   *   new LinkExtension({ adjacentPunctuations: [...DEFAULT_ADJACENT_PUNCTUATIONS, ')'] })
+   * ];
+   * ```
+   *
+   * @default
+   * [ ',', '.', '!', '?', ':', ';', "'", '"', '(', ')', '[', ']' ]
+   */
+  adjacentPunctuations?: string[];
+
+  /**
    * The default protocol to use when it can't be inferred.
    *
    * @default ''
@@ -238,6 +258,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
+    adjacentPunctuations: DEFAULT_ADJACENT_PUNCTUATIONS,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -290,7 +311,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const href = node.getAttribute('href');
-            const auto = node.hasAttribute(AUTO_ATTRIBUTE);
+            const text = node.textContent;
+
+            // If link text content equals href value we "auto link"
+            // e.g [test](//test.com) - not "auto link"
+            // e.g [test.com](//test.com) - "auto link"
+            const auto =
+              this.options.autoLink &&
+              (node.hasAttribute(AUTO_ATTRIBUTE) ||
+                href === text ||
+                href?.replace(`${this.options.defaultProtocol}//`, '') === text);
+
             return {
               ...extra.parse(node),
               href,
@@ -437,9 +468,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          const href = this.buildHref(url);
-
-          if (!this.isValidTLD(href)) {
+          if (!this.isValidUrl(url)) {
             return false;
           }
 
@@ -516,7 +545,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           if (this.options.selectTextOnClick) {
             const $start = doc.resolve(range.from);
             const $end = doc.resolve(range.to);
-            const transaction = tr.setSelection(new TextSelection($start, $end));
+            const transaction = tr.setSelection(TextSelection.between($start, $end));
 
             view.dispatch(transaction);
           }
@@ -573,8 +602,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
 
             newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
+              const wasLink = this.isValidUrl(prevMark.text);
+              const isLink = this.isValidUrl(newMark.text);
 
               if (wasLink && !isLink) {
                 removeLink({ from: newMark.from, to: newMark.to }).tr();
@@ -593,38 +622,83 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             }
 
             const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
-            this.findAutoLinks(nodeText)
-              // calculate link position
-              .map((link) => ({
-                ...link,
-                from: pos + link.start + 1,
-                to: pos + link.end + 1,
-              }))
-              .filter((link) => {
-                // Determine if found link is within the changed range
-                return (
-                  within(link.from, from, to) ||
-                  within(link.to, from, to) ||
-                  within(from, link.from, link.to) ||
-                  within(to, link.from, link.to)
-                );
-              })
-              .filter((link) => {
-                // Avoid overwriting manually created links
-                const marks = this.getLinkMarksInRange(tr.doc, link.from, link.to, false);
-                return marks.length === 0;
-              })
-              .forEach(({ from, to, href, text }) => {
-                const attrs = { href, auto: true };
-                const range = { from, to };
-                updateLink(attrs, range).tr();
-                onUpdateCallbacks.push({ attrs, range, text });
-              });
+
+            this.findAutoLinks(nodeText).forEach((link) => {
+              const positionStart = pos;
+              const positionEnd = positionStart + node.nodeSize;
+
+              // If a string is separated into two nodes by `Enter` key press,
+              // we consider both to be in the changed range.
+              const hasNewNode = to - from === 2;
+
+              const linkMarkInRange = this.getLinkMarksInRange(
+                doc,
+                positionStart + (link?.startIndex || 0),
+                positionEnd,
+                true,
+              );
+              const lastLinkMarkInRange = linkMarkInRange[linkMarkInRange.length - 1];
+
+              const text = link?.text || '';
+              const href = this.buildHref(text);
+              const start = positionStart + 1 + (link?.startIndex || 0);
+              const end = start + text.length;
+
+              const attrs = { auto: true, href };
+              const range = { from: start, to: end };
+
+              if (!link) {
+                // If we have an existing link we can assume the link is not valid and remove It,
+                lastLinkMarkInRange &&
+                  removeLink({
+                    from: lastLinkMarkInRange.from,
+                    to: lastLinkMarkInRange.to,
+                  }).tr();
+
+                return;
+              }
+
+              // Avoid overwriting manually created links
+              if (this.getLinkMarksInRange(tr.doc, start, end, false).length > 0) {
+                return;
+              }
+
+              if (
+                // Don't update or create a link outside the changed range,
+                (end < to || start > from) &&
+                // unless link is not in the same node,
+                !hasNewNode &&
+                // or the existing link is not a valid "auto link".
+                !linkMarkInRange.some(({ mark, text: markText, from, to }) => {
+                  return (
+                    !(
+                      // Outside changed range and
+                      (
+                        end < from &&
+                        // found auto link is not an updated existing link.
+                        !text.includes(markText)
+                      )
+                    ) &&
+                    // Existing link `href` matches the existing link text or
+                    (mark.attrs.href !== this.buildHref(markText) ||
+                      // the existing link matches found auto link href.
+                      (end === to && start === from && mark.attrs.href !== href))
+                  );
+                })
+              ) {
+                return;
+              }
+
+              updateLink(attrs, range).tr();
+              onUpdateCallbacks.push({ attrs, range, text });
+            });
           });
 
-          onUpdateCallbacks.forEach(({ range, attrs, text }) => {
-            const { doc, selection } = tr;
-            this.options.onUpdateLink(text, { doc, selection, range, attrs });
+          window.requestAnimationFrame(() => {
+            onUpdateCallbacks.forEach(({ attrs, range, text }) => {
+              const { doc, selection } = tr;
+              this.options.onUpdateLink(text, { attrs, doc, range, selection });
+            });
           });
         });
 
@@ -682,31 +756,33 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return linkMarks;
   }
 
-  private findAutoLinks(str: string): FoundAutoLink[] {
-    const toAutoLink: FoundAutoLink[] = [];
+  private findAutoLinks(input: string): FoundAutoLinks {
+    const foundLinks: FoundAutoLinks = [];
+    let temp = input;
 
-    for (const match of findMatches(str, this.options.autoLinkRegex)) {
-      const text = getMatchString(match);
+    // Fuzzy match valid links
+    for (const match of findMatches(temp, this.options.autoLinkRegex)) {
+      const link = getMatchString(match);
 
-      if (!text) {
+      // Slice adjacent characters and spaces of the link text
+      const text = input.slice(match.index, this.getLinkEndIndex(temp, link)).split(' ')[0];
+
+      // Remove previous links from input string
+      temp = temp.slice(temp.indexOf(link) + link.length);
+
+      // Test if link text is a valid URL
+      if (!this.isValidUrl(text)) {
         continue;
       }
 
-      const href = this.buildHref(text);
-
-      if (!this.isValidTLD(href)) {
-        continue;
-      }
-
-      toAutoLink.push({
-        text,
-        href,
-        start: match.index,
-        end: match.index + text.length,
-      });
+      foundLinks.push({ text, startIndex: match.index });
     }
 
-    return toAutoLink;
+    if (foundLinks.length === 0) {
+      foundLinks.push(undefined);
+    }
+
+    return foundLinks;
   }
 
   private isValidTLD(str: string): boolean {
@@ -726,6 +802,55 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     const tld = last<string>(domain.split('.'));
 
     return autoLinkAllowedTLDs.includes(tld);
+  }
+
+  private isValidUrl(url: string) {
+    const href = this.buildHref(url);
+
+    return this.isValidTLD(href) && this._autoLinkRegexNonGlobal?.test(url);
+  }
+
+  private getLinkEndIndex(input: string, url: string) {
+    const domain = extractDomain(addProtocol(input, this.options.defaultProtocol));
+
+    if (domain.length === 0) {
+      return;
+    }
+
+    const path = input.slice(domain.length + input.indexOf(domain)).slice(1);
+
+    // URL API could better determine a valid path but using extractDomain appears to do the job
+    // Need to make sure that path does not include "."
+    if (!path || path.includes('.')) {
+      // Return index to remove adjacent punctuation
+      return getTrailingCharIndex({
+        adjacentPunctuations: this.options.adjacentPunctuations,
+        input,
+        url,
+      });
+    }
+
+    // A URL with a path or search query is slightly more ambiguous
+    const index = -1;
+    const balancedPathIndex = !isBalanced(path) ? getBalancedIndex(path, index) : 0;
+
+    // Balanced part of path
+    const balanced = path.slice(0, balancedPathIndex);
+    // Imbalanced part of path
+    const imbalanced = path.replace(balanced, '');
+
+    const balanceIndex = ![
+      ...imbalanced.slice((!isBalanced(imbalanced) ? getBalancedIndex(imbalanced, index) : 0) + 1),
+    ].some((char) => ![')', ']', '}'].includes(char) && !SENTENCE_PUNCTUATIONS.includes(char))
+      ? balancedPathIndex
+      : undefined;
+
+    const balancedPath = balanceIndex ? balanced : balanced + imbalanced;
+
+    // Return index to remove trailing characters
+    return SENTENCE_PUNCTUATIONS.includes(balancedPath.slice(-1))
+      ? getTrailingPunctuationIndex(balancedPath, index) + (balanceIndex || 0)
+      : balanceIndex;
   }
 }
 
