@@ -1,4 +1,4 @@
-import { ComponentType, FC, useEffect } from 'react';
+import React, { ComponentType, FC, useEffect } from 'react';
 import { cx, isEmptyArray } from '@remirror/core';
 import { ReactComponentMessages as Messages } from '@remirror/messages';
 import { useCommands, useI18n } from '@remirror/react-core';

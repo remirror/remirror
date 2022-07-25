@@ -1,6 +1,7 @@
+import { jest } from '@jest/globals';
 import { act, renderHook } from '@testing-library/react-hooks';
 import { RemirrorTestChain } from 'jest-remirror';
-import { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { BoldExtension } from 'remirror/extensions';
 import { act as renderAct, strictRender } from 'testing/react';
 import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
@@ -34,16 +35,16 @@ describe('useRemirrorContext', () => {
   it('can listen to updates with handler', () => {
     const { chain, wrapper } = createTestChain();
     const { doc, p } = chain.nodes;
-    const mock = jest.fn();
+    const mock: any = jest.fn();
     renderHook(() => useRemirrorContext<BoldExtension>(mock), { wrapper });
     act(() => {
       chain.overwrite(doc(p('Welcome <start>friend<end>')));
     });
-    expect(mock).toHaveBeenCalledTimes(3);
+    expect(mock).toHaveBeenCalledTimes(2);
   });
 
   it('should auto update when in strict mode', () => {
-    const mock = jest.fn();
+    const mock: any = jest.fn();
     const HookComponent: FC = () => {
       useRemirrorContext({ autoUpdate: true });
       mock();
@@ -62,7 +63,7 @@ describe('useRemirrorContext', () => {
       });
     }
 
-    expect(mock).toHaveBeenCalledTimes(16);
+    expect(mock).toHaveBeenCalledTimes(14);
   });
 });
 

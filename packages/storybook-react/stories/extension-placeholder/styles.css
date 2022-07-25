@@ -1,3 +1,10 @@
-.my-placeholder::before {
-  color: red !important;
+.my-placeholder:first-of-type::before {
+  position: absolute;
+  pointer-events: none;
+  height: 0;
+  content: attr(data-placeholder);
+
+  color: lightcoral !important;
+  font-family: sans-serif;
+  font-weight: 900;
 }

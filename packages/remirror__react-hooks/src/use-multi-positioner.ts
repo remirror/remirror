@@ -1,6 +1,4 @@
-import { RefCallback, useMemo, useRef, useState } from 'react';
-import useLayoutEffect from 'use-isomorphic-layout-effect';
-import usePrevious from 'use-previous';
+import { RefCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { omitUndefined } from '@remirror/core';
 import {
   defaultAbsolutePosition,
@@ -11,6 +9,8 @@ import {
   PositionerPosition,
 } from '@remirror/extension-positioner';
 import { useExtension } from '@remirror/react-core';
+
+import { usePrevious } from './use-previous';
 
 export interface UseMultiPositionerReturn extends PositionerPosition {
   /**

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { AnyExtension } from 'remirror';
 import { TableExtension } from '@remirror/extension-react-tables';
 import {
@@ -123,7 +123,7 @@ const Table = ({
   children?: React.ReactElement;
   extensions: () => AnyExtension[];
 }): JSX.Element => {
-  const { manager, state } = useRemirror({ extensions, core: { excludeExtensions: ['history'] } });
+  const { manager, state } = useRemirror({ extensions });
 
   return (
     <ThemeProvider>

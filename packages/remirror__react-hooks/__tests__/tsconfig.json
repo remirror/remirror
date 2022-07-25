@@ -63,6 +63,9 @@
     },
     {
       "path": "../../multishift/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
     }
   ]
 }

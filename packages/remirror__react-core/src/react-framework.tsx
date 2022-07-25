@@ -1,4 +1,3 @@
-import composeRefs from '@seznam/compose-react-refs';
 import { Dispatch, ReactNode, Ref, SetStateAction } from 'react';
 import {
   AnyExtension,
@@ -7,18 +6,15 @@ import {
   FrameworkOptions,
   FrameworkProps,
   invariant,
-  isArray,
   object,
-  shouldUseDomEnvironment,
   STATE_OVERRIDE,
   UpdateStateProps,
 } from '@remirror/core';
 import type { EditorState } from '@remirror/pm/state';
-import type { EditorView } from '@remirror/pm/view';
-import { ReactPlaceholderExtension } from '@remirror/preset-react';
-import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
-import { addKeyToElement } from '@remirror/react-utils';
+import { EditorView } from '@remirror/pm/view';
+import { PlaceholderExtension } from '@remirror/preset-react';
 
+import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
 import type { GetRootPropsConfig, ReactFrameworkOutput, RefKeyRootProps } from './react-types';
 
 export class ReactFramework<Extension extends AnyExtension> extends Framework<
@@ -27,27 +23,9 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
   ReactFrameworkOutput<Extension>
 > {
   /**
-   * Whether to render the client immediately.
-   */
-  #getShouldRenderClient: () => boolean | undefined;
-
-  /**
-   * Update the should render client state input.
-   */
-  #setShouldRenderClient: SetShouldRenderClient;
-
-  /**
    * Stores the Prosemirror EditorView dom element.
    */
   #editorRef?: HTMLElement;
-
-  /**
-   * Used when suppressHydrationWarning is true to determine when it's okay to
-   * render the client content.
-   */
-  private get shouldRenderClient(): boolean | undefined {
-    return this.#getShouldRenderClient();
-  }
 
   /**
    * Keep track of whether the get root props has been called during the most recent render.
@@ -64,11 +42,6 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
   constructor(props: ReactFrameworkOptions<Extension>) {
     super(props);
 
-    const { getShouldRenderClient, setShouldRenderClient } = props;
-
-    this.#getShouldRenderClient = getShouldRenderClient;
-    this.#setShouldRenderClient = setShouldRenderClient;
-
     if (this.manager.view) {
       this.manager.view.setProps({
         state: this.manager.view.state,
@@ -81,7 +54,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
     }
 
     this.manager
-      .getExtension(ReactPlaceholderExtension)
+      .getExtension(PlaceholderExtension)
       .setOptions({ placeholder: this.props.placeholder ?? '' });
   }
 
@@ -91,11 +64,6 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
   update(props: ReactFrameworkOptions<Extension>): this {
     super.update(props);
 
-    const { getShouldRenderClient, setShouldRenderClient } = props;
-
-    this.#getShouldRenderClient = getShouldRenderClient;
-    this.#setShouldRenderClient = setShouldRenderClient;
-
     return this;
   }
 
@@ -103,17 +71,13 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
    * Create the prosemirror editor view.
    */
   protected createView(state: EditorState): EditorView {
-    return createEditorView(
-      null,
-      {
-        state,
-        dispatchTransaction: this.dispatchTransaction,
-        attributes: () => this.getAttributes(),
-        editable: () => this.props.editable ?? true,
-        plugins: [],
-      },
-      this.manager.settings.forceEnvironment,
-    );
+    return new EditorView(null, {
+      state,
+      dispatchTransaction: this.dispatchTransaction,
+      attributes: () => this.getAttributes(),
+      editable: () => this.props.editable ?? true,
+      plugins: [],
+    });
   }
 
   /**
@@ -151,7 +115,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
       [refKey]: composeRefs(ref as Ref<HTMLElement>, this.onRef),
       key: this.uid,
       ...config,
-      children: this.renderChildren(children),
+      children,
     } as any;
   };
 
@@ -276,14 +240,6 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
     this.addFocusListeners();
   }
 
-  onMount(): void {
-    const { suppressHydrationWarning } = this.props;
-
-    if (suppressHydrationWarning) {
-      this.#setShouldRenderClient(true);
-    }
-  }
-
   /**
    * Called for every update of the props and state.
    */
@@ -305,58 +261,8 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
       ...this.baseOutput,
       getRootProps: this.getRootProps,
       portalContainer: this.manager.store.portalContainer,
-      renderSsr: this.renderSsr,
     };
   }
-
-  /**
-   * Checks whether this is an SSR environment and returns a child array with
-   * the SSR component
-   *
-   * @param children
-   *
-   * TODO - this is useless and should be refactored.
-   */
-  private renderChildren(child: ReactNode = null) {
-    const { insertPosition = 'end', suppressHydrationWarning } = this.props;
-    const children = isArray(child) ? child : [child];
-
-    if (
-      shouldUseDomEnvironment(this.manager.settings.forceEnvironment) &&
-      (!suppressHydrationWarning || this.shouldRenderClient)
-    ) {
-      return children;
-    }
-
-    const ssrElement = this.renderSsr();
-
-    return (insertPosition === 'start' ? [ssrElement, ...children] : [...children, ssrElement]).map(
-      addKeyToElement,
-    );
-  }
-
-  /**
-   * Return a JSX Element to be used within the ssr rendering phase.
-   */
-  renderSsr = (): ReactNode => {
-    const { suppressHydrationWarning, editable } = this.props;
-
-    if (
-      shouldUseDomEnvironment(this.manager.settings.forceEnvironment) &&
-      (!suppressHydrationWarning || this.shouldRenderClient)
-    ) {
-      return null;
-    }
-
-    return (
-      <RemirrorSSR
-        attributes={this.getAttributes(true)}
-        state={this.getState()}
-        manager={this.manager}
-        editable={editable ?? true}
-      />
-    );
-  };
 
   /**
    * Reset the called status of `getRootProps`.
@@ -396,31 +302,6 @@ export interface ReactFrameworkProps<Extension extends AnyExtension>
   state?: EditorState | null;
 
   /**
-   * Set to true to ignore the hydration warning for a mismatch between the
-   * rendered server and client content.
-   *
-   * @remarks
-   *
-   * This is a potential solution for those who require server side rendering.
-   *
-   * While on the server the prosemirror document is transformed into a react
-   * component so that it can be rendered. The moment it enters the DOM
-   * environment prosemirror takes over control of the root element. The problem
-   * is that this will always see this hydration warning on the client:
-   *
-   * `Warning: Did not expect server HTML to contain a <div> in <div>.`
-   *
-   * Setting this to true removes the warning at the cost of a slightly slower
-   * start up time. It uses the two pass solution mentioned in the react docs.
-   * See {@link https://reactjs.org/docs/react-dom.html#hydrate}.
-   *
-   * For ease of use this prop copies the name used by react for DOM Elements.
-   * See {@link
-   * https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning.
-   */
-  suppressHydrationWarning?: boolean;
-
-  /**
    * Determine whether the Prosemirror view is inserted at the `start` or `end`
    * of it's container DOM element.
    *
@@ -438,9 +319,6 @@ export interface ReactFrameworkProps<Extension extends AnyExtension>
  * The options that are passed into the [[`ReactFramework`]] constructor.
  */
 export interface ReactFrameworkOptions<Extension extends AnyExtension>
-  extends FrameworkOptions<Extension, ReactFrameworkProps<Extension>> {
-  getShouldRenderClient: () => boolean | undefined;
-  setShouldRenderClient: SetShouldRenderClient;
-}
+  extends FrameworkOptions<Extension, ReactFrameworkProps<Extension>> {}
 
 export type SetShouldRenderClient = Dispatch<SetStateAction<boolean | undefined>>;

@@ -446,7 +446,7 @@ describe('Indent', () => {
     editor.add(from);
     editor.press('Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
-    expect(editor.view.state.selection.content().content.toString()).toEqual(
+    expect(editor.view.state.selection.content().content.toString()).toBe(
       `<bulletList(listItem(bulletList(listItem(paragraph("123")))))>`,
     );
   });
@@ -473,7 +473,7 @@ describe('Indent', () => {
     editor.add(from);
     editor.press('Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
-    expect(editor.view.state.selection.content().content.toString()).toEqual(
+    expect(editor.view.state.selection.content().content.toString()).toBe(
       `<taskList(taskListItem(taskList(taskListItem(paragraph("123")))))>`,
     );
   });
@@ -504,7 +504,7 @@ describe('Indent', () => {
     editor.add(from);
     editor.press('Tab');
     expect(editor.view.state.doc).toEqualProsemirrorNode(to);
-    expect(editor.view.state.selection.content().content.toString()).toEqual(
+    expect(editor.view.state.selection.content().content.toString()).toBe(
       `<taskList(taskListItem(bulletList(listItem(paragraph("123")))))>`,
     );
   });

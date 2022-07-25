@@ -27,13 +27,14 @@ describe('schema', () => {
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(doc(p(iframe())))).toMatchInlineSnapshot(`
       <p>
-        <iframe width="234"
-                height="123"
-                class="remirror-iframe remirror-iframe-custom"
-                src="https://awesome.com"
-                data-embed-type="custom"
-                allowfullscreen="true"
-                frameborder="0"
+        <iframe
+          width="234"
+          height="123"
+          class="remirror-iframe remirror-iframe-custom"
+          src="https://awesome.com"
+          data-embed-type="custom"
+          allowfullscreen="true"
+          frameborder="0"
         >
         </iframe>
       </p>

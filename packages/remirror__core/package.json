@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.10",
   "description": "Where your quest to create a world class editing experience begins.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core",
   "repository": {
@@ -13,46 +13,41 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-core.esm.js",
-      "require": "./dist/remirror-core.cjs.js",
-      "browser": "./dist/remirror-core.browser.esm.js",
-      "types": "./dist/remirror-core.cjs.d.ts",
-      "default": "./dist/remirror-core.esm.js"
+      "import": "./dist/remirror-core.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-core.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/remirror-core.cjs.js",
-  "module": "dist/remirror-core.esm.js",
-  "browser": {
-    "./dist/remirror-core.cjs.js": "./dist/remirror-core.browser.cjs.js",
-    "./dist/remirror-core.esm.js": "./dist/remirror-core.browser.esm.js"
-  },
-  "types": "./dist/remirror-core.cjs.d.ts",
+  "main": "./dist/remirror-core.js",
+  "module": "./dist/remirror-core.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "style",
-    "dist"
+    "dist",
+    "dist-types",
+    "style"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@linaria/core": "3.0.0-beta.13",
-    "@remirror/core-constants": "^2.0.0-beta.0",
-    "@remirror/core-helpers": "^2.0.0-beta.0",
-    "@remirror/core-types": "^2.0.0-beta.0",
-    "@remirror/core-utils": "^2.0.0-beta.0",
-    "@remirror/i18n": "^2.0.0-beta.0",
-    "@remirror/icons": "^2.0.0-beta.0",
-    "@remirror/messages": "^2.0.0-beta.0",
-    "nanoevents": "^5.1.13",
+    "@remirror/core-constants": "^2.0.0-beta.10",
+    "@remirror/core-helpers": "^2.0.0-beta.10",
+    "@remirror/core-types": "^2.0.0-beta.10",
+    "@remirror/core-utils": "^2.0.0-beta.10",
+    "@remirror/i18n": "^2.0.0-beta.10",
+    "@remirror/icons": "^2.0.0-beta.10",
+    "@remirror/messages": "^2.0.0-beta.10",
+    "nanoevents": "^7.0.1",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0"
+    "@remirror/pm": "^2.0.0-beta.10"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.0"
+    "@remirror/pm": "^2.0.0-beta.10"
   },
   "publishConfig": {
     "access": "public"
@@ -68,6 +63,5 @@
         }
       }
     }
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

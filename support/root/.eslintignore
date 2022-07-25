@@ -22,6 +22,7 @@ lerna.json
 docs/api/**
 
 **/temp/**
+dist-tmp
 
 pnpm-lock.yaml
 .pnpm-store/
@@ -35,3 +36,4 @@ website/build
 docs/api/
 docs/examples/
 website/extension-examples/
+*.api.md

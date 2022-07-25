@@ -1,3 +1,4 @@
+import React from 'react';
 import { strictRender } from 'testing/react';
 
 import { createLinkHandler } from '../';
@@ -26,8 +27,9 @@ describe('createLinkHandler', () => {
     const { container } = strictRender(<Link {...LINK} />);
 
     expect(container.innerHTML).toMatchInlineSnapshot(`
-      <a href="https://www.example.com"
-         target="_blank"
+      <a
+        href="https://www.example.com"
+        target="_blank"
       >
         example.com
       </a>

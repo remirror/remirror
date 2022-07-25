@@ -12,7 +12,7 @@ jobs:
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '/publish' && (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'COLLABORATOR') }}
     steps:
       - name: get pr information
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         id: pr
         with:
           script: |
@@ -34,21 +34,19 @@ jobs:
             }
 
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ fromJSON(steps.pr.outputs.result).head.ref }}
           fetch-depth: 0
 
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
 

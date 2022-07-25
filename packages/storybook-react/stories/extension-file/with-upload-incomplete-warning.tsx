@@ -1,7 +1,7 @@
 import 'remirror/styles/extension-file.css';
 
 import { css } from '@emotion/css';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { DropCursorExtension } from 'remirror/extensions';
 import { hasUploadingFile } from '@remirror/core';
 import { createSlowFileUploader, FileExtension } from '@remirror/extension-file';

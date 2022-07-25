@@ -3,31 +3,41 @@ hide_title: true
 title: 'GapCursorExtension'
 ---
 
+import Basic from '../../website/extension-examples/extension-gap-cursor/basic';
+
 # `GapCursorExtension`
 
 ## Summary
 
-This will capture clicks near and arrow-key-motion past places that don't have a normally selectable position nearby, and create a gap cursor selection for them. The cursor is drawn as an element with class `ProseMirror-gapcursor`.
+This will capture clicks near and arrow-key-motion past places that don't have a normally selectable position nearby, and create a gap cursor selection for them.
 
-Make sure to import the styles:
+For example, the user normally couldn't move the cursor after a horizontal line, if this is the last node in the document. The gap cursor gives the user the impression that the cursor could be behind the horizontal line, and lets the user type further.
 
-```ts
-import '@remirror/styles/extension-gap-cursor.css';
+## Styling
+
+The cursor is drawn as an element with class `ProseMirror-gapcursor`. The color (and other attributes) can be styled with CSS:
+
+```css
+.remirror-editor.ProseMirror .ProseMirror-gapcursor:after {
+  border-top-color: red;
+}
 ```
 
 ## Usage
 
 ### Installation
 
-This extension is installed for you when you install the main `remirror` package.
+It is not necessary to install the `GapCursorExtension` explicitely because it comes as part of the `CorePreset`, i.e. every editor has automatically this extension.
 
-You can use the imports in the following way:
+Make sure to import the styles, which make the gap cursor visible:
 
 ```ts
-import { GapCursorExtension } from 'remirror/extensions';
+import '@remirror/styles/extension-gap-cursor.css';
 ```
 
-The extension is provided by the `@remirror/extension-gap-cursor` package.
+### Examples
+
+<Basic />
 
 ## API
 

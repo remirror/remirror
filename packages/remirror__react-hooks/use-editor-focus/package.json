@@ -1,9 +1,6 @@
 {
-  "main": "dist/remirror-react-hooks-use-editor-focus.cjs.js",
-  "module": "dist/remirror-react-hooks-use-editor-focus.esm.js",
-  "browser": {
-    "./dist/remirror-react-hooks-use-editor-focus.cjs.js": "./dist/remirror-react-hooks-use-editor-focus.browser.cjs.js",
-    "./dist/remirror-react-hooks-use-editor-focus.esm.js": "./dist/remirror-react-hooks-use-editor-focus.browser.esm.js"
-  },
-  "types": "dist/remirror-react-hooks-use-editor-focus.cjs.d.ts"
+  "type": "module",
+  "main": "./dist/remirror-react-hooks-use-editor-focus.js",
+  "module": "./dist/remirror-react-hooks-use-editor-focus.js",
+  "types": "./../dist-types/use-editor-focus.d.ts"
 }

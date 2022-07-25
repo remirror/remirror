@@ -1,10 +1,11 @@
+import { jest } from '@jest/globals';
 import { axe } from 'jest-axe';
-import { forwardRef, FunctionComponent, RefAttributes } from 'react';
+import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 import { RenderResult, strictRender } from 'testing/react';
 
 import { createReactManager, Remirror, useRemirrorContext } from '../';
 
-const mock = jest.fn();
+const mock: any = jest.fn();
 
 test('supports a custom root element', () => {
   const Component: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((_, ref) => {

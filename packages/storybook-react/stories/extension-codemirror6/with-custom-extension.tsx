@@ -1,4 +1,5 @@
 import { EditorView as CodeMirrorEditorView } from '@codemirror/view';
+import React from 'react';
 import { CodeMirrorExtension } from '@remirror/extension-codemirror6';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 

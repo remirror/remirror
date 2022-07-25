@@ -1,2 +1,2 @@
 export { CodeMirrorExtension } from './codemirror-extension';
-export type { CodeMirrorExtensionOptions } from './codemirror-types';
+export type { CodeMirrorExtensionAttributes, CodeMirrorExtensionOptions } from './codemirror-types';

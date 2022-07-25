@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react';
+import React, { FC, Fragment } from 'react';
 import { isString, ObjectMark, RemirrorJSON } from '@remirror/core';
 
 import { MarkMap } from '../types';

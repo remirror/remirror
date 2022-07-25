@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, strictRender } from 'testing/react';
 
 import { useMultishift } from '../';

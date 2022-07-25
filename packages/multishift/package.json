@@ -1,6 +1,6 @@
 {
   "name": "multishift",
-  "version": "1.0.9-beta.0",
+  "version": "2.0.0-beta.10",
   "description": "A repurposed downshift for internal use within remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/multishift",
   "repository": {
@@ -12,34 +12,29 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
+  "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/multishift.esm.js",
-      "require": "./dist/multishift.cjs.js",
-      "browser": "./dist/multishift.browser.esm.js",
-      "types": "./dist/multishift.cjs.d.ts",
-      "default": "./dist/multishift.esm.js"
+      "import": "./dist/multishift.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/multishift.js"
     },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
+    "./package.json": "./package.json"
   },
-  "main": "dist/multishift.cjs.js",
-  "module": "dist/multishift.esm.js",
-  "browser": {
-    "./dist/multishift.cjs.js": "./dist/multishift.browser.cjs.js",
-    "./dist/multishift.esm.js": "./dist/multishift.browser.esm.js"
-  },
-  "types": "./dist/multishift.cjs.d.ts",
+  "main": "./dist/multishift.js",
+  "module": "./dist/multishift.js",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@reach/auto-id": "^0.16.0",
-    "@remirror/core-helpers": "^2.0.0-beta.0",
-    "@remirror/core-types": "^2.0.0-beta.0",
+    "@remirror/core-helpers": "^2.0.0-beta.10",
+    "@remirror/core-types": "^2.0.0-beta.10",
     "@seznam/compose-react-refs": "^1.0.6",
-    "a11y-status": "^1.0.0",
+    "a11y-status": "^2.0.0-beta.9",
     "compute-scroll-into-view": "^1.0.17",
     "react-use": "^17.3.2",
     "tiny-warning": "^1.0.3",
@@ -64,6 +59,5 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

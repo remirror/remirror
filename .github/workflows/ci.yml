@@ -22,20 +22,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
 
@@ -59,29 +57,24 @@ jobs:
       - name: check repo and versions
         run: pnpm lint:repo
 
-      - name: check exports
-        run: pnpm lint:exports
-
   # Typecheck the project
   typecheck:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
 
@@ -93,26 +86,24 @@ jobs:
       - name: typecheck project
         run: pnpm typecheck
 
-  # Unit test and update coverage report
+  # Unit test
   unit_test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
 
@@ -124,14 +115,14 @@ jobs:
       - name: run unit tests
         run: pnpm test
 
-      - name: publish code coverage report
-        uses: paambaati/codeclimate-action@v2.7.5
-        if: github.ref == 'refs/heads/main'
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: 'echo Coverage'
-          debug: false
+      # - name: publish code coverage report
+      #   uses: paambaati/codeclimate-action@v2.7.5
+      #   if: github.ref == 'refs/heads/main'
+      #   env:
+      #     CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      #   with:
+      #     coverageCommand: 'echo Coverage'
+      #     debug: false
 
   # Build the project and run tests on built files.
   build_test:
@@ -139,25 +130,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [14.x, 16.x, 18.x]
       fail-fast: false
 
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -178,20 +167,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: setup caching
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.PNPM_CACHE_FOLDER }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 14
 

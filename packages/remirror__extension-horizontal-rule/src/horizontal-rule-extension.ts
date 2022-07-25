@@ -142,7 +142,7 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
     tr.insert(pos, node);
 
     // Set the new selection to be inside the inserted node.
-    tr.setSelection(TextSelection.create(tr.doc, pos + 1));
+    tr.setSelection(TextSelection.near(tr.doc.resolve(pos + 1)));
   }
 }
 

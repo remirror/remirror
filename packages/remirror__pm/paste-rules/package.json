@@ -1,10 +1,6 @@
 {
-  "main": "dist/remirror-pm-paste-rules.cjs.js",
-  "module": "dist/remirror-pm-paste-rules.esm.js",
-  "browser": {
-    "./dist/remirror-pm-paste-rules.cjs.js": "./dist/remirror-pm-paste-rules.browser.cjs.js",
-    "./dist/remirror-pm-paste-rules.esm.js": "./dist/remirror-pm-paste-rules.browser.esm.js"
-  },
-  "types": "dist/remirror-pm-paste-rules.cjs.d.ts",
-  "rn:dev": "../src/paste-rules.ts"
+  "type": "module",
+  "main": "./dist/remirror-pm-paste-rules.js",
+  "module": "./dist/remirror-pm-paste-rules.js",
+  "types": "./../dist-types/paste-rules.d.ts"
 }

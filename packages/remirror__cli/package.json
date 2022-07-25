@@ -1,7 +1,8 @@
 {
   "name": "@remirror/cli",
-  "version": "2.0.0-beta.0",
-  "description": "The remirror cli",
+  "version": "1.0.0-beta.9",
+  "private": true,
+  "description": "CLI for internal development in the remirror monorepo",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__cli",
   "repository": {
     "type": "git",
@@ -10,101 +11,36 @@
   },
   "license": "MIT",
   "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>"
+    "Ocavue <ocavue@gmail.com>"
   ],
-  "sideEffects": true,
-  "exports": {
-    ".": {
-      "require": "./dist/remirror-cli.cjs.js",
-      "types": "./dist/remirror-cli.cjs.d.ts",
-      "default": "./dist/remirror-cli.cjs.js"
-    },
-    "./cli": {
-      "require": "./cli/dist/remirror-cli-cli.cjs.js",
-      "default": "./cli/dist/remirror-cli-cli.cjs.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
-  "main": "dist/remirror-cli.cjs.js",
-  "types": "./dist/remirror-cli.cjs.d.ts",
   "bin": {
-    "remirror": "bin.js"
+    "remirror-cli": "bin.ts"
   },
-  "files": [
-    "cli",
-    "bin",
-    "dist"
-  ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
-    "@remirror/core-helpers": "^2.0.0-beta.0",
-    "@rollup/plugin-babel": "^5.3.0",
-    "@rollup/plugin-commonjs": "^21.0.0",
-    "@rollup/plugin-json": "^4",
-    "@rollup/plugin-node-resolve": "^13.0.2",
-    "@rollup/plugin-replace": "^3.0.0",
-    "@types/fs-extra": "^9.0.12",
-    "@types/ms": "^0.7.31",
-    "@types/update-notifier": "^5.0.1",
-    "@types/yup": "^0.29.13",
-    "chalk": "^4.1.0",
-    "cli-spinners": "^2.6.0",
-    "clipanion": "^3.0.0",
-    "cpy": "^8.1.1",
-    "dargs": "^8.1.0",
-    "execa": "^5.1.1",
-    "figures": "^3.2.0",
-    "fs-extra": "^10.0.0",
-    "globby": "^11.0.4",
-    "ink": "^3.0.8",
-    "ink-link": "^2.0.0",
-    "ink-multi-select": "^2.0.0",
-    "ink-spinner": "^4.0.0",
-    "jsesc": "^3.0.1",
-    "json.macro": "^1.3.0",
-    "ms": "^2.1.3",
-    "react": "^18.0.0",
-    "react-use": "^17.3.2",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.53.2",
-    "rollup-plugin-terser": "^7.0.2",
-    "terminal-link": "^2.1.1",
-    "typanion": "^3.3.2",
-    "update-notifier": "^5.1.0"
+    "@manypkg/get-packages": "^1.1.3",
+    "chokidar": "^3.5.3",
+    "commander": "^9.3.0",
+    "esbuild": "^0.14.43",
+    "esbuild-node-externals": "^1.4.1",
+    "fast-deep-equal": "^3.1.3",
+    "fast-glob": "^3.2.11",
+    "sort-keys": "^4.2.0",
+    "tsx": "^3.4.2",
+    "write-pkg": "^5.1.0"
   },
   "devDependencies": {
-    "@remirror/core-types": "^2.0.0-beta.0",
-    "@testing-library/react-hooks": "^8.0.0",
-    "@types/ink-spinner": "^3.0.1",
-    "@types/ink-testing-library": "^1.0.1",
-    "@types/jsesc": "^3.0.1",
     "@types/node": "^16.3.3",
-    "@types/react": "^18.0.6",
-    "@types/rimraf": "^3.0.1",
-    "ink-testing-library": "^2.1.0"
-  },
-  "engines": {
-    "node": ">=14"
-  },
-  "preferGlobal": true,
-  "publishConfig": {
-    "access": "public"
+    "@types/prettier": "^2.3.2"
   },
   "@remirror": {
     "tsconfigs": {
       "src": {
         "compilerOptions": {
-          "allowJs": true
+          "types": [
+            "node"
+          ]
         }
       }
     }
-  },
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts",
-      "cli.ts"
-    ]
-  },
-  "rn:dev": "src/index.ts"
+  }
 }

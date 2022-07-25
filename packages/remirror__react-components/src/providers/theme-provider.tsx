@@ -3,8 +3,14 @@
  *
  * The `ThemeProvider` to wrap your editor with when using these components.
  */
-
-import { createContext, ElementType, ReactElement, ReactNode, useContext, useMemo } from 'react';
+import React, {
+  createContext,
+  ElementType,
+  ReactElement,
+  ReactNode,
+  useContext,
+  useMemo,
+} from 'react';
 import { Provider as ReakitProvider } from 'reakit';
 import { cx, deepMerge } from '@remirror/core';
 import { createThemeVariables, CSSProperties, RemirrorThemeType, THEME } from '@remirror/theme';

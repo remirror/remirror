@@ -1,5 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import type { AnyFunction, CommandFunction, Static, Transaction } from '@remirror/core-types';
+import { environment } from '@remirror/core-utils';
 
 import { AnyExtension, extension, PlainExtension } from '../extension';
 import type { CreateExtensionPlugin } from '../types';
@@ -26,7 +27,7 @@ export interface MetaOptions {
  */
 @extension<MetaOptions>({
   defaultOptions: {
-    capture: process.env.NODE_ENV === 'development',
+    capture: environment.isDevelopment,
   },
   staticKeys: ['capture'],
   defaultPriority: ExtensionPriority.Highest,

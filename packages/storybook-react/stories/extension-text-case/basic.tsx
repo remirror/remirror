@@ -1,5 +1,6 @@
 import 'remirror/styles/all.css';
 
+import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { TextCaseExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';

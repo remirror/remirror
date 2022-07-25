@@ -56,12 +56,12 @@ export function getTableStyle(attrs: ControllerStateValues): string {
     `;
   } else if (attrs.preselectTable) {
     classNames = css`
-      & table.${ExtensionTablesTheme.TABLE} tbody tr {
+      &.${ExtensionTablesTheme.TABLE_PRESELECT_ALL} table.${ExtensionTablesTheme.TABLE} tbody tr {
         td,
         th {
           ${preselectClass};
         }
-        th.${ExtensionTablesTheme.TABLE_CONTROLLER}.${ExtensionTablesTheme.TABLE_CONTROLLER} {
+        th.${ExtensionTablesTheme.TABLE_CONTROLLER} {
           ${preselectControllerClass}
         }
       }
@@ -94,11 +94,15 @@ export function createTableControllerPlugin(): ProsemirrorPlugin<ControllerState
           return null;
         }
 
-        const { tableNodeResult, predelete } = controllerState.values;
+        const { tableNodeResult, predelete, preselectTable } = controllerState.values;
 
         if (tableNodeResult) {
           const styleClassName = getTableStyle(controllerState.values);
           let className = `${ExtensionTablesTheme.TABLE_SHOW_CONTROLLERS} ${styleClassName}`;
+
+          if (preselectTable) {
+            className += ` ${ExtensionTablesTheme.TABLE_PRESELECT_ALL}`;
+          }
 
           if (predelete) {
             className += ` ${ExtensionTablesTheme.TABLE_SHOW_PREDELETE}`;
@@ -162,4 +166,13 @@ class ControllerState {
 
 export function setControllerPluginMeta(tr: Transaction, props: ControllerStateProps): Transaction {
   return tr.setMeta(key, props);
+}
+
+export function resetControllerPluginMeta(tr: Transaction): Transaction {
+  return setControllerPluginMeta(tr, {
+    preselectRow: -1,
+    preselectColumn: -1,
+    preselectTable: false,
+    predelete: false,
+  });
 }

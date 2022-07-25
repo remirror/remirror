@@ -1,7 +1,11 @@
 import React from 'react';
 
 import { TableCellMenu, TableCellMenuProps } from './table-cell-menu';
-import { TableDeleteRowColumnButton, TableDeleteRowColumnButtonProps } from './table-delete-button';
+import {
+  TableDeleteRowColumnButton,
+  TableDeleteRowColumnButtonProps,
+} from './table-delete-row-column-button';
+import { TableDeleteButton, TableDeleteButtonProps } from './table-delete-table-button';
 
 export interface TableComponentsProps {
   /**
@@ -27,21 +31,35 @@ export interface TableComponentsProps {
    * The props that will passed to `TableDeleteRowColumnButton`
    */
   tableDeleteRowColumnButtonProps?: TableDeleteRowColumnButtonProps;
+
+  /**
+   * Whether to use `TableDeleteButton`.
+   *
+   * @default true
+   */
+  enableTableDeleteButton?: boolean;
+
+  /**
+   * The props that will passed to `TableDeleteButton`
+   */
+  tableDeleteButtonProps?: TableDeleteButtonProps;
 }
 
-const defaultTableComponentsProps: TableComponentsProps = {
-  enableTableCellMenu: true,
-  enableTableDeleteRowColumnButton: true,
-};
-
-export const TableComponents: React.FC<TableComponentsProps> = (props) => {
-  props = { ...defaultTableComponentsProps, ...props };
+export const TableComponents: React.FC<TableComponentsProps> = ({
+  enableTableCellMenu = true,
+  enableTableDeleteRowColumnButton = true,
+  enableTableDeleteButton = true,
+  tableCellMenuProps,
+  tableDeleteRowColumnButtonProps,
+  tableDeleteButtonProps,
+}) => {
   return (
     <>
-      {props.enableTableCellMenu ? <TableCellMenu {...props.tableCellMenuProps} /> : null}
-      {props.enableTableDeleteRowColumnButton ? (
-        <TableDeleteRowColumnButton {...props.tableDeleteRowColumnButtonProps} />
-      ) : null}
+      {enableTableCellMenu && <TableCellMenu {...tableCellMenuProps} />}
+      {enableTableDeleteRowColumnButton && (
+        <TableDeleteRowColumnButton {...tableDeleteRowColumnButtonProps} />
+      )}
+      {enableTableDeleteButton && <TableDeleteButton {...tableDeleteButtonProps} />}
     </>
   );
 };

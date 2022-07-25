@@ -80,7 +80,7 @@ export interface ReactFrameworkOutput<Extension extends AnyExtension>
    * import { BoldExtension } from '@remirror/extension-bold';
    *
    * const InnerEditor = () => {
-   *   const { getRootProps, renderSsr } = useRemirror();
+   *   const { getRootProps } = useRemirror();
    *   return <div {...getRootProps()} />;
    * }
    *
@@ -112,11 +112,6 @@ export interface ReactFrameworkOutput<Extension extends AnyExtension>
    * @internal
    */
   portalContainer: PortalContainer;
-
-  /**
-   * Render an ssr component.
-   */
-  renderSsr: () => ReactNode;
 }
 
 /**

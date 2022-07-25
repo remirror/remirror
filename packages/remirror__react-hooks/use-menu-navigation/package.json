@@ -1,8 +1,6 @@
 {
-  "main": "dist/remirror-react-hooks-use-menu-navigation.cjs.js",
-  "module": "dist/remirror-react-hooks-use-menu-navigation.esm.js",
-  "browser": {
-    "./dist/remirror-react-hooks-use-menu-navigation.cjs.js": "./dist/remirror-react-hooks-use-menu-navigation.browser.cjs.js",
-    "./dist/remirror-react-hooks-use-menu-navigation.esm.js": "./dist/remirror-react-hooks-use-menu-navigation.browser.esm.js"
-  }
+  "type": "module",
+  "main": "./dist/remirror-react-hooks-use-menu-navigation.js",
+  "module": "./dist/remirror-react-hooks-use-menu-navigation.js",
+  "types": "./../dist-types/use-menu-navigation.d.ts"
 }

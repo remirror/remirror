@@ -1,3 +1,4 @@
+import React from 'react';
 import { DefaultProtocol, extractHref as extractLink, LinkExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
