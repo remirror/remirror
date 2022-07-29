@@ -10,7 +10,7 @@ export const logger = {
       return;
     }
 
-    console.debug(prefix, 'DEBUG', ...args);
+    console.debug(prefix, colors.blue('DEBUG'), ...args);
   },
   log: (...args: any[]) => {
     return logger.info(...args);

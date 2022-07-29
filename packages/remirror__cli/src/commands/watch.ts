@@ -8,12 +8,15 @@ import { listPackagesToBuild } from '../utils/list-packages';
 import { runTsc } from '../utils/run-tsc';
 import { build } from './build';
 
-export async function watch() {
+export async function watch(options: { skipBuild?: boolean }) {
   logger.debug(`current working directory: ${process.cwd()}`);
+  logger.debug(`CLI options: ${JSON.stringify(options)}`);
 
   logger.info('Building all packages...');
   try {
-    await build();
+    if (!options.skipBuild) {
+      await build();
+    }
   } catch (error) {
     logger.error('Failed to build all packages:', error);
   }
