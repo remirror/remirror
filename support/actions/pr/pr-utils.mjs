@@ -1,4 +1,4 @@
-import { getParameters } from 'codesandbox/lib/api/define';
+import { getParameters } from 'codesandbox/lib/api/define.js';
 import got from 'got';
 import { default as semver } from 'semver';
 
