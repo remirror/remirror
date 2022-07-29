@@ -82,5 +82,10 @@
     "@storybook/react": "^6.5.8",
     "@storybook/theming": "^6.5.8",
     "postcss": "^8.3.5"
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "stories": {}
+    }
   }
 }
