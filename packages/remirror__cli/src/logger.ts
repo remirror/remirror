@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 
-const prefix = '[remirror-cli]';
+import { colors } from './utils/colors';
+
+const prefix = colors.magenta('remirror-cli');
 
 export const logger = {
   debug: (...args: any[]) => {
@@ -14,13 +16,13 @@ export const logger = {
     return logger.info(...args);
   },
   info: (...args: any[]) => {
-    console.log(prefix, 'INFO', ...args);
+    console.log(prefix, colors.green('INFO'), ...args);
   },
   warn: (...args: any[]) => {
-    console.warn(prefix, 'WARN', ...args);
+    console.warn(prefix, colors.yellow('WARN'), ...args);
   },
   error: (...args: any[]) => {
-    console.error(prefix, 'ERROR', ...args);
+    console.error(prefix, colors.red('ERROR'), ...args);
   },
   assert: (condition: unknown, message = '') => {
     if (!condition) {
