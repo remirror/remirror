@@ -6,20 +6,21 @@ import { DebounceExecutor } from '../utils/debounce-executor';
 import { getRoot } from '../utils/get-root';
 import { listPackagesToBuild } from '../utils/list-packages';
 import { runTsc } from '../utils/run-tsc';
+import { build } from './build';
 
 export async function watch() {
   logger.debug(`current working directory: ${process.cwd()}`);
 
-  const packages = await listPackagesToBuild();
-
   logger.info('Building all packages...');
   try {
-    await Promise.all(packages.map(buildPackage));
+    await build();
   } catch (error) {
     logger.error('Failed to build all packages:', error);
   }
 
   logger.info('Watching all packages...');
+
+  const packages = await listPackagesToBuild();
 
   const packageDirMap = Object.fromEntries(packages.map((pkg) => [path.normalize(pkg.dir), pkg]));
 
@@ -37,7 +38,7 @@ export async function watch() {
 
   const chokidar = await import('chokidar');
   const watcher = chokidar.watch(getRoot(), {
-    ignored: ['**/{.git,node_modules,dist,dist-types}/**', /temp/, /tmp/],
+    ignored: ['**/{.git,node_modules,dist,dist-types}/**', /temp/, /tmp/, '**/package.json'],
     ignoreInitial: true,
     ignorePermissionErrors: true,
   });
