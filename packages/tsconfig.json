@@ -10,7 +10,7 @@
       "snapshot-diff",
       "playwright"
     ],
-    "declaration": false,
+    "composite": true,
     "noEmit": true,
     "skipLibCheck": true
   },

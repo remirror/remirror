@@ -17,8 +17,8 @@
       "node"
     ],
     "declaration": true,
-    "noEmit": false,
     "composite": true,
+    "noEmit": false,
     "emitDeclarationOnly": true,
     "outDir": "../dist-types"
   },

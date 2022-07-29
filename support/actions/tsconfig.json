@@ -9,7 +9,10 @@
   "compilerOptions": {
     "types": [],
     "declaration": true,
-    "noEmit": true
+    "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist-types"
   },
   "include": ["src"]
 }
