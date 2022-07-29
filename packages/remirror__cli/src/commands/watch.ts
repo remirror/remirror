@@ -5,6 +5,7 @@ import { buildPackage } from '../utils/build-package';
 import { DebounceExecutor } from '../utils/debounce-executor';
 import { getRoot } from '../utils/get-root';
 import { listPackagesToBuild } from '../utils/list-packages';
+import { runTsc } from '../utils/run-tsc';
 
 export async function watch() {
   logger.debug(`current working directory: ${process.cwd()}`);
@@ -40,7 +41,10 @@ export async function watch() {
     ignoreInitial: true,
     ignorePermissionErrors: true,
   });
-  const executor = new DebounceExecutor((dir: string) => buildPackage(packageDirMap[dir]));
+  const executor = new DebounceExecutor(async (dir: string) => {
+    await buildPackage(packageDirMap[dir]);
+    await runTsc();
+  });
 
   watcher.on('all', (event, filePath) => {
     logger.info(`Change detected: ${event} ${filePath}`);
