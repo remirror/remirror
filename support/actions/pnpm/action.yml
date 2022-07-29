@@ -5,16 +5,16 @@ inputs:
     description: 'The location of the pnpm cache'
     required: true
     default: '.pnpm-store'
-  version: # id of input
-    description: 'The version to use'
-    required: false
-    default: 6.14.5
 
 runs:
   using: 'composite'
   steps:
+    - name: enable corepack
+      run: corepack enable
+      shell: bash
+
     - name: install pnpm
-      run: npm i -g pnpm@${{ inputs.version }}
+      run: pnpm --version
       shell: bash
 
     - name: setup pnpm config
