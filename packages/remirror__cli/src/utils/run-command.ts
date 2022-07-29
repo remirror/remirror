@@ -14,9 +14,9 @@ export async function runCommand(command: string, args: string[], { cwd }: { cwd
   } catch (error_) {
     const error = error_ as ExecaReturnValue;
     logger.error(
-      `Command "${colors.yellow(commandString)}" on ${colors.yellow(cwd)} exits with code ${
-        error.exitCode
-      }. Error message is shown as below.\n${error.stderr}`,
+      `Shell command "${colors.yellow(commandString)}" on directly ${colors.yellow(
+        cwd,
+      )} exits with code ${error.exitCode}. Error message is shown as below.\n${error.stderr}`,
     );
 
     throw new Error(`Failed to run command "${commandString}"`);
