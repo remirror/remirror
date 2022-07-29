@@ -7,7 +7,7 @@ title: Contributing
 
 Fork [this repository][repo], clone your fork and add this repository as the upstream remote.
 
-You will need to have [`corepack`](https://github.com/nodejs/corepack) enabled so that you can use [`pnpm`](https://pnpm.js.org.
+You will need to have [`corepack`](https://github.com/nodejs/corepack) enabled so that you can use [`pnpm`](https://pnpm.js.org).
 
 ```bash
 git clone <<FORKED_REPO_URL>>
