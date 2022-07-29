@@ -82,8 +82,8 @@
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
     "storybook": "run-p css:watch storybook:start",
-    "storybook:build": "manypkg run packages/storybook-react build",
-    "storybook:start": "manypkg run packages/storybook-react start",
+    "storybook:build": "pnpm run --filter storybook-react build",
+    "storybook:start": "pnpm run --filter storybook-react start",
     "symlink:root": "node support/scripts/symlink-root.mjs",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --verbose",
     "test:build": "cross-env NODE_OPTIONS='--experimental-vm-modules --max_old_space_size=7680' TEST_BUILD=true jest --verbose --coverage=false",
@@ -228,6 +228,7 @@
   "manypkg": {
     "defaultBranch": "HEAD"
   },
+  "packageManager": "pnpm@6.33.1",
   "pnpm": {
     "overrides": {
       "postcss": ">= 8.0.0"
