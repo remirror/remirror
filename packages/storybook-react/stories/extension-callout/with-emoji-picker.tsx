@@ -44,7 +44,7 @@ const EmojiPicker = () => {
    * Need to pass pos information to commands, otherwise it will update the node where the cursor is located.
    */
   const handleSelectEmoji = useCallback(
-    (selection) => {
+    (selection: { emoji: string }) => {
       updateCallout({ emoji: selection.emoji }, pos.current);
     },
     [updateCallout],

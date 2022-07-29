@@ -2,14 +2,9 @@ import 'remirror/styles/all.css';
 import './styles.css';
 
 import React from 'react';
-import { cx, htmlToProsemirrorNode } from 'remirror';
-import { GapCursorExtension, HorizontalRuleExtension } from 'remirror/extensions';
+import { htmlToProsemirrorNode } from 'remirror';
+import { HorizontalRuleExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-
-interface ExampleEditorProps {
-  content: string;
-  hasGapCursor: boolean;
-}
 
 // Note: It's not required to add the GapCursorExtension explicitly because it's
 // part of the CorePreset, i.e. every editor has it.

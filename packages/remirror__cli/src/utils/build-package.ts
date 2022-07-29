@@ -17,7 +17,7 @@ import { writePackageJson } from './write-package-json';
  * Bundle a package using esbuild and update `package.json` if necessary.
  */
 export async function buildPackage(pkg: Package) {
-  logger.info(`${colors.yellow(pkg.packageJson.name)} building...`);
+  logger.info(`${colors.blue(pkg.packageJson.name)} building...`);
 
   const entryPoints = await parseEntryPoints(pkg);
 
@@ -28,7 +28,7 @@ export async function buildPackage(pkg: Package) {
   const buildScript = (pkg.packageJson as any)?.scripts?.build;
 
   if (buildScript) {
-    logger.info(`${colors.yellow(pkg.packageJson.name)} building with its custom build script...`);
+    logger.info(`${colors.blue(pkg.packageJson.name)} building with its custom build script...`);
     promises.push(runCustomScript(pkg, 'build'));
   } else {
     for (const entryPoint of entryPoints) {
@@ -41,7 +41,7 @@ export async function buildPackage(pkg: Package) {
   }
 
   await Promise.all(promises);
-  logger.info(`${colors.yellow(pkg.packageJson.name)} done`);
+  logger.info(`${colors.blue(pkg.packageJson.name)} done`);
 }
 
 interface EntryPoint {

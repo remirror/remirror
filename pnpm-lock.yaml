@@ -2267,6 +2267,7 @@ importers:
       '@storybook/theming': ^6.5.8
       '@svgmoji/blob': ^3.1.0
       '@types/codemirror': ^5.60.2
+      '@types/html-escaper': ^3.0.0
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
       '@types/refractor': ^3.0.2
@@ -2316,6 +2317,7 @@ importers:
       '@remirror/styles': link:../remirror__styles
       '@svgmoji/blob': 3.2.0
       '@types/codemirror': 5.60.5
+      '@types/html-escaper': 3.0.0
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.2
       '@types/refractor': 3.0.2
@@ -9837,6 +9839,10 @@ packages:
       '@types/react': 18.0.15
       hoist-non-react-statics: 3.3.2
     dev: true
+
+  /@types/html-escaper/3.0.0:
+    resolution: {integrity: sha512-OcJcvP3Yk8mjYwf/IdXZtTE1tb/u0WF0qa29ER07ZHCYUBZXSN29Z1mBS+/96+kNMGTFUAbSz9X+pHmHpZrTCw==}
+    dev: false
 
   /@types/html-minifier-terser/5.1.2:
     resolution: {integrity: sha512-h4lTMgMJctJybDp8CQrxTUiiYmedihHWkjnF/8Pxseu2S6Nlfcy8kwboQ8yejh456rP2yWoEVm1sS/FVsfM48w==}
