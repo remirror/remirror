@@ -60,11 +60,7 @@
   },
   "@remirror": {
     "tsconfigs": {
-      "./": {
-        "include": [
-          "src"
-        ]
-      }
+      "src": false
     }
   },
   "preconstruct": {

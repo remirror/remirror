@@ -558,9 +558,6 @@
       "path": "packages/testing/src"
     },
     {
-      "path": "support/actions/src"
-    },
-    {
       "path": "support/scripts/src"
     },
     {
