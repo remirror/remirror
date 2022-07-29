@@ -595,6 +595,9 @@ async function generatePackageTsConfigs() {
     { include: [], files: [], references },
     { detectIndent: true },
   );
+
+  filesToPrettify.push(PATH.packagesTsconfig);
+
   await writeJSON(PATH.packagesTsconfig, packagesTsconfig, { detectIndent: true });
 }
 
