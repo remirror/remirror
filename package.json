@@ -157,7 +157,6 @@
     "@types/testing-library__jest-dom": "^5.14.4",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^5.2.0",
-    "aws-cdk": "^1.129.0",
     "babel-jest": "^28.1.1",
     "babel-plugin-dev-expression": "^0.2.3",
     "babel-plugin-dynamic-import-node": "^2.3.3",
