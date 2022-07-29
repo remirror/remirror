@@ -26,8 +26,6 @@
     "clean:all": "git clean -fdx --exclude='.config.json' --exclude='.idea/'",
     "clean:modules": "git clean -fdX packages support",
     "clean:tsconfig": "rimraf packages/**/tsconfig.json",
-    "watch": "remirror-cli watch",
-    "watch:skip-build": "remirror-cli watch --skip-build",
     "create:package": "node packages/remirror__cli/bin.js create",
     "css:copy": "cpy packages/remirror__styles/*.css packages/remirror/styles/",
     "css:force": "tsx support/scripts/src/check-styles --force",
@@ -102,7 +100,9 @@
     "version:ci": "run-s version:changeset-dependents version:changeset version:date fix:repo update:workspace fix:prettier version:lockfile",
     "version:date": "tsx support/scripts/src/changelog-dates",
     "version:lockfile": "pnpm install --lockfile-only",
-    "version:pr": "tsx support/scripts/src/enable-pr-changeset"
+    "version:pr": "tsx support/scripts/src/enable-pr-changeset",
+    "watch": "remirror-cli watch",
+    "watch:skip-build": "remirror-cli watch --skip-build"
   },
   "browserslist": [
     "since 2017"
