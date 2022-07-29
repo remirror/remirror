@@ -10,7 +10,7 @@
   "scripts": {
     "api": "tsx support/scripts/src/generate-api && api-documenter generate -i ./support/api -o ./docs/api",
     "browser:coverage": "browserslist --coverage",
-    "build": "run-p build:core css:copy typecheck",
+    "build": "run-p build:core css:copy",
     "build:core": "preconstruct fix && preconstruct build && remirror-cli build",
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct fix && preconstruct dev",
@@ -80,7 +80,7 @@
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm symlink:root; pnpm install;",
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
-    "storybook": "run-p watch storybook:start",
+    "storybook": "pnpm build && run-p watch storybook:start",
     "storybook:build": "pnpm run --filter storybook-react build",
     "storybook:start": "pnpm run --filter storybook-react start",
     "symlink:root": "node support/scripts/symlink-root.mjs",
