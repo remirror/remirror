@@ -1,9 +1,9 @@
-import './styles.css';
 import 'remirror/styles/all.css';
+import './styles.css';
 
 import React, { useCallback } from 'react';
 import { PlaceholderExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { Remirror, useRemirror } from '@remirror/react';
 
 const WithCustomStyle = (): JSX.Element => {
   const extensions = useCallback(

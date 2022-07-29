@@ -4,6 +4,7 @@ import path from 'node:path';
 import sortKeys from 'sort-keys';
 
 import { logger } from '../logger';
+import { colors } from './colors';
 import { fileExists } from './file-exists';
 import { getRoot } from './get-root';
 import { removeFileExt } from './remove-file-ext';
@@ -16,7 +17,7 @@ import { writePackageJson } from './write-package-json';
  * Bundle a package using esbuild and update `package.json` if necessary.
  */
 export async function buildPackage(pkg: Package) {
-  logger.info(`building ${pkg.packageJson.name}`);
+  logger.info(`${colors.blue(pkg.packageJson.name)} building...`);
 
   const entryPoints = await parseEntryPoints(pkg);
 
@@ -27,7 +28,7 @@ export async function buildPackage(pkg: Package) {
   const buildScript = (pkg.packageJson as any)?.scripts?.build;
 
   if (buildScript) {
-    logger.info(`building ${pkg.packageJson.name} with its custom build script`);
+    logger.info(`${colors.blue(pkg.packageJson.name)} building with its custom build script...`);
     promises.push(runCustomScript(pkg, 'build'));
   } else {
     for (const entryPoint of entryPoints) {
@@ -40,7 +41,7 @@ export async function buildPackage(pkg: Package) {
   }
 
   await Promise.all(promises);
-  logger.info(`success to build ${pkg.packageJson.name}`);
+  logger.info(`${colors.blue(pkg.packageJson.name)} done`);
 }
 
 interface EntryPoint {

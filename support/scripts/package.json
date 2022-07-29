@@ -82,7 +82,7 @@
     "detect-port": "^1.3.0",
     "emojibase": "^6.0.0",
     "emojibase-data": "^6.1.0",
-    "execa": "^5.1.1",
+    "execa": "^6.1.0",
     "exit": "^0.1.2",
     "fs-extra": "^10.0.0",
     "globby": "^11.0.4",

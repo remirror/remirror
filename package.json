@@ -10,7 +10,7 @@
   "scripts": {
     "api": "tsx support/scripts/src/generate-api && api-documenter generate -i ./support/api -o ./docs/api",
     "browser:coverage": "browserslist --coverage",
-    "build": "run-p build:core css:copy typecheck",
+    "build": "run-p build:core css:copy",
     "build:core": "preconstruct fix && preconstruct build && remirror-cli build",
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct fix && preconstruct dev",
@@ -26,11 +26,9 @@
     "clean:all": "git clean -fdx --exclude='.config.json' --exclude='.idea/'",
     "clean:modules": "git clean -fdX packages support",
     "clean:tsconfig": "rimraf packages/**/tsconfig.json",
-    "cli": "node packages/remirror__cli/bin.js",
     "create:package": "node packages/remirror__cli/bin.js create",
     "css:copy": "cpy packages/remirror__styles/*.css packages/remirror/styles/",
     "css:force": "tsx support/scripts/src/check-styles --force",
-    "css:watch": "tsx support/scripts/src/check-styles --fix --watch",
     "deprecate:all": "tsx support/scripts/src/deprecate-version",
     "dev": "preconstruct fix && preconstruct watch",
     "docs": "pnpm run docs:dev",
@@ -81,7 +79,7 @@
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm symlink:root; pnpm install;",
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
-    "storybook": "run-p css:watch storybook:start",
+    "storybook": "pnpm remirror-cli build && run-p watch:skip-build storybook:start",
     "storybook:build": "pnpm run --filter storybook-react build",
     "storybook:start": "pnpm run --filter storybook-react start",
     "symlink:root": "node support/scripts/symlink-root.mjs",
@@ -102,7 +100,9 @@
     "version:ci": "run-s version:changeset-dependents version:changeset version:date fix:repo update:workspace fix:prettier version:lockfile",
     "version:date": "tsx support/scripts/src/changelog-dates",
     "version:lockfile": "pnpm install --lockfile-only",
-    "version:pr": "tsx support/scripts/src/enable-pr-changeset"
+    "version:pr": "tsx support/scripts/src/enable-pr-changeset",
+    "watch": "remirror-cli watch",
+    "watch:skip-build": "remirror-cli watch --skip-build"
   },
   "browserslist": [
     "since 2017"

@@ -43,6 +43,7 @@
     "@remirror/styles": "^2.0.0-beta.12",
     "@svgmoji/blob": "^3.1.0",
     "@types/codemirror": "^5.60.2",
+    "@types/html-escaper": "^3.0.0",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "@types/refractor": "^3.0.2",
@@ -82,5 +83,10 @@
     "@storybook/react": "^6.5.8",
     "@storybook/theming": "^6.5.8",
     "postcss": "^8.3.5"
+  },
+  "@remirror": {
+    "tsconfigs": {
+      "stories": {}
+    }
   }
 }

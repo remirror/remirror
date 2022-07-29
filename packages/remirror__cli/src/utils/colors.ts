@@ -35,6 +35,7 @@ function createColorWrapper(color: string) {
 export const colors = {
   magenta: createColorWrapper(codes.FgMagenta),
   green: createColorWrapper(codes.FgGreen),
+  blue: createColorWrapper(codes.FgBlue),
   yellow: createColorWrapper(codes.FgYellow),
   red: createColorWrapper(codes.FgRed),
 };

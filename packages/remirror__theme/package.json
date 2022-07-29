@@ -31,7 +31,7 @@
     "style"
   ],
   "scripts": {
-    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es"
+    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es && pnpm -w fix:css"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
