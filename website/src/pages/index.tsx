@@ -5,8 +5,8 @@ import Layout from '@theme/Layout';
 import React, { ReactElement } from 'react';
 import { cx, isString } from 'remirror';
 
-import Editor from '../../examples/social';
 import { ExternalIcon } from '../components/external-icon';
+import Editor from '../examples/social';
 import styles from './styles.module.css';
 
 const features = [

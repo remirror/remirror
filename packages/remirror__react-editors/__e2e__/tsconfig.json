@@ -16,8 +16,11 @@
       "playwright",
       "node"
     ],
-    "declaration": false,
-    "noEmit": true,
+    "declaration": true,
+    "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist-types",
     "skipLibCheck": true,
     "importsNotUsedAsValues": "remove"
   },
