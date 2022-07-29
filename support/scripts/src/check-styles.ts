@@ -8,14 +8,12 @@ import chalk from 'chalk';
 import fs from 'fs-extra';
 import globby from 'globby';
 
-import { baseDir, cliArgs, compareOutput, log, watchFiles } from './helpers';
+import { baseDir, cliArgs, compareOutput, log } from './helpers';
 import { copyFilesToRemirror, getOutput, removeGeneratedFiles, writeOutput } from './linaria';
 
 const force: boolean = cliArgs.force;
 const shouldFix: boolean = cliArgs.fix;
-const watch: boolean = cliArgs.watch;
 
-const inputFiles = globby.sync(['packages/remirror__theme/src/*.ts'], { cwd: baseDir() });
 const outputFiles = globby.sync(['packages/remirror__styles/*.css'], { cwd: baseDir() });
 
 /**
@@ -69,21 +67,10 @@ async function run(): Promise<boolean> {
 }
 
 async function main() {
-  if (watch) {
-    log.info(chalk`\n{green Start watching styles.}`);
-    watchFiles(inputFiles, () => {
-      try {
-        run();
-      } catch (error: any) {
-        console.log('error:', error);
-      }
-    });
-  } else {
-    const hasError = await run();
+  const hasError = await run();
 
-    if (hasError) {
-      process.exit(1);
-    }
+  if (hasError) {
+    process.exit(1);
   }
 }
 
