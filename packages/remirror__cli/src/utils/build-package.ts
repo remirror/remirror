@@ -41,7 +41,7 @@ export async function buildPackage(pkg: Package) {
   }
 
   await Promise.all(promises);
-  logger.info(`${colors.yellow(pkg.packageJson.name)} finished`);
+  logger.info(`${colors.yellow(pkg.packageJson.name)} done`);
 }
 
 interface EntryPoint {
