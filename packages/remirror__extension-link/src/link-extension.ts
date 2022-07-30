@@ -45,9 +45,9 @@ import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
 import {
-  getLinkPath,
   DEFAULT_ADJACENT_PUNCTUATIONS,
   getBalancedIndex,
+  getLinkPath,
   getTrailingCharIndex,
   getTrailingPunctuationIndex,
   SENTENCE_PUNCTUATIONS,
@@ -803,21 +803,16 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return autoLinkAllowedTLDs.includes(tld);
   }
 
-  private isValidUrl(text: string, href?: string) {
+  private isValidUrl(text: string, href?: string): boolean {
     return (
-      this.isValidTLD(href || this.buildHref(text)) && this._autoLinkRegexNonGlobal?.test(text)
+      this.isValidTLD(href || this.buildHref(text)) && !!this._autoLinkRegexNonGlobal?.test(text)
     );
   }
 
-  private getLinkEndIndex(input: string, url: string) {
+  private getLinkEndIndex(input: string, url: string): number | undefined {
     const inputPath = getLinkPath(url, this.options.defaultProtocol);
 
-    if (inputPath === undefined) {
-      return;
-    }
-
     if (inputPath.length === 0) {
-      // Return index to remove adjacent punctuation
       return getTrailingCharIndex({
         adjacentPunctuations: this.options.adjacentPunctuations,
         input,
@@ -830,7 +825,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     const balancedPath = inputPath.slice(0, balancedPathIndex);
 
     return SENTENCE_PUNCTUATIONS.includes(balancedPath.slice(-1))
-      ? getTrailingPunctuationIndex(balancedPath, -1)
+      ? getTrailingPunctuationIndex(balancedPath)
       : balancedPathIndex;
   }
 }

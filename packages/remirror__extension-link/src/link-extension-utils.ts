@@ -76,14 +76,17 @@ export const getBalancedIndex = (input: string): number | undefined => {
     // char is an open bracket character
     if (bracketIndex % 2 === 0) {
       stack.push({ index: i, expected: PAIR_PUNCTUATIONS.charAt(bracketIndex + 1) });
+
       continue;
     }
 
     // char is a closing bracket character
     const unmatched = stack.pop();
+
     if (unmatched === undefined) {
       // closing bracket without any opening bracket
       stack.push({ index: i });
+
       break;
     }
 
@@ -92,6 +95,7 @@ export const getBalancedIndex = (input: string): number | undefined => {
     if (char !== expected) {
       // closing bracket was not what we expected
       stack.push({ index });
+
       break;
     }
   }
@@ -99,19 +103,21 @@ export const getBalancedIndex = (input: string): number | undefined => {
   const index = stack.pop()?.index;
 
   if (
+    // If the input is imbalanced
     index !== undefined &&
     ![
+      // Slice of balanced part and iterate over the remaing charcters.
       ...input.slice(index),
-      // check characters after balanced input for closing pair or sentence punctuation.
+      // Check character for closing pair or sentence punctuation.
     ].some((char) => ![')', ']', '}'].includes(char) && !SENTENCE_PUNCTUATIONS.includes(char))
   ) {
     return index;
   }
 
-  return undefined;
+  return;
 };
 
-export const getTrailingPunctuationIndex = (input: string, index: number): number =>
+export const getTrailingPunctuationIndex = (input: string, index = -1): number =>
   SENTENCE_PUNCTUATIONS.includes(input.slice(0, index).slice(-1))
     ? getTrailingPunctuationIndex(input, --index)
     : index;
@@ -133,12 +139,12 @@ export const addProtocol = (input: string, defaultProtocol?: string): string =>
     ? input
     : `${defaultProtocol && defaultProtocol.length > 0 ? defaultProtocol : 'https:'}//${input}`;
 
-export const getLinkPath = (input: string, protocol?: string) => {
+export const getLinkPath = (input: string, protocol?: string): string => {
   let newUrl;
   try {
     newUrl = new URL(addProtocol(input, protocol));
   } catch {
-    return;
+    return '';
   }
 
   const { pathname, search } = newUrl;
