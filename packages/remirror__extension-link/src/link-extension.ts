@@ -46,11 +46,9 @@ import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
 import {
   DEFAULT_ADJACENT_PUNCTUATIONS,
-  getBalancedIndex,
+  getPathEndIndex,
   getLinkPath,
   getTrailingCharIndex,
-  getTrailingPunctuationIndex,
-  SENTENCE_PUNCTUATIONS,
   TOP_50_TLDS,
 } from './link-extension-utils';
 
@@ -59,6 +57,8 @@ const UPDATE_LINK = 'updateLink';
 // Based on https://gist.github.com/dperini/729294
 const DEFAULT_AUTO_LINK_REGEX =
   /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?]\S*)?/gi;
+
+const PATH_TEST_REGEX = /(\/|\?)/;
 
 /**
  * Can be an empty string which sets url's to '//google.com'.
@@ -760,9 +760,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     // Fuzzy match valid links
     for (const match of findMatches(temp, this.options.autoLinkRegex)) {
       const link = getMatchString(match);
+      const startIndex = match.index;
 
       // Slice adjacent characters and spaces of the link text
-      const text = input.slice(match.index, this.getLinkEndIndex(temp, link)).split(' ')[0];
+      const text = input.slice(startIndex, this.getLinkEndIndex(temp, link)).split(' ')[0];
       const href = this.buildHref(text);
 
       // Remove previous links from input string
@@ -773,7 +774,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         continue;
       }
 
-      foundLinks.push({ text, href, startIndex: match.index });
+      foundLinks.push({ text, href, startIndex });
     }
 
     // If no valid link was found we potentially need to remove an existing auto link.
@@ -810,9 +811,10 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   }
 
   private getLinkEndIndex(input: string, url: string): number | undefined {
-    const inputPath = getLinkPath(url, this.options.defaultProtocol);
+    // This test in not very accurate but good enough. For example A URL with a protocol would pass.
+    const path = PATH_TEST_REGEX.test(url) ? getLinkPath(url, this.options.defaultProtocol) : '';
 
-    if (inputPath.length === 0) {
+    if (path.length === 0) {
       return getTrailingCharIndex({
         adjacentPunctuations: this.options.adjacentPunctuations,
         input,
@@ -820,13 +822,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       });
     }
 
-    const balancedPathIndex = getBalancedIndex(inputPath);
-
-    const balancedPath = inputPath.slice(0, balancedPathIndex);
-
-    return SENTENCE_PUNCTUATIONS.includes(balancedPath.slice(-1))
-      ? getTrailingPunctuationIndex(balancedPath)
-      : balancedPathIndex;
+    return getPathEndIndex(path);
   }
 }
 
