@@ -45,12 +45,11 @@ import { Selection, TextSelection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
 import {
-  addProtocol,
+  getLinkPath,
   DEFAULT_ADJACENT_PUNCTUATIONS,
   getBalancedIndex,
   getTrailingCharIndex,
   getTrailingPunctuationIndex,
-  isBalanced,
   SENTENCE_PUNCTUATIONS,
   TOP_50_TLDS,
 } from './link-extension-utils';
@@ -811,17 +810,13 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
   }
 
   private getLinkEndIndex(input: string, url: string) {
-    const domain = extractDomain(addProtocol(input, this.options.defaultProtocol));
+    const inputPath = getLinkPath(url, this.options.defaultProtocol);
 
-    if (domain.length === 0) {
+    if (inputPath === undefined) {
       return;
     }
 
-    const inputPath = input.slice(domain.length + input.indexOf(domain)).slice(1);
-
-    // URL API could better determine a valid path but using extractDomain appears to do the job
-    // Need to make sure that path does not include "."
-    if (!inputPath || inputPath.includes('.')) {
+    if (inputPath.length === 0) {
       // Return index to remove adjacent punctuation
       return getTrailingCharIndex({
         adjacentPunctuations: this.options.adjacentPunctuations,
@@ -830,44 +825,13 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       });
     }
 
-    // A URL with a path or search query is slightly more ambiguous
-    const index = -1;
-    const balancedPathIndex = !isBalanced(inputPath) ? getBalancedIndex(inputPath, -1) : 0;
+    const balancedPathIndex = getBalancedIndex(inputPath);
 
-    /*
-    Balanced part of path is either an empty string or is balanced.
-    A blanced path only contains pair punctuation that are balanced.
+    const balancedPath = inputPath.slice(0, balancedPathIndex);
 
-    Example of a balanced path `test=((balance))`
-    */
-    const balancedPart = inputPath.slice(0, balancedPathIndex);
-
-    const isImbalanced = balancedPart.length > 0;
-
-    /*
-    If imbalanced the path alaways starts with a pair punctuation.
-
-    Examples `(Unicode_b`, `)))`
-    */
-    const path = isImbalanced ? inputPath.replace(balancedPart, '') : inputPath;
-
-    const balanceIndex =
-      // If the path is imbalanced we slice of the first punctuation character
-      // and iterate over the remaing charcters.
-      isImbalanced &&
-      ![
-        ...path.slice(1),
-        // check if the remaining characters do not include a closing pair or sentence punctuation.
-      ].some((char) => ![')', ']', '}'].includes(char) && !SENTENCE_PUNCTUATIONS.includes(char))
-        ? balancedPathIndex
-        : undefined;
-
-    const balancedPath = isImbalanced && balanceIndex ? balancedPart : balancedPart + path;
-
-    // Return index to remove trailing characters
     return SENTENCE_PUNCTUATIONS.includes(balancedPath.slice(-1))
-      ? getTrailingPunctuationIndex(balancedPath, index) + (balanceIndex || 0)
-      : balanceIndex;
+      ? getTrailingPunctuationIndex(balancedPath, -1)
+      : balancedPathIndex;
   }
 }
 

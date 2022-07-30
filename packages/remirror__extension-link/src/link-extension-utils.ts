@@ -61,32 +61,55 @@ export const DEFAULT_ADJACENT_PUNCTUATIONS = [...SENTENCE_PUNCTUATIONS, '(', ')'
 
 const PAIR_PUNCTUATIONS = '[]{}()';
 
-export const isBalanced = (input: string): boolean => {
-  const stack = [];
+export const getBalancedIndex = (input: string): number | undefined => {
+  const stack: Array<{ index: number; expected?: string }> = [];
 
-  for (const character of input) {
-    const index = PAIR_PUNCTUATIONS.indexOf(character);
+  for (let i = 0; i < input.length; i++) {
+    const char = input.charAt(i);
+    const bracketIndex = PAIR_PUNCTUATIONS.indexOf(char);
 
-    if (index === -1) {
+    // char is not a bracket
+    if (bracketIndex === -1) {
       continue;
     }
 
-    if (index % 2 === 0) {
-      stack.push(index + 1);
-
+    // char is an open bracket character
+    if (bracketIndex % 2 === 0) {
+      stack.push({ index: i, expected: PAIR_PUNCTUATIONS.charAt(bracketIndex + 1) });
       continue;
     }
 
-    if (stack.length === 0 || stack.pop() !== index) {
-      return false;
+    // char is a closing bracket character
+    const unmatched = stack.pop();
+    if (unmatched === undefined) {
+      // closing bracket without any opening bracket
+      stack.push({ index: i });
+      break;
+    }
+
+    const { index, expected } = unmatched;
+
+    if (char !== expected) {
+      // closing bracket was not what we expected
+      stack.push({ index });
+      break;
     }
   }
 
-  return stack.length === 0;
-};
+  const index = stack.pop()?.index;
 
-export const getBalancedIndex = (input: string, index: number): number =>
-  !isBalanced(input.slice(0, index)) ? getBalancedIndex(input, --index) : index;
+  if (
+    index !== undefined &&
+    ![
+      ...input.slice(index),
+      // check characters after balanced input for closing pair or sentence punctuation.
+    ].some((char) => ![')', ']', '}'].includes(char) && !SENTENCE_PUNCTUATIONS.includes(char))
+  ) {
+    return index;
+  }
+
+  return undefined;
+};
 
 export const getTrailingPunctuationIndex = (input: string, index: number): number =>
   SENTENCE_PUNCTUATIONS.includes(input.slice(0, index).slice(-1))
@@ -109,3 +132,21 @@ export const addProtocol = (input: string, defaultProtocol?: string): string =>
   ['http://', 'https://', 'ftp://'].some((protocol) => input.startsWith(protocol))
     ? input
     : `${defaultProtocol && defaultProtocol.length > 0 ? defaultProtocol : 'https:'}//${input}`;
+
+export const getLinkPath = (input: string, protocol?: string) => {
+  let newUrl;
+  try {
+    newUrl = new URL(addProtocol(input, protocol));
+  } catch {
+    return;
+  }
+
+  const { pathname, search } = newUrl;
+
+  try {
+    // URL() encodes unsafe characters, which need to be decoded to check for all punctuations.
+    return decodeURI(pathname.slice(1) + search);
+  } catch {
+    return pathname.slice(1) + search;
+  }
+};
