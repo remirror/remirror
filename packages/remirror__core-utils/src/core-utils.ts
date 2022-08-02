@@ -806,7 +806,7 @@ export interface GetSelectedGroup extends FromToProps {
 }
 
 /**
- * Takes an empty selection and expands it out to the nearest group not matching
+ * Takes a selection or given range and expands it out to the nearest group not matching
  * the excluded characters.
  *
  * @remarks
@@ -815,21 +815,29 @@ export interface GetSelectedGroup extends FromToProps {
  *
  * @param state - the editor state or a transaction
  * @param exclude - the regex pattern to exclude
+ * @param range - the range used to start the search, defaults to the current selection
  * @returns false if not a text selection or if no expansion available
  */
 export function getSelectedGroup(
   state: EditorState | Transaction,
   exclude: RegExp,
+  range?: FromToProps,
 ): GetSelectedGroup | undefined {
-  if (!isTextSelection(state.selection)) {
+  const tr = isTransaction(state) ? state : state.tr;
+
+  if (range) {
+    tr.setSelection(TextSelection.create(tr.doc, range.from, range.to));
+  }
+
+  if (!isTextSelection(tr.selection)) {
     return;
   }
 
-  let { from, to } = state.selection;
+  let { from, to } = tr.selection;
 
   const getChar = (start: number, end: number) =>
     getTextContentFromSlice(
-      TextSelection.between(state.doc.resolve(start), state.doc.resolve(end)).content(),
+      TextSelection.between(tr.doc.resolve(start), tr.doc.resolve(end)).content(),
     );
 
   for (
@@ -854,12 +862,12 @@ export function getSelectedGroup(
     return;
   }
 
-  const text = state.doc.textBetween(from, to, LEAF_NODE_REPLACING_CHARACTER, '\n\n');
+  const text = tr.doc.textBetween(from, to, LEAF_NODE_REPLACING_CHARACTER, '\n\n');
   return { from, to, text };
 }
 
 /**
- * Retrieves the nearest space separated word from the current selection.
+ * Retrieves the nearest space separated word from the current selection or given range.
  *
  * @remarks
  *
@@ -869,9 +877,13 @@ export function getSelectedGroup(
  * In other words it expands until it meets an invalid character.
  *
  * @param state - the editor state or transaction.
+ * @param range - the range used to start the search, defaults to the current selection
  */
-export function getSelectedWord(state: EditorState | Transaction): GetSelectedGroup | undefined {
-  return getSelectedGroup(state, /\W/);
+export function getSelectedWord(
+  state: EditorState | Transaction,
+  range?: FromToProps,
+): GetSelectedGroup | undefined {
+  return getSelectedGroup(state, /\W/, range);
 }
 
 /**

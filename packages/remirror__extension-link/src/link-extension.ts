@@ -15,6 +15,7 @@ import {
   GetMarkRange,
   getMarkRange,
   getMatchString,
+  getSelectedGroup,
   getSelectedWord,
   Handler,
   includes,
@@ -51,7 +52,7 @@ const UPDATE_LINK = 'updateLink';
 
 // Based on https://gist.github.com/dperini/729294
 const DEFAULT_AUTO_LINK_REGEX =
-  /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?]\S*)?/gi;
+  /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?](?:(?! |[!"'(),.;?[\]{}-]).|-+|\((?:(?![ )]).)*\)|\[(?:(?![ \]]).)*]|'(?=\w)|\.(?! |\.|$)|,(?! |,|$)|;(?! |;|$)|!(?! |!|$)|\?(?! |\?|$))+|\/)?/gi;
 
 /**
  * Can be an empty string which sets url's to '//google.com'.
@@ -150,7 +151,7 @@ export interface LinkOptions {
    * value.
    *
    * @default
-   * /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?]\S*)?/gi
+   * /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?](?:(?! |[!"'(),.;?[\]{}-]).|-+|\((?:(?![ )]).)*\)|\[(?:(?![ \]]).)*]|'(?=\w)|\.(?! |\.|$)|,(?! |,|$)|;(?! |;|$)|!(?! |!|$)|\?(?! |\?|$))+|\/)?/gi
    */
   autoLinkRegex?: Static<RegExp>;
 
@@ -576,18 +577,38 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
         const { updateLink, removeLink } = this.store.chain(tr);
 
         changes.forEach(({ from, to, prevFrom, prevTo }) => {
+          // If range is zero length, look for link mark in previous position
+          if (prevFrom === prevTo || from === to) {
+            prevFrom = Math.max(0, prevFrom - 1);
+          }
+
+          // Figure out where all the links from the previous state are now
+          const mappedPrevMarks = this.getLinkMarksInRange(
+            prevState.doc,
+            prevFrom,
+            prevTo,
+            true,
+          ).map((prevMark) => ({
+            ...prevMark,
+            from: mapping.map(prevMark.from),
+            to: mapping.map(prevMark.to),
+          }));
+
           // Remove auto links that are no longer valid
-          this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
-            const newFrom = mapping.map(prevMark.from);
-            const newTo = mapping.map(prevMark.to);
-            const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
+          mappedPrevMarks.forEach((prevMark, i) => {
+            const newMarks = this.getLinkMarksInRange(doc, prevMark.from, prevMark.to, true);
 
             newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
+              const wasLink = this.isValidUrl(prevMark.text);
+
+              // Expanded the link text to include additional non whitespace characters
+              // This determines if a link became invalid window.co -> window.confirm
+              const expanded = getSelectedGroup(state, /\s/, newMark) ?? newMark;
+              const isLink = this.isValidUrl(expanded.text);
 
               if (wasLink && !isLink) {
-                removeLink({ from: newMark.from, to: newMark.to }).tr();
+                removeLink({ from: expanded.from, to: expanded.to }).tr();
+                mappedPrevMarks.splice(i, 1);
               }
             });
           });
@@ -610,13 +631,26 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
                 from: pos + link.start + 1,
                 to: pos + link.end + 1,
               }))
+              .filter(({ from, text }) => {
+                // Ignore links we already know about
+                const found = mappedPrevMarks.find((prevMark) => {
+                  return prevMark.from === from && prevMark.text === text;
+                });
+
+                return !found;
+              })
               .filter((link) => {
                 // Determine if found link is within the changed range
+                // Expand the link bounds to include non whitespace.
+                // This allows creating links terminated by unlinked punctuation character
+                // <link>remirror.io</link>?<cursor>
+                const expanded = getSelectedGroup(state, /\s/, link) ?? link;
+
                 return (
-                  within(link.from, from, to) ||
-                  within(link.to, from, to) ||
-                  within(from, link.from, link.to) ||
-                  within(to, link.from, link.to)
+                  within(expanded.from, from, to) ||
+                  within(expanded.to, from, to) ||
+                  within(from, expanded.from, expanded.to) ||
+                  within(to, expanded.from, expanded.to)
                 );
               })
               .filter((link) => {
@@ -738,6 +772,15 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     const tld = last<string>(domain.split('.'));
 
     return autoLinkAllowedTLDs.includes(tld);
+  }
+
+  private isValidUrl(str: string): boolean {
+    if (!this._autoLinkRegexNonGlobal?.test(str)) {
+      return false;
+    }
+
+    const href = this.buildHref(str);
+    return this.isValidTLD(href);
   }
 }
 
