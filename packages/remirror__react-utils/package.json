@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-utils",
-  "version": "2.0.0-beta.12",
+  "version": "2.0.0-beta.13",
   "description": "A small set of utilities for react components in remirror.",
   "keywords": [
     "react",
@@ -37,9 +37,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-constants": "^2.0.0-beta.12",
-    "@remirror/core-helpers": "^2.0.0-beta.12",
-    "@remirror/core-types": "^2.0.0-beta.12"
+    "@remirror/core-constants": "^2.0.0-beta.13",
+    "@remirror/core-helpers": "^2.0.0-beta.13",
+    "@remirror/core-types": "^2.0.0-beta.13"
   },
   "devDependencies": {
     "@types/react": "^18.0.6",

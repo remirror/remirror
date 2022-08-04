@@ -1,5 +1,55 @@
 # @remirror/extension-callout
 
+## 2.0.0-beta.13
+
+> 2022-08-04
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Try to require JSDOM implicitly in node environment.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.13
+  - @remirror/theme@2.0.0-beta.13
+  - @remirror/core@2.0.0-beta.13
+  - @remirror/messages@2.0.0-beta.13
+
 ## 2.0.0-beta.12
 
 > 2022-07-20
