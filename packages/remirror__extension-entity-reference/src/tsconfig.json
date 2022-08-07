@@ -9,8 +9,8 @@
   "compilerOptions": {
     "types": [],
     "declaration": true,
-    "noEmit": false,
     "composite": true,
+    "noEmit": false,
     "emitDeclarationOnly": true,
     "outDir": "../dist-types"
   },
@@ -18,6 +18,9 @@
   "references": [
     {
       "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-events/src"
     },
     {
       "path": "../../remirror__extension-positioner/src"

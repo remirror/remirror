@@ -7,12 +7,14 @@ title: Contributing
 
 Fork [this repository][repo], clone your fork and add this repository as the upstream remote.
 
-You will need to have [`pnpm`](https://pnpm.js.org) installed so make sure you follow the installation [instructions](https://pnpm.js.org/en/installation). At the time of writing the advised way to install is via `npm i -g pnpm`.
+You will need to have [`corepack`](https://github.com/nodejs/corepack) enabled so that you can use [`pnpm`](https://pnpm.js.org).
 
 ```bash
 git clone <<FORKED_REPO_URL>>
 cd remirror
 git remote add upstream https://github.com/remirror/remirror
+corepack enable
+pnpm --version
 pnpm install
 
 # Checkout a branch and start working on it

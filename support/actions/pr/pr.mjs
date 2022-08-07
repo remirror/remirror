@@ -6,10 +6,10 @@
 
 import { getInput, setFailed, setOutput } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
-import giphyApi, { Giphy } from 'giphy-api';
+import giphyApi from 'giphy-api';
 import { mutatePackageVersions } from 'scripts';
 
-import { createSandboxUrl, getBuildNumber } from './pr-utils';
+import { createSandboxUrl, getBuildNumber } from './pr-utils.mjs';
 
 async function run() {
   const githubToken = process.env.GITHUB_TOKEN;
@@ -21,9 +21,9 @@ async function run() {
 
   const octokit = getOctokit(githubToken).rest;
   const giphyKey = getInput('giphyKey');
-  const prNumber = context.payload.issue?.number as number;
-  const owner = context.payload.repository?.full_name?.split('/')[0] as string;
-  const repo = context.payload.repository?.name as string;
+  const prNumber = context.payload.issue?.number;
+  const owner = context.payload.repository?.full_name?.split('/')[0];
+  const repo = context.payload.repository?.name;
 
   console.log({ owner, repo, prNumber, payload: JSON.stringify(context.payload) });
 
@@ -78,7 +78,7 @@ async function run() {
         `To install use the following versions \n\n- \`remirror@${version}\`\n\n- \`@remirror/react@${version}\``,
       ),
     });
-  } catch (error: any) {
+  } catch (error) {
     const gif = await getMarkdownGif(giphy, 'epic fail');
     await octokit.issues.createComment({
       owner,
@@ -100,7 +100,7 @@ run();
 /**
  * Get the markdown gif
  */
-async function getMarkdownGif(giphy: Giphy, phrase: string) {
+async function getMarkdownGif(giphy, phrase) {
   const gif = await giphy.random(phrase);
   return `![${phrase}](${gif.data.images.fixed_height.url})`;
 }
@@ -108,7 +108,7 @@ async function getMarkdownGif(giphy: Giphy, phrase: string) {
 /**
  * Create a GIF comment.
  */
-function gifComment(comment: string, gif: string, details: string) {
+function gifComment(comment, gif, details) {
   return (
     `${comment}\n\n${gif}` +
     `\n<details><summary>Details</summary>\n` +

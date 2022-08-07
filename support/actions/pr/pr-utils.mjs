@@ -1,8 +1,8 @@
-import { getParameters } from 'codesandbox/lib/api/define';
+import { getParameters } from 'codesandbox/lib/api/define.js';
 import got from 'got';
 import { default as semver } from 'semver';
 
-export function createSandboxUrl(version: string, extension: 'js' | 'tsx' = 'js') {
+export function createSandboxUrl(version, extension = 'js') {
   const parameters = getParameters({
     files: {
       'public/index.html': {
@@ -110,10 +110,8 @@ export default function App() {
   return `https://codesandbox.io/api/v1/sandboxes/define?parameters=${parameters}`;
 }
 
-export async function getBuildNumber(tag: string): Promise<number> {
-  const json = await got(`https://data.jsdelivr.com/v1/package/resolve/npm/remirror@${tag}`).json<{
-    version: string | null;
-  }>();
+export async function getBuildNumber(tag) {
+  const json = await got(`https://data.jsdelivr.com/v1/package/resolve/npm/remirror@${tag}`).json();
 
   const version = json.version;
   const parsed = semver.parse(version);

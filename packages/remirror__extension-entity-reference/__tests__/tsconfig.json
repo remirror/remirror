@@ -15,8 +15,11 @@
       "snapshot-diff",
       "node"
     ],
-    "declaration": false,
-    "noEmit": true,
+    "declaration": true,
+    "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist-types",
     "skipLibCheck": true,
     "importsNotUsedAsValues": "remove"
   },
@@ -33,6 +36,9 @@
     },
     {
       "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__extension-events/src"
     },
     {
       "path": "../../remirror__extension-positioner/src"

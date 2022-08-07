@@ -1,5 +1,238 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.0-beta.13
+
+> 2022-08-04
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- When href equals text content, treat the link as an auto link (if enabled)
+- Transform a hard break into `\n` in `Node.textContent`.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Try to require JSDOM implicitly in node environment.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Update ProseMirror packages to latest versions.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.13
+  - @remirror/extension-link@2.0.0-beta.13
+  - @remirror/extension-list@2.0.0-beta.13
+  - @remirror/preset-core@2.0.0-beta.13
+  - @remirror/extension-blockquote@2.0.0-beta.13
+  - @remirror/extension-code-block@2.0.0-beta.13
+  - @remirror/extension-image@2.0.0-beta.13
+  - @remirror/core@2.0.0-beta.13
+  - @remirror/extension-bidi@2.0.0-beta.13
+  - @remirror/extension-bold@2.0.0-beta.13
+  - @remirror/extension-code@2.0.0-beta.13
+  - @remirror/extension-drop-cursor@2.0.0-beta.13
+  - @remirror/extension-embed@2.0.0-beta.13
+  - @remirror/extension-gap-cursor@2.0.0-beta.13
+  - @remirror/extension-hard-break@2.0.0-beta.13
+  - @remirror/extension-heading@2.0.0-beta.13
+  - @remirror/extension-horizontal-rule@2.0.0-beta.13
+  - @remirror/extension-italic@2.0.0-beta.13
+  - @remirror/extension-search@2.0.0-beta.13
+  - @remirror/extension-shortcuts@2.0.0-beta.13
+  - @remirror/extension-strike@2.0.0-beta.13
+  - @remirror/extension-trailing-node@2.0.0-beta.13
+  - @remirror/extension-underline@2.0.0-beta.13
+
+## 2.0.0-beta.12
+
+> 2022-07-20
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- SSR features are removed.
+- Transform a hard break into `\n` in `Node.textContent`.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- When href equals text content, treat the link as an auto link (if enabled)
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.12
+  - @remirror/extension-bidi@2.0.0-beta.12
+  - @remirror/extension-blockquote@2.0.0-beta.12
+  - @remirror/extension-bold@2.0.0-beta.12
+  - @remirror/extension-code@2.0.0-beta.12
+  - @remirror/extension-code-block@2.0.0-beta.12
+  - @remirror/extension-drop-cursor@2.0.0-beta.12
+  - @remirror/extension-embed@2.0.0-beta.12
+  - @remirror/extension-gap-cursor@2.0.0-beta.12
+  - @remirror/extension-hard-break@2.0.0-beta.12
+  - @remirror/extension-heading@2.0.0-beta.12
+  - @remirror/extension-horizontal-rule@2.0.0-beta.12
+  - @remirror/extension-image@2.0.0-beta.12
+  - @remirror/extension-italic@2.0.0-beta.12
+  - @remirror/extension-link@2.0.0-beta.12
+  - @remirror/extension-list@2.0.0-beta.12
+  - @remirror/extension-search@2.0.0-beta.12
+  - @remirror/extension-shortcuts@2.0.0-beta.12
+  - @remirror/extension-strike@2.0.0-beta.12
+  - @remirror/extension-trailing-node@2.0.0-beta.12
+  - @remirror/extension-underline@2.0.0-beta.12
+  - @remirror/pm@2.0.0-beta.12
+  - @remirror/preset-core@2.0.0-beta.12
+
+## 2.0.0-beta.11
+
+> 2022-07-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Try to require JSDOM implicitly in node environment.
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- When href equals text content, treat the link as an auto link (if enabled)
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- SSR features are removed.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Transform a hard break into `\n` in `Node.textContent`.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-blockquote@2.0.0-beta.11
+  - @remirror/extension-code-block@2.0.0-beta.11
+  - @remirror/extension-image@2.0.0-beta.11
+  - @remirror/extension-list@2.0.0-beta.11
+  - @remirror/preset-core@2.0.0-beta.11
+  - @remirror/core@2.0.0-beta.11
+  - @remirror/extension-heading@2.0.0-beta.11
+  - @remirror/extension-link@2.0.0-beta.11
+  - @remirror/pm@2.0.0-beta.11
+  - @remirror/extension-bidi@2.0.0-beta.11
+  - @remirror/extension-bold@2.0.0-beta.11
+  - @remirror/extension-code@2.0.0-beta.11
+  - @remirror/extension-drop-cursor@2.0.0-beta.11
+  - @remirror/extension-embed@2.0.0-beta.11
+  - @remirror/extension-gap-cursor@2.0.0-beta.11
+  - @remirror/extension-hard-break@2.0.0-beta.11
+  - @remirror/extension-horizontal-rule@2.0.0-beta.11
+  - @remirror/extension-italic@2.0.0-beta.11
+  - @remirror/extension-search@2.0.0-beta.11
+  - @remirror/extension-shortcuts@2.0.0-beta.11
+  - @remirror/extension-strike@2.0.0-beta.11
+  - @remirror/extension-trailing-node@2.0.0-beta.11
+  - @remirror/extension-underline@2.0.0-beta.11
+
 ## 2.0.0-beta.10
 
 > 2022-07-19

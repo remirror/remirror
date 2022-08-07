@@ -1,5 +1,73 @@
 # @remirror/core-types
 
+## 2.0.0-beta.13
+
+> 2022-08-04
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.13
+  - @remirror/core-constants@2.0.0-beta.13
+  - @remirror/types@1.0.0-beta.13
+
+## 2.0.0-beta.12
+
+> 2022-07-20
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-constants@2.0.0-beta.12
+  - @remirror/pm@2.0.0-beta.12
+  - @remirror/types@1.0.0-beta.12
+
+## 2.0.0-beta.11
+
+> 2022-07-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.11
+  - @remirror/core-constants@2.0.0-beta.11
+  - @remirror/types@1.0.0-beta.11
+
 ## 2.0.0-beta.10
 
 > 2022-07-19

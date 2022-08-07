@@ -1,5 +1,280 @@
 # @remirror/react-editors
 
+## 1.0.0-beta.13
+
+> 2022-08-04
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Update prosemirror packages.
+- Update pnpm-lock.yaml
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Expose the return type of the throttle and debounce helpers
+- SSR features are removed.
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- When href equals text content, treat the link as an auto link (if enabled)
+- Transform a hard break into `\n` in `Node.textContent`.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Update ProseMirror packages.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Try to require JSDOM implicitly in node environment.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Update ProseMirror dependencies.
+- Update jsx-dom to v7.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Update ProseMirror packages to latest versions.
+- add helper to get shortest entity reference
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.13
+  - remirror@2.0.0-beta.13
+  - @remirror/extension-react-tables@2.0.0-beta.13
+  - @remirror/react@2.0.0-beta.13
+  - @remirror/styles@2.0.0-beta.13
+  - @remirror/core-helpers@2.0.0-beta.13
+  - create-context-state@2.0.0-beta.12
+
+## 1.0.0-beta.12
+
+> 2022-07-20
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Update jsx-dom to v7.
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Update ProseMirror dependencies.
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- SSR features are removed.
+- Update pnpm-lock.yaml
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Transform a hard break into `\n` in `Node.textContent`.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- When href equals text content, treat the link as an auto link (if enabled)
+- Update ProseMirror packages.
+- add helper to get shortest entity reference
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Try to require JSDOM implicitly in node environment.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Update prosemirror packages.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.0-beta.12
+  - @remirror/react@2.0.0-beta.12
+  - create-context-state@2.0.0-beta.11
+  - remirror@2.0.0-beta.12
+  - @remirror/core-helpers@2.0.0-beta.12
+  - @remirror/pm@2.0.0-beta.12
+  - @remirror/styles@2.0.0-beta.12
+
+## 1.0.0-beta.11
+
+> 2022-07-20
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update prosemirror packages.
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Try to require JSDOM implicitly in node environment.
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Update pnpm-lock.yaml
+- Update jsx-dom to v7.
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Update ProseMirror packages.
+- When href equals text content, treat the link as an auto link (if enabled)
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- SSR features are removed.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Transform a hard break into `\n` in `Node.textContent`.
+- add helper to get shortest entity reference
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.0-beta.11
+  - @remirror/styles@2.0.0-beta.11
+  - remirror@2.0.0-beta.11
+  - @remirror/react@2.0.0-beta.11
+  - @remirror/core-helpers@2.0.0-beta.11
+  - @remirror/pm@2.0.0-beta.11
+  - create-context-state@2.0.0-beta.10
+
 ## 1.0.0-beta.10
 
 > 2022-07-19

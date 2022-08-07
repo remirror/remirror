@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnyExtension, ErrorConstant, invariant, isArray, isNullOrUndefined } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
 
@@ -45,13 +45,19 @@ export function useReactFramework<Extension extends AnyExtension>(
     manager.getExtension(ReactExtension).setOptions({ placeholder });
   }, [placeholder, manager]);
 
-  const fallback = manager.createEmptyDoc();
-  const [initialContent, initialSelection] = isArray(props.initialContent)
-    ? props.initialContent
-    : ([props.initialContent ?? fallback] as const);
-  const initialEditorState = state
-    ? state
-    : manager.createState({ content: initialContent, selection: initialSelection });
+  const [initialEditorState] = useState(() => {
+    if (state) {
+      return state;
+    }
+
+    const fallback = manager.createEmptyDoc();
+
+    const [initialContent, initialSelection] = isArray(props.initialContent)
+      ? props.initialContent
+      : ([props.initialContent ?? fallback] as const);
+
+    return manager.createState({ content: initialContent, selection: initialSelection });
+  });
 
   // Create the framework which manages the connection between the `@remirror/core`
   // and React.

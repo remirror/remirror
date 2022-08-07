@@ -10,7 +10,7 @@
   "scripts": {
     "api": "tsx support/scripts/src/generate-api && api-documenter generate -i ./support/api -o ./docs/api",
     "browser:coverage": "browserslist --coverage",
-    "build": "run-p build:core css:copy typecheck",
+    "build": "run-p build:core css:copy",
     "build:core": "preconstruct fix && preconstruct build && remirror-cli build",
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct fix && preconstruct dev",
@@ -26,11 +26,9 @@
     "clean:all": "git clean -fdx --exclude='.config.json' --exclude='.idea/'",
     "clean:modules": "git clean -fdX packages support",
     "clean:tsconfig": "rimraf packages/**/tsconfig.json",
-    "cli": "node packages/remirror__cli/bin.js",
     "create:package": "node packages/remirror__cli/bin.js create",
     "css:copy": "cpy packages/remirror__styles/*.css packages/remirror/styles/",
     "css:force": "tsx support/scripts/src/check-styles --force",
-    "css:watch": "tsx support/scripts/src/check-styles --fix --watch",
     "deprecate:all": "tsx support/scripts/src/deprecate-version",
     "dev": "preconstruct fix && preconstruct watch",
     "docs": "pnpm run docs:dev",
@@ -81,9 +79,9 @@
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm symlink:root; pnpm install;",
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
-    "storybook": "run-p css:watch storybook:start",
-    "storybook:build": "manypkg run packages/storybook-react build",
-    "storybook:start": "manypkg run packages/storybook-react start",
+    "storybook": "pnpm remirror-cli build && run-p watch:skip-build storybook:start",
+    "storybook:build": "pnpm run --filter storybook-react build",
+    "storybook:start": "pnpm run --filter storybook-react start",
     "symlink:root": "node support/scripts/symlink-root.mjs",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --verbose",
     "test:build": "cross-env NODE_OPTIONS='--experimental-vm-modules --max_old_space_size=7680' TEST_BUILD=true jest --verbose --coverage=false",
@@ -102,7 +100,9 @@
     "version:ci": "run-s version:changeset-dependents version:changeset version:date fix:repo update:workspace fix:prettier version:lockfile",
     "version:date": "tsx support/scripts/src/changelog-dates",
     "version:lockfile": "pnpm install --lockfile-only",
-    "version:pr": "tsx support/scripts/src/enable-pr-changeset"
+    "version:pr": "tsx support/scripts/src/enable-pr-changeset",
+    "watch": "remirror-cli watch",
+    "watch:skip-build": "remirror-cli watch --skip-build"
   },
   "browserslist": [
     "since 2017"
@@ -141,7 +141,7 @@
     "@microsoft/api-documenter": "^7.17.10",
     "@microsoft/api-extractor": "^7.18.17",
     "@preconstruct/cli": "^2.1.5",
-    "@remirror/cli": "1.0.0-beta.9",
+    "@remirror/cli": "1.0.0-beta.12",
     "@size-limit/preset-big-lib": "^7.0.8",
     "@swc/core": "^1.2.204",
     "@swc/jest": "^0.2.21",
@@ -157,7 +157,6 @@
     "@types/testing-library__jest-dom": "^5.14.4",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^5.2.0",
-    "aws-cdk": "^1.129.0",
     "babel-jest": "^28.1.1",
     "babel-plugin-dev-expression": "^0.2.3",
     "babel-plugin-dynamic-import-node": "^2.3.3",
@@ -202,8 +201,8 @@
     "jest-extended": "^2.0.0",
     "jest-github-reporter": "^1.0.2",
     "jest-playwright-preset": "^1.7.2",
-    "jest-prosemirror": "^2.0.0-beta.10",
-    "jest-remirror": "^2.0.0-beta.10",
+    "jest-prosemirror": "^2.0.0-beta.13",
+    "jest-remirror": "^2.0.0-beta.13",
     "jest-watch-typeahead": "^1.1.0",
     "lint-staged": "^11.2.6",
     "npm-run-all": "^4.1.5",
@@ -212,7 +211,7 @@
     "playwright-testing-library": "^4.2.1",
     "prettier": "^2.3.2",
     "prettier-plugin-packagejson": "^2.2.13",
-    "remirror": "2.0.0-beta.10",
+    "remirror": "2.0.0-beta.13",
     "rimraf": "^3.0.2",
     "size-limit": "^7.0.8",
     "snapshot-diff": "^0.9.0",
@@ -228,6 +227,7 @@
   "manypkg": {
     "defaultBranch": "HEAD"
   },
+  "packageManager": "pnpm@6.33.1",
   "pnpm": {
     "overrides": {
       "postcss": ">= 8.0.0"
@@ -235,7 +235,6 @@
   },
   "preconstruct": {
     "packages": [
-      "support/actions",
       "support/scripts",
       "support/templates/*"
     ]

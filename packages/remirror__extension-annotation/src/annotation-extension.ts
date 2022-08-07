@@ -115,7 +115,6 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
       },
       props: {
         decorations(state: EditorState) {
-          // @ts-expect-error we can't get the type of `this` as a plugin
           return this.getState(state).decorationSet;
         },
       },

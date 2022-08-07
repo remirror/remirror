@@ -8,8 +8,11 @@
   "extends": "../../../support/tsconfig.base.json",
   "compilerOptions": {
     "types": [],
-    "declaration": false,
-    "noEmit": true
+    "declaration": true,
+    "composite": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist-types"
   },
   "include": ["./"],
   "references": [
