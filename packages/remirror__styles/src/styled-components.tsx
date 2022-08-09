@@ -3733,6 +3733,94 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
   .remirror-list-spine:hover {
     border-left-color: var(--rmr-color-primary);
   }
+
+  .remirror-experimental-item {
+    padding: 0;
+    display: flex;
+
+    counter-reset: remirror-ordered-item-number;
+  }
+
+  .remirror-experimental-item + .remirror-experimental-item {
+    counter-reset: none;
+  }
+
+  .remirror-experimental-item > .item-mark-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    min-width: 2rem;
+    box-sizing: border-box;
+  }
+
+  .remirror-experimental-item > .item-mark-container > .item-mark-ordered {
+    text-align: center;
+  }
+
+  .remirror-experimental-item > .item-mark-container > .item-mark-ordered:before {
+    counter-increment: remirror-ordered-item-number;
+    content: counter(remirror-ordered-item-number, decimal) '.';
+  }
+
+  .remirror-experimental-item > .item-mark-container > .item-mark-bullet {
+    text-align: center;
+  }
+
+  .remirror-experimental-item > .item-mark-container > .item-mark-bullet:before {
+    content: '•';
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+
+  .remirror-experimental-item > .item-mark-container > .item-mark-task {
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .remirror-experimental-item > .item-mark-container > .item-mark-task > input {
+    pointer-events: none;
+    cursor: pointer;
+  }
+
+  .remirror-experimental-item.collapsed > .item-mark-container {
+    color: #00ec00;
+  }
+
+  .remirror-experimental-item > .item-content-container {
+    flex: 1;
+  }
+
+  .remirror-experimental-item.collapsable > .item-mark-container {
+    cursor: pointer;
+  }
+
+  .remirror-experimental-item.collapsable:not(.collapsed) > .item-mark-container:after {
+    content: '';
+
+    display: block;
+    box-sizing: border-box;
+    border-right: 1px solid red;
+    align-self: flex-start;
+
+    height: 100%;
+    width: 50%;
+
+    margin-top: 4px;
+    margin-bottom: 8px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+  }
+
+  .remirror-experimental-item.collapsable:not(.collapsed) > .item-mark-container:hover:after {
+    border-right-color: blue;
+  }
+
+  .remirror-experimental-item.collapsed > .item-content-container > *:nth-child(n + 2) {
+    display: none;
+  }
 `;
 
 export const ExtensionListStyledComponent: ReturnType<typeof styled.div> = styled.div`
