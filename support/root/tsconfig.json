@@ -282,6 +282,12 @@
       "path": "packages/remirror__extension-italic/src"
     },
     {
+      "path": "packages/remirror__extension-item/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-item/src"
+    },
+    {
       "path": "packages/remirror__extension-link/__e2e__"
     },
     {

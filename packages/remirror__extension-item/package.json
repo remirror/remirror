@@ -1,0 +1,53 @@
+{
+  "name": "@remirror/extension-item",
+  "version": "0.0.1-beta.1",
+  "description": "The list extensions.",
+  "keywords": [
+    "remirror",
+    "preset",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-item",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remirror/remirror.git",
+    "directory": "packages/remirror__extension-item"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Ocavue <ocavue@gmail.com>"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-item.js",
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/remirror-extension-item.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/remirror-extension-item.js",
+  "module": "./dist/remirror-extension-item.js",
+  "types": "./dist-types/index.d.ts",
+  "files": [
+    "dist",
+    "dist-types"
+  ],
+  "devDependencies": {
+    "@remirror/pm": "^2.0.0-beta.13"
+  },
+  "peerDependencies": {
+    "@remirror/core": "*",
+    "@remirror/extension-events": "*",
+    "@remirror/messages": "*",
+    "@remirror/pm": "*",
+    "@remirror/theme": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "@remirror": {
+    "sizeLimit": "10 KB"
+  }
+}
