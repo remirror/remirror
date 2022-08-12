@@ -322,3 +322,45 @@ export function createMarkPositioner(
 function getCursorRect(coords: Coords): DOMRect {
   return new DOMRect(coords.left, coords.top, 1, coords.top - coords.bottom);
 }
+
+export const positioners = {
+  /**
+   * Creates a rect which wraps the current selection.
+   */
+  selection: selectionPositioner,
+
+  /**
+   * Creates a rect for the cursor. Is inactive for
+   */
+  cursor: cursorPositioner,
+
+  /**
+   * Creates a positioner which always shows the position of the selection whether empty or not.
+   */
+  always: alwaysPositioner,
+
+  /**
+   * Creates a position which wraps the entire selected block node.
+   */
+  block: blockNodePositioner,
+
+  /**
+   * Creates a position which wraps the entire selected block node. This is only active when the block node is empty.
+   */
+  emptyBlock: emptyBlockNodePositioner,
+
+  /**
+   * Creates a position which wraps the entire selected block node. This is only active when the block node is empty.
+   */
+  emptyBlockStart: emptyBlockNodeStartPositioner,
+
+  /**
+   * Creates a position which wraps the entire selected block node. This is only active when the block node is empty.
+   */
+  emptyBlockEnd: emptyBlockNodeEndPositioner,
+
+  /**
+   * Create a rect which surrounds the nearest word.
+   */
+  nearestWord: nearestWordPositioner,
+};
