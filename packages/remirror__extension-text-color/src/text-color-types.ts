@@ -6,7 +6,7 @@ export interface TextColorAttributes {
    * The color of the text. This can be a color value like `red` `#fff`
    * `rgb(0,0,0)` or a computed property like `--rmr-color-primary`.
    *
-   * @default ''
+   * @defaultValue ''
    */
   color?: string;
 }
@@ -15,7 +15,7 @@ export interface TextColorOptions {
   /**
    * The default color value.
    *
-   * @default 'inherit'
+   * @defaultValue 'inherit'
    */
   defaultColor?: Static<string>;
 

@@ -511,7 +511,7 @@ export interface IdentifiersObject {
    * succumbed to using the Americanized spelling instead of the Oxford
    * Dictionary defined spelling of `behaviour` 😢
    *
-   * @default 'any'
+   * @defaultValue 'any'
    */
   behavior?: 'all' | 'any';
 
@@ -1094,7 +1094,7 @@ declare global {
        *
        * This is only applied to the `MarkExtension` and `NodeExtension`.
        *
-       * @default {}
+       * @defaultValue {}
        */
       extraAttributes?: Static<SchemaAttributes>;
 
@@ -1106,7 +1106,7 @@ declare global {
        *
        * This is only applied to the `MarkExtension` and `NodeExtension`.
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       disableExtraAttributes?: Static<boolean>;
 
@@ -1167,7 +1167,7 @@ declare global {
        * Perhaps you don't need extra attributes at all in the editor. This
        * allows you to disable extra attributes when set to true.
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       disableExtraAttributes?: boolean;
 
@@ -1192,7 +1192,7 @@ declare global {
        * By default this is undefined and the default block node is assigned
        * based on the extension priorities.
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       defaultBlockNode?: string;
     }
@@ -1227,7 +1227,7 @@ declare global {
        * This can be updated via the manager settings when first creating the
        * editor.
        *
-       * @default 'paragraph'
+       * @defaultValue 'paragraph'
        */
       defaultBlockNode: string;
     }
@@ -1264,7 +1264,7 @@ declare global {
        * When true will disable extra attributes for all instances of this
        * extension.
        *
-       * @default false
+       * @defaultValue false
        */
       readonly disableExtraAttributes?: boolean;
     }

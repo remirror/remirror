@@ -176,7 +176,7 @@ export interface UseMentionAtomProps<
    * Whether matches should be permanently ignored when the user dismisses the
    * mention suggestion.
    *
-   * @default true
+   * @defaultValue true
    */
   ignoreMatchesOnDismiss?: boolean;
 }

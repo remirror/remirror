@@ -189,14 +189,14 @@ interface CreateYouTubeIframeProps {
 
   /**
    * The number os seconds in to start at.
-   * @default 0
+   * @defaultValue 0
    */
   startAt?: number;
 
   /**
    * When true will show the player controls.
    *
-   * @default true
+   * @defaultValue true
    */
   showControls?: boolean;
 
@@ -205,7 +205,7 @@ interface CreateYouTubeIframeProps {
    * won't store information about visitors on your website unless they play the
    * video._
    *
-   * @default true
+   * @defaultValue true
    */
   enhancedPrivacy?: boolean;
 }

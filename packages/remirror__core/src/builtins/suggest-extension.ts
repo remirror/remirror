@@ -167,7 +167,7 @@ declare global {
        * Whether to exclude the suggesters plugin configuration for the
        * extension.
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       suggesters?: boolean;
     }

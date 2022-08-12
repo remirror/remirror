@@ -9,7 +9,7 @@ export interface IframeOptions {
   /**
    * The class to add to the iframe.
    *
-   * @default 'remirror-iframe'
+   * @defaultValue 'remirror-iframe'
    */
   class?: Static<string>;
 
@@ -18,7 +18,7 @@ export interface IframeOptions {
    *
    * If true, the iframe node will be rendered by `nodeView` instead of `toDOM`.
    *
-   * @default false
+   * @defaultValue false
    */
   enableResizing: boolean;
 }

@@ -202,7 +202,7 @@ interface BasePasteRule {
    * The priority for the extension. Can be a number, or if you're using it with
    * `remirror` then use the `ExtensionPriority` enum.
    *
-   * @default 10
+   * @defaultValue 10
    */
   priority?: ExtensionPriority;
 }
@@ -224,7 +224,7 @@ interface BaseRegexPasteRule extends BasePasteRule {
    * This helps stop situations from occurring where the a capture group matches
    * but you don't want an update if it's all whitespace.
    *
-   * @default false
+   * @defaultValue false
    */
   ignoreWhitespace?: boolean;
 
@@ -595,7 +595,7 @@ export interface IsInCodeOptions {
   /**
    * When this is set to true ensure the selection is fully contained within a code block. This means that selections that span multiple characters must all be within a code region for it to return true.
    *
-   * @default true
+   * @defaultValue true
    */
   contained?: boolean;
 }

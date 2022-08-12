@@ -53,7 +53,7 @@ export interface ImageOptions {
    *
    * If true, the image node will be rendered by `nodeView` instead of `toDOM`.
    *
-   * @default false
+   * @defaultValue false
    */
   enableResizing: boolean;
 }

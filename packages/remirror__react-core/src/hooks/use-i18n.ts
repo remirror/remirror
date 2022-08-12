@@ -48,14 +48,14 @@ export interface I18nProps {
   /**
    * The current locale for this context.
    *
-   * @default 'en'
+   * @defaultValue 'en'
    */
   locale?: string;
 
   /**
    * Supported locales. Defaults to including the locale.
    *
-   * @default [locale]
+   * @defaultValue [locale]
    */
   supportedLocales?: string[];
 }

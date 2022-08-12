@@ -37,7 +37,7 @@ export interface CodeBlockOptions {
    * By default refractor bundles the following languages: `markup`, `css`,
    * `clike`, `js`
    *
-   * @default []
+   * @defaultValue []
    */
   supportedLanguages?: RefractorSyntax[];
 
@@ -46,14 +46,14 @@ export interface CodeBlockOptions {
    *
    * It is a property so it can change during the editor's life.
    *
-   * @default 'markup'
+   * @defaultValue 'markup'
    */
   defaultLanguage?: string;
 
   /**
    * Set to true to wrap content by default.
    *
-   * @default false
+   * @defaultValue false
    */
   defaultWrap?: boolean;
 
@@ -67,7 +67,7 @@ export interface CodeBlockOptions {
    * Set this to false if you want to manage the syntax styles by yourself. For
    * tips on how this could be accomplished see {@link https://prismjs.com}
    *
-   * @default 'atom-dark'
+   * @defaultValue 'atom-dark'
    */
   syntaxTheme?: SyntaxTheme;
 
@@ -82,7 +82,7 @@ export interface CodeBlockOptions {
   /**
    * The name of the node that the code block should toggle back and forth from.
    *
-   * @default 'paragraph'
+   * @defaultValue 'paragraph'
    */
   toggleName?: string;
 

@@ -52,7 +52,7 @@ export interface MarkdownOptions {
    * The parent nodes (or tags) where the markdown extension shortcuts are
    * active.
    *
-   * @default ['code']
+   * @defaultValue ['code']
    *
    * TODO implement keyboard shortcuts when within an activeNode for the
    * markdown extension.
@@ -64,7 +64,7 @@ export interface MarkdownOptions {
    * This means that when pasting into a plain text editor (vscode) for example,
    * the markdown will be preserved.
    *
-   * @default false
+   * @defaultValue false
    */
   copyAsMarkdown?: boolean;
 }

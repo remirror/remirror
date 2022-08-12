@@ -56,7 +56,7 @@ export interface BaseInputRuleProps extends ShouldSkip {
    * This helps stop situations from occurring where the a capture group matches
    * but you don't want an update if it's all whitespace.
    *
-   * @default false
+   * @defaultValue false
    */
   ignoreWhitespace?: boolean;
 

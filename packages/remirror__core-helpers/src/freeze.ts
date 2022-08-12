@@ -51,7 +51,7 @@ interface FreezeOptions {
   /**
    * Whether the key that is being accessed should exist on the target object.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   requireKeys?: boolean;
 }

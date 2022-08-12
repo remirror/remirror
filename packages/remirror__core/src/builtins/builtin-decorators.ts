@@ -306,7 +306,7 @@ interface ChainableCommandDecoratorOptions<Options extends Shape>
    * Set this to `true` to disable chaining of this command. This means it will
    * no longer be available when running `
    *
-   * @default false
+   * @defaultValue false
    */
   disableChaining?: false;
 }
@@ -316,7 +316,7 @@ interface NonChainableCommandDecoratorOptions<Options extends Shape>
    * Set this to `true` to disable chaining of this command. This means it will
    * no longer be available when running `
    *
-   * @default false
+   * @defaultValue false
    */
   disableChaining: true;
 }

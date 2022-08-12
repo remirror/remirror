@@ -47,7 +47,7 @@ export interface RemirrorProps<Extension extends AnyExtension = Remirror.Extensi
    * can arise from `zIndex` issues with floating components rendered within the
    * context.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   autoRender?: boolean | 'start' | 'end';
 

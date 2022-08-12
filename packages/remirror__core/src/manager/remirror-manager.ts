@@ -916,7 +916,7 @@ export interface CreateEditorStateProps extends Omit<StringHandlerProps, 'string
   /**
    * The selection that the user should have in the created node.
    *
-   * @default 'end'
+   * @defaultValue 'end'
    */
   selection?: PrimitiveSelection;
 
@@ -1059,7 +1059,7 @@ declare global {
        * The default named selection. This is used when `manager.createState` is
        * called without providing a selection.
        *
-       * @default 'end'
+       * @defaultValue 'end'
        */
       defaultSelection?: 'start' | 'end' | 'all';
     }

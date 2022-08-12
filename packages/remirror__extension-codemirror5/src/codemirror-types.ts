@@ -5,7 +5,7 @@ export interface CodeMirrorExtensionOptions {
   /**
    * Configuration for the inner CodeMirror editor.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   defaultCodeMirrorConfig?: CodeMirror.EditorConfiguration | null;
 
@@ -19,7 +19,7 @@ export interface CodeMirrorExtensionAttributes extends ProsemirrorAttributes {
   /**
    * Configuration for the inner CodeMirror editor.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   codeMirrorConfig?: CodeMirror.EditorConfiguration;
 
@@ -28,7 +28,7 @@ export interface CodeMirrorExtensionAttributes extends ProsemirrorAttributes {
    * `findModeByName` function. Note that you can also specify the
    * language by editing `codeMirrorConfig.mode` directly.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   language?: string;
 }

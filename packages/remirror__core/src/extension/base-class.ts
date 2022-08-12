@@ -617,7 +617,7 @@ export interface BaseClassConstructor<
    * point in time. As a workaround use `null` as the type and pass it as the
    * value in the default settings.
    *
-   * @default {}
+   * @defaultValue {}
    *
    * @internal
    */

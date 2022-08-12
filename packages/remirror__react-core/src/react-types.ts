@@ -47,7 +47,7 @@ export interface RefProps<RefKey = 'ref'> {
    * A custom ref key which allows a reference to be obtained from non standard
    * components.
    *
-   * @default 'ref'
+   * @defaultValue 'ref'
    */
   refKey?: RefKey;
 }

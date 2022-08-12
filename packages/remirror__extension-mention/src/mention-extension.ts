@@ -77,14 +77,14 @@ export interface MentionOptions
    * The `white-space: pre-wrap;` is what allows editors to add space characters
    * at the end of a section.
    *
-   * @default ''
+   * @defaultValue ''
    */
   appendText?: string;
 
   /**
    * Tag for the prosemirror decoration which wraps an active match.
    *
-   * @default 'span'
+   * @defaultValue 'span'
    */
   suggestTag?: string;
 
@@ -101,7 +101,7 @@ export interface MentionOptions
    * e.g. a `#hashtag`. Call it with the optional attributes to automatically
    * create a mention.
    *
-   * @default () => void
+   * @defaultValue () => void
    */
   onChange?: Handler<MentionChangeHandler>;
 
@@ -563,7 +563,7 @@ export interface OptionalMentionExtensionProps {
   /**
    * The text to append to the replacement.
    *
-   * @default ''
+   * @defaultValue ''
    */
   appendText?: string;
 
@@ -648,7 +648,7 @@ export interface MentionExtensionMatcher
   /**
    * Text to append after the suggestion has been added.
    *
-   * @default ''
+   * @defaultValue ''
    */
   appendText?: string;
 }
@@ -680,14 +680,14 @@ export type MentionChangeHandlerCommandAttributes = ProsemirrorAttributes<
     /**
      * The ID to apply the mention.
      *
-     * @default query.full
+     * @defaultValue query.full
      */
     id?: string;
 
     /**
      * The text that is displayed within the mention bounds.
      *
-     * @default text.full
+     * @defaultValue text.full
      */
     label?: string;
   }

@@ -159,7 +159,7 @@ export interface RemirrorErrorOptions {
   /**
    * When true logging to the console is disabled.
    *
-   * @default false
+   * @defaultValue false
    */
   disableLogging?: boolean;
 }

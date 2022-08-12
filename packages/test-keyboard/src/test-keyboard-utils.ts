@@ -26,7 +26,7 @@ interface GetModifierInformationProps {
   /**
    * Whether to treat this as a mac
    *
-   * @default false
+   * @defaultValue false
    */
   isMac?: boolean;
 }

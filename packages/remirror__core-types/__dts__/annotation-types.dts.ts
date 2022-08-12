@@ -28,7 +28,7 @@ interface MixedOptions {
 
   /**
    * Dynamic is optional but can make it obvious.
-   * @default []
+   * @defaultValue []
    */
   reminders?: Dynamic<string[]>;
 }

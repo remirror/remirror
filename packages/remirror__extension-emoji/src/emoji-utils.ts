@@ -36,7 +36,7 @@ export interface EmojiOptions {
    * stored in the `RemirrorJSON` output. If you're backend does not support
    * `unicode` then you should set this to `hexcode`.
    *
-   * @default emoji
+   * @defaultValue emoji
    */
   identifier?: 'emoji' | 'hexcode';
 
@@ -44,7 +44,7 @@ export interface EmojiOptions {
    * The fallback emoji. This is only used when `moji` is not provided or is a
    * string.
    *
-   * @default ':red_question_mark:'
+   * @defaultValue ':red_question_mark:'
    */
   fallback?: AcceptUndefined<string>;
 
@@ -54,7 +54,7 @@ export interface EmojiOptions {
    * This is a static property and can only be set at the creation of the emoji
    * extension.
    *
-   * @default false
+   * @defaultValue false
    */
   plainText?: Static<boolean>;
 
@@ -64,14 +64,14 @@ export interface EmojiOptions {
    *
    * The available options are `'noto'` | `'openmoji'` | `'twemoji'` | `'blob'`
    *
-   * @default 'noto'
+   * @defaultValue 'noto'
    */
   moji?: NamedMojiType | Moji;
 
   /**
    * The character which will activate the suggestion query callback.
    *
-   * @default ':'
+   * @defaultValue ':'
    */
   suggestionCharacter?: string;
 

@@ -28,7 +28,7 @@ export interface DecorationsOptions {
    * You can set it as `'selection'` to match the default styles provided by
    * `@remirror/styles`.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   persistentSelectionClass?: AcceptUndefined<string | boolean>;
 
@@ -41,14 +41,14 @@ export interface DecorationsOptions {
   /**
    * The className that is added to all placeholder positions
    *
-   * '@default 'placeholder'
+   * '@defaultValue 'placeholder'
    */
   placeholderClassName?: Static<string>;
 
   /**
    * The default element that is used for all placeholders.
    *
-   * @default 'span'
+   * @defaultValue 'span'
    */
   placeholderNodeName?: Static<string>;
 }
@@ -665,14 +665,14 @@ interface BasePlaceholder {
    * A custom class name to use for the placeholder decoration. All the trackers
    * will automatically be given the class name `remirror-tracker-position`
    *
-   * @default ''
+   * @defaultValue ''
    */
   className?: string;
 
   /**
    * A custom html element or string for a created element tag name.
    *
-   * @default 'tracker'
+   * @defaultValue 'tracker'
    */
   nodeName?: string;
 }

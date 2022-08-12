@@ -83,7 +83,7 @@ interface TypistOptions {
   /**
    * Set a delay in `ms` when typing.
    *
-   * @default undefined - no delay.
+   * @defaultValue undefined - no delay.
    */
   delay?: number;
 

@@ -107,7 +107,7 @@ export interface RenderEditorProps<Extension extends AnyExtension>
   /**
    * Whether to automatically cleanup the dom once the test finishes.
    *
-   * @default true
+   * @defaultValue true
    */
   autoClean?: boolean;
 }

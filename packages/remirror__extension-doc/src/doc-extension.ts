@@ -174,7 +174,7 @@ export class SetDocAttributeStep extends Step {
   /**
    * A custom name for the step type.
    *
-   * @default 'SetDocAttribute'
+   * @defaultValue 'SetDocAttribute'
    */
   readonly stepType: string;
 

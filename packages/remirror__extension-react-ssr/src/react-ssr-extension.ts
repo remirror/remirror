@@ -15,7 +15,7 @@ declare global {
       /**
        * Whether to use the SSR component when not in a DOM environment
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       reactSSR?: boolean;
     }

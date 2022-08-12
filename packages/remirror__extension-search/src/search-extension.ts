@@ -28,46 +28,46 @@ import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 export interface SearchOptions {
   /**
-   * @default false
+   * @defaultValue false
    */
   autoSelectNext?: boolean;
 
   /**
-   * @default 'search'
+   * @defaultValue 'search'
    */
   searchClass?: Static<string>;
 
   /**
    * The class to apply to the currently highlighted index.
    *
-   * @default 'highlighted-search'
+   * @defaultValue 'highlighted-search'
    */
   highlightedClass?: Static<string>;
 
   /**
-   * @default false
+   * @defaultValue false
    */
   searching?: boolean;
 
   /**
-   * @default false
+   * @defaultValue false
    */
   caseSensitive?: boolean;
 
   /**
-   * @default true
+   * @defaultValue true
    */
   disableRegex?: boolean;
 
   /**
-   * @default false
+   * @defaultValue false
    */
   alwaysSearch?: boolean;
 
   /**
    * Whether to clear the search when the `Escape` key is pressed.
    *
-   * @default true
+   * @defaultValue true
    */
   clearOnEscape?: boolean;
 

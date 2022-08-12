@@ -78,14 +78,14 @@ export interface CommandOptions {
   /**
    * The className that is added to all tracker positions
    *
-   * '@default 'remirror-tracker-position'
+   * '@defaultValue 'remirror-tracker-position'
    */
   trackerClassName?: Static<string>;
 
   /**
    * The default element that is used for all trackers.
    *
-   * @default 'span'
+   * @defaultValue 'span'
    */
   trackerNodeName?: Static<string>;
 }
@@ -1242,7 +1242,7 @@ interface UnchainedFactoryProps {
   /**
    * When false the dispatch is not provided (making this an `isEnabled` check).
    *
-   * @default true
+   * @defaultValue true
    */
   shouldDispatch?: boolean;
 }

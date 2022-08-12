@@ -95,14 +95,14 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
    * By default all editor bindings use the awareness 'cursor' field to
    * propagate cursor information.
    *
-   * @default 'cursor'
+   * @defaultValue 'cursor'
    */
   cursorStateField?: string;
 
   /**
    * Get the current editor selection.
    *
-   * @default `(state) => state.selection`
+   * @defaultValue `(state) => state.selection`
    */
   getSelection?: (state: EditorState) => Selection;
 
@@ -111,7 +111,7 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
   /**
    * Names of nodes in the editor which should be protected.
    *
-   * @default `new Set('paragraph')`
+   * @defaultValue `new Set('paragraph')`
    */
   protectedNodes?: Static<Set<string>>;
   trackedOrigins?: Static<any[]>;

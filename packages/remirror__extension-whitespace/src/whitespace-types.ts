@@ -5,7 +5,7 @@ export interface WhitespaceOptions extends WhitespaceDecoratorSettings {
   /**
    * The initial whitespace visibility.
    *
-   * @default false
+   * @defaultValue false
    */
   initialVisibility?: Static<boolean>;
 
@@ -24,21 +24,21 @@ export interface WhitespaceDecoratorSettings {
   /**
    * The nodes that are interpreted as break nodes.
    *
-   * @default ['hardBreak']
+   * @defaultValue ['hardBreak']
    */
   breakNodes?: string[];
 
   /**
    * The nodes that are interpreted as paragraph nodes.
    *
-   * @default ['paragraph']
+   * @defaultValue ['paragraph']
    */
   paragraphNodes?: string[];
 
   /**
    * The text which should be interpreted as space characters.
    *
-   * @default [' ']
+   * @defaultValue [' ']
    */
   spaceCharacters?: string[];
 }

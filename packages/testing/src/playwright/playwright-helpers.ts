@@ -92,7 +92,7 @@ export interface PressProps extends Pick<TypeProps, 'delay'> {
   /**
    * The number of times the key should be pressed.
    *
-   * @default 1
+   * @defaultValue 1
    */
   count?: number;
 }

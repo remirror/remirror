@@ -41,7 +41,7 @@ export interface FileOptions {
   /**
    * A regex test for the file type when users paste files.
    *
-   * @default /^((?!image).)*$/i - Only match non-image files, as image files
+   * @defaultValue /^((?!image).)*$/i - Only match non-image files, as image files
    * will be handled by the `ImageExtension`.
    */
   pasteRuleRegexp?: RegExp;

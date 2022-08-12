@@ -79,7 +79,7 @@ export interface IsNameUniqueProps {
   /**
    * The error code to use
    *
-   * @default 'extension'
+   * @defaultValue 'extension'
    */
   code: ErrorConstant.DUPLICATE_HELPER_NAMES | ErrorConstant.DUPLICATE_COMMAND_NAMES;
 }
