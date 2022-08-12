@@ -72,7 +72,7 @@ html[data-theme='dark'] {
   padding-top: 16px;
   padding-bottom: 16px;
   margin-bottom: 0;
-  z-index: var(--ifm-z-index-dropdown);
+  z-index: calc(var(--ifm-z-index-dropdown)+4);
   background-color: var(--ifm-background-color);
   border-bottom: 2px solid var(--ifm-toc-border-color);
 }
@@ -83,7 +83,7 @@ html[data-theme='dark'] {
   padding-top: 8px;
   padding-bottom: 8px;
   margin-bottom: 0;
-  z-index: var(--ifm-z-index-dropdown);
+  z-index: calc(var(--ifm-z-index-dropdown)+3);
   background-color: var(--ifm-background-color);
   border-bottom: 2px solid var(--ifm-toc-border-color);
 }
