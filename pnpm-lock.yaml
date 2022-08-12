@@ -114,7 +114,7 @@ importers:
       size-limit: ^7.0.8
       snapshot-diff: ^0.9.0
       testing: ^0.0.4
-      ts-documenter: ^0.0.3
+      ts-documenter: ^0.0.4
       tsx: ^3.4.2
       typescript: ~4.5.5
       typescript-styled-plugin: ^0.18.1
@@ -226,7 +226,7 @@ importers:
       size-limit: 7.0.8
       snapshot-diff: 0.9.0_jest@28.1.1
       testing: link:packages/testing
-      ts-documenter: 0.0.3
+      ts-documenter: 0.0.4
       tsx: 3.4.2
       typescript: 4.5.5
       typescript-styled-plugin: 0.18.1
@@ -26852,8 +26852,8 @@ packages:
     resolution: {integrity: sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==}
     engines: {node: '>=6.10'}
 
-  /ts-documenter/0.0.3:
-    resolution: {integrity: sha512-0bCY6BvCgo0VJwHmjRmf9+X8k0VJSMPBpEN6ACAkSYbBYD24iXwNlu0Hv3BPoIVreje+wqcoFzgaHFZ86FVd0w==}
+  /ts-documenter/0.0.4:
+    resolution: {integrity: sha512-jl9p3RjI2gWaSNM9KS1xoei2vYoDmlEKWvZheZlndBkki4HZXyOo6r+upLxBJXCjFG/smHOf9wCni/uvv7krsA==}
     hasBin: true
     dependencies:
       '@microsoft/api-extractor-model': 7.23.0
