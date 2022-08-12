@@ -40,6 +40,8 @@ async function getTypedPackages() {
 async function runApiExtractor() {
   const packages = await getTypedPackages();
 
+  const packageNameSet = new Set(packages.map((pkg) => pkg.packageJson.name));
+
   for (const pkg of packages) {
     const json = pkg.packageJson;
     const name = mangleScopedPackageName(json.name);
@@ -77,6 +79,12 @@ async function runApiExtractor() {
         tsconfigFilePath: path.join(projectFolder, 'src', 'tsconfig.json'),
         skipLibCheck: true,
       },
+
+      // Make `export * from 'other-remirror-packages'` to work
+      bundledPackages: [
+        ...Object.keys(pkg.packageJson.dependencies ?? {}),
+        ...Object.keys(pkg.packageJson.peerDependencies ?? {}),
+      ].filter((name) => packageNameSet.has(name)),
     };
 
     const extractorConfig: ExtractorConfig = ExtractorConfig.prepare({
