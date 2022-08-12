@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const pkg = require('./package.json');
+const sectionize = require('remark-sectionize');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -144,6 +145,12 @@ const config = {
 
             return `https://github.com/remirror/remirror/edit/main/docs/${docPath}`;
           },
+
+          remarkPlugins: [
+            // Wrap each heading and the content that follows it in a <section>
+            // tag. This allows us to add `position: sticky` CSS to headings.
+            sectionize,
+          ],
         },
         blog: {
           showReadingTime: true,

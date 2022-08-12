@@ -13,6 +13,8 @@
   --ifm-navbar-link-hover-color: #ccc;
   --ifm-footer-background-color: #303846;
   --ifm-menu-color-background-active: #e7e3f7;
+
+  --ifm-background-color: #fff;
 }
 
 html[data-theme='dark'] {
@@ -58,4 +60,30 @@ html[data-theme='dark'] {
 
 .beta:after {
   content: 'Beta';
+}
+
+.theme-doc-markdown.markdown section {
+  display: block;
+}
+
+.theme-doc-markdown.markdown section h2 {
+  position: sticky;
+  top: 60px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin-bottom: 0;
+  z-index: var(--ifm-z-index-dropdown);
+  background-color: var(--ifm-background-color);
+  border-bottom: 2px solid var(--ifm-toc-border-color);
+}
+
+.theme-doc-markdown.markdown section h3 {
+  position: sticky;
+  top: 122px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 0;
+  z-index: var(--ifm-z-index-dropdown);
+  background-color: var(--ifm-background-color);
+  border-bottom: 2px solid var(--ifm-toc-border-color);
 }
