@@ -8,9 +8,9 @@
   },
   "type": "module",
   "scripts": {
+    "api": "run-s typecheck api:generate-json api:generate-md",
     "api:generate-json": "tsx support/scripts/src/generate-api",
     "api:generate-md": "ts-documenter markdown -i ./support/api -o ./docs/api && rm docs/api/index.md",
-    "api": "run-s typecheck api:generate-json api:generate-md",
     "browser:coverage": "browserslist --coverage",
     "build": "run-p build:core css:copy",
     "build:core": "preconstruct fix && preconstruct build && remirror-cli build",
@@ -217,7 +217,7 @@
     "size-limit": "^7.0.8",
     "snapshot-diff": "^0.9.0",
     "testing": "^0.0.4",
-    "ts-documenter": "^0.0.3",
+    "ts-documenter": "^0.0.4",
     "tsx": "^3.4.2",
     "typescript": "~4.5.5",
     "typescript-styled-plugin": "^0.18.1"
