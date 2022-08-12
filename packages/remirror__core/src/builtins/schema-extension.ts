@@ -821,7 +821,7 @@ interface CreateSpecReturn<Type extends { group?: string | null }> {
 /**
  * Create the scheme spec for a node or mark extension.
  *
- * @template Type - either a [[Mark]] or a [[ProsemirrorNode]]
+ * @typeParam Type - either a [[Mark]] or a [[ProsemirrorNode]]
  * @param props - the options object [[CreateSpecProps]]
  */
 function createSpec<Type extends { group?: string | null }, Override extends object>(

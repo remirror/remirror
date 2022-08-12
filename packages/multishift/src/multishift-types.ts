@@ -114,7 +114,7 @@ export interface ActionWithPayload<Type extends string = string, Payload = any> 
  * cause a side effect, like a routing transition, it should return an async
  * action instead of an action.
  *
- * @template A Returned action type.
+ * @typeParam A Returned action type.
  */
 export type ActionCreator<A> = (...args: any[]) => A;
 
@@ -869,7 +869,7 @@ export interface MultishiftFocusHelpers {
  * This provides utility methods which make updating the state for
  * _uncontrolled_ components a bit simpler.
  *
- * @template Item = the underlying item type.
+ * @typeParam Item = the underlying item type.
  */
 export interface MultishiftStateHelpers<Item = any> {
   /**

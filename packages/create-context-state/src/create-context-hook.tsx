@@ -75,9 +75,9 @@ import React, {
  * }
  * ```
  *
- * @template Context - The type of the context that is returned from the
+ * @typeParam Context - The type of the context that is returned from the
  * `useContext` hook.
- * @template Props - The optional props that are passed through to the `Provider`.
+ * @typeParam Props - The optional props that are passed through to the `Provider`.
  */
 export function createContextHook<
   Context extends object,

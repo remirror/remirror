@@ -1015,8 +1015,8 @@ export function within(value: number, ...rest: Array<number | undefined | null>)
  * @param obj - the object to check
  * @param key - the property to check
  *
- * @template Obj - the object type
- * @template Property - the property which can be a string | number | symbol
+ * @typeParam Obj - the object type
+ * @typeParam Property - the property which can be a string | number | symbol
  */
 export function hasOwnProperty<Obj extends object, Property extends string | number | symbol>(
   object_: Obj,

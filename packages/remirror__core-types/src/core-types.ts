@@ -78,7 +78,7 @@ export interface GetAttributesProps {
  * - JSON object matching Prosemirror expected shape
  * - A top level ProsemirrorNode
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export type RemirrorContentType = string | RemirrorJSON | ProsemirrorNode | EditorState;
 
@@ -130,7 +130,7 @@ export type KeyBindingNames =
  * A map of keyboard bindings and their corresponding command functions (a.k.a
  * editing actions).
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  *
  * @remarks
  *

@@ -294,7 +294,7 @@ export interface CommandDecoratorMessageProps {
 }
 
 /**
- * @template Value - the value which should be returned from the function or
+ * @typeParam Value - the value which should be returned from the function or
  * used directly.
  */
 export type CommandDecoratorValue<Value> = ((props: CommandDecoratorMessageProps) => Value) | Value;

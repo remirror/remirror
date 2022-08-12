@@ -419,7 +419,7 @@ export function fireEventAtPosition(props: FireEventAtPositionProps): void {
  * The return type for the apply method which
  * @remarks
  *
- * @template Schema - the editor schema used node.
+ * @typeParam Schema - the editor schema used node.
  */
 export interface ApplyReturn extends TaggedDocProps, EditorStateProps {
   /**

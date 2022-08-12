@@ -713,7 +713,7 @@ export interface SuggestMarkProps {
 /**
  * A parameter builder interface indicating the reason the handler was called.
  *
- * @template Reason - Whether this is change or an exit reason.
+ * @typeParam Reason - Whether this is change or an exit reason.
  */
 export interface ReasonProps {
   /**
@@ -792,7 +792,7 @@ export interface SuggestReasonMap {
  *
  * This is used to build parameters for {@link Suggester} handler methods.
  *
- * @template Reason - Whether this is change or an exit reason.
+ * @typeParam Reason - Whether this is change or an exit reason.
  */
 export interface ReasonMatchProps {
   /**
@@ -838,7 +838,7 @@ export type Transaction = PMState.Transaction;
 /**
  * A parameter builder interface containing the `tr` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface TransactionProps {
   /**
@@ -852,7 +852,7 @@ export type EditorState = PMState.EditorState;
 /**
  * A parameter builder interface containing the `state` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface EditorStateProps {
   /**
@@ -864,7 +864,7 @@ export interface EditorStateProps {
 export type ResolvedPos = PMModel.ResolvedPos;
 
 /**
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface ResolvedPosProps {
   /**
@@ -889,7 +889,7 @@ export type EditorView = PMView.EditorView;
 /**
  * A parameter builder interface containing the `view` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface EditorViewProps {
   /**

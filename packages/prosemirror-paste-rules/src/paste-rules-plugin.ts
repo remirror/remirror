@@ -380,7 +380,7 @@ export type PasteRule = FilePasteRule | TextPasteRule | NodePasteRule | MarkPast
 const pastePluginKey = new PluginKey('pasteRule');
 
 /**
- * @template RegexPasteRule
+ * @typeParam RegexPasteRule
  */
 interface PasteRuleHandler<Rule extends RegexPasteRule> {
   /** The fragment to use */
