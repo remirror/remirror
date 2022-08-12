@@ -53,7 +53,7 @@
     "@linaria/babel-preset": "3.0.0-beta.13",
     "@lingui/core": "^3.14.0",
     "@manypkg/get-packages": "^1.1.3",
-    "@microsoft/api-extractor": "^7.18.17",
+    "@microsoft/api-extractor": "^7.29.2",
     "@microsoft/tsdoc": "^0.14.1",
     "@microsoft/tsdoc-config": "^0.16.1",
     "@remirror/core-helpers": "^2.0.0-beta.13",
