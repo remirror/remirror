@@ -8,7 +8,7 @@ interface UploadPlaceholderPluginData {
   payloads: Map<string, any>;
 }
 
-const key = new PluginKey<UploadPlaceholderPluginData>('remirroFilePlaceholderPlugin');
+const key = new PluginKey<UploadPlaceholderPluginData>('remirrorFilePlaceholderPlugin');
 
 export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginData> {
   const plugin: Plugin<UploadPlaceholderPluginData> = new Plugin<UploadPlaceholderPluginData>({
@@ -48,10 +48,10 @@ export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginD
 }
 
 /**
- * Try to find the positon of the placeholder in the document based on the
+ * Try to find the position of the placeholder in the document based on the
  * upload placeholder id
  *
- * @remark
+ * @remarks
  *
  * This function will first try to find the position based on the decoration set.
  * However, in some cases (e.g. `ReplaceStep`) the decoration will not be
@@ -63,10 +63,10 @@ export function findUploadPlaceholderPos(state: EditorState, id: string): number
   const set = key.getState(state)?.set;
 
   if (set) {
-    const decos = set.find(undefined, undefined, (spec) => spec.id === id);
-    const pos = decos?.[0]?.from;
+    const decorations = set.find(undefined, undefined, (spec) => spec.id === id);
+    const pos = decorations?.[0]?.from;
 
-    if (pos !== undefined) {
+    if (pos != null) {
       return pos;
     }
   }
