@@ -1,5 +1,6 @@
 import {
   ApplySchemaAttributes,
+  command,
   CommandFunction,
   ErrorConstant,
   extension,
@@ -51,45 +52,44 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
     };
   }
 
-  createCommands() {
-    return {
-      /**
-       * Inserts a horizontal line into the editor.
-       */
-      insertHorizontalRule: (): CommandFunction => (props) => {
-        const { tr, dispatch } = props;
-        const $pos = tr.selection.$anchor;
-        const initialParent = $pos.parent;
+  /**
+   * Inserts a horizontal line into the editor.
+   */
+  @command()
+  insertHorizontalRule(): CommandFunction {
+    return (props) => {
+      const { tr, dispatch } = props;
+      const $pos = tr.selection.$anchor;
+      const initialParent = $pos.parent;
 
-        if (initialParent.type.name === 'doc' || initialParent.isAtom || initialParent.isLeaf) {
-          return false;
-        }
+      if (initialParent.type.name === 'doc' || initialParent.isAtom || initialParent.isLeaf) {
+        return false;
+      }
 
-        if (!dispatch) {
-          return true;
-        }
-
-        // A boolean value that is true when the current node is empty and
-        // should be duplicated before the replacement of the current node by
-        // the `hr`.
-        const shouldDuplicateEmptyNode = tr.selection.empty && isEmptyBlockNode(initialParent);
-
-        // When the node should eb duplicated add it to the position after
-        // before the replacement.
-        if (shouldDuplicateEmptyNode) {
-          tr.insert($pos.pos + 1, initialParent);
-        }
-
-        // Create the horizontal rule by replacing the selection
-        tr.replaceSelectionWith(this.type.create());
-
-        // Update the selection if currently pointed at the node.
-        this.updateFromNodeSelection(tr);
-
-        dispatch(tr.scrollIntoView());
-
+      if (!dispatch) {
         return true;
-      },
+      }
+
+      // A boolean value that is true when the current node is empty and
+      // should be duplicated before the replacement of the current node by
+      // the `hr`.
+      const shouldDuplicateEmptyNode = tr.selection.empty && isEmptyBlockNode(initialParent);
+
+      // When the node should eb duplicated add it to the position after
+      // before the replacement.
+      if (shouldDuplicateEmptyNode) {
+        tr.insert($pos.pos + 1, initialParent);
+      }
+
+      // Create the horizontal rule by replacing the selection
+      tr.replaceSelectionWith(this.type.create());
+
+      // Update the selection if currently pointed at the node.
+      this.updateFromNodeSelection(tr);
+
+      dispatch(tr.scrollIntoView());
+
+      return true;
     };
   }
 
