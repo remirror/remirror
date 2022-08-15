@@ -14,7 +14,7 @@ export interface UseEditorFocusProps {
    * Set this to true if you want to also update the focus value when the user
    * focuses on other windows or tabs (outside of the current DOM).
    *
-   * @default false
+   * @defaultValue false
    */
   blurOnInactive?: boolean;
 }

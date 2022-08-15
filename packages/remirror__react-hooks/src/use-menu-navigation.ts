@@ -57,28 +57,28 @@ export interface MenuNavigationOptions {
   /**
    * The direction of the arrow key press.
    *
-   * @default 'vertical';
+   * @defaultValue 'vertical';
    */
   direction?: MenuDirection;
 
   /**
    * Keys that can submit the selection.
    *
-   * @default ['Enter']
+   * @defaultValue ['Enter']
    */
   submitKeys?: KeyBindingNames[];
 
   /**
    * Keys that can dismiss the menu.
    *
-   * @default ['Escape', 'Tab', 'Shift-Tab']
+   * @defaultValue ['Escape', 'Tab', 'Shift-Tab']
    */
   dismissKeys?: KeyBindingNames[];
 
   /**
    * When true, refocus the editor when a click is made.
    *
-   * @default true
+   * @defaultValue true
    */
   focusOnClick?: boolean;
 }

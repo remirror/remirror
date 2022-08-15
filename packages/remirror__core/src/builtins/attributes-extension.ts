@@ -112,7 +112,7 @@ declare global {
       /**
        * Whether to use the attributes provided by this extension
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       attributes?: boolean;
     }

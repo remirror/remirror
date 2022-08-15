@@ -19,7 +19,7 @@ interface GenerateDecorationsProps extends FromToProps {
   /**
    * The starting decoration set.
    *
-   * @default DecorationSet.empty
+   * @defaultValue DecorationSet.empty
    */
   decorationSet?: DecorationSet;
 

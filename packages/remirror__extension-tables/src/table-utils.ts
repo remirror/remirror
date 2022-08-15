@@ -23,27 +23,27 @@ export interface CreateTableCommand {
   /**
    * Defines the number of rows to create with.
    *
-   * @default 3
+   * @defaultValue 3
    */
   rowsCount?: number;
 
   /**
    * Defines the number of columns to create with.
    *
-   * @default 3
+   * @defaultValue 3
    */
   columnsCount?: number;
   /**
    * When true the first row of the table will be a header row.
    *
-   * @default true
+   * @defaultValue true
    */
   withHeaderRow?: boolean;
 
   /**
    * Defines the content of each cell as a prosemirror node.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   cellContent?: ProsemirrorNode;
 }

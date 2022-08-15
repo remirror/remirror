@@ -69,7 +69,7 @@ interface BaseFloatingPositioner extends UseEditorFocusProps {
    * Setting to true will also make scrolling less smooth since it will be using
    * JavaScript to keep track of the position of the element.
    *
-   * @default false
+   * @defaultValue false
    */
   renderOutsideEditor?: boolean;
 }
@@ -78,7 +78,7 @@ interface FloatingWrapperProps extends BaseFloatingPositioner {
   /**
    * When true the arrow will be displayed.
    *
-   * @default false
+   * @defaultValue false
    */
   displayArrow?: boolean;
 

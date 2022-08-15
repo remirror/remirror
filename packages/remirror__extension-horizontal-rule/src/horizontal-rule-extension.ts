@@ -22,7 +22,7 @@ export interface HorizontalRuleOptions {
    *
    * Set to false to prevent adding a node afterwards.
    *
-   * @default 'paragraph'
+   * @defaultValue 'paragraph'
    */
   insertionNode?: string | false;
 }

@@ -212,7 +212,7 @@ function updateNodeViewMark(node: ProsemirrorNode, mark: HTMLElement) {
 
 export type TaskListItemAttributes = ProsemirrorAttributes<{
   /**
-   * @default false
+   * @defaultValue false
    */
   checked: boolean;
 }>;

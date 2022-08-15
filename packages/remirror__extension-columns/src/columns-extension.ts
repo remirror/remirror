@@ -40,7 +40,7 @@ export interface ColumnsOptions {
   /**
    * The default columns to use for created columns.
    *
-   * @default `DEFAULT_COLUMN_ATTRIBUTES`
+   * @defaultValue `DEFAULT_COLUMN_ATTRIBUTES`
    */
   defaults?: Static<Required<BaseColumnAttributes>>;
 }
@@ -49,35 +49,35 @@ export interface BaseColumnAttributes {
   /**
    * Specifies the number of columns an element should be divided into.
    *
-   * @default 2
+   * @defaultValue 2
    */
   count?: number;
 
   /**
    * Specifies how to fill columns.
    *
-   * @default 'auto'
+   * @defaultValue 'auto'
    */
   fill?: 'balance' | 'auto';
 
   /**
    * Specifies the gap between the columns.
    *
-   * @default 'inherit'
+   * @defaultValue 'inherit'
    */
   gap?: string;
 
   /**
    * Specifies the color of the rule between columns.
    *
-   * @default 'transparent'
+   * @defaultValue 'transparent'
    */
   ruleColor?: string;
 
   /**
    * Specifies the style of the rule between columns.
    *
-   * @default 'none'
+   * @defaultValue 'none'
    */
   ruleStyle?:
     | 'none'
@@ -94,14 +94,14 @@ export interface BaseColumnAttributes {
   /**
    * Specifies the width of the rule between columns.
    *
-   * @default 'inherit'
+   * @defaultValue 'inherit'
    */
   ruleWidth?: LiteralUnion<'medium' | 'thin' | 'thick', string>;
 
   /**
    * Specifies a suggested, optimal width for the columns.
    *
-   * @default 'inherit'
+   * @defaultValue 'inherit'
    */
   width?: string;
 }

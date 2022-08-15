@@ -4,14 +4,14 @@ export interface FontSizeOptions {
   /**
    * The default size value.
    *
-   * @default ''
+   * @defaultValue ''
    */
   defaultSize?: Static<string>;
 
   /**
    * The default unit to use for the font sizes.
    *
-   * @default 'pt'
+   * @defaultValue 'pt'
    */
   unit?: DomSizeUnit;
 
@@ -46,7 +46,7 @@ export interface FontSizeOptions {
    * It is advisable to only set values that produce whole numbers when divided
    * by 1.
    *
-   * @default 0.5
+   * @defaultValue 0.5
    */
   roundingMultiple?: number;
 }
@@ -55,7 +55,7 @@ export interface FontSizeAttributes {
   /**
    * The font size.
    *
-   * @default ''
+   * @defaultValue ''
    */
   size?: string;
 }

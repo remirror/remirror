@@ -39,7 +39,7 @@ export type NonChainableCommandFunction<Extra extends object = object> = Brand<
 /**
  * Used to apply the Prosemirror transaction to the current {@link EditorState}.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export type DispatchFunction = (tr: Transaction) => void;
 
@@ -55,7 +55,7 @@ export type DispatchFunction = (tr: Transaction) => void;
  * When no dispatch callback is passed, the command should do a 'dry run',
  * determining whether it is applicable, but not actually performing any action.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export type ProsemirrorCommandFunction = (
   state: EditorState,
@@ -66,8 +66,8 @@ export type ProsemirrorCommandFunction = (
 /**
  * A command method for running commands in your editor.
  *
- * @template Schema - the underlying editor schema.
- * @template ExtraProps - extra parameters to add to the command function.
+ * @typeParam Schema - the underlying editor schema.
+ * @typeParam ExtraProps - extra parameters to add to the command function.
  *
  * @remarks
  *
@@ -94,7 +94,7 @@ export type CommandFunction<ExtraProps extends object = object> = (
 /**
  * A parameter builder interface for the remirror `CommandFunction`.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface CommandFunctionProps {
   /**

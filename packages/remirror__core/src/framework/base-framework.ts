@@ -82,14 +82,14 @@ export interface FrameworkProps<Extension extends AnyExtension> {
    * way to set the value via props. As a result this is the only opportunity to
    * directly control the rendered text.
    *
-   * @default `{ type: 'doc', content: [{ type: 'paragraph' }] }`
+   * @defaultValue `{ type: 'doc', content: [{ type: 'paragraph' }] }`
    */
   initialContent?: RemirrorContentType | [RemirrorContentType, PrimitiveSelection];
 
   /**
    * Adds attributes directly to the prosemirror element.
    *
-   * @default {}
+   * @defaultValue {}
    */
   attributes?: Record<string, string> | AttributePropFunction<Extension>;
 
@@ -103,7 +103,7 @@ export interface FrameworkProps<Extension extends AnyExtension> {
   /**
    * Determines whether this editor is editable or not.
    *
-   * @default true
+   * @defaultValue true
    */
   editable?: boolean;
 
@@ -111,7 +111,7 @@ export interface FrameworkProps<Extension extends AnyExtension> {
    * When set to true focus will be place on the editor as soon as it first
    * loads.
    *
-   * @default false
+   * @defaultValue false
    */
   autoFocus?: FocusType;
 
@@ -142,7 +142,7 @@ export interface FrameworkProps<Extension extends AnyExtension> {
   /**
    * Sets the accessibility label for the editor instance.
    *
-   * @default ''
+   * @defaultValue ''
    */
   label?: string;
 }
@@ -326,7 +326,7 @@ export interface TriggerChangeProps {
   /**
    * Whether or not to trigger this as a change and call any handlers.
    *
-   * @default true
+   * @defaultValue true
    */
   triggerChange?: boolean;
 }

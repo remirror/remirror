@@ -1021,7 +1021,7 @@ export interface CreateDocumentNodeProps
    * number is tracks the call depth of the recursive function to prevent it
    * exceeding the maximum.
    *
-   * @default 0
+   * @defaultValue 0
    *
    * @internal
    */
@@ -1361,7 +1361,7 @@ interface IsStateEqualOptions {
   /**
    * Whether to compare the selection of the two states.
    *
-   * @default false
+   * @defaultValue false
    */
   checkSelection?: boolean;
 }

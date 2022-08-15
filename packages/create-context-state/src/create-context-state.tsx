@@ -49,11 +49,11 @@ import { ContextSelector, createContextHook, CreateContextReturn } from './creat
  * };
  * ```
  *
- * @template Context - The type of the context that is returned from the
+ * @typeParam Context - The type of the context that is returned from the
  * `useContext` hook.
- * @template Props - The optional props that are passed through to the
+ * @typeParam Props - The optional props that are passed through to the
  * `Provider`.
- * @template State - Additional state which can be captured via hooks.
+ * @typeParam State - Additional state which can be captured via hooks.
  *
  * @param creator - A function used to create the desired context.
  * @param hook - An optional hook which can be used to provide additional state

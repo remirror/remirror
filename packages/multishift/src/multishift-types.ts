@@ -16,7 +16,7 @@ export interface MultishiftState<Item = any> {
    *
    * When `multiple` selection is enabled this can contain more than one item.
    *
-   * @default []
+   * @defaultValue []
    */
   selectedItems: Item[];
 
@@ -25,21 +25,21 @@ export interface MultishiftState<Item = any> {
    *
    * It allows the implementation of quick jump to item functionality.
    *
-   * @default ''
+   * @defaultValue ''
    */
   jumpText: string;
 
   /**
    * Determines whether or not the menu items should be displayed.
    *
-   * @default false
+   * @defaultValue false
    */
   isOpen: boolean;
 
   /**
    * This tracks the input value when filtering the items to insert.
    *
-   * @default ''
+   * @defaultValue ''
    */
   inputValue: string;
 
@@ -53,28 +53,28 @@ export interface MultishiftState<Item = any> {
    * - Click and drag - drag over multiple items to select each one
    * - ArrowKey shift - Select multiple highlighted items
    *
-   * @default []
+   * @defaultValue []
    */
   highlightedIndexes: number[];
 
   /**
    * Marks the position as the starting point for a new highlighted group.
    *
-   * @default -1
+   * @defaultValue -1
    */
   highlightedGroupStartIndex: number;
 
   /**
    * Marks the position as the end point for a new highlighted group.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   highlightedGroupEndIndex: number | undefined;
 
   /**
    * Marks the index of the currently hovered item.
    *
-   * @default -1
+   * @defaultValue -1
    */
   hoveredIndex: number;
 }
@@ -114,7 +114,7 @@ export interface ActionWithPayload<Type extends string = string, Payload = any> 
  * cause a side effect, like a routing transition, it should return an async
  * action instead of an action.
  *
- * @template A Returned action type.
+ * @typeParam A Returned action type.
  */
 export type ActionCreator<A> = (...args: any[]) => A;
 
@@ -331,7 +331,7 @@ export interface MultishiftBehaviorProps {
    * - When `vertical` the `ArrowUp` and `ArrowDown` keyDown handlers are used.
    * - When `horizontal` the `ArrowLeft` and `ArrowRight` handlers are used.
    *
-   * @default 'vertical'
+   * @defaultValue 'vertical'
    */
   direction?: 'horizontal' | 'vertical';
 
@@ -344,7 +344,7 @@ export interface MultishiftBehaviorProps {
   /**
    * When true will automatically selected the higlightedIndexes on blur.
    *
-   * @default true
+   * @defaultValue true
    */
   autoSelectOnBlur?: boolean;
 
@@ -366,7 +366,7 @@ export interface MultishiftBehaviorProps {
   /**
    * Set a custom message to render for the duration provided by the timeout.
    *
-   * @default ''
+   * @defaultValue ''
    */
   customA11yStatusMessage?: string;
 
@@ -374,7 +374,7 @@ export interface MultishiftBehaviorProps {
    * When true will include the hovered index in the next selection (whether on
    * blur) or active selection.
    *
-   * @default false
+   * @defaultValue false
    */
   includeHoveredIndexInSelection?: boolean;
 }
@@ -521,7 +521,7 @@ export interface GetRemoveButtonReturn<Element extends HTMLElement = any>
   /**
    * The aria role for the button. This can be overridden in the options.
    *
-   * @default 'button'
+   * @defaultValue 'button'
    */
   role: string;
 }
@@ -537,7 +537,7 @@ export type GetComboBoxPropsReturn<
   RefKey extends string = 'ref',
 > = DetailedHTMLProps<HTMLAttributes<Element>, Element> & { [P in RefKey]: Ref<any> } & {
   /**
-   * @default 'combobox'
+   * @defaultValue 'combobox'
    */
   role: string;
   'aria-expanded': boolean;
@@ -869,7 +869,7 @@ export interface MultishiftFocusHelpers {
  * This provides utility methods which make updating the state for
  * _uncontrolled_ components a bit simpler.
  *
- * @template Item = the underlying item type.
+ * @typeParam Item = the underlying item type.
  */
 export interface MultishiftStateHelpers<Item = any> {
   /**
@@ -928,7 +928,7 @@ export interface RefProps<RefKey extends string = 'ref'> {
    * A custom ref key which allows a reference to be obtained from non standard
    * components.
    *
-   * @default 'ref'
+   * @defaultValue 'ref'
    */
   refKey?: RefKey;
 }

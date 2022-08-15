@@ -305,7 +305,7 @@ export interface ReactFrameworkProps<Extension extends AnyExtension>
    * Determine whether the Prosemirror view is inserted at the `start` or `end`
    * of it's container DOM element.
    *
-   * @default 'end'
+   * @defaultValue 'end'
    */
   insertPosition?: 'start' | 'end';
 

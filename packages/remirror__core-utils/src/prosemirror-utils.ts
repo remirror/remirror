@@ -668,8 +668,8 @@ export function chainKeyBindingCommands(
  * - It is used to create the [[`mergeKeyBindings`]] function helper.
  * - It is used to create the [[`mergeProsemirrorKeyBindings`]] function helper.
  *
- * @template [Schema] - the schema that is being used to create this command.
- * @template [Type] - the mapper type signature which is what the `mapper`
+ * @typeParam [Schema] - the schema that is being used to create this command.
+ * @typeParam [Type] - the mapper type signature which is what the `mapper`
  * param transforms the [[`KeyBindingCommandFunction`]]  into.
  *
  * @param extensionKeymaps - the list of extension keymaps similar to the

@@ -241,14 +241,14 @@ export interface MarkPositionerProps {
   /**
    * When true will find all marks of the provided type in the doc.
    *
-   * @default false
+   * @defaultValue false
    */
   all?: boolean;
 
   /**
    * When true will only be active for the visible positions.
    *
-   * @default false
+   * @defaultValue false
    */
   onlyVisible?: boolean;
 }

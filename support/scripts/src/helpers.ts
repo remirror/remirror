@@ -93,14 +93,14 @@ interface FormatFilesOptions {
   /**
    * Whether to log anything to the console.
    *
-   * @default false
+   * @defaultValue false
    */
   silent?: boolean;
 
   /**
    * What formatters to use.
    *
-   * @default 'all'
+   * @defaultValue 'all'
    */
   formatter?: 'prettier' | 'eslint' | 'all';
 }

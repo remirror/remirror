@@ -10,21 +10,21 @@ export interface CalloutOptions {
    *
    * It is a property so it can change during the editor's life.
    *
-   * @default 'info'
+   * @defaultValue 'info'
    */
   defaultType?: Static<string>;
 
   /**
    * The valid types for the callout node.
    *
-   * @default ['info', 'warning' , 'error' , 'success', 'blank']
+   * @defaultValue ['info', 'warning' , 'error' , 'success', 'blank']
    */
   validTypes?: Static<string[]>;
 
   /**
    * The default emoji passed to attrsibute when none is provided.
    *
-   * @default ''
+   * @defaultValue ''
    */
   defaultEmoji?: Static<string>;
 
@@ -39,14 +39,14 @@ export interface CalloutAttributes extends ProsemirrorAttributes {
   /**
    * The type of callout, for instance `info`, `warning`, `error`, `success` or `blank`.
    *
-   * @default 'info'
+   * @defaultValue 'info'
    */
   type?: LiteralUnion<'info' | 'warning' | 'error' | 'success' | 'blank', string>;
 
   /**
    * The emoji information of callout.
    *
-   * @default ''
+   * @defaultValue ''
    */
   emoji?: string;
 }

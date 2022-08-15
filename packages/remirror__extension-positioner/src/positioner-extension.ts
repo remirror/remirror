@@ -44,7 +44,7 @@ export interface PositionerOptions {
    * The `ms` to debounce scroll events. Scroll events affect the visibility of
    * the rendered positioners. By default they are enabled for all positioners.
    *
-   * @default 100
+   * @defaultValue 100
    */
   scrollDebounce?: Static<number>;
 }

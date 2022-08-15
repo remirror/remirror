@@ -8,7 +8,7 @@ export interface TrailingNodeOptions extends TrailingNodePluginOptions {
    * means that the only nodes that will be ignored are those passed to the
    * `ignoredNodes` array.
    *
-   * @default false
+   * @defaultValue false
    */
   disableTags?: boolean;
 }

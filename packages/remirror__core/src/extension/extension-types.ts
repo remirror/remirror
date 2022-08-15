@@ -50,8 +50,8 @@ export type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>>
  * Utility type which receives an extension and provides the type of actions it
  * makes available.
  *
- * @template Extension - the extensions being used within the editor
- * @template Expanded - auto generated from `Extension`. These are the
+ * @typeParam Extension - the extensions being used within the editor
+ * @typeParam Expanded - auto generated from `Extension`. These are the
  * fully expanded extensions with all sub extensions automatically provided. You
  * never need to provide this type as it is automatically calculated.
  */
@@ -177,8 +177,8 @@ export type MapHelpers<RawHelpers extends Record<string, AnyFunction>> = {
  * Utility type which receives an extension and provides the type of helpers it
  * makes available.
  *
- * @template Extension - the extensions being used within the editor
- * @template Expanded - auto generated from `Extension`. These are the
+ * @typeParam Extension - the extensions being used within the editor
+ * @typeParam Expanded - auto generated from `Extension`. These are the
  * fully expanded extensions with all sub extensions automatically provided. You
  * never need to provide this type as it is automatically calculated.
  */
@@ -222,7 +222,7 @@ export type HelperNames<Extension extends AnyExtension> = StringKey<
  * Removes [[`AnyExtension`]] from an extension union. This can be used to make
  * typechecking stricter.
  *
- * @template Extension - The union of extensions to remove [[`AnyExtension`]] from.
+ * @typeParam Extension - The union of extensions to remove [[`AnyExtension`]] from.
  */
 export type RemoveAny<Extension> =
   // Use this to make the `Extension` a distributive union. It is always a
@@ -240,7 +240,7 @@ export type RemoveAny<Extension> =
  * This uses recursive conditional types which are only available in
  * `typescript@4.1` https://github.com/microsoft/TypeScript/pull/40002
  *
- * @template Extension - The union of extensions.
+ * @typeParam Extension - The union of extensions.
  */
 export type GetExtensions<Extension> =
   // I don't want to pick up `AnyExtension` in the collected union. If the
@@ -289,8 +289,8 @@ export type GetNameUnion<Extension extends AnyExtension> = GetExtensions<Extensi
  * A utility type for retrieving the name of an extension only when it's a plain
  * extension.
  *
- * @template Extension - the extensions being used within the editor
- * @template Expanded - auto generated from `Extension`. These are the
+ * @typeParam Extension - the extensions being used within the editor
+ * @typeParam Expanded - auto generated from `Extension`. These are the
  * fully expanded extensions with all sub extensions automatically provided. You
  * never need to provide this type as it is automatically calculated.
  */
@@ -303,8 +303,8 @@ export type GetPlainNameUnion<
  * A utility type for retrieving the name of an extension only when it's a mark
  * extension.
  *
- * @template Extension - the extensions being used within the editor
- * @template Expanded - auto generated from `Extension`. These are the
+ * @typeParam Extension - the extensions being used within the editor
+ * @typeParam Expanded - auto generated from `Extension`. These are the
  * fully expanded extensions with all sub extensions automatically provided. You
  * never need to provide this type as it is automatically calculated.
  */
@@ -317,8 +317,8 @@ export type GetMarkNameUnion<
  * A utility type for retrieving the name of an extension only when it's a node
  * extension.
  *
- * @template Extension - the extensions being used within the editor
- * @template Expanded - auto generated from `Extension`. These are the
+ * @typeParam Extension - the extensions being used within the editor
+ * @typeParam Expanded - auto generated from `Extension`. These are the
  * fully expanded extensions with all sub extensions automatically provided. You
  * never need to provide this type as it is automatically calculated.
  */

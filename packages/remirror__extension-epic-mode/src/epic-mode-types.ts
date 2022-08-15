@@ -29,21 +29,21 @@ export interface EpicModeOptions {
   /**
    * Whether epic mode is active.
    *
-   * @default true
+   * @defaultValue true
    */
   active?: boolean;
 
   /**
    * How long the shaking should last for.
    *
-   * @default 0.3
+   * @defaultValue 0.3
    */
   shakeTime?: number;
 
   /**
    * How strong should the intensity of the shaking be.
    *
-   * @default 5
+   * @defaultValue 5
    */
   shakeIntensity?: number;
 }

@@ -241,7 +241,7 @@ interface GetTextHelperOptions extends Partial<EditorStateProps> {
   /**
    * The divider used to separate text blocks.
    *
-   * @default '\n\n'
+   * @defaultValue '\n\n'
    */
   lineBreakDivider?: string;
 }

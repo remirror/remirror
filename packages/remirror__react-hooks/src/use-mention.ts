@@ -222,7 +222,7 @@ export interface UseMentionProps<
   /**
    * Whether matches should be permanently ignored when the user presses escape.
    *
-   * @default true
+   * @defaultValue true
    */
   ignoreMatchesOnDismiss?: boolean;
 }

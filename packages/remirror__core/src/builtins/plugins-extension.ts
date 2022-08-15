@@ -416,7 +416,7 @@ declare global {
       /**
        * Whether to exclude the extension's plugin
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       plugins?: boolean;
     }

@@ -27,14 +27,14 @@ export interface HeadingOptions {
   /**
    * The numerical value of the supporting headings.
    *
-   * @default `[1, 2, 3, 4, 5, 6]`
+   * @defaultValue `[1, 2, 3, 4, 5, 6]`
    */
   levels?: Static<number[]>;
 
   /**
    * The default level heading to use.
    *
-   * @default 1
+   * @defaultValue 1
    */
   defaultLevel?: Static<number>;
 }

@@ -97,21 +97,21 @@ export interface LinkOptions {
    * If multiple links exist within the range, only the first is returned. I'm
    * open to PR's if you feel it's important to capture all contained links.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   onShortcut?: Handler<(props: ShortcutHandlerProps) => void>;
 
   /**
    * Called after the `commands.updateLink` has been called.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   onUpdateLink?: Handler<(selectedText: string, meta: EventMeta) => void>;
 
   /**
    * Whether to select the text of the full active link when clicked.
    *
-   * @default false
+   * @defaultValue false
    */
   selectTextOnClick?: boolean;
 
@@ -140,7 +140,7 @@ export interface LinkOptions {
   /**
    * Whether automatic links should be created.
    *
-   * @default false
+   * @defaultValue false
    */
   autoLink?: boolean;
 
@@ -181,21 +181,21 @@ export interface LinkOptions {
    * ];
    * ```
    *
-   * @default the top 50 TLDs by usage (May 2022)
+   * @defaultValue the top 50 TLDs by usage (May 2022)
    */
   autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
    * The default protocol to use when it can't be inferred.
    *
-   * @default ''
+   * @defaultValue ''
    */
   defaultProtocol?: DefaultProtocol;
 
   /**
    * The default target to use for links.
    *
-   * @default null
+   * @defaultValue null
    */
   defaultTarget?: LinkTarget;
 
@@ -203,7 +203,7 @@ export interface LinkOptions {
    * The supported targets which can be parsed from the DOM or added with
    * `insertLink`.
    *
-   * @default []
+   * @defaultValue []
    */
   supportedTargets?: LinkTarget[];
 }
@@ -220,7 +220,7 @@ export type LinkAttributes = ProsemirrorAttributes<{
    * True when this was an automatically generated link. False when the link was
    * added specifically by the user.
    *
-   * @default false
+   * @defaultValue false
    */
   auto?: boolean;
 

@@ -41,14 +41,14 @@ export interface MentionAtomOptions
   /**
    * When `true` the atom node which wraps the mention will be selectable.
    *
-   * @default true
+   * @defaultValue true
    */
   selectable?: Static<boolean>;
 
   /**
    * Whether mentions should be draggable.
    *
-   * @default false
+   * @defaultValue false
    */
   draggable?: Static<boolean>;
 
@@ -71,14 +71,14 @@ export interface MentionAtomOptions
    * **NOTE**: If it seems that your editor is swallowing  up empty whitespace,
    * make sure you've imported the core css from the `@remirror/styles` library.
    *
-   * @default ' '
+   * @defaultValue ' '
    */
   appendText?: string;
 
   /**
    * Tag for the prosemirror decoration which wraps an active match.
    *
-   * @default 'span'
+   * @defaultValue 'span'
    */
   suggestTag?: string;
 
@@ -304,7 +304,7 @@ export interface OptionalMentionAtomExtensionProps {
   /**
    * The text to append to the replacement.
    *
-   * @default ''
+   * @defaultValue ''
    */
   appendText?: string;
 
@@ -314,7 +314,7 @@ export interface OptionalMentionAtomExtensionProps {
    * To force replacement of the whole match regardless of where in the match the cursor is placed set this to
    * `full`.
    *
-   * @default 'full'
+   * @defaultValue 'full'
    */
   replacementType?: keyof MatchValue;
 }
@@ -383,7 +383,7 @@ export interface MentionAtomExtensionMatcher
   /**
    * See [[``Suggester.matchOffset`]] for more details.
    *
-   * @default 1
+   * @defaultValue 1
    */
   matchOffset?: number;
 

@@ -54,7 +54,7 @@ export interface KeymapOptions {
   /**
    * The shortcuts to use for named keybindings in the editor.
    *
-   * @default 'default'
+   * @defaultValue 'default'
    */
   shortcuts?: KeyboardShortcuts;
 
@@ -62,14 +62,14 @@ export interface KeymapOptions {
    * Determines whether a backspace after an input rule has been applied should
    * reverse the effect of the input rule.
    *
-   * @default true
+   * @defaultValue true
    */
   undoInputRuleOnBackspace?: boolean;
 
   /**
    * Determines whether the escape key selects the current node.
    *
-   * @default false
+   * @defaultValue false
    */
   selectParentNodeOnEscape?: boolean;
 
@@ -82,7 +82,7 @@ export interface KeymapOptions {
    * keyboard mappings for your editor. Otherwise it is advisable to leave it
    * unchanged.
    *
-   * @default false
+   * @defaultValue false
    */
   excludeBaseKeymap?: boolean;
 
@@ -694,7 +694,7 @@ declare global {
        * Whether to exclude keybindings support. This is not a recommended
        * action and can break functionality.
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       keymap?: boolean;
     }

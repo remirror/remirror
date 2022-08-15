@@ -294,7 +294,7 @@ export interface CommandDecoratorMessageProps {
 }
 
 /**
- * @template Value - the value which should be returned from the function or
+ * @typeParam Value - the value which should be returned from the function or
  * used directly.
  */
 export type CommandDecoratorValue<Value> = ((props: CommandDecoratorMessageProps) => Value) | Value;
@@ -306,7 +306,7 @@ interface ChainableCommandDecoratorOptions<Options extends Shape>
    * Set this to `true` to disable chaining of this command. This means it will
    * no longer be available when running `
    *
-   * @default false
+   * @defaultValue false
    */
   disableChaining?: false;
 }
@@ -316,7 +316,7 @@ interface NonChainableCommandDecoratorOptions<Options extends Shape>
    * Set this to `true` to disable chaining of this command. This means it will
    * no longer be available when running `
    *
-   * @default false
+   * @defaultValue false
    */
   disableChaining: true;
 }

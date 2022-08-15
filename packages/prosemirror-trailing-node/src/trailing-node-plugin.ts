@@ -9,7 +9,7 @@ export interface TrailingNodePluginOptions {
    * **Note**: the nodeName will always be added to the `ignoredNodes` lists to
    * prevent an infinite loop.
    *
-   * @default 'paragraph'
+   * @defaultValue 'paragraph'
    */
   nodeName?: string;
 

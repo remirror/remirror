@@ -680,7 +680,7 @@ declare global {
       /**
        * Whether to exclude the extension's `clickHandler`.
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       clickHandler?: boolean;
     }

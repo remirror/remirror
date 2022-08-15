@@ -41,35 +41,35 @@ interface GifFormatOptions {
   /**
    * Frames per second.
    *
-   * @default 10`
+   * @defaultValue 10`
    */
   fps?: number;
 
   /**
    * Number of colors, up to 255.
    *
-   * @default 80
+   * @defaultValue 80
    */
   colors?: number;
 
   /**
    * Compression (quality) level, from 0 (no compression) to 100.
    *
-   * @default 40
+   * @defaultValue 40
    */
   compress?: number;
 
   /**
    * Time of starting position as `hh:mm:ss` or `seconds`,
    *
-   * @default 0
+   * @defaultValue 0
    */
   from?: string | number;
 
   /**
    * End position, hh:mm:ss or seconds
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   to?: string | number;
 
@@ -85,7 +85,7 @@ interface GifFormatOptions {
   /**
    * Movie speed
    *
-   * @default 1
+   * @defaultValue 1
    */
   speed?: number;
 

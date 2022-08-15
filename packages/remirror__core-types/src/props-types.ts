@@ -15,7 +15,7 @@ import type { ProsemirrorAttributes } from '@remirror/types';
 /**
  * A parameter builder interface containing the `view` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface EditorViewProps {
   /**
@@ -27,8 +27,8 @@ export interface EditorViewProps {
 /**
  * A parameter builder interface containing the `schema` property.
  *
- * @template Nodes - the names of the nodes within the editor schema.
- * @template Marks - the names of the marks within the editor schema.
+ * @typeParam Nodes - the names of the nodes within the editor schema.
+ * @typeParam Marks - the names of the marks within the editor schema.
  */
 export interface SchemaProps {
   /**
@@ -47,7 +47,7 @@ export interface SchemaProps {
 /**
  * A parameter builder interface containing the `state` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface EditorStateProps {
   /**
@@ -92,7 +92,7 @@ export interface AttributesProps {
 /**
  * A parameter builder interface containing the node `type` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface NodeTypeProps {
   /**
@@ -109,7 +109,7 @@ export interface NodeTypeProps {
  *
  * This can be used to check whether a certain type matches any of these types.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface NodeTypesProps {
   /**
@@ -126,7 +126,7 @@ export interface NodeTypesProps {
  *
  * This can be used to check whether a certain type matches any of these types.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface MarkTypesProps {
   /**
@@ -138,7 +138,7 @@ export interface MarkTypesProps {
 /**
  * A parameter builder interface containing the mark `type` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface MarkTypeProps {
   /**

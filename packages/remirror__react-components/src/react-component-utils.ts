@@ -66,7 +66,7 @@ interface ShortcutStringOptions {
    * True to display all named values as symbols (where possible, otherwise
    * display the translated string).
    *
-   * @default false
+   * @defaultValue false
    */
   namedAsSymbol?: boolean | string[];
 
@@ -75,21 +75,21 @@ interface ShortcutStringOptions {
    *
    * An array to only set the provided array values as symbols.
    *
-   * @default true
+   * @defaultValue true
    */
   modifierAsSymbol?: boolean | Modifiers[];
 
   /**
    * How the values should be cased.
    *
-   * @default 'title'
+   * @defaultValue 'title'
    */
   casing?: keyof typeof CASINGS;
 
   /**
    * The separator to use between symbols.
    *
-   * @default ' '
+   * @defaultValue ' '
    */
   separator?: string;
 

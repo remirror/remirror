@@ -157,11 +157,11 @@ export interface ListItemOptions {
 
 export type ListItemAttributes = ProsemirrorAttributes<{
   /**
-   * @default false
+   * @defaultValue false
    */
   closed: boolean;
   /**
-   * @default false
+   * @defaultValue false
    */
   nested: boolean;
 }>;

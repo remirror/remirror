@@ -160,7 +160,7 @@ export interface ToolbarCommandButtonItem extends BaseButtonItem, BaseItem {
   /**
    * Whether to display the shortcut.
    *
-   * @default true
+   * @defaultValue true
    */
   displayShortcut?: boolean;
 
@@ -276,7 +276,7 @@ export interface MenuCommandPaneItem extends BaseButtonItem {
   type: ComponentItem.MenuCommandPane;
 
   /**
-   * @default ['icon', 'label', 'shortcut']
+   * @defaultValue ['icon', 'label', 'shortcut']
    */
   layout?: PaneLayoutSection[];
 
@@ -293,7 +293,7 @@ export interface MenuCommandPaneItem extends BaseButtonItem {
   /**
    * Whether to display the shortcut.
    *
-   * @default true
+   * @defaultValue true
    */
   displayShortcut?: boolean;
 
@@ -341,7 +341,7 @@ export interface MenuDropdownItem extends BaseItem {
    * Defaults to label when it is a string and used for the aria label for the
    * menu element.
    *
-   * @default `label`
+   * @defaultValue `label`
    */
   menuLabel?: string;
 }

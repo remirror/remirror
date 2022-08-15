@@ -143,7 +143,7 @@ export interface TextHighlightOptions {
   /**
    * The default highlight value.
    *
-   * @default ''
+   * @defaultValue ''
    */
   defaultHighlight?: Static<string>;
 
@@ -159,7 +159,7 @@ export interface TextHighlightAttributes {
   /**
    * The highlight color.
    *
-   * @default ''
+   * @defaultValue ''
    */
   highlight?: string;
 }

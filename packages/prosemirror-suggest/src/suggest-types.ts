@@ -67,7 +67,7 @@ export interface Suggester {
    * configuration and not on user interaction it's possible to create the links
    * automatically within the `appendTransaction` hook.
    *
-   * @default false
+   * @defaultValue false
    */
   appendTransaction?: boolean;
 
@@ -88,7 +88,7 @@ export interface Suggester {
    * you're using this within the context of `remirror` you can also use the
    * `ExtensionPriority` from the `remirror/core` library.
    *
-   * @default 50
+   * @defaultValue 50
    */
   priority?: number;
 
@@ -96,7 +96,7 @@ export interface Suggester {
    * When set to true, matches will only be recognised at the start of a new
    * line.
    *
-   * @default false
+   * @defaultValue false
    */
   startOfLine?: boolean;
 
@@ -104,7 +104,7 @@ export interface Suggester {
    * A regex containing all supported characters when within an active
    * suggester.
    *
-   * @default /[\w\d_]+/
+   * @defaultValue /[\w\d_]+/
    */
   supportedCharacters?: RegExp | string;
 
@@ -116,7 +116,7 @@ export interface Suggester {
    * This will be used when {@link Suggester.invalidPrefixCharacters} is not
    * provided.
    *
-   * @default /^[\s\0]?$/ - translation: only space and zero width characters
+   * @defaultValue /^[\s\0]?$/ - translation: only space and zero width characters
    * allowed.
    */
   validPrefixCharacters?: RegExp | string;
@@ -129,7 +129,7 @@ export interface Suggester {
    * This has preference over the `validPrefixCharacters` option and when it is
    * defined only it will be looked at in determining whether a prefix is valid.
    *
-   * @default ''
+   * @defaultValue ''
    */
   invalidPrefixCharacters?: RegExp | string | null;
 
@@ -147,35 +147,35 @@ export interface Suggester {
    * - `matchOffset: 3` matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'`
    * - And so on...
    *
-   * @default 0
+   * @defaultValue 0
    */
   matchOffset?: number;
 
   /**
    * Class name to use for the decoration while the suggester is active.
    *
-   * @default 'suggest'
+   * @defaultValue 'suggest'
    */
   suggestClassName?: string;
 
   /**
    * Tag for the prosemirror decoration which wraps an active match.
    *
-   * @default 'span'
+   * @defaultValue 'span'
    */
   suggestTag?: string;
 
   /**
    * Set a class for the ignored suggester decoration.
    *
-   * @default null
+   * @defaultValue null
    */
   ignoredClassName?: string | null;
 
   /**
    * Set a tag for the ignored suggester decoration.
    *
-   * @default 'span'
+   * @defaultValue 'span'
    */
   ignoredTag?: string;
 
@@ -187,7 +187,7 @@ export interface Suggester {
   /**
    * A list of node names which will be marked as invalid.
    *
-   * @default []
+   * @defaultValue []
    */
   invalidNodes?: string[];
 
@@ -198,14 +198,14 @@ export interface Suggester {
    * Setting this to an empty array would mean that this [[`Suggester`]] can
    * never match.
    *
-   * @default null
+   * @defaultValue null
    */
   validNodes?: string[] | null;
 
   /**
    * A list of node names which will be marked as invalid.
    *
-   * @default []
+   * @defaultValue []
    */
   invalidMarks?: string[];
 
@@ -216,7 +216,7 @@ export interface Suggester {
    * By setting this value to the empty array `[]`, you are telling this
    * [[`Suggester`]] to never match if any marks are found.
    *
-   * @default null
+   * @defaultValue null
    */
   validMarks?: string[] | null;
 
@@ -255,14 +255,14 @@ export interface Suggester {
    *
    * This is called before all `onChange` handlers.
    *
-   * @default null
+   * @defaultValue null
    */
   checkNextValidSelection?: CheckNextValidSelection | null;
 
   /**
    * Whether this suggester should only be valid for empty selections.
    *
-   * @default false
+   * @defaultValue false
    */
   emptySelectionsOnly?: boolean;
 
@@ -270,21 +270,21 @@ export interface Suggester {
    * Whether the match should be case insensitive and ignore the case. This adds
    * the `i` flag to the regex used.
    *
-   * @default false
+   * @defaultValue false
    */
   caseInsensitive?: boolean;
 
   /**
    * When true support matches across multiple lines.
    *
-   * @default false
+   * @defaultValue false
    */
   multiline?: boolean;
 
   /**
    * When true support matches using Unicode Regex.
    *
-   * @default false
+   * @defaultValue false
    */
   unicode?: boolean;
 
@@ -294,7 +294,7 @@ export interface Suggester {
    * When this is set to true it will be the first matching group with
    * `match[1]`.
    *
-   * @default true
+   * @defaultValue true
    */
   captureChar?: boolean;
 }
@@ -713,7 +713,7 @@ export interface SuggestMarkProps {
 /**
  * A parameter builder interface indicating the reason the handler was called.
  *
- * @template Reason - Whether this is change or an exit reason.
+ * @typeParam Reason - Whether this is change or an exit reason.
  */
 export interface ReasonProps {
   /**
@@ -792,7 +792,7 @@ export interface SuggestReasonMap {
  *
  * This is used to build parameters for {@link Suggester} handler methods.
  *
- * @template Reason - Whether this is change or an exit reason.
+ * @typeParam Reason - Whether this is change or an exit reason.
  */
 export interface ReasonMatchProps {
   /**
@@ -838,7 +838,7 @@ export type Transaction = PMState.Transaction;
 /**
  * A parameter builder interface containing the `tr` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface TransactionProps {
   /**
@@ -852,7 +852,7 @@ export type EditorState = PMState.EditorState;
 /**
  * A parameter builder interface containing the `state` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface EditorStateProps {
   /**
@@ -864,7 +864,7 @@ export interface EditorStateProps {
 export type ResolvedPos = PMModel.ResolvedPos;
 
 /**
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface ResolvedPosProps {
   /**
@@ -889,7 +889,7 @@ export type EditorView = PMView.EditorView;
 /**
  * A parameter builder interface containing the `view` property.
  *
- * @template Schema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
 export interface EditorViewProps {
   /**

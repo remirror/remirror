@@ -33,7 +33,7 @@ export interface UpdateMarkProps extends Partial<RangeProps>, Partial<Attributes
   /**
    * The text to append.
    *
-   * @default '''
+   * @defaultValue '''
    */
   appendText?: string;
 
@@ -222,7 +222,7 @@ export interface ToggleBlockItemProps extends NodeTypeProps, Partial<AttributesP
   /**
    * The type to toggle back to. Usually this is the `paragraph` node type.
    *
-   * @default 'paragraph'
+   * @defaultValue 'paragraph'
    */
   toggleType?: NodeType | string;
 
@@ -230,7 +230,7 @@ export interface ToggleBlockItemProps extends NodeTypeProps, Partial<AttributesP
    * Whether to preserve the attrs when toggling a block item. This means that
    * extra attributes that are shared between nodes will be maintained.
    *
-   * @default true
+   * @defaultValue true
    */
   preserveAttrs?: boolean;
 }
@@ -266,7 +266,7 @@ export interface ReplaceTextProps extends Partial<AttributesProps> {
   /**
    * The text to append.
    *
-   * @default '''
+   * @defaultValue '''
    */
   appendText?: string;
 
@@ -438,7 +438,7 @@ export interface RemoveMarkProps extends MakeNullable<MarkTypeProps, 'type'> {
   /**
    * Whether to expand empty selections to the current mark range.
    *
-   * @default true
+   * @defaultValue true
    */
   expand?: boolean;
 

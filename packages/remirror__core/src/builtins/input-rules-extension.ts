@@ -102,7 +102,7 @@ declare global {
       /**
        * Whether to use the inputRules for this particular extension.
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       inputRules?: boolean;
     }

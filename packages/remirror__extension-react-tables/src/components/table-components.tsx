@@ -11,7 +11,7 @@ export interface TableComponentsProps {
   /**
    * Whether to use `TableCellMenu`.
    *
-   * @default true
+   * @defaultValue true
    */
   enableTableCellMenu?: boolean;
 
@@ -23,7 +23,7 @@ export interface TableComponentsProps {
   /**
    * Whether to use `TableDeleteRowColumnButton`.
    *
-   * @default true
+   * @defaultValue true
    */
   enableTableDeleteRowColumnButton?: boolean;
 
@@ -35,7 +35,7 @@ export interface TableComponentsProps {
   /**
    * Whether to use `TableDeleteButton`.
    *
-   * @default true
+   * @defaultValue true
    */
   enableTableDeleteButton?: boolean;
 

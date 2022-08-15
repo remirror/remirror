@@ -56,7 +56,7 @@ interface DefaultOptionsProps<Options extends Shape = EmptyShape> {
    * }
    * ```
    *
-   * @default {}
+   * @defaultValue {}
    */
   defaultOptions: DefaultExtensionOptions<Options>;
 }
@@ -65,7 +65,7 @@ interface DefaultPriorityProps {
   /**
    * The default priority for this extension.
    *
-   * @default {}
+   * @defaultValue {}
    */
   defaultPriority?: ExtensionPriority;
 }

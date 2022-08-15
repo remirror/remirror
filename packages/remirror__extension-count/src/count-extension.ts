@@ -19,21 +19,21 @@ export interface CountOptions {
   /**
    * An optional soft limit. Text that exceeds this limit will be highlighted.
    *
-   * @default -1
+   * @defaultValue -1
    */
   maximum?: Static<number>;
 
   /**
    * The classname to use when highlighting text that exceed the given maximum.
    *
-   * @default 'remirror-max-count-exceeded'
+   * @defaultValue 'remirror-max-count-exceeded'
    */
   maximumExceededClassName?: Static<string>;
 
   /**
    * The counting strategy to use. Either CountStrategy.CHARACTERS or CountStrategy.WORDS
    *
-   * @default CountStrategy.CHARACTERS
+   * @defaultValue CountStrategy.CHARACTERS
    */
   maximumStrategy?: Static<CountStrategy>;
 }

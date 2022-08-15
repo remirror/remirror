@@ -54,7 +54,7 @@ export interface ThemeProviderProps extends UseThemeProps {
   /**
    * A custom component to use for the wrapper.
    *
-   * @default 'div'
+   * @defaultValue 'div'
    */
   as?: ElementType<{ style?: CSSProperties; className?: string }>;
 

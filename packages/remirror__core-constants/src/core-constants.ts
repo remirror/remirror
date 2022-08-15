@@ -466,7 +466,7 @@ export enum NamedShortcut {
   /**
    * A keyboard shortcut to trigger formatting the current block.
    *
-   * @default 'Alt-Shift-F' (Mac) | 'Shift-Ctrl-F' (PC)
+   * @defaultValue 'Alt-Shift-F' (Mac) | 'Shift-Ctrl-F' (PC)
    */
   Format = '_|format|_',
 }

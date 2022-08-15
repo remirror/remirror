@@ -58,7 +58,7 @@ interface IsPositionVisibleOptions {
    * When `true` account for padding and the scroll bar width for the provided
    * element.
    *
-   * @default false
+   * @defaultValue false
    */
   accountForPadding?: boolean;
 }

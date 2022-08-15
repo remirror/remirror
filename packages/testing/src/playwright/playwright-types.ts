@@ -37,32 +37,32 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       /**
-       * @default 'chromium'
+       * @defaultValue 'chromium'
        */
       E2E_BROWSER?: PlaywrightBrowserName;
 
       /**
-       * @default 'development'
+       * @defaultValue 'development'
        */
       E2E_MODE?: 'development' | 'production';
 
       /**
-       * @default 'storybook-react'
+       * @defaultValue 'storybook-react'
        */
       E2E_SERVER?: TestServerName;
 
       /**
-       * @default 'playwright'
+       * @defaultValue 'playwright'
        */
       E2E_ENVIRONMENT?: TestEnvironment;
 
       /**
-       * @default undefined
+       * @defaultValue undefined
        */
       E2E_DEBUG?: string;
 
       /**
-       * @default undefined
+       * @defaultValue undefined
        */
       E2E_COVERAGE?: string;
     }

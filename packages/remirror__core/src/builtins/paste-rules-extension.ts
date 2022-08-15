@@ -53,7 +53,7 @@ declare global {
       /**
        * Whether to exclude the extension's pasteRules
        *
-       * @default undefined
+       * @defaultValue undefined
        */
       pasteRules?: boolean;
     }

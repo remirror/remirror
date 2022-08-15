@@ -27,12 +27,12 @@ import { Commit, Span, TrackState } from './diff-utils';
 
 export interface DiffOptions {
   /**
-   * @default 'blame-marker';
+   * @defaultValue 'blame-marker';
    */
   blameMarkerClass?: Static<string>;
 
   /**
-   * @default `(message: string) => "Revert: '" + message + "'"`
+   * @defaultValue `(message: string) => "Revert: '" + message + "'"`
    */
   revertMessage?: (message: string) => string;
 

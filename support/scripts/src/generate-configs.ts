@@ -149,7 +149,7 @@ interface SizeLimitConfig {
   /**
    * With false it will disable calculating running time.
    *
-   * @default false
+   * @defaultValue false
    */
   running?: boolean;
 

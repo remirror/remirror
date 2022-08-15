@@ -22,7 +22,7 @@ interface DescendProps {
   /**
    * Whether to descend into a node.
    *
-   * @default true
+   * @defaultValue true
    */
   descend: boolean;
 }
@@ -309,7 +309,7 @@ interface GetChangedNodesOptions {
   /**
    * Whether to descend into child nodes.
    *
-   * @default false
+   * @defaultValue false
    */
   descend?: boolean;
 
@@ -326,7 +326,7 @@ interface GetChangedNodesOptions {
    * The valid step types to check for. Set to an empty array to accept all
    * types.
    *
-   * @default [ReplaceStep]
+   * @defaultValue [ReplaceStep]
    */
   StepTypes?: Array<AnyConstructor<Step>>;
 }

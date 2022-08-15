@@ -79,7 +79,7 @@ export function renderEditor<Extension extends AnyExtension>(
  * This creates a chainable test helper for testing your remirror presets,
  * extensions and commands.
  *
- * @template Extension - All the extensions being used within this editor
+ * @typeParam Extension - All the extensions being used within this editor
  */
 export class RemirrorTestChain<Extension extends AnyExtension> {
   /**
