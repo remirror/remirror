@@ -108,12 +108,12 @@ const config = {
     // https://docusaurus.io/docs/search
     algolia: {
       // The application ID provided by Algolia
-      appId: 'YOUR_APP_ID',
+      appId: '6UIK1UXRIZ',
 
       // Public API key: it is safe to commit it
-      apiKey: 'YOUR_SEARCH_API_KEY',
+      apiKey: 'c3003f83e3f7025ad50c8a4e1e322c00',
 
-      indexName: 'YOUR_INDEX_NAME',
+      indexName: 'remirror',
 
       // Optional: see doc section below
       // contextualSearch: true,
