@@ -795,17 +795,17 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       node: ProsemirrorNode;
       pos: number;
     }> = [];
-    const predicate: (node: ProsemirrorNode) => boolean = (node) =>
-      !node.isTextblock || !node.type.allowsMarkType(this.type);
 
     // define a placeholder for leaf nodes to calculate link position
     node.nodesBetween(range.from, range.to, (node, pos) => {
-      if (!predicate(node)) {
-        nodesWithPos.push({
-          node,
-          pos,
-        });
+      if (!node.isTextblock || !node.type.allowsMarkType(this.type)) {
+        return;
       }
+
+      nodesWithPos.push({
+        node,
+        pos,
+      });
     });
 
     return nodesWithPos.map((textBlock) => ({
