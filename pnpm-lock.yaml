@@ -1214,6 +1214,7 @@ importers:
       '@remirror/pm': ^2.0.0-beta.15
       '@types/extract-domain': 2.2.0
       extract-domain: 2.2.1
+      linkifyjs: ^3.0.5
     dependencies:
       '@babel/runtime': 7.18.9
       '@remirror/core': link:../remirror__core
@@ -1223,6 +1224,7 @@ importers:
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/extract-domain': 2.2.0
+      linkifyjs: 3.0.5
 
   packages/remirror__extension-list:
     specifiers:
@@ -20188,6 +20190,10 @@ packages:
 
   /lines-and-columns/1.1.6:
     resolution: {integrity: sha512-8ZmlJFVK9iCmtLz19HpSsR8HaAMWBT284VMNednLwlIMDP2hJDCIhUp0IZ2xUcZ+Ob6BM0VvCSJwzASDM45NLQ==}
+
+  /linkifyjs/3.0.5:
+    resolution: {integrity: sha512-1Y9XQH65eQKA9p2xtk+zxvnTeQBG7rdAXSkUG97DmuI/Xhji9uaUzaWxRj6rf9YC0v8KKHkxav7tnLX82Sz5Fg==}
+    dev: true
 
   /lint-staged/11.2.6:
     resolution: {integrity: sha512-Vti55pUnpvPE0J9936lKl0ngVeTdSZpEdTNhASbkaWX7J5R9OEifo1INBGQuGW4zmy6OG+TcWPJ3m5yuy5Q8Tg==}

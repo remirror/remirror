@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import * as linkify from 'linkifyjs';
 import {
   ApplySchemaAttributes,
   DecorationsExtension,
@@ -20,6 +21,8 @@ import {
   OrderedListExtension,
   TOP_50_TLDS,
 } from 'remirror/extensions';
+
+import { FoundAutoLink } from '../src/link-extension';
 
 extensionValidityTest(LinkExtension);
 
@@ -511,6 +514,11 @@ describe('autolinking', () => {
   let { bold } = editor.marks;
 
   beforeEach(() => {
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb: FrameRequestCallback) => {
+      cb(1);
+      return 1;
+    });
+
     onUpdateLink = jest.fn(() => {});
 
     editor = create({ autoLink: true, onUpdateLink });
@@ -519,6 +527,10 @@ describe('autolinking', () => {
       nodes: { doc, p, nomark },
       marks: { bold },
     } = editor);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('can auto link', () => {
@@ -735,7 +747,38 @@ describe('autolinking', () => {
     );
   });
 
-  it('supports deleting selected to to invalidate the match', () => {
+  it('detects separating two links by entering a space', () => {
+    editor.add(doc(p('github.com<cursor>remirror.io')));
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('github.com<cursor>remirror.io')));
+
+    editor.insertText(' ');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//github.com' })('github.com'),
+          ' ',
+          link({ auto: true, href: '//remirror.io' })('remirror.io'),
+        ),
+      ),
+    );
+  });
+
+  it('detects separating two links by `Enter` key press', () => {
+    editor
+      .add(doc(p(link({ auto: true, href: '//test.coremirror.io' })('test.co<cursor>remirror.io'))))
+      .press('Enter');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(link({ auto: true, href: '//test.co' })('test.co')),
+        p(link({ auto: true, href: '//remirror.io' })('remirror.io')),
+      ),
+    );
+  });
+
+  it('supports deleting selected forward to invalidate the match', () => {
     editor
       .add(doc(p('<cursor>')))
       .insertText('test.com')
@@ -759,6 +802,165 @@ describe('autolinking', () => {
 
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('should only update first link', () => {
+    editor.add(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co<cursor>'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+
+    editor.insertText('m');
+
+    expect(onUpdateLink).toHaveBeenCalledOnce();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//first.com' })('first.com'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+  });
+
+  it('should only update second link', () => {
+    editor.add(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+
+    editor.backspace();
+
+    expect(onUpdateLink).toHaveBeenCalledOnce();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.co' })('second.co'),
+        ),
+      ),
+    );
+  });
+
+  it('should update second link once after stepping out of link node', () => {
+    editor.add(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.com' })('second.com'),
+        ),
+      ),
+    );
+
+    editor.backspace();
+
+    expect(onUpdateLink).toHaveBeenCalledOnce();
+
+    editor.insertText(' ');
+
+    expect(onUpdateLink).toHaveBeenCalledOnce();
+
+    editor.insertText('Test');
+
+    expect(onUpdateLink).toHaveBeenCalledOnce();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          link({ auto: true, href: '//first.co' })('first.co'),
+          ' ',
+          link({ auto: true, href: '//second.co' })('second.co'),
+          ' Test',
+        ),
+      ),
+    );
+  });
+
+  it('supports detecting changed TLD in quotes', () => {
+    editor.add(doc(p('"test.co<cursor>"')));
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('"test.co"')));
+
+    editor.insertText('m');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('"', link({ auto: true, href: '//test.com' })('test.com'), '"')),
+    );
+  });
+
+  it('supports detecting removing and creating links inside string', () => {
+    editor.add(doc(p('Test"test.co<cursor>"Test')));
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('Test"test.co"Test')));
+
+    editor.backspace(2).insertText('io');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('Test"', link({ auto: true, href: '//test.io' })('test.io'), '"Test')),
+    );
+  });
+
+  it('supports detecting added adjacent text nodes', () => {
+    editor.add(doc(p('window.com')));
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('window.com')));
+
+    editor.backspace();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//window.co' })('window.co'))),
+    );
+
+    editor.insertText('nfirm');
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('window.confirm')));
+  });
+
+  it('supports detecting removed adjacent text nodes', () => {
+    editor.add(doc(p('window.confirm')));
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('window.confirm')));
+
+    editor.backspace(5);
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//window.co' })('window.co'))),
+    );
+  });
+
+  it('can respond to inserted space separating the link', () => {
+    editor.add(doc(p('test.co/is<cursor>testing'))).insertText(' ');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.co/is' })('test.co/is'), ' testing')),
+    );
+  });
+
+  it('responds to joining text', () => {
+    editor.add(
+      doc(p(link({ auto: true, href: '//test.co/is' })('test.co/is'), ' <cursor>testing')),
+    );
+
+    editor.backspace();
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.co/istesting' })('test.co/istesting'))),
     );
   });
 
@@ -853,6 +1055,112 @@ describe('autolinking', () => {
     );
   });
 
+  it('does not create a link if not in selection range - edit text after', () => {
+    editor.add(doc(p('remirror.io tester'))).backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('remirror.io', ' test')));
+  });
+
+  it('does not create a link if not in selection range - edit text before', () => {
+    editor
+      .add(doc(p('tester remirror.io')))
+      .selectText(7)
+      .backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test', ' remirror.io')));
+  });
+
+  it('does not create a link if not in selection range - create link after', () => {
+    editor
+      .add(doc(p('remirror.io test ')))
+      .backspace()
+      .insertText('.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('remirror.io ', link({ auto: true, href: '//test.com' })('test.com'))),
+    );
+  });
+
+  it('does not create a link if not in selection range - create link before', () => {
+    editor
+      .add(doc(p('test remirror.io')))
+      .selectText(5)
+      .insertText('.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//test.com' })('test.com'), ' remirror.io')),
+    );
+  });
+
+  it('should create links with the same URL without a space between links', () => {
+    editor.add(doc(p('test"'))).insertText('test.com"test.com"test');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          'test"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"test',
+        ),
+      ),
+    );
+  });
+
+  it('should create links with different URLs without a space between links', () => {
+    editor.add(doc(p('test"'))).insertText('tester.com"test.com"test');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(
+          'test"',
+          link({ auto: true, href: '//tester.com' })('tester.com'),
+          '"',
+          link({ auto: true, href: '//test.com' })('test.com'),
+          '"test',
+        ),
+      ),
+    );
+  });
+
+  it('should only update edited link when multiple links are not separated by a space - first link', () => {
+    editor
+      .add(doc(p('test"test.com"remirror.io"test')))
+      .selectText(14)
+      .backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test"test.c"remirror.io"test')));
+
+    editor.insertText('om');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('test"', link({ auto: true, href: '//test.com' })('test.com'), '"remirror.io"test')),
+    );
+
+    editor.backspace(2);
+
+    expect(editor.doc).toEqualRemirrorDocument(doc(p('test"test.c"remirror.io"test')));
+  });
+
+  it('allows creating identical links in different parent nodes', () => {
+    editor
+      .add(doc(p(link({ auto: true, href: '//test.com' })('test.com'))))
+      .press('Enter')
+      .insertText('test.com test.com');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(
+        p(link({ auto: true, href: '//test.com' })('test.com')),
+        p(
+          link({ auto: true, href: '//test.com' })('test.com'),
+          ' ',
+          link({ auto: true, href: '//test.com' })('test.com'),
+        ),
+      ),
+    );
+  });
+
   it('detects emails as auto link', () => {
     editor.add(doc(p('<cursor>'))).insertText('user@example.com');
 
@@ -911,6 +1219,11 @@ describe('more auto link cases', () => {
 
     // with '(' and ')'
     { input: 'https://en.wikipedia.org/wiki/Specials_(Unicode_block)' },
+
+    {
+      input: 'en.wikipedia.org/wiki/Specials_(Unicode_block)',
+      expected: '//en.wikipedia.org/wiki/Specials_(Unicode_block)',
+    },
 
     // with "?"
     { input: 'https://www.google.com/search?q=test' },
@@ -1054,7 +1367,7 @@ describe('onClick', () => {
     add(doc(node));
 
     view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {} as MouseEvent, false));
-    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledOnce();
     expect(onClick).toHaveBeenCalledWith(
       {},
       expect.objectContaining({
@@ -1066,7 +1379,7 @@ describe('onClick', () => {
     );
 
     view.someProp('handleClick', (fn) => fn(view, 3, {} as MouseEvent));
-    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledOnce();
   });
 
   it('can override further options when false is returned', () => {
@@ -1177,5 +1490,411 @@ describe('target', () => {
       .run();
     const link = a({ href: '//test.com', target: '_blank' });
     expect(editor.doc).toEqualRemirrorDocument(doc(p(link('test'))));
+  });
+});
+
+describe('adjacent punctuations', () => {
+  it('should not remove link if "." is added before link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor
+      .add(doc(p('<cursor>')))
+      .insertText('remirror.io')
+      .selectText(0)
+      .insertText('.');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('.', link({ auto: true, href: '//remirror.io' })('remirror.io'))),
+    );
+  });
+
+  it('should not include surrounding `"` in the link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('"remirror.io"');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('"', link({ auto: true, href: '//remirror.io' })('remirror.io'), '"')),
+    );
+  });
+
+  it('should not include surrounding `((("")))` in the link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('((("remirror.io")))');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p('((("', link({ auto: true, href: '//remirror.io' })('remirror.io'), '")))')),
+    );
+  });
+
+  it('should not include trailing `"` in the link', () => {
+    const editor = renderEditor([
+      new LinkExtension({
+        autoLink: true,
+      }),
+    ]);
+    const {
+      attributeMarks: { link },
+      nodes: { doc, p },
+    } = editor;
+
+    editor.add(doc(p('<cursor>'))).insertText('remirror.io"');
+
+    expect(editor.doc).toEqualRemirrorDocument(
+      doc(p(link({ auto: true, href: '//remirror.io' })('remirror.io'), '"')),
+    );
+  });
+
+  describe('URL Path', () => {
+    it('should allow a path that is not balanced', () => {
+      const editor = renderEditor([
+        new LinkExtension({
+          autoLink: true,
+        }),
+      ]);
+      const {
+        attributeMarks: { link },
+        nodes: { doc, p },
+      } = editor;
+
+      editor
+        .add(doc(p('<cursor>')))
+        .insertText('remirror.io?test=(balance)')
+        .backspace();
+
+      expect(editor.doc).toEqualRemirrorDocument(
+        doc(
+          p(link({ auto: true, href: '//remirror.io?test=(balance' })('remirror.io?test=(balance')),
+        ),
+      );
+    });
+
+    describe('linkify', () => {
+      const findAutoLinks = (str: string): FoundAutoLink[] =>
+        linkify.find(str).map((link) => ({
+          text: link.value,
+          href: link.href,
+          start: link.start,
+          end: link.end,
+        }));
+
+      const isValidUrl = (input: string) => linkify.test(input);
+
+      it('should allow a path that is not balanced', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor
+          .add(doc(p('<cursor>')))
+          .insertText('remirror.io/?test=(balance)')
+          .backspace();
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(
+              link({ auto: true, href: 'http://remirror.io/?test=(balance' })(
+                'remirror.io/?test=(balance',
+              ),
+            ),
+          ),
+        );
+      });
+
+      it('should not include surrounding `((("")))` in the link', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor.add(doc(p('<cursor>'))).insertText('((("remirror.io/test")))');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(
+              '((("',
+              link({ auto: true, href: 'http://remirror.io/test' })('remirror.io/test'),
+              '")))',
+            ),
+          ),
+        );
+      });
+
+      it('should not include surrounding `,` in the link', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor.add(doc(p('<cursor>'))).insertText(',remirror.io/test,');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(',', link({ auto: true, href: 'http://remirror.io/test' })('remirror.io/test'), ','),
+          ),
+        );
+      });
+
+      it('should not include trailing `?` in the link', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor.add(doc(p('<cursor>'))).insertText('remirror.io/?test=true');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(
+              link({ auto: true, href: 'http://remirror.io/?test=true' })('remirror.io/?test=true'),
+            ),
+          ),
+        );
+
+        editor.selectText(23).backspace(10).insertText('?');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(p(link({ auto: true, href: 'http://remirror.io/' })('remirror.io/'), '?')),
+        );
+      });
+
+      it('should not include trailing `"` in the link', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor.add(doc(p('<cursor>'))).insertText('remirror.io/test"');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(p(link({ auto: true, href: 'http://remirror.io/test' })('remirror.io/test'), '"')),
+        );
+      });
+
+      it('should not include trailing `"""` in the link', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor.add(doc(p('<cursor>'))).insertText('remirror.io/test"""');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(p(link({ auto: true, href: 'http://remirror.io/test' })('remirror.io/test'), '"""')),
+        );
+      });
+
+      it('should handle unbalanced path', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor
+          .add(doc(p('<cursor>')))
+          .insertText('remirror.io/test(balance))')
+          .backspace(2);
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(
+              link({ auto: true, href: 'http://remirror.io/test(balance' })(
+                'remirror.io/test(balance',
+              ),
+            ),
+          ),
+        );
+      });
+
+      it('should check for balanced brackets', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor.add(doc(p('<cursor>'))).insertText('remirror.io/test(balance))');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(
+              link({ auto: true, href: 'http://remirror.io/test(balance)' })(
+                'remirror.io/test(balance)',
+              ),
+              ')',
+            ),
+          ),
+        );
+      });
+
+      it('should exclude ")" and following punctuation after balanced path', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor.add(doc(p('<cursor>'))).insertText('remirror.io/?test=(balance))"');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(
+              link({ auto: true, href: 'http://remirror.io/?test=(balance)' })(
+                'remirror.io/?test=(balance)',
+              ),
+              ')"',
+            ),
+          ),
+        );
+      });
+    });
+
+    describe('regex supporting balanced brackets', () => {
+      const autoLinkRegex =
+        /(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?](?:(?! |[!"'(),.;?[\]{}-]).|-+|\((?:(?![ )]).)*\)|\[(?:(?![ \]]).)*]|'(?=\w)|\.(?! |\.|$)|,(?! |,|$)|;(?! |;|$)|!(?! |!|$)|\?(?! |\?|$))+|\/)?/gi;
+
+      it('should not allow a path that is not balanced', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            autoLinkRegex,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor
+          .add(doc(p('<cursor>')))
+          .insertText('remirror.io?test=(balance)')
+          .backspace();
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(link({ auto: true, href: '//remirror.io?test=' })('remirror.io?test='), '(balance'),
+          ),
+        );
+      });
+
+      it('detects separating two links by `Enter` key press and unlinks invalid characters', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            autoLinkRegex,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor
+          .add(
+            doc(
+              p(
+                link({ auto: true, href: '//test.co/(123)remirror.io' })(
+                  'test.co/(1<cursor>23)remirror.io',
+                ),
+              ),
+            ),
+          )
+          .press('Enter');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p(link({ auto: true, href: '//test.co/' })('test.co/'), '(1'),
+            p('23)', link({ auto: true, href: '//remirror.io' })('remirror.io')),
+          ),
+        );
+      });
+    });
   });
 });
