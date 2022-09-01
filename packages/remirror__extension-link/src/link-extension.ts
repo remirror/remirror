@@ -31,6 +31,7 @@ import {
   MarkExtensionSpec,
   MarkSpecOverride,
   NamedShortcut,
+  NodeWithPosition,
   omitExtraAttributes,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -207,7 +208,7 @@ export interface LinkOptions {
    * @param {string} defaultProtocol
    * @returns {array} FoundAutoLink[]
    */
-  findAutoLinks?: ((input: string, defaultProtocol: string) => FoundAutoLink[]) | null;
+  findAutoLinks?: Static<(input: string, defaultProtocol: string) => FoundAutoLink[]>;
 
   /**
    * Check if the given string is a link
@@ -222,7 +223,7 @@ export interface LinkOptions {
    * @param {string} defaultProtocol
    * @returns {boolean}
    */
-  isValidUrl?: ((input: string, defaultProtocol: string) => boolean) | null;
+  isValidUrl?: Static<(input: string, defaultProtocol: string) => boolean>;
 
   /**
    * The default protocol to use when it can't be inferred.
@@ -277,8 +278,8 @@ export type LinkAttributes = ProsemirrorAttributes<{
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
-    findAutoLinks: null,
-    isValidUrl: null,
+    findAutoLinks: undefined,
+    isValidUrl: undefined,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -791,10 +792,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     node: ProsemirrorNode,
     range: FromToProps,
   ): Array<{ text: string; positionStart: number }> {
-    const nodesWithPos: Array<{
-      node: ProsemirrorNode;
-      pos: number;
-    }> = [];
+    const nodesWithPos: NodeWithPosition[] = [];
 
     // define a placeholder for leaf nodes to calculate link position
     node.nodesBetween(range.from, range.to, (node, pos) => {

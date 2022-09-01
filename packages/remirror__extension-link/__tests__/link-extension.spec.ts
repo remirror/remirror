@@ -1834,6 +1834,28 @@ describe('adjacent punctuations', () => {
           ),
         );
       });
+
+      it('detects email and excludes surrounding parentheses', () => {
+        const editor = renderEditor([
+          new LinkExtension({
+            autoLink: true,
+            findAutoLinks,
+            isValidUrl,
+          }),
+        ]);
+        const {
+          attributeMarks: { link },
+          nodes: { doc, p },
+        } = editor;
+
+        editor.add(doc(p('<cursor>'))).insertText('(user@exmaple.com)');
+
+        expect(editor.doc).toEqualRemirrorDocument(
+          doc(
+            p('(', link({ auto: true, href: 'mailto:user@exmaple.com' })('user@exmaple.com'), ')'),
+          ),
+        );
+      });
     });
 
     describe('regex supporting balanced brackets', () => {
