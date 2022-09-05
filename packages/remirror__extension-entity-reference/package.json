@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-entity-reference.js",
       "require": "./dist/remirror-extension-entity-reference.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-entity-reference.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"

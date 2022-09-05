@@ -24,8 +24,7 @@
     ".": {
       "import": "./dist/remirror-preset-core.js",
       "require": "./dist/remirror-preset-core.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-preset-core.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

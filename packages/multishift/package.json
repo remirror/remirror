@@ -17,8 +17,7 @@
     ".": {
       "import": "./dist/multishift.js",
       "require": "./dist/multishift.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/multishift.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

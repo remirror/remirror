@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-font-family.js",
       "require": "./dist/remirror-extension-font-family.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-font-family.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

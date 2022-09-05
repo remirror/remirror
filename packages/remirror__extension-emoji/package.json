@@ -26,8 +26,7 @@
     ".": {
       "import": "./dist/remirror-extension-emoji.js",
       "require": "./dist/remirror-extension-emoji.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-emoji.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

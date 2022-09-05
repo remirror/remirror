@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-underline.js",
       "require": "./dist/remirror-extension-underline.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-underline.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

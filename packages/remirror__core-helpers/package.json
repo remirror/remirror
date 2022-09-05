@@ -18,8 +18,7 @@
     ".": {
       "import": "./dist/remirror-core-helpers.js",
       "require": "./dist/remirror-core-helpers.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-core-helpers.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

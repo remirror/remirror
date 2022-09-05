@@ -26,8 +26,7 @@
     ".": {
       "import": "./dist/remirror-extension-image.js",
       "require": "./dist/remirror-extension-image.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-image.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

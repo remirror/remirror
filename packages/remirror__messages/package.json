@@ -21,8 +21,7 @@
     ".": {
       "import": "./dist/remirror-messages.js",
       "require": "./dist/remirror-messages.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-messages.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

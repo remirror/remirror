@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-search.js",
       "require": "./dist/remirror-extension-search.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-search.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

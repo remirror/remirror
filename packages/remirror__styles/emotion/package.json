@@ -1,15 +1,14 @@
 {
   "type": "module",
+  "main": "./dist/remirror-styles-emotion.cjs",
+  "module": "./dist/remirror-styles-emotion.js",
+  "types": "./../dist-types/emotion.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-styles-emotion.js",
       "require": "./dist/remirror-styles-emotion.cjs",
-      "types": "./../dist-types/emotion.d.ts",
-      "default": "./dist/remirror-styles-emotion.js"
+      "types": "./../dist-types/emotion.d.ts"
     },
     "./package.json": "./package.json"
-  },
-  "main": "./dist/remirror-styles-emotion.cjs",
-  "module": "./dist/remirror-styles-emotion.js",
-  "types": "./../dist-types/emotion.d.ts"
+  }
 }

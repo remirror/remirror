@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-gap-cursor.js",
       "require": "./dist/remirror-extension-gap-cursor.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-gap-cursor.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

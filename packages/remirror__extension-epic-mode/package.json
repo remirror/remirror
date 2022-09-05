@@ -27,8 +27,7 @@
     ".": {
       "import": "./dist/remirror-extension-epic-mode.js",
       "require": "./dist/remirror-extension-epic-mode.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-epic-mode.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

@@ -24,8 +24,7 @@
     ".": {
       "import": "./dist/remirror-react-utils.js",
       "require": "./dist/remirror-react-utils.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-react-utils.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

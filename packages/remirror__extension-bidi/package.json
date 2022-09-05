@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-bidi.js",
       "require": "./dist/remirror-extension-bidi.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-bidi.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

@@ -18,8 +18,7 @@
     ".": {
       "import": "./dist/remirror-core-types.js",
       "require": "./dist/remirror-core-types.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-core-types.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-columns.js",
       "require": "./dist/remirror-extension-columns.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-columns.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

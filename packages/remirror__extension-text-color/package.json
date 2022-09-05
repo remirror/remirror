@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-text-color.js",
       "require": "./dist/remirror-extension-text-color.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-text-color.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

@@ -18,14 +18,12 @@
     ".": {
       "import": "./dist/remirror-react-components.js",
       "require": "./dist/remirror-react-components.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-react-components.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./all-icons": {
       "import": "./all-icons/dist/remirror-react-components-all-icons.js",
       "require": "./all-icons/dist/remirror-react-components-all-icons.cjs",
-      "types": "./dist-types/all-icons.d.ts",
-      "default": "./all-icons/dist/remirror-react-components-all-icons.js"
+      "types": "./dist-types/all-icons.d.ts"
     },
     "./package.json": "./package.json"
   },

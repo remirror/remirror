@@ -1,15 +1,14 @@
 {
   "type": "module",
+  "main": "./dist/remirror-pm-paste-rules.cjs",
+  "module": "./dist/remirror-pm-paste-rules.js",
+  "types": "./../dist-types/paste-rules.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-paste-rules.js",
       "require": "./dist/remirror-pm-paste-rules.cjs",
-      "types": "./../dist-types/paste-rules.d.ts",
-      "default": "./dist/remirror-pm-paste-rules.js"
+      "types": "./../dist-types/paste-rules.d.ts"
     },
     "./package.json": "./package.json"
-  },
-  "main": "./dist/remirror-pm-paste-rules.cjs",
-  "module": "./dist/remirror-pm-paste-rules.js",
-  "types": "./../dist-types/paste-rules.d.ts"
+  }
 }

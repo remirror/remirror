@@ -18,8 +18,7 @@
     ".": {
       "import": "./dist/prosemirror-suggest.js",
       "require": "./dist/prosemirror-suggest.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/prosemirror-suggest.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

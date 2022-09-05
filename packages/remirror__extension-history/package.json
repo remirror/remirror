@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-extension-history.js",
       "require": "./dist/remirror-extension-history.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-history.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

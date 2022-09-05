@@ -18,8 +18,7 @@
     ".": {
       "import": "./dist/remirror-core-constants.js",
       "require": "./dist/remirror-core-constants.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-core-constants.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

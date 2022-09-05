@@ -23,8 +23,7 @@
     ".": {
       "import": "./dist/remirror-preset-formatting.js",
       "require": "./dist/remirror-preset-formatting.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-preset-formatting.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

@@ -21,8 +21,7 @@
     ".": {
       "import": "./dist/remirror-react-ssr.js",
       "require": "./dist/remirror-react-ssr.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-react-ssr.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

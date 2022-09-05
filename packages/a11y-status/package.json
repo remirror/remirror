@@ -17,8 +17,7 @@
     ".": {
       "import": "./dist/a11y-status.js",
       "require": "./dist/a11y-status.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/a11y-status.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

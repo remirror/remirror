@@ -22,8 +22,7 @@
     ".": {
       "import": "./dist/remirror-dom.js",
       "require": "./dist/remirror-dom.cjs",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-dom.js"
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },

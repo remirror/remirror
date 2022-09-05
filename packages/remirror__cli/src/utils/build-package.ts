@@ -188,8 +188,8 @@ function buildPackageJson(
   const mainExport = exports['.'];
 
   if (mainExport) {
-    packageJson.main = mainExport.require || mainExport.default;
-    packageJson.module = mainExport.import || mainExport.default;
+    packageJson.main = mainExport.require || mainExport.import;
+    packageJson.module = mainExport.import || undefined;
     packageJson.types = mainExport.types;
   }
 
@@ -246,7 +246,6 @@ function buildCondictionalExports(
           }
         : {}),
       types: dtsFileRelativePath,
-      default: supportEsm ? outEsmFileRelativePath : outCjsFileRelativePath,
     },
   };
 }
