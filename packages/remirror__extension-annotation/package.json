@@ -21,12 +21,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-annotation.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-annotation.js"
+      "require": "./dist/remirror-extension-annotation.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-annotation.js",
+  "main": "./dist/remirror-extension-annotation.cjs",
   "module": "./dist/remirror-extension-annotation.js",
   "types": "./dist-types/index.d.ts",
   "files": [

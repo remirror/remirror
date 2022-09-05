@@ -1,6 +1,14 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-schema-list.js",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-pm-schema-list.js",
+      "require": "./dist/remirror-pm-schema-list.cjs",
+      "types": "./../dist-types/schema-list.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/remirror-pm-schema-list.cjs",
   "module": "./dist/remirror-pm-schema-list.js",
   "types": "./../dist-types/schema-list.d.ts"
 }

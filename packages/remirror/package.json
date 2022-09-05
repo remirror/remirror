@@ -26,28 +26,28 @@
   "exports": {
     ".": {
       "import": "./dist/remirror.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror.js"
+      "require": "./dist/remirror.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./dom": {
       "import": "./dom/dist/remirror-dom.js",
-      "types": "./dist-types/dom.d.ts",
-      "default": "./dom/dist/remirror-dom.js"
+      "require": "./dom/dist/remirror-dom.cjs",
+      "types": "./dist-types/dom.d.ts"
     },
     "./extensions": {
       "import": "./extensions/dist/remirror-extensions.js",
-      "types": "./dist-types/extensions.d.ts",
-      "default": "./extensions/dist/remirror-extensions.js"
+      "require": "./extensions/dist/remirror-extensions.cjs",
+      "types": "./dist-types/extensions.d.ts"
     },
     "./icons": {
       "import": "./icons/dist/remirror-icons.js",
-      "types": "./dist-types/icons.d.ts",
-      "default": "./icons/dist/remirror-icons.js"
+      "require": "./icons/dist/remirror-icons.cjs",
+      "types": "./dist-types/icons.d.ts"
     },
     "./package.json": "./package.json",
     "./styles/*": "./styles/*"
   },
-  "main": "./dist/remirror.js",
+  "main": "./dist/remirror.cjs",
   "module": "./dist/remirror.js",
   "types": "./dist-types/index.d.ts",
   "files": [

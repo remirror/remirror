@@ -1,6 +1,14 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-view.js",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-pm-view.js",
+      "require": "./dist/remirror-pm-view.cjs",
+      "types": "./../dist-types/view.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/remirror-pm-view.cjs",
   "module": "./dist/remirror-pm-view.js",
   "types": "./../dist-types/view.d.ts"
 }

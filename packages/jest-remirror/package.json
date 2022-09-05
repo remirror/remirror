@@ -21,17 +21,17 @@
   "exports": {
     ".": {
       "import": "./dist/jest-remirror.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/jest-remirror.js"
+      "require": "./dist/jest-remirror.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./environment": {
       "import": "./environment/dist/jest-remirror-environment.js",
-      "types": "./dist-types/environment.d.ts",
-      "default": "./environment/dist/jest-remirror-environment.js"
+      "require": "./environment/dist/jest-remirror-environment.cjs",
+      "types": "./dist-types/environment.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/jest-remirror.js",
+  "main": "./dist/jest-remirror.cjs",
   "module": "./dist/jest-remirror.js",
   "types": "./dist-types/index.d.ts",
   "files": [
@@ -48,7 +48,6 @@
     "@testing-library/dom": "^8.13.0",
     "@types/sanitize-html": "^2.3.2",
     "jest-prosemirror": "^2.0.0-beta.13",
-    "mutationobserver-shim": "^0.3.7",
     "sanitize-html": "^2.4.0",
     "tiny-warning": "^1.0.3"
   },

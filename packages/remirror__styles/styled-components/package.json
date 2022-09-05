@@ -1,6 +1,14 @@
 {
   "type": "module",
-  "main": "./dist/remirror-styles-styled-components.js",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-styles-styled-components.js",
+      "require": "./dist/remirror-styles-styled-components.cjs",
+      "types": "./../dist-types/styled-components.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/remirror-styles-styled-components.cjs",
   "module": "./dist/remirror-styles-styled-components.js",
   "types": "./../dist-types/styled-components.d.ts"
 }

@@ -24,12 +24,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-doc.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-doc.js"
+      "require": "./dist/remirror-extension-doc.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-doc.js",
+  "main": "./dist/remirror-extension-doc.cjs",
   "module": "./dist/remirror-extension-doc.js",
   "types": "./dist-types/index.d.ts",
   "files": [

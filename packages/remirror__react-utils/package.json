@@ -23,12 +23,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-react-utils.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-react-utils.js"
+      "require": "./dist/remirror-react-utils.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-react-utils.js",
+  "main": "./dist/remirror-react-utils.cjs",
   "module": "./dist/remirror-react-utils.js",
   "types": "./dist-types/index.d.ts",
   "files": [

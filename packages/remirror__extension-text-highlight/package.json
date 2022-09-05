@@ -21,12 +21,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-text-highlight.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-text-highlight.js"
+      "require": "./dist/remirror-extension-text-highlight.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-text-highlight.js",
+  "main": "./dist/remirror-extension-text-highlight.cjs",
   "module": "./dist/remirror-extension-text-highlight.js",
   "types": "./dist-types/index.d.ts",
   "files": [

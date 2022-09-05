@@ -1,4 +1,4 @@
-import { h, HTMLAttributes } from 'jsx-dom';
+import { h, HTMLAttributes } from 'jsx-dom-cjs';
 
 // Re-export from jsx-dom so that we can easily switch the implement behind.
 export type { HTMLAttributes };

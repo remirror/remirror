@@ -1,6 +1,14 @@
 {
   "type": "module",
-  "main": "./dist/jest-remirror-environment.js",
+  "exports": {
+    ".": {
+      "import": "./dist/jest-remirror-environment.js",
+      "require": "./dist/jest-remirror-environment.cjs",
+      "types": "./../dist-types/environment.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/jest-remirror-environment.cjs",
   "module": "./dist/jest-remirror-environment.js",
   "types": "./../dist-types/environment.d.ts"
 }

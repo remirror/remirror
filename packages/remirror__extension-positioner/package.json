@@ -23,12 +23,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-positioner.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-positioner.js"
+      "require": "./dist/remirror-extension-positioner.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-positioner.js",
+  "main": "./dist/remirror-extension-positioner.cjs",
   "module": "./dist/remirror-extension-positioner.js",
   "types": "./dist-types/index.d.ts",
   "files": [
@@ -41,7 +41,7 @@
     "@remirror/extension-events": "^2.0.0-beta.13",
     "@remirror/messages": "^2.0.0-beta.13",
     "@remirror/theme": "^2.0.0-beta.13",
-    "nanoevents": "^7.0.1"
+    "nanoevents": "^5.1.13"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.0-beta.13"

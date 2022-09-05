@@ -17,12 +17,12 @@
   "exports": {
     ".": {
       "import": "./dist/prosemirror-trailing-node.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/prosemirror-trailing-node.js"
+      "require": "./dist/prosemirror-trailing-node.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/prosemirror-trailing-node.js",
+  "main": "./dist/prosemirror-trailing-node.cjs",
   "module": "./dist/prosemirror-trailing-node.js",
   "types": "./dist-types/index.d.ts",
   "files": [

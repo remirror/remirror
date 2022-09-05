@@ -303,7 +303,6 @@ importers:
       '@types/sanitize-html': ^2.3.2
       jest: ^28.1.1
       jest-prosemirror: ^2.0.0-beta.13
-      mutationobserver-shim: ^0.3.7
       sanitize-html: ^2.4.0
       tiny-warning: ^1.0.3
     dependencies:
@@ -315,7 +314,6 @@ importers:
       '@testing-library/dom': 8.13.0
       '@types/sanitize-html': 2.5.0
       jest-prosemirror: link:../jest-prosemirror
-      mutationobserver-shim: 0.3.7
       sanitize-html: 2.5.2
       tiny-warning: 1.0.3
     devDependencies:
@@ -614,7 +612,7 @@ importers:
       '@remirror/icons': ^2.0.0-beta.13
       '@remirror/messages': ^2.0.0-beta.13
       '@remirror/pm': ^2.0.0-beta.13
-      nanoevents: ^7.0.1
+      nanoevents: ^5.1.13
       tiny-warning: ^1.0.3
     dependencies:
       '@babel/runtime': 7.18.9
@@ -626,7 +624,7 @@ importers:
       '@remirror/i18n': link:../remirror__i18n
       '@remirror/icons': link:../remirror__icons
       '@remirror/messages': link:../remirror__messages
-      nanoevents: 7.0.1
+      nanoevents: 5.1.13
       tiny-warning: 1.0.3
     devDependencies:
       '@remirror/pm': link:../remirror__pm
@@ -866,20 +864,20 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^2.0.0-beta.13
+      '@remirror/core-helpers': ^2.0.0-beta.13
       '@remirror/messages': ^2.0.0-beta.13
       '@remirror/pm': ^2.0.0-beta.13
       '@types/codemirror': ^5.60.2
       codemirror: ^5.62.0
-      default-import: ^1.1.1
     dependencies:
       '@babel/runtime': 7.18.9
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
     devDependencies:
+      '@remirror/core-helpers': link:../remirror__core-helpers
       '@remirror/pm': link:../remirror__pm
       '@types/codemirror': 5.60.5
       codemirror: 5.63.3
-      default-import: 1.1.1
 
   packages/remirror__extension-codemirror6:
     specifiers:
@@ -1069,7 +1067,7 @@ importers:
       '@remirror/theme': ^2.0.0-beta.13
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
-      nanoevents: ^7.0.1
+      nanoevents: ^5.1.13
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
@@ -1078,7 +1076,7 @@ importers:
       '@remirror/react': link:../remirror__react
       '@remirror/react-components': link:../remirror__react-components
       '@remirror/theme': link:../remirror__theme
-      nanoevents: 7.0.1
+      nanoevents: 5.1.13
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 18.0.15
@@ -1353,14 +1351,14 @@ importers:
       '@remirror/messages': ^2.0.0-beta.13
       '@remirror/pm': ^2.0.0-beta.13
       '@remirror/theme': ^2.0.0-beta.13
-      nanoevents: ^7.0.1
+      nanoevents: ^5.1.13
     dependencies:
       '@babel/runtime': 7.18.9
       '@remirror/core': link:../remirror__core
       '@remirror/extension-events': link:../remirror__extension-events
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
-      nanoevents: 7.0.1
+      nanoevents: 5.1.13
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
@@ -1373,14 +1371,14 @@ importers:
       '@remirror/react': ^2.0.0-beta.13
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
-      nanoevents: ^7.0.1
+      nanoevents: ^5.1.13
       react: ^18.0.0
       react-dom: ^18.0.0
     dependencies:
       '@babel/runtime': 7.18.9
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
-      nanoevents: 7.0.1
+      nanoevents: 5.1.13
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
@@ -1431,7 +1429,7 @@ importers:
       '@remirror/theme': ^2.0.0-beta.13
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
-      jsx-dom: ^7.0.4
+      jsx-dom-cjs: ^8.0.0
       react: ^18.0.0
       react-dom: ^18.0.0
       y-webrtc: ^10.2.2
@@ -1451,7 +1449,7 @@ importers:
       '@remirror/react-core': link:../remirror__react-core
       '@remirror/react-hooks': link:../remirror__react-hooks
       '@remirror/theme': link:../remirror__theme
-      jsx-dom: 7.0.4
+      jsx-dom-cjs: 8.0.2
     devDependencies:
       '@remirror/pm': link:../remirror__pm
       '@types/react': 18.0.15
@@ -2180,14 +2178,14 @@ importers:
       '@emotion/css': ^11.1.3
       '@emotion/react': ^11.9.0
       '@emotion/styled': ^11.3.0
+      '@remirror/core-helpers': ^2.0.0-beta.13
       '@types/react': ^18.0.6
       '@types/styled-components': ^5.1.11
-      default-import: ^1.1.1
       react: ^18.0.0
       styled-components: ^5.2.3
     dependencies:
       '@babel/runtime': 7.18.9
-      default-import: 1.1.1
+      '@remirror/core-helpers': link:../remirror__core-helpers
     devDependencies:
       '@emotion/css': 11.5.0_@babel+core@7.18.10
       '@emotion/react': 11.9.0_be4640d19c7069687d6d07ca829736d3
@@ -2440,10 +2438,10 @@ importers:
 
   support:
     specifiers:
-      default-import: ^1.1.1
+      '@remirror/core-helpers': ^2.0.0-beta.13
       diffable-html: ^5.0.0
     dependencies:
-      default-import: 1.1.1
+      '@remirror/core-helpers': link:../packages/remirror__core-helpers
       diffable-html: 5.0.0
 
   support/actions:
@@ -12281,7 +12279,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.5
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -14055,10 +14053,6 @@ packages:
     dependencies:
       execa: 5.1.1
     dev: true
-
-  /default-import/1.1.1:
-    resolution: {integrity: sha512-CUFKx88ZyLFX8VEtwk9Cbgp2uxrretCzoZxB1qC7Ade22KaCytxmR3CLo0kVcM1mQ9ibUKeK1/whra5P8Ef1Ig==}
-    engines: {node: '>=14'}
 
   /default-require-extensions/3.0.0:
     resolution: {integrity: sha512-ek6DpXq/SCpvjhpFsLFRVtIxJCRw6fUR42lYMVZuUMK7n8eMz4Uh5clckdBjEpLhn/gEBZo7hDJnJcwdKLKQjg==}
@@ -20025,8 +20019,8 @@ packages:
       object.assign: 4.1.2
     dev: false
 
-  /jsx-dom/7.0.4:
-    resolution: {integrity: sha512-CX5ayrg1/fvsXlXmff/ovhdFnA9iGAveATla1adsjsfd0c1XtBChK4ZoL0fT4euOuC4lTcGlNDfUf5Q0H1XJFw==}
+  /jsx-dom-cjs/8.0.2:
+    resolution: {integrity: sha512-BSd6athNCsDr9az5D8qLRo9FVFyqfJ6N/y0Z0hXGspcsvd3ZKNSQvjwDfVxD8gD2CN/udr0Vr91G0VcA0oYWIA==}
     dependencies:
       csstype: 3.1.0
     dev: false
@@ -21238,10 +21232,6 @@ packages:
     hasBin: true
     dev: false
 
-  /mutationobserver-shim/0.3.7:
-    resolution: {integrity: sha512-oRIDTyZQU96nAiz2AQyngwx1e89iApl2hN5AOYwyxLUB47UYsU3Wv9lJWqH5y/QdiYkc5HQLi23ZNB3fELdHcQ==}
-    dev: false
-
   /mute-stream/0.0.7:
     resolution: {integrity: sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=}
     dev: false
@@ -21286,9 +21276,9 @@ packages:
     resolution: {integrity: sha512-2nMHqg1x5PU+unxX7PGY7AuYxl2qDx7PSrTRjizr8sxdd3l/3hBuWWaki62qmtYm2U5i4Z5E7GbjlyDFhs9/EQ==}
     dev: true
 
-  /nanoevents/7.0.1:
-    resolution: {integrity: sha512-o6lpKiCxLeijK4hgsqfR6CNToPyRU3keKyyI6uwuHRvpRTbZ0wXw51WRgyldVugZqoJfkGFrjrIenYH3bfEO3Q==}
-    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+  /nanoevents/5.1.13:
+    resolution: {integrity: sha512-JFAeG9fp0QZnRoESHjkbVFbZ9BkOXkkagUVwZVo/pkSX+Fq1VKlY+5og/8X9CYc6C7vje/CV+bwJ5M2X0+IY9Q==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nanoid/2.1.11:
@@ -23287,17 +23277,6 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
-
-  /promise-inflight/1.0.1_bluebird@3.7.2:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
-    dependencies:
-      bluebird: 3.7.2
-    dev: true
 
   /promise-retry/1.1.1:
     resolution: {integrity: sha1-ZznpaOMFHaIM5kl/srUPaRHfPW0=}

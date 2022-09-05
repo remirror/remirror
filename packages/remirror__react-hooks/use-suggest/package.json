@@ -1,6 +1,14 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-hooks-use-suggest.js",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-hooks-use-suggest.js",
+      "require": "./dist/remirror-react-hooks-use-suggest.cjs",
+      "types": "./../dist-types/use-suggest.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/remirror-react-hooks-use-suggest.cjs",
   "module": "./dist/remirror-react-hooks-use-suggest.js",
   "types": "./../dist-types/use-suggest.d.ts"
 }

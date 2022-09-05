@@ -21,12 +21,12 @@
   "exports": {
     ".": {
       "import": "./dist/test-keyboard.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/test-keyboard.js"
+      "require": "./dist/test-keyboard.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/test-keyboard.js",
+  "main": "./dist/test-keyboard.cjs",
   "module": "./dist/test-keyboard.js",
   "types": "./dist-types/index.d.ts",
   "files": [

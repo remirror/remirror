@@ -1,6 +1,14 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-trailing-node.js",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-pm-trailing-node.js",
+      "require": "./dist/remirror-pm-trailing-node.cjs",
+      "types": "./../dist-types/trailing-node.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/remirror-pm-trailing-node.cjs",
   "module": "./dist/remirror-pm-trailing-node.js",
   "types": "./../dist-types/trailing-node.d.ts"
 }

@@ -20,17 +20,17 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-icons.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-icons.js"
+      "require": "./dist/remirror-icons.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./all": {
       "import": "./all/dist/remirror-icons-all.js",
-      "types": "./dist-types/all.d.ts",
-      "default": "./all/dist/remirror-icons-all.js"
+      "require": "./all/dist/remirror-icons-all.cjs",
+      "types": "./dist-types/all.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-icons.js",
+  "main": "./dist/remirror-icons.cjs",
   "module": "./dist/remirror-icons.js",
   "types": "./dist-types/index.d.ts",
   "files": [

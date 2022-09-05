@@ -17,12 +17,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-core.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-core.js"
+      "require": "./dist/remirror-core.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-core.js",
+  "main": "./dist/remirror-core.cjs",
   "module": "./dist/remirror-core.js",
   "types": "./dist-types/index.d.ts",
   "files": [
@@ -40,7 +40,7 @@
     "@remirror/i18n": "^2.0.0-beta.13",
     "@remirror/icons": "^2.0.0-beta.13",
     "@remirror/messages": "^2.0.0-beta.13",
-    "nanoevents": "^7.0.1",
+    "nanoevents": "^5.1.13",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {

@@ -23,12 +23,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-bold.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-bold.js"
+      "require": "./dist/remirror-extension-bold.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-bold.js",
+  "main": "./dist/remirror-extension-bold.cjs",
   "module": "./dist/remirror-extension-bold.js",
   "types": "./dist-types/index.d.ts",
   "files": [

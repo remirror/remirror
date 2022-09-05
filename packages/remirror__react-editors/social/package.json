@@ -1,6 +1,14 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-editors-social.js",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-editors-social.js",
+      "require": "./dist/remirror-react-editors-social.cjs",
+      "types": "./../dist-types/social/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/remirror-react-editors-social.cjs",
   "module": "./dist/remirror-react-editors-social.js",
   "types": "./../dist-types/social/index.d.ts"
 }

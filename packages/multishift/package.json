@@ -16,12 +16,12 @@
   "exports": {
     ".": {
       "import": "./dist/multishift.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/multishift.js"
+      "require": "./dist/multishift.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/multishift.js",
+  "main": "./dist/multishift.cjs",
   "module": "./dist/multishift.js",
   "types": "./dist-types/index.d.ts",
   "files": [

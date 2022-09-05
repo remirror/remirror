@@ -24,12 +24,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-preset-react.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-preset-react.js"
+      "require": "./dist/remirror-preset-react.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-preset-react.js",
+  "main": "./dist/remirror-preset-react.cjs",
   "module": "./dist/remirror-preset-react.js",
   "types": "./dist-types/index.d.ts",
   "files": [

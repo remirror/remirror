@@ -21,12 +21,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-font-size.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-font-size.js"
+      "require": "./dist/remirror-extension-font-size.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-font-size.js",
+  "main": "./dist/remirror-extension-font-size.cjs",
   "module": "./dist/remirror-extension-font-size.js",
   "types": "./dist-types/index.d.ts",
   "files": [

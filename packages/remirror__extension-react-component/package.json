@@ -22,12 +22,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-react-component.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-react-component.js"
+      "require": "./dist/remirror-extension-react-component.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-react-component.js",
+  "main": "./dist/remirror-extension-react-component.cjs",
   "module": "./dist/remirror-extension-react-component.js",
   "types": "./dist-types/index.d.ts",
   "files": [
@@ -38,7 +38,7 @@
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^2.0.0-beta.13",
     "@remirror/messages": "^2.0.0-beta.13",
-    "nanoevents": "^7.0.1"
+    "nanoevents": "^5.1.13"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.0-beta.13",

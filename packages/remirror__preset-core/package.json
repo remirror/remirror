@@ -23,12 +23,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-preset-core.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-preset-core.js"
+      "require": "./dist/remirror-preset-core.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-preset-core.js",
+  "main": "./dist/remirror-preset-core.cjs",
   "module": "./dist/remirror-preset-core.js",
   "types": "./dist-types/index.d.ts",
   "files": [

@@ -23,12 +23,12 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-paragraph.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/remirror-extension-paragraph.js"
+      "require": "./dist/remirror-extension-paragraph.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-paragraph.js",
+  "main": "./dist/remirror-extension-paragraph.cjs",
   "module": "./dist/remirror-extension-paragraph.js",
   "types": "./dist-types/index.d.ts",
   "files": [

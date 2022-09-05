@@ -4,7 +4,7 @@
 
 import { css } from '@emotion/react';
 import emotionStyled from '@emotion/styled';
-import { defaultImport } from 'default-import';
+import { defaultImport } from '@remirror/core-helpers';
 
 const styled = defaultImport(emotionStyled);
 

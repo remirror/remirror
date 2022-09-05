@@ -22,12 +22,12 @@
   "exports": {
     ".": {
       "import": "./dist/prosemirror-resizable-view.js",
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/prosemirror-resizable-view.js"
+      "require": "./dist/prosemirror-resizable-view.cjs",
+      "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/prosemirror-resizable-view.js",
+  "main": "./dist/prosemirror-resizable-view.cjs",
   "module": "./dist/prosemirror-resizable-view.js",
   "types": "./dist-types/index.d.ts",
   "files": [
