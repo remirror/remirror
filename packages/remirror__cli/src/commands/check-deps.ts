@@ -1,12 +1,17 @@
 import { logger } from '../logger';
 import { isCommonJSModule } from '../utils/is-common-js-module';
-import { listPackagesToBuild } from '../utils/list-packages';
+import { listPackages } from '../utils/list-packages';
 
-const skipPatterns = [/^@types\//];
+const skipPatterns = [
+  // The following packages only contains .d.ts files
+  /^@types\//,
+  'type-fest',
+  'csstype',
+];
 
 function skipDep(dep: string): boolean {
   for (const pattern of skipPatterns) {
-    if (pattern.test(dep)) {
+    if (typeof pattern === 'string' ? pattern === dep : pattern.test(dep)) {
       return true;
     }
   }
@@ -25,7 +30,7 @@ const moduleEntryPoints: Record<string, string> = {
 
 export async function checkDeps() {
   logger.debug(`current working directory: ${process.cwd()}`);
-  const packages = await listPackagesToBuild();
+  const packages = await listPackages({ isPrivate: false });
   const failed = new Set<string>();
 
   for (const pkg of packages) {
