@@ -7,6 +7,8 @@ const skipPatterns = [
   /^@types\//,
   'type-fest',
   'csstype',
+
+  // The following packages are only used for development
 ];
 
 function skipDep(dep: string): boolean {

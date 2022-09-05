@@ -15,7 +15,6 @@ export function jsdomPolyfill(): void {
   }
 
   supportBoundingClientRect();
-  supportMutationObserver();
   supportCancelAnimationFrame();
   supportInnerTextInAnchors();
   supportRanges();
@@ -118,26 +117,6 @@ function supportBoundingClientRect() {
 
     return rects;
   };
-}
-
-/**
- * Add a fake mutation observer when none is available via jsdom.
- */
-function supportMutationObserver(): void {
-  if (window.MutationObserver) {
-    return;
-  }
-
-  // Taken from
-  // https://github.com/jsdom/jsdom/issues/639#issuecomment-371278152
-  const mutationObserver = readFileSync(require.resolve('mutationobserver-shim'), {
-    encoding: 'utf-8',
-  });
-
-  const mutationObserverScript = window.document.createElement('script');
-  mutationObserverScript.textContent = mutationObserver;
-
-  window.document.head.append(mutationObserverScript);
 }
 
 /**
