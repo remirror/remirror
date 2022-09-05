@@ -1,5 +1,5 @@
 import type { FlatEmoji, Moji } from 'svgmoji';
-import svgmoji from 'svgmoji';
+import { Blobmoji, Notomoji, Openmoji, Twemoji } from 'svgmoji';
 import type {
   AcceptUndefined,
   FromToProps,
@@ -8,8 +8,6 @@ import type {
   ProsemirrorAttributes,
   Static,
 } from '@remirror/core';
-
-const { Blobmoji, Notomoji, Openmoji, Twemoji } = svgmoji;
 
 export interface EmojiOptions {
   /**

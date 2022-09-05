@@ -32,7 +32,6 @@ const moduleEntryPoints: Record<string, string> = {
   'y-protocols': 'y-protocols/auth',
   'emojibase-data': 'emojibase-data/versions/unicode.json',
   '@babel/runtime': '@babel/runtime/helpers/classCallCheck',
-  '@remirror/styles': '@remirror/styles/emotion',
 };
 
 export async function checkDeps() {

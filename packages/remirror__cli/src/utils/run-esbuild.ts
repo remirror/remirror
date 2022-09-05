@@ -6,6 +6,14 @@ import path from 'node:path';
 import { logger } from '../logger';
 import { removeFileExt } from './remove-file-ext';
 
+// These packages are not (valid) ESM packages, and Node.js can't import them
+// with ESM import syntax.
+// As a workaround, we need to bundle the code from them into our own packages,
+// They can be removed from this list once their maintainers fix these issues:
+// https://github.com/svgmoji/svgmoji/issues/24
+// https://github.com/streamich/react-use/issues/2353
+const dependenciesToBundle = /(emojibase|svgmoji|react-use)/;
+
 export async function runEsbuild(
   pkg: Package,
   { inFile, outFile, format }: { inFile: string; outFile: string; format: 'esm' | 'cjs' },
@@ -20,7 +28,7 @@ export async function runEsbuild(
     ...pkg.packageJson.devDependencies,
     ...pkg.packageJson.peerDependencies,
     ...pkg.packageJson.optionalDependencies,
-  });
+  }).filter((name) => !dependenciesToBundle.test(name));
 
   const result = await build({
     plugins: [nodeExternalsPlugin()],
