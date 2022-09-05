@@ -122,52 +122,7 @@ async function validEntryPoint(pkg: Package, entryPoint: string) {
 }
 
 async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
-  console.log('pkg:', pkg);
-  console.log('entryPoints:', entryPoints);
   const packageJson = buildPackageJson(pkg.dir, pkg.dir, entryPoints, pkg.packageJson);
-
-  // for (const entryPoint of entryPoints) {
-  //   const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
-  //   const dtsFileRelativeToPkgDir = `./${path.join(
-  //     'dist-types',
-  //     `${removeFileExt(inFileRelativeToSrc)}.d.ts`,
-  //   )}`;
-
-  //   const outFileRelativeToPkgDir = `./${path.relative(pkg.dir, entryPoint.outFile)}`;
-
-  //   const supportCjs = entryPoint.format === 'dual' || entryPoint.format === 'cjs';
-  //   const supportEsm = entryPoint.format === 'dual' || entryPoint.format === 'esm';
-
-  //   exports[entryPoint.subpath] = {
-  //     ...(supportEsm
-  //       ? {
-  //           import: ensureCjsFilename(outFileRelativeToPkgDir),
-  //         }
-  //       : {}),
-  //     ...(supportCjs
-  //       ? {
-  //           require: outFileRelativeToPkgDir,
-  //         }
-  //       : {}),
-  //     types: dtsFileRelativeToPkgDir,
-  //     default: outFileRelativeToPkgDir,
-  //   };
-  // }
-
-  // exports = sortKeys(exports);
-  // exports['./package.json'] = './package.json';
-
-  // packageJson.type = 'module';
-  // const mainExport = exports['.'];
-
-  // if (mainExport) {
-  //   packageJson.main = mainExport.require || mainExport.default;
-  //   packageJson.module = mainExport.import || mainExport.default;
-  //   packageJson.types = mainExport.types;
-  // }
-
-  // delete packageJson.browser;
-  // packageJson.exports = exports;
 
   // Update `files`
   const files: string[] = packageJson.files ?? [];

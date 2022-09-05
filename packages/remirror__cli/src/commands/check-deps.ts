@@ -2,7 +2,7 @@ import { logger } from '../logger';
 import { isCommonJSModule } from '../utils/is-common-js-module';
 import { listPackagesToBuild } from '../utils/list-packages';
 
-const skipPatterns = [/^@remirror\//, /^@types\//];
+const skipPatterns = [/^@types\//];
 
 function skipDep(dep: string): boolean {
   for (const pattern of skipPatterns) {
