@@ -17,12 +17,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-mention.js",
+      "require": "./dist/remirror-extension-mention.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-mention.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-mention.js",
+  "main": "./dist/remirror-extension-mention.cjs",
   "module": "./dist/remirror-extension-mention.js",
   "types": "./dist-types/index.d.ts",
   "files": [

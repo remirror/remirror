@@ -25,12 +25,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-react-ssr.js",
+      "require": "./dist/remirror-extension-react-ssr.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-react-ssr.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-react-ssr.js",
+  "main": "./dist/remirror-extension-react-ssr.cjs",
   "module": "./dist/remirror-extension-react-ssr.js",
   "types": "./dist-types/index.d.ts",
   "files": [

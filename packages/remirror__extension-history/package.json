@@ -21,12 +21,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-history.js",
+      "require": "./dist/remirror-extension-history.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-history.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-history.js",
+  "main": "./dist/remirror-extension-history.cjs",
   "module": "./dist/remirror-extension-history.js",
   "types": "./dist-types/index.d.ts",
   "files": [

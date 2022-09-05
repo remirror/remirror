@@ -22,12 +22,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-sup.js",
+      "require": "./dist/remirror-extension-sup.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-sup.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-sup.js",
+  "main": "./dist/remirror-extension-sup.cjs",
   "module": "./dist/remirror-extension-sup.js",
   "types": "./dist-types/index.d.ts",
   "files": [

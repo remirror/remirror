@@ -21,12 +21,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-columns.js",
+      "require": "./dist/remirror-extension-columns.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-columns.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-columns.js",
+  "main": "./dist/remirror-extension-columns.cjs",
   "module": "./dist/remirror-extension-columns.js",
   "types": "./dist-types/index.d.ts",
   "files": [

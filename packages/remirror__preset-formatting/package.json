@@ -22,12 +22,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-preset-formatting.js",
+      "require": "./dist/remirror-preset-formatting.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-preset-formatting.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-preset-formatting.js",
+  "main": "./dist/remirror-preset-formatting.cjs",
   "module": "./dist/remirror-preset-formatting.js",
   "types": "./dist-types/index.d.ts",
   "files": [

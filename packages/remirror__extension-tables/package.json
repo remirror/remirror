@@ -26,12 +26,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-tables.js",
+      "require": "./dist/remirror-extension-tables.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-tables.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-tables.js",
+  "main": "./dist/remirror-extension-tables.cjs",
   "module": "./dist/remirror-extension-tables.js",
   "types": "./dist-types/index.d.ts",
   "files": [

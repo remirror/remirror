@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-hooks-use-mention-atom.js",
+  "main": "./dist/remirror-react-hooks-use-mention-atom.cjs",
   "module": "./dist/remirror-react-hooks-use-mention-atom.js",
-  "types": "./../dist-types/use-mention-atom.d.ts"
+  "types": "./../dist-types/use-mention-atom.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-hooks-use-mention-atom.js",
+      "require": "./dist/remirror-react-hooks-use-mention-atom.cjs",
+      "types": "./../dist-types/use-mention-atom.d.ts",
+      "default": "./dist/remirror-react-hooks-use-mention-atom.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

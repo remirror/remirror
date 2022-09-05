@@ -21,17 +21,19 @@
   "exports": {
     ".": {
       "import": "./dist/jest-remirror.js",
+      "require": "./dist/jest-remirror.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/jest-remirror.js"
     },
     "./environment": {
       "import": "./environment/dist/jest-remirror-environment.js",
+      "require": "./environment/dist/jest-remirror-environment.cjs",
       "types": "./dist-types/environment.d.ts",
       "default": "./environment/dist/jest-remirror-environment.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/jest-remirror.js",
+  "main": "./dist/jest-remirror.cjs",
   "module": "./dist/jest-remirror.js",
   "types": "./dist-types/index.d.ts",
   "files": [

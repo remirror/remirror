@@ -21,12 +21,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-strike.js",
+      "require": "./dist/remirror-extension-strike.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-strike.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-strike.js",
+  "main": "./dist/remirror-extension-strike.cjs",
   "module": "./dist/remirror-extension-strike.js",
   "types": "./dist-types/index.d.ts",
   "files": [

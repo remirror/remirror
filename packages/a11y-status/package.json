@@ -16,12 +16,13 @@
   "exports": {
     ".": {
       "import": "./dist/a11y-status.js",
+      "require": "./dist/a11y-status.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/a11y-status.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/a11y-status.js",
+  "main": "./dist/a11y-status.cjs",
   "module": "./dist/a11y-status.js",
   "types": "./dist-types/index.d.ts",
   "files": [

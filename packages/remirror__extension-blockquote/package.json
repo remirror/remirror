@@ -21,12 +21,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-blockquote.js",
+      "require": "./dist/remirror-extension-blockquote.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-blockquote.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-blockquote.js",
+  "main": "./dist/remirror-extension-blockquote.cjs",
   "module": "./dist/remirror-extension-blockquote.js",
   "types": "./dist-types/index.d.ts",
   "files": [

@@ -23,12 +23,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-positioner.js",
+      "require": "./dist/remirror-extension-positioner.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-positioner.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-positioner.js",
+  "main": "./dist/remirror-extension-positioner.cjs",
   "module": "./dist/remirror-extension-positioner.js",
   "types": "./dist-types/index.d.ts",
   "files": [

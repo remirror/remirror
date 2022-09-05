@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-i18n-plurals.js",
+  "main": "./dist/remirror-i18n-plurals.cjs",
   "module": "./dist/remirror-i18n-plurals.js",
-  "types": "./../dist-types/plurals.d.ts"
+  "types": "./../dist-types/plurals.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-i18n-plurals.js",
+      "require": "./dist/remirror-i18n-plurals.cjs",
+      "types": "./../dist-types/plurals.d.ts",
+      "default": "./dist/remirror-i18n-plurals.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

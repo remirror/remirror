@@ -21,12 +21,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-callout.js",
+      "require": "./dist/remirror-extension-callout.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-callout.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-callout.js",
+  "main": "./dist/remirror-extension-callout.cjs",
   "module": "./dist/remirror-extension-callout.js",
   "types": "./dist-types/index.d.ts",
   "files": [

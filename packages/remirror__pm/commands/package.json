@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-commands.js",
+  "main": "./dist/remirror-pm-commands.cjs",
   "module": "./dist/remirror-pm-commands.js",
-  "types": "./../dist-types/commands.d.ts"
+  "types": "./../dist-types/commands.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-pm-commands.js",
+      "require": "./dist/remirror-pm-commands.cjs",
+      "types": "./../dist-types/commands.d.ts",
+      "default": "./dist/remirror-pm-commands.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

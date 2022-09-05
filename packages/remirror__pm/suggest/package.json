@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-suggest.js",
+  "main": "./dist/remirror-pm-suggest.cjs",
   "module": "./dist/remirror-pm-suggest.js",
-  "types": "./../dist-types/suggest.d.ts"
+  "types": "./../dist-types/suggest.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-pm-suggest.js",
+      "require": "./dist/remirror-pm-suggest.cjs",
+      "types": "./../dist-types/suggest.d.ts",
+      "default": "./dist/remirror-pm-suggest.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

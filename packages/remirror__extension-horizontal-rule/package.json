@@ -21,12 +21,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-horizontal-rule.js",
+      "require": "./dist/remirror-extension-horizontal-rule.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-horizontal-rule.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-horizontal-rule.js",
+  "main": "./dist/remirror-extension-horizontal-rule.cjs",
   "module": "./dist/remirror-extension-horizontal-rule.js",
   "types": "./dist-types/index.d.ts",
   "files": [

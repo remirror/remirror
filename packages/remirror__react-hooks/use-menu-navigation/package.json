@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-hooks-use-menu-navigation.js",
+  "main": "./dist/remirror-react-hooks-use-menu-navigation.cjs",
   "module": "./dist/remirror-react-hooks-use-menu-navigation.js",
-  "types": "./../dist-types/use-menu-navigation.d.ts"
+  "types": "./../dist-types/use-menu-navigation.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-hooks-use-menu-navigation.js",
+      "require": "./dist/remirror-react-hooks-use-menu-navigation.cjs",
+      "types": "./../dist-types/use-menu-navigation.d.ts",
+      "default": "./dist/remirror-react-hooks-use-menu-navigation.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

@@ -21,12 +21,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-node-formatting.js",
+      "require": "./dist/remirror-extension-node-formatting.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-node-formatting.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-node-formatting.js",
+  "main": "./dist/remirror-extension-node-formatting.cjs",
   "module": "./dist/remirror-extension-node-formatting.js",
   "types": "./dist-types/index.d.ts",
   "files": [

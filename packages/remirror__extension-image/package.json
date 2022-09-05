@@ -25,12 +25,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-image.js",
+      "require": "./dist/remirror-extension-image.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-image.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-image.js",
+  "main": "./dist/remirror-extension-image.cjs",
   "module": "./dist/remirror-extension-image.js",
   "types": "./dist-types/index.d.ts",
   "files": [

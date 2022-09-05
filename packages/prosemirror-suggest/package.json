@@ -17,12 +17,13 @@
   "exports": {
     ".": {
       "import": "./dist/prosemirror-suggest.js",
+      "require": "./dist/prosemirror-suggest.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/prosemirror-suggest.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/prosemirror-suggest.js",
+  "main": "./dist/prosemirror-suggest.cjs",
   "module": "./dist/prosemirror-suggest.js",
   "types": "./dist-types/index.d.ts",
   "files": [

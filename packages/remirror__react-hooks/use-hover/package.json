@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-hooks-use-hover.js",
+  "main": "./dist/remirror-react-hooks-use-hover.cjs",
   "module": "./dist/remirror-react-hooks-use-hover.js",
-  "types": "./../dist-types/use-hover.d.ts"
+  "types": "./../dist-types/use-hover.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-hooks-use-hover.js",
+      "require": "./dist/remirror-react-hooks-use-hover.cjs",
+      "types": "./../dist-types/use-hover.d.ts",
+      "default": "./dist/remirror-react-hooks-use-hover.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

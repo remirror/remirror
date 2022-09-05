@@ -41,6 +41,7 @@ export async function runEsbuild(
     sourcemap: true,
     platform: nodePackages.has(pkg.packageJson.name) ? 'node' : 'browser',
     external: externals,
+    outExtension: format === 'cjs' ? { '.js': '.cjs' } : undefined,
   });
 
   if (result.errors && result.errors.length > 0) {

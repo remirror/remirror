@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-components-all-icons.js",
+  "main": "./dist/remirror-react-components-all-icons.cjs",
   "module": "./dist/remirror-react-components-all-icons.js",
-  "types": "./../dist-types/all-icons.d.ts"
+  "types": "./../dist-types/all-icons.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-components-all-icons.js",
+      "require": "./dist/remirror-react-components-all-icons.cjs",
+      "types": "./../dist-types/all-icons.d.ts",
+      "default": "./dist/remirror-react-components-all-icons.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

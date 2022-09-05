@@ -5,6 +5,8 @@ import sortKeys from 'sort-keys';
 
 import { logger } from '../logger';
 import { colors } from './colors';
+import { ensureCjsFilename } from './ensure-cjs-filename';
+import { EntryPoint } from './entry-point';
 import { fileExists } from './file-exists';
 import { getRoot } from './get-root';
 import { removeFileExt } from './remove-file-ext';
@@ -32,36 +34,24 @@ export async function buildPackage(pkg: Package) {
     promises.push(runCustomScript(pkg, 'build'));
   } else {
     for (const entryPoint of entryPoints) {
-      promises.push(runEsbuild(pkg, entryPoint));
+      const { format } = entryPoint;
+
+      if (format === 'dual' || format === 'esm') {
+        promises.push(runEsbuild(pkg, { ...entryPoint, format: 'esm' }));
+      }
+
+      if (format === 'dual' || format === 'cjs') {
+        promises.push(runEsbuild(pkg, { ...entryPoint, format: 'cjs' }));
+      }
     }
   }
 
-  for (const entryPoint of entryPoints) {
+  for (const entryPoint of entryPoints.filter((entryPoint) => !entryPoint.isMain)) {
     promises.push(writeSubpathPackageJson(pkg, entryPoint));
   }
 
   await Promise.all(promises);
   logger.info(`${colors.blue(pkg.packageJson.name)} done`);
-}
-
-interface EntryPoint {
-  // This entry is a "main" entry point or a "subpath" entry point.
-  isMain: boolean;
-
-  // The absolute path to the entry file. Usually ends with `.ts` or `.tsx`.
-  // e.g. /projects/remirror/packages/remirror__extension-foo/src/submodule/index.tsx
-  inFile: string;
-
-  // The absolute path to the output file. Usually ends with `.js`.
-  // e.g. /projects/remirror/packages/remirror__extension-foo/submodule/dist/remirror-extension-foo.js
-  outFile: string;
-
-  // The relative path to the output file.
-  // e.g. ".", "./subpath", "./subpath/subpath"
-  subpath: string;
-
-  // The format of the input file. Mostly `esm`.
-  format: 'cjs' | 'esm';
 }
 
 /**
@@ -96,9 +86,12 @@ async function parseEntryPoints(pkg: Package): Promise<EntryPoint[]> {
 
     const outFile = path.resolve(pkg.dir, subpath, 'dist', `${entryPointName}.js`);
 
-    const cjs = /\.c[jt]sx?$/.test(inFile);
+    const isPureCjs = /\.c[jt]sx?$/.test(inFile);
+    const isPureMjs = /\.m[jt]sx?$/.test(inFile);
+    const isDual = !isPureMjs && !isPureCjs;
+    const format = isDual ? 'dual' : isPureCjs ? 'cjs' : 'esm';
 
-    entryPoints.push({ isMain, inFile, outFile, subpath, format: cjs ? 'cjs' : 'esm' });
+    entryPoints.push({ isMain, inFile, outFile, subpath, format });
   }
 
   return entryPoints;
@@ -129,40 +122,52 @@ async function validEntryPoint(pkg: Package, entryPoint: string) {
 }
 
 async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
-  const packageJson = pkg.packageJson as any;
+  console.log('pkg:', pkg);
+  console.log('entryPoints:', entryPoints);
+  const packageJson = buildPackageJson(pkg.dir, pkg.dir, entryPoints, pkg.packageJson);
 
-  let exports: any = { ...packageJson.exports };
+  // for (const entryPoint of entryPoints) {
+  //   const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
+  //   const dtsFileRelativeToPkgDir = `./${path.join(
+  //     'dist-types',
+  //     `${removeFileExt(inFileRelativeToSrc)}.d.ts`,
+  //   )}`;
 
-  for (const entryPoint of entryPoints) {
-    const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
-    const dtsFileRelativeToPkgDir = `./${path.join(
-      'dist-types',
-      `${removeFileExt(inFileRelativeToSrc)}.d.ts`,
-    )}`;
+  //   const outFileRelativeToPkgDir = `./${path.relative(pkg.dir, entryPoint.outFile)}`;
 
-    const outFileRelativeToPkgDir = `./${path.relative(pkg.dir, entryPoint.outFile)}`;
+  //   const supportCjs = entryPoint.format === 'dual' || entryPoint.format === 'cjs';
+  //   const supportEsm = entryPoint.format === 'dual' || entryPoint.format === 'esm';
 
-    exports[entryPoint.subpath] = {
-      [entryPoint.format === 'cjs' ? 'require' : 'import']: outFileRelativeToPkgDir,
-      types: dtsFileRelativeToPkgDir,
-      default: outFileRelativeToPkgDir,
-    };
-  }
+  //   exports[entryPoint.subpath] = {
+  //     ...(supportEsm
+  //       ? {
+  //           import: ensureCjsFilename(outFileRelativeToPkgDir),
+  //         }
+  //       : {}),
+  //     ...(supportCjs
+  //       ? {
+  //           require: outFileRelativeToPkgDir,
+  //         }
+  //       : {}),
+  //     types: dtsFileRelativeToPkgDir,
+  //     default: outFileRelativeToPkgDir,
+  //   };
+  // }
 
-  exports = sortKeys(exports);
-  exports['./package.json'] = './package.json';
+  // exports = sortKeys(exports);
+  // exports['./package.json'] = './package.json';
 
-  packageJson.type = 'module';
-  const mainExport = exports['.'];
+  // packageJson.type = 'module';
+  // const mainExport = exports['.'];
 
-  if (mainExport) {
-    packageJson.main = mainExport.default;
-    packageJson.module = mainExport.default;
-    packageJson.types = mainExport.types;
-  }
+  // if (mainExport) {
+  //   packageJson.main = mainExport.require || mainExport.default;
+  //   packageJson.module = mainExport.import || mainExport.default;
+  //   packageJson.types = mainExport.types;
+  // }
 
-  delete packageJson.browser;
-  packageJson.exports = exports;
+  // delete packageJson.browser;
+  // packageJson.exports = exports;
 
   // Update `files`
   const files: string[] = packageJson.files ?? [];
@@ -190,27 +195,103 @@ async function writeMainPackageJson(pkg: Package, entryPoints: EntryPoint[]) {
 }
 
 async function writeSubpathPackageJson(pkg: Package, entryPoint: EntryPoint) {
-  if (entryPoint.isMain) {
-    return;
+  logger.assert(!entryPoint.isMain);
+
+  const subPathDir = path.resolve(pkg.dir, entryPoint.subpath);
+  const packageJson = buildPackageJson(pkg.dir, subPathDir, [entryPoint]);
+  await writePackageJson(subPathDir, packageJson);
+}
+
+function buildPackageJson(
+  /**
+   * The absolute path to the NPM package directory.
+   */
+  packageDir: string,
+  /**
+   * The absolute path to the directory that include the package.json file. This directory may be the same as the packageDir or it may be a subdirectory of the packageDir.
+   */
+  packageJsonDir: string,
+
+  entryPoints: EntryPoint[],
+  packageJson: any = {},
+) {
+  let exports: Record<string, any> = { ...packageJson.exports };
+
+  for (const entryPoint of entryPoints) {
+    exports = {
+      ...exports,
+      ...buildCondictionalExports(packageDir, packageJsonDir, entryPoint),
+    };
   }
 
-  const subpathDir = path.resolve(entryPoint.outFile, '..', '..');
+  exports = sortKeys(exports);
+  exports['./package.json'] = './package.json';
 
-  const inFileRelativeToSrc = path.relative(path.join(pkg.dir, 'src'), entryPoint.inFile);
+  packageJson.type = entryPoints.every((entryPoint) => entryPoint.format === 'cjs')
+    ? 'commonjs'
+    : 'module';
+  const mainExport = exports['.'];
+
+  if (mainExport) {
+    packageJson.main = mainExport.require || mainExport.default;
+    packageJson.module = mainExport.import || mainExport.default;
+    packageJson.types = mainExport.types;
+  }
+
+  delete packageJson.browser;
+  packageJson.exports = exports;
+  return packageJson;
+}
+
+function buildCondictionalExports(
+  /**
+   * The absolute path to the NPM package directory.
+   */
+  packageDir: string,
+  /**
+   * The absolute path to the directory that include the package.json file. This directory may be the same as the packageDir or it may be a subdirectory of the packageDir.
+   */
+  packageJsonDir: string,
+  entryPoint: EntryPoint,
+): Record<string, any> {
+  const inFileRelativeToSrc = path.relative(path.join(packageDir, 'src'), entryPoint.inFile);
   const dtsFile = `${path.join(
-    pkg.dir,
+    packageDir,
     'dist-types',
     `${removeFileExt(inFileRelativeToSrc)}.d.ts`,
   )}`;
-  const dtsFileRelativeToSubpath = `./${path.relative(subpathDir, dtsFile)}`;
-  const outFileRelativeToSubpath = `./${path.relative(subpathDir, entryPoint.outFile)}`;
 
-  const packageJson = {
-    type: entryPoint.format === 'cjs' ? 'commonjs' : 'module',
-    main: outFileRelativeToSubpath,
-    module: outFileRelativeToSubpath,
-    types: dtsFileRelativeToSubpath,
+  const dtsFileRelativePath = `./${path.relative(packageJsonDir, dtsFile)}`;
+  const outEsmFileRelativePath = `./${path.relative(packageJsonDir, entryPoint.outFile)}`;
+  const outCjsFileRelativePath = ensureCjsFilename(outEsmFileRelativePath);
+
+  let subPathRelativePath = `./${path.relative(
+    packageJsonDir,
+    path.join(packageDir, entryPoint.subpath),
+  )}`;
+
+  if (subPathRelativePath === './') {
+    subPathRelativePath = '.';
+  }
+
+  const supportCjs = entryPoint.format === 'dual' || entryPoint.format === 'cjs';
+  const supportEsm = entryPoint.format === 'dual' || entryPoint.format === 'esm';
+  logger.assert(supportCjs || supportEsm);
+
+  return {
+    [subPathRelativePath]: {
+      ...(supportEsm
+        ? {
+            import: outEsmFileRelativePath,
+          }
+        : {}),
+      ...(supportCjs
+        ? {
+            require: outCjsFileRelativePath,
+          }
+        : {}),
+      types: dtsFileRelativePath,
+      default: supportEsm ? outEsmFileRelativePath : outCjsFileRelativePath,
+    },
   };
-
-  await writePackageJson(subpathDir, packageJson);
 }

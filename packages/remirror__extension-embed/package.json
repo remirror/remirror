@@ -22,12 +22,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-extension-embed.js",
+      "require": "./dist/remirror-extension-embed.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-extension-embed.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-embed.js",
+  "main": "./dist/remirror-extension-embed.cjs",
   "module": "./dist/remirror-extension-embed.js",
   "types": "./dist-types/index.d.ts",
   "files": [

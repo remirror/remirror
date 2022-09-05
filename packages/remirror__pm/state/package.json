@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-state.js",
+  "main": "./dist/remirror-pm-state.cjs",
   "module": "./dist/remirror-pm-state.js",
-  "types": "./../dist-types/state.d.ts"
+  "types": "./../dist-types/state.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-pm-state.js",
+      "require": "./dist/remirror-pm-state.cjs",
+      "types": "./../dist-types/state.d.ts",
+      "default": "./dist/remirror-pm-state.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

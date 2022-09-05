@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-extension-code-block-formatter.js",
+  "main": "./dist/remirror-extension-code-block-formatter.cjs",
   "module": "./dist/remirror-extension-code-block-formatter.js",
-  "types": "./../dist-types/formatter.d.ts"
+  "types": "./../dist-types/formatter.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extension-code-block-formatter.js",
+      "require": "./dist/remirror-extension-code-block-formatter.cjs",
+      "types": "./../dist-types/formatter.d.ts",
+      "default": "./dist/remirror-extension-code-block-formatter.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

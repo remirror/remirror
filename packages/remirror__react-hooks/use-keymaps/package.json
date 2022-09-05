@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-hooks-use-keymaps.js",
+  "main": "./dist/remirror-react-hooks-use-keymaps.cjs",
   "module": "./dist/remirror-react-hooks-use-keymaps.js",
-  "types": "./../dist-types/use-keymaps.d.ts"
+  "types": "./../dist-types/use-keymaps.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-react-hooks-use-keymaps.js",
+      "require": "./dist/remirror-react-hooks-use-keymaps.cjs",
+      "types": "./../dist-types/use-keymaps.d.ts",
+      "default": "./dist/remirror-react-hooks-use-keymaps.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

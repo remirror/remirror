@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/remirror-extensions.js",
+  "main": "./dist/remirror-extensions.cjs",
   "module": "./dist/remirror-extensions.js",
-  "types": "./../dist-types/extensions.d.ts"
+  "types": "./../dist-types/extensions.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/remirror-extensions.js",
+      "require": "./dist/remirror-extensions.cjs",
+      "types": "./../dist-types/extensions.d.ts",
+      "default": "./dist/remirror-extensions.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

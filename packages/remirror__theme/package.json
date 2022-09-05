@@ -17,12 +17,13 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-theme.js",
+      "require": "./dist/remirror-theme.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-theme.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-theme.js",
+  "main": "./dist/remirror-theme.cjs",
   "module": "./dist/remirror-theme.js",
   "types": "./dist-types/index.d.ts",
   "files": [
@@ -31,7 +32,7 @@
     "style"
   ],
   "scripts": {
-    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es && pnpm -w fix:css"
+    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.cjs --format cjs && pnpm -w fix:css"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",

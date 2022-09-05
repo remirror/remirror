@@ -1,6 +1,15 @@
 {
   "type": "module",
-  "main": "./dist/testing-react.js",
+  "main": "./dist/testing-react.cjs",
   "module": "./dist/testing-react.js",
-  "types": "./../dist-types/react.d.ts"
+  "types": "./../dist-types/react.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/testing-react.js",
+      "require": "./dist/testing-react.cjs",
+      "types": "./../dist-types/react.d.ts",
+      "default": "./dist/testing-react.js"
+    },
+    "./package.json": "./package.json"
+  }
 }

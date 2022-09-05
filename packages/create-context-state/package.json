@@ -20,12 +20,13 @@
   "exports": {
     ".": {
       "import": "./dist/create-context-state.js",
+      "require": "./dist/create-context-state.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/create-context-state.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/create-context-state.js",
+  "main": "./dist/create-context-state.cjs",
   "module": "./dist/create-context-state.js",
   "types": "./dist-types/index.d.ts",
   "files": [

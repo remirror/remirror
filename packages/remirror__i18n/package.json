@@ -21,22 +21,25 @@
   "exports": {
     ".": {
       "import": "./dist/remirror-i18n.js",
+      "require": "./dist/remirror-i18n.cjs",
       "types": "./dist-types/index.d.ts",
       "default": "./dist/remirror-i18n.js"
     },
     "./en": {
       "import": "./en/dist/remirror-i18n-en.js",
+      "require": "./en/dist/remirror-i18n-en.cjs",
       "types": "./dist-types/en/index.d.ts",
       "default": "./en/dist/remirror-i18n-en.js"
     },
-    "./package.json": "./package.json",
     "./plurals": {
       "import": "./plurals/dist/remirror-i18n-plurals.js",
+      "require": "./plurals/dist/remirror-i18n-plurals.cjs",
       "types": "./dist-types/plurals.d.ts",
       "default": "./plurals/dist/remirror-i18n-plurals.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-i18n.js",
+  "main": "./dist/remirror-i18n.cjs",
   "module": "./dist/remirror-i18n.js",
   "types": "./dist-types/index.d.ts",
   "files": [
