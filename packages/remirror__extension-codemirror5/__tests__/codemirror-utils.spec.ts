@@ -1,7 +1,7 @@
 import 'codemirror/mode/meta';
 
 import CodeMirrorPackage from 'codemirror';
-import { defaultImport } from 'default-import';
+import { defaultImport } from '@remirror/core-helpers';
 
 import ref from '../src/codemirror-ref';
 import { parseLanguageToMode } from '../src/codemirror-utils';
