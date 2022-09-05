@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-dom.cjs",
-  "module": "./dist/remirror-dom.js",
-  "types": "./../dist-types/dom.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-dom.js",
@@ -10,5 +7,8 @@
       "types": "./../dist-types/dom.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-dom.cjs",
+  "module": "./dist/remirror-dom.js",
+  "types": "./../dist-types/dom.d.ts"
 }

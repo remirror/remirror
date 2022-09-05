@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-dropcursor.cjs",
-  "module": "./dist/remirror-pm-dropcursor.js",
-  "types": "./../dist-types/dropcursor.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-dropcursor.js",
@@ -10,5 +7,8 @@
       "types": "./../dist-types/dropcursor.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-pm-dropcursor.cjs",
+  "module": "./dist/remirror-pm-dropcursor.js",
+  "types": "./../dist-types/dropcursor.d.ts"
 }

@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-keymap.cjs",
-  "module": "./dist/remirror-pm-keymap.js",
-  "types": "./../dist-types/keymap.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-keymap.js",
@@ -10,5 +7,8 @@
       "types": "./../dist-types/keymap.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-pm-keymap.cjs",
+  "module": "./dist/remirror-pm-keymap.js",
+  "types": "./../dist-types/keymap.d.ts"
 }

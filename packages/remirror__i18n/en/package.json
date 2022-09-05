@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-i18n-en.cjs",
-  "module": "./dist/remirror-i18n-en.js",
-  "types": "./../dist-types/en/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-i18n-en.js",
@@ -10,5 +7,8 @@
       "types": "./../dist-types/en/index.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-i18n-en.cjs",
+  "module": "./dist/remirror-i18n-en.js",
+  "types": "./../dist-types/en/index.d.ts"
 }

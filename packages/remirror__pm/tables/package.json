@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-tables.cjs",
-  "module": "./dist/remirror-pm-tables.js",
-  "types": "./../dist-types/tables.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-tables.js",
@@ -10,5 +7,8 @@
       "types": "./../dist-types/tables.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-pm-tables.cjs",
+  "module": "./dist/remirror-pm-tables.js",
+  "types": "./../dist-types/tables.d.ts"
 }

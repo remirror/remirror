@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/testing-playwright.cjs",
-  "module": "./dist/testing-playwright.js",
-  "types": "./../dist-types/playwright/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/testing-playwright.js",
@@ -10,5 +7,8 @@
       "types": "./../dist-types/playwright/index.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/testing-playwright.cjs",
+  "module": "./dist/testing-playwright.js",
+  "types": "./../dist-types/playwright/index.d.ts"
 }
