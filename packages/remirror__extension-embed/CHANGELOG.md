@@ -1,5 +1,37 @@
 # @remirror/extension-embed
 
+## 2.0.0-beta.14
+
+> 2022-09-05
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- SSR features are removed.
+- Try to require JSDOM implicitly in node environment.
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Support both ESM and CJS.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.14
+  - prosemirror-resizable-view@2.0.0-beta.14
+  - @remirror/pm@2.0.0-beta.14
+  - @remirror/messages@2.0.0-beta.14
+
 ## 2.0.0-beta.13
 
 > 2022-08-04

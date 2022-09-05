@@ -1,5 +1,82 @@
 # @remirror/react-hooks
 
+## 2.0.0-beta.14
+
+> 2022-09-05
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- SSR features are removed.
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Try to require JSDOM implicitly in node environment.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Expose the return type of the throttle and debounce helpers
+- Support both ESM and CJS.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-emoji@2.0.0-beta.14
+  - @remirror/extension-mention-atom@2.0.0-beta.14
+  - @remirror/extension-positioner@2.0.0-beta.14
+  - @remirror/react-core@2.0.0-beta.14
+  - @remirror/core@2.0.0-beta.14
+  - @remirror/extension-events@2.0.0-beta.14
+  - @remirror/extension-history@2.0.0-beta.14
+  - @remirror/extension-mention@2.0.0-beta.14
+  - @remirror/pm@2.0.0-beta.14
+  - @remirror/i18n@2.0.0-beta.14
+  - @remirror/react-utils@2.0.0-beta.14
+  - multishift@2.0.0-beta.14
+
 ## 2.0.0-beta.13
 
 > 2022-08-04

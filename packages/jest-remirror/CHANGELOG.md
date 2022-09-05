@@ -1,5 +1,81 @@
 # jest-remirror
 
+## 2.0.0-beta.14
+
+> 2022-09-05
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- SSR features are removed.
+- Try to require JSDOM implicitly in node environment.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Update ProseMirror packages to latest versions.
+- Update ProseMirror packages.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Update ProseMirror dependencies.
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Update prosemirror packages.
+- Expose the return type of the throttle and debounce helpers
+- Support both ESM and CJS.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/dom@2.0.0-beta.14
+  - @remirror/preset-core@2.0.0-beta.14
+  - @remirror/core@2.0.0-beta.14
+  - jest-prosemirror@2.0.0-beta.14
+  - @remirror/pm@2.0.0-beta.14
+
 ## 2.0.0-beta.13
 
 > 2022-08-04

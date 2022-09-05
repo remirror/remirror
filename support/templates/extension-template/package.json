@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-template",
-  "version": "2.0.0-beta.13",
+  "version": "2.0.0-beta.14",
   "private": true,
   "description": "TEMPLATE_DESCRIPTION",
   "keywords": [
@@ -41,13 +41,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.13"
+    "@remirror/core": "^2.0.0-beta.14"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.13"
+    "@remirror/pm": "^2.0.0-beta.14"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.13"
+    "@remirror/pm": "^2.0.0-beta.14"
   },
   "publishConfig": {
     "access": "public"
