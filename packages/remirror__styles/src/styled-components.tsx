@@ -2,7 +2,7 @@
  * AUTO GENERATED FILE - TO UPDATE RUN: `pnpm -w run fix:css`
  */
 
-import { defaultImport } from 'default-import';
+import { defaultImport } from '@remirror/core-helpers';
 import StyledComponents, { css } from 'styled-components';
 
 const styled = defaultImport(StyledComponents);
