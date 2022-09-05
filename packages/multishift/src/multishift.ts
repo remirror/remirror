@@ -8,7 +8,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { useEffectOnce } from 'react-use';
+import reactUse from 'react-use';
 import {
   debounce,
   includes,
@@ -67,6 +67,8 @@ import {
   isValidIndex,
   scrollIntoView,
 } from './multishift-utils';
+
+const { useEffectOnce } = reactUse;
 
 /**
  * Multishift is a hook that provides all the necessary tools for building

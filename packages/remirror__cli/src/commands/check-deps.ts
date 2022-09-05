@@ -8,7 +8,8 @@ const skipPatterns = [
   'type-fest',
   'csstype',
 
-  // The following packages are only used for development
+  // The following packages use Jest global API so we can `require` them directly in Node.js
+  'jest-prosemirror',
 ];
 
 function skipDep(dep: string): boolean {
@@ -28,6 +29,7 @@ const moduleEntryPoints: Record<string, string> = {
   'y-protocols': 'y-protocols/auth',
   'emojibase-data': 'emojibase-data/versions/unicode.json',
   '@babel/runtime': '@babel/runtime/helpers/classCallCheck',
+  '@remirror/styles': '@remirror/styles/emotion',
 };
 
 export async function checkDeps() {

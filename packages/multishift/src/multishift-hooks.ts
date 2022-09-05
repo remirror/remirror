@@ -2,7 +2,7 @@ import { useId } from '@reach/auto-id';
 import { setStatus } from 'a11y-status';
 import type { DependencyList, Dispatch, EffectCallback, MutableRefObject } from 'react';
 import { useEffect, useReducer, useRef } from 'react';
-import { useEffectOnce, useShallowCompareEffect } from 'react-use';
+import reactUse from 'react-use';
 import { isEmptyArray } from '@remirror/core-helpers';
 
 import { multishiftReducer } from './multishift-reducer';
@@ -23,6 +23,8 @@ import {
   getInitialStateProps,
   isOrContainsNode,
 } from './multishift-utils';
+
+const { useEffectOnce, useShallowCompareEffect } = reactUse;
 
 /**
  * Creates the reducer for managing the multishift internal state.

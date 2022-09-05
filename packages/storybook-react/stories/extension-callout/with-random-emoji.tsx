@@ -1,6 +1,6 @@
 import 'remirror/styles/all.css';
 
-import { Blobmoji } from '@svgmoji/blob';
+import svgmojiBlob from '@svgmoji/blob';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { htmlToProsemirrorNode, ProsemirrorNode } from 'remirror';
 import { CalloutExtension } from 'remirror/extensions';
@@ -12,6 +12,8 @@ import {
   useRemirror,
   useRemirrorContext,
 } from '@remirror/react';
+
+const { Blobmoji } = svgmojiBlob;
 
 const RandomEmoji: React.FC = () => {
   const { updateCallout } = useCommands();
