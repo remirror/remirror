@@ -189,7 +189,11 @@ function buildPackageJson(
 
   if (mainExport) {
     packageJson.main = mainExport.require || mainExport.import;
-    packageJson.module = mainExport.import || undefined;
+
+    if (mainExport.import) {
+      packageJson.module = mainExport.import;
+    }
+
     packageJson.types = mainExport.types;
   }
 
