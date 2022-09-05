@@ -85,6 +85,7 @@
 '@remirror/react-ssr': patch
 '@remirror/react-utils': patch
 'test-keyboard': patch
+'@remirror/styles': patch
 ---
 
 Expose the return type of the throttle and debounce helpers

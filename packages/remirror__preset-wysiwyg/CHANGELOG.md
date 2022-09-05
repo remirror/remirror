@@ -1,5 +1,85 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.0-beta.14
+
+> 2022-09-05
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- SSR features are removed.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Try to require JSDOM implicitly in node environment.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Update ProseMirror packages to latest versions.
+- When href equals text content, treat the link as an auto link (if enabled)
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Transform a hard break into `\n` in `Node.textContent`.
+- Expose the return type of the throttle and debounce helpers
+- Support both ESM and CJS.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-blockquote@2.0.0-beta.14
+  - @remirror/extension-code-block@2.0.0-beta.14
+  - @remirror/extension-image@2.0.0-beta.14
+  - @remirror/extension-list@2.0.0-beta.14
+  - @remirror/preset-core@2.0.0-beta.14
+  - @remirror/core@2.0.0-beta.14
+  - @remirror/extension-bidi@2.0.0-beta.14
+  - @remirror/extension-bold@2.0.0-beta.14
+  - @remirror/extension-code@2.0.0-beta.14
+  - @remirror/extension-drop-cursor@2.0.0-beta.14
+  - @remirror/extension-embed@2.0.0-beta.14
+  - @remirror/extension-gap-cursor@2.0.0-beta.14
+  - @remirror/extension-hard-break@2.0.0-beta.14
+  - @remirror/extension-heading@2.0.0-beta.14
+  - @remirror/extension-horizontal-rule@2.0.0-beta.14
+  - @remirror/extension-italic@2.0.0-beta.14
+  - @remirror/extension-link@2.0.0-beta.14
+  - @remirror/extension-search@2.0.0-beta.14
+  - @remirror/extension-shortcuts@2.0.0-beta.14
+  - @remirror/extension-strike@2.0.0-beta.14
+  - @remirror/extension-trailing-node@2.0.0-beta.14
+  - @remirror/extension-underline@2.0.0-beta.14
+  - @remirror/pm@2.0.0-beta.14
+
 ## 2.0.0-beta.13
 
 > 2022-08-04
