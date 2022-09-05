@@ -8,8 +8,11 @@ const skipPatterns = [
   'type-fest',
   'csstype',
 
-  // The following packages use Jest global API so we can `require` them directly in Node.js
+  // The following packages use Jest global API so we cannot `require` them directly in Node.js
   'jest-prosemirror',
+
+  // The following packages use DOM API so we cannot `require` them directly in Node.js
+  'codemirror',
 ];
 
 function skipDep(dep: string): boolean {
