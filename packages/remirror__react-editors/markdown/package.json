@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-editors-markdown.cjs",
-  "module": "./dist/remirror-react-editors-markdown.js",
-  "types": "./../dist-types/markdown/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-react-editors-markdown.js",
@@ -11,5 +8,8 @@
       "default": "./dist/remirror-react-editors-markdown.js"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-react-editors-markdown.cjs",
+  "module": "./dist/remirror-react-editors-markdown.js",
+  "types": "./../dist-types/markdown/index.d.ts"
 }

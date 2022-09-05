@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-schema-list.cjs",
-  "module": "./dist/remirror-pm-schema-list.js",
-  "types": "./../dist-types/schema-list.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-schema-list.js",
@@ -11,5 +8,8 @@
       "default": "./dist/remirror-pm-schema-list.js"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-pm-schema-list.cjs",
+  "module": "./dist/remirror-pm-schema-list.js",
+  "types": "./../dist-types/schema-list.d.ts"
 }

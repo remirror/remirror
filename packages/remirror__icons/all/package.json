@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-icons-all.cjs",
-  "module": "./dist/remirror-icons-all.js",
-  "types": "./../dist-types/all.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-icons-all.js",
@@ -11,5 +8,8 @@
       "default": "./dist/remirror-icons-all.js"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-icons-all.cjs",
+  "module": "./dist/remirror-icons-all.js",
+  "types": "./../dist-types/all.d.ts"
 }

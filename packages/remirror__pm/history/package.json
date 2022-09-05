@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-pm-history.cjs",
-  "module": "./dist/remirror-pm-history.js",
-  "types": "./../dist-types/history.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-history.js",
@@ -11,5 +8,8 @@
       "default": "./dist/remirror-pm-history.js"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-pm-history.cjs",
+  "module": "./dist/remirror-pm-history.js",
+  "types": "./../dist-types/history.d.ts"
 }
