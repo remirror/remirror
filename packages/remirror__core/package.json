@@ -41,7 +41,7 @@
     "@remirror/i18n": "^2.0.0-beta.13",
     "@remirror/icons": "^2.0.0-beta.13",
     "@remirror/messages": "^2.0.0-beta.13",
-    "nanoevents": "^7.0.1",
+    "nanoevents": "^5.1.13",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
