@@ -16,6 +16,7 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx|mjs)$': ['@swc/jest'],
   },
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  resolver: '<rootDir>/support/jest/jest-resolver.js',
   transformIgnorePatterns: ['node_modules(?!/(.+/)*(lib0|y-protocols)[@/])'],
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
