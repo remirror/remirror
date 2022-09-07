@@ -1,4 +1,7 @@
-import domino from 'domino';
+/**
+ * @jest-environment jsdom
+ */
+
 import {
   a,
   atomInline,
@@ -735,10 +738,6 @@ describe('toDOM', () => {
   it('transforms a doc into a documentFragment', () => {
     expect(prosemirrorNodeToDom(node)).toBeInstanceOf(DocumentFragment);
   });
-
-  it('allows for custom document to be passed in', () => {
-    expect(prosemirrorNodeToDom(node, domino.createDocument())).toBeObject();
-  });
 });
 
 describe('htmlToProsemirrorNode', () => {
@@ -748,16 +747,6 @@ describe('htmlToProsemirrorNode', () => {
     expect(htmlToProsemirrorNode({ content: content, schema: testSchema })).toEqualProsemirrorNode(
       doc(p('Hello')),
     );
-  });
-
-  it('allows for custom document to be passed in', () => {
-    expect(
-      htmlToProsemirrorNode({
-        content: content,
-        schema: testSchema,
-        document: domino.createDocument(),
-      }),
-    ).toEqualProsemirrorNode(doc(p('Hello')));
   });
 });
 

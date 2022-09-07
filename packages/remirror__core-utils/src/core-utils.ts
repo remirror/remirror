@@ -1222,13 +1222,6 @@ export function getDocument(): Document {
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require('domino').createDocument();
-  } catch {
-    // ignore
-  }
-
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     return require('min-document');
   } catch {
     // ignore
