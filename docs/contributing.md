@@ -5,7 +5,7 @@ title: Contributing
 
 # Contributing
 
-Fork [this repository][repo], clone your fork and add this repository as the upstream remote.
+Fork [this repository][repo], clone your fork and add this repository as the upstream remote (see below).
 
 You will need to have [`corepack`](https://github.com/nodejs/corepack) enabled so that you can use [`pnpm`](https://pnpm.js.org).
 
@@ -18,7 +18,7 @@ pnpm --version
 pnpm install
 
 # Checkout a branch and start working on it
-git checkout -b BRANCH_NAME
+git checkout -b <<SOME_BRANCH_NAME>>
 ```
 
 If you already have a previous version of the repository checked out then make sure to clean your `node_modules` by running the following command before installation.
@@ -30,6 +30,38 @@ pnpm install
 # An alternative which combines these to commands
 pnpm refresh
 ```
+
+## Development
+
+If you're modifying a package and import helpers from another packages in the monorepo, ensure that the other package is referenced in the referring package's `package.json` file.
+
+### General
+
+```bash
+pnpm run watch
+```
+
+When developing Remirror, you need to open a terminal window and run the command above. This command will keep watching the source code from all packages and compile them when there are changes. Error messages will be printed in the terminal if the compilation didn't succeed.
+
+Set the environment variable `DEBUG` to `true` to see more detailed logs.
+
+```bash
+# for Linux and macOS
+export DEBUG=true
+pnpm run watch
+```
+
+Under the hood, for most packages, this command uses `esbuild` to compile TypeScript to JavaScript, and `tsc` to output type definitions. Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to produce CSS files. `pnpm run watch` will also handle these packages too.
+
+### Storybook
+
+```bash
+pnpm run storybook
+```
+
+When run this builds all packages and then watches for changes to reload as necessary. If you are running storybook, then it will run `pnpm run watch` automatically, so you don't need to do it yourself.
+
+<br />
 
 ## Project Structure
 
@@ -167,38 +199,6 @@ To stop per-commit / per-push checks run:
 ```bash
 pnpm checks:disable
 ```
-
-<br />
-
-## Development
-
-If you're modifying a package and import helpers from another packages in the monorepo, ensure that the other package is referenced in the referring package's `package.json` file.
-
-### General
-
-```bash
-pnpm run watch
-```
-
-When developing Remirror, you need to open a terminal window and run the command above. This command will keep watching the source code from all packages and compile them when there are changes. Error message will be printed in the terminal if compile didn't succeed.
-
-Set the environment variable `DEBUG` to `true` to see more detailed logs.
-
-```bash
-# for Linux and macOS
-export DEBUG=true
-pnpm run watch
-```
-
-Under the hood, for most package, this command uses `esbuild` to compile TypeScript to JavaScript, and `tsc` to output type definitions. Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to produce CSS files. `pnpm run watch` will also handle these packages too.
-
-### Storybook
-
-```bash
-pnpm run storybook
-```
-
-When run this builds all packages and then watch for changes to reload as necessary. If you are running storybook, then it will run `pnpm run watch` for you, so you don't need to do it yourself.
 
 <br />
 
