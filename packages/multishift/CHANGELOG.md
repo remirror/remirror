@@ -1,5 +1,26 @@
 # multishift
 
+## 2.0.0-beta.16
+
+> 2022-09-08
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - a11y-status@2.0.0-beta.15
+  - @remirror/core-helpers@2.0.0-beta.16
+  - @remirror/core-types@2.0.0-beta.16
+
 ## 2.0.0-beta.15
 
 > 2022-09-08

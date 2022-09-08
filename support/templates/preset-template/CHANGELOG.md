@@ -1,5 +1,27 @@
 # @remirror/preset-template
 
+## 2.0.0-beta.16
+
+> 2022-09-08
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.16
+  - @remirror/core@2.0.0-beta.16
+
 ## 2.0.0-beta.15
 
 > 2022-09-08

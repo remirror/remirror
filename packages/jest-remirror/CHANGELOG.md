@@ -1,5 +1,85 @@
 # jest-remirror
 
+## 2.0.0-beta.16
+
+> 2022-09-08
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+- Removes `domino` from the codebase.
+- Update ProseMirror packages to latest versions.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update prosemirror packages.
+- Improve the calculation of changed ranges by utilising mapping
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Support both ESM and CJS.
+- SSR features are removed.
+- Update ProseMirror packages.
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.16
+  - jest-prosemirror@2.0.0-beta.16
+  - @remirror/core@2.0.0-beta.16
+  - @remirror/dom@2.0.0-beta.16
+  - @remirror/preset-core@2.0.0-beta.16
+
 ## 2.0.0-beta.15
 
 > 2022-09-08

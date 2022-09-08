@@ -1,5 +1,73 @@
 # @remirror/preset-formatting
 
+## 2.0.0-beta.16
+
+> 2022-09-08
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes `domino` from the codebase.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Improve the calculation of changed ranges by utilising mapping
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Support both ESM and CJS.
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.16
+  - @remirror/core@2.0.0-beta.16
+  - @remirror/extension-bold@2.0.0-beta.16
+  - @remirror/extension-columns@2.0.0-beta.16
+  - @remirror/extension-font-size@2.0.0-beta.16
+  - @remirror/extension-heading@2.0.0-beta.16
+  - @remirror/extension-italic@2.0.0-beta.16
+  - @remirror/extension-node-formatting@2.0.0-beta.16
+  - @remirror/extension-strike@2.0.0-beta.16
+  - @remirror/extension-sub@2.0.0-beta.16
+  - @remirror/extension-sup@2.0.0-beta.16
+  - @remirror/extension-text-case@2.0.0-beta.16
+  - @remirror/extension-text-color@2.0.0-beta.16
+  - @remirror/extension-text-highlight@2.0.0-beta.16
+  - @remirror/extension-underline@2.0.0-beta.16
+  - @remirror/extension-whitespace@2.0.0-beta.16
+
 ## 2.0.0-beta.15
 
 > 2022-09-08

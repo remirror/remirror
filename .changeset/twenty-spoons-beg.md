@@ -1,5 +1,8 @@
 ---
 '@remirror/extension-link': patch
+'remirror': patch
+'@remirror/preset-wysiwyg': patch
+'@remirror/react-editors': patch
 ---
 
 Auto link adjacent character detection.
