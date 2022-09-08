@@ -33,7 +33,7 @@ pnpm refresh
 
 ## Development
 
-If you're modifying a package and import helpers from another packages in the monorepo, ensure that the other package is referenced in the referring package's `package.json` file.
+When importing code from another package in the monorepo, ensure that it is referenced in the `package.json` file in the package you're modifying. This is normally as a dependency (expect in the case of `@remirror/pm` which in most cases is a _peer_ dependency)
 
 ### General
 
@@ -51,7 +51,9 @@ export DEBUG=true
 pnpm run watch
 ```
 
-Under the hood, for most packages, this command uses `esbuild` to compile TypeScript to JavaScript, and `tsc` to output type definitions. Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to produce CSS files. `pnpm run watch` will also handle these packages too.
+Under the hood, for most packages, this command uses `esbuild` to compile TypeScript to JavaScript, and `tsc` to output type definitions. 
+
+Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to produce CSS files. `pnpm run watch` will execute the build scripts in these packages too.
 
 ### Storybook
 
