@@ -198,7 +198,7 @@ Under the hood, for most package, this command uses `esbuild` to compile TypeScr
 pnpm run storybook
 ```
 
-When run this builds all packages and then watch for changes to reload as necessary. If you are running storybook, then it will run `pnpm watch` for you, so you don't need to do it yourself.
+When run this builds all packages and then watch for changes to reload as necessary. If you are running storybook, then it will run `pnpm run watch` for you, so you don't need to do it yourself.
 
 <br />
 
