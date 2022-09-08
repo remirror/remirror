@@ -1,6 +1,6 @@
 {
   "name": "a11y-status",
-  "version": "2.0.0-beta.13",
+  "version": "2.0.0-beta.14",
   "description": "Create a singleton live region for a11y status updates",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/a11y-status",
   "repository": {

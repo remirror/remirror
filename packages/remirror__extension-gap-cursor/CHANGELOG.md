@@ -1,5 +1,37 @@
 # @remirror/extension-gap-cursor
 
+## 2.0.0-beta.15
+
+> 2022-09-08
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes `domino` from the codebase.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Support both ESM and CJS.
+- SSR features are removed.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.15
+  - @remirror/core@2.0.0-beta.15
+  - @remirror/messages@2.0.0-beta.15
+
 ## 2.0.0-beta.14
 
 > 2022-09-05

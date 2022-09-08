@@ -1,5 +1,68 @@
 # @remirror/extension-entity-reference
 
+## 2.0.0-beta.15
+
+> 2022-09-08
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Update pnpm-lock.yaml
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- add helper to get shortest entity reference
+- Removes `domino` from the codebase.
+- Expose the return type of the throttle and debounce helpers
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Try to require JSDOM implicitly in node environment.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Support both ESM and CJS.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- SSR features are removed.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-events@2.0.0-beta.15
+  - @remirror/extension-positioner@2.0.0-beta.15
+  - @remirror/pm@2.0.0-beta.15
+  - @remirror/core@2.0.0-beta.15
+
 ## 2.0.0-beta.14
 
 > 2022-09-05
