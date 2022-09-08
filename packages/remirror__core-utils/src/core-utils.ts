@@ -673,6 +673,31 @@ export interface ChangedRange extends FromToProps {
 }
 
 /**
+ * Deduplicate changes ranges and removes ranges that spanned by other ranges
+ */
+function removeOverlappingChangedRanges(ranges: ChangedRange[]): ChangedRange[] {
+  const uniqueRanges = uniqueBy(
+    ranges,
+    ({ from, to, prevFrom, prevTo }) => `${from}_${to}_${prevFrom}_${prevTo}`,
+  );
+
+  return uniqueRanges.filter((range, i, arr) => {
+    return !arr.some((otherRange, j) => {
+      if (i === j) {
+        return false;
+      }
+
+      return (
+        range.prevFrom >= otherRange.prevFrom &&
+        range.prevTo <= otherRange.prevTo &&
+        range.from >= otherRange.from &&
+        range.to <= otherRange.to
+      );
+    });
+  });
+}
+
+/**
  * Get all the ranges of changes for the provided transaction.
  *
  * This can be used to gather specific parts of the document which require
@@ -689,65 +714,47 @@ export function getChangedRanges(
   tr: Transaction,
   StepTypes: Array<AnyConstructor<Step>> = [],
 ): ChangedRange[] {
-  // The holder for the ranges value which will be returned from this function.
   const ranges: ChangedRange[] = [];
-  const rawRanges: FromToProps[] = [];
+  const { steps, mapping } = tr;
+  const inverseMapping = mapping.invert();
 
-  for (const step of tr.steps) {
+  steps.forEach((step, i) => {
     if (!isValidStep(step, StepTypes)) {
-      continue;
+      return;
     }
 
+    const rawRanges: FromToProps[] = [];
     const stepMap = step.getMap();
+    const mappingSlice = mapping.slice(i);
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore @see https://github.com/ProseMirror/prosemirror/issues/1075
     if (stepMap.ranges.length === 0 && isRangeStep(step)) {
       const { from, to } = step;
-
-      if (from === undefined || to === undefined) {
-        continue;
-      }
-
       rawRanges.push({ from, to });
     } else {
-      step.getMap().forEach((from, to) => {
+      stepMap.forEach((from, to) => {
         rawRanges.push({ from, to });
       });
     }
-  }
+
+    rawRanges.forEach((range) => {
+      const from = mappingSlice.map(range.from, -1);
+      const to = mappingSlice.map(range.to);
+
+      ranges.push({
+        from,
+        to,
+        prevFrom: inverseMapping.map(from, -1),
+        prevTo: inverseMapping.map(to),
+      });
+    });
+  });
 
   // Sort the ranges.
-  const sortedRanges = sort(rawRanges, (a, z) => a.from - z.from);
+  const sortedRanges = sort(ranges, (a, z) => a.from - z.from);
 
-  // Merge sorted ranges into the new range.
-  for (const { from, to } of sortedRanges) {
-    // The last item in the accumulated `ranges`.
-    const lastRange = ranges[ranges.length - 1];
-
-    // True when range added has no overlap with the previous end value.
-    const noOverlap = !lastRange || lastRange.to < from;
-
-    if (noOverlap) {
-      // Add the new range when no overlap is found.
-      const newFrom = tr.mapping.map(from, -1);
-      const newTo = tr.mapping.map(to);
-      ranges.push({
-        from: newFrom,
-        to: newTo,
-        prevFrom: tr.mapping.invert().map(newFrom, -1),
-        prevTo: tr.mapping.invert().map(newTo),
-      });
-    } else if (lastRange) {
-      // Update the lastRange's end value.
-      lastRange.to = Math.max(lastRange.from, to);
-    }
-  }
-
-  return uniqueBy(
-    ranges,
-    ({ from, to, prevFrom, prevTo }) => `${from}_${to}_${prevFrom}_${prevTo}`,
-  );
+  return removeOverlappingChangedRanges(sortedRanges);
 }
 
 /**
