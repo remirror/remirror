@@ -180,9 +180,17 @@ If you're modifying a package and import helpers from another packages in the mo
 pnpm run watch
 ```
 
-When developing Remirror, you would need to open a terminal window and run the command above. This command will keep watching the source code and compile them when there are changes. Under the hood, for most package, it uses `esbuild` to compile TypeScript to JavaScript, `tsc` to compile TypeScript to type definitions. Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to output the CSS. `pnpm run watch` will also handle these packages too.
+When developing Remirror, you need to open a terminal window and run the command above. This command will keep watching the source code from all packages and compile them when there are changes. Error message will be printed in the terminal if compile didn't succeed.
 
-If your code have some error, this command will print the error message in the terminal.
+Set the environment variable `DEBUG` to `true` to see more detailed logs.
+
+```bash
+# for Linux and macOS
+export DEBUG=true
+pnpm run watch
+```
+
+Under the hood, for most package, this command uses `esbuild` to compile TypeScript to JavaScript, and `tsc` to output type definitions. Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to produce CSS files. `pnpm run watch` will also handle these packages too.
 
 ### Storybook
 
