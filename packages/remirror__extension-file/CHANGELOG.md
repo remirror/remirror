@@ -1,5 +1,80 @@
 # @remirror/extension-file
 
+## 1.0.0-beta.15
+
+> 2022-09-08
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes `domino` from the codebase.
+- Expose the return type of the throttle and debounce helpers
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Try to require JSDOM implicitly in node environment.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Support both ESM and CJS.
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- Update jsx-dom to v7.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- SSR features are removed.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/react@2.0.0-beta.15
+  - @remirror/react-components@2.0.0-beta.15
+  - @remirror/pm@2.0.0-beta.15
+  - @remirror/core@2.0.0-beta.15
+  - @remirror/theme@2.0.0-beta.15
+
 ## 1.0.0-beta.14
 
 > 2022-09-05
