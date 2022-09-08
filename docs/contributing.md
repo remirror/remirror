@@ -51,7 +51,7 @@ export DEBUG=true
 pnpm run watch
 ```
 
-Under the hood, for most packages, this command uses `esbuild` to compile TypeScript to JavaScript, and `tsc` to output type definitions. 
+Under the hood, for most packages, this command uses `esbuild` to compile TypeScript to JavaScript, and `tsc` to output type definitions.
 
 Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to produce CSS files. `pnpm run watch` will execute the build scripts in these packages too.
 
