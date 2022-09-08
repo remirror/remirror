@@ -176,7 +176,13 @@ If you're modifying a package and import helpers from another packages in the mo
 
 ### General
 
-This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct) to manage builds. Each time the project is installed `preconstruct dev` is run which automatically sets the dist folder with entry points mapping to the source files of the package. This is really useful for development and except for one exception when working on the Storybook is all you need.
+```bash
+pnpm run watch
+```
+
+When developing Remirror, you would need to open a terminal window and run the command above. This command will keep watching the source code and compile them when there are changes. Under the hood, for most package, it uses `esbuild` to compile TypeScript to JavaScript, `tsc` to compile TypeScript to type definitions. Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to output the CSS. `pnpm run watch` will also handle these packages too.
+
+If your code have some error, this command will print the error message in the terminal.
 
 ### Storybook
 
@@ -184,7 +190,7 @@ This project uses [`preconstruct`](https://github.com/preconstruct/preconstruct)
 pnpm run storybook
 ```
 
-When run this builds all packages and then watch for changes to reload as necessary.
+When run this builds all packages and then watch for changes to reload as necessary. If you are running storybook, then it will run `pnpm watch` for you, so you don't need to do it yourself.
 
 <br />
 
