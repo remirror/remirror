@@ -31,13 +31,13 @@ import {
   MarkExtensionSpec,
   MarkSpecOverride,
   NamedShortcut,
+  NodeWithPosition,
   omitExtraAttributes,
   ProsemirrorAttributes,
   ProsemirrorNode,
   removeMark,
   Static,
   updateMark,
-  within,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
 import { undoDepth } from '@remirror/pm/history';
@@ -58,11 +58,20 @@ const DEFAULT_AUTO_LINK_REGEX =
  */
 export type DefaultProtocol = 'http:' | 'https:' | '' | string;
 
-interface FoundAutoLink {
+export interface FoundAutoLink {
+  /** link href */
   href: string;
+  /** link text */
   text: string;
+  /** offset of matched text */
   start: number;
+  /** index of next char after match end */
   end: number;
+}
+
+interface LinkWithProperties extends Omit<FoundAutoLink, 'href'> {
+  range: FromToProps;
+  attrs: LinkAttributes;
 }
 
 interface EventMeta {
@@ -186,6 +195,37 @@ export interface LinkOptions {
   autoLinkAllowedTLDs?: Static<string[]>;
 
   /**
+   * Returns a list of links found in string where each element is a hash
+   * with properties { href: string; text: string; start: number; end: number; }
+   *
+   * @remarks
+   *
+   * This function is used instead of matching links with the autoLinkRegex option.
+   *
+   * @default null
+   *
+   * @param {string} input
+   * @param {string} defaultProtocol
+   * @returns {array} FoundAutoLink[]
+   */
+  findAutoLinks?: Static<(input: string, defaultProtocol: string) => FoundAutoLink[]>;
+
+  /**
+   * Check if the given string is a link
+   *
+   * @remarks
+   *
+   * Used instead of validating a link with the autoLinkRegex and autoLinkAllowedTLDs option.
+   *
+   * @default null
+   *
+   * @param {string} input
+   * @param {string} defaultProtocol
+   * @returns {boolean}
+   */
+  isValidUrl?: Static<(input: string, defaultProtocol: string) => boolean>;
+
+  /**
    * The default protocol to use when it can't be inferred.
    *
    * @defaultValue ''
@@ -238,6 +278,8 @@ export type LinkAttributes = ProsemirrorAttributes<{
     openLinkOnClick: false,
     autoLinkRegex: DEFAULT_AUTO_LINK_REGEX,
     autoLinkAllowedTLDs: TOP_50_TLDS,
+    findAutoLinks: undefined,
+    isValidUrl: undefined,
     defaultTarget: null,
     supportedTargets: [],
     extractHref,
@@ -447,9 +489,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
             return false;
           }
 
-          const href = this.buildHref(url);
-
-          if (!this.isValidTLD(href)) {
+          if (!this.isValidUrl(url)) {
             return false;
           }
 
@@ -575,59 +615,113 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
         const { updateLink, removeLink } = this.store.chain(tr);
 
-        changes.forEach(({ from, to, prevFrom, prevTo }) => {
-          // Remove auto links that are no longer valid
-          this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true).forEach((prevMark) => {
-            const newFrom = mapping.map(prevMark.from);
-            const newTo = mapping.map(prevMark.to);
-            const newMarks = this.getLinkMarksInRange(doc, newFrom, newTo, true);
-
-            newMarks.forEach((newMark) => {
-              const wasLink = this._autoLinkRegexNonGlobal?.test(prevMark.text);
-              const isLink = this._autoLinkRegexNonGlobal?.test(newMark.text);
-
-              if (wasLink && !isLink) {
-                removeLink({ from: newMark.from, to: newMark.to }).tr();
-              }
-            });
-          });
-
+        changes.forEach(({ prevFrom, prevTo, from, to }) => {
           // Store all the callbacks we need to make
           const onUpdateCallbacks: Array<Pick<EventMeta, 'range' | 'attrs'> & { text: string }> =
             [];
 
-          // Find text that can be auto linked
-          tr.doc.nodesBetween(from, to, (node, pos) => {
-            if (!node.isTextblock || !node.type.allowsMarkType(this.type)) {
-              return;
-            }
+          // Check if node was split into two by `Enter` key press
+          const isNodeSeparated = to - from === 2;
 
-            const nodeText = tr.doc.textBetween(pos, pos + node.nodeSize, undefined, ' ');
-            this.findAutoLinks(nodeText)
-              // calculate link position
-              .map((link) => ({
-                ...link,
-                from: pos + link.start + 1,
-                to: pos + link.end + 1,
-              }))
-              .filter((link) => {
-                // Determine if found link is within the changed range
-                return (
-                  within(link.from, from, to) ||
-                  within(link.to, from, to) ||
-                  within(from, link.from, link.to) ||
-                  within(to, link.from, link.to)
-                );
+          // Get previous links
+          const prevMarks = this.getLinkMarksInRange(prevState.doc, prevFrom, prevTo, true)
+            .filter((item) => item.mark.type === this.type)
+            .map(({ from, to, text }) => ({
+              mappedFrom: mapping.map(from),
+              mappedTo: mapping.map(to),
+              text,
+              from,
+              to,
+            }));
+
+          // Check if links need to be removed or updated.
+          prevMarks.forEach(
+            ({ mappedFrom: newFrom, mappedTo: newTo, from: prevMarkFrom, to: prevMarkTo }, i) =>
+              this.getLinkMarksInRange(doc, newFrom, newTo, true)
+                .filter((item) => item.mark.type === this.type)
+                .forEach((newMark) => {
+                  const prevLinkText = prevState.doc.textBetween(
+                    prevMarkFrom,
+                    prevMarkTo,
+                    undefined,
+                    ' ',
+                  );
+
+                  const newLinkText = doc
+                    .textBetween(newMark.from, newMark.to + 1, undefined, ' ')
+                    .trim();
+
+                  const wasLink = this.isValidUrl(prevLinkText);
+                  const isLink = this.isValidUrl(newLinkText);
+
+                  if (isLink) {
+                    return;
+                  }
+
+                  if (wasLink) {
+                    removeLink({ from: newMark.from, to: newMark.to }).tr();
+
+                    prevMarks.splice(i, 1);
+                  }
+
+                  if (isNodeSeparated) {
+                    return;
+                  }
+
+                  // If link characters have been deleted
+                  from === to &&
+                    // Check newLinkText for a remaining valid link
+                    this.findAutoLinks(newLinkText)
+                      .map((link) =>
+                        this.addLinkProperties({
+                          ...link,
+                          from: newFrom + link.start,
+                          to: newFrom + link.end,
+                        }),
+                      )
+                      .forEach(({ attrs, range, text }) => {
+                        updateLink(attrs, range).tr();
+
+                        onUpdateCallbacks.push({ attrs, range, text });
+                      });
+                }),
+          );
+
+          // Find text that can be auto linked
+          this.findTextBlocksInRange(doc, { from, to }).forEach(({ text, positionStart }) => {
+            // Match links in text node
+            this.findAutoLinks(text)
+              .map((link) =>
+                this.addLinkProperties({
+                  ...link,
+                  // Calculate link position.
+                  from: positionStart + link.start + 1,
+                  to: positionStart + link.end + 1,
+                }),
+              )
+              // Check if link is within the changed range.
+              .filter(({ range }) => {
+                const fromIsInRange = from >= range.from && from <= range.to;
+                const toIsInRange = to >= range.from && to <= range.to;
+
+                return fromIsInRange || toIsInRange || isNodeSeparated;
               })
-              .filter((link) => {
-                // Avoid overwriting manually created links
-                const marks = this.getLinkMarksInRange(tr.doc, link.from, link.to, false);
-                return marks.length === 0;
-              })
-              .forEach(({ from, to, href, text }) => {
-                const attrs = { href, auto: true };
-                const range = { from, to };
+              // Avoid overwriting manually created links.
+              .filter(
+                ({ range }) =>
+                  this.getLinkMarksInRange(tr.doc, range.from, range.to, false).length === 0,
+              )
+              // Prevent updating existing auto links
+              .filter(
+                ({ range: { from }, text }) =>
+                  !prevMarks.some(
+                    ({ text: prevMarkText, mappedFrom }) =>
+                      mappedFrom === from && prevMarkText === text,
+                  ),
+              )
+              .forEach(({ attrs, text, range }) => {
                 updateLink(attrs, range).tr();
+
                 onUpdateCallbacks.push({ attrs, range, text });
               });
           });
@@ -665,14 +759,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     const linkMarks: GetMarkRange[] = [];
 
     if (from === to) {
-      const $pos = doc.resolve(from);
-      $pos.marks().forEach(() => {
-        const range = getMarkRange($pos, this.type);
+      const resolveFrom = Math.max(from - 1, 0);
 
-        if (range?.mark.attrs.auto === isAutoLink) {
-          linkMarks.push(range);
-        }
-      });
+      const $pos = doc.resolve(resolveFrom);
+      const range = getMarkRange($pos, this.type);
+
+      if (range?.mark.attrs.auto === isAutoLink) {
+        linkMarks.push(range);
+      }
     } else {
       doc.nodesBetween(from, to, (node, pos) => {
         const marks = node.marks ?? [];
@@ -694,7 +788,53 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     return linkMarks;
   }
 
+  private findTextBlocksInRange(
+    node: ProsemirrorNode,
+    range: FromToProps,
+  ): Array<{ text: string; positionStart: number }> {
+    const nodesWithPos: NodeWithPosition[] = [];
+
+    // define a placeholder for leaf nodes to calculate link position
+    node.nodesBetween(range.from, range.to, (node, pos) => {
+      if (!node.isTextblock || !node.type.allowsMarkType(this.type)) {
+        return;
+      }
+
+      nodesWithPos.push({
+        node,
+        pos,
+      });
+    });
+
+    return nodesWithPos.map((textBlock) => ({
+      text: node.textBetween(
+        textBlock.pos,
+        textBlock.pos + textBlock.node.nodeSize,
+        undefined,
+        ' ',
+      ),
+      positionStart: textBlock.pos,
+    }));
+  }
+
+  private addLinkProperties({
+    from,
+    to,
+    href,
+    ...link
+  }: FoundAutoLink & FromToProps): LinkWithProperties {
+    return {
+      ...link,
+      range: { from, to },
+      attrs: { href, auto: true },
+    };
+  }
+
   private findAutoLinks(str: string): FoundAutoLink[] {
+    if (this.options.findAutoLinks) {
+      return this.options.findAutoLinks(str, this.options.defaultProtocol);
+    }
+
     const toAutoLink: FoundAutoLink[] = [];
 
     for (const match of findMatches(str, this.options.autoLinkRegex)) {
@@ -719,6 +859,14 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     }
 
     return toAutoLink;
+  }
+
+  private isValidUrl(text: string): boolean {
+    if (this.options.isValidUrl) {
+      return this.options.isValidUrl(text, this.options.defaultProtocol);
+    }
+
+    return this.isValidTLD(this.buildHref(text)) && !!this._autoLinkRegexNonGlobal?.test(text);
   }
 
   private isValidTLD(str: string): boolean {
