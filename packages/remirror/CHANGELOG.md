@@ -1,5 +1,175 @@
 # remirror
 
+## 2.0.0-beta.16
+
+> 2022-09-08
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- Removes `domino` from the codebase.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- Update ProseMirror packages to latest versions.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update pnpm-lock.yaml
+- add helper to get shortest entity reference
+- Improve the calculation of changed ranges by utilising mapping
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Support both ESM and CJS.
+- SSR features are removed.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Expose the return type of the throttle and debounce helpers
+- Auto link adjacent character detection.
+
+  Remove auto link if the link becomes invalid.
+
+  **Before:**
+
+  "window.confirm" results in "[window.co](//window.co)nfirm"
+
+  **After:**
+
+  "window.confirm" results in "window.confirm"
+
+  New options `findAutoLinks` and `isValidUrl` that if provided are used instead of `autoLinkAllowedTLDs` and `autoLinkRegex` to find and validate a link.
+
+  URLs are very ambiguous the new options allow to find valid auto links without adding additional complexity to the link extension.
+
+  Library examples to find URLs in text.
+
+  - [linkify-it](https://www.npmjs.com/package/linkify-it)
+  - [linkifyjs](https://www.npmjs.com/package/linkifyjs)
+
+  It is worth mentioning that the `autoLinkRegex` can be modified to exclude adjacent punctuations from an auto link.
+
+  Regex suggestion from @whawker
+
+  `/(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?](?:(?! |[!"'(),.;?[\]{}-]).|-+|\((?:(?![ )]).)*\)|\[(?:(?![ \]]).)*]|'(?=\w)|\.(?! |\.|$)|,(?! |,|$)|;(?! |;|$)|!(?! |!|$)|\?(?! |\?|$))+|\/)?/gi;`
+
+  **Examples**
+
+  - [www.remirror.io/test](www.remirror.io/test)? - excluding sentence punctuation
+  - "[www.remirror.io/test](www.remirror.io/test)" - surround link with quotation marks
+  - ([www.remirror.io/(test)](<www.remirror.io/(test)>))- link with balanced parentheses in path surrounded by parentheses
+
+- When href equals text content, treat the link as an auto link (if enabled)
+- Transform a hard break into `\n` in `Node.textContent`.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.16
+  - @remirror/extension-entity-reference@2.0.0-beta.16
+  - @remirror/core-utils@2.0.0-beta.16
+  - @remirror/core@2.0.0-beta.16
+  - @remirror/dom@2.0.0-beta.16
+  - @remirror/extension-annotation@2.0.0-beta.16
+  - @remirror/extension-bidi@2.0.0-beta.16
+  - @remirror/extension-blockquote@2.0.0-beta.16
+  - @remirror/extension-bold@2.0.0-beta.16
+  - @remirror/extension-callout@2.0.0-beta.16
+  - @remirror/extension-code@2.0.0-beta.16
+  - @remirror/extension-code-block@2.0.0-beta.16
+  - @remirror/extension-codemirror5@2.0.0-beta.16
+  - @remirror/extension-collaboration@2.0.0-beta.16
+  - @remirror/extension-columns@2.0.0-beta.16
+  - @remirror/extension-diff@2.0.0-beta.16
+  - @remirror/extension-doc@2.0.0-beta.16
+  - @remirror/extension-drop-cursor@2.0.0-beta.16
+  - @remirror/extension-embed@2.0.0-beta.16
+  - @remirror/extension-emoji@2.0.0-beta.16
+  - @remirror/extension-epic-mode@2.0.0-beta.16
+  - @remirror/extension-events@2.0.0-beta.16
+  - @remirror/extension-font-family@2.0.0-beta.16
+  - @remirror/extension-font-size@2.0.0-beta.16
+  - @remirror/extension-gap-cursor@2.0.0-beta.16
+  - @remirror/extension-hard-break@2.0.0-beta.16
+  - @remirror/extension-heading@2.0.0-beta.16
+  - @remirror/extension-history@2.0.0-beta.16
+  - @remirror/extension-horizontal-rule@2.0.0-beta.16
+  - @remirror/extension-image@2.0.0-beta.16
+  - @remirror/extension-italic@2.0.0-beta.16
+  - @remirror/extension-link@2.0.0-beta.16
+  - @remirror/extension-list@2.0.0-beta.16
+  - @remirror/extension-markdown@2.0.0-beta.16
+  - @remirror/extension-mention@2.0.0-beta.16
+  - @remirror/extension-mention-atom@2.0.0-beta.16
+  - @remirror/extension-node-formatting@2.0.0-beta.16
+  - @remirror/extension-paragraph@2.0.0-beta.16
+  - @remirror/extension-placeholder@2.0.0-beta.16
+  - @remirror/extension-positioner@2.0.0-beta.16
+  - @remirror/extension-search@2.0.0-beta.16
+  - @remirror/extension-shortcuts@2.0.0-beta.16
+  - @remirror/extension-strike@2.0.0-beta.16
+  - @remirror/extension-sub@2.0.0-beta.16
+  - @remirror/extension-sup@2.0.0-beta.16
+  - @remirror/extension-tables@2.0.0-beta.16
+  - @remirror/extension-text@2.0.0-beta.16
+  - @remirror/extension-text-case@2.0.0-beta.16
+  - @remirror/extension-text-color@2.0.0-beta.16
+  - @remirror/extension-text-highlight@2.0.0-beta.16
+  - @remirror/extension-trailing-node@2.0.0-beta.16
+  - @remirror/extension-underline@2.0.0-beta.16
+  - @remirror/extension-whitespace@2.0.0-beta.16
+  - @remirror/extension-yjs@3.0.0-beta.16
+  - @remirror/preset-core@2.0.0-beta.16
+  - @remirror/preset-formatting@2.0.0-beta.16
+  - @remirror/preset-wysiwyg@2.0.0-beta.16
+  - @remirror/theme@2.0.0-beta.16
+  - @remirror/core-constants@2.0.0-beta.16
+  - @remirror/core-helpers@2.0.0-beta.16
+  - @remirror/core-types@2.0.0-beta.16
+  - @remirror/icons@2.0.0-beta.16
+
 ## 2.0.0-beta.15
 
 > 2022-09-08

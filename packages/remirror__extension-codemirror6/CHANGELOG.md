@@ -1,5 +1,43 @@
 # @remirror/extension-codemirror6
 
+## 1.0.0-beta.16
+
+> 2022-09-08
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- `@remirror/extension-codemirror6` now includes two new commands: `createCodeMirror` and `updateCodeMirror`, which allows you to create and update a CodeMirror block.
+
+### Patch Changes
+
+- Removes `domino` from the codebase.
+- Improve the calculation of changed ranges by utilising mapping
+- Update codemirror to v6.
+- Support both ESM and CJS.
+- SSR features are removed.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.16
+  - @remirror/core@2.0.0-beta.16
+
 ## 1.0.0-beta.15
 
 > 2022-09-08

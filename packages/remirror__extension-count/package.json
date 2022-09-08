@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-count",
-  "version": "2.0.0-beta.15",
+  "version": "2.0.0-beta.16",
   "description": "Count characters or words in your editor, and set a soft max length",
   "keywords": [
     "remirror",
@@ -35,13 +35,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.15"
+    "@remirror/core": "^2.0.0-beta.16"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.15"
+    "@remirror/pm": "^2.0.0-beta.16"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.15"
+    "@remirror/pm": "^2.0.0-beta.16"
   },
   "publishConfig": {
     "access": "public"

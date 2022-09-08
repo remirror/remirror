@@ -1,5 +1,142 @@
 # @remirror/react-editors
 
+## 1.0.0-beta.16
+
+> 2022-09-08
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- Removes `domino` from the codebase.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Fix `onSendableReceived` handler so it is actually debounced as intended.
+
+  Add two new commands `cancelSendableSteps` and `flushSendableSteps` which more control over the debounced functionality
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Update ProseMirror packages to latest versions.
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update prosemirror packages.
+- Update pnpm-lock.yaml
+- add helper to get shortest entity reference
+- Improve the calculation of changed ranges by utilising mapping
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Add an optional onclickmark handler to handle clicks on entity reference
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Support both ESM and CJS.
+- SSR features are removed.
+- Update ProseMirror packages.
+- Update jsx-dom to v7.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Expose the return type of the throttle and debounce helpers
+- Auto link adjacent character detection.
+
+  Remove auto link if the link becomes invalid.
+
+  **Before:**
+
+  "window.confirm" results in "[window.co](//window.co)nfirm"
+
+  **After:**
+
+  "window.confirm" results in "window.confirm"
+
+  New options `findAutoLinks` and `isValidUrl` that if provided are used instead of `autoLinkAllowedTLDs` and `autoLinkRegex` to find and validate a link.
+
+  URLs are very ambiguous the new options allow to find valid auto links without adding additional complexity to the link extension.
+
+  Library examples to find URLs in text.
+
+  - [linkify-it](https://www.npmjs.com/package/linkify-it)
+  - [linkifyjs](https://www.npmjs.com/package/linkifyjs)
+
+  It is worth mentioning that the `autoLinkRegex` can be modified to exclude adjacent punctuations from an auto link.
+
+  Regex suggestion from @whawker
+
+  `/(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?](?:(?! |[!"'(),.;?[\]{}-]).|-+|\((?:(?![ )]).)*\)|\[(?:(?![ \]]).)*]|'(?=\w)|\.(?! |\.|$)|,(?! |,|$)|;(?! |;|$)|!(?! |!|$)|\?(?! |\?|$))+|\/)?/gi;`
+
+  **Examples**
+
+  - [www.remirror.io/test](www.remirror.io/test)? - excluding sentence punctuation
+  - "[www.remirror.io/test](www.remirror.io/test)" - surround link with quotation marks
+  - ([www.remirror.io/(test)](<www.remirror.io/(test)>))- link with balanced parentheses in path surrounded by parentheses
+
+- When href equals text content, treat the link as an auto link (if enabled)
+- Transform a hard break into `\n` in `Node.textContent`.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.16
+  - remirror@2.0.0-beta.16
+  - @remirror/extension-react-tables@2.0.0-beta.16
+  - @remirror/react@2.0.0-beta.16
+  - @remirror/styles@2.0.0-beta.16
+  - create-context-state@2.0.0-beta.15
+  - @remirror/core-helpers@2.0.0-beta.16
+
 ## 1.0.0-beta.15
 
 > 2022-09-08

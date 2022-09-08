@@ -1,5 +1,27 @@
 # prosemirror-paste-rules
 
+## 2.0.0-beta.16
+
+> 2022-09-08
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update ProseMirror packages to latest versions.
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Support both ESM and CJS.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-constants@2.0.0-beta.16
+  - @remirror/core-helpers@2.0.0-beta.16
+
 ## 2.0.0-beta.15
 
 > 2022-09-08
