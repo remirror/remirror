@@ -223,7 +223,9 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    *
    * @internal
    */
-  ['~E']: ReturnType<this['createExtensions']>[number];
+  ['~E']: ReturnType<this['createExtensions']>[number] = {} as ReturnType<
+    this['createExtensions']
+  >[number];
 
   /**
    * Create the extensions which will be consumed by the preset. Override this
