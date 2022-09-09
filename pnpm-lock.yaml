@@ -2276,6 +2276,7 @@ importers:
       globby: ^11.0.4
       html-escaper: ^3.0.3
       is-ci: ^3.0.0
+      linkifyjs: ^3.0.5
       postcss: '>= 8.0.0'
       react: ^18.0.0
       react-circular-progressbar: ^2.0.4
@@ -2351,6 +2352,7 @@ importers:
       '@storybook/node-logger': 6.5.8
       '@storybook/react': 6.5.8_79e948ef66167ad9a1038475fd459697
       '@storybook/theming': 6.5.8_react-dom@18.0.0+react@18.0.0
+      linkifyjs: 3.0.5
       postcss: 8.4.14
 
   packages/test-keyboard:
