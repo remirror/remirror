@@ -46,7 +46,7 @@ export async function watch(options: { skipBuild?: boolean }) {
     ignorePermissionErrors: true,
   });
   const executor = new DebounceExecutor(async (dir: string) => {
-    await buildPackage(packageDirMap[dir]);
+    await buildPackage(packageDirMap[dir], false);
     await runTsc();
   });
 
