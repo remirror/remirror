@@ -793,6 +793,7 @@
       "@types/react-dom",
       "react",
       "react-dom",
+      "remirror",
       "@remirror/core",
       "@remirror/extension-positioner",
       "@remirror/extension-text-color",
