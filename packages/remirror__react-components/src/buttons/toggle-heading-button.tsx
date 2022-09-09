@@ -1,16 +1,16 @@
 import React, { FC, useCallback } from 'react';
-import { ProsemirrorAttributes } from '@remirror/core';
+import { HeadingExtension, HeadingExtensionAttributes } from 'remirror/extensions';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
 
 export interface ToggleHeadingButtonProps
   extends Omit<CommandButtonProps, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'> {
-  attrs?: Partial<ProsemirrorAttributes>;
+  attrs?: Partial<HeadingExtensionAttributes>;
 }
 
 export const ToggleHeadingButton: FC<ToggleHeadingButtonProps> = ({ attrs, ...rest }) => {
-  const { toggleHeading } = useCommands();
+  const { toggleHeading } = useCommands<HeadingExtension>();
 
   const handleSelect = useCallback(() => {
     if (toggleHeading.enabled(attrs)) {
@@ -18,7 +18,7 @@ export const ToggleHeadingButton: FC<ToggleHeadingButtonProps> = ({ attrs, ...re
     }
   }, [toggleHeading, attrs]);
 
-  const active = useActive().heading(attrs);
+  const active = useActive<HeadingExtension>().heading(attrs);
   const enabled = toggleHeading.enabled(attrs);
 
   return (

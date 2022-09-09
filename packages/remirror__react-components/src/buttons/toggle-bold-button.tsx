@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { BoldExtension } from 'remirror/extensions';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
@@ -7,7 +8,7 @@ export interface ToggleBoldButtonProps
   extends Omit<CommandButtonProps, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'> {}
 
 export const ToggleBoldButton: FC<ToggleBoldButtonProps> = (props) => {
-  const { toggleBold } = useCommands();
+  const { toggleBold } = useCommands<BoldExtension>();
 
   const handleSelect = useCallback(() => {
     if (toggleBold.enabled()) {
@@ -15,7 +16,7 @@ export const ToggleBoldButton: FC<ToggleBoldButtonProps> = (props) => {
     }
   }, [toggleBold]);
 
-  const active = useActive().bold();
+  const active = useActive<BoldExtension>().bold();
   const enabled = toggleBold.enabled();
 
   return (

@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { CommandsExtension } from '@remirror/core';
 import { useCommands, useEditorState } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
@@ -7,7 +8,7 @@ export interface PasteButtonProps
   extends Omit<CommandButtonProps, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'> {}
 
 export const PasteButton: FC<PasteButtonProps> = (props) => {
-  const { paste } = useCommands();
+  const { paste } = useCommands<CommandsExtension>();
   // Force component update on state change
   useEditorState();
 

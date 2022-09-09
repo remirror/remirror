@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { BulletListExtension } from 'remirror/extensions';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
@@ -7,7 +8,7 @@ export interface ToggleBulletListButtonProps
   extends Omit<CommandButtonProps, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'> {}
 
 export const ToggleBulletListButton: FC<ToggleBulletListButtonProps> = (props) => {
-  const { toggleBulletList } = useCommands();
+  const { toggleBulletList } = useCommands<BulletListExtension>();
 
   const handleSelect = useCallback(() => {
     if (toggleBulletList.enabled()) {
@@ -15,7 +16,7 @@ export const ToggleBulletListButton: FC<ToggleBulletListButtonProps> = (props) =
     }
   }, [toggleBulletList]);
 
-  const active = useActive().bulletList();
+  const active = useActive<BulletListExtension>().bulletList();
   const enabled = toggleBulletList.enabled();
 
   return (

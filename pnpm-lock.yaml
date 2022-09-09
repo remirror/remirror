@@ -1949,6 +1949,7 @@ importers:
       react: ^18.0.0
       react-color: ^2.19.3
       react-dom: ^18.0.0
+      remirror: ^2.0.0-beta.16
     dependencies:
       '@babel/runtime': 7.18.9
       '@emotion/react': 11.9.0_be4640d19c7069687d6d07ca829736d3
@@ -1979,6 +1980,7 @@ importers:
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
+      remirror: link:../remirror
 
   packages/remirror__react-core:
     specifiers:

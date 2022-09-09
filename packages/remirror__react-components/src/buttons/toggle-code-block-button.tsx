@@ -1,16 +1,16 @@
 import React, { FC, useCallback } from 'react';
-import { ProsemirrorAttributes } from '@remirror/core';
+import { CodeBlockAttributes, CodeBlockExtension } from 'remirror/extensions';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
 
 export interface ToggleCodeBlockButtonProps
   extends Omit<CommandButtonProps, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'> {
-  attrs?: Partial<ProsemirrorAttributes>;
+  attrs?: Partial<CodeBlockAttributes>;
 }
 
 export const ToggleCodeBlockButton: FC<ToggleCodeBlockButtonProps> = ({ attrs = {}, ...rest }) => {
-  const { toggleCodeBlock } = useCommands();
+  const { toggleCodeBlock } = useCommands<CodeBlockExtension>();
 
   const handleSelect = useCallback(() => {
     if (toggleCodeBlock.enabled(attrs)) {
@@ -18,7 +18,7 @@ export const ToggleCodeBlockButton: FC<ToggleCodeBlockButtonProps> = ({ attrs = 
     }
   }, [toggleCodeBlock, attrs]);
 
-  const active = useActive().codeBlock();
+  const active = useActive<CodeBlockExtension>().codeBlock();
   const enabled = toggleCodeBlock.enabled(attrs);
 
   return (

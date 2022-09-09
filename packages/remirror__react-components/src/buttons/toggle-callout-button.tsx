@@ -1,16 +1,16 @@
 import React, { FC, useCallback } from 'react';
-import { ProsemirrorAttributes } from '@remirror/core';
+import { CalloutExtension, CalloutExtensionAttributes } from 'remirror/extensions';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
 
 export interface ToggleCalloutButtonProps
   extends Omit<CommandButtonProps, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'> {
-  attrs?: Partial<ProsemirrorAttributes>;
+  attrs?: Partial<CalloutExtensionAttributes>;
 }
 
 export const ToggleCalloutButton: FC<ToggleCalloutButtonProps> = ({ attrs = {}, ...rest }) => {
-  const { toggleCallout } = useCommands();
+  const { toggleCallout } = useCommands<CalloutExtension>();
 
   const handleSelect = useCallback(() => {
     if (toggleCallout.enabled(attrs)) {
@@ -18,7 +18,7 @@ export const ToggleCalloutButton: FC<ToggleCalloutButtonProps> = ({ attrs = {}, 
     }
   }, [toggleCallout, attrs]);
 
-  const active = useActive().callout(attrs);
+  const active = useActive<CalloutExtension>().callout(attrs);
   const enabled = toggleCallout.enabled(attrs);
 
   return (

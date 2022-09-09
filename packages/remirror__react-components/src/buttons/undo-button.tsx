@@ -1,4 +1,5 @@
 import React, { FC, useCallback } from 'react';
+import { HistoryExtension } from 'remirror/extensions';
 import { useCommands, useHelpers } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
@@ -7,8 +8,8 @@ export interface UndoButtonProps
   extends Omit<CommandButtonProps, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'> {}
 
 export const UndoButton: FC<UndoButtonProps> = (props) => {
-  const { undo } = useCommands();
-  const { undoDepth } = useHelpers(true);
+  const { undo } = useCommands<HistoryExtension>();
+  const { undoDepth } = useHelpers<HistoryExtension>(true);
 
   const handleSelect = useCallback(() => {
     if (undo.enabled()) {
