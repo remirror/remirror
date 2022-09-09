@@ -13,7 +13,7 @@ const findAutoLinks = (str: string) =>
 
 const isValidUrl = (input: string) => linkify.test(input);
 
-const Linkify = (): JSX.Element => {
+const LinkifyJS = (): JSX.Element => {
   const { manager, state } = useRemirror({
     extensions: () => [new LinkExtension({ autoLink: true, findAutoLinks, isValidUrl })],
     content: `Type "www.remirror.io" to insert a link:&nbsp;`,
@@ -27,4 +27,4 @@ const Linkify = (): JSX.Element => {
   );
 };
 
-export default Linkify;
+export default LinkifyJS;
