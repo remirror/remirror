@@ -25,7 +25,7 @@ test('add content', () => {
     view,
     nodes: { doc, p },
     add,
-  } = renderEditor([]);
+  } = renderEditor([] as never[]);
   add(doc(p(expected)));
 
   expect(view.dom).toHaveTextContent(expected);
@@ -224,7 +224,7 @@ describe('tags', () => {
       view,
       nodes: { doc, p },
       add,
-    } = renderEditor([]));
+    } = renderEditor<never>([]));
   });
 
   it('supports <cursor>', () => {

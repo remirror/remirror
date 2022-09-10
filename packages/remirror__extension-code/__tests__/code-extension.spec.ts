@@ -51,7 +51,7 @@ describe('inputRules', () => {
       add,
       nodes: { p, doc },
       marks: { code },
-    } = renderEditor([new CodeExtension()]));
+    } = renderEditor<CodeExtension>([new CodeExtension()]));
   });
 
   it('should match input rule', () => {
@@ -80,7 +80,7 @@ describe('commands', () => {
     nodes: { p, doc },
     marks: { code },
     commands,
-  } = renderEditor([new CodeExtension()]);
+  } = renderEditor<CodeExtension>([new CodeExtension()]);
 
   beforeEach(() => {
     ({
@@ -89,7 +89,7 @@ describe('commands', () => {
       nodes: { p, doc },
       marks: { code },
       commands,
-    } = renderEditor([new CodeExtension()]));
+    } = renderEditor<CodeExtension>([new CodeExtension()]));
   });
 
   it('#toggleBold', () => {

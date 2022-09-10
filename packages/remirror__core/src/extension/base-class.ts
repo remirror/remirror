@@ -89,7 +89,7 @@ export abstract class BaseClass<
    *
    * @internal
    */
-  ['~O']: Options & DefaultStaticOptions;
+  ['~O']: Options & DefaultStaticOptions = {} as Options & DefaultStaticOptions;
 
   /**
    * This identifies this as a `Remirror` object. .

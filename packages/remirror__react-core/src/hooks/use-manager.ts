@@ -42,7 +42,7 @@ export function useManager<Extension extends AnyExtension = Remirror.Extensions>
   const extensionsRef = useRef(extensions);
   const optionsRef = useRef(options);
 
-  const [manager, setManager] = useState(() => createReactManager(extensions, options));
+  const [manager, setManager] = useState(() => createReactManager<Extension>(extensions, options));
 
   // Keep the parameter refs up to date with the latest value.
   extensionsRef.current = extensions;
@@ -54,7 +54,7 @@ export function useManager<Extension extends AnyExtension = Remirror.Extensions>
     return manager.addHandler('destroy', () => {
       // `clone` is used to ensure that that any stale extensions are
       // reinitialized.
-      setManager(() => createReactManager(extensionsRef.current, optionsRef.current));
+      setManager(() => createReactManager<Extension>(extensionsRef.current, optionsRef.current));
     });
   }, [manager]);
 
