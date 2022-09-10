@@ -98,7 +98,7 @@ describe('inputRules', () => {
       add,
       nodes: { doc, p },
       marks: { bold, italic },
-    } = renderEditor([new BoldExtension(), new ItalicExtension()]);
+    } = renderEditor<BoldExtension | ItalicExtension>([new BoldExtension(), new ItalicExtension()]);
 
     add(doc(p('_**bold italic<cursor>')))
       .insertText('**')
@@ -122,7 +122,7 @@ describe('inputRules', () => {
       add,
       nodes: { doc, p },
       marks: { bold, italic },
-    } = renderEditor([new BoldExtension(), new ItalicExtension()]);
+    } = renderEditor<BoldExtension | ItalicExtension>([new BoldExtension(), new ItalicExtension()]);
 
     add(doc(p('**_italic bold<cursor>')))
       .insertText('_')

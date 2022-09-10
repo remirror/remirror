@@ -14,7 +14,7 @@ function create(options?: DiffOptions, handlers: GetHandler<DiffOptions> = {}) {
     view,
     commands,
     helpers,
-  } = renderEditor([extension]);
+  } = renderEditor<DiffExtension>([extension]);
   const node = doc(p('This is not yet committed'));
 
   for (const [name, handler] of entries(handlers)) {
