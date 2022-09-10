@@ -256,6 +256,49 @@ export type GetExtensions<Extension> =
     : AnyExtension;
 
 /**
+ * Extract the function return type if the generic type is a function, otherwise
+ *
+ * @internal
+ *
+ * @example
+ *
+ * ```ts
+ * type A = () => string
+ * type B = UnpackedReturnType<A>
+ * // B = string
+ *
+ * type C = string
+ * type D = UnpackedReturnType<A>
+ * // D = string
+ * ```
+ */
+type UnpackedReturnType<MaybeFunction> = MaybeFunction extends (...args: any[]) => infer Returned
+  ? Returned
+  : MaybeFunction;
+
+/**
+ * Get the union extension type from an array of extensions or from a function that returns an array of extension.
+ *
+ * @example
+ *
+ * ```ts
+ * const extensions = [new BoldExtension(), new ItalicExtension()];
+ * type Extension = UnpackedExtension<typeof extensions>
+ * // Extension = BoldExtension | ItalicExtension
+ * ```
+ *
+ * @example
+ *
+ * ```ts
+ * const extensions = () => [new BoldExtension(), new ItalicExtension()];
+ * type Extension = UnpackedExtension<typeof extensions>
+ * // Extension = BoldExtension | ItalicExtension
+ * ```
+ */
+export type UnpackedExtension<Extension extends AnyExtension[] | (() => AnyExtension[])> =
+  UnpackedReturnType<Extension>[number];
+
+/**
  * The type which gets the active methods from the provided extensions.
  */
 export type ActiveFromExtensions<Extension extends AnyExtension> = Record<
