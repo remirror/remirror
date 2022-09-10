@@ -46,8 +46,8 @@ describe('tags', () => {
   });
 
   it('throws when an invalid tag is added', () => {
-    // @ts-expect-error
     expect(() =>
+      // @ts-expect-error
       renderEditor<InvalidExtension>([new InvalidExtension()]),
     ).toThrowErrorMatchingSnapshot();
   });
@@ -62,6 +62,7 @@ describe('tags', () => {
     expect(ExtensionTag.Awesome).toBe('awesome');
     // @ts-expect-error
     const editor = renderEditor<InvalidExtension>([new InvalidExtension()]);
+    // @ts-expect-error
     expect(editor.manager.nodes['invalid'].group).toBe('awesome');
 
     // @ts-expect-error
