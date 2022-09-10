@@ -6,7 +6,7 @@ import {
   LinkExtension,
 } from 'remirror/extensions';
 import { cleanup } from 'testing/react';
-import { PlainExtension, prosemirrorNodeToHtml } from '@remirror/core';
+import { AnyExtension, PlainExtension, prosemirrorNodeToHtml } from '@remirror/core';
 import { NodeSelection } from '@remirror/pm/state';
 
 import { renderEditor } from '../';
@@ -25,7 +25,7 @@ test('add content', () => {
     view,
     nodes: { doc, p },
     add,
-  } = renderEditor([] as never[]);
+  } = renderEditor<AnyExtension>([]);
   add(doc(p(expected)));
 
   expect(view.dom).toHaveTextContent(expected);
