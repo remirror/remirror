@@ -24,14 +24,18 @@ export interface UseRemirrorProps<Extension extends AnyExtension>
     Partial<CreateEditorStateProps> {
   /**
    * Provide a function that returns an array of extensions which will be used
-   * to create the manager. If you prefer you can directly provide your own
-   * `RemirrorManager` to override this. The manager you provide will be cloned
-   * and used within your editor.
+   * to create the manager.
+   */
+  extensions?: () => Extension[];
+
+  /**
+   * The initial manager to use for the editor. If this is provided then the
+   * `extensions` prop should not be provided.
    *
    * When a `Manager` is provided then several settings are ignored like
    * [[`stringHandler`]] and [[`onError`]].
    */
-  extensions?: (() => Extension[]) | RemirrorManager<any>;
+  manager?: RemirrorManager<any>;
 
   /**
    * This is called when the editor has invalid content.
@@ -156,8 +160,8 @@ export interface UseRemirrorReturn<Extension extends AnyExtension> {
 export function useRemirror<Extension extends AnyExtension>(
   props: UseRemirrorProps<Extension> = {},
 ): UseRemirrorReturn<ReactExtensions<Extension>> {
-  const { content, document, selection, extensions, ...settings } = props;
-  const manager = useManager(extensions ?? (() => []), settings);
+  const { content, document, selection, extensions, manager: _manager, ...settings } = props;
+  const manager = useManager(extensions, _manager, settings);
 
   const [state, setState] = useState(() =>
     manager.createState({

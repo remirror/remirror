@@ -347,7 +347,7 @@ describe('onChange', () => {
     const mock: any = jest.fn();
 
     const Component = () => {
-      const { manager } = useRemirror({ extensions: chain.manager });
+      const { manager } = useRemirror({ manager: chain.manager });
       const [state, setState] = useState(0);
 
       const onChange = () => {
@@ -375,7 +375,7 @@ describe('onChange', () => {
     const mock: any = jest.fn();
 
     const Component = () => {
-      const { manager } = useRemirror({ extensions: chain.manager });
+      const { manager } = useRemirror({ manager: chain.manager });
       const [state, setState] = useState(0);
 
       const onChange = () => {

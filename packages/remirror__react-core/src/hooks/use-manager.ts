@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { AnyExtension, RemirrorManager } from '@remirror/core';
+import { AnyExtension, RemirrorManager } from '@remirror/core';
 
 import { createReactManager } from '../react-helpers';
 import type { CreateReactManagerOptions, ReactExtensions } from '../react-types';
@@ -33,8 +33,9 @@ import type { CreateReactManagerOptions, ReactExtensions } from '../react-types'
  *
  * @internal
  */
-export function useManager<Extension extends AnyExtension = Remirror.Extensions>(
-  extensions: (() => Extension[]) | RemirrorManager<ReactExtensions<Extension>>,
+export function useManager<Extension extends AnyExtension>(
+  extensions: () => Extension[] = () => [],
+  _manager: RemirrorManager<ReactExtensions<Extension>> | null = null,
   options: CreateReactManagerOptions = {},
 ): RemirrorManager<ReactExtensions<Extension>> {
   // Store the value in refs so that they can be used in the `useEffect` hook
@@ -42,7 +43,13 @@ export function useManager<Extension extends AnyExtension = Remirror.Extensions>
   const extensionsRef = useRef(extensions);
   const optionsRef = useRef(options);
 
-  const [manager, setManager] = useState(() => createReactManager(extensions, options));
+  const [manager, setManager] = useState(() => {
+    if (_manager) {
+      return _manager;
+    }
+
+    return createReactManager(extensions, options);
+  });
 
   // Keep the parameter refs up to date with the latest value.
   extensionsRef.current = extensions;

@@ -414,7 +414,7 @@ test('support for rendering a nested controlled editor in strict mode', () => {
 
   const Component = () => {
     const { manager, state, onChange } = useRemirror({
-      extensions: chain.manager,
+      manager: chain.manager,
       content: '<p>test</p>',
       selection: 'all',
     });
@@ -466,7 +466,7 @@ describe('onChange', () => {
 
   const Component = () => {
     const { manager, state, setState } = useRemirror({
-      extensions: chain.manager,
+      manager: chain.manager,
       content: '<p>A</p>',
       selection: 'end',
     });

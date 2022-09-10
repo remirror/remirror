@@ -1,11 +1,11 @@
 import React from 'react';
 import { act as renderAct, render } from 'testing/react';
-import type { AnyRemirrorManager } from '@remirror/core';
+import type { AnyExtension, AnyRemirrorManager } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
 import { useManager } from '@remirror/react';
 
 // TODO: `jest.mock` doesn't work on ESM environments.
-describe.skip('useManager', () => {
+describe('useManager', () => {
   // jest.mock('@remirror/preset-react', () => {
   //   const actual = jest.requireActual('@remirror/preset-react');
   //   return {
@@ -18,7 +18,7 @@ describe.skip('useManager', () => {
 
   it('does not recreate the react preset for every rerender', () => {
     const Component = (_: { options?: object }) => {
-      useManager(() => [], {});
+      useManager(() => []);
 
       return null;
     };
@@ -33,8 +33,7 @@ describe.skip('useManager', () => {
   it('rerenders when the manager is destroyed', () => {
     let manager: AnyRemirrorManager;
     const Component = (_: { options?: object }) => {
-      manager = useManager(() => [], {});
-
+      manager = useManager();
       return null;
     };
 
