@@ -483,6 +483,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           auto: !isReplacement,
         }),
         transformMatch: (match) => {
+          if (!this.options.autoLink) return false;
+
           const url = getMatchString(match);
 
           if (!url) {
