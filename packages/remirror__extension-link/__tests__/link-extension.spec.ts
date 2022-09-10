@@ -1415,7 +1415,7 @@ describe('spanning', () => {
       attributeMarks: { link },
       nodes: { doc, p },
       view,
-    } = renderEditor([
+    } = renderEditor<LinkExtension | DecorationsExtension>([
       new LinkExtension(),
       new DecorationsExtension({ persistentSelectionClass: 'selection' }),
     ]);

@@ -44,7 +44,7 @@ describe('inputRules', () => {
     add,
     nodes: { p, doc },
     marks: { code },
-  } = renderEditor([new CodeExtension()]);
+  } = renderEditor<CodeExtension>([new CodeExtension()]);
 
   beforeEach(() => {
     ({

@@ -11,7 +11,7 @@ describe('commands', () => {
     nodes: { p, doc },
     marks: { sub },
     commands,
-  } = renderEditor([new SubExtension()]);
+  } = renderEditor<SubExtension>([new SubExtension()]);
 
   it('#toggleSub', () => {
     add(doc(p('Hello <start>sub<end>, lets dance.')));

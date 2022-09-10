@@ -11,7 +11,7 @@ describe('inputRules', () => {
       add,
       nodes: { doc, p },
       marks: { italic },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('Text _italic_')
@@ -29,7 +29,7 @@ describe('inputRules', () => {
       add,
       nodes: { doc, p },
       marks: { italic },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('Text *italic*')
@@ -46,7 +46,7 @@ describe('inputRules', () => {
     const {
       add,
       nodes: { doc, p },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('_    _')
