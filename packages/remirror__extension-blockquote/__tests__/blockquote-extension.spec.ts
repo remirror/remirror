@@ -9,7 +9,7 @@ describe('schema', () => {
   const {
     nodes: { blockquote, doc, p },
     schema,
-  } = renderEditor([new BlockquoteExtension()]);
+  } = renderEditor<BlockquoteExtension>([new BlockquoteExtension()]);
 
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(blockquote(p('Hello friend!')))).toMatchInlineSnapshot(`
@@ -35,7 +35,7 @@ describe('schema', () => {
 test('supports extra attributes', () => {
   const {
     nodes: { blockquote, p },
-  } = renderEditor([
+  } = renderEditor<BlockquoteExtension>([
     new BlockquoteExtension({ extraAttributes: { 'data-custom': 'hello-world' } }),
   ]);
 
@@ -50,7 +50,7 @@ test('supports extra attributes', () => {
 
 function create() {
   const blockquoteExtension = new BlockquoteExtension();
-  return renderEditor([blockquoteExtension]);
+  return renderEditor<BlockquoteExtension>([blockquoteExtension]);
 }
 
 test('inputRules', () => {

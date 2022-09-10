@@ -7,7 +7,7 @@ import { HistoryExtension } from '../';
 extensionValidityTest(HistoryExtension);
 
 describe('commands', () => {
-  const create = () => renderEditor([new HistoryExtension()]);
+  const create = () => renderEditor<HistoryExtension>([new HistoryExtension()]);
 
   it('can undo', () => {
     const {

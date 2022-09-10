@@ -561,12 +561,14 @@ describe('custom annotations', () => {
   }
 
   it('should support custom annotations', () => {
+    const extension = new AnnotationExtension<MyAnnotation>();
+    type Extension = typeof extension;
     const {
       add,
       helpers,
       nodes: { p, doc },
       commands,
-    } = renderEditor([new AnnotationExtension<MyAnnotation>()]);
+    } = renderEditor<Extension>([extension]);
 
     add(doc(p('<start>Hello<end>')));
     commands.addAnnotation({ id: '1', tag: 'tag' });
@@ -583,13 +585,15 @@ describe('custom annotations', () => {
   });
 
   it('should support overlapping custom annotations', () => {
+    const extension = new AnnotationExtension<MyAnnotation>();
+    type Extension = typeof extension;
     const {
       dom,
       selectText,
       add,
       nodes: { p, doc },
       commands,
-    } = renderEditor([new AnnotationExtension<MyAnnotation>()]);
+    } = renderEditor<Extension>([extension]);
 
     add(doc(p('<start>Hello<end> my friend')));
 
@@ -630,12 +634,14 @@ describe('custom styling', () => {
       return `background: ${annotations[0]?.color}`;
     };
 
+    const extension = new AnnotationExtension<ColoredAnnotation>({ getStyle });
+    type Extension = typeof extension;
     const {
       dom,
       add,
       nodes: { p, doc },
       commands,
-    } = renderEditor([new AnnotationExtension<ColoredAnnotation>({ getStyle })]);
+    } = renderEditor<Extension>([extension]);
 
     add(doc(p('<start>Hello<end> my friend')));
 

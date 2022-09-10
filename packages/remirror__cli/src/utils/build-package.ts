@@ -18,12 +18,14 @@ import { writePackageJson } from './write-package-json';
 /**
  * Bundle a package using esbuild and update `package.json` if necessary.
  */
-export async function buildPackage(pkg: Package) {
+export async function buildPackage(pkg: Package, writePackageJson = true) {
   logger.info(`${colors.blue(pkg.packageJson.name)} building...`);
 
   const entryPoints = await parseEntryPoints(pkg);
 
-  await writeMainPackageJson(pkg, entryPoints);
+  if (writePackageJson) {
+    await writeMainPackageJson(pkg, entryPoints);
+  }
 
   const promises: Array<Promise<unknown>> = [];
 
@@ -46,8 +48,10 @@ export async function buildPackage(pkg: Package) {
     }
   }
 
-  for (const entryPoint of entryPoints.filter((entryPoint) => !entryPoint.isMain)) {
-    promises.push(writeSubpathPackageJson(pkg, entryPoint));
+  if (writePackageJson) {
+    for (const entryPoint of entryPoints.filter((entryPoint) => !entryPoint.isMain)) {
+      promises.push(writeSubpathPackageJson(pkg, entryPoint));
+    }
   }
 
   await Promise.all(promises);

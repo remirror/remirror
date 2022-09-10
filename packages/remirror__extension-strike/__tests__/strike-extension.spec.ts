@@ -9,7 +9,7 @@ describe('inputRules', () => {
     add,
     nodes: { p, doc },
     marks: { strike },
-  } = renderEditor([new StrikeExtension()]);
+  } = renderEditor<StrikeExtension>([new StrikeExtension()]);
 
   it('should match input rule', () => {
     add(doc(p('Start<cursor>')))
@@ -37,7 +37,7 @@ describe('commands', () => {
     nodes: { p, doc },
     marks: { strike },
     commands,
-  } = renderEditor([new StrikeExtension()]);
+  } = renderEditor<StrikeExtension>([new StrikeExtension()]);
 
   it('#toggleStrike', () => {
     add(doc(p('Hello <start>strike<end>, lets dance.')));

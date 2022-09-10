@@ -28,7 +28,7 @@ import {
   PrimitiveSelection,
   ShouldSkipFunction,
 } from '@remirror/core';
-import type { Suggester } from '@remirror/pm/suggest';
+import { DEFAULT_SUGGESTER, Suggester } from '@remirror/pm/suggest';
 import { ExtensionEmojiTheme } from '@remirror/theme';
 
 import {
@@ -47,6 +47,7 @@ import {
     fallback: ':red_question_mark:',
     moji: 'noto',
     suggestionCharacter: ':',
+    supportedCharacters: DEFAULT_SUGGESTER.supportedCharacters,
   },
   staticKeys: ['plainText'],
   handlerKeys: ['suggestEmoji'],
@@ -305,6 +306,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
     return {
       disableDecorations: true,
       invalidPrefixCharacters: `${escapeStringRegex(this.options.suggestionCharacter)}|\\w`,
+      supportedCharacters: this.options.supportedCharacters,
       char: this.options.suggestionCharacter,
       name: this.name,
       suggestTag: 'span',

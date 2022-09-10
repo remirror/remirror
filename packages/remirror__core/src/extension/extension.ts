@@ -223,7 +223,9 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
    *
    * @internal
    */
-  ['~E']: ReturnType<this['createExtensions']>[number];
+  ['~E']: ReturnType<this['createExtensions']>[number] = {} as ReturnType<
+    this['createExtensions']
+  >[number];
 
   /**
    * Create the extensions which will be consumed by the preset. Override this
@@ -370,55 +372,7 @@ abstract class Extension<Options extends ValidOptions = EmptyShape> extends Base
   setPriority(priority: undefined | ExtensionPriority): void {
     this.priorityOverride = priority;
   }
-}
 
-/**
- * Declaration merging since the constructor property can't be defined on the
- * actual class.
- */
-interface Extension<Options extends ValidOptions = EmptyShape>
-  extends ExtensionLifecycleMethods,
-    Remirror.BaseExtension {
-  /**
-   * The type of the constructor for the extension.
-   */
-  constructor: ExtensionConstructor<Options>;
-
-  /**
-   * An extension can declare the extensions it requires.
-   *
-   * @remarks
-   *
-   * When creating the extension manager the extension will be checked for
-   * required extension as well as a quick check to see if the required
-   * extension is already included. If not present a descriptive error will be
-   * thrown.
-   */
-  requiredExtensions?: AnyExtensionConstructor[];
-}
-
-/**
- * Get the expected type signature for the `defaultOptions`. Requires that every
- * optional setting key (except for keys which are defined on the
- * `BaseExtensionOptions`) has a value assigned.
- */
-export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptions<
-  Options,
-  BaseExtensionOptions
->;
-
-/**
- * Here is the extension lifecycle order.
- *
- * ### Ordering
- *
- * - `onCreate`
- * - `onView`
- * - **runtime**
- * - `onStateUpdate` (repeats for every update to the prosemirror editor state)
- * - `onDestroy` (end of life)
- */
-interface ExtensionLifecycleMethods {
   /**
    * This handler is called when the `RemirrorManager` is first created.
    *
@@ -431,6 +385,8 @@ interface ExtensionLifecycleMethods {
    * You can return a `Dispose` function which will automatically be called when
    * the extension is destroyed.
    *
+   * This handler is called before the `onView` handler.
+   *
    * @category Lifecycle Methods
    */
   onCreate?(): Dispose | void;
@@ -441,6 +397,8 @@ interface ExtensionLifecycleMethods {
    *
    * Return a dispose function which will be called when the extension is
    * destroyed.
+   *
+   * This handler is called after the `onCreate` handler.
    *
    * @category Lifecycle Methods
    */
@@ -494,6 +452,39 @@ interface ExtensionLifecycleMethods {
    */
   onDestroy?(): void;
 }
+
+/**
+ * Declaration merging since the constructor property can't be defined on the
+ * actual class.
+ */
+interface Extension<Options extends ValidOptions = EmptyShape> extends Remirror.BaseExtension {
+  /**
+   * The type of the constructor for the extension.
+   */
+  constructor: ExtensionConstructor<Options>;
+
+  /**
+   * An extension can declare the extensions it requires.
+   *
+   * @remarks
+   *
+   * When creating the extension manager the extension will be checked for
+   * required extension as well as a quick check to see if the required
+   * extension is already included. If not present a descriptive error will be
+   * thrown.
+   */
+  requiredExtensions?: AnyExtensionConstructor[];
+}
+
+/**
+ * Get the expected type signature for the `defaultOptions`. Requires that every
+ * optional setting key (except for keys which are defined on the
+ * `BaseExtensionOptions`) has a value assigned.
+ */
+export type DefaultExtensionOptions<Options extends ValidOptions> = DefaultOptions<
+  Options,
+  BaseExtensionOptions
+>;
 
 /**
  * Create a plain extension which doesn't directly map to Prosemirror nodes or

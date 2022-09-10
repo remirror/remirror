@@ -1,6 +1,6 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { DecorationsExtension } from '../';
+import { AnyExtension, DecorationsExtension } from '../';
 
 extensionValidityTest(DecorationsExtension);
 
@@ -17,7 +17,7 @@ describe('options', () => {
         dom,
         selectText,
         nodes: { p, doc },
-      } = renderEditor([], { builtin: configuration });
+      } = renderEditor<AnyExtension>([], { builtin: configuration });
 
       add(doc(p('Some text')));
       selectText({ from: 4, to: 9 });
@@ -27,7 +27,7 @@ describe('options', () => {
 
     it('retains selection and decoration', () => {
       const builtin = { persistentSelectionClass: 'selection' };
-      const editor = renderEditor([], { builtin });
+      const editor = renderEditor<never>([], { builtin });
       const {
         add,
         dom,

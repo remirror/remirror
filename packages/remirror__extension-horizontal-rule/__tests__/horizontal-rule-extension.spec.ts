@@ -7,7 +7,9 @@ extensionValidityTest(HorizontalRuleExtension);
 
 describe('insertHorizontalRule', () => {
   it('can insert into the middle of content', () => {
-    const { add, nodes, commands, view } = renderEditor([new HorizontalRuleExtension()]);
+    const { add, nodes, commands, view } = renderEditor<HorizontalRuleExtension>([
+      new HorizontalRuleExtension(),
+    ]);
     const { doc, horizontalRule: hr, p } = nodes;
 
     add(doc(p('This <cursor>is content')));
@@ -18,7 +20,9 @@ describe('insertHorizontalRule', () => {
   });
 
   it('adds a trailing node when at the end of a block node', () => {
-    const { add, nodes, commands, view } = renderEditor([new HorizontalRuleExtension()]);
+    const { add, nodes, commands, view } = renderEditor<HorizontalRuleExtension>([
+      new HorizontalRuleExtension(),
+    ]);
     const { doc, horizontalRule: hr, p } = nodes;
 
     add(doc(p('This is content<cursor>')));
@@ -65,7 +69,7 @@ describe('insertHorizontalRule', () => {
   });
 
   it('does not split content when adding the hr', () => {
-    const editor = renderEditor([new HorizontalRuleExtension()]);
+    const editor = renderEditor<HorizontalRuleExtension>([new HorizontalRuleExtension()]);
     const { add, nodes, view } = editor;
     const { doc, horizontalRule: hr, p } = nodes;
 
@@ -84,7 +88,9 @@ describe('insertHorizontalRule', () => {
 
 describe('inputRules', () => {
   it('adds a trailing node by default', () => {
-    const { add, nodes, view, insertText } = renderEditor([new HorizontalRuleExtension()]);
+    const { add, nodes, view, insertText } = renderEditor<HorizontalRuleExtension>([
+      new HorizontalRuleExtension(),
+    ]);
     const { doc, horizontalRule: hr, p } = nodes;
 
     add(doc(p('This is content'), p('<cursor>'))).insertText('---');
@@ -128,7 +134,7 @@ describe('inputRules', () => {
   });
 
   it('can split content at the start of line', () => {
-    const editor = renderEditor([new HorizontalRuleExtension()]);
+    const editor = renderEditor<HorizontalRuleExtension>([new HorizontalRuleExtension()]);
     const { add, nodes, view } = editor;
     const { doc, horizontalRule: hr, p } = nodes;
 

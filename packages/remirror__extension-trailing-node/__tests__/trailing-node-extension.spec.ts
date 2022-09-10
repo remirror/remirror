@@ -5,18 +5,21 @@ import {
   TrailingNodeExtension,
   TrailingNodeOptions,
 } from 'remirror/extensions';
+import { UnpackedExtension } from '@remirror/core';
 
 extensionValidityTest(TrailingNodeExtension);
 
 function create(params?: Partial<TrailingNodeOptions>) {
-  const {
-    add,
-    nodes: { doc, p, heading, blockquote },
-  } = renderEditor(() => [
+  const extensions = () => [
     new TrailingNodeExtension(params),
     new HeadingExtension(),
     new BlockquoteExtension(),
-  ]);
+  ];
+  type Extension = UnpackedExtension<typeof extensions>;
+  const {
+    add,
+    nodes: { doc, p, heading, blockquote },
+  } = renderEditor<Extension>(extensions);
 
   return { add, doc, p, h: heading, b: blockquote };
 }

@@ -65,7 +65,7 @@ describe('dynamic schema attributes', () => {
 });
 
 test('custom schema', () => {
-  const editor = renderEditor([], { schema });
+  const editor = renderEditor<never>([], { schema });
 
   expect(editor.schema).toBe(schema);
   expect(Object.keys(editor.manager.nodes)).toMatchSnapshot();
