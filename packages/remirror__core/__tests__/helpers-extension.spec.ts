@@ -47,7 +47,7 @@ describe('helpers', () => {
     });
 
     it('returns false if the view is not editable', () => {
-      const { helpers } = renderEditor([], { props: { editable: false } });
+      const { helpers } = renderEditor<never>([], { props: { editable: false } });
       expect(helpers.isViewEditable()).toBeFalse();
     });
   });

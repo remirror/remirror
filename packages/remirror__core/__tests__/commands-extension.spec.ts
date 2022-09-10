@@ -189,7 +189,7 @@ describe('commands.insertText', () => {
 
 describe('setContent', () => {
   it('can set the content while preserving history', () => {
-    const editor = renderEditor([], { stringHandler: 'html' });
+    const editor = renderEditor<never>([], { stringHandler: 'html' });
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my content')));
 
@@ -201,7 +201,7 @@ describe('setContent', () => {
   });
 
   it('can reset the content while preserving history', () => {
-    const editor = renderEditor([], { stringHandler: 'html' });
+    const editor = renderEditor<never>([], { stringHandler: 'html' });
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my content')));
 

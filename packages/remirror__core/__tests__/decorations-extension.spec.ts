@@ -27,7 +27,7 @@ describe('options', () => {
 
     it('retains selection and decoration', () => {
       const builtin = { persistentSelectionClass: 'selection' };
-      const editor = renderEditor([], { builtin });
+      const editor = renderEditor<never>([], { builtin });
       const {
         add,
         dom,
