@@ -301,7 +301,9 @@ export interface GetChangeOptionsReturn<Options extends ValidOptions> {
   pickChanged: PickChanged<Options>;
 }
 
-export type PickChanged<Options> = <Key extends keyof GetFixedDynamic<Options>>(
+export type PickChanged<Options extends ValidOptions> = <
+  Key extends keyof GetFixedDynamic<Options>,
+>(
   keys: Key[],
 ) => Partial<Pick<GetFixedDynamic<Options>, Key>>;
 
