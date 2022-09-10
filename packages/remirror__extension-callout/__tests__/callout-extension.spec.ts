@@ -9,7 +9,7 @@ describe('schema', () => {
   const {
     nodes: { callout, doc, p },
     schema,
-  } = renderEditor([new CalloutExtension()]);
+  } = renderEditor<CalloutExtension>([new CalloutExtension()]);
 
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(callout(p('Hello friend!')))).toMatchInlineSnapshot(`

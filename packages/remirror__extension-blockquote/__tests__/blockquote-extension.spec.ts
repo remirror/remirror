@@ -9,7 +9,7 @@ describe('schema', () => {
   const {
     nodes: { blockquote, doc, p },
     schema,
-  } = renderEditor([new BlockquoteExtension()]);
+  } = renderEditor<BlockquoteExtension>([new BlockquoteExtension()]);
 
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(blockquote(p('Hello friend!')))).toMatchInlineSnapshot(`

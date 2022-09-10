@@ -41,13 +41,15 @@ describe('tags', () => {
       }
     }
 
-    const editor = renderEditor([new CustomExtension()]);
+    const editor = renderEditor<CustomExtension>([new CustomExtension()]);
     expect(editor.manager.nodes.custom.group).toBe(ExtensionTag.Alignment);
   });
 
   it('throws when an invalid tag is added', () => {
     // @ts-expect-error
-    expect(() => renderEditor([new InvalidExtension()])).toThrowErrorMatchingSnapshot();
+    expect(() =>
+      renderEditor<InvalidExtension>([new InvalidExtension()]),
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it('can mutate the tags', () => {
@@ -59,7 +61,7 @@ describe('tags', () => {
     // @ts-expect-error
     expect(ExtensionTag.Awesome).toBe('awesome');
     // @ts-expect-error
-    const editor = renderEditor([new InvalidExtension()]);
+    const editor = renderEditor<InvalidExtension>([new InvalidExtension()]);
     expect(editor.manager.nodes['invalid'].group).toBe('awesome');
 
     // @ts-expect-error

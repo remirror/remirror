@@ -115,7 +115,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    * ```ts
    * import { HeadingExtension } from 'remirror/extensions';
    *
-   * const editor = renderEditor([new HeadingExtension()])
+   * const editor = renderEditor<HeadingExtension>([new HeadingExtension()])
    * const { heading } = editor.attributeNodes;
    *
    * heading({ level: 4, id: '1223' })('My custom heading');

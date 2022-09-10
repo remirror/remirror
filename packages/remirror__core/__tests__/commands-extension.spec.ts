@@ -120,7 +120,7 @@ describe('commands.insertText', () => {
   });
 
   it('can insert text with marks', () => {
-    const editor = renderEditor([new BoldExtension()]);
+    const editor = renderEditor<BoldExtension>([new BoldExtension()]);
     const { doc, p } = editor.nodes;
     const { bold } = editor.marks;
 

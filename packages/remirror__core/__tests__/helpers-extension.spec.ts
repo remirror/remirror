@@ -12,7 +12,7 @@ describe('active', () => {
       nodes: { p, doc },
       attributeNodes: { heading: h },
       active,
-    } = renderEditor([new HeadingExtension()]);
+    } = renderEditor<HeadingExtension>([new HeadingExtension()]);
 
     add(doc((p('one'), h({ level: 2 })('tw<cursor>o'))));
 
@@ -81,7 +81,7 @@ describe('commands.insertHtml', () => {
   });
 
   it('can insert marks', () => {
-    const editor = renderEditor([new BoldExtension()]);
+    const editor = renderEditor<BoldExtension>([new BoldExtension()]);
     const { doc, p } = editor.nodes;
     const { bold } = editor.marks;
 

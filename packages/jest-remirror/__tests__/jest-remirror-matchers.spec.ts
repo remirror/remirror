@@ -48,7 +48,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([new BoldExtension()]);
+    } = renderEditor<BoldExtension>([new BoldExtension()]);
     const oldNode = pOld('simple');
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));
@@ -104,7 +104,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([new BoldExtension()]);
+    } = renderEditor<BoldExtension>([new BoldExtension()]);
     const oldNode = pOld('simple');
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));

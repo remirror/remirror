@@ -22,7 +22,7 @@ describe('configuration', () => {
   hideConsoleError(true);
 
   it('throws without a provider', () => {
-    expect(() => renderEditor([new YjsExtension()])).toThrowErrorMatchingSnapshot();
+    expect(() => renderEditor<YjsExtension>([new YjsExtension()])).toThrowErrorMatchingSnapshot();
   });
 
   it('calls the destroy provider', () => {

@@ -10,7 +10,7 @@ test('captures the direction of each node', () => {
     add,
     nodes: { p, doc },
     view,
-  } = renderEditor([new BidiExtension()]);
+  } = renderEditor<BidiExtension>([new BidiExtension()]);
 
   add(doc(p('first paragraph'), p('بسيطة'), p('@')));
   expect(view.dom).toMatchSnapshot();

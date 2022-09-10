@@ -37,7 +37,7 @@ test('can be configured with plain node extensions', () => {
     view: { dom },
     nodes: { blockquote, doc, p },
     add,
-  } = renderEditor([new BlockquoteExtension()]);
+  } = renderEditor<BlockquoteExtension>([new BlockquoteExtension()]);
   add(doc(blockquote(p(expected)), p('This is a p')));
 
   expect(dom).toHaveTextContent('A simple blockquote');
@@ -50,7 +50,7 @@ test('can be configured with attribute node extensions', () => {
     nodes: { doc },
     attributeNodes: { heading },
     add,
-  } = renderEditor([new HeadingExtension()]);
+  } = renderEditor<HeadingExtension>([new HeadingExtension()]);
 
   const h3 = heading({ level: 3 });
   const h2 = heading({ level: 2 });
@@ -67,7 +67,7 @@ test('can be configured with plain mark extensions', () => {
     nodes: { doc, p },
     add,
     marks: { bold },
-  } = renderEditor([new BoldExtension()]);
+  } = renderEditor<BoldExtension>([new BoldExtension()]);
   add(doc(p('Text is ', bold(expected))));
 
   expect(dom.querySelector('strong')!.textContent).toBe(expected);
@@ -81,7 +81,7 @@ test('can be configured with attribute mark extensions', () => {
     nodes: { doc, p },
     add,
     attributeMarks: { link },
-  } = renderEditor([new LinkExtension()]);
+  } = renderEditor<LinkExtension>([new LinkExtension()]);
   const googleLinkExtension = link({ href });
   add(doc(p('LinkExtension to ', googleLinkExtension(expected))));
 

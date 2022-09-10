@@ -63,7 +63,7 @@ describe('inputRules', () => {
     const {
       add,
       nodes: { doc, p },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('Text *oops_')
@@ -80,7 +80,7 @@ describe('inputRules', () => {
     const {
       add,
       nodes: { doc, p },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('BBC_News')

@@ -799,26 +799,26 @@ describe('areSchemasCompatible', () => {
   });
 
   it('is false for schemas with different mark lengths', () => {
-    const { schema: a } = renderEditor([new BoldExtension()]);
+    const { schema: a } = renderEditor<BoldExtension>([new BoldExtension()]);
     const { schema: b } = renderEditor([]);
     expect(areSchemasCompatible(a, b)).toBe(false);
   });
 
   it('is false schemas with different marks', () => {
-    const { schema: a } = renderEditor([new BoldExtension()]);
-    const { schema: b } = renderEditor([new ItalicExtension()]);
+    const { schema: a } = renderEditor<BoldExtension>([new BoldExtension()]);
+    const { schema: b } = renderEditor<ItalicExtension>([new ItalicExtension()]);
     expect(areSchemasCompatible(a, b)).toBe(false);
   });
 
   it('is false schemas with different node lengths', () => {
-    const { schema: a } = renderEditor([new BlockquoteExtension()]);
+    const { schema: a } = renderEditor<BlockquoteExtension>([new BlockquoteExtension()]);
     const { schema: b } = renderEditor([]);
     expect(areSchemasCompatible(a, b)).toBe(false);
   });
 
   it('is false schemas with different nodes', () => {
-    const { schema: a } = renderEditor([new BlockquoteExtension()]);
-    const { schema: b } = renderEditor([new HeadingExtension()]);
+    const { schema: a } = renderEditor<BlockquoteExtension>([new BlockquoteExtension()]);
+    const { schema: b } = renderEditor<HeadingExtension>([new HeadingExtension()]);
     expect(areSchemasCompatible(a, b)).toBe(false);
   });
 });
