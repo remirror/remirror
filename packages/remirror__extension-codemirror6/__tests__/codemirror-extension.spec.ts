@@ -3,7 +3,7 @@ import { renderEditor } from 'jest-remirror';
 import { CodeMirrorExtension } from '../';
 
 function create() {
-  const renderEditorReturn = renderEditor([new CodeMirrorExtension()]);
+  const renderEditorReturn = renderEditor<CodeMirrorExtension>([new CodeMirrorExtension()]);
 
   const {
     add,

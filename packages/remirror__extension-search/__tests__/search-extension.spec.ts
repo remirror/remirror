@@ -10,7 +10,7 @@ function create(options?: SearchOptions) {
     nodes: { p, doc },
     view,
     commands,
-  } = renderEditor([new SearchExtension(options)]);
+  } = renderEditor<SearchExtension>([new SearchExtension(options)]);
   const node = doc(p('welcome'), p('friend'), p('hello'), p('welcome friend'));
 
   return { add, p, doc, view, commands, node };

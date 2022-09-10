@@ -9,7 +9,7 @@ describe('schema', () => {
   const {
     nodes: { callout, doc, p },
     schema,
-  } = renderEditor([new CalloutExtension()]);
+  } = renderEditor<CalloutExtension>([new CalloutExtension()]);
 
   it('creates the correct dom node', () => {
     expect(prosemirrorNodeToHtml(callout(p('Hello friend!')))).toMatchInlineSnapshot(`
@@ -35,7 +35,9 @@ describe('schema', () => {
 test('supports extra attributes', () => {
   const {
     nodes: { callout, p },
-  } = renderEditor([new CalloutExtension({ extraAttributes: { 'data-custom': 'hello-world' } })]);
+  } = renderEditor<CalloutExtension>([
+    new CalloutExtension({ extraAttributes: { 'data-custom': 'hello-world' } }),
+  ]);
 
   expect(prosemirrorNodeToHtml(callout(p('friend!')))).toMatchInlineSnapshot(`
     <div
@@ -51,7 +53,7 @@ test('supports extra attributes', () => {
 
 function create() {
   const calloutExtension = new CalloutExtension();
-  return renderEditor([calloutExtension]);
+  return renderEditor<CalloutExtension>([calloutExtension]);
 }
 
 describe('commands', () => {
@@ -126,7 +128,7 @@ describe('commands', () => {
         attributeNodes: { callout },
 
         commands,
-      } = renderEditor([calloutExtension]);
+      } = renderEditor<CalloutExtension>([calloutExtension]);
 
       add(doc(p(`Make this a callout<cursor>`)));
 

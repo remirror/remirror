@@ -11,7 +11,7 @@ describe('commands', () => {
     nodes: { p, doc },
     marks: { sup },
     commands,
-  } = renderEditor([new SupExtension()]);
+  } = renderEditor<SupExtension>([new SupExtension()]);
 
   it('#toggleSup', () => {
     add(doc(p('Hello <start>sup<end>, lets dance.')));

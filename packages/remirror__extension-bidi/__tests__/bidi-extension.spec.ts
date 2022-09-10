@@ -10,7 +10,7 @@ test('captures the direction of each node', () => {
     add,
     nodes: { p, doc },
     view,
-  } = renderEditor([new BidiExtension()]);
+  } = renderEditor<BidiExtension>([new BidiExtension()]);
 
   add(doc(p('first paragraph'), p('بسيطة'), p('@')));
   expect(view.dom).toMatchSnapshot();
@@ -22,7 +22,7 @@ test('updates to the default direction affect the attributes', () => {
     add,
     nodes: { p, doc },
     view,
-  } = renderEditor([extension]);
+  } = renderEditor<BidiExtension>([extension]);
 
   add(doc(p('first paragraph')));
   extension.setOptions({ defaultDirection: 'rtl', autoUpdate: true });
@@ -45,7 +45,9 @@ describe('options', () => {
       add,
       nodes: { p, doc },
       view,
-    } = renderEditor([new BidiExtension({ defaultDirection: 'rtl', autoUpdate: true })]);
+    } = renderEditor<BidiExtension>([
+      new BidiExtension({ defaultDirection: 'rtl', autoUpdate: true }),
+    ]);
 
     add(doc(p('first paragraph'), p('بسيطة'), p('@')));
     expect(view.dom).toMatchSnapshot();
@@ -69,7 +71,7 @@ describe('options', () => {
       add,
       nodes: { p, doc, heading },
       view,
-    } = renderEditor([extension, new HeadingExtension()]);
+    } = renderEditor<BidiExtension | HeadingExtension>([extension, new HeadingExtension()]);
 
     add(doc(p('<cursor>'), heading('')))
       .insertText('بسيطة')

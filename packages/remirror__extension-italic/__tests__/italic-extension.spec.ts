@@ -11,7 +11,7 @@ describe('inputRules', () => {
       add,
       nodes: { doc, p },
       marks: { italic },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('Text _italic_')
@@ -29,7 +29,7 @@ describe('inputRules', () => {
       add,
       nodes: { doc, p },
       marks: { italic },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('Text *italic*')
@@ -46,7 +46,7 @@ describe('inputRules', () => {
     const {
       add,
       nodes: { doc, p },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('_    _')
@@ -63,7 +63,7 @@ describe('inputRules', () => {
     const {
       add,
       nodes: { doc, p },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('Text *oops_')
@@ -80,7 +80,7 @@ describe('inputRules', () => {
     const {
       add,
       nodes: { doc, p },
-    } = renderEditor([new ItalicExtension()]);
+    } = renderEditor<ItalicExtension>([new ItalicExtension()]);
 
     add(doc(p('<cursor>')))
       .insertText('BBC_News')
@@ -98,7 +98,7 @@ describe('inputRules', () => {
       add,
       nodes: { doc, p },
       marks: { bold, italic },
-    } = renderEditor([new BoldExtension(), new ItalicExtension()]);
+    } = renderEditor<BoldExtension | ItalicExtension>([new BoldExtension(), new ItalicExtension()]);
 
     add(doc(p('_**bold italic<cursor>')))
       .insertText('**')
@@ -122,7 +122,7 @@ describe('inputRules', () => {
       add,
       nodes: { doc, p },
       marks: { bold, italic },
-    } = renderEditor([new BoldExtension(), new ItalicExtension()]);
+    } = renderEditor<BoldExtension | ItalicExtension>([new BoldExtension(), new ItalicExtension()]);
 
     add(doc(p('**_italic bold<cursor>')))
       .insertText('_')
