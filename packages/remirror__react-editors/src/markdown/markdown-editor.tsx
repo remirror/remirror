@@ -13,7 +13,6 @@ import {
   HardBreakExtension,
   HeadingExtension,
   ItalicExtension,
-  LinkExtension,
   ListItemExtension,
   MarkdownExtension,
   OrderedListExtension,
@@ -50,12 +49,10 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   const extensions = useCallback(
     () => [
       new PlaceholderExtension({ placeholder }),
-      new LinkExtension({ autoLink: true }),
       new BoldExtension(),
       new StrikeExtension(),
       new ItalicExtension(),
       new HeadingExtension(),
-      new LinkExtension(),
       new BlockquoteExtension(),
       new BulletListExtension({ enableSpine: true }),
       new OrderedListExtension(),

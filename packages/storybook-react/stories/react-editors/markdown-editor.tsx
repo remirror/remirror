@@ -17,7 +17,6 @@ import {
   HardBreakExtension,
   HeadingExtension,
   ItalicExtension,
-  LinkExtension,
   ListItemExtension,
   MarkdownExtension,
   OrderedListExtension,
@@ -191,12 +190,10 @@ export const DualEditor: React.FC = () => {
 };
 
 const extensions = () => [
-  new LinkExtension({ autoLink: true }),
   new BoldExtension(),
   new StrikeExtension(),
   new ItalicExtension(),
   new HeadingExtension(),
-  new LinkExtension(),
   new BlockquoteExtension(),
   new BulletListExtension({ enableSpine: true }),
   new OrderedListExtension(),
