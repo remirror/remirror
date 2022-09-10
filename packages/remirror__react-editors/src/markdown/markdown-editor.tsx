@@ -48,12 +48,11 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   const extensions = useCallback(
     () => [
       new PlaceholderExtension({ placeholder }),
-      new LinkExtension({ autoLink: true }),
       new BoldExtension(),
       new StrikeExtension(),
       new ItalicExtension(),
       new HeadingExtension(),
-      new LinkExtension(),
+      new LinkExtension({ autoLink: true }),
       new BlockquoteExtension(),
       new BulletListExtension({ enableSpine: true }),
       new OrderedListExtension(),
