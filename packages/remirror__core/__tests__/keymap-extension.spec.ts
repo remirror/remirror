@@ -14,7 +14,7 @@ test('supports custom keymaps', () => {
     manager,
     add,
     nodes: { p, doc },
-  } = renderEditor([]);
+  } = renderEditor<never>([]);
 
   manager.getExtension(KeymapExtension).addCustomHandler('keymap', { a: mock });
 
@@ -29,7 +29,7 @@ test('supports the default keymap', () => {
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([]);
+  } = renderEditor<never>([]);
 
   add(doc(p('Start<cursor>')))
     .press('Enter')

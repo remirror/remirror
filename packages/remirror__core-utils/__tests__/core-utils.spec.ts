@@ -778,8 +778,8 @@ describe('isStateEqual', () => {
   });
 
   it('returns false with non identical schema', () => {
-    const a = renderEditor([]);
-    const b = renderEditor([]);
+    const a = renderEditor<never>([]);
+    const b = renderEditor<never>([]);
     a.add(a.nodes.doc(a.nodes.p('Hello')));
     b.add(b.nodes.doc(b.nodes.p('Hello')));
     expect(areStatesEqual(a.state, b.state)).toBeFalse();
@@ -788,19 +788,19 @@ describe('isStateEqual', () => {
 
 describe('areSchemasCompatible', () => {
   it('is true for identical schema', () => {
-    const { schema } = renderEditor([]);
+    const { schema } = renderEditor<never>([]);
     expect(areSchemasCompatible(schema, schema)).toBe(true);
   });
 
   it('is true for similar schema', () => {
-    const { schema: a } = renderEditor([]);
-    const { schema: b } = renderEditor([]);
+    const { schema: a } = renderEditor<never>([]);
+    const { schema: b } = renderEditor<never>([]);
     expect(areSchemasCompatible(a, b)).toBe(true);
   });
 
   it('is false for schemas with different mark lengths', () => {
     const { schema: a } = renderEditor<BoldExtension>([new BoldExtension()]);
-    const { schema: b } = renderEditor([]);
+    const { schema: b } = renderEditor<never>([]);
     expect(areSchemasCompatible(a, b)).toBe(false);
   });
 
@@ -812,7 +812,7 @@ describe('areSchemasCompatible', () => {
 
   it('is false schemas with different node lengths', () => {
     const { schema: a } = renderEditor<BlockquoteExtension>([new BlockquoteExtension()]);
-    const { schema: b } = renderEditor([]);
+    const { schema: b } = renderEditor<never>([]);
     expect(areSchemasCompatible(a, b)).toBe(false);
   });
 

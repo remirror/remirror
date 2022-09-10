@@ -11,7 +11,7 @@ test('calls the docChanged handler when the document is changed', () => {
     manager,
     add,
     nodes: { p, doc },
-  } = renderEditor([]);
+  } = renderEditor<never>([]);
 
   manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
 
@@ -34,7 +34,7 @@ test('does not call the docChanged handler when the selection is changed', () =>
     manager,
     add,
     nodes: { p, doc },
-  } = renderEditor([]);
+  } = renderEditor<never>([]);
 
   manager.getExtension(DocChangedExtension).addHandler('docChanged', mock);
 

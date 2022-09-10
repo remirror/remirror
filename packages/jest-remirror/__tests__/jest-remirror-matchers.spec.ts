@@ -8,7 +8,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
     const expected = p('simple');
     const { state } = add(doc(expected));
 
@@ -19,7 +19,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
     const expected = p('simple');
     const { state } = add(doc(expected));
 
@@ -31,7 +31,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
     const { state } = add(doc(p('old')));
     const { state: newState } = add(doc(p('new')));
 
@@ -43,7 +43,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc: docOld, p: pOld },
       add: addOld,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
 
     const {
       nodes: { doc, p },
@@ -64,7 +64,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
     const expected = p('simple');
     const { state } = add(doc(expected));
 
@@ -75,7 +75,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
     const expected = p('simple');
     const { state } = add(doc(expected));
 
@@ -87,7 +87,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
     const { state } = add(doc(p('old')));
     const { state: newState } = add(doc(p('new')));
 
@@ -99,7 +99,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc: docOld, p: pOld },
       add: addOld,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
 
     const {
       nodes: { doc, p },
@@ -120,7 +120,7 @@ describe('toEqualRemirrorState', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor([]);
+    } = renderEditor<never>([]);
     const { state } = add(doc(p('Foo <start>bar<end>')));
     expect(state).toEqualRemirrorState(doc(p('Foo <start>bar<end>')));
     expect(state).not.toEqualRemirrorState(doc(p('Foo <cursor>bar')));

@@ -24,7 +24,7 @@ describe('active', () => {
 describe('helpers', () => {
   describe('`isSelectionEmpty`', () => {
     it('returns true if the selection is empty', () => {
-      const { add, nodes, helpers } = renderEditor([]);
+      const { add, nodes, helpers } = renderEditor<never>([]);
       const { p, doc } = nodes;
 
       add(doc(p('on<cursor>e')));
@@ -32,7 +32,7 @@ describe('helpers', () => {
     });
 
     it('returns false if the selection is not empty', () => {
-      const { add, nodes, helpers } = renderEditor([]);
+      const { add, nodes, helpers } = renderEditor<never>([]);
       const { p, doc } = nodes;
 
       add(doc(p('on<start>e<end>')));
@@ -42,7 +42,7 @@ describe('helpers', () => {
 
   describe('`isViewEditable`', () => {
     it('returns true if the view is editable', () => {
-      const { helpers } = renderEditor([]);
+      const { helpers } = renderEditor<never>([]);
       expect(helpers.isViewEditable()).toBeTrue();
     });
 

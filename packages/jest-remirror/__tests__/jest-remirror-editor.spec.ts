@@ -14,7 +14,7 @@ import { renderEditor } from '../';
 beforeEach(cleanup);
 
 test('renders an editor into the dom', () => {
-  const { view } = renderEditor([]);
+  const { view } = renderEditor<never>([]);
 
   expect(view.dom).toBeVisible();
 });
