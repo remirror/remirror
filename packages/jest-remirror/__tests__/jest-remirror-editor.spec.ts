@@ -95,7 +95,7 @@ test('can throw error if received a non top level node', () => {
   const {
     nodes: { doc, p },
     add,
-  } = renderEditor([]);
+  } = renderEditor<AnyExtension>([]);
 
   expect(() => add(doc(p('')))).not.toThrow();
   expect(() => add(p(''))).toThrow();
@@ -122,9 +122,12 @@ class CustomExtension extends PlainExtension {
 }
 
 function create() {
-  return renderEditor([new BoldExtension(), new CustomExtension()], {
-    builtin: { persistentSelectionClass: undefined },
-  });
+  return renderEditor<BoldExtension | CustomExtension>(
+    [new BoldExtension(), new CustomExtension()],
+    {
+      builtin: { persistentSelectionClass: undefined },
+    },
+  );
 }
 
 describe('add', () => {
@@ -217,7 +220,7 @@ describe('tags', () => {
     view,
     nodes: { doc, p },
     add,
-  } = renderEditor([]);
+  } = renderEditor<never>([]);
 
   beforeEach(() => {
     ({

@@ -35,7 +35,7 @@ describe('schema', () => {
 test('supports extra attributes', () => {
   const {
     nodes: { blockquote, p },
-  } = renderEditor([
+  } = renderEditor<BlockquoteExtension>([
     new BlockquoteExtension({ extraAttributes: { 'data-custom': 'hello-world' } }),
   ]);
 
@@ -50,7 +50,7 @@ test('supports extra attributes', () => {
 
 function create() {
   const blockquoteExtension = new BlockquoteExtension();
-  return renderEditor([blockquoteExtension]);
+  return renderEditor<BlockquoteExtension>([blockquoteExtension]);
 }
 
 test('inputRules', () => {
