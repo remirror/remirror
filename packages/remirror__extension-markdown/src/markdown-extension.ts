@@ -28,7 +28,7 @@ export interface MarkdownOptions {
    *
    * By default this uses
    */
-  htmlToMarkdown?: Static<(html: string) => string>;
+  htmlToMarkdown?: Static<(html: string, escape?: (input: string) => string) => string>;
 
   /**
    * Takes a markdown string and outputs html. It is up to you to make sure the
@@ -67,6 +67,18 @@ export interface MarkdownOptions {
    * @defaultValue false
    */
   copyAsMarkdown?: boolean;
+
+  /**
+   * Overriding TurndownService.prototype.escape
+   *
+   * If you are confident in doing so, you may want to customise the escaping behaviour
+   * to suit your needs.
+   * This can be done by overriding TurndownService.prototype.escape. escape takes the text of each
+   * HTML element and should return a version with the Markdown characters escaped.
+   *
+   * Note: text in code elements is never passed toescape.
+   */
+  escape?: Static<(input: string) => string>;
 }
 
 /**
@@ -89,6 +101,7 @@ export interface MarkdownOptions {
     htmlToMarkdown,
     markdownToHtml,
     htmlSanitizer,
+    escape: undefined,
     activeNodes: [ExtensionTag.Code],
     copyAsMarkdown: false,
   },
@@ -114,7 +127,7 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
           wrapper.append(serializer.serializeFragment(slice.content));
 
           // Here we take the sliced text and transform it into markdown.
-          return this.options.htmlToMarkdown(wrapper.innerHTML);
+          return this.options.htmlToMarkdown(wrapper.innerHTML, this.options.escape);
         }
       : undefined;
 
@@ -193,7 +206,7 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
    */
   @helper()
   getMarkdown(state?: EditorState): Helper<string> {
-    return this.options.htmlToMarkdown(this.store.helpers.getHTML(state));
+    return this.options.htmlToMarkdown(this.store.helpers.getHTML(state), this.options.escape);
   }
 
   /**
