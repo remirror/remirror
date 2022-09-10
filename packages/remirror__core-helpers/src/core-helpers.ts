@@ -916,7 +916,7 @@ export function unset(path: Array<string | number>, target: Shape): Shape {
   return clonedObject;
 }
 
-function makeFunctionForUniqueBy<Item = any>(value: string | string[]) {
+function makeFunctionForUniqueBy<Item extends Shape = Shape>(value: string | string[]) {
   return (item: Item) => {
     return get(item, value as string);
   };
