@@ -1,5 +1,39 @@
 # @remirror/extension-epic-mode
 
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- SSR features are removed.
+- Improve the calculation of changed ranges by utilising mapping
+- Expose the return type of the throttle and debounce helpers
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.17
+  - @remirror/core@2.0.0-beta.17
+  - @remirror/messages@2.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08

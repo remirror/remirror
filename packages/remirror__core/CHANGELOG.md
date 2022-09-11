@@ -1,5 +1,43 @@
 # @remirror/core
 
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- SSR features are removed.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Improve the calculation of changed ranges by utilising mapping
+- Expose the return type of the throttle and debounce helpers
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.17
+  - @remirror/core-helpers@2.0.0-beta.17
+  - @remirror/core-types@2.0.0-beta.17
+  - @remirror/core-utils@2.0.0-beta.17
+  - @remirror/core-constants@2.0.0-beta.17
+  - @remirror/i18n@2.0.0-beta.17
+  - @remirror/icons@2.0.0-beta.17
+  - @remirror/messages@2.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08
