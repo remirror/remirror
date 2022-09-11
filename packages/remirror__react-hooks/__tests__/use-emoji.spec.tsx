@@ -90,7 +90,7 @@ describe('useEmoji', () => {
       },
     ]);
 
-    expect(result.current?.state?.exit).toBeTruthy();
+    expect(result.current?.state?.exit).toBe(true);
 
     acts([
       () => {
