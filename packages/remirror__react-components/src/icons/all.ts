@@ -359,7 +359,6 @@ import {
   checkboxMultipleBlankFill,
   checkboxMultipleBlankLine,
   checkboxMultipleFill,
-  checkboxMultipleLine,
   checkDoubleFill,
   checkDoubleLine,
   checkFill,
@@ -5057,14 +5056,6 @@ export const CheckboxMultipleBlankLineIcon: IconType = (props) => {
  */
 export const CheckboxMultipleFillIcon: IconType = (props) => {
   return GenIcon(checkboxMultipleFill)(props);
-};
-
-/**
- * The react component for the `checkbox-multiple-line.svg` icon created by [RemixIcons](https://remixicons.com).
- * ![Checkbox Multiple Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/checkbox-multiple-line.svg)
- */
-export const CheckboxMultipleLineIcon: IconType = (props) => {
-  return GenIcon(checkboxMultipleLine)(props);
 };
 
 /**

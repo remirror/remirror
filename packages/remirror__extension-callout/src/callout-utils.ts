@@ -11,7 +11,7 @@ import {
 } from '@remirror/core';
 import { ExtensionCalloutMessages } from '@remirror/messages';
 
-import type { CalloutAttributes } from './callout-types';
+import type { CalloutExtensionAttributes } from './callout-types';
 
 export const dataAttributeType = 'data-callout-type';
 
@@ -21,9 +21,9 @@ export const dataAttributeEmoji = 'data-callout-emoji';
  * Check that the attributes exist and are valid for the codeBlock
  * updateAttributes.
  */
-export function isValidCalloutAttributes(
+export function isValidCalloutExtensionAttributes(
   attributes: ProsemirrorAttributes,
-): attributes is CalloutAttributes {
+): attributes is CalloutExtensionAttributes {
   if (attributes && isObject(attributes)) {
     const attributesChecklist = Object.entries(attributes).map(([key, value]) => {
       switch (key) {
@@ -49,9 +49,9 @@ export function isValidCalloutAttributes(
  * This is used to update the type of the callout.
  */
 export function updateNodeAttributes(type: NodeType) {
-  return (attributes: CalloutAttributes, pos?: number): CommandFunction =>
+  return (attributes: CalloutExtensionAttributes, pos?: number): CommandFunction =>
     ({ state: { tr, selection, doc }, dispatch }) => {
-      if (!isValidCalloutAttributes(attributes)) {
+      if (!isValidCalloutExtensionAttributes(attributes)) {
         throw new Error('Invalid attrs passed to the updateAttributes method');
       }
 
@@ -79,7 +79,7 @@ const { DESCRIPTION, LABEL } = ExtensionCalloutMessages;
 
 export const toggleCalloutOptions: Remirror.CommandDecoratorOptions = {
   icon: ({ attrs }) => {
-    switch (attrs?.type as CalloutAttributes['type']) {
+    switch (attrs?.type as CalloutExtensionAttributes['type']) {
       case 'error':
         return 'closeCircleLine';
       case 'success':

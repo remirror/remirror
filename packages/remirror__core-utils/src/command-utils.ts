@@ -309,6 +309,21 @@ export function isChrome(minVersion = 0): boolean {
 }
 
 /**
+ * Taken from https://stackoverflow.com/a/4900484
+ *
+ * Check that the browser is safari. Supports passing a minimum version to check
+ * that it is a greater than or equal to this version.
+ */
+export function isSafari(minVersion = 0): boolean {
+  const isMac = navigator.userAgent.match(/Mac/);
+  const parsedAgent = navigator.userAgent.match(/Safari\/(\d+)\./);
+
+  return isMac && !isChrome() && parsedAgent
+    ? Number.parseInt(assertGet(parsedAgent, 2), 10) >= minVersion
+    : false;
+}
+
+/**
  * Checks the selection for the current state and updates the active transaction
  * to a selection that is consistent with the initial selection.
  *

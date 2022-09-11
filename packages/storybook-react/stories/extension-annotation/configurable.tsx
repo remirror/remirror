@@ -1,25 +1,21 @@
 import 'remirror/styles/all.css';
 
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { uniqueId } from 'remirror';
 import {
   AnnotationExtension,
   BoldExtension,
   createCenteredAnnotationPositioner,
   ItalicExtension,
-  MarkdownExtension,
   UnderlineExtension,
 } from 'remirror/extensions';
 import {
-  Button,
-  ComponentItem,
-  ControlledDialogComponent,
+  CommandButton,
   EditorComponent,
   FloatingToolbar,
   PositionerPortal,
   Remirror,
   ThemeProvider,
-  ToolbarItemUnion,
   useCommands,
   useHelpers,
   usePositioner,
@@ -27,31 +23,6 @@ import {
 } from '@remirror/react';
 
 const simpleExtensions = [new BoldExtension({}), new UnderlineExtension(), new ItalicExtension()];
-
-interface AnnotationEditorProps {
-  onChange: (markdown: string) => void;
-}
-/**
- * The editor which is used to create the annotation. Supports formatting.
- */
-const AnnotationEditor = (props: AnnotationEditorProps) => {
-  const { manager, state } = useRemirror({
-    extensions: () => [...simpleExtensions, new MarkdownExtension({})],
-    content: '**bold** content is the _best_',
-    stringHandler: 'markdown',
-  });
-
-  return (
-    <Remirror
-      manager={manager}
-      initialContent={state}
-      autoFocus
-      onChange={({ helpers }) => {
-        props.onChange(helpers.getMarkdown());
-      }}
-    />
-  );
-};
 
 const Configurable: FC = () => {
   const { manager, state } = useRemirror({
@@ -71,30 +42,32 @@ const Configurable: FC = () => {
 };
 
 const FloatingAnnotations = () => {
-  const [visible, setVisible] = useState(false);
-  const commands = useCommands();
+  const { addAnnotation } = useCommands();
   const { getAnnotationsAt } = useHelpers();
-  const floatingToolbarItems = useMemo<ToolbarItemUnion[]>(
-    () => [
-      {
-        type: ComponentItem.ToolbarButton,
-        onClick: () => {
-          // setVisible(true);
-          commands.addAnnotation({ id: uniqueId() });
-        },
-        icon: 'chatNewLine',
-      },
-    ],
-    [commands],
-  );
+
+  const handleSelect = useCallback(() => {
+    const id = uniqueId();
+
+    if (addAnnotation.enabled({ id })) {
+      addAnnotation({ id });
+    }
+  }, [addAnnotation]);
 
   const annotations = getAnnotationsAt();
   const label = annotations.map((annotation) => annotation.text).join('\n');
   const positioner = usePositioner(createCenteredAnnotationPositioner(getAnnotationsAt), []);
+  const enabled = addAnnotation.enabled({ id: '' });
 
   return (
     <>
-      <FloatingToolbar items={floatingToolbarItems} positioner='selection' placement='top' />
+      <FloatingToolbar>
+        <CommandButton
+          icon='chatNewLine'
+          commandName='addAnnotation'
+          enabled={enabled}
+          onSelect={handleSelect}
+        />
+      </FloatingToolbar>
       <PositionerPortal>
         <div
           style={{
@@ -110,17 +83,6 @@ const FloatingAnnotations = () => {
           {label}
         </div>
       </PositionerPortal>
-      <ControlledDialogComponent visible={visible} onUpdate={(v) => setVisible(v)} backdrop={true}>
-        <AnnotationEditor onChange={(text) => console.log(text)} />
-        <Button
-          onClick={() => {
-            commands.addAnnotation({ id: uniqueId() });
-            setVisible(false);
-          }}
-        >
-          Done
-        </Button>
-      </ControlledDialogComponent>
     </>
   );
 };

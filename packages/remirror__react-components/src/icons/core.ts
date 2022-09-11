@@ -27,6 +27,7 @@ import {
   bringToFront,
   chatNewLine,
   checkboxCircleLine,
+  checkboxMultipleLine,
   clipboardFill,
   clipboardLine,
   closeCircleLine,
@@ -356,6 +357,14 @@ export const ChatNewLineIcon: IconType = (props) => {
  */
 export const CheckboxCircleLineIcon: IconType = (props) => {
   return GenIcon(checkboxCircleLine)(props);
+};
+
+/**
+ * The react component for the `checkbox-multiple-line.svg` icon created by [RemixIcons](https://remixicons.com).
+ * ![Checkbox Multiple Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/checkbox-multiple-line.svg)
+ */
+export const CheckboxMultipleLineIcon: IconType = (props) => {
+  return GenIcon(checkboxMultipleLine)(props);
 };
 
 /**

@@ -67,7 +67,7 @@
   'extension.command.toggle-bullet-list.description': 'Bulleted list',
   'extension.command.toggle-callout.description': [
     [
-      'level',
+      'type',
       'select',
       {
         info: 'Create an information callout block',
@@ -80,7 +80,7 @@
   ],
   'extension.command.toggle-callout.label': [
     [
-      'level',
+      'type',
       'select',
       {
         info: 'Information Callout',

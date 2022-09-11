@@ -2,13 +2,12 @@ import type { ChangeEvent, HTMLProps, KeyboardEvent } from 'react';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createMarkPositioner, LinkExtension, ShortcutHandlerProps } from 'remirror/extensions';
 import {
-  ComponentItem,
+  CommandButton,
   EditorComponent,
   FloatingToolbar,
   FloatingWrapper,
   Remirror,
   ThemeProvider,
-  ToolbarItemUnion,
   useActive,
   useAttrs,
   useChainedCommands,
@@ -138,33 +137,31 @@ const FloatingLinkToolbar = () => {
   const active = useActive();
   const activeLink = active.link();
   const { empty } = useCurrentSelection();
-  const linkEditItems: ToolbarItemUnion[] = useMemo(
-    () => [
-      {
-        type: ComponentItem.ToolbarGroup,
-        label: 'Link',
-        items: activeLink
-          ? [
-              { type: ComponentItem.ToolbarButton, onClick: () => clickEdit(), icon: 'pencilLine' },
-              { type: ComponentItem.ToolbarButton, onClick: onRemove, icon: 'linkUnlink' },
-            ]
-          : [{ type: ComponentItem.ToolbarButton, onClick: () => clickEdit(), icon: 'link' }],
-      },
-    ],
-    [clickEdit, onRemove, activeLink],
-  );
 
-  const items: ToolbarItemUnion[] = useMemo(() => linkEditItems, [linkEditItems]);
+  const handleClickEdit = useCallback(() => {
+    clickEdit();
+  }, [clickEdit]);
+
+  const linkEditButtons = activeLink ? (
+    <>
+      <CommandButton
+        commandName='updateLink'
+        onSelect={handleClickEdit}
+        icon='pencilLine'
+        enabled
+      />
+      <CommandButton commandName='removeLink' onSelect={onRemove} icon='linkUnlink' enabled />
+    </>
+  ) : (
+    <CommandButton commandName='updateLink' onSelect={handleClickEdit} icon='link' enabled />
+  );
 
   return (
     <>
-      <FloatingToolbar items={items} positioner='selection' placement='top' enabled={!isEditing} />
-      <FloatingToolbar
-        items={linkEditItems}
-        positioner={linkPositioner}
-        placement='bottom'
-        enabled={!isEditing && empty}
-      />
+      {!isEditing && <FloatingToolbar>{linkEditButtons}</FloatingToolbar>}
+      {!isEditing && empty && (
+        <FloatingToolbar positioner={linkPositioner}>{linkEditButtons}</FloatingToolbar>
+      )}
 
       <FloatingWrapper
         positioner='always'

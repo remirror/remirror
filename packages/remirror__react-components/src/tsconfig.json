@@ -54,6 +54,9 @@
     },
     {
       "path": "../../remirror__pm/src"
+    },
+    {
+      "path": "../../remirror/src"
     }
   ]
 }
