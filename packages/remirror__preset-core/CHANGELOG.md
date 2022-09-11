@@ -1,5 +1,68 @@
 # @remirror/preset-core
 
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- SSR features are removed.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Improve the calculation of changed ranges by utilising mapping
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Expose the return type of the throttle and debounce helpers
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.17
+  - @remirror/core@2.0.0-beta.17
+  - @remirror/extension-doc@2.0.0-beta.17
+  - @remirror/extension-events@2.0.0-beta.17
+  - @remirror/extension-gap-cursor@2.0.0-beta.17
+  - @remirror/extension-history@2.0.0-beta.17
+  - @remirror/extension-paragraph@2.0.0-beta.17
+  - @remirror/extension-positioner@2.0.0-beta.17
+  - @remirror/extension-text@2.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08

@@ -1,5 +1,27 @@
 # prosemirror-suggest
 
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Update ProseMirror packages to latest versions.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0-beta.17
+  - @remirror/core-constants@2.0.0-beta.17
+  - @remirror/types@1.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08
