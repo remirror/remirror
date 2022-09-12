@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-core",
-  "version": "2.0.0-beta.18",
+  "version": "2.0.0-beta.19",
   "description": "The core preset providing the functionality you need and want.",
   "keywords": [
     "remirror",
@@ -37,20 +37,20 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0-beta.18",
-    "@remirror/extension-doc": "^2.0.0-beta.18",
-    "@remirror/extension-events": "^2.0.0-beta.18",
-    "@remirror/extension-gap-cursor": "^2.0.0-beta.18",
-    "@remirror/extension-history": "^2.0.0-beta.18",
-    "@remirror/extension-paragraph": "^2.0.0-beta.18",
-    "@remirror/extension-positioner": "^2.0.0-beta.18",
-    "@remirror/extension-text": "^2.0.0-beta.18"
+    "@remirror/core": "^2.0.0-beta.19",
+    "@remirror/extension-doc": "^2.0.0-beta.19",
+    "@remirror/extension-events": "^2.0.0-beta.19",
+    "@remirror/extension-gap-cursor": "^2.0.0-beta.19",
+    "@remirror/extension-history": "^2.0.0-beta.19",
+    "@remirror/extension-paragraph": "^2.0.0-beta.19",
+    "@remirror/extension-positioner": "^2.0.0-beta.19",
+    "@remirror/extension-text": "^2.0.0-beta.19"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0-beta.18"
+    "@remirror/pm": "^2.0.0-beta.19"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0-beta.18"
+    "@remirror/pm": "^2.0.0-beta.19"
   },
   "publishConfig": {
     "access": "public"

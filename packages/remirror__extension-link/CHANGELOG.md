@@ -1,5 +1,77 @@
 # @remirror/extension-link
 
+## 2.0.0-beta.19
+
+> 2022-09-12
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Removes `domino` from the codebase.
+- Support both ESM and CJS.
+- Delay trigger of `onUpdateLink` till the end of the execution queue to prevent updates on stale state.
+- Try to require JSDOM implicitly in node environment.
+- When href equals text content, treat the link as an auto link (if enabled)
+- SSR features are removed.
+- Auto link adjacent character detection.
+
+  Remove auto link if the link becomes invalid.
+
+  **Before:**
+
+  "window.confirm" results in "[window.co](//window.co)nfirm"
+
+  **After:**
+
+  "window.confirm" results in "window.confirm"
+
+  New options `findAutoLinks` and `isValidUrl` that if provided are used instead of `autoLinkAllowedTLDs` and `autoLinkRegex` to find and validate a link.
+
+  URLs are very ambiguous the new options allow to find valid auto links without adding additional complexity to the link extension.
+
+  Library examples to find URLs in text.
+
+  - [linkify-it](https://www.npmjs.com/package/linkify-it)
+  - [linkifyjs](https://www.npmjs.com/package/linkifyjs)
+
+  It is worth mentioning that the `autoLinkRegex` can be modified to exclude adjacent punctuations from an auto link.
+
+  Regex suggestion from @whawker
+
+  `/(?:(?:(?:https?|ftp):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)*(?:(?:\d(?!\.)|[a-z\u00A1-\uFFFF])(?:[\da-z\u00A1-\uFFFF][\w\u00A1-\uFFFF-]{0,62})?[\da-z\u00A1-\uFFFF]\.)+[a-z\u00A1-\uFFFF]{2,}(?::\d{2,5})?(?:[#/?](?:(?! |[!"'(),.;?[\]{}-]).|-+|\((?:(?![ )]).)*\)|\[(?:(?![ \]]).)*]|'(?=\w)|\.(?! |\.|$)|,(?! |,|$)|;(?! |;|$)|!(?! |!|$)|\?(?! |\?|$))+|\/)?/gi;`
+
+  **Examples**
+
+  - [www.remirror.io/test](www.remirror.io/test)? - excluding sentence punctuation
+  - "[www.remirror.io/test](www.remirror.io/test)" - surround link with quotation marks
+  - ([www.remirror.io/(test)](<www.remirror.io/(test)>))- link with balanced parentheses in path surrounded by parentheses
+
+- Expose the return type of the throttle and debounce helpers
+- Improve the calculation of changed ranges by utilising mapping
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.19
+  - @remirror/extension-events@2.0.0-beta.19
+  - @remirror/messages@2.0.0-beta.19
+  - @remirror/pm@2.0.0-beta.19
+
 ## 2.0.0-beta.18
 
 > 2022-09-12
