@@ -1,5 +1,45 @@
 # jest-prosemirror
 
+## 2.0.0-beta.18
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Update ProseMirror packages.
+- Expose the return type of the throttle and debounce helpers
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Update ProseMirror packages to latest versions.
+- Improve the calculation of changed ranges by utilising mapping
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Update prosemirror packages.
+- Update ProseMirror dependencies.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-constants@2.0.0-beta.18
+  - @remirror/core-helpers@2.0.0-beta.18
+  - @remirror/core-types@2.0.0-beta.18
+  - @remirror/core-utils@2.0.0-beta.18
+  - @remirror/pm@2.0.0-beta.18
+  - test-keyboard@2.0.0-beta.18
+
 ## 2.0.0-beta.17
 
 > 2022-09-11

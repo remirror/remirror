@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-suggest",
-  "version": "2.0.0-beta.17",
+  "version": "2.0.0-beta.18",
   "description": "Primitives for building your prosemirror suggestion and autocomplete functionality",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-suggest",
   "repository": {
@@ -31,9 +31,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core-constants": "^2.0.0-beta.17",
-    "@remirror/core-helpers": "^2.0.0-beta.17",
-    "@remirror/types": "^1.0.0-beta.17",
+    "@remirror/core-constants": "^2.0.0-beta.18",
+    "@remirror/core-helpers": "^2.0.0-beta.18",
+    "@remirror/types": "^1.0.0-beta.18",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {

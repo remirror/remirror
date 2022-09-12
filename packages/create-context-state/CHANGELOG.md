@@ -1,5 +1,17 @@
 # create-context-state
 
+## 2.0.0-beta.17
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+
 ## 2.0.0-beta.16
 
 > 2022-09-11
