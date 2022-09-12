@@ -8,7 +8,7 @@ import type {
   ProsemirrorAttributes,
   Static,
 } from '@remirror/core';
-import { Suggester } from '@remirror/pm/src/suggest';
+import { Suggester } from '@remirror/pm/suggest';
 
 export interface EmojiOptions extends Pick<Suggester, 'supportedCharacters'> {
   /**
