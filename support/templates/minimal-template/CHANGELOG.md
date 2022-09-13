@@ -1,5 +1,17 @@
 # @remirror/minimal-template
 
+## 0.0.3
+
+> 2022-09-13
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0
+
 ## 0.0.3-beta.0
 
 > 2022-05-31
