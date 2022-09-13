@@ -1,5 +1,17 @@
 # a11y-status
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+
 ## 2.0.0-beta.18
 
 > 2022-09-12

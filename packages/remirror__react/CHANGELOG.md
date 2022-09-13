@@ -1,5 +1,88 @@
 # @remirror/react
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Improve the calculation of changed ranges by utilising mapping
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- Rewrite React components using MUI.
+- Support both ESM and CJS.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Correct a bad import.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes `domino` from the codebase.
+- Update jsx-dom to v7.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- option for supported characters in emoji suggester.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-placeholder@2.0.0
+  - @remirror/extension-positioner@2.0.0
+  - @remirror/extension-react-component@2.0.0
+  - @remirror/extension-react-tables@2.0.0
+  - @remirror/preset-react@2.0.0
+  - @remirror/react-components@2.0.0
+  - @remirror/react-core@2.0.0
+  - @remirror/react-hooks@2.0.0
+  - @remirror/react-renderer@2.0.0
+  - @remirror/react-utils@2.0.0
+
 ## 2.0.0-beta.19
 
 > 2022-09-12

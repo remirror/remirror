@@ -1,5 +1,25 @@
 # test-keyboard
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Support both ESM and CJS.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0
+  - @remirror/core-types@2.0.0
+
 ## 2.0.0-beta.19
 
 > 2022-09-12
