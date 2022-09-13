@@ -3,7 +3,7 @@ name: docs
 on:
   push:
     branches:
-      - v1
+      - main
   pull_request:
     types: [opened, synchronize]
     branches:
@@ -17,7 +17,7 @@ jobs:
   deploy_docs:
     timeout-minutes: 90
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/v1' || github.event.pull_request
+    if: github.ref == 'refs/heads/main' || github.event.pull_request
 
     steps:
       - name: checkout code repository
@@ -64,7 +64,7 @@ jobs:
         uses: nwtgck/actions-netlify@develop
         with:
           publish-dir: './website/build'
-          production-branch: v1
+          production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
           alias: ${{ github.head_ref }}
