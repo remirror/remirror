@@ -36,7 +36,7 @@ If you don't want to update all packages, you can only deduplicate the packages 
 
 - `npm`: run [`npm dedupe`](https://docs.npmjs.com/cli/v8/commands/npm-dedupe)
 - `yarn` v1: install and use a third-party tool [`yarn-deduplicate`](https://www.npmjs.com/package/yarn-deduplicate)
-- `yarn` v2 or later: run [`yarn dedupe`](https://yarnpkg.com/en/docs/cli/dedupe) in your project root
+- `yarn` v2 or later: run [`yarn dedupe`](https://yarnpkg.com/cli/dedupe) in your project root
 - `pnpm`: install and use a third-party tool[`pnpm-deduplicate`](https://www.npmjs.com/package/pnpm-deduplicate)
 
 After deduplicating, please verify in your lockfile again that there aren't any duplicated packages left.
