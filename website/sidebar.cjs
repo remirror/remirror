@@ -127,7 +127,7 @@ const docs = [
   {
     type: 'category',
     label: 'More',
-    items: ['contributing', 'tooling', 'errors', 'projects'],
+    items: ['contributing', 'tooling', 'errors', 'projects', 'migration-v2'],
   },
 ];
 
