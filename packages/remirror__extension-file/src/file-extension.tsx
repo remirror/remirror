@@ -24,8 +24,8 @@ import {
   UploadFileHandler,
   UploadPlaceholderPayload,
 } from '@remirror/core';
+import { NodeViewComponentProps } from '@remirror/extension-react-component';
 import { PasteRule } from '@remirror/pm/paste-rules';
-import { NodeViewComponentProps } from '@remirror/react';
 
 import { FileComponent, FileComponentProps } from './file-component';
 import { createDataUrlFileUploader } from './file-uploaders';
