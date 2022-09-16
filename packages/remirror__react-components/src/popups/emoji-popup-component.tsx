@@ -29,6 +29,10 @@ export const EmojiPopupComponent: FC = () => {
   const { state, getMenuProps, getItemProps, indexIsHovered, indexIsSelected } = useEmoji();
   const enabled = !!state;
 
+  if (state?.exit) {
+    return null;
+  }
+
   return (
     <FloatingWrapper positioner='cursor' enabled={enabled} placement='auto-end' renderOutsideEditor>
       <div {...getMenuProps()} className={cx(ExtensionEmojiTheme.EMOJI_POPUP_WRAPPER)}>

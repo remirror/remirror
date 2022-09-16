@@ -47,6 +47,7 @@ describe('useEmoji', () => {
     expect(result.current?.state).toEqual({
       range: { from: 17, to: 19, cursor: 19 },
       apply: expect.any(Function),
+      exit: false,
       list: expect.any(Array),
       query: 'a',
     });
@@ -89,7 +90,7 @@ describe('useEmoji', () => {
       },
     ]);
 
-    expect(result.current?.state).toBeNull();
+    expect(result.current?.state?.exit).toBe(true);
 
     acts([
       () => {
