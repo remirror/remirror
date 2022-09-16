@@ -12,7 +12,7 @@ describe('active', () => {
       nodes: { p, doc },
       attributeNodes: { heading: h },
       active,
-    } = renderEditor([new HeadingExtension()]);
+    } = renderEditor<HeadingExtension>([new HeadingExtension()]);
 
     add(doc((p('one'), h({ level: 2 })('tw<cursor>o'))));
 
@@ -24,7 +24,7 @@ describe('active', () => {
 describe('helpers', () => {
   describe('`isSelectionEmpty`', () => {
     it('returns true if the selection is empty', () => {
-      const { add, nodes, helpers } = renderEditor([]);
+      const { add, nodes, helpers } = renderEditor<never>([]);
       const { p, doc } = nodes;
 
       add(doc(p('on<cursor>e')));
@@ -32,7 +32,7 @@ describe('helpers', () => {
     });
 
     it('returns false if the selection is not empty', () => {
-      const { add, nodes, helpers } = renderEditor([]);
+      const { add, nodes, helpers } = renderEditor<never>([]);
       const { p, doc } = nodes;
 
       add(doc(p('on<start>e<end>')));
@@ -42,12 +42,12 @@ describe('helpers', () => {
 
   describe('`isViewEditable`', () => {
     it('returns true if the view is editable', () => {
-      const { helpers } = renderEditor([]);
+      const { helpers } = renderEditor<never>([]);
       expect(helpers.isViewEditable()).toBeTrue();
     });
 
     it('returns false if the view is not editable', () => {
-      const { helpers } = renderEditor([], { props: { editable: false } });
+      const { helpers } = renderEditor<never>([], { props: { editable: false } });
       expect(helpers.isViewEditable()).toBeFalse();
     });
   });
@@ -81,7 +81,7 @@ describe('commands.insertHtml', () => {
   });
 
   it('can insert marks', () => {
-    const editor = renderEditor([new BoldExtension()]);
+    const editor = renderEditor<BoldExtension>([new BoldExtension()]);
     const { doc, p } = editor.nodes;
     const { bold } = editor.marks;
 

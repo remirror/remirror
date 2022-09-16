@@ -25,7 +25,11 @@ import { Node } from '@remirror/pm/model';
 import { EditorStateConfig, TextSelection } from '@remirror/pm/state';
 import { DecorationSet } from '@remirror/pm/view';
 
-import { EntityReferenceMetaData, EntityReferenceOptions } from './types';
+import {
+  EntityReferenceMetaData,
+  EntityReferenceOptions,
+  EntityReferencePluginState,
+} from './types';
 import { decorateEntityReferences } from './utils/decorate-entity-references';
 import { getDisjoinedEntityReferencesFromNode } from './utils/disjoined-entity-references';
 import { joinDisjoinedEntityReferences } from './utils/joined-entity-references';
@@ -44,7 +48,7 @@ interface EntityReferenceState {
 
 const getEntityReferencesFromPluginState = (props: StateProps): EntityReferenceMetaData[][] => {
   const { extension, state } = props;
-  const { entityReferences } = extension.getPluginState(state);
+  const { entityReferences } = extension.getPluginState<EntityReferencePluginState>(state);
   return entityReferences;
 };
 

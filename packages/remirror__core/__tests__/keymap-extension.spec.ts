@@ -14,7 +14,7 @@ test('supports custom keymaps', () => {
     manager,
     add,
     nodes: { p, doc },
-  } = renderEditor([]);
+  } = renderEditor<never>([]);
 
   manager.getExtension(KeymapExtension).addCustomHandler('keymap', { a: mock });
 
@@ -29,7 +29,7 @@ test('supports the default keymap', () => {
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([]);
+  } = renderEditor<never>([]);
 
   add(doc(p('Start<cursor>')))
     .press('Enter')
@@ -43,7 +43,7 @@ test('supports turning the keymap off', () => {
   const {
     add,
     nodes: { p, doc },
-  } = renderEditor([], { builtin });
+  } = renderEditor<never>([], { builtin });
 
   add(doc(p('Start<cursor>')))
     .press('Enter')
@@ -57,7 +57,7 @@ test('it supports updating options at runtime', () => {
     manager,
     add,
     nodes: { p, doc },
-  } = renderEditor([], { builtin: { excludeBaseKeymap: true } });
+  } = renderEditor<never>([], { builtin: { excludeBaseKeymap: true } });
 
   add(doc(p('Start<cursor>')))
     .press('Enter')

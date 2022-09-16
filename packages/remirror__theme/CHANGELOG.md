@@ -1,5 +1,145 @@
 # @remirror/theme
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-types@2.0.0
+
+## 2.0.0-beta.19
+
+> 2022-09-12
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-types@2.0.0-beta.19
+
+## 2.0.0-beta.18
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Support both ESM and CJS.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-types@2.0.0-beta.18
+
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-types@2.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08

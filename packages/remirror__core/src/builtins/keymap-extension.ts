@@ -603,8 +603,8 @@ export type ShortcutMap = Record<NamedShortcut, string>;
 export const DEFAULT_SHORTCUTS: ShortcutMap = {
   [NamedShortcut.Copy]: 'Mod-c',
   [NamedShortcut.Cut]: 'Mod-x',
-  [NamedShortcut.Paste]: 'Mod-p',
-  [NamedShortcut.PastePlain]: 'Mod-Shift-p',
+  [NamedShortcut.Paste]: 'Mod-v',
+  [NamedShortcut.PastePlain]: 'Mod-Shift-v',
   [NamedShortcut.SelectAll]: 'Mod-a',
   [NamedShortcut.Undo]: 'Mod-z',
   [NamedShortcut.Redo]: environment.isMac ? 'Shift-Mod-z' : 'Mod-y',

@@ -7,6 +7,8 @@ import {
   environment,
   extension,
   Handler,
+  Helper,
+  helper,
   isFunction,
   keyBinding,
   KeyBindingProps,
@@ -20,7 +22,7 @@ import {
   Static,
 } from '@remirror/core';
 import { ExtensionHistoryMessages as Messages } from '@remirror/messages';
-import { history, redo, undo } from '@remirror/pm/history';
+import { history, redo, redoDepth, undo, undoDepth } from '@remirror/pm/history';
 
 export interface HistoryOptions {
   /**
@@ -196,6 +198,22 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   })
   redo(): NonChainableCommandFunction {
     return nonChainable(this.wrapMethod(redo, this.options.onRedo));
+  }
+
+  /**
+   * Returns the amount of undoable events available from the current state, or provide a custom state.
+   */
+  @helper()
+  undoDepth(state: EditorState = this.store.getState()): Helper<number> {
+    return undoDepth(state);
+  }
+
+  /**
+   * Returns the amount of redoable events available from the current state, or provide a custom state.
+   */
+  @helper()
+  redoDepth(state: EditorState = this.store.getState()): Helper<number> {
+    return redoDepth(state);
   }
 }
 

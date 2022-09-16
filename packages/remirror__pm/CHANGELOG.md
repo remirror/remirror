@@ -1,5 +1,125 @@
 # @remirror/pm
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update ProseMirror dependencies.
+- Update ProseMirror packages.
+- Update prosemirror packages.
+- Support both ESM and CJS.
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Expose the return type of the throttle and debounce helpers
+- Update ProseMirror packages to latest versions.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - prosemirror-paste-rules@2.0.0
+  - prosemirror-suggest@2.0.0
+  - prosemirror-trailing-node@2.0.0
+  - @remirror/core-helpers@2.0.0
+  - @remirror/core-constants@2.0.0
+
+## 2.0.0-beta.19
+
+> 2022-09-12
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Update ProseMirror packages.
+- Update prosemirror packages.
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Update ProseMirror packages to latest versions.
+- Update ProseMirror dependencies.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - prosemirror-paste-rules@2.0.0-beta.19
+  - prosemirror-suggest@2.0.0-beta.19
+  - prosemirror-trailing-node@2.0.0-beta.19
+  - @remirror/core-constants@2.0.0-beta.19
+  - @remirror/core-helpers@2.0.0-beta.19
+
+## 2.0.0-beta.18
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Update ProseMirror packages.
+- Expose the return type of the throttle and debounce helpers
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Update ProseMirror packages to latest versions.
+- Update prosemirror packages.
+- Update ProseMirror dependencies.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - prosemirror-paste-rules@2.0.0-beta.18
+  - prosemirror-suggest@2.0.0-beta.18
+  - prosemirror-trailing-node@2.0.0-beta.18
+  - @remirror/core-constants@2.0.0-beta.18
+  - @remirror/core-helpers@2.0.0-beta.18
+
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Update ProseMirror packages.
+- Support both ESM and CJS.
+- Update prosemirror packages.
+- Update ProseMirror dependencies.
+- Update ProseMirror packages to latest versions.
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - prosemirror-paste-rules@2.0.0-beta.17
+  - prosemirror-suggest@2.0.0-beta.17
+  - prosemirror-trailing-node@2.0.0-beta.17
+  - @remirror/core-helpers@2.0.0-beta.17
+  - @remirror/core-constants@2.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08

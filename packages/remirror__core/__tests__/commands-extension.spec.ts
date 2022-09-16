@@ -35,7 +35,7 @@ test('can chain commands', () => {
 test('clears range selection', () => {
   const text = 'my content';
 
-  const editor = renderEditor([]);
+  const editor = renderEditor<never>([]);
   const { doc, p } = editor.nodes;
   const { commands } = editor;
 
@@ -51,7 +51,7 @@ test('clears range selection', () => {
 });
 
 test('rejects clearing range selection if there is none', () => {
-  const editor = renderEditor([]);
+  const editor = renderEditor<never>([]);
   const { doc, p } = editor.nodes;
   const { commands } = editor;
 
@@ -61,7 +61,7 @@ test('rejects clearing range selection if there is none', () => {
 });
 
 test('it can select text', () => {
-  const editor = renderEditor([]);
+  const editor = renderEditor<never>([]);
   const { doc, p } = editor.nodes;
 
   editor.add(doc(p('my <cursor>content')));
@@ -92,7 +92,7 @@ function sleep(msDelay: number) {
 
 describe('commands.clearRangeSelection', () => {
   it('clears the selection', () => {
-    const editor = renderEditor([]);
+    const editor = renderEditor<never>([]);
     const { doc, p } = editor.nodes;
 
     editor.add(doc(p('my <head>content<anchor> is chill')));
@@ -104,7 +104,7 @@ describe('commands.clearRangeSelection', () => {
   });
 
   it('does nothing when the selection is empty', () => {
-    const editor = renderEditor([]);
+    const editor = renderEditor<never>([]);
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my content<head><anchor> is chill')));
 
@@ -120,7 +120,7 @@ describe('commands.insertText', () => {
   });
 
   it('can insert text with marks', () => {
-    const editor = renderEditor([new BoldExtension()]);
+    const editor = renderEditor<BoldExtension>([new BoldExtension()]);
     const { doc, p } = editor.nodes;
     const { bold } = editor.marks;
 
@@ -135,7 +135,7 @@ describe('commands.insertText', () => {
   });
 
   it('can insert a range of text', () => {
-    const editor = renderEditor([]);
+    const editor = renderEditor<never>([]);
     const { doc, p } = editor.nodes;
 
     editor.add(doc(p('my <cursor>content')));
@@ -149,7 +149,7 @@ describe('commands.insertText', () => {
   });
 
   it('can insert text asynchronously', async () => {
-    const editor = renderEditor([]);
+    const editor = renderEditor<never>([]);
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my <cursor>CODE!')));
     const promise = sleep(100).then(() => {
@@ -168,7 +168,7 @@ describe('commands.insertText', () => {
   });
 
   it('can recover after a rejected promise', async () => {
-    const editor = renderEditor([]);
+    const editor = renderEditor<never>([]);
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my <cursor>CODE!')));
     const promise = Promise.reject();
@@ -189,7 +189,7 @@ describe('commands.insertText', () => {
 
 describe('setContent', () => {
   it('can set the content while preserving history', () => {
-    const editor = renderEditor([], { stringHandler: 'html' });
+    const editor = renderEditor<never>([], { stringHandler: 'html' });
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my content')));
 
@@ -201,7 +201,7 @@ describe('setContent', () => {
   });
 
   it('can reset the content while preserving history', () => {
-    const editor = renderEditor([], { stringHandler: 'html' });
+    const editor = renderEditor<never>([], { stringHandler: 'html' });
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my content')));
 

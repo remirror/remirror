@@ -45,7 +45,7 @@ describe('schema', () => {
 });
 
 function create() {
-  return renderEditor([new TableExtension()]);
+  return renderEditor<TableExtension>([new TableExtension()]);
 }
 
 describe('commands', () => {

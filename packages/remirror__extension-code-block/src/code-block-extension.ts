@@ -255,7 +255,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * remove the code block altogether.
    */
   @command(toggleCodeBlockOptions)
-  toggleCodeBlock(attributes: Partial<CodeBlockAttributes>): CommandFunction {
+  toggleCodeBlock(attributes: Partial<CodeBlockAttributes> = {}): CommandFunction {
     return toggleBlockItem({
       type: this.type,
       toggleType: this.options.toggleName,

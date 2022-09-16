@@ -25,7 +25,7 @@ import { TextSelection } from '@remirror/pm/state';
 import { EditorView } from '@remirror/pm/view';
 import { ExtensionCalloutTheme } from '@remirror/theme';
 
-import type { CalloutAttributes, CalloutOptions } from './callout-types';
+import type { CalloutExtensionAttributes, CalloutOptions } from './callout-types';
 import {
   dataAttributeEmoji,
   dataAttributeType,
@@ -164,7 +164,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * ```
    */
   @command(toggleCalloutOptions)
-  toggleCallout(attributes: CalloutAttributes = {}): CommandFunction {
+  toggleCallout(attributes: CalloutExtensionAttributes = {}): CommandFunction {
     return toggleWrap(this.type, attributes);
   }
 
@@ -179,7 +179,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * ```
    */
   @command(toggleCalloutOptions)
-  updateCallout(attributes: CalloutAttributes, pos?: number): CommandFunction {
+  updateCallout(attributes: CalloutExtensionAttributes, pos?: number): CommandFunction {
     return updateNodeAttributes(this.type)(attributes, pos);
   }
 

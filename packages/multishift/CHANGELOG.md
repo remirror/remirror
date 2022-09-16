@@ -1,5 +1,89 @@
 # multishift
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Support both ESM and CJS.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0
+  - @remirror/core-types@2.0.0
+  - a11y-status@2.0.0
+
+## 2.0.0-beta.19
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - a11y-status@2.0.0-beta.18
+  - @remirror/core-helpers@2.0.0-beta.19
+  - @remirror/core-types@2.0.0-beta.19
+
+## 2.0.0-beta.18
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Support both ESM and CJS.
+- Expose the return type of the throttle and debounce helpers
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - a11y-status@2.0.0-beta.17
+  - @remirror/core-helpers@2.0.0-beta.18
+  - @remirror/core-types@2.0.0-beta.18
+
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Patch Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Support both ESM and CJS.
+- Expose the return type of the throttle and debounce helpers
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-helpers@2.0.0-beta.17
+  - @remirror/core-types@2.0.0-beta.17
+  - a11y-status@2.0.0-beta.16
+
 ## 2.0.0-beta.16
 
 > 2022-09-08

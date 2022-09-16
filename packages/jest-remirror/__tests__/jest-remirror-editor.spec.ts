@@ -6,7 +6,7 @@ import {
   LinkExtension,
 } from 'remirror/extensions';
 import { cleanup } from 'testing/react';
-import { PlainExtension, prosemirrorNodeToHtml } from '@remirror/core';
+import { AnyExtension, PlainExtension, prosemirrorNodeToHtml } from '@remirror/core';
 import { NodeSelection } from '@remirror/pm/state';
 
 import { renderEditor } from '../';
@@ -14,7 +14,7 @@ import { renderEditor } from '../';
 beforeEach(cleanup);
 
 test('renders an editor into the dom', () => {
-  const { view } = renderEditor([]);
+  const { view } = renderEditor<never>([]);
 
   expect(view.dom).toBeVisible();
 });
@@ -25,7 +25,7 @@ test('add content', () => {
     view,
     nodes: { doc, p },
     add,
-  } = renderEditor([]);
+  } = renderEditor<AnyExtension>([]);
   add(doc(p(expected)));
 
   expect(view.dom).toHaveTextContent(expected);
@@ -37,7 +37,7 @@ test('can be configured with plain node extensions', () => {
     view: { dom },
     nodes: { blockquote, doc, p },
     add,
-  } = renderEditor([new BlockquoteExtension()]);
+  } = renderEditor<BlockquoteExtension>([new BlockquoteExtension()]);
   add(doc(blockquote(p(expected)), p('This is a p')));
 
   expect(dom).toHaveTextContent('A simple blockquote');
@@ -50,7 +50,7 @@ test('can be configured with attribute node extensions', () => {
     nodes: { doc },
     attributeNodes: { heading },
     add,
-  } = renderEditor([new HeadingExtension()]);
+  } = renderEditor<HeadingExtension>([new HeadingExtension()]);
 
   const h3 = heading({ level: 3 });
   const h2 = heading({ level: 2 });
@@ -67,7 +67,7 @@ test('can be configured with plain mark extensions', () => {
     nodes: { doc, p },
     add,
     marks: { bold },
-  } = renderEditor([new BoldExtension()]);
+  } = renderEditor<BoldExtension>([new BoldExtension()]);
   add(doc(p('Text is ', bold(expected))));
 
   expect(dom.querySelector('strong')!.textContent).toBe(expected);
@@ -81,7 +81,7 @@ test('can be configured with attribute mark extensions', () => {
     nodes: { doc, p },
     add,
     attributeMarks: { link },
-  } = renderEditor([new LinkExtension()]);
+  } = renderEditor<LinkExtension>([new LinkExtension()]);
   const googleLinkExtension = link({ href });
   add(doc(p('LinkExtension to ', googleLinkExtension(expected))));
 
@@ -95,7 +95,7 @@ test('can throw error if received a non top level node', () => {
   const {
     nodes: { doc, p },
     add,
-  } = renderEditor([]);
+  } = renderEditor<AnyExtension>([]);
 
   expect(() => add(doc(p('')))).not.toThrow();
   expect(() => add(p(''))).toThrow();
@@ -122,9 +122,12 @@ class CustomExtension extends PlainExtension {
 }
 
 function create() {
-  return renderEditor([new BoldExtension(), new CustomExtension()], {
-    builtin: { persistentSelectionClass: undefined },
-  });
+  return renderEditor<BoldExtension | CustomExtension>(
+    [new BoldExtension(), new CustomExtension()],
+    {
+      builtin: { persistentSelectionClass: undefined },
+    },
+  );
 }
 
 describe('add', () => {
@@ -217,14 +220,14 @@ describe('tags', () => {
     view,
     nodes: { doc, p },
     add,
-  } = renderEditor([]);
+  } = renderEditor<never>([]);
 
   beforeEach(() => {
     ({
       view,
       nodes: { doc, p },
       add,
-    } = renderEditor([]));
+    } = renderEditor<never>([]));
   });
 
   it('supports <cursor>', () => {

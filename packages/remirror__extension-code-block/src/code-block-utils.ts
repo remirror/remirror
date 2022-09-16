@@ -22,7 +22,7 @@ import {
   range,
   TextProps,
 } from '@remirror/core';
-import { ExtensionCodeMessages } from '@remirror/messages';
+import { ExtensionCodeBlockMessages } from '@remirror/messages';
 import { TextSelection } from '@remirror/pm/state';
 import { Decoration } from '@remirror/pm/view';
 
@@ -343,7 +343,7 @@ export function getLanguageFromDom(codeElement: HTMLElement): string | undefined
   );
 }
 
-const { DESCRIPTION, LABEL } = ExtensionCodeMessages;
+const { DESCRIPTION, LABEL } = ExtensionCodeBlockMessages;
 export const toggleCodeBlockOptions: Remirror.CommandDecoratorOptions = {
   icon: 'bracesLine',
   description: ({ t }) => t(DESCRIPTION),

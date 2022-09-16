@@ -6,6 +6,7 @@ export type {
 } from './command-utils';
 export {
   isChrome,
+  isSafari,
   lift,
   preserveSelection,
   removeMark,

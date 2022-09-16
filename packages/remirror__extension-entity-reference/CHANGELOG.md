@@ -1,5 +1,265 @@
 # @remirror/extension-entity-reference
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Update pnpm-lock.yaml
+
+### Patch Changes
+
+- Improve the calculation of changed ranges by utilising mapping
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Support both ESM and CJS.
+- Expose the return type of the throttle and debounce helpers
+- add helper to get shortest entity reference
+- Try to require JSDOM implicitly in node environment.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes `domino` from the codebase.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0
+  - @remirror/extension-events@2.0.0
+  - @remirror/extension-positioner@2.0.0
+  - @remirror/pm@2.0.0
+
+## 2.0.0-beta.19
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Update pnpm-lock.yaml
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+
+### Patch Changes
+
+- Removes `domino` from the codebase.
+- Support both ESM and CJS.
+- Try to require JSDOM implicitly in node environment.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- SSR features are removed.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Expose the return type of the throttle and debounce helpers
+- Improve the calculation of changed ranges by utilising mapping
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- add helper to get shortest entity reference
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.0-beta.19
+  - @remirror/extension-events@2.0.0-beta.19
+  - @remirror/extension-positioner@2.0.0-beta.19
+  - @remirror/pm@2.0.0-beta.19
+
+## 2.0.0-beta.18
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Update pnpm-lock.yaml
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- SSR features are removed.
+- Support both ESM and CJS.
+- Expose the return type of the throttle and debounce helpers
+- Improve the calculation of changed ranges by utilising mapping
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- add helper to get shortest entity reference
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-positioner@2.0.0-beta.18
+  - @remirror/core@2.0.0-beta.18
+  - @remirror/extension-events@2.0.0-beta.18
+  - @remirror/pm@2.0.0-beta.18
+
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add an optional onclickmark handler to handle clicks on entity reference
+- Click event receives all entity reference marks, their ranges and their respective text on the clicked position
+- Update pnpm-lock.yaml
+
+### Patch Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Support both ESM and CJS.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- SSR features are removed.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Improve the calculation of changed ranges by utilising mapping
+- add helper to get shortest entity reference
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Expose the return type of the throttle and debounce helpers
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.17
+  - @remirror/core@2.0.0-beta.17
+  - @remirror/extension-events@2.0.0-beta.17
+  - @remirror/extension-positioner@2.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08

@@ -35,7 +35,7 @@ export interface CalloutOptions {
   renderEmoji?: (node: ProsemirrorNode, view: EditorView, getPos: () => number) => HTMLElement;
 }
 
-export interface CalloutAttributes extends ProsemirrorAttributes {
+export interface CalloutExtensionAttributes extends ProsemirrorAttributes {
   /**
    * The type of callout, for instance `info`, `warning`, `error`, `success` or `blank`.
    *

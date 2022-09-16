@@ -51,6 +51,9 @@ jobs:
       - name: generate .d.ts files
         run: pnpm typecheck
 
+      - name: patch MUI package.json files
+        run: bash support/scripts/patch-mui-package-json.sh
+
       - name: generate api markdown files
         run: pnpm api
 
@@ -63,7 +66,7 @@ jobs:
         uses: nwtgck/actions-netlify@develop
         with:
           publish-dir: './website/build'
-          production-branch: v1
+          production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}'
           alias: '${{ env.GITHUB_REF_SLUG }}'

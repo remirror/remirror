@@ -8,8 +8,9 @@ import type {
   ProsemirrorAttributes,
   Static,
 } from '@remirror/core';
+import { Suggester } from '@remirror/pm/suggest';
 
-export interface EmojiOptions {
+export interface EmojiOptions extends Pick<Suggester, 'supportedCharacters'> {
   /**
    * The list of emoji data to make available to the user. This is used to
    * create the underlying instance of the `Moji` which is used for searching

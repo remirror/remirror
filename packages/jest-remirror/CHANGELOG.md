@@ -1,5 +1,329 @@
 # jest-remirror
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Improve the calculation of changed ranges by utilising mapping
+- Update ProseMirror dependencies.
+- Update ProseMirror packages.
+- Update prosemirror packages.
+- Support both ESM and CJS.
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Clarify the TS return type for `pmBuild`.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- SSR features are removed.
+- Update ProseMirror packages to latest versions.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes `domino` from the codebase.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - jest-prosemirror@2.0.0
+  - @remirror/core@2.0.0
+  - @remirror/dom@2.0.0
+  - @remirror/preset-core@2.0.0
+  - @remirror/pm@2.0.0
+
+## 2.0.0-beta.19
+
+> 2022-09-12
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Removes `domino` from the codebase.
+- Support both ESM and CJS.
+- Update ProseMirror packages.
+- Clarify the TS return type for `pmBuild`.
+- Try to require JSDOM implicitly in node environment.
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Update prosemirror packages.
+- SSR features are removed.
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Update ProseMirror packages to latest versions.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update ProseMirror dependencies.
+- Expose the return type of the throttle and debounce helpers
+- Improve the calculation of changed ranges by utilising mapping
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - jest-prosemirror@2.0.0-beta.19
+  - @remirror/core@2.0.0-beta.19
+  - @remirror/dom@2.0.0-beta.19
+  - @remirror/preset-core@2.0.0-beta.19
+  - @remirror/pm@2.0.0-beta.19
+
+## 2.0.0-beta.18
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- SSR features are removed.
+- Support both ESM and CJS.
+- Update ProseMirror packages.
+- Expose the return type of the throttle and debounce helpers
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Update ProseMirror packages to latest versions.
+- Improve the calculation of changed ranges by utilising mapping
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Update prosemirror packages.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Update ProseMirror dependencies.
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/dom@2.0.0-beta.18
+  - @remirror/preset-core@2.0.0-beta.18
+  - @remirror/core@2.0.0-beta.18
+  - jest-prosemirror@2.0.0-beta.18
+  - @remirror/pm@2.0.0-beta.18
+
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a new Jest matcher `toEqualRemirrorState`, which can check that `EditorState` passed in has the same document and same selection as the expected tagged document.
+
+  ```ts
+  test('jest test', () => {
+    // Only checks that the document is the same
+    expect(view.state).toEqualRemirrorState(doc(p(`This is SPARTA`)));
+
+    // Checks both document and selection
+    expect(view.state).toEqualRemirrorState(doc(p(`This is <head>SPARTA<anchor>`)));
+    expect(view.state).not.toEqualRemirrorState(doc(p(`This is <cursor>SPARTA`)));
+  });
+  ```
+
+### Patch Changes
+
+- Update ProseMirror packages.
+- Support both ESM and CJS.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- SSR features are removed.
+- Update prosemirror packages.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Update ProseMirror dependencies.
+- Improve the calculation of changed ranges by utilising mapping
+- Update ProseMirror packages to latest versions.
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+- When pasting some text that should be transformed into multiple adjacent inline nodes, avoid creating an empty text node.
+- Expose the return type of the throttle and debounce helpers
+- Correct diff message ouputed by `toEqualRemirrorState`.
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.17
+  - jest-prosemirror@2.0.0-beta.17
+  - @remirror/core@2.0.0-beta.17
+  - @remirror/dom@2.0.0-beta.17
+  - @remirror/preset-core@2.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08

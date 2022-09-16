@@ -1,6 +1,6 @@
 {
   "name": "@remirror/cli",
-  "version": "1.0.0-beta.15",
+  "version": "1.0.0",
   "private": true,
   "description": "CLI for internal development in the remirror monorepo",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__cli",

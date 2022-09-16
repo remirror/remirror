@@ -142,17 +142,19 @@ interface MarkTypeAttributes extends Record<string, any> {
   markType: string;
 }
 
-type Builder = <
-  Types extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
-    string,
-    NodeTypeAttributes | MarkTypeAttributes
-  >,
->(
-  testSchema: EditorSchema,
-  names: Types,
-) => {
-  [Name in keyof Types]: Types[Name] extends NodeTypeAttributes ? NodeBuilder : MarkBuilder;
+interface DefaultBuilderTypes {
+  doc: NodeTypeAttributes;
+  p: NodeTypeAttributes;
+  text: NodeTypeAttributes;
+}
+
+type BuilderTypes = Record<string, NodeTypeAttributes | MarkTypeAttributes>;
+
+type BuilderReturns<T extends BuilderTypes> = {
+  [Name in keyof T]: T[Name] extends NodeTypeAttributes ? NodeBuilder : MarkBuilder;
 };
+
+type Builder = <T extends BuilderTypes>(testSchema: EditorSchema, names: T) => BuilderReturns<T>;
 
 /**
  * A short hand way for building prosemirror test builders with the core nodes already provided
@@ -164,18 +166,18 @@ type Builder = <
  * @param names - the extra marks and nodes to provide with their attributes
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function pmBuild<
-  Types extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
-    string,
-    NodeTypeAttributes | MarkTypeAttributes
-  >,
->(testSchema: EditorSchema, names: Types) {
-  return (pm.builders as unknown as Builder)(testSchema, {
+export function pmBuild<Types extends BuilderTypes = BuilderTypes>(
+  testSchema: EditorSchema,
+  names: Types,
+): BuilderReturns<Types & DefaultBuilderTypes> {
+  const builder = pm.builders as unknown as Builder;
+  const types: Types & DefaultBuilderTypes = {
     doc: { nodeType: 'doc' },
     p: { nodeType: 'paragraph' },
     text: { nodeType: 'text' },
     ...names,
-  });
+  };
+  return builder(testSchema, types);
 }
 
 const built = pmBuild(schema, {

@@ -7,7 +7,7 @@ extensionValidityTest(HardBreakExtension);
 
 describe('schema', () => {
   it('should return the correct textContent', () => {
-    const { add, nodes, view } = renderEditor([new HardBreakExtension()]);
+    const { add, nodes, view } = renderEditor<HardBreakExtension>([new HardBreakExtension()]);
     const { doc, hardBreak: br, p } = nodes;
 
     const firstParagraph = p('First line', br(), 'Second line');
@@ -24,7 +24,9 @@ describe('schema', () => {
 
 describe('commands', () => {
   it('insertHardBreak', () => {
-    const { add, nodes, commands, view } = renderEditor([new HardBreakExtension()]);
+    const { add, nodes, commands, view } = renderEditor<HardBreakExtension>([
+      new HardBreakExtension(),
+    ]);
     const { doc, hardBreak: br, p } = nodes;
 
     add(doc(p('This is content<cursor>')));

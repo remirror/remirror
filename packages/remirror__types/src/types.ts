@@ -393,7 +393,7 @@ export type IfNoRequiredProperties<
 /**
  * Get all the keys for required properties on this type.
  */
-export type GetRequiredKeys<Type extends object> = keyof ConditionalPick<
+export type GetRequiredKeys<Type extends Shape> = keyof ConditionalPick<
   KeepPartialProperties<Type>,
   NeverBrand
 >;
@@ -402,7 +402,7 @@ export type GetRequiredKeys<Type extends object> = keyof ConditionalPick<
  * Keeps the partial properties of a type unchanged. Transforms the rest to
  * `never`.
  */
-export type KeepPartialProperties<Type extends object> = {
+export type KeepPartialProperties<Type extends Shape> = {
   [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : NeverBrand;
 };
 
@@ -410,21 +410,21 @@ export type KeepPartialProperties<Type extends object> = {
  * Pick the `partial` properties from the provided Type and make them all
  * required.
  */
-export type PickPartial<Type extends object> = {
+export type PickPartial<Type extends Shape> = {
   [Key in keyof ConditionalExcept<KeepPartialProperties<Type>, NeverBrand>]-?: Type[Key];
 };
 
 /**
  * Like pick partial but all types can still specify undefined.
  */
-export type UndefinedPickPartial<Type extends object> = {
+export type UndefinedPickPartial<Type extends Shape> = {
   [Key in keyof PickPartial<Type>]: PickPartial<Type>[Key] | undefined;
 };
 
 /**
  * Only pick the `required` (non-`partial`) types from the given `Type`.
  */
-export type PickRequired<Type extends object> = {
+export type PickRequired<Type extends Shape> = {
   [Key in keyof ConditionalPick<KeepPartialProperties<Type>, NeverBrand>]: Type[Key];
 };
 
@@ -433,7 +433,7 @@ export type PickRequired<Type extends object> = {
  * required property it becomes a partial property and if it was a partial
  * property it becomes a required property.
  */
-export type FlipPartialAndRequired<Type extends object> = PickPartial<Type> &
+export type FlipPartialAndRequired<Type extends Shape> = PickPartial<Type> &
   Partial<PickRequired<Type>>;
 
 /**
@@ -441,7 +441,7 @@ export type FlipPartialAndRequired<Type extends object> = PickPartial<Type> &
  * required property it becomes a partial property and if it was a partial
  * property it becomes a required property.
  */
-export type UndefinedFlipPartialAndRequired<Type extends object> = UndefinedPickPartial<Type> &
+export type UndefinedFlipPartialAndRequired<Type extends Shape> = UndefinedPickPartial<Type> &
   Partial<PickRequired<Type>>;
 
 /**

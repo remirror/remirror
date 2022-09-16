@@ -1,5 +1,367 @@
 # @remirror/extension-react-tables
 
+## 2.0.0
+
+> 2022-09-13
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+### Patch Changes
+
+- Improve the calculation of changed ranges by utilising mapping
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- Rewrite React components using MUI.
+- Support both ESM and CJS.
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Expose the return type of the throttle and debounce helpers
+- Try to require JSDOM implicitly in node environment.
+- Correct a bad import.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- SSR features are removed.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes `domino` from the codebase.
+- Update jsx-dom to v7.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- option for supported characters in emoji suggester.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-utils@2.0.0
+  - @remirror/core@2.0.0
+  - @remirror/extension-positioner@2.0.0
+  - @remirror/extension-tables@2.0.0
+  - @remirror/preset-core@2.0.0
+  - @remirror/react-components@2.0.0
+  - @remirror/react-core@2.0.0
+  - @remirror/react-hooks@2.0.0
+  - @remirror/pm@2.0.0
+  - @remirror/icons@2.0.0
+  - @remirror/messages@2.0.0
+  - @remirror/theme@2.0.0
+
+## 2.0.0-beta.19
+
+> 2022-09-12
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+### Patch Changes
+
+- Removes `domino` from the codebase.
+- Support both ESM and CJS.
+- option for supported characters in emoji suggester.
+- Rewrite React components using MUI.
+- Try to require JSDOM implicitly in node environment.
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- SSR features are removed.
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- Correct a bad import.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Expose the return type of the throttle and debounce helpers
+- Update jsx-dom to v7.
+- Improve the calculation of changed ranges by utilising mapping
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core-utils@2.0.0-beta.19
+  - @remirror/core@2.0.0-beta.19
+  - @remirror/extension-positioner@2.0.0-beta.19
+  - @remirror/extension-tables@2.0.0-beta.19
+  - @remirror/preset-core@2.0.0-beta.19
+  - @remirror/react-components@2.0.0-beta.19
+  - @remirror/react-core@2.0.0-beta.19
+  - @remirror/react-hooks@2.0.0-beta.19
+  - @remirror/icons@2.0.0-beta.19
+  - @remirror/messages@2.0.0-beta.19
+  - @remirror/pm@2.0.0-beta.19
+  - @remirror/theme@2.0.0-beta.19
+
+## 2.0.0-beta.18
+
+> 2022-09-12
+
+### Major Changes
+
+- Migrate to pure ESM!
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+
+### Minor Changes
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+### Patch Changes
+
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- SSR features are removed.
+- option for supported characters in emoji suggester.
+- Rewrite React components using MUI.
+- Support both ESM and CJS.
+- Correct a bad import.
+- Expose the return type of the throttle and debounce helpers
+- Update jsx-dom to v7.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Improve the calculation of changed ranges by utilising mapping
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/theme@2.0.0-beta.18
+  - @remirror/extension-positioner@2.0.0-beta.18
+  - @remirror/extension-tables@2.0.0-beta.18
+  - @remirror/preset-core@2.0.0-beta.18
+  - @remirror/react-components@2.0.0-beta.18
+  - @remirror/react-core@2.0.0-beta.18
+  - @remirror/react-hooks@2.0.0-beta.18
+  - @remirror/core@2.0.0-beta.18
+  - @remirror/core-utils@2.0.0-beta.18
+  - @remirror/icons@2.0.0-beta.18
+  - @remirror/messages@2.0.0-beta.18
+  - @remirror/pm@2.0.0-beta.18
+
+## 2.0.0-beta.17
+
+> 2022-09-11
+
+### Major Changes
+
+- Use [official TypeScript type definitions](https://discuss.prosemirror.net/t/prosemirror-is-now-a-typescript-project/4624) from ProseMirror.
+- Migrate to pure ESM!
+
+### Minor Changes
+
+- Add a customisible floating button to completely delete React tables.
+
+  Fix creating React tables from markdown initial state.
+
+  Fix copy and paste of React tables, which resulted in duplicated controlled cells.
+
+### Patch Changes
+
+- option for supported characters in emoji suggester.
+- Rename `useEvent` to `useEditorEvent` to avoid confusion with the React hook of the same name
+
+  Remove the deprecated `useEvents` hook
+
+- `OnChangeHTML` and `OnChangeJSON` won't listen to the first update.
+- Support both ESM and CJS.
+- Set style `white-space` as `break-spaces` to wrap end-of-lines spaces.
+- Rewrite React components using MUI.
+- SSR features are removed.
+- Standardize the `contextmenu` and `hover` events to return event as first parameter
+- Removes the following CSS variables:
+
+  ```
+  --rmr-color-selection-background: Highlight;
+  --rmr-color-selection-shadow: inherit;
+  --rmr-color-selection-text: HighlightText;
+  --rmr-color-selection-caret: inherit;
+  ```
+
+  This brings more natural selection colors to the editor.
+
+- Improve the calculation of changed ranges by utilising mapping
+- Update jsx-dom to v7.
+- Don't re-create `initialEditorState` when re-mounting the `<Remirror/>` component.
+
+  Before this patch, for an uncontrolled editor, the `<Remirror/>` component would re-create the `initialEditorState` when it re-mounts. This will call `EditorState.create()` and call the [`init`](https://prosemirror.net/docs/ref/#state.StateField.init) method for every ProseMirror plugins with `initialEditorState`. This is problematic because the editor state passed to plugins is not the same as the current state.
+
+  This patch fixes the issue by only creating `initialEditorState` when the editor is mounted for the first time.
+
+- Fix the issue that PlaceholderExtension passed with the extension list doesn't work.
+- Expose the return type of the throttle and debounce helpers
+- Removes `domino` from the codebase.
+- Try to require JSDOM implicitly in node environment.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/pm@2.0.0-beta.17
+  - @remirror/react-components@2.0.0-beta.17
+  - @remirror/react-hooks@2.0.0-beta.17
+  - @remirror/react-core@2.0.0-beta.17
+  - @remirror/core@2.0.0-beta.17
+  - @remirror/core-utils@2.0.0-beta.17
+  - @remirror/extension-tables@2.0.0-beta.17
+  - @remirror/extension-positioner@2.0.0-beta.17
+  - @remirror/icons@2.0.0-beta.17
+  - @remirror/messages@2.0.0-beta.17
+  - @remirror/preset-core@2.0.0-beta.17
+  - @remirror/theme@2.0.0-beta.17
+
 ## 2.0.0-beta.16
 
 > 2022-09-08
