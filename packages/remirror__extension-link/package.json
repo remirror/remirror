@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-link",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Add links to your text editor.",
   "keywords": [
     "remirror",
@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^2.0.0",
-    "@remirror/extension-events": "^2.0.0",
+    "@remirror/extension-events": "^2.1.0",
     "@remirror/messages": "^2.0.0",
     "extract-domain": "2.2.1"
   },

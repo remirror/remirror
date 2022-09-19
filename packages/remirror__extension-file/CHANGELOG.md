@@ -1,5 +1,16 @@
 # @remirror/extension-file
 
+## 1.0.1
+
+> 2022-09-19
+
+### Patch Changes
+
+- Adds four new events `doubleClick`, `doubleClickMark`, `tripleClick` and `tripleClickMark`. They have the same interface as the existing `click` and `clickMark` event, but are triggered when the user double or triple clicks.
+- Reduces the dependency footprint from `@remirror/extension-file`.
+- Updated dependencies
+  - @remirror/react-core@2.0.1
+
 ## 1.0.0
 
 > 2022-09-13

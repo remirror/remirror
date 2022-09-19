@@ -1,5 +1,16 @@
 # @remirror/react-core
 
+## 2.0.1
+
+> 2022-09-19
+
+### Patch Changes
+
+- Adds four new events `doubleClick`, `doubleClickMark`, `tripleClick` and `tripleClickMark`. They have the same interface as the existing `click` and `clickMark` event, but are triggered when the user double or triple clicks.
+- Updated dependencies
+  - @remirror/extension-positioner@2.0.1
+  - @remirror/preset-core@2.0.1
+
 ## 2.0.0
 
 > 2022-09-13
