@@ -1,5 +1,13 @@
 # @remirror/extension-events
 
+## 2.1.0
+
+> 2022-09-19
+
+### Minor Changes
+
+- Adds four new events `doubleClick`, `doubleClickMark`, `tripleClick` and `tripleClickMark`. They have the same interface as the existing `click` and `clickMark` event, but are triggered when the user double or triple clicks.
+
 ## 2.0.0
 
 > 2022-09-13
