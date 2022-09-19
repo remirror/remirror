@@ -21,6 +21,7 @@ import {
   NodeWithPosition,
   noop,
   PlainExtension,
+  ProsemirrorNode,
   range,
   ResolvedPos,
 } from '@remirror/core';
@@ -138,6 +139,26 @@ export interface EventsOptions {
   clickMark?: Handler<ClickMarkEventHandler>;
 
   /**
+   * Same as {@link EventsOptions.click} but for double clicks.
+   */
+  doubleClick?: Handler<ClickEventHandler>;
+
+  /**
+   * Same as {@link EventsOptions.clickMark} but for double clicks.
+   */
+  doubleClickMark?: Handler<ClickMarkEventHandler>;
+
+  /**
+   * Same as {@link EventsOptions.click} but for triple clicks.
+   */
+  tripleClick?: Handler<ClickEventHandler>;
+
+  /**
+   * Same as {@link EventsOptions.clickMark} but for triple clicks.
+   */
+  tripleClickMark?: Handler<ClickMarkEventHandler>;
+
+  /**
    * Listen for contextmenu events and pass through props which detail the
    * direct node and parent nodes which were activated.
    */
@@ -195,6 +216,10 @@ export type HoverEventHandler = (
     'keydown',
     'click',
     'clickMark',
+    'doubleClick',
+    'doubleClickMark',
+    'tripleClick',
+    'tripleClickMark',
     'contextmenu',
     'hover',
     'scroll',
@@ -208,6 +233,8 @@ export type HoverEventHandler = (
     mouseleave: { earlyReturnValue: true },
     mouseup: { earlyReturnValue: true },
     click: { earlyReturnValue: true },
+    doubleClick: { earlyReturnValue: true },
+    tripleClick: { earlyReturnValue: true },
     hover: { earlyReturnValue: true },
     contextmenu: { earlyReturnValue: true },
     scroll: { earlyReturnValue: true },
@@ -275,6 +302,68 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
     // the reference to the event is lost.
     const eventMap: WeakMap<Event, boolean> = new WeakMap();
 
+    const runClickHandlerOn = (
+      clickMark: ClickMarkEventHandler,
+      click: ClickEventHandler,
+      // The following arguments are passed through from ProseMirror
+      // handleClickOn / handleDoubleClickOn / handleTripleClickOn handler
+      view: EditorView,
+      pos: number,
+      node: ProsemirrorNode,
+      nodePos: number,
+      event: MouseEvent,
+      direct: boolean,
+    ) => {
+      const state = this.store.currentState;
+      const { schema, doc } = state;
+      const $pos = doc.resolve(pos);
+
+      // True when the event has already been handled. In these cases we
+      // should **not** run the `clickMark` handler since all that is needed
+      // is the `$pos` property to check if a mark is active.
+      const handled = eventMap.has(event);
+
+      // Generate the base state which is passed to the `clickMark` handler
+      // and used to create the `click` handler state.
+      const baseState = createClickMarkState({ $pos, handled, view, state });
+      let returnValue = false;
+
+      if (!handled) {
+        // The boolean return value for the mark click handler. This is
+        // intentionally separate so that both the `clickMark` handlers and
+        // the `click` handlers are run for each click. It uses the eventMap
+        // to limit the ensure that it is only run once per click since this
+        // method is run with the same event for every single node in the
+        // `doc` tree.
+        returnValue = clickMark(event, baseState) || returnValue;
+      }
+
+      // Create click state to help API consumers inspect whether the event
+      // is a relevant click type.
+      const clickState: ClickHandlerState = {
+        ...baseState,
+        pos,
+        direct,
+        nodeWithPosition: { node, pos: nodePos },
+
+        getNode: (nodeType) => {
+          const type = isString(nodeType) ? schema.nodes[nodeType] : nodeType;
+
+          invariant(type, {
+            code: ErrorConstant.EXTENSION,
+            message: 'The node being checked does not exist',
+          });
+
+          return type === node.type ? { node, pos: nodePos } : undefined;
+        },
+      };
+
+      // Store this event so that marks aren't re-run for identical events.
+      eventMap.set(event, true);
+
+      return click(event, clickState) || returnValue;
+    };
+
     return {
       props: {
         handleKeyPress: (_, event) => {
@@ -287,54 +376,40 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
           return this.options.textInput({ from, to, text }) || false;
         },
         handleClickOn: (view, pos, node, nodePos, event, direct) => {
-          const state = this.store.currentState;
-          const { schema, doc } = state;
-          const $pos = doc.resolve(pos);
-
-          // True when the event has already been handled. In these cases we
-          // should **not** run the `clickMark` handler since all that is needed
-          // is the `$pos` property to check if a mark is active.
-          const handled = eventMap.has(event);
-
-          // Generate the base state which is passed to the `clickMark` handler
-          // and used to create the `click` handler state.
-          const baseState = createClickMarkState({ $pos, handled, view, state });
-          let returnValue = false;
-
-          if (!handled) {
-            // The boolean return value for the mark click handler. This is
-            // intentionally separate so that both the `clickMark` handlers and
-            // the `click` handlers are run for each click. It uses the eventMap
-            // to limit the ensure that it is only run once per click since this
-            // method is run with the same event for every single node in the
-            // `doc` tree.
-            returnValue = this.options.clickMark(event, baseState) || returnValue;
-          }
-
-          // Create click state to help API consumers inspect whether the event
-          // is a relevant click type.
-          const clickState: ClickHandlerState = {
-            ...baseState,
+          return runClickHandlerOn(
+            this.options.clickMark,
+            this.options.click,
+            view,
             pos,
+            node,
+            nodePos,
+            event,
             direct,
-            nodeWithPosition: { node, pos: nodePos },
-
-            getNode: (nodeType) => {
-              const type = isString(nodeType) ? schema.nodes[nodeType] : nodeType;
-
-              invariant(type, {
-                code: ErrorConstant.EXTENSION,
-                message: 'The node being checked does not exist',
-              });
-
-              return type === node.type ? { node, pos: nodePos } : undefined;
-            },
-          };
-
-          // Store this event so that marks aren't re-run for identical events.
-          eventMap.set(event, true);
-
-          return this.options.click(event, clickState) || returnValue;
+          );
+        },
+        handleDoubleClickOn: (view, pos, node, nodePos, event, direct) => {
+          return runClickHandlerOn(
+            this.options.doubleClickMark,
+            this.options.doubleClick,
+            view,
+            pos,
+            node,
+            nodePos,
+            event,
+            direct,
+          );
+        },
+        handleTripleClickOn: (view, pos, node, nodePos, event, direct) => {
+          return runClickHandlerOn(
+            this.options.tripleClickMark,
+            this.options.tripleClick,
+            view,
+            pos,
+            node,
+            nodePos,
+            event,
+            direct,
+          );
         },
 
         handleDOMEvents: {
