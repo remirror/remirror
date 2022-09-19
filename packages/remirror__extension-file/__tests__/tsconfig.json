@@ -38,10 +38,10 @@
       "path": "../../remirror__core/src"
     },
     {
-      "path": "../../remirror__react/src"
+      "path": "../../remirror__extension-react-component/src"
     },
     {
-      "path": "../../remirror__react-components/src"
+      "path": "../../remirror__react-core/src"
     },
     {
       "path": "../../remirror__theme/src"

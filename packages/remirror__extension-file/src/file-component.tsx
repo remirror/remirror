@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { UploadContext } from '@remirror/core';
-import { NodeViewComponentProps, useCommands } from '@remirror/react';
+import { NodeViewComponentProps } from '@remirror/extension-react-component';
+import { useCommands } from '@remirror/react-core';
 import { ExtensionFileTheme } from '@remirror/theme';
 
 import type { FileAttributes } from './file-extension';

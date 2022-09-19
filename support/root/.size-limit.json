@@ -325,8 +325,8 @@
       "react",
       "react-dom",
       "@remirror/core",
-      "@remirror/react",
-      "@remirror/react-components",
+      "@remirror/extension-react-component",
+      "@remirror/react-core",
       "@remirror/theme"
     ],
     "running": false,
