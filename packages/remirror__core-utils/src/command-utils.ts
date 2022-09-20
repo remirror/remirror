@@ -319,7 +319,7 @@ export function isSafari(minVersion = 0): boolean {
   const parsedAgent = navigator.userAgent.match(/Safari\/(\d+)\./);
 
   return isMac && !isChrome() && parsedAgent
-    ? Number.parseInt(assertGet(parsedAgent, 2), 10) >= minVersion
+    ? Number.parseInt(assertGet(parsedAgent, 1), 10) >= minVersion
     : false;
 }
 
