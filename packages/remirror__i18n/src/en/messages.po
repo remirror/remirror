@@ -133,6 +133,16 @@ msgstr "Increase indentation"
 msgid "extension.command.insert-emoji.label"
 msgstr "Insert Emoji"
 
+#. Description for inserting a horizontal rule (divider) command.
+#: packages/remirror__messages/src/extension-horizontal-rule-messages.ts:10
+msgid "extension.command.insert-horizontal-rule.description"
+msgstr "Separate content with a diving horizontal line"
+
+#. Label for inserting a horizontal rule (divider) command.
+#: packages/remirror__messages/src/extension-horizontal-rule-messages.ts:4
+msgid "extension.command.insert-horizontal-rule.label"
+msgstr "Divider"
+
 #. Description for inserting a paragraph.
 #: packages/remirror__messages/src/extension-paragraph-messages.ts:10
 msgid "extension.command.insert-paragraph.description"
