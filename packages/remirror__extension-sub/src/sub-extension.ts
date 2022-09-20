@@ -8,6 +8,7 @@ import {
   KeyBindingProps,
   MarkExtension,
   MarkExtensionSpec,
+  MarkSpecOverride,
   NamedShortcut,
   toggleMark,
 } from '@remirror/core';
@@ -28,14 +29,16 @@ export class SubExtension extends MarkExtension {
     return [ExtensionTag.FormattingMark, ExtensionTag.FontStyle];
   }
 
-  createMarkSpec(extra: ApplySchemaAttributes): MarkExtensionSpec {
+  createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
+      ...override,
       attrs: extra.defaults(),
       parseDOM: [
         {
           tag: 'sub',
           getAttrs: extra.parse,
         },
+        ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => ['sub', extra.dom(mark), 0],
     };
