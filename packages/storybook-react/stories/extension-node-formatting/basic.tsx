@@ -7,7 +7,18 @@ import {
   BulletListExtension,
   NodeFormattingExtension,
 } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+import {
+  CommandButtonGroup,
+  CommandMenuItem,
+  DropdownButton,
+  IndentationButtonGroup,
+  Remirror,
+  TextAlignmentButtonGroup,
+  ThemeProvider,
+  Toolbar,
+  useCommands,
+  useRemirror,
+} from '@remirror/react';
 
 const Basic: React.FC = () => {
   const { manager, state, onChange } = useRemirror({
@@ -29,73 +40,35 @@ const Basic: React.FC = () => {
         initialContent={state}
         autoRender='end'
       >
-        <AlignButtons />
-        &nbsp;
-        <IndentButtons />
-        &nbsp;
-        <LineHeightButtons />
+        <Toolbar>
+          <TextAlignmentButtonGroup />
+          <IndentationButtonGroup />
+          <LineHeightButtonDropdown />
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );
 };
 
-const AlignButtons = () => {
-  const commands = useCommands();
+const LineHeightButtonDropdown = () => {
+  const { setLineHeight } = useCommands();
   return (
-    <>
-      <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.leftAlign()}>
-        Left
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.centerAlign()}
-      >
-        Center
-      </button>
-      <button onMouseDown={(event) => event.preventDefault()} onClick={() => commands.rightAlign()}>
-        Right
-      </button>
-    </>
-  );
-};
-
-const IndentButtons = () => {
-  const commands = useCommands();
-  return (
-    <>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.decreaseIndent()}
-      >
-        &lt;&lt;
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.increaseIndent()}
-      >
-        &gt;&gt;
-      </button>
-    </>
-  );
-};
-
-const LineHeightButtons = () => {
-  const commands = useCommands();
-  return (
-    <>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setLineHeight(1)}
-      >
-        Narrow
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setLineHeight(2)}
-      >
-        Wide
-      </button>
-    </>
+    <CommandButtonGroup>
+      <DropdownButton aria-label='Line height' icon='lineHeight'>
+        <CommandMenuItem
+          commandName='setLineHeight'
+          onSelect={() => setLineHeight(1)}
+          enabled={setLineHeight.enabled(1)}
+          label='Narrow'
+        />
+        <CommandMenuItem
+          commandName='setLineHeight'
+          onSelect={() => setLineHeight(2)}
+          enabled={setLineHeight.enabled(2)}
+          label='Wide'
+        />
+      </DropdownButton>
+    </CommandButtonGroup>
   );
 };
 
