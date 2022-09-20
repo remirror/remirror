@@ -16,6 +16,8 @@ import {
   extension,
   getChangedRanges,
   getDocRange,
+  Helper,
+  helper,
   isEmptyObject,
   isString,
   OnSetOptionsProps,
@@ -218,6 +220,14 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
         this.active = false;
       })(props);
     };
+  }
+
+  /**
+   * Determine if whitespace characters are currently shown.
+   */
+  @helper()
+  isWhitespaceVisible(): Helper<boolean> {
+    return this.active;
   }
 }
 

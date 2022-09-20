@@ -23,4 +23,5 @@ export * from './toggle-subscript-button';
 export * from './toggle-superscript-button';
 export * from './toggle-task-list-button';
 export * from './toggle-underline-button';
+export * from './toggle-whitespace-button';
 export * from './undo-button';

@@ -163,7 +163,7 @@ export function createDefaultWhitespaceDecorators(settings: WhitespaceDecoratorS
 }
 
 export const toggleWhitespaceOptions: Remirror.CommandDecoratorOptions = {
-  icon: 'moreFill',
+  icon: 'paragraph',
   description: ({ t }) => t(ExtensionWhitespaceMessages.DESCRIPTION),
   label: ({ t }) => t(ExtensionWhitespaceMessages.LABEL),
 };
