@@ -4,6 +4,7 @@ export * from './copy-button';
 export * from './create-table-button';
 export * from './cut-button';
 export * from './dropdown-button';
+export * from './insert-horizontal-rule-button';
 export * from './justify-align-button';
 export * from './left-align-button';
 export * from './paste-button';
