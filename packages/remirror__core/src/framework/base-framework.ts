@@ -218,6 +218,13 @@ export interface FrameworkOutput<Extension extends AnyExtension>
   ) => InstanceType<ExtensionConstructor>;
 
   /**
+   * Assert if an extension is present by it's constructor.
+   */
+  hasExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
+    Constructor: ExtensionConstructor,
+  ) => boolean;
+
+  /**
    * Focus the editor at the `start` | `end` a specific position or at a valid
    * range between `{ from, to }`.
    *

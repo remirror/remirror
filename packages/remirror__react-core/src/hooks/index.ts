@@ -10,6 +10,7 @@ export * from './use-editor-view';
 export * from './use-extension';
 export * from './use-extension-event';
 export * from './use-force-update';
+export * from './use-has-extension';
 export * from './use-helpers';
 export * from './use-i18n';
 export * from './use-manager';

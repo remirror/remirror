@@ -711,6 +711,21 @@ export class RemirrorManager<Extension extends AnyExtension> {
   }
 
   /**
+   * Determines in an extension is present by providing the desired
+   * `Constructor`.
+   *
+   * This method can be used as a safer alternative to getExtension which
+   * will throw an error if the constructor doesn't exist within the
+   * extension created by this extension.
+   */
+  hasExtension<ExtensionConstructor extends AnyExtensionConstructor>(
+    Constructor: ExtensionConstructor,
+  ): boolean {
+    const extension = this.#extensionMap.get(Constructor);
+    return !!extension;
+  }
+
+  /**
    * Make a clone of the manager.
    *
    * @internalremarks What about the state stored in the extensions and presets,

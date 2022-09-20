@@ -18,6 +18,7 @@ Array [
   "getPreviousState",
   "getRootProps",
   "getState",
+  "hasExtension",
   "helpers",
   "manager",
   "markTags",
