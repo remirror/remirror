@@ -2,30 +2,17 @@ import 'remirror/styles/all.css';
 import './styles.css';
 
 import React from 'react';
-import { cx, htmlToProsemirrorNode } from 'remirror';
+import { htmlToProsemirrorNode } from 'remirror';
 import { HeadingExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
+import {
+  HeadingLevelButtonGroup,
+  Remirror,
+  ThemeProvider,
+  Toolbar,
+  useRemirror,
+} from '@remirror/react';
 
 const extensions = () => [new HeadingExtension()];
-
-const HeadingButtons = () => {
-  const commands = useCommands();
-  const active = useActive(true);
-  return (
-    <>
-      {[1, 2, 3, 4, 5, 6].map((level) => (
-        <button
-          key={level}
-          onMouseDown={(event) => event.preventDefault()}
-          onClick={() => commands.toggleHeading({ level })}
-          className={cx(active.heading({ level }) && 'active')}
-        >
-          H{level}
-        </button>
-      ))}
-    </>
-  );
-};
 
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
@@ -43,7 +30,9 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <HeadingButtons />
+        <Toolbar>
+          <HeadingLevelButtonGroup showAll />
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );

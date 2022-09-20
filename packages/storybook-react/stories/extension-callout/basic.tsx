@@ -3,7 +3,13 @@ import 'remirror/styles/all.css';
 import React, { useCallback } from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { CalloutExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import {
+  CalloutTypeButtonGroup,
+  Remirror,
+  ThemeProvider,
+  Toolbar,
+  useRemirror,
+} from '@remirror/react';
 
 const Basic = (): JSX.Element => {
   const basicExtensions = useCallback(() => [new CalloutExtension()], []);
@@ -25,7 +31,11 @@ const Basic = (): JSX.Element => {
         onChange={onChange}
         initialContent={state}
         autoRender='end'
-      />
+      >
+        <Toolbar>
+          <CalloutTypeButtonGroup />
+        </Toolbar>
+      </Remirror>
     </ThemeProvider>
   );
 };

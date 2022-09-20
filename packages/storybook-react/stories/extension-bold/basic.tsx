@@ -2,25 +2,11 @@ import 'remirror/styles/all.css';
 import './styles.css';
 
 import React from 'react';
-import { cx, htmlToProsemirrorNode } from 'remirror';
+import { htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
 
 const extensions = () => [new BoldExtension()];
-
-const BoldButton = () => {
-  const commands = useCommands();
-  const active = useActive(true);
-  return (
-    <button
-      onMouseDown={(event) => event.preventDefault()}
-      onClick={() => commands.toggleBold()}
-      className={cx(active.bold() && 'active')}
-    >
-      Bold
-    </button>
-  );
-};
 
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
@@ -38,7 +24,9 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <BoldButton />
+        <Toolbar>
+          <ToggleBoldButton />
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );

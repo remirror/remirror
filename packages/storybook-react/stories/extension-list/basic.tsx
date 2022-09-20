@@ -9,44 +9,12 @@ import {
 } from 'remirror/extensions';
 import {
   EditorComponent,
+  ListButtonGroup,
   Remirror,
   ThemeProvider,
-  useCommands,
+  Toolbar,
   useRemirror,
 } from '@remirror/react';
-
-const Button = (): JSX.Element => {
-  const commands = useCommands();
-
-  return (
-    <>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.toggleTaskList()}
-      >
-        toggleTaskList
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.toggleBulletList()}
-      >
-        toggleBulletList
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.toggleOrderedList()}
-      >
-        toggleOrderedList
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.liftListItemOutOfList()}
-      >
-        liftListItemOutOfList
-      </button>
-    </>
-  );
-};
 
 const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({
@@ -58,7 +26,9 @@ const Basic = (): JSX.Element => {
   return (
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state}>
-        <Button />
+        <Toolbar>
+          <ListButtonGroup />
+        </Toolbar>
         <EditorComponent />
       </Remirror>
     </ThemeProvider>

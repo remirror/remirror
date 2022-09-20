@@ -3,14 +3,15 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { HorizontalRuleExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+import {
+  InsertHorizontalRuleButton,
+  Remirror,
+  ThemeProvider,
+  Toolbar,
+  useRemirror,
+} from '@remirror/react';
 
 const extensions = () => [new HorizontalRuleExtension()];
-
-const HorizontalRuleButton = () => {
-  const commands = useCommands();
-  return <button onClick={() => commands.insertHorizontalRule()}>Insert</button>;
-};
 
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
@@ -28,7 +29,9 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <HorizontalRuleButton />
+        <Toolbar>
+          <InsertHorizontalRuleButton />
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );

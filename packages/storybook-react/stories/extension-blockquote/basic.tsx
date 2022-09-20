@@ -2,25 +2,17 @@ import 'remirror/styles/all.css';
 import './styles.css';
 
 import React from 'react';
-import { cx, htmlToProsemirrorNode } from 'remirror';
+import { htmlToProsemirrorNode } from 'remirror';
 import { BlockquoteExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
+import {
+  Remirror,
+  ThemeProvider,
+  ToggleBlockquoteButton,
+  Toolbar,
+  useRemirror,
+} from '@remirror/react';
 
 const extensions = () => [new BlockquoteExtension()];
-
-const BlockquoteButton = () => {
-  const commands = useCommands();
-  const active = useActive(true);
-  return (
-    <button
-      onMouseDown={(event) => event.preventDefault()}
-      onClick={() => commands.toggleBlockquote()}
-      className={cx(active.blockquote() && 'active')}
-    >
-      Blockquote
-    </button>
-  );
-};
 
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
@@ -38,7 +30,9 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <BlockquoteButton />
+        <Toolbar>
+          <ToggleBlockquoteButton />
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );

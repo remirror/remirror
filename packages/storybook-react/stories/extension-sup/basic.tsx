@@ -3,21 +3,15 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { SupExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+import {
+  Remirror,
+  ThemeProvider,
+  ToggleSuperscriptButton,
+  Toolbar,
+  useRemirror,
+} from '@remirror/react';
 
 const extensions = () => [new SupExtension()];
-
-const SupButton = () => {
-  const commands = useCommands();
-  return (
-    <button
-      onMouseDown={(event) => event.preventDefault()}
-      onClick={() => commands.toggleSuperscript()}
-    >
-      Toggle Superscript
-    </button>
-  );
-};
 
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
@@ -35,7 +29,9 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <SupButton />
+        <Toolbar>
+          <ToggleSuperscriptButton />
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );

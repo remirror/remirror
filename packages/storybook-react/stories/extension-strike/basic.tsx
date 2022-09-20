@@ -2,25 +2,11 @@ import 'remirror/styles/all.css';
 import './styles.css';
 
 import React from 'react';
-import { cx, htmlToProsemirrorNode } from 'remirror';
+import { htmlToProsemirrorNode } from 'remirror';
 import { StrikeExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, ToggleStrikeButton, Toolbar, useRemirror } from '@remirror/react';
 
 const extensions = () => [new StrikeExtension()];
-
-const StrikeButton = () => {
-  const commands = useCommands();
-  const active = useActive(true);
-  return (
-    <button
-      onMouseDown={(event) => event.preventDefault()}
-      onClick={() => commands.toggleStrike()}
-      className={cx(active.strike() && 'active')}
-    >
-      Strike
-    </button>
-  );
-};
 
 const Basic = (): JSX.Element => {
   const { manager, state, onChange } = useRemirror({
@@ -38,7 +24,9 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <StrikeButton />
+        <Toolbar>
+          <ToggleStrikeButton />
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );
