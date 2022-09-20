@@ -72,7 +72,7 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
   }
 
   // Setup the initial decorators.
-  protected init(): void {
+  onCreate(): void {
     this.updateDecorators();
   }
 
@@ -80,7 +80,9 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
    * Create the initial decoration state.
    */
   onInitState(state: EditorState): void {
-    this.decorationSet = this.createFullDecorationSet(state.doc);
+    if (this.active) {
+      this.decorationSet = this.createFullDecorationSet(state.doc);
+    }
   }
 
   /**
