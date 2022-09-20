@@ -1,5 +1,18 @@
 # jest-remirror
 
+## 2.0.2
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/core@2.0.1
+  - jest-prosemirror@2.0.1
+  - @remirror/dom@2.0.2
+  - @remirror/preset-core@2.0.2
+
 ## 2.0.1
 
 > 2022-09-19

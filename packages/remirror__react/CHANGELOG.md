@@ -1,5 +1,23 @@
 # @remirror/react
 
+## 2.0.2
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/react-components@2.0.2
+  - @remirror/extension-placeholder@2.0.1
+  - @remirror/extension-positioner@2.0.2
+  - @remirror/extension-react-component@2.0.1
+  - @remirror/extension-react-tables@2.0.2
+  - @remirror/preset-react@2.0.1
+  - @remirror/react-core@2.0.2
+  - @remirror/react-hooks@2.0.2
+  - @remirror/react-renderer@2.0.1
+
 ## 2.0.1
 
 > 2022-09-19

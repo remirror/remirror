@@ -1,5 +1,22 @@
 # @remirror/preset-core
 
+## 2.0.2
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/core@2.0.1
+  - @remirror/extension-doc@2.0.1
+  - @remirror/extension-events@2.1.1
+  - @remirror/extension-gap-cursor@2.0.1
+  - @remirror/extension-history@2.0.1
+  - @remirror/extension-paragraph@2.0.1
+  - @remirror/extension-positioner@2.0.2
+  - @remirror/extension-text@2.0.1
+
 ## 2.0.1
 
 > 2022-09-19

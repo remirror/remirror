@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-bold",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Make your text bold. Make it courageous.",
   "keywords": [
     "remirror",
@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0",
+    "@remirror/core": "^2.0.1",
     "@remirror/messages": "^2.0.0"
   },
   "devDependencies": {

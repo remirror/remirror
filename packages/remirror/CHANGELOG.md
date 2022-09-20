@@ -1,5 +1,70 @@
 # remirror
 
+## 2.0.2
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/core-utils@2.0.1
+  - @remirror/core@2.0.1
+  - @remirror/dom@2.0.2
+  - @remirror/extension-annotation@2.0.2
+  - @remirror/extension-bidi@2.0.1
+  - @remirror/extension-blockquote@2.0.1
+  - @remirror/extension-bold@2.0.1
+  - @remirror/extension-callout@2.0.1
+  - @remirror/extension-code@2.0.1
+  - @remirror/extension-code-block@2.0.1
+  - @remirror/extension-codemirror5@2.0.1
+  - @remirror/extension-collaboration@2.0.1
+  - @remirror/extension-columns@2.0.1
+  - @remirror/extension-diff@2.0.1
+  - @remirror/extension-doc@2.0.1
+  - @remirror/extension-drop-cursor@2.0.1
+  - @remirror/extension-embed@2.0.1
+  - @remirror/extension-emoji@2.0.1
+  - @remirror/extension-entity-reference@2.0.2
+  - @remirror/extension-epic-mode@2.0.1
+  - @remirror/extension-events@2.1.1
+  - @remirror/extension-font-family@2.0.1
+  - @remirror/extension-font-size@2.0.1
+  - @remirror/extension-gap-cursor@2.0.1
+  - @remirror/extension-hard-break@2.0.1
+  - @remirror/extension-heading@2.0.1
+  - @remirror/extension-history@2.0.1
+  - @remirror/extension-horizontal-rule@2.0.1
+  - @remirror/extension-image@2.0.1
+  - @remirror/extension-italic@2.0.1
+  - @remirror/extension-link@2.0.2
+  - @remirror/extension-list@2.0.2
+  - @remirror/extension-markdown@2.0.1
+  - @remirror/extension-mention@2.0.2
+  - @remirror/extension-mention-atom@2.0.2
+  - @remirror/extension-node-formatting@2.0.1
+  - @remirror/extension-paragraph@2.0.1
+  - @remirror/extension-placeholder@2.0.1
+  - @remirror/extension-positioner@2.0.2
+  - @remirror/extension-search@2.0.1
+  - @remirror/extension-shortcuts@2.0.1
+  - @remirror/extension-strike@2.0.1
+  - @remirror/extension-sub@2.0.1
+  - @remirror/extension-sup@2.0.1
+  - @remirror/extension-tables@2.0.1
+  - @remirror/extension-text@2.0.1
+  - @remirror/extension-text-case@2.0.1
+  - @remirror/extension-text-color@2.0.1
+  - @remirror/extension-text-highlight@2.0.1
+  - @remirror/extension-trailing-node@2.0.1
+  - @remirror/extension-underline@2.0.1
+  - @remirror/extension-whitespace@2.0.1
+  - @remirror/extension-yjs@3.0.1
+  - @remirror/preset-core@2.0.2
+  - @remirror/preset-formatting@2.0.1
+  - @remirror/preset-wysiwyg@2.0.2
+
 ## 2.0.1
 
 > 2022-09-19

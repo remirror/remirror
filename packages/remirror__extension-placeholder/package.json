@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-placeholder",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "TEMPLATE_DESCRIPTION",
   "keywords": [
     "remirror",
@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.0",
+    "@remirror/core": "^2.0.1",
     "@remirror/messages": "^2.0.0",
     "@remirror/theme": "^2.0.0"
   },

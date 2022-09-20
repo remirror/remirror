@@ -1,5 +1,29 @@
 # @remirror/preset-formatting
 
+## 2.0.1
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/core@2.0.1
+  - @remirror/extension-bold@2.0.1
+  - @remirror/extension-columns@2.0.1
+  - @remirror/extension-font-size@2.0.1
+  - @remirror/extension-heading@2.0.1
+  - @remirror/extension-italic@2.0.1
+  - @remirror/extension-node-formatting@2.0.1
+  - @remirror/extension-strike@2.0.1
+  - @remirror/extension-sub@2.0.1
+  - @remirror/extension-sup@2.0.1
+  - @remirror/extension-text-case@2.0.1
+  - @remirror/extension-text-color@2.0.1
+  - @remirror/extension-text-highlight@2.0.1
+  - @remirror/extension-underline@2.0.1
+  - @remirror/extension-whitespace@2.0.1
+
 ## 2.0.0
 
 > 2022-09-13
