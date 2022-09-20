@@ -6,5 +6,6 @@ export * from './data-transfer-button-group';
 export * from './formatting-button-group';
 export * from './heading-level-button-group';
 export * from './history-button-group';
+export * from './indentation-button-group';
 export * from './list-button-group';
 export * from './text-alignment-button-group';
