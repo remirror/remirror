@@ -19,6 +19,8 @@ export * from './toggle-heading-button';
 export * from './toggle-italic-button';
 export * from './toggle-ordered-list-button';
 export * from './toggle-strike-button';
+export * from './toggle-subscript-button';
+export * from './toggle-superscript-button';
 export * from './toggle-task-list-button';
 export * from './toggle-underline-button';
 export * from './undo-button';

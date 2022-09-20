@@ -1,3 +1,4 @@
+export * from './baseline-button-group';
 export * from './basic-formatting-button-group';
 export * from './callout-type-button-group';
 export * from './command-button-group';
