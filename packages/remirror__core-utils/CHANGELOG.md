@@ -1,5 +1,13 @@
 # @remirror/core-utils
 
+## 2.0.1
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+
 ## 2.0.0
 
 > 2022-09-13

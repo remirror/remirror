@@ -1,5 +1,15 @@
 # @remirror/dev
 
+## 2.0.2
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/react-core@2.0.2
+
 ## 2.0.1
 
 > 2022-09-19

@@ -1,5 +1,22 @@
 # @remirror/extension-react-tables
 
+## 2.0.2
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/core-utils@2.0.1
+  - @remirror/core@2.0.1
+  - @remirror/react-components@2.0.2
+  - @remirror/extension-positioner@2.0.2
+  - @remirror/extension-tables@2.0.1
+  - @remirror/preset-core@2.0.2
+  - @remirror/react-core@2.0.2
+  - @remirror/react-hooks@2.0.2
+
 ## 2.0.1
 
 > 2022-09-19

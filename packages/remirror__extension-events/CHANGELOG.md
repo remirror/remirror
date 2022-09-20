@@ -1,5 +1,15 @@
 # @remirror/extension-events
 
+## 2.1.1
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/core@2.0.1
+
 ## 2.1.0
 
 > 2022-09-19

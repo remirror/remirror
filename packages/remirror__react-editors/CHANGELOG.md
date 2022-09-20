@@ -1,5 +1,17 @@
 # @remirror/react-editors
 
+## 1.0.2
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - remirror@2.0.2
+  - @remirror/extension-react-tables@2.0.2
+  - @remirror/react@2.0.2
+
 ## 1.0.1
 
 > 2022-09-19

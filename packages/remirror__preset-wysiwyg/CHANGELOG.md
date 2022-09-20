@@ -1,5 +1,36 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.2
+
+> 2022-09-20
+
+### Patch Changes
+
+- Fix an issue that causes `isSafari` to crash.
+- Updated dependencies
+  - @remirror/core@2.0.1
+  - @remirror/extension-bidi@2.0.1
+  - @remirror/extension-blockquote@2.0.1
+  - @remirror/extension-bold@2.0.1
+  - @remirror/extension-code@2.0.1
+  - @remirror/extension-code-block@2.0.1
+  - @remirror/extension-drop-cursor@2.0.1
+  - @remirror/extension-embed@2.0.1
+  - @remirror/extension-gap-cursor@2.0.1
+  - @remirror/extension-hard-break@2.0.1
+  - @remirror/extension-heading@2.0.1
+  - @remirror/extension-horizontal-rule@2.0.1
+  - @remirror/extension-image@2.0.1
+  - @remirror/extension-italic@2.0.1
+  - @remirror/extension-link@2.0.2
+  - @remirror/extension-list@2.0.2
+  - @remirror/extension-search@2.0.1
+  - @remirror/extension-shortcuts@2.0.1
+  - @remirror/extension-strike@2.0.1
+  - @remirror/extension-trailing-node@2.0.1
+  - @remirror/extension-underline@2.0.1
+  - @remirror/preset-core@2.0.2
+
 ## 2.0.1
 
 > 2022-09-19
