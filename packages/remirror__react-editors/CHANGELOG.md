@@ -1,5 +1,30 @@
 # @remirror/react-editors
 
+## 1.0.3
+
+> 2022-09-21
+
+### Patch Changes
+
+- Fix active helpers for text alignment in `NodeFormattingExtension`
+- Make `SubExtension` and `SupExtension` overridable
+- Decorate the `insertHorizontalRule` command
+- Fix the display of whitespace character when made visible
+- Make the task list button in `ListButtonGroup` optional
+
+  Add a new hook `useHasExtension` which checks for the presence of an extension in the manager
+
+- Add toolbar buttons for text alignment, subscript and superscript, display whitespace, and insert horizontal rule
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - remirror@2.0.3
+  - @remirror/extension-react-tables@2.0.3
+  - @remirror/react@2.0.3
+
 ## 1.0.2
 
 > 2022-09-20
