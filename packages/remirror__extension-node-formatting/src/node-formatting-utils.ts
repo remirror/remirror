@@ -25,25 +25,29 @@ export const decreaseIndentOptions: Remirror.CommandDecoratorOptions = {
 export const centerAlignOptions: Remirror.CommandDecoratorOptions = {
   label: ({ t }) => t(Messages.CENTER_ALIGN_LABEL),
   icon: 'alignCenter',
-  active: createActiveCheck(({ node }) => node.attrs.textAlign === 'center'),
+  active: createActiveCheck(({ node }) => node.attrs.nodeTextAlignment === 'center'),
 };
 
 export const justifyAlignOptions: Remirror.CommandDecoratorOptions = {
   label: ({ t }) => t(Messages.JUSTIFY_ALIGN_LABEL),
   icon: 'alignJustify',
-  active: createActiveCheck(({ node }) => node.attrs.textAlign === 'justify'),
+  active: createActiveCheck(({ node }) => node.attrs.nodeTextAlignment === 'justify'),
 };
 
 export const rightAlignOptions: Remirror.CommandDecoratorOptions = {
   label: ({ t }) => t(Messages.RIGHT_ALIGN_LABEL),
   icon: 'alignRight',
-  active: createActiveCheck(({ node }) => node.attrs.textAlign === 'right'),
+  active: createActiveCheck(({ node }) => node.attrs.nodeTextAlignment === 'right'),
 };
 
 export const leftAlignOptions: Remirror.CommandDecoratorOptions = {
   label: ({ t }) => t(Messages.LEFT_ALIGN_LABEL),
   icon: 'alignLeft',
-  active: createActiveCheck(({ node }) => node.attrs.textAlign === 'left'),
+  active: createActiveCheck(({ node }) => {
+    const { nodeTextAlignment } = node.attrs;
+    // TODO: Assumption here is that left is default text alignment, which may not be true in RTL languages
+    return nodeTextAlignment === 'left' || nodeTextAlignment === '';
+  }),
 };
 
 function createActiveCheck(

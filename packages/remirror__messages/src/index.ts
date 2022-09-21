@@ -12,6 +12,7 @@ export * as ExtensionEmojiMessages from './extension-emoji-messages';
 export * as ExtensionFontSizeMessages from './extension-font-size-messages';
 export * as ExtensionHeadingMessages from './extension-heading-messages';
 export * as ExtensionHistoryMessages from './extension-history-messages';
+export * as ExtensionHorizontalRuleMessages from './extension-horizontal-rule-messages';
 export * as ExtensionItalicMessages from './extension-italic-messages';
 export * as ExtensionListMessages from './extension-list-messages';
 export * as ExtensionNodeFormattingMessages from './extension-node-formatting-messages';

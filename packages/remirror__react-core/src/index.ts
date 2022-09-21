@@ -21,6 +21,7 @@ export {
   useExtensionCustomEvent,
   useExtensionEvent,
   useForceUpdate,
+  useHasExtension,
   useHelpers,
   useI18n,
   useManager,

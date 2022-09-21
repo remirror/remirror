@@ -504,6 +504,7 @@ export abstract class Framework<
       getState: this.getState,
       getPreviousState: this.getPreviousState,
       getExtension: this.manager.getExtension.bind(this.manager),
+      hasExtension: this.manager.hasExtension.bind(this.manager),
 
       // Setter Methods
       clearContent: this.clearContent,

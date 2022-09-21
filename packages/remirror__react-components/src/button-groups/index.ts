@@ -1,3 +1,4 @@
+export * from './baseline-button-group';
 export * from './basic-formatting-button-group';
 export * from './callout-type-button-group';
 export * from './command-button-group';
@@ -5,4 +6,6 @@ export * from './data-transfer-button-group';
 export * from './formatting-button-group';
 export * from './heading-level-button-group';
 export * from './history-button-group';
+export * from './indentation-button-group';
 export * from './list-button-group';
+export * from './text-alignment-button-group';

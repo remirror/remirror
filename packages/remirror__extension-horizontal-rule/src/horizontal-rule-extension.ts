@@ -17,6 +17,8 @@ import {
 } from '@remirror/core';
 import { TextSelection } from '@remirror/pm/state';
 
+import { insertHorizontalRuleOptions } from './horizontal-rule-utils';
+
 export interface HorizontalRuleOptions {
   /**
    * The name of the node to insert after inserting a horizontalRule.
@@ -55,7 +57,7 @@ export class HorizontalRuleExtension extends NodeExtension<HorizontalRuleOptions
   /**
    * Inserts a horizontal line into the editor.
    */
-  @command()
+  @command(insertHorizontalRuleOptions)
   insertHorizontalRule(): CommandFunction {
     return (props) => {
       const { tr, dispatch } = props;
