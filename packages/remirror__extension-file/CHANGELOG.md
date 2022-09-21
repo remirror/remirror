@@ -1,5 +1,22 @@
 # @remirror/extension-file
 
+## 1.0.3
+
+> 2022-09-21
+
+### Patch Changes
+
+- Decorate the `insertHorizontalRule` command
+- Make the task list button in `ListButtonGroup` optional
+
+  Add a new hook `useHasExtension` which checks for the presence of an extension in the manager
+
+- Updated dependencies
+- Updated dependencies
+  - @remirror/core@2.0.2
+  - @remirror/extension-react-component@2.0.2
+  - @remirror/react-core@2.0.3
+
 ## 1.0.2
 
 > 2022-09-20

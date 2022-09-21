@@ -1,5 +1,31 @@
 # @remirror/react-components
 
+## 2.0.3
+
+> 2022-09-21
+
+### Patch Changes
+
+- Decorate the `insertHorizontalRule` command
+- Make the task list button in `ListButtonGroup` optional
+
+  Add a new hook `useHasExtension` which checks for the presence of an extension in the manager
+
+- Add toolbar buttons for text alignment, subscript and superscript, display whitespace, and insert horizontal rule
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - remirror@2.0.3
+  - @remirror/i18n@2.0.1
+  - @remirror/messages@2.0.1
+  - @remirror/core@2.0.2
+  - @remirror/extension-positioner@2.0.3
+  - @remirror/extension-text-color@2.0.2
+  - @remirror/react-core@2.0.3
+  - @remirror/react-hooks@2.0.3
+
 ## 2.0.2
 
 > 2022-09-20

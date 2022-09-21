@@ -1,5 +1,40 @@
 # @remirror/preset-formatting
 
+## 2.0.2
+
+> 2022-09-21
+
+### Patch Changes
+
+- Fix active helpers for text alignment in `NodeFormattingExtension`
+- Make `SubExtension` and `SupExtension` overridable
+- Decorate the `insertHorizontalRule` command
+- Fix the display of whitespace character when made visible
+- Make the task list button in `ListButtonGroup` optional
+
+  Add a new hook `useHasExtension` which checks for the presence of an extension in the manager
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-node-formatting@2.0.2
+  - @remirror/extension-sub@2.0.2
+  - @remirror/extension-sup@2.0.2
+  - @remirror/core@2.0.2
+  - @remirror/extension-bold@2.0.2
+  - @remirror/extension-columns@2.0.2
+  - @remirror/extension-font-size@2.0.2
+  - @remirror/extension-heading@2.0.2
+  - @remirror/extension-italic@2.0.2
+  - @remirror/extension-strike@2.0.2
+  - @remirror/extension-text-case@2.0.2
+  - @remirror/extension-text-color@2.0.2
+  - @remirror/extension-text-highlight@2.0.2
+  - @remirror/extension-underline@2.0.2
+  - @remirror/extension-whitespace@2.0.2
+
 ## 2.0.1
 
 > 2022-09-20

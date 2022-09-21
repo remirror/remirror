@@ -1,5 +1,41 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.3
+
+> 2022-09-21
+
+### Patch Changes
+
+- Decorate the `insertHorizontalRule` command
+- Make the task list button in `ListButtonGroup` optional
+
+  Add a new hook `useHasExtension` which checks for the presence of an extension in the manager
+
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-horizontal-rule@2.0.2
+  - @remirror/core@2.0.2
+  - @remirror/extension-bidi@2.0.2
+  - @remirror/extension-blockquote@2.0.2
+  - @remirror/extension-bold@2.0.2
+  - @remirror/extension-code@2.0.2
+  - @remirror/extension-code-block@2.0.2
+  - @remirror/extension-drop-cursor@2.0.2
+  - @remirror/extension-embed@2.0.2
+  - @remirror/extension-gap-cursor@2.0.2
+  - @remirror/extension-hard-break@2.0.2
+  - @remirror/extension-heading@2.0.2
+  - @remirror/extension-image@2.0.2
+  - @remirror/extension-italic@2.0.2
+  - @remirror/extension-link@2.0.3
+  - @remirror/extension-list@2.0.3
+  - @remirror/extension-search@2.0.2
+  - @remirror/extension-shortcuts@2.0.2
+  - @remirror/extension-strike@2.0.2
+  - @remirror/extension-trailing-node@2.0.2
+  - @remirror/extension-underline@2.0.2
+  - @remirror/preset-core@2.0.3
+
 ## 2.0.2
 
 > 2022-09-20

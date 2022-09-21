@@ -99,8 +99,8 @@ importers:
       jest-extended: ^2.0.0
       jest-github-reporter: ^1.0.2
       jest-playwright-preset: ^1.7.2
-      jest-prosemirror: ^2.0.1
-      jest-remirror: ^2.0.2
+      jest-prosemirror: ^2.0.2
+      jest-remirror: ^2.0.3
       jest-watch-typeahead: ^1.1.0
       lint-staged: ^11.2.6
       npm-run-all: ^4.1.5
@@ -109,7 +109,7 @@ importers:
       playwright-testing-library: ^4.2.1
       prettier: ^2.3.2
       prettier-plugin-packagejson: ^2.2.13
-      remirror: 2.0.2
+      remirror: 2.0.3
       rimraf: ^3.0.2
       size-limit: ^7.0.8
       snapshot-diff: ^0.9.0
@@ -260,7 +260,7 @@ importers:
       '@remirror/core-constants': ^2.0.0
       '@remirror/core-helpers': ^2.0.0
       '@remirror/core-types': ^2.0.0
-      '@remirror/core-utils': ^2.0.1
+      '@remirror/core-utils': ^2.0.2
       '@remirror/pm': ^2.0.0
       '@testing-library/dom': ^8.13.0
       '@types/stringify-object': ^3.3.1
@@ -294,15 +294,15 @@ importers:
   packages/jest-remirror:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/dom': ^2.0.2
+      '@remirror/core': ^2.0.2
+      '@remirror/dom': ^2.0.3
       '@remirror/pm': ^2.0.0
-      '@remirror/preset-core': ^2.0.2
+      '@remirror/preset-core': ^2.0.3
       '@testing-library/dom': ^8.13.0
       '@types/node': ^16.3.3
       '@types/sanitize-html': ^2.3.2
       jest: ^28.1.1
-      jest-prosemirror: ^2.0.1
+      jest-prosemirror: ^2.0.2
       sanitize-html: ^2.4.0
       tiny-warning: ^1.0.3
     dependencies:
@@ -374,7 +374,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core-helpers': ^2.0.0
-      '@remirror/core-utils': ^2.0.1
+      '@remirror/core-utils': ^2.0.2
       prosemirror-model: ^1.18.1
       prosemirror-view: ^1.28.0
     dependencies:
@@ -427,67 +427,67 @@ importers:
   packages/remirror:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/core-constants': ^2.0.0
       '@remirror/core-helpers': ^2.0.0
       '@remirror/core-types': ^2.0.0
-      '@remirror/core-utils': ^2.0.1
-      '@remirror/dom': ^2.0.2
-      '@remirror/extension-annotation': ^2.0.2
-      '@remirror/extension-bidi': ^2.0.1
-      '@remirror/extension-blockquote': ^2.0.1
-      '@remirror/extension-bold': ^2.0.1
-      '@remirror/extension-callout': ^2.0.1
-      '@remirror/extension-code': ^2.0.1
-      '@remirror/extension-code-block': ^2.0.1
-      '@remirror/extension-codemirror5': ^2.0.1
-      '@remirror/extension-collaboration': ^2.0.1
-      '@remirror/extension-columns': ^2.0.1
-      '@remirror/extension-diff': ^2.0.1
-      '@remirror/extension-doc': ^2.0.1
-      '@remirror/extension-drop-cursor': ^2.0.1
-      '@remirror/extension-embed': ^2.0.1
-      '@remirror/extension-emoji': ^2.0.1
-      '@remirror/extension-entity-reference': ^2.0.2
-      '@remirror/extension-epic-mode': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/extension-font-family': ^2.0.1
-      '@remirror/extension-font-size': ^2.0.1
-      '@remirror/extension-gap-cursor': ^2.0.1
-      '@remirror/extension-hard-break': ^2.0.1
-      '@remirror/extension-heading': ^2.0.1
-      '@remirror/extension-history': ^2.0.1
-      '@remirror/extension-horizontal-rule': ^2.0.1
-      '@remirror/extension-image': ^2.0.1
-      '@remirror/extension-italic': ^2.0.1
-      '@remirror/extension-link': ^2.0.2
-      '@remirror/extension-list': ^2.0.2
-      '@remirror/extension-markdown': ^2.0.1
-      '@remirror/extension-mention': ^2.0.2
-      '@remirror/extension-mention-atom': ^2.0.2
-      '@remirror/extension-node-formatting': ^2.0.1
-      '@remirror/extension-paragraph': ^2.0.1
-      '@remirror/extension-placeholder': ^2.0.1
-      '@remirror/extension-positioner': ^2.0.2
-      '@remirror/extension-search': ^2.0.1
-      '@remirror/extension-shortcuts': ^2.0.1
-      '@remirror/extension-strike': ^2.0.1
-      '@remirror/extension-sub': ^2.0.1
-      '@remirror/extension-sup': ^2.0.1
-      '@remirror/extension-tables': ^2.0.1
-      '@remirror/extension-text': ^2.0.1
-      '@remirror/extension-text-case': ^2.0.1
-      '@remirror/extension-text-color': ^2.0.1
-      '@remirror/extension-text-highlight': ^2.0.1
-      '@remirror/extension-trailing-node': ^2.0.1
-      '@remirror/extension-underline': ^2.0.1
-      '@remirror/extension-whitespace': ^2.0.1
-      '@remirror/extension-yjs': ^3.0.1
+      '@remirror/core-utils': ^2.0.2
+      '@remirror/dom': ^2.0.3
+      '@remirror/extension-annotation': ^2.0.3
+      '@remirror/extension-bidi': ^2.0.2
+      '@remirror/extension-blockquote': ^2.0.2
+      '@remirror/extension-bold': ^2.0.2
+      '@remirror/extension-callout': ^2.0.2
+      '@remirror/extension-code': ^2.0.2
+      '@remirror/extension-code-block': ^2.0.2
+      '@remirror/extension-codemirror5': ^2.0.2
+      '@remirror/extension-collaboration': ^2.0.2
+      '@remirror/extension-columns': ^2.0.2
+      '@remirror/extension-diff': ^2.0.2
+      '@remirror/extension-doc': ^2.0.2
+      '@remirror/extension-drop-cursor': ^2.0.2
+      '@remirror/extension-embed': ^2.0.2
+      '@remirror/extension-emoji': ^2.0.2
+      '@remirror/extension-entity-reference': ^2.0.3
+      '@remirror/extension-epic-mode': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/extension-font-family': ^2.0.2
+      '@remirror/extension-font-size': ^2.0.2
+      '@remirror/extension-gap-cursor': ^2.0.2
+      '@remirror/extension-hard-break': ^2.0.2
+      '@remirror/extension-heading': ^2.0.2
+      '@remirror/extension-history': ^2.0.2
+      '@remirror/extension-horizontal-rule': ^2.0.2
+      '@remirror/extension-image': ^2.0.2
+      '@remirror/extension-italic': ^2.0.2
+      '@remirror/extension-link': ^2.0.3
+      '@remirror/extension-list': ^2.0.3
+      '@remirror/extension-markdown': ^2.0.2
+      '@remirror/extension-mention': ^2.0.3
+      '@remirror/extension-mention-atom': ^2.0.3
+      '@remirror/extension-node-formatting': ^2.0.2
+      '@remirror/extension-paragraph': ^2.0.2
+      '@remirror/extension-placeholder': ^2.0.2
+      '@remirror/extension-positioner': ^2.0.3
+      '@remirror/extension-search': ^2.0.2
+      '@remirror/extension-shortcuts': ^2.0.2
+      '@remirror/extension-strike': ^2.0.2
+      '@remirror/extension-sub': ^2.0.2
+      '@remirror/extension-sup': ^2.0.2
+      '@remirror/extension-tables': ^2.0.2
+      '@remirror/extension-text': ^2.0.2
+      '@remirror/extension-text-case': ^2.0.2
+      '@remirror/extension-text-color': ^2.0.2
+      '@remirror/extension-text-highlight': ^2.0.2
+      '@remirror/extension-trailing-node': ^2.0.2
+      '@remirror/extension-underline': ^2.0.2
+      '@remirror/extension-whitespace': ^2.0.2
+      '@remirror/extension-yjs': ^3.0.2
       '@remirror/icons': ^2.0.0
       '@remirror/pm': ^2.0.0
-      '@remirror/preset-core': ^2.0.2
-      '@remirror/preset-formatting': ^2.0.1
-      '@remirror/preset-wysiwyg': ^2.0.2
+      '@remirror/preset-core': ^2.0.3
+      '@remirror/preset-formatting': ^2.0.2
+      '@remirror/preset-wysiwyg': ^2.0.3
       '@remirror/theme': ^2.0.0
       '@types/codemirror': ^5.60.2
       '@types/prettier': ^2.3.2
@@ -607,10 +607,10 @@ importers:
       '@remirror/core-constants': ^2.0.0
       '@remirror/core-helpers': ^2.0.0
       '@remirror/core-types': ^2.0.0
-      '@remirror/core-utils': ^2.0.1
-      '@remirror/i18n': ^2.0.0
+      '@remirror/core-utils': ^2.0.2
+      '@remirror/i18n': ^2.0.1
       '@remirror/icons': ^2.0.0
-      '@remirror/messages': ^2.0.0
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       nanoevents: ^5.1.13
       tiny-warning: ^1.0.3
@@ -686,7 +686,7 @@ importers:
       '@remirror/core-constants': ^2.0.0
       '@remirror/core-helpers': ^2.0.0
       '@remirror/core-types': ^2.0.0
-      '@remirror/messages': ^2.0.0
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@types/jsdom': ^16.2.13
       '@types/min-document': ^2.19.0
@@ -715,7 +715,7 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/pm': ^2.0.0
-      '@remirror/react-core': ^2.0.2
+      '@remirror/react-core': ^2.0.3
       '@testing-library/react': ^13.1.1
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
@@ -737,9 +737,9 @@ importers:
   packages/remirror__dom:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/pm': ^2.0.0
-      '@remirror/preset-core': ^2.0.2
+      '@remirror/preset-core': ^2.0.3
     dependencies:
       '@babel/runtime': 7.18.9
       '@remirror/core': link:../remirror__core
@@ -750,9 +750,9 @@ importers:
   packages/remirror__extension-annotation:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-positioner': ^2.0.2
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-positioner': ^2.0.3
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -765,8 +765,8 @@ importers:
   packages/remirror__extension-bidi:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@types/direction': ^1.0.0
       direction: ^1.0.4
@@ -782,8 +782,8 @@ importers:
   packages/remirror__extension-blockquote:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
     dependencies:
@@ -797,8 +797,8 @@ importers:
   packages/remirror__extension-bold:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -810,8 +810,8 @@ importers:
   packages/remirror__extension-callout:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
     dependencies:
@@ -825,8 +825,8 @@ importers:
   packages/remirror__extension-code:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -838,8 +838,8 @@ importers:
   packages/remirror__extension-code-block:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
       '@types/prettier': ^2.3.2
@@ -861,9 +861,9 @@ importers:
   packages/remirror__extension-codemirror5:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/core-helpers': ^2.0.0
-      '@remirror/messages': ^2.0.0
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@types/codemirror': ^5.60.2
       codemirror: ^5.62.0
@@ -883,7 +883,7 @@ importers:
       '@codemirror/language': ^6.1.0
       '@codemirror/state': ^6.0.1
       '@codemirror/view': ^6.0.2
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -897,8 +897,8 @@ importers:
   packages/remirror__extension-collaboration:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -910,8 +910,8 @@ importers:
   packages/remirror__extension-columns:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -923,7 +923,7 @@ importers:
   packages/remirror__extension-count:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -934,8 +934,8 @@ importers:
   packages/remirror__extension-diff:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -947,8 +947,8 @@ importers:
   packages/remirror__extension-doc:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -960,8 +960,8 @@ importers:
   packages/remirror__extension-drop-cursor:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -973,11 +973,11 @@ importers:
   packages/remirror__extension-embed:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@types/querystringify': ^2.0.0
-      prosemirror-resizable-view: ^2.0.1
+      prosemirror-resizable-view: ^2.0.2
       querystringify: ^2.2.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -992,8 +992,8 @@ importers:
   packages/remirror__extension-emoji:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
       emojibase: ^6.0.0
@@ -1017,9 +1017,9 @@ importers:
   packages/remirror__extension-entity-reference:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/extension-positioner': ^2.0.2
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/extension-positioner': ^2.0.3
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1032,8 +1032,8 @@ importers:
   packages/remirror__extension-epic-mode:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1045,8 +1045,8 @@ importers:
   packages/remirror__extension-events:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1058,10 +1058,10 @@ importers:
   packages/remirror__extension-file:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-react-component': ^2.0.1
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-react-component': ^2.0.2
       '@remirror/pm': ^2.0.0
-      '@remirror/react-core': ^2.0.2
+      '@remirror/react-core': ^2.0.3
       '@remirror/theme': ^2.0.0
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
@@ -1085,8 +1085,8 @@ importers:
   packages/remirror__extension-font-family:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1098,8 +1098,8 @@ importers:
   packages/remirror__extension-font-size:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       round: ^2.0.1
     dependencies:
@@ -1113,8 +1113,8 @@ importers:
   packages/remirror__extension-gap-cursor:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1126,8 +1126,8 @@ importers:
   packages/remirror__extension-hard-break:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1139,8 +1139,8 @@ importers:
   packages/remirror__extension-heading:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1152,8 +1152,8 @@ importers:
   packages/remirror__extension-history:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1165,8 +1165,8 @@ importers:
   packages/remirror__extension-horizontal-rule:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1178,11 +1178,11 @@ importers:
   packages/remirror__extension-image:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
-      prosemirror-resizable-view: ^2.0.1
+      prosemirror-resizable-view: ^2.0.2
     dependencies:
       '@babel/runtime': 7.18.9
       '@remirror/core': link:../remirror__core
@@ -1195,8 +1195,8 @@ importers:
   packages/remirror__extension-italic:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1208,9 +1208,9 @@ importers:
   packages/remirror__extension-link:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@types/extract-domain': 2.2.0
       extract-domain: 2.2.1
@@ -1229,9 +1229,9 @@ importers:
   packages/remirror__extension-list:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
     dependencies:
@@ -1246,9 +1246,9 @@ importers:
   packages/remirror__extension-markdown:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-react-tables': ^2.0.2
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-react-tables': ^2.0.3
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@types/marked': ^4.0.2
       '@types/turndown': ^5.0.1
@@ -1271,9 +1271,9 @@ importers:
   packages/remirror__extension-mention:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       escape-string-regexp: ^4.0.0
     dependencies:
@@ -1288,9 +1288,9 @@ importers:
   packages/remirror__extension-mention-atom:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
     dependencies:
@@ -1305,8 +1305,8 @@ importers:
   packages/remirror__extension-node-formatting:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1318,8 +1318,8 @@ importers:
   packages/remirror__extension-paragraph:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1331,8 +1331,8 @@ importers:
   packages/remirror__extension-placeholder:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
     dependencies:
@@ -1346,9 +1346,9 @@ importers:
   packages/remirror__extension-positioner:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
       nanoevents: ^5.1.13
@@ -1365,10 +1365,10 @@ importers:
   packages/remirror__extension-react-component:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
-      '@remirror/react': ^2.0.2
+      '@remirror/react': ^2.0.3
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
       nanoevents: ^5.1.13
@@ -1390,11 +1390,11 @@ importers:
   packages/remirror__extension-react-ssr:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-react-component': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-react-component': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
-      '@remirror/react': ^2.0.2
+      '@remirror/react': ^2.0.3
       '@remirror/react-utils': ^2.0.0
       '@types/react': ^18.0.6
       react: ^18.0.0
@@ -1415,17 +1415,17 @@ importers:
       '@babel/runtime': ^7.13.10
       '@emotion/css': ^11.1.3
       '@linaria/core': 3.0.0-beta.13
-      '@remirror/core': ^2.0.1
-      '@remirror/core-utils': ^2.0.1
-      '@remirror/extension-positioner': ^2.0.2
-      '@remirror/extension-tables': ^2.0.1
+      '@remirror/core': ^2.0.2
+      '@remirror/core-utils': ^2.0.2
+      '@remirror/extension-positioner': ^2.0.3
+      '@remirror/extension-tables': ^2.0.2
       '@remirror/icons': ^2.0.0
-      '@remirror/messages': ^2.0.0
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
-      '@remirror/preset-core': ^2.0.2
-      '@remirror/react-components': ^2.0.2
-      '@remirror/react-core': ^2.0.2
-      '@remirror/react-hooks': ^2.0.2
+      '@remirror/preset-core': ^2.0.3
+      '@remirror/react-components': ^2.0.3
+      '@remirror/react-core': ^2.0.3
+      '@remirror/react-hooks': ^2.0.3
       '@remirror/theme': ^2.0.0
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
@@ -1462,8 +1462,8 @@ importers:
   packages/remirror__extension-search:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       escape-string-regexp: ^4.0.0
     dependencies:
@@ -1477,7 +1477,7 @@ importers:
   packages/remirror__extension-shortcuts:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1488,8 +1488,8 @@ importers:
   packages/remirror__extension-strike:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1501,8 +1501,8 @@ importers:
   packages/remirror__extension-sub:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1514,8 +1514,8 @@ importers:
   packages/remirror__extension-sup:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1527,8 +1527,8 @@ importers:
   packages/remirror__extension-tables:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
     dependencies:
@@ -1542,8 +1542,8 @@ importers:
   packages/remirror__extension-text:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1555,8 +1555,8 @@ importers:
   packages/remirror__extension-text-case:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1568,9 +1568,9 @@ importers:
   packages/remirror__extension-text-color:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/i18n': ^2.0.0
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/i18n': ^2.0.1
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.0
       color2k: ^2.0.0
@@ -1587,9 +1587,9 @@ importers:
   packages/remirror__extension-text-highlight:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-text-color': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-text-color': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1602,8 +1602,8 @@ importers:
   packages/remirror__extension-trailing-node:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1615,8 +1615,8 @@ importers:
   packages/remirror__extension-underline:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1628,8 +1628,8 @@ importers:
   packages/remirror__extension-whitespace:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1641,8 +1641,8 @@ importers:
   packages/remirror__extension-yjs:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       y-prosemirror: ^1.0.19
       y-protocols: ^1.0.5
@@ -1745,14 +1745,14 @@ importers:
   packages/remirror__preset-core:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-doc': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/extension-gap-cursor': ^2.0.1
-      '@remirror/extension-history': ^2.0.1
-      '@remirror/extension-paragraph': ^2.0.1
-      '@remirror/extension-positioner': ^2.0.2
-      '@remirror/extension-text': ^2.0.1
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-doc': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/extension-gap-cursor': ^2.0.2
+      '@remirror/extension-history': ^2.0.2
+      '@remirror/extension-paragraph': ^2.0.2
+      '@remirror/extension-positioner': ^2.0.3
+      '@remirror/extension-text': ^2.0.2
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1770,21 +1770,21 @@ importers:
   packages/remirror__preset-formatting:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-bold': ^2.0.1
-      '@remirror/extension-columns': ^2.0.1
-      '@remirror/extension-font-size': ^2.0.1
-      '@remirror/extension-heading': ^2.0.1
-      '@remirror/extension-italic': ^2.0.1
-      '@remirror/extension-node-formatting': ^2.0.1
-      '@remirror/extension-strike': ^2.0.1
-      '@remirror/extension-sub': ^2.0.1
-      '@remirror/extension-sup': ^2.0.1
-      '@remirror/extension-text-case': ^2.0.1
-      '@remirror/extension-text-color': ^2.0.1
-      '@remirror/extension-text-highlight': ^2.0.1
-      '@remirror/extension-underline': ^2.0.1
-      '@remirror/extension-whitespace': ^2.0.1
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-bold': ^2.0.2
+      '@remirror/extension-columns': ^2.0.2
+      '@remirror/extension-font-size': ^2.0.2
+      '@remirror/extension-heading': ^2.0.2
+      '@remirror/extension-italic': ^2.0.2
+      '@remirror/extension-node-formatting': ^2.0.2
+      '@remirror/extension-strike': ^2.0.2
+      '@remirror/extension-sub': ^2.0.2
+      '@remirror/extension-sup': ^2.0.2
+      '@remirror/extension-text-case': ^2.0.2
+      '@remirror/extension-text-color': ^2.0.2
+      '@remirror/extension-text-highlight': ^2.0.2
+      '@remirror/extension-underline': ^2.0.2
+      '@remirror/extension-whitespace': ^2.0.2
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -1809,9 +1809,9 @@ importers:
   packages/remirror__preset-react:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-placeholder': ^2.0.1
-      '@remirror/extension-react-component': ^2.0.1
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-placeholder': ^2.0.2
+      '@remirror/extension-react-component': ^2.0.2
       '@remirror/pm': ^2.0.0
       '@remirror/react-utils': ^2.0.0
       '@types/react': ^18.0.6
@@ -1834,29 +1834,29 @@ importers:
   packages/remirror__preset-wysiwyg:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-bidi': ^2.0.1
-      '@remirror/extension-blockquote': ^2.0.1
-      '@remirror/extension-bold': ^2.0.1
-      '@remirror/extension-code': ^2.0.1
-      '@remirror/extension-code-block': ^2.0.1
-      '@remirror/extension-drop-cursor': ^2.0.1
-      '@remirror/extension-embed': ^2.0.1
-      '@remirror/extension-gap-cursor': ^2.0.1
-      '@remirror/extension-hard-break': ^2.0.1
-      '@remirror/extension-heading': ^2.0.1
-      '@remirror/extension-horizontal-rule': ^2.0.1
-      '@remirror/extension-image': ^2.0.1
-      '@remirror/extension-italic': ^2.0.1
-      '@remirror/extension-link': ^2.0.2
-      '@remirror/extension-list': ^2.0.2
-      '@remirror/extension-search': ^2.0.1
-      '@remirror/extension-shortcuts': ^2.0.1
-      '@remirror/extension-strike': ^2.0.1
-      '@remirror/extension-trailing-node': ^2.0.1
-      '@remirror/extension-underline': ^2.0.1
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-bidi': ^2.0.2
+      '@remirror/extension-blockquote': ^2.0.2
+      '@remirror/extension-bold': ^2.0.2
+      '@remirror/extension-code': ^2.0.2
+      '@remirror/extension-code-block': ^2.0.2
+      '@remirror/extension-drop-cursor': ^2.0.2
+      '@remirror/extension-embed': ^2.0.2
+      '@remirror/extension-gap-cursor': ^2.0.2
+      '@remirror/extension-hard-break': ^2.0.2
+      '@remirror/extension-heading': ^2.0.2
+      '@remirror/extension-horizontal-rule': ^2.0.2
+      '@remirror/extension-image': ^2.0.2
+      '@remirror/extension-italic': ^2.0.2
+      '@remirror/extension-link': ^2.0.3
+      '@remirror/extension-list': ^2.0.3
+      '@remirror/extension-search': ^2.0.2
+      '@remirror/extension-shortcuts': ^2.0.2
+      '@remirror/extension-strike': ^2.0.2
+      '@remirror/extension-trailing-node': ^2.0.2
+      '@remirror/extension-underline': ^2.0.2
       '@remirror/pm': ^2.0.0
-      '@remirror/preset-core': ^2.0.2
+      '@remirror/preset-core': ^2.0.3
     dependencies:
       '@babel/runtime': 7.18.9
       '@remirror/core': link:../remirror__core
@@ -1887,15 +1887,15 @@ importers:
   packages/remirror__react:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/extension-placeholder': ^2.0.1
-      '@remirror/extension-positioner': ^2.0.2
-      '@remirror/extension-react-component': ^2.0.1
-      '@remirror/extension-react-tables': ^2.0.2
-      '@remirror/preset-react': ^2.0.1
-      '@remirror/react-components': ^2.0.2
-      '@remirror/react-core': ^2.0.2
-      '@remirror/react-hooks': ^2.0.2
-      '@remirror/react-renderer': ^2.0.1
+      '@remirror/extension-placeholder': ^2.0.2
+      '@remirror/extension-positioner': ^2.0.3
+      '@remirror/extension-react-component': ^2.0.2
+      '@remirror/extension-react-tables': ^2.0.3
+      '@remirror/preset-react': ^2.0.2
+      '@remirror/react-components': ^2.0.3
+      '@remirror/react-core': ^2.0.3
+      '@remirror/react-hooks': ^2.0.3
+      '@remirror/react-renderer': ^2.0.2
       '@remirror/react-utils': ^2.0.0
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
@@ -1927,16 +1927,16 @@ importers:
       '@lingui/core': ^3.14.0
       '@mui/material': ^5.8.5
       '@popperjs/core': ^2.9.2
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-positioner': ^2.0.2
-      '@remirror/extension-text-color': ^2.0.1
-      '@remirror/i18n': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-positioner': ^2.0.3
+      '@remirror/extension-text-color': ^2.0.2
+      '@remirror/i18n': ^2.0.1
       '@remirror/icons': ^2.0.0
-      '@remirror/messages': ^2.0.0
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
-      '@remirror/react': ^2.0.2
-      '@remirror/react-core': ^2.0.2
-      '@remirror/react-hooks': ^2.0.2
+      '@remirror/react': ^2.0.3
+      '@remirror/react-core': ^2.0.3
+      '@remirror/react-hooks': ^2.0.3
       '@remirror/react-utils': ^2.0.0
       '@remirror/theme': ^2.0.0
       '@seznam/compose-react-refs': ^1.0.6
@@ -1949,7 +1949,7 @@ importers:
       react: ^18.0.0
       react-color: ^2.19.3
       react-dom: ^18.0.0
-      remirror: ^2.0.2
+      remirror: ^2.0.3
     dependencies:
       '@babel/runtime': 7.18.9
       '@emotion/react': 11.9.0_816f4796c226633b430061503809d561
@@ -1985,15 +1985,15 @@ importers:
   packages/remirror__react-core:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-positioner': ^2.0.2
-      '@remirror/extension-react-component': ^2.0.1
-      '@remirror/i18n': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-positioner': ^2.0.3
+      '@remirror/extension-react-component': ^2.0.2
+      '@remirror/i18n': ^2.0.1
       '@remirror/pm': ^2.0.0
-      '@remirror/preset-core': ^2.0.2
-      '@remirror/preset-react': ^2.0.1
-      '@remirror/react': ^2.0.2
-      '@remirror/react-renderer': ^2.0.1
+      '@remirror/preset-core': ^2.0.3
+      '@remirror/preset-react': ^2.0.2
+      '@remirror/react': ^2.0.3
+      '@remirror/react-renderer': ^2.0.2
       '@remirror/react-utils': ^2.0.0
       '@remirror/theme': ^2.0.0
       '@seznam/compose-react-refs': ^1.0.6
@@ -2038,9 +2038,9 @@ importers:
       '@babel/runtime': ^7.13.10
       '@emotion/css': ^11.1.3
       '@remirror/core-helpers': ^2.0.0
-      '@remirror/extension-react-tables': ^2.0.2
+      '@remirror/extension-react-tables': ^2.0.3
       '@remirror/pm': ^2.0.0
-      '@remirror/react': ^2.0.2
+      '@remirror/react': ^2.0.3
       '@remirror/styles': ^2.0.0
       '@svgmoji/noto': ^3.2.0
       '@types/react': ^18.0.6
@@ -2050,7 +2050,7 @@ importers:
       react: ^18.0.0
       react-dom: ^18.0.0
       refractor: ^3.3.1
-      remirror: 2.0.2
+      remirror: 2.0.3
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -2075,17 +2075,17 @@ importers:
   packages/remirror__react-hooks:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-emoji': ^2.0.1
-      '@remirror/extension-events': ^2.1.1
-      '@remirror/extension-history': ^2.0.1
-      '@remirror/extension-mention': ^2.0.2
-      '@remirror/extension-mention-atom': ^2.0.2
-      '@remirror/extension-positioner': ^2.0.2
-      '@remirror/i18n': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-emoji': ^2.0.2
+      '@remirror/extension-events': ^2.1.2
+      '@remirror/extension-history': ^2.0.2
+      '@remirror/extension-mention': ^2.0.3
+      '@remirror/extension-mention-atom': ^2.0.3
+      '@remirror/extension-positioner': ^2.0.3
+      '@remirror/i18n': ^2.0.1
       '@remirror/pm': ^2.0.0
-      '@remirror/react': ^2.0.2
-      '@remirror/react-core': ^2.0.2
+      '@remirror/react': ^2.0.3
+      '@remirror/react-core': ^2.0.3
       '@remirror/react-utils': ^2.0.0
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
@@ -2122,7 +2122,7 @@ importers:
   packages/remirror__react-renderer:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@types/react': ^18.0.6
       react: ^18.0.0
     dependencies:
@@ -2135,10 +2135,10 @@ importers:
   packages/remirror__react-ssr:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
-      '@remirror/extension-react-ssr': ^2.0.1
+      '@remirror/core': ^2.0.2
+      '@remirror/extension-react-ssr': ^2.0.2
       '@remirror/pm': ^2.0.0
-      '@remirror/react': ^2.0.2
+      '@remirror/react': ^2.0.3
       '@types/react': ^18.0.6
       '@types/react-dom': ^18.0.2
       react: ^18.0.0
@@ -2234,19 +2234,19 @@ importers:
       '@emotion/css': ^11.1.3
       '@joeattardi/emoji-button': ^4.6.0
       '@popperjs/core': ^2.9.2
-      '@remirror/core': ^2.0.1
-      '@remirror/dev': ^2.0.2
-      '@remirror/extension-codemirror6': ^1.0.1
-      '@remirror/extension-count': ^2.0.1
-      '@remirror/extension-entity-reference': ^2.0.2
-      '@remirror/extension-file': ^1.0.2
-      '@remirror/extension-mention': ^2.0.2
-      '@remirror/extension-mention-atom': ^2.0.2
-      '@remirror/extension-react-tables': ^2.0.2
-      '@remirror/messages': ^2.0.0
+      '@remirror/core': ^2.0.2
+      '@remirror/dev': ^2.0.3
+      '@remirror/extension-codemirror6': ^1.0.2
+      '@remirror/extension-count': ^2.0.2
+      '@remirror/extension-entity-reference': ^2.0.3
+      '@remirror/extension-file': ^1.0.3
+      '@remirror/extension-mention': ^2.0.3
+      '@remirror/extension-mention-atom': ^2.0.3
+      '@remirror/extension-react-tables': ^2.0.3
+      '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
-      '@remirror/react': ^2.0.2
-      '@remirror/react-editors': ^1.0.2
+      '@remirror/react': ^2.0.3
+      '@remirror/react-editors': ^1.0.3
       '@remirror/styles': ^2.0.0
       '@storybook/addon-actions': ^6.5.8
       '@storybook/addon-controls': ^6.5.8
@@ -2284,7 +2284,7 @@ importers:
       react-is: ^18.0.0
       reakit: ^1.3.11
       refractor: ^3.3.1
-      remirror: 2.0.2
+      remirror: 2.0.3
       scripts: 0.0.1
       svgmoji: ^3.2.0
       y-webrtc: ^10.2.2
@@ -2371,10 +2371,10 @@ importers:
       '@ffmpeg-installer/ffmpeg': ^1.1.0
       '@jest/globals': ^28.1.1
       '@react-spring/mock-raf': ^1.1.1
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/pm': ^2.0.0
-      '@remirror/preset-core': ^2.0.2
-      '@remirror/react': ^2.0.2
+      '@remirror/preset-core': ^2.0.3
+      '@remirror/react': ^2.0.3
       '@testing-library/react': ^13.1.1
       '@testing-library/react-hooks': ^8.0.0
       '@types/fluent-ffmpeg': ^2.1.18
@@ -2626,7 +2626,7 @@ importers:
   support/templates/extension-template:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -2645,7 +2645,7 @@ importers:
   support/templates/preset-template:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@remirror/core': ^2.0.1
+      '@remirror/core': ^2.0.2
       '@remirror/pm': ^2.0.0
     dependencies:
       '@babel/runtime': 7.18.9
@@ -2673,10 +2673,10 @@ importers:
       '@fontsource/fira-code': ^4.5.0
       '@fontsource/rubik': ^4.5.0
       '@mdx-js/react': ^1.6.22
-      '@remirror/core': ^2.0.1
-      '@remirror/dev': ^2.0.2
-      '@remirror/react': ^2.0.2
-      '@remirror/react-editors': ^1.0.2
+      '@remirror/core': ^2.0.2
+      '@remirror/dev': ^2.0.3
+      '@remirror/react': ^2.0.3
+      '@remirror/react-editors': ^1.0.3
       '@remirror/styles': ^2.0.0
       '@tsconfig/docusaurus': ^1.0.6
       '@types/react': ^18.0.6
@@ -2706,7 +2706,7 @@ importers:
       reakit: ^1.3.11
       remark-footnotes: ^3.0.0
       remark-sectionize: ^1.1.1
-      remirror: ^2.0.2
+      remirror: ^2.0.3
     dependencies:
       '@babel/runtime': 7.18.9
       '@emotion/css': 11.5.0_@babel+core@7.18.10
@@ -17527,7 +17527,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.17.0
+      uglify-js: 3.17.1
 
   /har-schema/2.0.0:
     resolution: {integrity: sha1-qUwiJOvKwEeCoNkDVSHyRzW37JI=}
@@ -27286,8 +27286,8 @@ packages:
     resolution: {integrity: sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==}
     dev: true
 
-  /uglify-js/3.17.0:
-    resolution: {integrity: sha512-aTeNPVmgIMPpm1cxXr2Q/nEbvkmV8yq66F3om7X3P/cvOXQ0TMQ64Wk63iyT1gPlmdmGzjGpyLh1f3y8MZWXGg==}
+  /uglify-js/3.17.1:
+    resolution: {integrity: sha512-+juFBsLLw7AqMaqJ0GFvlsGZwdQfI2ooKQB39PSBgMnMakcFosi9O8jCwE+2/2nMNcc0z63r9mwjoDG8zr+q0Q==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true

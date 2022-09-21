@@ -1,5 +1,15 @@
 # @remirror/core-utils
 
+## 2.0.2
+
+> 2022-09-21
+
+### Patch Changes
+
+- Decorate the `insertHorizontalRule` command
+- Updated dependencies
+  - @remirror/messages@2.0.1
+
 ## 2.0.1
 
 > 2022-09-20

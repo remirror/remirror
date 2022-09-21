@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-whitespace",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Manage whitespace characters within your editor.",
   "keywords": [
     "remirror",
@@ -35,8 +35,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.1",
-    "@remirror/messages": "^2.0.0"
+    "@remirror/core": "^2.0.2",
+    "@remirror/messages": "^2.0.1"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.0"
