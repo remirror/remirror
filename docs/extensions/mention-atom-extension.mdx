@@ -3,6 +3,8 @@ hide_title: true
 title: 'MentionAtomExtension'
 ---
 
+import SocialEditor from '../../website/extension-examples/react-editors/social-editor';
+
 # `MentionAtomExtension`
 
 ## Summary
@@ -15,17 +17,174 @@ It provides mentions as atom nodes which don't support editing once being insert
 
 ### Installation
 
-This extension is installed for you when you install the main `remirror` package.
+This extension is installed for you when you install the main `remirror` package. The extension is provided by the `@remirror/extension-mention-atom` package.
 
-You can use the imports in the following way:
+Using the setup from `Getting started`, you have:
 
-```ts
-import { MentionAtomExtension } from 'remirror/extensions';
+```tsx
+import { Remirror, EditorComponent, useRemirror } from '@remirror/react';
+import 'remirror/styles/all.css';
+
+const MyEditor: React.FC = () => {
+  const { manager, state } = useRemirror({
+    content: '<p>I love Remirror</p>',
+    selection: 'start',
+    stringHandler: 'html',
+  });
+
+  return (
+    <div className='remirror-theme'>
+      <Remirror manager={manager} initialContent={state}>
+        <EditorComponent />
+      </Remirror>
+    </div>
+  );
+};
 ```
 
-The extension is provided by the `@remirror/extension-mention-atom` package.
+Add the mentionAtomExtension and create a component to use for the suggestion popup:
+
+```tsx
+import {
+  Remirror,
+  EditorComponent,
+  useRemirror,
+  useMentionAtom,
+  MentionAtomNodeAttributes,
+  FloatingWrapper,
+} from '@remirror/react';
+import { cx } from '@remirror/core';
+
+import { MentionAtomExtension } from 'remirror/extensions';
+import 'remirror/styles/all.css';
+
+import { useEffect, useState } from 'react';
+
+const ALL_USERS = [
+  { id: 'joe', label: 'Joe' },
+  { id: 'sue', label: 'Sue' },
+  { id: 'pat', label: 'Pat' },
+  { id: 'tom', label: 'Tom' },
+  { id: 'jim', label: 'Jim' },
+];
+
+const MentionSuggestor: React.FC = () => {
+  const [options, setOptions] = useState<MentionAtomNodeAttributes[]>([]);
+  const { state, getMenuProps, getItemProps, indexIsHovered, indexIsSelected } = useMentionAtom({
+    items: options,
+  });
+
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+
+    const searchTerm = state.query.full.toLowerCase();
+
+    const filteredOptions = ALL_USERS.filter((user) =>
+      user.label.toLowerCase().includes(searchTerm),
+    )
+      .sort()
+      .slice(0, 5);
+
+    setOptions(filteredOptions);
+  }, [state]);
+
+  const enabled = Boolean(state);
+
+  return (
+    <FloatingWrapper positioner='cursor' enabled={enabled} placement='bottom-start'>
+      <div {...getMenuProps()} className='suggestions'>
+        {enabled &&
+          options.map((user, index) => {
+            const isHighlighted = indexIsSelected(index);
+            const isHovered = indexIsHovered(index);
+
+            return (
+              <div
+                key={user.id}
+                className={cx('suggestion', isHighlighted && 'highlighted', isHovered && 'hovered')}
+                {...getItemProps({
+                  item: user,
+                  index,
+                })}
+              >
+                {user.label}
+              </div>
+            );
+          })}
+      </div>
+    </FloatingWrapper>
+  );
+};
+
+const MyEditor: React.FC = () => {
+  const { manager, state } = useRemirror({
+    extensions: () => [
+      new MentionAtomExtension({
+        matchers: [{ name: 'at', char: '@', appendText: ' ' }],
+      }),
+    ],
+    content: '<p>I love Remirror</p>',
+    selection: 'start',
+    stringHandler: 'html',
+  });
+
+  return (
+    <div className='remirror-theme'>
+      <Remirror manager={manager} initialContent={state}>
+        <EditorComponent />
+        <MentionSuggestor />
+      </Remirror>
+    </div>
+  );
+};
+```
+
+You can add additional machers, for example hashtags:
+
+```ts
+const ALL_TAGS = [
+  { id: 'cel', label: 'Celebrity' },
+  { id: 'ed', label: 'Education' },
+  { id: 'tech', label: 'Tech' },
+];
+```
+
+```ts
+  new MentionAtomExtension({
+    matchers: [
+      { name: 'at', char: '@', appendText: ' ' },
+      { name: 'tag', char: '#', appendText: ' ' },
+    ],
+  }),
+```
+
+Update `useEffect` in `MentionSuggestor` component:
+
+```ts
+useEffect(() => {
+  if (!state) {
+    return;
+  }
+
+  const searchTerm = state.query.full.toLowerCase();
+  let filteredOptions: MentionAtomNodeAttributes[] = [];
+
+  if (state.name === 'tag') {
+    filteredOptions = ALL_TAGS.filter((tag) => tag.label.toLowerCase().includes(searchTerm));
+  } else if (state.name === 'at') {
+    filteredOptions = ALL_USERS.filter((user) => user.label.toLowerCase().includes(searchTerm));
+  }
+
+  filteredOptions = filteredOptions.sort().slice(0, 5);
+  setOptions(filteredOptions);
+}, [state]);
+```
 
 ### Examples
+
+<SocialEditor />
 
 See [storybook](https://remirror.vercel.app/?path=/story/react-hooks-usementionatom--basic) for examples.
 
