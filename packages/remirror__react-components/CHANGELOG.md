@@ -1,5 +1,23 @@
 # @remirror/react-components
 
+## 2.0.4
+
+> 2022-09-22
+
+### Patch Changes
+
+- Don't require `jsdom` in the browser environment.
+
+  This patch moves the `require('jsdom')` code into a standalone package [`get-dom-document`](https://www.npmjs.com/package/get-dom-document), which use the `browser` field in `package.json` to avoid bundling `jsdom` in the browser environment.
+
+- Updated dependencies
+  - remirror@2.0.4
+  - @remirror/core@2.0.3
+  - @remirror/extension-positioner@2.0.4
+  - @remirror/extension-text-color@2.0.3
+  - @remirror/react-core@2.0.4
+  - @remirror/react-hooks@2.0.4
+
 ## 2.0.3
 
 > 2022-09-21

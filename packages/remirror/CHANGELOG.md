@@ -1,5 +1,73 @@
 # remirror
 
+## 2.0.4
+
+> 2022-09-22
+
+### Patch Changes
+
+- Don't require `jsdom` in the browser environment.
+
+  This patch moves the `require('jsdom')` code into a standalone package [`get-dom-document`](https://www.npmjs.com/package/get-dom-document), which use the `browser` field in `package.json` to avoid bundling `jsdom` in the browser environment.
+
+- Updated dependencies
+  - @remirror/core-utils@2.0.3
+  - @remirror/core@2.0.3
+  - @remirror/dom@2.0.4
+  - @remirror/extension-annotation@2.0.4
+  - @remirror/extension-bidi@2.0.3
+  - @remirror/extension-blockquote@2.0.3
+  - @remirror/extension-bold@2.0.3
+  - @remirror/extension-callout@2.0.3
+  - @remirror/extension-code@2.0.3
+  - @remirror/extension-code-block@2.0.3
+  - @remirror/extension-codemirror5@2.0.3
+  - @remirror/extension-collaboration@2.0.3
+  - @remirror/extension-columns@2.0.3
+  - @remirror/extension-diff@2.0.3
+  - @remirror/extension-doc@2.0.3
+  - @remirror/extension-drop-cursor@2.0.3
+  - @remirror/extension-embed@2.0.3
+  - @remirror/extension-emoji@2.0.3
+  - @remirror/extension-entity-reference@2.0.4
+  - @remirror/extension-epic-mode@2.0.3
+  - @remirror/extension-events@2.1.3
+  - @remirror/extension-font-family@2.0.3
+  - @remirror/extension-font-size@2.0.3
+  - @remirror/extension-gap-cursor@2.0.3
+  - @remirror/extension-hard-break@2.0.3
+  - @remirror/extension-heading@2.0.3
+  - @remirror/extension-history@2.0.3
+  - @remirror/extension-horizontal-rule@2.0.3
+  - @remirror/extension-image@2.0.3
+  - @remirror/extension-italic@2.0.3
+  - @remirror/extension-link@2.0.4
+  - @remirror/extension-list@2.0.4
+  - @remirror/extension-markdown@2.0.3
+  - @remirror/extension-mention@2.0.4
+  - @remirror/extension-mention-atom@2.0.4
+  - @remirror/extension-node-formatting@2.0.3
+  - @remirror/extension-paragraph@2.0.3
+  - @remirror/extension-placeholder@2.0.3
+  - @remirror/extension-positioner@2.0.4
+  - @remirror/extension-search@2.0.3
+  - @remirror/extension-shortcuts@2.0.3
+  - @remirror/extension-strike@2.0.3
+  - @remirror/extension-sub@2.0.3
+  - @remirror/extension-sup@2.0.3
+  - @remirror/extension-tables@2.0.3
+  - @remirror/extension-text@2.0.3
+  - @remirror/extension-text-case@2.0.3
+  - @remirror/extension-text-color@2.0.3
+  - @remirror/extension-text-highlight@2.0.3
+  - @remirror/extension-trailing-node@2.0.3
+  - @remirror/extension-underline@2.0.3
+  - @remirror/extension-whitespace@2.0.3
+  - @remirror/extension-yjs@3.0.3
+  - @remirror/preset-core@2.0.4
+  - @remirror/preset-formatting@2.0.3
+  - @remirror/preset-wysiwyg@2.0.4
+
 ## 2.0.3
 
 > 2022-09-21

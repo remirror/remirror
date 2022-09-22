@@ -1,5 +1,32 @@
 # @remirror/preset-formatting
 
+## 2.0.3
+
+> 2022-09-22
+
+### Patch Changes
+
+- Don't require `jsdom` in the browser environment.
+
+  This patch moves the `require('jsdom')` code into a standalone package [`get-dom-document`](https://www.npmjs.com/package/get-dom-document), which use the `browser` field in `package.json` to avoid bundling `jsdom` in the browser environment.
+
+- Updated dependencies
+  - @remirror/core@2.0.3
+  - @remirror/extension-bold@2.0.3
+  - @remirror/extension-columns@2.0.3
+  - @remirror/extension-font-size@2.0.3
+  - @remirror/extension-heading@2.0.3
+  - @remirror/extension-italic@2.0.3
+  - @remirror/extension-node-formatting@2.0.3
+  - @remirror/extension-strike@2.0.3
+  - @remirror/extension-sub@2.0.3
+  - @remirror/extension-sup@2.0.3
+  - @remirror/extension-text-case@2.0.3
+  - @remirror/extension-text-color@2.0.3
+  - @remirror/extension-text-highlight@2.0.3
+  - @remirror/extension-underline@2.0.3
+  - @remirror/extension-whitespace@2.0.3
+
 ## 2.0.2
 
 > 2022-09-21
