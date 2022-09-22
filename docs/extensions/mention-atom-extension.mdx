@@ -22,8 +22,9 @@ This extension is installed for you when you install the main `remirror` package
 Using the setup from `Getting started`, you have:
 
 ```tsx
-import { Remirror, EditorComponent, useRemirror } from '@remirror/react';
 import 'remirror/styles/all.css';
+
+import { EditorComponent, Remirror, useRemirror } from '@remirror/react';
 
 const MyEditor: React.FC = () => {
   const { manager, state } = useRemirror({
@@ -45,20 +46,19 @@ const MyEditor: React.FC = () => {
 Add the mentionAtomExtension and create a component to use for the suggestion popup:
 
 ```tsx
-import {
-  Remirror,
-  EditorComponent,
-  useRemirror,
-  useMentionAtom,
-  MentionAtomNodeAttributes,
-  FloatingWrapper,
-} from '@remirror/react';
-import { cx } from '@remirror/core';
-
-import { MentionAtomExtension } from 'remirror/extensions';
 import 'remirror/styles/all.css';
 
 import { useEffect, useState } from 'react';
+import { MentionAtomExtension } from 'remirror/extensions';
+import { cx } from '@remirror/core';
+import {
+  EditorComponent,
+  FloatingWrapper,
+  MentionAtomNodeAttributes,
+  Remirror,
+  useMentionAtom,
+  useRemirror,
+} from '@remirror/react';
 
 const ALL_USERS = [
   { id: 'joe', label: 'Joe' },
