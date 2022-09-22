@@ -28,9 +28,9 @@ In this article we will mainly demonstrate _ReactComponentExtension_ functionali
 
 Here’s a [UserNodeView with content example](https://remirror.vercel.app/?path=/story/components-labs-card-with-content--user-card).([source code](https://github.com/remirror/remirror/blob/d58c4b4d55acd6e057c2fa4c4c0377abc1b8daa8/packages/storybook-react/stories/react-components/node-with-content.stories.tsx))
 
-# Create a new Node without content
+## Create a new Node without content
 
-## Let Remirror know about our node
+### Let Remirror know about our node
 
 First, Remirror needs to know the DOM representation of our node so it can render it (draw it in the document).
 
@@ -90,7 +90,7 @@ class UserCardExtension extends NodeExtension {
 
 As you may have noticed in the example above, we don’t allow for content at all (`content: ''`), We tell Remirror what to parse from the DOM and how to render to the DOM.
 
-## Create a NodeView for our new node using ReactComponent property
+### Create a NodeView for our new node using ReactComponent property
 
 Next we will add our custom react component to represent the user card node in the editor without content.
 
@@ -121,7 +121,7 @@ class UserCardExtension extends NodeExtension {
 
 Congratulations, we created a _UserNodeView_ without content.
 
-# Allow Node to have editable content
+## Allow Node to have editable content
 
 To the main objective, we will make the changes to our extension to allow for editable content in our user node. First, we change the _NodeSpec_ to tell Remirror to allow empty or block content.
 
@@ -187,3 +187,5 @@ We now have our _UserNodeView_ that has editable content. Building on this we ca
 If you're not using a react component for your custom node you can add content to it directly using createNodeViews like mentioned above checkout the [callout-extension code](https://github.com/remirror/remirror/blob/22dc4de1b20286d19b66624fb4dbb0afba4d9214/packages/remirror__extension-callout/src/callout-extension.ts).
 
 Happy Coding!
+
+_This post was originally published on [Medium](https://medium.com/p/e22e920cbeae)._
