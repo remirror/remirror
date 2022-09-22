@@ -1,5 +1,20 @@
 # @remirror/react-editors
 
+## 1.0.4
+
+> 2022-09-22
+
+### Patch Changes
+
+- Don't require `jsdom` in the browser environment.
+
+  This patch moves the `require('jsdom')` code into a standalone package [`get-dom-document`](https://www.npmjs.com/package/get-dom-document), which use the `browser` field in `package.json` to avoid bundling `jsdom` in the browser environment.
+
+- Updated dependencies
+  - remirror@2.0.4
+  - @remirror/extension-react-tables@2.0.4
+  - @remirror/react@2.0.4
+
 ## 1.0.3
 
 > 2022-09-21

@@ -1,5 +1,25 @@
 # @remirror/react-hooks
 
+## 2.0.4
+
+> 2022-09-22
+
+### Patch Changes
+
+- Don't require `jsdom` in the browser environment.
+
+  This patch moves the `require('jsdom')` code into a standalone package [`get-dom-document`](https://www.npmjs.com/package/get-dom-document), which use the `browser` field in `package.json` to avoid bundling `jsdom` in the browser environment.
+
+- Updated dependencies
+  - @remirror/core@2.0.3
+  - @remirror/extension-emoji@2.0.3
+  - @remirror/extension-events@2.1.3
+  - @remirror/extension-history@2.0.3
+  - @remirror/extension-mention@2.0.4
+  - @remirror/extension-mention-atom@2.0.4
+  - @remirror/extension-positioner@2.0.4
+  - @remirror/react-core@2.0.4
+
 ## 2.0.3
 
 > 2022-09-21

@@ -1,5 +1,39 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.4
+
+> 2022-09-22
+
+### Patch Changes
+
+- Don't require `jsdom` in the browser environment.
+
+  This patch moves the `require('jsdom')` code into a standalone package [`get-dom-document`](https://www.npmjs.com/package/get-dom-document), which use the `browser` field in `package.json` to avoid bundling `jsdom` in the browser environment.
+
+- Updated dependencies
+  - @remirror/core@2.0.3
+  - @remirror/extension-bidi@2.0.3
+  - @remirror/extension-blockquote@2.0.3
+  - @remirror/extension-bold@2.0.3
+  - @remirror/extension-code@2.0.3
+  - @remirror/extension-code-block@2.0.3
+  - @remirror/extension-drop-cursor@2.0.3
+  - @remirror/extension-embed@2.0.3
+  - @remirror/extension-gap-cursor@2.0.3
+  - @remirror/extension-hard-break@2.0.3
+  - @remirror/extension-heading@2.0.3
+  - @remirror/extension-horizontal-rule@2.0.3
+  - @remirror/extension-image@2.0.3
+  - @remirror/extension-italic@2.0.3
+  - @remirror/extension-link@2.0.4
+  - @remirror/extension-list@2.0.4
+  - @remirror/extension-search@2.0.3
+  - @remirror/extension-shortcuts@2.0.3
+  - @remirror/extension-strike@2.0.3
+  - @remirror/extension-trailing-node@2.0.3
+  - @remirror/extension-underline@2.0.3
+  - @remirror/preset-core@2.0.4
+
 ## 2.0.3
 
 > 2022-09-21

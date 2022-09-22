@@ -1,5 +1,19 @@
 # @remirror/extension-image
 
+## 2.0.3
+
+> 2022-09-22
+
+### Patch Changes
+
+- Don't require `jsdom` in the browser environment.
+
+  This patch moves the `require('jsdom')` code into a standalone package [`get-dom-document`](https://www.npmjs.com/package/get-dom-document), which use the `browser` field in `package.json` to avoid bundling `jsdom` in the browser environment.
+
+- Updated dependencies
+  - prosemirror-resizable-view@2.0.3
+  - @remirror/core@2.0.3
+
 ## 2.0.2
 
 > 2022-09-21

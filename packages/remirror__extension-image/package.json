@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-image",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Add images to your editor.",
   "keywords": [
     "remirror",
@@ -39,10 +39,10 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.2",
+    "@remirror/core": "^2.0.3",
     "@remirror/messages": "^2.0.1",
     "@remirror/theme": "^2.0.0",
-    "prosemirror-resizable-view": "^2.0.2"
+    "prosemirror-resizable-view": "^2.0.3"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.0"
