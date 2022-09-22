@@ -1,5 +1,6 @@
 import { cssifyObject } from 'css-in-js-utils';
 import type { StyleObject } from 'css-in-js-utils/es/cssifyObject';
+import { getDomDocument } from 'get-dom-document';
 import {
   __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   ErrorConstant,
@@ -1215,23 +1216,10 @@ export function shouldUseDomEnvironment(): boolean {
  * @internal
  */
 export function getDocument(): Document {
-  if (typeof document !== 'undefined') {
+  const document = getDomDocument();
+
+  if (document) {
     return document;
-  }
-
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { JSDOM } = require('jsdom');
-    return new JSDOM().window.document;
-  } catch {
-    // ignore
-  }
-
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require('min-document');
-  } catch {
-    // ignore
   }
 
   throw new Error(
