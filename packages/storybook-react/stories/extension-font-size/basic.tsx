@@ -4,54 +4,41 @@ import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { FontSizeExtension } from 'remirror/extensions';
 import {
+  CommandButtonGroup,
+  CommandMenuItem,
+  DecreaseFontSizeButton,
+  DropdownButton,
+  IncreaseFontSizeButton,
   Remirror,
   ThemeProvider,
+  Toolbar,
+  useActive,
   useCommands,
-  useHelpers,
   useRemirror,
-  useRemirrorContext,
 } from '@remirror/react';
 
-const extensions = () => [new FontSizeExtension()];
+const extensions = () => [new FontSizeExtension({ defaultSize: '16', unit: 'px' })];
+
+const FONT_SIZES = ['8', '10', '12', '14', '16', '18', '24', '30'];
 
 const FontSizeButtons = () => {
-  const commands = useCommands();
-  const helpers = useHelpers();
-  const { view } = useRemirrorContext({ autoUpdate: true });
-
+  const { setFontSize } = useCommands();
+  const { fontSize } = useActive();
   return (
-    <>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setFontSize(8)}
-      >
-        Small
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setFontSize(24)}
-      >
-        Large
-      </button>
-
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.decreaseFontSize()}
-      >
-        -
-      </button>
-
-      <button onMouseDown={(event) => event.preventDefault()}>
-        current fontSize: {helpers.getFontSizeForSelection(view.state.selection)}
-      </button>
-
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.increaseFontSize()}
-      >
-        +
-      </button>
-    </>
+    <DropdownButton aria-label='Set font size' icon='fontSize'>
+      {FONT_SIZES.map((size) => (
+        <CommandMenuItem
+          key={size}
+          commandName='setFontSize'
+          onSelect={() => setFontSize(size)}
+          enabled={setFontSize.enabled(size)}
+          active={fontSize({ size })}
+          label={size}
+          icon={null}
+          displayDescription={false}
+        />
+      ))}
+    </DropdownButton>
   );
 };
 
@@ -71,7 +58,13 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <FontSizeButtons />
+        <Toolbar>
+          <CommandButtonGroup>
+            <DecreaseFontSizeButton />
+            <FontSizeButtons />
+            <IncreaseFontSizeButton />
+          </CommandButtonGroup>
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );

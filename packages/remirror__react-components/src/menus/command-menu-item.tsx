@@ -26,7 +26,7 @@ export interface CommandMenuItemProps
   commandName: string;
   displayShortcut?: boolean;
   onSelect: () => void;
-  icon?: CoreIcon | JSX.Element;
+  icon?: CoreIcon | JSX.Element | null;
   attrs?: UseCommandOptionValuesParams['attrs'];
   label?: NonNullable<ReactNode>;
   description?: NonNullable<ReactNode>;
@@ -78,7 +78,7 @@ export const CommandMenuItem: FC<CommandMenuItemProps> = ({
       {...rest}
       onClick={handleClick}
     >
-      <MenuItemIcon icon={icon ?? fallbackIcon} />
+      {icon !== null && <MenuItemIcon icon={icon ?? fallbackIcon} />}
       <ListItemText primary={primary} secondary={secondary} />
       {displayShortcut && commandOptions.shortcut && (
         <Typography variant='body2' color='text.secondary' sx={{ ml: 2 }}>

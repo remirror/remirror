@@ -2,20 +2,8 @@ import { ToggleButton, ToggleButtonProps, Tooltip } from '@mui/material';
 import React, { FC, MouseEvent, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { CoreIcon, isString } from '@remirror/core';
 
-import { Icon } from '../icons';
 import { useCommandOptionValues, UseCommandOptionValuesParams } from '../use-command-option-values';
-
-interface ButtonIconProps {
-  icon: CoreIcon | JSX.Element | null;
-}
-
-const ButtonIcon: FC<ButtonIconProps> = ({ icon }) => {
-  if (isString(icon)) {
-    return <Icon name={icon} size='1rem' />;
-  }
-
-  return icon;
-};
+import { CommandButtonBadge, CommandButtonIcon } from './command-button-icon';
 
 export interface CommandButtonProps
   extends Omit<ToggleButtonProps, 'value' | 'aria-label'>,
@@ -102,7 +90,9 @@ export const CommandButton: FC<CommandButtonProps> = ({
         value={commandName}
         onChange={handleChange}
       >
-        <ButtonIcon icon={icon ?? fallbackIcon} />
+        <CommandButtonBadge icon={commandOptions.icon}>
+          <CommandButtonIcon icon={icon ?? fallbackIcon} />
+        </CommandButtonBadge>
       </ToggleButton>
     </Tooltip>
   );

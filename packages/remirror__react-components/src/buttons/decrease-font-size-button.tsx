@@ -1,27 +1,27 @@
 import React, { FC, useCallback } from 'react';
-import { NodeFormattingExtension } from 'remirror/extensions';
+import { FontSizeExtension } from 'remirror/extensions';
 import { useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
 
-export interface DecreaseIndentButtonProps
+export interface DecreaseFontSizeButtonProps
   extends Omit<CommandButtonProps, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'> {}
 
-export const DecreaseIndentButton: FC<DecreaseIndentButtonProps> = (props) => {
-  const { decreaseIndent } = useCommands<NodeFormattingExtension>();
+export const DecreaseFontSizeButton: FC<DecreaseFontSizeButtonProps> = (props) => {
+  const { decreaseFontSize } = useCommands<FontSizeExtension>();
 
   const handleSelect = useCallback(() => {
-    if (decreaseIndent.enabled()) {
-      decreaseIndent();
+    if (decreaseFontSize.enabled()) {
+      decreaseFontSize();
     }
-  }, [decreaseIndent]);
+  }, [decreaseFontSize]);
 
-  const enabled = decreaseIndent.enabled();
+  const enabled = decreaseFontSize.enabled();
 
   return (
     <CommandButton
       {...props}
-      commandName='decreaseIndent'
+      commandName='decreaseFontSize'
       enabled={enabled}
       onSelect={handleSelect}
     />

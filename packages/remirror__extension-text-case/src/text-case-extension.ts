@@ -116,7 +116,11 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
   }
 
   @command()
-  setTextCase(attrs: TextCaseAttributes, selection?: PrimitiveSelection): CommandFunction {
+  setTextCase(
+    casing: string | TextCaseAttributes,
+    selection?: PrimitiveSelection,
+  ): CommandFunction {
+    const attrs = typeof casing === 'string' ? { casing } : casing;
     return this.store.commands.applyMark.original(this.type, attrs, selection);
   }
 }
