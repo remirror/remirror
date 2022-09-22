@@ -3,45 +3,52 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { TextCaseExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+import {
+  CommandButtonGroup,
+  CommandMenuItem,
+  DropdownButton,
+  Remirror,
+  ThemeProvider,
+  Toolbar,
+  useActive,
+  useCommands,
+  useRemirror,
+} from '@remirror/react';
 
 const extensions = () => [new TextCaseExtension()];
 
+const TEXT_CASES: Array<[React.CSSProperties['textTransform'], string]> = [
+  ['none', 'None'],
+  ['uppercase', 'Upper'],
+  ['lowercase', 'Lower'],
+  ['capitalize', 'Capitalize'],
+];
+
 const TextCaseButton = () => {
-  const commands = useCommands();
+  const { setTextCase } = useCommands();
+  const { textCase } = useActive();
   return (
-    <>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setTextCase({ casing: 'none' })}
-      >
-        None
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setTextCase({ casing: 'uppercase' })}
-      >
-        Upper
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setTextCase({ casing: 'lowercase' })}
-      >
-        Lower
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setTextCase({ casing: 'capitalize' })}
-      >
-        Capitalize
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.setTextCase({ casing: 'small-caps' })}
-      >
-        Small caps
-      </button>
-    </>
+    <CommandButtonGroup>
+      <DropdownButton aria-label='Text case' icon='fontSize2'>
+        {TEXT_CASES.map(([casing, label]) => (
+          <CommandMenuItem
+            key={casing}
+            commandName='setTextCase'
+            onSelect={() => setTextCase(casing as string)}
+            enabled={setTextCase.enabled(casing as string)}
+            active={textCase({ casing })}
+            label={<span style={{ textTransform: casing }}>{label}</span>}
+          />
+        ))}
+        <CommandMenuItem
+          commandName='setTextCase'
+          onSelect={() => setTextCase('small-caps')}
+          enabled={setTextCase.enabled('small-caps')}
+          active={textCase({ casing: 'small-caps' })}
+          label={<span style={{ fontVariant: 'small-caps' }}>Small caps</span>}
+        />
+      </DropdownButton>
+    </CommandButtonGroup>
   );
 };
 
@@ -61,7 +68,9 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <TextCaseButton />
+        <Toolbar>
+          <TextCaseButton />
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );

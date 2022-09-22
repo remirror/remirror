@@ -3,7 +3,14 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { ColumnAttributes, ColumnsExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+import {
+  CommandButtonGroup,
+  Remirror,
+  ThemeProvider,
+  ToggleColumnsButton,
+  Toolbar,
+  useRemirror,
+} from '@remirror/react';
 
 const extensions = () => [new ColumnsExtension()];
 
@@ -17,26 +24,6 @@ const TWO_COLUMNS: ColumnAttributes = {
 };
 const THREE_COLUMNS: ColumnAttributes = {
   count: 3,
-};
-
-const ColumnsButton = () => {
-  const commands = useCommands();
-  return (
-    <>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.toggleColumns(TWO_COLUMNS)}
-      >
-        2 columns
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.toggleColumns(THREE_COLUMNS)}
-      >
-        3 columns
-      </button>
-    </>
-  );
 };
 
 const Basic = (): JSX.Element => {
@@ -60,7 +47,12 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <ColumnsButton />
+        <Toolbar>
+          <CommandButtonGroup>
+            <ToggleColumnsButton attrs={TWO_COLUMNS} />
+            <ToggleColumnsButton attrs={THREE_COLUMNS} />
+          </CommandButtonGroup>
+        </Toolbar>
       </Remirror>
     </ThemeProvider>
   );
