@@ -1,5 +1,26 @@
 # @remirror/react-editors
 
+## 1.0.5
+
+> 2022-09-23
+
+### Patch Changes
+
+- Allow for simplified argument for `setTextCase` command
+- Update dependencies.
+- Enable display of `sup` and `sub` icon decorations on `CommandButton` via MUI badge
+
+  Add button components for toggling columns, and increase/decreasing font size
+
+- Fix the default import for `turndown`.
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - remirror@2.0.5
+  - @remirror/extension-react-tables@2.0.5
+  - @remirror/react@2.0.5
+
 ## 1.0.4
 
 > 2022-09-22

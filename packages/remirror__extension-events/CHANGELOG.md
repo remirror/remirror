@@ -1,5 +1,15 @@
 # @remirror/extension-events
 
+## 2.1.4
+
+> 2022-09-23
+
+### Patch Changes
+
+- Update dependencies.
+- Updated dependencies
+  - @remirror/core@2.0.4
+
 ## 2.1.3
 
 > 2022-09-22

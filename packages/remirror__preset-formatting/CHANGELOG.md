@@ -1,5 +1,31 @@
 # @remirror/preset-formatting
 
+## 2.0.4
+
+> 2022-09-23
+
+### Patch Changes
+
+- Allow for simplified argument for `setTextCase` command
+- Update dependencies.
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-text-case@2.0.4
+  - @remirror/core@2.0.4
+  - @remirror/extension-bold@2.0.4
+  - @remirror/extension-columns@2.0.4
+  - @remirror/extension-font-size@2.0.4
+  - @remirror/extension-heading@2.0.4
+  - @remirror/extension-italic@2.0.4
+  - @remirror/extension-node-formatting@2.0.4
+  - @remirror/extension-strike@2.0.4
+  - @remirror/extension-sub@2.0.4
+  - @remirror/extension-sup@2.0.4
+  - @remirror/extension-text-color@2.0.4
+  - @remirror/extension-text-highlight@2.0.4
+  - @remirror/extension-underline@2.0.4
+  - @remirror/extension-whitespace@2.0.4
+
 ## 2.0.3
 
 > 2022-09-22
