@@ -152,12 +152,12 @@ const ALL_TAGS = [
 ```
 
 ```ts
-  new MentionAtomExtension({
-    matchers: [
-      { name: 'at', char: '@', appendText: ' ' },
-      { name: 'tag', char: '#', appendText: ' ' },
-    ],
-  }),
+new MentionAtomExtension({
+  matchers: [
+    { name: 'at', char: '@', appendText: ' ' },
+    { name: 'tag', char: '#', appendText: ' ' },
+  ],
+});
 ```
 
 Update `useEffect` in `MentionSuggestor` component:
