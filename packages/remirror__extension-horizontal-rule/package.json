@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-horizontal-rule",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Allow your users to divide their content with horizontal lines. Nice!",
   "keywords": [
     "remirror",
@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.3",
+    "@remirror/core": "^2.0.4",
     "@remirror/messages": "^2.0.1"
   },
   "devDependencies": {

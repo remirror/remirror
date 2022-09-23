@@ -1,5 +1,26 @@
 # @remirror/react-components
 
+## 2.0.5
+
+> 2022-09-23
+
+### Patch Changes
+
+- Update dependencies.
+- Enable display of `sup` and `sub` icon decorations on `CommandButton` via MUI badge
+
+  Add button components for toggling columns, and increase/decreasing font size
+
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - remirror@2.0.5
+  - @remirror/core@2.0.4
+  - @remirror/extension-positioner@2.0.5
+  - @remirror/extension-text-color@2.0.4
+  - @remirror/react-core@2.0.5
+  - @remirror/react-hooks@2.0.5
+
 ## 2.0.4
 
 > 2022-09-22

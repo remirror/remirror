@@ -1,5 +1,16 @@
 # @remirror/extension-text-case
 
+## 2.0.4
+
+> 2022-09-23
+
+### Patch Changes
+
+- Allow for simplified argument for `setTextCase` command
+- Update dependencies.
+- Updated dependencies
+  - @remirror/core@2.0.4
+
 ## 2.0.3
 
 > 2022-09-22

@@ -1,5 +1,17 @@
 # @remirror/extension-file
 
+## 1.0.5
+
+> 2022-09-23
+
+### Patch Changes
+
+- Update dependencies.
+- Updated dependencies
+  - @remirror/core@2.0.4
+  - @remirror/extension-react-component@2.0.4
+  - @remirror/react-core@2.0.5
+
 ## 1.0.4
 
 > 2022-09-22

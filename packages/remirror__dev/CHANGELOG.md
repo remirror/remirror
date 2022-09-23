@@ -1,5 +1,15 @@
 # @remirror/dev
 
+## 2.0.5
+
+> 2022-09-23
+
+### Patch Changes
+
+- Update dependencies.
+- Updated dependencies
+  - @remirror/react-core@2.0.5
+
 ## 2.0.4
 
 > 2022-09-22

@@ -1,5 +1,18 @@
 # jest-remirror
 
+## 2.0.5
+
+> 2022-09-23
+
+### Patch Changes
+
+- Update dependencies.
+- Updated dependencies
+  - jest-prosemirror@2.0.4
+  - @remirror/core@2.0.4
+  - @remirror/dom@2.0.5
+  - @remirror/preset-core@2.0.5
+
 ## 2.0.4
 
 > 2022-09-22

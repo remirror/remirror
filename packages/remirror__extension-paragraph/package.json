@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-paragraph",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Group your words into paragraphs and render each statement a harmonious symphony.",
   "keywords": [
     "remirror",
@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.3",
+    "@remirror/core": "^2.0.4",
     "@remirror/messages": "^2.0.1"
   },
   "devDependencies": {
