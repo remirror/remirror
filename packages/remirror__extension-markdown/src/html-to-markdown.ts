@@ -4,8 +4,10 @@
  * Use `turndown` to provide a github flavoured markdown converter and the
  * default common mark converter.
  */
-import TurndownService from 'turndown';
-import { ErrorConstant, invariant, isElementDomNode } from '@remirror/core';
+import _TurndownService from 'turndown';
+import { defaultImport, ErrorConstant, invariant, isElementDomNode } from '@remirror/core';
+
+const TurndownService = defaultImport(_TurndownService);
 
 /**
  * Converts the provide HTML to markdown.
