@@ -37,7 +37,7 @@
     "@remirror/messages": "^2.0.1",
     "@types/min-document": "^2.19.0",
     "css-in-js-utils": "^3.1.0",
-    "get-dom-document": "^0.1.0",
+    "get-dom-document": "^0.1.1",
     "min-document": "^2.19.0",
     "parenthesis": "^3.1.8"
   },

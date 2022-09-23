@@ -144,7 +144,7 @@
     "prosemirror-tables": "^1.2.5",
     "prosemirror-trailing-node": "^2.0.0",
     "prosemirror-transform": "^1.7.0",
-    "prosemirror-view": "^1.28.0"
+    "prosemirror-view": "^1.28.1"
   },
   "publishConfig": {
     "access": "public"
