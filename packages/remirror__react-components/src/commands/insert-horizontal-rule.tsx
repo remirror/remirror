@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithoutRef, ElementType, ReactElement, useCallback} from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
 import { HorizontalRuleExtension } from 'remirror/extensions';
 import { useCommands, useCurrentSelection } from '@remirror/react-core';
 

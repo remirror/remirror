@@ -14,9 +14,6 @@
   ],
   "sideEffects": false,
   "type": "module",
-  "scripts": {
-    "prebuild": "tsx scripts/generate-command-components.ts"
-  },
   "exports": {
     ".": {
       "import": "./dist/remirror-react-components.js",
@@ -39,6 +36,9 @@
     "dist-types",
     "style"
   ],
+  "scripts": {
+    "prebuild": "tsx scripts/generate-command-components.ts"
+  },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@emotion/react": "^11.9.0",

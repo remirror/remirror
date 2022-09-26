@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithoutRef, ElementType, ReactElement, useCallback} from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
 import { WhitespaceExtension } from 'remirror/extensions';
 import { useCommands, useHelpers } from '@remirror/react-core';
 

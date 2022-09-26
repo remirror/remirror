@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithoutRef, ElementType, ReactElement, useCallback} from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
 import { HistoryExtension } from 'remirror/extensions';
 import { useCommands, useHelpers } from '@remirror/react-core';
 
@@ -8,10 +8,7 @@ export type UndoProps<T extends ElementType> = {
   as?: T;
 } & Omit<ComponentPropsWithoutRef<T>, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'>;
 
-export const Undo = <T extends ElementType>({
-  as,
-  ...rest
-}: UndoProps<T>): ReactElement => {
+export const Undo = <T extends ElementType>({ as, ...rest }: UndoProps<T>): ReactElement => {
   const Component = as || CommandButton;
 
   const { undo } = useCommands<HistoryExtension>();

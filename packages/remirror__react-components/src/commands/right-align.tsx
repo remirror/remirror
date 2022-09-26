@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithoutRef, ElementType, ReactElement, useCallback} from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
 import { NodeFormattingExtension } from 'remirror/extensions';
 import { useCommands, useCurrentSelection } from '@remirror/react-core';
 
@@ -9,8 +9,8 @@ export type RightAlignProps<T extends ElementType> = {
 } & Omit<ComponentPropsWithoutRef<T>, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'>;
 
 export const RightAlign = <T extends ElementType>({
- as,
- ...rest
+  as,
+  ...rest
 }: RightAlignProps<T>): ReactElement => {
   const Component = as || CommandButton;
 

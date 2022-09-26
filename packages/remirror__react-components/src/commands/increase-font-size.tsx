@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithoutRef, ElementType, ReactElement, useCallback} from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
 import { FontSizeExtension } from 'remirror/extensions';
 import { useCommands } from '@remirror/react-core';
 
@@ -25,11 +25,6 @@ export const IncreaseFontSize = <T extends ElementType>({
   const enabled = increaseFontSize.enabled();
 
   return (
-    <Component
-      {...rest}
-      commandName='increaseFontSize'
-      enabled={enabled}
-      onSelect={handleSelect}
-    />
+    <Component {...rest} commandName='increaseFontSize' enabled={enabled} onSelect={handleSelect} />
   );
 };

@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithoutRef, ElementType, ReactElement, useCallback} from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
 import { NodeFormattingExtension } from 'remirror/extensions';
 import { useCommands } from '@remirror/react-core';
 
@@ -25,11 +25,6 @@ export const DecreaseIndent = <T extends ElementType>({
   const enabled = decreaseIndent.enabled();
 
   return (
-    <Component
-      {...rest}
-      commandName='decreaseIndent'
-      enabled={enabled}
-      onSelect={handleSelect}
-    />
+    <Component {...rest} commandName='decreaseIndent' enabled={enabled} onSelect={handleSelect} />
   );
 };

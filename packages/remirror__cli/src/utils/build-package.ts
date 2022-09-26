@@ -33,7 +33,9 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
   const buildScript = (pkg.packageJson as any)?.scripts?.build;
 
   if (preBuildScript) {
-    logger.info(`${colors.blue(pkg.packageJson.name)} building with its custom pre build script...`);
+    logger.info(
+      `${colors.blue(pkg.packageJson.name)} building with its custom pre build script...`,
+    );
     promises.push(runCustomScript(pkg, 'prebuild'));
   }
 

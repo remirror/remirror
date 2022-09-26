@@ -9,7 +9,10 @@ import { DecreaseFontSize, DecreaseFontSizeProps } from '../commands/decrease-fo
 import { DecreaseIndent, DecreaseIndentProps } from '../commands/decrease-indent';
 import { IncreaseFontSize, IncreaseFontSizeProps } from '../commands/increase-font-size';
 import { IncreaseIndent, IncreaseIndentProps } from '../commands/increase-indent';
-import { InsertHorizontalRule, InsertHorizontalRuleProps } from '../commands/insert-horizontal-rule';
+import {
+  InsertHorizontalRule,
+  InsertHorizontalRuleProps,
+} from '../commands/insert-horizontal-rule';
 import { JustifyAlign, JustifyAlignProps } from '../commands/justify-align';
 import { LeftAlign, LeftAlignProps } from '../commands/left-align';
 import { Paste, PasteProps } from '../commands/paste';
@@ -57,7 +60,10 @@ export const CutMenuItem: FC<CutMenuItemProps> = (props) => {
   return <Cut as={CommandMenuItem} {...props} />;
 };
 
-export type DecreaseFontSizeMenuItemProps = Omit<DecreaseFontSizeProps<typeof CommandMenuItem>, 'as'>;
+export type DecreaseFontSizeMenuItemProps = Omit<
+  DecreaseFontSizeProps<typeof CommandMenuItem>,
+  'as'
+>;
 
 export const DecreaseFontSizeMenuItem: FC<DecreaseFontSizeMenuItemProps> = (props) => {
   return <DecreaseFontSize as={CommandMenuItem} {...props} />;
@@ -69,7 +75,10 @@ export const DecreaseIndentMenuItem: FC<DecreaseIndentMenuItemProps> = (props) =
   return <DecreaseIndent as={CommandMenuItem} {...props} />;
 };
 
-export type IncreaseFontSizeMenuItemProps = Omit<IncreaseFontSizeProps<typeof CommandMenuItem>, 'as'>;
+export type IncreaseFontSizeMenuItemProps = Omit<
+  IncreaseFontSizeProps<typeof CommandMenuItem>,
+  'as'
+>;
 
 export const IncreaseFontSizeMenuItem: FC<IncreaseFontSizeMenuItemProps> = (props) => {
   return <IncreaseFontSize as={CommandMenuItem} {...props} />;
@@ -81,7 +90,10 @@ export const IncreaseIndentMenuItem: FC<IncreaseIndentMenuItemProps> = (props) =
   return <IncreaseIndent as={CommandMenuItem} {...props} />;
 };
 
-export type InsertHorizontalRuleMenuItemProps = Omit<InsertHorizontalRuleProps<typeof CommandMenuItem>, 'as'>;
+export type InsertHorizontalRuleMenuItemProps = Omit<
+  InsertHorizontalRuleProps<typeof CommandMenuItem>,
+  'as'
+>;
 
 export const InsertHorizontalRuleMenuItem: FC<InsertHorizontalRuleMenuItemProps> = (props) => {
   return <InsertHorizontalRule as={CommandMenuItem} {...props} />;
@@ -117,7 +129,10 @@ export const RightAlignMenuItem: FC<RightAlignMenuItemProps> = (props) => {
   return <RightAlign as={CommandMenuItem} {...props} />;
 };
 
-export type ToggleBlockquoteMenuItemProps = Omit<ToggleBlockquoteProps<typeof CommandMenuItem>, 'as'>;
+export type ToggleBlockquoteMenuItemProps = Omit<
+  ToggleBlockquoteProps<typeof CommandMenuItem>,
+  'as'
+>;
 
 export const ToggleBlockquoteMenuItem: FC<ToggleBlockquoteMenuItemProps> = (props) => {
   return <ToggleBlockquote as={CommandMenuItem} {...props} />;
@@ -129,7 +144,10 @@ export const ToggleBoldMenuItem: FC<ToggleBoldMenuItemProps> = (props) => {
   return <ToggleBold as={CommandMenuItem} {...props} />;
 };
 
-export type ToggleBulletListMenuItemProps = Omit<ToggleBulletListProps<typeof CommandMenuItem>, 'as'>;
+export type ToggleBulletListMenuItemProps = Omit<
+  ToggleBulletListProps<typeof CommandMenuItem>,
+  'as'
+>;
 
 export const ToggleBulletListMenuItem: FC<ToggleBulletListMenuItemProps> = (props) => {
   return <ToggleBulletList as={CommandMenuItem} {...props} />;
@@ -171,7 +189,10 @@ export const ToggleItalicMenuItem: FC<ToggleItalicMenuItemProps> = (props) => {
   return <ToggleItalic as={CommandMenuItem} {...props} />;
 };
 
-export type ToggleOrderedListMenuItemProps = Omit<ToggleOrderedListProps<typeof CommandMenuItem>, 'as'>;
+export type ToggleOrderedListMenuItemProps = Omit<
+  ToggleOrderedListProps<typeof CommandMenuItem>,
+  'as'
+>;
 
 export const ToggleOrderedListMenuItem: FC<ToggleOrderedListMenuItemProps> = (props) => {
   return <ToggleOrderedList as={CommandMenuItem} {...props} />;
@@ -189,7 +210,10 @@ export const ToggleSubscriptMenuItem: FC<ToggleSubscriptMenuItemProps> = (props)
   return <ToggleSubscript as={CommandMenuItem} {...props} />;
 };
 
-export type ToggleSuperscriptMenuItemProps = Omit<ToggleSuperscriptProps<typeof CommandMenuItem>, 'as'>;
+export type ToggleSuperscriptMenuItemProps = Omit<
+  ToggleSuperscriptProps<typeof CommandMenuItem>,
+  'as'
+>;
 
 export const ToggleSuperscriptMenuItem: FC<ToggleSuperscriptMenuItemProps> = (props) => {
   return <ToggleSuperscript as={CommandMenuItem} {...props} />;
@@ -207,7 +231,10 @@ export const ToggleUnderlineMenuItem: FC<ToggleUnderlineMenuItemProps> = (props)
   return <ToggleUnderline as={CommandMenuItem} {...props} />;
 };
 
-export type ToggleWhitespaceMenuItemProps = Omit<ToggleWhitespaceProps<typeof CommandMenuItem>, 'as'>;
+export type ToggleWhitespaceMenuItemProps = Omit<
+  ToggleWhitespaceProps<typeof CommandMenuItem>,
+  'as'
+>;
 
 export const ToggleWhitespaceMenuItem: FC<ToggleWhitespaceMenuItemProps> = (props) => {
   return <ToggleWhitespace as={CommandMenuItem} {...props} />;

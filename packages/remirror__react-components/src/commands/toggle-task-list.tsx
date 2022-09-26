@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithoutRef, ElementType, ReactElement, useCallback} from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
 import { TaskListExtension } from 'remirror/extensions';
 import { useActive, useCommands } from '@remirror/react-core';
 

@@ -1,4 +1,4 @@
-import React, {ComponentPropsWithoutRef, ElementType, ReactElement, useCallback} from 'react';
+import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
 import { CommandsExtension } from '@remirror/core';
 import { useCommands, useCurrentSelection } from '@remirror/react-core';
 
@@ -8,10 +8,7 @@ export type CopyProps<T extends ElementType> = {
   as?: T;
 } & Omit<ComponentPropsWithoutRef<T>, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'>;
 
-export const Copy = <T extends ElementType>({
-  as,
-  ...rest
-}: CopyProps<T>): ReactElement => {
+export const Copy = <T extends ElementType>({ as, ...rest }: CopyProps<T>): ReactElement => {
   const Component = as || CommandButton;
 
   const { copy } = useCommands<CommandsExtension>();

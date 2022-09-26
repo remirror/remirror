@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import globby from 'globby';
-import path from "path";
+import path from 'path';
 import { pascalCase } from '@remirror/core';
 
 async function getCommandFiles(glob: string): Promise<string[]> {
@@ -9,7 +9,7 @@ async function getCommandFiles(glob: string): Promise<string[]> {
   return files;
 }
 
-function generateButtonComponent (componentName: string): string {
+function generateButtonComponent(componentName: string): string {
   return `export type ${componentName}ButtonProps = Omit<${componentName}Props<typeof CommandButton>, 'as'>;
 
 export const ${componentName}Button: FC<${componentName}ButtonProps> = (props) => {
@@ -18,7 +18,7 @@ export const ${componentName}Button: FC<${componentName}ButtonProps> = (props) =
 `;
 }
 
-function generateMenuItemComponent (componentName: string): string {
+function generateMenuItemComponent(componentName: string): string {
   return `export type ${componentName}MenuItemProps = Omit<${componentName}Props<typeof CommandMenuItem>, 'as'>;
 
 export const ${componentName}MenuItem: FC<${componentName}MenuItemProps> = (props) => {
@@ -33,11 +33,13 @@ async function run() {
   const buttonComponents: string[] = [];
   const menuItemComponents: string[] = [];
 
-  for(const file of files) {
+  for (const file of files) {
     const fileName = path.parse(file).name;
     const componentName = pascalCase(fileName);
 
-    imports.push(`import { ${componentName}, ${componentName}Props } from '../commands/${fileName}';`);
+    imports.push(
+      `import { ${componentName}, ${componentName}Props } from '../commands/${fileName}';`,
+    );
     buttonComponents.push(generateButtonComponent(componentName));
     menuItemComponents.push(generateMenuItemComponent(componentName));
   }
@@ -50,22 +52,28 @@ async function run() {
   const menusPath = path.resolve(process.cwd(), './src/menus/index.tsx');
 
   await Promise.all([
-    fs.writeFile(buttonsPath, [
-      "import React, { FC } from 'react';",
-      '',
-      "import { CommandButton } from '../';",
-      commandImports,
-      '',
-      buttonFileContent
-    ].join('\n')),
-    fs.writeFile(menusPath, [
-      "import React, { FC } from 'react';",
-      '',
-      "import { CommandMenuItem } from '../';",
-      commandImports,
-      '',
-      menuItemsFileContent
-    ].join('\n')),
+    fs.writeFile(
+      buttonsPath,
+      [
+        "import React, { FC } from 'react';",
+        '',
+        "import { CommandButton } from '../';",
+        commandImports,
+        '',
+        buttonFileContent,
+      ].join('\n'),
+    ),
+    fs.writeFile(
+      menusPath,
+      [
+        "import React, { FC } from 'react';",
+        '',
+        "import { CommandMenuItem } from '../';",
+        commandImports,
+        '',
+        menuItemsFileContent,
+      ].join('\n'),
+    ),
   ]);
 }
 
