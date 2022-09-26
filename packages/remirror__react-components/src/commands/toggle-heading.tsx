@@ -1,36 +1,36 @@
 import React, { ComponentPropsWithoutRef, ElementType, ReactElement, useCallback } from 'react';
-import { CalloutExtension, CalloutExtensionAttributes } from 'remirror/extensions';
+import { HeadingExtension, HeadingExtensionAttributes } from 'remirror/extensions';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton } from '../base-components';
 
-export type ToggleCalloutProps<T extends ElementType> = {
-  attrs?: Partial<CalloutExtensionAttributes>;
+export type ToggleHeadingProps<T extends ElementType> = {
+  attrs?: Partial<HeadingExtensionAttributes>;
   as?: T;
 } & Omit<ComponentPropsWithoutRef<T>, 'commandName' | 'active' | 'enabled' | 'attrs' | 'onSelect'>;
 
-export const ToggleCallout = <T extends ElementType>({
+export const ToggleHeading = <T extends ElementType>({
   as,
   attrs = {},
   ...rest
-}: ToggleCalloutProps<T>): ReactElement => {
+}: ToggleHeadingProps<T>): ReactElement => {
   const Component = as || CommandButton;
 
-  const { toggleCallout } = useCommands<CalloutExtension>();
+  const { toggleHeading } = useCommands<HeadingExtension>();
 
   const handleSelect = useCallback(() => {
-    if (toggleCallout.enabled(attrs)) {
-      toggleCallout(attrs);
+    if (toggleHeading.enabled(attrs)) {
+      toggleHeading(attrs);
     }
-  }, [toggleCallout, attrs]);
+  }, [toggleHeading, attrs]);
 
-  const active = useActive<CalloutExtension>().callout(attrs);
-  const enabled = toggleCallout.enabled(attrs);
+  const active = useActive<HeadingExtension>().heading(attrs);
+  const enabled = toggleHeading.enabled(attrs);
 
   return (
     <Component
       {...rest}
-      commandName='toggleCallout'
+      commandName='toggleHeading'
       active={active}
       enabled={enabled}
       attrs={attrs}

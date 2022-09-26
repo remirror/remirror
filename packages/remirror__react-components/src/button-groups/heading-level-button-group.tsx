@@ -1,7 +1,8 @@
 import React, { FC, ReactNode } from 'react';
 
-import { DropdownButton, ToggleHeadingButton } from '../buttons';
-import { ToggleHeadingMenuItem } from '../menus';
+import { DropdownButton } from '../base-components';
+import { ToggleHeadingButton } from '../buttons';
+import { ToggleHeadingMenuItem } from '../menu-items';
 import { CommandButtonGroup } from './command-button-group';
 
 export interface HeadingLevelButtonGroupProps {

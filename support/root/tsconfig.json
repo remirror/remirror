@@ -489,6 +489,9 @@
       "path": "packages/remirror__react-components/__tests__"
     },
     {
+      "path": "packages/remirror__react-components/scripts"
+    },
+    {
       "path": "packages/remirror__react-components/src"
     },
     {
