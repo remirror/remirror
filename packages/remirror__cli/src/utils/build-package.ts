@@ -64,6 +64,16 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
   }
 
   await Promise.all(promises);
+
+  const postBuildScript = (pkg.packageJson as any)?.scripts?.postbuild;
+
+  if (postBuildScript) {
+    logger.info(
+      `${colors.blue(pkg.packageJson.name)} building with its custom post build script...`,
+    );
+    await runCustomScript(pkg, 'postbuild');
+  }
+
   logger.info(`${colors.blue(pkg.packageJson.name)} done`);
 }
 
