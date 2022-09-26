@@ -27,17 +27,18 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
     await writeMainPackageJson(pkg, entryPoints);
   }
 
-  const promises: Array<Promise<unknown>> = [];
-
   const preBuildScript = (pkg.packageJson as any)?.scripts?.prebuild;
-  const buildScript = (pkg.packageJson as any)?.scripts?.build;
 
   if (preBuildScript) {
     logger.info(
       `${colors.blue(pkg.packageJson.name)} building with its custom pre build script...`,
     );
-    promises.push(runCustomScript(pkg, 'prebuild'));
+    await runCustomScript(pkg, 'prebuild');
   }
+
+  const promises: Array<Promise<unknown>> = [];
+
+  const buildScript = (pkg.packageJson as any)?.scripts?.build;
 
   if (buildScript) {
     logger.info(`${colors.blue(pkg.packageJson.name)} building with its custom build script...`);

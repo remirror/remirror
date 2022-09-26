@@ -64,6 +64,7 @@
     "react-color": "^2.19.3"
   },
   "devDependencies": {
+    "@remirror/core-helpers": "^2.0.0",
     "@remirror/pm": "^2.0.0",
     "@remirror/react": "^2.0.8",
     "@types/react": "^18.0.6",
