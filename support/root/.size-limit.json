@@ -114,7 +114,6 @@
     "ignore": [
       "@remirror/pm",
       "@types/node",
-      "jsdom",
       "@remirror/core-constants",
       "@remirror/core-helpers",
       "@remirror/core-types",

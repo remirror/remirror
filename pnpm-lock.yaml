@@ -994,6 +994,7 @@ importers:
   packages/remirror__extension-emoji:
     specifiers:
       '@babel/runtime': ^7.13.10
+      '@ocavue/svgmoji-cjs': ^0.1.0
       '@remirror/core': ^2.0.4
       '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
@@ -1005,6 +1006,7 @@ importers:
       svgmoji: ^3.2.0
     dependencies:
       '@babel/runtime': 7.18.9
+      '@ocavue/svgmoji-cjs': 0.1.0
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
@@ -7251,6 +7253,12 @@ packages:
       rimraf: 3.0.2
     dev: true
 
+  /@ocavue/svgmoji-cjs/0.1.0:
+    resolution: {integrity: sha512-FYCRf7/d80Jd7y3KflOM5gxszqvAxm35AAJ9FWF+D1b6th9VvZI4CVpAGqlVjZme2NhzzJbBLgkxcfeBBzKvVA==}
+    dependencies:
+      svgmoji: 3.2.0
+    dev: false
+
   /@octokit/app/4.3.0:
     resolution: {integrity: sha512-TAi6Ju1u1rf7+V1vd2pg70SFwmHmwt5WAaAJ8BPaIHALxKbLpyyKUaVP1DBBmNmgF+fw0dwBR/edrClDMpdDfQ==}
     deprecated: '''@octokit/app'' will be repurposed in future. Use ''@octokit/auth-app'' instead'
@@ -12465,7 +12473,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.5
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -23477,17 +23485,6 @@ packages:
       bluebird:
         optional: true
 
-  /promise-inflight/1.0.1_bluebird@3.7.2:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
-    dependencies:
-      bluebird: 3.7.2
-    dev: true
-
   /promise-retry/1.1.1:
     resolution: {integrity: sha1-ZznpaOMFHaIM5kl/srUPaRHfPW0=}
     engines: {node: '>=0.12'}
@@ -24850,7 +24847,7 @@ packages:
     dev: false
 
   /remove-accents/0.4.2:
-    resolution: {integrity: sha1-CkPTqq4egNuRngeuJUsoXZ4ce7U=}
+    resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
 
   /remove-trailing-separator/1.1.0:
     resolution: {integrity: sha512-/hS+Y0u3aOfIETiaiirUFwDBDzmXPvO+jAfKTitUngIPzdKc6Z0LoFjM/CK5PL4C+eKwHohlHAb6H0VFfmmUsw==}
