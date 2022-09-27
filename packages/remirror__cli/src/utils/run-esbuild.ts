@@ -13,7 +13,7 @@ import { removeFileExt } from './remove-file-ext';
 // https://github.com/streamich/react-use/issues/2353
 //
 // We currently use https://github.com/ocavue/svgmoji-cjs as a workaround for https://github.com/svgmoji/svgmoji/issues/24
-const dependenciesToBundle = /(emojibase|react-use)/;
+const dependenciesToBundle = /(react-use)/;
 
 export async function runEsbuild(
   pkg: Package,
