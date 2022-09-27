@@ -10,9 +10,10 @@ import { removeFileExt } from './remove-file-ext';
 // with ESM import syntax.
 // As a workaround, we need to bundle the code from them into our own packages,
 // They can be removed from this list once their maintainers fix these issues:
-// https://github.com/svgmoji/svgmoji/issues/24
 // https://github.com/streamich/react-use/issues/2353
-const dependenciesToBundle = /(emojibase|svgmoji|react-use)/;
+//
+// We currently use https://github.com/ocavue/svgmoji-cjs as a workaround for https://github.com/svgmoji/svgmoji/issues/24
+const dependenciesToBundle = /(react-use)/;
 
 export async function runEsbuild(
   pkg: Package,

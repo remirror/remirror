@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
+    "@ocavue/svgmoji-cjs": "^0.1.0",
     "@remirror/core": "^2.0.4",
     "@remirror/messages": "^2.0.1",
     "@remirror/theme": "^2.0.0",
