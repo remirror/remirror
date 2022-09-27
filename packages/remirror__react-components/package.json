@@ -37,7 +37,6 @@
     "style"
   ],
   "scripts": {
-    "postbuild": "pnpm -w run:prettier-custom -- --write \"packages/remirror__react-components/src/**/index.tsx\"",
     "prebuild": "tsx scripts/generate-command-components.ts"
   },
   "dependencies": {

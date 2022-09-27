@@ -37,3 +37,6 @@ docs/api/
 docs/examples/
 website/extension-examples/
 *.api.md
+
+*.gen.ts
+*.gen.tsx

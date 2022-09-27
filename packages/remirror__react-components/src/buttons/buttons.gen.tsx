@@ -13,10 +13,7 @@ import { DecreaseFontSize, DecreaseFontSizeProps } from '../commands/decrease-fo
 import { DecreaseIndent, DecreaseIndentProps } from '../commands/decrease-indent';
 import { IncreaseFontSize, IncreaseFontSizeProps } from '../commands/increase-font-size';
 import { IncreaseIndent, IncreaseIndentProps } from '../commands/increase-indent';
-import {
-  InsertHorizontalRule,
-  InsertHorizontalRuleProps,
-} from '../commands/insert-horizontal-rule';
+import { InsertHorizontalRule, InsertHorizontalRuleProps } from '../commands/insert-horizontal-rule';
 import { JustifyAlign, JustifyAlignProps } from '../commands/justify-align';
 import { LeftAlign, LeftAlignProps } from '../commands/left-align';
 import { Paste, PasteProps } from '../commands/paste';
@@ -88,10 +85,7 @@ export const IncreaseIndentButton: FC<IncreaseIndentButtonProps> = (props) => {
   return <IncreaseIndent as={CommandButton} {...props} />;
 };
 
-export type InsertHorizontalRuleButtonProps = Omit<
-  InsertHorizontalRuleProps<typeof CommandButton>,
-  'as'
->;
+export type InsertHorizontalRuleButtonProps = Omit<InsertHorizontalRuleProps<typeof CommandButton>, 'as'>;
 
 export const InsertHorizontalRuleButton: FC<InsertHorizontalRuleButtonProps> = (props) => {
   return <InsertHorizontalRule as={CommandButton} {...props} />;

@@ -61,8 +61,8 @@ async function run() {
     menuItemComponents.push(generateMenuItemComponent(componentName));
   }
 
-  const buttonsPath = path.resolve(process.cwd(), './src/buttons/index.tsx');
-  const menusPath = path.resolve(process.cwd(), './src/menu-items/index.tsx');
+  const buttonsPath = path.resolve(process.cwd(), './src/buttons/buttons.gen.tsx');
+  const menusPath = path.resolve(process.cwd(), './src/menu-items/menu-items.gen.tsx');
 
   await Promise.all([
     fs.writeFile(buttonsPath, generateIndexFile(imports, buttonComponents, 'CommandButton')),
