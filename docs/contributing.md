@@ -63,7 +63,7 @@ pnpm run build
 
 If you only want to build some specific packages, run the following command:
 
-````bash
+```bash
 pnpm remirror-cli build @remirror/extension-bold @remirror/extension-italic
 ```
 
@@ -71,7 +71,7 @@ pnpm remirror-cli build @remirror/extension-bold @remirror/extension-italic
 
 ```bash
 pnpm run storybook
-````
+```
 
 When run this builds all packages and then watches for changes to reload as necessary. If you are running storybook, then it will run `pnpm run watch` automatically, so you don't need to do it yourself.
 
