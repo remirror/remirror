@@ -1,5 +1,17 @@
 # @remirror/react
 
+## 2.0.6
+
+> 2022-09-27
+
+### Patch Changes
+
+- Fixes the CJS build of `@remirror/extension-emoji`.
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.6
+  - @remirror/react-components@2.0.6
+  - @remirror/react-hooks@2.0.6
+
 ## 2.0.5
 
 > 2022-09-23
