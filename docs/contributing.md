@@ -61,11 +61,9 @@ If you only want to build all packages once, run the following command:
 pnpm run build
 ```
 
-If you only want to build a specific package, run the following command:
+If you only want to build some specific packages, run the following command:
 
 ````bash
-pnpm remirror-cli build @remirror/extension-bold
-# Or
 pnpm remirror-cli build @remirror/extension-bold @remirror/extension-italic
 ```
 
