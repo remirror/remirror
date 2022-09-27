@@ -55,11 +55,25 @@ Under the hood, for most packages, this command uses `esbuild` to compile TypeSc
 
 Some packages have their own build scripts, e.g. `@remirror/theme` uses `babel` and `linaria` to produce CSS files. `pnpm run watch` will execute the build scripts in these packages too.
 
+If you only want to build all packages once, run the following command:
+
+```bash
+pnpm run build
+```
+
+If you only want to build a specific package, run the following command:
+
+````bash
+pnpm remirror-cli build @remirror/extension-bold
+# Or
+pnpm remirror-cli build @remirror/extension-bold @remirror/extension-italic
+```
+
 ### Storybook
 
 ```bash
 pnpm run storybook
-```
+````
 
 When run this builds all packages and then watches for changes to reload as necessary. If you are running storybook, then it will run `pnpm run watch` automatically, so you don't need to do it yourself.
 

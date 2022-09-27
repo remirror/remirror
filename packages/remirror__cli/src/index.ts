@@ -16,7 +16,11 @@ export async function main() {
         `${colors.yellow('yes')} to see more information.)`,
     );
 
-  program.command('build').description(`Build all NPM packages in current monorepo.`).action(build);
+  program
+    .command('build')
+    .argument('[name...]', 'The package you want to build.')
+    .description(`Build NPM packages in current monorepo.`)
+    .action(build);
 
   program
     .command('watch')
