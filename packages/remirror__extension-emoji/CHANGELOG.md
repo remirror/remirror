@@ -1,5 +1,13 @@
 # @remirror/extension-emoji
 
+## 2.0.6
+
+> 2022-09-28
+
+### Patch Changes
+
+- Fixes the import error for `@remirror/extension-emoji` when using `vite dev`.
+
 ## 2.0.5
 
 > 2022-09-27
