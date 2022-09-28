@@ -1,5 +1,13 @@
 # @remirror/extension-emoji
 
+## 2.0.7
+
+> 2022-09-28
+
+### Patch Changes
+
+- Workarounds the import error for `@remirror/extension-emoji` when using `react-scripts start` by not using `.cjs` file extension.
+
 ## 2.0.6
 
 > 2022-09-28
