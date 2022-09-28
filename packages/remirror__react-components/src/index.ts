@@ -1,8 +1,11 @@
+export * from './base-components';
 export * from './button-groups';
 export * from './buttons';
+export type { CommandSuggesterProps } from './command-suggester';
+export { CommandSuggester } from './command-suggester';
 export * from './floating-menu';
 export * from './icons/icons-base';
-export * from './menus';
+export * from './menu-items';
 export * from './popups';
 export * from './providers';
 export * from './toolbar';

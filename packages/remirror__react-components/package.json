@@ -36,6 +36,9 @@
     "dist-types",
     "style"
   ],
+  "scripts": {
+    "prebuild": "tsx scripts/generate-command-components.ts"
+  },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@emotion/react": "^11.9.0",
@@ -61,13 +64,16 @@
     "react-color": "^2.19.3"
   },
   "devDependencies": {
+    "@remirror/core-helpers": "^2.0.0",
     "@remirror/pm": "^2.0.0",
     "@remirror/react": "^2.0.8",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
+    "globby": "^11.0.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "remirror": "^2.0.8"
+    "remirror": "^2.0.8",
+    "tsx": "^3.4.2"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.0",
@@ -89,7 +95,17 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "200 KB"
+    "sizeLimit": "200 KB",
+    "tsconfigs": {
+      "scripts": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ],
+          "esModuleInterop": true
+        }
+      }
+    }
   },
   "preconstruct": {
     "entrypoints": [

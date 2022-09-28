@@ -1932,6 +1932,7 @@ importers:
       '@mui/material': ^5.8.5
       '@popperjs/core': ^2.9.2
       '@remirror/core': ^2.0.4
+      '@remirror/core-helpers': ^2.0.0
       '@remirror/extension-positioner': ^2.0.5
       '@remirror/extension-text-color': ^2.0.4
       '@remirror/i18n': ^2.0.1
@@ -1948,12 +1949,14 @@ importers:
       '@types/react-color': ^3.0.6
       '@types/react-dom': ^18.0.2
       create-context-state: ^2.0.0
+      globby: ^11.0.4
       match-sorter: ^6.3.0
       multishift: ^2.0.0
       react: ^18.0.0
       react-color: ^2.19.3
       react-dom: ^18.0.0
       remirror: ^2.0.8
+      tsx: ^3.4.2
     dependencies:
       '@babel/runtime': 7.18.9
       '@emotion/react': 11.9.0_816f4796c226633b430061503809d561
@@ -1978,13 +1981,16 @@ importers:
       multishift: link:../multishift
       react-color: 2.19.3_react@18.0.0
     devDependencies:
+      '@remirror/core-helpers': link:../remirror__core-helpers
       '@remirror/pm': link:../remirror__pm
       '@remirror/react': link:../remirror__react
       '@types/react': 18.0.20
       '@types/react-dom': 18.0.2
+      globby: 11.1.0
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
       remirror: link:../remirror
+      tsx: 3.4.2
 
   packages/remirror__react-core:
     specifiers:
@@ -5892,21 +5898,18 @@ packages:
     dependencies:
       '@esbuild-kit/core-utils': 1.3.1
       get-tsconfig: 3.2.0
-    dev: false
 
   /@esbuild-kit/core-utils/1.3.1:
     resolution: {integrity: sha512-QXWJKf3mEIs+jgUCrY2YWJ2cr9e9asRYRwDhxit+wkCaQbSfV6fCCgs8KjRsrkIdMBcWsjbWnFKfwZ9kjILPrw==}
     dependencies:
       esbuild: 0.14.38
       source-map-support: 0.5.21
-    dev: false
 
   /@esbuild-kit/esm-loader/2.1.5:
     resolution: {integrity: sha512-G0HZSh53dXOb42xR14zEASXtVWFNX2itREVPnh6BWU2PcApbSzFEIUpknotpybuu6QupuW9sS9hVVpJjuyZlSw==}
     dependencies:
       '@esbuild-kit/core-utils': 1.3.1
       get-tsconfig: 3.2.0
-    dev: false
 
   /@eslint/eslintrc/1.0.3:
     resolution: {integrity: sha512-DHI1wDPoKCBPoLZA3qDR91+3te/wDSc1YhKg3jR8NxKKRJq2hwHwcWv31cSwSYvIBrmbENoYMWcenW8uproQqg==}
@@ -14970,7 +14973,6 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-android-64/0.14.43:
@@ -14988,7 +14990,6 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-android-arm64/0.14.43:
@@ -15006,7 +15007,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-darwin-64/0.14.43:
@@ -15024,7 +15024,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-darwin-arm64/0.14.43:
@@ -15042,7 +15041,6 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-freebsd-64/0.14.43:
@@ -15060,7 +15058,6 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-freebsd-arm64/0.14.43:
@@ -15078,7 +15075,6 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-linux-32/0.14.43:
@@ -15096,7 +15092,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-linux-64/0.14.43:
@@ -15114,7 +15109,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-linux-arm/0.14.43:
@@ -15132,7 +15126,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-linux-arm64/0.14.43:
@@ -15150,7 +15143,6 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-linux-mips64le/0.14.43:
@@ -15168,7 +15160,6 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-linux-ppc64le/0.14.43:
@@ -15186,7 +15177,6 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-linux-riscv64/0.14.43:
@@ -15204,7 +15194,6 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-linux-s390x/0.14.43:
@@ -15235,7 +15224,6 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-netbsd-64/0.14.43:
@@ -15263,7 +15251,6 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-openbsd-64/0.14.43:
@@ -15281,7 +15268,6 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-sunos-64/0.14.43:
@@ -15299,7 +15285,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-windows-32/0.14.43:
@@ -15317,7 +15302,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-windows-64/0.14.43:
@@ -15335,7 +15319,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: false
     optional: true
 
   /esbuild-windows-arm64/0.14.43:
@@ -15373,7 +15356,6 @@ packages:
       esbuild-windows-32: 0.14.38
       esbuild-windows-64: 0.14.38
       esbuild-windows-arm64: 0.14.38
-    dev: false
 
   /esbuild/0.14.43:
     resolution: {integrity: sha512-Uf94+kQmy/5jsFwKWiQB4hfo/RkM9Dh7b79p8yqd1tshULdr25G2szLz631NoH3s2ujnKEKVD16RmOxvCNKRFA==}
@@ -17153,7 +17135,6 @@ packages:
 
   /get-tsconfig/3.2.0:
     resolution: {integrity: sha512-PChG1QIKJKpzrgR/wRhX5TWMKqH1cIHViJYDk0cjXhpwXFHIGGJiL5TXu/frupyetjXXxeDInWbP4vhvhHSBkg==}
-    dev: false
 
   /get-value/2.0.6:
     resolution: {integrity: sha512-Ln0UQDlxH1BapMu3GPtf7CuYNwRZf2gwCuPqbyG6pB8WfmFpzqcy4xtAaAMUhnNqjMKTiCPZG2oMT3YSx8U2NA==}
@@ -27159,7 +27140,6 @@ packages:
       '@esbuild-kit/esm-loader': 2.1.5
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
 
   /tty-browserify/0.0.0:
     resolution: {integrity: sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=}

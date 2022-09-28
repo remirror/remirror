@@ -80,6 +80,7 @@
     "release:next": "pnpm publish -r --tag next",
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm symlink:root; pnpm install;",
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
+    "run:prettier-custom": "prettier --loglevel warn --ignore-path .eslintignore",
     "size": "size-limit",
     "storybook": "pnpm remirror-cli build && run-p watch:skip-build storybook:start",
     "storybook:build": "pnpm run --filter storybook-react build",
