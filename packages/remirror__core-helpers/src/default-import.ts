@@ -38,8 +38,9 @@ export function defaultImport<T>(mod: T): T {
       : mod;
 
   if (
+    defaultVal &&
+    typeof mod === 'object' &&
     '__esModule' in defaultVal &&
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     (defaultVal as any).__esModule &&
     (defaultVal as any).default !== undefined
   ) {
