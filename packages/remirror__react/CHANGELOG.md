@@ -1,5 +1,17 @@
 # @remirror/react
 
+## 2.0.7
+
+> 2022-09-28
+
+### Patch Changes
+
+- Fixes the import error for `@remirror/extension-emoji` when using `vite dev`.
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.7
+  - @remirror/react-components@2.0.7
+  - @remirror/react-hooks@2.0.7
+
 ## 2.0.6
 
 > 2022-09-27

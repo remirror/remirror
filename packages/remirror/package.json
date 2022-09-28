@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -80,7 +80,7 @@
     "@remirror/extension-doc": "^2.0.4",
     "@remirror/extension-drop-cursor": "^2.0.4",
     "@remirror/extension-embed": "^2.0.4",
-    "@remirror/extension-emoji": "^2.0.5",
+    "@remirror/extension-emoji": "^2.0.6",
     "@remirror/extension-entity-reference": "^2.0.5",
     "@remirror/extension-epic-mode": "^2.0.4",
     "@remirror/extension-events": "^2.1.4",
