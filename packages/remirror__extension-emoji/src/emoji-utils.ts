@@ -1,7 +1,8 @@
-import svgmoji from '@ocavue/svgmoji-cjs';
+import * as _svgmoji from '@ocavue/svgmoji-cjs';
 import type { FlatEmoji, Moji } from 'svgmoji';
-import type {
+import {
   AcceptUndefined,
+  defaultImport,
   FromToProps,
   Handler,
   PrimitiveSelection,
@@ -10,6 +11,7 @@ import type {
 } from '@remirror/core';
 import { Suggester } from '@remirror/pm/suggest';
 
+const svgmoji = defaultImport(_svgmoji);
 const { Blobmoji, Notomoji, Openmoji, Twemoji } = svgmoji;
 
 export interface EmojiOptions extends Pick<Suggester, 'supportedCharacters'> {
