@@ -1,6 +1,8 @@
 export * from './base-components';
 export * from './button-groups';
 export * from './buttons';
+export type { CommandSuggesterProps } from './command-suggester';
+export { CommandSuggester } from './command-suggester';
 export * from './floating-menu';
 export * from './icons/icons-base';
 export * from './menu-items';

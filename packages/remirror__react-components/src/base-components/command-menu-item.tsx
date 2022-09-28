@@ -4,6 +4,7 @@ import { CoreIcon, isString } from '@remirror/core';
 
 import { Icon } from '../icons';
 import { useCommandOptionValues, UseCommandOptionValuesParams } from '../use-command-option-values';
+import { CommandMenuItemText } from './command-menu-item-text';
 
 interface ButtonIconProps {
   icon: CoreIcon | JSX.Element | null;
@@ -23,6 +24,7 @@ export interface CommandMenuItemProps
   extends MenuItemProps,
     Omit<UseCommandOptionValuesParams, 'active' | 'attrs'> {
   active?: UseCommandOptionValuesParams['active'];
+  commandId?: string;
   commandName: string;
   displayShortcut?: boolean;
   onSelect: () => void;
@@ -34,6 +36,7 @@ export interface CommandMenuItemProps
 }
 
 export const CommandMenuItem: FC<CommandMenuItemProps> = ({
+  commandId,
   commandName,
   active = false,
   enabled,
@@ -68,7 +71,7 @@ export const CommandMenuItem: FC<CommandMenuItemProps> = ({
   }
 
   const primary = label ?? commandOptions.label ?? '';
-  const secondary = displayDescription && (description ?? commandOptions.description);
+  const secondary = description ?? commandOptions.description;
 
   return (
     <MenuItem
@@ -79,12 +82,13 @@ export const CommandMenuItem: FC<CommandMenuItemProps> = ({
       onClick={handleClick}
     >
       {icon !== null && <MenuItemIcon icon={icon ?? fallbackIcon} />}
-      <ListItemText primary={primary} secondary={secondary} />
+      <ListItemText primary={primary} secondary={displayDescription && secondary} />
       {displayShortcut && commandOptions.shortcut && (
         <Typography variant='body2' color='text.secondary' sx={{ ml: 2 }}>
           {commandOptions.shortcut}
         </Typography>
       )}
+      <CommandMenuItemText commandId={commandId} label={primary} description={displayDescription && secondary} />
     </MenuItem>
   );
 };
