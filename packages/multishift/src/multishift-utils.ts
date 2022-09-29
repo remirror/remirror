@@ -46,6 +46,29 @@ import type {
 } from './multishift-types';
 
 /**
+ * Dom Node type. See https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+ *
+ * We use our own enum instead of the global `Node` object to be more compatible with server
+ * environments.
+ *
+ * @internal
+ */
+const enum DomNodeType {
+  ELEMENT_NODE = 1,
+  ATTRIBUTE_NODE = 2,
+  TEXT_NODE = 3,
+  CDATA_SECTION_NODE = 4,
+  ENTITY_REFERENCE_NODE = 5,
+  ENTITY_NODE = 6,
+  PROCESSING_INSTRUCTION_NODE = 7,
+  COMMENT_NODE = 8,
+  DOCUMENT_NODE = 9,
+  DOCUMENT_TYPE_NODE = 10,
+  DOCUMENT_FRAGMENT_NODE = 11,
+  NOTATION_NODE = 12,
+}
+
+/**
  * The default unique identifier getter function.
  */
 export function defaultGetItemId<Item = any>(item: Item): Item {
@@ -1121,29 +1144,6 @@ export function scrollIntoView(
     el.scrollTop = top;
     el.scrollLeft = left;
   });
-}
-
-/**
- * Dom Node type. See https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
- *
- * We use our own enum instead of the global `Node` object to be more compatible with server
- * environments.
- *
- * @internal
- */
-const enum DomNodeType {
-  ELEMENT_NODE = 1,
-  ATTRIBUTE_NODE = 2,
-  TEXT_NODE = 3,
-  CDATA_SECTION_NODE = 4,
-  ENTITY_REFERENCE_NODE = 5,
-  ENTITY_NODE = 6,
-  PROCESSING_INSTRUCTION_NODE = 7,
-  COMMENT_NODE = 8,
-  DOCUMENT_NODE = 9,
-  DOCUMENT_TYPE_NODE = 10,
-  DOCUMENT_FRAGMENT_NODE = 11,
-  NOTATION_NODE = 12,
 }
 
 /**
