@@ -1,5 +1,17 @@
 # @remirror/react-editors
 
+## 1.0.9
+
+> 2022-09-29
+
+### Patch Changes
+
+- Do not use `instanceof` in `isDomNode` anymore. This increases the compatibility on Node.js environments, where might exist more than one DOM API implementation.
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.9
+  - @remirror/react@2.0.9
+  - remirror@2.0.9
+
 ## 1.0.8
 
 > 2022-09-28

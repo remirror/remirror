@@ -1,5 +1,23 @@
 # @remirror/react-hooks
 
+## 2.0.9
+
+> 2022-09-29
+
+### Patch Changes
+
+- Do not use `instanceof` in `isDomNode` anymore. This increases the compatibility on Node.js environments, where might exist more than one DOM API implementation.
+- Updated dependencies
+  - multishift@2.0.1
+  - @remirror/core@2.0.5
+  - @remirror/extension-emoji@2.0.8
+  - @remirror/extension-events@2.1.5
+  - @remirror/extension-history@2.0.5
+  - @remirror/extension-mention@2.0.6
+  - @remirror/extension-mention-atom@2.0.6
+  - @remirror/extension-positioner@2.0.6
+  - @remirror/react-core@2.0.6
+
 ## 2.0.8
 
 > 2022-09-28

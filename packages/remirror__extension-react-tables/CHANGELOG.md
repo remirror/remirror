@@ -1,5 +1,22 @@
 # @remirror/extension-react-tables
 
+## 2.0.9
+
+> 2022-09-29
+
+### Patch Changes
+
+- Do not use `instanceof` in `isDomNode` anymore. This increases the compatibility on Node.js environments, where might exist more than one DOM API implementation.
+- Updated dependencies
+  - @remirror/core-utils@2.0.5
+  - @remirror/react-components@2.0.9
+  - @remirror/react-hooks@2.0.9
+  - @remirror/core@2.0.5
+  - @remirror/extension-positioner@2.0.6
+  - @remirror/extension-tables@2.0.5
+  - @remirror/preset-core@2.0.6
+  - @remirror/react-core@2.0.6
+
 ## 2.0.8
 
 > 2022-09-28
