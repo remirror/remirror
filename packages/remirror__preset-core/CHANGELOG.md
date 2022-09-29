@@ -1,5 +1,22 @@
 # @remirror/preset-core
 
+## 2.0.6
+
+> 2022-09-29
+
+### Patch Changes
+
+- Do not use `instanceof` in `isDomNode` anymore. This increases the compatibility on Node.js environments, where might exist more than one DOM API implementation.
+- Updated dependencies
+  - @remirror/core@2.0.5
+  - @remirror/extension-doc@2.0.5
+  - @remirror/extension-events@2.1.5
+  - @remirror/extension-gap-cursor@2.0.5
+  - @remirror/extension-history@2.0.5
+  - @remirror/extension-paragraph@2.0.5
+  - @remirror/extension-positioner@2.0.6
+  - @remirror/extension-text@2.0.5
+
 ## 2.0.5
 
 > 2022-09-23

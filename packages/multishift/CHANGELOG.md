@@ -1,5 +1,13 @@
 # multishift
 
+## 2.0.1
+
+> 2022-09-29
+
+### Patch Changes
+
+- Do not use `instanceof` in `isDomNode` anymore. This increases the compatibility on Node.js environments, where might exist more than one DOM API implementation.
+
 ## 2.0.0
 
 > 2022-09-13

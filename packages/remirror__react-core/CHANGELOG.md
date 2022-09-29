@@ -1,5 +1,20 @@
 # @remirror/react-core
 
+## 2.0.6
+
+> 2022-09-29
+
+### Patch Changes
+
+- Do not use `instanceof` in `isDomNode` anymore. This increases the compatibility on Node.js environments, where might exist more than one DOM API implementation.
+- Updated dependencies
+  - @remirror/core@2.0.5
+  - @remirror/extension-positioner@2.0.6
+  - @remirror/extension-react-component@2.0.5
+  - @remirror/preset-core@2.0.6
+  - @remirror/preset-react@2.0.5
+  - @remirror/react-renderer@2.0.5
+
 ## 2.0.5
 
 > 2022-09-23
