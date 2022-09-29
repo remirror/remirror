@@ -1124,16 +1124,35 @@ export function scrollIntoView(
 }
 
 /**
+ * Dom Node type. See https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+ *
+ * We use our own enum instead of the global `Node` object to be more compatible with server
+ * environments.
+ *
+ * @internal
+ */
+const enum DomNodeType {
+  ELEMENT_NODE = 1,
+  ATTRIBUTE_NODE = 2,
+  TEXT_NODE = 3,
+  CDATA_SECTION_NODE = 4,
+  ENTITY_REFERENCE_NODE = 5,
+  ENTITY_NODE = 6,
+  PROCESSING_INSTRUCTION_NODE = 7,
+  COMMENT_NODE = 8,
+  DOCUMENT_NODE = 9,
+  DOCUMENT_TYPE_NODE = 10,
+  DOCUMENT_FRAGMENT_NODE = 11,
+  NOTATION_NODE = 12,
+}
+
+/**
  * Checks whether the passed value is a valid dom node
  *
  * @param domNode - the dom node
  */
 export function isNode(domNode: unknown): domNode is Node {
-  return isObject(Node)
-    ? domNode instanceof Node
-    : isObject(domNode) &&
-        isNumber((domNode as any).nodeType) &&
-        isString((domNode as any).nodeName);
+  return isObject(domNode) && isNumber(domNode.nodeType) && isString(domNode.nodeName);
 }
 
 /**
@@ -1142,7 +1161,7 @@ export function isNode(domNode: unknown): domNode is Node {
  * @param domNode - the dom node
  */
 export const isHTMLElement = (domNode: unknown): domNode is HTMLElement =>
-  isNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
+  isNode(domNode) && domNode.nodeType === DomNodeType.ELEMENT_NODE;
 
 /**
  * Checks that this is a browser environment.

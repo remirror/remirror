@@ -1,13 +1,5 @@
 import parse from 'parenthesis';
-import {
-  Cast,
-  clamp,
-  findMatches,
-  includes,
-  isNumber,
-  isObject,
-  isString,
-} from '@remirror/core-helpers';
+import { clamp, findMatches, includes, isNumber, isObject, isString } from '@remirror/core-helpers';
 import { KebabCase, StringKey } from '@remirror/core-types';
 
 import { getMatchString } from './core-utils';
@@ -290,12 +282,30 @@ export function convertPixelsToDomUnit(
  * @param domNode - the dom node
  */
 export function isDomNode(domNode: unknown): domNode is Node {
-  return (
-    typeof document !== 'undefined' &&
-    (isObject(Node)
-      ? domNode instanceof Node
-      : isObject(domNode) && isNumber(Cast(domNode).nodeType) && isString(Cast(domNode).nodeName))
-  );
+  return isObject(domNode) && isNumber(domNode.nodeType) && isString(domNode.nodeName);
+}
+
+/**
+ * Dom Node type. See https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+ *
+ * We use our own enum instead of the global `Node` object to be more compatible with server
+ * environments.
+ *
+ * @internal
+ */
+const enum DomNodeType {
+  ELEMENT_NODE = 1,
+  ATTRIBUTE_NODE = 2,
+  TEXT_NODE = 3,
+  CDATA_SECTION_NODE = 4,
+  ENTITY_REFERENCE_NODE = 5,
+  ENTITY_NODE = 6,
+  PROCESSING_INSTRUCTION_NODE = 7,
+  COMMENT_NODE = 8,
+  DOCUMENT_NODE = 9,
+  DOCUMENT_TYPE_NODE = 10,
+  DOCUMENT_FRAGMENT_NODE = 11,
+  NOTATION_NODE = 12,
 }
 
 /**
@@ -304,7 +314,7 @@ export function isDomNode(domNode: unknown): domNode is Node {
  * @param domNode - the dom node
  */
 export function isElementDomNode(domNode: unknown): domNode is HTMLElement {
-  return isDomNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
+  return isDomNode(domNode) && domNode.nodeType === DomNodeType.ELEMENT_NODE;
 }
 
 /**
@@ -313,5 +323,5 @@ export function isElementDomNode(domNode: unknown): domNode is HTMLElement {
  * @param domNode - the dom node
  */
 export function isTextDomNode(domNode: unknown): domNode is Text {
-  return isDomNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
+  return isDomNode(domNode) && domNode.nodeType === DomNodeType.TEXT_NODE;
 }
