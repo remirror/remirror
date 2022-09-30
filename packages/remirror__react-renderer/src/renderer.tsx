@@ -21,7 +21,7 @@ export const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
   return <div {...(node.attrs ?? object())}>{children}</div>;
 };
 
-const defaultTypeMap: MarkMap = {
+export const defaultTypeMap: MarkMap = {
   blockquote: 'blockquote',
   bulletList: 'ul',
   callout: Callout,
@@ -35,9 +35,10 @@ const defaultTypeMap: MarkMap = {
   codeBlock: CodeBlock,
   orderedList: 'ol',
   text: TextHandler,
+  li: 'li'
 };
 
-const defaultMarkMap: MarkMap = {
+export const defaultMarkMap: MarkMap = {
   italic: 'em',
   bold: 'strong',
   code: 'code',

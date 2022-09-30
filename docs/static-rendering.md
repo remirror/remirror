@@ -31,4 +31,9 @@ The react-render provides a more efficient way to visualize Remirror documents: 
 
 See [storybook](https://remirror.vercel.app/?path=/story/editors-react-renderer-static-html--basic) for example usage.
 
-_Note: Today only the most widely Remirror node types are supported by the react-render. Please file a ticket (or even better PR) if you require further node types._
+### Supported types
+Today only the most widely Remirror node types are supported by the react-render.
+
+You can pass a map of marks and types to the `typeMap` and `markMap` props respectively, and import `reactRendererDefaultTypeMap` and `reactRendererDefaultMarkMap` to retain the default mappings if you only want to add or override.
+
+_Note: Please file a ticket (or even better PR) if you require further node types._
