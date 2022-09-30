@@ -54,7 +54,9 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.0",
+    "@types/jsdom": "^16.2.13",
     "@types/prettier": "^2.3.2",
+    "jsdom": "^17.0.0",
     "prettier": "^2.3.2"
   },
   "peerDependencies": {

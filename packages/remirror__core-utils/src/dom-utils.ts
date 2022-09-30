@@ -2,7 +2,7 @@ import parse from 'parenthesis';
 import { clamp, findMatches, includes, isNumber, isObject, isString } from '@remirror/core-helpers';
 import { KebabCase, StringKey } from '@remirror/core-types';
 
-import { getMatchString } from './core-utils';
+import { getMatchString, getWindow, maybeGetWindow } from './core-utils';
 
 /**
  * Dom Node type. See https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
@@ -34,9 +34,8 @@ export function getStyle(
   element: HTMLElement,
   property: KebabCase<StringKey<CSSStyleDeclaration>>,
 ): string {
-  const view = element.ownerDocument?.defaultView ?? window;
-  const style = view.getComputedStyle(element);
-  return style.getPropertyValue(property);
+  const view = maybeGetWindow(element);
+  return view?.getComputedStyle(element)?.getPropertyValue(property) ?? '';
 }
 
 /**
@@ -97,15 +96,18 @@ const POINTS_PER_INCH = 72;
 const PICAS_PER_INCH = 6;
 
 export function getFontSize(element?: Element | null): string {
-  return isElementDomNode(element)
-    ? getStyle(element, 'font-size') || getFontSize(element.parentElement)
-    : getStyle(window.document.documentElement, 'font-size');
+  if (isElementDomNode(element)) {
+    return getStyle(element, 'font-size') || getFontSize(element.parentElement);
+  }
+
+  const view = maybeGetWindow(element);
+  return view ? getStyle(view.document.documentElement, 'font-size') : '';
 }
 
 type UnitConvertor = (value: number, unit: string) => number;
 
 function createUnitConverter(element?: Element | null): UnitConvertor {
-  const view = element?.ownerDocument?.defaultView ?? window;
+  const view = getWindow();
   const root = view.document.documentElement || view.document.body;
 
   return (value: number, unit: string) => {
@@ -255,7 +257,7 @@ export function convertPixelsToDomUnit(
   to: DomSizeUnit,
   element?: Element | null,
 ): number {
-  const view = element?.ownerDocument?.defaultView ?? window;
+  const view = getWindow(element);
   const root = view.document.documentElement || view.document.body;
   const pixelValue = extractPixelSize(size, element);
 

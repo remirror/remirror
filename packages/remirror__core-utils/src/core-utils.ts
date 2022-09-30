@@ -1227,6 +1227,39 @@ export function getDocument(): Document {
   );
 }
 
+/**
+ * Try to retrieve the window from the given HTML element or the global scope.
+ *
+ * @internal
+ */
+export function maybeGetWindow(
+  element?: Element | null,
+  document?: Document | null,
+): (Window & typeof globalThis) | null | undefined {
+  return (
+    element?.ownerDocument?.defaultView ??
+    document?.defaultView ??
+    (typeof window !== 'undefined' ? window : undefined) ??
+    getDomDocument()?.defaultView
+  );
+}
+
+/**
+ * @internal
+ */
+export function getWindow(
+  element?: Element | null,
+  document?: Document | null,
+): Window & typeof globalThis {
+  const view = maybeGetWindow(element, document) ?? getDocument().defaultView;
+
+  if (view) {
+    return view;
+  }
+
+  throw new Error('Unable to retrieve the window from the global scope');
+}
+
 export interface CustomDocumentProps {
   /**
    * The root or custom document to use when referencing the dom.
@@ -1251,7 +1284,7 @@ export function prosemirrorNodeToDom(
 }
 
 function elementFromString(html: string, document?: Document): HTMLElement {
-  const parser = new ((document || getDocument())?.defaultView ?? window).DOMParser();
+  const parser = new (getWindow(undefined, document).DOMParser)();
   return parser.parseFromString(`<body>${html}</body>`, 'text/html').body;
 }
 
