@@ -5,7 +5,13 @@ import { EditorView } from '@remirror/core';
  * inside the editor.
  */
 function posAtDOM(view: EditorView, node: Node, offset: number, bias?: number): number | null {
-  return (view as any).docView.posFromDOM(node, offset, bias);
+  const pos = (view as any).docView.posFromDOM(node, offset, bias);
+
+  if (pos === null || pos < 0) {
+    return null;
+  }
+
+  return pos;
 }
 
 /**
