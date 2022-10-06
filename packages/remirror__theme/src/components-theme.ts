@@ -339,6 +339,10 @@ export const MENU_ITEM = css`
     background-color: ${primaryActive} !important;
     color: ${primaryActiveText} !important;
   }
+
+  &:disabled {
+    opacity: 0.5;
+  }
 `;
 
 export const MENU_ITEM_ROW = css`
