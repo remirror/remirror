@@ -50,9 +50,10 @@ const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ set
 interface DefaultTableCellMenuItemProps {
   label: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 const DefaultTableCellMenuItem: React.FC<DefaultTableCellMenuItemProps> = (props) => (
-  <button onClick={props.onClick} className={ComponentsTheme.MENU_ITEM}>
+  <button disabled={props.disabled} onClick={props.onClick} className={ComponentsTheme.MENU_ITEM}>
     {props.label}
   </button>
 );
@@ -114,7 +115,16 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
         label='Add column after'
         onClick={handleClick(commands.addTableColumnAfter)}
       />
-
+      <DefaultTableCellMenuItem
+        label='Merge cells'
+        onClick={handleClick(commands.mergeTableCells)}
+        disabled={!commands.mergeTableCells.enabled()}
+      />
+      <DefaultTableCellMenuItem
+        label='Split cells'
+        onClick={handleClick(commands.splitTableCell)}
+        disabled={!commands.splitTableCell.enabled()}
+      />
       <DefaultTableCellMenuItem
         label='Remove column'
         onClick={handleClick(commands.deleteTableColumn)}
