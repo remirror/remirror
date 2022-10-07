@@ -2,7 +2,7 @@ import parse from 'parenthesis';
 import { clamp, findMatches, includes, isNumber, isObject, isString } from '@remirror/core-helpers';
 import { KebabCase, StringKey } from '@remirror/core-types';
 
-import { getMatchString, getWindow, maybeGetWindow } from './core-utils';
+import { getMatchString, getWindowFromElement, maybeGetWindowFromElement } from './core-utils';
 
 /**
  * Dom Node type. See https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
@@ -34,7 +34,7 @@ export function getStyle(
   element: HTMLElement,
   property: KebabCase<StringKey<CSSStyleDeclaration>>,
 ): string {
-  const view = maybeGetWindow(element);
+  const view = maybeGetWindowFromElement(element);
   return view?.getComputedStyle(element)?.getPropertyValue(property) ?? '';
 }
 
@@ -100,14 +100,14 @@ export function getFontSize(element?: Element | null): string {
     return getStyle(element, 'font-size') || getFontSize(element.parentElement);
   }
 
-  const view = maybeGetWindow(element);
+  const view = maybeGetWindowFromElement(element);
   return view ? getStyle(view.document.documentElement, 'font-size') : '';
 }
 
 type UnitConvertor = (value: number, unit: string) => number;
 
 function createUnitConverter(element?: Element | null): UnitConvertor {
-  const view = getWindow();
+  const view = getWindowFromElement(element);
   const root = view.document.documentElement || view.document.body;
 
   return (value: number, unit: string) => {
@@ -257,7 +257,7 @@ export function convertPixelsToDomUnit(
   to: DomSizeUnit,
   element?: Element | null,
 ): number {
-  const view = getWindow(element);
+  const view = getWindowFromElement(element);
   const root = view.document.documentElement || view.document.body;
   const pixelValue = extractPixelSize(size, element);
 

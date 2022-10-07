@@ -1237,16 +1237,12 @@ export function getDocument(): Document {
 }
 
 /**
- * Try to retrieve the window from the given HTML element or the global scope.
- *
  * @internal
  */
-export function maybeGetWindow(
-  element?: Element | null,
+export function maybeGetWindowFromDocument(
   document?: Document | null,
 ): (Window & typeof globalThis) | null | undefined {
   return (
-    element?.ownerDocument?.defaultView ??
     document?.defaultView ??
     (typeof window !== 'undefined' ? window : undefined) ??
     getDomDocument()?.defaultView
@@ -1256,17 +1252,32 @@ export function maybeGetWindow(
 /**
  * @internal
  */
-export function getWindow(
-  element?: Element | null,
-  document?: Document | null,
-): Window & typeof globalThis {
-  const view = maybeGetWindow(element, document) ?? getDocument().defaultView;
+export function maybeGetWindowFromElement(
+  element?: Element | HTMLElement | null,
+): (Window & typeof globalThis) | null | undefined {
+  return maybeGetWindowFromDocument(element?.ownerDocument);
+}
+
+/**
+ * @internal
+ */
+export function getWindowFromDocument(document?: Document | null): Window & typeof globalThis {
+  const view = maybeGetWindowFromDocument(document) ?? getDocument().defaultView;
 
   if (view) {
     return view;
   }
 
   throw new Error('Unable to retrieve the window from the global scope');
+}
+
+/**
+ * @internal
+ */
+export function getWindowFromElement(
+  element?: Element | HTMLElement | null,
+): Window & typeof globalThis {
+  return getWindowFromDocument(element?.ownerDocument);
 }
 
 export interface CustomDocumentProps {
@@ -1293,7 +1304,7 @@ export function prosemirrorNodeToDom(
 }
 
 function elementFromString(html: string, document?: Document): HTMLElement {
-  const parser = new (getWindow(undefined, document).DOMParser)();
+  const parser = new (getWindowFromDocument(document).DOMParser)();
   return parser.parseFromString(`<body>${html}</body>`, 'text/html').body;
 }
 
