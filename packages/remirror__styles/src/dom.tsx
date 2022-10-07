@@ -338,6 +338,10 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     color: var(--rmr-color-active-primary-text) !important;
   }
 
+  .remirror-menu-item:disabled {
+    opacity: 0.5;
+  }
+
   .remirror-menu-item-row {
     padding: 0 var(--rmr-space-2);
   }

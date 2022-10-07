@@ -1223,7 +1223,16 @@ export function getDocument(): Document {
   }
 
   throw new Error(
-    'Unable to retrieve the document from the global scope. Maybe you are running Remirror in a non-browser environment? If you are using Node.js, you can install JSDOM or similar to create a fake document and pass it to Remirror.',
+    'Unable to retrieve the document from the global scope. \n' +
+      'It seems that you are running Remirror in a non-browser environment. ' +
+      'Remirror need browser APIs to work. \n' +
+      'If you are using Jest (or other testing frameworks), make sure that ' +
+      'you are using the JSDOM environment (https://jestjs.io/docs/29.0/configuration#testenvironment-string). \n' +
+      'If you are using Next.js (or other server-side rendering frameworks), ' +
+      'please use dynamic import with `ssr: false` to load the editor component ' +
+      'without rendering it on the server (https://nextjs.org/docs/advanced-features/dynamic-import#with-no-ssr). \n' +
+      'If you are using Node.js, you can install JSDOM and Remirror will try to use it automatically, ' +
+      'or you can create a fake document and pass it to Remirror',
   );
 }
 
