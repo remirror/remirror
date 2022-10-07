@@ -1236,6 +1236,50 @@ export function getDocument(): Document {
   );
 }
 
+/**
+ * @internal
+ */
+export function maybeGetWindowFromDocument(
+  document?: Document | null,
+): (Window & typeof globalThis) | null | undefined {
+  return (
+    document?.defaultView ??
+    (typeof window !== 'undefined' ? window : undefined) ??
+    getDomDocument()?.defaultView
+  );
+}
+
+/**
+ * @internal
+ */
+export function maybeGetWindowFromElement(
+  element?: Element | HTMLElement | null,
+): (Window & typeof globalThis) | null | undefined {
+  return maybeGetWindowFromDocument(element?.ownerDocument);
+}
+
+/**
+ * @internal
+ */
+export function getWindowFromDocument(document?: Document | null): Window & typeof globalThis {
+  const view = maybeGetWindowFromDocument(document) ?? getDocument().defaultView;
+
+  if (view) {
+    return view;
+  }
+
+  throw new Error('Unable to retrieve the window from the global scope');
+}
+
+/**
+ * @internal
+ */
+export function getWindowFromElement(
+  element?: Element | HTMLElement | null,
+): Window & typeof globalThis {
+  return getWindowFromDocument(element?.ownerDocument);
+}
+
 export interface CustomDocumentProps {
   /**
    * The root or custom document to use when referencing the dom.
@@ -1260,7 +1304,7 @@ export function prosemirrorNodeToDom(
 }
 
 function elementFromString(html: string, document?: Document): HTMLElement {
-  const parser = new ((document || getDocument())?.defaultView ?? window).DOMParser();
+  const parser = new (getWindowFromDocument(document).DOMParser)();
   return parser.parseFromString(`<body>${html}</body>`, 'text/html').body;
 }
 
