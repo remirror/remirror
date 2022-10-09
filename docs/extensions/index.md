@@ -5,6 +5,10 @@ title: Overview
 
 # All extensions
 
+## Standard extensions
+
+The following extensions are bundled together with Remirror:
+
 **[AnnotationExtension](./annotation-extension.mdx)**<br /> Allows the annotation (or highlighting) of the content in your editor
 
 **[BlockquoteExtension](./blockquote-extension.mdx)**<br /> Makes regions of text appear as an indented quote to ensure it stands out
@@ -78,3 +82,15 @@ title: Overview
 **[UnderlineExtension](./underline-extension.mdx)**<br /> Makes the text under the cursor / or at the provided position range <u>underline</u>
 
 **[WhitespaceExtension](./whitespace-extension.mdx)**<br /> Manage whitespace characters within the editor
+
+## Community extensions
+
+The following extensions are maintained by the community:
+
+**[EntityExtension](https://github.com/Collaborne/remirror-entity-extension)**<br /> Stores all the data of an entity within the document itself
+
+:::info
+
+Did you create an extension and want to list it here as well? Please create a PR - or reach out on [Discord](https://remirror.io/chat).
+
+:::
