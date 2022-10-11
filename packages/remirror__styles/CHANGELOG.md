@@ -1,5 +1,13 @@
 # @remirror/styles
 
+## 2.0.1
+
+> 2022-10-11
+
+### Patch Changes
+
+- Expose the ability to split and merge cells in the default React tables menu
+
 ## 2.0.0
 
 > 2022-09-13

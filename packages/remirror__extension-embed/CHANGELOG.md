@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 2.0.6
+
+> 2022-10-11
+
+### Patch Changes
+
+- Fixes a bug that causes `ReferenceError: window is not defined` when parsing HTML on the server.
+- Updated dependencies
+  - prosemirror-resizable-view@2.0.6
+  - @remirror/core@2.0.6
+
 ## 2.0.5
 
 > 2022-09-29

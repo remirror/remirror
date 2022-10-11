@@ -1,5 +1,26 @@
 # @remirror/react-hooks
 
+## 2.0.10
+
+> 2022-10-11
+
+### Patch Changes
+
+- Expose the ability to split and merge cells in the default React tables menu
+- Fixes a bug that causes `ReferenceError: window is not defined` when parsing HTML on the server.
+- Catch when `posFromDom` returns -1, which causes a thrown error when attempting to resolve the pos
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-emoji@2.0.9
+  - @remirror/extension-mention-atom@2.0.7
+  - @remirror/extension-positioner@2.0.7
+  - @remirror/react-core@2.0.7
+  - @remirror/core@2.0.6
+  - @remirror/extension-events@2.1.6
+  - @remirror/extension-history@2.0.6
+  - @remirror/extension-mention@2.0.7
+
 ## 2.0.9
 
 > 2022-09-29

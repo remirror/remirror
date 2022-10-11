@@ -1,5 +1,40 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.7
+
+> 2022-10-11
+
+### Patch Changes
+
+- Expose the ability to split and merge cells in the default React tables menu
+- Fixes a bug that causes `ReferenceError: window is not defined` when parsing HTML on the server.
+- Catch when `posFromDom` returns -1, which causes a thrown error when attempting to resolve the pos
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-blockquote@2.0.6
+  - @remirror/extension-code-block@2.0.6
+  - @remirror/extension-image@2.0.6
+  - @remirror/extension-list@2.0.7
+  - @remirror/preset-core@2.0.7
+  - @remirror/core@2.0.6
+  - @remirror/extension-bidi@2.0.6
+  - @remirror/extension-bold@2.0.6
+  - @remirror/extension-code@2.0.6
+  - @remirror/extension-drop-cursor@2.0.6
+  - @remirror/extension-embed@2.0.6
+  - @remirror/extension-gap-cursor@2.0.6
+  - @remirror/extension-hard-break@2.0.6
+  - @remirror/extension-heading@2.0.6
+  - @remirror/extension-horizontal-rule@2.0.6
+  - @remirror/extension-italic@2.0.6
+  - @remirror/extension-link@2.0.7
+  - @remirror/extension-search@2.0.6
+  - @remirror/extension-shortcuts@2.0.6
+  - @remirror/extension-strike@2.0.6
+  - @remirror/extension-trailing-node@2.0.6
+  - @remirror/extension-underline@2.0.6
+
 ## 2.0.6
 
 > 2022-09-29

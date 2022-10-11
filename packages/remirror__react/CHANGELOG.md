@@ -1,5 +1,27 @@
 # @remirror/react
 
+## 2.0.10
+
+> 2022-10-11
+
+### Patch Changes
+
+- Expose the ability to split and merge cells in the default React tables menu
+- Fixes a bug that causes `ReferenceError: window is not defined` when parsing HTML on the server.
+- Catch when `posFromDom` returns -1, which causes a thrown error when attempting to resolve the pos
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.10
+  - @remirror/extension-placeholder@2.0.6
+  - @remirror/extension-positioner@2.0.7
+  - @remirror/preset-react@2.0.6
+  - @remirror/react-components@2.0.10
+  - @remirror/react-core@2.0.7
+  - @remirror/react-hooks@2.0.10
+  - @remirror/extension-react-component@2.0.6
+  - @remirror/react-renderer@2.0.6
+
 ## 2.0.9
 
 > 2022-09-29

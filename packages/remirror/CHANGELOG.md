@@ -1,5 +1,75 @@
 # remirror
 
+## 2.0.10
+
+> 2022-10-11
+
+### Patch Changes
+
+- Expose the ability to split and merge cells in the default React tables menu
+- Fixes a bug that causes `ReferenceError: window is not defined` when parsing HTML on the server.
+- Catch when `posFromDom` returns -1, which causes a thrown error when attempting to resolve the pos
+- Updated dependencies
+- Updated dependencies
+- Updated dependencies
+  - @remirror/theme@2.0.1
+  - @remirror/dom@2.0.7
+  - @remirror/extension-annotation@2.0.7
+  - @remirror/extension-blockquote@2.0.6
+  - @remirror/extension-callout@2.0.6
+  - @remirror/extension-code-block@2.0.6
+  - @remirror/extension-emoji@2.0.9
+  - @remirror/extension-entity-reference@2.0.7
+  - @remirror/extension-image@2.0.6
+  - @remirror/extension-list@2.0.7
+  - @remirror/extension-mention-atom@2.0.7
+  - @remirror/extension-placeholder@2.0.6
+  - @remirror/extension-positioner@2.0.7
+  - @remirror/extension-tables@2.0.6
+  - @remirror/extension-text-color@2.0.6
+  - @remirror/extension-text-highlight@2.0.6
+  - @remirror/preset-core@2.0.7
+  - @remirror/preset-formatting@2.0.6
+  - @remirror/preset-wysiwyg@2.0.7
+  - @remirror/core-utils@2.0.6
+  - @remirror/core@2.0.6
+  - @remirror/extension-bidi@2.0.6
+  - @remirror/extension-bold@2.0.6
+  - @remirror/extension-code@2.0.6
+  - @remirror/extension-codemirror5@2.0.6
+  - @remirror/extension-collaboration@2.0.6
+  - @remirror/extension-columns@2.0.6
+  - @remirror/extension-diff@2.0.6
+  - @remirror/extension-doc@2.0.6
+  - @remirror/extension-drop-cursor@2.0.6
+  - @remirror/extension-embed@2.0.6
+  - @remirror/extension-epic-mode@2.0.6
+  - @remirror/extension-events@2.1.6
+  - @remirror/extension-font-family@2.0.6
+  - @remirror/extension-font-size@2.0.6
+  - @remirror/extension-gap-cursor@2.0.6
+  - @remirror/extension-hard-break@2.0.6
+  - @remirror/extension-heading@2.0.6
+  - @remirror/extension-history@2.0.6
+  - @remirror/extension-horizontal-rule@2.0.6
+  - @remirror/extension-italic@2.0.6
+  - @remirror/extension-link@2.0.7
+  - @remirror/extension-markdown@2.0.6
+  - @remirror/extension-mention@2.0.7
+  - @remirror/extension-node-formatting@2.0.6
+  - @remirror/extension-paragraph@2.0.6
+  - @remirror/extension-search@2.0.6
+  - @remirror/extension-shortcuts@2.0.6
+  - @remirror/extension-strike@2.0.6
+  - @remirror/extension-sub@2.0.6
+  - @remirror/extension-sup@2.0.6
+  - @remirror/extension-text@2.0.6
+  - @remirror/extension-text-case@2.0.6
+  - @remirror/extension-trailing-node@2.0.6
+  - @remirror/extension-underline@2.0.6
+  - @remirror/extension-whitespace@2.0.6
+  - @remirror/extension-yjs@3.0.6
+
 ## 2.0.9
 
 > 2022-09-29
