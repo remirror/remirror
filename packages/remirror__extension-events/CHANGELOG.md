@@ -1,5 +1,16 @@
 # @remirror/extension-events
 
+## 2.1.6
+
+> 2022-10-11
+
+### Patch Changes
+
+- Fixes a bug that causes `ReferenceError: window is not defined` when parsing HTML on the server.
+- Catch when `posFromDom` returns -1, which causes a thrown error when attempting to resolve the pos
+- Updated dependencies
+  - @remirror/core@2.0.6
+
 ## 2.1.5
 
 > 2022-09-29

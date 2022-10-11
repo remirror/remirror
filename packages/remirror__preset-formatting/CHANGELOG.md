@@ -1,5 +1,31 @@
 # @remirror/preset-formatting
 
+## 2.0.6
+
+> 2022-10-11
+
+### Patch Changes
+
+- Expose the ability to split and merge cells in the default React tables menu
+- Fixes a bug that causes `ReferenceError: window is not defined` when parsing HTML on the server.
+- Updated dependencies
+- Updated dependencies
+  - @remirror/extension-text-color@2.0.6
+  - @remirror/extension-text-highlight@2.0.6
+  - @remirror/core@2.0.6
+  - @remirror/extension-bold@2.0.6
+  - @remirror/extension-columns@2.0.6
+  - @remirror/extension-font-size@2.0.6
+  - @remirror/extension-heading@2.0.6
+  - @remirror/extension-italic@2.0.6
+  - @remirror/extension-node-formatting@2.0.6
+  - @remirror/extension-strike@2.0.6
+  - @remirror/extension-sub@2.0.6
+  - @remirror/extension-sup@2.0.6
+  - @remirror/extension-text-case@2.0.6
+  - @remirror/extension-underline@2.0.6
+  - @remirror/extension-whitespace@2.0.6
+
 ## 2.0.5
 
 > 2022-09-29
