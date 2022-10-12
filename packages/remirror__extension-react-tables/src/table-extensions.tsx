@@ -366,4 +366,23 @@ export class TableControllerCellExtension extends BaseTableControllerCellExtensi
   createExtensions() {
     return [];
   }
+
+  createPlugin(): CreateExtensionPlugin {
+    return {
+      filterTransaction: (tr) => {
+        const controllerCellsWithContent = getChangedNodes(tr, {
+          descend: true,
+          predicate: (node: ProsemirrorNode) => {
+            if (node.type !== this.type) {
+              return false;
+            }
+
+            return node.textContent !== '';
+          },
+        });
+
+        return controllerCellsWithContent.length === 0;
+      },
+    };
+  }
 }
