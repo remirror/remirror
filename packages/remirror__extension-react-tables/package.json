@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-tables",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Create tables with nested react components.",
   "keywords": [
     "remirror",

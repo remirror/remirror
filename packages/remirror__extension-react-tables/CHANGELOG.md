@@ -1,5 +1,13 @@
 # @remirror/extension-react-tables
 
+## 2.0.11
+
+> 2022-10-13
+
+### Patch Changes
+
+- Prevent controller cell content with `filterTransaction`
+
 ## 2.0.10
 
 > 2022-10-11
