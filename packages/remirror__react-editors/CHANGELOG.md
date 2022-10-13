@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 1.0.11
+
+> 2022-10-13
+
+### Patch Changes
+
+- Prevent controller cell content with `filterTransaction`
+- Updated dependencies
+  - @remirror/extension-react-tables@2.0.11
+  - @remirror/react@2.0.11
+
 ## 1.0.10
 
 > 2022-10-11
