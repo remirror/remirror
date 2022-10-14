@@ -67,7 +67,11 @@ export class TableExtension extends BaseTableExtension {
    * Add the table plugins to the editor.
    */
   createExternalPlugins(): ProsemirrorPlugin[] {
-    const plugins = [];
+    const plugins: ProsemirrorPlugin[] = [];
+
+    if (this.store.isMounted() && this.store.helpers.isViewEditable() === false) {
+      return plugins;
+    }
 
     if (this.options.resizable) {
       // Add first to avoid highlighting cells while resizing
@@ -127,6 +131,8 @@ export class TableExtension extends BaseTableExtension {
   }
 
   onView(view: EditorView): void {
+    super.onView(view);
+
     // We have multiple node types which share a eom table_row in this
     // extension. In order to make the function `tableNodeTypes` from
     // `prosemirror-extension-tables` return the correct node type, we

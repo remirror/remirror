@@ -5,6 +5,7 @@ import {
   CommandFunctionProps,
   convertCommand,
   EditorState,
+  EditorView,
   extension,
   ExtensionPriority,
   ExtensionTag,
@@ -102,11 +103,21 @@ export class TableExtension extends NodeExtension<TableOptions> {
     }
   }
 
+  onView(_: EditorView): void {
+    if (this.store.helpers.isViewEditable() === false) {
+      this.store.updateExtensionPlugins(this);
+    }
+  }
+
   /**
    * Add the table plugins to the editor.
    */
   createExternalPlugins(): ProsemirrorPlugin[] {
-    const plugins = [];
+    const plugins: ProsemirrorPlugin[] = [];
+
+    if (this.store.isMounted() && this.store.helpers.isViewEditable() === false) {
+      return plugins;
+    }
 
     if (this.options.resizable) {
       // Add first to avoid highlighting cells while resizing
