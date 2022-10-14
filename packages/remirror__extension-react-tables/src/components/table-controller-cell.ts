@@ -26,12 +26,15 @@ const TableControllerCell = ({
 
   const events = createControllerEvents({ view, findTable });
 
+  const childNodes = view.editable
+    ? [...TableInsertButtonTrigger({ view, findTable }), ...TableInsertMark()]
+    : [];
+
   const wrapper = h(
     'div',
     { contentEditable: 'false', className: ExtensionTablesTheme.TABLE_CONTROLLER_WRAPPER },
     contentDOM,
-    ...TableInsertButtonTrigger({ view, findTable }),
-    ...TableInsertMark(),
+    ...childNodes,
   );
 
   return h(

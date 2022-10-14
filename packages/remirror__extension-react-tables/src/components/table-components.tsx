@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHelpers } from '@remirror/react-core';
 
 import { TableCellMenu, TableCellMenuProps } from './table-cell-menu';
 import {
@@ -53,6 +54,12 @@ export const TableComponents: React.FC<TableComponentsProps> = ({
   tableDeleteRowColumnButtonProps,
   tableDeleteButtonProps,
 }) => {
+  const { isViewEditable } = useHelpers();
+
+  if (!isViewEditable()) {
+    return null;
+  }
+
   return (
     <>
       {enableTableCellMenu && <TableCellMenu {...tableCellMenuProps} />}
