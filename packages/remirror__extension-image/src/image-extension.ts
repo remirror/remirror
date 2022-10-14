@@ -55,7 +55,7 @@ export interface ImageOptions {
    *
    * @defaultValue false
    */
-  enableResizing: boolean;
+  enableResizing?: boolean;
 }
 
 interface FileWithProgress {
