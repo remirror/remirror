@@ -1,5 +1,15 @@
 # @remirror/react
 
+## 2.0.12
+
+> 2022-10-14
+
+### Patch Changes
+
+- Prevent table plugins (such as column resizing) from loading, if the view is not editable
+- Updated dependencies
+  - @remirror/extension-react-tables@2.1.0
+
 ## 2.0.11
 
 > 2022-10-13

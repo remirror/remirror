@@ -56,6 +56,19 @@ export interface ImageOptions {
    * @defaultValue false
    */
   enableResizing?: boolean;
+
+  /**
+   * When pasting mixed text and image content (usually from Microsoft Office products) the content on the clipboard is either:
+   *
+   * a. one large image: containing effectively a screenshot of the original content (an image with text in it).
+   * b. HTML content: containing usable text, but images with file protocol URLs (which cannot be resolved due to browser security restrictions).
+   *
+   * If true, this will extract the text from the clipboard data, and drop the images.
+   * If false, the "screenshot" image will be used and the text will be dropped.
+   *
+   * @defaultValue true
+   */
+  preferPastedTextContent?: boolean;
 }
 
 interface FileWithProgress {
@@ -86,6 +99,7 @@ type SetProgress = (progress: number) => void;
     destroyPlaceholder: () => {},
     uploadHandler,
     enableResizing: false,
+    preferPastedTextContent: true,
   },
 })
 export class ImageExtension extends NodeExtension<ImageOptions> {
@@ -98,6 +112,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
   }
 
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): NodeExtensionSpec {
+    const { preferPastedTextContent } = this.options;
     return {
       inline: true,
       draggable: true,
@@ -119,8 +134,19 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
       parseDOM: [
         {
           tag: 'img[src]',
-          getAttrs: (element) =>
-            isElementDomNode(element) ? getImageAttributes({ element, parse: extra.parse }) : {},
+          getAttrs: (element) => {
+            if (isElementDomNode(element)) {
+              const attrs = getImageAttributes({ element, parse: extra.parse });
+
+              if (preferPastedTextContent && attrs.src?.startsWith('file:///')) {
+                return false;
+              }
+
+              return attrs;
+            }
+
+            return {};
+          },
         },
         ...(override.parseDOM ?? []),
       ],
@@ -202,7 +228,17 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
     };
   }
 
-  private fileUploadFileHandler(files: File[]) {
+  private fileUploadFileHandler(files: File[], event: ClipboardEvent | DragEvent) {
+    const { preferPastedTextContent, uploadHandler } = this.options;
+
+    if (
+      preferPastedTextContent &&
+      isClipboardEvent(event) &&
+      event.clipboardData?.getData('text/plain')
+    ) {
+      return false;
+    }
+
     const { commands, chain } = this.store;
     const filesWithProgress: FileWithProgress[] = files.map((file, index) => ({
       file,
@@ -211,7 +247,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
       },
     }));
 
-    const uploads = this.options.uploadHandler(filesWithProgress);
+    const uploads = uploadHandler(filesWithProgress);
 
     for (const upload of uploads) {
       chain.uploadImage(upload);
@@ -227,7 +263,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
       {
         type: 'file',
         regexp: /image/i,
-        fileHandler: ({ files }) => this.fileUploadFileHandler(files),
+        fileHandler: ({ files, event }) => this.fileUploadFileHandler(files, event),
       },
     ];
   }
@@ -353,6 +389,10 @@ function uploadHandler(files: FileWithProgress[]): DelayedImage[] {
   }
 
   return promises;
+}
+
+function isClipboardEvent(event: ClipboardEvent | DragEvent): event is ClipboardEvent {
+  return (event as ClipboardEvent).clipboardData !== undefined;
 }
 
 declare global {
