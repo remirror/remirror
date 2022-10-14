@@ -1,5 +1,13 @@
 # @remirror/extension-tabless
 
+## 2.1.0
+
+> 2022-10-14
+
+### Minor Changes
+
+- Prevent table plugins (such as column resizing) from loading, if the view is not editable
+
 ## 2.0.6
 
 > 2022-10-11
