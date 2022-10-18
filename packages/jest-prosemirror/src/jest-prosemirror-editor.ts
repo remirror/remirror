@@ -142,7 +142,7 @@ export function pasteContent(
 
     slice = content.slice(from, to);
     view.someProp('transformPasted', (f) => {
-      slice = f(slice);
+      slice = f(slice, view);
     });
   }
 

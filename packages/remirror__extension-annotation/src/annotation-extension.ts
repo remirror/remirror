@@ -115,7 +115,7 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
       },
       props: {
         decorations(state: EditorState) {
-          return this.getState(state).decorationSet;
+          return this.getState(state)?.decorationSet;
         },
       },
     };
