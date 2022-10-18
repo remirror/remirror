@@ -139,12 +139,12 @@
     "prosemirror-model": "^1.18.1",
     "prosemirror-paste-rules": "^2.0.0",
     "prosemirror-schema-list": "^1.2.2",
-    "prosemirror-state": "^1.4.1",
+    "prosemirror-state": "^1.4.2",
     "prosemirror-suggest": "^2.0.0",
     "prosemirror-tables": "^1.2.5",
     "prosemirror-trailing-node": "^2.0.0",
     "prosemirror-transform": "^1.7.0",
-    "prosemirror-view": "^1.28.1"
+    "prosemirror-view": "^1.29.0"
   },
   "publishConfig": {
     "access": "public"
