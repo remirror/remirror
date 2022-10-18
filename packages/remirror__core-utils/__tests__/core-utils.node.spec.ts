@@ -14,7 +14,8 @@ describe('toDOM', () => {
     const customDocument = new JSDOM().window.document;
     expect(prosemirrorNodeToDom(node, customDocument)).toBeObject();
 
-    const wrongDocument = {} as Document;
+    const wrongWindow = {} as Window;
+    const wrongDocument = { defaultView: wrongWindow } as Document;
     expect(() => prosemirrorNodeToDom(node, customDocument)).not.toThrow();
     expect(() => prosemirrorNodeToDom(node, wrongDocument)).toThrow();
   });
@@ -34,7 +35,8 @@ describe('htmlToProsemirrorNode', () => {
       }),
     ).toEqualProsemirrorNode(doc(p('Hello')));
 
-    const wrongDocument = {} as Document;
+    const wrongWindow = {} as Window;
+    const wrongDocument = { defaultView: wrongWindow } as Document;
     expect(() =>
       htmlToProsemirrorNode({
         content: content,
