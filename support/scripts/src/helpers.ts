@@ -5,7 +5,7 @@ import { getPackages } from '@manypkg/get-packages';
 import assert from 'assert';
 import camelCaseKeys from 'camelcase-keys';
 import chalk from 'chalk';
-import { execFile as _execFile } from 'child_process';
+import { exec as _exec, execFile as _execFile } from 'child_process';
 import fs from 'fs';
 import { diff } from 'jest-diff';
 import isEqual from 'lodash.isequal';
@@ -30,6 +30,7 @@ const minLevel = cliArgs.logLevel ?? process.env.LOG_LEVEL ?? 'debug';
  */
 export const log: Logger = new Logger({ minLevel });
 
+export const exec = promisify(_exec);
 export const execFile = promisify(_execFile);
 export const rm = promisify(_rm);
 const separator = '__';
