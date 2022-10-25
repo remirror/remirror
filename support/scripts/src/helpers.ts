@@ -107,17 +107,18 @@ interface FormatFilesOptions {
 }
 
 /**
- * Format the provided files with `prettier` and `eslint`.
+ * Format the provided file or files with `prettier` and `eslint`.
  */
 export async function formatFiles(
-  path = '',
+  path: string | string[],
   { silent = false, formatter = 'all' }: FormatFilesOptions = {},
 ): Promise<void> {
   const promises: Array<Promise<{ stdout: string; stderr: string }>> = [];
+  const paths: string[] = typeof path === 'string' ? [path] : path;
 
   if (formatter !== 'prettier') {
     promises.push(
-      execFile(`eslint`, [`--fix`, path], {
+      execFile(`eslint`, [`--fix`, ...paths], {
         // @ts-expect-error
         stdio: 'pipe',
       }),
@@ -126,7 +127,7 @@ export async function formatFiles(
 
   if (formatter !== 'eslint') {
     promises.push(
-      execFile(`prettier`, [`--loglevel`, `warn`, path, `--write`], {
+      execFile(`prettier`, [`--loglevel`, `warn`, ...paths, `--write`], {
         // @ts-expect-error
         stdio: 'pipe',
       }),

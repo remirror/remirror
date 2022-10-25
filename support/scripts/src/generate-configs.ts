@@ -554,7 +554,7 @@ async function generatePackageTsConfigs() {
 
         // Add the file created to the list of files to prettify at the end of
         // the script being run.
-        filesToPrettify.push(tsconfigFiles.map((tsconfig) => tsconfig.filepath).join(' '));
+        filesToPrettify.push(...tsconfigFiles.map((tsconfig) => tsconfig.filepath));
       }),
     );
   }
@@ -615,7 +615,7 @@ async function main() {
   log.debug('Prettifying the updated and created files');
 
   // Format all the files which have been created before exiting.
-  await formatFiles(filesToPrettify.join(' '), { silent: true, formatter: 'prettier' });
+  await formatFiles(filesToPrettify, { silent: true, formatter: 'prettier' });
 }
 
 // Run the script and listen for any errors.
