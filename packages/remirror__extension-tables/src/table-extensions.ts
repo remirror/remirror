@@ -33,6 +33,7 @@ import {
   deleteTable,
   fixTables,
   fixTablesKey,
+  isCellSelection,
   mergeCells,
   setCellAttr,
   splitCell,
@@ -47,6 +48,7 @@ import {
   CreateTableCommand,
   createTableNodeSchema,
   createTableOptions,
+  findCellClosestToPos,
   TableSchemaSpec,
 } from './table-utils';
 
@@ -317,6 +319,42 @@ export class TableExtension extends NodeExtension<TableOptions> {
       }
 
       return false;
+    };
+  }
+
+  @command()
+  selectParentCell(): CommandFunction {
+    return ({ dispatch, tr }) => {
+      const cell = findCellClosestToPos(tr.selection.$from);
+
+      if (!cell) {
+        return false;
+      }
+
+      dispatch?.(tr.setSelection(CellSelection.create(tr.doc, cell.pos)));
+      return true;
+    };
+  }
+
+  @command()
+  expandCellSelection(type: 'column' | 'row' | 'all' = 'all'): CommandFunction {
+    return ({ dispatch, tr }) => {
+      if (!isCellSelection(tr.selection)) {
+        return false;
+      }
+
+      if (type !== 'row') {
+        const { $anchorCell, $headCell } = tr.selection;
+        tr.setSelection(CellSelection.colSelection($anchorCell, $headCell));
+      }
+
+      if (type !== 'column') {
+        const { $anchorCell, $headCell } = tr.selection;
+        tr.setSelection(CellSelection.rowSelection($anchorCell, $headCell));
+      }
+
+      dispatch?.(tr);
+      return true;
     };
   }
 

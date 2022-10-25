@@ -586,7 +586,13 @@
     "name": "@remirror/extension-tables",
     "limit": "10 KB",
     "path": "packages/remirror__extension-tables/dist/remirror-extension-tables.js",
-    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages", "@remirror/theme"],
+    "ignore": [
+      "@remirror/pm",
+      "@remirror/core",
+      "@remirror/extension-positioner",
+      "@remirror/messages",
+      "@remirror/theme"
+    ],
     "running": false,
     "gzip": true
   },

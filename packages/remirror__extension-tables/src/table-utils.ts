@@ -3,13 +3,17 @@ import {
   EditorSchema,
   ErrorConstant,
   ExtensionTag,
+  findParentNodeOfType,
+  FindProsemirrorNodeResult,
   includes,
   invariant,
   NodeExtensionSpec,
   NodeSpecOverride,
   NodeType,
   object,
+  ResolvedPos,
   SchemaProps,
+  Selection,
   values,
 } from '@remirror/core';
 import { ExtensionTablesMessages } from '@remirror/messages';
@@ -250,6 +254,24 @@ export function createTable(props: CreateTableProps): ProsemirrorNode {
   }
 
   return table.createChecked(null, rows);
+}
+
+/**
+ * Finds the nearest parent table node (if it exists)
+ */
+export function findTable(
+  selection: Selection | ResolvedPos,
+): FindProsemirrorNodeResult | undefined {
+  return findParentNodeOfType({ selection, types: 'table' });
+}
+
+/**
+ * Finds the nearest parent table cell or header cell (if it exists)
+ */
+export function findCellClosestToPos(
+  selection: Selection | ResolvedPos,
+): FindProsemirrorNodeResult | undefined {
+  return findParentNodeOfType({ selection, types: ['tableHeaderCell', 'tableCell'] });
 }
 
 const { CREATE_COMMAND_DESCRIPTION, CREATE_COMMAND_LABEL } = ExtensionTablesMessages;

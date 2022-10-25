@@ -1536,12 +1536,14 @@ importers:
     specifiers:
       '@babel/runtime': ^7.13.10
       '@remirror/core': ^2.0.6
+      '@remirror/extension-positioner': ^2.0.7
       '@remirror/messages': ^2.0.1
       '@remirror/pm': ^2.0.0
       '@remirror/theme': ^2.0.1
     dependencies:
       '@babel/runtime': 7.18.9
       '@remirror/core': link:../remirror__core
+      '@remirror/extension-positioner': link:../remirror__extension-positioner
       '@remirror/messages': link:../remirror__messages
       '@remirror/theme': link:../remirror__theme
     devDependencies:
@@ -12469,7 +12471,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.5
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -23491,6 +23493,7 @@ packages:
         optional: true
     dependencies:
       bluebird: 3.7.2
+    dev: false
 
   /promise-retry/1.1.1:
     resolution: {integrity: sha1-ZznpaOMFHaIM5kl/srUPaRHfPW0=}
