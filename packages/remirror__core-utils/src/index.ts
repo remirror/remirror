@@ -103,6 +103,7 @@ export {
   isDomNode,
   isElementDomNode,
   isTextDomNode,
+  mergeDOMRects,
   parseSizeUnit,
   setStyle,
 } from './dom-utils';
