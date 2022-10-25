@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { expect, jest } from '@jest/globals';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { isAllSelection } from '@remirror/core';
 
@@ -49,13 +49,13 @@ describe('utils#isPositionerUpdateTransaction', () => {
 
     chain.forceUpdatePositioners().tr();
 
-    expect(isPositionerUpdateTransaction(manager.tr)).toBeTrue();
+    expect(isPositionerUpdateTransaction(manager.tr)).toBe(true);
   });
 
   it('returns false if the transaction is NOT a positioner update', () => {
     const { manager } = create();
 
-    expect(isPositionerUpdateTransaction(manager.tr)).toBeFalse();
+    expect(isPositionerUpdateTransaction(manager.tr)).toBe(false);
   });
 
   it('returns true if the transaction is of the matching positioner key', () => {
@@ -63,7 +63,7 @@ describe('utils#isPositionerUpdateTransaction', () => {
 
     chain.forceUpdatePositioners('myCustomKey').tr();
 
-    expect(isPositionerUpdateTransaction(manager.tr, 'myCustomKey')).toBeTrue();
+    expect(isPositionerUpdateTransaction(manager.tr, 'myCustomKey')).toBe(true);
   });
 
   it('returns false if the transaction is of the matching positioner key', () => {
@@ -71,8 +71,8 @@ describe('utils#isPositionerUpdateTransaction', () => {
 
     chain.forceUpdatePositioners('myCustomKey').tr();
 
-    expect(isPositionerUpdateTransaction(manager.tr)).toBeFalse();
-    expect(isPositionerUpdateTransaction(manager.tr, 'myOtherKey')).toBeFalse();
+    expect(isPositionerUpdateTransaction(manager.tr)).toBe(false);
+    expect(isPositionerUpdateTransaction(manager.tr, 'myOtherKey')).toBe(false);
   });
 });
 
@@ -99,7 +99,7 @@ test('`cursorPositioner` can position itself', () => {
     .insertText('a')
     .callback(() => {
       expect(cursorMock.onUpdate).toHaveBeenCalledWith([
-        { setElement: expect.any(Function), id: expect.any(String) },
+        { setElement: expect.any(Function), id: expect.any(String), data: expect.any(Object) },
       ]);
       expect(cursorMock.onDone).toHaveBeenCalledWith([
         { position: expect.any(Object), element: cursorElement, id: '0' },
@@ -138,7 +138,7 @@ test('`selectionPositioner` can position itself', () => {
     .selectText({ from: 1, to: 5 })
     .callback(() => {
       expect(centeredMock.onUpdate).toHaveBeenCalledWith([
-        { setElement: expect.any(Function), id: '0' },
+        { setElement: expect.any(Function), id: '0', data: expect.any(Object) },
       ]);
       expect(centeredMock.onDone).toHaveBeenCalledWith([
         { position: expect.any(Object), element: centeredElement, id: '0' },
@@ -169,7 +169,7 @@ test('`positionerExtension` can position itself', () => {
     .insertText('a \n')
     .callback(() => {
       expect(floatingMock.onUpdate).toHaveBeenCalledWith([
-        { setElement: expect.any(Function), id: '0' },
+        { setElement: expect.any(Function), id: '0', data: expect.any(Object) },
       ]);
       expect(floatingMock.onDone).toHaveBeenCalledWith([
         { position: expect.any(Object), element: floatingElement, id: '0' },
@@ -201,7 +201,7 @@ test("a custom positioner can define it's own hasChanged behaviour", () => {
     })
     .callback(() => {
       expect(customMock.onUpdate).toHaveBeenCalledWith([
-        { setElement: expect.any(Function), id: '0' },
+        { setElement: expect.any(Function), id: '0', data: expect.any(Object) },
       ]);
       expect(customMock.onDone).toHaveBeenCalledWith([
         { position: expect.any(Object), element: customElement, id: '0' },
@@ -255,7 +255,7 @@ test("a custom positioner can determine it's own active state", () => {
     .selectText('all')
     .callback(() => {
       expect(customMock.onUpdate).toHaveBeenCalledWith([
-        { setElement: expect.any(Function), id: '0' },
+        { setElement: expect.any(Function), id: '0', data: expect.any(Object) },
       ]);
       expect(customMock.onDone).toHaveBeenCalledWith([
         { position: expect.any(Object), element: customElement, id: '0' },

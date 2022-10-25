@@ -12,7 +12,7 @@ import { useExtension } from '@remirror/react-core';
 
 import { usePrevious } from './use-previous';
 
-export interface UseMultiPositionerReturn extends PositionerPosition {
+export interface UseMultiPositionerReturn<Data = any> extends PositionerPosition {
   /**
    * This ref must be applied to the component that is being positioned in order
    * to correctly obtain the position data.
@@ -20,7 +20,7 @@ export interface UseMultiPositionerReturn extends PositionerPosition {
   ref: RefCallback<HTMLElement>;
 
   /**
-   * The element that that the ref has found.
+   * The element that the ref has found.
    */
   element?: HTMLElement;
 
@@ -29,6 +29,11 @@ export interface UseMultiPositionerReturn extends PositionerPosition {
    * react element.
    */
   key: string;
+
+  /**
+   * Metadata associated with the position
+   */
+  data: Data;
 }
 
 /**
@@ -64,13 +69,14 @@ export interface UseMultiPositionerReturn extends PositionerPosition {
  * @param deps - an array of dependencies which will cause the hook to rerender
  * with an updated positioner. This is the only way to update the positioner.
  */
-export function useMultiPositioner(
+export function useMultiPositioner<Data = any>(
   positioner: PositionerParam,
   deps: unknown[],
-): UseMultiPositionerReturn[] {
+): Array<UseMultiPositionerReturn<Data>> {
   interface CollectElementRef {
     ref: RefCallback<HTMLElement>;
     id: string;
+    data: Data;
   }
 
   const [state, setState] = useState<ElementsAddedProps[]>([]);
@@ -99,7 +105,7 @@ export function useMultiPositioner(
     const disposeUpdate = memoizedPositioner.addListener('update', (options) => {
       const items: CollectElementRef[] = [];
 
-      for (const { id, setElement } of options) {
+      for (const { id, data, setElement } of options) {
         const ref: RefCallback<HTMLElement> = (element) => {
           if (!element) {
             return;
@@ -108,7 +114,7 @@ export function useMultiPositioner(
           setElement(element);
         };
 
-        items.push({ id, ref });
+        items.push({ id, data, ref });
       }
 
       setCollectRefs(items);
@@ -131,12 +137,12 @@ export function useMultiPositioner(
   return useMemo(() => {
     const positions: UseMultiPositionerReturn[] = [];
 
-    for (const [index, { ref, id: key }] of collectRefs.entries()) {
+    for (const [index, { ref, data, id: key }] of collectRefs.entries()) {
       const stateValue = state[index];
       const { element, position = {} } = stateValue ?? {};
       const absolutePosition = { ...defaultAbsolutePosition, ...omitUndefined(position) };
 
-      positions.push({ ref, element, key, ...absolutePosition });
+      positions.push({ ref, element, data, key, ...absolutePosition });
     }
 
     return positions;

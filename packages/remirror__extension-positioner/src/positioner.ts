@@ -121,7 +121,7 @@ export interface BasePositioner<Data> {
   events?: PositionerUpdateEvent[];
 }
 
-export interface SetActiveElement {
+export interface SetActiveElement<Data = any> {
   /**
    * Set the html element for the active position.
    */
@@ -131,6 +131,8 @@ export interface SetActiveElement {
    * The unique ide for the active element.
    */
   id: string;
+
+  data: Data;
 }
 
 export interface BasePositionerProps extends Omit<StateUpdateLifecycleProps, 'previousState'> {
@@ -169,7 +171,7 @@ export interface ElementsAddedProps {
   id: string;
 }
 
-interface PositionerEvents {
+interface PositionerEvents<Data = any> {
   /**
    * Called when the dom elements have all been received. In some frameworks
    * like `React` this may be called asynchronously.
@@ -179,7 +181,7 @@ interface PositionerEvents {
   /**
    * Called when the active values have been updated.
    */
-  update: (elementSetters: SetActiveElement[]) => void;
+  update: (elementSetters: Array<SetActiveElement<Data>>) => void;
 }
 
 /**
@@ -223,7 +225,7 @@ export class Positioner<Data = any> {
 
   readonly events: PositionerUpdateEvent[];
 
-  #handler = createNanoEvents<PositionerEvents>();
+  #handler = createNanoEvents<PositionerEvents<Data>>();
   #active: Data[] = [];
   #props: Map<number, GetPositionProps<Data>> = new Map();
   #ids: string[] = [];
@@ -272,7 +274,7 @@ export class Positioner<Data = any> {
     this.#updated = false;
     this.#ids = [];
 
-    const elementSetters: SetActiveElement[] = [];
+    const elementSetters: Array<SetActiveElement<Data>> = [];
 
     for (const [index, data] of active.entries()) {
       const id = this.getID(data, index);
@@ -283,6 +285,7 @@ export class Positioner<Data = any> {
           return this.addProps({ ...props, data, element }, index);
         },
         id,
+        data,
       });
     }
 
@@ -299,9 +302,9 @@ export class Positioner<Data = any> {
   /**
    * Add a listener to the positioner events.
    */
-  readonly addListener = <Key extends keyof PositionerEvents>(
+  readonly addListener = <Key extends keyof PositionerEvents<Data>>(
     event: Key,
-    cb: PositionerEvents[Key],
+    cb: PositionerEvents<Data>[Key],
   ): Unsubscribe => {
     return this.#handler.on(event, cb);
   };
