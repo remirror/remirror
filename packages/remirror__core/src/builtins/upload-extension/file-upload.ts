@@ -187,7 +187,7 @@ function onFileLoaded<NodeAttributes extends AbstractNodeAttributes>({
   setUploadPlaceholderAction(tr, { type: ActionType.REMOVE_PLACEHOLDER, id });
   const fileAttrs: NodeAttributes = { ...fileNode.attrs, ...attrs, id: null };
   // We need to update the node to trigger the render function, which will accept
-  // differnt properties during and after the upload progress.
+  // different properties during and after the upload progress.
   tr.setNodeMarkup(placeholderPos, undefined, fileAttrs);
   view.dispatch(tr);
 }

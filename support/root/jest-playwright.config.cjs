@@ -3,7 +3,7 @@
 const { E2E_DEBUG, E2E_COVERAGE, E2E_BROWSER = 'chromium' } = process.env;
 
 /** @type {?} */
-const browsers = E2E_BROWSER.split(',')
+const browsers = E2E_BROWSER.split(',');
 const collectCoverage = E2E_COVERAGE === 'true';
 const debug = E2E_DEBUG === 'true';
 
@@ -20,4 +20,4 @@ const config = {
   collectCoverage,
 };
 
-module.exports = config
+module.exports = config;
