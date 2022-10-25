@@ -6,9 +6,8 @@ import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 const extensions = () => [new ImageExtension({ enableResizing: true })];
 
-const Resizable = ({ delaySeconds = 1 }: { delaySeconds: number }): JSX.Element => {
+const Resizable = (): JSX.Element => {
   const imageSrc = 'https://dummyimage.com/2000x800/479e0c/fafafa';
-  const proxySrc = `https://deelay.me/${delaySeconds * 1000}/${imageSrc}`;
 
   const { manager, state, onChange } = useRemirror({
     extensions,
@@ -23,7 +22,7 @@ const Resizable = ({ delaySeconds = 1 }: { delaySeconds: number }): JSX.Element 
               attrs: {
                 height: 160,
                 width: 400,
-                src: proxySrc,
+                src: imageSrc,
               },
             },
           ],
