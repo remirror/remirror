@@ -52,6 +52,11 @@ import {
   TableSchemaSpec,
 } from './table-utils';
 
+export interface TableResizableOptions {
+  handleWidth?: number;
+  cellMinWidth?: number;
+}
+
 export interface TableOptions {
   /**
    * When `true` the table will be resizable.
@@ -59,6 +64,11 @@ export interface TableOptions {
    * @defaultValue true
    */
   resizable?: boolean;
+
+  /**
+   * The options passed to the column resizing plugin
+   */
+  resizeableOptions?: TableResizableOptions;
 }
 
 let tablesEnabled = false;
@@ -66,6 +76,7 @@ let tablesEnabled = false;
 @extension<TableOptions>({
   defaultOptions: {
     resizable: true,
+    resizeableOptions: {},
   },
   defaultPriority: ExtensionPriority.Default,
 })
@@ -121,9 +132,11 @@ export class TableExtension extends NodeExtension<TableOptions> {
       return plugins;
     }
 
-    if (this.options.resizable) {
+    const { resizable, resizeableOptions } = this.options;
+
+    if (resizable) {
       // Add first to avoid highlighting cells while resizing
-      plugins.push(columnResizing({}));
+      plugins.push(columnResizing(resizeableOptions));
     }
 
     plugins.push(tableEditing());

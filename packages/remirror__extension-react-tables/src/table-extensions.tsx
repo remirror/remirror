@@ -73,9 +73,11 @@ export class TableExtension extends BaseTableExtension {
       return plugins;
     }
 
-    if (this.options.resizable) {
+    const { resizable, resizeableOptions } = this.options;
+
+    if (resizable) {
       // Add first to avoid highlighting cells while resizing
-      plugins.push(columnResizing({ firstResizableColumn: 1 }));
+      plugins.push(columnResizing({ ...resizeableOptions, firstResizableColumn: 1 }));
     }
 
     plugins.push(tableEditing(), createTableControllerPlugin());

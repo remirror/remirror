@@ -1,4 +1,4 @@
-export type { TableOptions } from './table-extensions';
+export type { TableOptions, TableResizableOptions } from './table-extensions';
 export {
   TableCellExtension,
   TableControllerCellExtension,
