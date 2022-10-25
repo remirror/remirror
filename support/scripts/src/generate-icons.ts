@@ -300,10 +300,10 @@ async function writeIconModule() {
  */
 async function run() {
   log.debug(chalk`Generating icons for {grey \`@remirror/react-components\`}`);
-  const formatPath = [coreIconsPath, coreComponentsPath, allIconsPath, allComponentsPath].join(' ');
+  const formatPaths = [coreIconsPath, coreComponentsPath, allIconsPath, allComponentsPath];
 
   await writeIconModule();
-  await formatFiles(formatPath, { silent: true });
+  await formatFiles(formatPaths, { silent: true });
 
   log.debug(chalk`{green Icons generated} 🙌`);
 }

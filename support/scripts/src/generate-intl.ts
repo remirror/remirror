@@ -32,7 +32,7 @@ async function run() {
     await createIndexFile(locale);
   }
 
-  await formatFiles(filesToFormat.join(' '), { formatter: 'prettier' });
+  await formatFiles(filesToFormat, { formatter: 'prettier' });
 }
 
 run().catch((error) => log.fatal(error));

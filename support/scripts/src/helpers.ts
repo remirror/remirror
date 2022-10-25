@@ -5,7 +5,7 @@ import { getPackages } from '@manypkg/get-packages';
 import assert from 'assert';
 import camelCaseKeys from 'camelcase-keys';
 import chalk from 'chalk';
-import { exec as _exec } from 'child_process';
+import { exec as _exec, execFile as _execFile } from 'child_process';
 import fs from 'fs';
 import { diff } from 'jest-diff';
 import isEqual from 'lodash.isequal';
@@ -31,6 +31,7 @@ const minLevel = cliArgs.logLevel ?? process.env.LOG_LEVEL ?? 'debug';
 export const log: Logger = new Logger({ minLevel });
 
 export const exec = promisify(_exec);
+export const execFile = promisify(_execFile);
 export const rm = promisify(_rm);
 const separator = '__';
 
@@ -106,17 +107,18 @@ interface FormatFilesOptions {
 }
 
 /**
- * Format the provided files with `prettier` and `eslint`.
+ * Format the provided file or files with `prettier` and `eslint`.
  */
 export async function formatFiles(
-  path = '',
+  path: string | string[],
   { silent = false, formatter = 'all' }: FormatFilesOptions = {},
 ): Promise<void> {
   const promises: Array<Promise<{ stdout: string; stderr: string }>> = [];
+  const paths: string[] = typeof path === 'string' ? [path] : path;
 
   if (formatter !== 'prettier') {
     promises.push(
-      exec(`eslint --fix ${path}`, {
+      execFile(`eslint`, [`--fix`, ...paths], {
         // @ts-expect-error
         stdio: 'pipe',
       }),
@@ -125,7 +127,7 @@ export async function formatFiles(
 
   if (formatter !== 'eslint') {
     promises.push(
-      exec(`prettier --loglevel warn ${path} --write`, {
+      execFile(`prettier`, [`--loglevel`, `warn`, ...paths, `--write`], {
         // @ts-expect-error
         stdio: 'pipe',
       }),
