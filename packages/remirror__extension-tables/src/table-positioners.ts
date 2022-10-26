@@ -119,9 +119,15 @@ export const tablePositioner = Positioner.create<FindProsemirrorNodeResult>({
     // The top and left relative to the parent `editorRect`.
     const left = view.dom.scrollLeft + rect.left - editorRect.left - 1;
     const top = view.dom.scrollTop + rect.top - editorRect.top - 1;
-    const visible = isPositionVisible(rect, view.dom);
 
-    return { x: left, y: top, height, width, rect, visible };
+    return {
+      x: left,
+      y: top,
+      height,
+      width,
+      rect,
+      visible: isPositionVisible(rect, view.dom),
+    };
   },
 });
 
@@ -192,11 +198,11 @@ export const allColumnsStartPositioner = Positioner.create<NodeWithPosition>({
     const left = view.dom.scrollLeft + rect.left - editorRect.left;
     const top = view.dom.scrollTop + rect.top - editorRect.top - 1;
 
-    const columnTopRect = new DOMRect(left - 1, top - 1, width, 1);
+    const columnTopRect = new DOMRect(rect.x, rect.y - 1, width, 1);
 
     return {
-      x: columnTopRect.x,
-      y: columnTopRect.y,
+      x: left,
+      y: top,
       width,
       height: 1,
       rect: columnTopRect,
@@ -252,11 +258,11 @@ export const allRowsStartPositioner = allColumnsStartPositioner.clone(() => ({
     const left = view.dom.scrollLeft + rect.left - editorRect.left - 1;
     const top = view.dom.scrollTop + rect.top - editorRect.top;
 
-    const rowLeftRect = new DOMRect(left - 1, top - 1, 1, height);
+    const rowLeftRect = new DOMRect(rect.x - 1, rect.y, 1, height);
 
     return {
-      x: rowLeftRect.x,
-      y: rowLeftRect.y,
+      x: left,
+      y: top,
       width: 1,
       height,
       rect: rowLeftRect,
@@ -318,20 +324,23 @@ export const activeCellColumnPositioner = Positioner.create<ActiveCellColumnPosi
   },
 
   getPosition(props) {
-    const { view, data } = props;
-    const { x, y, width, height } = data.rect;
+    const {
+      view,
+      data: { rect },
+    } = props;
 
     const editorRect = view.dom.getBoundingClientRect();
 
-    // The top and left relative to the parent `editorRect`.
-    const left = view.dom.scrollLeft + x - editorRect.left - 1;
-    const top = view.dom.scrollTop + y - editorRect.top - 1;
+    const height = rect.height;
+    const width = rect.width;
 
-    const rect = new DOMRect(left, top, width, height);
+    // The top and left relative to the parent `editorRect`.
+    const left = view.dom.scrollLeft + rect.left - editorRect.left - 1;
+    const top = view.dom.scrollTop + rect.top - editorRect.top - 1;
 
     return {
-      x: rect.x,
-      y: rect.y,
+      x: left,
+      y: top,
       width,
       height,
       rect,

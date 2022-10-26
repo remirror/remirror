@@ -122,6 +122,7 @@ const Template: Story = ({ positioner, placement, label, multi = false }: Templa
   });
 
   const Component = multi ? MultiPositionerIllustration : PositionerIllustration;
+  const floatingPositioner = multi ? activeCellPositioner : positioner;
 
   return (
     <ThemeProvider>
@@ -131,7 +132,7 @@ const Template: Story = ({ positioner, placement, label, multi = false }: Templa
       </p>
       <Remirror manager={manager} initialContent={state} onChange={onChange} autoRender>
         <>
-          <FloatingWrapper positioner={positioner} placement={placement}>
+          <FloatingWrapper positioner={floatingPositioner} placement={placement}>
             <div className='card'>{label}</div>
           </FloatingWrapper>
           <PositionerPortal>
@@ -160,7 +161,7 @@ ActiveCell.args = {
 export const ActiveCellColumn: Story = Template.bind({});
 ActiveCellColumn.args = {
   positioner: activeCellColumnPositioner,
-  placement: 'bottom',
+  placement: 'right',
   label: 'Creates a rect for the column of the active cell.',
 };
 
@@ -174,21 +175,21 @@ ActiveCellRow.args = {
 export const SelectedColumn: Story = Template.bind({});
 SelectedColumn.args = {
   positioner: selectedColumnPositioner,
-  placement: 'bottom',
+  placement: 'right',
   label: 'Creates a rect for a single column where all rows are selected.',
 };
 
 export const SelectedRow: Story = Template.bind({});
 SelectedRow.args = {
   positioner: selectedRowPositioner,
-  placement: 'right',
+  placement: 'bottom',
   label: 'Creates a rect for a single row where all columns are selected.',
 };
 
 export const AllColumnsStart: Story = Template.bind({});
 AllColumnsStart.args = {
   positioner: allColumnsStartPositioner,
-  placement: 'right',
+  placement: 'bottom',
   label: 'Creates multiple rects for the top side of each column in a table.',
   multi: true,
 };
