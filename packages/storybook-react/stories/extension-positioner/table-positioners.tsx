@@ -175,7 +175,7 @@ export const SelectedColumn: Story = Template.bind({});
 SelectedColumn.args = {
   positioner: selectedColumnPositioner,
   placement: 'bottom',
-  label: 'Creates a rect for a single column where all row are selected.',
+  label: 'Creates a rect for a single column where all rows are selected.',
 };
 
 export const SelectedRow: Story = Template.bind({});
@@ -189,7 +189,7 @@ export const AllColumnsStart: Story = Template.bind({});
 AllColumnsStart.args = {
   positioner: allColumnsStartPositioner,
   placement: 'right',
-  label: 'Creates multiple rects for the top of each column in a table.',
+  label: 'Creates multiple rects for the top side of each column in a table.',
   multi: true,
 };
 
@@ -197,7 +197,7 @@ export const AllRowsStart: Story = Template.bind({});
 AllRowsStart.args = {
   positioner: allRowsStartPositioner,
   placement: 'right',
-  label: 'Creates multiple rects for the left of each row in a table.',
+  label: 'Creates multiple rects for the left side of each row in a table.',
   multi: true,
 };
 
