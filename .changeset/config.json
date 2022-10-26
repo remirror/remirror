@@ -1,9 +1,19 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.3.0/schema.json",
-  "ignore": ["storybook-react", "support", "testing", "website", "actions", "scripts"],
+  "ignore": [
+    "storybook-react",
+    "support",
+    "testing",
+    "website",
+    "actions",
+    "scripts"
+  ],
   "updateInternalDependencies": "patch",
   "commit": false,
   "linked": [],
   "access": "public",
-  "baseBranch": "main"
+  "baseBranch": "main",
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "updateInternalDependents": "always"
+  }
 }

@@ -5,7 +5,7 @@
 'prosemirror-trailing-node': patch
 '@remirror/core-utils': patch
 '@remirror/dev': patch
-'@remirror/extension-code-block': patch
+'@remirror/extension-code-block': major
 '@remirror/pm': patch
 ---
 
