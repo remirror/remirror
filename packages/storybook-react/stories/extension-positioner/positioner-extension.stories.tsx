@@ -6,7 +6,7 @@ import {
   EmptyBlockEnd,
   EmptyBlockStart,
   Selection,
-} from './positioners';
+} from './basic';
 import {
   ActiveCell,
   ActiveCellColumn,
