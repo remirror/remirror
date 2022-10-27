@@ -1,6 +1,7 @@
 import {
   FindProsemirrorNodeResult,
   isElementDomNode,
+  mergeDOMRects,
   NodeWithPosition,
   ProsemirrorNode,
   Selection,
@@ -11,7 +12,7 @@ import {
   isPositionVisible,
   Positioner,
 } from '@remirror/extension-positioner';
-import { isCellSelection, TableMap } from '@remirror/pm/tables';
+import { CellSelection, isCellSelection, TableMap } from '@remirror/pm/tables';
 
 import { findCellClosestToPos, findTable } from './table-utils';
 
@@ -472,3 +473,58 @@ export const selectedRowPositioner = activeCellRowPositioner.clone(({ getActive 
     return [data];
   },
 }));
+
+/**
+ * Creates a positioner for the current cell selection in a table
+ *
+ * It spans the full width and height of the selected cells
+ */
+export const cellSelectionPositioner = Positioner.create<CellSelection>({
+  hasChanged: hasStateChanged,
+
+  getActive(props) {
+    const { selection } = props.state;
+
+    if (!isCellSelection(selection)) {
+      return Positioner.EMPTY;
+    }
+
+    return [selection];
+  },
+
+  getPosition(props) {
+    const { view, data: selection } = props;
+
+    const { $headCell, $anchorCell } = selection;
+
+    const headNode = view.nodeDOM($headCell.pos);
+    const anchorNode = view.nodeDOM($anchorCell.pos);
+
+    if (!isElementDomNode(headNode) || !isElementDomNode(anchorNode)) {
+      return defaultAbsolutePosition;
+    }
+
+    const rect = mergeDOMRects(
+      headNode.getBoundingClientRect(),
+      anchorNode.getBoundingClientRect(),
+    );
+
+    const editorRect = view.dom.getBoundingClientRect();
+
+    const height = rect.height;
+    const width = rect.width;
+
+    // The top and left relative to the parent `editorRect`.
+    const left = view.dom.scrollLeft + rect.left - editorRect.left - 1;
+    const top = view.dom.scrollTop + rect.top - editorRect.top - 1;
+
+    return {
+      x: left,
+      y: top,
+      width,
+      height,
+      rect,
+      visible: isPositionVisible(rect, view.dom),
+    };
+  },
+});
