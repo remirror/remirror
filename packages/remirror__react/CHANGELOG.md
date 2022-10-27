@@ -1,5 +1,14 @@
 # @remirror/react
 
+## 2.0.14
+
+> 2022-10-27
+
+### Patch Changes
+
+- @remirror/extension-react-tables@2.2.1
+- @remirror/react-components@2.0.12
+
 ## 2.0.13
 
 > 2022-10-27

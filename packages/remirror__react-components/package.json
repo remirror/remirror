@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-components",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "Components to begin your remirror journey",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-components",
   "repository": {
@@ -62,12 +62,12 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.1",
-    "@remirror/react": "^2.0.13",
+    "@remirror/react": "^2.0.14",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "remirror": "^2.0.12"
+    "remirror": "^2.0.13"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.1",
@@ -75,7 +75,7 @@
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",
     "react-dom": "^16.14.0 || ^17 || ^18",
-    "remirror": "^2.0.12"
+    "remirror": "^2.0.13"
   },
   "peerDependenciesMeta": {
     "@types/react": {

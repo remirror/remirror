@@ -1,5 +1,13 @@
 # @remirror/extension-tabless
 
+## 2.2.1
+
+> 2022-10-27
+
+### Patch Changes
+
+- 0d2237a8d: Add a new table positioner for cell selections
+
 ## 2.2.0
 
 > 2022-10-27
