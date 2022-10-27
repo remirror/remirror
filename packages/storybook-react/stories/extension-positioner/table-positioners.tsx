@@ -12,6 +12,7 @@ import {
   activeCellRowPositioner,
   allColumnsStartPositioner,
   allRowsStartPositioner,
+  cellSelectionPositioner,
   selectedColumnPositioner,
   selectedRowPositioner,
   TableExtension,
@@ -200,6 +201,13 @@ AllRowsStart.args = {
   placement: 'right',
   label: 'Creates multiple rects for the left side of each row in a table.',
   multi: true,
+};
+
+export const CellSelection: Story = Template.bind({});
+CellSelection.args = {
+  positioner: cellSelectionPositioner,
+  placement: 'bottom',
+  label: 'Creates a rect which wraps the selected cells.',
 };
 
 export default Table;

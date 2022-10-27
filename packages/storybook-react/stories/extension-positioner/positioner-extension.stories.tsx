@@ -13,6 +13,7 @@ import {
   ActiveCellRow,
   AllColumnsStart,
   AllRowsStart,
+  CellSelection,
   SelectedColumn,
   SelectedRow,
   Table,
@@ -26,6 +27,7 @@ export { EmptyBlock };
 export { EmptyBlockStart };
 export { EmptyBlockEnd };
 export { Table };
+export { CellSelection };
 export { ActiveCell };
 export { ActiveCellColumn };
 export { ActiveCellRow };

@@ -16,6 +16,7 @@ export {
   activeCellRowPositioner,
   allColumnsStartPositioner,
   allRowsStartPositioner,
+  cellSelectionPositioner,
   selectedColumnPositioner,
   selectedRowPositioner,
   tablePositioner,
