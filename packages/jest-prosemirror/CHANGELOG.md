@@ -1,5 +1,18 @@
 # jest-prosemirror
 
+## 2.0.7
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [3fa267878]
+- Updated dependencies [b637f9f3e]
+  - @remirror/core-utils@2.0.7
+  - @remirror/pm@2.0.1
+  - @remirror/core-types@2.0.1
+  - test-keyboard@2.0.1
+
 ## 2.0.6
 
 > 2022-10-11

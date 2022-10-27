@@ -1,5 +1,24 @@
 # @remirror/react-components
 
+## 2.0.11
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [3fa267878]
+- Updated dependencies [b637f9f3e]
+  - @remirror/extension-positioner@2.1.0
+  - @remirror/react-hooks@2.0.11
+  - @remirror/pm@2.0.1
+  - remirror@2.0.12
+  - @remirror/react-core@2.0.8
+  - @remirror/core@2.0.7
+  - @remirror/extension-text-color@2.0.7
+  - multishift@2.0.2
+  - @remirror/react-utils@2.0.1
+  - @remirror/theme@2.0.2
+
 ## 2.0.10
 
 > 2022-10-11

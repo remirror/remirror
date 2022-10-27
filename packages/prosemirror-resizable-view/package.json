@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-resizable-view",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "private": false,
   "description": "A ProseMirror node view that make your node resizable",
   "keywords": [
@@ -37,7 +37,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core-helpers": "^2.0.0",
-    "@remirror/core-utils": "^2.0.6",
+    "@remirror/core-utils": "^2.0.7",
     "prosemirror-model": "^1.18.1",
     "prosemirror-view": "^1.29.0"
   },

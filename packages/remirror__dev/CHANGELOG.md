@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 2.0.8
+
+> 2022-10-27
+
+### Patch Changes
+
+- b637f9f3e: Update dependencies.
+- Updated dependencies [b637f9f3e]
+  - @remirror/pm@2.0.1
+  - @remirror/react-core@2.0.8
+
 ## 2.0.7
 
 > 2022-10-11

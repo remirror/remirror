@@ -1,5 +1,31 @@
 # @remirror/react-hooks
 
+## 2.0.11
+
+> 2022-10-27
+
+### Patch Changes
+
+- 3fa267878: `usePositioner` and `useMultiPositioner` now return a `data` property, that enables you to pass metadata (such as document positions) from your positioner to your React component.
+
+  These hooks are now generic functions that accept a type definition, that describes the type of `data`.
+
+  For instance `const { data } = usePositioner<FromToProps>(myPositioner, [])` would indicate that `data` is `{ from: number, to: number }`.
+
+- Updated dependencies [3fa267878]
+- Updated dependencies [b637f9f3e]
+  - @remirror/extension-positioner@2.1.0
+  - @remirror/pm@2.0.1
+  - @remirror/react-core@2.0.8
+  - @remirror/core@2.0.7
+  - @remirror/extension-emoji@2.0.10
+  - @remirror/extension-events@2.1.7
+  - @remirror/extension-history@2.0.7
+  - @remirror/extension-mention@2.0.8
+  - @remirror/extension-mention-atom@2.0.8
+  - multishift@2.0.2
+  - @remirror/react-utils@2.0.1
+
 ## 2.0.10
 
 > 2022-10-11

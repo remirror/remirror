@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-mention",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Mention extension for the remirror wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-mention",
   "repository": {
@@ -31,16 +31,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.6",
-    "@remirror/extension-events": "^2.1.6",
+    "@remirror/core": "^2.0.7",
+    "@remirror/extension-events": "^2.1.7",
     "@remirror/messages": "^2.0.1",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0"
+    "@remirror/pm": "^2.0.1"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0"
+    "@remirror/pm": "^2.0.1"
   },
   "publishConfig": {
     "access": "public"

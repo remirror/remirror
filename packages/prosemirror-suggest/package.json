@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-suggest",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Primitives for building your prosemirror suggestion and autocomplete functionality",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-suggest",
   "repository": {

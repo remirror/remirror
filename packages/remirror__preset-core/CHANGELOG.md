@@ -1,5 +1,23 @@
 # @remirror/preset-core
 
+## 2.0.8
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [3fa267878]
+- Updated dependencies [b637f9f3e]
+  - @remirror/extension-positioner@2.1.0
+  - @remirror/pm@2.0.1
+  - @remirror/core@2.0.7
+  - @remirror/extension-doc@2.0.7
+  - @remirror/extension-events@2.1.7
+  - @remirror/extension-gap-cursor@2.0.7
+  - @remirror/extension-history@2.0.7
+  - @remirror/extension-paragraph@2.0.7
+  - @remirror/extension-text@2.0.7
+
 ## 2.0.7
 
 > 2022-10-11

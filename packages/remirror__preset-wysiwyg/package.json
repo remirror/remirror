@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -36,34 +36,34 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.6",
-    "@remirror/extension-bidi": "^2.0.6",
-    "@remirror/extension-blockquote": "^2.0.6",
-    "@remirror/extension-bold": "^2.0.6",
-    "@remirror/extension-code": "^2.0.6",
-    "@remirror/extension-code-block": "^2.0.6",
-    "@remirror/extension-drop-cursor": "^2.0.6",
-    "@remirror/extension-embed": "^2.0.6",
-    "@remirror/extension-gap-cursor": "^2.0.6",
-    "@remirror/extension-hard-break": "^2.0.6",
-    "@remirror/extension-heading": "^2.0.6",
-    "@remirror/extension-horizontal-rule": "^2.0.6",
-    "@remirror/extension-image": "^2.1.0",
-    "@remirror/extension-italic": "^2.0.6",
-    "@remirror/extension-link": "^2.0.7",
-    "@remirror/extension-list": "^2.0.7",
-    "@remirror/extension-search": "^2.0.6",
-    "@remirror/extension-shortcuts": "^2.0.6",
-    "@remirror/extension-strike": "^2.0.6",
-    "@remirror/extension-trailing-node": "^2.0.6",
-    "@remirror/extension-underline": "^2.0.6",
-    "@remirror/preset-core": "^2.0.7"
+    "@remirror/core": "^2.0.7",
+    "@remirror/extension-bidi": "^2.0.7",
+    "@remirror/extension-blockquote": "^2.0.7",
+    "@remirror/extension-bold": "^2.0.7",
+    "@remirror/extension-code": "^2.0.7",
+    "@remirror/extension-code-block": "^2.0.7",
+    "@remirror/extension-drop-cursor": "^2.0.7",
+    "@remirror/extension-embed": "^2.0.7",
+    "@remirror/extension-gap-cursor": "^2.0.7",
+    "@remirror/extension-hard-break": "^2.0.7",
+    "@remirror/extension-heading": "^2.0.7",
+    "@remirror/extension-horizontal-rule": "^2.0.7",
+    "@remirror/extension-image": "^2.1.1",
+    "@remirror/extension-italic": "^2.0.7",
+    "@remirror/extension-link": "^2.0.8",
+    "@remirror/extension-list": "^2.0.8",
+    "@remirror/extension-search": "^2.0.7",
+    "@remirror/extension-shortcuts": "^2.0.7",
+    "@remirror/extension-strike": "^2.0.7",
+    "@remirror/extension-trailing-node": "^2.0.7",
+    "@remirror/extension-underline": "^2.0.7",
+    "@remirror/preset-core": "^2.0.8"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0"
+    "@remirror/pm": "^2.0.1"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0"
+    "@remirror/pm": "^2.0.1"
   },
   "publishConfig": {
     "access": "public"

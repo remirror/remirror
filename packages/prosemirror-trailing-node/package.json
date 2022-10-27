@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-trailing-node",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A trailing node plugin for the prosemirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-trailing-node",
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-paste-rules",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Better handling of pasted content in your prosemirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-paste-rules",
   "repository": {

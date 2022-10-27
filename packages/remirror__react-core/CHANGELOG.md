@@ -1,5 +1,23 @@
 # @remirror/react-core
 
+## 2.0.8
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [3fa267878]
+- Updated dependencies [b637f9f3e]
+  - @remirror/extension-positioner@2.1.0
+  - @remirror/pm@2.0.1
+  - @remirror/preset-core@2.0.8
+  - @remirror/core@2.0.7
+  - @remirror/extension-react-component@2.0.7
+  - @remirror/preset-react@2.0.7
+  - @remirror/react-renderer@2.0.7
+  - @remirror/react-utils@2.0.1
+  - @remirror/theme@2.0.2
+
 ## 2.0.7
 
 > 2022-10-11
