@@ -1,5 +1,5 @@
 import { useMemo, useRef } from 'react';
-import { isBoolean, MakeOptional, uniqueId } from '@remirror/core';
+import { isBoolean, uniqueId } from '@remirror/core';
 import {
   CallbackPositioner,
   defaultAbsolutePosition,
@@ -10,12 +10,37 @@ import {
 
 import { useMultiPositioner, UseMultiPositionerReturn } from './use-multi-positioner';
 
-export interface UsePositionerReturn extends MakeOptional<UseMultiPositionerReturn, 'ref'> {
+interface UsePositionerReturnActive<Data = any> extends UseMultiPositionerReturn<Data> {
   /**
    * When `true`, the position is active and the positioner will be displayed.
    */
-  active: boolean;
+  active: true;
 }
+
+interface UsePositionerReturnInactive<Data = any>
+  extends Omit<UseMultiPositionerReturn<Data>, 'ref' | 'data'> {
+  /**
+   * When `true`, the position is active and the positioner will be displayed.
+   */
+  active: false;
+
+  /**
+   * When active is `true` this will contain a ref that must be applied to the component that is
+   * being positioned in order to correctly obtain the position data.
+   * When active is `false` this will be undefined.
+   */
+  ref: undefined;
+
+  /**
+   * When active is `true` this will contain metadata associated with the position.
+   * When active is `false` this we be an empty object.
+   */
+  data: Record<string, never>;
+}
+
+export type UsePositionerReturn<Data = any> =
+  | UsePositionerReturnActive<Data>
+  | UsePositionerReturnInactive<Data>;
 
 /**
  * A hook for creating a positioner with the `PositionerExtension`. When an
@@ -58,22 +83,22 @@ export interface UsePositionerReturn extends MakeOptional<UseMultiPositionerRetu
  * be updated when changed or a boolean value when the positioner is a string
  * which can be used to override whether the positioner is active.
  */
-export function usePositioner(
+export function usePositioner<Data = any>(
   positioner: StringPositioner,
   isActive?: boolean,
-): UsePositionerReturn;
-export function usePositioner(
+): UsePositionerReturn<Data>;
+export function usePositioner<Data = any>(
   positioner: Positioner | CallbackPositioner,
   deps: unknown[],
-): UsePositionerReturn;
-export function usePositioner(
+): UsePositionerReturn<Data>;
+export function usePositioner<Data = any>(
   positioner: PositionerParam,
   activeOrDeps?: unknown[] | boolean,
-): UsePositionerReturn {
+): UsePositionerReturn<Data> {
   const deps = activeOrDeps == null || isBoolean(activeOrDeps) ? [positioner] : activeOrDeps;
   const isActive = isBoolean(activeOrDeps) ? activeOrDeps : true;
   const key = useRef(uniqueId());
-  const positions = useMultiPositioner(positioner, deps);
+  const positions = useMultiPositioner<Data>(positioner, deps);
   const position = positions[0];
 
   return useMemo(() => {
@@ -81,6 +106,12 @@ export function usePositioner(
       return { ...position, active: true };
     }
 
-    return { ...defaultAbsolutePosition, active: false, key: key.current };
+    return {
+      ...defaultAbsolutePosition,
+      ref: undefined,
+      data: {},
+      active: false,
+      key: key.current,
+    };
   }, [isActive, position]);
 }

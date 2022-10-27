@@ -1,6 +1,6 @@
 import React, { CSSProperties, MouseEventHandler, useCallback } from 'react';
 import type { EditorView, FindProsemirrorNodeResult } from '@remirror/core';
-import { cx, findParentNodeOfType, isElementDomNode } from '@remirror/core';
+import { cx, findParentNodeOfType, isElementDomNode, mergeDOMRects } from '@remirror/core';
 import {
   defaultAbsolutePosition,
   hasStateChanged,
@@ -15,7 +15,6 @@ import { usePositioner } from '@remirror/react-hooks';
 import { ExtensionTablesTheme } from '@remirror/theme';
 
 import { CellSelectionType, getCellSelectionType, setPredelete } from '../utils/controller';
-import { mergeDOMRects } from '../utils/dom';
 
 interface DeleteButtonPositionerData {
   tableResult: FindProsemirrorNodeResult;

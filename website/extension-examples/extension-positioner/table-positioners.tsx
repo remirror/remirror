@@ -9,7 +9,7 @@
 import React from 'react';
 import CodeBlock from '@theme/CodeBlock';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-positioner/positioners.tsx';
+import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-positioner/table-positioners.tsx';
 
 import { StoryExample } from '../../src/components/story-example-component';
 
@@ -17,7 +17,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-positioner/positioners').default
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-positioner/table-positioners').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

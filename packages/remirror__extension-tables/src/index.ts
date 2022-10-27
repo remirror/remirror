@@ -1,4 +1,4 @@
-export type { TableOptions } from './table-extensions';
+export type { TableOptions, TableResizableOptions } from './table-extensions';
 export {
   TableCellExtension,
   TableControllerCellExtension,
@@ -6,5 +6,19 @@ export {
   TableHeaderCellExtension,
   TableRowExtension,
 } from './table-extensions';
+export type {
+  ActiveCellColumnPositionerData,
+  ActiveCellRowPositionerData,
+} from './table-positioners';
+export {
+  activeCellColumnPositioner,
+  activeCellPositioner,
+  activeCellRowPositioner,
+  allColumnsStartPositioner,
+  allRowsStartPositioner,
+  selectedColumnPositioner,
+  selectedRowPositioner,
+  tablePositioner,
+} from './table-positioners';
 export type { CreateTableCommand, TableRole, TableSchemaSpec } from './table-utils';
 export { createTable, createTableOptions } from './table-utils';

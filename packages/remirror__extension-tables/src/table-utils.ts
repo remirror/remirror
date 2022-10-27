@@ -3,13 +3,17 @@ import {
   EditorSchema,
   ErrorConstant,
   ExtensionTag,
+  findParentNodeOfType,
+  FindProsemirrorNodeResult,
   includes,
   invariant,
   NodeExtensionSpec,
   NodeSpecOverride,
   NodeType,
   object,
+  ResolvedPos,
   SchemaProps,
+  Selection,
   values,
 } from '@remirror/core';
 import { ExtensionTablesMessages } from '@remirror/messages';
@@ -57,11 +61,12 @@ function getCellAttrs(dom: HTMLElement) {
   const widths =
     widthAttr && /^\d+(,\d+)*$/.test(widthAttr) ? widthAttr.split(',').map((s) => Number(s)) : null;
   const colspan = Number(dom.getAttribute('colspan') ?? 1);
+  const backgroundColor = dom.getAttribute('data-background-color');
   return {
     colspan,
     rowspan: Number(dom.getAttribute('rowspan') ?? 1),
     colwidth: widths && widths.length === colspan ? widths : null,
-    background: dom.style.backgroundColor || null,
+    background: backgroundColor || dom.style.backgroundColor || null,
   };
 }
 
@@ -82,6 +87,7 @@ function setCellAttrs(node: ProsemirrorNode) {
 
   if (node.attrs.background) {
     attrs.style = `${attrs.style ?? ''}background-color: ${node.attrs.background as string};`;
+    attrs['data-background-color'] = node.attrs.background;
   }
 
   return attrs;
@@ -250,6 +256,24 @@ export function createTable(props: CreateTableProps): ProsemirrorNode {
   }
 
   return table.createChecked(null, rows);
+}
+
+/**
+ * Finds the nearest parent table node (if it exists)
+ */
+export function findTable(
+  selection: Selection | ResolvedPos,
+): FindProsemirrorNodeResult | undefined {
+  return findParentNodeOfType({ selection, types: 'table' });
+}
+
+/**
+ * Finds the nearest parent table cell or header cell (if it exists)
+ */
+export function findCellClosestToPos(
+  selection: Selection | ResolvedPos,
+): FindProsemirrorNodeResult | undefined {
+  return findParentNodeOfType({ selection, types: ['tableHeaderCell', 'tableCell'] });
 }
 
 const { CREATE_COMMAND_DESCRIPTION, CREATE_COMMAND_LABEL } = ExtensionTablesMessages;

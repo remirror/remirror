@@ -327,3 +327,19 @@ export function isElementDomNode(domNode: unknown): domNode is HTMLElement {
 export function isTextDomNode(domNode: unknown): domNode is Text {
   return isDomNode(domNode) && domNode.nodeType === DomNodeType.TEXT_NODE;
 }
+
+/**
+ * Merge two DOMRect objects into a one big DOMRect object that contains both two DOMRect objects.
+ *
+ * @param rect1 - the first DOMRect
+ * @param rect2 - the second DOMRect
+ */
+export function mergeDOMRects(rect1: DOMRect, rect2: DOMRect): DOMRect {
+  const left = Math.min(rect1.left, rect2.left);
+  const right = Math.max(rect1.right, rect2.right);
+  const top = Math.min(rect1.top, rect2.top);
+  const bottom = Math.max(rect1.bottom, rect2.bottom);
+  const width = right - left;
+  const height = bottom - top;
+  return new DOMRect(left, top, width, height);
+}

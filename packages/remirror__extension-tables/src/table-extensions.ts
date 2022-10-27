@@ -33,6 +33,7 @@ import {
   deleteTable,
   fixTables,
   fixTablesKey,
+  isCellSelection,
   mergeCells,
   setCellAttr,
   splitCell,
@@ -47,8 +48,14 @@ import {
   CreateTableCommand,
   createTableNodeSchema,
   createTableOptions,
+  findCellClosestToPos,
   TableSchemaSpec,
 } from './table-utils';
+
+export interface TableResizableOptions {
+  handleWidth?: number;
+  cellMinWidth?: number;
+}
 
 export interface TableOptions {
   /**
@@ -57,6 +64,11 @@ export interface TableOptions {
    * @defaultValue true
    */
   resizable?: boolean;
+
+  /**
+   * The options passed to the column resizing plugin
+   */
+  resizeableOptions?: TableResizableOptions;
 }
 
 let tablesEnabled = false;
@@ -64,6 +76,7 @@ let tablesEnabled = false;
 @extension<TableOptions>({
   defaultOptions: {
     resizable: true,
+    resizeableOptions: {},
   },
   defaultPriority: ExtensionPriority.Default,
 })
@@ -119,9 +132,11 @@ export class TableExtension extends NodeExtension<TableOptions> {
       return plugins;
     }
 
-    if (this.options.resizable) {
+    const { resizable, resizeableOptions } = this.options;
+
+    if (resizable) {
       // Add first to avoid highlighting cells while resizing
-      plugins.push(columnResizing({}));
+      plugins.push(columnResizing(resizeableOptions));
     }
 
     plugins.push(tableEditing());
@@ -317,6 +332,42 @@ export class TableExtension extends NodeExtension<TableOptions> {
       }
 
       return false;
+    };
+  }
+
+  @command()
+  selectParentCell(): CommandFunction {
+    return ({ dispatch, tr }) => {
+      const cell = findCellClosestToPos(tr.selection.$from);
+
+      if (!cell) {
+        return false;
+      }
+
+      dispatch?.(tr.setSelection(CellSelection.create(tr.doc, cell.pos)));
+      return true;
+    };
+  }
+
+  @command()
+  expandCellSelection(type: 'column' | 'row' | 'all' = 'all'): CommandFunction {
+    return ({ dispatch, tr }) => {
+      if (!isCellSelection(tr.selection)) {
+        return false;
+      }
+
+      if (type !== 'row') {
+        const { $anchorCell, $headCell } = tr.selection;
+        tr.setSelection(CellSelection.colSelection($anchorCell, $headCell));
+      }
+
+      if (type !== 'column') {
+        const { $anchorCell, $headCell } = tr.selection;
+        tr.setSelection(CellSelection.rowSelection($anchorCell, $headCell));
+      }
+
+      dispatch?.(tr);
+      return true;
     };
   }
 
