@@ -1,6 +1,6 @@
 ---
-'@remirror/extension-react-tables': patch
-'@remirror/extension-tables': patch
+'@remirror/extension-react-tables': minor
+'@remirror/extension-tables': minor
 ---
 
 Expose positioners for use with tables.
