@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-codemirror5",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Add CodeMirror to your editor.",
   "keywords": [
     "remirror",
@@ -37,17 +37,17 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.6",
+    "@remirror/core": "^2.0.7",
     "@remirror/messages": "^2.0.1"
   },
   "devDependencies": {
     "@remirror/core-helpers": "^2.0.0",
-    "@remirror/pm": "^2.0.0",
+    "@remirror/pm": "^2.0.1",
     "@types/codemirror": "^5.60.2",
     "codemirror": "^5.62.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0",
+    "@remirror/pm": "^2.0.1",
     "@types/codemirror": "*",
     "codemirror": "^5"
   },

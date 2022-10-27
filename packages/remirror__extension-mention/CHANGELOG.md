@@ -1,5 +1,16 @@
 # @remirror/extension-mention
 
+## 2.0.8
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [b637f9f3e]
+  - @remirror/pm@2.0.1
+  - @remirror/core@2.0.7
+  - @remirror/extension-events@2.1.7
+
 ## 2.0.7
 
 > 2022-10-11

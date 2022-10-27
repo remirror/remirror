@@ -1,5 +1,17 @@
 # @remirror/core-utils
 
+## 2.0.7
+
+> 2022-10-27
+
+### Patch Changes
+
+- 3fa267878: Expose the `mergeDOMRects` helper from core utils
+- b637f9f3e: Update dependencies.
+- Updated dependencies [b637f9f3e]
+  - @remirror/pm@2.0.1
+  - @remirror/core-types@2.0.1
+
 ## 2.0.6
 
 > 2022-10-11

@@ -1,5 +1,13 @@
 # prosemirror-trailing-node
 
+## 2.0.1
+
+> 2022-10-27
+
+### Patch Changes
+
+- b637f9f3e: Update dependencies.
+
 ## 2.0.0
 
 > 2022-09-13

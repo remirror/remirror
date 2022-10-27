@@ -1,5 +1,29 @@
 # @remirror/preset-formatting
 
+## 2.0.7
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [b637f9f3e]
+  - @remirror/pm@2.0.1
+  - @remirror/core@2.0.7
+  - @remirror/extension-bold@2.0.7
+  - @remirror/extension-columns@2.0.7
+  - @remirror/extension-font-size@2.0.7
+  - @remirror/extension-heading@2.0.7
+  - @remirror/extension-italic@2.0.7
+  - @remirror/extension-node-formatting@2.0.7
+  - @remirror/extension-strike@2.0.7
+  - @remirror/extension-sub@2.0.7
+  - @remirror/extension-sup@2.0.7
+  - @remirror/extension-text-case@2.0.7
+  - @remirror/extension-text-color@2.0.7
+  - @remirror/extension-text-highlight@2.0.7
+  - @remirror/extension-underline@2.0.7
+  - @remirror/extension-whitespace@2.0.7
+
 ## 2.0.6
 
 > 2022-10-11

@@ -1,5 +1,44 @@
 # @remirror/extension-react-tables
 
+## 2.2.0
+
+> 2022-10-27
+
+### Minor Changes
+
+- 3fa267878: Expose positioners for use with tables.
+
+  These include:
+
+  - `tablePositioner` - spans the full width and height of the table
+  - `activeCellPositioner` - spans the full width and height of the current cell
+  - `activeCellColumnPositioner` - spans the full width and height of the column containing the current cell
+  - `activeCellRowPositioner` - spans the full width and height of the row containing the current cell
+  - `selectedColumnPositioner` - spans the full width and height of a selected single column
+  - `selectedColumnPositioner` - spans the full width and height of a selected single row
+  - `allColumnsStartPositioner` - returns multiple positions, for the top side of each column in a table
+  - `allRowsStartPositioner` - returns multiple positions, for the left side of each row in a table
+
+### Patch Changes
+
+- 3fa267878: Make the columnResizing plugin configurable via extension options
+- 3fa267878: Expose the `mergeDOMRects` helper from core utils
+- Updated dependencies [3fa267878]
+- Updated dependencies [3fa267878]
+- Updated dependencies [3fa267878]
+- Updated dependencies [b637f9f3e]
+- Updated dependencies [3fa267878]
+  - @remirror/extension-positioner@2.1.0
+  - @remirror/react-hooks@2.0.11
+  - @remirror/extension-tables@2.2.0
+  - @remirror/core-utils@2.0.7
+  - @remirror/pm@2.0.1
+  - @remirror/preset-core@2.0.8
+  - @remirror/react-components@2.0.11
+  - @remirror/react-core@2.0.8
+  - @remirror/core@2.0.7
+  - @remirror/theme@2.0.2
+
 ## 2.1.0
 
 > 2022-10-14

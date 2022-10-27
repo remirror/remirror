@@ -1,5 +1,36 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.9
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [b637f9f3e]
+  - @remirror/extension-code-block@2.0.7
+  - @remirror/pm@2.0.1
+  - @remirror/preset-core@2.0.8
+  - @remirror/core@2.0.7
+  - @remirror/extension-embed@2.0.7
+  - @remirror/extension-image@2.1.1
+  - @remirror/extension-bidi@2.0.7
+  - @remirror/extension-blockquote@2.0.7
+  - @remirror/extension-bold@2.0.7
+  - @remirror/extension-code@2.0.7
+  - @remirror/extension-drop-cursor@2.0.7
+  - @remirror/extension-gap-cursor@2.0.7
+  - @remirror/extension-hard-break@2.0.7
+  - @remirror/extension-heading@2.0.7
+  - @remirror/extension-horizontal-rule@2.0.7
+  - @remirror/extension-italic@2.0.7
+  - @remirror/extension-link@2.0.8
+  - @remirror/extension-list@2.0.8
+  - @remirror/extension-search@2.0.7
+  - @remirror/extension-shortcuts@2.0.7
+  - @remirror/extension-strike@2.0.7
+  - @remirror/extension-trailing-node@2.0.7
+  - @remirror/extension-underline@2.0.7
+
 ## 2.0.8
 
 > 2022-10-14

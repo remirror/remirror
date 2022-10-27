@@ -1,5 +1,16 @@
 # @remirror/dom
 
+## 2.0.8
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [b637f9f3e]
+  - @remirror/pm@2.0.1
+  - @remirror/preset-core@2.0.8
+  - @remirror/core@2.0.7
+
 ## 2.0.7
 
 > 2022-10-11

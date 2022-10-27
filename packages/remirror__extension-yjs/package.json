@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-yjs",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "Realtime collaboration with yjs",
   "keywords": [
     "remirror",
@@ -39,18 +39,18 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.6",
+    "@remirror/core": "^2.0.7",
     "@remirror/messages": "^2.0.1",
     "y-prosemirror": "^1.0.19",
     "y-protocols": "^1.0.5"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0",
+    "@remirror/pm": "^2.0.1",
     "y-webrtc": "^10.2.2",
     "yjs": "^13.5.23"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0",
+    "@remirror/pm": "^2.0.1",
     "yjs": "^13.4.0"
   },
   "publishConfig": {

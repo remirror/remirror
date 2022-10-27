@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-bidi",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Add automatic bidirectional text support to your remirror editor. Just start typing for the magic.",
   "keywords": [
     "remirror",
@@ -35,16 +35,16 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.6",
+    "@remirror/core": "^2.0.7",
     "@remirror/messages": "^2.0.1",
     "@types/direction": "^1.0.0",
     "direction": "^1.0.4"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.0"
+    "@remirror/pm": "^2.0.1"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.0"
+    "@remirror/pm": "^2.0.1"
   },
   "publishConfig": {
     "access": "public"

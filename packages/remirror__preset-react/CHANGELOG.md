@@ -1,5 +1,18 @@
 # @remirror/preset-react
 
+## 2.0.7
+
+> 2022-10-27
+
+### Patch Changes
+
+- Updated dependencies [b637f9f3e]
+  - @remirror/pm@2.0.1
+  - @remirror/core@2.0.7
+  - @remirror/extension-placeholder@2.0.7
+  - @remirror/extension-react-component@2.0.7
+  - @remirror/react-utils@2.0.1
+
 ## 2.0.6
 
 > 2022-10-11
