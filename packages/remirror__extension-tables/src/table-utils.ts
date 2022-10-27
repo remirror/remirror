@@ -61,11 +61,12 @@ function getCellAttrs(dom: HTMLElement) {
   const widths =
     widthAttr && /^\d+(,\d+)*$/.test(widthAttr) ? widthAttr.split(',').map((s) => Number(s)) : null;
   const colspan = Number(dom.getAttribute('colspan') ?? 1);
+  const backgroundColor = dom.getAttribute('data-background-color');
   return {
     colspan,
     rowspan: Number(dom.getAttribute('rowspan') ?? 1),
     colwidth: widths && widths.length === colspan ? widths : null,
-    background: dom.style.backgroundColor || null,
+    background: backgroundColor || dom.style.backgroundColor || null,
   };
 }
 
@@ -86,6 +87,7 @@ function setCellAttrs(node: ProsemirrorNode) {
 
   if (node.attrs.background) {
     attrs.style = `${attrs.style ?? ''}background-color: ${node.attrs.background as string};`;
+    attrs['data-background-color'] = node.attrs.background;
   }
 
   return attrs;

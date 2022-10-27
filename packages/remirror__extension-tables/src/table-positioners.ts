@@ -195,10 +195,10 @@ export const allColumnsStartPositioner = Positioner.create<NodeWithPosition>({
     const width = rect.width;
 
     // The top and left relative to the parent `editorRect`.
-    const left = view.dom.scrollLeft + rect.left - editorRect.left;
+    const left = view.dom.scrollLeft + rect.left - editorRect.left - 1;
     const top = view.dom.scrollTop + rect.top - editorRect.top - 1;
 
-    const columnTopRect = new DOMRect(rect.x, rect.y - 1, width, 1);
+    const columnTopRect = new DOMRect(rect.x - 1, rect.y - 1, width, 1);
 
     return {
       x: left,
@@ -256,9 +256,9 @@ export const allRowsStartPositioner = allColumnsStartPositioner.clone(() => ({
 
     // The top and left relative to the parent `editorRect`.
     const left = view.dom.scrollLeft + rect.left - editorRect.left - 1;
-    const top = view.dom.scrollTop + rect.top - editorRect.top;
+    const top = view.dom.scrollTop + rect.top - editorRect.top - 1;
 
-    const rowLeftRect = new DOMRect(rect.x - 1, rect.y, 1, height);
+    const rowLeftRect = new DOMRect(rect.x - 1, rect.y - 1, 1, height);
 
     return {
       x: left,
