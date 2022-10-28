@@ -34,10 +34,10 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
     "@remirror/core": "^2.0.7",
-    "@remirror/messages": "^2.0.1",
-    "escape-string-regexp": "^4.0.0"
+    "@types/string.prototype.matchall": "^4.0.1",
+    "escape-string-regexp": "^4.0.0",
+    "string.prototype.matchall": "^4.0.7"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.1"
@@ -49,6 +49,6 @@
     "access": "public"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "20 KB"
   }
 }

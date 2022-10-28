@@ -1,2 +1,2 @@
-export type { SearchDirection, SearchOptions } from './search-extension';
-export { rotateHighlightedIndex, SearchExtension } from './search-extension';
+export type { SearchOptions } from './search-extension';
+export { SearchExtension } from './search-extension';

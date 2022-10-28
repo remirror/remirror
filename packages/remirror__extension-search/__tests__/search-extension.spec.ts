@@ -10,76 +10,122 @@ function create(options?: SearchOptions) {
     nodes: { p, doc },
     view,
     commands,
+    helpers,
   } = renderEditor<SearchExtension>([new SearchExtension(options)]);
-  const node = doc(p('welcome'), p('friend'), p('hello'), p('welcome friend'));
-
-  return { add, p, doc, view, commands, node };
+  const node = doc(p('Welcome'), p('friend'), p('welcome friend'));
+  add(node);
+  return { p, doc, view, commands, helpers, node, add };
 }
 
-describe('commands', () => {
-  it('#find', () => {
-    const { view, add, commands, node } = create();
-    add(node);
+describe('helpers and commands', () => {
+  it('search', () => {
+    const { view, helpers } = create();
 
-    commands.search('welcome');
-    expect(view.dom).toMatchSnapshot();
+    let result = helpers.search({ searchTerm: 'welcome', caseSensitive: true });
+    expect(result.activeIndex).toBeUndefined();
+    expect(result.ranges).toHaveLength(1);
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        Welcome
+      </p>
+      <p>
+        friend
+      </p>
+      <p>
+        <span style="background-color: yellow;">
+          welcome
+        </span>
+        friend
+      </p>
+    `);
 
-    commands.searchNext();
-    expect(view.dom).toMatchSnapshot();
-
-    commands.searchPrevious();
-    expect(view.dom).toMatchSnapshot();
+    result = helpers.search({ searchTerm: 'friend', activeIndex: -1 });
+    expect(result.activeIndex).toBe(1);
+    expect(result.ranges).toHaveLength(2);
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        Welcome
+      </p>
+      <p>
+        <span style="background-color: yellow;">
+          friend
+        </span>
+      </p>
+      <p>
+        welcome
+        <span style="background-color: orange;">
+          friend
+        </span>
+      </p>
+    `);
   });
 
-  it('#replace', () => {
-    const { view, add, commands, node } = create();
-    add(node);
+  it('can handle invalid regexp', () => {
+    const { add, doc, p, helpers } = create();
 
-    commands.search('we');
-    commands.replaceSearchResult('me');
-    expect(view.dom).toMatchSnapshot();
+    // C++ is an invalid regexp
+    const searchTerm = 'C++';
+    expect(() => new RegExp(searchTerm)).toThrow();
+    add(doc(p('C++'), p('++C C++')));
+    expect(helpers.search({ searchTerm }).ranges).toHaveLength(2);
   });
 
-  it('#findNext, #replace', () => {
-    const { view, add, commands, node } = create();
-    add(node);
+  it('can handle a regexp-like search term', () => {
+    const { add, doc, p, helpers } = create();
 
-    commands.search('e');
-    commands.searchNext();
-    commands.replaceSearchResult('E');
-    expect(view.dom).toHaveTextContent('welcomE');
+    const searchTerm = '.*';
+    expect(() => new RegExp(searchTerm)).not.toThrow();
+    add(doc(p('Hello world'), p('')));
 
-    commands.replaceSearchResult('E');
-    expect(view.dom).toHaveTextContent('friEnd');
+    // This search term should not be treat as a regexp and it should not match anything
+    expect(helpers.search({ searchTerm }).ranges).toHaveLength(0);
 
-    commands.search('hello');
-    commands.replaceSearchResult('goodbye');
-    expect(view.dom).toHaveTextContent('goodbye');
-    expect(view.dom).toMatchSnapshot();
-
-    commands.replaceSearchResult('abcd');
-    expect(view.dom).not.toHaveTextContent('abcd');
+    add(doc(p('Hello world'), p('.*')));
+    expect(helpers.search({ searchTerm }).ranges).toHaveLength(1);
   });
 
-  it('#replaceAll', () => {
-    const { view, add, commands, node } = create();
-    add(node);
-
-    commands.search('friend');
-    expect(commands.replaceAllSearchResults.isEnabled('')).toBeTrue();
-
-    commands.replaceAllSearchResults('enemy');
-    expect(view.dom).toMatchSnapshot();
-
-    expect(commands.replaceAllSearchResults.isEnabled('')).toBeFalse();
+  it('replaceSearchResult', () => {
+    const { view, commands } = create();
+    commands.startSearch({ searchTerm: 'friend', caseSensitive: true });
+    commands.replaceSearchResult({ replacement: 'FRIEND' });
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        Welcome
+      </p>
+      <p>
+        FRIEND
+      </p>
+      <p>
+        welcome
+        <span style="background-color: yellow;">
+          friend
+        </span>
+      </p>
+    `);
   });
 
-  it('#clearSearch', () => {
-    const { view, add, commands, node } = create();
-    add(node);
+  it('replaceAllSearchResults', () => {
+    const { view, commands } = create();
+    commands.startSearch({ searchTerm: 'friend', caseSensitive: false });
+    commands.replaceAllSearchResults({ replacement: 'FRIEND' });
+    expect(view.dom.innerHTML).toMatchInlineSnapshot(`
+      <p>
+        Welcome
+      </p>
+      <p>
+        FRIEND
+      </p>
+      <p>
+        welcome FRIEND
+      </p>
+    `);
+  });
 
-    commands.search('friend');
-    commands.clearSearch();
-    expect(view.dom).toMatchSnapshot();
+  it('clearResult', () => {
+    const { view, commands } = create();
+    commands.startSearch({ searchTerm: 'friend' });
+    expect(view.dom.innerHTML).toContain('background-color');
+    commands.stopSearch();
+    expect(view.dom.innerHTML).not.toContain('background-color');
   });
 });

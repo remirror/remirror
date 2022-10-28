@@ -1,100 +1,61 @@
-import escapeStringRegexp from 'escape-string-regexp';
+import escapeStringRegex from 'escape-string-regexp';
+import matchAll from 'string.prototype.matchall';
 import {
-  assertGet,
   command,
   CommandFunction,
   CreateExtensionPlugin,
-  cx,
   DispatchFunction,
   extension,
-  findMatches,
   FromToProps,
-  getSelectedWord,
-  Handler,
-  isEmptyArray,
+  Helper,
+  helper,
   isNumber,
-  isSelectionEmpty,
-  isString,
-  keyBinding,
-  KeyBindingCommandFunction,
-  KeyBindingProps,
-  NamedShortcut,
   PlainExtension,
   ProsemirrorNode,
-  Static,
   Transaction,
 } from '@remirror/core';
-import { Decoration, DecorationSet } from '@remirror/pm/view';
+import { Decoration, DecorationAttrs, DecorationSet } from '@remirror/pm/view';
+
+import {
+  ReplaceAllOptions,
+  ReplaceOptions,
+  SearchResult,
+  StartSearchOptions,
+} from './search-types';
+import { rotateIndex } from './search-utils';
 
 export interface SearchOptions {
   /**
-   * @defaultValue false
-   */
-  autoSelectNext?: boolean;
-
-  /**
-   * @defaultValue 'search'
-   */
-  searchClass?: Static<string>;
-
-  /**
-   * The class to apply to the currently highlighted index.
+   * The inline decoraton to apply to all search results.
    *
-   * @defaultValue 'highlighted-search'
+   * @defaultValue '{style: "background-color: yellow;"}'
    */
-  highlightedClass?: Static<string>;
+  searchDecoration?: DecorationAttrs;
 
   /**
-   * @defaultValue false
+   * The inline decoraton to apply to the active search result (if any).
+   *
+   * @defaultValue '{style: "background-color: orange;"}'
    */
-  searching?: boolean;
+  activeDecoration?: DecorationAttrs;
 
   /**
-   * @defaultValue false
-   */
-  caseSensitive?: boolean;
-
-  /**
-   * @defaultValue true
-   */
-  disableRegex?: boolean;
-
-  /**
+   * When the search is active, whether to do a search on every document change.
+   *
    * @defaultValue false
    */
   alwaysSearch?: boolean;
-
-  /**
-   * Whether to clear the search when the `Escape` key is pressed.
-   *
-   * @defaultValue true
-   */
-  clearOnEscape?: boolean;
-
-  /**
-   * Search handler
-   */
-  onSearch: Handler<(selectedText: string, direction: SearchDirection) => void>;
 }
-
-export type SearchDirection = 'next' | 'previous';
 
 /**
  * This extension add search functionality to your editor.
  */
 @extension<SearchOptions>({
   defaultOptions: {
-    autoSelectNext: true,
-    searchClass: 'search',
-    highlightedClass: 'highlighted-search',
-    searching: false,
-    caseSensitive: false,
-    disableRegex: true,
+    searchDecoration: { style: 'background-color: yellow;' },
+    activeDecoration: { style: 'background-color: orange;' },
     alwaysSearch: false,
-    clearOnEscape: true,
   },
-  handlerKeys: ['onSearch'],
-  staticKeys: ['searchClass', 'highlightedClass'],
 })
 export class SearchExtension extends PlainExtension<SearchOptions> {
   get name() {
@@ -102,12 +63,82 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   private _updating = false;
-  private _searchTerm?: string;
-  private _results: FromToProps[] = [];
-  private _activeIndex = 0;
+  private _searchTerm = '';
+  private _caseSensitive = true;
+  private _ranges: FromToProps[] = [];
+  private _activeIndex?: number = undefined;
+
+  @helper()
+  search(options: StartSearchOptions): Helper<SearchResult> {
+    this.store.commands.startSearch(options);
+    return {
+      activeIndex: this._activeIndex,
+      ranges: this._ranges,
+    };
+  }
+
+  @command()
+  startSearch({ searchTerm, activeIndex, caseSensitive }: StartSearchOptions): CommandFunction {
+    if (!searchTerm) {
+      return this.stopSearch();
+    }
+
+    this._searchTerm = escapeStringRegex(searchTerm);
+    this._activeIndex = activeIndex;
+    this._caseSensitive = caseSensitive ?? false;
+
+    return ({ tr, dispatch }) => {
+      return this.updateView(tr, dispatch);
+    };
+  }
+
+  @command()
+  stopSearch(): CommandFunction {
+    return ({ tr, dispatch }) => {
+      this._searchTerm = '';
+      this._activeIndex = undefined;
+      return this.updateView(tr, dispatch);
+    };
+  }
+
+  @command()
+  replaceSearchResult({ replacement, index }: ReplaceOptions): CommandFunction {
+    return (props) => {
+      const { tr, dispatch } = props;
+      index = rotateIndex(isNumber(index) ? index : this._activeIndex ?? 0, this._ranges.length);
+      const result = this._ranges[index];
+
+      if (!result) {
+        return false;
+      }
+
+      if (!dispatch) {
+        return true;
+      }
+
+      tr.insertText(replacement, result.from, result.to);
+      return this.updateView(tr, dispatch);
+    };
+  }
+
+  @command()
+  replaceAllSearchResults({ replacement }: ReplaceAllOptions): CommandFunction {
+    return (props) => {
+      const { tr } = props;
+      const ranges = this.gatherSearchResults(tr.doc);
+
+      for (let i = ranges.length - 1; i >= 0; i--) {
+        const { from, to } = ranges[i];
+        tr.insertText(replacement, from, to);
+      }
+
+      return this.stopSearch()(props);
+    };
+  }
 
   /**
-   * This plugin is responsible for adding something decorations to the
+   * This plugin is responsible for do the searching and updating the
+   * decorations.
    */
   createPlugin(): CreateExtensionPlugin {
     return {
@@ -116,12 +147,12 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
           return DecorationSet.empty;
         },
         apply: (tr, old) => {
-          if (
-            this._updating ||
-            this.options.searching ||
-            (tr.docChanged && this.options.alwaysSearch)
-          ) {
-            return this.createDecoration(tr.doc);
+          if (this._updating || (tr.docChanged && this.options.alwaysSearch)) {
+            const doc = tr.doc;
+            this._ranges = this.gatherSearchResults(doc);
+            this.normalizeActiveIndex();
+            this.scrollToActiveResult();
+            return this.createDecorationSet(doc);
           }
 
           if (tr.docChanged) {
@@ -140,252 +171,48 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     };
   }
 
-  /**
-   * Find a search term in the editor. If no search term is provided it
-   * defaults to the currently selected text.
-   */
-  @command()
-  search(searchTerm?: string, direction?: SearchDirection): CommandFunction {
-    return this.find(searchTerm, direction);
-  }
-
-  /**
-   * Find the next occurrence of the search term.
-   */
-  @command()
-  searchNext(): CommandFunction {
-    return this.find(this._searchTerm, 'next');
-  }
-
-  /**
-   * Find the previous occurrence of the search term.
-   */
-  @command()
-  searchPrevious(): CommandFunction {
-    return this.find(this._searchTerm, 'previous');
-  }
-
-  /**
-   * Replace the provided
-   */
-  @command()
-  replaceSearchResult(replacement: string, index?: number): CommandFunction {
-    return this.replace(replacement, index);
-  }
-
-  /**
-   * Replaces all search results with the replacement text.
-   */
-  @command()
-  replaceAllSearchResults(replacement: string): CommandFunction {
-    return this.replaceAll(replacement);
-  }
-
-  /**
-   * Clears the current search.
-   */
-  @command()
-  clearSearch(): CommandFunction {
-    return this.clear();
-  }
-
-  @keyBinding<SearchExtension>({ shortcut: NamedShortcut.Find })
-  searchForwardShortcut(props: KeyBindingProps): boolean {
-    return this.createSearchKeyBinding('next')(props);
-  }
-
-  @keyBinding<SearchExtension>({ shortcut: NamedShortcut.FindBackwards })
-  searchBackwardShortcut(props: KeyBindingProps): boolean {
-    return this.createSearchKeyBinding('previous')(props);
-  }
-
-  @keyBinding<SearchExtension>({ shortcut: 'Escape', isActive: (options) => options.clearOnEscape })
-  escapeShortcut(_: KeyBindingProps): boolean {
-    if (!isString(this._searchTerm)) {
-      return false;
-    }
-
-    this.clearSearch();
-
-    return true;
-  }
-
-  private createSearchKeyBinding(direction: SearchDirection): KeyBindingCommandFunction {
-    return ({ state }) => {
-      let searchTerm: string | undefined;
-
-      if (isSelectionEmpty(state)) {
-        if (!this._searchTerm) {
-          return false;
-        }
-
-        searchTerm = this._searchTerm;
-      }
-
-      this.find(searchTerm, direction);
-
-      return true;
-    };
-  }
-
-  private findRegExp() {
-    return new RegExp(this._searchTerm ?? '', !this.options.caseSensitive ? 'gui' : 'gu');
-  }
-
-  private getDecorations() {
-    return this._results.map((deco, index) =>
-      Decoration.inline(deco.from, deco.to, {
-        class: cx(
-          this.options.searchClass,
-          index === this._activeIndex && this.options.highlightedClass,
-        ),
-      }),
-    );
-  }
-
-  private gatherSearchResults(doc: ProsemirrorNode) {
-    interface MergedTextNode {
-      text: string;
-      pos: number;
-    }
-
-    this._results = [];
-    const mergedTextNodes: MergedTextNode[] = [];
-    let index = 0;
-
+  private gatherSearchResults(doc: ProsemirrorNode): FromToProps[] {
     if (!this._searchTerm) {
-      return;
+      return [];
     }
+
+    const re = new RegExp(this._searchTerm, this._caseSensitive ? 'gu' : 'gui');
+    const ranges: FromToProps[] = [];
 
     doc.descendants((node, pos) => {
-      const mergedTextNode = mergedTextNodes[index];
-
-      if (!node.isText && mergedTextNode) {
-        index += 1;
-        return;
+      if (!node.isTextblock) {
+        return true;
       }
 
-      if (mergedTextNode) {
-        mergedTextNodes[index] = {
-          text: `${mergedTextNode.text}${node.text ?? ''}`,
-          pos: mergedTextNode.pos + (index === 0 ? 1 : 0),
-        };
+      const start = pos + 1;
 
-        return;
+      for (const match of matchAll(node.textContent, re)) {
+        const from = start + (match.index ?? 0);
+        const to = from + match[0].length;
+        ranges.push({ from, to });
       }
 
-      mergedTextNodes[index] = {
-        text: node.text ?? '',
-        pos,
-      };
+      return false;
     });
 
-    for (const { text, pos } of mergedTextNodes) {
-      const search = this.findRegExp();
+    return ranges;
+  }
 
-      findMatches(text, search).forEach((match) => {
-        this._results.push({
-          from: pos + match.index,
-          to: pos + match.index + assertGet(match, 0).length,
-        });
-      });
+  private normalizeActiveIndex(): void {
+    if (this._activeIndex != null) {
+      this._activeIndex = rotateIndex(this._activeIndex, this._ranges.length);
     }
   }
 
-  private replace(replacement: string, index?: number): CommandFunction {
-    return (props) => {
-      const { tr, dispatch } = props;
-      const result = this._results[isNumber(index) ? index : this._activeIndex];
-
-      if (!result) {
-        return false;
-      }
-
-      if (!dispatch) {
-        return true;
-      }
-
-      tr.insertText(replacement, result.from, result.to);
-      return this.searchNext()(props);
-    };
-  }
-
-  private rebaseNextResult({ replacement, index, lastOffset = 0 }: RebaseNextResultProps) {
-    const nextIndex = index + 1;
-
-    if (!this._results[nextIndex]) {
-      return;
-    }
-
-    const current = assertGet(this._results, index);
-    const offset = current.to - current.from - replacement.length + lastOffset;
-    const next = assertGet(this._results, nextIndex);
-
-    this._results[nextIndex] = {
-      to: next.to - offset,
-      from: next.from - offset,
-    };
-
-    return offset;
-  }
-
-  private replaceAll(replacement: string): CommandFunction {
-    return (props) => {
-      const { tr, dispatch } = props;
-      let offset: number | undefined;
-
-      if (isEmptyArray(this._results)) {
-        return false;
-      }
-
-      if (!dispatch) {
-        return true;
-      }
-
-      this._results.forEach(({ from, to }, index) => {
-        tr.insertText(replacement, from, to);
-        offset = this.rebaseNextResult({ replacement, index, lastOffset: offset });
-      });
-
-      return this.find(this._searchTerm)(props);
-    };
-  }
-
-  private find(searchTerm?: string, direction?: SearchDirection): CommandFunction {
-    return ({ tr, dispatch }) => {
-      const range = isSelectionEmpty(tr) ? getSelectedWord(tr) : tr.selection;
-      let actualSearch = '';
-
-      if (searchTerm) {
-        actualSearch = searchTerm;
-      } else if (range) {
-        const { from, to } = range;
-        actualSearch = tr.doc.textBetween(from, to);
-      }
-
-      this._searchTerm = this.options.disableRegex
-        ? escapeStringRegexp(actualSearch)
-        : actualSearch;
-
-      this._activeIndex = !direction
-        ? 0
-        : rotateHighlightedIndex({
-            direction,
-            previousIndex: this._activeIndex,
-            resultsLength: this._results.length,
-          });
-
-      return this.updateView(tr, dispatch);
-    };
-  }
-
-  private clear(): CommandFunction {
-    return ({ tr, dispatch }) => {
-      this._searchTerm = undefined;
-      this._activeIndex = 0;
-
-      return this.updateView(tr, dispatch);
-    };
+  private createDecorationSet(doc: ProsemirrorNode): DecorationSet {
+    const decorations = this._ranges.map((deco, index) => {
+      return Decoration.inline(
+        deco.from,
+        deco.to,
+        index === this._activeIndex ? this.options.activeDecoration : this.options.searchDecoration,
+      );
+    });
+    return DecorationSet.create(doc, decorations);
   }
 
   /**
@@ -403,45 +230,29 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     return true;
   }
 
-  private createDecoration(doc: ProsemirrorNode) {
-    this.gatherSearchResults(doc);
-    const decorations = this.getDecorations();
+  private scrollToActiveResult(): void {
+    if (this._activeIndex == null) {
+      return;
+    }
 
-    return decorations ? DecorationSet.create(doc, decorations) : [];
+    const activeResult = this._ranges[this._activeIndex];
+
+    if (!activeResult) {
+      return;
+    }
+
+    const view = this.store.view;
+    const maxSize = view.state.doc.content.size;
+    const pos = activeResult.from;
+
+    if (pos > maxSize) {
+      return;
+    }
+
+    const dom = view.domAtPos(pos).node as HTMLElement;
+    dom?.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' });
   }
 }
-
-interface RebaseNextResultProps {
-  replacement: string;
-  index: number;
-  lastOffset?: number;
-}
-
-interface RotateHighlightedIndexProps {
-  /**
-   * Whether the search is moving forward or backward.
-   */
-  direction: SearchDirection;
-
-  /**
-   * The total number of matches
-   */
-  resultsLength: number;
-
-  /**
-   * The previously matched index
-   */
-  previousIndex: number;
-}
-export const rotateHighlightedIndex = (props: RotateHighlightedIndexProps): number => {
-  const { direction, resultsLength, previousIndex } = props;
-
-  if (direction === 'next') {
-    return previousIndex + 1 > resultsLength - 1 ? 0 : previousIndex + 1;
-  }
-
-  return previousIndex - 1 < 0 ? resultsLength - 1 : previousIndex - 1;
-};
 
 declare global {
   namespace Remirror {

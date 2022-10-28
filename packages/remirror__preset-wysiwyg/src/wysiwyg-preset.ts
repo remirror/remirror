@@ -93,25 +93,9 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
   const { defaultLevel, levels } = options;
   const headingExtension = new HeadingExtension({ defaultLevel, levels });
 
-  const {
-    alwaysSearch,
-    autoSelectNext,
-    caseSensitive,
-    clearOnEscape,
-    disableRegex,
-    highlightedClass,
-    searching,
-    searchClass,
-  } = options;
+  const { alwaysSearch } = options;
   const searchExtension = new SearchExtension({
     alwaysSearch,
-    autoSelectNext,
-    caseSensitive,
-    clearOnEscape,
-    disableRegex,
-    highlightedClass,
-    searching,
-    searchClass,
   });
 
   const { disableTags, ignoredNodes, nodeName } = options;

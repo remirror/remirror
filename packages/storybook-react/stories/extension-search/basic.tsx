@@ -1,85 +1,120 @@
 import 'remirror/styles/all.css';
-import './styles.css';
 
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { SearchExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, useCommands, useHelpers, useRemirror } from '@remirror/react';
 
-const extensions = () => [
-  new SearchExtension({
-    searchClass: 'my-custom-search-class',
-    highlightedClass: 'my-custom-highlighted-class',
-  }),
-];
+const extensions = () => [new SearchExtension({})];
 
 const SearchInput = () => {
+  const helpers = useHelpers();
   const commands = useCommands();
 
   const [searchTerm, setSearchTerm] = React.useState('');
+  const [currIndex, setCurrIndex] = React.useState(0);
+  const [total, setTotal] = React.useState(0);
+  const [caseSensitive, setCaseSensitive] = React.useState(false);
+
+  const search = (index: number) => {
+    const result = helpers.search({ searchTerm, caseSensitive, activeIndex: index });
+    setTotal(result.ranges.length);
+    setCurrIndex(result.activeIndex ?? 0);
+  };
+
+  const clear = () => {
+    setSearchTerm('');
+    setCurrIndex(0);
+    setTotal(0);
+    commands.stopSearch();
+  };
 
   return (
     <div>
       <input
-        style={{ width: '280px' }}
-        placeholder='Input something and press the search button'
+        placeholder='Search'
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            search(currIndex);
+          }
+        }}
       />
       <button
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => {
-          commands.search(searchTerm);
+          search(currIndex);
         }}
       >
-        search
+        Search
       </button>
       <button
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => {
-          commands.searchNext();
+          search(currIndex + 1);
         }}
       >
-        searchNext
+        Next
       </button>
       <button
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => {
-          commands.searchPrevious();
+          search(currIndex - 1);
         }}
       >
-        searchPrevious
+        Previous
       </button>
       <button
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => {
-          const replaceText = window.prompt('Replace search result with:') || '';
-          const replaceIndex = Number.parseInt(
-            window.prompt('Which search result index you would replace? Please input a number') ||
-              '0',
-            10,
-          );
-          commands.replaceSearchResult(replaceText, replaceIndex);
+          clear();
         }}
       >
-        replaceSearchResult
+        Clear
+      </button>
+
+      <span>
+        {total ? currIndex + 1 : 0} of {total}
+      </span>
+
+      <span>
+        <input
+          type='checkbox'
+          id='case-sensitive-checkbox'
+          checked={caseSensitive}
+          onClick={() => {
+            setCaseSensitive((value) => !value);
+          }}
+        />
+        <label htmlFor='case-sensitive-checkbox'>Match case</label>
+      </span>
+    </div>
+  );
+};
+
+const ReplaceInput = (): JSX.Element => {
+  const [replacement, setReplacement] = React.useState('');
+  const commands = useCommands();
+
+  return (
+    <div>
+      <input
+        placeholder='Replace'
+        value={replacement}
+        onChange={(event) => setReplacement(event.target.value)}
+      />
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commands.replaceSearchResult({ replacement })}
+      >
+        Replace
       </button>
       <button
         onMouseDown={(event) => event.preventDefault()}
-        onClick={() => {
-          const replaceText = window.prompt('Replace all search results with:') || '';
-          commands.replaceAllSearchResults(replaceText);
-        }}
+        onClick={() => commands.replaceAllSearchResults({ replacement })}
       >
-        replaceAllSearchResult
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => {
-          commands.clearSearch();
-        }}
-      >
-        clearSearch
+        Replace all
       </button>
     </div>
   );
@@ -103,6 +138,7 @@ const Basic = (): JSX.Element => {
         autoRender='end'
       >
         <SearchInput />
+        <ReplaceInput />
       </Remirror>
     </ThemeProvider>
   );

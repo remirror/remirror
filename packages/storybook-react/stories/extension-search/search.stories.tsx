@@ -1,4 +1,5 @@
 import Basic from './basic';
+import WithFindReplaceComponent from './with-find-replace-component';
 
-export { Basic };
+export { Basic, WithFindReplaceComponent };
 export default { title: 'Extensions / Search' };
