@@ -1,5 +1,15 @@
 # @remirror/extension-react-tables
 
+## 2.2.2
+
+> 2022-10-28
+
+### Patch Changes
+
+- Updated dependencies [64fccb544]
+  - @remirror/extension-tables@2.2.2
+  - @remirror/react-components@2.0.13
+
 ## 2.2.1
 
 > 2022-10-27
