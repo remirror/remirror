@@ -40,11 +40,11 @@ function useSearch() {
   };
 
   const replace = () => {
-    commands.replaceSearchResult({ replacement });
+    commands.findAndReplace({ replacement });
   };
 
   const replaceAll = () => {
-    commands.replaceAllSearchResults({ replacement });
+    commands.findAndReplaceAll({ replacement });
   };
 
   useEffect(() => {

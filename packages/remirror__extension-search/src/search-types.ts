@@ -20,20 +20,30 @@ export interface StartSearchOptions {
   searchTerm: string;
 
   /**
+   * @defaultValue false (search is case insensitive)
+   */
+  caseSensitive?: boolean;
+
+  /**
    * The index of search result to highlight. If not provided, none will be
    * highlighted.
    */
   activeIndex?: number;
+}
+
+export interface ReplaceOptions {
+  /**
+   * The text to search for.
+   */
+  searchTerm: string;
 
   /**
    * @defaultValue false (search is case insensitive)
    */
   caseSensitive?: boolean;
-}
 
-export interface ReplaceOptions {
   /**
-   * The text to replace
+   * The text to replace.
    */
   replacement: string;
 
@@ -45,5 +55,18 @@ export interface ReplaceOptions {
 }
 
 export interface ReplaceAllOptions {
+  /**
+   * The text to search for.
+   */
+  searchTerm: string;
+
+  /**
+   * @defaultValue false (search is case insensitive)
+   */
+  caseSensitive?: boolean;
+
+  /**
+   * The text to replace.
+   */
   replacement: string;
 }

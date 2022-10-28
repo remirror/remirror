@@ -84,10 +84,10 @@ describe('helpers and commands', () => {
     expect(helpers.search({ searchTerm }).ranges).toHaveLength(1);
   });
 
-  it('replaceSearchResult', () => {
+  it('findAndReplace', () => {
     const { view, commands } = create();
     commands.startSearch({ searchTerm: 'friend', caseSensitive: true });
-    commands.replaceSearchResult({ replacement: 'FRIEND' });
+    commands.findAndReplace({ replacement: 'FRIEND' });
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         Welcome
@@ -104,10 +104,10 @@ describe('helpers and commands', () => {
     `);
   });
 
-  it('replaceAllSearchResults', () => {
+  it('findAndReplaceAll', () => {
     const { view, commands } = create();
     commands.startSearch({ searchTerm: 'friend', caseSensitive: false });
-    commands.replaceAllSearchResults({ replacement: 'FRIEND' });
+    commands.findAndReplaceAll({ replacement: 'FRIEND' });
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         Welcome

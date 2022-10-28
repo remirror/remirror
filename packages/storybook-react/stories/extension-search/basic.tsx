@@ -106,13 +106,13 @@ const ReplaceInput = (): JSX.Element => {
       />
       <button
         onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.replaceSearchResult({ replacement })}
+        onClick={() => commands.findAndReplace({ replacement })}
       >
         Replace
       </button>
       <button
         onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.replaceAllSearchResults({ replacement })}
+        onClick={() => commands.findAndReplaceAll({ replacement })}
       >
         Replace all
       </button>

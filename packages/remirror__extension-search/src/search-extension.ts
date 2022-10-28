@@ -102,7 +102,8 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   @command()
-  replaceSearchResult({ replacement, index }: ReplaceOptions): CommandFunction {
+  findAndReplace({ replacement, index }: ReplaceOptions): CommandFunction {
+    // TODO: use searchTerm
     return (props) => {
       const { tr, dispatch } = props;
       index = rotateIndex(isNumber(index) ? index : this._activeIndex ?? 0, this._ranges.length);
@@ -122,7 +123,8 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   }
 
   @command()
-  replaceAllSearchResults({ replacement }: ReplaceAllOptions): CommandFunction {
+  findAndReplaceAll({ replacement }: ReplaceAllOptions): CommandFunction {
+    // TODO: use searchTerm
     return (props) => {
       const { tr } = props;
       const ranges = this.gatherSearchResults(tr.doc);
