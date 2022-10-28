@@ -528,3 +528,54 @@ export const cellSelectionPositioner = Positioner.create<CellSelection>({
     };
   },
 });
+
+/**
+ * Creates a positioner if the cell selection goes all the way from the top to the bottom of the table
+ *
+ * It spans the full width and height of the selected cells
+ */
+export const cellColumnSelectionPositioner = cellSelectionPositioner.clone(({ getActive }) => ({
+  getActive(props) {
+    const [selection] = getActive(props);
+
+    if (!selection || !selection.isColSelection()) {
+      return Positioner.EMPTY;
+    }
+
+    return [selection];
+  },
+}));
+
+/**
+ * Creates a positioner if the cell selection goes all the way from the left to the right of the table
+ *
+ * It spans the full width and height of the selected cells
+ */
+export const cellRowSelectionPositioner = cellSelectionPositioner.clone(({ getActive }) => ({
+  getActive(props) {
+    const [selection] = getActive(props);
+
+    if (!selection || !selection.isRowSelection()) {
+      return Positioner.EMPTY;
+    }
+
+    return [selection];
+  },
+}));
+
+/**
+ * Creates a positioner if all the cells in a table are selected
+ *
+ * It spans the full width and height of the selected cells (the entire table)
+ */
+export const allCellSelectionPositioner = cellSelectionPositioner.clone(({ getActive }) => ({
+  getActive(props) {
+    const [selection] = getActive(props);
+
+    if (!selection || !selection.isColSelection() || !selection.isRowSelection()) {
+      return Positioner.EMPTY;
+    }
+
+    return [selection];
+  },
+}));

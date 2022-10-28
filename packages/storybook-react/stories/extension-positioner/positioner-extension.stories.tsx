@@ -11,8 +11,11 @@ import {
   ActiveCell,
   ActiveCellColumn,
   ActiveCellRow,
+  AllCellSelection,
   AllColumnsStart,
   AllRowsStart,
+  CellColumnSelection,
+  CellRowSelection,
   CellSelection,
   SelectedColumn,
   SelectedRow,
@@ -27,10 +30,13 @@ export { EmptyBlock };
 export { EmptyBlockStart };
 export { EmptyBlockEnd };
 export { Table };
-export { CellSelection };
 export { ActiveCell };
 export { ActiveCellColumn };
 export { ActiveCellRow };
+export { CellSelection };
+export { CellColumnSelection };
+export { CellRowSelection };
+export { AllCellSelection };
 export { SelectedColumn };
 export { SelectedRow };
 export { AllColumnsStart };
