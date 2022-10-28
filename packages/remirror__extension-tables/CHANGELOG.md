@@ -1,5 +1,13 @@
 # @remirror/extension-tabless
 
+## 2.2.2
+
+> 2022-10-28
+
+### Patch Changes
+
+- 64fccb544: Add table positioners for column, row and all cell selections
+
 ## 2.2.1
 
 > 2022-10-27

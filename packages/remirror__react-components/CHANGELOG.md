@@ -1,5 +1,13 @@
 # @remirror/react-components
 
+## 2.0.13
+
+> 2022-10-28
+
+### Patch Changes
+
+- remirror@2.0.14
+
 ## 2.0.12
 
 > 2022-10-27

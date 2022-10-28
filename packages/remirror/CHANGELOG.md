@@ -1,5 +1,14 @@
 # remirror
 
+## 2.0.14
+
+> 2022-10-28
+
+### Patch Changes
+
+- Updated dependencies [64fccb544]
+  - @remirror/extension-tables@2.2.2
+
 ## 2.0.13
 
 > 2022-10-27
