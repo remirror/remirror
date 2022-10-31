@@ -1,10 +1,10 @@
 import 'remirror/styles/all.css';
 
 import React from 'react';
-import { ImageExtension } from 'remirror/extensions';
+import { DropCursorExtension, ImageExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
-const extensions = () => [new ImageExtension()];
+const extensions = () => [new ImageExtension(), new DropCursorExtension()];
 
 const Basic = (): JSX.Element => {
   const imageSrc = 'https://dummyimage.com/2000x800/479e0c/fafafa';
@@ -33,6 +33,15 @@ const Basic = (): JSX.Element => {
             {
               type: 'text',
               text: 'You can see a green image above.',
+            },
+          ],
+        },
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'Drag and drop an image file to editor to insert it.',
             },
           ],
         },

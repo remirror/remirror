@@ -10,6 +10,7 @@ import {
   getTextSelection,
   invariant,
   isElementDomNode,
+  isNumber,
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
@@ -228,7 +229,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
     };
   }
 
-  private fileUploadFileHandler(files: File[], event: ClipboardEvent | DragEvent) {
+  private fileUploadFileHandler(files: File[], event: ClipboardEvent | DragEvent, pos?: number) {
     const { preferPastedTextContent, uploadHandler } = this.options;
 
     if (
@@ -249,6 +250,10 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
 
     const uploads = uploadHandler(filesWithProgress);
 
+    if (isNumber(pos)) {
+      chain.selectText(pos);
+    }
+
     for (const upload of uploads) {
       chain.uploadImage(upload);
     }
@@ -263,7 +268,10 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
       {
         type: 'file',
         regexp: /image/i,
-        fileHandler: ({ files, event }) => this.fileUploadFileHandler(files, event),
+        fileHandler: (props): boolean => {
+          const pos = props.type === 'drop' ? props.pos : undefined;
+          return this.fileUploadFileHandler(props.files, props.event, pos);
+        },
       },
     ];
   }
