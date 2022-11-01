@@ -68,19 +68,13 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   private _ranges: FromToProps[] = [];
   private _activeIndex?: number = undefined;
 
-  @helper()
-  search(options: StartSearchOptions): Helper<SearchResult> {
-    this.store.commands.startSearch(options);
-    return {
-      activeIndex: this._activeIndex,
-      ranges: this._ranges,
-    };
-  }
-
+  /**
+   * Find and highlight the search result in the editor.
+   */
   @command()
-  startSearch({ searchTerm, activeIndex, caseSensitive }: StartSearchOptions): CommandFunction {
+  find({ searchTerm, activeIndex, caseSensitive }: StartSearchOptions): CommandFunction {
     if (!searchTerm) {
-      return this.stopSearch();
+      return this.stopFind();
     }
 
     this._searchTerm = escapeStringRegex(searchTerm);
@@ -92,8 +86,11 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     };
   }
 
+  /**
+   * Stop find and remove all highlight.
+   */
   @command()
-  stopSearch(): CommandFunction {
+  stopFind(): CommandFunction {
     return ({ tr, dispatch }) => {
       this._searchTerm = '';
       this._activeIndex = undefined;
@@ -101,6 +98,9 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     };
   }
 
+  /**
+   * Find and replace the one search result.
+   */
   @command()
   findAndReplace({ replacement, index }: ReplaceOptions): CommandFunction {
     // TODO: use searchTerm
@@ -122,6 +122,9 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     };
   }
 
+  /**
+   * Find and replace all search results.
+   */
   @command()
   findAndReplaceAll({ replacement }: ReplaceAllOptions): CommandFunction {
     // TODO: use searchTerm
@@ -134,7 +137,19 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
         tr.insertText(replacement, from, to);
       }
 
-      return this.stopSearch()(props);
+      return this.stopFind()(props);
+    };
+  }
+
+  /**
+   * Find and highlight the search result in the editor. Returns search results.
+   */
+  @helper()
+  findRanges(options: StartSearchOptions): Helper<SearchResult> {
+    this.store.commands.find(options);
+    return {
+      activeIndex: this._activeIndex,
+      ranges: this._ranges,
     };
   }
 

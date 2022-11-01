@@ -15,7 +15,7 @@ function useSearch() {
   const [replacement, setReplacement] = React.useState('');
 
   const search = (index: number) => {
-    const result = helpers.search({ searchTerm, caseSensitive, activeIndex: index });
+    const result = helpers.findRanges({ searchTerm, caseSensitive, activeIndex: index });
     setTotal(result.ranges.length);
     setCurrIndex(result.activeIndex ?? -1);
   };
@@ -36,7 +36,7 @@ function useSearch() {
     setSearchTerm('');
     setCurrIndex(-1);
     setTotal(0);
-    commands.stopSearch();
+    commands.stopFind();
   };
 
   const replace = () => {
