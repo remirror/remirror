@@ -95,7 +95,7 @@ const SearchInput = () => {
 
 const ReplaceInput = (): JSX.Element => {
   const [replacement, setReplacement] = React.useState('');
-  const commands = useCommands();
+  // const commands = useCommands();
 
   return (
     <div>
@@ -104,18 +104,19 @@ const ReplaceInput = (): JSX.Element => {
         value={replacement}
         onChange={(event) => setReplacement(event.target.value)}
       />
-      <button
+      {/* TODO */}
+      {/* <button
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => commands.findAndReplace({ replacement })}
       >
         Replace
-      </button>
-      <button
+      </button> */}
+      {/* <button
         onMouseDown={(event) => event.preventDefault()}
         onClick={() => commands.findAndReplaceAll({ replacement })}
       >
         Replace all
-      </button>
+      </button> */}
     </div>
   );
 };

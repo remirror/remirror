@@ -1,6 +1,6 @@
 import type { FromToProps } from '@remirror/core';
 
-export interface SearchResult {
+export interface FindResult {
   /**
    * The index of search result to highlight. Undefined if no search result is
    * active.
@@ -13,7 +13,7 @@ export interface SearchResult {
   ranges: FromToProps[];
 }
 
-export interface StartSearchOptions {
+export interface FindProps {
   /**
    * The text to search for.
    */
@@ -31,7 +31,7 @@ export interface StartSearchOptions {
   activeIndex?: number;
 }
 
-export interface ReplaceOptions {
+export interface FindAndReplaceProps {
   /**
    * The text to search for.
    */
@@ -54,7 +54,7 @@ export interface ReplaceOptions {
   index?: number;
 }
 
-export interface ReplaceAllOptions {
+export interface FindAndReplaceAllProps {
   /**
    * The text to search for.
    */

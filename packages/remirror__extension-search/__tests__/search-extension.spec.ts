@@ -86,8 +86,11 @@ describe('helpers and commands', () => {
 
   it('findAndReplace', () => {
     const { view, commands } = create();
-    commands.startSearch({ searchTerm: 'friend', caseSensitive: true });
-    commands.findAndReplace({ replacement: 'FRIEND' });
+    commands.findAndReplace({
+      searchTerm: 'friend',
+      caseSensitive: true,
+      replacement: 'FRIEND',
+    });
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         Welcome
@@ -106,8 +109,11 @@ describe('helpers and commands', () => {
 
   it('findAndReplaceAll', () => {
     const { view, commands } = create();
-    commands.startSearch({ searchTerm: 'friend', caseSensitive: false });
-    commands.findAndReplaceAll({ replacement: 'FRIEND' });
+    commands.findAndReplaceAll({
+      searchTerm: 'friend',
+      caseSensitive: false,
+      replacement: 'FRIEND',
+    });
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
       <p>
         Welcome

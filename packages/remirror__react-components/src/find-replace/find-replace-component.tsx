@@ -1,74 +1,95 @@
 import { Box, Button, ButtonGroup, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useCommands, useHelpers } from '@remirror/react-core';
 
 import { Icon } from '../icons';
 import { MdiFormatLetterCase } from './letter-icon';
 
-function useSearch() {
+interface FindReplaceState {
+  searchTerm: string;
+  replacement: string;
+  activeIndex: number | null;
+  total: number;
+  caseSensitive: boolean;
+}
+
+function initialState(): FindReplaceState {
+  return {
+    searchTerm: '',
+    replacement: '',
+    activeIndex: null,
+    total: 0,
+    caseSensitive: false,
+  };
+}
+
+function useFindReplace() {
   const helpers = useHelpers();
   const commands = useCommands();
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [currIndex, setCurrIndex] = React.useState(-1);
-  const [total, setTotal] = React.useState(0);
-  const [caseSensitive, setCaseSensitive] = React.useState(false);
-  const [replacement, setReplacement] = React.useState('');
+  const [state, setState] = useState<FindReplaceState>(initialState);
 
-  const search = (index: number) => {
-    const result = helpers.findRanges({ searchTerm, caseSensitive, activeIndex: index });
-    setTotal(result.ranges.length);
-    setCurrIndex(result.activeIndex ?? -1);
-  };
+  const find = useCallback(
+    (indexDiff = 0): void => {
+      setState((state): FindReplaceState => {
+        const { searchTerm, caseSensitive, activeIndex } = state;
+        const result = helpers.findRanges({
+          searchTerm,
+          caseSensitive,
+          activeIndex: activeIndex == null ? 0 : activeIndex + indexDiff,
+        });
+        return { ...state, total: result.ranges.length, activeIndex: result.activeIndex ?? 0 };
+      });
+    },
+    [helpers],
+  );
 
-  const searchNext = () => {
-    search(currIndex + 1);
-  };
+  const findNext = useCallback(() => find(+1), [find]);
+  const findPrev = useCallback(() => find(-1), [find]);
 
-  const searchPrevious = () => {
-    search(currIndex - 1);
-  };
-
-  const searchCurrent = () => {
-    search(currIndex);
-  };
-
-  const stopSearch = () => {
-    setSearchTerm('');
-    setCurrIndex(-1);
-    setTotal(0);
+  const stopFind = useCallback(() => {
+    setState(initialState());
     commands.stopFind();
-  };
+  }, [commands]);
 
-  const replace = () => {
-    commands.findAndReplace({ replacement });
-  };
+  const replace = useCallback((): void => {
+    const { searchTerm, replacement, caseSensitive } = state;
+    commands.findAndReplace({ searchTerm, replacement, caseSensitive });
+    find();
+  }, [commands, state, find]);
 
-  const replaceAll = () => {
-    commands.findAndReplaceAll({ replacement });
+  const replaceAll = useCallback((): void => {
+    const { searchTerm, replacement, caseSensitive } = state;
+    commands.findAndReplaceAll({ searchTerm, replacement, caseSensitive });
+    find();
+  }, [commands, state, find]);
+
+  const toggleCaseSensitive = () => {
+    setState((state) => ({ ...state, caseSensitive: !state.caseSensitive }));
+  };
+  const setSearchTerm = (searchTerm: string) => {
+    setState((state) => ({ ...state, searchTerm }));
+  };
+  const setReplacement = (replacement: string) => {
+    setState((state) => ({ ...state, replacement }));
   };
 
   useEffect(() => {
-    if (searchTerm) {
-      searchCurrent();
+    if (state.searchTerm) {
+      find();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [caseSensitive]);
+  }, [find, state.searchTerm, state.caseSensitive]);
 
   return {
-    searchTerm,
-    setSearchTerm,
-    currIndex,
-    total,
-    caseSensitive,
-    setCaseSensitive,
-    replacement,
-    setReplacement,
-    searchCurrent,
-    searchNext,
-    searchPrevious,
-    stopSearch,
+    ...state,
+    findNext,
+    findPrev,
+    stopFind,
     replace,
     replaceAll,
+
+    toggleCaseSensitive,
+    setSearchTerm,
+    setReplacement,
   };
 }
 
@@ -93,18 +114,18 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) =
   const {
     searchTerm,
     setSearchTerm,
-    currIndex,
+    activeIndex,
     total,
     caseSensitive,
     replacement,
     setReplacement,
-    setCaseSensitive,
-    searchNext,
-    searchPrevious,
-    stopSearch,
+    toggleCaseSensitive,
+    findNext,
+    findPrev,
+    stopFind,
     replace,
     replaceAll,
-  } = useSearch();
+  } = useFindReplace();
 
   const searchInput = (
     <OutlinedInput
@@ -116,9 +137,9 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) =
       onKeyDown={(event) => {
         if (event.key === 'Enter') {
           if (event.shiftKey) {
-            searchPrevious();
+            findPrev();
           } else {
-            searchNext();
+            findNext();
           }
         }
       }}
@@ -130,7 +151,7 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) =
       }}
       size='small'
       inputProps={{ 'aria-label': 'Find' }}
-      endAdornment={<CounterAdornment activeIndex={currIndex} totalCount={total} />}
+      endAdornment={<CounterAdornment activeIndex={activeIndex ?? 0} totalCount={total} />}
     />
   );
 
@@ -155,7 +176,7 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) =
   const searchController = (
     <>
       <IconButton
-        onClick={() => searchPrevious()}
+        onClick={findPrev}
         size='small'
         title='Next Match (Enter)'
         aria-label='Next Match (Enter)'
@@ -163,7 +184,7 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) =
         <Icon name={'arrowLeftSFill'} />
       </IconButton>
       <IconButton
-        onClick={() => searchNext()}
+        onClick={findNext}
         size='small'
         title='Previous Match (Shift+Enter)'
         aria-label='Previous Match (Shift+Enter)'
@@ -171,9 +192,7 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) =
         <Icon name={'arrowRightSFill'} />
       </IconButton>
       <IconButton
-        onClick={() => {
-          setCaseSensitive((value) => !value);
-        }}
+        onClick={toggleCaseSensitive}
         size='small'
         color={caseSensitive ? 'primary' : 'default'}
         title='Match Case'
@@ -183,7 +202,7 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) =
       </IconButton>
       <IconButton
         onClick={() => {
-          stopSearch();
+          stopFind();
           onStopSearch?.();
         }}
         size='small'

@@ -16,12 +16,7 @@ import {
 } from '@remirror/core';
 import { Decoration, DecorationAttrs, DecorationSet } from '@remirror/pm/view';
 
-import {
-  ReplaceAllOptions,
-  ReplaceOptions,
-  SearchResult,
-  StartSearchOptions,
-} from './search-types';
+import { FindAndReplaceAllProps, FindAndReplaceProps, FindProps, FindResult } from './search-types';
 import { rotateIndex } from './search-utils';
 
 export interface SearchOptions {
@@ -72,7 +67,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Find and highlight the search result in the editor.
    */
   @command()
-  find({ searchTerm, activeIndex, caseSensitive }: StartSearchOptions): CommandFunction {
+  find({ searchTerm, activeIndex, caseSensitive }: FindProps): CommandFunction {
     if (!searchTerm) {
       return this.stopFind();
     }
@@ -102,7 +97,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Find and replace the one search result.
    */
   @command()
-  findAndReplace({ replacement, index }: ReplaceOptions): CommandFunction {
+  findAndReplace({ replacement, index }: FindAndReplaceProps): CommandFunction {
     // TODO: use searchTerm
     return (props) => {
       const { tr, dispatch } = props;
@@ -126,7 +121,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Find and replace all search results.
    */
   @command()
-  findAndReplaceAll({ replacement }: ReplaceAllOptions): CommandFunction {
+  findAndReplaceAll({ replacement }: FindAndReplaceAllProps): CommandFunction {
     // TODO: use searchTerm
     return (props) => {
       const { tr } = props;
@@ -145,7 +140,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Find and highlight the search result in the editor. Returns search results.
    */
   @helper()
-  findRanges(options: StartSearchOptions): Helper<SearchResult> {
+  findRanges(options: FindProps): Helper<FindResult> {
     this.store.commands.find(options);
     return {
       activeIndex: this._activeIndex,
