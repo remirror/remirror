@@ -1953,6 +1953,7 @@ importers:
       '@mui/material': ^5.8.5
       '@popperjs/core': ^2.9.2
       '@remirror/core': ^2.0.7
+      '@remirror/extension-find': ^0.0.0
       '@remirror/extension-positioner': ^2.1.0
       '@remirror/extension-text-color': ^2.0.7
       '@remirror/i18n': ^2.0.1
@@ -1983,6 +1984,7 @@ importers:
       '@mui/material': 5.10.4_822232393be1441005b8f7aae83f4aad
       '@popperjs/core': 2.11.6
       '@remirror/core': link:../remirror__core
+      '@remirror/extension-find': link:../remirror__extension-find
       '@remirror/extension-positioner': link:../remirror__extension-positioner
       '@remirror/extension-text-color': link:../remirror__extension-text-color
       '@remirror/i18n': link:../remirror__i18n
@@ -12501,7 +12503,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.5
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -23516,6 +23518,17 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
+
+  /promise-inflight/1.0.1_bluebird@3.7.2:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dependencies:
+      bluebird: 3.7.2
+    dev: true
 
   /promise-retry/1.1.1:
     resolution: {integrity: sha1-ZznpaOMFHaIM5kl/srUPaRHfPW0=}

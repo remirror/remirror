@@ -21,7 +21,7 @@ describe('helpers and commands', () => {
   it('find', () => {
     const { view, helpers } = create();
 
-    let result = helpers.findRanges({ text: 'welcome', caseSensitive: true });
+    let result = helpers.findRanges({ query: 'welcome', caseSensitive: true });
     expect(result.activeIndex).toBeUndefined();
     expect(result.ranges).toHaveLength(1);
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
@@ -39,7 +39,7 @@ describe('helpers and commands', () => {
       </p>
     `);
 
-    result = helpers.findRanges({ text: 'friend', activeIndex: -1 });
+    result = helpers.findRanges({ query: 'friend', activeIndex: -1 });
     expect(result.activeIndex).toBe(1);
     expect(result.ranges).toHaveLength(2);
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
@@ -64,30 +64,30 @@ describe('helpers and commands', () => {
     const { add, doc, p, helpers } = create();
 
     // C++ is an invalid regexp
-    const text = 'C++';
-    expect(() => new RegExp(text)).toThrow();
+    const query = 'C++';
+    expect(() => new RegExp(query)).toThrow();
     add(doc(p('C++'), p('++C C++')));
-    expect(helpers.findRanges({ text }).ranges).toHaveLength(2);
+    expect(helpers.findRanges({ query }).ranges).toHaveLength(2);
   });
 
   it('can handle a regexp-like find term', () => {
     const { add, doc, p, helpers } = create();
 
-    const text = '.*';
-    expect(() => new RegExp(text)).not.toThrow();
+    const query = '.*';
+    expect(() => new RegExp(query)).not.toThrow();
     add(doc(p('Hello world'), p('')));
 
     // This find term should not be treat as a regexp and it should not match anything
-    expect(helpers.findRanges({ text }).ranges).toHaveLength(0);
+    expect(helpers.findRanges({ query }).ranges).toHaveLength(0);
 
     add(doc(p('Hello world'), p('.*')));
-    expect(helpers.findRanges({ text }).ranges).toHaveLength(1);
+    expect(helpers.findRanges({ query }).ranges).toHaveLength(1);
   });
 
   it('findAndReplace', () => {
     const { view, commands } = create();
     commands.findAndReplace({
-      text: 'friend',
+      query: 'friend',
       caseSensitive: true,
       replacement: 'FRIEND',
     });
@@ -110,7 +110,7 @@ describe('helpers and commands', () => {
   it('findAndReplaceAll', () => {
     const { view, commands } = create();
     commands.findAndReplaceAll({
-      text: 'friend',
+      query: 'friend',
       caseSensitive: false,
       replacement: 'FRIEND',
     });
@@ -129,7 +129,7 @@ describe('helpers and commands', () => {
 
   it('clearResult', () => {
     const { view, commands } = create();
-    commands.find({ text: 'friend' });
+    commands.find({ query: 'friend' });
     expect(view.dom.innerHTML).toContain('background-color');
     commands.stopFind();
     expect(view.dom.innerHTML).not.toContain('background-color');

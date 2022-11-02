@@ -17,7 +17,7 @@ export interface FindProps {
   /**
    * The text to search for.
    */
-  text: string;
+  query: string;
 
   /**
    * @defaultValue false (search is case insensitive)
@@ -35,7 +35,7 @@ export interface FindAndReplaceProps {
   /**
    * The text to search for.
    */
-  text: string;
+  query: string;
 
   /**
    * @defaultValue false (search is case insensitive)
@@ -58,7 +58,7 @@ export interface FindAndReplaceAllProps {
   /**
    * The text to search for.
    */
-  text: string;
+  query: string;
 
   /**
    * @defaultValue false (search is case insensitive)

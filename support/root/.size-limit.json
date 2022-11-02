@@ -808,6 +808,7 @@
       "react-dom",
       "remirror",
       "@remirror/core",
+      "@remirror/extension-find",
       "@remirror/extension-positioner",
       "@remirror/extension-text-color",
       "@remirror/i18n",

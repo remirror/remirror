@@ -42,7 +42,7 @@ export interface FindOptions {
 }
 
 /**
- * This extension add search functionality to your editor.
+ * This extension add find and replace functionality to your editor.
  */
 @extension<FindOptions>({
   defaultOptions: {
@@ -57,7 +57,7 @@ export class FindExtension extends PlainExtension<FindOptions> {
   }
 
   private _updating = false;
-  private _text = '';
+  private _query = '';
   private _caseSensitive = true;
   private _ranges: FromToProps[] = [];
   private _activeIndex?: number = undefined;
@@ -66,12 +66,12 @@ export class FindExtension extends PlainExtension<FindOptions> {
    * Find and highlight the search result in the editor.
    */
   @command()
-  find({ text, activeIndex, caseSensitive }: FindProps): CommandFunction {
-    if (!text) {
+  find({ query, activeIndex, caseSensitive }: FindProps): CommandFunction {
+    if (!query) {
       return this.stopFind();
     }
 
-    this.setProps({ text, activeIndex, caseSensitive });
+    this.setProps({ query, activeIndex, caseSensitive });
 
     return ({ tr, dispatch }) => {
       return this.updateView(tr, dispatch);
@@ -84,7 +84,7 @@ export class FindExtension extends PlainExtension<FindOptions> {
   @command()
   stopFind(): CommandFunction {
     return ({ tr, dispatch }) => {
-      this._text = '';
+      this._query = '';
       this._activeIndex = undefined;
       return this.updateView(tr, dispatch);
     };
@@ -95,13 +95,13 @@ export class FindExtension extends PlainExtension<FindOptions> {
    */
   @command()
   findAndReplace({
-    text,
+    query,
     caseSensitive,
     replacement,
     index,
   }: FindAndReplaceProps): CommandFunction {
     return (props) => {
-      this.setProps({ text, caseSensitive });
+      this.setProps({ query, caseSensitive });
 
       const { tr, dispatch } = props;
       const ranges = this.gatherFindResults(tr.doc);
@@ -125,9 +125,13 @@ export class FindExtension extends PlainExtension<FindOptions> {
    * Find and replace all search results.
    */
   @command()
-  findAndReplaceAll({ text, caseSensitive, replacement }: FindAndReplaceAllProps): CommandFunction {
+  findAndReplaceAll({
+    query,
+    caseSensitive,
+    replacement,
+  }: FindAndReplaceAllProps): CommandFunction {
     return (props) => {
-      this.setProps({ text, caseSensitive });
+      this.setProps({ query, caseSensitive });
 
       const { tr } = props;
       const ranges = this.gatherFindResults(tr.doc);
@@ -189,25 +193,25 @@ export class FindExtension extends PlainExtension<FindOptions> {
   }
 
   private setProps({
-    text,
+    query,
     activeIndex,
     caseSensitive,
   }: {
-    text: string;
+    query: string;
     activeIndex?: number;
     caseSensitive?: boolean;
   }) {
-    this._text = escapeStringRegex(text);
+    this._query = escapeStringRegex(query);
     this._activeIndex = activeIndex;
     this._caseSensitive = caseSensitive ?? false;
   }
 
   private gatherFindResults(doc: ProsemirrorNode): FromToProps[] {
-    if (!this._text) {
+    if (!this._query) {
       return [];
     }
 
-    const re = new RegExp(this._text, this._caseSensitive ? 'gu' : 'gui');
+    const re = new RegExp(this._query, this._caseSensitive ? 'gu' : 'gui');
     const ranges: FromToProps[] = [];
 
     doc.descendants((node, pos) => {
