@@ -21,7 +21,7 @@ describe('helpers and commands', () => {
   it('find', () => {
     const { view, helpers } = create();
 
-    let result = helpers.find({ text: 'welcome', caseSensitive: true });
+    let result = helpers.findRanges({ text: 'welcome', caseSensitive: true });
     expect(result.activeIndex).toBeUndefined();
     expect(result.ranges).toHaveLength(1);
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
@@ -39,7 +39,7 @@ describe('helpers and commands', () => {
       </p>
     `);
 
-    result = helpers.find({ text: 'friend', activeIndex: -1 });
+    result = helpers.findRanges({ text: 'friend', activeIndex: -1 });
     expect(result.activeIndex).toBe(1);
     expect(result.ranges).toHaveLength(2);
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
@@ -67,7 +67,7 @@ describe('helpers and commands', () => {
     const text = 'C++';
     expect(() => new RegExp(text)).toThrow();
     add(doc(p('C++'), p('++C C++')));
-    expect(helpers.find({ text }).ranges).toHaveLength(2);
+    expect(helpers.findRanges({ text }).ranges).toHaveLength(2);
   });
 
   it('can handle a regexp-like find term', () => {
@@ -78,10 +78,10 @@ describe('helpers and commands', () => {
     add(doc(p('Hello world'), p('')));
 
     // This find term should not be treat as a regexp and it should not match anything
-    expect(helpers.find({ text }).ranges).toHaveLength(0);
+    expect(helpers.findRanges({ text }).ranges).toHaveLength(0);
 
     add(doc(p('Hello world'), p('.*')));
-    expect(helpers.find({ text }).ranges).toHaveLength(1);
+    expect(helpers.findRanges({ text }).ranges).toHaveLength(1);
   });
 
   it('findAndReplace', () => {
@@ -129,7 +129,7 @@ describe('helpers and commands', () => {
 
   it('clearResult', () => {
     const { view, commands } = create();
-    commands.startFind({ text: 'friend' });
+    commands.find({ text: 'friend' });
     expect(view.dom.innerHTML).toContain('background-color');
     commands.stopFind();
     expect(view.dom.innerHTML).not.toContain('background-color');

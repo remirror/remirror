@@ -9,7 +9,6 @@ import {
   FromToProps,
   Helper,
   helper,
-  isNumber,
   PlainExtension,
   ProsemirrorNode,
   Transaction,
@@ -72,9 +71,7 @@ export class FindExtension extends PlainExtension<FindOptions> {
       return this.stopFind();
     }
 
-    this._text = escapeStringRegex(text);
-    this._activeIndex = activeIndex;
-    this._caseSensitive = caseSensitive ?? false;
+    this.setProps({ text, activeIndex, caseSensitive });
 
     return ({ tr, dispatch }) => {
       return this.updateView(tr, dispatch);
@@ -97,12 +94,19 @@ export class FindExtension extends PlainExtension<FindOptions> {
    * Find and replace the one search result.
    */
   @command()
-  findAndReplace({ replacement, index }: FindAndReplaceProps): CommandFunction {
-    // TODO: use text
+  findAndReplace({
+    text,
+    caseSensitive,
+    replacement,
+    index,
+  }: FindAndReplaceProps): CommandFunction {
     return (props) => {
+      this.setProps({ text, caseSensitive });
+
       const { tr, dispatch } = props;
-      index = rotateIndex(isNumber(index) ? index : this._activeIndex ?? 0, this._ranges.length);
-      const result = this._ranges[index];
+      const ranges = this.gatherFindResults(tr.doc);
+      index = rotateIndex(index ?? this._activeIndex ?? 0, ranges.length);
+      const result = ranges[index];
 
       if (!result) {
         return false;
@@ -121,9 +125,10 @@ export class FindExtension extends PlainExtension<FindOptions> {
    * Find and replace all search results.
    */
   @command()
-  findAndReplaceAll({ replacement }: FindAndReplaceAllProps): CommandFunction {
-    // TODO: use text
+  findAndReplaceAll({ text, caseSensitive, replacement }: FindAndReplaceAllProps): CommandFunction {
     return (props) => {
+      this.setProps({ text, caseSensitive });
+
       const { tr } = props;
       const ranges = this.gatherFindResults(tr.doc);
 
@@ -181,6 +186,20 @@ export class FindExtension extends PlainExtension<FindOptions> {
         },
       },
     };
+  }
+
+  private setProps({
+    text,
+    activeIndex,
+    caseSensitive,
+  }: {
+    text: string;
+    activeIndex?: number;
+    caseSensitive?: boolean;
+  }) {
+    this._text = escapeStringRegex(text);
+    this._activeIndex = activeIndex;
+    this._caseSensitive = caseSensitive ?? false;
   }
 
   private gatherFindResults(doc: ProsemirrorNode): FromToProps[] {
