@@ -107,10 +107,10 @@ const CounterAdornment: FC<SearchCounterProps> = ({ activeIndex, totalCount }) =
 };
 
 export interface FindReplaceComponentProps {
-  onStopSearch?: () => void;
+  onDismiss?: () => void;
 }
 
-const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) => {
+const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss }) => {
   const {
     searchTerm,
     setSearchTerm,
@@ -203,7 +203,7 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onStopSearch }) =
       <IconButton
         onClick={() => {
           stopFind();
-          onStopSearch?.();
+          onDismiss?.();
         }}
         size='small'
       >
