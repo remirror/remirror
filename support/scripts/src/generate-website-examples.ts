@@ -46,7 +46,7 @@ const ExampleComponent = (): JSX.Element => {
 };
 
 export default ExampleComponent;
-  `;
+`;
 }
 
 async function generateExampleFile(conponentPath: string) {
