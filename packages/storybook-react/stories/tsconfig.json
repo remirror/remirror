@@ -34,6 +34,9 @@
       "path": "../../remirror__extension-file/src"
     },
     {
+      "path": "../../remirror__extension-find/src"
+    },
+    {
       "path": "../../remirror__extension-mention/src"
     },
     {

@@ -332,6 +332,14 @@
     "gzip": true
   },
   {
+    "name": "@remirror/extension-find",
+    "limit": "20 KB",
+    "path": "packages/remirror__extension-find/dist/remirror-extension-find.js",
+    "ignore": ["@remirror/pm", "@remirror/core"],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-font-family",
     "limit": "5 KB",
     "path": "packages/remirror__extension-font-family/dist/remirror-extension-font-family.js",
@@ -800,6 +808,7 @@
       "react-dom",
       "remirror",
       "@remirror/core",
+      "@remirror/extension-find",
       "@remirror/extension-positioner",
       "@remirror/extension-text-color",
       "@remirror/i18n",

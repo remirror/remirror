@@ -26,6 +26,9 @@ import {
 } from '@remirror/core';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
+/**
+ * @deprecated - use `@remirror/extension-find` instead.
+ */
 export interface SearchOptions {
   /**
    * @defaultValue false
@@ -81,6 +84,8 @@ export type SearchDirection = 'next' | 'previous';
 
 /**
  * This extension add search functionality to your editor.
+ *
+ * @deprecated - use `@remirror/extension-find` instead.
  */
 @extension<SearchOptions>({
   defaultOptions: {

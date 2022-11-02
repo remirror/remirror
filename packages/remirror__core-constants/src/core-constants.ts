@@ -446,8 +446,11 @@ export enum NamedShortcut {
   RightAlignment = '_|right-align|_',
   JustifyAlignment = '_|justify-align|_',
   InsertLink = '_|link|_',
+  /** @deprecated */
   Find = '_|find|_',
+  /** @deprecated */
   FindBackwards = '_|find-backwards|_',
+  /** @deprecated */
   FindReplace = '_|find-replace|_',
   AddFootnote = '_|footnote|_',
   AddComment = '_|comment|_',
