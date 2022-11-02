@@ -49,6 +49,7 @@ export * from '@remirror/extension-trailing-node';
 export * from '@remirror/extension-underline';
 export * from '@remirror/extension-whitespace';
 export * from '@remirror/extension-yjs';
+
 // Presets
 export * from '@remirror/preset-core';
 export * from '@remirror/preset-formatting';
