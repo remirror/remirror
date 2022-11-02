@@ -131,7 +131,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.1",
-    "@remirror/react": "^2.0.15",
+    "@remirror/react": "^2.0.16",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",

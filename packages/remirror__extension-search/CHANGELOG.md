@@ -1,5 +1,13 @@
 # @remirror/extension-search
 
+## 2.0.8
+
+> 2022-11-02
+
+### Patch Changes
+
+- 8843920bb: Deprecate `@remirror/extension-search`. Please use `@remirror/extension-find` instead.
+
 ## 2.0.7
 
 > 2022-10-27

@@ -1,5 +1,19 @@
 # @remirror/react-components
 
+## 2.1.0
+
+> 2022-11-02
+
+### Minor Changes
+
+- 8843920bb: Add new `<FindReplaceComponent/>` that addes find and replace functionality to your editor.
+
+### Patch Changes
+
+- Updated dependencies [8843920bb]
+  - @remirror/extension-find@0.1.0
+  - remirror@2.0.15
+
 ## 2.0.13
 
 > 2022-10-28
