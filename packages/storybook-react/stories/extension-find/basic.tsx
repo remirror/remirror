@@ -1,9 +1,9 @@
 import 'remirror/styles/all.css';
 
-import { FindExtension } from '@remirror/extension-find';
-import { Remirror, ThemeProvider, useCommands, useHelpers, useRemirror } from '@remirror/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
+import { FindExtension } from '@remirror/extension-find';
+import { Remirror, ThemeProvider, useCommands, useHelpers, useRemirror } from '@remirror/react';
 
 const extensions = () => [new FindExtension({})];
 
@@ -66,7 +66,9 @@ function useFindReplace() {
   }, [commands, state, find]);
 
   const toggleCaseSensitive = useCallback(() => {
-    setState((state) => ({ ...state, caseSensitive: !state.caseSensitive }));
+    setState((state) => {
+      return { ...state, caseSensitive: !state.caseSensitive };
+    });
   }, []);
   const setQuery = useCallback((query: string) => {
     setState((state) => ({ ...state, query }));
@@ -76,9 +78,7 @@ function useFindReplace() {
   }, []);
 
   useEffect(() => {
-    if (state.query) {
-      find();
-    }
+    find();
   }, [find, state.query, state.caseSensitive]);
 
   return {
@@ -96,7 +96,6 @@ function useFindReplace() {
 }
 
 const FindReplace = (): JSX.Element => {
-  const [replacement, setReplacement] = React.useState('');
   const {
     query,
     setQuery,
@@ -109,6 +108,8 @@ const FindReplace = (): JSX.Element => {
     toggleCaseSensitive,
     replace,
     replaceAll,
+    replacement,
+    setReplacement,
   } = useFindReplace();
 
   return (
@@ -138,6 +139,7 @@ const FindReplace = (): JSX.Element => {
             type='checkbox'
             id='case-sensitive-checkbox'
             checked={caseSensitive}
+            onMouseDown={(event) => event.preventDefault()}
             onClick={toggleCaseSensitive}
           />
           <label htmlFor='case-sensitive-checkbox'>Match case</label>

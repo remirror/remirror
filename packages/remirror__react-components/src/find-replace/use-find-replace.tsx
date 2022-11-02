@@ -82,10 +82,8 @@ export function useFindReplace(): UseFindReplaceReturn {
   }, []);
 
   useEffect(() => {
-    if (state.query) {
-      find();
-    }
-  }, [find, state.query, state.caseSensitive]);
+    find();
+  }, [find, commands, state.query, state.caseSensitive]);
 
   return {
     ...state,
