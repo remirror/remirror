@@ -332,6 +332,14 @@
     "gzip": true
   },
   {
+    "name": "@remirror/extension-find",
+    "limit": "20 KB",
+    "path": "packages/remirror__extension-find/dist/remirror-extension-find.js",
+    "ignore": ["@remirror/pm", "@remirror/core"],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/extension-font-family",
     "limit": "5 KB",
     "path": "packages/remirror__extension-font-family/dist/remirror-extension-font-family.js",
@@ -560,9 +568,9 @@
   },
   {
     "name": "@remirror/extension-search",
-    "limit": "20 KB",
+    "limit": "5 KB",
     "path": "packages/remirror__extension-search/dist/remirror-extension-search.js",
-    "ignore": ["@remirror/pm", "@remirror/core"],
+    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
     "gzip": true
   },

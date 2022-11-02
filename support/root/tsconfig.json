@@ -228,6 +228,12 @@
       "path": "packages/remirror__extension-file/src"
     },
     {
+      "path": "packages/remirror__extension-find/__tests__"
+    },
+    {
+      "path": "packages/remirror__extension-find/src"
+    },
+    {
       "path": "packages/remirror__extension-font-family/__tests__"
     },
     {

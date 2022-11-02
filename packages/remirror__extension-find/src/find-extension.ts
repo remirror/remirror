@@ -17,7 +17,7 @@ import {
 import { Decoration, DecorationAttrs, DecorationSet } from '@remirror/pm/view';
 
 import { FindAndReplaceAllProps, FindAndReplaceProps, FindProps, FindResult } from './find-types';
-import { rotateIndex } from './search-utils';
+import { rotateIndex } from './find-utils';
 
 export interface FindOptions {
   /**

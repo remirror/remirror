@@ -2,10 +2,10 @@ import 'remirror/styles/all.css';
 
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
-import { SearchExtension } from 'remirror/extensions';
+import { FindExtension } from '@remirror/extension-find';
 import { Remirror, ThemeProvider, useCommands, useHelpers, useRemirror } from '@remirror/react';
 
-const extensions = () => [new SearchExtension({})];
+const extensions = () => [new FindExtension({})];
 
 const SearchInput = () => {
   const helpers = useHelpers();

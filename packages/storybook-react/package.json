@@ -19,6 +19,7 @@
     ]
   },
   "dependencies": {
+    "@remirror/extension-find": "^0.0.0",
     "@babel/runtime": "^7.13.10",
     "@codemirror/basic-setup": "^0.20.0",
     "@codemirror/language-data": "^6.1.0",
