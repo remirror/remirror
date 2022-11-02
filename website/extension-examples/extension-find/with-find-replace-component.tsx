@@ -9,7 +9,7 @@
 import React from 'react';
 import CodeBlock from '@theme/CodeBlock';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-search/with-find-replace-component.tsx';
+import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-find/with-find-replace-component.tsx';
 
 import { StoryExample } from '../../src/components/story-example-component';
 
@@ -17,7 +17,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-search/with-find-replace-component').default
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-find/with-find-replace-component').default
         return <ComponentStory/>
       }}
     </BrowserOnly>
