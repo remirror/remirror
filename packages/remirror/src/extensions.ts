@@ -35,6 +35,7 @@ export * from '@remirror/extension-node-formatting';
 export * from '@remirror/extension-paragraph';
 export * from '@remirror/extension-placeholder';
 export * from '@remirror/extension-positioner';
+export * from '@remirror/extension-search';
 export * from '@remirror/extension-shortcuts';
 export * from '@remirror/extension-strike';
 export * from '@remirror/extension-sub';
@@ -48,8 +49,7 @@ export * from '@remirror/extension-trailing-node';
 export * from '@remirror/extension-underline';
 export * from '@remirror/extension-whitespace';
 export * from '@remirror/extension-yjs';
-export * from '@remirror/preset-formatting';
-
 // Presets
 export * from '@remirror/preset-core';
+export * from '@remirror/preset-formatting';
 export * from '@remirror/preset-wysiwyg';
