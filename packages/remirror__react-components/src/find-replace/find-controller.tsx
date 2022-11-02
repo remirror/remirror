@@ -7,11 +7,11 @@ import { MdiFormatLetterCase } from './letter-icon';
 export const FindController: FC<{
   findPrev: () => void;
   findNext: () => void;
-  toggleCaseSensitive: () => void;
-  caseSensitive: boolean;
   stopFind: () => void;
-  onDismiss: (() => void) | undefined;
-}> = ({ findPrev, findNext, toggleCaseSensitive, caseSensitive, stopFind, onDismiss }) => {
+  caseSensitive: boolean;
+  toggleCaseSensitive: () => void;
+  onDismiss?: () => void;
+}> = ({ findPrev, findNext, stopFind, caseSensitive, toggleCaseSensitive, onDismiss }) => {
   return (
     <>
       <IconButton

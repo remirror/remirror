@@ -91,7 +91,7 @@ export class FindExtension extends PlainExtension<FindOptions> {
   }
 
   /**
-   * Find and replace the one search result.
+   * Find and replace one search result.
    */
   @command()
   findAndReplace({
