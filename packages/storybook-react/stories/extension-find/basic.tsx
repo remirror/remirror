@@ -1,122 +1,161 @@
 import 'remirror/styles/all.css';
 
-import React from 'react';
-import { htmlToProsemirrorNode } from 'remirror';
 import { FindExtension } from '@remirror/extension-find';
 import { Remirror, ThemeProvider, useCommands, useHelpers, useRemirror } from '@remirror/react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { htmlToProsemirrorNode } from 'remirror';
 
 const extensions = () => [new FindExtension({})];
 
-const SearchInput = () => {
-  const helpers = useHelpers();
-  const commands = useCommands();
+interface FindReplaceState {
+  query: string;
+  replacement: string;
+  activeIndex: number | null;
+  total: number;
+  caseSensitive: boolean;
+}
 
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [currIndex, setCurrIndex] = React.useState(0);
-  const [total, setTotal] = React.useState(0);
-  const [caseSensitive, setCaseSensitive] = React.useState(false);
-
-  const search = (index: number) => {
-    const result = helpers.search({ searchTerm, caseSensitive, activeIndex: index });
-    setTotal(result.ranges.length);
-    setCurrIndex(result.activeIndex ?? 0);
+function initialState(): FindReplaceState {
+  return {
+    query: '',
+    replacement: '',
+    activeIndex: null,
+    total: 0,
+    caseSensitive: false,
   };
+}
 
-  const clear = () => {
-    setSearchTerm('');
-    setCurrIndex(0);
-    setTotal(0);
-    commands.stopSearch();
-  };
+function useFindReplace() {
+  const helpers = useHelpers<FindExtension>();
+  const commands = useCommands<FindExtension>();
+  const [state, setState] = useState<FindReplaceState>(initialState);
 
-  return (
-    <div>
-      <input
-        placeholder='Search'
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            search(currIndex);
-          }
-        }}
-      />
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => {
-          search(currIndex);
-        }}
-      >
-        Search
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => {
-          search(currIndex + 1);
-        }}
-      >
-        Next
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => {
-          search(currIndex - 1);
-        }}
-      >
-        Previous
-      </button>
-      <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => {
-          clear();
-        }}
-      >
-        Clear
-      </button>
-
-      <span>
-        {total ? currIndex + 1 : 0} of {total}
-      </span>
-
-      <span>
-        <input
-          type='checkbox'
-          id='case-sensitive-checkbox'
-          checked={caseSensitive}
-          onClick={() => {
-            setCaseSensitive((value) => !value);
-          }}
-        />
-        <label htmlFor='case-sensitive-checkbox'>Match case</label>
-      </span>
-    </div>
+  const find = useCallback(
+    (indexDiff = 0): void => {
+      setState((state): FindReplaceState => {
+        const { query, caseSensitive, activeIndex } = state;
+        const result = helpers.findRanges({
+          query,
+          caseSensitive,
+          activeIndex: activeIndex == null ? 0 : activeIndex + indexDiff,
+        });
+        return { ...state, total: result.ranges.length, activeIndex: result.activeIndex ?? 0 };
+      });
+    },
+    [helpers],
   );
-};
 
-const ReplaceInput = (): JSX.Element => {
+  const findNext = useCallback(() => find(+1), [find]);
+  const findPrev = useCallback(() => find(-1), [find]);
+
+  const stopFind = useCallback(() => {
+    setState(initialState());
+    commands.stopFind();
+  }, [commands]);
+
+  const replace = useCallback((): void => {
+    const { query, replacement, caseSensitive } = state;
+    commands.findAndReplace({ query, replacement, caseSensitive });
+    find();
+  }, [commands, state, find]);
+
+  const replaceAll = useCallback((): void => {
+    const { query, replacement, caseSensitive } = state;
+    commands.findAndReplaceAll({ query, replacement, caseSensitive });
+    find();
+  }, [commands, state, find]);
+
+  const toggleCaseSensitive = useCallback(() => {
+    setState((state) => ({ ...state, caseSensitive: !state.caseSensitive }));
+  }, []);
+  const setQuery = useCallback((query: string) => {
+    setState((state) => ({ ...state, query }));
+  }, []);
+  const setReplacement = useCallback((replacement: string) => {
+    setState((state) => ({ ...state, replacement }));
+  }, []);
+
+  useEffect(() => {
+    if (state.query) {
+      find();
+    }
+  }, [find, state.query, state.caseSensitive]);
+
+  return {
+    ...state,
+    findNext,
+    findPrev,
+    stopFind,
+    replace,
+    replaceAll,
+
+    toggleCaseSensitive,
+    setQuery,
+    setReplacement,
+  };
+}
+
+const FindReplace = (): JSX.Element => {
   const [replacement, setReplacement] = React.useState('');
-  // const commands = useCommands();
+  const {
+    query,
+    setQuery,
+    findNext,
+    findPrev,
+    stopFind,
+    total,
+    activeIndex,
+    caseSensitive,
+    toggleCaseSensitive,
+    replace,
+    replaceAll,
+  } = useFindReplace();
 
   return (
     <div>
-      <input
-        placeholder='Replace'
-        value={replacement}
-        onChange={(event) => setReplacement(event.target.value)}
-      />
-      {/* TODO */}
-      {/* <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.findAndReplace({ replacement })}
-      >
-        Replace
-      </button> */}
-      {/* <button
-        onMouseDown={(event) => event.preventDefault()}
-        onClick={() => commands.findAndReplaceAll({ replacement })}
-      >
-        Replace all
-      </button> */}
+      <div>
+        <input
+          placeholder='Search'
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
+        <button onMouseDown={(event) => event.preventDefault()} onClick={findNext}>
+          Next
+        </button>
+        <button onMouseDown={(event) => event.preventDefault()} onClick={findPrev}>
+          Previous
+        </button>
+        <button onMouseDown={(event) => event.preventDefault()} onClick={stopFind}>
+          Clear
+        </button>
+
+        <span>
+          {total && activeIndex != null ? activeIndex + 1 : 0} of {total}
+        </span>
+
+        <span>
+          <input
+            type='checkbox'
+            id='case-sensitive-checkbox'
+            checked={caseSensitive}
+            onClick={toggleCaseSensitive}
+          />
+          <label htmlFor='case-sensitive-checkbox'>Match case</label>
+        </span>
+      </div>
+      <div>
+        <input
+          placeholder='Replace'
+          value={replacement}
+          onChange={(event) => setReplacement(event.target.value)}
+        />
+        <button onMouseDown={(event) => event.preventDefault()} onClick={replace}>
+          Replace
+        </button>
+        <button onMouseDown={(event) => event.preventDefault()} onClick={replaceAll}>
+          Replace all
+        </button>
+      </div>
     </div>
   );
 };
@@ -138,8 +177,7 @@ const Basic = (): JSX.Element => {
         initialContent={state}
         autoRender='end'
       >
-        <SearchInput />
-        <ReplaceInput />
+        <FindReplace />
       </Remirror>
     </ThemeProvider>
   );
