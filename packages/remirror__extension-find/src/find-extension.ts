@@ -16,16 +16,16 @@ import {
 } from '@remirror/core';
 import { Decoration, DecorationAttrs, DecorationSet } from '@remirror/pm/view';
 
-import { FindAndReplaceAllProps, FindAndReplaceProps, FindProps, FindResult } from './search-types';
+import { FindAndReplaceAllProps, FindAndReplaceProps, FindProps, FindResult } from './find-types';
 import { rotateIndex } from './search-utils';
 
-export interface SearchOptions {
+export interface FindOptions {
   /**
    * The inline decoraton to apply to all search results.
    *
    * @defaultValue '{style: "background-color: yellow;"}'
    */
-  searchDecoration?: DecorationAttrs;
+  decoration?: DecorationAttrs;
 
   /**
    * The inline decoraton to apply to the active search result (if any).
@@ -39,26 +39,26 @@ export interface SearchOptions {
    *
    * @defaultValue false
    */
-  alwaysSearch?: boolean;
+  alwaysFind?: boolean;
 }
 
 /**
  * This extension add search functionality to your editor.
  */
-@extension<SearchOptions>({
+@extension<FindOptions>({
   defaultOptions: {
-    searchDecoration: { style: 'background-color: yellow;' },
+    decoration: { style: 'background-color: yellow;' },
     activeDecoration: { style: 'background-color: orange;' },
-    alwaysSearch: false,
+    alwaysFind: false,
   },
 })
-export class SearchExtension extends PlainExtension<SearchOptions> {
+export class FindExtension extends PlainExtension<FindOptions> {
   get name() {
-    return 'search' as const;
+    return 'find' as const;
   }
 
   private _updating = false;
-  private _searchTerm = '';
+  private _text = '';
   private _caseSensitive = true;
   private _ranges: FromToProps[] = [];
   private _activeIndex?: number = undefined;
@@ -67,12 +67,12 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    * Find and highlight the search result in the editor.
    */
   @command()
-  find({ searchTerm, activeIndex, caseSensitive }: FindProps): CommandFunction {
-    if (!searchTerm) {
+  find({ text, activeIndex, caseSensitive }: FindProps): CommandFunction {
+    if (!text) {
       return this.stopFind();
     }
 
-    this._searchTerm = escapeStringRegex(searchTerm);
+    this._text = escapeStringRegex(text);
     this._activeIndex = activeIndex;
     this._caseSensitive = caseSensitive ?? false;
 
@@ -87,7 +87,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
   @command()
   stopFind(): CommandFunction {
     return ({ tr, dispatch }) => {
-      this._searchTerm = '';
+      this._text = '';
       this._activeIndex = undefined;
       return this.updateView(tr, dispatch);
     };
@@ -98,7 +98,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    */
   @command()
   findAndReplace({ replacement, index }: FindAndReplaceProps): CommandFunction {
-    // TODO: use searchTerm
+    // TODO: use text
     return (props) => {
       const { tr, dispatch } = props;
       index = rotateIndex(isNumber(index) ? index : this._activeIndex ?? 0, this._ranges.length);
@@ -122,10 +122,10 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
    */
   @command()
   findAndReplaceAll({ replacement }: FindAndReplaceAllProps): CommandFunction {
-    // TODO: use searchTerm
+    // TODO: use text
     return (props) => {
       const { tr } = props;
-      const ranges = this.gatherSearchResults(tr.doc);
+      const ranges = this.gatherFindResults(tr.doc);
 
       for (let i = ranges.length - 1; i >= 0; i--) {
         const { from, to } = ranges[i];
@@ -159,9 +159,9 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
           return DecorationSet.empty;
         },
         apply: (tr, old) => {
-          if (this._updating || (tr.docChanged && this.options.alwaysSearch)) {
+          if (this._updating || (tr.docChanged && this.options.alwaysFind)) {
             const doc = tr.doc;
-            this._ranges = this.gatherSearchResults(doc);
+            this._ranges = this.gatherFindResults(doc);
             this.normalizeActiveIndex();
             this.scrollToActiveResult();
             return this.createDecorationSet(doc);
@@ -183,12 +183,12 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
     };
   }
 
-  private gatherSearchResults(doc: ProsemirrorNode): FromToProps[] {
-    if (!this._searchTerm) {
+  private gatherFindResults(doc: ProsemirrorNode): FromToProps[] {
+    if (!this._text) {
       return [];
     }
 
-    const re = new RegExp(this._searchTerm, this._caseSensitive ? 'gu' : 'gui');
+    const re = new RegExp(this._text, this._caseSensitive ? 'gu' : 'gui');
     const ranges: FromToProps[] = [];
 
     doc.descendants((node, pos) => {
@@ -221,7 +221,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       return Decoration.inline(
         deco.from,
         deco.to,
-        index === this._activeIndex ? this.options.activeDecoration : this.options.searchDecoration,
+        index === this._activeIndex ? this.options.activeDecoration : this.options.decoration,
       );
     });
     return DecorationSet.create(doc, decorations);
@@ -269,7 +269,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
 declare global {
   namespace Remirror {
     interface AllExtensions {
-      search: SearchExtension;
+      find: FindExtension;
     }
   }
 }

@@ -1,16 +1,16 @@
 {
-  "name": "@remirror/extension-search",
-  "version": "2.0.7",
-  "description": "Find all of your favourite things in the remirror editor.",
+  "name": "@remirror/extension-find",
+  "version": "0.0.0",
+  "description": "Find and replace text in the remirror editor.",
   "keywords": [
     "remirror",
     "extension"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-search",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-find",
   "repository": {
     "type": "git",
     "url": "https://github.com/remirror/remirror.git",
-    "directory": "packages/remirror__extension-search"
+    "directory": "packages/remirror__extension-find"
   },
   "license": "MIT",
   "contributors": [
@@ -20,14 +20,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/remirror-extension-search.js",
-      "require": "./dist/remirror-extension-search.cjs",
+      "import": "./dist/remirror-extension-find.js",
+      "require": "./dist/remirror-extension-find.cjs",
       "types": "./dist-types/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-search.cjs",
-  "module": "./dist/remirror-extension-search.js",
+  "main": "./dist/remirror-extension-find.cjs",
+  "module": "./dist/remirror-extension-find.js",
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",

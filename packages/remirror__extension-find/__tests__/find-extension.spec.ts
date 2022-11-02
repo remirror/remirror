@@ -1,27 +1,27 @@
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 
-import { SearchExtension, SearchOptions } from '../';
+import { FindExtension, FindOptions } from '../';
 
-extensionValidityTest(SearchExtension);
+extensionValidityTest(FindExtension);
 
-function create(options?: SearchOptions) {
+function create(options?: FindOptions) {
   const {
     add,
     nodes: { p, doc },
     view,
     commands,
     helpers,
-  } = renderEditor<SearchExtension>([new SearchExtension(options)]);
+  } = renderEditor<FindExtension>([new FindExtension(options)]);
   const node = doc(p('Welcome'), p('friend'), p('welcome friend'));
   add(node);
   return { p, doc, view, commands, helpers, node, add };
 }
 
 describe('helpers and commands', () => {
-  it('search', () => {
+  it('find', () => {
     const { view, helpers } = create();
 
-    let result = helpers.search({ searchTerm: 'welcome', caseSensitive: true });
+    let result = helpers.find({ text: 'welcome', caseSensitive: true });
     expect(result.activeIndex).toBeUndefined();
     expect(result.ranges).toHaveLength(1);
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
@@ -39,7 +39,7 @@ describe('helpers and commands', () => {
       </p>
     `);
 
-    result = helpers.search({ searchTerm: 'friend', activeIndex: -1 });
+    result = helpers.find({ text: 'friend', activeIndex: -1 });
     expect(result.activeIndex).toBe(1);
     expect(result.ranges).toHaveLength(2);
     expect(view.dom.innerHTML).toMatchInlineSnapshot(`
@@ -64,30 +64,30 @@ describe('helpers and commands', () => {
     const { add, doc, p, helpers } = create();
 
     // C++ is an invalid regexp
-    const searchTerm = 'C++';
-    expect(() => new RegExp(searchTerm)).toThrow();
+    const text = 'C++';
+    expect(() => new RegExp(text)).toThrow();
     add(doc(p('C++'), p('++C C++')));
-    expect(helpers.search({ searchTerm }).ranges).toHaveLength(2);
+    expect(helpers.find({ text }).ranges).toHaveLength(2);
   });
 
-  it('can handle a regexp-like search term', () => {
+  it('can handle a regexp-like find term', () => {
     const { add, doc, p, helpers } = create();
 
-    const searchTerm = '.*';
-    expect(() => new RegExp(searchTerm)).not.toThrow();
+    const text = '.*';
+    expect(() => new RegExp(text)).not.toThrow();
     add(doc(p('Hello world'), p('')));
 
-    // This search term should not be treat as a regexp and it should not match anything
-    expect(helpers.search({ searchTerm }).ranges).toHaveLength(0);
+    // This find term should not be treat as a regexp and it should not match anything
+    expect(helpers.find({ text }).ranges).toHaveLength(0);
 
     add(doc(p('Hello world'), p('.*')));
-    expect(helpers.search({ searchTerm }).ranges).toHaveLength(1);
+    expect(helpers.find({ text }).ranges).toHaveLength(1);
   });
 
   it('findAndReplace', () => {
     const { view, commands } = create();
     commands.findAndReplace({
-      searchTerm: 'friend',
+      text: 'friend',
       caseSensitive: true,
       replacement: 'FRIEND',
     });
@@ -110,7 +110,7 @@ describe('helpers and commands', () => {
   it('findAndReplaceAll', () => {
     const { view, commands } = create();
     commands.findAndReplaceAll({
-      searchTerm: 'friend',
+      text: 'friend',
       caseSensitive: false,
       replacement: 'FRIEND',
     });
@@ -129,9 +129,9 @@ describe('helpers and commands', () => {
 
   it('clearResult', () => {
     const { view, commands } = create();
-    commands.startSearch({ searchTerm: 'friend' });
+    commands.startFind({ text: 'friend' });
     expect(view.dom.innerHTML).toContain('background-color');
-    commands.stopSearch();
+    commands.stopFind();
     expect(view.dom.innerHTML).not.toContain('background-color');
   });
 });

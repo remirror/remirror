@@ -18,7 +18,7 @@ import {
   OrderedListExtension,
   TaskListExtension,
 } from '@remirror/extension-list';
-import { SearchExtension, SearchOptions } from '@remirror/extension-search';
+import { SearchExtension, SearchOptions } from '../../remirror__extension-find/dist-types';
 import { ShortcutsExtension } from '@remirror/extension-shortcuts';
 import { StrikeExtension } from '@remirror/extension-strike';
 import { TrailingNodeExtension, TrailingNodeOptions } from '@remirror/extension-trailing-node';

@@ -1,4 +1,4 @@
-import { rotateIndex } from '../src/search-utils';
+import { rotateIndex } from '../src/find-utils';
 
 test('rotateIndex', () => {
   expect(rotateIndex(0, 10)).toBe(0);
