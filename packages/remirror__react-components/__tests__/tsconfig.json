@@ -38,6 +38,9 @@
       "path": "../../remirror__core/src"
     },
     {
+      "path": "../../remirror__extension-find/src"
+    },
+    {
       "path": "../../remirror__extension-positioner/src"
     },
     {
@@ -69,9 +72,6 @@
     },
     {
       "path": "../../multishift/src"
-    },
-    {
-      "path": "../../remirror__extension-find/src"
     },
     {
       "path": "../../remirror__pm/src"
