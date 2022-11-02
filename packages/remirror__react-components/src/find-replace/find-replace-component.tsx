@@ -1,12 +1,13 @@
 import { Box, Button, ButtonGroup, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import React, { FC, useCallback, useEffect, useState } from 'react';
+import type { FindExtension } from '@remirror/extension-find';
 import { useCommands, useHelpers } from '@remirror/react-core';
 
 import { Icon } from '../icons';
 import { MdiFormatLetterCase } from './letter-icon';
 
 interface FindReplaceState {
-  searchTerm: string;
+  query: string;
   replacement: string;
   activeIndex: number | null;
   total: number;
@@ -15,7 +16,7 @@ interface FindReplaceState {
 
 function initialState(): FindReplaceState {
   return {
-    searchTerm: '',
+    query: '',
     replacement: '',
     activeIndex: null,
     total: 0,
@@ -24,16 +25,16 @@ function initialState(): FindReplaceState {
 }
 
 function useFindReplace() {
-  const helpers = useHelpers();
-  const commands = useCommands();
+  const helpers = useHelpers<FindExtension>();
+  const commands = useCommands<FindExtension>();
   const [state, setState] = useState<FindReplaceState>(initialState);
 
   const find = useCallback(
     (indexDiff = 0): void => {
       setState((state): FindReplaceState => {
-        const { searchTerm, caseSensitive, activeIndex } = state;
+        const { query, caseSensitive, activeIndex } = state;
         const result = helpers.findRanges({
-          searchTerm,
+          query,
           caseSensitive,
           activeIndex: activeIndex == null ? 0 : activeIndex + indexDiff,
         });
@@ -52,32 +53,32 @@ function useFindReplace() {
   }, [commands]);
 
   const replace = useCallback((): void => {
-    const { searchTerm, replacement, caseSensitive } = state;
-    commands.findAndReplace({ searchTerm, replacement, caseSensitive });
+    const { query, replacement, caseSensitive } = state;
+    commands.findAndReplace({ query, replacement, caseSensitive });
     find();
   }, [commands, state, find]);
 
   const replaceAll = useCallback((): void => {
-    const { searchTerm, replacement, caseSensitive } = state;
-    commands.findAndReplaceAll({ searchTerm, replacement, caseSensitive });
+    const { query, replacement, caseSensitive } = state;
+    commands.findAndReplaceAll({ query, replacement, caseSensitive });
     find();
   }, [commands, state, find]);
 
-  const toggleCaseSensitive = () => {
+  const toggleCaseSensitive = useCallback(() => {
     setState((state) => ({ ...state, caseSensitive: !state.caseSensitive }));
-  };
-  const setSearchTerm = (searchTerm: string) => {
-    setState((state) => ({ ...state, searchTerm }));
-  };
-  const setReplacement = (replacement: string) => {
+  }, []);
+  const setQuery = useCallback((query: string) => {
+    setState((state) => ({ ...state, query }));
+  }, []);
+  const setReplacement = useCallback((replacement: string) => {
     setState((state) => ({ ...state, replacement }));
-  };
+  }, []);
 
   useEffect(() => {
-    if (state.searchTerm) {
+    if (state.query) {
       find();
     }
-  }, [find, state.searchTerm, state.caseSensitive]);
+  }, [find, state.query, state.caseSensitive]);
 
   return {
     ...state,
@@ -88,23 +89,10 @@ function useFindReplace() {
     replaceAll,
 
     toggleCaseSensitive,
-    setSearchTerm,
+    setQuery,
     setReplacement,
   };
 }
-
-interface SearchCounterProps {
-  activeIndex: number;
-  totalCount: number;
-}
-
-const CounterAdornment: FC<SearchCounterProps> = ({ activeIndex, totalCount }) => {
-  return (
-    <InputAdornment position='end'>
-      {totalCount && activeIndex >= 0 ? activeIndex + 1 : 0} of {totalCount}
-    </InputAdornment>
-  );
-};
 
 export interface FindReplaceComponentProps {
   onDismiss?: () => void;
@@ -112,8 +100,8 @@ export interface FindReplaceComponentProps {
 
 const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss }) => {
   const {
-    searchTerm,
-    setSearchTerm,
+    query,
+    setQuery,
     activeIndex,
     total,
     caseSensitive,
@@ -127,22 +115,15 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss }) => {
     replaceAll,
   } = useFindReplace();
 
-  const searchInput = (
+  const counterLabel = `${total && activeIndex != null ? activeIndex + 1 : 0} of ${total}`;
+
+  const findInput = (
     <OutlinedInput
       fullWidth={true}
       margin='none'
       placeholder='Find'
-      value={searchTerm}
-      onChange={(event) => setSearchTerm(event.target.value)}
-      onKeyDown={(event) => {
-        if (event.key === 'Enter') {
-          if (event.shiftKey) {
-            findPrev();
-          } else {
-            findNext();
-          }
-        }
-      }}
+      value={query}
+      onChange={(event) => setQuery(event.target.value)}
       sx={{
         '& input': {
           paddingTop: '4px',
@@ -151,7 +132,7 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss }) => {
       }}
       size='small'
       inputProps={{ 'aria-label': 'Find' }}
-      endAdornment={<CounterAdornment activeIndex={activeIndex ?? 0} totalCount={total} />}
+      endAdornment={<InputAdornment position='end'>{counterLabel}</InputAdornment>}
     />
   );
 
@@ -173,7 +154,7 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss }) => {
     />
   );
 
-  const searchController = (
+  const findController = (
     <>
       <IconButton
         onClick={findPrev}
@@ -214,10 +195,10 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss }) => {
 
   const replaceController = (
     <ButtonGroup variant='outlined' size='small'>
-      <Button aria-label='Relace' sx={{ textTransform: 'none' }} onClick={() => replace()}>
+      <Button aria-label='Relace' sx={{ textTransform: 'none' }} onClick={replace}>
         Replace
       </Button>
-      <Button aria-label='Relace all' sx={{ textTransform: 'none' }} onClick={() => replaceAll()}>
+      <Button aria-label='Relace all' sx={{ textTransform: 'none' }} onClick={replaceAll}>
         All
       </Button>
     </ButtonGroup>
@@ -234,8 +215,8 @@ const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss }) => {
         alignItems: 'center',
       }}
     >
-      <Box>{searchInput}</Box>
-      <Box sx={{ justifySelf: 'end' }}>{searchController}</Box>
+      <Box>{findInput}</Box>
+      <Box sx={{ justifySelf: 'end' }}>{findController}</Box>
       <Box>{replaceInput}</Box>
       <Box sx={{ justifySelf: 'end' }}>{replaceController}</Box>
     </Box>
