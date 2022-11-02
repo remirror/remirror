@@ -17,6 +17,9 @@
   "include": ["./"],
   "references": [
     {
+      "path": "../../remirror__extension-find/src"
+    },
+    {
       "path": "../../remirror__core/src"
     },
     {

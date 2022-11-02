@@ -2,6 +2,7 @@ import 'remirror/styles/all.css';
 
 import React from 'react';
 import { wysiwygPreset } from 'remirror/extensions';
+import { FindExtension } from '@remirror/extension-find';
 import {
   EditorComponent,
   FindReplaceComponent,
@@ -10,7 +11,7 @@ import {
   useRemirror,
 } from '@remirror/react';
 
-const extensions = () => [...wysiwygPreset()];
+const extensions = () => [...wysiwygPreset(), new FindExtension()];
 
 const WithFindReplaceComponent: React.FC = () => {
   const { manager, state } = useRemirror({
