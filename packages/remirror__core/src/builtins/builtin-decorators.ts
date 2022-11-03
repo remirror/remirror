@@ -103,8 +103,11 @@ export function helper(options: HelperDecoratorOptions = {}) {
  *     return 'my';
  *   }
  *
- *   @command() myCommand(text: string): CommandFunction {return ({ tr, dispatch
- *   }) => {dispatch?.(tr.insertText('my command ' + text)); return true;
+ *   @command()
+ *   myCommand(text: string): CommandFunction {
+ *     return ({ tr, dispatch }) => {
+ *       dispatch?.(tr.insertText('my command ' + text));
+ *       return true;
  *     }
  *   }
  * }
