@@ -1,5 +1,15 @@
 # remirror
 
+## 2.0.15
+
+> 2022-11-02
+
+### Patch Changes
+
+- Updated dependencies [8843920bb]
+  - @remirror/extension-search@2.0.8
+  - @remirror/preset-wysiwyg@2.0.10
+
 ## 2.0.14
 
 > 2022-10-28

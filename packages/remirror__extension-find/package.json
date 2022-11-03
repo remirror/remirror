@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-find",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Find and replace text in the remirror editor.",
   "keywords": [
     "remirror",
