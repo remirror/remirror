@@ -1,10 +1,11 @@
-import computeScrollIntoView from 'compute-scroll-into-view';
+import _computeScrollIntoView from 'compute-scroll-into-view';
 import type { Dispatch, KeyboardEvent, SyntheticEvent } from 'react';
 import warning from 'tiny-warning';
 import { keyName } from 'w3c-keyname';
 import {
   assertGet,
   clamp,
+  defaultImport,
   isArray,
   isEmptyArray,
   isNumber,
@@ -44,6 +45,8 @@ import type {
   MultishiftStateProps,
   SpecialKeyDownPayload,
 } from './multishift-types';
+
+const computeScrollIntoView = defaultImport(_computeScrollIntoView);
 
 /**
  * Dom Node type. See https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
