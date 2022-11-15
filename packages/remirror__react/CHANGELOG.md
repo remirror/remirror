@@ -1,5 +1,15 @@
 # @remirror/react
 
+## 2.0.17
+
+> 2022-11-15
+
+### Patch Changes
+
+- @remirror/react-components@2.1.1
+- @remirror/react-hooks@2.0.12
+- @remirror/extension-react-tables@2.2.4
+
 ## 2.0.16
 
 > 2022-11-02

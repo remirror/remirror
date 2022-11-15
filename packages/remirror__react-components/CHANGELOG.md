@@ -1,5 +1,16 @@
 # @remirror/react-components
 
+## 2.1.1
+
+> 2022-11-15
+
+### Patch Changes
+
+- Updated dependencies [96422dd3d]
+  - multishift@2.0.3
+  - @remirror/react-hooks@2.0.12
+  - remirror@2.0.16
+
 ## 2.1.0
 
 > 2022-11-02

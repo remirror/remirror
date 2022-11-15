@@ -1,5 +1,13 @@
 # multishift
 
+## 2.0.3
+
+> 2022-11-15
+
+### Patch Changes
+
+- 96422dd3d: Fix an error `(0 , import_compute_scroll_into_view.default) is not a function` when using create-react-app.
+
 ## 2.0.2
 
 > 2022-10-27
