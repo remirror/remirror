@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -91,7 +91,7 @@
     "@remirror/extension-heading": "^2.0.7",
     "@remirror/extension-history": "^2.0.7",
     "@remirror/extension-horizontal-rule": "^2.0.7",
-    "@remirror/extension-image": "^2.1.1",
+    "@remirror/extension-image": "^2.1.2",
     "@remirror/extension-italic": "^2.0.7",
     "@remirror/extension-link": "^2.0.8",
     "@remirror/extension-list": "^2.0.8",
@@ -119,7 +119,7 @@
     "@remirror/icons": "^2.0.0",
     "@remirror/preset-core": "^2.0.8",
     "@remirror/preset-formatting": "^2.0.7",
-    "@remirror/preset-wysiwyg": "^2.0.10",
+    "@remirror/preset-wysiwyg": "^2.0.11",
     "@remirror/theme": "^2.0.2",
     "@types/codemirror": "^5.60.2",
     "@types/refractor": "^3.0.2",

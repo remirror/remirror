@@ -1,5 +1,13 @@
 # @remirror/extension-image
 
+## 2.1.2
+
+> 2022-11-15
+
+### Patch Changes
+
+- 71c154420: Insert images at the drop position.
+
 ## 2.1.1
 
 > 2022-10-27

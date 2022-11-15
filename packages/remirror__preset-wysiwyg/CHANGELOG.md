@@ -1,5 +1,14 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.11
+
+> 2022-11-15
+
+### Patch Changes
+
+- Updated dependencies [71c154420]
+  - @remirror/extension-image@2.1.2
+
 ## 2.0.10
 
 > 2022-11-02
