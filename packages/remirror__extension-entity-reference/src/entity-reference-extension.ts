@@ -33,6 +33,7 @@ import {
 import { decorateEntityReferences } from './utils/decorate-entity-references';
 import { getDisjoinedEntityReferencesFromNode } from './utils/disjoined-entity-references';
 import { joinDisjoinedEntityReferences } from './utils/joined-entity-references';
+import { getShortestEntityReference } from './utils/shortest-entity-reference';
 
 /**
  *  Required props to create entityReference marks decorations.
@@ -69,9 +70,11 @@ const createDecorationSet = (props: StateProps) => {
     blockSeparator: undefined,
     onClickMark: () => {},
   },
+  handlerKeys: ['onClick'],
 })
 export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptions> {
   get name(): string {
+    // TODO: rename this to entityReference for consistency
     return 'entity-reference' as const;
   }
 
@@ -125,6 +128,12 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
 
         if (entityReferences.length === 0) {
           return this.options.onClickMark();
+        }
+
+        const shortest = getShortestEntityReference(entityReferences);
+
+        if (shortest) {
+          this.options.onClick(shortest);
         }
 
         return this.options.onClickMark(entityReferences);

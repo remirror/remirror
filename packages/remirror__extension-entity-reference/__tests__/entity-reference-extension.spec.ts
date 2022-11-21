@@ -12,7 +12,15 @@ extensionValidityTest(EntityReferenceExtension);
 const DUMMY_TEXT = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
 
 function create(options: EntityReferenceOptions = {}) {
-  return renderEditor([new EntityReferenceExtension(options)]);
+  const { onClick, ...rest } = options;
+
+  const entityReferenceExtension = new EntityReferenceExtension(rest);
+
+  if (onClick) {
+    entityReferenceExtension.addHandler('onClick', onClick);
+  }
+
+  return renderEditor([entityReferenceExtension]);
 }
 
 let {
@@ -307,6 +315,88 @@ describe('EntityReference marks', () => {
       view.someProp('handleClickOn', (fn) => fn(view, 9, node, 1, {} as MouseEvent, false));
       expect(onClickMark).toHaveBeenCalledTimes(1);
       expect(onClickMark).toHaveBeenCalledWith();
+    });
+  });
+
+  describe('onClick', () => {
+    const onClick = jest.fn(() => false);
+
+    beforeEach(() => {
+      ({
+        add,
+        nodes: { doc, p },
+        selectText,
+        helpers,
+        commands,
+        view,
+      } = create({ onClick }));
+    });
+
+    afterEach(() => {
+      onClick.mockReset();
+    });
+
+    it('responds to mark clicks and passes mark id if click is a mark', () => {
+      const node = doc(p('testing text'));
+      add(node);
+      const entityReference = {
+        id: 'testId',
+        from: 1,
+        to: 8,
+        text: 'testing',
+      };
+
+      selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+
+      view.someProp('handleClickOn', (fn) => fn(view, 2, node, 1, {} as MouseEvent, false));
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(onClick).toHaveBeenCalledWith(entityReference);
+    });
+
+    it('is not called if click is not an entity reference mark', () => {
+      const node = doc(p('testing text'));
+      add(node);
+      const entityReference = {
+        id: 'testId',
+        from: 1,
+        to: 8,
+        text: 'testing',
+      };
+
+      selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+
+      view.someProp('handleClickOn', (fn) => fn(view, 9, node, 1, {} as MouseEvent, false));
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('is called with the shortest mark if there are overlapping entity reference marks', () => {
+      const node = doc(p('testing text'));
+      add(node);
+      const entityReference1 = {
+        id: 'testId1',
+        from: 1,
+        to: 8,
+        text: 'testing',
+      };
+
+      selectText({ from: entityReference1.from, to: entityReference1.to });
+      commands.addEntityReference(entityReference1.id);
+
+      const entityReference2 = {
+        id: 'testId2',
+        from: 4,
+        to: 8,
+        text: 'ting',
+      };
+
+      selectText({ from: entityReference2.from, to: entityReference2.to });
+      commands.addEntityReference(entityReference2.id);
+
+      view.someProp('handleClickOn', (fn) => fn(view, 5, node, 1, {} as MouseEvent, false));
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(onClick).toHaveBeenCalledWith(entityReference2);
     });
   });
 });

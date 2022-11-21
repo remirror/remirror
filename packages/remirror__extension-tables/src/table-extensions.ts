@@ -324,7 +324,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
         return true;
       }
 
-      const found = findParentNodeOfType({ selection, types: 'tableCell' });
+      const found = findParentNodeOfType({ selection, types: ['tableCell', 'tableHeaderCell'] });
 
       if (found) {
         dispatch?.(tr.setNodeMarkup(found.pos, undefined, { ...found.node.attrs, background }));

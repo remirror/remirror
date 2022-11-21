@@ -1,10 +1,13 @@
-import type { AcceptUndefined, Decoration, FromToProps } from '@remirror/core';
+import type { AcceptUndefined, Decoration, FromToProps, Handler } from '@remirror/core';
 
-export interface EntityReferenceMetaData extends FromToProps {
+export interface EntityReferenceAttributes {
   /**
    * Unique identifier of the entity references
    */
   id: string;
+}
+
+export interface EntityReferenceMetaData extends EntityReferenceAttributes, FromToProps {
   /**
    * Text content of the node
    */
@@ -25,6 +28,7 @@ export interface EntityReferenceOptions {
   getStyle?: (entityReferences: EntityReferenceMetaData[][]) => Decoration[];
   blockSeparator?: AcceptUndefined<string>;
   onClickMark?: (entityReferences?: EntityReferenceMetaData[]) => void;
+  onClick?: Handler<(entityReference: EntityReferenceMetaData) => void>;
 }
 
 export interface EntityReferencePluginState extends Required<EntityReferenceOptions> {
