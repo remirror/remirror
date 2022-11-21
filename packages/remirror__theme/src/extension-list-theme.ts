@@ -31,6 +31,7 @@ export const LIST_ITEM_MARKER_CONTAINER = css`
   width: 24px;
   display: inline-block;
   text-align: center;
+  user-select: none;
 ` as 'remirror-list-item-marker-container';
 
 export const LIST_ITEM_CHECKBOX = css`
@@ -55,6 +56,7 @@ export const COLLAPSIBLE_LIST_ITEM_BUTTON = css`
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
+  user-select: none;
 
   transition: background-color 0.25s ease;
   background-color: ${getThemeVar('color', 'border')};
@@ -77,6 +79,7 @@ export const LIST_SPINE = css`
   left: -20px;
   width: 16px;
   cursor: pointer;
+  user-select: none;
 
   transition: border-left-color 0.25s ease;
   border-left-color: ${getThemeVar('color', 'border')};
