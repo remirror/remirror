@@ -3641,6 +3641,10 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
     width: 24px;
     display: inline-block;
     text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .remirror-list-item-checkbox {
@@ -3664,6 +3668,10 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     transition: background-color 0.25s ease;
     background-color: var(--rmr-color-border);
@@ -3686,6 +3694,10 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
     left: -20px;
     width: 16px;
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     transition: border-left-color 0.25s ease;
     border-left-color: var(--rmr-color-border);
