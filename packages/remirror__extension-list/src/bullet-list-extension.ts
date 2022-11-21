@@ -56,7 +56,7 @@ export class BulletListExtension extends NodeExtension<BulletListOptions> {
     }
 
     return (_, view, getPos) => {
-      const dom = document.createElement('ul');
+      const dom = document.createElement('div');
       dom.style.position = 'relative';
 
       const pos = (getPos as () => number)();
@@ -85,7 +85,7 @@ export class BulletListExtension extends NodeExtension<BulletListOptions> {
         dom.append(spine);
       }
 
-      const contentDOM = document.createElement('div');
+      const contentDOM = document.createElement('ul');
       contentDOM.classList.add(ExtensionListTheme.UL_LIST_CONTENT);
       dom.append(contentDOM);
 
