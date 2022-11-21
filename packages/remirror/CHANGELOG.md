@@ -1,5 +1,35 @@
 # remirror
 
+## 2.0.17
+
+> 2022-11-21
+
+### Patch Changes
+
+- Updated dependencies [79aeb4f5f]
+- Updated dependencies [79aeb4f5f]
+- Updated dependencies [d395a8a11]
+- Updated dependencies [d395a8a11]
+  - @remirror/extension-tables@2.2.3
+  - @remirror/extension-entity-reference@2.1.0
+  - @remirror/extension-list@2.0.9
+  - @remirror/theme@2.0.3
+  - @remirror/preset-wysiwyg@2.0.12
+  - @remirror/extension-blockquote@2.0.8
+  - @remirror/extension-callout@2.0.8
+  - @remirror/extension-code-block@2.0.8
+  - @remirror/extension-emoji@2.0.11
+  - @remirror/extension-image@2.1.3
+  - @remirror/extension-mention-atom@2.0.9
+  - @remirror/extension-placeholder@2.0.8
+  - @remirror/extension-positioner@2.1.1
+  - @remirror/extension-text-color@2.0.8
+  - @remirror/extension-annotation@2.0.9
+  - @remirror/preset-core@2.0.9
+  - @remirror/extension-text-highlight@2.0.8
+  - @remirror/preset-formatting@2.0.8
+  - @remirror/dom@2.0.9
+
 ## 2.0.16
 
 > 2022-11-15

@@ -1,5 +1,14 @@
 # @remirror/extension-image
 
+## 2.1.3
+
+> 2022-11-21
+
+### Patch Changes
+
+- Updated dependencies [d395a8a11]
+  - @remirror/theme@2.0.3
+
 ## 2.1.2
 
 > 2022-11-15

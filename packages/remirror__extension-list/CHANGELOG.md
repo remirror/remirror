@@ -1,5 +1,16 @@
 # @remirror/extension-list
 
+## 2.0.9
+
+> 2022-11-21
+
+### Patch Changes
+
+- d395a8a11: Improve the selection of lists on touch screen.
+- d395a8a11: Fix the dom structure of the bullet list when `enableSpine` is `true`. The `<ul>` element only contains `<li>` elements after this patch.
+- Updated dependencies [d395a8a11]
+  - @remirror/theme@2.0.3
+
 ## 2.0.8
 
 > 2022-10-27

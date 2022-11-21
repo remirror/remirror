@@ -1,5 +1,14 @@
 # @remirror/extension-placeholder
 
+## 2.0.8
+
+> 2022-11-21
+
+### Patch Changes
+
+- Updated dependencies [d395a8a11]
+  - @remirror/theme@2.0.3
+
 ## 2.0.7
 
 > 2022-10-27

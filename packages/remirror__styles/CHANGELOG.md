@@ -1,5 +1,13 @@
 # @remirror/styles
 
+## 2.0.2
+
+> 2022-11-21
+
+### Patch Changes
+
+- d395a8a11: Improve the selection of lists on touch screen.
+
 ## 2.0.1
 
 > 2022-10-11

@@ -1,5 +1,19 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.12
+
+> 2022-11-21
+
+### Patch Changes
+
+- Updated dependencies [d395a8a11]
+- Updated dependencies [d395a8a11]
+  - @remirror/extension-list@2.0.9
+  - @remirror/extension-blockquote@2.0.8
+  - @remirror/extension-code-block@2.0.8
+  - @remirror/extension-image@2.1.3
+  - @remirror/preset-core@2.0.9
+
 ## 2.0.11
 
 > 2022-11-15

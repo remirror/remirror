@@ -1,5 +1,14 @@
 # @remirror/extension-positioner
 
+## 2.1.1
+
+> 2022-11-21
+
+### Patch Changes
+
+- Updated dependencies [d395a8a11]
+  - @remirror/theme@2.0.3
+
 ## 2.1.0
 
 > 2022-10-27
