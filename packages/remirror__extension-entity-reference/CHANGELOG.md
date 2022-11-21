@@ -1,5 +1,19 @@
 # @remirror/extension-entity-reference
 
+## 2.1.0
+
+> 2022-11-21
+
+### Minor Changes
+
+- 79aeb4f5f: Add an `onClick` handler, which can be used mutliple times without overwriting previous handlers.
+
+  This differs to the existing constructor option `onClickMark` which can only be used once.
+
+### Patch Changes
+
+- @remirror/extension-positioner@2.1.1
+
 ## 2.0.8
 
 > 2022-10-27

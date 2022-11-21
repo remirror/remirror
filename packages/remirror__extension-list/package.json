@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-list",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "description": "The list extensions.",
   "keywords": [
     "remirror",
@@ -41,7 +41,7 @@
     "@remirror/core": "^2.0.7",
     "@remirror/extension-events": "^2.1.7",
     "@remirror/messages": "^2.0.1",
-    "@remirror/theme": "^2.0.2"
+    "@remirror/theme": "^2.0.3"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.1"

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-positioner",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Reposition your elements with every state update.",
   "keywords": [
     "remirror",
@@ -40,7 +40,7 @@
     "@remirror/core": "^2.0.7",
     "@remirror/extension-events": "^2.1.7",
     "@remirror/messages": "^2.0.1",
-    "@remirror/theme": "^2.0.2",
+    "@remirror/theme": "^2.0.3",
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {

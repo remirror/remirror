@@ -1,5 +1,16 @@
 # @remirror/extension-tabless
 
+## 2.2.3
+
+> 2022-11-21
+
+### Patch Changes
+
+- 79aeb4f5f: `setTableCellBackground` should also apply to table header cells
+- Updated dependencies [d395a8a11]
+  - @remirror/theme@2.0.3
+  - @remirror/extension-positioner@2.1.1
+
 ## 2.2.2
 
 > 2022-10-28

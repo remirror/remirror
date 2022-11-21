@@ -1,5 +1,15 @@
 # @remirror/extension-file
 
+## 1.0.9
+
+> 2022-11-21
+
+### Patch Changes
+
+- Updated dependencies [d395a8a11]
+  - @remirror/theme@2.0.3
+  - @remirror/react-core@2.0.9
+
 ## 1.0.8
 
 > 2022-10-27
