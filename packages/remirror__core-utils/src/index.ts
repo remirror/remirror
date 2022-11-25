@@ -20,6 +20,7 @@ export {
 export type {
   CreateDocumentNodeProps,
   CustomDocumentProps,
+  DefaultDocNodeOptions,
   FragmentStringHandlerOptions,
   GetMarkRange,
   InvalidContentBlock,
