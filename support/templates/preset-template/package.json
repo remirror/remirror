@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-template",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": true,
   "description": "TEMPLATE_DESCRIPTION",
   "keywords": [
@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.7"
+    "@remirror/core": "^2.0.8"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.1"

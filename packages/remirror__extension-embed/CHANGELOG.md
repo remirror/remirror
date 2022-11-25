@@ -1,5 +1,14 @@
 # @remirror/extension-embed
 
+## 2.0.8
+
+> 2022-11-25
+
+### Patch Changes
+
+- prosemirror-resizable-view@2.0.8
+- @remirror/core@2.0.8
+
 ## 2.0.7
 
 > 2022-10-27

@@ -1,5 +1,14 @@
 # @remirror/extension-text-highlight
 
+## 2.0.9
+
+> 2022-11-25
+
+### Patch Changes
+
+- @remirror/core@2.0.8
+- @remirror/extension-text-color@2.0.9
+
 ## 2.0.8
 
 > 2022-11-21

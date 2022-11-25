@@ -1,5 +1,17 @@
 # @remirror/extension-doc
 
+## 2.1.0
+
+> 2022-11-25
+
+### Minor Changes
+
+- 8bd49f599: Expose a helper for detecting doc changes from the default
+
+### Patch Changes
+
+- @remirror/core@2.0.8
+
 ## 2.0.7
 
 > 2022-10-27

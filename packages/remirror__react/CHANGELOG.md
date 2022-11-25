@@ -1,5 +1,21 @@
 # @remirror/react
 
+## 2.0.19
+
+> 2022-11-25
+
+### Patch Changes
+
+- @remirror/extension-react-tables@2.2.6
+- @remirror/react-components@2.1.3
+- @remirror/react-core@2.0.10
+- @remirror/extension-placeholder@2.0.9
+- @remirror/extension-positioner@2.1.2
+- @remirror/extension-react-component@2.0.8
+- @remirror/preset-react@2.0.9
+- @remirror/react-hooks@2.0.14
+- @remirror/react-renderer@2.0.8
+
 ## 2.0.18
 
 > 2022-11-21

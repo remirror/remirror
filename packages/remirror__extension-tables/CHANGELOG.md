@@ -1,5 +1,15 @@
 # @remirror/extension-tabless
 
+## 2.2.4
+
+> 2022-11-25
+
+### Patch Changes
+
+- 8bd49f599: Apply table columns sizes when view not is editable. Fixes #1937
+  - @remirror/core@2.0.8
+  - @remirror/extension-positioner@2.1.2
+
 ## 2.2.3
 
 > 2022-11-21
