@@ -4,6 +4,7 @@ import {
   CommandFunction,
   CommandFunctionProps,
   convertCommand,
+  CreateExtensionPlugin,
   EditorState,
   EditorView,
   extension,
@@ -12,6 +13,7 @@ import {
   findParentNodeOfType,
   Helper,
   helper,
+  isElementDomNode,
   NodeExtension,
   NodeSpecOverride,
   nonChainable,
@@ -38,9 +40,12 @@ import {
   setCellAttr,
   splitCell,
   tableEditing,
+  // @ts-expect-error TableView is exported
+  TableView,
   toggleHeaderCell,
   toggleHeaderColumn,
   toggleHeaderRow,
+  updateColumnsOnResize,
 } from '@remirror/pm/tables';
 
 import {
@@ -142,6 +147,43 @@ export class TableExtension extends NodeExtension<TableOptions> {
     plugins.push(tableEditing());
 
     return plugins;
+  }
+
+  createPlugin(): CreateExtensionPlugin {
+    const { resizable, resizeableOptions } = this.options;
+
+    if (!resizable) {
+      return {};
+    }
+
+    if (!this.store.isMounted() || this.store.helpers.isViewEditable()) {
+      // If the view is editable, we should be using the external columnResizing plugin above
+      return {};
+    }
+
+    /**
+     * If the view is not editable, use the updateColumnsOnResize method to ensure col widths are applied
+     */
+
+    const { cellMinWidth = 25 } = resizeableOptions;
+
+    return {
+      props: {
+        nodeViews: {
+          table(node, view, getPos) {
+            const dom = view.nodeDOM(getPos());
+
+            if (!isElementDomNode(dom)) {
+              return;
+            }
+
+            updateColumnsOnResize(node, dom.firstChild as Element, dom, cellMinWidth);
+
+            return new TableView(node, cellMinWidth, view);
+          },
+        },
+      },
+    };
   }
 
   /**

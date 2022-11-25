@@ -2,10 +2,15 @@ import {
   ApplySchemaAttributes,
   command,
   CommandFunction,
+  DefaultDocNodeOptions,
   EditorSchema,
+  EditorStateProps,
   entries,
   extension,
   ExtensionPriority,
+  Helper,
+  helper,
+  isDefaultDocNode,
   isPlainObject,
   NodeExtension,
   NodeExtensionSpec,
@@ -144,6 +149,14 @@ export class DocExtension extends NodeExtension<DocOptions> {
       return true;
     };
   }
+
+  @helper()
+  isDefaultDocNode({
+    state = this.store.getState(),
+    options,
+  }: IsDefaultDocNodeHelperOptions = {}): Helper<boolean> {
+    return isDefaultDocNode(state.doc, options);
+  }
 }
 
 interface SetDocAttrStepJSONValue {
@@ -224,6 +237,13 @@ export class SetDocAttributeStep extends Step {
       value: this.value,
     };
   }
+}
+
+interface IsDefaultDocNodeHelperOptions extends Partial<EditorStateProps> {
+  /**
+   * The options passed to the isDefaultDocNode util
+   */
+  options?: DefaultDocNodeOptions;
 }
 
 try {

@@ -380,7 +380,7 @@ export function isDocNodeEmpty(node: ProsemirrorNode): boolean {
   );
 }
 
-interface DefaultDocNodeOptions {
+export interface DefaultDocNodeOptions {
   /**
    * When true will not check any of the attributes for any of the nodes.
    */
