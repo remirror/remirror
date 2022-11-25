@@ -1,5 +1,13 @@
 # @remirror/core-utils
 
+## 2.0.8
+
+> 2022-11-25
+
+### Patch Changes
+
+- 8bd49f599: Expose a helper for detecting doc changes from the default
+
 ## 2.0.7
 
 > 2022-10-27

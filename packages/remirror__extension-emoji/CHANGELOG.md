@@ -1,5 +1,13 @@
 # @remirror/extension-emoji
 
+## 2.0.12
+
+> 2022-11-25
+
+### Patch Changes
+
+- @remirror/core@2.0.8
+
 ## 2.0.11
 
 > 2022-11-21

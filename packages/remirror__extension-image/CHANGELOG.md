@@ -1,5 +1,14 @@
 # @remirror/extension-image
 
+## 2.1.4
+
+> 2022-11-25
+
+### Patch Changes
+
+- prosemirror-resizable-view@2.0.8
+- @remirror/core@2.0.8
+
 ## 2.1.3
 
 > 2022-11-21
