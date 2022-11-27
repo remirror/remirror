@@ -268,7 +268,7 @@ importers:
       jest: ^28.1.1
       jest-matcher-utils: ^28.1.1
       prosemirror-schema-basic: ^1.2.0
-      prosemirror-tables: ^1.3.0-beta.0
+      prosemirror-tables: ^1.3.0-beta.1
       prosemirror-test-builder: ^1.1.0
       stringify-object: ^3.3.0
       test-keyboard: 2.0.1
@@ -284,7 +284,7 @@ importers:
       chalk: 4.1.2
       jest-matcher-utils: 28.1.1
       prosemirror-schema-basic: 1.2.0
-      prosemirror-tables: 1.3.0-beta.0
+      prosemirror-tables: 1.3.0-beta.1
       prosemirror-test-builder: 1.1.0
       stringify-object: 3.3.0
       test-keyboard: link:../test-keyboard
@@ -1742,7 +1742,7 @@ importers:
       prosemirror-schema-list: ^1.2.2
       prosemirror-state: ^1.4.2
       prosemirror-suggest: ^2.0.1
-      prosemirror-tables: ^1.3.0-beta.0
+      prosemirror-tables: ^1.3.0-beta.1
       prosemirror-trailing-node: ^2.0.1
       prosemirror-transform: ^1.7.0
       prosemirror-view: ^1.29.0
@@ -1762,7 +1762,7 @@ importers:
       prosemirror-schema-list: 1.2.2
       prosemirror-state: 1.4.2
       prosemirror-suggest: link:../prosemirror-suggest
-      prosemirror-tables: 1.3.0-beta.0
+      prosemirror-tables: 1.3.0-beta.1
       prosemirror-trailing-node: link:../prosemirror-trailing-node
       prosemirror-transform: 1.7.0
       prosemirror-view: 1.29.0
@@ -12475,7 +12475,7 @@ packages:
       mississippi: 2.0.0
       mkdirp: 0.5.5
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 5.3.0
       unique-filename: 1.1.1
@@ -12495,7 +12495,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.5
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -12539,7 +12539,7 @@ packages:
       mississippi: 1.3.1
       mkdirp: 0.5.5
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 4.1.6
       unique-filename: 1.1.1
@@ -22292,7 +22292,7 @@ packages:
       npm-package-arg: 5.1.2
       npm-pick-manifest: 1.0.4
       osenv: 0.1.5
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       promise-retry: 1.1.1
       protoduck: 4.0.0
       safe-buffer: 5.2.1
@@ -23499,17 +23499,6 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
-    dev: true
-
-  /promise-inflight/1.0.1_bluebird@3.7.2:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
-    dependencies:
-      bluebird: 3.7.2
 
   /promise-retry/1.1.1:
     resolution: {integrity: sha1-ZznpaOMFHaIM5kl/srUPaRHfPW0=}
@@ -23665,8 +23654,8 @@ packages:
       prosemirror-transform: 1.7.0
       prosemirror-view: 1.29.0
 
-  /prosemirror-tables/1.3.0-beta.0:
-    resolution: {integrity: sha512-wVk4gJGPCxg4hQt0w6mS99Z7MzVknfWwpSR9JzjgwjvKq0xryCvvqZWsKwjAMaG0xfCJ6Yt2UCyYjEPXu1o1kA==}
+  /prosemirror-tables/1.3.0-beta.1:
+    resolution: {integrity: sha512-A238Za6UjpQE4gYU110v+J2C/HXaSe5zfphqp/F19w5vB6vBZVLBbQf3cV252DGCfV1MtzKOljdT5h0m0ucxKA==}
     dependencies:
       prosemirror-keymap: 1.2.0
       prosemirror-model: 1.18.1
