@@ -11,9 +11,9 @@ import { setNodeAttrs } from '../utils/prosemirror';
 
 export class TableView implements NodeView {
   readonly root: HTMLElement;
-  readonly table: HTMLElement;
-  readonly colgroup: HTMLElement;
-  readonly tbody: HTMLElement;
+  readonly table: HTMLTableElement;
+  readonly colgroup: HTMLTableColElement;
+  readonly tbody: HTMLTableSectionElement;
   readonly insertButtonWrapper: HTMLElement;
 
   private readonly handleMouseMove: (e: MouseEvent) => void;

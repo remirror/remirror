@@ -40,7 +40,6 @@ import {
   setCellAttr,
   splitCell,
   tableEditing,
-  // @ts-expect-error TableView is exported
   TableView,
   toggleHeaderCell,
   toggleHeaderColumn,
@@ -173,13 +172,16 @@ export class TableExtension extends NodeExtension<TableOptions> {
           table(node, view, getPos) {
             const dom = view.nodeDOM(getPos());
 
-            if (!isElementDomNode(dom)) {
-              return;
+            if (isElementDomNode(dom) && dom.tagName === 'TABLE') {
+              updateColumnsOnResize(
+                node,
+                dom.firstChild as HTMLTableColElement,
+                dom as HTMLTableElement,
+                cellMinWidth,
+              );
             }
 
-            updateColumnsOnResize(node, dom.firstChild as Element, dom, cellMinWidth);
-
-            return new TableView(node, cellMinWidth, view);
+            return new TableView(node, cellMinWidth);
           },
         },
       },
