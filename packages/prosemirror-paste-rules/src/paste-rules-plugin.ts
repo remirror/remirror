@@ -116,8 +116,7 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin {
         // paste rule might remove some other node from the fragment because of
         // its invalidity. So we need to check the opening to make sure that the
         // slice is still valid.
-        // return fixSliceOpening(slice);
-        return slice;
+        return fixSliceOpening(slice);
       },
       handleDOMEvents: {
         // Handle paste for pasting content.
