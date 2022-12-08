@@ -6,12 +6,14 @@ import {
   h1,
   h2,
   hardBreak,
+  li,
   p,
   schema,
   strong,
   table,
   tableCell,
   tableRow,
+  ul,
 } from 'jest-prosemirror';
 import type { Node as ProsemirrorNode } from 'prosemirror-model';
 
@@ -267,6 +269,71 @@ describe('pasteRules', () => {
           content.doc.check();
           expect(content.doc).toEqualProsemirrorNode(doc(p('', strong('@bar'))));
         });
+    });
+
+    it('should not create a slice with invalid open depth', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /(@[a-z])/,
+          markType: schema.marks.strong,
+          type: 'mark',
+        },
+      ]);
+      const editor = createEditor(
+        doc(
+          ul(
+            li(
+              p('A'),
+              ul(
+                li(
+                  p('B'),
+                  ul(
+                    li(
+                      p('C'),
+                      ul(
+                        //
+                        li(p('<start>@foo<end>')),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        { plugins: [plugin] },
+      );
+
+      const copied = editor.copied;
+
+      editor.paste({
+        text: copied.text.replace('@foo', '@bar'),
+        html: copied.html.replace('@foo', '@bar'),
+      });
+
+      expect(editor.doc).toEqualProsemirrorNode(
+        doc(
+          ul(
+            li(
+              p('A'),
+              ul(
+                li(
+                  p('B'),
+                  ul(
+                    li(
+                      p('C'),
+                      ul(
+                        ///
+                        li(p(strong('bar'))),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
     });
   });
 
