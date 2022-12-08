@@ -1,6 +1,6 @@
 import { fireEvent, prettyDOM } from '@testing-library/dom';
 import { Keyboard } from 'test-keyboard';
-import { isString, object, pick } from '@remirror/core-helpers';
+import { object, pick } from '@remirror/core-helpers';
 import type {
   AnchorHeadProps,
   CommandFunction,
@@ -12,6 +12,7 @@ import type {
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   ProsemirrorPlugin,
+  ResolvedPos,
   SelectionProps,
   Shape,
   TextProps,
@@ -20,7 +21,9 @@ import {
   findElementAtPosition,
   getTextSelection,
   isElementDomNode,
+  isProsemirrorNode,
   isTextDomNode,
+  prosemirrorNodeToHtml,
 } from '@remirror/core-utils';
 import { inputRules } from '@remirror/pm/inputrules';
 import { Schema, Slice } from '@remirror/pm/model';
@@ -28,7 +31,9 @@ import { AllSelection, NodeSelection, Selection, TextSelection } from '@remirror
 import { cellAround, CellSelection } from '@remirror/pm/tables';
 import {
   // @ts-expect-error: __parseFromClipboard is not typed
-  __parseFromClipboard as parseFromClipboard,
+  __parseFromClipboard,
+  // @ts-expect-error: __serializeForClipboard is not typed
+  __serializeForClipboard,
   DirectEditorProps,
   EditorView,
 } from '@remirror/pm/view';
@@ -36,6 +41,19 @@ import {
 import { createEvents, EventType } from './jest-prosemirror-events';
 import { createState, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
 import type { TaggedDocProps, TestEditorView, TestEditorViewProps } from './jest-prosemirror-types';
+
+export const parseFromClipboard: (
+  view: EditorView,
+  text: string,
+  html: string | null,
+  plainText: boolean,
+  $context: ResolvedPos,
+) => Slice | null = __parseFromClipboard;
+
+export const serializeForClipboard: (
+  view: EditorView,
+  slice: Slice,
+) => { dom: HTMLDivElement; text: string } = __serializeForClipboard;
 
 const cleanupItems = new Set<[TestEditorView, HTMLElement]>();
 
@@ -118,35 +136,63 @@ export function flush(view: TestEditorView): void {
 }
 
 /**
- * A very basic broken paste implementation for jsdom and prosemirror.
+ * A paste implementation for jsdom and prosemirror.
+ *
+ * @remark
+ *
+ * It accepts an object with the `html` and `text` properties. The `text`
+ * property is used to set the `text/plain` clipboard data. The `html` property
+ * is used to set the `text/html` clipboard data. It also accepts an option
+ * `plainText` property which is used to simulate a plain text paste (e.g. press
+ * `Ctrl-Shift-V` or `Command-Shift-V`).
+ *
+ * @internal
  */
-export function pasteContent(
-  props: TestEditorViewProps & TestEditorViewProps & { content: ProsemirrorNode | string },
-): void {
+export function pasteContent(props: {
+  view: EditorView;
+  content: ProsemirrorNode | string | { text: string; html: string; plainText?: boolean };
+}): void {
   const { view, content } = props;
-  let slice: Slice;
 
-  if (isString(content)) {
-    const parsedSlice = parseFromClipboard(view, content, '', true, view.state.selection.$head);
+  let text = '';
+  let html = '';
+  let plainText = false;
 
-    if (!parsedSlice) {
-      throw new Error('No content to paste');
-    }
-
-    slice = parsedSlice;
+  if (typeof content === 'string') {
+    text = content;
+  } else if (isProsemirrorNode(content)) {
+    text = content.textContent;
+    html = prosemirrorNodeToHtml(content);
   } else {
-    const { from, to } =
-      content.type.name === 'doc'
-        ? { from: 1, to: content.nodeSize - 2 }
-        : { from: 0, to: undefined };
-
-    slice = content.slice(from, to);
-    view.someProp('transformPasted', (f) => {
-      slice = f(slice, view);
-    });
+    text = content.text;
+    html = content.html;
+    plainText = content.plainText ?? false;
   }
 
-  view.dispatch(view.state.tr.replaceSelection(slice));
+  const slice = parseFromClipboard(view, text, html, plainText, view.state.selection.$head);
+
+  if (slice) {
+    view.dispatch(view.state.tr.replaceSelection(slice));
+  }
+}
+
+/**
+ * A copy implementation for jsdom and prosemirror.
+ *
+ * @remark
+ *
+ * This function will return the copied content of selected content as an object
+ * with the `html` and `text` properties. The `text` property is the
+ * `text/plain` clipboard data. The `html` property is the `text/html` clipboard
+ * data.
+ *
+ * @internal
+ */
+export function copyContent(props: { view: EditorView }): { html: string; text: string } {
+  const { view } = props;
+  const { dom, text } = serializeForClipboard(view, view.state.selection.content());
+  const html = dom.innerHTML;
+  return { html, text };
 }
 
 export interface InsertTextProps extends TestEditorViewProps, TextProps {
@@ -511,6 +557,13 @@ export class ProsemirrorTestChain {
     return this.state.selection.to;
   }
 
+  /**
+   * The content to write to the clipboard if copy the current selection.
+   */
+  get copied(): { text: string; html: string } {
+    return copyContent({ view: this.view });
+  }
+
   constructor(view: TestEditorView) {
     this.view = view;
   }
@@ -679,11 +732,10 @@ export class ProsemirrorTestChain {
 
   /**
    * Paste text into the editor.
-   *
-   * TODO - this is overly simplistic and doesn't fully express what prosemirror
-   * can do so will need to be improved.
    */
-  paste(content: ProsemirrorNode | string): this {
+  paste(
+    content: ProsemirrorNode | string | { text: string; html: string; plainText?: boolean },
+  ): this {
     pasteContent({ view: this.view, content });
     return this;
   }
