@@ -274,7 +274,7 @@ describe('pasteRules', () => {
     it('should not create a slice with invalid open depth', () => {
       const plugin = pasteRules([
         {
-          regexp: /(@[a-z])/,
+          regexp: /(@[a-z]+)/,
           markType: schema.marks.strong,
           type: 'mark',
         },
@@ -324,7 +324,7 @@ describe('pasteRules', () => {
                       p('C'),
                       ul(
                         ///
-                        li(p(strong('bar'))),
+                        li(p(strong('@bar'))),
                       ),
                     ),
                   ),
