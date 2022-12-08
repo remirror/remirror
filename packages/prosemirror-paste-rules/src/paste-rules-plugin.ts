@@ -111,6 +111,12 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin {
           }
         }
 
+        // The `slice` passed to `transformPasted` might contain a invalid
+        // fragment (this is fine since slice has openStart and openEnd). The
+        // paste rule might remove some other node from the fragment because of
+        // its invalidity. So we need to check the opening to make sure that the
+        // slice is still valid.
+        // return fixSliceOpening(slice);
         return slice;
       },
       handleDOMEvents: {
@@ -672,4 +678,9 @@ function getDataTransferFiles(event: DragEvent): File[] {
   }
 
   return [];
+}
+
+function fixSliceOpening(slice: Slice): Slice {
+  const max = Slice.maxOpen(slice.content);
+  return max.openStart < slice.openStart || max.openEnd < slice.openEnd ? max : slice;
 }
