@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-file",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "keywords": [
     "remirror",
@@ -36,21 +36,21 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.8",
-    "@remirror/extension-react-component": "^2.0.8",
-    "@remirror/react-core": "^2.0.10",
-    "@remirror/theme": "^2.0.3",
+    "@remirror/core": "^2.0.9",
+    "@remirror/extension-react-component": "^2.0.9",
+    "@remirror/react-core": "^2.0.11",
+    "@remirror/theme": "^2.0.4",
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.1",
+    "@remirror/pm": "^2.0.2",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.1",
+    "@remirror/pm": "^2.0.2",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",

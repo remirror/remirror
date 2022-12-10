@@ -1,5 +1,19 @@
 # @remirror/extension-tabless
 
+## 2.2.5
+
+> 2022-12-10
+
+### Patch Changes
+
+- c24854eef: Update `prosemirror-tables` to the latest version, which includes new TypeScript declaration.
+- Updated dependencies [c24854eef]
+- Updated dependencies [f62c04ad3]
+  - @remirror/pm@2.0.2
+  - @remirror/core@2.0.9
+  - @remirror/extension-positioner@2.1.3
+  - @remirror/theme@2.0.4
+
 ## 2.2.4
 
 > 2022-11-25

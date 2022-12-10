@@ -1,5 +1,24 @@
 # @remirror/react
 
+## 2.0.20
+
+> 2022-12-10
+
+### Patch Changes
+
+- c24854eef: Update `prosemirror-tables` to the latest version, which includes new TypeScript declaration.
+- f62c04ad3: Update all `prosemirror` dependencies to latest version.
+  - @remirror/extension-react-tables@2.2.7
+  - @remirror/extension-placeholder@2.0.10
+  - @remirror/extension-positioner@2.1.3
+  - @remirror/extension-react-component@2.0.9
+  - @remirror/preset-react@2.0.10
+  - @remirror/react-components@2.1.4
+  - @remirror/react-core@2.0.11
+  - @remirror/react-hooks@2.0.15
+  - @remirror/react-renderer@2.0.9
+  - @remirror/react-utils@2.0.2
+
 ## 2.0.19
 
 > 2022-11-25

@@ -1,5 +1,75 @@
 # remirror
 
+## 2.0.19
+
+> 2022-12-10
+
+### Patch Changes
+
+- c24854eef: Update `prosemirror-tables` to the latest version, which includes new TypeScript declaration.
+- f62c04ad3: Update all `prosemirror` dependencies to latest version.
+- Updated dependencies [c24854eef]
+- Updated dependencies [f62c04ad3]
+  - @remirror/extension-tables@2.2.5
+  - @remirror/pm@2.0.2
+  - @remirror/core@2.0.9
+  - @remirror/core-types@2.0.2
+  - @remirror/core-utils@2.0.9
+  - @remirror/dom@2.0.11
+  - @remirror/extension-annotation@2.0.11
+  - @remirror/extension-bidi@2.0.9
+  - @remirror/extension-blockquote@2.0.10
+  - @remirror/extension-bold@2.0.9
+  - @remirror/extension-callout@2.0.10
+  - @remirror/extension-code@2.0.9
+  - @remirror/extension-code-block@2.0.10
+  - @remirror/extension-codemirror5@2.0.9
+  - @remirror/extension-collaboration@2.0.9
+  - @remirror/extension-columns@2.0.9
+  - @remirror/extension-diff@2.0.9
+  - @remirror/extension-doc@2.1.1
+  - @remirror/extension-drop-cursor@2.0.9
+  - @remirror/extension-embed@2.0.9
+  - @remirror/extension-emoji@2.0.13
+  - @remirror/extension-entity-reference@2.1.2
+  - @remirror/extension-epic-mode@2.0.9
+  - @remirror/extension-events@2.1.9
+  - @remirror/extension-font-family@2.0.9
+  - @remirror/extension-font-size@2.0.9
+  - @remirror/extension-gap-cursor@2.0.9
+  - @remirror/extension-hard-break@2.0.9
+  - @remirror/extension-heading@2.0.9
+  - @remirror/extension-history@2.0.9
+  - @remirror/extension-horizontal-rule@2.0.9
+  - @remirror/extension-image@2.1.5
+  - @remirror/extension-italic@2.0.9
+  - @remirror/extension-link@2.0.10
+  - @remirror/extension-list@2.0.11
+  - @remirror/extension-markdown@2.0.9
+  - @remirror/extension-mention@2.0.10
+  - @remirror/extension-mention-atom@2.0.11
+  - @remirror/extension-node-formatting@2.0.9
+  - @remirror/extension-paragraph@2.0.9
+  - @remirror/extension-placeholder@2.0.10
+  - @remirror/extension-positioner@2.1.3
+  - @remirror/extension-search@2.0.10
+  - @remirror/extension-shortcuts@2.0.9
+  - @remirror/extension-strike@2.0.9
+  - @remirror/extension-sub@2.0.9
+  - @remirror/extension-sup@2.0.9
+  - @remirror/extension-text@2.0.9
+  - @remirror/extension-text-case@2.0.9
+  - @remirror/extension-text-color@2.0.10
+  - @remirror/extension-text-highlight@2.0.10
+  - @remirror/extension-trailing-node@2.0.9
+  - @remirror/extension-underline@2.0.9
+  - @remirror/extension-whitespace@2.0.9
+  - @remirror/extension-yjs@3.0.9
+  - @remirror/preset-core@2.0.11
+  - @remirror/preset-formatting@2.0.10
+  - @remirror/preset-wysiwyg@2.0.14
+  - @remirror/theme@2.0.4
+
 ## 2.0.18
 
 > 2022-11-25

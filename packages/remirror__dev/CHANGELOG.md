@@ -1,5 +1,17 @@
 # @remirror/dev
 
+## 2.0.11
+
+> 2022-12-10
+
+### Patch Changes
+
+- f62c04ad3: Update all `prosemirror` dependencies to latest version.
+- Updated dependencies [c24854eef]
+- Updated dependencies [f62c04ad3]
+  - @remirror/pm@2.0.2
+  - @remirror/react-core@2.0.11
+
 ## 2.0.10
 
 > 2022-11-25

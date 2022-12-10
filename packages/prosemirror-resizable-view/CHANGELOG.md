@@ -1,5 +1,14 @@
 # prosemirror-resizable-view
 
+## 2.0.9
+
+> 2022-12-10
+
+### Patch Changes
+
+- f62c04ad3: Update all `prosemirror` dependencies to latest version.
+  - @remirror/core-utils@2.0.9
+
 ## 2.0.8
 
 > 2022-11-25

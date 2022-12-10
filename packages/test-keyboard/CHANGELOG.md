@@ -1,5 +1,13 @@
 # test-keyboard
 
+## 2.0.2
+
+> 2022-12-10
+
+### Patch Changes
+
+- @remirror/core-types@2.0.2
+
 ## 2.0.1
 
 > 2022-10-27

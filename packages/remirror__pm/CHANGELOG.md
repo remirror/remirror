@@ -1,5 +1,19 @@
 # @remirror/pm
 
+## 2.0.2
+
+> 2022-12-10
+
+### Patch Changes
+
+- c24854eef: Update `prosemirror-tables` to the latest version, which includes new TypeScript declaration.
+- f62c04ad3: Update all `prosemirror` dependencies to latest version.
+- Updated dependencies [f62c04ad3]
+- Updated dependencies [46c1762e3]
+  - prosemirror-paste-rules@2.0.2
+  - prosemirror-suggest@2.0.2
+  - prosemirror-trailing-node@2.0.2
+
 ## 2.0.1
 
 > 2022-10-27
