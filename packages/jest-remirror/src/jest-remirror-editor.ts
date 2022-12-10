@@ -1,6 +1,7 @@
 import { prettyDOM } from '@testing-library/dom';
 import {
   backspace,
+  copyContent,
   dispatchTextSelection,
   fireEventAtPosition,
   FireProps,
@@ -242,6 +243,13 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
    */
   get end(): number {
     return this.state.selection.to;
+  }
+
+  /**
+   * The content to write to the clipboard if copy the current selection.
+   */
+  get copied(): { text: string; html: string } {
+    return copyContent({ view: this.view });
   }
 
   /**
