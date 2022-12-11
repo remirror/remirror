@@ -1,5 +1,24 @@
 # jest-prosemirror
 
+## 2.1.0
+
+> 2022-12-10
+
+### Minor Changes
+
+- 46c1762e3: Add `ProsemirrorTestChain.copied`. This is the copied content of selected content as an object with the `html` and `text` properties. The `text` property is the `text/plain` clipboard data. The `html` property is the `text/html` clipboard data.
+- 46c1762e3: Improve `ProsemirrorTestChain.paste`. It's behavior is closer to ProseMirror's paste behavior. It now accepts an object with the `html` and `text` properties. The `text` property is used to set the `text/plain` clipboard data. The `html` property is used to set the `text/html` clipboard data. It also accepts an option `plainText` property which is used to simulate a plain text paste (e.g. press `Ctrl-Shift-V` or `Command-Shift-V`).
+
+### Patch Changes
+
+- f62c04ad3: Update all `prosemirror` dependencies to latest version.
+- Updated dependencies [c24854eef]
+- Updated dependencies [f62c04ad3]
+  - @remirror/pm@2.0.2
+  - @remirror/core-types@2.0.2
+  - @remirror/core-utils@2.0.9
+  - test-keyboard@2.0.2
+
 ## 2.0.8
 
 > 2022-11-25

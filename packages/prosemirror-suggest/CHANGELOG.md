@@ -1,5 +1,13 @@
 # prosemirror-suggest
 
+## 2.0.2
+
+> 2022-12-10
+
+### Patch Changes
+
+- f62c04ad3: Update all `prosemirror` dependencies to latest version.
+
 ## 2.0.1
 
 > 2022-10-27

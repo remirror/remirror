@@ -1,5 +1,25 @@
 # @remirror/react-hooks
 
+## 2.0.15
+
+> 2022-12-10
+
+### Patch Changes
+
+- Updated dependencies [c24854eef]
+- Updated dependencies [f62c04ad3]
+  - @remirror/pm@2.0.2
+  - @remirror/core@2.0.9
+  - @remirror/extension-emoji@2.0.13
+  - @remirror/extension-events@2.1.9
+  - @remirror/extension-history@2.0.9
+  - @remirror/extension-mention@2.0.10
+  - @remirror/extension-mention-atom@2.0.11
+  - @remirror/extension-positioner@2.1.3
+  - @remirror/react-core@2.0.11
+  - multishift@2.0.4
+  - @remirror/react-utils@2.0.2
+
 ## 2.0.14
 
 > 2022-11-25

@@ -1,5 +1,14 @@
 # prosemirror-paste-rules
 
+## 2.0.2
+
+> 2022-12-10
+
+### Patch Changes
+
+- f62c04ad3: Update all `prosemirror` dependencies to latest version.
+- 46c1762e3: Fixes the `Cannot read properties of null (reading 'lastChild')` error when pasting a part of a nested list from ProseMirror into ProseMirror with paste rules.
+
 ## 2.0.1
 
 > 2022-10-27

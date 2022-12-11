@@ -1,5 +1,15 @@
 # @remirror/core-types
 
+## 2.0.2
+
+> 2022-12-10
+
+### Patch Changes
+
+- Updated dependencies [c24854eef]
+- Updated dependencies [f62c04ad3]
+  - @remirror/pm@2.0.2
+
 ## 2.0.1
 
 > 2022-10-27
