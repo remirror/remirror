@@ -1,5 +1,13 @@
 # @remirror/extension-entity-reference
 
+## 2.2.0
+
+> 2022-12-12
+
+### Minor Changes
+
+- 977838001: Entity references helpers can use other states than current state
+
 ## 2.1.2
 
 > 2022-12-10

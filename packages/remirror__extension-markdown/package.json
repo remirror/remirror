@@ -44,7 +44,7 @@
     "turndown-plugin-gfm": "^1.0.2"
   },
   "devDependencies": {
-    "@remirror/extension-react-tables": "^2.2.7",
+    "@remirror/extension-react-tables": "^2.2.8",
     "@remirror/pm": "^2.0.2"
   },
   "peerDependencies": {

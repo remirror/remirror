@@ -1,5 +1,14 @@
 # @remirror/extension-file
 
+## 1.0.12
+
+> 2022-12-12
+
+### Patch Changes
+
+- Updated dependencies [977838001]
+  - @remirror/react-core@2.0.12
+
 ## 1.0.11
 
 > 2022-12-10
