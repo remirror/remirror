@@ -1,5 +1,14 @@
 # remirror
 
+## 2.0.20
+
+> 2022-12-12
+
+### Patch Changes
+
+- Updated dependencies [977838001]
+  - @remirror/extension-entity-reference@2.2.0
+
 ## 2.0.19
 
 > 2022-12-10

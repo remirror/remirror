@@ -1,5 +1,16 @@
 # @remirror/react-components
 
+## 2.1.5
+
+> 2022-12-12
+
+### Patch Changes
+
+- Updated dependencies [977838001]
+  - @remirror/react-core@2.0.12
+  - remirror@2.0.20
+  - @remirror/react-hooks@2.0.16
+
 ## 2.1.4
 
 > 2022-12-10

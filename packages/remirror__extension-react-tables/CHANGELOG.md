@@ -1,5 +1,16 @@
 # @remirror/extension-react-tables
 
+## 2.2.8
+
+> 2022-12-12
+
+### Patch Changes
+
+- Updated dependencies [977838001]
+  - @remirror/react-core@2.0.12
+  - @remirror/react-components@2.1.5
+  - @remirror/react-hooks@2.0.16
+
 ## 2.2.7
 
 > 2022-12-10
