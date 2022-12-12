@@ -269,10 +269,12 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
    * `joinDisjoinedEntityReferences`.
    */
   @helper()
-  getEntityReferences(): Helper<EntityReferenceMetaData[]> {
+  getEntityReferences(
+    state: EditorState = this.store.getState(),
+  ): Helper<EntityReferenceMetaData[]> {
     const entityReferences = getEntityReferencesFromPluginState({
       extension: this,
-      state: this.store.getState(),
+      state,
     }).flat();
     return joinDisjoinedEntityReferences(entityReferences);
   }
@@ -284,10 +286,13 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
    *
    */
   @helper()
-  getEntityReferenceById(entityReferenceId: string): Helper<EntityReferenceMetaData | undefined> {
+  getEntityReferenceById(
+    entityReferenceId: string,
+    state: EditorState = this.store.getState(),
+  ): Helper<EntityReferenceMetaData | undefined> {
     const entityReferences = getEntityReferencesFromPluginState({
       extension: this,
-      state: this.store.getState(),
+      state,
     }).flat();
     return joinDisjoinedEntityReferences(entityReferences).find(
       (entityReference) => entityReference.id === entityReferenceId,
@@ -301,8 +306,10 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
    *
    */
   @helper()
-  getEntityReferencesAt(pos?: PrimitiveSelection): Helper<EntityReferenceMetaData[]> {
-    const state = this.store.getState();
+  getEntityReferencesAt(
+    pos?: PrimitiveSelection,
+    state: EditorState = this.store.getState(),
+  ): Helper<EntityReferenceMetaData[]> {
     const { doc, selection } = state;
     const { from, to } = getTextSelection(pos ?? selection, doc);
 

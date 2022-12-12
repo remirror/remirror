@@ -14,6 +14,7 @@ export {
   useChainedCommands,
   useCommands,
   useCurrentSelection,
+  useDocChanged,
   useEditorDomRef,
   useEditorState,
   useEditorView,
