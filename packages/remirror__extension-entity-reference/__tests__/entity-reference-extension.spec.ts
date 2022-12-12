@@ -23,24 +23,28 @@ function create(options: EntityReferenceOptions = {}) {
   return renderEditor([entityReferenceExtension]);
 }
 
+let editor = create();
 let {
   add,
   nodes: { doc, p },
   selectText,
+  insertText,
   commands,
   helpers,
   view,
-} = create();
+} = editor;
 
 beforeEach(() => {
+  editor = create();
   ({
     add,
     nodes: { doc, p },
     selectText,
+    insertText,
     helpers,
     commands,
     view,
-  } = create());
+  } = editor);
 });
 
 describe('schema', () => {
@@ -222,6 +226,26 @@ describe('EntityReference marks', () => {
       const entityReferences = helpers.getEntityReferencesAt(2);
       expect(entityReferences).toHaveLength(2);
     });
+
+    it('returns entityReferences for the given state', () => {
+      add(doc(p('Some text')));
+
+      selectText({ from: 3, to: 5 });
+      commands.addEntityReference();
+      selectText({ from: 3, to: 10 });
+      commands.addEntityReference();
+
+      const prevState = editor.state;
+
+      selectText(1);
+      insertText('Inserted ');
+
+      const currentEntityReferences = helpers.getEntityReferencesAt(3);
+      expect(currentEntityReferences).toHaveLength(0);
+
+      const prevEntityReferences = helpers.getEntityReferencesAt(3, prevState);
+      expect(prevEntityReferences).toHaveLength(2);
+    });
   });
 
   describe('getEntityReferenceId', () => {
@@ -238,6 +262,31 @@ describe('EntityReference marks', () => {
       const entityReferenceFromDoc = helpers.getEntityReferenceById(entityReference.id);
 
       expect(entityReferenceFromDoc).toEqual(entityReference);
+    });
+
+    it('returns entityReference by Id for the given state', () => {
+      add(doc(p('testing text')));
+      const entityReference = {
+        id: 'testId',
+        from: 9,
+        to: 13,
+        text: 'text',
+      };
+      selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id);
+
+      const prevState = editor.state;
+
+      commands.removeEntityReference(entityReference.id);
+
+      const entityReferenceFromDoc = helpers.getEntityReferenceById(entityReference.id);
+      expect(entityReferenceFromDoc).toBeUndefined();
+
+      const prevEntityReferenceFromDoc = helpers.getEntityReferenceById(
+        entityReference.id,
+        prevState,
+      );
+      expect(prevEntityReferenceFromDoc).toEqual(entityReference);
     });
   });
 
