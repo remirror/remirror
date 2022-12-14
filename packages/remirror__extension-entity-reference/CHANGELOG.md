@@ -1,5 +1,13 @@
 # @remirror/extension-entity-reference
 
+## 2.2.1
+
+> 2022-12-14
+
+### Patch Changes
+
+- 8d911e983: Allow the adding of extra attributes via `addEntityReference` and return those attributes via the helpers
+
 ## 2.2.0
 
 > 2022-12-12
