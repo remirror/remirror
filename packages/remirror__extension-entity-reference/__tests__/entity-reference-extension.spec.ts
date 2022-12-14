@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { createCoreManager } from 'remirror/extensions';
-import { prosemirrorNodeToHtml, uniqueArray } from '@remirror/core';
+import { BaseExtensionOptions, prosemirrorNodeToHtml, uniqueArray } from '@remirror/core';
 
 import { EntityReferenceExtension } from '../';
 import { EntityReferenceOptions } from '../src/types';
@@ -11,7 +11,9 @@ extensionValidityTest(EntityReferenceExtension);
 
 const DUMMY_TEXT = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
 
-function create(options: EntityReferenceOptions = {}) {
+interface Options extends EntityReferenceOptions, BaseExtensionOptions {}
+
+function create(options: Options = {}) {
   const { onClick, ...rest } = options;
 
   const entityReferenceExtension = new EntityReferenceExtension(rest);
@@ -446,6 +448,45 @@ describe('EntityReference marks', () => {
       view.someProp('handleClickOn', (fn) => fn(view, 5, node, 1, {} as MouseEvent, false));
       expect(onClick).toHaveBeenCalledTimes(1);
       expect(onClick).toHaveBeenCalledWith(entityReference2);
+    });
+  });
+
+  describe('extra attributes', () => {
+    beforeEach(() => {
+      ({
+        add,
+        nodes: { doc, p },
+        selectText,
+        helpers,
+        commands,
+        view,
+      } = create({
+        extraAttributes: {
+          entityType: {
+            default: null,
+            parseDOM: (dom: any) => dom.getAttribute('data-entity-type'),
+            toDOM: (attrs: any) => ['data-entity-type', attrs.entityType],
+          },
+        },
+      }));
+    });
+
+    it('can add and return extra attributes', () => {
+      add(doc(p('testing text')));
+      const entityReference = {
+        id: 'testId',
+        from: 1,
+        to: 8,
+        text: 'testing',
+        attrs: {
+          entityType: 'comment',
+        },
+      };
+      selectText({ from: entityReference.from, to: entityReference.to });
+      commands.addEntityReference(entityReference.id, entityReference.attrs);
+      const entityReferenceFromDoc = helpers.getEntityReferenceById(entityReference.id);
+
+      expect(entityReferenceFromDoc).toEqual(entityReference);
     });
   });
 });

@@ -1,4 +1,10 @@
-import type { AcceptUndefined, Decoration, FromToProps, Handler } from '@remirror/core';
+import type {
+  AcceptUndefined,
+  Decoration,
+  FromToProps,
+  Handler,
+  ProsemirrorAttributes,
+} from '@remirror/core';
 
 export interface EntityReferenceAttributes {
   /**
@@ -12,6 +18,11 @@ export interface EntityReferenceMetaData extends EntityReferenceAttributes, From
    * Text content of the node
    */
   text: string;
+
+  /**
+   * Only present if you have configured extra attributes for the entity reference mark
+   */
+  attrs?: ProsemirrorAttributes;
 }
 
 export type OmitId<Type extends EntityReferenceMetaData> = Omit<Type, 'id'>;

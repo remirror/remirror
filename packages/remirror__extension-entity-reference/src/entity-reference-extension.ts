@@ -15,6 +15,7 @@ import {
   MarkExtensionSpec,
   MarkSpecOverride,
   PrimitiveSelection,
+  ProsemirrorAttributes,
   ProsemirrorNode,
   Transaction,
   uniqueId,
@@ -170,10 +171,10 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
   }
 
   @command()
-  addEntityReference(id?: string): CommandFunction {
+  addEntityReference(id?: string, attrs: ProsemirrorAttributes = {}): CommandFunction {
     return ({ state, tr, dispatch }) => {
       const { from, to } = state.selection;
-      const newMark = this.type.create({ id: id ?? uniqueId() });
+      const newMark = this.type.create({ ...attrs, id: id ?? uniqueId() });
       try {
         tr = tr.addMark(from, to, newMark);
       } catch (error: any) {
