@@ -1,4 +1,6 @@
 export { BulletListExtension } from './bullet-list-extension';
+export { ExperimentalItemExtension } from './experimental/item-extension';
+export type { ListAttributes } from './experimental/item-types';
 export { dedentList } from './list-command-dedent';
 export { indentList } from './list-command-indent';
 export {
