@@ -1,5 +1,68 @@
 # remirror
 
+## 2.0.22
+
+> 2022-12-26
+
+### Patch Changes
+
+- Updated dependencies [2d9ac815b]
+  - @remirror/core@2.0.10
+  - @remirror/dom@2.0.12
+  - @remirror/extension-annotation@2.0.12
+  - @remirror/extension-bidi@2.0.10
+  - @remirror/extension-blockquote@2.0.11
+  - @remirror/extension-bold@2.0.10
+  - @remirror/extension-callout@2.0.11
+  - @remirror/extension-code@2.0.10
+  - @remirror/extension-code-block@2.0.11
+  - @remirror/extension-codemirror5@2.0.10
+  - @remirror/extension-collaboration@2.0.10
+  - @remirror/extension-columns@2.0.10
+  - @remirror/extension-diff@2.0.10
+  - @remirror/extension-doc@2.1.2
+  - @remirror/extension-drop-cursor@2.0.10
+  - @remirror/extension-embed@2.0.10
+  - @remirror/extension-emoji@2.0.14
+  - @remirror/extension-entity-reference@2.2.2
+  - @remirror/extension-epic-mode@2.0.10
+  - @remirror/extension-events@2.1.10
+  - @remirror/extension-font-family@2.0.10
+  - @remirror/extension-font-size@2.0.10
+  - @remirror/extension-gap-cursor@2.0.10
+  - @remirror/extension-hard-break@2.0.10
+  - @remirror/extension-heading@2.0.10
+  - @remirror/extension-history@2.0.10
+  - @remirror/extension-horizontal-rule@2.0.10
+  - @remirror/extension-image@2.1.6
+  - @remirror/extension-italic@2.0.10
+  - @remirror/extension-link@2.0.11
+  - @remirror/extension-list@2.0.12
+  - @remirror/extension-markdown@2.0.10
+  - @remirror/extension-mention@2.0.11
+  - @remirror/extension-mention-atom@2.0.12
+  - @remirror/extension-node-formatting@2.0.10
+  - @remirror/extension-paragraph@2.0.10
+  - @remirror/extension-placeholder@2.0.11
+  - @remirror/extension-positioner@2.1.4
+  - @remirror/extension-search@2.0.11
+  - @remirror/extension-shortcuts@2.0.10
+  - @remirror/extension-strike@2.0.10
+  - @remirror/extension-sub@2.0.10
+  - @remirror/extension-sup@2.0.10
+  - @remirror/extension-tables@2.2.6
+  - @remirror/extension-text@2.0.10
+  - @remirror/extension-text-case@2.0.10
+  - @remirror/extension-text-color@2.0.11
+  - @remirror/extension-text-highlight@2.0.11
+  - @remirror/extension-trailing-node@2.0.10
+  - @remirror/extension-underline@2.0.10
+  - @remirror/extension-whitespace@2.0.10
+  - @remirror/extension-yjs@3.0.10
+  - @remirror/preset-core@2.0.12
+  - @remirror/preset-formatting@2.0.11
+  - @remirror/preset-wysiwyg@2.0.15
+
 ## 2.0.21
 
 > 2022-12-14

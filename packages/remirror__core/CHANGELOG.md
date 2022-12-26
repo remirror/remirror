@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 2.0.10
+
+> 2022-12-26
+
+### Patch Changes
+
+- 2d9ac815b: When updating keymap bindings (e.g. with `useKeymap(...)` React hook), `KeymapExtension` won't trigger an editor state update anymore and it also won't [reconfigure](https://prosemirror.net/docs/ref/#state.EditorState.reconfigure) all plugins. This could bring a significant performance boost because some plugins (e.g. `YjsExtension`) are expensive to reconfigure.
+
 ## 2.0.9
 
 > 2022-12-10

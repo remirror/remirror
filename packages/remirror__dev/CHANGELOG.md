@@ -1,5 +1,13 @@
 # @remirror/dev
 
+## 2.0.13
+
+> 2022-12-26
+
+### Patch Changes
+
+- @remirror/react-core@2.0.13
+
 ## 2.0.12
 
 > 2022-12-12

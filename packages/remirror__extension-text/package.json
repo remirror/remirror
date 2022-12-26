@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-text",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Enable text in your text-editor, an oxymoron of sorts.",
   "keywords": [
     "remirror",
@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.9",
+    "@remirror/core": "^2.0.10",
     "@remirror/messages": "^2.0.1"
   },
   "devDependencies": {

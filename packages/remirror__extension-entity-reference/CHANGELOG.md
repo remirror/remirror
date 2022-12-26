@@ -1,5 +1,16 @@
 # @remirror/extension-entity-reference
 
+## 2.2.2
+
+> 2022-12-26
+
+### Patch Changes
+
+- Updated dependencies [2d9ac815b]
+  - @remirror/core@2.0.10
+  - @remirror/extension-events@2.1.10
+  - @remirror/extension-positioner@2.1.4
+
 ## 2.2.1
 
 > 2022-12-14

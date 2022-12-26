@@ -1,5 +1,14 @@
 # @remirror/extension-image
 
+## 2.1.6
+
+> 2022-12-26
+
+### Patch Changes
+
+- Updated dependencies [2d9ac815b]
+  - @remirror/core@2.0.10
+
 ## 2.1.5
 
 > 2022-12-10

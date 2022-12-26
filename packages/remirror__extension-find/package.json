@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-find",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Find and replace text in the remirror editor.",
   "keywords": [
     "remirror",
@@ -34,7 +34,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@remirror/core": "^2.0.9",
+    "@remirror/core": "^2.0.10",
     "@types/string.prototype.matchall": "^4.0.1",
     "escape-string-regexp": "^4.0.0",
     "string.prototype.matchall": "^4.0.7"
