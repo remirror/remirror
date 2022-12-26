@@ -1,5 +1,15 @@
 # @remirror/extension-text-highlight
 
+## 2.0.11
+
+> 2022-12-26
+
+### Patch Changes
+
+- Updated dependencies [2d9ac815b]
+  - @remirror/core@2.0.10
+  - @remirror/extension-text-color@2.0.11
+
 ## 2.0.10
 
 > 2022-12-10

@@ -1,5 +1,20 @@
 # @remirror/react-components
 
+## 2.1.7
+
+> 2022-12-26
+
+### Patch Changes
+
+- Updated dependencies [2d9ac815b]
+  - @remirror/core@2.0.10
+  - remirror@2.0.22
+  - @remirror/extension-find@0.1.3
+  - @remirror/extension-positioner@2.1.4
+  - @remirror/extension-text-color@2.0.11
+  - @remirror/react-core@2.0.13
+  - @remirror/react-hooks@2.0.17
+
 ## 2.1.6
 
 > 2022-12-14

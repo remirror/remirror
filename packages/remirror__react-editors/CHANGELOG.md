@@ -1,5 +1,15 @@
 # @remirror/react-editors
 
+## 1.0.23
+
+> 2022-12-26
+
+### Patch Changes
+
+- remirror@2.0.22
+- @remirror/extension-react-tables@2.2.10
+- @remirror/react@2.0.23
+
 ## 1.0.22
 
 > 2022-12-14

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-search",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Find all of your favourite things in the remirror editor.",
   "keywords": [
     "remirror",
@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.9",
+    "@remirror/core": "^2.0.10",
     "@remirror/messages": "^2.0.1",
     "escape-string-regexp": "^4.0.0"
   },

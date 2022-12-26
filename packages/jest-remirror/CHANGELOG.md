@@ -1,5 +1,16 @@
 # jest-remirror
 
+## 2.1.1
+
+> 2022-12-26
+
+### Patch Changes
+
+- Updated dependencies [2d9ac815b]
+  - @remirror/core@2.0.10
+  - @remirror/dom@2.0.12
+  - @remirror/preset-core@2.0.12
+
 ## 2.1.0
 
 > 2022-12-10

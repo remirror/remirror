@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-ssr",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "If server side support is important to you, then this is perfect for your remirror editor in react.",
   "keywords": [
     "remirror",
@@ -39,14 +39,14 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.9",
-    "@remirror/extension-react-component": "^2.0.9",
+    "@remirror/core": "^2.0.10",
+    "@remirror/extension-react-component": "^2.0.10",
     "@remirror/messages": "^2.0.1",
     "@remirror/react-utils": "^2.0.2"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.2",
-    "@remirror/react": "^2.0.22",
+    "@remirror/react": "^2.0.23",
     "@types/react": "^18.0.6",
     "react": "^18.0.0"
   },

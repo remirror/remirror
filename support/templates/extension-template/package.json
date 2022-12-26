@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-template",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": true,
   "description": "TEMPLATE_DESCRIPTION",
   "keywords": [
@@ -41,7 +41,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.9"
+    "@remirror/core": "^2.0.10"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.2"

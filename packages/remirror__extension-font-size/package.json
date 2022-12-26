@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-font-size",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Add font size to the selected text, or text within the provided range.",
   "keywords": [
     "remirror",
@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.9",
+    "@remirror/core": "^2.0.10",
     "@remirror/messages": "^2.0.1",
     "round": "^2.0.1"
   },
