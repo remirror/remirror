@@ -14,6 +14,7 @@ import {
 import type {
   CommandFunction,
   CustomHandler,
+  EditorView,
   KeyBindingProps,
   KeyBindings,
   ProsemirrorPlugin,
@@ -37,7 +38,8 @@ import {
   selectParentNode,
 } from '@remirror/pm/commands';
 import { undoInputRule } from '@remirror/pm/inputrules';
-import { keymap } from '@remirror/pm/keymap';
+import { keydownHandler } from '@remirror/pm/keymap';
+import { Plugin } from '@remirror/pm/state';
 
 import { AnyExtension, extension, Helper, PlainExtension } from '../extension';
 import type { AddCustomHandler } from '../extension/base-class';
@@ -161,6 +163,11 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
   private readonly backwardMarkExitTracker = new Map<number, boolean>();
 
   /**
+   * The underlying keydown handler.
+   */
+  private keydownHandler: ((view: EditorView, event: KeyboardEvent) => boolean) | null = null;
+
+  /**
    * Get the shortcut map.
    */
   private get shortcutMap(): ShortcutMap {
@@ -185,13 +192,28 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       return [];
     }
 
-    return [this.generateKeymap()];
+    this.setupKeydownHandler();
+
+    return [
+      new Plugin({
+        props: {
+          handleKeyDown: (view, event) => {
+            return this.keydownHandler?.(view, event);
+          },
+        },
+      }),
+    ];
+  }
+
+  private setupKeydownHandler() {
+    const bindings = this.generateKeymapBindings();
+    this.keydownHandler = keydownHandler(bindings);
   }
 
   /**
-   * Updates the stored keymap plugin on this extension.
+   * Updates the stored keymap bindings on this extension.
    */
-  private generateKeymap() {
+  private generateKeymapBindings() {
     const extensionKeymaps: PrioritizedKeyBindings[] = [];
     const shortcutMap = this.shortcutMap;
     const commandsExtension = this.store.getExtension(CommandsExtension);
@@ -264,7 +286,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     const sortedKeymaps = this.sortKeymaps([...this.extraKeyBindings, ...extensionKeymaps]);
     const mappedCommands = mergeProsemirrorKeyBindings(sortedKeymaps);
 
-    return keymap(mappedCommands);
+    return mappedCommands;
   }
 
   /**
@@ -414,11 +436,10 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
    * The method for rebuilding all the extension keymaps.
    *
    * 1. Rebuild keymaps.
-   * 2. Replace the old keymap plugin.
-   * 3. Update the plugins used in the state (triggers an editor update).
+   * 2. Replace `this.keydownHandler` with the new keydown handler.
    */
   private readonly rebuildKeymap = () => {
-    this.store.updateExtensionPlugins(this);
+    this.setupKeydownHandler();
   };
 
   /**
@@ -705,10 +726,6 @@ declare global {
        * extension to recreate the keyboard bindings.
        *
        * @remarks
-       *
-       * Under the hood it updates the plugin which is used to insert the
-       * keybindings into the editor. This causes the state to be updated and
-       * will cause a rerender in your ui framework.
        *
        * **NOTE** - This will not update keybinding for extensions that
        * implement their own keybinding functionality (e.g. any plugin using
