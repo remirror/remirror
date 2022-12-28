@@ -18,6 +18,7 @@ export function jsdomPolyfill(): void {
   supportInnerTextInAnchors();
   supportRanges();
   supportAdjustableSizes();
+  supportScrollIntoView();
 }
 
 /**
@@ -209,4 +210,13 @@ function supportAdjustableSizes() {
       value: document.documentElement.scrollHeight,
     },
   });
+}
+
+/**
+ * Add support for `element.scrollIntoView` in jsdom.
+ *
+ * See also https://github.com/jsdom/jsdom/issues/1695
+ */
+function supportScrollIntoView() {
+  Element.prototype.scrollIntoView = () => {};
 }
