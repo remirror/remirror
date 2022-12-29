@@ -1,5 +1,18 @@
 # jest-remirror
 
+## 2.1.2
+
+> 2022-12-29
+
+### Patch Changes
+
+- 64fe7d6b1: Add jsdom polyfill for `element.scrollIntoView`.
+  - jest-prosemirror@2.1.1
+  - @remirror/core@2.0.11
+  - @remirror/pm@2.0.3
+  - @remirror/dom@2.0.13
+  - @remirror/preset-core@2.0.13
+
 ## 2.1.1
 
 > 2022-12-26

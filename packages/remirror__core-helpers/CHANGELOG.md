@@ -1,5 +1,13 @@
 # @remirror/core-helpers
 
+## 2.0.1
+
+> 2022-12-29
+
+### Patch Changes
+
+- 6a93233e2: This is a workaround for a Babel issue when using create-react-app with Remirror. See https://github.com/remirror/remirror/issues/1970 for more details.
+
 ## 2.0.0
 
 > 2022-09-13

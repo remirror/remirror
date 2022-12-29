@@ -1,5 +1,16 @@
 # @remirror/extension-annotation
 
+## 2.0.13
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/messages@2.0.2
+- @remirror/pm@2.0.3
+- @remirror/extension-positioner@2.1.5
+
 ## 2.0.12
 
 > 2022-12-26

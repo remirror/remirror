@@ -1,5 +1,14 @@
 # @remirror/preset-template
 
+## 2.0.5
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/pm@2.0.3
+
 ## 2.0.4
 
 > 2022-12-26

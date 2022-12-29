@@ -1,5 +1,16 @@
 # @remirror/extension-mention
 
+## 2.0.12
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/messages@2.0.2
+- @remirror/pm@2.0.3
+- @remirror/extension-events@2.1.11
+
 ## 2.0.11
 
 > 2022-12-26

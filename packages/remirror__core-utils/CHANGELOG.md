@@ -1,5 +1,17 @@
 # @remirror/core-utils
 
+## 2.0.10
+
+> 2022-12-29
+
+### Patch Changes
+
+- Updated dependencies [6a93233e2]
+  - @remirror/core-helpers@2.0.1
+  - @remirror/messages@2.0.2
+  - @remirror/pm@2.0.3
+  - @remirror/core-types@2.0.3
+
 ## 2.0.9
 
 > 2022-12-10

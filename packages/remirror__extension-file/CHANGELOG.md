@@ -1,5 +1,17 @@
 # @remirror/extension-file
 
+## 1.0.14
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/pm@2.0.3
+- @remirror/extension-react-component@2.0.11
+- @remirror/react-core@2.0.14
+- @remirror/theme@2.0.5
+
 ## 1.0.13
 
 > 2022-12-26

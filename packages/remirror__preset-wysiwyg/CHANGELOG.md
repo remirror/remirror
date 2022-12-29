@@ -1,5 +1,35 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.16
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/pm@2.0.3
+- @remirror/extension-embed@2.0.11
+- @remirror/extension-image@2.1.7
+- @remirror/extension-bidi@2.0.11
+- @remirror/extension-blockquote@2.0.12
+- @remirror/extension-bold@2.0.11
+- @remirror/extension-code@2.0.11
+- @remirror/extension-code-block@2.0.12
+- @remirror/extension-drop-cursor@2.0.11
+- @remirror/extension-gap-cursor@2.0.11
+- @remirror/extension-hard-break@2.0.11
+- @remirror/extension-heading@2.0.11
+- @remirror/extension-horizontal-rule@2.0.11
+- @remirror/extension-italic@2.0.11
+- @remirror/extension-link@2.0.12
+- @remirror/extension-list@2.0.13
+- @remirror/extension-search@2.0.12
+- @remirror/extension-shortcuts@2.0.11
+- @remirror/extension-strike@2.0.11
+- @remirror/extension-trailing-node@2.0.11
+- @remirror/extension-underline@2.0.11
+- @remirror/preset-core@2.0.13
+
 ## 2.0.15
 
 > 2022-12-26

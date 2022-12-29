@@ -1,5 +1,15 @@
 # @remirror/dom
 
+## 2.0.13
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/pm@2.0.3
+- @remirror/preset-core@2.0.13
+
 ## 2.0.12
 
 > 2022-12-26

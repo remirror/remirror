@@ -1,5 +1,16 @@
 # @remirror/extension-emoji
 
+## 2.0.15
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/messages@2.0.2
+- @remirror/pm@2.0.3
+- @remirror/theme@2.0.5
+
 ## 2.0.14
 
 > 2022-12-26

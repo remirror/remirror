@@ -1,5 +1,26 @@
 # @remirror/react-components
 
+## 2.1.8
+
+> 2022-12-29
+
+### Patch Changes
+
+- multishift@2.0.5
+- remirror@2.0.23
+- @remirror/core@2.0.11
+- @remirror/i18n@2.0.2
+- @remirror/icons@2.0.1
+- @remirror/messages@2.0.2
+- @remirror/pm@2.0.3
+- @remirror/react-utils@2.0.3
+- @remirror/react-hooks@2.0.18
+- @remirror/extension-find@0.1.4
+- @remirror/extension-positioner@2.1.5
+- @remirror/extension-text-color@2.0.12
+- @remirror/react-core@2.0.14
+- @remirror/theme@2.0.5
+
 ## 2.1.7
 
 > 2022-12-26

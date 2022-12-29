@@ -1,5 +1,14 @@
 # @remirror/extension-find
 
+## 0.1.4
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/pm@2.0.3
+
 ## 0.1.3
 
 > 2022-12-26
