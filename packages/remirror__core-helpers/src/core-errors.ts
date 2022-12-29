@@ -109,15 +109,8 @@ export class RemirrorError extends BaseError {
    * The constructor is intentionally kept private to prevent being extended from.
    */
   private constructor({ code, message, disableLogging = false }: RemirrorErrorOptions = {}) {
-    let errorCode: ErrorConstant;
-
-    if (isErrorConstant(code)) {
-      errorCode = code;
-      super(createErrorMessage(errorCode, message));
-    } else {
-      errorCode = ErrorConstant.CUSTOM;
-      super(createErrorMessage(errorCode, message));
-    }
+    const errorCode: ErrorConstant = isErrorConstant(code) ? code : ErrorConstant.CUSTOM;
+    super(createErrorMessage(errorCode, message));
 
     this.errorCode = errorCode;
     this.url = `${ERROR_INFORMATION_URL}#${errorCode.toLowerCase()}`;
