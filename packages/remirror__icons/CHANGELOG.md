@@ -1,5 +1,14 @@
 # @remirror/icons
 
+## 2.0.1
+
+> 2022-12-29
+
+### Patch Changes
+
+- Updated dependencies [6a93233e2]
+  - @remirror/core-helpers@2.0.1
+
 ## 2.0.0
 
 > 2022-09-13

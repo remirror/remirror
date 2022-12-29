@@ -1,5 +1,13 @@
 # @remirror/react-renderer
 
+## 2.0.11
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+
 ## 2.0.10
 
 > 2022-12-26

@@ -1,5 +1,14 @@
 # @remirror/extension-codemirror6
 
+## 1.0.11
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/pm@2.0.3
+
 ## 1.0.10
 
 > 2022-12-26

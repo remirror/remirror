@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 2.0.11
+
+> 2022-12-29
+
+### Patch Changes
+
+- prosemirror-resizable-view@2.0.10
+- @remirror/core@2.0.11
+- @remirror/messages@2.0.2
+- @remirror/pm@2.0.3
+
 ## 2.0.10
 
 > 2022-12-26

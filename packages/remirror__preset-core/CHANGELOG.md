@@ -1,5 +1,21 @@
 # @remirror/preset-core
 
+## 2.0.13
+
+> 2022-12-29
+
+### Patch Changes
+
+- @remirror/core@2.0.11
+- @remirror/pm@2.0.3
+- @remirror/extension-doc@2.1.3
+- @remirror/extension-events@2.1.11
+- @remirror/extension-gap-cursor@2.0.11
+- @remirror/extension-history@2.0.11
+- @remirror/extension-paragraph@2.0.11
+- @remirror/extension-positioner@2.1.5
+- @remirror/extension-text@2.0.11
+
 ## 2.0.12
 
 > 2022-12-26
