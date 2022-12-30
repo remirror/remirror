@@ -16,11 +16,11 @@ You need to have a recent Node version installed.
 
 ### Installation
 
-First, let's set up a basic React app with [CRA](https://reactjs.org/docs/create-a-new-react-app.html):
+First, let's set up a basic React app with [Vite](https://vitejs.dev/guide/):
 
 ```bash type=installation
-npx create-react-app cra-remirror --template typescript
-cd cra-remirror
+npx create-vite vite-remirror --template react-ts
+cd vite-remirror
 ```
 
 Next, we're installing Remirror:
@@ -50,7 +50,7 @@ export default App;
 Let's run the app:
 
 ```bash
-npm run start
+npm run dev
 ```
 
 :::tip Hooray!
