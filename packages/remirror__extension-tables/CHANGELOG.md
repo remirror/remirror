@@ -1,5 +1,13 @@
 # @remirror/extension-tabless
 
+## 2.2.8
+
+> 2023-01-15
+
+### Patch Changes
+
+- @remirror/extension-positioner@2.1.6
+
 ## 2.2.7
 
 > 2022-12-29

@@ -1,5 +1,25 @@
 # remirror
 
+## 2.0.24
+
+> 2023-01-15
+
+### Patch Changes
+
+- Updated dependencies [830724900]
+  - @remirror/extension-events@2.1.12
+  - @remirror/extension-entity-reference@2.2.4
+  - @remirror/extension-link@2.0.13
+  - @remirror/extension-list@2.0.14
+  - @remirror/extension-mention@2.0.13
+  - @remirror/extension-mention-atom@2.0.14
+  - @remirror/extension-positioner@2.1.6
+  - @remirror/preset-core@2.0.14
+  - @remirror/preset-wysiwyg@2.0.17
+  - @remirror/extension-annotation@2.0.14
+  - @remirror/extension-tables@2.2.8
+  - @remirror/dom@2.0.14
+
 ## 2.0.23
 
 > 2022-12-29

@@ -1,5 +1,13 @@
 # @remirror/extension-events
 
+## 2.1.12
+
+> 2023-01-15
+
+### Patch Changes
+
+- 830724900: This patch fixes an issue where `EventsExtension` cannot get the marks with [`inclusive`](https://prosemirror.net/docs/ref/#model.MarkSpec.inclusive) set to `false` for a `hover` event.
+
 ## 2.1.11
 
 > 2022-12-29
