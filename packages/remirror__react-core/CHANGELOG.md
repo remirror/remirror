@@ -1,5 +1,14 @@
 # @remirror/react-core
 
+## 2.0.15
+
+> 2023-01-15
+
+### Patch Changes
+
+- @remirror/extension-positioner@2.1.6
+- @remirror/preset-core@2.0.14
+
 ## 2.0.14
 
 > 2022-12-29

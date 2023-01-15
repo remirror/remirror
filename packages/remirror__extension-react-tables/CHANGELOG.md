@@ -1,5 +1,18 @@
 # @remirror/extension-react-tables
 
+## 2.2.12
+
+> 2023-01-15
+
+### Patch Changes
+
+- @remirror/extension-positioner@2.1.6
+- @remirror/preset-core@2.0.14
+- @remirror/react-hooks@2.0.19
+- @remirror/react-components@2.1.9
+- @remirror/extension-tables@2.2.8
+- @remirror/react-core@2.0.15
+
 ## 2.2.11
 
 > 2022-12-29

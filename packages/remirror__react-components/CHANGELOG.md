@@ -1,5 +1,16 @@
 # @remirror/react-components
 
+## 2.1.9
+
+> 2023-01-15
+
+### Patch Changes
+
+- remirror@2.0.24
+- @remirror/extension-positioner@2.1.6
+- @remirror/react-hooks@2.0.19
+- @remirror/react-core@2.0.15
+
 ## 2.1.8
 
 > 2022-12-29

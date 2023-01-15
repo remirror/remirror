@@ -1,5 +1,18 @@
 # @remirror/react-hooks
 
+## 2.0.19
+
+> 2023-01-15
+
+### Patch Changes
+
+- Updated dependencies [830724900]
+  - @remirror/extension-events@2.1.12
+  - @remirror/extension-mention@2.0.13
+  - @remirror/extension-mention-atom@2.0.14
+  - @remirror/extension-positioner@2.1.6
+  - @remirror/react-core@2.0.15
+
 ## 2.0.18
 
 > 2022-12-29

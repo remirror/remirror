@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-components",
-  "version": "2.1.8",
+  "version": "2.1.9",
   "description": "Components to begin your remirror journey",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-components",
   "repository": {
@@ -45,13 +45,13 @@
     "@popperjs/core": "^2.9.2",
     "@remirror/core": "^2.0.11",
     "@remirror/extension-find": "^0.1.4",
-    "@remirror/extension-positioner": "^2.1.5",
+    "@remirror/extension-positioner": "^2.1.6",
     "@remirror/extension-text-color": "^2.0.12",
     "@remirror/i18n": "^2.0.2",
     "@remirror/icons": "^2.0.1",
     "@remirror/messages": "^2.0.2",
-    "@remirror/react-core": "^2.0.14",
-    "@remirror/react-hooks": "^2.0.18",
+    "@remirror/react-core": "^2.0.15",
+    "@remirror/react-hooks": "^2.0.19",
     "@remirror/react-utils": "^2.0.3",
     "@remirror/theme": "^2.0.5",
     "@seznam/compose-react-refs": "^1.0.6",
@@ -63,12 +63,12 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.3",
-    "@remirror/react": "^2.0.24",
+    "@remirror/react": "^2.0.25",
     "@types/react": "^18.0.6",
     "@types/react-dom": "^18.0.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "remirror": "^2.0.23"
+    "remirror": "^2.0.24"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.3",
@@ -76,7 +76,7 @@
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",
     "react-dom": "^16.14.0 || ^17 || ^18",
-    "remirror": "^2.0.23"
+    "remirror": "^2.0.24"
   },
   "peerDependenciesMeta": {
     "@types/react": {

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-tables",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "description": "A table a day keeps the doctor away. Remirror and play keeps the bad times at bay.",
   "keywords": [
     "remirror",
@@ -41,7 +41,7 @@
   "dependencies": {
     "@babel/runtime": "^7.13.10",
     "@remirror/core": "^2.0.11",
-    "@remirror/extension-positioner": "^2.1.5",
+    "@remirror/extension-positioner": "^2.1.6",
     "@remirror/messages": "^2.0.2",
     "@remirror/theme": "^2.0.5"
   },

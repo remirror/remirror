@@ -1,5 +1,14 @@
 # jest-remirror
 
+## 2.1.3
+
+> 2023-01-15
+
+### Patch Changes
+
+- @remirror/preset-core@2.0.14
+- @remirror/dom@2.0.14
+
 ## 2.1.2
 
 > 2022-12-29

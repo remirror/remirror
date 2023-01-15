@@ -1,5 +1,15 @@
 # @remirror/preset-wysiwyg
 
+## 2.0.17
+
+> 2023-01-15
+
+### Patch Changes
+
+- @remirror/extension-link@2.0.13
+- @remirror/extension-list@2.0.14
+- @remirror/preset-core@2.0.14
+
 ## 2.0.16
 
 > 2022-12-29
