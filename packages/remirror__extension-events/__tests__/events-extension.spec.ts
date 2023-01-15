@@ -152,7 +152,7 @@ describe('events', () => {
     expect(hoverHandler.mock.calls[3]?.[1]?.getNode).toBeFunction();
     expect(hoverHandler.mock.calls[3]?.[1]).toHaveProperty('hovering', false);
     expect(hoverHandler.mock.calls[3]?.[1]?.marks).toHaveLength(1);
-    expect(hoverHandler.mock.calls[2]?.[1]?.marks[0].mark.type.name).toBe('link');
+    expect(hoverHandler.mock.calls[3]?.[1]?.marks[0].mark.type.name).toBe('link');
   });
 
   it('responds to editor `contextmenu` events', () => {
