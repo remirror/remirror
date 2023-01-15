@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 import { fireEvent } from '@testing-library/dom';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import { LinkExtension } from 'remirror/extensions';
 
 import { ContextMenuEventHandlerState, EventsExtension, HoverEventHandlerState } from '../';
 
@@ -100,26 +101,58 @@ describe('events', () => {
   it('responds to editor `hover` events', () => {
     const eventsExtension = new EventsExtension();
     const hoverHandler: any = jest.fn((_: MouseEvent, __: HoverEventHandlerState) => true);
-    const editor = renderEditor([eventsExtension]);
+    const editor = renderEditor([eventsExtension, new LinkExtension()]);
     const { doc, p } = editor.nodes;
+    const { link } = editor.attributeMarks;
     eventsExtension.addHandler('hover', hoverHandler);
 
-    editor.add(doc(p('first')));
-    fireEvent.mouseOver(editor.dom.querySelector('p') as Element);
+    editor.add(
+      doc(p('paragraph 1'), p('paragraph 2', link({ href: 'https://example.com' })('link'))),
+    );
+
+    const paragraphElement = editor.dom.querySelector('p') as Element;
+    expect(paragraphElement.textContent).toBe('paragraph 1');
+
+    fireEvent.mouseOver(paragraphElement);
 
     expect(hoverHandler).toHaveBeenCalledTimes(1);
     expect(hoverHandler.mock.calls[0]?.[0]).toBeInstanceOf(Event);
     expect(hoverHandler.mock.calls[0]?.[1]).not.toHaveProperty('event');
     expect(hoverHandler.mock.calls[0]?.[1]?.getNode).toBeFunction();
     expect(hoverHandler.mock.calls[0]?.[1]).toHaveProperty('hovering', true);
+    expect(hoverHandler.mock.calls[0]?.[1]?.marks).toHaveLength(0);
 
-    fireEvent.mouseOut(editor.dom.querySelector('p') as Element);
+    fireEvent.mouseOut(paragraphElement);
 
     expect(hoverHandler).toHaveBeenCalledTimes(2);
     expect(hoverHandler.mock.calls[1]?.[0]).toBeInstanceOf(Event);
     expect(hoverHandler.mock.calls[1]?.[1]).not.toHaveProperty('event');
     expect(hoverHandler.mock.calls[1]?.[1]?.getNode).toBeFunction();
     expect(hoverHandler.mock.calls[1]?.[1]).toHaveProperty('hovering', false);
+    expect(hoverHandler.mock.calls[1]?.[1]?.marks).toHaveLength(0);
+
+    const linkElement = editor.dom.querySelector('a') as Element;
+    expect(linkElement.attributes.getNamedItem('href')?.value).toBe('https://example.com');
+
+    fireEvent.mouseOver(linkElement);
+
+    expect(hoverHandler).toHaveBeenCalledTimes(3);
+    expect(hoverHandler.mock.calls[2]?.[0]).toBeInstanceOf(Event);
+    expect(hoverHandler.mock.calls[2]?.[1]).not.toHaveProperty('event');
+    expect(hoverHandler.mock.calls[2]?.[1]?.getNode).toBeFunction();
+    expect(hoverHandler.mock.calls[2]?.[1]).toHaveProperty('hovering', true);
+    expect(hoverHandler.mock.calls[2]?.[1]?.marks).toHaveLength(1);
+    expect(hoverHandler.mock.calls[2]?.[1]?.marks[0].mark.type.name).toBe('link');
+
+    fireEvent.mouseOut(linkElement);
+
+    expect(hoverHandler).toHaveBeenCalledTimes(4);
+    expect(hoverHandler.mock.calls[3]?.[0]).toBeInstanceOf(Event);
+    expect(hoverHandler.mock.calls[3]?.[1]).not.toHaveProperty('event');
+    expect(hoverHandler.mock.calls[3]?.[1]?.getNode).toBeFunction();
+    expect(hoverHandler.mock.calls[3]?.[1]).toHaveProperty('hovering', false);
+    expect(hoverHandler.mock.calls[3]?.[1]?.marks).toHaveLength(1);
+    expect(hoverHandler.mock.calls[2]?.[1]?.marks[0].mark.type.name).toBe('link');
   });
 
   it('responds to editor `contextmenu` events', () => {
