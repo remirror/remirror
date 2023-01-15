@@ -529,7 +529,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
       // The marks wrapping the captured position.
       const marks: GetMarkRange[] = [];
 
-      const { inside } = eventPosition;
+      const { inside, pos } = eventPosition;
 
       // This handle the case when the context menu click has no corresponding
       // nodes or marks because it's outside of any editor content.
@@ -538,7 +538,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
       }
 
       // Retrieve the resolved position from the current state.
-      const $pos = view.state.doc.resolve(inside);
+      const $pos = view.state.doc.resolve(pos);
 
       // The depth of the current node (which is a direct match)
       const currentNodeDepth = $pos.depth + 1;
@@ -552,7 +552,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
       }
 
       // Populate the marks.
-      for (const { type } of $pos.marks()) {
+      for (const { type } of $pos.marksAcross($pos) ?? []) {
         const range = getMarkRange($pos, type);
 
         if (range) {
