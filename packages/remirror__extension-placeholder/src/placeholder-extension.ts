@@ -23,6 +23,11 @@ export interface PlaceholderOptions {
    * then you will also need to apply your own styles.
    */
   emptyNodeClass?: string;
+
+  /**
+   * Disable the placeholder extension.
+   */
+  disabled?: boolean;
 }
 
 export interface PlaceholderPluginState extends Required<PlaceholderOptions> {
@@ -37,6 +42,7 @@ export interface PlaceholderPluginState extends Required<PlaceholderOptions> {
   defaultOptions: {
     emptyNodeClass: ExtensionPlaceholderTheme.IS_EMPTY,
     placeholder: '',
+    disabled: false,
   },
 })
 export class PlaceholderExtension extends PlainExtension<PlaceholderOptions> {
@@ -123,7 +129,11 @@ function applyState(props: ApplyStateProps) {
 function createDecorationSet(props: SharedProps) {
   const { extension, state } = props;
   const { empty } = extension.pluginKey.getState(state) as PlaceholderPluginState;
-  const { emptyNodeClass, placeholder } = extension.options;
+  const { emptyNodeClass, placeholder, disabled } = extension.options;
+
+  if (disabled) {
+    return null;
+  }
 
   if (!empty) {
     return null;
