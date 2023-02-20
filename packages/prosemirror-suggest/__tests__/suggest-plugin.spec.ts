@@ -9,7 +9,7 @@ describe('suggester', () => {
   it('should call `onChange`', () => {
     const expected = 'suggest';
     const exit: any = jest.fn();
-    const onChange: SuggestChangeHandler = jest.fn((param) => {
+    const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>((param) => {
       const { exitReason, text: matchText, query: queryText, range } = param;
 
       if (exitReason) {
@@ -39,7 +39,7 @@ describe('suggester', () => {
   it('supports `textBefore` and `textAfter` `onChange`', () => {
     const expected = 'suggest';
     const exit: any = jest.fn();
-    const onChange: SuggestChangeHandler = jest.fn((param) => {
+    const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>((param) => {
       const { exitReason, textBefore, textAfter } = param;
 
       if (exitReason) {
@@ -109,7 +109,7 @@ describe('suggester', () => {
   it('supports regex for character matches', () => {
     const expected = 'suggest';
     const exit: any = jest.fn();
-    const onChange: SuggestChangeHandler = jest.fn((param) => {
+    const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>((param) => {
       const { exitReason, text: matchText, query: queryText, range } = param;
 
       if (exitReason) {
@@ -144,7 +144,7 @@ describe('suggester', () => {
   it('should support unicode regex for character matches', () => {
     const expected = 'michał';
     const exit: any = jest.fn();
-    const onChange: SuggestChangeHandler = jest.fn((param) => {
+    const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>((param) => {
       const { exitReason, text: matchText, query: queryText, range } = param;
 
       if (exitReason) {
@@ -179,7 +179,7 @@ describe('suggester', () => {
 
   it('should not call `onChange` for the activation character when matchOffset is greater than 0', () => {
     const exit: any = jest.fn();
-    const onChange: SuggestChangeHandler = jest.fn(({ exitReason }) => {
+    const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>(({ exitReason }) => {
       if (exitReason) {
         exit(exitReason);
       }
@@ -201,11 +201,13 @@ describe('suggester', () => {
 
   it('responds to different kinds of exits', () => {
     const exit: any = jest.fn();
-    const onChange: SuggestChangeHandler = jest.fn(({ exitReason, range }) => {
-      if (exitReason) {
-        exit(exitReason, range);
-      }
-    });
+    const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>(
+      ({ exitReason, range }) => {
+        if (exitReason) {
+          exit(exitReason, range);
+        }
+      },
+    );
 
     const plugin = suggest({ char: '@', onChange, name: 'at', matchOffset: 0 });
 
@@ -253,23 +255,27 @@ describe('suggester', () => {
   it('calls the correct handlers when jumping between two suggesters', () => {
     const change1: any = jest.fn();
     const exit1: any = jest.fn();
-    const onChange1: SuggestChangeHandler = jest.fn(({ exitReason, changeReason }) => {
-      if (exitReason) {
-        exit1(exitReason);
-      } else {
-        change1(changeReason);
-      }
-    });
+    const onChange1: SuggestChangeHandler = jest.fn<SuggestChangeHandler>(
+      ({ exitReason, changeReason }) => {
+        if (exitReason) {
+          exit1(exitReason);
+        } else {
+          change1(changeReason);
+        }
+      },
+    );
 
     const change2: any = jest.fn();
     const exit2: any = jest.fn();
-    const onChange2: SuggestChangeHandler = jest.fn(({ exitReason, changeReason }) => {
-      if (exitReason) {
-        exit2(exitReason);
-      } else {
-        change2(changeReason);
-      }
-    });
+    const onChange2: SuggestChangeHandler = jest.fn<SuggestChangeHandler>(
+      ({ exitReason, changeReason }) => {
+        if (exitReason) {
+          exit2(exitReason);
+        } else {
+          change2(changeReason);
+        }
+      },
+    );
 
     const plugin = suggest(
       { char: '@', name: 'at', onChange: onChange1 },
@@ -299,7 +305,7 @@ describe('Suggest Ignore', () => {
   it('should ignore matches when called', () => {
     const change: any = jest.fn();
     const exit: any = jest.fn();
-    const onChange: SuggestChangeHandler = jest.fn(
+    const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>(
       ({ exitReason, range, addIgnored, suggester }) => {
         if (exitReason) {
           addIgnored({ from: range.from, name: suggester.name });
@@ -338,7 +344,7 @@ describe('Suggest Ignore', () => {
     };
 
     const exitAt: any = jest.fn();
-    const onChangeAt: SuggestChangeHandler = jest.fn(
+    const onChangeAt: SuggestChangeHandler = jest.fn<SuggestChangeHandler>(
       ({ exitReason, range, addIgnored, suggester, clearIgnored }) => {
         if (exitReason) {
           const { name } = suggester;
@@ -350,7 +356,7 @@ describe('Suggest Ignore', () => {
     );
 
     const exitTag: any = jest.fn();
-    const onChangeTag: SuggestChangeHandler = jest.fn(
+    const onChangeTag: SuggestChangeHandler = jest.fn<SuggestChangeHandler>(
       ({ exitReason, range, addIgnored, suggester, clearIgnored }) => {
         if (exitReason) {
           const { name } = suggester;
@@ -401,7 +407,7 @@ describe('Suggest Ignore', () => {
 
 test('addSuggester', () => {
   const exit: any = jest.fn();
-  const onChange: SuggestChangeHandler = jest.fn(({ exitReason, range }) => {
+  const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>(({ exitReason, range }) => {
     if (exitReason) {
       exit(exitReason, range);
     }
@@ -522,7 +528,7 @@ describe('validity', () => {
 
 test('should support whitespace characters in `supportedCharacters`', () => {
   const exit: any = jest.fn();
-  const onChange: SuggestChangeHandler = jest.fn((param) => {
+  const onChange: SuggestChangeHandler = jest.fn<SuggestChangeHandler>((param) => {
     const { exitReason, text: matchText, query: queryText, range } = param;
 
     if (exitReason) {

@@ -43,19 +43,19 @@ jobs:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: check css
-        run: pnpm lint:css
+        run: pnpm run lint:css
 
       - name: check TS / JS files
-        run: pnpm lint:es -- -f github
+        run: pnpm run lint:es -f github
 
       - name: check markdown code blocks
-        run: pnpm lint:md -- -f github
+        run: pnpm run lint:md -f github
 
       - name: check formatting
-        run: pnpm lint:prettier
+        run: pnpm run lint:prettier
 
       - name: check repo and versions
-        run: pnpm lint:repo
+        run: pnpm run lint:repo
 
   # Typecheck the project
   typecheck:

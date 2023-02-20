@@ -74,7 +74,7 @@ function UserSuggestor() {
 const extensions = () => [
   new MentionAtomExtension({
     extraAttributes: { type: 'user' },
-    matchers: [{ name: 'at', char: '@', appendText: ' ', matchOffset: 0 }],
+    matchers: [{ name: 'at', char: '@', matchOffset: 0 }],
   }),
   new PlaceholderExtension({ placeholder: `Mention a @user` }),
 ];

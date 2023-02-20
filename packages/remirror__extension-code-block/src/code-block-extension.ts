@@ -390,7 +390,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 
     const { nodeBefore, parent } = tr.selection.$anchor;
 
-    if (!nodeBefore || !nodeBefore.isText || !parent.type.isTextblock) {
+    if (!nodeBefore?.isText || !parent.type.isTextblock) {
       return false;
     }
 

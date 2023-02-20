@@ -8,8 +8,8 @@ export const servers: Record<TestServerName, TestServer> = {
     environment: 'playwright',
     config: {
       command: dev
-        ? 'cd examples/with-next && pnpm dev -- -p 3030'
-        : 'cd examples/with-next && pnpm build && pnpm start -- -p 3030',
+        ? 'cd examples/with-next && pnpm dev -p 3030'
+        : 'cd examples/with-next && pnpm build && pnpm start -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120_000,
@@ -23,7 +23,7 @@ export const servers: Record<TestServerName, TestServer> = {
     environment: 'playwright',
     config: {
       command: dev
-        ? 'cd website && pnpm start -- -p 3031'
+        ? 'cd website && pnpm start -p 3031'
         : 'cd website && pnpm build && pnpx http-server build --p 3031',
       port: 3031,
       usedPortAction: 'kill',
@@ -38,7 +38,7 @@ export const servers: Record<TestServerName, TestServer> = {
     environment: 'playwright',
     config: {
       command: dev
-        ? 'cd packages/storybook-react && pnpm start -- -p 3032 --ci'
+        ? 'cd packages/storybook-react && pnpm start -p 3032 --ci'
         : 'cd packages/storybook-react && pnpm build && pnpx http-server storybook-static -p 3032',
       port: 3032,
       usedPortAction: 'kill',
