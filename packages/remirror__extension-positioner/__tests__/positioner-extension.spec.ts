@@ -86,7 +86,7 @@ test('`cursorPositioner` can position itself', () => {
   const cursorElement = document.createElement('div');
   document.body.append(cursorElement);
   const cursorMock = {
-    onUpdate: jest.fn((items) => items?.[0]?.setElement(cursorElement)),
+    onUpdate: jest.fn((items: any) => items?.[0]?.setElement(cursorElement)),
     onDone: jest.fn(),
   };
 
@@ -121,7 +121,7 @@ test('`selectionPositioner` can position itself', () => {
   const centeredElement = document.createElement('div');
   document.body.append(centeredElement);
   const centeredMock = {
-    onUpdate: jest.fn((items) => items?.[0]?.setElement(centeredElement)),
+    onUpdate: jest.fn((items: any) => items?.[0]?.setElement(centeredElement)),
     onDone: jest.fn(),
   };
 
@@ -156,7 +156,7 @@ test('`positionerExtension` can position itself', () => {
   const floatingElement = document.createElement('div');
   document.body.append(floatingElement);
   const floatingMock = {
-    onUpdate: jest.fn((items) => items?.[0]?.setElement(floatingElement)),
+    onUpdate: jest.fn((items: any) => items?.[0]?.setElement(floatingElement)),
     onDone: jest.fn(),
   };
 
@@ -187,7 +187,7 @@ test("a custom positioner can define it's own hasChanged behaviour", () => {
   const customElement = document.createElement('div');
   document.body.append(customElement);
   const customMock = {
-    onUpdate: jest.fn((items) => items?.[0]?.setElement(customElement)),
+    onUpdate: jest.fn((items: any) => items?.[0]?.setElement(customElement)),
     onDone: jest.fn(),
   };
 
@@ -219,7 +219,7 @@ test("a custom positioner can determine it's own active state", () => {
   const customElement = document.createElement('div');
   document.body.append(customElement);
   const customMock = {
-    onUpdate: jest.fn((items) => items?.[0]?.setElement(customElement)),
+    onUpdate: jest.fn((items: any) => items?.[0]?.setElement(customElement)),
     onDone: jest.fn(),
   };
 

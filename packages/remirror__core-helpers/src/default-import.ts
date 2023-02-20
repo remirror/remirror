@@ -40,7 +40,7 @@ export function defaultImport<T>(mod: T): T {
   if (
     defaultVal &&
     typeof mod === 'object' &&
-    '__esModule' in defaultVal &&
+    '__esModule' in (defaultVal as any) &&
     (defaultVal as any).__esModule &&
     (defaultVal as any).default !== undefined
   ) {

@@ -37,12 +37,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@lingui/core": "^3.14.0",
+    "@lingui/core": "^3.17.1",
     "@remirror/core-helpers": "^2.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
-    "@babel/preset-typescript": "^7.17.12",
+    "@babel/preset-typescript": "^7.18.6",
     "babel-plugin-macros": "^3.1.0",
     "rollup": "^2.75.6"
   },
