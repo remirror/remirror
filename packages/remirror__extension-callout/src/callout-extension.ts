@@ -191,7 +191,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
 
     const { nodeBefore, parent } = tr.selection.$from;
 
-    if (!nodeBefore || !nodeBefore.isText || !parent.type.isTextblock) {
+    if (!nodeBefore?.isText || !parent.type.isTextblock) {
       return false;
     }
 
