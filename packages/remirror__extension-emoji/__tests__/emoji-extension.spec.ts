@@ -13,7 +13,7 @@ function create(options: EmojiOptions = object()) {
   let firstMatch: string | undefined;
 
   const exit: any = jest.fn();
-  const suggestEmoji: EmojiSuggestHandler = jest.fn((props) => {
+  const suggestEmoji: EmojiSuggestHandler = jest.fn<EmojiSuggestHandler>((props) => {
     if (props.exit) {
       exit();
       apply = undefined;

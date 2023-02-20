@@ -114,7 +114,7 @@ describe('`createSuggesters`', () => {
   const change: any = jest.fn();
 
   // The default `onChange` handler. Make sure to include this in future work.
-  const onChange: MentionChangeHandler = jest.fn((props, command) => {
+  const onChange: MentionChangeHandler = jest.fn<MentionChangeHandler>((props, command) => {
     if (props.exitReason) {
       command();
     }

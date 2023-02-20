@@ -4,10 +4,10 @@ This folder contains the templates for new packages. When creating a new package
 
 ## 1. Automated
 
-The easiest way to create a new scoped package in this repo is to run `pnpm create:package NAME -- --description "DESCRIPTION"`. For example the following command would create a package called `@remirror/extension-chill`.
+The easiest way to create a new scoped package in this repo is to run `pnpm run create:package NAME --description "DESCRIPTION"`. For example the following command would create a package called `@remirror/extension-chill`.
 
 ```bash
-pnpm create:package @remirror/extension-chill -- --description "The time to be chill."
+pnpm run create:package @remirror/extension-chill --description "The time to be chill."
 ```
 
 ## 2. Manually

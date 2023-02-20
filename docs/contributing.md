@@ -267,10 +267,10 @@ const doSomething = (something: string) => {
 
 ### Automated
 
-The easiest way to create a new scoped package in this repo is to run `pnpm create:package NAME -- --description "DESCRIPTION"`. For example the following command would create a package called `@remirror/extension-chill`.
+The easiest way to create a new scoped package in this repo is to run `pnpm run create:package NAME --description "DESCRIPTION"`. For example the following command would create a package called `@remirror/extension-chill`.
 
 ```bash
-pnpm create:package @remirror/extension-chill -- --description "The time to be chill."
+pnpm run create:package @remirror/extension-chill --description "The time to be chill."
 ```
 
 ### Manually

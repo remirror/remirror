@@ -309,8 +309,8 @@ function createEditor(controlled = false) {
     new MentionAtomExtension({
       extraAttributes: { role: 'presentation', href: { default: null } },
       matchers: [
-        { name: 'at', char: '@', appendText: ' ' },
-        { name: 'tag', char: '#', appendText: ' ' },
+        { name: 'at', char: '@' },
+        { name: 'tag', char: '#' },
       ],
     }),
   ]);

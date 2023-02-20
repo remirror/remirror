@@ -538,7 +538,7 @@ export const cellColumnSelectionPositioner = cellSelectionPositioner.clone(({ ge
   getActive(props) {
     const [selection] = getActive(props);
 
-    if (!selection || !selection.isColSelection()) {
+    if (!selection?.isColSelection()) {
       return Positioner.EMPTY;
     }
 
@@ -555,7 +555,7 @@ export const cellRowSelectionPositioner = cellSelectionPositioner.clone(({ getAc
   getActive(props) {
     const [selection] = getActive(props);
 
-    if (!selection || !selection.isRowSelection()) {
+    if (!selection?.isRowSelection()) {
       return Positioner.EMPTY;
     }
 
@@ -572,7 +572,7 @@ export const allCellSelectionPositioner = cellSelectionPositioner.clone(({ getAc
   getActive(props) {
     const [selection] = getActive(props);
 
-    if (!selection || !selection.isColSelection() || !selection.isRowSelection()) {
+    if (!selection?.isColSelection() || !selection.isRowSelection()) {
       return Positioner.EMPTY;
     }
 
