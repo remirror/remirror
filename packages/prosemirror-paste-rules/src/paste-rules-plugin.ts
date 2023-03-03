@@ -255,7 +255,7 @@ interface BaseContentPasteRule extends BaseRegexPasteRule {
    */
   getAttributes?:
     | Record<string, unknown>
-    | ((match: string[], isReplacement: boolean) => Record<string, unknown> | undefined);
+    | ((match: RegExpExecArray, isReplacement: boolean) => Record<string, unknown> | undefined);
 }
 
 /**
