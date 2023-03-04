@@ -1,2 +1,20 @@
-export * from './core-constants';
-export { ErrorConstant } from './error-constants';
+export {
+  EMPTY_ARRAY,
+  EMPTY_NODE,
+  EMPTY_PARAGRAPH_NODE,
+  ExtensionPriority,
+  LEAF_NODE_REPLACING_CHARACTER,
+  ManagerPhase,
+  mutateTag,
+  NamedShortcut,
+  NON_BREAKING_SPACE_CHAR,
+  NULL_CHARACTER,
+  RemirrorIdentifier,
+  REMIRROR_WEBVIEW_NAME,
+  SELECTED_NODE_CLASS_NAME,
+  SELECTED_NODE_CLASS_SELECTOR,
+  STATE_OVERRIDE,
+  ZERO_WIDTH_SPACE_CHAR,
+  __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
+} from './core-constants';
+export type { ExtensionTagType } from './core-constants';

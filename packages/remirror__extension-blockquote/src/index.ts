@@ -1,1 +1,1 @@
-export * from './blockquote-extension';
+export { BlockquoteExtension } from './blockquote-extension';
