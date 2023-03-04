@@ -1,4 +1,6 @@
+export type { ExtensionTagType } from './core-constants';
 export {
+  __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
   EMPTY_ARRAY,
   EMPTY_NODE,
   EMPTY_PARAGRAPH_NODE,
@@ -9,12 +11,10 @@ export {
   NamedShortcut,
   NON_BREAKING_SPACE_CHAR,
   NULL_CHARACTER,
-  RemirrorIdentifier,
   REMIRROR_WEBVIEW_NAME,
+  RemirrorIdentifier,
   SELECTED_NODE_CLASS_NAME,
   SELECTED_NODE_CLASS_SELECTOR,
   STATE_OVERRIDE,
   ZERO_WIDTH_SPACE_CHAR,
-  __INTERNAL_REMIRROR_IDENTIFIER_KEY__,
 } from './core-constants';
-export type { ExtensionTagType } from './core-constants';

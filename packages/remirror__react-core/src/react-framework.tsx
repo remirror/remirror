@@ -30,7 +30,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
   /**
    * Keep track of whether the get root props has been called during the most recent render.
    */
-  private rootPropsConfig = {
+  private readonly rootPropsConfig = {
     called: false,
     count: 0,
   };
