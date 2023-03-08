@@ -189,11 +189,11 @@ export const DualEditor: React.FC = () => {
 };
 
 const extensions = () => [
+  new LinkExtension({ autoLink: true }),
   new BoldExtension(),
   new StrikeExtension(),
   new ItalicExtension(),
   new HeadingExtension(),
-  new LinkExtension({ autoLink: true }),
   new BlockquoteExtension(),
   new BulletListExtension({ enableSpine: true }),
   new OrderedListExtension(),
