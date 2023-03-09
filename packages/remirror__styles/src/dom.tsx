@@ -3562,13 +3562,7 @@ export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
     top: -2px;
     width: 20px;
     border-top: 1px solid black;
-    -webkit-animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
     animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
-  }
-  @-webkit-keyframes ProseMirror-cursor-blink {
-    to {
-      visibility: hidden;
-    }
   }
   @keyframes ProseMirror-cursor-blink {
     to {
@@ -3591,17 +3585,7 @@ export const extensionImageStyledCss: ReturnType<typeof css> = css`
     border-top: 16px solid #3498db;
     width: 120px;
     height: 120px;
-    -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
-  }
-
-  @-webkit-keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
   }
 
   @keyframes spin {
