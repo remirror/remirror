@@ -90,7 +90,6 @@ importers:
       eslint-plugin-unicorn: ^37.0.1
       esm: ^3.2.25
       expect-playwright: ^0.8.0
-      husky: ^7.0.4
       if-env: ^1.0.4
       jest: ^28.1.1
       jest-axe: ^6.0.0
@@ -201,7 +200,6 @@ importers:
       eslint-plugin-unicorn: 37.0.1_eslint@8.1.0
       esm: 3.2.25
       expect-playwright: 0.8.0
-      husky: 7.0.4
       if-env: 1.0.4
       jest: 28.1.1_@types+node@16.11.36
       jest-axe: 6.0.0
@@ -19160,12 +19158,6 @@ packages:
 
   /humps/2.0.1:
     resolution: {integrity: sha512-E0eIbrFWUhwfXJmsbdjRQFQPrl5pTEoKlz163j1mTqqUnU9PgR4AgB8AIITzuB3vLBdxZXyZ9TDIrwB2OASz4g==}
-    dev: false
-
-  /husky/7.0.4:
-    resolution: {integrity: sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==}
-    engines: {node: '>=12'}
-    hasBin: true
     dev: false
 
   /hyphenate-style-name/1.0.4:
