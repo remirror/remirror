@@ -194,7 +194,6 @@ const extensions = () => [
   new StrikeExtension(),
   new ItalicExtension(),
   new HeadingExtension(),
-  new LinkExtension(),
   new BlockquoteExtension(),
   new BulletListExtension({ enableSpine: true }),
   new OrderedListExtension(),
