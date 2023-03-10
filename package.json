@@ -79,7 +79,6 @@
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch --verbose=false --coverage=false",
     "ts": "node -r ./support/scripts/babel-register.js",
     "typecheck": "tsc -b",
-    "posttypecheck": "tsc -b --clean",
     "typecheck:force": "tsc -b --force",
     "typecheck:quick": "tsc -p tsconfig.dev.json",
     "update:deps": "pnpm update --latest --recursive -i",
