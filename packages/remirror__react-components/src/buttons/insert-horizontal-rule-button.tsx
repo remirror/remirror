@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { HorizontalRuleExtension } from 'remirror/extensions';
+import { HorizontalRuleExtension } from '@remirror/extension-horizontal-rule';
 import { useCommands, useCurrentSelection } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

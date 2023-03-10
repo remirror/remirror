@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { TableExtension } from 'remirror/extensions';
+import { TableExtension } from '@remirror/extension-tables';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

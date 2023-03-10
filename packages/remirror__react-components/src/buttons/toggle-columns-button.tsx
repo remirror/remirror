@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { ColumnAttributes, ColumnsExtension } from 'remirror/extensions';
+import { ColumnAttributes, ColumnsExtension } from '@remirror/extension-columns';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

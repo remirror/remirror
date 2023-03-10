@@ -1953,9 +1953,28 @@ importers:
       '@mui/material': ^5.8.5
       '@popperjs/core': ^2.9.2
       '@remirror/core': ^2.0.11
+      '@remirror/extension-blockquote': ^2.0.12
+      '@remirror/extension-bold': ^2.0.11
+      '@remirror/extension-callout': ^2.0.12
+      '@remirror/extension-code': ^2.0.11
+      '@remirror/extension-code-block': ^2.0.12
+      '@remirror/extension-columns': ^2.0.11
       '@remirror/extension-find': ^0.1.4
+      '@remirror/extension-font-size': ^2.0.11
+      '@remirror/extension-heading': ^2.0.11
+      '@remirror/extension-history': ^2.0.11
+      '@remirror/extension-horizontal-rule': ^2.0.11
+      '@remirror/extension-italic': ^2.0.11
+      '@remirror/extension-list': ^2.0.14
+      '@remirror/extension-node-formatting': ^2.0.11
       '@remirror/extension-positioner': ^2.1.6
+      '@remirror/extension-strike': ^2.0.11
+      '@remirror/extension-sub': ^2.0.11
+      '@remirror/extension-sup': ^2.0.11
+      '@remirror/extension-tables': ^2.2.8
       '@remirror/extension-text-color': ^2.0.12
+      '@remirror/extension-underline': ^2.0.11
+      '@remirror/extension-whitespace': ^2.0.11
       '@remirror/i18n': ^2.0.2
       '@remirror/icons': ^2.0.1
       '@remirror/messages': ^2.0.2
@@ -1975,7 +1994,6 @@ importers:
       react: ^18.0.0
       react-color: ^2.19.3
       react-dom: ^18.0.0
-      remirror: ^2.0.24
     dependencies:
       '@babel/runtime': 7.20.13
       '@emotion/react': 11.9.0_mibu4szvw4ek6m273klteqcdre
@@ -1984,9 +2002,28 @@ importers:
       '@mui/material': 5.10.4_ymr2pz4cw7wv7lvni4zep3kp2m
       '@popperjs/core': 2.11.6
       '@remirror/core': link:../remirror__core
+      '@remirror/extension-blockquote': link:../remirror__extension-blockquote
+      '@remirror/extension-bold': link:../remirror__extension-bold
+      '@remirror/extension-callout': link:../remirror__extension-callout
+      '@remirror/extension-code': link:../remirror__extension-code
+      '@remirror/extension-code-block': link:../remirror__extension-code-block
+      '@remirror/extension-columns': link:../remirror__extension-columns
       '@remirror/extension-find': link:../remirror__extension-find
+      '@remirror/extension-font-size': link:../remirror__extension-font-size
+      '@remirror/extension-heading': link:../remirror__extension-heading
+      '@remirror/extension-history': link:../remirror__extension-history
+      '@remirror/extension-horizontal-rule': link:../remirror__extension-horizontal-rule
+      '@remirror/extension-italic': link:../remirror__extension-italic
+      '@remirror/extension-list': link:../remirror__extension-list
+      '@remirror/extension-node-formatting': link:../remirror__extension-node-formatting
       '@remirror/extension-positioner': link:../remirror__extension-positioner
+      '@remirror/extension-strike': link:../remirror__extension-strike
+      '@remirror/extension-sub': link:../remirror__extension-sub
+      '@remirror/extension-sup': link:../remirror__extension-sup
+      '@remirror/extension-tables': link:../remirror__extension-tables
       '@remirror/extension-text-color': link:../remirror__extension-text-color
+      '@remirror/extension-underline': link:../remirror__extension-underline
+      '@remirror/extension-whitespace': link:../remirror__extension-whitespace
       '@remirror/i18n': link:../remirror__i18n
       '@remirror/icons': link:../remirror__icons
       '@remirror/messages': link:../remirror__messages
@@ -2007,7 +2044,6 @@ importers:
       '@types/react-dom': 18.0.2
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      remirror: link:../remirror
 
   packages/remirror__react-core:
     specifiers:

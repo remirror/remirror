@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { HistoryExtension } from 'remirror/extensions';
+import { HistoryExtension } from '@remirror/extension-history';
 import { useCommands, useHelpers } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

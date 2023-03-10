@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { CodeBlockAttributes, CodeBlockExtension } from 'remirror/extensions';
+import { CodeBlockAttributes, CodeBlockExtension } from '@remirror/extension-code-block';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

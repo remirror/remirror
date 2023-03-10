@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { FontSizeExtension } from 'remirror/extensions';
+import { FontSizeExtension } from '@remirror/extension-font-size';
 import { useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';
