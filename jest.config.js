@@ -5,7 +5,7 @@ if (process.env.CI === 'true') {
 }
 
 module.exports = {
-  ...require('../jest/jest.config'),
+  ...require('./support/jest/jest.config'),
   coverageThreshold: {
     global: {
       statements: 50,
