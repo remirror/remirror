@@ -195,23 +195,6 @@ Following the 1.0.0 release of `remirror` there will be a big push to add more s
 
 I recommend that while working on your code you commit early and often. You won't be judged. All worked submitted in a pull request (see following section) will be squashed into one commit before merging (unless it makes sense to keep the commits as separate items).
 
-`remirror` has built in [husky] support for git hooks
-
-- Before each commit (lint and test changed files)
-- Before each push (lint, typecheck and test)
-
-By default these checks are **not** run automatically. To enable automatic pre-commit and pre-push hooks use the following command:
-
-```bash
-pnpm checks:enable
-```
-
-To stop per-commit / per-push checks run:
-
-```bash
-pnpm checks:disable
-```
-
 <br />
 
 ## Pull Request (PR) Process

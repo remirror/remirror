@@ -1,8 +1,0 @@
-{
-  "hooks": {
-    "preCommit": false,
-    "prePush": false,
-    "postMerge": false,
-    "macPostInstall": false
-  }
-}

@@ -1,4 +1,0 @@
-{
-  "main": "dist/scripts-run-if-config.cjs.js",
-  "module": "dist/scripts-run-if-config.esm.js"
-}

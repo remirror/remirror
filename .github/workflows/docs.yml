@@ -51,9 +51,6 @@ jobs:
       - name: generate .d.ts files
         run: pnpm typecheck
 
-      - name: patch MUI package.json files
-        run: bash support/scripts/patch-mui-package-json.sh
-
       - name: generate api markdown files
         run: pnpm api
 

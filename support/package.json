@@ -26,13 +26,11 @@
           "noEmit": true
         },
         "exclude": [
-          "templates",
-          "root"
+          "templates"
         ],
         "include": [
           "./*.js",
           "jest",
-          "root",
           "scripts"
         ]
       }

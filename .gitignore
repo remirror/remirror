@@ -122,8 +122,6 @@ yarn.lock
 
 /report.*.json
 
-.config.json
-
 key.json
 db.json
 secret.json
