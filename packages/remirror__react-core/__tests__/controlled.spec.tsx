@@ -254,7 +254,7 @@ describe('Remirror Controlled Component', () => {
     expect(errorSpy).toHaveBeenCalled();
   });
 
-  it.skip('notifies extensions of state updates via `manager.onStateUpdate`', () => {
+  it('notifies extensions of state updates via `manager.onStateUpdate`', () => {
     const mock: any = jest.fn();
 
     class UpdateExtension extends PlainExtension {
@@ -293,7 +293,9 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    strictRender(<Component />);
+    render(<Component />);
+
+    expect(mock).toHaveBeenCalledTimes(1);
 
     act(() => {
       chain.commands.insertText('First text update');
