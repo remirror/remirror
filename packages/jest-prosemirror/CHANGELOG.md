@@ -1,5 +1,18 @@
 # jest-prosemirror
 
+## 2.1.2
+
+> 2023-03-10
+
+### Patch Changes
+
+- 652a6d33a: Set `jest` as an optional peer dependency. This will make [Vitest](https://vitest.dev/) users easier.
+- Updated dependencies [7a6811d96]
+  - @remirror/pm@2.0.4
+  - @remirror/core-types@2.0.4
+  - @remirror/core-utils@2.0.11
+  - test-keyboard@2.0.4
+
 ## 2.1.1
 
 > 2022-12-29

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/pm",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A bundled library containing all the core prosemirror libraries required for using remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__pm",
   "repository": {
@@ -137,7 +137,7 @@
     "prosemirror-inputrules": "^1.2.0",
     "prosemirror-keymap": "^1.2.1",
     "prosemirror-model": "^1.19.0",
-    "prosemirror-paste-rules": "^2.0.3",
+    "prosemirror-paste-rules": "^2.0.4",
     "prosemirror-schema-list": "^1.2.2",
     "prosemirror-state": "^1.4.2",
     "prosemirror-suggest": "^2.0.3",

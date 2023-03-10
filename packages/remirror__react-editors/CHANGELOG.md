@@ -1,5 +1,19 @@
 # @remirror/react-editors
 
+## 1.0.26
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [7a6811d96]
+- Updated dependencies [fff18ac89]
+  - @remirror/pm@2.0.4
+  - @remirror/styles@2.0.4
+  - remirror@2.0.25
+  - @remirror/extension-react-tables@2.2.13
+  - @remirror/react@2.0.26
+
 ## 1.0.25
 
 > 2023-01-15

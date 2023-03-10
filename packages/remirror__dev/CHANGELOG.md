@@ -1,5 +1,15 @@
 # @remirror/dev
 
+## 2.0.16
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [7a6811d96]
+  - @remirror/pm@2.0.4
+  - @remirror/react-core@2.0.16
+
 ## 2.0.15
 
 > 2023-01-15

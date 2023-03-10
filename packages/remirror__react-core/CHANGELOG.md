@@ -1,5 +1,22 @@
 # @remirror/react-core
 
+## 2.0.16
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [7a6811d96]
+  - @remirror/pm@2.0.4
+  - @remirror/core@2.0.12
+  - @remirror/extension-positioner@2.1.7
+  - @remirror/extension-react-component@2.0.12
+  - @remirror/preset-core@2.0.15
+  - @remirror/preset-react@2.0.13
+  - @remirror/react-renderer@2.0.12
+  - @remirror/react-utils@2.0.4
+  - @remirror/theme@2.0.6
+
 ## 2.0.15
 
 > 2023-01-15

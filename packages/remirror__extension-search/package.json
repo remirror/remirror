@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-search",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "Find all of your favourite things in the remirror editor.",
   "keywords": [
     "remirror",
@@ -35,15 +35,15 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@remirror/core": "^2.0.11",
+    "@remirror/core": "^2.0.12",
     "@remirror/messages": "^2.0.2",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.3"
+    "@remirror/pm": "^2.0.4"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.3"
+    "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
     "access": "public"

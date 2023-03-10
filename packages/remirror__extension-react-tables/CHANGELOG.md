@@ -1,5 +1,23 @@
 # @remirror/extension-react-tables
 
+## 2.2.13
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [7a6811d96]
+  - @remirror/pm@2.0.4
+  - @remirror/core@2.0.12
+  - @remirror/core-utils@2.0.11
+  - @remirror/extension-positioner@2.1.7
+  - @remirror/extension-tables@2.2.9
+  - @remirror/preset-core@2.0.15
+  - @remirror/react-components@2.1.10
+  - @remirror/react-core@2.0.16
+  - @remirror/react-hooks@2.0.20
+  - @remirror/theme@2.0.6
+
 ## 2.2.12
 
 > 2023-01-15

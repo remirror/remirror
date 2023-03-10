@@ -1,5 +1,20 @@
 # jest-remirror
 
+## 2.1.4
+
+> 2023-03-10
+
+### Patch Changes
+
+- 652a6d33a: Set `jest` as an optional peer dependency. This will make [Vitest](https://vitest.dev/) users easier.
+- Updated dependencies [7a6811d96]
+- Updated dependencies [652a6d33a]
+  - @remirror/pm@2.0.4
+  - jest-prosemirror@2.1.2
+  - @remirror/core@2.0.12
+  - @remirror/dom@2.0.15
+  - @remirror/preset-core@2.0.15
+
 ## 2.1.3
 
 > 2023-01-15
