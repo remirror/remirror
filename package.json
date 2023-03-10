@@ -48,7 +48,7 @@
     "generate:icons": "tsx support/scripts/src/generate-icons",
     "generate:intl": "tsx support/scripts/src/generate-intl",
     "generate:ts": "tsx support/scripts/src/generate-configs --ts-packages",
-    "generate:website-examples": "tsx support/scripts/src/generate-website-examples",
+    "generate:website-examples": "remirror-cli generate-website-examples",
     "if-not-ci": "tsx support/scripts/src/run-if-not-ci",
     "if-publishable": "tsx support/scripts/src/run-if-publishable",
     "postinstall": "npm-run-all -p build:dev css:copy",
