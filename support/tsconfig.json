@@ -7,19 +7,10 @@
   ],
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "allowJs": true,
     "noEmit": true
   },
-  "exclude": [
-    "templates",
-    "root"
-  ],
-  "include": [
-    "./*.js",
-    "jest",
-    "scripts"
-  ]
+  "exclude": ["templates", "root"],
+  "include": ["./*.js", "jest", "scripts"]
 }
