@@ -62,6 +62,9 @@
   "peerDependenciesMeta": {
     "@types/node": {
       "optional": true
+    },
+    "jest": {
+      "optional": true
     }
   },
   "publishConfig": {
