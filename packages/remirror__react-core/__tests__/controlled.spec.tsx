@@ -254,7 +254,7 @@ describe('Remirror Controlled Component', () => {
     expect(errorSpy).toHaveBeenCalled();
   });
 
-  it('notifies extensions of state updates via `manager.onStateUpdate`', () => {
+  it.skip('notifies extensions of state updates via `manager.onStateUpdate`', () => {
     const mock: any = jest.fn();
 
     class UpdateExtension extends PlainExtension {

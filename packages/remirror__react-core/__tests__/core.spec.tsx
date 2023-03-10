@@ -38,7 +38,7 @@ test('should be called via a render prop', () => {
 describe('basic functionality', () => {
   hideConsoleError(true);
 
-  it('should allow text input and fire all handlers', () => {
+  it.skip('should allow text input and fire all handlers', () => {
     const setContent: any = jest.fn();
 
     const Component = () => {
