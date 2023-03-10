@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`theme 1`] = `
-Object {
+{
   "css": "--rmr-color-background: #ffffff;
 --rmr-color-border: rgba(0, 0, 0, 0.25);
 --rmr-color-foreground: #000000;
@@ -183,7 +183,7 @@ Object {
 --rmr-radius-border: 0.25rem;
 --rmr-radius-extra: 0.5rem;
 --rmr-radius-circle: 50%;
---rmr-font-family-default: system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, \\"Helvetica Neue\\", sans-serif;
+--rmr-font-family-default: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 --rmr-font-family-heading: inherit;
 --rmr-font-family-mono: Menlo, monospace;
 --rmr-font-size-0: 12px;
@@ -216,7 +216,7 @@ Object {
 --rmr-box-shadow-1: 0 1px 1px rgba(10,31,68,0.08);
 --rmr-box-shadow-2: 0 1px 1px rgba(10,31,68,0.10);
 --rmr-box-shadow-3: 0 1px 1px rgba(10,31,68,0.12);",
-  "styles": Object {
+  "styles": {
     "--rmr-box-shadow-1": "0 1px 1px rgba(10,31,68,0.08)",
     "--rmr-box-shadow-2": "0 1px 1px rgba(10,31,68,0.10)",
     "--rmr-box-shadow-3": "0 1px 1px rgba(10,31,68,0.12)",
@@ -268,7 +268,7 @@ Object {
     "--rmr-color-table-selected-cell": "#d0ebff",
     "--rmr-color-table-selected-controller": "#339af0",
     "--rmr-color-text": "#252103",
-    "--rmr-font-family-default": "system-ui, -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, \\"Helvetica Neue\\", sans-serif",
+    "--rmr-font-family-default": "system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif",
     "--rmr-font-family-heading": "inherit",
     "--rmr-font-family-mono": "Menlo, monospace",
     "--rmr-font-size-0": "12px",

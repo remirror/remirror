@@ -293,7 +293,9 @@ describe('Remirror Controlled Component', () => {
       );
     };
 
-    strictRender(<Component />);
+    render(<Component />);
+
+    expect(mock).toHaveBeenCalledTimes(1);
 
     act(() => {
       chain.commands.insertText('First text update');

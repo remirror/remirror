@@ -46,7 +46,7 @@ describe('basic functionality', () => {
       return null;
     };
 
-    const { getByLabelText } = strictRender(
+    const { getByLabelText } = render(
       <Remirror
         label={label}
         onChange={handlers.onChange}

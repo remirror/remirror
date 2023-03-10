@@ -24,7 +24,7 @@ describe('#forceUpdatePositioners', () => {
     chain.forceUpdatePositioners().tr();
 
     expect(manager.tr.getMeta(POSITIONER_UPDATE_KEY)).toMatchInlineSnapshot(`
-      Object {
+      {
         "key": "__all_positioners__",
       }
     `);
@@ -36,7 +36,7 @@ describe('#forceUpdatePositioners', () => {
     chain.forceUpdatePositioners('myCustomFiltering').tr();
 
     expect(manager.tr.getMeta(POSITIONER_UPDATE_KEY)).toMatchInlineSnapshot(`
-      Object {
+      {
         "key": "myCustomFiltering",
       }
     `);

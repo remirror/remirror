@@ -252,14 +252,14 @@ describe('composeTransactionSteps', () => {
 
     const composedTr = composeTransactionSteps([tr1, tr2], state);
     expect(composedTr.steps).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "from": 0,
-          "slice": Object {
-            "content": Array [
-              Object {
-                "content": Array [
-                  Object {
+          "slice": {
+            "content": [
+              {
+                "content": [
+                  {
                     "text": "ONE",
                     "type": "text",
                   },
@@ -271,13 +271,13 @@ describe('composeTransactionSteps', () => {
           "stepType": "replace",
           "to": 5,
         },
-        Object {
+        {
           "from": 5,
-          "slice": Object {
-            "content": Array [
-              Object {
-                "content": Array [
-                  Object {
+          "slice": {
+            "content": [
+              {
+                "content": [
+                  {
                     "text": "TWO",
                     "type": "text",
                   },

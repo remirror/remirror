@@ -45,7 +45,7 @@
     "@remirror/dom": "^2.0.15",
     "@remirror/pm": "^2.0.4",
     "@remirror/preset-core": "^2.0.15",
-    "@testing-library/dom": "^8.13.0",
+    "@testing-library/dom": "^9.0.1",
     "@types/sanitize-html": "^2.3.2",
     "jest-prosemirror": "^2.1.2",
     "sanitize-html": "^2.4.0",
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@types/node": "^16.3.3",
-    "jest": "^28.1.1"
+    "jest": "^29.5.0"
   },
   "peerDependencies": {
     "@types/node": "*",
