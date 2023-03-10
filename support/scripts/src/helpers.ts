@@ -11,7 +11,7 @@ import { diff } from 'jest-diff';
 import isEqual from 'lodash.isequal';
 import minimist from 'minimist';
 import path from 'path';
-import _rm from 'rimraf';
+import { rimraf } from 'rimraf';
 import { debounce } from 'throttle-debounce';
 import { Logger } from 'tslog';
 import { promisify } from 'util';
@@ -32,7 +32,7 @@ export const log: Logger = new Logger({ minLevel });
 
 export const exec = promisify(_exec);
 export const execFile = promisify(_execFile);
-export const rm = promisify(_rm);
+export const rm = rimraf;
 const separator = '__';
 
 /**
