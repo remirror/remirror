@@ -43,10 +43,6 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: check versions are valid
-        if: github.event.pull_request_target
-        run: pnpm version:pr
-
       - name: create versions
         uses: changesets/action@v1
         if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/v2' }}

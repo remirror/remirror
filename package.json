@@ -88,7 +88,6 @@
     "version:ci": "run-s version:changeset version:date fix:repo update:workspace fix:prettier version:lockfile",
     "version:date": "tsx support/scripts/src/changelog-dates",
     "version:lockfile": "pnpm install --lockfile-only",
-    "version:pr": "tsx support/scripts/src/enable-pr-changeset",
     "watch": "remirror-cli watch",
     "watch:skip-build": "remirror-cli watch --skip-build"
   },
