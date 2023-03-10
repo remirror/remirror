@@ -240,6 +240,7 @@
       "github>ocavue/config-renovate"
     ],
     "ignoreDeps": [
+      "chalk",
       "testing",
       "@remirror/cli"
     ],
