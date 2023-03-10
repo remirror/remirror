@@ -2,4 +2,4 @@
 '@remirror/styles': patch
 ---
 
-update caniuse
+Update `caniuse` and remove some unneeded CSS prefixes. 
