@@ -186,8 +186,8 @@ describe('commands', () => {
     chain.addAnnotation({ id }).selectText('end').insertText(' awesome!').tr();
 
     expect(manager.tr.getMeta(AnnotationExtension.name)).toMatchInlineSnapshot(`
-      Object {
-        "annotationData": Object {
+      {
+        "annotationData": {
           "id": "1",
         },
         "from": 4,
@@ -391,8 +391,8 @@ describe('helpers', () => {
       add(doc(p('This is my <start>annotated<end> text.')));
       commands.addAnnotation({ id: '1' });
       expect(helpers.getAnnotations()).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "from": 12,
             "id": "1",
             "text": "annotated",
@@ -403,8 +403,8 @@ describe('helpers', () => {
 
       commands.insertText(' edited', { from: 11 });
       expect(helpers.getAnnotations()).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "from": 19,
             "id": "1",
             "text": "annotated",
@@ -428,8 +428,8 @@ describe('helpers', () => {
       add(doc(p('This is my <start>annotated<end> text.')));
       commands.addAnnotation({ id: '1' });
       expect(helpers.getAnnotations()).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "from": 12,
             "id": "1",
             "text": "annotated",
@@ -462,8 +462,8 @@ describe('helpers', () => {
       commands.addAnnotation({ id: '2' });
 
       expect(helpers.getAnnotations()).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "from": 1,
             "id": "2",
             "text": "This",

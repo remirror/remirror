@@ -289,15 +289,15 @@ describe('createEmptyDoc', () => {
     const manager = RemirrorManager.create([...corePreset()]);
 
     expect(manager.createEmptyDoc().toJSON()).toMatchInlineSnapshot(`
-          Object {
-            "content": Array [
-              Object {
-                "type": "paragraph",
-              },
-            ],
-            "type": "doc",
-          }
-      `);
+      {
+        "content": [
+          {
+            "type": "paragraph",
+          },
+        ],
+        "type": "doc",
+      }
+    `);
   });
 
   it('creates an empty doc with alternative content', () => {

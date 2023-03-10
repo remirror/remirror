@@ -46,7 +46,7 @@ For more information visit https://remirror.io/docs/errors#rmr0100"
 exports[`commands createMention throws when invalid config passed into the command 5`] = `
 "An error occurred within an extension. More details should be made available.
 
-The name 'invalid' specified for this command is invalid. Please choose from: [\\"tag\\",\\"at\\",\\"plus\\"].
+The name 'invalid' specified for this command is invalid. Please choose from: ["tag","at","plus"].
 
 For more information visit https://remirror.io/docs/errors#rmr0100"
 `;

@@ -36,7 +36,7 @@ test('#commitChange', () => {
   commands.commitChange('commit two');
 
   expect(helpers.getCommits().map((commit) => commit.message)).toMatchInlineSnapshot(`
-    Array [
+    [
       "first commit",
       "commit two",
     ]
@@ -56,7 +56,7 @@ describe('#revertCommit', () => {
     commands.revertCommit();
 
     expect(helpers.getCommits().map((commit) => commit.message)).toMatchInlineSnapshot(`
-      Array [
+      [
         "first commit",
         "commit two",
         "Revert: 'commit two'",
@@ -81,7 +81,7 @@ describe('#revertCommit', () => {
     commands.revertCommit(commit);
 
     expect(helpers.getCommits().map((commit) => commit.message)).toMatchInlineSnapshot(`
-      Array [
+      [
         "first commit",
         "commit two",
         "final commit",

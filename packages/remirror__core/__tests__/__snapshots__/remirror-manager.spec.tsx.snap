@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Manager #properties should initialize the \`extensionStore\` with the correct values 1`] = `
-Array [
+[
   "extensions",
   "phase",
   "view",

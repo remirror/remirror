@@ -99,7 +99,7 @@ describe('EntityReference marks', () => {
         id: expect.any(String),
       },
       `
-      Object {
+      {
         "from": 1,
         "id": Any<String>,
         "text": "Lorem Ipsum is simply dummy text of t",
@@ -112,7 +112,7 @@ describe('EntityReference marks', () => {
         id: expect.any(String),
       },
       `
-      Object {
+      {
         "from": 1,
         "id": Any<String>,
         "text": "Lorem Ipsum is simply dummy text of t",
@@ -140,7 +140,7 @@ describe('EntityReference marks', () => {
         id: expect.any(String),
       },
       `
-      Object {
+      {
         "from": 20,
         "id": Any<String>,
         "text": "ly dummy text of the",
@@ -153,7 +153,7 @@ describe('EntityReference marks', () => {
         id: expect.any(String),
       },
       `
-      Object {
+      {
         "from": 1,
         "id": Any<String>,
         "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
@@ -177,7 +177,7 @@ describe('EntityReference marks', () => {
         id: expect.any(String),
       },
       `
-      Object {
+      {
         "from": 1,
         "id": Any<String>,
         "text": "orem Ipsum is simply dummy text of the printing and typesetting industry.",
