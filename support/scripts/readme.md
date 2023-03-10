@@ -5,7 +5,6 @@ This folder includes the custom node scripts. Used in the project.
 ## Files
 
 - `helpers/` - Some helper functions.
-- `check-pnpm.js` - Run on `preinstall` to check that `pnpm` is being used. This command will error with instructions if using a different package manager.
 - `check-styles.js` - Check that the css styles are up to date in the project.
 - `generate-configs.js` - Generate configuration files. At the moment this only creates the `.size-limit.json` files. `.size-limit.json` file for checking the file sizes.
 - `linaria.js` - Generate the `css` files for the project.
