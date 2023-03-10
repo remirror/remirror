@@ -1,5 +1,16 @@
 # @remirror/extension-link
 
+## 2.0.14
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [7a6811d96]
+  - @remirror/pm@2.0.4
+  - @remirror/core@2.0.12
+  - @remirror/extension-events@2.1.13
+
 ## 2.0.13
 
 > 2023-01-15

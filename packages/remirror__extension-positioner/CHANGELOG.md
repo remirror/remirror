@@ -1,5 +1,17 @@
 # @remirror/extension-positioner
 
+## 2.1.7
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [7a6811d96]
+  - @remirror/pm@2.0.4
+  - @remirror/core@2.0.12
+  - @remirror/extension-events@2.1.13
+  - @remirror/theme@2.0.6
+
 ## 2.1.6
 
 > 2023-01-15

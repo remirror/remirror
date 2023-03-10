@@ -1,5 +1,13 @@
 # @remirror/theme
 
+## 2.0.6
+
+> 2023-03-10
+
+### Patch Changes
+
+- @remirror/core-types@2.0.4
+
 ## 2.0.5
 
 > 2022-12-29

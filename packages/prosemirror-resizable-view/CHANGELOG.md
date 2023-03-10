@@ -1,5 +1,13 @@
 # prosemirror-resizable-view
 
+## 2.0.11
+
+> 2023-03-10
+
+### Patch Changes
+
+- @remirror/core-utils@2.0.11
+
 ## 2.0.10
 
 > 2022-12-29

@@ -1,5 +1,15 @@
 # @remirror/pm
 
+## 2.0.4
+
+> 2023-03-10
+
+### Patch Changes
+
+- 7a6811d96: Update all ProseMirror packages to latest versions.
+- Updated dependencies [414fa25d5]
+  - prosemirror-paste-rules@2.0.4
+
 ## 2.0.3
 
 > 2022-12-29

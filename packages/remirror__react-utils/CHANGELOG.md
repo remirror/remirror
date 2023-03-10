@@ -1,5 +1,13 @@
 # @remirror/react-utils
 
+## 2.0.4
+
+> 2023-03-10
+
+### Patch Changes
+
+- @remirror/core-types@2.0.4
+
 ## 2.0.3
 
 > 2022-12-29

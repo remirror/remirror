@@ -1,5 +1,42 @@
 # @remirror/react-components
 
+## 2.1.10
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [7a6811d96]
+  - @remirror/pm@2.0.4
+  - @remirror/core@2.0.12
+  - @remirror/extension-blockquote@2.0.13
+  - @remirror/extension-bold@2.0.12
+  - @remirror/extension-callout@2.0.13
+  - @remirror/extension-code@2.0.12
+  - @remirror/extension-code-block@2.0.13
+  - @remirror/extension-columns@2.0.12
+  - @remirror/extension-find@0.1.5
+  - @remirror/extension-font-size@2.0.12
+  - @remirror/extension-heading@2.0.12
+  - @remirror/extension-history@2.0.12
+  - @remirror/extension-horizontal-rule@2.0.12
+  - @remirror/extension-italic@2.0.12
+  - @remirror/extension-list@2.0.15
+  - @remirror/extension-node-formatting@2.0.12
+  - @remirror/extension-positioner@2.1.7
+  - @remirror/extension-strike@2.0.12
+  - @remirror/extension-sub@2.0.12
+  - @remirror/extension-sup@2.0.12
+  - @remirror/extension-tables@2.2.9
+  - @remirror/extension-text-color@2.0.13
+  - @remirror/extension-underline@2.0.12
+  - @remirror/extension-whitespace@2.0.12
+  - @remirror/react-core@2.0.16
+  - @remirror/react-hooks@2.0.20
+  - multishift@2.0.6
+  - @remirror/react-utils@2.0.4
+  - @remirror/theme@2.0.6
+
 ## 2.1.9
 
 > 2023-01-15

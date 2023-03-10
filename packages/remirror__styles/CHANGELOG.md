@@ -1,5 +1,13 @@
 # @remirror/styles
 
+## 2.0.4
+
+> 2023-03-10
+
+### Patch Changes
+
+- fff18ac89: Update `caniuse` and remove some unneeded CSS prefixes.
+
 ## 2.0.3
 
 > 2022-12-29

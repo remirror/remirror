@@ -1,5 +1,17 @@
 # @remirror/extension-entity-reference
 
+## 2.2.5
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [7a6811d96]
+  - @remirror/pm@2.0.4
+  - @remirror/core@2.0.12
+  - @remirror/extension-events@2.1.13
+  - @remirror/extension-positioner@2.1.7
+
 ## 2.2.4
 
 > 2023-01-15
