@@ -54,7 +54,7 @@
     "codemirror": "^5.62.0",
     "create-context-state": "^2.0.0",
     "diffable-html": "^5.0.0",
-    "globby": "^11.0.4",
+    "globby": "^13.1.3",
     "html-escaper": "^3.0.3",
     "is-ci": "^3.0.0",
     "react": "^18.0.0",
