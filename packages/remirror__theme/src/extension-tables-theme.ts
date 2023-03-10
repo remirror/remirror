@@ -91,7 +91,7 @@ export const TABLE_CONTROLLER_MARK_COLUMN_CORNER = 'remirror-table-controller-ma
  * the `css` template literals.
  */
 const CSSSegements = (() => {
-  // To get the benefits from typescript-styled-plugin like auto-completion and
+  // To get the benefits from @styled/typescript-styled-plugin like auto-completion and
   // syntax error reporting, we create a fake "css" function to cheat it.
   const css = String.raw;
 
