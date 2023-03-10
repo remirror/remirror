@@ -8004,14 +8004,6 @@ packages:
       moo: 0.5.2
     dev: false
 
-  /@microsoft/api-extractor-model/7.24.1:
-    resolution: {integrity: sha512-H2KrRbO3beDnH2Fwt+3zXgK8KagFEzHHWNUR7weSEOssabGH5T/aADNR0k1FBidKpXokrvMM6SHamdMCVJjlBg==}
-    dependencies:
-      '@microsoft/tsdoc': 0.14.1
-      '@microsoft/tsdoc-config': 0.16.2
-      '@rushstack/node-core-library': 3.51.2
-    dev: false
-
   /@microsoft/api-extractor-model/7.26.4:
     resolution: {integrity: sha512-PDCgCzXDo+SLY5bsfl4bS7hxaeEtnXj7XtuzEE+BtALp7B5mK/NrS2kHWU69pohgsRmEALycQdaQPXoyT2i5MQ==}
     dependencies:
@@ -8083,10 +8075,6 @@ packages:
       ajv: 6.12.6
       jju: 1.4.0
       resolve: 1.19.0
-    dev: false
-
-  /@microsoft/tsdoc/0.14.1:
-    resolution: {integrity: sha512-6Wci+Tp3CgPt/B9B0a3J4s3yMgLNSku6w5TV6mN+61C71UqsRBv2FUibBf3tPGlNxebgPHMEUzKpb1ggE8KCKw==}
     dev: false
 
   /@microsoft/tsdoc/0.14.2:
@@ -8700,19 +8688,6 @@ packages:
       rollup: 2.75.6
     dev: false
 
-  /@rushstack/node-core-library/3.51.2:
-    resolution: {integrity: sha512-DwK2Lo62sHCsg8VsVe/WfugiL1lC5YzmhwzdWr8jLsfOCl8DzcIdLm4Plz0bOCQj/9ItJX1QGXr2jK5xw1Kzwg==}
-    dependencies:
-      '@types/node': 12.20.24
-      colors: 1.2.5
-      fs-extra: 7.0.1
-      import-lazy: 4.0.0
-      jju: 1.4.0
-      resolve: 1.17.0
-      semver: 7.3.7
-      z-schema: 5.0.3
-    dev: false
-
   /@rushstack/node-core-library/3.55.2:
     resolution: {integrity: sha512-SaLe/x/Q/uBVdNFK5V1xXvsVps0y7h1sN7aSJllQyFbugyOaxhNRF25bwEDnicARNEjJw0pk0lYnJQ9Kr6ev0A==}
     peerDependencies:
@@ -8753,15 +8728,6 @@ packages:
     dependencies:
       resolve: 1.22.1
       strip-json-comments: 3.1.1
-    dev: false
-
-  /@rushstack/ts-command-line/4.12.3:
-    resolution: {integrity: sha512-Pdij22RotMXzI+HWHyYCvw0RMZhiP5a6Za/96XamZ1+mxmpSm4ujf8TROKxGAHySmR5A8iNVSlzhNMnUlFQE6g==}
-    dependencies:
-      '@types/argparse': 1.0.38
-      argparse: 1.0.10
-      colors: 1.2.5
-      string-argv: 0.3.1
     dev: false
 
   /@rushstack/ts-command-line/4.13.2:
@@ -11219,10 +11185,6 @@ packages:
       '@types/node': 16.11.36
       form-data: 3.0.1
     dev: true
-
-  /@types/node/12.20.24:
-    resolution: {integrity: sha512-yxDeaQIAJlMav7fH5AQqPH1u8YIuhYJXYBzxaQ4PifsU0GDO38MSdmEDeRlIxrKbC6NbEaaEHDanWb+y30U8SQ==}
-    dev: false
 
   /@types/node/12.20.52:
     resolution: {integrity: sha512-cfkwWw72849SNYp3Zx0IcIs25vABmFh73xicxhCkTcvtZQeIez15PpwQN8fY3RD7gv1Wrxlc9MEtfMORZDEsGw==}
@@ -25465,12 +25427,6 @@ packages:
     resolution: {integrity: sha512-J1l+Zxxp4XK3LUDZ9m60LRJF/mAe4z6a4xyabPHk7pvK5t35dACV32iIjJDFeWZFfZlO29w6SZ67knR0tHzJtQ==}
     engines: {node: '>=10'}
 
-  /resolve/1.17.0:
-    resolution: {integrity: sha512-ic+7JYiV8Vi2yzQGFWOkiZD5Z9z7O2Zhm9XMaTxdJExKasieFCr+yXZ/WmXsckHiKl12ar0y6XiXDx3m4RHn1w==}
-    dependencies:
-      path-parse: 1.0.7
-    dev: false
-
   /resolve/1.19.0:
     resolution: {integrity: sha512-rArEXAgsBG4UgRGcynxWIWKFvh/XZCcS8UJdHhwy91zwAvCZIbcs+vAbflgBnNjYMs/i/i+/Ux6IZhML1yPvxg==}
     dependencies:
@@ -27363,6 +27319,7 @@ packages:
 
   /trim/0.0.1:
     resolution: {integrity: sha512-YzQV+TZg4AxpKxaTHK3c3D+kRDCGVEE7LemdlQZoQXn0iennk10RsIoY6ikzAqJTc9Xjl9C1/waHom/J86ziAQ==}
+    deprecated: Use String.prototype.trim() instead
     dev: true
 
   /trough/1.0.5:
@@ -27378,10 +27335,10 @@ packages:
     hasBin: true
     dependencies:
       '@microsoft/api-extractor': 7.34.4_@types+node@16.11.36
-      '@microsoft/api-extractor-model': 7.24.1
+      '@microsoft/api-extractor-model': 7.26.4_@types+node@16.11.36
       '@microsoft/tsdoc': 0.14.2
-      '@rushstack/node-core-library': 3.51.2
-      '@rushstack/ts-command-line': 4.12.3
+      '@rushstack/node-core-library': 3.55.2_@types+node@16.11.36
+      '@rushstack/ts-command-line': 4.13.2
       colors: 1.4.0
       github-slugger: 1.4.0
       js-yaml: 3.13.1
