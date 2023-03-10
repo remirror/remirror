@@ -35,8 +35,7 @@
     "linaria",
     "run-if-not-ci",
     "run-if-publishable",
-    "publish-pr",
-    "verdaccio-registry"
+    "publish-pr"
   ],
   "scripts": {},
   "dependencies": {
@@ -107,7 +106,6 @@
     "ts-morph": "^11.0.3",
     "tslog": "^3.1.2",
     "type-fest": "^2.0.0",
-    "verdaccio": "^5.1.2",
     "write-json-file": "^4.3.0"
   },
   "publishConfig": {
@@ -130,8 +128,7 @@
       "linaria.ts",
       "run-if-not-ci.ts",
       "run-if-publishable.ts",
-      "publish-pr.ts",
-      "verdaccio-registry.ts"
+      "publish-pr.ts"
     ]
   }
 }
