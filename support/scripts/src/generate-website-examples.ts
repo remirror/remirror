@@ -49,8 +49,8 @@ export default ExampleComponent;
 `;
 }
 
-async function generateExampleFile(conponentPath: string) {
-  const relativePath = path.relative(storiesDirPath, conponentPath);
+async function generateExampleFile(componentPath: string) {
+  const relativePath = path.relative(storiesDirPath, componentPath);
   const examplePath = path.join(examplesDirPath, relativePath);
   await fs.mkdir(path.dirname(examplePath), { recursive: true });
   await fs.writeFile(examplePath, generateExampleContent(relativePath), { encoding: 'utf-8' });
