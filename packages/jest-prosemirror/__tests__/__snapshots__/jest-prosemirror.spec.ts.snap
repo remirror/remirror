@@ -317,6 +317,9 @@ Prosemirror schema: {
         },
         {
           "style": "font-style=italic"
+        },
+        {
+          "style": "font-style=normal"
         }
       ]
     },
@@ -327,6 +330,9 @@ Prosemirror schema: {
         },
         {
           "tag": "b"
+        },
+        {
+          "style": "font-weight=400"
         },
         {
           "style": "font-weight"

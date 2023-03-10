@@ -18,7 +18,6 @@
     "build:dev": "preconstruct fix && preconstruct dev",
     "build:docs": "run-s docs:prod docs:redirects",
     "changeset": "changeset",
-    "check:pnpm": "node support/scripts/check-pnpm.mjs",
     "checks": "run-s lint typecheck:quick test",
     "checks:disable": "rimraf ./.config.json",
     "checks:enable": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
@@ -58,7 +57,7 @@
     "if-config": "tsx support/scripts/src/run-if-config",
     "if-not-ci": "tsx support/scripts/src/run-if-not-ci",
     "if-publishable": "tsx support/scripts/src/run-if-publishable",
-    "preinstall": "pnpm symlink:root && pnpm check:pnpm",
+    "preinstall": "pnpm symlink:root",
     "postinstall": "npm-run-all -p build:dev css:copy",
     "intl": "run-s intl:extract intl:compile generate:intl",
     "intl:compile": "lingui compile",
@@ -222,13 +221,12 @@
     "typescript-styled-plugin": "^0.18.2"
   },
   "engines": {
-    "node": ">=14",
-    "pnpm": "^7.0.0"
+    "node": ">=14"
   },
   "manypkg": {
     "defaultBranch": "HEAD"
   },
-  "packageManager": "pnpm@7.27.1",
+  "packageManager": "pnpm@7.29.1",
   "pnpm": {
     "overrides": {
       "postcss": ">= 8.0.0"
@@ -242,43 +240,12 @@
   },
   "renovate": {
     "extends": [
-      "config:base",
-      ":semanticCommitTypeAll(chore)"
-    ],
-    "lockFileMaintenance": {
-      "enabled": true,
-      "extends": "schedule:weekly"
-    },
-    "packageRules": [
-      {
-        "groupName": "prosemirror packages",
-        "matchPackagePatterns": [
-          "^prosemirror.*"
-        ],
-        "rangeStrategy": "bump",
-        "stabilityDays": 0
-      },
-      {
-        "groupName": "dependencies (non-major)",
-        "excludePackagePatterns": [
-          ".*prosemirror.*"
-        ],
-        "matchUpdateTypes": [
-          "patch",
-          "minor"
-        ],
-        "extends": "schedule:weekly",
-        "stabilityDays": 0
-      }
+      "github>ocavue/config-renovate"
     ],
     "ignoreDeps": [
       "testing",
       "@remirror/cli"
     ],
-    "prCreation": "not-pending",
-    "stabilityDays": 30,
-    "rangeStrategy": "replace",
-    "prConcurrentLimit": 2,
     "dependencyDashboard": true
   }
 }

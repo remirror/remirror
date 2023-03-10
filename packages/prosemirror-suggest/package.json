@@ -37,9 +37,9 @@
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "prosemirror-model": "^1.18.3",
+    "prosemirror-model": "^1.19.0",
     "prosemirror-state": "^1.4.2",
-    "prosemirror-view": "^1.29.1"
+    "prosemirror-view": "^1.30.1"
   },
   "peerDependencies": {
     "prosemirror-model": "^1",
