@@ -38,7 +38,7 @@ test('should be called via a render prop', () => {
 describe('basic functionality', () => {
   hideConsoleError(true);
 
-  it.skip('should allow text input and fire all handlers', () => {
+  it('should allow text input and fire all handlers', () => {
     const setContent: any = jest.fn();
 
     const Component = () => {
@@ -46,7 +46,7 @@ describe('basic functionality', () => {
       return null;
     };
 
-    const { getByLabelText } = strictRender(
+    const { getByLabelText } = render(
       <Remirror
         label={label}
         onChange={handlers.onChange}
