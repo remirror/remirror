@@ -1672,13 +1672,13 @@ importers:
       '@babel/runtime': 7.20.13
       '@remirror/core': link:../remirror__core
       '@remirror/messages': link:../remirror__messages
+      prosemirror-model: 1.19.0
+      prosemirror-state: 1.4.2
+      prosemirror-view: 1.30.1
       y-prosemirror: 1.0.19_t5kcpxhndfuhzh76jo2ys3ynha
       y-protocols: 1.0.5
     devDependencies:
       '@remirror/pm': link:../remirror__pm
-      prosemirror-model: 1.19.0
-      prosemirror-state: 1.4.2
-      prosemirror-view: 1.30.1
       y-webrtc: 10.2.2
       yjs: 13.5.23
 
