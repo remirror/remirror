@@ -1,6 +1,6 @@
 const { server: __SERVER__ } = require('testing/playwright');
-const config = require('../jest/jest.config');
-const { jestSupportDir } = require('../jest/helpers');
+const config = require('./support/jest/jest.config');
+const { jestSupportDir } = require('./support/jest/helpers');
 
 const { E2E_ENVIRONMENT = 'playwright' } = process.env;
 

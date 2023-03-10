@@ -3,7 +3,7 @@ import path from 'path';
 
 import { baseDir, formatFiles, log } from './helpers';
 
-const config: { locales: string[] } = require(baseDir('support', 'root', 'lingui.config.js'));
+const config: { locales: string[] } = require(baseDir('lingui.config.js'));
 
 const I18N_SRC_DIR = baseDir('packages', 'remirror__i18n', 'src');
 const filesToFormat: string[] = [];

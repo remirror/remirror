@@ -30,10 +30,10 @@ const tsconfigFileName = 'tsconfig.json';
 
 // A collection of the absolute paths where files will be written to.
 const PATH = {
-  sizeLimit: baseDir('support', 'root', '.size-limit.json'),
+  sizeLimit: baseDir('.size-limit.json'),
   mainTsconfig: baseDir(tsconfigFileName),
   baseTsconfig: baseDir('support', 'tsconfig.base.json'),
-  rootTsconfig: baseDir('support', 'root', tsconfigFileName),
+  rootTsconfig: baseDir(tsconfigFileName),
   packagesTsconfig: baseDir('packages', tsconfigFileName),
 };
 
@@ -176,8 +176,7 @@ interface SizeLimitConfig {
 }
 
 /**
- * This generates the `.size-limit.json` file which is currently placed into the
- * `support/root` folder.
+ * This generates the `.size-limit.json` file.
  */
 async function generateSizeLimitConfig() {
   log.info(chalk`\n{blue Generating {bold.grey size-limit.json} config file}`);

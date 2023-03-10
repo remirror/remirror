@@ -79,8 +79,6 @@ When run this builds all packages and then watches for changes to reload as nece
 
 ## Project Structure
 
-The number of files in the root directory is deliberately as minimal as possible. This is achieved by moving all configuration files to the `support/root` folder. Whenever you run `pnpm install` these files are symlinked to the root directory.
-
 - `.github` - The `GitHub` specific configuration for workflows, issue templates and pull request templates.
 - `docs` - The documentation for this project. This is also used by the docusaurus website.
 - `packages` - The packages provided by remirror. Within this folder there are top level packages like `remirror` and `jest-remirror` and also scope packages within the `@remirror/*` folder like `@remirror/core`.

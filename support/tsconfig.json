@@ -12,5 +12,5 @@
     "noEmit": true
   },
   "exclude": ["templates", "root"],
-  "include": ["./*.js", "jest", "root", "scripts"]
+  "include": ["./*.js", "jest", "scripts"]
 }
