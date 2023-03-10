@@ -30,6 +30,7 @@ export function addColumn(
       tr.setNodeMarkup(
         tr.mapping.map(tableStart + pos),
         undefined,
+        // @ts-expect-error: cell.attrs needs stricter types
         addColSpan(cell.attrs, col - map.colCount(pos)),
       );
       // Skip ahead if rowspan > 1
