@@ -222,13 +222,12 @@
     "typescript-styled-plugin": "^0.18.2"
   },
   "engines": {
-    "node": ">=14",
-    "pnpm": "^7.0.0"
+    "node": ">=14"
   },
   "manypkg": {
     "defaultBranch": "HEAD"
   },
-  "packageManager": "pnpm@7.27.1",
+  "packageManager": "pnpm@7.29.1",
   "pnpm": {
     "overrides": {
       "postcss": ">= 8.0.0"
