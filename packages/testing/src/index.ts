@@ -24,7 +24,7 @@ export const initialJson = {
  *
  * Also return the jest spy for checking if the console.error was called.
  */
-export function hideConsoleError(hide: boolean): { spy: jest.SpyInstance } {
+export function hideConsoleError(hide: boolean) {
   // The following code mocks the console.error so that tests with expected
   // failures that log to the console can be run without making the test logs
   // ugly and messy.
