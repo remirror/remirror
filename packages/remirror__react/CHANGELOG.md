@@ -1,5 +1,15 @@
 # @remirror/react
 
+## 2.0.27
+
+> 2023-03-10
+
+### Patch Changes
+
+- @remirror/react-components@2.1.11
+- @remirror/react-hooks@2.0.21
+- @remirror/extension-react-tables@2.2.14
+
 ## 2.0.26
 
 > 2023-03-10

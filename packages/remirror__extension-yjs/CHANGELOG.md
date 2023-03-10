@@ -1,5 +1,13 @@
 # @remirror/extension-yjs
 
+## 3.0.13
+
+> 2023-03-10
+
+### Patch Changes
+
+- 5bfcb41d5: Fix the missing peer dependency warning when installing `@remirror/extension-yjs`.
+
 ## 3.0.12
 
 > 2023-03-10

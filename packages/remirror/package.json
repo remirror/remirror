@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "2.0.25",
+  "version": "2.0.26",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -115,7 +115,7 @@
     "@remirror/extension-trailing-node": "^2.0.12",
     "@remirror/extension-underline": "^2.0.12",
     "@remirror/extension-whitespace": "^2.0.12",
-    "@remirror/extension-yjs": "^3.0.12",
+    "@remirror/extension-yjs": "^3.0.13",
     "@remirror/icons": "^2.0.1",
     "@remirror/preset-core": "^2.0.15",
     "@remirror/preset-formatting": "^2.0.13",
