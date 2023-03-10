@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { UnderlineExtension } from 'remirror/extensions';
+import { UnderlineExtension } from '@remirror/extension-underline';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

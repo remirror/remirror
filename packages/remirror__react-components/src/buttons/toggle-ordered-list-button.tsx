@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { OrderedListExtension } from 'remirror/extensions';
+import { OrderedListExtension } from '@remirror/extension-list';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

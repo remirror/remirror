@@ -38,13 +38,70 @@
       "path": "../../remirror__core/src"
     },
     {
+      "path": "../../remirror__extension-blockquote/src"
+    },
+    {
+      "path": "../../remirror__extension-bold/src"
+    },
+    {
+      "path": "../../remirror__extension-callout/src"
+    },
+    {
+      "path": "../../remirror__extension-code/src"
+    },
+    {
+      "path": "../../remirror__extension-code-block/src"
+    },
+    {
+      "path": "../../remirror__extension-columns/src"
+    },
+    {
       "path": "../../remirror__extension-find/src"
+    },
+    {
+      "path": "../../remirror__extension-font-size/src"
+    },
+    {
+      "path": "../../remirror__extension-heading/src"
+    },
+    {
+      "path": "../../remirror__extension-history/src"
+    },
+    {
+      "path": "../../remirror__extension-horizontal-rule/src"
+    },
+    {
+      "path": "../../remirror__extension-italic/src"
+    },
+    {
+      "path": "../../remirror__extension-list/src"
+    },
+    {
+      "path": "../../remirror__extension-node-formatting/src"
     },
     {
       "path": "../../remirror__extension-positioner/src"
     },
     {
+      "path": "../../remirror__extension-strike/src"
+    },
+    {
+      "path": "../../remirror__extension-sub/src"
+    },
+    {
+      "path": "../../remirror__extension-sup/src"
+    },
+    {
+      "path": "../../remirror__extension-tables/src"
+    },
+    {
       "path": "../../remirror__extension-text-color/src"
+    },
+    {
+      "path": "../../remirror__extension-underline/src"
+    },
+    {
+      "path": "../../remirror__extension-whitespace/src"
     },
     {
       "path": "../../remirror__i18n/src"
@@ -75,9 +132,6 @@
     },
     {
       "path": "../../remirror__pm/src"
-    },
-    {
-      "path": "../../remirror/src"
     }
   ]
 }

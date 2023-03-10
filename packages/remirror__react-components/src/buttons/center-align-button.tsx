@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { NodeFormattingExtension } from 'remirror/extensions';
+import { NodeFormattingExtension } from '@remirror/extension-node-formatting';
 import { useCommands, useCurrentSelection } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

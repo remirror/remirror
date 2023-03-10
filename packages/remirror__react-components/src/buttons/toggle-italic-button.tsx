@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { ItalicExtension } from 'remirror/extensions';
+import { ItalicExtension } from '@remirror/extension-italic';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

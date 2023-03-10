@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import { TaskListExtension } from 'remirror/extensions';
+import { TaskListExtension } from '@remirror/extension-list';
 
 import { ToggleBulletListButton, ToggleOrderedListButton, ToggleTaskListButton } from '../buttons';
 import { IfExtensionPresent } from '../if-extension-present';

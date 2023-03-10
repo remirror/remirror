@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { StrikeExtension } from 'remirror/extensions';
+import { StrikeExtension } from '@remirror/extension-strike';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

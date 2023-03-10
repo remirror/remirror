@@ -68,6 +68,11 @@
   "peerDependencies": {
     "jest": ">= 24"
   },
+  "peerDependenciesMeta": {
+    "jest": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public"
   },

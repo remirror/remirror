@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { WhitespaceExtension } from 'remirror/extensions';
+import { WhitespaceExtension } from '@remirror/extension-whitespace';
 import { useCommands, useHelpers } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

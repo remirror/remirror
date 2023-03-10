@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { BulletListExtension } from 'remirror/extensions';
+import { BulletListExtension } from '@remirror/extension-list';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

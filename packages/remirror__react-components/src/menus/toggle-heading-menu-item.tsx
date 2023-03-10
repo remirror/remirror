@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { HeadingExtension, HeadingExtensionAttributes } from 'remirror/extensions';
+import { HeadingExtension, HeadingExtensionAttributes } from '@remirror/extension-heading';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandMenuItem, CommandMenuItemProps } from './command-menu-item';

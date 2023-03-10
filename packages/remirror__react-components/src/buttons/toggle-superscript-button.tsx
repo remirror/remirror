@@ -1,5 +1,5 @@
 import React, { FC, useCallback } from 'react';
-import { SupExtension } from 'remirror/extensions';
+import { SupExtension } from '@remirror/extension-sup';
 import { useActive, useCommands } from '@remirror/react-core';
 
 import { CommandButton, CommandButtonProps } from './command-button';

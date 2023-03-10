@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@reach/auto-id": "^0.16.0",
+    "@reach/auto-id": "^0.18.0",
     "@remirror/core-helpers": "^2.0.1",
     "@remirror/core-types": "^2.0.3",
     "@seznam/compose-react-refs": "^1.0.6",
