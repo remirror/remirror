@@ -1,4 +1,3 @@
-import { useId } from '@reach/auto-id';
 import { setStatus } from 'a11y-status';
 import type { DependencyList, Dispatch, EffectCallback, MutableRefObject } from 'react';
 import { useEffect, useReducer, useRef } from 'react';
@@ -23,6 +22,7 @@ import {
   getInitialStateProps,
   isOrContainsNode,
 } from './multishift-utils';
+import { useId } from './use-id';
 
 /**
  * Creates the reducer for managing the multishift internal state.
