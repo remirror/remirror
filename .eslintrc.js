@@ -476,7 +476,7 @@ if (process.env.FULL_ESLINT_CHECK) {
     },
     overrides: [
       {
-        parserOptions: { project: [require.resolve('../tsconfig.lint.json')] },
+        parserOptions: { project: [require.resolve('./support/tsconfig.lint.json')] },
         files: ['**/!(*.{md,mdx})/*.ts', '**/!(*.{md,mdx})/*.tsx'],
         rules,
       },

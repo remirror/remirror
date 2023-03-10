@@ -7,7 +7,7 @@ const config = {
   classNameSlug: (_hash, title) => {
     return `${title.startsWith('$') ? '' : 'remirror-'}${title.toLowerCase().split('_').join('-')}`;
   },
-  babelOptions: require('../base.babel'),
+  babelOptions: require('./support/base.babel'),
   rules: [
     {
       action: require('@linaria/shaker').default,

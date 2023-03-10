@@ -12,4 +12,3 @@ This folder includes the custom node scripts. Used in the project.
 - `run-if-config.js` - Check the private project configuration to see if the command is supported. This is how precommit hooks can tell if they should run.
 - `run-if-mac.js` - Run the provided command on mac only.
 - `run-if-not-ci.js` - Run the command on CI only.
-- `symlink-root.js` - Symlink the config files to the root directory.
