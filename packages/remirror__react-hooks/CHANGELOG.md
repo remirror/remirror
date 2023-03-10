@@ -1,5 +1,14 @@
 # @remirror/react-hooks
 
+## 2.0.21
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [48ee2c2cb]
+  - multishift@2.0.7
+
 ## 2.0.20
 
 > 2023-03-10

@@ -1,5 +1,14 @@
 # remirror
 
+## 2.0.26
+
+> 2023-03-10
+
+### Patch Changes
+
+- Updated dependencies [5bfcb41d5]
+  - @remirror/extension-yjs@3.0.13
+
 ## 2.0.25
 
 > 2023-03-10

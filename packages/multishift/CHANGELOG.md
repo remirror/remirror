@@ -1,5 +1,13 @@
 # multishift
 
+## 2.0.7
+
+> 2023-03-10
+
+### Patch Changes
+
+- 48ee2c2cb: Remove maintained `@reach/auto-id` from dependencies.
+
 ## 2.0.6
 
 > 2023-03-10
