@@ -317,7 +317,7 @@ importers:
   packages/multishift:
     specifiers:
       '@babel/runtime': ^7.13.10
-      '@reach/auto-id': ^0.16.0
+      '@reach/auto-id': ^0.18.0
       '@remirror/core-helpers': ^2.0.1
       '@remirror/core-types': ^2.0.3
       '@seznam/compose-react-refs': ^1.0.6
@@ -331,7 +331,7 @@ importers:
       w3c-keyname: ^2.2.4
     dependencies:
       '@babel/runtime': 7.20.13
-      '@reach/auto-id': 0.16.0_react@18.0.0
+      '@reach/auto-id': 0.18.0_react@18.0.0
       '@remirror/core-helpers': link:../remirror__core-helpers
       '@remirror/core-types': link:../remirror__core-types
       '@seznam/compose-react-refs': 1.0.6
@@ -8572,26 +8572,23 @@ packages:
       - supports-color
     dev: false
 
-  /@reach/auto-id/0.16.0_react@18.0.0:
-    resolution: {integrity: sha512-5ssbeP5bCkM39uVsfQCwBBL+KT8YColdnMN5/Eto6Rj7929ql95R3HZUOkKIvj7mgPtEb60BLQxd1P3o6cjbmg==}
+  /@reach/auto-id/0.18.0_react@18.0.0:
+    resolution: {integrity: sha512-XwY1IwhM7mkHZFghhjiqjQ6dstbOdpbFLdggeke75u8/8icT8uEHLbovFUgzKjy9qPvYwZIB87rLiR8WdtOXCg==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
-      '@reach/utils': 0.16.0_react@18.0.0
+      '@reach/utils': 0.18.0_react@18.0.0
       react: 18.0.0
-      tslib: 2.4.0
     dev: false
 
-  /@reach/utils/0.16.0_react@18.0.0:
-    resolution: {integrity: sha512-PCggBet3qaQmwFNcmQ/GqHSefadAFyNCUekq9RrWoaU9hh/S4iaFgf2MBMdM47eQj5i/Bk0Mm07cP/XPFlkN+Q==}
+  /@reach/utils/0.18.0_react@18.0.0:
+    resolution: {integrity: sha512-KdVMdpTgDyK8FzdKO9SCpiibuy/kbv3pwgfXshTI6tEcQT1OOwj7BAksnzGC0rPz0UholwC+AgkqEl3EJX3M1A==}
     peerDependencies:
       react: ^16.8.0 || 17.x
       react-dom: ^16.8.0 || 17.x
     dependencies:
       react: 18.0.0
-      tiny-warning: 1.0.3
-      tslib: 2.4.0
     dev: false
 
   /@react-spring/mock-raf/1.1.1:
