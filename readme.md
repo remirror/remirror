@@ -82,9 +82,10 @@ Alternatively, take a look at our [5 minute tutorial](https://remirror.io/docs/5
 
 ```bash
 npm install remirror @remirror/react @remirror/pm
-```
-```bash
+# Or 
 yarn add remirror @remirror/react @remirror/pm
+# Or 
+pnpm add remirror @remirror/react @remirror/pm
 ```
 
 If you run into any issues we recommend any of the following:
