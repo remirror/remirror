@@ -54,9 +54,20 @@ function useFindReplace() {
   }, [commands]);
 
   const replace = useCallback((): void => {
-    const { query, replacement, caseSensitive } = state;
-    commands.findAndReplace({ query, replacement, caseSensitive });
-    find();
+    const { query, replacement, caseSensitive, activeIndex } = state;
+    const index = activeIndex as number;
+    commands.findAndReplace({ query, replacement, caseSensitive, index });
+    let isReplacementSubsetOfQuery = false;
+    if (caseSensitive) {
+      isReplacementSubsetOfQuery = replacement.includes(query);
+    } else {
+      isReplacementSubsetOfQuery = replacement.toLowerCase().includes(query.toLowerCase());
+    }
+    if (isReplacementSubsetOfQuery) {
+      findNext();
+    } else {
+      find();
+    }
   }, [commands, state, find]);
 
   const replaceAll = useCallback((): void => {
