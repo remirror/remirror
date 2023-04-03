@@ -55,8 +55,7 @@ function useFindReplace() {
 
   const replace = useCallback((): void => {
     const { query, replacement, caseSensitive, activeIndex } = state;
-    const index = activeIndex as number;
-    commands.findAndReplace({ query, replacement, caseSensitive, index });
+    commands.findAndReplace({ query, replacement, caseSensitive, index: activeIndex ?? undefined });
 
     const isQuerySubsetOfReplacement = caseSensitive
       ? replacement.includes(query)
@@ -67,7 +66,7 @@ function useFindReplace() {
     } else {
       find();
     }
-  }, [commands, state, find, findNext]);
+  }, [commands, state, findNext, find]);
 
   const replaceAll = useCallback((): void => {
     const { query, replacement, caseSensitive } = state;
