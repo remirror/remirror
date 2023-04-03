@@ -57,13 +57,12 @@ function useFindReplace() {
     const { query, replacement, caseSensitive, activeIndex } = state;
     const index = activeIndex as number;
     commands.findAndReplace({ query, replacement, caseSensitive, index });
-    let isReplacementSubsetOfQuery = false;
 
-    isReplacementSubsetOfQuery = caseSensitive
+    const isQuerySubsetOfReplacement = caseSensitive
       ? replacement.includes(query)
       : replacement.toLowerCase().includes(query.toLowerCase());
 
-    if (isReplacementSubsetOfQuery) {
+    if (isQuerySubsetOfReplacement) {
       findNext();
     } else {
       find();
