@@ -1,4 +1,4 @@
-import { ToggleButton, ToggleButtonProps, Tooltip } from '@mui/material';
+import { Box, ToggleButton, ToggleButtonProps, Tooltip } from '@mui/material';
 import React, { FC, MouseEvent, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { CoreIcon, isString } from '@remirror/core';
 
@@ -58,42 +58,46 @@ export const CommandButton: FC<CommandButtonProps> = ({
 
   return (
     <Tooltip title={`${tooltipText}${shortcutText}`}>
-      <ToggleButton
-        aria-label={labelText}
-        selected={active}
-        disabled={!enabled}
-        onMouseDown={handleMouseDown}
-        color='primary'
-        size='small'
-        sx={{
-          padding: '6px 12px',
-          '&.Mui-selected': {
-            backgroundColor: 'primary.main',
-            color: 'primary.contrastText',
-          },
-          '&.Mui-selected:hover': {
-            backgroundColor: 'primary.dark',
-            color: 'primary.contrastText',
-          },
-          '&:not(:first-of-type)': {
-            marginLeft: '-1px',
-            borderLeft: '1px solid transparent',
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-          },
-          '&:not(:last-of-type)': {
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0,
-          },
-        }}
-        {...rest}
-        value={commandName}
-        onChange={handleChange}
-      >
-        <CommandButtonBadge icon={commandOptions.icon}>
-          <CommandButtonIcon icon={icon ?? fallbackIcon} />
-        </CommandButtonBadge>
-      </ToggleButton>
+      {/*
+        This Box<span> wrapper fixes an MUI tooltip error when the button is disabled.
+      */}
+      <Box component='span' sx={{ '&:not(:first-of-type)': { marginLeft: '-1px' } }}>
+        <ToggleButton
+          aria-label={labelText}
+          selected={active}
+          disabled={!enabled}
+          onMouseDown={handleMouseDown}
+          color='primary'
+          size='small'
+          sx={{
+            padding: '6px 12px',
+            '&.Mui-selected': {
+              backgroundColor: 'primary.main',
+              color: 'primary.contrastText',
+            },
+            '&.Mui-selected:hover': {
+              backgroundColor: 'primary.dark',
+              color: 'primary.contrastText',
+            },
+            '&:not(:first-of-type)': {
+              borderLeft: '1px solid transparent',
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
+            },
+            '&:not(:last-of-type)': {
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+            },
+          }}
+          {...rest}
+          value={commandName}
+          onChange={handleChange}
+        >
+          <CommandButtonBadge icon={commandOptions.icon}>
+            <CommandButtonIcon icon={icon ?? fallbackIcon} />
+          </CommandButtonBadge>
+        </ToggleButton>
+      </Box>
     </Tooltip>
   );
 };
