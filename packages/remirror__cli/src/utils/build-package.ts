@@ -246,15 +246,18 @@ function buildPackageJson(
   delete packageJson.browser;
   packageJson.exports = exports;
 
-  if (!publishConfig) {
-    packageJson.publishConfig = buildPackageJson(
-      packageDir,
-      packageJsonDir,
-      entryPoints,
-      { exports: packageJson.exports },
-      true,
-    );
-  }
+  const isMainPackage = packageDir === packageJsonDir;
+
+  packageJson.publishConfig =
+    isMainPackage && !publishConfig
+      ? buildPackageJson(
+          packageDir,
+          packageJsonDir,
+          entryPoints,
+          { exports: packageJson.exports },
+          true,
+        )
+      : undefined;
 
   return packageJson;
 }
