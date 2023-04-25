@@ -2,6 +2,7 @@ import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
 import path from 'node:path';
 import sortKeys from 'sort-keys';
+import { build as tsupBuild } from 'tsup';
 
 import { logger } from '../logger';
 import { colors } from './colors';
@@ -11,7 +12,6 @@ import { fileExists } from './file-exists';
 import { getRoot } from './get-root';
 import { removeFileExt } from './remove-file-ext';
 import { runCustomScript } from './run-custom-script';
-import { runEsbuild } from './run-esbuild';
 import { slugify } from './slugify';
 import { writePackageJson } from './write-package-json';
 
@@ -36,15 +36,25 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
     promises.push(runCustomScript(pkg, 'build'));
   } else {
     for (const entryPoint of entryPoints) {
-      const { format } = entryPoint;
-
-      if (format === 'dual' || format === 'esm') {
-        promises.push(runEsbuild(pkg, { ...entryPoint, format: 'esm' }));
-      }
-
-      if (format === 'dual' || format === 'cjs') {
-        promises.push(runEsbuild(pkg, { ...entryPoint, format: 'cjs' }));
-      }
+      const { format, outFile, inFile } = entryPoint;
+      const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
+      const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.tsx?$/, '.d.ts');
+      promises.push(
+        tsupBuild({
+          outDir: path.dirname(outFile),
+          entry: {
+            [outFileEntry]: inFile,
+          },
+          format: format === 'dual' ? ['cjs', 'esm'] : format,
+          outExtension: ({ format }) => {
+            return { js: format === 'esm' ? '.js' : '.cjs' };
+          },
+          dts: {
+            entry: { [outFileEntry]: inDtsFile },
+          },
+          clean: true,
+        }),
+      );
     }
   }
 
