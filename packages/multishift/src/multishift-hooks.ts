@@ -1,7 +1,6 @@
 import { setStatus } from 'a11y-status';
 import type { DependencyList, Dispatch, EffectCallback, MutableRefObject } from 'react';
 import { useEffect, useReducer, useRef } from 'react';
-import { useEffectOnce, useShallowCompareEffect } from 'react-use';
 import { isEmptyArray } from '@remirror/core-helpers';
 
 import { multishiftReducer } from './multishift-reducer';
@@ -329,13 +328,14 @@ export function useTimeouts(): Readonly<[(fn: () => void, time?: number) => void
 export function useEffectOnUpdate(effect: EffectCallback, dependencies: DependencyList): void {
   const isInitialMount = useRef(true);
 
-  useShallowCompareEffect(() => {
+  useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
       return effect();
     }
-  }, [dependencies]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...dependencies]);
 }
 
 /**
@@ -356,4 +356,9 @@ export function useEffectOnUpdate(effect: EffectCallback, dependencies: Dependen
  */
 export function useUnmount(fn: () => void | undefined): void {
   useEffectOnce(() => fn);
+}
+
+function useEffectOnce(fn: EffectCallback) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(fn, []);
 }
