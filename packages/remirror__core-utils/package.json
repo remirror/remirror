@@ -30,7 +30,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core-constants": "^2.0.0",
     "@remirror/core-helpers": "^2.0.1",
     "@remirror/core-types": "^2.0.4",
@@ -43,8 +43,8 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.4",
-    "@types/jsdom": "^16.2.13",
-    "@types/node": "^16.3.3",
+    "@types/jsdom": "^16.2.15",
+    "@types/node": "^16.18.24",
     "jsdom": "^17.0.0"
   },
   "peerDependencies": {

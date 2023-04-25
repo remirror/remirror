@@ -59,7 +59,7 @@
     "styles"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core": "^2.0.12",
     "@remirror/core-constants": "^2.0.0",
     "@remirror/core-helpers": "^2.0.1",
@@ -121,21 +121,21 @@
     "@remirror/preset-formatting": "^2.0.13",
     "@remirror/preset-wysiwyg": "^2.0.18",
     "@remirror/theme": "^2.0.6",
-    "@types/codemirror": "^5.60.2",
+    "@types/codemirror": "^5.60.7",
     "@types/refractor": "^3.0.2",
-    "codemirror": "^5.62.0",
-    "refractor": "^3.3.1",
-    "yjs": "^13.5.23"
+    "codemirror": "^5.65.12",
+    "refractor": "^3.6.0",
+    "yjs": "^13.6.0"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.4",
-    "@types/prettier": "^2.3.2",
-    "prettier": "^2.3.2"
+    "@types/prettier": "^2.7.2",
+    "prettier": "^2.8.8"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.4",
-    "@types/prettier": "^2.1.5",
-    "prettier": "^2.2.0"
+    "@types/prettier": "^2.7.2",
+    "prettier": "^2.8.8"
   },
   "peerDependenciesMeta": {
     "@types/prettier": {

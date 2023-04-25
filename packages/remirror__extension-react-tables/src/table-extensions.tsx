@@ -56,7 +56,7 @@ export class TableExtension extends BaseTableExtension {
     return (
       node: ProsemirrorNode,
       view: EditorView,
-      getPos: boolean | (() => number),
+      getPos: () => number | undefined,
       decorations: readonly Decoration[],
     ) => {
       return new TableView(node, 10, decorations, view, getPos as () => number);
@@ -366,7 +366,7 @@ export class TableControllerCellExtension extends BaseTableControllerCellExtensi
   }
 
   createNodeViews(): NodeViewMethod {
-    return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
+    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => {
       return new TableControllerCellView(node, view, getPos as () => number);
     };
   }

@@ -30,7 +30,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/extension-placeholder": "^2.0.13",
     "@remirror/extension-positioner": "^2.1.7",
     "@remirror/extension-react-component": "^2.0.12",
@@ -43,10 +43,10 @@
     "@remirror/react-utils": "^2.0.4"
   },
   "devDependencies": {
-    "@types/react": "^18.0.6",
-    "@types/react-dom": "^18.0.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17 || ^18",

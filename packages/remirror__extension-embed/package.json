@@ -35,7 +35,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core": "^2.0.12",
     "@remirror/messages": "^2.0.2",
     "@types/querystringify": "^2.0.0",

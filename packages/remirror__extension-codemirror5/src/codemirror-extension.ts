@@ -69,7 +69,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
   }
 
   createNodeViews(): NodeViewMethod {
-    return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
+    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => {
       const codeMirrorConfig = {
         ...this.options.defaultCodeMirrorConfig,
         ...node.attrs.codeMirrorConfig,

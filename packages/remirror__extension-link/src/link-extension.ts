@@ -846,7 +846,7 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
 
       const href = this.buildHref(text);
 
-      if (!this.isValidTLD(href)) {
+      if (!this.isValidTLD(href) && !href.startsWith('tel:')) {
         continue;
       }
 

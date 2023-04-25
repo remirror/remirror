@@ -40,10 +40,17 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
     return 'collaboration' as const;
   }
 
-  private _getSendableSteps?: DebouncedFunction<(state: EditorState) => void>;
+  private _debounceGetSendableSteps?: DebouncedFunction<(state: EditorState) => void>;
 
-  protected init(): void {
-    this._getSendableSteps = debounce(this.options.debounceMs, this.getSendableSteps.bind(this));
+  private get debounceGetSendableSteps() {
+    if (!this._debounceGetSendableSteps) {
+      this._debounceGetSendableSteps = debounce(
+        this.options.debounceMs,
+        this.getSendableSteps.bind(this),
+      );
+    }
+
+    return this._debounceGetSendableSteps;
   }
 
   /**
@@ -79,7 +86,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
   @command()
   cancelSendableSteps(): CommandFunction {
     return () => {
-      this._getSendableSteps?.cancel();
+      this.debounceGetSendableSteps?.cancel();
       return true;
     };
   }
@@ -87,7 +94,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
   @command()
   flushSendableSteps(): CommandFunction {
     return ({ state }) => {
-      this._getSendableSteps?.cancel();
+      this.debounceGetSendableSteps?.cancel();
       this.getSendableSteps(state);
       return true;
     };
@@ -105,7 +112,7 @@ export class CollaborationExtension extends PlainExtension<CollaborationOptions>
   }
 
   onStateUpdate(props: StateUpdateLifecycleProps): void {
-    this._getSendableSteps?.(props.state);
+    this.debounceGetSendableSteps?.(props.state);
   }
 
   onDestroy(): void {

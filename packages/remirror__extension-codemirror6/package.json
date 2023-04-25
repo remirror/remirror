@@ -36,10 +36,10 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
-    "@codemirror/language": "^6.1.0",
-    "@codemirror/state": "^6.0.1",
-    "@codemirror/view": "^6.0.2",
+    "@babel/runtime": "^7.21.0",
+    "@codemirror/language": "^6.6.0",
+    "@codemirror/state": "^6.2.0",
+    "@codemirror/view": "^6.10.0",
     "@remirror/core": "^2.0.12"
   },
   "devDependencies": {

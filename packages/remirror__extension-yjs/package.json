@@ -38,23 +38,23 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core": "^2.0.12",
     "@remirror/messages": "^2.0.2",
     "prosemirror-model": "^1.19.0",
     "prosemirror-state": "^1.4.2",
-    "prosemirror-view": "^1.30.1",
+    "prosemirror-view": "^1.30.2",
     "y-prosemirror": "^1.0.19",
     "y-protocols": "^1.0.5"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.4",
-    "y-webrtc": "^10.2.2",
-    "yjs": "^13.5.23"
+    "y-webrtc": "^10.2.5",
+    "yjs": "^13.6.0"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.4",
-    "yjs": "^13.4.0"
+    "yjs": "^13.6.0"
   },
   "publishConfig": {
     "access": "public"

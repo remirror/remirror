@@ -33,7 +33,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "type-fest": "^2.0.0"
+    "type-fest": "^2.19.0"
   },
   "publishConfig": {
     "access": "public"

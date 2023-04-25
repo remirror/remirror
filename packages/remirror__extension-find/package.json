@@ -37,7 +37,7 @@
     "@remirror/core": "^2.0.12",
     "@types/string.prototype.matchall": "^4.0.1",
     "escape-string-regexp": "^4.0.0",
-    "string.prototype.matchall": "^4.0.7"
+    "string.prototype.matchall": "^4.0.8"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.4"

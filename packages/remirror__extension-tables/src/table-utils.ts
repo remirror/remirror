@@ -171,7 +171,7 @@ export function createTableNodeSchema(
 }
 
 const TABLE_ROLES = ['table', 'row', 'cell', 'header_cell'] as const;
-export type TableRole = typeof TABLE_ROLES[number];
+export type TableRole = (typeof TABLE_ROLES)[number];
 
 /**
  * Returns a map where keys are tableRoles and values are NodeTypes.

@@ -17,17 +17,6 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist/minimal-template.esm.js",
-      "require": "./dist/minimal-template.cjs.js",
-      "browser": "./dist/minimal-template.esm.js",
-      "types": "./dist/minimal-template.cjs.d.ts",
-      "default": "./dist/minimal-template.esm.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
   "main": "dist/remirror-minimal-template.cjs.js",
   "module": "dist/remirror-minimal-template.esm.js",
   "browser": {
@@ -39,7 +28,7 @@
     "dist"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core-helpers": "^2.0.1"
   },
   "publishConfig": {

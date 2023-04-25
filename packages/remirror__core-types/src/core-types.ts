@@ -13,7 +13,7 @@ import type {
   Selection,
 } from '@remirror/pm';
 import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
-import type { Decoration, NodeView } from '@remirror/pm/view';
+import { Decoration, DecorationSource, NodeView } from '@remirror/pm/view';
 import type { JsonPrimitive, Literal, ObjectMark, ProsemirrorAttributes } from '@remirror/types';
 
 import type { FromToProps, MarkWithAttributes, NodeWithAttributes } from './props-types';
@@ -270,8 +270,9 @@ export type MarkSpecOverride = Pick<
 export type NodeViewMethod<View extends NodeView = NodeView> = (
   node: ProsemirrorNode,
   view: EditorView,
-  getPos: (() => number) | boolean,
+  getPos: () => number | undefined,
   decorations: readonly Decoration[],
+  innerDecorations: DecorationSource,
 ) => View;
 
 /**
