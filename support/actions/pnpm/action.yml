@@ -1,28 +1,34 @@
-name: 'pnpm installation'
-description: 'Install and audit dependencies for pnpm'
+name: "pnpm installation"
+description: "Install and audit dependencies for pnpm"
+
 inputs:
-  cache: # id of input
-    description: 'The location of the pnpm cache'
+  node-version:
+    description: "The version of Node.js"
     required: true
-    default: '.pnpm-store'
+    default: "16.x"
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: enable corepack
       run: corepack enable
       shell: bash
 
+    - name: setup node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.cache }}
+
     - name: install pnpm
       run: pnpm --version
       shell: bash
 
-    - name: setup pnpm config
-      run: pnpm config set store-dir ${{ inputs.cache }}
+    - name: install dependencies
+      run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 pnpm install --frozen-lockfile
       shell: bash
 
-    - name: install dependencies
-      run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 pnpm install
+    - name: Check type
+      run: pnpm typecheck
       shell: bash
 
     - name: build packages
