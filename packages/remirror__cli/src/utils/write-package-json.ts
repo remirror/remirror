@@ -16,10 +16,18 @@ export async function writePackageJson(dirPath: string, packageJson: any) {
     // ignore
   }
 
-  if (existedPackageJson && fastDeepEqual(existedPackageJson, packageJson)) {
+  if (existedPackageJson && jsonEqual(existedPackageJson, packageJson)) {
     return;
   }
 
   logger.debug(`writing package.json to ${packageJsonPath}`);
   await writePackage(packageJsonPath, packageJson, { indent: '  ' });
+}
+
+function jsonEqual(a: any, b: any): boolean {
+  return fastDeepEqual(normalizeJson(a), normalizeJson(b));
+}
+
+function normalizeJson(json: any) {
+  return JSON.parse(JSON.stringify(json));
 }
