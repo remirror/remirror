@@ -6,7 +6,7 @@ import { build as tsupBuild } from 'tsup';
 
 import { logger } from '../logger';
 import { colors } from './colors';
-import { ensureCjsFilename } from './ensure-cjs-filename';
+import { ensureCjsFilename, ensureDtsFilename } from './ensure-cjs-filename';
 import { EntryPoint } from './entry-point';
 import { fileExists } from './file-exists';
 import { getRoot } from './get-root';
@@ -257,12 +257,9 @@ function buildCondictionalExports(
   packageJsonDir: string,
   entryPoint: EntryPoint,
 ): Record<string, any> {
-  const inFileRelativeToSrc = path.relative(path.join(packageDir, 'src'), entryPoint.inFile);
-  const dtsFile = `${path.join(packageDir, 'dist', `${removeFileExt(inFileRelativeToSrc)}.d.ts`)}`;
-
-  const dtsFileRelativePath = `./${path.relative(packageJsonDir, dtsFile)}`;
   const outEsmFileRelativePath = `./${path.relative(packageJsonDir, entryPoint.outFile)}`;
   const outCjsFileRelativePath = ensureCjsFilename(outEsmFileRelativePath);
+  const outDtsFileRelativePath = ensureDtsFilename(outEsmFileRelativePath);
 
   let subPathRelativePath = `./${path.relative(
     packageJsonDir,
@@ -279,7 +276,6 @@ function buildCondictionalExports(
 
   return {
     [subPathRelativePath]: {
-      types: dtsFileRelativePath,
       ...(supportEsm
         ? {
             import: outEsmFileRelativePath,
@@ -290,6 +286,7 @@ function buildCondictionalExports(
             require: outCjsFileRelativePath,
           }
         : {}),
+      types: outDtsFileRelativePath,
     },
   };
 }
