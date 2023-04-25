@@ -56,9 +56,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/prosemirror-suggest.cjs",
     "module": "./dist/prosemirror-suggest.js",
+    "type": "module",
     "types": "./dist/prosemirror-suggest.d.ts"
   },
   "@remirror": {

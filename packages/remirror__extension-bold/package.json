@@ -55,9 +55,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-extension-bold.cjs",
     "module": "./dist/remirror-extension-bold.js",
+    "type": "module",
     "types": "./dist/remirror-extension-bold.d.ts"
   },
   "@remirror": {

@@ -55,9 +55,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/prosemirror-trailing-node.cjs",
     "module": "./dist/prosemirror-trailing-node.js",
+    "type": "module",
     "types": "./dist/prosemirror-trailing-node.d.ts"
   },
   "@remirror": {

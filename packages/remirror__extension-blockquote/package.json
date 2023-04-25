@@ -54,9 +54,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-extension-blockquote.cjs",
     "module": "./dist/remirror-extension-blockquote.js",
+    "type": "module",
     "types": "./dist/remirror-extension-blockquote.d.ts"
   },
   "@remirror": {

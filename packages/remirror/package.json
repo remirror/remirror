@@ -170,9 +170,9 @@
       "./package.json": "./package.json",
       "./styles/*": "./styles/*"
     },
-    "type": "module",
     "main": "./dist/remirror.cjs",
     "module": "./dist/remirror.js",
+    "type": "module",
     "types": "./dist/remirror.d.ts"
   },
   "@remirror": {},

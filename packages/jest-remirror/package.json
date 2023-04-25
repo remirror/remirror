@@ -81,9 +81,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/jest-remirror.cjs",
     "module": "./dist/jest-remirror.js",
+    "type": "module",
     "types": "./dist/jest-remirror.d.ts"
   },
   "@remirror": {

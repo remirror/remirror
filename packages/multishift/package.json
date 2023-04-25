@@ -62,9 +62,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/multishift.cjs",
     "module": "./dist/multishift.js",
+    "type": "module",
     "types": "./dist/multishift.d.ts"
   },
   "@remirror": {

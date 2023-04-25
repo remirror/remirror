@@ -50,9 +50,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/prosemirror-resizable-view.cjs",
     "module": "./dist/prosemirror-resizable-view.js",
+    "type": "module",
     "types": "./dist/prosemirror-resizable-view.d.ts"
   },
   "@remirror": {

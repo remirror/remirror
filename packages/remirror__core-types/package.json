@@ -49,9 +49,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-core-types.cjs",
     "module": "./dist/remirror-core-types.js",
+    "type": "module",
     "types": "./dist/remirror-core-types.d.ts"
   },
   "@remirror": {

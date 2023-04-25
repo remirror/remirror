@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/jest-prosemirror-environment.cjs",
-  "module": "./dist/jest-prosemirror-environment.js",
-  "types": "./dist/jest-prosemirror-environment.d.ts",
   "exports": {
     ".": {
       "types": "./dist/jest-prosemirror-environment.d.ts",
@@ -10,5 +7,8 @@
       "require": "./dist/jest-prosemirror-environment.cjs"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/jest-prosemirror-environment.cjs",
+  "module": "./dist/jest-prosemirror-environment.js",
+  "types": "./dist/jest-prosemirror-environment.d.ts"
 }

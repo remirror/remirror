@@ -41,9 +41,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-core-constants.cjs",
     "module": "./dist/remirror-core-constants.js",
+    "type": "module",
     "types": "./dist/remirror-core-constants.d.ts"
   },
   "@remirror": {

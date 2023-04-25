@@ -58,9 +58,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/create-context-state.cjs",
     "module": "./dist/create-context-state.js",
+    "type": "module",
     "types": "./dist/create-context-state.d.ts"
   },
   "@remirror": {

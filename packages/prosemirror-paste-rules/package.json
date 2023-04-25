@@ -55,9 +55,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/prosemirror-paste-rules.cjs",
     "module": "./dist/prosemirror-paste-rules.js",
+    "type": "module",
     "types": "./dist/prosemirror-paste-rules.d.ts"
   },
   "@remirror": {

@@ -54,9 +54,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-extension-callout.cjs",
     "module": "./dist/remirror-extension-callout.js",
+    "type": "module",
     "types": "./dist/remirror-extension-callout.d.ts"
   },
   "@remirror": {

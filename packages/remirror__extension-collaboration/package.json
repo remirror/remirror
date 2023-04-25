@@ -55,9 +55,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-extension-collaboration.cjs",
     "module": "./dist/remirror-extension-collaboration.js",
+    "type": "module",
     "types": "./dist/remirror-extension-collaboration.d.ts"
   },
   "@remirror": {

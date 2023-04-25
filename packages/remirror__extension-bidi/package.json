@@ -55,9 +55,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-extension-bidi.cjs",
     "module": "./dist/remirror-extension-bidi.js",
+    "type": "module",
     "types": "./dist/remirror-extension-bidi.d.ts"
   },
   "@remirror": {

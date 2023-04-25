@@ -57,9 +57,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-extension-codemirror6.cjs",
     "module": "./dist/remirror-extension-codemirror6.js",
+    "type": "module",
     "types": "./dist/remirror-extension-codemirror6.d.ts"
   },
   "@remirror": {

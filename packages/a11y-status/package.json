@@ -42,9 +42,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/a11y-status.cjs",
     "module": "./dist/a11y-status.js",
+    "type": "module",
     "types": "./dist/a11y-status.d.ts"
   },
   "@remirror": {

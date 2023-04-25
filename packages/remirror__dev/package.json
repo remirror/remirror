@@ -66,9 +66,9 @@
       },
       "./package.json": "./package.json"
     },
-    "type": "module",
     "main": "./dist/remirror-dev.cjs",
     "module": "./dist/remirror-dev.js",
+    "type": "module",
     "types": "./dist/remirror-dev.d.ts"
   }
 }

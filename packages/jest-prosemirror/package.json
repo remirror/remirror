@@ -91,9 +91,9 @@
         "require": "./serializer/dist/jest-prosemirror-serializer.cjs"
       }
     },
-    "type": "module",
     "main": "./dist/jest-prosemirror.cjs",
     "module": "./dist/jest-prosemirror.js",
+    "type": "module",
     "types": "./dist/jest-prosemirror.d.ts"
   },
   "@remirror": {
