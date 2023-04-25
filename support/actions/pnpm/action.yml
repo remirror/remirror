@@ -17,7 +17,7 @@ runs:
     - name: setup node.js
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ inputs.cache }}
+        node-version: ${{ inputs.node-version }}
 
     - name: install pnpm
       run: pnpm --version
