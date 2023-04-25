@@ -14,7 +14,9 @@
     "emitDeclarationOnly": true,
     "outDir": "../dist-types"
   },
-  "include": ["./"],
+  "include": [
+    "./",
+  ],
   "references": [
     {
       "path": "../../remirror__core-types/src"

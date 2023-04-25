@@ -1,6 +1,7 @@
 import { css } from '@linaria/core';
 
-import { createThemeVariables, defaultRemirrorTheme, getThemeVar } from './utils';
+import { defaultThemeVariables } from './theme-variables';
+import { getThemeVar } from './utils';
 
 /**
  * Create the theme variables from the provided theme.
@@ -19,7 +20,7 @@ export const THEME = css`
     box-sizing: inherit;
   }
 
-  ${createThemeVariables(defaultRemirrorTheme).css}
+  ${defaultThemeVariables}
 
   font-family: ${getThemeVar('fontFamily', 'default')};
   line-height: ${getThemeVar('lineHeight', 'default')};
