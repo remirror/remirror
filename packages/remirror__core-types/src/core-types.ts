@@ -268,7 +268,7 @@ export type MarkSpecOverride = Pick<
  * case the node view needs to update it's presentation)
  */
 export type NodeViewMethod<View extends NodeView = NodeView> = (
-  node: Node,
+  node: ProsemirrorNode,
   view: EditorView,
   getPos: () => number | undefined,
   decorations: readonly Decoration[],
