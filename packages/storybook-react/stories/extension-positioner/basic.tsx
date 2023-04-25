@@ -3,7 +3,7 @@ import './styles.css';
 
 import { css } from '@emotion/css';
 import { Placement } from '@popperjs/core';
-import { Annotations, BaseStory } from '@storybook/addons';
+import { StoryFn } from '@storybook/react';
 import React, { useEffect } from 'react';
 import type { StringPositioner } from 'remirror/extensions';
 import {
@@ -15,8 +15,6 @@ import {
   usePositioner,
   useRemirror,
 } from '@remirror/react';
-
-type Story = BaseStory<TemplateArgs, JSX.Element> & Annotations<TemplateArgs, JSX.Element>;
 
 interface PositionerIllustrationProps {
   positioner: StringPositioner;
@@ -61,6 +59,8 @@ interface TemplateArgs {
   label: string;
 }
 
+type Story = StoryFn<TemplateArgs>;
+
 const Template: Story = ({ content, positioner, placement, label }: TemplateArgs) => {
   const { manager, state, onChange } = useRemirror({
     stringHandler: 'html',
@@ -87,7 +87,7 @@ const Template: Story = ({ content, positioner, placement, label }: TemplateArgs
   );
 };
 
-export const Selection = Template.bind({});
+export const Selection: Story = Template.bind({});
 Selection.args = {
   content: '<p>Creates a rect which wraps the current selection.</p>',
   positioner: 'selection',
