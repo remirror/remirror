@@ -22,14 +22,14 @@
     ".": {
       "import": "./dist/remirror-extension-entity-reference.js",
       "require": "./dist/remirror-extension-entity-reference.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-entity-reference.d.ts"
     },
     "./package.json": "./package.json",
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "./dist/remirror-extension-entity-reference.cjs",
   "module": "./dist/remirror-extension-entity-reference.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-entity-reference.d.ts",
   "files": [
     "dist",
     "dist-types"

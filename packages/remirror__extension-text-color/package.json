@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-text-color.js",
       "require": "./dist/remirror-extension-text-color.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-text-color.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-text-color.cjs",
   "module": "./dist/remirror-extension-text-color.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-text-color.d.ts",
   "files": [
     "dist",
     "dist-types"

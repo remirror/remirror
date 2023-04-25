@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-font-size.js",
       "require": "./dist/remirror-extension-font-size.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-font-size.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-font-size.cjs",
   "module": "./dist/remirror-extension-font-size.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-font-size.d.ts",
   "files": [
     "dist",
     "dist-types"

@@ -24,13 +24,13 @@
     ".": {
       "import": "./dist/remirror-react-utils.js",
       "require": "./dist/remirror-react-utils.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-react-utils.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-react-utils.cjs",
   "module": "./dist/remirror-react-utils.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-react-utils.d.ts",
   "files": [
     "dist",
     "dist-types"

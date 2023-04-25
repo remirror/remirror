@@ -28,28 +28,28 @@
     ".": {
       "import": "./dist/remirror-react-editors.js",
       "require": "./dist/remirror-react-editors.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-react-editors.d.ts"
     },
     "./markdown": {
       "import": "./markdown/dist/remirror-react-editors-markdown.js",
       "require": "./markdown/dist/remirror-react-editors-markdown.cjs",
-      "types": "./dist-types/markdown/index.d.ts"
+      "types": "./markdown/dist/remirror-react-editors-markdown.d.ts"
     },
     "./package.json": "./package.json",
     "./social": {
       "import": "./social/dist/remirror-react-editors-social.js",
       "require": "./social/dist/remirror-react-editors-social.cjs",
-      "types": "./dist-types/social/index.d.ts"
+      "types": "./social/dist/remirror-react-editors-social.d.ts"
     },
     "./wysiwyg": {
       "import": "./wysiwyg/dist/remirror-react-editors-wysiwyg.js",
       "require": "./wysiwyg/dist/remirror-react-editors-wysiwyg.cjs",
-      "types": "./dist-types/wysiwyg/index.d.ts"
+      "types": "./wysiwyg/dist/remirror-react-editors-wysiwyg.d.ts"
     }
   },
   "main": "./dist/remirror-react-editors.cjs",
   "module": "./dist/remirror-react-editors.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-react-editors.d.ts",
   "files": [
     "dist",
     "dist-types",

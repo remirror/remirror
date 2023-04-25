@@ -21,13 +21,13 @@
     ".": {
       "import": "./dist/remirror-react-renderer.js",
       "require": "./dist/remirror-react-renderer.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-react-renderer.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-react-renderer.cjs",
   "module": "./dist/remirror-react-renderer.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-react-renderer.d.ts",
   "files": [
     "dist",
     "dist-types"

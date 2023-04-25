@@ -24,13 +24,13 @@
     ".": {
       "import": "./dist/remirror-extension-collaboration.js",
       "require": "./dist/remirror-extension-collaboration.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-collaboration.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-collaboration.cjs",
   "module": "./dist/remirror-extension-collaboration.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-collaboration.d.ts",
   "files": [
     "dist",
     "dist-types"

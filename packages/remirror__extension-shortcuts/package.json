@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-shortcuts.js",
       "require": "./dist/remirror-extension-shortcuts.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-shortcuts.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-shortcuts.cjs",
   "module": "./dist/remirror-extension-shortcuts.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-shortcuts.d.ts",
   "files": [
     "dist",
     "dist-types"

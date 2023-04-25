@@ -23,13 +23,13 @@
     ".": {
       "import": "./dist/prosemirror-resizable-view.js",
       "require": "./dist/prosemirror-resizable-view.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/prosemirror-resizable-view.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/prosemirror-resizable-view.cjs",
   "module": "./dist/prosemirror-resizable-view.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/prosemirror-resizable-view.d.ts",
   "files": [
     "dist",
     "dist-types"

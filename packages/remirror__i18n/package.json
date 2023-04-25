@@ -22,23 +22,23 @@
     ".": {
       "import": "./dist/remirror-i18n.js",
       "require": "./dist/remirror-i18n.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-i18n.d.ts"
     },
     "./en": {
       "import": "./en/dist/remirror-i18n-en.js",
       "require": "./en/dist/remirror-i18n-en.cjs",
-      "types": "./dist-types/en/index.d.ts"
+      "types": "./en/dist/remirror-i18n-en.d.ts"
     },
     "./package.json": "./package.json",
     "./plurals": {
       "import": "./plurals/dist/remirror-i18n-plurals.js",
       "require": "./plurals/dist/remirror-i18n-plurals.cjs",
-      "types": "./dist-types/plurals.d.ts"
+      "types": "./plurals/dist/remirror-i18n-plurals.d.ts"
     }
   },
   "main": "./dist/remirror-i18n.cjs",
   "module": "./dist/remirror-i18n.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-i18n.d.ts",
   "files": [
     "dist",
     "dist-types",

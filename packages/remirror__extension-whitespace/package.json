@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-whitespace.js",
       "require": "./dist/remirror-extension-whitespace.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-whitespace.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-whitespace.cjs",
   "module": "./dist/remirror-extension-whitespace.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-whitespace.d.ts",
   "files": [
     "dist",
     "dist-types"

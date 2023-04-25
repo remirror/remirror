@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-text-case.js",
       "require": "./dist/remirror-extension-text-case.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-text-case.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-text-case.cjs",
   "module": "./dist/remirror-extension-text-case.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-text-case.d.ts",
   "files": [
     "dist",
     "dist-types"

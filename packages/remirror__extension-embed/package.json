@@ -23,13 +23,13 @@
     ".": {
       "import": "./dist/remirror-extension-embed.js",
       "require": "./dist/remirror-extension-embed.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-embed.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-embed.cjs",
   "module": "./dist/remirror-extension-embed.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-embed.d.ts",
   "files": [
     "dist",
     "dist-types"

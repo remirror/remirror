@@ -26,13 +26,13 @@
     ".": {
       "import": "./dist/remirror-extension-emoji.js",
       "require": "./dist/remirror-extension-emoji.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-emoji.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-emoji.cjs",
   "module": "./dist/remirror-extension-emoji.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-emoji.d.ts",
   "files": [
     "apple",
     "dist",

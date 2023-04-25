@@ -24,13 +24,13 @@
     ".": {
       "import": "./dist/remirror-extension-codemirror5.js",
       "require": "./dist/remirror-extension-codemirror5.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-codemirror5.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-codemirror5.cjs",
   "module": "./dist/remirror-extension-codemirror5.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-codemirror5.d.ts",
   "files": [
     "dist",
     "dist-types"

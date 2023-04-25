@@ -23,13 +23,13 @@
     ".": {
       "import": "./dist/remirror-preset-wysiwyg.js",
       "require": "./dist/remirror-preset-wysiwyg.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-preset-wysiwyg.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-preset-wysiwyg.cjs",
   "module": "./dist/remirror-preset-wysiwyg.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-preset-wysiwyg.d.ts",
   "files": [
     "dist",
     "dist-types"

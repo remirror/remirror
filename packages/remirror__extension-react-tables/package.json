@@ -27,13 +27,13 @@
     ".": {
       "import": "./dist/remirror-extension-react-tables.js",
       "require": "./dist/remirror-extension-react-tables.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-react-tables.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-react-tables.cjs",
   "module": "./dist/remirror-extension-react-tables.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-react-tables.d.ts",
   "files": [
     "dist",
     "dist-types"

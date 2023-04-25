@@ -18,13 +18,13 @@
     ".": {
       "import": "./dist/remirror-core-constants.js",
       "require": "./dist/remirror-core-constants.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-core-constants.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-core-constants.cjs",
   "module": "./dist/remirror-core-constants.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-core-constants.d.ts",
   "files": [
     "dist",
     "dist-types"

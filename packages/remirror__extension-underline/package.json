@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-underline.js",
       "require": "./dist/remirror-extension-underline.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-underline.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-underline.cjs",
   "module": "./dist/remirror-extension-underline.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-underline.d.ts",
   "files": [
     "dist",
     "dist-types"

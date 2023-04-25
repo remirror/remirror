@@ -24,13 +24,13 @@
     ".": {
       "import": "./dist/remirror-extension-paragraph.js",
       "require": "./dist/remirror-extension-paragraph.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-paragraph.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-paragraph.cjs",
   "module": "./dist/remirror-extension-paragraph.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-paragraph.d.ts",
   "files": [
     "dist",
     "dist-types"

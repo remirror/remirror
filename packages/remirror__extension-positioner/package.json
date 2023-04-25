@@ -24,13 +24,13 @@
     ".": {
       "import": "./dist/remirror-extension-positioner.js",
       "require": "./dist/remirror-extension-positioner.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-positioner.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-positioner.cjs",
   "module": "./dist/remirror-extension-positioner.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-positioner.d.ts",
   "files": [
     "dist",
     "dist-types"

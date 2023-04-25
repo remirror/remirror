@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-gap-cursor.js",
       "require": "./dist/remirror-extension-gap-cursor.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-gap-cursor.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-gap-cursor.cjs",
   "module": "./dist/remirror-extension-gap-cursor.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-gap-cursor.d.ts",
   "files": [
     "dist",
     "dist-types"

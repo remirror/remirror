@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/test-keyboard.js",
       "require": "./dist/test-keyboard.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/test-keyboard.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/test-keyboard.cjs",
   "module": "./dist/test-keyboard.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/test-keyboard.d.ts",
   "files": [
     "dist",
     "dist-types",

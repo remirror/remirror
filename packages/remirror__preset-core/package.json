@@ -24,13 +24,13 @@
     ".": {
       "import": "./dist/remirror-preset-core.js",
       "require": "./dist/remirror-preset-core.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-preset-core.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-preset-core.cjs",
   "module": "./dist/remirror-preset-core.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-preset-core.d.ts",
   "files": [
     "dist",
     "dist-types"

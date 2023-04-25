@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-hard-break.js",
       "require": "./dist/remirror-extension-hard-break.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-hard-break.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-hard-break.cjs",
   "module": "./dist/remirror-extension-hard-break.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-hard-break.d.ts",
   "files": [
     "dist",
     "dist-types"

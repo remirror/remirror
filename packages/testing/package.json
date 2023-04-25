@@ -15,24 +15,24 @@
     ".": {
       "import": "./dist/testing.js",
       "require": "./dist/testing.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/testing.d.ts"
     },
     "./package.json": "./package.json",
     "./playwright": {
       "import": "./playwright/dist/testing-playwright.js",
       "require": "./playwright/dist/testing-playwright.cjs",
-      "types": "./dist-types/playwright/index.d.ts"
+      "types": "./playwright/dist/testing-playwright.d.ts"
     },
     "./react": {
       "import": "./react/dist/testing-react.js",
       "require": "./react/dist/testing-react.cjs",
-      "types": "./dist-types/react.d.ts"
+      "types": "./react/dist/testing-react.d.ts"
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
   "main": "./dist/testing.cjs",
   "module": "./dist/testing.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/testing.d.ts",
   "files": [
     "dist",
     "dist-types",

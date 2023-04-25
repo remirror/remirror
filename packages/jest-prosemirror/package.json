@@ -23,22 +23,22 @@
     ".": {
       "import": "./dist/jest-prosemirror.js",
       "require": "./dist/jest-prosemirror.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/jest-prosemirror.d.ts"
     },
     "./environment": {
       "import": "./environment/dist/jest-prosemirror-environment.js",
       "require": "./environment/dist/jest-prosemirror-environment.cjs",
-      "types": "./dist-types/environment.d.ts"
+      "types": "./environment/dist/jest-prosemirror-environment.d.ts"
     },
     "./package.json": "./package.json",
     "./serializer": {
       "require": "./serializer/dist/jest-prosemirror-serializer.cjs",
-      "types": "./dist-types/serializer.d.ts"
+      "types": "./serializer/dist/jest-prosemirror-serializer.d.ts"
     }
   },
   "main": "./dist/jest-prosemirror.cjs",
   "module": "./dist/jest-prosemirror.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/jest-prosemirror.d.ts",
   "files": [
     "dist",
     "dist-types",

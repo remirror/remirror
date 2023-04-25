@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-annotation.js",
       "require": "./dist/remirror-extension-annotation.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-annotation.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-annotation.cjs",
   "module": "./dist/remirror-extension-annotation.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-annotation.d.ts",
   "files": [
     "dist",
     "dist-types"

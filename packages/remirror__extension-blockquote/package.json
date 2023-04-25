@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-blockquote.js",
       "require": "./dist/remirror-extension-blockquote.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-blockquote.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-blockquote.cjs",
   "module": "./dist/remirror-extension-blockquote.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-blockquote.d.ts",
   "files": [
     "dist",
     "dist-types"

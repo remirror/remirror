@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-history.js",
       "require": "./dist/remirror-extension-history.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-history.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-history.cjs",
   "module": "./dist/remirror-extension-history.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-history.d.ts",
   "files": [
     "dist",
     "dist-types"

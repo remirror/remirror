@@ -18,13 +18,13 @@
     ".": {
       "import": "./dist/prosemirror-paste-rules.js",
       "require": "./dist/prosemirror-paste-rules.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/prosemirror-paste-rules.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/prosemirror-paste-rules.cjs",
   "module": "./dist/prosemirror-paste-rules.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/prosemirror-paste-rules.d.ts",
   "files": [
     "dist",
     "dist-types"

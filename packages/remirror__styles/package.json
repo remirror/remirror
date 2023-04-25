@@ -19,18 +19,18 @@
     "./dom": {
       "import": "./dom/dist/remirror-styles-dom.js",
       "require": "./dom/dist/remirror-styles-dom.cjs",
-      "types": "./dist-types/dom.d.ts"
+      "types": "./dom/dist/remirror-styles-dom.d.ts"
     },
     "./emotion": {
       "import": "./emotion/dist/remirror-styles-emotion.js",
       "require": "./emotion/dist/remirror-styles-emotion.cjs",
-      "types": "./dist-types/emotion.d.ts"
+      "types": "./emotion/dist/remirror-styles-emotion.d.ts"
     },
     "./package.json": "./package.json",
     "./styled-components": {
       "import": "./styled-components/dist/remirror-styles-styled-components.js",
       "require": "./styled-components/dist/remirror-styles-styled-components.cjs",
-      "types": "./dist-types/styled-components.d.ts"
+      "types": "./styled-components/dist/remirror-styles-styled-components.d.ts"
     }
   },
   "files": [

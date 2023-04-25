@@ -27,13 +27,13 @@
     ".": {
       "import": "./dist/remirror-extension-epic-mode.js",
       "require": "./dist/remirror-extension-epic-mode.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-epic-mode.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-epic-mode.cjs",
   "module": "./dist/remirror-extension-epic-mode.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-epic-mode.d.ts",
   "files": [
     "dist",
     "dist-types"

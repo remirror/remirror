@@ -25,13 +25,13 @@
     ".": {
       "import": "./dist/remirror-extension-drop-cursor.js",
       "require": "./dist/remirror-extension-drop-cursor.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-drop-cursor.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-drop-cursor.cjs",
   "module": "./dist/remirror-extension-drop-cursor.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-drop-cursor.d.ts",
   "files": [
     "dist",
     "dist-types"

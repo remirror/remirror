@@ -1,14 +1,14 @@
 {
   "type": "module",
+  "main": "./dist/remirror-pm-keymap.cjs",
+  "module": "./dist/remirror-pm-keymap.js",
+  "types": "./dist/remirror-pm-keymap.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-keymap.js",
       "require": "./dist/remirror-pm-keymap.cjs",
-      "types": "./../dist-types/keymap.d.ts"
+      "types": "./dist/remirror-pm-keymap.d.ts"
     },
     "./package.json": "./package.json"
-  },
-  "main": "./dist/remirror-pm-keymap.cjs",
-  "module": "./dist/remirror-pm-keymap.js",
-  "types": "./../dist-types/keymap.d.ts"
+  }
 }

@@ -1,14 +1,14 @@
 {
   "type": "module",
+  "main": "./dist/remirror-pm-collab.cjs",
+  "module": "./dist/remirror-pm-collab.js",
+  "types": "./dist/remirror-pm-collab.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-collab.js",
       "require": "./dist/remirror-pm-collab.cjs",
-      "types": "./../dist-types/collab.d.ts"
+      "types": "./dist/remirror-pm-collab.d.ts"
     },
     "./package.json": "./package.json"
-  },
-  "main": "./dist/remirror-pm-collab.cjs",
-  "module": "./dist/remirror-pm-collab.js",
-  "types": "./../dist-types/collab.d.ts"
+  }
 }

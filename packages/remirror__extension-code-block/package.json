@@ -27,18 +27,18 @@
     ".": {
       "import": "./dist/remirror-extension-code-block.js",
       "require": "./dist/remirror-extension-code-block.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-code-block.d.ts"
     },
     "./formatter": {
       "import": "./formatter/dist/remirror-extension-code-block-formatter.js",
       "require": "./formatter/dist/remirror-extension-code-block-formatter.cjs",
-      "types": "./dist-types/formatter.d.ts"
+      "types": "./formatter/dist/remirror-extension-code-block-formatter.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-code-block.cjs",
   "module": "./dist/remirror-extension-code-block.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-code-block.d.ts",
   "files": [
     "dist",
     "dist-types",

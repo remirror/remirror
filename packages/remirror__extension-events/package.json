@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-events.js",
       "require": "./dist/remirror-extension-events.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-events.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-events.cjs",
   "module": "./dist/remirror-extension-events.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-events.d.ts",
   "files": [
     "dist",
     "dist-types"

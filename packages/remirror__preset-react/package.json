@@ -25,13 +25,13 @@
     ".": {
       "import": "./dist/remirror-preset-react.js",
       "require": "./dist/remirror-preset-react.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-preset-react.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-preset-react.cjs",
   "module": "./dist/remirror-preset-react.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-preset-react.d.ts",
   "files": [
     "dist",
     "dist-types"

@@ -1,14 +1,14 @@
 {
   "type": "module",
+  "main": "./dist/remirror-i18n-en.cjs",
+  "module": "./dist/remirror-i18n-en.js",
+  "types": "./dist/remirror-i18n-en.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-i18n-en.js",
       "require": "./dist/remirror-i18n-en.cjs",
-      "types": "./../dist-types/en/index.d.ts"
+      "types": "./dist/remirror-i18n-en.d.ts"
     },
     "./package.json": "./package.json"
-  },
-  "main": "./dist/remirror-i18n-en.cjs",
-  "module": "./dist/remirror-i18n-en.js",
-  "types": "./../dist-types/en/index.d.ts"
+  }
 }

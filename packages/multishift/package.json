@@ -17,13 +17,13 @@
     ".": {
       "import": "./dist/multishift.js",
       "require": "./dist/multishift.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/multishift.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/multishift.cjs",
   "module": "./dist/multishift.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/multishift.d.ts",
   "files": [
     "dist",
     "dist-types"

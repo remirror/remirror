@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-placeholder.js",
       "require": "./dist/remirror-extension-placeholder.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-placeholder.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-placeholder.cjs",
   "module": "./dist/remirror-extension-placeholder.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-placeholder.d.ts",
   "files": [
     "dist",
     "dist-types",

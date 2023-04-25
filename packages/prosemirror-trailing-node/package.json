@@ -18,13 +18,13 @@
     ".": {
       "import": "./dist/prosemirror-trailing-node.js",
       "require": "./dist/prosemirror-trailing-node.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/prosemirror-trailing-node.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/prosemirror-trailing-node.cjs",
   "module": "./dist/prosemirror-trailing-node.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/prosemirror-trailing-node.d.ts",
   "files": [
     "dist",
     "dist-types"

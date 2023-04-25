@@ -18,93 +18,93 @@
     ".": {
       "import": "./dist/remirror-pm.js",
       "require": "./dist/remirror-pm.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-pm.d.ts"
     },
     "./collab": {
       "import": "./collab/dist/remirror-pm-collab.js",
       "require": "./collab/dist/remirror-pm-collab.cjs",
-      "types": "./dist-types/collab.d.ts"
+      "types": "./collab/dist/remirror-pm-collab.d.ts"
     },
     "./commands": {
       "import": "./commands/dist/remirror-pm-commands.js",
       "require": "./commands/dist/remirror-pm-commands.cjs",
-      "types": "./dist-types/commands.d.ts"
+      "types": "./commands/dist/remirror-pm-commands.d.ts"
     },
     "./dropcursor": {
       "import": "./dropcursor/dist/remirror-pm-dropcursor.js",
       "require": "./dropcursor/dist/remirror-pm-dropcursor.cjs",
-      "types": "./dist-types/dropcursor.d.ts"
+      "types": "./dropcursor/dist/remirror-pm-dropcursor.d.ts"
     },
     "./gapcursor": {
       "import": "./gapcursor/dist/remirror-pm-gapcursor.js",
       "require": "./gapcursor/dist/remirror-pm-gapcursor.cjs",
-      "types": "./dist-types/gapcursor.d.ts"
+      "types": "./gapcursor/dist/remirror-pm-gapcursor.d.ts"
     },
     "./history": {
       "import": "./history/dist/remirror-pm-history.js",
       "require": "./history/dist/remirror-pm-history.cjs",
-      "types": "./dist-types/history.d.ts"
+      "types": "./history/dist/remirror-pm-history.d.ts"
     },
     "./inputrules": {
       "import": "./inputrules/dist/remirror-pm-inputrules.js",
       "require": "./inputrules/dist/remirror-pm-inputrules.cjs",
-      "types": "./dist-types/inputrules.d.ts"
+      "types": "./inputrules/dist/remirror-pm-inputrules.d.ts"
     },
     "./keymap": {
       "import": "./keymap/dist/remirror-pm-keymap.js",
       "require": "./keymap/dist/remirror-pm-keymap.cjs",
-      "types": "./dist-types/keymap.d.ts"
+      "types": "./keymap/dist/remirror-pm-keymap.d.ts"
     },
     "./model": {
       "import": "./model/dist/remirror-pm-model.js",
       "require": "./model/dist/remirror-pm-model.cjs",
-      "types": "./dist-types/model.d.ts"
+      "types": "./model/dist/remirror-pm-model.d.ts"
     },
     "./package.json": "./package.json",
     "./paste-rules": {
       "import": "./paste-rules/dist/remirror-pm-paste-rules.js",
       "require": "./paste-rules/dist/remirror-pm-paste-rules.cjs",
-      "types": "./dist-types/paste-rules.d.ts"
+      "types": "./paste-rules/dist/remirror-pm-paste-rules.d.ts"
     },
     "./schema-list": {
       "import": "./schema-list/dist/remirror-pm-schema-list.js",
       "require": "./schema-list/dist/remirror-pm-schema-list.cjs",
-      "types": "./dist-types/schema-list.d.ts"
+      "types": "./schema-list/dist/remirror-pm-schema-list.d.ts"
     },
     "./state": {
       "import": "./state/dist/remirror-pm-state.js",
       "require": "./state/dist/remirror-pm-state.cjs",
-      "types": "./dist-types/state.d.ts"
+      "types": "./state/dist/remirror-pm-state.d.ts"
     },
     "./suggest": {
       "import": "./suggest/dist/remirror-pm-suggest.js",
       "require": "./suggest/dist/remirror-pm-suggest.cjs",
-      "types": "./dist-types/suggest.d.ts"
+      "types": "./suggest/dist/remirror-pm-suggest.d.ts"
     },
     "./tables": {
       "import": "./tables/dist/remirror-pm-tables.js",
       "require": "./tables/dist/remirror-pm-tables.cjs",
-      "types": "./dist-types/tables.d.ts"
+      "types": "./tables/dist/remirror-pm-tables.d.ts"
     },
     "./trailing-node": {
       "import": "./trailing-node/dist/remirror-pm-trailing-node.js",
       "require": "./trailing-node/dist/remirror-pm-trailing-node.cjs",
-      "types": "./dist-types/trailing-node.d.ts"
+      "types": "./trailing-node/dist/remirror-pm-trailing-node.d.ts"
     },
     "./transform": {
       "import": "./transform/dist/remirror-pm-transform.js",
       "require": "./transform/dist/remirror-pm-transform.cjs",
-      "types": "./dist-types/transform.d.ts"
+      "types": "./transform/dist/remirror-pm-transform.d.ts"
     },
     "./view": {
       "import": "./view/dist/remirror-pm-view.js",
       "require": "./view/dist/remirror-pm-view.cjs",
-      "types": "./dist-types/view.d.ts"
+      "types": "./view/dist/remirror-pm-view.d.ts"
     }
   },
   "main": "./dist/remirror-pm.cjs",
   "module": "./dist/remirror-pm.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-pm.d.ts",
   "files": [
     "collab",
     "commands",

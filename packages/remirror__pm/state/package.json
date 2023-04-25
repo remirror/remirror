@@ -1,14 +1,14 @@
 {
   "type": "module",
+  "main": "./dist/remirror-pm-state.cjs",
+  "module": "./dist/remirror-pm-state.js",
+  "types": "./dist/remirror-pm-state.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-pm-state.js",
       "require": "./dist/remirror-pm-state.cjs",
-      "types": "./../dist-types/state.d.ts"
+      "types": "./dist/remirror-pm-state.d.ts"
     },
     "./package.json": "./package.json"
-  },
-  "main": "./dist/remirror-pm-state.cjs",
-  "module": "./dist/remirror-pm-state.js",
-  "types": "./../dist-types/state.d.ts"
+  }
 }

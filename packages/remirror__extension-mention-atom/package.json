@@ -18,13 +18,13 @@
     ".": {
       "import": "./dist/remirror-extension-mention-atom.js",
       "require": "./dist/remirror-extension-mention-atom.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-mention-atom.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-mention-atom.cjs",
   "module": "./dist/remirror-extension-mention-atom.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-mention-atom.d.ts",
   "files": [
     "dist",
     "dist-types"

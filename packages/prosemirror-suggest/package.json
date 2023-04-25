@@ -18,13 +18,13 @@
     ".": {
       "import": "./dist/prosemirror-suggest.js",
       "require": "./dist/prosemirror-suggest.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/prosemirror-suggest.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/prosemirror-suggest.cjs",
   "module": "./dist/prosemirror-suggest.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/prosemirror-suggest.d.ts",
   "files": [
     "dist",
     "dist-types"

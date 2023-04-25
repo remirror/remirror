@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-diff.js",
       "require": "./dist/remirror-extension-diff.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-diff.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-diff.cjs",
   "module": "./dist/remirror-extension-diff.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-diff.d.ts",
   "files": [
     "dist",
     "dist-types"

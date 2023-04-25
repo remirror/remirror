@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-find.js",
       "require": "./dist/remirror-extension-find.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-find.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-find.cjs",
   "module": "./dist/remirror-extension-find.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-find.d.ts",
   "files": [
     "dist",
     "dist-types"

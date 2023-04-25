@@ -17,13 +17,13 @@
     ".": {
       "import": "./dist/a11y-status.js",
       "require": "./dist/a11y-status.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/a11y-status.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/a11y-status.cjs",
   "module": "./dist/a11y-status.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/a11y-status.d.ts",
   "files": [
     "dist",
     "dist-types"

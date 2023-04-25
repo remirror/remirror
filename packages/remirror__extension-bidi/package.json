@@ -22,13 +22,13 @@
     ".": {
       "import": "./dist/remirror-extension-bidi.js",
       "require": "./dist/remirror-extension-bidi.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-extension-bidi.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-bidi.cjs",
   "module": "./dist/remirror-extension-bidi.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-extension-bidi.d.ts",
   "files": [
     "dist",
     "dist-types"

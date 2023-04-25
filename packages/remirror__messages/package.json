@@ -21,13 +21,13 @@
     ".": {
       "import": "./dist/remirror-messages.js",
       "require": "./dist/remirror-messages.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-messages.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-messages.cjs",
   "module": "./dist/remirror-messages.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-messages.d.ts",
   "files": [
     "dist",
     "dist-types"

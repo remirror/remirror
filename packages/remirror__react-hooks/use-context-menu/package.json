@@ -1,14 +1,14 @@
 {
   "type": "module",
+  "main": "./dist/remirror-react-hooks-use-context-menu.cjs",
+  "module": "./dist/remirror-react-hooks-use-context-menu.js",
+  "types": "./dist/remirror-react-hooks-use-context-menu.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-react-hooks-use-context-menu.js",
       "require": "./dist/remirror-react-hooks-use-context-menu.cjs",
-      "types": "./../dist-types/use-context-menu.d.ts"
+      "types": "./dist/remirror-react-hooks-use-context-menu.d.ts"
     },
     "./package.json": "./package.json"
-  },
-  "main": "./dist/remirror-react-hooks-use-context-menu.cjs",
-  "module": "./dist/remirror-react-hooks-use-context-menu.js",
-  "types": "./../dist-types/use-context-menu.d.ts"
+  }
 }

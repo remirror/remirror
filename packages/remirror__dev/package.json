@@ -18,13 +18,13 @@
     ".": {
       "import": "./dist/remirror-dev.js",
       "require": "./dist/remirror-dev.cjs",
-      "types": "./dist-types/index.d.ts"
+      "types": "./dist/remirror-dev.d.ts"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-dev.cjs",
   "module": "./dist/remirror-dev.js",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/remirror-dev.d.ts",
   "files": [
     "dist",
     "dist-types"
