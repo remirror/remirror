@@ -46,13 +46,13 @@
     "serializer"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core-constants": "^2.0.0",
     "@remirror/core-helpers": "^2.0.1",
     "@remirror/core-types": "^2.0.4",
     "@remirror/core-utils": "^2.0.11",
     "@remirror/pm": "^2.0.4",
-    "@testing-library/dom": "^9.0.1",
+    "@testing-library/dom": "^9.2.0",
     "@types/stringify-object": "^3.3.1",
     "chalk": "^4.1.0",
     "jest-matcher-utils": "^29.5.0",
@@ -66,7 +66,7 @@
     "jest": "^29.5.0"
   },
   "peerDependencies": {
-    "jest": ">= 24"
+    "jest": ">= 24.9.0"
   },
   "peerDependenciesMeta": {
     "jest": {

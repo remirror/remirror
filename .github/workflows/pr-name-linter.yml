@@ -25,6 +25,6 @@ jobs:
           cp ./repo/commitlint.config.js ./commitlint.config.js
 
       - name: lint pr title
-        uses: JulienKode/pull-request-name-linter-action@v0.4.0
+        uses: JulienKode/pull-request-name-linter-action@v0.5.0
         with:
           configuration-path: './commitlint.config.js'

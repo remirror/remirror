@@ -45,24 +45,24 @@
     "formatter"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core": "^2.0.12",
     "@remirror/messages": "^2.0.2",
     "@remirror/theme": "^2.0.6",
     "@types/refractor": "^3.0.2",
-    "refractor": "^3.3.1"
+    "refractor": "^3.6.0"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.4",
-    "@types/jsdom": "^16.2.13",
-    "@types/prettier": "^2.3.2",
+    "@types/jsdom": "^16.2.15",
+    "@types/prettier": "^2.7.2",
     "jsdom": "^17.0.0",
-    "prettier": "^2.3.2"
+    "prettier": "^2.8.8"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.4",
-    "@types/prettier": "^2",
-    "prettier": "^2"
+    "@types/prettier": "^2.7.2",
+    "prettier": "^2.8.8"
   },
   "peerDependenciesMeta": {
     "@types/prettier": {

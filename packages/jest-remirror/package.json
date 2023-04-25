@@ -40,24 +40,24 @@
     "environment"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core": "^2.0.12",
     "@remirror/dom": "^2.0.15",
     "@remirror/pm": "^2.0.4",
     "@remirror/preset-core": "^2.0.15",
-    "@testing-library/dom": "^9.0.1",
-    "@types/sanitize-html": "^2.3.2",
+    "@testing-library/dom": "^9.2.0",
+    "@types/sanitize-html": "^2.9.0",
     "jest-prosemirror": "^2.1.2",
-    "sanitize-html": "^2.4.0",
+    "sanitize-html": "^2.10.0",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@types/node": "^16.3.3",
+    "@types/node": "^16.18.24",
     "jest": "^29.5.0"
   },
   "peerDependencies": {
     "@types/node": "*",
-    "jest": ">= 24"
+    "jest": ">= 24.9.0"
   },
   "peerDependenciesMeta": {
     "@types/node": {

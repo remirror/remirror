@@ -34,17 +34,17 @@
     "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.cjs --format cjs && pnpm -w fix:css"
   },
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
-    "@linaria/core": "3.0.0-beta.13",
+    "@babel/runtime": "^7.21.0",
+    "@linaria/core": "3.0.0-beta.22",
     "@remirror/core-types": "^2.0.4",
-    "color2k": "^2.0.0",
-    "csstype": "^3.0.7"
+    "color2k": "^2.0.2",
+    "csstype": "^3.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.10",
-    "@babel/core": "^7.15.8",
-    "@babel/plugin-transform-typescript": "^7.20.13",
-    "rollup": "^2.75.6"
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/plugin-transform-typescript": "^7.21.3",
+    "rollup": "^2.79.1"
   },
   "publishConfig": {
     "access": "public"

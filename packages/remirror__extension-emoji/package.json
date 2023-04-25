@@ -42,14 +42,14 @@
     "build:custom": "node ./build.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@ocavue/svgmoji-cjs": "^0.1.1",
     "@remirror/core": "^2.0.12",
     "@remirror/messages": "^2.0.2",
     "@remirror/theme": "^2.0.6",
-    "emojibase": "^6.0.0",
-    "emojibase-data": "^6.1.0",
-    "emojibase-regex": "^6.0.0",
+    "emojibase": "^6.1.0",
+    "emojibase-data": "^6.2.0",
+    "emojibase-regex": "^6.0.1",
     "escape-string-regexp": "^4.0.0",
     "svgmoji": "^3.2.0"
   },

@@ -34,12 +34,12 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core": "^2.0.12",
     "@remirror/i18n": "^2.0.2",
     "@remirror/messages": "^2.0.2",
     "@remirror/theme": "^2.0.6",
-    "color2k": "^2.0.0"
+    "color2k": "^2.0.2"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.4"

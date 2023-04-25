@@ -29,20 +29,20 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core-helpers": "^2.0.1",
     "@remirror/core-types": "^2.0.4",
     "@seznam/compose-react-refs": "^1.0.6",
     "a11y-status": "^2.0.0",
-    "compute-scroll-into-view": "^1.0.17",
-    "react-use": "^17.3.2",
+    "compute-scroll-into-view": "^1.0.20",
+    "react-use": "^17.4.0",
     "tiny-warning": "^1.0.3",
-    "w3c-keyname": "^2.2.4"
+    "w3c-keyname": "^2.2.6"
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
-    "@types/react": "^18.0.6",
-    "react": "^18.0.0"
+    "@types/react": "^18.2.0",
+    "react": "^18.2.0"
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17 || ^18",

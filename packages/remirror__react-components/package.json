@@ -37,12 +37,12 @@
     "style"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.3.0",
-    "@lingui/core": "^3.17.1",
-    "@mui/material": "^5.8.5",
-    "@popperjs/core": "^2.9.2",
+    "@babel/runtime": "^7.21.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@lingui/core": "^3.17.2",
+    "@mui/material": "^5.12.1",
+    "@popperjs/core": "^2.11.7",
     "@remirror/core": "^2.0.12",
     "@remirror/extension-blockquote": "^2.0.13",
     "@remirror/extension-bold": "^2.0.12",
@@ -76,17 +76,17 @@
     "@seznam/compose-react-refs": "^1.0.6",
     "@types/react-color": "^3.0.6",
     "create-context-state": "^2.0.0",
-    "match-sorter": "^6.3.0",
+    "match-sorter": "^6.3.1",
     "multishift": "^2.0.7",
     "react-color": "^2.19.3"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.4",
     "@remirror/react": "^2.0.27",
-    "@types/react": "^18.0.6",
-    "@types/react-dom": "^18.0.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.4",

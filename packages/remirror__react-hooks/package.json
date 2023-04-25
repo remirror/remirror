@@ -114,7 +114,7 @@
     "use-suggest"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.13.10",
+    "@babel/runtime": "^7.21.0",
     "@remirror/core": "^2.0.12",
     "@remirror/extension-emoji": "^2.0.16",
     "@remirror/extension-events": "^2.1.13",
@@ -126,16 +126,16 @@
     "@remirror/react-core": "^2.0.16",
     "@remirror/react-utils": "^2.0.4",
     "multishift": "^2.0.7",
-    "use-isomorphic-layout-effect": "^1.1.1",
-    "use-previous": "^1.1.0"
+    "use-isomorphic-layout-effect": "^1.1.2",
+    "use-previous": "^1.2.0"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.4",
     "@remirror/react": "^2.0.27",
-    "@types/react": "^18.0.6",
-    "@types/react-dom": "^18.0.2",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "svgmoji": "^3.2.0"
   },
   "peerDependencies": {
