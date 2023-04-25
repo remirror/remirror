@@ -20,17 +20,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-search.js",
-      "require": "./dist/remirror-extension-search.cjs",
-      "types": "./dist/remirror-extension-search.d.ts"
+      "require": "./dist/remirror-extension-search.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-search.cjs",
   "module": "./dist/remirror-extension-search.js",
-  "types": "./dist/remirror-extension-search.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -45,7 +46,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-search.d.ts",
+        "import": "./dist/remirror-extension-search.js",
+        "require": "./dist/remirror-extension-search.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-search.cjs",
+    "module": "./dist/remirror-extension-search.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-search.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

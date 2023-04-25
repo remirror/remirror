@@ -1,14 +1,14 @@
 {
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./dist/remirror-icons.js",
-      "require": "./dist/remirror-icons.cjs",
-      "types": "./dist/remirror-icons.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
   "main": "./dist/remirror-icons.cjs",
   "module": "./dist/remirror-icons.js",
-  "types": "./dist/remirror-icons.d.ts"
+  "types": "./dist/remirror-icons.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/remirror-icons.d.ts",
+      "import": "./dist/remirror-icons.js",
+      "require": "./dist/remirror-icons.cjs"
+    },
+    "./package.json": "./package.json"
+  }
 }

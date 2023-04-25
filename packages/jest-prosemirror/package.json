@@ -21,24 +21,24 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/jest-prosemirror.js",
       "require": "./dist/jest-prosemirror.cjs"
     },
     "./environment": {
-      "types": "./dist/environment.d.ts",
+      "types": "./dist-types/environment.d.ts",
       "import": "./environment/dist/jest-prosemirror-environment.js",
       "require": "./environment/dist/jest-prosemirror-environment.cjs"
     },
     "./package.json": "./package.json",
     "./serializer": {
-      "types": "./dist/serializer.d.ts",
+      "types": "./dist-types/serializer.d.ts",
       "require": "./serializer/dist/jest-prosemirror-serializer.cjs"
     }
   },
   "main": "./dist/jest-prosemirror.cjs",
   "module": "./dist/jest-prosemirror.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
     "dist-types",

@@ -16,17 +16,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/prosemirror-paste-rules.js",
-      "require": "./dist/prosemirror-paste-rules.cjs",
-      "types": "./dist/prosemirror-paste-rules.d.ts"
+      "require": "./dist/prosemirror-paste-rules.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/prosemirror-paste-rules.cjs",
   "module": "./dist/prosemirror-paste-rules.js",
-  "types": "./dist/prosemirror-paste-rules.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -46,7 +47,18 @@
   },
   "peerDependenciesMeta": {},
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/prosemirror-paste-rules.d.ts",
+        "import": "./dist/prosemirror-paste-rules.js",
+        "require": "./dist/prosemirror-paste-rules.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "type": "module",
+    "main": "./dist/prosemirror-paste-rules.cjs",
+    "module": "./dist/prosemirror-paste-rules.js",
+    "types": "./dist/prosemirror-paste-rules.d.ts"
   },
   "@remirror": {
     "sizeLimit": "10 KB"

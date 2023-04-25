@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/testing-react.d.ts",
       "import": "./dist/testing-react.js",
-      "require": "./dist/testing-react.cjs",
-      "types": "./dist/testing-react.d.ts"
+      "require": "./dist/testing-react.cjs"
     },
     "./package.json": "./package.json"
   },

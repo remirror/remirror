@@ -19,23 +19,35 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-types.js",
-      "require": "./dist/remirror-types.cjs",
-      "types": "./dist/remirror-types.d.ts"
+      "require": "./dist/remirror-types.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-types.cjs",
   "module": "./dist/remirror-types.js",
-  "types": "./dist/remirror-types.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "type-fest": "^2.19.0"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-types.d.ts",
+        "import": "./dist/remirror-types.js",
+        "require": "./dist/remirror-types.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-types.cjs",
+    "module": "./dist/remirror-types.js",
+    "type": "module",
+    "types": "./dist/remirror-types.d.ts"
   },
   "@remirror": {
     "sizeLimit": "0 KB"

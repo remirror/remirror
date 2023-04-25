@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-suggest.d.ts",
       "import": "./dist/remirror-pm-suggest.js",
-      "require": "./dist/remirror-pm-suggest.cjs",
-      "types": "./dist/remirror-pm-suggest.d.ts"
+      "require": "./dist/remirror-pm-suggest.cjs"
     },
     "./package.json": "./package.json"
   },

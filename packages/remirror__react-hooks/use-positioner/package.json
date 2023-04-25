@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-positioner.d.ts",
       "import": "./dist/remirror-react-hooks-use-positioner.js",
-      "require": "./dist/remirror-react-hooks-use-positioner.cjs",
-      "types": "./dist/remirror-react-hooks-use-positioner.d.ts"
+      "require": "./dist/remirror-react-hooks-use-positioner.cjs"
     },
     "./package.json": "./package.json"
   },

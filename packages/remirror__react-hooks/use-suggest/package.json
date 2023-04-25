@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-suggest.d.ts",
       "import": "./dist/remirror-react-hooks-use-suggest.js",
-      "require": "./dist/remirror-react-hooks-use-suggest.cjs",
-      "types": "./dist/remirror-react-hooks-use-suggest.d.ts"
+      "require": "./dist/remirror-react-hooks-use-suggest.cjs"
     },
     "./package.json": "./package.json"
   },

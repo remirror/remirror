@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-dropcursor.d.ts",
       "import": "./dist/remirror-pm-dropcursor.js",
-      "require": "./dist/remirror-pm-dropcursor.cjs",
-      "types": "./dist/remirror-pm-dropcursor.d.ts"
+      "require": "./dist/remirror-pm-dropcursor.cjs"
     },
     "./package.json": "./package.json"
   },

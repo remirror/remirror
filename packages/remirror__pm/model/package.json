@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-model.d.ts",
       "import": "./dist/remirror-pm-model.js",
-      "require": "./dist/remirror-pm-model.cjs",
-      "types": "./dist/remirror-pm-model.d.ts"
+      "require": "./dist/remirror-pm-model.cjs"
     },
     "./package.json": "./package.json"
   },

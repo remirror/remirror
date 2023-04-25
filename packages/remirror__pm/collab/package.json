@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-collab.d.ts",
       "import": "./dist/remirror-pm-collab.js",
-      "require": "./dist/remirror-pm-collab.cjs",
-      "types": "./dist/remirror-pm-collab.d.ts"
+      "require": "./dist/remirror-pm-collab.cjs"
     },
     "./package.json": "./package.json"
   },

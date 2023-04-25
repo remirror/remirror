@@ -20,17 +20,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-trailing-node.js",
-      "require": "./dist/remirror-extension-trailing-node.cjs",
-      "types": "./dist/remirror-extension-trailing-node.d.ts"
+      "require": "./dist/remirror-extension-trailing-node.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-trailing-node.cjs",
   "module": "./dist/remirror-extension-trailing-node.js",
-  "types": "./dist/remirror-extension-trailing-node.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -44,7 +45,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-trailing-node.d.ts",
+        "import": "./dist/remirror-extension-trailing-node.js",
+        "require": "./dist/remirror-extension-trailing-node.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-trailing-node.cjs",
+    "module": "./dist/remirror-extension-trailing-node.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-trailing-node.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

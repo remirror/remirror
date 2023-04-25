@@ -15,17 +15,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/multishift.js",
-      "require": "./dist/multishift.cjs",
-      "types": "./dist/multishift.d.ts"
+      "require": "./dist/multishift.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/multishift.cjs",
   "module": "./dist/multishift.js",
-  "types": "./dist/multishift.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -53,7 +54,18 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/multishift.d.ts",
+        "import": "./dist/multishift.js",
+        "require": "./dist/multishift.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "type": "module",
+    "main": "./dist/multishift.cjs",
+    "module": "./dist/multishift.js",
+    "types": "./dist/multishift.d.ts"
   },
   "@remirror": {
     "sizeLimit": "20 KB"

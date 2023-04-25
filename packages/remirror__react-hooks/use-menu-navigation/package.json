@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-menu-navigation.d.ts",
       "import": "./dist/remirror-react-hooks-use-menu-navigation.js",
-      "require": "./dist/remirror-react-hooks-use-menu-navigation.cjs",
-      "types": "./dist/remirror-react-hooks-use-menu-navigation.d.ts"
+      "require": "./dist/remirror-react-hooks-use-menu-navigation.cjs"
     },
     "./package.json": "./package.json"
   },

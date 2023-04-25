@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-keymap.d.ts",
       "import": "./dist/remirror-react-hooks-use-keymap.js",
-      "require": "./dist/remirror-react-hooks-use-keymap.cjs",
-      "types": "./dist/remirror-react-hooks-use-keymap.d.ts"
+      "require": "./dist/remirror-react-hooks-use-keymap.cjs"
     },
     "./package.json": "./package.json"
   },

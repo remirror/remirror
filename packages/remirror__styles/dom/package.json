@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-styles-dom.d.ts",
       "import": "./dist/remirror-styles-dom.js",
-      "require": "./dist/remirror-styles-dom.cjs",
-      "types": "./dist/remirror-styles-dom.d.ts"
+      "require": "./dist/remirror-styles-dom.cjs"
     },
     "./package.json": "./package.json"
   },

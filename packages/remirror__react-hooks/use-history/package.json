@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-history.d.ts",
       "import": "./dist/remirror-react-hooks-use-history.js",
-      "require": "./dist/remirror-react-hooks-use-history.cjs",
-      "types": "./dist/remirror-react-hooks-use-history.d.ts"
+      "require": "./dist/remirror-react-hooks-use-history.cjs"
     },
     "./package.json": "./package.json"
   },

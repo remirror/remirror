@@ -21,17 +21,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-embed.js",
-      "require": "./dist/remirror-extension-embed.cjs",
-      "types": "./dist/remirror-extension-embed.d.ts"
+      "require": "./dist/remirror-extension-embed.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-embed.cjs",
   "module": "./dist/remirror-extension-embed.js",
-  "types": "./dist/remirror-extension-embed.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -48,7 +49,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-embed.d.ts",
+        "import": "./dist/remirror-extension-embed.js",
+        "require": "./dist/remirror-extension-embed.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-embed.cjs",
+    "module": "./dist/remirror-extension-embed.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-embed.d.ts"
   },
   "@remirror": {
     "sizeLimit": "20 KB"

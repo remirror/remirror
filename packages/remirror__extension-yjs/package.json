@@ -24,17 +24,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-yjs.js",
-      "require": "./dist/remirror-extension-yjs.cjs",
-      "types": "./dist/remirror-extension-yjs.d.ts"
+      "require": "./dist/remirror-extension-yjs.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-yjs.cjs",
   "module": "./dist/remirror-extension-yjs.js",
-  "types": "./dist/remirror-extension-yjs.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -56,7 +57,18 @@
     "yjs": "^13.6.0"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-yjs.d.ts",
+        "import": "./dist/remirror-extension-yjs.js",
+        "require": "./dist/remirror-extension-yjs.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-yjs.cjs",
+    "module": "./dist/remirror-extension-yjs.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-yjs.d.ts"
   },
   "@remirror": {
     "sizeLimit": "115 KB"

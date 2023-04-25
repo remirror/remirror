@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-commands.d.ts",
       "import": "./dist/remirror-pm-commands.js",
-      "require": "./dist/remirror-pm-commands.cjs",
-      "types": "./dist/remirror-pm-commands.d.ts"
+      "require": "./dist/remirror-pm-commands.cjs"
     },
     "./package.json": "./package.json"
   },

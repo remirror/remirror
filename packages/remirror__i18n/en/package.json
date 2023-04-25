@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-i18n-en.d.ts",
       "import": "./dist/remirror-i18n-en.js",
-      "require": "./dist/remirror-i18n-en.cjs",
-      "types": "./dist/remirror-i18n-en.d.ts"
+      "require": "./dist/remirror-i18n-en.cjs"
     },
     "./package.json": "./package.json"
   },

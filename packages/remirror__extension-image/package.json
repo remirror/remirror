@@ -24,17 +24,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-image.js",
-      "require": "./dist/remirror-extension-image.cjs",
-      "types": "./dist/remirror-extension-image.d.ts"
+      "require": "./dist/remirror-extension-image.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-image.cjs",
   "module": "./dist/remirror-extension-image.js",
-  "types": "./dist/remirror-extension-image.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -50,7 +51,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-image.d.ts",
+        "import": "./dist/remirror-extension-image.js",
+        "require": "./dist/remirror-extension-image.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-image.cjs",
+    "module": "./dist/remirror-extension-image.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-image.d.ts"
   },
   "@remirror": {
     "sizeLimit": "20 KB"

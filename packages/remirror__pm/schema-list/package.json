@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-schema-list.d.ts",
       "import": "./dist/remirror-pm-schema-list.js",
-      "require": "./dist/remirror-pm-schema-list.cjs",
-      "types": "./dist/remirror-pm-schema-list.d.ts"
+      "require": "./dist/remirror-pm-schema-list.cjs"
     },
     "./package.json": "./package.json"
   },

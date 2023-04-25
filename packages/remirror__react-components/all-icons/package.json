@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-components-all-icons.d.ts",
       "import": "./dist/remirror-react-components-all-icons.js",
-      "require": "./dist/remirror-react-components-all-icons.cjs",
-      "types": "./dist/remirror-react-components-all-icons.d.ts"
+      "require": "./dist/remirror-react-components-all-icons.cjs"
     },
     "./package.json": "./package.json"
   },

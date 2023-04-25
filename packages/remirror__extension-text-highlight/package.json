@@ -20,17 +20,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-text-highlight.js",
-      "require": "./dist/remirror-extension-text-highlight.cjs",
-      "types": "./dist/remirror-extension-text-highlight.d.ts"
+      "require": "./dist/remirror-extension-text-highlight.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-text-highlight.cjs",
   "module": "./dist/remirror-extension-text-highlight.js",
-  "types": "./dist/remirror-extension-text-highlight.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -45,7 +46,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-text-highlight.d.ts",
+        "import": "./dist/remirror-extension-text-highlight.js",
+        "require": "./dist/remirror-extension-text-highlight.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-text-highlight.cjs",
+    "module": "./dist/remirror-extension-text-highlight.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-text-highlight.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-history.d.ts",
       "import": "./dist/remirror-pm-history.js",
-      "require": "./dist/remirror-pm-history.cjs",
-      "types": "./dist/remirror-pm-history.d.ts"
+      "require": "./dist/remirror-pm-history.cjs"
     },
     "./package.json": "./package.json"
   },

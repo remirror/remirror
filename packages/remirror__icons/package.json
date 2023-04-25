@@ -19,30 +19,47 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-icons.js",
-      "require": "./dist/remirror-icons.cjs",
-      "types": "./dist/remirror-icons.d.ts"
+      "require": "./dist/remirror-icons.cjs"
     },
     "./all": {
+      "types": "./dist-types/all.d.ts",
       "import": "./all/dist/remirror-icons-all.js",
-      "require": "./all/dist/remirror-icons-all.cjs",
-      "types": "./all/dist/remirror-icons-all.d.ts"
+      "require": "./all/dist/remirror-icons-all.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-icons.cjs",
   "module": "./dist/remirror-icons.js",
-  "types": "./dist/remirror-icons.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "all",
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "@remirror/core-helpers": "^2.0.1"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-icons.d.ts",
+        "import": "./dist/remirror-icons.js",
+        "require": "./dist/remirror-icons.cjs"
+      },
+      "./all": {
+        "types": "./all/dist/remirror-icons-all.d.ts",
+        "import": "./all/dist/remirror-icons-all.js",
+        "require": "./all/dist/remirror-icons-all.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-icons.cjs",
+    "module": "./dist/remirror-icons.js",
+    "type": "module",
+    "types": "./dist/remirror-icons.d.ts"
   },
   "@remirror": {
     "sizeLimit": "30 KB"

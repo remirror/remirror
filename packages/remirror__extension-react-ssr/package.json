@@ -24,17 +24,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-react-ssr.js",
-      "require": "./dist/remirror-extension-react-ssr.cjs",
-      "types": "./dist/remirror-extension-react-ssr.d.ts"
+      "require": "./dist/remirror-extension-react-ssr.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-react-ssr.cjs",
   "module": "./dist/remirror-extension-react-ssr.js",
-  "types": "./dist/remirror-extension-react-ssr.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -60,7 +61,18 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-react-ssr.d.ts",
+        "import": "./dist/remirror-extension-react-ssr.js",
+        "require": "./dist/remirror-extension-react-ssr.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-react-ssr.cjs",
+    "module": "./dist/remirror-extension-react-ssr.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-react-ssr.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

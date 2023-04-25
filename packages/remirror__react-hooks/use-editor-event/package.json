@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-editor-event.d.ts",
       "import": "./dist/remirror-react-hooks-use-editor-event.js",
-      "require": "./dist/remirror-react-hooks-use-editor-event.cjs",
-      "types": "./dist/remirror-react-hooks-use-editor-event.d.ts"
+      "require": "./dist/remirror-react-hooks-use-editor-event.cjs"
     },
     "./package.json": "./package.json"
   },

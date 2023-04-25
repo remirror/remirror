@@ -16,87 +16,88 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-react-hooks.js",
-      "require": "./dist/remirror-react-hooks.cjs",
-      "types": "./dist/remirror-react-hooks.d.ts"
+      "require": "./dist/remirror-react-hooks.cjs"
     },
     "./package.json": "./package.json",
     "./use-context-menu": {
+      "types": "./dist-types/use-context-menu.d.ts",
       "import": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.js",
-      "require": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.cjs",
-      "types": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.d.ts"
+      "require": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.cjs"
     },
     "./use-editor-event": {
+      "types": "./dist-types/use-editor-event.d.ts",
       "import": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.js",
-      "require": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.cjs",
-      "types": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.d.ts"
+      "require": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.cjs"
     },
     "./use-editor-focus": {
+      "types": "./dist-types/use-editor-focus.d.ts",
       "import": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.js",
-      "require": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs",
-      "types": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.d.ts"
+      "require": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs"
     },
     "./use-emoji": {
+      "types": "./dist-types/use-emoji.d.ts",
       "import": "./use-emoji/dist/remirror-react-hooks-use-emoji.js",
-      "require": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs",
-      "types": "./use-emoji/dist/remirror-react-hooks-use-emoji.d.ts"
+      "require": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs"
     },
     "./use-history": {
+      "types": "./dist-types/use-history.d.ts",
       "import": "./use-history/dist/remirror-react-hooks-use-history.js",
-      "require": "./use-history/dist/remirror-react-hooks-use-history.cjs",
-      "types": "./use-history/dist/remirror-react-hooks-use-history.d.ts"
+      "require": "./use-history/dist/remirror-react-hooks-use-history.cjs"
     },
     "./use-hover": {
+      "types": "./dist-types/use-hover.d.ts",
       "import": "./use-hover/dist/remirror-react-hooks-use-hover.js",
-      "require": "./use-hover/dist/remirror-react-hooks-use-hover.cjs",
-      "types": "./use-hover/dist/remirror-react-hooks-use-hover.d.ts"
+      "require": "./use-hover/dist/remirror-react-hooks-use-hover.cjs"
     },
     "./use-keymap": {
+      "types": "./dist-types/use-keymap.d.ts",
       "import": "./use-keymap/dist/remirror-react-hooks-use-keymap.js",
-      "require": "./use-keymap/dist/remirror-react-hooks-use-keymap.cjs",
-      "types": "./use-keymap/dist/remirror-react-hooks-use-keymap.d.ts"
+      "require": "./use-keymap/dist/remirror-react-hooks-use-keymap.cjs"
     },
     "./use-keymaps": {
+      "types": "./dist-types/use-keymaps.d.ts",
       "import": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.js",
-      "require": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.cjs",
-      "types": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.d.ts"
+      "require": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.cjs"
     },
     "./use-mention": {
+      "types": "./dist-types/use-mention.d.ts",
       "import": "./use-mention/dist/remirror-react-hooks-use-mention.js",
-      "require": "./use-mention/dist/remirror-react-hooks-use-mention.cjs",
-      "types": "./use-mention/dist/remirror-react-hooks-use-mention.d.ts"
+      "require": "./use-mention/dist/remirror-react-hooks-use-mention.cjs"
     },
     "./use-mention-atom": {
+      "types": "./dist-types/use-mention-atom.d.ts",
       "import": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.js",
-      "require": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.cjs",
-      "types": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.d.ts"
+      "require": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.cjs"
     },
     "./use-menu-navigation": {
+      "types": "./dist-types/use-menu-navigation.d.ts",
       "import": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.js",
-      "require": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.cjs",
-      "types": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.d.ts"
+      "require": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.cjs"
     },
     "./use-multi-positioner": {
+      "types": "./dist-types/use-multi-positioner.d.ts",
       "import": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.js",
-      "require": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.cjs",
-      "types": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.d.ts"
+      "require": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.cjs"
     },
     "./use-positioner": {
+      "types": "./dist-types/use-positioner.d.ts",
       "import": "./use-positioner/dist/remirror-react-hooks-use-positioner.js",
-      "require": "./use-positioner/dist/remirror-react-hooks-use-positioner.cjs",
-      "types": "./use-positioner/dist/remirror-react-hooks-use-positioner.d.ts"
+      "require": "./use-positioner/dist/remirror-react-hooks-use-positioner.cjs"
     },
     "./use-suggest": {
+      "types": "./dist-types/use-suggest.d.ts",
       "import": "./use-suggest/dist/remirror-react-hooks-use-suggest.js",
-      "require": "./use-suggest/dist/remirror-react-hooks-use-suggest.cjs",
-      "types": "./use-suggest/dist/remirror-react-hooks-use-suggest.d.ts"
+      "require": "./use-suggest/dist/remirror-react-hooks-use-suggest.cjs"
     }
   },
   "main": "./dist/remirror-react-hooks.cjs",
   "module": "./dist/remirror-react-hooks.js",
-  "types": "./dist/remirror-react-hooks.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "use-context-menu",
     "use-editor-event",
     "use-editor-focus",
@@ -159,7 +160,88 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-react-hooks.d.ts",
+        "import": "./dist/remirror-react-hooks.js",
+        "require": "./dist/remirror-react-hooks.cjs"
+      },
+      "./package.json": "./package.json",
+      "./use-context-menu": {
+        "types": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.d.ts",
+        "import": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.js",
+        "require": "./use-context-menu/dist/remirror-react-hooks-use-context-menu.cjs"
+      },
+      "./use-editor-event": {
+        "types": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.d.ts",
+        "import": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.js",
+        "require": "./use-editor-event/dist/remirror-react-hooks-use-editor-event.cjs"
+      },
+      "./use-editor-focus": {
+        "types": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.d.ts",
+        "import": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.js",
+        "require": "./use-editor-focus/dist/remirror-react-hooks-use-editor-focus.cjs"
+      },
+      "./use-emoji": {
+        "types": "./use-emoji/dist/remirror-react-hooks-use-emoji.d.ts",
+        "import": "./use-emoji/dist/remirror-react-hooks-use-emoji.js",
+        "require": "./use-emoji/dist/remirror-react-hooks-use-emoji.cjs"
+      },
+      "./use-history": {
+        "types": "./use-history/dist/remirror-react-hooks-use-history.d.ts",
+        "import": "./use-history/dist/remirror-react-hooks-use-history.js",
+        "require": "./use-history/dist/remirror-react-hooks-use-history.cjs"
+      },
+      "./use-hover": {
+        "types": "./use-hover/dist/remirror-react-hooks-use-hover.d.ts",
+        "import": "./use-hover/dist/remirror-react-hooks-use-hover.js",
+        "require": "./use-hover/dist/remirror-react-hooks-use-hover.cjs"
+      },
+      "./use-keymap": {
+        "types": "./use-keymap/dist/remirror-react-hooks-use-keymap.d.ts",
+        "import": "./use-keymap/dist/remirror-react-hooks-use-keymap.js",
+        "require": "./use-keymap/dist/remirror-react-hooks-use-keymap.cjs"
+      },
+      "./use-keymaps": {
+        "types": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.d.ts",
+        "import": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.js",
+        "require": "./use-keymaps/dist/remirror-react-hooks-use-keymaps.cjs"
+      },
+      "./use-mention": {
+        "types": "./use-mention/dist/remirror-react-hooks-use-mention.d.ts",
+        "import": "./use-mention/dist/remirror-react-hooks-use-mention.js",
+        "require": "./use-mention/dist/remirror-react-hooks-use-mention.cjs"
+      },
+      "./use-mention-atom": {
+        "types": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.d.ts",
+        "import": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.js",
+        "require": "./use-mention-atom/dist/remirror-react-hooks-use-mention-atom.cjs"
+      },
+      "./use-menu-navigation": {
+        "types": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.d.ts",
+        "import": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.js",
+        "require": "./use-menu-navigation/dist/remirror-react-hooks-use-menu-navigation.cjs"
+      },
+      "./use-multi-positioner": {
+        "types": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.d.ts",
+        "import": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.js",
+        "require": "./use-multi-positioner/dist/remirror-react-hooks-use-multi-positioner.cjs"
+      },
+      "./use-positioner": {
+        "types": "./use-positioner/dist/remirror-react-hooks-use-positioner.d.ts",
+        "import": "./use-positioner/dist/remirror-react-hooks-use-positioner.js",
+        "require": "./use-positioner/dist/remirror-react-hooks-use-positioner.cjs"
+      },
+      "./use-suggest": {
+        "types": "./use-suggest/dist/remirror-react-hooks-use-suggest.d.ts",
+        "import": "./use-suggest/dist/remirror-react-hooks-use-suggest.js",
+        "require": "./use-suggest/dist/remirror-react-hooks-use-suggest.cjs"
+      }
+    },
+    "main": "./dist/remirror-react-hooks.cjs",
+    "module": "./dist/remirror-react-hooks.js",
+    "type": "module",
+    "types": "./dist/remirror-react-hooks.d.ts"
   },
   "@remirror": {
     "sizeLimit": "200 KB"

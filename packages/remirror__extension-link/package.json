@@ -20,17 +20,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-link.js",
-      "require": "./dist/remirror-extension-link.cjs",
-      "types": "./dist/remirror-extension-link.d.ts"
+      "require": "./dist/remirror-extension-link.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-link.cjs",
   "module": "./dist/remirror-extension-link.js",
-  "types": "./dist/remirror-extension-link.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -48,7 +49,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-link.d.ts",
+        "import": "./dist/remirror-extension-link.js",
+        "require": "./dist/remirror-extension-link.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-link.cjs",
+    "module": "./dist/remirror-extension-link.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-link.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-keymap.d.ts",
       "import": "./dist/remirror-pm-keymap.js",
-      "require": "./dist/remirror-pm-keymap.cjs",
-      "types": "./dist/remirror-pm-keymap.d.ts"
+      "require": "./dist/remirror-pm-keymap.cjs"
     },
     "./package.json": "./package.json"
   },

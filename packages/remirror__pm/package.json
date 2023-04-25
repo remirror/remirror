@@ -16,99 +16,100 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-pm.js",
-      "require": "./dist/remirror-pm.cjs",
-      "types": "./dist/remirror-pm.d.ts"
+      "require": "./dist/remirror-pm.cjs"
     },
     "./collab": {
+      "types": "./dist-types/collab.d.ts",
       "import": "./collab/dist/remirror-pm-collab.js",
-      "require": "./collab/dist/remirror-pm-collab.cjs",
-      "types": "./collab/dist/remirror-pm-collab.d.ts"
+      "require": "./collab/dist/remirror-pm-collab.cjs"
     },
     "./commands": {
+      "types": "./dist-types/commands.d.ts",
       "import": "./commands/dist/remirror-pm-commands.js",
-      "require": "./commands/dist/remirror-pm-commands.cjs",
-      "types": "./commands/dist/remirror-pm-commands.d.ts"
+      "require": "./commands/dist/remirror-pm-commands.cjs"
     },
     "./dropcursor": {
+      "types": "./dist-types/dropcursor.d.ts",
       "import": "./dropcursor/dist/remirror-pm-dropcursor.js",
-      "require": "./dropcursor/dist/remirror-pm-dropcursor.cjs",
-      "types": "./dropcursor/dist/remirror-pm-dropcursor.d.ts"
+      "require": "./dropcursor/dist/remirror-pm-dropcursor.cjs"
     },
     "./gapcursor": {
+      "types": "./dist-types/gapcursor.d.ts",
       "import": "./gapcursor/dist/remirror-pm-gapcursor.js",
-      "require": "./gapcursor/dist/remirror-pm-gapcursor.cjs",
-      "types": "./gapcursor/dist/remirror-pm-gapcursor.d.ts"
+      "require": "./gapcursor/dist/remirror-pm-gapcursor.cjs"
     },
     "./history": {
+      "types": "./dist-types/history.d.ts",
       "import": "./history/dist/remirror-pm-history.js",
-      "require": "./history/dist/remirror-pm-history.cjs",
-      "types": "./history/dist/remirror-pm-history.d.ts"
+      "require": "./history/dist/remirror-pm-history.cjs"
     },
     "./inputrules": {
+      "types": "./dist-types/inputrules.d.ts",
       "import": "./inputrules/dist/remirror-pm-inputrules.js",
-      "require": "./inputrules/dist/remirror-pm-inputrules.cjs",
-      "types": "./inputrules/dist/remirror-pm-inputrules.d.ts"
+      "require": "./inputrules/dist/remirror-pm-inputrules.cjs"
     },
     "./keymap": {
+      "types": "./dist-types/keymap.d.ts",
       "import": "./keymap/dist/remirror-pm-keymap.js",
-      "require": "./keymap/dist/remirror-pm-keymap.cjs",
-      "types": "./keymap/dist/remirror-pm-keymap.d.ts"
+      "require": "./keymap/dist/remirror-pm-keymap.cjs"
     },
     "./model": {
+      "types": "./dist-types/model.d.ts",
       "import": "./model/dist/remirror-pm-model.js",
-      "require": "./model/dist/remirror-pm-model.cjs",
-      "types": "./model/dist/remirror-pm-model.d.ts"
+      "require": "./model/dist/remirror-pm-model.cjs"
     },
     "./package.json": "./package.json",
     "./paste-rules": {
+      "types": "./dist-types/paste-rules.d.ts",
       "import": "./paste-rules/dist/remirror-pm-paste-rules.js",
-      "require": "./paste-rules/dist/remirror-pm-paste-rules.cjs",
-      "types": "./paste-rules/dist/remirror-pm-paste-rules.d.ts"
+      "require": "./paste-rules/dist/remirror-pm-paste-rules.cjs"
     },
     "./schema-list": {
+      "types": "./dist-types/schema-list.d.ts",
       "import": "./schema-list/dist/remirror-pm-schema-list.js",
-      "require": "./schema-list/dist/remirror-pm-schema-list.cjs",
-      "types": "./schema-list/dist/remirror-pm-schema-list.d.ts"
+      "require": "./schema-list/dist/remirror-pm-schema-list.cjs"
     },
     "./state": {
+      "types": "./dist-types/state.d.ts",
       "import": "./state/dist/remirror-pm-state.js",
-      "require": "./state/dist/remirror-pm-state.cjs",
-      "types": "./state/dist/remirror-pm-state.d.ts"
+      "require": "./state/dist/remirror-pm-state.cjs"
     },
     "./suggest": {
+      "types": "./dist-types/suggest.d.ts",
       "import": "./suggest/dist/remirror-pm-suggest.js",
-      "require": "./suggest/dist/remirror-pm-suggest.cjs",
-      "types": "./suggest/dist/remirror-pm-suggest.d.ts"
+      "require": "./suggest/dist/remirror-pm-suggest.cjs"
     },
     "./tables": {
+      "types": "./dist-types/tables.d.ts",
       "import": "./tables/dist/remirror-pm-tables.js",
-      "require": "./tables/dist/remirror-pm-tables.cjs",
-      "types": "./tables/dist/remirror-pm-tables.d.ts"
+      "require": "./tables/dist/remirror-pm-tables.cjs"
     },
     "./trailing-node": {
+      "types": "./dist-types/trailing-node.d.ts",
       "import": "./trailing-node/dist/remirror-pm-trailing-node.js",
-      "require": "./trailing-node/dist/remirror-pm-trailing-node.cjs",
-      "types": "./trailing-node/dist/remirror-pm-trailing-node.d.ts"
+      "require": "./trailing-node/dist/remirror-pm-trailing-node.cjs"
     },
     "./transform": {
+      "types": "./dist-types/transform.d.ts",
       "import": "./transform/dist/remirror-pm-transform.js",
-      "require": "./transform/dist/remirror-pm-transform.cjs",
-      "types": "./transform/dist/remirror-pm-transform.d.ts"
+      "require": "./transform/dist/remirror-pm-transform.cjs"
     },
     "./view": {
+      "types": "./dist-types/view.d.ts",
       "import": "./view/dist/remirror-pm-view.js",
-      "require": "./view/dist/remirror-pm-view.cjs",
-      "types": "./view/dist/remirror-pm-view.d.ts"
+      "require": "./view/dist/remirror-pm-view.cjs"
     }
   },
   "main": "./dist/remirror-pm.cjs",
   "module": "./dist/remirror-pm.js",
-  "types": "./dist/remirror-pm.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "collab",
     "commands",
     "dist",
+    "dist-types",
     "dropcursor",
     "gapcursor",
     "history",
@@ -146,7 +147,98 @@
     "prosemirror-view": "^1.30.2"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-pm.d.ts",
+        "import": "./dist/remirror-pm.js",
+        "require": "./dist/remirror-pm.cjs"
+      },
+      "./collab": {
+        "types": "./collab/dist/remirror-pm-collab.d.ts",
+        "import": "./collab/dist/remirror-pm-collab.js",
+        "require": "./collab/dist/remirror-pm-collab.cjs"
+      },
+      "./commands": {
+        "types": "./commands/dist/remirror-pm-commands.d.ts",
+        "import": "./commands/dist/remirror-pm-commands.js",
+        "require": "./commands/dist/remirror-pm-commands.cjs"
+      },
+      "./dropcursor": {
+        "types": "./dropcursor/dist/remirror-pm-dropcursor.d.ts",
+        "import": "./dropcursor/dist/remirror-pm-dropcursor.js",
+        "require": "./dropcursor/dist/remirror-pm-dropcursor.cjs"
+      },
+      "./gapcursor": {
+        "types": "./gapcursor/dist/remirror-pm-gapcursor.d.ts",
+        "import": "./gapcursor/dist/remirror-pm-gapcursor.js",
+        "require": "./gapcursor/dist/remirror-pm-gapcursor.cjs"
+      },
+      "./history": {
+        "types": "./history/dist/remirror-pm-history.d.ts",
+        "import": "./history/dist/remirror-pm-history.js",
+        "require": "./history/dist/remirror-pm-history.cjs"
+      },
+      "./inputrules": {
+        "types": "./inputrules/dist/remirror-pm-inputrules.d.ts",
+        "import": "./inputrules/dist/remirror-pm-inputrules.js",
+        "require": "./inputrules/dist/remirror-pm-inputrules.cjs"
+      },
+      "./keymap": {
+        "types": "./keymap/dist/remirror-pm-keymap.d.ts",
+        "import": "./keymap/dist/remirror-pm-keymap.js",
+        "require": "./keymap/dist/remirror-pm-keymap.cjs"
+      },
+      "./model": {
+        "types": "./model/dist/remirror-pm-model.d.ts",
+        "import": "./model/dist/remirror-pm-model.js",
+        "require": "./model/dist/remirror-pm-model.cjs"
+      },
+      "./package.json": "./package.json",
+      "./paste-rules": {
+        "types": "./paste-rules/dist/remirror-pm-paste-rules.d.ts",
+        "import": "./paste-rules/dist/remirror-pm-paste-rules.js",
+        "require": "./paste-rules/dist/remirror-pm-paste-rules.cjs"
+      },
+      "./schema-list": {
+        "types": "./schema-list/dist/remirror-pm-schema-list.d.ts",
+        "import": "./schema-list/dist/remirror-pm-schema-list.js",
+        "require": "./schema-list/dist/remirror-pm-schema-list.cjs"
+      },
+      "./state": {
+        "types": "./state/dist/remirror-pm-state.d.ts",
+        "import": "./state/dist/remirror-pm-state.js",
+        "require": "./state/dist/remirror-pm-state.cjs"
+      },
+      "./suggest": {
+        "types": "./suggest/dist/remirror-pm-suggest.d.ts",
+        "import": "./suggest/dist/remirror-pm-suggest.js",
+        "require": "./suggest/dist/remirror-pm-suggest.cjs"
+      },
+      "./tables": {
+        "types": "./tables/dist/remirror-pm-tables.d.ts",
+        "import": "./tables/dist/remirror-pm-tables.js",
+        "require": "./tables/dist/remirror-pm-tables.cjs"
+      },
+      "./trailing-node": {
+        "types": "./trailing-node/dist/remirror-pm-trailing-node.d.ts",
+        "import": "./trailing-node/dist/remirror-pm-trailing-node.js",
+        "require": "./trailing-node/dist/remirror-pm-trailing-node.cjs"
+      },
+      "./transform": {
+        "types": "./transform/dist/remirror-pm-transform.d.ts",
+        "import": "./transform/dist/remirror-pm-transform.js",
+        "require": "./transform/dist/remirror-pm-transform.cjs"
+      },
+      "./view": {
+        "types": "./view/dist/remirror-pm-view.d.ts",
+        "import": "./view/dist/remirror-pm-view.js",
+        "require": "./view/dist/remirror-pm-view.cjs"
+      }
+    },
+    "main": "./dist/remirror-pm.cjs",
+    "module": "./dist/remirror-pm.js",
+    "type": "module",
+    "types": "./dist/remirror-pm.d.ts"
   },
   "preconstruct": {
     "entrypoints": [

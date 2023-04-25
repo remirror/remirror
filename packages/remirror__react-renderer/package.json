@@ -19,17 +19,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-react-renderer.js",
-      "require": "./dist/remirror-react-renderer.cjs",
-      "types": "./dist/remirror-react-renderer.d.ts"
+      "require": "./dist/remirror-react-renderer.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-react-renderer.cjs",
   "module": "./dist/remirror-react-renderer.js",
-  "types": "./dist/remirror-react-renderer.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -49,7 +50,18 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-react-renderer.d.ts",
+        "import": "./dist/remirror-react-renderer.js",
+        "require": "./dist/remirror-react-renderer.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-react-renderer.cjs",
+    "module": "./dist/remirror-react-renderer.js",
+    "type": "module",
+    "types": "./dist/remirror-react-renderer.d.ts"
   },
   "@remirror": {
     "sizeLimit": "50 KB"

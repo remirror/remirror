@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-state.d.ts",
       "import": "./dist/remirror-pm-state.js",
-      "require": "./dist/remirror-pm-state.cjs",
-      "types": "./dist/remirror-pm-state.d.ts"
+      "require": "./dist/remirror-pm-state.cjs"
     },
     "./package.json": "./package.json"
   },

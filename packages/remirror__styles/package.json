@@ -17,25 +17,26 @@
   "exports": {
     "./*": "./*",
     "./dom": {
+      "types": "./dist-types/dom.d.ts",
       "import": "./dom/dist/remirror-styles-dom.js",
-      "require": "./dom/dist/remirror-styles-dom.cjs",
-      "types": "./dom/dist/remirror-styles-dom.d.ts"
+      "require": "./dom/dist/remirror-styles-dom.cjs"
     },
     "./emotion": {
+      "types": "./dist-types/emotion.d.ts",
       "import": "./emotion/dist/remirror-styles-emotion.js",
-      "require": "./emotion/dist/remirror-styles-emotion.cjs",
-      "types": "./emotion/dist/remirror-styles-emotion.d.ts"
+      "require": "./emotion/dist/remirror-styles-emotion.cjs"
     },
     "./package.json": "./package.json",
     "./styled-components": {
+      "types": "./dist-types/styled-components.d.ts",
       "import": "./styled-components/dist/remirror-styles-styled-components.js",
-      "require": "./styled-components/dist/remirror-styles-styled-components.cjs",
-      "types": "./styled-components/dist/remirror-styles-styled-components.d.ts"
+      "require": "./styled-components/dist/remirror-styles-styled-components.cjs"
     }
   },
   "files": [
     "*.css",
     "dist",
+    "dist-types",
     "dom",
     "emotion",
     "styled-components"
@@ -83,7 +84,26 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      "./*": "./*",
+      "./dom": {
+        "types": "./dom/dist/remirror-styles-dom.d.ts",
+        "import": "./dom/dist/remirror-styles-dom.js",
+        "require": "./dom/dist/remirror-styles-dom.cjs"
+      },
+      "./emotion": {
+        "types": "./emotion/dist/remirror-styles-emotion.d.ts",
+        "import": "./emotion/dist/remirror-styles-emotion.js",
+        "require": "./emotion/dist/remirror-styles-emotion.cjs"
+      },
+      "./package.json": "./package.json",
+      "./styled-components": {
+        "types": "./styled-components/dist/remirror-styles-styled-components.d.ts",
+        "import": "./styled-components/dist/remirror-styles-styled-components.js",
+        "require": "./styled-components/dist/remirror-styles-styled-components.cjs"
+      }
+    },
+    "type": "module"
   },
   "preconstruct": {
     "entrypoints": [

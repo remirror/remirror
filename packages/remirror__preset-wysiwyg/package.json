@@ -21,17 +21,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-preset-wysiwyg.js",
-      "require": "./dist/remirror-preset-wysiwyg.cjs",
-      "types": "./dist/remirror-preset-wysiwyg.d.ts"
+      "require": "./dist/remirror-preset-wysiwyg.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-preset-wysiwyg.cjs",
   "module": "./dist/remirror-preset-wysiwyg.js",
-  "types": "./dist/remirror-preset-wysiwyg.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -65,7 +66,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-preset-wysiwyg.d.ts",
+        "import": "./dist/remirror-preset-wysiwyg.js",
+        "require": "./dist/remirror-preset-wysiwyg.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-preset-wysiwyg.cjs",
+    "module": "./dist/remirror-preset-wysiwyg.js",
+    "type": "module",
+    "types": "./dist/remirror-preset-wysiwyg.d.ts"
   },
   "@remirror": {
     "sizeLimit": "130 KB"

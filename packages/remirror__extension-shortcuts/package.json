@@ -20,17 +20,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-shortcuts.js",
-      "require": "./dist/remirror-extension-shortcuts.cjs",
-      "types": "./dist/remirror-extension-shortcuts.d.ts"
+      "require": "./dist/remirror-extension-shortcuts.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-shortcuts.cjs",
   "module": "./dist/remirror-extension-shortcuts.js",
-  "types": "./dist/remirror-extension-shortcuts.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -43,7 +44,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-shortcuts.d.ts",
+        "import": "./dist/remirror-extension-shortcuts.js",
+        "require": "./dist/remirror-extension-shortcuts.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-shortcuts.cjs",
+    "module": "./dist/remirror-extension-shortcuts.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-shortcuts.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

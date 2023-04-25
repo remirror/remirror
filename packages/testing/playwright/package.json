@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/testing-playwright.d.ts",
       "import": "./dist/testing-playwright.js",
-      "require": "./dist/testing-playwright.cjs",
-      "types": "./dist/testing-playwright.d.ts"
+      "require": "./dist/testing-playwright.cjs"
     },
     "./package.json": "./package.json"
   },

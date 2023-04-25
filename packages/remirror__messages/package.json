@@ -19,17 +19,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-messages.js",
-      "require": "./dist/remirror-messages.cjs",
-      "types": "./dist/remirror-messages.d.ts"
+      "require": "./dist/remirror-messages.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-messages.cjs",
   "module": "./dist/remirror-messages.js",
-  "types": "./dist/remirror-messages.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "scripts": {
     "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.cjs --format cjs"
@@ -46,7 +47,18 @@
     "rollup": "^2.79.1"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-messages.d.ts",
+        "import": "./dist/remirror-messages.js",
+        "require": "./dist/remirror-messages.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-messages.cjs",
+    "module": "./dist/remirror-messages.js",
+    "type": "module",
+    "types": "./dist/remirror-messages.d.ts"
   },
   "@remirror": {
     "sizeLimit": "50 KB"

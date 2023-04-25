@@ -1,24 +1,12 @@
 {
   "type": "commonjs",
   "main": "./dist/jest-prosemirror-serializer.cjs",
-  "types": "./../dist/serializer.d.ts",
+  "types": "./dist/jest-prosemirror-serializer.d.ts",
   "exports": {
     ".": {
-      "types": "./../dist/serializer.d.ts",
+      "types": "./dist/jest-prosemirror-serializer.d.ts",
       "require": "./dist/jest-prosemirror-serializer.cjs"
     },
     "./package.json": "./package.json"
-  },
-  "publishConfig": {
-    "exports": {
-      ".": {
-        "types": "./dist/jest-prosemirror-serializer.d.ts",
-        "require": "./dist/jest-prosemirror-serializer.cjs"
-      },
-      "./package.json": "./package.json"
-    },
-    "type": "commonjs",
-    "main": "./dist/jest-prosemirror-serializer.cjs",
-    "types": "./dist/jest-prosemirror-serializer.d.ts"
   }
 }

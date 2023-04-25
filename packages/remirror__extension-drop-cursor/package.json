@@ -23,17 +23,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-drop-cursor.js",
-      "require": "./dist/remirror-extension-drop-cursor.cjs",
-      "types": "./dist/remirror-extension-drop-cursor.d.ts"
+      "require": "./dist/remirror-extension-drop-cursor.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-drop-cursor.cjs",
   "module": "./dist/remirror-extension-drop-cursor.js",
-  "types": "./dist/remirror-extension-drop-cursor.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -47,7 +48,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-drop-cursor.d.ts",
+        "import": "./dist/remirror-extension-drop-cursor.js",
+        "require": "./dist/remirror-extension-drop-cursor.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-drop-cursor.cjs",
+    "module": "./dist/remirror-extension-drop-cursor.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-drop-cursor.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-editors-wysiwyg.d.ts",
       "import": "./dist/remirror-react-editors-wysiwyg.js",
-      "require": "./dist/remirror-react-editors-wysiwyg.cjs",
-      "types": "./dist/remirror-react-editors-wysiwyg.d.ts"
+      "require": "./dist/remirror-react-editors-wysiwyg.cjs"
     },
     "./package.json": "./package.json"
   },

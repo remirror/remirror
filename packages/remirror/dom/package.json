@@ -1,14 +1,14 @@
 {
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./dist/remirror-dom.js",
-      "require": "./dist/remirror-dom.cjs",
-      "types": "./dist/remirror-dom.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
   "main": "./dist/remirror-dom.cjs",
   "module": "./dist/remirror-dom.js",
-  "types": "./dist/remirror-dom.d.ts"
+  "types": "./dist/remirror-dom.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/remirror-dom.d.ts",
+      "import": "./dist/remirror-dom.js",
+      "require": "./dist/remirror-dom.cjs"
+    },
+    "./package.json": "./package.json"
+  }
 }

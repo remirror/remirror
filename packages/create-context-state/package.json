@@ -19,17 +19,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/create-context-state.js",
-      "require": "./dist/create-context-state.cjs",
-      "types": "./dist/create-context-state.d.ts"
+      "require": "./dist/create-context-state.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/create-context-state.cjs",
   "module": "./dist/create-context-state.js",
-  "types": "./dist/create-context-state.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0"
@@ -49,7 +50,18 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/create-context-state.d.ts",
+        "import": "./dist/create-context-state.js",
+        "require": "./dist/create-context-state.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "type": "module",
+    "main": "./dist/create-context-state.cjs",
+    "module": "./dist/create-context-state.js",
+    "types": "./dist/create-context-state.d.ts"
   },
   "@remirror": {
     "sizeLimit": "1.5 KB"

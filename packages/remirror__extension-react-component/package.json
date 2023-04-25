@@ -21,17 +21,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-react-component.js",
-      "require": "./dist/remirror-extension-react-component.cjs",
-      "types": "./dist/remirror-extension-react-component.d.ts"
+      "require": "./dist/remirror-extension-react-component.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-react-component.cjs",
   "module": "./dist/remirror-extension-react-component.js",
-  "types": "./dist/remirror-extension-react-component.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -63,7 +64,18 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-react-component.d.ts",
+        "import": "./dist/remirror-extension-react-component.js",
+        "require": "./dist/remirror-extension-react-component.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-react-component.cjs",
+    "module": "./dist/remirror-extension-react-component.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-react-component.d.ts"
   },
   "@remirror": {
     "sizeLimit": "10 KB"

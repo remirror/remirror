@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-context-menu.d.ts",
       "import": "./dist/remirror-react-hooks-use-context-menu.js",
-      "require": "./dist/remirror-react-hooks-use-context-menu.cjs",
-      "types": "./dist/remirror-react-hooks-use-context-menu.d.ts"
+      "require": "./dist/remirror-react-hooks-use-context-menu.cjs"
     },
     "./package.json": "./package.json"
   },

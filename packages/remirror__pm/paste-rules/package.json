@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-paste-rules.d.ts",
       "import": "./dist/remirror-pm-paste-rules.js",
-      "require": "./dist/remirror-pm-paste-rules.cjs",
-      "types": "./dist/remirror-pm-paste-rules.d.ts"
+      "require": "./dist/remirror-pm-paste-rules.cjs"
     },
     "./package.json": "./package.json"
   },

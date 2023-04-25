@@ -20,17 +20,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-placeholder.js",
-      "require": "./dist/remirror-extension-placeholder.cjs",
-      "types": "./dist/remirror-extension-placeholder.d.ts"
+      "require": "./dist/remirror-extension-placeholder.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-placeholder.cjs",
   "module": "./dist/remirror-extension-placeholder.js",
-  "types": "./dist/remirror-extension-placeholder.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "style"
   ],
   "dependencies": {
@@ -46,7 +47,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-placeholder.d.ts",
+        "import": "./dist/remirror-extension-placeholder.js",
+        "require": "./dist/remirror-extension-placeholder.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-placeholder.cjs",
+    "module": "./dist/remirror-extension-placeholder.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-placeholder.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

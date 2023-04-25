@@ -25,17 +25,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-epic-mode.js",
-      "require": "./dist/remirror-extension-epic-mode.cjs",
-      "types": "./dist/remirror-extension-epic-mode.d.ts"
+      "require": "./dist/remirror-extension-epic-mode.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-epic-mode.cjs",
   "module": "./dist/remirror-extension-epic-mode.js",
-  "types": "./dist/remirror-extension-epic-mode.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -49,7 +50,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-epic-mode.d.ts",
+        "import": "./dist/remirror-extension-epic-mode.js",
+        "require": "./dist/remirror-extension-epic-mode.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-epic-mode.cjs",
+    "module": "./dist/remirror-extension-epic-mode.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-epic-mode.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

@@ -20,17 +20,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-find.js",
-      "require": "./dist/remirror-extension-find.cjs",
-      "types": "./dist/remirror-extension-find.d.ts"
+      "require": "./dist/remirror-extension-find.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-extension-find.cjs",
   "module": "./dist/remirror-extension-find.js",
-  "types": "./dist/remirror-extension-find.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@remirror/core": "^2.0.12",
@@ -45,7 +46,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-find.d.ts",
+        "import": "./dist/remirror-extension-find.js",
+        "require": "./dist/remirror-extension-find.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-find.cjs",
+    "module": "./dist/remirror-extension-find.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-find.d.ts"
   },
   "@remirror": {
     "sizeLimit": "20 KB"

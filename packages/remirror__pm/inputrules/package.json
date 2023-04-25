@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-inputrules.d.ts",
       "import": "./dist/remirror-pm-inputrules.js",
-      "require": "./dist/remirror-pm-inputrules.cjs",
-      "types": "./dist/remirror-pm-inputrules.d.ts"
+      "require": "./dist/remirror-pm-inputrules.cjs"
     },
     "./package.json": "./package.json"
   },

@@ -20,17 +20,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/test-keyboard.js",
-      "require": "./dist/test-keyboard.cjs",
-      "types": "./dist/test-keyboard.d.ts"
+      "require": "./dist/test-keyboard.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/test-keyboard.cjs",
   "module": "./dist/test-keyboard.js",
-  "types": "./dist/test-keyboard.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "environment.d.ts",
     "environment.js"
   ],
@@ -40,7 +41,18 @@
     "@remirror/core-types": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/test-keyboard.d.ts",
+        "import": "./dist/test-keyboard.js",
+        "require": "./dist/test-keyboard.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/test-keyboard.cjs",
+    "module": "./dist/test-keyboard.js",
+    "type": "module",
+    "types": "./dist/test-keyboard.d.ts"
   },
   "@remirror": {
     "sizeLimit": "10 KB"

@@ -16,23 +16,35 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-core-constants.js",
-      "require": "./dist/remirror-core-constants.cjs",
-      "types": "./dist/remirror-core-constants.d.ts"
+      "require": "./dist/remirror-core-constants.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-core-constants.cjs",
   "module": "./dist/remirror-core-constants.js",
-  "types": "./dist/remirror-core-constants.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-core-constants.d.ts",
+        "import": "./dist/remirror-core-constants.js",
+        "require": "./dist/remirror-core-constants.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "type": "module",
+    "main": "./dist/remirror-core-constants.cjs",
+    "module": "./dist/remirror-core-constants.js",
+    "types": "./dist/remirror-core-constants.d.ts"
   },
   "@remirror": {
     "sizeLimit": "2 KB"

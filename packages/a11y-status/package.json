@@ -15,17 +15,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/a11y-status.js",
-      "require": "./dist/a11y-status.cjs",
-      "types": "./dist/a11y-status.d.ts"
+      "require": "./dist/a11y-status.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/a11y-status.cjs",
   "module": "./dist/a11y-status.js",
-  "types": "./dist/a11y-status.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -33,7 +34,18 @@
     "throttle-debounce": "^3.0.1"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/a11y-status.d.ts",
+        "import": "./dist/a11y-status.js",
+        "require": "./dist/a11y-status.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "type": "module",
+    "main": "./dist/a11y-status.cjs",
+    "module": "./dist/a11y-status.js",
+    "types": "./dist/a11y-status.d.ts"
   },
   "@remirror": {
     "sizeLimit": "1 KB"

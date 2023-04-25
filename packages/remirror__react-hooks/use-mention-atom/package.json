@@ -2,9 +2,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-mention-atom.d.ts",
       "import": "./dist/remirror-react-hooks-use-mention-atom.js",
-      "require": "./dist/remirror-react-hooks-use-mention-atom.cjs",
-      "types": "./dist/remirror-react-hooks-use-mention-atom.d.ts"
+      "require": "./dist/remirror-react-hooks-use-mention-atom.cjs"
     },
     "./package.json": "./package.json"
   },

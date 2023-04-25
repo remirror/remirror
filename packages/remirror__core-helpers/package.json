@@ -16,17 +16,18 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-core-helpers.js",
-      "require": "./dist/remirror-core-helpers.cjs",
-      "types": "./dist/remirror-core-helpers.d.ts"
+      "require": "./dist/remirror-core-helpers.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-core-helpers.cjs",
   "module": "./dist/remirror-core-helpers.js",
-  "types": "./dist/remirror-core-helpers.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
@@ -46,7 +47,18 @@
     "throttle-debounce": "^3.0.1"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-core-helpers.d.ts",
+        "import": "./dist/remirror-core-helpers.js",
+        "require": "./dist/remirror-core-helpers.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "type": "module",
+    "main": "./dist/remirror-core-helpers.cjs",
+    "module": "./dist/remirror-core-helpers.js",
+    "types": "./dist/remirror-core-helpers.d.ts"
   },
   "@remirror": {
     "tsconfigs": {
