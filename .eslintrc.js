@@ -38,7 +38,7 @@ let config = {
   },
   settings: {
     react: {
-      version: 'latest',
+      version: 'detect',
     },
   },
   env: {
