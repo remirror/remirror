@@ -27,7 +27,7 @@ runs:
       run: PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 pnpm install --frozen-lockfile
       shell: bash
 
-    - name: Check type
+    - name: check type
       run: pnpm typecheck
       shell: bash
 
