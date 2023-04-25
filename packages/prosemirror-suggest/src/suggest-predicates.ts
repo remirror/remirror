@@ -98,7 +98,7 @@ const selectionExitReasons = [
  */
 export function isSelectionExitReason(
   value: unknown,
-): value is typeof selectionExitReasons[number] {
+): value is (typeof selectionExitReasons)[number] {
   return includes(selectionExitReasons, value);
 }
 
@@ -111,7 +111,7 @@ const selectionChangeReasons = [
 
 export function isSelectionChangeReason(
   value: unknown,
-): value is typeof selectionChangeReasons[number] {
+): value is (typeof selectionChangeReasons)[number] {
   return includes(selectionChangeReasons, value);
 }
 

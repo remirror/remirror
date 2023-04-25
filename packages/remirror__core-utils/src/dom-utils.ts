@@ -64,7 +64,7 @@ export const DOM_SIZE_UNITS = [
   'vmax',
 ] as const;
 
-export type DomSizeUnit = typeof DOM_SIZE_UNITS[number];
+export type DomSizeUnit = (typeof DOM_SIZE_UNITS)[number];
 
 /**
  * A tuple for the font size and unit.

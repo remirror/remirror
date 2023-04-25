@@ -1036,7 +1036,7 @@ interface GetModifiersEvent {
 /**
  * Get an array of the event modifiers
  */
-export function getModifiers(event: GetModifiersEvent): Array<typeof modifierKeys[number]> {
+export function getModifiers(event: GetModifiersEvent): Array<(typeof modifierKeys)[number]> {
   return modifierKeys.filter((key) => event[key]);
 }
 

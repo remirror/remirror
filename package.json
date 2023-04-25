@@ -203,13 +203,13 @@
     "tsx": "^3.12.6",
     "typescript": "~4.9.5"
   },
+  "packageManager": "pnpm@7.32.2",
   "engines": {
     "node": ">=v14.21.3"
   },
   "manypkg": {
     "defaultBranch": "HEAD"
   },
-  "packageManager": "pnpm@7.32.2",
   "pnpm": {
     "overrides": {
       "postcss": ">= 8.0.0"
