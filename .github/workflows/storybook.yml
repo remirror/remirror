@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           # Uses node 14 to allow nullish coalescing in `.js` files
-          node-version: 14
+          node-version: 16
 
       - name: install and audit
         uses: ./support/actions/pnpm
