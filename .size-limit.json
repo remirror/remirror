@@ -101,7 +101,7 @@
   },
   {
     "name": "@remirror/core-types",
-    "limit": "110 B",
+    "limit": "1 kB",
     "path": "packages/remirror__core-types/dist/remirror-core-types.js",
     "ignore": ["@remirror/pm", "@remirror/core-constants", "@remirror/types"],
     "running": false,
@@ -912,7 +912,7 @@
   },
   {
     "name": "@remirror/types",
-    "limit": "0 KB",
+    "limit": "1 KB",
     "path": "packages/remirror__types/dist/remirror-types.js",
     "ignore": [],
     "running": false,

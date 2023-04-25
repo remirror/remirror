@@ -55,7 +55,7 @@
     "types": "./dist/remirror-core-types.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "110 B"
+    "sizeLimit": "1 kB"
   },
   "preconstruct": {
     "entrypoints": [

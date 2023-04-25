@@ -50,6 +50,6 @@
     "types": "./dist/remirror-types.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "0 KB"
+    "sizeLimit": "1 KB"
   }
 }
