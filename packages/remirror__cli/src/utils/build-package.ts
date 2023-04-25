@@ -50,39 +50,39 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
             return { js: format === 'esm' ? '.js' : '.cjs' };
           },
           skipNodeModulesBundle: true,
-          dts: {
-            entry: {
-              [outFileEntry]: inDtsFile,
-            },
-            compilerOptions: {
-              allowJs: true,
-              module: 'ESNext',
-              target: 'ESNext',
-              lib: ['DOM', 'DOM.Iterable', 'ESNext'],
-              jsx: 'react',
-              types: ['node', '@jest/globals'],
-              moduleResolution: 'node',
-              useDefineForClassFields: true,
-              sourceMap: true,
-              declaration: true,
-              pretty: true,
-              noEmit: true,
-              strict: true,
-              resolveJsonModule: true,
-              preserveWatchOutput: true,
-              skipLibCheck: true,
-              experimentalDecorators: true,
-              isolatedModules: true,
-              allowSyntheticDefaultImports: true,
-              esModuleInterop: true,
-              importsNotUsedAsValues: 'remove',
-              noUnusedLocals: true,
-              noUnusedParameters: true,
-              allowUnreachableCode: false,
-              forceConsistentCasingInFileNames: true,
-              noImplicitReturns: true,
-            },
-          },
+          // dts: {
+          //   entry: {
+          //     [outFileEntry]: inDtsFile,
+          //   },
+          //   compilerOptions: {
+          //     allowJs: true,
+          //     module: 'ESNext',
+          //     target: 'ESNext',
+          //     lib: ['DOM', 'DOM.Iterable', 'ESNext'],
+          //     jsx: 'react',
+          //     types: ['node', '@jest/globals'],
+          //     moduleResolution: 'node',
+          //     useDefineForClassFields: true,
+          //     sourceMap: true,
+          //     declaration: true,
+          //     pretty: true,
+          //     noEmit: true,
+          //     strict: true,
+          //     resolveJsonModule: true,
+          //     preserveWatchOutput: true,
+          //     skipLibCheck: true,
+          //     experimentalDecorators: true,
+          //     isolatedModules: true,
+          //     allowSyntheticDefaultImports: true,
+          //     esModuleInterop: true,
+          //     importsNotUsedAsValues: 'remove',
+          //     noUnusedLocals: true,
+          //     noUnusedParameters: true,
+          //     allowUnreachableCode: false,
+          //     forceConsistentCasingInFileNames: true,
+          //     noImplicitReturns: true,
+          //   },
+          // },
         }),
       );
     }
@@ -213,13 +213,15 @@ function buildPackageJson(
 
   entryPoints: EntryPoint[],
   packageJson: any = {},
+
+  publishConfig = false,
 ) {
   let exports: Record<string, any> = { ...packageJson.exports };
 
   for (const entryPoint of entryPoints) {
     exports = {
       ...exports,
-      ...buildCondictionalExports(packageDir, packageJsonDir, entryPoint),
+      ...buildCondictionalExports(packageDir, packageJsonDir, entryPoint, publishConfig),
     };
   }
 
@@ -243,6 +245,17 @@ function buildPackageJson(
 
   delete packageJson.browser;
   packageJson.exports = exports;
+
+  if (!publishConfig) {
+    packageJson.publishConfig = buildPackageJson(
+      packageDir,
+      packageJsonDir,
+      entryPoints,
+      { exports: packageJson.exports },
+      true,
+    );
+  }
+
   return packageJson;
 }
 
@@ -256,7 +269,12 @@ function buildCondictionalExports(
    */
   packageJsonDir: string,
   entryPoint: EntryPoint,
+  publishConfig: boolean,
 ): Record<string, any> {
+  const inFileRelativeToSrc = path.relative(path.join(packageDir, 'src'), entryPoint.inFile);
+  const dtsFile = `${path.join(packageDir, 'dist', `${removeFileExt(inFileRelativeToSrc)}.d.ts`)}`;
+
+  const dtsFileRelativePath = `./${path.relative(packageJsonDir, dtsFile)}`;
   const outEsmFileRelativePath = `./${path.relative(packageJsonDir, entryPoint.outFile)}`;
   const outCjsFileRelativePath = ensureCjsFilename(outEsmFileRelativePath);
   const outDtsFileRelativePath = ensureDtsFilename(outEsmFileRelativePath);
@@ -276,6 +294,7 @@ function buildCondictionalExports(
 
   return {
     [subPathRelativePath]: {
+      types: publishConfig ? outDtsFileRelativePath : dtsFileRelativePath,
       ...(supportEsm
         ? {
             import: outEsmFileRelativePath,
@@ -286,7 +305,6 @@ function buildCondictionalExports(
             require: outCjsFileRelativePath,
           }
         : {}),
-      types: outDtsFileRelativePath,
     },
   };
 }
