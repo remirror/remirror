@@ -180,7 +180,7 @@ export function isProsemirrorMark(value: unknown): value is Mark {
  *
  * @param value - the value to check
  */
-export function isEditorState(value: unknown): value is PMEditorState {
+export function isEditorState(value: unknown): value is PMEditorState | Readonly<PMEditorState> {
   return isObject(value) && value instanceof PMEditorState;
 }
 
