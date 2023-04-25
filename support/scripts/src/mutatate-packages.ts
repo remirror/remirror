@@ -84,7 +84,7 @@ function getPreReleaseVersion(version: string | undefined, prerelease: string) {
  */
 function mutateDependencies(
   versionedNames: Record<string, string>,
-  dependencies: Record<string, string> | undefined,
+  dependencies: Record<string, string | undefined> | undefined,
 ) {
   if (!dependencies) {
     return;
