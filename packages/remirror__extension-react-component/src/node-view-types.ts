@@ -100,7 +100,7 @@ export interface NodeViewComponentProps extends EditorViewProps, NodeWithAttribu
 /**
  * Retrieve the position of the current nodeView
  */
-export type GetPosition = (() => number) | boolean;
+export type GetPosition = () => number | undefined;
 
 export interface ReactNodeViewProps
   extends EditorViewProps,

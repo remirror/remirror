@@ -58,7 +58,7 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
     };
 
     if (this.options.enableResizing) {
-      return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
+      return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => {
         return new ResizableIframeView(node, view, getPos as () => number, iframeOptions);
       };
     }

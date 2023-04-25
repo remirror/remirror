@@ -278,7 +278,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
 
   createNodeViews(): NodeViewMethod | Record<string, NodeViewMethod> {
     if (this.options.enableResizing) {
-      return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
+      return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => {
         return new ResizableImageView(node, view, getPos as () => number);
       };
     }

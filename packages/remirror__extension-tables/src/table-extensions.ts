@@ -170,7 +170,7 @@ export class TableExtension extends NodeExtension<TableOptions> {
       props: {
         nodeViews: {
           table(node, view, getPos) {
-            const dom = view.nodeDOM(getPos());
+            const dom = view.nodeDOM(getPos() as number);
 
             if (isElementDomNode(dom) && dom.tagName === 'TABLE') {
               updateColumnsOnResize(

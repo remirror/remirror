@@ -59,7 +59,7 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
    * Adds the returned DOM node form `renderEmoji`  into it.
    */
   createNodeViews(): NodeViewMethod {
-    return (node: ProsemirrorNode, view: EditorView, getPos: boolean | (() => number)) => {
+    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => {
       const { type, emoji } = node.attrs;
       const { renderEmoji } = this.options;
       const dom = document.createElement('div');

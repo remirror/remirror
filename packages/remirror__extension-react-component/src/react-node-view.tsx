@@ -84,7 +84,7 @@ export class ReactNodeView implements NodeView {
   /**
    * Method for retrieving the position of the current nodeView
    */
-  readonly #getPosition: () => number;
+  readonly #getPosition: () => number | undefined;
 
   /**
    * The options passed through to the `ReactComponent`.
@@ -297,7 +297,13 @@ export class ReactNodeView implements NodeView {
       return;
     }
 
-    const tr = this.#view.state.tr.setNodeMarkup(this.#getPosition(), undefined, {
+    const pos = this.#getPosition();
+
+    if (pos == null) {
+      return;
+    }
+
+    const tr = this.#view.state.tr.setNodeMarkup(pos, undefined, {
       ...this.#node.attrs,
       ...attrs,
     });
