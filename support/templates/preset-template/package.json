@@ -19,17 +19,6 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist/preset-template.esm.js",
-      "require": "./dist/preset-template.cjs.js",
-      "browser": "./dist/preset-template.esm.js",
-      "types": "./dist/preset-template.cjs.d.ts",
-      "default": "./dist/preset-template.esm.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
   "main": "dist/remirror-preset-template.cjs.js",
   "module": "dist/remirror-preset-template.esm.js",
   "browser": {

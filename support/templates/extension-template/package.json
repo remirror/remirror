@@ -18,17 +18,6 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "exports": {
-    ".": {
-      "import": "./dist/extension-template.esm.js",
-      "require": "./dist/extension-template.cjs.js",
-      "browser": "./dist/extension-template.esm.js",
-      "types": "./dist/extension-template.cjs.d.ts",
-      "default": "./dist/extension-template.esm.js"
-    },
-    "./package.json": "./package.json",
-    "./types/*": "./dist/declarations/src/*.d.ts"
-  },
   "main": "dist/remirror-extension-template.cjs.js",
   "module": "dist/remirror-extension-template.esm.js",
   "browser": {
