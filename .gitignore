@@ -139,9 +139,6 @@ test/__failed-diffs__
 cc-reporter
 support/api/**
 
-# CI `pnpm` cache
-.pnpm-store/
-
 ## Storybook
 **/storybook-static
 

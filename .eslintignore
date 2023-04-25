@@ -25,7 +25,6 @@ docs/api/**
 dist-tmp
 
 pnpm-lock.yaml
-.pnpm-store/
 
 **/.next
 **/.docusaurus

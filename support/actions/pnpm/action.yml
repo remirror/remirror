@@ -1,14 +1,14 @@
-name: "pnpm installation"
-description: "Install and audit dependencies for pnpm"
+name: 'pnpm installation'
+description: 'Install and audit dependencies for pnpm'
 
 inputs:
   node-version:
-    description: "The version of Node.js"
+    description: 'The version of Node.js'
     required: true
-    default: "16.x"
+    default: '16.x'
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: enable corepack
       run: corepack enable
