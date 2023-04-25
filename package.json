@@ -212,7 +212,8 @@
   },
   "pnpm": {
     "overrides": {
-      "postcss": ">= 8.0.0"
+      "postcss": ">= 8.0.0",
+      "lib0": "0.2.61"
     }
   },
   "preconstruct": {

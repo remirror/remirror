@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 overrides:
   postcss: '>= 8.0.0'
+  lib0: 0.2.61
 
 importers:
 
@@ -20855,10 +20856,9 @@ packages:
       type-check: 0.4.0
     dev: false
 
-  /lib0/0.2.74:
-    resolution: {integrity: sha512-roj9i46/JwG5ik5KNTkxP2IytlnrssAkD/OhlAVtE+GqectrdkfR+pttszVLrOzMDeXNs1MPt6yo66MUolWSiA==}
+  /lib0/0.2.61:
+    resolution: {integrity: sha512-yVhT0uMXNWk50KqBgsZPxmcoO7Yft341wDTByKjXIzBpkhUjEzXl/M9b/GfqyDFBdiLCGg19Cv26NHUEnbL1pA==}
     engines: {node: '>=14'}
-    hasBin: true
     dependencies:
       isomorphic.js: 0.2.4
 
@@ -28649,7 +28649,7 @@ packages:
       y-protocols: ^1.0.1
       yjs: ^13.5.38
     dependencies:
-      lib0: 0.2.74
+      lib0: 0.2.61
       prosemirror-model: 1.19.0
       prosemirror-state: 1.4.2
       prosemirror-view: 1.30.2
@@ -28660,14 +28660,14 @@ packages:
   /y-protocols/1.0.5:
     resolution: {integrity: sha512-Wil92b7cGk712lRHDqS4T90IczF6RkcvCwAD0A2OPg+adKmOe+nOiT/N2hvpQIWS3zfjmtL4CPaH5sIW1Hkm/A==}
     dependencies:
-      lib0: 0.2.74
+      lib0: 0.2.61
 
   /y-webrtc/10.2.5:
     resolution: {integrity: sha512-ZyBNvTI5L28sQ2PQI0T/JvyWgvuTq05L21vGkIlcvNLNSJqAaLCBJRe3FHEqXoaogqWmRcEAKGfII4ErNXMnNw==}
     engines: {node: '>=12'}
     hasBin: true
     dependencies:
-      lib0: 0.2.74
+      lib0: 0.2.61
       simple-peer: 9.11.0
       y-protocols: 1.0.5
     optionalDependencies:
@@ -28771,7 +28771,7 @@ packages:
     resolution: {integrity: sha512-tFZtuQV6XamtDa9SfZhUsxchUcTBWe7fzpo1UWZDLXGejTZ5t9MCswGYzyvq7+BDzfEc9oX54QEbzI/4NyS6+g==}
     engines: {node: '>=16.0.0', npm: '>=8.0.0'}
     dependencies:
-      lib0: 0.2.74
+      lib0: 0.2.61
 
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
