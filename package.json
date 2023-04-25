@@ -219,7 +219,8 @@
       "@lingui/detect-locale@3.17.2": "patches/@lingui__detect-locale@3.17.2.patch",
       "y-prosemirror@1.2.1": "patches/y-prosemirror@1.2.1.patch",
       "y-webrtc@10.2.5": "patches/y-webrtc@10.2.5.patch",
-      "svgmoji@3.2.0": "patches/svgmoji@3.2.0.patch"
+      "svgmoji@3.2.0": "patches/svgmoji@3.2.0.patch",
+      "react-use@17.4.0": "patches/react-use@17.4.0.patch"
     }
   },
   "preconstruct": {

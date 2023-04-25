@@ -3,10 +3,10 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="jest-extended" />
 
-import { defaultImport } from '@remirror/core-helpers';
 import diffHtml from 'diffable-html';
 import JestExtended from 'jest-extended';
 import { prosemirrorSerializer } from 'jest-prosemirror';
+import { defaultImport } from '@remirror/core-helpers';
 
 const jestExtendedMatchers = defaultImport(JestExtended);
 
