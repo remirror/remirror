@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-styles-styled-components.cjs",
-  "module": "./dist/remirror-styles-styled-components.js",
-  "types": "./dist/remirror-styles-styled-components.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-styles-styled-components.js",
@@ -10,5 +7,8 @@
       "types": "./dist/remirror-styles-styled-components.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-styles-styled-components.cjs",
+  "module": "./dist/remirror-styles-styled-components.js",
+  "types": "./dist/remirror-styles-styled-components.d.ts"
 }

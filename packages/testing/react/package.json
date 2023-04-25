@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/testing-react.cjs",
-  "module": "./dist/testing-react.js",
-  "types": "./dist/testing-react.d.ts",
   "exports": {
     ".": {
       "import": "./dist/testing-react.js",
@@ -10,5 +7,8 @@
       "types": "./dist/testing-react.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/testing-react.cjs",
+  "module": "./dist/testing-react.js",
+  "types": "./dist/testing-react.d.ts"
 }

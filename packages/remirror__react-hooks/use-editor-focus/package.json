@@ -1,8 +1,5 @@
 {
   "type": "module",
-  "main": "./dist/remirror-react-hooks-use-editor-focus.cjs",
-  "module": "./dist/remirror-react-hooks-use-editor-focus.js",
-  "types": "./dist/remirror-react-hooks-use-editor-focus.d.ts",
   "exports": {
     ".": {
       "import": "./dist/remirror-react-hooks-use-editor-focus.js",
@@ -10,5 +7,8 @@
       "types": "./dist/remirror-react-hooks-use-editor-focus.d.ts"
     },
     "./package.json": "./package.json"
-  }
+  },
+  "main": "./dist/remirror-react-hooks-use-editor-focus.cjs",
+  "module": "./dist/remirror-react-hooks-use-editor-focus.js",
+  "types": "./dist/remirror-react-hooks-use-editor-focus.d.ts"
 }
