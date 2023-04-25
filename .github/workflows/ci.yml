@@ -2,7 +2,7 @@ name: ci
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
   push:
     branches:
@@ -112,8 +112,14 @@ jobs:
         with:
           cache: ${{ env.PNPM_CACHE_FOLDER }}
 
-      - name: run unit tests
-        run: pnpm test
+      - name: run unit tests (part 1)
+        run: pnpm test -- --shard=1/3
+
+      - name: run unit tests (part 2)
+        run: pnpm test -- --shard=2/3
+
+      - name: run unit tests (part 3)
+        run: pnpm test -- --shard=3/3
 
       # - name: publish code coverage report
       #   uses: paambaati/codeclimate-action@v2.7.5
