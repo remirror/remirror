@@ -24,7 +24,7 @@ export async function build(packageNames?: string[]) {
     }
   }
 
-  await runTsc();
+  // await runTsc();
 
   for (const pkg of packages) {
     await buildPackage(pkg);

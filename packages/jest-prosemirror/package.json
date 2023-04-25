@@ -21,26 +21,27 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/jest-prosemirror.js",
-      "require": "./dist/jest-prosemirror.cjs",
-      "types": "./dist/jest-prosemirror.d.ts"
+      "require": "./dist/jest-prosemirror.cjs"
     },
     "./environment": {
+      "types": "./dist/environment.d.ts",
       "import": "./environment/dist/jest-prosemirror-environment.js",
-      "require": "./environment/dist/jest-prosemirror-environment.cjs",
-      "types": "./environment/dist/jest-prosemirror-environment.d.ts"
+      "require": "./environment/dist/jest-prosemirror-environment.cjs"
     },
     "./package.json": "./package.json",
     "./serializer": {
-      "require": "./serializer/dist/jest-prosemirror-serializer.cjs",
-      "types": "./serializer/dist/jest-prosemirror-serializer.d.ts"
+      "types": "./dist/serializer.d.ts",
+      "require": "./serializer/dist/jest-prosemirror-serializer.cjs"
     }
   },
   "main": "./dist/jest-prosemirror.cjs",
   "module": "./dist/jest-prosemirror.js",
-  "types": "./dist/jest-prosemirror.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
+    "dist-types",
     "environment",
     "serializer"
   ],
@@ -73,7 +74,27 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/jest-prosemirror.d.ts",
+        "import": "./dist/jest-prosemirror.js",
+        "require": "./dist/jest-prosemirror.cjs"
+      },
+      "./environment": {
+        "types": "./environment/dist/jest-prosemirror-environment.d.ts",
+        "import": "./environment/dist/jest-prosemirror-environment.js",
+        "require": "./environment/dist/jest-prosemirror-environment.cjs"
+      },
+      "./package.json": "./package.json",
+      "./serializer": {
+        "types": "./serializer/dist/jest-prosemirror-serializer.d.ts",
+        "require": "./serializer/dist/jest-prosemirror-serializer.cjs"
+      }
+    },
+    "type": "module",
+    "main": "./dist/jest-prosemirror.cjs",
+    "module": "./dist/jest-prosemirror.js",
+    "types": "./dist/jest-prosemirror.d.ts"
   },
   "@remirror": {
     "tsconfigs": {
