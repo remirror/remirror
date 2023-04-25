@@ -13,7 +13,7 @@ import type {
   Selection,
 } from '@remirror/pm';
 import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
-import { Decoration, DecorationSource, NodeView, NodeViewConstructor } from '@remirror/pm/view';
+import { Decoration, DecorationSource, NodeView } from '@remirror/pm/view';
 import type { JsonPrimitive, Literal, ObjectMark, ProsemirrorAttributes } from '@remirror/types';
 
 import type { FromToProps, MarkWithAttributes, NodeWithAttributes } from './props-types';
