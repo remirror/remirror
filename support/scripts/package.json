@@ -44,6 +44,7 @@
     "@changesets/types": "^5.2.1",
     "@changesets/write": "^0.2.3",
     "@linaria/babel-preset": "4.4.4",
+    "@linaria/utils": "^4.3.3",
     "@lingui/core": "^3.17.2",
     "@manypkg/get-packages": "^1.1.3",
     "@microsoft/api-extractor": "^7.34.4",

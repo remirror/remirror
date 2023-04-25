@@ -8,6 +8,7 @@
 /// <reference types="node" />
 
 import { transform } from '@linaria/babel-preset';
+import { asyncResolveFallback } from '@linaria/utils';
 import autoprefixer from 'autoprefixer';
 import chalk from 'chalk';
 import cpy from 'cpy';
@@ -144,11 +145,16 @@ async function extractCssFromPackage(name: string, relativeFilePaths: string[]) 
     const fileContents = await fs.readFile(baseDir(filename));
 
     // Transform the `css` linaria imports into css text.
-    const { cssText: rawCssText } = transform(fileContents.toString(), {
-      filename,
-      outputFilename,
-      preprocessor: 'none',
-    });
+    const result = await transform(
+      fileContents.toString(),
+      {
+        filename,
+        outputFilename,
+        preprocessor: 'none',
+      },
+      asyncResolveFallback,
+    );
+    const { cssText: rawCssText } = result;
 
     // Skip this if no css was found in the file.
     if (!rawCssText) {
