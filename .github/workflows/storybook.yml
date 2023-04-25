@@ -29,6 +29,7 @@ jobs:
           export STORYBOOK_BUILD_TIME=$(date +"%Y-%m-%dT%H:%M:%S%z")
           export STORYBOOK_GIT_SHA=$GITHUB_SHA
           export STORYBOOK_GIT_REF=$GITHUB_REF
+          export NODE_OPTIONS=--max_old_space_size=4096
           pnpm storybook:build
 
       - name: deploy storybook for pull request

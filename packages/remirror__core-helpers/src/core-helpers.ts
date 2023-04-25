@@ -953,7 +953,7 @@ export function uniqueBy<Item = any>(
   const list = fromStart ? [...array].reverse() : array;
 
   for (const item of list) {
-    const value = getter(item);
+    const value = getter(item as any);
 
     if (!found.has(value)) {
       found.add(value);

@@ -3,7 +3,7 @@ import './styles.css';
 
 import { css } from '@emotion/css';
 import { Placement } from '@popperjs/core';
-import { Annotations, BaseStory } from '@storybook/addons';
+import { StoryFn } from '@storybook/react';
 import React, { ReactElement, useEffect } from 'react';
 import type { Positioner } from 'remirror/extensions';
 import {
@@ -31,8 +31,6 @@ import {
   usePositioner,
   useRemirror,
 } from '@remirror/react';
-
-type Story = BaseStory<TemplateArgs, JSX.Element> & Annotations<TemplateArgs, JSX.Element>;
 
 interface PositionerIllustrationProps {
   positioner: Positioner;
@@ -119,6 +117,8 @@ const TABLE_HTML = `
   </table>
 `;
 
+type Story = StoryFn<TemplateArgs>;
+
 const Template: Story = ({
   content,
   positioner,
@@ -156,7 +156,7 @@ const Template: Story = ({
   );
 };
 
-export const Table = Template.bind({});
+export const Table: Story = Template.bind({});
 Table.args = {
   positioner: tablePositioner,
   placement: 'bottom',
