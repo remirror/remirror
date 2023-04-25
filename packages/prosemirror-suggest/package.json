@@ -16,9 +16,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/prosemirror-suggest.js",
-      "require": "./dist/prosemirror-suggest.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/prosemirror-suggest.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -48,7 +48,18 @@
   },
   "peerDependenciesMeta": {},
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/prosemirror-suggest.d.ts",
+        "import": "./dist/prosemirror-suggest.js",
+        "require": "./dist/prosemirror-suggest.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/prosemirror-suggest.cjs",
+    "module": "./dist/prosemirror-suggest.js",
+    "type": "module",
+    "types": "./dist/prosemirror-suggest.d.ts"
   },
   "@remirror": {
     "sizeLimit": "10 KB"

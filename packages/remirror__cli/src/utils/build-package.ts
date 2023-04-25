@@ -2,16 +2,16 @@ import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
 import path from 'node:path';
 import sortKeys from 'sort-keys';
+import { build as tsupBuild } from 'tsup';
 
 import { logger } from '../logger';
 import { colors } from './colors';
-import { ensureCjsFilename } from './ensure-cjs-filename';
+import { ensureCjsFilename, ensureDtsFilename } from './ensure-cjs-filename';
 import { EntryPoint } from './entry-point';
 import { fileExists } from './file-exists';
 import { getRoot } from './get-root';
 import { removeFileExt } from './remove-file-ext';
 import { runCustomScript } from './run-custom-script';
-import { runEsbuild } from './run-esbuild';
 import { slugify } from './slugify';
 import { writePackageJson } from './write-package-json';
 
@@ -36,15 +36,55 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
     promises.push(runCustomScript(pkg, 'build'));
   } else {
     for (const entryPoint of entryPoints) {
-      const { format } = entryPoint;
-
-      if (format === 'dual' || format === 'esm') {
-        promises.push(runEsbuild(pkg, { ...entryPoint, format: 'esm' }));
-      }
-
-      if (format === 'dual' || format === 'cjs') {
-        promises.push(runEsbuild(pkg, { ...entryPoint, format: 'cjs' }));
-      }
+      const { format, outFile, inFile } = entryPoint;
+      const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
+      const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
+      promises.push(
+        tsupBuild({
+          outDir: path.dirname(outFile),
+          entry: {
+            [outFileEntry]: inFile,
+          },
+          format: format === 'dual' ? ['cjs', 'esm'] : format,
+          outExtension: ({ format }) => {
+            return { js: format === 'esm' ? '.js' : '.cjs' };
+          },
+          skipNodeModulesBundle: true,
+          dts: {
+            entry: {
+              [outFileEntry]: inDtsFile,
+            },
+            compilerOptions: {
+              allowJs: true,
+              module: 'ESNext',
+              target: 'ESNext',
+              lib: ['DOM', 'DOM.Iterable', 'ESNext'],
+              jsx: 'react',
+              types: ['node', '@jest/globals'],
+              moduleResolution: 'node',
+              useDefineForClassFields: true,
+              sourceMap: true,
+              declaration: true,
+              pretty: true,
+              noEmit: true,
+              strict: true,
+              resolveJsonModule: true,
+              preserveWatchOutput: true,
+              skipLibCheck: true,
+              experimentalDecorators: true,
+              isolatedModules: true,
+              allowSyntheticDefaultImports: true,
+              esModuleInterop: true,
+              importsNotUsedAsValues: 'remove',
+              noUnusedLocals: true,
+              noUnusedParameters: true,
+              allowUnreachableCode: false,
+              forceConsistentCasingInFileNames: true,
+              noImplicitReturns: true,
+            },
+          },
+        }),
+      );
     }
   }
 
@@ -157,7 +197,7 @@ async function writeSubpathPackageJson(pkg: Package, entryPoint: EntryPoint) {
   logger.assert(!entryPoint.isMain);
 
   const subPathDir = path.resolve(pkg.dir, entryPoint.subpath);
-  const packageJson = buildPackageJson(pkg.dir, subPathDir, [entryPoint]);
+  const packageJson = buildPackageJson(pkg.dir, subPathDir, [entryPoint], {}, true);
   await writePackageJson(subPathDir, packageJson);
 }
 
@@ -173,13 +213,15 @@ function buildPackageJson(
 
   entryPoints: EntryPoint[],
   packageJson: any = {},
+
+  publishConfig = false,
 ) {
   let exports: Record<string, any> = { ...packageJson.exports };
 
   for (const entryPoint of entryPoints) {
     exports = {
       ...exports,
-      ...buildCondictionalExports(packageDir, packageJsonDir, entryPoint),
+      ...buildCondictionalExports(packageDir, packageJsonDir, entryPoint, publishConfig),
     };
   }
 
@@ -203,6 +245,20 @@ function buildPackageJson(
 
   delete packageJson.browser;
   packageJson.exports = exports;
+
+  const isMainPackage = packageDir === packageJsonDir;
+
+  packageJson.publishConfig =
+    isMainPackage && !publishConfig
+      ? buildPackageJson(
+          packageDir,
+          packageJsonDir,
+          entryPoints,
+          { exports: packageJson.exports },
+          true,
+        )
+      : undefined;
+
   return packageJson;
 }
 
@@ -216,6 +272,7 @@ function buildCondictionalExports(
    */
   packageJsonDir: string,
   entryPoint: EntryPoint,
+  publishConfig: boolean,
 ): Record<string, any> {
   const inFileRelativeToSrc = path.relative(path.join(packageDir, 'src'), entryPoint.inFile);
   const dtsFile = `${path.join(
@@ -227,6 +284,7 @@ function buildCondictionalExports(
   const dtsFileRelativePath = `./${path.relative(packageJsonDir, dtsFile)}`;
   const outEsmFileRelativePath = `./${path.relative(packageJsonDir, entryPoint.outFile)}`;
   const outCjsFileRelativePath = ensureCjsFilename(outEsmFileRelativePath);
+  const outDtsFileRelativePath = ensureDtsFilename(outEsmFileRelativePath);
 
   let subPathRelativePath = `./${path.relative(
     packageJsonDir,
@@ -243,6 +301,7 @@ function buildCondictionalExports(
 
   return {
     [subPathRelativePath]: {
+      types: publishConfig ? outDtsFileRelativePath : dtsFileRelativePath,
       ...(supportEsm
         ? {
             import: outEsmFileRelativePath,
@@ -253,7 +312,6 @@ function buildCondictionalExports(
             require: outCjsFileRelativePath,
           }
         : {}),
-      types: dtsFileRelativePath,
     },
   };
 }

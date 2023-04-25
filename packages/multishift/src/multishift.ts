@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  EffectCallback,
   HTMLProps,
   Ref,
   SyntheticEvent,
@@ -8,7 +9,6 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import { useEffectOnce } from 'react-use';
 import {
   debounce,
   includes,
@@ -737,3 +737,8 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     ...focusHelpers,
   };
 };
+
+function useEffectOnce(fn: EffectCallback) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(fn, []);
+}

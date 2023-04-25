@@ -20,9 +20,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-markdown.js",
-      "require": "./dist/remirror-extension-markdown.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-markdown.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -51,7 +51,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-markdown.d.ts",
+        "import": "./dist/remirror-extension-markdown.js",
+        "require": "./dist/remirror-extension-markdown.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-markdown.cjs",
+    "module": "./dist/remirror-extension-markdown.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-markdown.d.ts"
   },
   "@remirror": {
     "sizeLimit": "25 KB"

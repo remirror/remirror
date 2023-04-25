@@ -12,7 +12,7 @@ on:
 
 jobs:
   deploy_docs:
-    timeout-minutes: 10
+    timeout-minutes: 30
     runs-on: ubuntu-latest
 
     steps:

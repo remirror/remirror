@@ -21,19 +21,19 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/jest-prosemirror.js",
-      "require": "./dist/jest-prosemirror.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/jest-prosemirror.cjs"
     },
     "./environment": {
+      "types": "./dist-types/environment.d.ts",
       "import": "./environment/dist/jest-prosemirror-environment.js",
-      "require": "./environment/dist/jest-prosemirror-environment.cjs",
-      "types": "./dist-types/environment.d.ts"
+      "require": "./environment/dist/jest-prosemirror-environment.cjs"
     },
     "./package.json": "./package.json",
     "./serializer": {
-      "require": "./serializer/dist/jest-prosemirror-serializer.cjs",
-      "types": "./dist-types/serializer.d.ts"
+      "types": "./dist-types/serializer.d.ts",
+      "require": "./serializer/dist/jest-prosemirror-serializer.cjs"
     }
   },
   "main": "./dist/jest-prosemirror.cjs",
@@ -74,7 +74,27 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/jest-prosemirror.d.ts",
+        "import": "./dist/jest-prosemirror.js",
+        "require": "./dist/jest-prosemirror.cjs"
+      },
+      "./environment": {
+        "types": "./environment/dist/jest-prosemirror-environment.d.ts",
+        "import": "./environment/dist/jest-prosemirror-environment.js",
+        "require": "./environment/dist/jest-prosemirror-environment.cjs"
+      },
+      "./package.json": "./package.json",
+      "./serializer": {
+        "types": "./serializer/dist/jest-prosemirror-serializer.d.ts",
+        "require": "./serializer/dist/jest-prosemirror-serializer.cjs"
+      }
+    },
+    "main": "./dist/jest-prosemirror.cjs",
+    "module": "./dist/jest-prosemirror.js",
+    "type": "module",
+    "types": "./dist/jest-prosemirror.d.ts"
   },
   "@remirror": {
     "tsconfigs": {

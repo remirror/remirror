@@ -16,9 +16,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-mention-atom.js",
-      "require": "./dist/remirror-extension-mention-atom.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-mention-atom.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -43,7 +43,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-mention-atom.d.ts",
+        "import": "./dist/remirror-extension-mention-atom.js",
+        "require": "./dist/remirror-extension-mention-atom.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-mention-atom.cjs",
+    "module": "./dist/remirror-extension-mention-atom.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-mention-atom.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

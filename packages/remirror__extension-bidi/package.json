@@ -20,9 +20,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-bidi.js",
-      "require": "./dist/remirror-extension-bidi.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-bidi.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -47,7 +47,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-bidi.d.ts",
+        "import": "./dist/remirror-extension-bidi.js",
+        "require": "./dist/remirror-extension-bidi.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-bidi.cjs",
+    "module": "./dist/remirror-extension-bidi.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-bidi.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

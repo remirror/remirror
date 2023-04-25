@@ -20,9 +20,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-gap-cursor.js",
-      "require": "./dist/remirror-extension-gap-cursor.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-gap-cursor.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -45,7 +45,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-gap-cursor.d.ts",
+        "import": "./dist/remirror-extension-gap-cursor.js",
+        "require": "./dist/remirror-extension-gap-cursor.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-gap-cursor.cjs",
+    "module": "./dist/remirror-extension-gap-cursor.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-gap-cursor.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

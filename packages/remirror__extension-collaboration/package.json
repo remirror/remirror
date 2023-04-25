@@ -22,9 +22,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-collaboration.js",
-      "require": "./dist/remirror-extension-collaboration.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-collaboration.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -47,7 +47,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-collaboration.d.ts",
+        "import": "./dist/remirror-extension-collaboration.js",
+        "require": "./dist/remirror-extension-collaboration.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-collaboration.cjs",
+    "module": "./dist/remirror-extension-collaboration.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-collaboration.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

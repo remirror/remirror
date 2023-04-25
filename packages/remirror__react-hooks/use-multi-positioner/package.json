@@ -2,13 +2,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-multi-positioner.d.ts",
       "import": "./dist/remirror-react-hooks-use-multi-positioner.js",
-      "require": "./dist/remirror-react-hooks-use-multi-positioner.cjs",
-      "types": "./../dist-types/use-multi-positioner.d.ts"
+      "require": "./dist/remirror-react-hooks-use-multi-positioner.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-react-hooks-use-multi-positioner.cjs",
   "module": "./dist/remirror-react-hooks-use-multi-positioner.js",
-  "types": "./../dist-types/use-multi-positioner.d.ts"
+  "types": "./dist/remirror-react-hooks-use-multi-positioner.d.ts"
 }

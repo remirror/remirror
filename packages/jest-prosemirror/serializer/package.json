@@ -2,11 +2,11 @@
   "type": "commonjs",
   "exports": {
     ".": {
-      "require": "./dist/jest-prosemirror-serializer.cjs",
-      "types": "./../dist-types/serializer.d.ts"
+      "types": "./dist/jest-prosemirror-serializer.d.ts",
+      "require": "./dist/jest-prosemirror-serializer.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/jest-prosemirror-serializer.cjs",
-  "types": "./../dist-types/serializer.d.ts"
+  "types": "./dist/jest-prosemirror-serializer.d.ts"
 }

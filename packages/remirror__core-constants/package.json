@@ -16,9 +16,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-core-constants.js",
-      "require": "./dist/remirror-core-constants.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-core-constants.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -33,7 +33,18 @@
     "@babel/runtime": "^7.21.0"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-core-constants.d.ts",
+        "import": "./dist/remirror-core-constants.js",
+        "require": "./dist/remirror-core-constants.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-core-constants.cjs",
+    "module": "./dist/remirror-core-constants.js",
+    "type": "module",
+    "types": "./dist/remirror-core-constants.d.ts"
   },
   "@remirror": {
     "sizeLimit": "2 KB"

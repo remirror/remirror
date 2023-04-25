@@ -21,9 +21,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/prosemirror-resizable-view.js",
-      "require": "./dist/prosemirror-resizable-view.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/prosemirror-resizable-view.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -42,7 +42,18 @@
     "prosemirror-view": "^1.30.2"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/prosemirror-resizable-view.d.ts",
+        "import": "./dist/prosemirror-resizable-view.js",
+        "require": "./dist/prosemirror-resizable-view.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/prosemirror-resizable-view.cjs",
+    "module": "./dist/prosemirror-resizable-view.js",
+    "type": "module",
+    "types": "./dist/prosemirror-resizable-view.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

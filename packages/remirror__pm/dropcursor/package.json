@@ -2,13 +2,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-dropcursor.d.ts",
       "import": "./dist/remirror-pm-dropcursor.js",
-      "require": "./dist/remirror-pm-dropcursor.cjs",
-      "types": "./../dist-types/dropcursor.d.ts"
+      "require": "./dist/remirror-pm-dropcursor.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-pm-dropcursor.cjs",
   "module": "./dist/remirror-pm-dropcursor.js",
-  "types": "./../dist-types/dropcursor.d.ts"
+  "types": "./dist/remirror-pm-dropcursor.d.ts"
 }

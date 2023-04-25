@@ -19,9 +19,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-messages.js",
-      "require": "./dist/remirror-messages.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-messages.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -47,7 +47,18 @@
     "rollup": "^2.79.1"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-messages.d.ts",
+        "import": "./dist/remirror-messages.js",
+        "require": "./dist/remirror-messages.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-messages.cjs",
+    "module": "./dist/remirror-messages.js",
+    "type": "module",
+    "types": "./dist/remirror-messages.d.ts"
   },
   "@remirror": {
     "sizeLimit": "50 KB"

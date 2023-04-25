@@ -2,13 +2,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/testing-playwright.d.ts",
       "import": "./dist/testing-playwright.js",
-      "require": "./dist/testing-playwright.cjs",
-      "types": "./../dist-types/playwright/index.d.ts"
+      "require": "./dist/testing-playwright.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/testing-playwright.cjs",
   "module": "./dist/testing-playwright.js",
-  "types": "./../dist-types/playwright/index.d.ts"
+  "types": "./dist/testing-playwright.d.ts"
 }

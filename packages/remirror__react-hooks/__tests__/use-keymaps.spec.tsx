@@ -5,7 +5,7 @@ import { act, strictRender } from 'testing/react';
 import { ExtensionPriority, prosemirrorNodeToHtml } from '@remirror/core';
 import { createReactManager, Remirror, useRemirror } from '@remirror/react';
 
-import { useKeymaps } from '../use-keymaps';
+import { useKeymaps } from '../src/use-keymaps';
 
 describe('useKeymaps', () => {
   it('captures keymaps in correct order', () => {

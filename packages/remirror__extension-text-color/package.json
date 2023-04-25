@@ -20,9 +20,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-text-color.js",
-      "require": "./dist/remirror-extension-text-color.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-text-color.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -48,7 +48,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-text-color.d.ts",
+        "import": "./dist/remirror-extension-text-color.js",
+        "require": "./dist/remirror-extension-text-color.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-text-color.cjs",
+    "module": "./dist/remirror-extension-text-color.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-text-color.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

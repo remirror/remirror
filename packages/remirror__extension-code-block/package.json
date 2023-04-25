@@ -25,14 +25,14 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-code-block.js",
-      "require": "./dist/remirror-extension-code-block.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-code-block.cjs"
     },
     "./formatter": {
+      "types": "./dist-types/formatter.d.ts",
       "import": "./formatter/dist/remirror-extension-code-block-formatter.js",
-      "require": "./formatter/dist/remirror-extension-code-block-formatter.cjs",
-      "types": "./dist-types/formatter.d.ts"
+      "require": "./formatter/dist/remirror-extension-code-block-formatter.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -76,7 +76,23 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-code-block.d.ts",
+        "import": "./dist/remirror-extension-code-block.js",
+        "require": "./dist/remirror-extension-code-block.cjs"
+      },
+      "./formatter": {
+        "types": "./formatter/dist/remirror-extension-code-block-formatter.d.ts",
+        "import": "./formatter/dist/remirror-extension-code-block-formatter.js",
+        "require": "./formatter/dist/remirror-extension-code-block-formatter.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-code-block.cjs",
+    "module": "./dist/remirror-extension-code-block.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-code-block.d.ts"
   },
   "@remirror": {
     "sizeLimit": "20 KB"

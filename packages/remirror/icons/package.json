@@ -2,13 +2,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-icons.d.ts",
       "import": "./dist/remirror-icons.js",
-      "require": "./dist/remirror-icons.cjs",
-      "types": "./../dist-types/icons.d.ts"
+      "require": "./dist/remirror-icons.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-icons.cjs",
   "module": "./dist/remirror-icons.js",
-  "types": "./../dist-types/icons.d.ts"
+  "types": "./dist/remirror-icons.d.ts"
 }

@@ -2,13 +2,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-suggest.d.ts",
       "import": "./dist/remirror-pm-suggest.js",
-      "require": "./dist/remirror-pm-suggest.cjs",
-      "types": "./../dist-types/suggest.d.ts"
+      "require": "./dist/remirror-pm-suggest.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-pm-suggest.cjs",
   "module": "./dist/remirror-pm-suggest.js",
-  "types": "./../dist-types/suggest.d.ts"
+  "types": "./dist/remirror-pm-suggest.d.ts"
 }

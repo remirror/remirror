@@ -15,9 +15,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/a11y-status.js",
-      "require": "./dist/a11y-status.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/a11y-status.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -34,7 +34,18 @@
     "throttle-debounce": "^3.0.1"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/a11y-status.d.ts",
+        "import": "./dist/a11y-status.js",
+        "require": "./dist/a11y-status.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/a11y-status.cjs",
+    "module": "./dist/a11y-status.js",
+    "type": "module",
+    "types": "./dist/a11y-status.d.ts"
   },
   "@remirror": {
     "sizeLimit": "1 KB"

@@ -1,4 +1,4 @@
-import type { ClassName } from '@linaria/core/types/cx';
+import type { ClassName } from '@linaria/core/cx';
 import { cx, object } from '@remirror/core-helpers';
 import type { ProsemirrorAttributes } from '@remirror/core-types';
 

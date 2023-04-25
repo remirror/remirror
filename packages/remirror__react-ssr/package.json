@@ -19,9 +19,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-react-ssr.js",
-      "require": "./dist/remirror-react-ssr.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-react-ssr.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -58,7 +58,18 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-react-ssr.d.ts",
+        "import": "./dist/remirror-react-ssr.js",
+        "require": "./dist/remirror-react-ssr.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-react-ssr.cjs",
+    "module": "./dist/remirror-react-ssr.js",
+    "type": "module",
+    "types": "./dist/remirror-react-ssr.d.ts"
   },
   "@remirror": {
     "sizeLimit": "10 KB"

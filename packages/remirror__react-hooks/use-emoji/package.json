@@ -2,13 +2,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-emoji.d.ts",
       "import": "./dist/remirror-react-hooks-use-emoji.js",
-      "require": "./dist/remirror-react-hooks-use-emoji.cjs",
-      "types": "./../dist-types/use-emoji.d.ts"
+      "require": "./dist/remirror-react-hooks-use-emoji.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-react-hooks-use-emoji.cjs",
   "module": "./dist/remirror-react-hooks-use-emoji.js",
-  "types": "./../dist-types/use-emoji.d.ts"
+  "types": "./dist/remirror-react-hooks-use-emoji.d.ts"
 }

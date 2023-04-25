@@ -2,13 +2,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-react-hooks-use-mention.d.ts",
       "import": "./dist/remirror-react-hooks-use-mention.js",
-      "require": "./dist/remirror-react-hooks-use-mention.cjs",
-      "types": "./../dist-types/use-mention.d.ts"
+      "require": "./dist/remirror-react-hooks-use-mention.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-react-hooks-use-mention.cjs",
   "module": "./dist/remirror-react-hooks-use-mention.js",
-  "types": "./../dist-types/use-mention.d.ts"
+  "types": "./dist/remirror-react-hooks-use-mention.d.ts"
 }

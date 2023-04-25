@@ -26,25 +26,25 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-react-editors.js",
-      "require": "./dist/remirror-react-editors.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-react-editors.cjs"
     },
     "./markdown": {
+      "types": "./dist-types/markdown/index.d.ts",
       "import": "./markdown/dist/remirror-react-editors-markdown.js",
-      "require": "./markdown/dist/remirror-react-editors-markdown.cjs",
-      "types": "./dist-types/markdown/index.d.ts"
+      "require": "./markdown/dist/remirror-react-editors-markdown.cjs"
     },
     "./package.json": "./package.json",
     "./social": {
+      "types": "./dist-types/social/index.d.ts",
       "import": "./social/dist/remirror-react-editors-social.js",
-      "require": "./social/dist/remirror-react-editors-social.cjs",
-      "types": "./dist-types/social/index.d.ts"
+      "require": "./social/dist/remirror-react-editors-social.cjs"
     },
     "./wysiwyg": {
+      "types": "./dist-types/wysiwyg/index.d.ts",
       "import": "./wysiwyg/dist/remirror-react-editors-wysiwyg.js",
-      "require": "./wysiwyg/dist/remirror-react-editors-wysiwyg.cjs",
-      "types": "./dist-types/wysiwyg/index.d.ts"
+      "require": "./wysiwyg/dist/remirror-react-editors-wysiwyg.cjs"
     }
   },
   "main": "./dist/remirror-react-editors.cjs",
@@ -93,7 +93,33 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-react-editors.d.ts",
+        "import": "./dist/remirror-react-editors.js",
+        "require": "./dist/remirror-react-editors.cjs"
+      },
+      "./markdown": {
+        "types": "./markdown/dist/remirror-react-editors-markdown.d.ts",
+        "import": "./markdown/dist/remirror-react-editors-markdown.js",
+        "require": "./markdown/dist/remirror-react-editors-markdown.cjs"
+      },
+      "./package.json": "./package.json",
+      "./social": {
+        "types": "./social/dist/remirror-react-editors-social.d.ts",
+        "import": "./social/dist/remirror-react-editors-social.js",
+        "require": "./social/dist/remirror-react-editors-social.cjs"
+      },
+      "./wysiwyg": {
+        "types": "./wysiwyg/dist/remirror-react-editors-wysiwyg.d.ts",
+        "import": "./wysiwyg/dist/remirror-react-editors-wysiwyg.js",
+        "require": "./wysiwyg/dist/remirror-react-editors-wysiwyg.cjs"
+      }
+    },
+    "main": "./dist/remirror-react-editors.cjs",
+    "module": "./dist/remirror-react-editors.js",
+    "type": "module",
+    "types": "./dist/remirror-react-editors.d.ts"
   },
   "preconstruct": {
     "entrypoints": [

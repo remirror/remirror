@@ -24,9 +24,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-yjs.js",
-      "require": "./dist/remirror-extension-yjs.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-yjs.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -57,7 +57,18 @@
     "yjs": "^13.6.0"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-yjs.d.ts",
+        "import": "./dist/remirror-extension-yjs.js",
+        "require": "./dist/remirror-extension-yjs.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-yjs.cjs",
+    "module": "./dist/remirror-extension-yjs.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-yjs.d.ts"
   },
   "@remirror": {
     "sizeLimit": "115 KB"

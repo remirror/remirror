@@ -4,7 +4,7 @@ import { act, DefaultEditor, strictRender } from 'testing/react';
 import type { RemirrorManager } from '@remirror/core';
 import { createReactManager, Remirror } from '@remirror/react';
 
-import { useSuggest, UseSuggestReturn } from '../use-suggest';
+import { useSuggest, UseSuggestReturn } from '../src/use-suggest';
 
 const result: { current: UseSuggestReturn | undefined } = {
   current: undefined,

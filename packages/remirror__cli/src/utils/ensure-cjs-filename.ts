@@ -5,3 +5,7 @@ export function ensureCjsFilename(filePath: string) {
 
   return filePath.replace(/\.[cm]?js$/, '.cjs');
 }
+
+export function ensureDtsFilename(filePath: string) {
+  return ensureCjsFilename(filePath).replace(/\.cjs$/, '.d.ts');
+}

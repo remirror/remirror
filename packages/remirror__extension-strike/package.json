@@ -20,9 +20,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-strike.js",
-      "require": "./dist/remirror-extension-strike.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-strike.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -45,7 +45,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-strike.d.ts",
+        "import": "./dist/remirror-extension-strike.js",
+        "require": "./dist/remirror-extension-strike.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-strike.cjs",
+    "module": "./dist/remirror-extension-strike.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-strike.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

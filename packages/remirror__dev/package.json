@@ -16,9 +16,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-dev.js",
-      "require": "./dist/remirror-dev.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-dev.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -58,6 +58,17 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-dev.d.ts",
+        "import": "./dist/remirror-dev.js",
+        "require": "./dist/remirror-dev.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-dev.cjs",
+    "module": "./dist/remirror-dev.js",
+    "type": "module",
+    "types": "./dist/remirror-dev.d.ts"
   }
 }

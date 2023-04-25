@@ -77,6 +77,9 @@ async function runApiExtractor() {
       },
       compiler: {
         tsconfigFilePath: path.join(projectFolder, 'src', 'tsconfig.json'),
+        overrideTsconfig: {
+          moduleResolution: 'nodenext',
+        },
         skipLibCheck: true,
       },
 

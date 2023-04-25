@@ -13,20 +13,20 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/testing.js",
-      "require": "./dist/testing.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/testing.cjs"
     },
     "./package.json": "./package.json",
     "./playwright": {
+      "types": "./dist-types/playwright/index.d.ts",
       "import": "./playwright/dist/testing-playwright.js",
-      "require": "./playwright/dist/testing-playwright.cjs",
-      "types": "./dist-types/playwright/index.d.ts"
+      "require": "./playwright/dist/testing-playwright.cjs"
     },
     "./react": {
+      "types": "./dist-types/react.d.ts",
       "import": "./react/dist/testing-react.js",
-      "require": "./react/dist/testing-react.cjs",
-      "types": "./dist-types/react.d.ts"
+      "require": "./react/dist/testing-react.cjs"
     },
     "./types/*": "./dist/declarations/src/*.d.ts"
   },
@@ -85,6 +85,31 @@
     "@types/react": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/testing.d.ts",
+        "import": "./dist/testing.js",
+        "require": "./dist/testing.cjs"
+      },
+      "./package.json": "./package.json",
+      "./playwright": {
+        "types": "./playwright/dist/testing-playwright.d.ts",
+        "import": "./playwright/dist/testing-playwright.js",
+        "require": "./playwright/dist/testing-playwright.cjs"
+      },
+      "./react": {
+        "types": "./react/dist/testing-react.d.ts",
+        "import": "./react/dist/testing-react.js",
+        "require": "./react/dist/testing-react.cjs"
+      },
+      "./types/*": "./dist/declarations/src/*.d.ts"
+    },
+    "main": "./dist/testing.cjs",
+    "module": "./dist/testing.js",
+    "type": "module",
+    "types": "./dist/testing.d.ts"
   },
   "@remirror": {
     "tsconfigs": {

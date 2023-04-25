@@ -1,4 +1,4 @@
-import type { ClassName } from '@linaria/core/types/cx';
+import type { ClassName } from '@linaria/core/cx';
 import type { Unsubscribe } from 'nanoevents';
 import type {
   EditorState,

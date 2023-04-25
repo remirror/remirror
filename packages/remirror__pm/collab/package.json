@@ -2,13 +2,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/remirror-pm-collab.d.ts",
       "import": "./dist/remirror-pm-collab.js",
-      "require": "./dist/remirror-pm-collab.cjs",
-      "types": "./../dist-types/collab.d.ts"
+      "require": "./dist/remirror-pm-collab.cjs"
     },
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-pm-collab.cjs",
   "module": "./dist/remirror-pm-collab.js",
-  "types": "./../dist-types/collab.d.ts"
+  "types": "./dist/remirror-pm-collab.d.ts"
 }

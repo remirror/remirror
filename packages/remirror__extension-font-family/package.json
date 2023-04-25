@@ -20,9 +20,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-extension-font-family.js",
-      "require": "./dist/remirror-extension-font-family.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-extension-font-family.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -45,7 +45,18 @@
     "@remirror/pm": "^2.0.4"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-extension-font-family.d.ts",
+        "import": "./dist/remirror-extension-font-family.js",
+        "require": "./dist/remirror-extension-font-family.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-extension-font-family.cjs",
+    "module": "./dist/remirror-extension-font-family.js",
+    "type": "module",
+    "types": "./dist/remirror-extension-font-family.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

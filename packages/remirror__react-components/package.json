@@ -16,14 +16,14 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-react-components.js",
-      "require": "./dist/remirror-react-components.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-react-components.cjs"
     },
     "./all-icons": {
+      "types": "./dist-types/all-icons.d.ts",
       "import": "./all-icons/dist/remirror-react-components-all-icons.js",
-      "require": "./all-icons/dist/remirror-react-components-all-icons.cjs",
-      "types": "./dist-types/all-icons.d.ts"
+      "require": "./all-icons/dist/remirror-react-components-all-icons.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -104,7 +104,23 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-react-components.d.ts",
+        "import": "./dist/remirror-react-components.js",
+        "require": "./dist/remirror-react-components.cjs"
+      },
+      "./all-icons": {
+        "types": "./all-icons/dist/remirror-react-components-all-icons.d.ts",
+        "import": "./all-icons/dist/remirror-react-components-all-icons.js",
+        "require": "./all-icons/dist/remirror-react-components-all-icons.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-react-components.cjs",
+    "module": "./dist/remirror-react-components.js",
+    "type": "module",
+    "types": "./dist/remirror-react-components.d.ts"
   },
   "@remirror": {
     "sizeLimit": "200 KB"

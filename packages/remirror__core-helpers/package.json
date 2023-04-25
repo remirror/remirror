@@ -16,9 +16,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror-core-helpers.js",
-      "require": "./dist/remirror-core-helpers.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror-core-helpers.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -47,7 +47,18 @@
     "throttle-debounce": "^3.0.1"
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror-core-helpers.d.ts",
+        "import": "./dist/remirror-core-helpers.js",
+        "require": "./dist/remirror-core-helpers.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/remirror-core-helpers.cjs",
+    "module": "./dist/remirror-core-helpers.js",
+    "type": "module",
+    "types": "./dist/remirror-core-helpers.d.ts"
   },
   "@remirror": {
     "tsconfigs": {

@@ -16,9 +16,9 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/prosemirror-paste-rules.js",
-      "require": "./dist/prosemirror-paste-rules.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/prosemirror-paste-rules.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -47,7 +47,18 @@
   },
   "peerDependenciesMeta": {},
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/prosemirror-paste-rules.d.ts",
+        "import": "./dist/prosemirror-paste-rules.js",
+        "require": "./dist/prosemirror-paste-rules.cjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "main": "./dist/prosemirror-paste-rules.cjs",
+    "module": "./dist/prosemirror-paste-rules.js",
+    "type": "module",
+    "types": "./dist/prosemirror-paste-rules.d.ts"
   },
   "@remirror": {
     "sizeLimit": "10 KB"

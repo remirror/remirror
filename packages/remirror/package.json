@@ -25,24 +25,24 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/remirror.js",
-      "require": "./dist/remirror.cjs",
-      "types": "./dist-types/index.d.ts"
+      "require": "./dist/remirror.cjs"
     },
     "./dom": {
+      "types": "./dist-types/dom.d.ts",
       "import": "./dom/dist/remirror-dom.js",
-      "require": "./dom/dist/remirror-dom.cjs",
-      "types": "./dist-types/dom.d.ts"
+      "require": "./dom/dist/remirror-dom.cjs"
     },
     "./extensions": {
+      "types": "./dist-types/extensions.d.ts",
       "import": "./extensions/dist/remirror-extensions.js",
-      "require": "./extensions/dist/remirror-extensions.cjs",
-      "types": "./dist-types/extensions.d.ts"
+      "require": "./extensions/dist/remirror-extensions.cjs"
     },
     "./icons": {
+      "types": "./dist-types/icons.d.ts",
       "import": "./icons/dist/remirror-icons.js",
-      "require": "./icons/dist/remirror-icons.cjs",
-      "types": "./dist-types/icons.d.ts"
+      "require": "./icons/dist/remirror-icons.cjs"
     },
     "./package.json": "./package.json",
     "./styles/*": "./styles/*"
@@ -146,7 +146,34 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "exports": {
+      ".": {
+        "types": "./dist/remirror.d.ts",
+        "import": "./dist/remirror.js",
+        "require": "./dist/remirror.cjs"
+      },
+      "./dom": {
+        "types": "./dom/dist/remirror-dom.d.ts",
+        "import": "./dom/dist/remirror-dom.js",
+        "require": "./dom/dist/remirror-dom.cjs"
+      },
+      "./extensions": {
+        "types": "./extensions/dist/remirror-extensions.d.ts",
+        "import": "./extensions/dist/remirror-extensions.js",
+        "require": "./extensions/dist/remirror-extensions.cjs"
+      },
+      "./icons": {
+        "types": "./icons/dist/remirror-icons.d.ts",
+        "import": "./icons/dist/remirror-icons.js",
+        "require": "./icons/dist/remirror-icons.cjs"
+      },
+      "./package.json": "./package.json",
+      "./styles/*": "./styles/*"
+    },
+    "main": "./dist/remirror.cjs",
+    "module": "./dist/remirror.js",
+    "type": "module",
+    "types": "./dist/remirror.d.ts"
   },
   "@remirror": {},
   "preconstruct": {
