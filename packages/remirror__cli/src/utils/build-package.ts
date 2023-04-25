@@ -197,7 +197,7 @@ async function writeSubpathPackageJson(pkg: Package, entryPoint: EntryPoint) {
   logger.assert(!entryPoint.isMain);
 
   const subPathDir = path.resolve(pkg.dir, entryPoint.subpath);
-  const packageJson = buildPackageJson(pkg.dir, subPathDir, [entryPoint]);
+  const packageJson = buildPackageJson(pkg.dir, subPathDir, [entryPoint], {}, true);
   await writePackageJson(subPathDir, packageJson);
 }
 
@@ -275,7 +275,11 @@ function buildCondictionalExports(
   publishConfig: boolean,
 ): Record<string, any> {
   const inFileRelativeToSrc = path.relative(path.join(packageDir, 'src'), entryPoint.inFile);
-  const dtsFile = `${path.join(packageDir, 'dist', `${removeFileExt(inFileRelativeToSrc)}.d.ts`)}`;
+  const dtsFile = `${path.join(
+    packageDir,
+    'dist-types',
+    `${removeFileExt(inFileRelativeToSrc)}.d.ts`,
+  )}`;
 
   const dtsFileRelativePath = `./${path.relative(packageJsonDir, dtsFile)}`;
   const outEsmFileRelativePath = `./${path.relative(packageJsonDir, entryPoint.outFile)}`;
