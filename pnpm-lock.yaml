@@ -2261,6 +2261,7 @@ importers:
       '@babel/cli': ^7.21.0
       '@babel/core': ^7.21.4
       '@babel/plugin-transform-typescript': ^7.21.3
+      '@babel/preset-typescript': ^7.21.4
       '@babel/runtime': ^7.21.0
       '@linaria/core': 4.2.9
       '@remirror/core-types': ^2.0.4
@@ -2277,6 +2278,7 @@ importers:
       '@babel/cli': 7.21.0_@babel+core@7.21.4
       '@babel/core': 7.21.4
       '@babel/plugin-transform-typescript': 7.21.3_@babel+core@7.21.4
+      '@babel/preset-typescript': 7.21.4_@babel+core@7.21.4
       rollup: 2.79.1
 
   packages/remirror__types:
@@ -11748,7 +11750,7 @@ packages:
   /@types/react-is/17.0.3:
     resolution: {integrity: sha512-aBTIWg1emtu95bLTLx0cpkxwGW3ueZv71nE2YFBpL8k/z5czEW8yYpOo8Dp+UUAFAtKwNaOsh/ioSeQnWlZcfw==}
     dependencies:
-      '@types/react': 18.2.0
+      '@types/react': 18.0.32
     dev: false
 
   /@types/react-router-config/5.0.6:
@@ -11771,7 +11773,7 @@ packages:
     resolution: {integrity: sha512-RNSXOyb3VyRs/EOGmjBhhGKTbnN6fHWvy5FNLzWfOWOGjgVUKqJZXfpKzLmgoU8h6Hj8mpALj/mbXQASOb92wQ==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 18.2.0
+      '@types/react': 18.0.32
     dev: true
 
   /@types/react-syntax-highlighter/13.5.2:
@@ -11798,7 +11800,6 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.2
-    dev: true
 
   /@types/react/18.2.0:
     resolution: {integrity: sha512-0FLj93y5USLHdnhIhABk83rm8XEGA7kH3cr+YUlvxoUGp1xNt/DINUMvqPxLyOQMzLmZe8i4RTHbvb8MC7NmrA==}

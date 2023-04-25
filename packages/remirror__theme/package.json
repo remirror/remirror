@@ -43,6 +43,7 @@
   "devDependencies": {
     "@babel/cli": "^7.21.0",
     "@babel/core": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.4",
     "@babel/plugin-transform-typescript": "^7.21.3",
     "rollup": "^2.79.1"
   },
