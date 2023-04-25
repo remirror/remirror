@@ -38,7 +38,7 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
     for (const entryPoint of entryPoints) {
       const { format, outFile, inFile } = entryPoint;
       const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
-      const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.tsx?$/, '.d.ts');
+      const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
       promises.push(
         tsupBuild({
           outDir: path.dirname(outFile),
@@ -49,10 +49,40 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
           outExtension: ({ format }) => {
             return { js: format === 'esm' ? '.js' : '.cjs' };
           },
+          skipNodeModulesBundle: true,
           dts: {
-            entry: { [outFileEntry]: inDtsFile },
+            entry: {
+              [outFileEntry]: inDtsFile,
+            },
+            compilerOptions: {
+              allowJs: true,
+              module: 'ESNext',
+              target: 'ESNext',
+              lib: ['DOM', 'DOM.Iterable', 'ESNext'],
+              jsx: 'react',
+              types: ['node', '@jest/globals'],
+              moduleResolution: 'node',
+              useDefineForClassFields: true,
+              sourceMap: true,
+              declaration: true,
+              pretty: true,
+              noEmit: true,
+              strict: true,
+              resolveJsonModule: true,
+              preserveWatchOutput: true,
+              skipLibCheck: true,
+              experimentalDecorators: true,
+              isolatedModules: true,
+              allowSyntheticDefaultImports: true,
+              esModuleInterop: true,
+              importsNotUsedAsValues: 'remove',
+              noUnusedLocals: true,
+              noUnusedParameters: true,
+              allowUnreachableCode: false,
+              forceConsistentCasingInFileNames: true,
+              noImplicitReturns: true,
+            },
           },
-          clean: true,
         }),
       );
     }
@@ -228,11 +258,7 @@ function buildCondictionalExports(
   entryPoint: EntryPoint,
 ): Record<string, any> {
   const inFileRelativeToSrc = path.relative(path.join(packageDir, 'src'), entryPoint.inFile);
-  const dtsFile = `${path.join(
-    packageDir,
-    'dist-types',
-    `${removeFileExt(inFileRelativeToSrc)}.d.ts`,
-  )}`;
+  const dtsFile = `${path.join(packageDir, 'dist', `${removeFileExt(inFileRelativeToSrc)}.d.ts`)}`;
 
   const dtsFileRelativePath = `./${path.relative(packageJsonDir, dtsFile)}`;
   const outEsmFileRelativePath = `./${path.relative(packageJsonDir, entryPoint.outFile)}`;
@@ -253,6 +279,7 @@ function buildCondictionalExports(
 
   return {
     [subPathRelativePath]: {
+      types: dtsFileRelativePath,
       ...(supportEsm
         ? {
             import: outEsmFileRelativePath,
@@ -263,7 +290,6 @@ function buildCondictionalExports(
             require: outCjsFileRelativePath,
           }
         : {}),
-      types: dtsFileRelativePath,
     },
   };
 }
