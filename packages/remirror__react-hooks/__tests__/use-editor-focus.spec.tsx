@@ -5,7 +5,7 @@ import type { RemirrorManager } from '@remirror/core';
 import { EventsExtension } from '@remirror/extension-events';
 import { createReactManager, ReactExtensions, Remirror } from '@remirror/react';
 
-import { useEditorFocus } from '../use-editor-focus';
+import { useEditorFocus } from '../src/use-editor-focus';
 
 const result = {
   focused: true,

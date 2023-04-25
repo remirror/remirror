@@ -6,7 +6,7 @@ import data from 'svgmoji/emoji.json';
 import { act as renderAct, strictRender } from 'testing/react';
 import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
 
-import { useEmoji, UseEmojiReturn } from '../use-emoji';
+import { useEmoji, UseEmojiReturn } from '../src/use-emoji';
 
 function createChain() {
   const manager = createReactManager(() => [new EmojiExtension({ data })]);

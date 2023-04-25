@@ -1,5 +1,5 @@
 import { cx as classNames } from '@linaria/core';
-import type { ClassName } from '@linaria/core/types/cx';
+import type { ClassName } from '@linaria/core/cx';
 import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
 import { BaseError } from 'make-error';

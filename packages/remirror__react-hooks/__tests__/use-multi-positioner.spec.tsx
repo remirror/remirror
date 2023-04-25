@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { strictRender } from 'testing/react';
 import { createReactManager, Remirror } from '@remirror/react';
 
-import { useMultiPositioner } from '../use-multi-positioner';
+import { useMultiPositioner } from '../src/use-multi-positioner';
 
 test('`useMultiPositioner` default values', () => {
   const HookComponent: FC = () => {

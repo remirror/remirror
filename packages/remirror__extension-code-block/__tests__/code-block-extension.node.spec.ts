@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { CodeBlockExtension, createCoreManager } from 'remirror/src/extensions';
+import { CodeBlockExtension, createCoreManager } from 'remirror/extensions';
 import { htmlToProsemirrorNode } from '@remirror/core';
 
 describe('schema', () => {

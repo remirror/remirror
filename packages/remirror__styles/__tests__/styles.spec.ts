@@ -1,6 +1,6 @@
-import * as dom from '../dom';
-import * as emotion from '../emotion';
-import * as styled from '../styled-components';
+import * as dom from '../src/dom';
+import * as emotion from '../src/emotion';
+import * as styled from '../src/styled-components';
 
 test('imports are valid', () => {
   expect(Object.keys(dom).every((name) => !name.endsWith('StyledComponent'))).toBeTrue();

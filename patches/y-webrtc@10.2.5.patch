@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index 4efbb8f51854fc5d5891daa476e37056a056a423..c2ed4625e15484e19023f3af57a8d0705e66a6d2 100644
+--- a/package.json
++++ b/package.json
+@@ -13,6 +13,7 @@
+     "url": "https://github.com/sponsors/dmonad"
+   },
+   "exports": {
++    "types": "./dist/src/y-webrtc.d.ts",
+     "module": "./src/y-webrtc.js",
+     "import": "./src/y-webrtc.js",
+     "require": "./dist/y-webrtc.cjs"

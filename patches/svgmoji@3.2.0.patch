@@ -1,0 +1,66 @@
+diff --git a/package.json b/package.json
+index be64ec045e3382692b1f7d6d33ef27d1287e833e..c3eb9da4b2e7dc2be7da237c4e265fe4092e293b 100644
+--- a/package.json
++++ b/package.json
+@@ -16,17 +16,50 @@
+       "types": "./dist/svgmoji.cjs.d.ts",
+       "default": "./dist/svgmoji.esm.js"
+     },
+-    "./emoji-discord.json": "./emoji-discord.json",
+-    "./emoji-discord.min.json": "./emoji-discord.min.json",
+-    "./emoji-github.json": "./emoji-github.json",
+-    "./emoji-github.min.json": "./emoji-github.min.json",
+-    "./emoji-slack.json": "./emoji-slack.json",
+-    "./emoji-slack.min.json": "./emoji-slack.min.json",
+-    "./emoji.json": "./emoji.json",
+-    "./emoji.min.json": "./emoji.min.json",
+-    "./emoticons.json": "./emoticons.json",
+-    "./package.json": "./package.json",
+-    "./types/*": "./dist/declarations/src/*.d.ts"
++    "./emoji-discord.json": {
++      "types": "./emoji-discord.json.d.ts",
++      "default": "./emoji-discord.json"
++    },
++    "./emoji-discord.min.json": {
++      "types": "./emoji-discord.min.json.d.ts",
++      "default": "./emoji-discord.min.json"
++    },
++    "./emoji-github.json": {
++      "types": "./emoji-github.json.d.ts",
++      "default": "./emoji-github.json"
++    },
++    "./emoji-github.min.json": {
++      "types": "./emoji-github.min.json.d.ts",
++      "default": "./emoji-github.min.json"
++    },
++    "./emoji-slack.json": {
++      "types": "./emoji-slack.json.d.ts",
++      "default": "./emoji-slack.json"
++    },
++    "./emoji-slack.min.json": {
++      "types": "./emoji-slack.min.json.d.ts",
++      "default": "./emoji-slack.min.json"
++    },
++    "./emoji.json": {
++      "types": "./emoji.json.d.ts",
++      "default": "./emoji.json"
++    },
++    "./emoji.min.json": {
++      "types": "./emoji.min.json.d.ts",
++      "default": "./emoji.min.json"
++    },
++    "./emoticons.json": {
++      "types": "./emoticons.json.d.ts",
++      "default": "./emoticons.json"
++    },
++    "./package.json": {
++      "types": "./package.json.d.ts",
++      "default": "./package.json"
++    },
++    "./types/*": {
++      "types": "./dist/declarations/src/*.d.ts.d.ts",
++      "default": "./dist/declarations/src/*.d.ts"
++    }
+   },
+   "main": "dist/svgmoji.cjs.js",
+   "module": "dist/svgmoji.esm.js",

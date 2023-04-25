@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index 6767536abd7947ea0e02c8f8ecc9ec190d362123..8d9bc8e99777d09b4008ca8c8241527228a5b35a 100644
+--- a/package.json
++++ b/package.json
+@@ -22,6 +22,7 @@
+   },
+   "exports": {
+     ".": {
++      "types": "./dist/src/y-prosemirror.d.ts",
+       "import": "./src/y-prosemirror.js",
+       "require": "./dist/y-prosemirror.cjs"
+     }

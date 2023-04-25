@@ -6,7 +6,7 @@ import type { RemirrorManager } from '@remirror/core';
 import type { HistoryExtension } from '@remirror/extension-history';
 import { createReactManager, ReactExtensions, Remirror } from '@remirror/react';
 
-import { useHistory } from '../use-history';
+import { useHistory } from '../src/use-history';
 
 const mocks = {
   undo: jest.fn(),

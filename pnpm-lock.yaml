@@ -3,6 +3,23 @@ lockfileVersion: 5.4
 overrides:
   postcss: '>= 8.0.0'
 
+patchedDependencies:
+  '@lingui/detect-locale@3.17.2':
+    hash: qcm5lr5cbvjqi3vaflop4cvg2y
+    path: patches/@lingui__detect-locale@3.17.2.patch
+  svgmoji@3.2.0:
+    hash: 5i7mtmrnskhzbc2vgkqgpph4ni
+    path: patches/svgmoji@3.2.0.patch
+  w3c-keyname@2.2.6:
+    hash: go3xnlo7srqmglufp5t7erusky
+    path: patches/w3c-keyname@2.2.6.patch
+  y-prosemirror@1.2.1:
+    hash: qmoqv2ukd266e4uf7e6uwxdto4
+    path: patches/y-prosemirror@1.2.1.patch
+  y-webrtc@10.2.5:
+    hash: 4m5fkqkkfxtu7lybpna26wm2ia
+    path: patches/y-webrtc@10.2.5.patch
+
 importers:
 
   .:
@@ -335,7 +352,7 @@ importers:
       compute-scroll-into-view: 1.0.20
       react-use: 17.4.0_react@18.2.0
       tiny-warning: 1.0.3
-      w3c-keyname: 2.2.6
+      w3c-keyname: 2.2.6_go3xnlo7srqmglufp5t7erusky
     devDependencies:
       '@testing-library/react': 14.0.0_react@18.2.0
       '@types/react': 18.2.0
@@ -1012,7 +1029,7 @@ importers:
       emojibase-data: 6.2.0_emojibase@6.1.0
       emojibase-regex: 6.0.1
       escape-string-regexp: 4.0.0
-      svgmoji: 3.2.0
+      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
@@ -1473,7 +1490,7 @@ importers:
       '@types/react-dom': 18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      y-webrtc: 10.2.5
+      y-webrtc: 10.2.5_4m5fkqkkfxtu7lybpna26wm2ia
       yjs: 13.6.0
 
   packages/remirror__extension-search:
@@ -1677,11 +1694,11 @@ importers:
       prosemirror-model: 1.19.0
       prosemirror-state: 1.4.2
       prosemirror-view: 1.30.2
-      y-prosemirror: 1.2.1_im2pltlmpyak2cqnk63mzf7whm
+      y-prosemirror: 1.2.1_qmoqv2ukd266e4uf7e6uwxdto4_im2pltlmpyak2cqnk63mzf7whm
       y-protocols: 1.0.5
     devDependencies:
       '@remirror/pm': link:../remirror__pm
-      y-webrtc: 10.2.5
+      y-webrtc: 10.2.5_4m5fkqkkfxtu7lybpna26wm2ia
       yjs: 13.6.0
 
   packages/remirror__i18n:
@@ -1694,7 +1711,7 @@ importers:
     dependencies:
       '@babel/runtime': 7.21.0
       '@lingui/core': 3.17.2
-      '@lingui/detect-locale': 3.17.2
+      '@lingui/detect-locale': 3.17.2_qcm5lr5cbvjqi3vaflop4cvg2y
       '@remirror/core-helpers': link:../remirror__core-helpers
       make-plural: 6.2.2
 
@@ -2127,7 +2144,7 @@ importers:
       create-context-state: link:../create-context-state
       refractor: 3.6.0
       remirror: link:../remirror
-      svgmoji: 3.2.0
+      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
     devDependencies:
       '@emotion/css': 11.10.6
       '@types/react': 18.2.0
@@ -2180,7 +2197,7 @@ importers:
       '@types/react-dom': 18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      svgmoji: 3.2.0
+      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
 
   packages/remirror__react-renderer:
     specifiers:
@@ -2403,8 +2420,8 @@ importers:
       refractor: 3.6.0
       remirror: link:../remirror
       scripts: link:../../support/scripts
-      svgmoji: 3.2.0
-      y-webrtc: 10.2.5
+      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
+      y-webrtc: 10.2.5_4m5fkqkkfxtu7lybpna26wm2ia
       yjs: 13.6.0
     devDependencies:
       '@storybook/addon-actions': 7.0.7_biqbaboplfbrettd7655fr4n2y
@@ -5160,7 +5177,7 @@ packages:
     dependencies:
       '@codemirror/state': 0.20.0
       style-mod: 4.0.0
-      w3c-keyname: 2.2.6
+      w3c-keyname: 2.2.6_go3xnlo7srqmglufp5t7erusky
     dev: false
 
   /@codemirror/view/6.10.0:
@@ -5168,7 +5185,7 @@ packages:
     dependencies:
       '@codemirror/state': 6.2.0
       style-mod: 4.0.0
-      w3c-keyname: 2.2.6
+      w3c-keyname: 2.2.6_go3xnlo7srqmglufp5t7erusky
     dev: false
 
   /@colors/colors/1.5.0:
@@ -7476,10 +7493,11 @@ packages:
       make-plural: 6.2.2
     dev: false
 
-  /@lingui/detect-locale/3.17.2:
+  /@lingui/detect-locale/3.17.2_qcm5lr5cbvjqi3vaflop4cvg2y:
     resolution: {integrity: sha512-rqyO16lj05WRfBuppo++mPzB1fQBFDhGqEFz5X97CbWXYp6AadOIkrm+pbn114Y2Yumy9QI7Cm4Ptbfk7CXO3Q==}
     engines: {node: '>=14.0.0'}
     dev: false
+    patched: true
 
   /@lingui/macro/3.17.2_ko32vqz5jrx7k653ibjljze2hy:
     resolution: {integrity: sha512-kk1ZtwYSx5Knu/5LsRGisTqfNoLIeVkJJPn6xjZXcItoxUgRsykyKb3BqCJwxqYUClz4i4A8Ld/aA4xBi4apRQ==}
@@ -7911,7 +7929,7 @@ packages:
   /@ocavue/svgmoji-cjs/0.1.1:
     resolution: {integrity: sha512-tCP6ggbtgIL4hPM5goVFSjL51jH/BLl/yBLy98wAV9a2L/Sn9iS3abfprPeQw6/nan5lLaz4Vz8ZP37LKh+xfQ==}
     dependencies:
-      svgmoji: 3.2.0
+      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
     dev: false
 
   /@octokit/app/4.3.0:
@@ -21573,7 +21591,7 @@ packages:
     resolution: {integrity: sha512-kVK6WGC+83LZwuSJnuCb9PsADQnFZllt94qPP3Rx/vLcOUV65+IbBeH2nS5cFggPyEVJhGkGrgYFRrG250WhHQ==}
     dependencies:
       prosemirror-state: 1.4.2
-      w3c-keyname: 2.2.6
+      w3c-keyname: 2.2.6_go3xnlo7srqmglufp5t7erusky
     dev: false
 
   /prosemirror-model/1.19.0:
@@ -24137,7 +24155,7 @@ packages:
     resolution: {integrity: sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==}
     dev: true
 
-  /svgmoji/3.2.0:
+  /svgmoji/3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni:
     resolution: {integrity: sha512-tjmdQhIju2ZQ81FLBlPngg1aWMOhQjP9ErXb2ROikM0aBGA/hqI0/DN/5J0sDsXzJPHmODpSFhWfiSsUieU3bA==}
     dependencies:
       '@babel/runtime': 7.21.0
@@ -24146,6 +24164,7 @@ packages:
       '@svgmoji/noto': 3.2.0
       '@svgmoji/openmoji': 3.2.0
       '@svgmoji/twemoji': 3.2.0
+    patched: true
 
   /svgo/1.3.2:
     resolution: {integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==}
@@ -25414,9 +25433,10 @@ packages:
     dependencies:
       browser-process-hrtime: 1.0.0
 
-  /w3c-keyname/2.2.6:
+  /w3c-keyname/2.2.6_go3xnlo7srqmglufp5t7erusky:
     resolution: {integrity: sha512-f+fciywl1SJEniZHD6H+kUO8gOnwIr7f4ijKA6+ZvJFjeGi1r4PDLl53Ayud9O/rk64RqgoQine0feoeOU0kXg==}
     dev: false
+    patched: true
 
   /w3c-xmlserializer/2.0.0:
     resolution: {integrity: sha512-4tzD0mF8iSiMiNs30BiLO3EpfGLZUT2MSX/G+o7ZywDzliWQ3OPtTZ0PTC3B3ca1UAf4cJMHB+2Bf56EriJuRA==}
@@ -26071,7 +26091,7 @@ packages:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
 
-  /y-prosemirror/1.2.1_im2pltlmpyak2cqnk63mzf7whm:
+  /y-prosemirror/1.2.1_qmoqv2ukd266e4uf7e6uwxdto4_im2pltlmpyak2cqnk63mzf7whm:
     resolution: {integrity: sha512-czMBfB1eL2awqmOSxQM8cS/fsUOGE6fjvyPLInrh4crPxFiw67wDpwIW+EGBYKRa04sYbS0ScGj7ZgvWuDrmBQ==}
     peerDependencies:
       prosemirror-model: ^1.7.1
@@ -26087,13 +26107,14 @@ packages:
       y-protocols: 1.0.5
       yjs: 13.6.0
     dev: false
+    patched: true
 
   /y-protocols/1.0.5:
     resolution: {integrity: sha512-Wil92b7cGk712lRHDqS4T90IczF6RkcvCwAD0A2OPg+adKmOe+nOiT/N2hvpQIWS3zfjmtL4CPaH5sIW1Hkm/A==}
     dependencies:
       lib0: 0.2.74
 
-  /y-webrtc/10.2.5:
+  /y-webrtc/10.2.5_4m5fkqkkfxtu7lybpna26wm2ia:
     resolution: {integrity: sha512-ZyBNvTI5L28sQ2PQI0T/JvyWgvuTq05L21vGkIlcvNLNSJqAaLCBJRe3FHEqXoaogqWmRcEAKGfII4ErNXMnNw==}
     engines: {node: '>=12'}
     hasBin: true
@@ -26107,6 +26128,7 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+    patched: true
 
   /y18n/3.2.2:
     resolution: {integrity: sha512-uGZHXkHnhF0XeeAPgnKfPv1bgKAYyVvmNL1xlKsPYZPaIHxGti2hHqvOCQv71XMsLxu1QjergkqogUnms5D3YQ==}
