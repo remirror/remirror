@@ -8,7 +8,7 @@ patchedDependencies:
     hash: qcm5lr5cbvjqi3vaflop4cvg2y
     path: patches/@lingui__detect-locale@3.17.2.patch
   svgmoji@3.2.0:
-    hash: 5i7mtmrnskhzbc2vgkqgpph4ni
+    hash: hb5tifrnyoxxmogod3ui2wx6rq
     path: patches/svgmoji@3.2.0.patch
   w3c-keyname@2.2.6:
     hash: go3xnlo7srqmglufp5t7erusky
@@ -1029,7 +1029,7 @@ importers:
       emojibase-data: 6.2.0_emojibase@6.1.0
       emojibase-regex: 6.0.1
       escape-string-regexp: 4.0.0
-      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
+      svgmoji: 3.2.0_hb5tifrnyoxxmogod3ui2wx6rq
     devDependencies:
       '@remirror/pm': link:../remirror__pm
 
@@ -2144,7 +2144,7 @@ importers:
       create-context-state: link:../create-context-state
       refractor: 3.6.0
       remirror: link:../remirror
-      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
+      svgmoji: 3.2.0_hb5tifrnyoxxmogod3ui2wx6rq
     devDependencies:
       '@emotion/css': 11.10.6
       '@types/react': 18.2.0
@@ -2197,7 +2197,7 @@ importers:
       '@types/react-dom': 18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
+      svgmoji: 3.2.0_hb5tifrnyoxxmogod3ui2wx6rq
 
   packages/remirror__react-renderer:
     specifiers:
@@ -2420,7 +2420,7 @@ importers:
       refractor: 3.6.0
       remirror: link:../remirror
       scripts: link:../../support/scripts
-      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
+      svgmoji: 3.2.0_hb5tifrnyoxxmogod3ui2wx6rq
       y-webrtc: 10.2.5_4m5fkqkkfxtu7lybpna26wm2ia
       yjs: 13.6.0
     devDependencies:
@@ -7929,7 +7929,7 @@ packages:
   /@ocavue/svgmoji-cjs/0.1.1:
     resolution: {integrity: sha512-tCP6ggbtgIL4hPM5goVFSjL51jH/BLl/yBLy98wAV9a2L/Sn9iS3abfprPeQw6/nan5lLaz4Vz8ZP37LKh+xfQ==}
     dependencies:
-      svgmoji: 3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni
+      svgmoji: 3.2.0_hb5tifrnyoxxmogod3ui2wx6rq
     dev: false
 
   /@octokit/app/4.3.0:
@@ -24155,7 +24155,7 @@ packages:
     resolution: {integrity: sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==}
     dev: true
 
-  /svgmoji/3.2.0_5i7mtmrnskhzbc2vgkqgpph4ni:
+  /svgmoji/3.2.0_hb5tifrnyoxxmogod3ui2wx6rq:
     resolution: {integrity: sha512-tjmdQhIju2ZQ81FLBlPngg1aWMOhQjP9ErXb2ROikM0aBGA/hqI0/DN/5J0sDsXzJPHmODpSFhWfiSsUieU3bA==}
     dependencies:
       '@babel/runtime': 7.21.0

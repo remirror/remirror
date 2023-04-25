@@ -1,8 +1,8 @@
 diff --git a/package.json b/package.json
-index be64ec045e3382692b1f7d6d33ef27d1287e833e..c3eb9da4b2e7dc2be7da237c4e265fe4092e293b 100644
+index be64ec045e3382692b1f7d6d33ef27d1287e833e..2f99d113380c8a083ac7a972f75f65bcee1c7ceb 100644
 --- a/package.json
 +++ b/package.json
-@@ -16,17 +16,50 @@
+@@ -16,17 +16,49 @@
        "types": "./dist/svgmoji.cjs.d.ts",
        "default": "./dist/svgmoji.esm.js"
      },
@@ -58,7 +58,6 @@ index be64ec045e3382692b1f7d6d33ef27d1287e833e..c3eb9da4b2e7dc2be7da237c4e265fe4
 +      "default": "./package.json"
 +    },
 +    "./types/*": {
-+      "types": "./dist/declarations/src/*.d.ts.d.ts",
 +      "default": "./dist/declarations/src/*.d.ts"
 +    }
    },
