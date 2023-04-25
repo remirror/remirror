@@ -27,8 +27,7 @@
   "types": "./dist/remirror-core-types.d.ts",
   "files": [
     "base",
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@remirror/core-constants": "^2.0.0",

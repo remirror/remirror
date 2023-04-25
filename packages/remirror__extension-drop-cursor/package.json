@@ -33,8 +33,7 @@
   "module": "./dist/remirror-extension-drop-cursor.js",
   "types": "./dist/remirror-extension-drop-cursor.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

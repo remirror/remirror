@@ -35,8 +35,7 @@
   "types": "./dist/remirror-icons.d.ts",
   "files": [
     "all",
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

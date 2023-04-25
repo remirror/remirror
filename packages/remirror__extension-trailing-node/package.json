@@ -30,8 +30,7 @@
   "module": "./dist/remirror-extension-trailing-node.js",
   "types": "./dist/remirror-extension-trailing-node.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

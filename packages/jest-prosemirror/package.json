@@ -41,7 +41,6 @@
   "types": "./dist/jest-prosemirror.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "environment",
     "serializer"
   ],

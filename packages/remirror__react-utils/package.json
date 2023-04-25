@@ -32,8 +32,7 @@
   "module": "./dist/remirror-react-utils.js",
   "types": "./dist/remirror-react-utils.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

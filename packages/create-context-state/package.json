@@ -29,8 +29,7 @@
   "module": "./dist/create-context-state.js",
   "types": "./dist/create-context-state.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0"

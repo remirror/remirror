@@ -30,8 +30,7 @@
   "module": "./dist/remirror-extension-horizontal-rule.js",
   "types": "./dist/remirror-extension-horizontal-rule.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

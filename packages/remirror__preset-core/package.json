@@ -32,8 +32,7 @@
   "module": "./dist/remirror-preset-core.js",
   "types": "./dist/remirror-preset-core.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

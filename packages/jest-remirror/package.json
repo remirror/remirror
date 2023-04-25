@@ -36,7 +36,6 @@
   "types": "./dist/jest-remirror.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "environment"
   ],
   "dependencies": {

@@ -97,7 +97,6 @@
   "types": "./dist/remirror-react-hooks.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "use-context-menu",
     "use-editor-event",
     "use-editor-focus",

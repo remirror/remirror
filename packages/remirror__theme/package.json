@@ -27,7 +27,6 @@
   "types": "./dist/remirror-theme.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "style"
   ],
   "scripts": {

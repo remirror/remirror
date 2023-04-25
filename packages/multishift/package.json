@@ -25,8 +25,7 @@
   "module": "./dist/multishift.js",
   "types": "./dist/multishift.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

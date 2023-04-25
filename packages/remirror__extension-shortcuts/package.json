@@ -30,8 +30,7 @@
   "module": "./dist/remirror-extension-shortcuts.js",
   "types": "./dist/remirror-extension-shortcuts.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

@@ -31,8 +31,7 @@
   "module": "./dist/remirror-preset-wysiwyg.js",
   "types": "./dist/remirror-preset-wysiwyg.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

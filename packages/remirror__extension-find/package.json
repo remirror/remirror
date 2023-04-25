@@ -30,8 +30,7 @@
   "module": "./dist/remirror-extension-find.js",
   "types": "./dist/remirror-extension-find.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@remirror/core": "^2.0.12",

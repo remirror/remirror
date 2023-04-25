@@ -34,8 +34,7 @@
   "module": "./dist/remirror-extension-react-ssr.js",
   "types": "./dist/remirror-extension-react-ssr.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

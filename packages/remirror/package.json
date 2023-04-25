@@ -52,7 +52,6 @@
   "types": "./dist/remirror.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "dom",
     "extensions",
     "icons",

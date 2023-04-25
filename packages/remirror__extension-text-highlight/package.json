@@ -30,8 +30,7 @@
   "module": "./dist/remirror-extension-text-highlight.js",
   "types": "./dist/remirror-extension-text-highlight.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

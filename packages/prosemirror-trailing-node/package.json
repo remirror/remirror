@@ -26,8 +26,7 @@
   "module": "./dist/prosemirror-trailing-node.js",
   "types": "./dist/prosemirror-trailing-node.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

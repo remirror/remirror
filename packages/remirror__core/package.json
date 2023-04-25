@@ -27,7 +27,6 @@
   "types": "./dist/remirror-core.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "style"
   ],
   "dependencies": {

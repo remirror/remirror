@@ -31,7 +31,6 @@
   "types": "./dist/remirror-extension-placeholder.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "style"
   ],
   "dependencies": {

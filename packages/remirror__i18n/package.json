@@ -41,7 +41,6 @@
   "types": "./dist/remirror-i18n.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "en",
     "plurals"
   ],

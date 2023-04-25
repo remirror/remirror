@@ -35,8 +35,7 @@
   "module": "./dist/remirror-extension-tables.js",
   "types": "./dist/remirror-extension-tables.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

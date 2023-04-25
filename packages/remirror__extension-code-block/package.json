@@ -41,7 +41,6 @@
   "types": "./dist/remirror-extension-code-block.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "formatter"
   ],
   "dependencies": {

@@ -30,8 +30,7 @@
   "module": "./dist/remirror-extension-blockquote.js",
   "types": "./dist/remirror-extension-blockquote.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

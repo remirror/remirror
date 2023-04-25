@@ -52,7 +52,6 @@
   "types": "./dist/remirror-react-editors.d.ts",
   "files": [
     "dist",
-    "dist-types",
     "markdown",
     "social",
     "wysiwyg"

@@ -32,8 +32,7 @@
   "module": "./dist/remirror-extension-text.js",
   "types": "./dist/remirror-extension-text.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

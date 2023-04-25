@@ -30,8 +30,7 @@
   "module": "./dist/remirror-extension-italic.js",
   "types": "./dist/remirror-extension-italic.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

@@ -26,8 +26,7 @@
   "module": "./dist/remirror-core-utils.js",
   "types": "./dist/remirror-core-utils.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

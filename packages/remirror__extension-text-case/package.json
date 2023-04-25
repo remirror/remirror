@@ -30,8 +30,7 @@
   "module": "./dist/remirror-extension-text-case.js",
   "types": "./dist/remirror-extension-text-case.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

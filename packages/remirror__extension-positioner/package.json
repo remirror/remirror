@@ -32,8 +32,7 @@
   "module": "./dist/remirror-extension-positioner.js",
   "types": "./dist/remirror-extension-positioner.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

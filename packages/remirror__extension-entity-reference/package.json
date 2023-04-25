@@ -31,8 +31,7 @@
   "module": "./dist/remirror-extension-entity-reference.js",
   "types": "./dist/remirror-extension-entity-reference.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

@@ -36,7 +36,6 @@
   "files": [
     "*.css",
     "dist",
-    "dist-types",
     "dom",
     "emotion",
     "styled-components"

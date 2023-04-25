@@ -35,8 +35,7 @@
   "module": "./dist/remirror-extension-epic-mode.js",
   "types": "./dist/remirror-extension-epic-mode.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

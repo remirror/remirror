@@ -33,7 +33,6 @@
   "files": [
     "all-icons",
     "dist",
-    "dist-types",
     "style"
   ],
   "dependencies": {

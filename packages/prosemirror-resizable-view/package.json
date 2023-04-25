@@ -31,8 +31,7 @@
   "module": "./dist/prosemirror-resizable-view.js",
   "types": "./dist/prosemirror-resizable-view.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",

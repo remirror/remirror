@@ -34,8 +34,7 @@
   "module": "./dist/remirror-extension-yjs.js",
   "types": "./dist/remirror-extension-yjs.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
