@@ -10,9 +10,6 @@ on:
       - v1
       - main
 
-env:
-  PNPM_CACHE_FOLDER: .pnpm-store
-
 jobs:
   deploy_docs:
     timeout-minutes: 10
@@ -24,22 +21,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.PNPM_CACHE_FOLDER }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: setup node.js
-        uses: actions/setup-node@v3
-        with:
-          # Uses node 14 to allow nullish coalescing in `.js` files
-          node-version: 16
-
       - name: install and audit
         uses: ./support/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build storybook
         run: |

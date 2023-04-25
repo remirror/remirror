@@ -11,9 +11,6 @@ on:
       - main
       - v1
 
-env:
-  PNPM_CACHE_FOLDER: .pnpm-store
-
 jobs:
   # Update package versions with changesets.
   version:
@@ -27,21 +24,8 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.REMIRROR_BOT_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
 
-      - name: setup caching
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.PNPM_CACHE_FOLDER }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: setup node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
       - name: install and audit
         uses: ./support/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: create versions
         uses: changesets/action@v1

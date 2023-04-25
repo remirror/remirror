@@ -11,9 +11,6 @@ on:
       - v1
       - main
 
-env:
-  PNPM_CACHE_FOLDER: .pnpm-store
-
 jobs:
   deploy_docs:
     timeout-minutes: 90
@@ -32,21 +29,8 @@ jobs:
         run: |
           echo "${{ env.GITHUB_REF_SLUG }}"
 
-      - name: setup caching
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.PNPM_CACHE_FOLDER }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: setup node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
       - name: install and audit
         uses: ./support/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: generate .d.ts files
         run: pnpm typecheck

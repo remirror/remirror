@@ -6,9 +6,6 @@ on:
     branches: [main]
     types: [completed]
 
-env:
-  PNPM_CACHE_FOLDER: .pnpm-store
-
 jobs:
   # Publish the public packages to npm
   npm:
@@ -22,21 +19,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup caching
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.PNPM_CACHE_FOLDER }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-
-      - name: setup node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
       - name: install and audit
         uses: ./support/actions/pnpm
-        with:
-          cache: ${{ env.PNPM_CACHE_FOLDER }}
 
       - name: build project
         run: pnpm build
