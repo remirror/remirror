@@ -227,6 +227,7 @@
       "github>ocavue/config-renovate"
     ],
     "ignoreDeps": [
+      "y-prosemirror",
       "chalk",
       "testing",
       "@remirror/cli"
