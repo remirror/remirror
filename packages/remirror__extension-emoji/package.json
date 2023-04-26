@@ -46,7 +46,7 @@
     "@ocavue/svgmoji-cjs": "^0.1.1",
     "@remirror/core": "^2.0.13",
     "@remirror/messages": "^2.0.3",
-    "@remirror/theme": "^2.0.7",
+    "@remirror/theme": "^2.0.8",
     "emojibase": "^6.1.0",
     "emojibase-data": "^6.2.0",
     "emojibase-regex": "^6.0.1",
