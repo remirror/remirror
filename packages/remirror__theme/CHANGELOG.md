@@ -1,5 +1,13 @@
 # @remirror/theme
 
+## 2.0.8
+
+> 2023-04-26
+
+### Patch Changes
+
+- 86e9e5b3c: Fix incorrect typing file.
+
 ## 2.0.7
 
 > 2023-04-26
