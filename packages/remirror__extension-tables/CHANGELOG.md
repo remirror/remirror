@@ -1,5 +1,20 @@
 # @remirror/extension-tabless
 
+## 2.2.10
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/extension-positioner@2.1.8
+  - @remirror/messages@2.0.3
+  - @remirror/theme@2.0.7
+  - @remirror/core@2.0.13
+  - @remirror/pm@2.0.5
+
 ## 2.2.9
 
 > 2023-03-10

@@ -1,5 +1,19 @@
 # @remirror/pm
 
+## 2.0.5
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+  - prosemirror-trailing-node@2.0.4
+  - @remirror/core-constants@2.0.1
+  - prosemirror-paste-rules@2.0.5
+  - @remirror/core-helpers@2.0.2
+  - prosemirror-suggest@2.0.4
+
 ## 2.0.4
 
 > 2023-03-10

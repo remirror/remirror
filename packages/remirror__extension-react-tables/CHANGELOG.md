@@ -1,5 +1,29 @@
 # @remirror/extension-react-tables
 
+## 2.2.15
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [e63437575]
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [157fd132a]
+- Updated dependencies [e88cf35bb]
+  - @remirror/react-components@2.1.12
+  - @remirror/extension-positioner@2.1.8
+  - @remirror/extension-tables@2.2.10
+  - @remirror/preset-core@2.0.16
+  - @remirror/react-hooks@2.0.22
+  - @remirror/core-utils@2.0.12
+  - @remirror/react-core@2.0.17
+  - @remirror/messages@2.0.3
+  - @remirror/icons@2.0.2
+  - @remirror/theme@2.0.7
+  - @remirror/core@2.0.13
+  - @remirror/pm@2.0.5
+
 ## 2.2.14
 
 > 2023-03-10

@@ -1,5 +1,20 @@
 # @remirror/extension-text-color
 
+## 2.0.14
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/messages@2.0.3
+  - @remirror/theme@2.0.7
+  - @remirror/core@2.0.13
+  - @remirror/i18n@2.0.3
+  - @remirror/pm@2.0.5
+
 ## 2.0.13
 
 > 2023-03-10

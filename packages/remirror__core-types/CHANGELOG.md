@@ -1,5 +1,18 @@
 # @remirror/core-types
 
+## 2.0.5
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [d1edcffaf]
+  - @remirror/core-constants@2.0.1
+  - @remirror/types@1.0.1
+  - @remirror/pm@2.0.5
+
 ## 2.0.4
 
 > 2023-03-10

@@ -1,5 +1,21 @@
 # @remirror/react-editors
 
+## 1.0.28
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+  - @remirror/extension-react-tables@2.2.15
+  - @remirror/core-helpers@2.0.2
+  - create-context-state@2.0.1
+  - @remirror/styles@2.0.5
+  - @remirror/react@2.0.28
+  - @remirror/pm@2.0.5
+  - remirror@2.0.27
+
 ## 1.0.27
 
 > 2023-03-10

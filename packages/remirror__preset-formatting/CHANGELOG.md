@@ -1,5 +1,31 @@
 # @remirror/preset-formatting
 
+## 2.0.14
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/extension-node-formatting@2.0.13
+  - @remirror/extension-text-highlight@2.0.14
+  - @remirror/extension-text-color@2.0.14
+  - @remirror/extension-whitespace@2.0.13
+  - @remirror/extension-font-size@2.0.13
+  - @remirror/extension-text-case@2.0.13
+  - @remirror/extension-underline@2.0.13
+  - @remirror/extension-columns@2.0.13
+  - @remirror/extension-heading@2.0.13
+  - @remirror/extension-italic@2.0.13
+  - @remirror/extension-strike@2.0.13
+  - @remirror/extension-bold@2.0.13
+  - @remirror/extension-sub@2.0.13
+  - @remirror/extension-sup@2.0.13
+  - @remirror/core@2.0.13
+  - @remirror/pm@2.0.5
+
 ## 2.0.13
 
 > 2023-03-10

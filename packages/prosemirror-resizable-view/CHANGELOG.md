@@ -1,5 +1,16 @@
 # prosemirror-resizable-view
 
+## 2.0.12
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+  - @remirror/core-helpers@2.0.2
+  - @remirror/core-utils@2.0.12
+
 ## 2.0.11
 
 > 2023-03-10

@@ -1,5 +1,26 @@
 # @remirror/react-core
 
+## 2.0.17
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/extension-react-component@2.0.13
+  - @remirror/extension-positioner@2.1.8
+  - @remirror/react-renderer@2.0.13
+  - @remirror/preset-react@2.0.14
+  - @remirror/preset-core@2.0.16
+  - @remirror/react-utils@2.0.5
+  - create-context-state@2.0.1
+  - @remirror/theme@2.0.7
+  - @remirror/core@2.0.13
+  - @remirror/i18n@2.0.3
+  - @remirror/pm@2.0.5
+
 ## 2.0.16
 
 > 2023-03-10

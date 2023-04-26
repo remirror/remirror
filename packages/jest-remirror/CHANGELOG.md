@@ -1,5 +1,20 @@
 # jest-remirror
 
+## 2.1.5
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/preset-core@2.0.16
+  - jest-prosemirror@2.1.3
+  - @remirror/core@2.0.13
+  - @remirror/dom@2.0.16
+  - @remirror/pm@2.0.5
+
 ## 2.1.4
 
 > 2023-03-10

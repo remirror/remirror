@@ -1,5 +1,26 @@
 # @remirror/react
 
+## 2.0.28
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [e63437575]
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [157fd132a]
+  - @remirror/react-components@2.1.12
+  - @remirror/extension-react-component@2.0.13
+  - @remirror/extension-react-tables@2.2.15
+  - @remirror/extension-placeholder@2.0.14
+  - @remirror/extension-positioner@2.1.8
+  - @remirror/react-renderer@2.0.13
+  - @remirror/preset-react@2.0.14
+  - @remirror/react-hooks@2.0.22
+  - @remirror/react-utils@2.0.5
+  - @remirror/react-core@2.0.17
+
 ## 2.0.27
 
 > 2023-03-10

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/styles",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Styles for every remirror package.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__styles",
   "repository": {
@@ -43,7 +43,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "@remirror/core-helpers": "^2.0.1"
+    "@remirror/core-helpers": "^2.0.2"
   },
   "devDependencies": {
     "@emotion/css": "^11.10.6",

@@ -1,5 +1,50 @@
 # @remirror/react-components
 
+## 2.1.12
+
+> 2023-04-26
+
+### Patch Changes
+
+- e63437575: Increase active index after replace
+- 7b2c3928d: Rollup `.d.ts` file.
+- 157fd132a: Fixed MUI tooltip error for buttons
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/extension-horizontal-rule@2.0.13
+  - @remirror/extension-node-formatting@2.0.13
+  - @remirror/extension-blockquote@2.0.14
+  - @remirror/extension-code-block@2.0.14
+  - @remirror/extension-positioner@2.1.8
+  - @remirror/extension-text-color@2.0.14
+  - @remirror/extension-whitespace@2.0.13
+  - @remirror/extension-font-size@2.0.13
+  - @remirror/extension-underline@2.0.13
+  - @remirror/extension-callout@2.0.14
+  - @remirror/extension-columns@2.0.13
+  - @remirror/extension-heading@2.0.13
+  - @remirror/extension-history@2.0.13
+  - @remirror/extension-italic@2.0.13
+  - @remirror/extension-strike@2.0.13
+  - @remirror/extension-tables@2.2.10
+  - @remirror/extension-bold@2.0.13
+  - @remirror/extension-code@2.0.13
+  - @remirror/extension-find@0.1.6
+  - @remirror/extension-list@2.0.16
+  - @remirror/extension-sub@2.0.13
+  - @remirror/extension-sup@2.0.13
+  - @remirror/react-hooks@2.0.22
+  - @remirror/react-utils@2.0.5
+  - create-context-state@2.0.1
+  - @remirror/react-core@2.0.17
+  - @remirror/messages@2.0.3
+  - @remirror/icons@2.0.2
+  - @remirror/theme@2.0.7
+  - @remirror/core@2.0.13
+  - @remirror/i18n@2.0.3
+  - @remirror/pm@2.0.5
+  - multishift@2.0.8
+
 ## 2.1.11
 
 > 2023-03-10

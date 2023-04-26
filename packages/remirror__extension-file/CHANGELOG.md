@@ -1,5 +1,20 @@
 # @remirror/extension-file
 
+## 1.0.17
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/extension-react-component@2.0.13
+  - @remirror/react-core@2.0.17
+  - @remirror/theme@2.0.7
+  - @remirror/core@2.0.13
+  - @remirror/pm@2.0.5
+
 ## 1.0.16
 
 > 2023-03-10

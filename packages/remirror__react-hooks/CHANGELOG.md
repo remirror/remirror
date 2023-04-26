@@ -1,5 +1,27 @@
 # @remirror/react-hooks
 
+## 2.0.22
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/extension-mention-atom@2.0.16
+  - @remirror/extension-positioner@2.1.8
+  - @remirror/extension-history@2.0.13
+  - @remirror/extension-mention@2.0.15
+  - @remirror/extension-events@2.1.14
+  - @remirror/extension-emoji@2.0.17
+  - @remirror/react-utils@2.0.5
+  - @remirror/react-core@2.0.17
+  - @remirror/core@2.0.13
+  - @remirror/i18n@2.0.3
+  - @remirror/pm@2.0.5
+  - multishift@2.0.8
+
 ## 2.0.21
 
 > 2023-03-10

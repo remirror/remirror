@@ -1,5 +1,23 @@
 # @remirror/core
 
+## 2.0.13
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- e88cf35bb: Fix a runtime error from the `paste` command on Firefix.
+- Updated dependencies [7b2c3928d]
+  - @remirror/core-constants@2.0.1
+  - @remirror/core-helpers@2.0.2
+  - @remirror/core-types@2.0.5
+  - @remirror/core-utils@2.0.12
+  - @remirror/messages@2.0.3
+  - @remirror/icons@2.0.2
+  - @remirror/i18n@2.0.3
+  - @remirror/pm@2.0.5
+
 ## 2.0.12
 
 > 2023-03-10

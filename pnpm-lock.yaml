@@ -121,7 +121,7 @@ importers:
         specifier: ^2.5.0
         version: 2.5.0
       '@remirror/cli':
-        specifier: 1.0.0
+        specifier: 1.0.1
         version: link:packages/remirror__cli
       '@size-limit/preset-small-lib':
         specifier: ^8.2.4
@@ -293,15 +293,15 @@ importers:
         version: 3.2.4(jest@29.5.0)
       jest-github-reporter:
         specifier: ^1.1.1
-        version: 1.1.1(@octokit/core@3.6.0)(jest@29.5.0)
+        version: 1.1.1(@octokit/core@4.2.0)(jest@29.5.0)
       jest-playwright-preset:
         specifier: ^3.0.1
         version: 3.0.1(jest-circus@29.5.0)(jest-environment-node@29.5.0)(jest-runner@29.5.0)(jest@29.5.0)
       jest-prosemirror:
-        specifier: ^2.1.2
+        specifier: ^2.1.3
         version: link:packages/jest-prosemirror
       jest-remirror:
-        specifier: ^2.1.4
+        specifier: ^2.1.5
         version: link:packages/jest-remirror
       jest-watch-typeahead:
         specifier: ^2.2.2
@@ -325,7 +325,7 @@ importers:
         specifier: ^2.4.3
         version: 2.4.3(prettier@2.8.8)
       remirror:
-        specifier: 2.0.26
+        specifier: 2.0.27
         version: link:packages/remirror
       rimraf:
         specifier: ^4.4.1
@@ -383,19 +383,19 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__core-types
       '@remirror/core-utils':
-        specifier: ^2.0.11
+        specifier: ^2.0.12
         version: link:../remirror__core-utils
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@testing-library/dom':
         specifier: ^9.2.0
@@ -422,7 +422,7 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       test-keyboard:
-        specifier: 2.0.4
+        specifier: 2.0.5
         version: link:../test-keyboard
     devDependencies:
       jest:
@@ -435,16 +435,16 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/dom':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__dom
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/preset-core':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__preset-core
       '@testing-library/dom':
         specifier: ^9.2.0
@@ -453,7 +453,7 @@ importers:
         specifier: ^2.9.0
         version: 2.9.0
       jest-prosemirror:
-        specifier: ^2.1.2
+        specifier: ^2.1.3
         version: link:../jest-prosemirror
       sanitize-html:
         specifier: ^2.10.0
@@ -475,16 +475,16 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__core-types
       '@seznam/compose-react-refs':
         specifier: ^1.0.6
         version: 1.0.6
       a11y-status:
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../a11y-status
       compute-scroll-into-view:
         specifier: ^1.0.20
@@ -512,10 +512,10 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       escape-string-regexp:
         specifier: ^4.0.0
@@ -537,10 +537,10 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/core-utils':
-        specifier: ^2.0.11
+        specifier: ^2.0.12
         version: link:../remirror__core-utils
       prosemirror-model:
         specifier: ^1.19.0
@@ -555,13 +555,13 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/types':
-        specifier: ^1.0.0
+        specifier: ^1.0.1
         version: link:../remirror__types
       escape-string-regexp:
         specifier: ^4.0.0
@@ -583,10 +583,10 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       escape-string-regexp:
         specifier: ^4.0.0
@@ -608,187 +608,187 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__core-types
       '@remirror/core-utils':
-        specifier: ^2.0.11
+        specifier: ^2.0.12
         version: link:../remirror__core-utils
       '@remirror/dom':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__dom
       '@remirror/extension-annotation':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-annotation
       '@remirror/extension-bidi':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-code-block
       '@remirror/extension-codemirror5':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-codemirror5
       '@remirror/extension-collaboration':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-collaboration
       '@remirror/extension-columns':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-columns
       '@remirror/extension-diff':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-diff
       '@remirror/extension-doc':
-        specifier: ^2.1.4
+        specifier: ^2.1.5
         version: link:../remirror__extension-doc
       '@remirror/extension-drop-cursor':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-embed
       '@remirror/extension-emoji':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-emoji
       '@remirror/extension-entity-reference':
-        specifier: ^2.2.5
+        specifier: ^2.2.6
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-epic-mode':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-epic-mode
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/extension-font-family':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-font-family
       '@remirror/extension-font-size':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-font-size
       '@remirror/extension-gap-cursor':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-hard-break':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-history
       '@remirror/extension-horizontal-rule':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: ^2.1.8
+        specifier: ^2.1.9
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-list
       '@remirror/extension-markdown':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-markdown
       '@remirror/extension-mention':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-node-formatting':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-paragraph':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-paragraph
       '@remirror/extension-placeholder':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-placeholder
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/extension-search':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-search
       '@remirror/extension-shortcuts':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-shortcuts
       '@remirror/extension-strike':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: ^2.2.9
+        specifier: ^2.2.10
         version: link:../remirror__extension-tables
       '@remirror/extension-text':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-text
       '@remirror/extension-text-case':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-trailing-node':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-trailing-node
       '@remirror/extension-underline':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-whitespace
       '@remirror/extension-yjs':
-        specifier: ^3.0.13
+        specifier: ^3.0.14
         version: link:../remirror__extension-yjs
       '@remirror/icons':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__icons
       '@remirror/preset-core':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__preset-core
       '@remirror/preset-formatting':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__preset-formatting
       '@remirror/preset-wysiwyg':
-        specifier: ^2.0.18
+        specifier: ^2.0.19
         version: link:../remirror__preset-wysiwyg
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       '@types/codemirror':
         specifier: ^5.60.7
@@ -807,7 +807,7 @@ importers:
         version: 13.6.0
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@types/prettier':
         specifier: ^2.7.2
@@ -874,25 +874,25 @@ importers:
         specifier: 4.2.9
         version: 4.2.9
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__core-types
       '@remirror/core-utils':
-        specifier: ^2.0.11
+        specifier: ^2.0.12
         version: link:../remirror__core-utils
       '@remirror/i18n':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__i18n
       '@remirror/icons':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__icons
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       nanoevents:
         specifier: ^5.1.13
@@ -902,7 +902,7 @@ importers:
         version: 1.0.3
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__core-constants:
@@ -920,10 +920,10 @@ importers:
         specifier: 4.2.9
         version: 4.2.9
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/types':
-        specifier: ^1.0.0
+        specifier: ^1.0.1
         version: link:../remirror__types
       '@types/object.omit':
         specifier: ^3.0.0
@@ -962,14 +962,14 @@ importers:
   packages/remirror__core-types:
     dependencies:
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/types':
-        specifier: ^1.0.0
+        specifier: ^1.0.1
         version: link:../remirror__types
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__core-utils:
@@ -978,16 +978,16 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__core-types
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@types/min-document':
         specifier: ^2.19.0
@@ -1006,7 +1006,7 @@ importers:
         version: 3.1.8
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@types/jsdom':
         specifier: ^16.2.15
@@ -1024,14 +1024,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/react-core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__react-core
       prosemirror-dev-toolkit:
         specifier: ^1.1.2
-        version: 1.1.2(svelte@3.55.1)
+        version: 1.1.2(svelte@3.58.0)
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@testing-library/react':
         specifier: ^14.0.0
@@ -1055,14 +1055,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/preset-core':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__preset-core
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-annotation:
@@ -1071,17 +1071,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-bidi:
@@ -1090,10 +1090,10 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@types/direction':
         specifier: ^1.0.0
@@ -1103,7 +1103,7 @@ importers:
         version: 1.0.4
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-blockquote:
@@ -1112,17 +1112,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-bold:
@@ -1131,14 +1131,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-callout:
@@ -1147,17 +1147,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-code:
@@ -1166,14 +1166,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-code-block:
@@ -1182,13 +1182,13 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       '@types/refractor':
         specifier: ^3.0.2
@@ -1198,7 +1198,7 @@ importers:
         version: 3.6.0
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@types/jsdom':
         specifier: ^16.2.15
@@ -1219,17 +1219,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@types/codemirror':
         specifier: ^5.60.7
@@ -1253,11 +1253,11 @@ importers:
         specifier: ^6.10.0
         version: 6.10.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-collaboration:
@@ -1266,14 +1266,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-columns:
@@ -1282,14 +1282,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-count:
@@ -1298,11 +1298,11 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-diff:
@@ -1311,14 +1311,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-doc:
@@ -1327,14 +1327,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-drop-cursor:
@@ -1343,14 +1343,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-embed:
@@ -1359,23 +1359,23 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@types/querystringify':
         specifier: ^2.0.0
         version: 2.0.0
       prosemirror-resizable-view:
-        specifier: ^2.0.11
+        specifier: ^2.0.12
         version: link:../prosemirror-resizable-view
       querystringify:
         specifier: ^2.2.0
         version: 2.2.0
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-emoji:
@@ -1387,13 +1387,13 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       emojibase:
         specifier: ^6.1.0
@@ -1412,7 +1412,7 @@ importers:
         version: 3.2.0(patch_hash=hb5tifrnyoxxmogod3ui2wx6rq)
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-entity-reference:
@@ -1421,17 +1421,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-epic-mode:
@@ -1440,14 +1440,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-events:
@@ -1456,14 +1456,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-file:
@@ -1472,23 +1472,23 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-react-component
       '@remirror/react-core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__react-core
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       nanoevents:
         specifier: ^5.1.13
         version: 5.1.13
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -1506,7 +1506,7 @@ importers:
   packages/remirror__extension-find:
     dependencies:
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@types/string.prototype.matchall':
         specifier: ^4.0.1
@@ -1519,7 +1519,7 @@ importers:
         version: 4.0.8
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-font-family:
@@ -1528,14 +1528,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-font-size:
@@ -1544,17 +1544,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       round:
         specifier: ^2.0.1
         version: 2.0.1
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-gap-cursor:
@@ -1563,14 +1563,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-hard-break:
@@ -1579,14 +1579,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-heading:
@@ -1595,14 +1595,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-history:
@@ -1611,14 +1611,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-horizontal-rule:
@@ -1627,14 +1627,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-image:
@@ -1643,20 +1643,20 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       prosemirror-resizable-view:
-        specifier: ^2.0.11
+        specifier: ^2.0.12
         version: link:../prosemirror-resizable-view
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-italic:
@@ -1665,14 +1665,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-link:
@@ -1681,20 +1681,20 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       extract-domain:
         specifier: 2.2.1
         version: 2.2.1
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@types/extract-domain':
         specifier: 2.3.1
@@ -1709,20 +1709,20 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-markdown:
@@ -1731,10 +1731,10 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@types/marked':
         specifier: ^4.0.8
@@ -1753,10 +1753,10 @@ importers:
         version: 1.0.2
     devDependencies:
       '@remirror/extension-react-tables':
-        specifier: ^2.2.14
+        specifier: ^2.2.15
         version: link:../remirror__extension-react-tables
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-mention:
@@ -1765,20 +1765,20 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       escape-string-regexp:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-mention-atom:
@@ -1787,20 +1787,20 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-node-formatting:
@@ -1809,14 +1809,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-paragraph:
@@ -1825,14 +1825,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-placeholder:
@@ -1841,17 +1841,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-positioner:
@@ -1860,23 +1860,23 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       nanoevents:
         specifier: ^5.1.13
         version: 5.1.13
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-react-component:
@@ -1885,20 +1885,20 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       nanoevents:
         specifier: ^5.1.13
         version: 5.1.13
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -1919,23 +1919,23 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-react-component
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/react-utils':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__react-utils
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -1956,44 +1956,44 @@ importers:
         specifier: 4.2.9
         version: 4.2.9
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/core-utils':
-        specifier: ^2.0.11
+        specifier: ^2.0.12
         version: link:../remirror__core-utils
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/extension-tables':
-        specifier: ^2.2.9
+        specifier: ^2.2.10
         version: link:../remirror__extension-tables
       '@remirror/icons':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__icons
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/preset-core':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__preset-core
       '@remirror/react-components':
-        specifier: ^2.1.11
+        specifier: ^2.1.12
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: ^2.0.21
+        specifier: ^2.0.22
         version: link:../remirror__react-hooks
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       jsx-dom-cjs:
         specifier: ^8.0.5
         version: 8.0.5
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2020,17 +2020,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       escape-string-regexp:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-shortcuts:
@@ -2039,11 +2039,11 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-strike:
@@ -2052,14 +2052,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-sub:
@@ -2068,14 +2068,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-sup:
@@ -2084,14 +2084,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-tables:
@@ -2100,20 +2100,20 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-text:
@@ -2122,14 +2122,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-text-case:
@@ -2138,14 +2138,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-text-color:
@@ -2154,23 +2154,23 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/i18n':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__i18n
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       color2k:
         specifier: ^2.0.2
         version: 2.0.2
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-text-highlight:
@@ -2179,17 +2179,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-text-color':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-text-color
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-trailing-node:
@@ -2198,14 +2198,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-underline:
@@ -2214,14 +2214,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-whitespace:
@@ -2230,14 +2230,14 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__extension-yjs:
@@ -2246,10 +2246,10 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       prosemirror-model:
         specifier: ^1.19.0
@@ -2268,7 +2268,7 @@ importers:
         version: 1.0.5
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       y-webrtc:
         specifier: ^10.2.5
@@ -2289,7 +2289,7 @@ importers:
         specifier: ^3.17.2
         version: 3.17.2(patch_hash=qcm5lr5cbvjqi3vaflop4cvg2y)
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       make-plural:
         specifier: ^6.2.2
@@ -2301,7 +2301,7 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
 
   packages/remirror__messages:
@@ -2313,7 +2313,7 @@ importers:
         specifier: ^3.17.2
         version: 3.17.2
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
     devDependencies:
       '@babel/cli':
@@ -2335,10 +2335,10 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       prosemirror-collab:
         specifier: ^1.3.0
@@ -2365,7 +2365,7 @@ importers:
         specifier: ^1.19.0
         version: 1.19.0
       prosemirror-paste-rules:
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../prosemirror-paste-rules
       prosemirror-schema-list:
         specifier: ^1.2.2
@@ -2374,13 +2374,13 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2
       prosemirror-suggest:
-        specifier: ^2.0.3
+        specifier: ^2.0.4
         version: link:../prosemirror-suggest
       prosemirror-tables:
         specifier: ^1.3.2
         version: 1.3.2
       prosemirror-trailing-node:
-        specifier: ^2.0.3
+        specifier: ^2.0.4
         version: link:../prosemirror-trailing-node
       prosemirror-transform:
         specifier: ^1.7.1
@@ -2395,32 +2395,32 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-doc':
-        specifier: ^2.1.4
+        specifier: ^2.1.5
         version: link:../remirror__extension-doc
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/extension-gap-cursor':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-history':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-history
       '@remirror/extension-paragraph':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-paragraph
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/extension-text':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-text
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__preset-formatting:
@@ -2429,53 +2429,53 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-bold':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-bold
       '@remirror/extension-columns':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-columns
       '@remirror/extension-font-size':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-heading
       '@remirror/extension-italic':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-node-formatting':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-strike':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-sup
       '@remirror/extension-text-case':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-underline':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-whitespace
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__preset-react:
@@ -2484,20 +2484,20 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-placeholder':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-placeholder
       '@remirror/extension-react-component':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-react-component
       '@remirror/react-utils':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__react-utils
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2518,74 +2518,74 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-bidi':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-bold
       '@remirror/extension-code':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-code-block
       '@remirror/extension-drop-cursor':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-embed
       '@remirror/extension-gap-cursor':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-hard-break':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-heading
       '@remirror/extension-horizontal-rule':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: ^2.1.8
+        specifier: ^2.1.9
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-list
       '@remirror/extension-search':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-search
       '@remirror/extension-shortcuts':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-shortcuts
       '@remirror/extension-strike':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-strike
       '@remirror/extension-trailing-node':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-trailing-node
       '@remirror/extension-underline':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-underline
       '@remirror/preset-core':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__preset-core
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
 
   packages/remirror__react:
@@ -2594,34 +2594,34 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/extension-placeholder':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-placeholder
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-react-component
       '@remirror/extension-react-tables':
-        specifier: ^2.2.14
+        specifier: ^2.2.15
         version: link:../remirror__extension-react-tables
       '@remirror/preset-react':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__preset-react
       '@remirror/react-components':
-        specifier: ^2.1.11
+        specifier: ^2.1.12
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: ^2.0.21
+        specifier: ^2.0.22
         version: link:../remirror__react-hooks
       '@remirror/react-renderer':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__react-renderer
       '@remirror/react-utils':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__react-utils
     devDependencies:
       '@types/react':
@@ -2658,94 +2658,94 @@ importers:
         specifier: ^2.11.7
         version: 2.11.7
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-blockquote':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-code-block
       '@remirror/extension-columns':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-columns
       '@remirror/extension-find':
-        specifier: ^0.1.5
+        specifier: ^0.1.6
         version: link:../remirror__extension-find
       '@remirror/extension-font-size':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-history
       '@remirror/extension-horizontal-rule':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-italic':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-list':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-list
       '@remirror/extension-node-formatting':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/extension-strike':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: ^2.2.9
+        specifier: ^2.2.10
         version: link:../remirror__extension-tables
       '@remirror/extension-text-color':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__extension-text-color
       '@remirror/extension-underline':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-whitespace
       '@remirror/i18n':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__i18n
       '@remirror/icons':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__icons
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/react-core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: ^2.0.21
+        specifier: ^2.0.22
         version: link:../remirror__react-hooks
       '@remirror/react-utils':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__react-utils
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       '@seznam/compose-react-refs':
         specifier: ^1.0.6
@@ -2754,23 +2754,23 @@ importers:
         specifier: ^3.0.6
         version: 3.0.6
       create-context-state:
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../create-context-state
       match-sorter:
         specifier: ^6.3.1
         version: 6.3.1
       multishift:
-        specifier: ^2.0.7
+        specifier: ^2.0.8
         version: link:../multishift
       react-color:
         specifier: ^2.19.3
         version: 2.19.3(react@18.2.0)
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -2791,37 +2791,37 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-react-component
       '@remirror/i18n':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__i18n
       '@remirror/preset-core':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__preset-core
       '@remirror/preset-react':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: link:../remirror__preset-react
       '@remirror/react-renderer':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__react-renderer
       '@remirror/react-utils':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__react-utils
       '@remirror/theme':
-        specifier: ^2.0.6
+        specifier: ^2.0.7
         version: link:../remirror__theme
       '@seznam/compose-react-refs':
         specifier: ^1.0.6
         version: 1.0.6
       create-context-state:
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../create-context-state
       fast-deep-equal:
         specifier: ^3.1.3
@@ -2834,10 +2834,10 @@ importers:
         version: 1.0.3
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@types/jsdom':
         specifier: ^16.2.15
@@ -2864,19 +2864,19 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/extension-react-tables':
-        specifier: ^2.2.14
+        specifier: ^2.2.15
         version: link:../remirror__extension-react-tables
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@remirror/styles':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__styles
       '@svgmoji/noto':
         specifier: ^3.2.0
@@ -2885,13 +2885,13 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       create-context-state:
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../create-context-state
       refractor:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 2.0.26
+        specifier: 2.0.27
         version: link:../remirror
       svgmoji:
         specifier: ^3.2.0
@@ -2919,37 +2919,37 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-emoji':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-emoji
       '@remirror/extension-events':
-        specifier: ^2.1.13
+        specifier: ^2.1.14
         version: link:../remirror__extension-events
       '@remirror/extension-history':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-history
       '@remirror/extension-mention':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-positioner':
-        specifier: ^2.1.7
+        specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/i18n':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__i18n
       '@remirror/react-core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__react-core
       '@remirror/react-utils':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__react-utils
       multishift:
-        specifier: ^2.0.7
+        specifier: ^2.0.8
         version: link:../multishift
       use-isomorphic-layout-effect:
         specifier: ^1.1.2
@@ -2959,10 +2959,10 @@ importers:
         version: 1.2.0(@types/react@18.2.0)(react@18.2.0)
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -2986,7 +2986,7 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
     devDependencies:
       '@types/react':
@@ -3002,17 +3002,17 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/extension-react-ssr':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-react-ssr
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -3033,13 +3033,13 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-constants':
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__core-types
     devDependencies:
       '@types/react':
@@ -3055,7 +3055,7 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
     devDependencies:
       '@emotion/css':
@@ -3089,7 +3089,7 @@ importers:
         specifier: 4.2.9
         version: 4.2.9
       '@remirror/core-types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__core-types
       color2k:
         specifier: ^2.0.2
@@ -3147,49 +3147,49 @@ importers:
         specifier: ^2.11.7
         version: 2.11.7
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/dev':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__dev
       '@remirror/extension-codemirror6':
-        specifier: ^1.0.12
+        specifier: ^1.0.13
         version: link:../remirror__extension-codemirror6
       '@remirror/extension-count':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__extension-count
       '@remirror/extension-entity-reference':
-        specifier: ^2.2.5
+        specifier: ^2.2.6
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-file':
-        specifier: ^1.0.16
+        specifier: ^1.0.17
         version: link:../remirror__extension-file
       '@remirror/extension-find':
-        specifier: ^0.1.5
+        specifier: ^0.1.6
         version: link:../remirror__extension-find
       '@remirror/extension-mention':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-react-tables':
-        specifier: ^2.2.14
+        specifier: ^2.2.15
         version: link:../remirror__extension-react-tables
       '@remirror/messages':
-        specifier: ^2.0.2
+        specifier: ^2.0.3
         version: link:../remirror__messages
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@remirror/react-editors':
-        specifier: ^1.0.27
+        specifier: ^1.0.28
         version: link:../remirror__react-editors
       '@remirror/styles':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__styles
       '@svgmoji/blob':
         specifier: ^3.2.0
@@ -3217,12 +3217,12 @@ importers:
         version: 10.4.14(postcss@8.4.14)
       babel-loader:
         specifier: ^8.3.0
-        version: 8.3.0(@babel/core@7.21.4)(webpack@5.76.0)
+        version: 8.3.0(@babel/core@7.21.4)(webpack@5.80.0)
       codemirror:
         specifier: ^5.65.12
         version: 5.65.12
       create-context-state:
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../create-context-state
       diffable-html:
         specifier: ^5.0.0
@@ -3255,7 +3255,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 2.0.26
+        specifier: 2.0.27
         version: link:../remirror
       scripts:
         specifier: 0.0.1
@@ -3325,10 +3325,10 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__core-types
 
   packages/testing:
@@ -3346,16 +3346,16 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../remirror__core
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../remirror__pm
       '@remirror/preset-core':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__preset-core
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../remirror__react
       '@testing-library/react':
         specifier: ^14.0.0
@@ -3427,7 +3427,7 @@ importers:
         specifier: ^3.0.7
         version: 3.0.7
       test-keyboard:
-        specifier: 2.0.4
+        specifier: 2.0.5
         version: link:../test-keyboard
     devDependencies:
       '@types/react':
@@ -3440,7 +3440,7 @@ importers:
   support:
     dependencies:
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../packages/remirror__core-helpers
       diffable-html:
         specifier: ^5.0.0
@@ -3461,7 +3461,7 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../../packages/remirror__core-helpers
       '@types/fs-extra':
         specifier: ^9.0.13
@@ -3531,13 +3531,13 @@ importers:
         specifier: ^7.34.4
         version: 7.34.4(@types/node@16.18.24)
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../../packages/remirror__core-helpers
       '@remirror/icons':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../../packages/remirror__icons
       '@remirror/types':
-        specifier: ^1.0.0
+        specifier: ^1.0.1
         version: link:../../packages/remirror__types
       '@types/autoprefixer':
         specifier: ^9.7.2
@@ -3664,7 +3664,7 @@ importers:
         version: 8.4.14
       postcss-loader:
         specifier: ^6.2.1
-        version: 6.2.1(postcss@8.4.14)(webpack@5.76.0)
+        version: 6.2.1(postcss@8.4.14)(webpack@5.80.0)
       postcss-nested:
         specifier: ^5.0.6
         version: 5.0.6(postcss@8.4.14)
@@ -3708,11 +3708,11 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/remirror__pm
 
   support/templates/minimal-template:
@@ -3721,7 +3721,7 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core-helpers':
-        specifier: ^2.0.1
+        specifier: ^2.0.2
         version: link:../../../packages/remirror__core-helpers
 
   support/templates/preset-template:
@@ -3730,11 +3730,11 @@ importers:
         specifier: ^7.21.0
         version: 7.21.0
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../../../packages/remirror__pm
 
   website:
@@ -3761,29 +3761,29 @@ importers:
         specifier: ^1.6.22
         version: 1.6.22(react@18.2.0)
       '@remirror/core':
-        specifier: ^2.0.12
+        specifier: ^2.0.13
         version: link:../packages/remirror__core
       '@remirror/dev':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../packages/remirror__dev
       '@remirror/react':
-        specifier: ^2.0.27
+        specifier: ^2.0.28
         version: link:../packages/remirror__react
       '@remirror/react-editors':
-        specifier: ^1.0.27
+        specifier: ^1.0.28
         version: link:../packages/remirror__react-editors
       '@remirror/styles':
-        specifier: ^2.0.4
+        specifier: ^2.0.5
         version: link:../packages/remirror__styles
       '@types/react-syntax-highlighter':
         specifier: ^13.5.2
         version: 13.5.2
       create-context-state:
-        specifier: ^2.0.0
+        specifier: ^2.0.1
         version: link:../packages/create-context-state
       esbuild-loader:
         specifier: ^2.21.0
-        version: 2.21.0(webpack@5.76.0)
+        version: 2.21.0(webpack@5.80.0)
       framer-motion:
         specifier: ^4.1.17
         version: 4.1.17(react-dom@18.2.0)(react@18.2.0)
@@ -3815,7 +3815,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       remirror:
-        specifier: ^2.0.26
+        specifier: ^2.0.27
         version: link:../packages/remirror
     devDependencies:
       '@docusaurus/core':
@@ -3838,7 +3838,7 @@ importers:
         version: 2.4.0(@swc/core@1.3.55)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
       '@docusaurus/preset-classic':
         specifier: ^2.4.0
-        version: 2.4.0(@algolia/client-search@4.13.1)(@swc/core@1.3.55)(@types/react@18.2.0)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.0(@algolia/client-search@4.17.0)(@swc/core@1.3.55)(@types/react@18.2.0)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
       '@docusaurus/theme-classic':
         specifier: ^2.4.0
         version: 2.4.0(@swc/core@1.3.55)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
@@ -3889,13 +3889,13 @@ importers:
         version: 14.1.0(postcss@8.4.14)
       postcss-loader:
         specifier: ^6.2.1
-        version: 6.2.1(postcss@8.4.14)(webpack@5.76.0)
+        version: 6.2.1(postcss@8.4.14)(webpack@5.80.0)
       postcss-nested:
         specifier: ^5.0.6
         version: 5.0.6(postcss@8.4.14)
       raw-loader:
         specifier: ^4.0.2
-        version: 4.0.2(webpack@5.76.0)
+        version: 4.0.2(webpack@5.80.0)
 
 packages:
 
@@ -3943,14 +3943,14 @@ packages:
       '@algolia/autocomplete-shared': 1.7.1
     dev: true
 
-  /@algolia/autocomplete-preset-algolia@1.7.1(@algolia/client-search@4.13.1)(algoliasearch@4.13.1):
+  /@algolia/autocomplete-preset-algolia@1.7.1(@algolia/client-search@4.17.0)(algoliasearch@4.13.1):
     resolution: {integrity: sha512-pJwmIxeJCymU1M6cGujnaIYcY3QPOVYZOXhFkWVM7IxKzy272BwCvMFMyc5NpG/QmiObBxjo7myd060OeTNJXg==}
     peerDependencies:
       '@algolia/client-search': ^4.9.1
       algoliasearch: ^4.9.1
     dependencies:
       '@algolia/autocomplete-shared': 1.7.1
-      '@algolia/client-search': 4.13.1
+      '@algolia/client-search': 4.17.0
       algoliasearch: 4.13.1
     dev: true
 
@@ -3966,6 +3966,10 @@ packages:
 
   /@algolia/cache-common@4.13.1:
     resolution: {integrity: sha512-7Vaf6IM4L0Jkl3sYXbwK+2beQOgVJ0mKFbz/4qSxKd1iy2Sp77uTAazcX+Dlexekg1fqGUOSO7HS4Sx47ZJmjA==}
+    dev: true
+
+  /@algolia/cache-common@4.17.0:
+    resolution: {integrity: sha512-g8mXzkrcUBIPZaulAuqE7xyHhLAYAcF2xSch7d9dABheybaU3U91LjBX6eJTEB7XVhEsgK4Smi27vWtAJRhIKQ==}
     dev: true
 
   /@algolia/cache-in-memory@4.13.1:
@@ -3998,6 +4002,13 @@ packages:
       '@algolia/transporter': 4.13.1
     dev: true
 
+  /@algolia/client-common@4.17.0:
+    resolution: {integrity: sha512-jHMks0ZFicf8nRDn6ma8DNNsdwGgP/NKiAAL9z6rS7CymJ7L0+QqTJl3rYxRW7TmBhsUH40wqzmrG6aMIN/DrQ==}
+    dependencies:
+      '@algolia/requester-common': 4.17.0
+      '@algolia/transporter': 4.17.0
+    dev: true
+
   /@algolia/client-personalization@4.13.1:
     resolution: {integrity: sha512-1CqrOW1ypVrB4Lssh02hP//YxluoIYXAQCpg03L+/RiXJlCs+uIqlzC0ctpQPmxSlTK6h07kr50JQoYH/TIM9w==}
     dependencies:
@@ -4014,12 +4025,24 @@ packages:
       '@algolia/transporter': 4.13.1
     dev: true
 
+  /@algolia/client-search@4.17.0:
+    resolution: {integrity: sha512-x4P2wKrrRIXszT8gb7eWsMHNNHAJs0wE7/uqbufm4tZenAp+hwU/hq5KVsY50v+PfwM0LcDwwn/1DroujsTFoA==}
+    dependencies:
+      '@algolia/client-common': 4.17.0
+      '@algolia/requester-common': 4.17.0
+      '@algolia/transporter': 4.17.0
+    dev: true
+
   /@algolia/events@4.0.1:
     resolution: {integrity: sha512-FQzvOCgoFXAbf5Y6mYozw2aj5KCJoA3m4heImceldzPSMbdyS4atVjJzXKMsfX3wnZTFYwkkt8/z8UesLHlSBQ==}
     dev: true
 
   /@algolia/logger-common@4.13.1:
     resolution: {integrity: sha512-L6slbL/OyZaAXNtS/1A8SAbOJeEXD5JcZeDCPYDqSTYScfHu+2ePRTDMgUTY4gQ7HsYZ39N1LujOd8WBTmM2Aw==}
+    dev: true
+
+  /@algolia/logger-common@4.17.0:
+    resolution: {integrity: sha512-DGuoZqpTmIKJFDeyAJ7M8E/LOenIjWiOsg1XJ1OqAU/eofp49JfqXxbfgctlVZVmDABIyOz8LqEoJ6ZP4DTyvw==}
     dev: true
 
   /@algolia/logger-console@4.13.1:
@@ -4038,6 +4061,10 @@ packages:
     resolution: {integrity: sha512-eGVf0ID84apfFEuXsaoSgIxbU3oFsIbz4XiotU3VS8qGCJAaLVUC5BUJEkiFENZIhon7hIB4d0RI13HY4RSA+w==}
     dev: true
 
+  /@algolia/requester-common@4.17.0:
+    resolution: {integrity: sha512-XJjmWFEUlHu0ijvcHBoixuXfEoiRUdyzQM6YwTuB8usJNIgShua8ouFlRWF8iCeag0vZZiUm4S2WCVBPkdxFgg==}
+    dev: true
+
   /@algolia/requester-node-http@4.13.1:
     resolution: {integrity: sha512-7C0skwtLdCz5heKTVe/vjvrqgL/eJxmiEjHqXdtypcE5GCQCYI15cb+wC4ytYioZDMiuDGeVYmCYImPoEgUGPw==}
     dependencies:
@@ -4050,6 +4077,14 @@ packages:
       '@algolia/cache-common': 4.13.1
       '@algolia/logger-common': 4.13.1
       '@algolia/requester-common': 4.13.1
+    dev: true
+
+  /@algolia/transporter@4.17.0:
+    resolution: {integrity: sha512-6xL6H6fe+Fi0AEP3ziSgC+G04RK37iRb4uUUqVAH9WPYFI8g+LYFq6iv5HS8Cbuc5TTut+Bwj6G+dh/asdb9uA==}
+    dependencies:
+      '@algolia/cache-common': 4.17.0
+      '@algolia/logger-common': 4.17.0
+      '@algolia/requester-common': 4.17.0
     dev: true
 
   /@ampproject/remapping@2.2.1:
@@ -6152,7 +6187,7 @@ packages:
     resolution: {integrity: sha512-jnNrO2JVYYhj2pP2FomlHIy6220n6mrLn2t9v2/qc+rM7M/fbIcKMgk9ky4RN+L/maUEmteckzg6/PIYoAAXJg==}
     dev: true
 
-  /@docsearch/react@3.2.0(@algolia/client-search@4.13.1)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
+  /@docsearch/react@3.2.0(@algolia/client-search@4.17.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-ATS3w5JBgQGQF0kHn5iOAPfnCCaoLouZQMmI7oENV//QMFrYbjhUZxBU9lIwAT7Rzybud+Jtb4nG5IEjBk3Ixw==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 19.0.0'
@@ -6160,7 +6195,7 @@ packages:
       react-dom: '>= 16.8.0 < 19.0.0'
     dependencies:
       '@algolia/autocomplete-core': 1.7.1
-      '@algolia/autocomplete-preset-algolia': 1.7.1(@algolia/client-search@4.13.1)(algoliasearch@4.13.1)
+      '@algolia/autocomplete-preset-algolia': 1.7.1(@algolia/client-search@4.17.0)(algoliasearch@4.13.1)
       '@docsearch/css': 3.2.0
       '@types/react': 18.2.0
       algoliasearch: 4.13.1
@@ -6241,7 +6276,7 @@ packages:
       semver: 7.5.0
       serve-handler: 6.1.3
       shelljs: 0.8.5
-      terser-webpack-plugin: 5.3.3(@swc/core@1.3.55)(esbuild@0.17.18)(webpack@5.76.0)
+      terser-webpack-plugin: 5.3.3(@swc/core@1.3.55)(esbuild@0.17.18)(webpack@5.73.0)
       tslib: 2.5.0
       update-notifier: 5.1.0
       url-loader: 4.1.1(file-loader@6.2.0)(webpack@5.73.0)
@@ -6324,7 +6359,7 @@ packages:
       unified: 9.2.2
       unist-util-visit: 2.0.3
       url-loader: 4.1.1(file-loader@6.2.0)(webpack@5.76.0)
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.76.0(@swc/core@1.3.55)
     transitivePeerDependencies:
       - '@docusaurus/types'
       - '@swc/core'
@@ -6416,7 +6451,7 @@ packages:
       tslib: 2.5.0
       unist-util-visit: 2.0.3
       utility-types: 3.10.0
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.76.0(@swc/core@1.3.55)
     transitivePeerDependencies:
       - '@parcel/css'
       - '@swc/core'
@@ -6490,7 +6525,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tslib: 2.5.0
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.76.0(@swc/core@1.3.55)
     transitivePeerDependencies:
       - '@parcel/css'
       - '@swc/core'
@@ -6702,7 +6737,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/preset-classic@2.4.0(@algolia/client-search@4.13.1)(@swc/core@1.3.55)(@types/react@18.2.0)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/preset-classic@2.4.0(@algolia/client-search@4.17.0)(@swc/core@1.3.55)(@types/react@18.2.0)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-/5z5o/9bc6+P5ool2y01PbJhoGddEGsC0ej1MF6mCoazk8A+kW4feoUd68l7Bnv01rCnG3xy7kHUQP97Y0grUA==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -6720,7 +6755,7 @@ packages:
       '@docusaurus/plugin-sitemap': 2.4.0(@swc/core@1.3.55)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
       '@docusaurus/theme-classic': 2.4.0(@swc/core@1.3.55)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
       '@docusaurus/theme-common': 2.4.0(@docusaurus/types@2.4.0)(@swc/core@1.3.55)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/theme-search-algolia': 2.4.0(@algolia/client-search@4.13.1)(@docusaurus/types@2.4.0)(@swc/core@1.3.55)(@types/react@18.2.0)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/theme-search-algolia': 2.4.0(@algolia/client-search@4.17.0)(@docusaurus/types@2.4.0)(@swc/core@1.3.55)(@types/react@18.2.0)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
       '@docusaurus/types': 2.4.0(@swc/core@1.3.55)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -6896,14 +6931,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/theme-search-algolia@2.4.0(@algolia/client-search@4.13.1)(@docusaurus/types@2.4.0)(@swc/core@1.3.55)(@types/react@18.2.0)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/theme-search-algolia@2.4.0(@algolia/client-search@4.17.0)(@docusaurus/types@2.4.0)(@swc/core@1.3.55)(@types/react@18.2.0)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
     resolution: {integrity: sha512-pPCJSCL1Qt4pu/Z0uxBAuke0yEBbxh0s4fOvimna7TEcBLPq0x06/K78AaABXrTVQM6S0vdocFl9EoNgU17hqA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docsearch/react': 3.2.0(@algolia/client-search@4.13.1)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
+      '@docsearch/react': 3.2.0(@algolia/client-search@4.17.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/core': 2.4.0(@docusaurus/types@2.4.0)(@swc/core@1.3.55)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
       '@docusaurus/logger': 2.4.0
       '@docusaurus/plugin-content-docs': 2.4.0(@swc/core@1.3.55)(eslint@8.39.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
@@ -7027,7 +7062,7 @@ packages:
       shelljs: 0.8.5
       tslib: 2.5.0
       url-loader: 4.1.1(file-loader@6.2.0)(webpack@5.76.0)
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.76.0(@swc/core@1.3.55)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -8048,6 +8083,10 @@ packages:
     resolution: {integrity: sha512-F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==}
     engines: {node: '>=6.0.0'}
 
+  /@jridgewell/resolve-uri@3.1.1:
+    resolution: {integrity: sha512-dSYZh7HhCDtCKm4QakX0xFpsRDqjjtZf/kjI/v3T3Nwt5r8/qz/M19F9ySyOqU94SXBmeG9ttTul+YnR4LOxFA==}
+    engines: {node: '>=6.0.0'}
+
   /@jridgewell/set-array@1.1.1:
     resolution: {integrity: sha512-Ct5MqZkLGEXTVmQYbGtx9SVqD2fqwvdubdps5D3djjAkgkKwT918VNOz65pEHFaYTeWcukmJmH5SwsA9Tn2ObQ==}
     engines: {node: '>=6.0.0'}
@@ -8061,8 +8100,17 @@ packages:
   /@jridgewell/sourcemap-codec@1.4.14:
     resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
 
+  /@jridgewell/sourcemap-codec@1.4.15:
+    resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
+
   /@jridgewell/trace-mapping@0.3.17:
     resolution: {integrity: sha512-MCNzAp77qzKca9+W/+I0+sEpaUnZoeasnghNeVc41VZCEKaCH73Vq3BZZ/SzWIgrqE4H4ceI+p+b6C0mHf9T4g==}
+    dependencies:
+      '@jridgewell/resolve-uri': 3.1.0
+      '@jridgewell/sourcemap-codec': 1.4.14
+
+  /@jridgewell/trace-mapping@0.3.18:
+    resolution: {integrity: sha512-w+niJYzMHdd7USdiH2U6869nqhD2nbfZXND5Yp93qIbEmnDNk7PD48o+YchRVpzMU7M6jVCbenTR7PA1FLQ9pA==}
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
@@ -8070,8 +8118,8 @@ packages:
   /@jridgewell/trace-mapping@0.3.9:
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
     dependencies:
-      '@jridgewell/resolve-uri': 3.1.0
-      '@jridgewell/sourcemap-codec': 1.4.14
+      '@jridgewell/resolve-uri': 3.1.1
+      '@jridgewell/sourcemap-codec': 1.4.15
 
   /@juggle/resize-observer@3.4.0:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
@@ -8865,6 +8913,13 @@ packages:
       '@octokit/types': 6.34.0
     dev: false
 
+  /@octokit/auth-token@3.0.3:
+    resolution: {integrity: sha512-/aFM2M4HVDBT/jjDBa84sJniv1t9Gm/rLkalaz9htOm+L+8JMj1k9w0CkUdcxNyNxZPlTxKPVko+m1VlM58ZVA==}
+    engines: {node: '>= 14'}
+    dependencies:
+      '@octokit/types': 9.1.2
+    dev: false
+
   /@octokit/core@3.6.0:
     resolution: {integrity: sha512-7RKRKuA4xTjMhY+eG3jthb3hlZCsOwg3rztWh75Xc+ShDWOfDDATWbeZpAHBNRpm4Tv9WgBMOy1zEJYXG6NJ7Q==}
     dependencies:
@@ -8879,10 +8934,34 @@ packages:
       - encoding
     dev: false
 
+  /@octokit/core@4.2.0:
+    resolution: {integrity: sha512-AgvDRUg3COpR82P7PBdGZF/NNqGmtMq2NiPqeSsDIeCfYFOZ9gddqWNQHnFdEUf+YwOj4aZYmJnlPp7OXmDIDg==}
+    engines: {node: '>= 14'}
+    dependencies:
+      '@octokit/auth-token': 3.0.3
+      '@octokit/graphql': 5.0.5
+      '@octokit/request': 6.2.3
+      '@octokit/request-error': 3.0.3
+      '@octokit/types': 9.1.2
+      before-after-hook: 2.2.3
+      universal-user-agent: 6.0.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@octokit/endpoint@6.0.12:
     resolution: {integrity: sha512-lF3puPwkQWGfkMClXb4k/eUT/nZKQfxinRWJrdZaJO85Dqwo/G0yOC434Jr2ojwafWJMYqFGFa5ms4jJUgujdA==}
     dependencies:
       '@octokit/types': 6.34.0
+      is-plain-object: 5.0.0
+      universal-user-agent: 6.0.0
+    dev: false
+
+  /@octokit/endpoint@7.0.5:
+    resolution: {integrity: sha512-LG4o4HMY1Xoaec87IqQ41TQ+glvIeTKqfjkCEmt5AIwDZJwQeVZFIEYXrYY6yLwK+pAScb9Gj4q+Nz2qSw1roA==}
+    engines: {node: '>= 14'}
+    dependencies:
+      '@octokit/types': 9.1.2
       is-plain-object: 5.0.0
       universal-user-agent: 6.0.0
     dev: false
@@ -8897,8 +8976,23 @@ packages:
       - encoding
     dev: false
 
+  /@octokit/graphql@5.0.5:
+    resolution: {integrity: sha512-Qwfvh3xdqKtIznjX9lz2D458r7dJPP8l6r4GQkIdWQouZwHQK0mVT88uwiU2bdTU2OtT1uOlKpRciUWldpG0yQ==}
+    engines: {node: '>= 14'}
+    dependencies:
+      '@octokit/request': 6.2.3
+      '@octokit/types': 9.1.2
+      universal-user-agent: 6.0.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@octokit/openapi-types@11.2.0:
     resolution: {integrity: sha512-PBsVO+15KSlGmiI8QAzaqvsNlZlrDlyAJYcrXBCvVUxCp7VnXjkwPoFHgjEJXx3WF9BAwkA6nfCUA7i9sODzKA==}
+    dev: false
+
+  /@octokit/openapi-types@17.0.0:
+    resolution: {integrity: sha512-V8BVJGN0ZmMlURF55VFHFd/L92XQQ43KvFjNmY1IYbCN3V/h/uUFV6iQi19WEHM395Nn+1qhUbViCAD/1czzog==}
     dev: false
 
   /@octokit/plugin-paginate-rest@1.1.2:
@@ -8922,6 +9016,14 @@ packages:
       '@octokit/core': '>=3'
     dependencies:
       '@octokit/core': 3.6.0
+    dev: false
+
+  /@octokit/plugin-request-log@1.0.4(@octokit/core@4.2.0):
+    resolution: {integrity: sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==}
+    peerDependencies:
+      '@octokit/core': '>=3'
+    dependencies:
+      '@octokit/core': 4.2.0
     dev: false
 
   /@octokit/plugin-rest-endpoint-methods@2.4.0:
@@ -8957,6 +9059,15 @@ packages:
       once: 1.4.0
     dev: false
 
+  /@octokit/request-error@3.0.3:
+    resolution: {integrity: sha512-crqw3V5Iy2uOU5Np+8M/YexTlT8zxCfI+qu+LxUB7SZpje4Qmx3mub5DfEKSO8Ylyk0aogi6TYdf6kxzh2BguQ==}
+    engines: {node: '>= 14'}
+    dependencies:
+      '@octokit/types': 9.1.2
+      deprecation: 2.3.1
+      once: 1.4.0
+    dev: false
+
   /@octokit/request@5.6.3:
     resolution: {integrity: sha512-bFJl0I1KVc9jYTe9tdGGpAMPy32dLBXXo1dS/YwSCTL/2nd9XeHsY616RE3HPXDVk+a+dBuzyz5YdlXwcDTr2A==}
     dependencies:
@@ -8970,12 +9081,26 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/rest@16.43.2(@octokit/core@3.6.0):
+  /@octokit/request@6.2.3:
+    resolution: {integrity: sha512-TNAodj5yNzrrZ/VxP+H5HiYaZep0H3GU0O7PaF+fhDrt8FPrnkei9Aal/txsN/1P7V3CPiThG0tIvpPDYUsyAA==}
+    engines: {node: '>= 14'}
+    dependencies:
+      '@octokit/endpoint': 7.0.5
+      '@octokit/request-error': 3.0.3
+      '@octokit/types': 9.1.2
+      is-plain-object: 5.0.0
+      node-fetch: 2.6.9
+      universal-user-agent: 6.0.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@octokit/rest@16.43.2(@octokit/core@4.2.0):
     resolution: {integrity: sha512-ngDBevLbBTFfrHZeiS7SAMAZ6ssuVmXuya+F/7RaVvlysgGa1JKJkKWY+jV6TCJYcW0OALfJ7nTIGXcBXzycfQ==}
     dependencies:
       '@octokit/auth-token': 2.5.0
       '@octokit/plugin-paginate-rest': 1.1.2
-      '@octokit/plugin-request-log': 1.0.4(@octokit/core@3.6.0)
+      '@octokit/plugin-request-log': 1.0.4(@octokit/core@4.2.0)
       '@octokit/plugin-rest-endpoint-methods': 2.4.0
       '@octokit/request': 5.6.3
       '@octokit/request-error': 1.2.1
@@ -9015,6 +9140,12 @@ packages:
     resolution: {integrity: sha512-s1zLBjWhdEI2zwaoSgyOFoKSl109CUcVBCc7biPJ3aAf6LGLU6szDvi31JPU7bxfla2lqfhjbbg/5DdFNxOwHw==}
     dependencies:
       '@octokit/openapi-types': 11.2.0
+    dev: false
+
+  /@octokit/types@9.1.2:
+    resolution: {integrity: sha512-LPbJIuu1WNoRHbN4UMysEdlissRFpTCWyoKT7kHPufI8T+XX33/qilfMWJo3mCOjNIKu0+43oSQPf+HJa0+TTQ==}
+    dependencies:
+      '@octokit/openapi-types': 17.0.0
     dev: false
 
   /@philpl/buble@0.19.7:
@@ -10828,11 +10959,23 @@ packages:
       '@types/eslint': 7.29.0
       '@types/estree': 0.0.51
 
+  /@types/eslint-scope@3.7.4:
+    resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
+    dependencies:
+      '@types/eslint': 8.37.0
+      '@types/estree': 1.0.1
+
   /@types/eslint@7.29.0:
     resolution: {integrity: sha512-VNcvioYDH8/FxaeTKkM4/TiTwt6pBV9E3OfGmvaw8tPl0rrHCJ4Ll15HRT+pMiFAf/MLQvAzC+6RzUMEL9Ceng==}
     dependencies:
       '@types/estree': 0.0.51
       '@types/json-schema': 7.0.9
+
+  /@types/eslint@8.37.0:
+    resolution: {integrity: sha512-Piet7dG2JBuDIfohBngQ3rCt7MgO9xCO4xIMKxBThCq5PNRB91IjlJ10eJVwfoNtvTErmxLzwBZ7rHZtbOMmFQ==}
+    dependencies:
+      '@types/estree': 1.0.1
+      '@types/json-schema': 7.0.11
 
   /@types/estree@0.0.39:
     resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
@@ -10840,6 +10983,9 @@ packages:
 
   /@types/estree@0.0.51:
     resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==}
+
+  /@types/estree@1.0.1:
+    resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
 
   /@types/exit@0.1.31:
     resolution: {integrity: sha512-ghT0E6Bw64RXc6lM30ExMNlYbUCsyR8oucl/q+ESGGhNOXOmBPpZHYGXCH2T/yTFq9YtudNCnZEQ4puX6aq87A==}
@@ -11001,6 +11147,9 @@ packages:
       '@types/tough-cookie': 4.0.1
       parse5: 7.1.2
     dev: false
+
+  /@types/json-schema@7.0.11:
+    resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
 
   /@types/json-schema@7.0.9:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
@@ -11592,14 +11741,29 @@ packages:
       '@webassemblyjs/helper-numbers': 1.11.1
       '@webassemblyjs/helper-wasm-bytecode': 1.11.1
 
+  /@webassemblyjs/ast@1.11.5:
+    resolution: {integrity: sha512-LHY/GSAZZRpsNQH+/oHqhRQ5FT7eoULcBqgfyTB5nQHogFnK3/7QoN7dLnwSE/JkUAF0SrRuclT7ODqMFtWxxQ==}
+    dependencies:
+      '@webassemblyjs/helper-numbers': 1.11.5
+      '@webassemblyjs/helper-wasm-bytecode': 1.11.5
+
   /@webassemblyjs/floating-point-hex-parser@1.11.1:
     resolution: {integrity: sha512-iGRfyc5Bq+NnNuX8b5hwBrRjzf0ocrJPI6GWFodBFzmFnyvrQ83SHKhmilCU/8Jv67i4GJZBMhEzltxzcNagtQ==}
+
+  /@webassemblyjs/floating-point-hex-parser@1.11.5:
+    resolution: {integrity: sha512-1j1zTIC5EZOtCplMBG/IEwLtUojtwFVwdyVMbL/hwWqbzlQoJsWCOavrdnLkemwNoC/EOwtUFch3fuo+cbcXYQ==}
 
   /@webassemblyjs/helper-api-error@1.11.1:
     resolution: {integrity: sha512-RlhS8CBCXfRUR/cwo2ho9bkheSXG0+NwooXcc3PAILALf2QLdFyj7KGsKRbVc95hZnhnERon4kW/D3SZpp6Tcg==}
 
+  /@webassemblyjs/helper-api-error@1.11.5:
+    resolution: {integrity: sha512-L65bDPmfpY0+yFrsgz8b6LhXmbbs38OnwDCf6NpnMUYqa+ENfE5Dq9E42ny0qz/PdR0LJyq/T5YijPnU8AXEpA==}
+
   /@webassemblyjs/helper-buffer@1.11.1:
     resolution: {integrity: sha512-gwikF65aDNeeXa8JxXa2BAk+REjSyhrNC9ZwdT0f8jc4dQQeDQ7G4m0f2QCLPJiMTTO6wfDmRmj/pW0PsUvIcA==}
+
+  /@webassemblyjs/helper-buffer@1.11.5:
+    resolution: {integrity: sha512-fDKo1gstwFFSfacIeH5KfwzjykIE6ldh1iH9Y/8YkAZrhmu4TctqYjSh7t0K2VyDSXOZJ1MLhht/k9IvYGcIxg==}
 
   /@webassemblyjs/helper-numbers@1.11.1:
     resolution: {integrity: sha512-vDkbxiB8zfnPdNK9Rajcey5C0w+QJugEglN0of+kmO8l7lDb77AnlKYQF7aarZuCrv+l0UvqL+68gSDr3k9LPQ==}
@@ -11608,8 +11772,18 @@ packages:
       '@webassemblyjs/helper-api-error': 1.11.1
       '@xtuc/long': 4.2.2
 
+  /@webassemblyjs/helper-numbers@1.11.5:
+    resolution: {integrity: sha512-DhykHXM0ZABqfIGYNv93A5KKDw/+ywBFnuWybZZWcuzWHfbp21wUfRkbtz7dMGwGgT4iXjWuhRMA2Mzod6W4WA==}
+    dependencies:
+      '@webassemblyjs/floating-point-hex-parser': 1.11.5
+      '@webassemblyjs/helper-api-error': 1.11.5
+      '@xtuc/long': 4.2.2
+
   /@webassemblyjs/helper-wasm-bytecode@1.11.1:
     resolution: {integrity: sha512-PvpoOGiJwXeTrSf/qfudJhwlvDQxFgelbMqtq52WWiXC6Xgg1IREdngmPN3bs4RoO83PnL/nFrxucXj1+BX62Q==}
+
+  /@webassemblyjs/helper-wasm-bytecode@1.11.5:
+    resolution: {integrity: sha512-oC4Qa0bNcqnjAowFn7MPCETQgDYytpsfvz4ujZz63Zu/a/v71HeCAAmZsgZ3YVKec3zSPYytG3/PrRCqbtcAvA==}
 
   /@webassemblyjs/helper-wasm-section@1.11.1:
     resolution: {integrity: sha512-10P9No29rYX1j7F3EVPX3JvGPQPae+AomuSTPiF9eBQeChHI6iqjMIwR9JmOJXwpnn/oVGDk7I5IlskuMwU/pg==}
@@ -11619,8 +11793,21 @@ packages:
       '@webassemblyjs/helper-wasm-bytecode': 1.11.1
       '@webassemblyjs/wasm-gen': 1.11.1
 
+  /@webassemblyjs/helper-wasm-section@1.11.5:
+    resolution: {integrity: sha512-uEoThA1LN2NA+K3B9wDo3yKlBfVtC6rh0i4/6hvbz071E8gTNZD/pT0MsBf7MeD6KbApMSkaAK0XeKyOZC7CIA==}
+    dependencies:
+      '@webassemblyjs/ast': 1.11.5
+      '@webassemblyjs/helper-buffer': 1.11.5
+      '@webassemblyjs/helper-wasm-bytecode': 1.11.5
+      '@webassemblyjs/wasm-gen': 1.11.5
+
   /@webassemblyjs/ieee754@1.11.1:
     resolution: {integrity: sha512-hJ87QIPtAMKbFq6CGTkZYJivEwZDbQUgYd3qKSadTNOhVY7p+gfP6Sr0lLRVTaG1JjFj+r3YchoqRYxNH3M0GQ==}
+    dependencies:
+      '@xtuc/ieee754': 1.2.0
+
+  /@webassemblyjs/ieee754@1.11.5:
+    resolution: {integrity: sha512-37aGq6qVL8A8oPbPrSGMBcp38YZFXcHfiROflJn9jxSdSMMM5dS5P/9e2/TpaJuhE+wFrbukN2WI6Hw9MH5acg==}
     dependencies:
       '@xtuc/ieee754': 1.2.0
 
@@ -11629,8 +11816,16 @@ packages:
     dependencies:
       '@xtuc/long': 4.2.2
 
+  /@webassemblyjs/leb128@1.11.5:
+    resolution: {integrity: sha512-ajqrRSXaTJoPW+xmkfYN6l8VIeNnR4vBOTQO9HzR7IygoCcKWkICbKFbVTNMjMgMREqXEr0+2M6zukzM47ZUfQ==}
+    dependencies:
+      '@xtuc/long': 4.2.2
+
   /@webassemblyjs/utf8@1.11.1:
     resolution: {integrity: sha512-9kqcxAEdMhiwQkHpkNiorZzqpGrodQQ2IGrHHxCy+Ozng0ofyMA0lTqiLkVs1uzTRejX+/O0EOT7KxqVPuXosQ==}
+
+  /@webassemblyjs/utf8@1.11.5:
+    resolution: {integrity: sha512-WiOhulHKTZU5UPlRl53gHR8OxdGsSOxqfpqWeA2FmcwBMaoEdz6b2x2si3IwC9/fSPLfe8pBMRTHVMk5nlwnFQ==}
 
   /@webassemblyjs/wasm-edit@1.11.1:
     resolution: {integrity: sha512-g+RsupUC1aTHfR8CDgnsVRVZFJqdkFHpsHMfJuWQzWU3tvnLC07UqHICfP+4XyL2tnr1amvl1Sdp06TnYCmVkA==}
@@ -11644,6 +11839,18 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.1
       '@webassemblyjs/wast-printer': 1.11.1
 
+  /@webassemblyjs/wasm-edit@1.11.5:
+    resolution: {integrity: sha512-C0p9D2fAu3Twwqvygvf42iGCQ4av8MFBLiTb+08SZ4cEdwzWx9QeAHDo1E2k+9s/0w1DM40oflJOpkZ8jW4HCQ==}
+    dependencies:
+      '@webassemblyjs/ast': 1.11.5
+      '@webassemblyjs/helper-buffer': 1.11.5
+      '@webassemblyjs/helper-wasm-bytecode': 1.11.5
+      '@webassemblyjs/helper-wasm-section': 1.11.5
+      '@webassemblyjs/wasm-gen': 1.11.5
+      '@webassemblyjs/wasm-opt': 1.11.5
+      '@webassemblyjs/wasm-parser': 1.11.5
+      '@webassemblyjs/wast-printer': 1.11.5
+
   /@webassemblyjs/wasm-gen@1.11.1:
     resolution: {integrity: sha512-F7QqKXwwNlMmsulj6+O7r4mmtAlCWfO/0HdgOxSklZfQcDu0TpLiD1mRt/zF25Bk59FIjEuGAIyn5ei4yMfLhA==}
     dependencies:
@@ -11653,6 +11860,15 @@ packages:
       '@webassemblyjs/leb128': 1.11.1
       '@webassemblyjs/utf8': 1.11.1
 
+  /@webassemblyjs/wasm-gen@1.11.5:
+    resolution: {integrity: sha512-14vteRlRjxLK9eSyYFvw1K8Vv+iPdZU0Aebk3j6oB8TQiQYuO6hj9s4d7qf6f2HJr2khzvNldAFG13CgdkAIfA==}
+    dependencies:
+      '@webassemblyjs/ast': 1.11.5
+      '@webassemblyjs/helper-wasm-bytecode': 1.11.5
+      '@webassemblyjs/ieee754': 1.11.5
+      '@webassemblyjs/leb128': 1.11.5
+      '@webassemblyjs/utf8': 1.11.5
+
   /@webassemblyjs/wasm-opt@1.11.1:
     resolution: {integrity: sha512-VqnkNqnZlU5EB64pp1l7hdm3hmQw7Vgqa0KF/KCNO9sIpI6Fk6brDEiX+iCOYrvMuBWDws0NkTOxYEb85XQHHw==}
     dependencies:
@@ -11660,6 +11876,14 @@ packages:
       '@webassemblyjs/helper-buffer': 1.11.1
       '@webassemblyjs/wasm-gen': 1.11.1
       '@webassemblyjs/wasm-parser': 1.11.1
+
+  /@webassemblyjs/wasm-opt@1.11.5:
+    resolution: {integrity: sha512-tcKwlIXstBQgbKy1MlbDMlXaxpucn42eb17H29rawYLxm5+MsEmgPzeCP8B1Cl69hCice8LeKgZpRUAPtqYPgw==}
+    dependencies:
+      '@webassemblyjs/ast': 1.11.5
+      '@webassemblyjs/helper-buffer': 1.11.5
+      '@webassemblyjs/wasm-gen': 1.11.5
+      '@webassemblyjs/wasm-parser': 1.11.5
 
   /@webassemblyjs/wasm-parser@1.11.1:
     resolution: {integrity: sha512-rrBujw+dJu32gYB7/Lup6UhdkPx9S9SnobZzRVL7VcBH9Bt9bCBLEuX/YXOOtBsOZ4NQrRykKhffRWHvigQvOA==}
@@ -11671,10 +11895,26 @@ packages:
       '@webassemblyjs/leb128': 1.11.1
       '@webassemblyjs/utf8': 1.11.1
 
+  /@webassemblyjs/wasm-parser@1.11.5:
+    resolution: {integrity: sha512-SVXUIwsLQlc8srSD7jejsfTU83g7pIGr2YYNb9oHdtldSxaOhvA5xwvIiWIfcX8PlSakgqMXsLpLfbbJ4cBYew==}
+    dependencies:
+      '@webassemblyjs/ast': 1.11.5
+      '@webassemblyjs/helper-api-error': 1.11.5
+      '@webassemblyjs/helper-wasm-bytecode': 1.11.5
+      '@webassemblyjs/ieee754': 1.11.5
+      '@webassemblyjs/leb128': 1.11.5
+      '@webassemblyjs/utf8': 1.11.5
+
   /@webassemblyjs/wast-printer@1.11.1:
     resolution: {integrity: sha512-IQboUWM4eKzWW+N/jij2sRatKMh99QEelo3Eb2q0qXkvPRISAj8Qxtmw5itwqK+TTkBuUIE45AxYPToqPtL5gg==}
     dependencies:
       '@webassemblyjs/ast': 1.11.1
+      '@xtuc/long': 4.2.2
+
+  /@webassemblyjs/wast-printer@1.11.5:
+    resolution: {integrity: sha512-f7Pq3wvg3GSPUPzR0F6bmI89Hdb+u9WXrSKc4v+N0aV0q6r42WoF92Jp2jEorBEBRoRNXgjp53nBniDXcqZYPA==}
+    dependencies:
+      '@webassemblyjs/ast': 1.11.5
       '@xtuc/long': 4.2.2
 
   /@xtuc/ieee754@1.2.0:
@@ -12360,7 +12600,7 @@ packages:
       webpack: 5.73.0(@swc/core@1.3.55)(esbuild@0.17.18)
     dev: true
 
-  /babel-loader@8.3.0(@babel/core@7.21.4)(webpack@5.76.0):
+  /babel-loader@8.3.0(@babel/core@7.21.4)(webpack@5.80.0):
     resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
     engines: {node: '>= 8.9'}
     peerDependencies:
@@ -12372,7 +12612,7 @@ packages:
       loader-utils: 2.0.4
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.80.0(@swc/core@1.3.55)(esbuild@0.17.18)
     dev: false
 
   /babel-loader@9.1.2(@babel/core@7.21.4)(webpack@5.73.0):
@@ -12665,6 +12905,10 @@ packages:
 
   /before-after-hook@2.2.2:
     resolution: {integrity: sha512-3pZEU3NT5BFUo/AD5ERPWOgQOCZITni6iavr5AUw5AUwQjMlI0kzu5btnyD39AF0gUEsDPwJT+oY1ORBJijPjQ==}
+    dev: false
+
+  /before-after-hook@2.2.3:
+    resolution: {integrity: sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==}
     dev: false
 
   /better-opn@2.1.1:
@@ -14837,7 +15081,7 @@ packages:
     dependencies:
       semver: 7.5.0
       shelljs: 0.8.5
-      typescript: 5.1.0-dev.20230425
+      typescript: 5.1.0-dev.20230426
     dev: false
 
   /duplexer3@0.1.4:
@@ -15080,6 +15324,9 @@ packages:
   /es-module-lexer@0.9.3:
     resolution: {integrity: sha512-1HQ2M2sPtxwnvOvT1ZClHyQDiggdNjURWpY2we6aMKCQiUVxTmVs2UYPLIrD84sS+kMdUwfBSylbJPwNnBrnHQ==}
 
+  /es-module-lexer@1.2.1:
+    resolution: {integrity: sha512-9978wrXM50Y4rTMmW5kXIC09ZdXQZqkE4mxhwkd8VbzsGkXGPgV4zWuqQJgCEzYngdo2dYDa0l8xhX4fkSwJSg==}
+
   /es-set-tostringtag@2.0.1:
     resolution: {integrity: sha512-g3OMbtlwY3QewlqAiMLI47KywjWZoEytKr8pf6iTC8uJq5bIAH52Z9pnQ8pVL6whrCto53JZDuUIsifGeLorTg==}
     engines: {node: '>= 0.4'}
@@ -15122,7 +15369,7 @@ packages:
       es6-promise: 4.2.8
     dev: false
 
-  /esbuild-loader@2.21.0(webpack@5.76.0):
+  /esbuild-loader@2.21.0(webpack@5.80.0):
     resolution: {integrity: sha512-k7ijTkCT43YBSZ6+fBCW1Gin7s46RrJ0VQaM8qA7lq7W+OLsGgtLyFV8470FzYi/4TeDexniTBTPTwZUnXXR5g==}
     peerDependencies:
       webpack: ^4.40.0 || ^5.0.0
@@ -15132,7 +15379,7 @@ packages:
       json5: 2.2.3
       loader-utils: 2.0.4
       tapable: 2.2.1
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.80.0(@swc/core@1.3.55)(esbuild@0.17.18)
       webpack-sources: 1.4.3
     dev: false
 
@@ -16163,7 +16410,7 @@ packages:
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.1.1
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.76.0(@swc/core@1.3.55)
     dev: true
 
   /file-name@0.1.0:
@@ -17093,6 +17340,9 @@ packages:
 
   /graceful-fs@4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
+
+  /graceful-fs@4.2.11:
+    resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
   /grapheme-splitter@1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
@@ -18720,12 +18970,12 @@ packages:
     resolution: {integrity: sha512-J5Xez4nRRMjk8emnTpWrlkyb9pfRQQanDrvWHhsR1+VUfbwxi30eVcZFlcdGInRibU4G5LwHXpI7IRHU0CY+gg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  /jest-github-reporter@1.1.1(@octokit/core@3.6.0)(jest@29.5.0):
+  /jest-github-reporter@1.1.1(@octokit/core@4.2.0)(jest@29.5.0):
     resolution: {integrity: sha512-+Gvsu9TCQkvVZud29hqoOti8Uc1IDO+5pZzp7Hi8YkdwQGLsa0KuEvt7SdDwDDFmz9pPrv//97FEkcTy/3Fxbg==}
     peerDependencies:
       jest: '>= 24.x'
     dependencies:
-      '@octokit/rest': 16.43.2(@octokit/core@3.6.0)
+      '@octokit/rest': 16.43.2(@octokit/core@4.2.0)
       create-check: 0.6.40
       execa: 1.0.0
       jest: 29.5.0(@types/node@16.18.24)(ts-node@10.9.1)
@@ -19341,7 +19591,7 @@ packages:
     dependencies:
       universalify: 0.1.2
     optionalDependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
     dev: false
 
   /jsonfile@6.1.0:
@@ -19569,6 +19819,10 @@ packages:
 
   /loader-runner@4.2.0:
     resolution: {integrity: sha512-92+huvxMvYlMzMt0iIOukcwYBFpkYJdpl2xsZ7LrlayO7E8SOv+JJUEK17B/dJIHAOLMfh2dZZ/Y18WgmGtYNw==}
+    engines: {node: '>=6.11.5'}
+
+  /loader-runner@4.3.0:
+    resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
     engines: {node: '>=6.11.5'}
 
   /loader-utils@1.4.0:
@@ -20558,6 +20812,18 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+
+  /node-fetch@2.6.9:
+    resolution: {integrity: sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
+    dependencies:
+      whatwg-url: 5.0.0
+    dev: false
 
   /node-forge@1.3.1:
     resolution: {integrity: sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==}
@@ -21662,7 +21928,7 @@ packages:
       yaml: 1.10.2
     dev: false
 
-  /postcss-loader@6.2.1(postcss@8.4.14)(webpack@5.76.0):
+  /postcss-loader@6.2.1(postcss@8.4.14)(webpack@5.80.0):
     resolution: {integrity: sha512-WbbYpmAaKcux/P66bZ40bpWsBucjx/TTgVVzRZ9yUO8yQfVBlameJ0ZGVaPfH64hNSBh63a+ICP5nqOpBA0w+Q==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
@@ -21673,7 +21939,7 @@ packages:
       klona: 2.0.5
       postcss: 8.4.14
       semver: 7.5.0
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.80.0(@swc/core@1.3.55)(esbuild@0.17.18)
 
   /postcss-loader@7.0.0(postcss@8.4.14)(webpack@5.73.0):
     resolution: {integrity: sha512-IDyttebFzTSY6DI24KuHUcBjbAev1i+RyICoPEWcAstZsj03r533uMXtDn506l6/wlsRYiS5XBdx7TpccCsyUg==}
@@ -22228,12 +22494,12 @@ packages:
       prosemirror-transform: 1.7.1
     dev: false
 
-  /prosemirror-dev-toolkit@1.1.2(svelte@3.55.1):
+  /prosemirror-dev-toolkit@1.1.2(svelte@3.58.0):
     resolution: {integrity: sha512-LeBknQEHB+75F8zU9dg2hCox9c9pYj+LmaCnKYn3ym4pEB0EDKCgI7W28osr2z5CeDCtz87Ib5MAQC8LocVj3A==}
     dependencies:
       html: 1.0.0
       prosemirror-model: 1.19.0
-      svelte-tree-view: 1.3.3(svelte@3.55.1)
+      svelte-tree-view: 1.3.3(svelte@3.58.0)
     transitivePeerDependencies:
       - svelte
     dev: false
@@ -22550,7 +22816,7 @@ packages:
       unpipe: 1.0.0
     dev: true
 
-  /raw-loader@4.0.2(webpack@5.76.0):
+  /raw-loader@4.0.2(webpack@5.80.0):
     resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -22558,7 +22824,7 @@ packages:
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.1.1
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.80.0(@swc/core@1.3.55)(esbuild@0.17.18)
     dev: true
 
   /rc@1.2.8:
@@ -23737,6 +24003,14 @@ packages:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
 
+  /schema-utils@3.1.2:
+    resolution: {integrity: sha512-pvjEHOgWc9OWA/f/DE3ohBWTD6EleVLf7iFUkoSwAxttdBhB9QUebQgxER2kWueOvRJXPHNnyrvvh9eZINB8Eg==}
+    engines: {node: '>= 10.13.0'}
+    dependencies:
+      '@types/json-schema': 7.0.11
+      ajv: 6.12.6
+      ajv-keywords: 3.5.2(ajv@6.12.6)
+
   /schema-utils@4.0.0:
     resolution: {integrity: sha512-1edyXKgh6XnJsJSQ8mKWXnN/BVaIbFMLpouRUrXgVq7WYne5kw3MW7UPhO44uRXQSIpTSXoJbmrR2X0w9kUTyg==}
     engines: {node: '>= 12.13.0'}
@@ -23846,6 +24120,11 @@ packages:
 
   /serialize-javascript@6.0.0:
     resolution: {integrity: sha512-Qr3TosvguFt8ePWqsvRfrKyQXIiW+nGbYpy8XK24NQHE83caxWt+mIymTT19DGFbNWNLfEwsrkSmN64lVWB9ag==}
+    dependencies:
+      randombytes: 2.1.0
+
+  /serialize-javascript@6.0.1:
+    resolution: {integrity: sha512-owoXEFjWRllis8/M1Q+Cw5k8ZH40e3zhp/ovX+Xr/vi1qj6QesbyXXViFbpNvWvPNAD62SutwEXavefrLJWj7w==}
     dependencies:
       randombytes: 2.1.0
 
@@ -24744,16 +25023,16 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /svelte-tree-view@1.3.3(svelte@3.55.1):
+  /svelte-tree-view@1.3.3(svelte@3.58.0):
     resolution: {integrity: sha512-MkpOC/+FK1cMRDUy9H4O82s+B20oKBYcq9B1ql+xQ46tueRnqHUC5tRmFpOG1slHy+ZijSEmA0zwtwO1h174Cg==}
     peerDependencies:
       svelte: '>=3'
     dependencies:
-      svelte: 3.55.1
+      svelte: 3.58.0
     dev: false
 
-  /svelte@3.55.1:
-    resolution: {integrity: sha512-S+87/P0Ve67HxKkEV23iCdAh/SX1xiSfjF1HOglno/YTbSTW7RniICMCofWGdJJbdjw3S+0PfFb1JtGfTXE0oQ==}
+  /svelte@3.58.0:
+    resolution: {integrity: sha512-brIBNNB76mXFmU/Kerm4wFnkskBbluBDCjx/8TcpYRb298Yh2dztS2kQ6bhtjMcvUhd5ynClfwpz5h2gnzdQ1A==}
     engines: {node: '>= 8'}
     dev: false
 
@@ -24952,8 +25231,8 @@ packages:
       terser: 5.16.6
       webpack: 5.73.0(@swc/core@1.3.55)(esbuild@0.17.18)
 
-  /terser-webpack-plugin@5.3.3(@swc/core@1.3.55)(esbuild@0.17.18)(webpack@5.76.0):
-    resolution: {integrity: sha512-Fx60G5HNYknNTNQnzQ1VePRuu89ZVYWfjRAeT5rITuCY/1b08s49e5kSQwHDirKZWuoKOBRFS98EUUoZ9kLEwQ==}
+  /terser-webpack-plugin@5.3.7(@swc/core@1.3.55)(esbuild@0.17.18)(webpack@5.80.0):
+    resolution: {integrity: sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       '@swc/core': '*'
@@ -24968,14 +25247,14 @@ packages:
       uglify-js:
         optional: true
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.17
+      '@jridgewell/trace-mapping': 0.3.18
       '@swc/core': 1.3.55
       esbuild: 0.17.18
       jest-worker: 27.5.1
-      schema-utils: 3.1.1
-      serialize-javascript: 6.0.0
-      terser: 5.16.6
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      schema-utils: 3.1.2
+      serialize-javascript: 6.0.1
+      terser: 5.17.1
+      webpack: 5.80.0(@swc/core@1.3.55)(esbuild@0.17.18)
 
   /terser@4.8.0:
     resolution: {integrity: sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==}
@@ -25007,7 +25286,6 @@ packages:
       acorn: 8.8.2
       commander: 2.20.3
       source-map-support: 0.5.21
-    dev: false
 
   /test-exclude@6.0.0:
     resolution: {integrity: sha512-cAGWPIyOHU6zlmg88jwm7VRyXnMN7iV68OGAbYDk/Mh/xC/pzVPlQtY6ngoIH/5/tciuhGfvESU8GrHrcxD56w==}
@@ -25498,8 +25776,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.1.0-dev.20230425:
-    resolution: {integrity: sha512-r1wbkllVmbfrGl2JE5sGmMg50hrD7P9MiAuaq2v6CgUN3qPKDeHVS3V/OOFA0LRUknZMPP8WUpgZpckmQhnyNQ==}
+  /typescript@5.1.0-dev.20230426:
+    resolution: {integrity: sha512-zQ4BsUQeM5CFScIVsyY0XOMCn/VYav7z5CT6nlOSqI/CJ3DVn86JWE/DwkK44c39RyKCmtwB9hz+BWcb7bem/g==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false
@@ -25839,7 +26117,7 @@ packages:
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.1.1
-      webpack: 5.76.0(@swc/core@1.3.55)(esbuild@0.17.18)
+      webpack: 5.76.0(@swc/core@1.3.55)
     dev: true
 
   /url-parse-lax@1.0.0:
@@ -26365,7 +26643,7 @@ packages:
       - esbuild
       - uglify-js
 
-  /webpack@5.76.0(@swc/core@1.3.55)(esbuild@0.17.18):
+  /webpack@5.76.0(@swc/core@1.3.55):
     resolution: {integrity: sha512-l5sOdYBDunyf72HW8dF23rFtWq/7Zgvt/9ftMof71E/yUb1YLOBmTgA2K4vQthB3kotMrSj609txVE0dnr2fjA==}
     engines: {node: '>=10.13.0'}
     hasBin: true
@@ -26396,7 +26674,47 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.1
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.3(@swc/core@1.3.55)(esbuild@0.17.18)(webpack@5.76.0)
+      terser-webpack-plugin: 5.3.3(@swc/core@1.3.55)(esbuild@0.17.18)(webpack@5.73.0)
+      watchpack: 2.4.0
+      webpack-sources: 3.2.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
+    dev: true
+
+  /webpack@5.80.0(@swc/core@1.3.55)(esbuild@0.17.18):
+    resolution: {integrity: sha512-OIMiq37XK1rWO8mH9ssfFKZsXg4n6klTEDL7S8/HqbAOBBaiy8ABvXvz0dDCXeEF9gqwxSvVk611zFPjS8hJxA==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    peerDependencies:
+      webpack-cli: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+    dependencies:
+      '@types/eslint-scope': 3.7.4
+      '@types/estree': 1.0.1
+      '@webassemblyjs/ast': 1.11.5
+      '@webassemblyjs/wasm-edit': 1.11.5
+      '@webassemblyjs/wasm-parser': 1.11.5
+      acorn: 8.8.2
+      acorn-import-assertions: 1.8.0(acorn@8.8.2)
+      browserslist: 4.21.5
+      chrome-trace-event: 1.0.3
+      enhanced-resolve: 5.13.0
+      es-module-lexer: 1.2.1
+      eslint-scope: 5.1.1
+      events: 3.3.0
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+      json-parse-even-better-errors: 2.3.1
+      loader-runner: 4.3.0
+      mime-types: 2.1.35
+      neo-async: 2.6.2
+      schema-utils: 3.1.2
+      tapable: 2.2.1
+      terser-webpack-plugin: 5.3.7(@swc/core@1.3.55)(esbuild@0.17.18)(webpack@5.80.0)
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:
