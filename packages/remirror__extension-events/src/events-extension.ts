@@ -58,6 +58,13 @@ export interface EventsOptions {
   copy?: Handler<ClipboardEventHandler>;
 
   /**
+   * Listens to `cut` events on the editor.
+   *
+   * Return `true` to prevent any other prosemirror listeners from firing.
+   */
+  cut?: Handler<ClipboardEventHandler>;
+
+  /**
    * Listens to `paste` events on the editor.
    *
    * Return `true` to prevent any other prosemirror listeners from firing.
@@ -224,6 +231,7 @@ export type HoverEventHandler = (
     'hover',
     'scroll',
     'copy',
+    'cut',
     'paste',
   ],
   handlerKeyOptions: {
@@ -239,6 +247,7 @@ export type HoverEventHandler = (
     contextmenu: { earlyReturnValue: true },
     scroll: { earlyReturnValue: true },
     copy: { earlyReturnValue: true },
+    cut: { earlyReturnValue: true },
     paste: { earlyReturnValue: true },
   },
   defaultPriority: ExtensionPriority.High,
@@ -465,6 +474,10 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
           copy: (_, event: Event) => {
             return this.options.copy(event as ClipboardEvent) || false;
+          },
+
+          cut: (_, event: Event) => {
+            return this.options.cut(event as ClipboardEvent) || false;
           },
 
           paste: (_, event: Event) => {
