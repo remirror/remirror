@@ -5,8 +5,5 @@
   "commit": false,
   "linked": [],
   "access": "public",
-  "baseBranch": "main",
-  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
-    "updateInternalDependents": "always"
-  }
+  "baseBranch": "main"
 }
