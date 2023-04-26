@@ -1,5 +1,15 @@
 # @remirror/messages
 
+## 2.0.3
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+  - @remirror/core-helpers@2.0.2
+
 ## 2.0.2
 
 > 2022-12-29

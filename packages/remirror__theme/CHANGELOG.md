@@ -1,5 +1,15 @@
 # @remirror/theme
 
+## 2.0.7
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+  - @remirror/core-types@2.0.5
+
 ## 2.0.6
 
 > 2023-03-10

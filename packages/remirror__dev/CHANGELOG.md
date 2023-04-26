@@ -1,5 +1,16 @@
 # @remirror/dev
 
+## 2.0.17
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+  - @remirror/react-core@2.0.17
+  - @remirror/pm@2.0.5
+
 ## 2.0.16
 
 > 2023-03-10

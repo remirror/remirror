@@ -1,5 +1,24 @@
 # @remirror/preset-core
 
+## 2.0.16
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - @remirror/extension-gap-cursor@2.0.13
+  - @remirror/extension-positioner@2.1.8
+  - @remirror/extension-paragraph@2.0.13
+  - @remirror/extension-history@2.0.13
+  - @remirror/extension-events@2.1.14
+  - @remirror/extension-text@2.0.13
+  - @remirror/extension-doc@2.1.5
+  - @remirror/core@2.0.13
+  - @remirror/pm@2.0.5
+
 ## 2.0.15
 
 > 2023-03-10

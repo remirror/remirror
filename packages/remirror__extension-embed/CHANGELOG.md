@@ -1,5 +1,19 @@
 # @remirror/extension-embed
 
+## 2.0.13
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+- Updated dependencies [e88cf35bb]
+  - prosemirror-resizable-view@2.0.12
+  - @remirror/messages@2.0.3
+  - @remirror/core@2.0.13
+  - @remirror/pm@2.0.5
+
 ## 2.0.12
 
 > 2023-03-10

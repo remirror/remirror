@@ -1,5 +1,13 @@
 # a11y-status
 
+## 2.0.1
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+
 ## 2.0.0
 
 > 2022-09-13

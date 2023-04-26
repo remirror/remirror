@@ -1,5 +1,20 @@
 # jest-prosemirror
 
+## 2.1.3
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+  - @remirror/core-constants@2.0.1
+  - @remirror/core-helpers@2.0.2
+  - @remirror/core-types@2.0.5
+  - @remirror/core-utils@2.0.12
+  - test-keyboard@2.0.5
+  - @remirror/pm@2.0.5
+
 ## 2.1.2
 
 > 2023-03-10

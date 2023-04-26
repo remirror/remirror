@@ -1,5 +1,16 @@
 # prosemirror-trailing-node
 
+## 2.0.4
+
+> 2023-04-26
+
+### Patch Changes
+
+- 7b2c3928d: Rollup `.d.ts` file.
+- Updated dependencies [7b2c3928d]
+  - @remirror/core-constants@2.0.1
+  - @remirror/core-helpers@2.0.2
+
 ## 2.0.3
 
 > 2022-12-29
