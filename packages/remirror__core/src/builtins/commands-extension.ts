@@ -911,7 +911,13 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
     return this.store
       .createPlaceholderCommand({
         // TODO https://caniuse.com/?search=clipboard.read - once browser support is sufficient.
-        promise: () => navigator.clipboard.readText(),
+        promise: async () => {
+          if (navigator.clipboard?.readText) {
+            return await navigator.clipboard.readText();
+          }
+
+          return '';
+        },
         placeholder: { type: 'inline' },
         onSuccess: (value, selection, props) => {
           return this.insertNode(
