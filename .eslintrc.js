@@ -1,4 +1,103 @@
 /** @type {import('eslint').Linter.Config} */
+const baseRules = {
+  'prefer-const': ['error', { destructuring: 'all' }],
+
+  'unicorn/better-regex': 'error',
+  'unicorn/catch-error-name': 'error',
+  'unicorn/consistent-destructuring': 'error',
+  'unicorn/error-message': 'error',
+  'unicorn/escape-case': 'error',
+  'unicorn/expiring-todo-comments': 'error',
+  'unicorn/explicit-length-check': 'error',
+  'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+  'unicorn/import-style': 'error',
+  'unicorn/new-for-builtins': 'error',
+  'unicorn/no-abusive-eslint-disable': 'error',
+  'unicorn/no-array-reduce': 'error',
+  'unicorn/no-console-spaces': 'error',
+  'unicorn/no-for-loop': 'error',
+  'unicorn/no-hex-escape': 'error',
+  'unicorn/no-instanceof-array': 'error',
+  'unicorn/no-lonely-if': 'error',
+  'unicorn/no-new-array': 'error',
+  'unicorn/no-new-buffer': 'error',
+  'unicorn/no-process-exit': 'error',
+  'unicorn/no-unreadable-array-destructuring': 'error',
+  'unicorn/no-useless-undefined': 'error',
+  'unicorn/no-zero-fractions': 'error',
+  'unicorn/number-literal-case': 'error',
+  'unicorn/numeric-separators-style': 'error',
+  'unicorn/prefer-add-event-listener': 'error',
+  'unicorn/prefer-array-find': 'error',
+  'unicorn/prefer-array-flat-map': 'error',
+  'unicorn/prefer-array-index-of': 'error',
+  'unicorn/prefer-array-some': 'error',
+  'unicorn/prefer-date-now': 'error',
+  'unicorn/prefer-default-parameters': 'error',
+  'unicorn/prefer-dom-node-append': 'error',
+  'unicorn/prefer-dom-node-remove': 'error',
+  'unicorn/prefer-dom-node-text-content': 'error',
+  'unicorn/prefer-includes': 'error',
+  'unicorn/prefer-keyboard-event-key': 'error',
+  'unicorn/prefer-math-trunc': 'error',
+  'unicorn/prefer-modern-dom-apis': 'error',
+  'unicorn/prefer-negative-index': 'error',
+  'unicorn/prefer-number-properties': 'error',
+  'unicorn/prefer-optional-catch-binding': 'error',
+  'unicorn/prefer-query-selector': 'error',
+  'unicorn/prefer-reflect-apply': 'error',
+  'unicorn/prefer-regexp-test': 'error',
+  'unicorn/prefer-set-has': 'error',
+  'unicorn/prefer-spread': 'error',
+  'unicorn/prefer-string-slice': 'error',
+  'unicorn/prefer-string-starts-ends-with': 'error',
+  'unicorn/prefer-string-trim-start-end': 'error',
+  'unicorn/prefer-ternary': 'error',
+  'unicorn/prefer-type-error': 'error',
+  'unicorn/throw-new-error': 'error',
+  'unicorn/no-array-push-push': 'error',
+
+  'unicorn/no-keyword-prefix': 'off',
+  'no-nested-ternary': 'off',
+  'unicorn/no-nested-ternary': 'off',
+  'unicorn/no-unsafe-regex': 'off',
+  'unicorn/no-unused-properties': 'off',
+  'unicorn/string-content': 'off',
+  'unicorn/custom-error-definition': 'off',
+  'unicorn/empty-brace-spaces': 'off',
+};
+
+const importRules = {
+  'sort-imports': 'off',
+
+  // Use nice import and export rules
+  'simple-import-sort/exports': ['warn'], // TODO switch on after release
+  'simple-import-sort/imports': [
+    'warn',
+    {
+      groups: [
+        // Side effect imports.
+        ['^\\u0000'],
+
+        // Packages that are not scoped to `remirror`
+        // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+        ['^(?!@remirror)@?\\w', '^@remirror'],
+
+        // Scoped packages
+        // [],
+
+        // Absolute imports and other imports such as Vue-style `@/foo`.
+        // Anything that does not start with a dot.
+        ['^[^.]'],
+
+        // Relative imports.
+        // Anything that starts with a dot.
+        ['^\\.'],
+      ],
+    },
+  ],
+};
+
 let config = {
   parser: '@typescript-eslint/parser',
   ignorePatterns: ['*.d.ts'],
@@ -35,6 +134,8 @@ let config = {
     ecmaFeatures: {
       jsx: true,
     },
+    project: 'tsconfig.eslint.json',
+    tsconfigRootDir: __dirname,
   },
   settings: {
     react: {
@@ -48,72 +149,8 @@ let config = {
     es6: true,
   },
   rules: {
-    'prefer-const': ['error', { destructuring: 'all' }],
-
-    'unicorn/better-regex': 'error',
-    'unicorn/catch-error-name': 'error',
-    'unicorn/consistent-destructuring': 'error',
-    'unicorn/error-message': 'error',
-    'unicorn/escape-case': 'error',
-    'unicorn/expiring-todo-comments': 'error',
-    'unicorn/explicit-length-check': 'error',
-    'unicorn/filename-case': ['error', { case: 'kebabCase' }],
-    'unicorn/import-style': 'error',
-    'unicorn/new-for-builtins': 'error',
-    'unicorn/no-abusive-eslint-disable': 'error',
-    'unicorn/no-array-reduce': 'error',
-    'unicorn/no-console-spaces': 'error',
-    'unicorn/no-for-loop': 'error',
-    'unicorn/no-hex-escape': 'error',
-    'unicorn/no-instanceof-array': 'error',
-    'unicorn/no-lonely-if': 'error',
-    'unicorn/no-new-array': 'error',
-    'unicorn/no-new-buffer': 'error',
-    'unicorn/no-process-exit': 'error',
-    'unicorn/no-unreadable-array-destructuring': 'error',
-    'unicorn/no-useless-undefined': 'error',
-    'unicorn/no-zero-fractions': 'error',
-    'unicorn/number-literal-case': 'error',
-    'unicorn/numeric-separators-style': 'error',
-    'unicorn/prefer-add-event-listener': 'error',
-    'unicorn/prefer-array-find': 'error',
-    'unicorn/prefer-array-flat-map': 'error',
-    'unicorn/prefer-array-index-of': 'error',
-    'unicorn/prefer-array-some': 'error',
-    'unicorn/prefer-date-now': 'error',
-    'unicorn/prefer-default-parameters': 'error',
-    'unicorn/prefer-dom-node-append': 'error',
-    'unicorn/prefer-dom-node-remove': 'error',
-    'unicorn/prefer-dom-node-text-content': 'error',
-    'unicorn/prefer-includes': 'error',
-    'unicorn/prefer-keyboard-event-key': 'error',
-    'unicorn/prefer-math-trunc': 'error',
-    'unicorn/prefer-modern-dom-apis': 'error',
-    'unicorn/prefer-negative-index': 'error',
-    'unicorn/prefer-number-properties': 'error',
-    'unicorn/prefer-optional-catch-binding': 'error',
-    'unicorn/prefer-query-selector': 'error',
-    'unicorn/prefer-reflect-apply': 'error',
-    'unicorn/prefer-regexp-test': 'error',
-    'unicorn/prefer-set-has': 'error',
-    'unicorn/prefer-spread': 'error',
-    'unicorn/prefer-string-slice': 'error',
-    'unicorn/prefer-string-starts-ends-with': 'error',
-    'unicorn/prefer-string-trim-start-end': 'error',
-    'unicorn/prefer-ternary': 'error',
-    'unicorn/prefer-type-error': 'error',
-    'unicorn/throw-new-error': 'error',
-    'unicorn/no-array-push-push': 'error',
-
-    'unicorn/no-keyword-prefix': 'off',
-    'no-nested-ternary': 'off',
-    'unicorn/no-nested-ternary': 'off',
-    'unicorn/no-unsafe-regex': 'off',
-    'unicorn/no-unused-properties': 'off',
-    'unicorn/string-content': 'off',
-    'unicorn/custom-error-definition': 'off',
-    'unicorn/empty-brace-spaces': 'off',
-
+    ...baseRules,
+    ...importRules,
     'jest/no-test-return-statement': 'off',
     'jest/prefer-strict-equal': 'off',
     'jest/no-export': 'off',
@@ -127,35 +164,6 @@ let config = {
     'jest/no-restricted-matchers': [
       'error',
       { toBeTruthy: 'Avoid `toBeTruthy`', toBeFalsy: 'Avoid `toBeFalsy`' },
-    ],
-
-    'sort-imports': 'off',
-
-    // Use nice import and export rules
-    'simple-import-sort/exports': ['warn'], // TODO switch on after release
-    'simple-import-sort/imports': [
-      'warn',
-      {
-        groups: [
-          // Side effect imports.
-          ['^\\u0000'],
-
-          // Packages that are not scoped to `remirror`
-          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
-          ['^(?!@remirror)@?\\w', '^@remirror'],
-
-          // Scoped packages
-          // [],
-
-          // Absolute imports and other imports such as Vue-style `@/foo`.
-          // Anything that does not start with a dot.
-          ['^[^.]'],
-
-          // Relative imports.
-          // Anything that starts with a dot.
-          ['^\\.'],
-        ],
-      },
     ],
 
     '@typescript-eslint/no-unused-expressions': [
@@ -495,18 +503,26 @@ if (process.env.FULL_ESLINT_CHECK) {
       ...config.overrides,
     ],
   };
-} else {
-  config.plugins = [...config.plugins, 'markdown'];
+} else if (process.env.MD_ESLINT_CHECK) {
   config = {
-    ...config,
     // Apply the markdown plugin
-    plugins: [...config.plugins, 'markdown'],
+    plugins: [
+      'lit',
+      'lit-a11y',
+      // disable import sorting for now - too many errors
+      // 'simple-import-sort',
+      'markdown',
+    ],
+    extends: [],
+    parserOptions: {
+      ecmaVersion: 2021,
+      //
+      // sourceType: 'module',
+    },
 
     // Only apply markdown rules when not in TypeScript mode, since they are
     // currently incompatible.
     overrides: [
-      ...config.overrides,
-
       { files: ['*.mdx', '*.md'], processor: 'markdown/markdown' },
       {
         // Lint code blocks in markdown
@@ -514,15 +530,9 @@ if (process.env.FULL_ESLINT_CHECK) {
 
         // Set up rules to be excluded in the markdown blocks.
         rules: {
-          'simple-import-sort/exports': 'warn',
-          'simple-import-sort/imports': 'warn',
-          'unicorn/filename-case': 'off',
-          '@typescript-eslint/explicit-module-boundary-types': 'off',
-          '@typescript-eslint/no-unused-vars-experimental': 'off',
-          '@typescript-eslint/no-unused-vars': 'off',
-          'react-hooks/rules-of-hooks': 'off',
-          'react/jsx-uses-react': 'off',
-          'react/react-in-jsx-scope': 'off',
+          // ...importRules,
+          // 'simple-import-sort/exports': 'warn',
+          // 'simple-import-sort/imports': 'warn',
         },
       },
     ],

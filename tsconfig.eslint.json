@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["*.md", "*.mdx"],
+  "include": [
+    ".eslintrc.js",
+    "packages",
+    "website",
+    "support",
+    "lingui.config.js",
+    "linaria.config.js",
+    "babel.config.js",
+    "commitlint.config.js",
+    "jest.config.e2e.js",
+    "jest.config.js"
+  ]
+}
