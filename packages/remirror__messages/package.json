@@ -33,7 +33,7 @@
     "dist-types"
   ],
   "scripts": {
-    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.cjs --format cjs"
+    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.cjs --format cjs && cp public/* dist/"
   },
   "dependencies": {
     "@babel/runtime": "^7.21.0",
