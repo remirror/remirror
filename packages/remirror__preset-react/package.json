@@ -38,7 +38,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "@remirror/core": "^2.0.13",
+    "@remirror/core": "^2.0.14",
     "@remirror/extension-placeholder": "^2.0.14",
     "@remirror/extension-react-component": "^2.0.13",
     "@remirror/react-utils": "^2.0.5"

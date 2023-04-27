@@ -1,5 +1,13 @@
 # @remirror/messages
 
+## 2.0.4
+
+> 2023-04-27
+
+### Patch Changes
+
+- b267c5dcd: Fix incorrect typing file.
+
 ## 2.0.3
 
 > 2023-04-26
