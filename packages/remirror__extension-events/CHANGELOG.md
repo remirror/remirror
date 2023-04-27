@@ -1,5 +1,15 @@
 # @remirror/extension-events
 
+## 2.1.15
+
+> 2023-04-27
+
+### Patch Changes
+
+- 93653611d: Add `cut` event.
+- Updated dependencies [93653611d]
+  - @remirror/core@2.0.15
+
 ## 2.1.14
 
 > 2023-04-26
