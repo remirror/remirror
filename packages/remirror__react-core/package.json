@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "@remirror/core": "^2.0.13",
+    "@remirror/core": "^2.0.14",
     "@remirror/extension-positioner": "^2.1.8",
     "@remirror/extension-react-component": "^2.0.13",
     "@remirror/i18n": "^2.0.3",
@@ -39,7 +39,7 @@
     "@remirror/preset-react": "^2.0.14",
     "@remirror/react-renderer": "^2.0.13",
     "@remirror/react-utils": "^2.0.5",
-    "@remirror/theme": "^2.0.7",
+    "@remirror/theme": "^2.0.8",
     "@seznam/compose-react-refs": "^1.0.6",
     "create-context-state": "^2.0.1",
     "fast-deep-equal": "^3.1.3",
