@@ -1,5 +1,4 @@
-import type { ClassName } from '@linaria/core/cx';
-import { cx, object } from '@remirror/core-helpers';
+import { type ClassName, cx, object } from '@remirror/core-helpers';
 import type { ProsemirrorAttributes } from '@remirror/core-types';
 
 import { AnyExtension, PlainExtension } from '../extension';

@@ -1,5 +1,5 @@
-import type { ClassName } from '@linaria/core/cx';
 import type { Unsubscribe } from 'nanoevents';
+import type { ClassName } from '@remirror/core-helpers';
 import type {
   EditorState,
   EditorStateProps,

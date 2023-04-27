@@ -1,5 +1,4 @@
 import { cx as classNames } from '@linaria/core';
-import type { ClassName } from '@linaria/core/cx';
 import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
 import { BaseError } from 'make-error';
@@ -1035,6 +1034,8 @@ export function getLazyArray<Type>(value: Type[] | (() => Type[])): Type[] {
 
   return value;
 }
+
+export type ClassName<T = string> = T | false | void | null | 0 | '';
 
 export function cx(...classes: ClassName[]): string {
   return uniqueArray(classNames(...classes).split(' ')).join(' ');
