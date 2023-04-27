@@ -11,7 +11,7 @@
   },
   "main": "index.js",
   "dependencies": {
-    "@remirror/core-helpers": "^2.0.2",
+    "@remirror/core-helpers": "^2.0.3",
     "diffable-html": "^5.0.0"
   },
   "@remirror": {

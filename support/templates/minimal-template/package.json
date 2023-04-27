@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "@remirror/core-helpers": "^2.0.2"
+    "@remirror/core-helpers": "^2.0.3"
   },
   "publishConfig": {
     "access": "public"

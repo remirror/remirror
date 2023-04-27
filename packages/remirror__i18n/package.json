@@ -49,7 +49,7 @@
     "@babel/runtime": "^7.21.0",
     "@lingui/core": "^3.17.2",
     "@lingui/detect-locale": "^3.17.2",
-    "@remirror/core-helpers": "^2.0.2",
+    "@remirror/core-helpers": "^2.0.3",
     "make-plural": "^6.2.2"
   },
   "publishConfig": {
