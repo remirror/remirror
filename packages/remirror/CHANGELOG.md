@@ -1,5 +1,15 @@
 # remirror
 
+## 2.0.29
+
+> 2023-04-27
+
+### Patch Changes
+
+- b267c5dcd: Fix incorrect typing file.
+- Updated dependencies [b267c5dcd]
+  - @remirror/core@2.0.14
+
 ## 2.0.28
 
 > 2023-04-26
