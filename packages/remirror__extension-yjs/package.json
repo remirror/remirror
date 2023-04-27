@@ -43,7 +43,7 @@
     "@remirror/messages": "^2.0.3",
     "prosemirror-model": "^1.19.0",
     "prosemirror-state": "^1.4.2",
-    "prosemirror-view": "^1.30.2",
+    "prosemirror-view": "^1.31.0",
     "y-prosemirror": "^1.0.19",
     "y-protocols": "^1.0.5"
   },
