@@ -1,5 +1,13 @@
 # @remirror/core-helpers
 
+## 2.0.3
+
+> 2023-04-27
+
+### Patch Changes
+
+- 761fbd211: Export type `ClassName`.
+
 ## 2.0.2
 
 > 2023-04-26

@@ -32,7 +32,7 @@
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "@remirror/core-constants": "^2.0.1",
-    "@remirror/core-helpers": "^2.0.2",
+    "@remirror/core-helpers": "^2.0.3",
     "@remirror/core-types": "^2.0.5",
     "@remirror/messages": "^2.0.4",
     "@types/min-document": "^2.19.0",
