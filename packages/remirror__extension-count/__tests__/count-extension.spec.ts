@@ -369,6 +369,7 @@ describe('rendering', () => {
     add(doc(ul(li(p('Some text')), li(p('Over multiple')), li(p('Exceeds the limit')))));
 
     expect(helpers.getCharacterCount()).toBe(41);
+    // eslint-disable-next-line jest/no-large-snapshots
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <ul>
         <li>
@@ -411,6 +412,7 @@ describe('rendering', () => {
       ),
     );
 
+    // eslint-disable-next-line jest/no-large-snapshots
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <ul>
         <li>
@@ -502,6 +504,7 @@ describe('rendering', () => {
     );
 
     expect(helpers.getWordCount()).toBe(11);
+    // eslint-disable-next-line jest/no-large-snapshots
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <ul>
         <li>
@@ -550,6 +553,7 @@ describe('rendering', () => {
       ),
     );
 
+    // eslint-disable-next-line jest/no-large-snapshots
     expect(dom.innerHTML).toMatchInlineSnapshot(`
       <ul>
         <li>
