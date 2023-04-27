@@ -44,7 +44,7 @@
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "@ocavue/svgmoji-cjs": "^0.1.1",
-    "@remirror/core": "^2.0.16",
+    "@remirror/core": "^2.0.15",
     "@remirror/messages": "^2.0.4",
     "@remirror/theme": "^2.0.8",
     "emojibase": "^6.1.0",

@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.21.0",
-    "@remirror/core-helpers": "^2.0.3",
+    "@remirror/core-helpers": "^2.0.2",
     "@remirror/core-types": "^2.0.5",
     "@seznam/compose-react-refs": "^1.0.6",
     "a11y-status": "^2.0.1",
