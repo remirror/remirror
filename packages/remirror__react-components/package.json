@@ -43,7 +43,7 @@
     "@lingui/core": "^3.17.2",
     "@mui/material": "^5.12.1",
     "@popperjs/core": "^2.11.7",
-    "@remirror/core": "^2.0.14",
+    "@remirror/core": "^2.0.15",
     "@remirror/extension-blockquote": "^2.0.14",
     "@remirror/extension-bold": "^2.0.13",
     "@remirror/extension-callout": "^2.0.14",

@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 2.0.15
+
+> 2023-04-27
+
+### Patch Changes
+
+- 93653611d: Add `cut` event.
+
 ## 2.0.14
 
 > 2023-04-27
