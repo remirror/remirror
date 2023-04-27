@@ -11,8 +11,7 @@ export const FindController: FC<{
   caseSensitive: boolean;
   toggleCaseSensitive: () => void;
   onDismiss?: () => void;
-}> = ({ findPrev, findNext, stopFind, caseSensitive, toggleCaseSensitive, onDismiss }) => {
-  return (
+}> = ({ findPrev, findNext, stopFind, caseSensitive, toggleCaseSensitive, onDismiss }) => (
     <>
       <IconButton
         onClick={findPrev}
@@ -50,4 +49,3 @@ export const FindController: FC<{
       </IconButton>
     </>
   );
-};

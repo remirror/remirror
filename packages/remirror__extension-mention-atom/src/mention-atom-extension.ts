@@ -264,8 +264,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
       'appendText',
     ]);
 
-    return this.options.matchers.map<Suggester>((matcher) => {
-      return {
+    return this.options.matchers.map<Suggester>((matcher) => ({
         ...DEFAULT_MATCHER,
         ...options,
         ...matcher,
@@ -279,8 +278,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
 
           this.options.onChange(props, command);
         },
-      };
-    });
+      }));
   }
 }
 

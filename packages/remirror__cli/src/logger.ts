@@ -12,9 +12,7 @@ export const logger = {
 
     console.debug(prefix, colors.blue('DEBUG'), ...args);
   },
-  log: (...args: any[]) => {
-    return logger.info(...args);
-  },
+  log: (...args: any[]) => logger.info(...args),
   info: (...args: any[]) => {
     console.log(prefix, colors.green('INFO'), ...args);
   },

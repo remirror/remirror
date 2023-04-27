@@ -4,8 +4,7 @@ import React, { FC } from 'react';
 export const ReplaceInput: FC<{
   replacement: string;
   setReplacement: (query: string) => void;
-}> = ({ replacement, setReplacement }) => {
-  return (
+}> = ({ replacement, setReplacement }) => (
     <OutlinedInput
       fullWidth={true}
       margin='none'
@@ -22,4 +21,3 @@ export const ReplaceInput: FC<{
       inputProps={{ 'aria-label': 'Replace' }}
     />
   );
-};

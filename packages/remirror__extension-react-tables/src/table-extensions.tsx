@@ -58,9 +58,7 @@ export class TableExtension extends BaseTableExtension {
       view: EditorView,
       getPos: () => number | undefined,
       decorations: readonly Decoration[],
-    ) => {
-      return new TableView(node, 10, decorations, view, getPos as () => number);
-    };
+    ) => new TableView(node, 10, decorations, view, getPos as () => number);
   }
 
   /**
@@ -154,9 +152,7 @@ export class TableExtension extends BaseTableExtension {
 
     const tableNodes = findChildren({
       node: doc,
-      predicate: ({ node: { type, attrs } }) => {
-        return type === schema.nodes.table && attrs.isControllersInjected === false;
-      },
+      predicate: ({ node: { type, attrs } }) => type === schema.nodes.table && attrs.isControllersInjected === false,
     });
 
     if (tableNodes.length === 0) {
@@ -284,9 +280,7 @@ export class TableRowExtension extends BaseTableRowExtension {
   createNodeSpec(extra: ApplySchemaAttributes, override: NodeSpecOverride): TableSchemaSpec {
     const spec = super.createNodeSpec(extra, override);
     spec.content = '(tableCell | tableHeaderCell | tableControllerCell)*';
-    spec.toDOM = (node) => {
-      return ['tr', extra.dom(node), 0];
-    };
+    spec.toDOM = (node) => ['tr', extra.dom(node), 0];
     spec.allowGapCursor = false;
     return spec;
   }
@@ -366,9 +360,7 @@ export class TableControllerCellExtension extends BaseTableControllerCellExtensi
   }
 
   createNodeViews(): NodeViewMethod {
-    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => {
-      return new TableControllerCellView(node, view, getPos as () => number);
-    };
+    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => new TableControllerCellView(node, view, getPos as () => number);
   }
 
   createExtensions() {

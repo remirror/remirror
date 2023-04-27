@@ -43,17 +43,14 @@ export class CheckboxExtension extends NodeExtension<CheckboxOptions> {
       parseDOM: [
         {
           tag: 'input[type=checkbox]',
-          getAttrs: (dom) => {
-            return {
+          getAttrs: (dom) => ({
               ...extra.parse(dom),
               checked: (dom as HTMLInputElement).checked,
-            };
-          },
+            }),
         },
         ...(override.parseDOM ?? []),
       ],
-      toDOM: (mark) => {
-        return [
+      toDOM: (mark) => [
           'label',
           extra.dom(mark),
           [
@@ -64,8 +61,7 @@ export class CheckboxExtension extends NodeExtension<CheckboxOptions> {
             },
             0,
           ],
-        ];
-      },
+        ],
     };
   }
 

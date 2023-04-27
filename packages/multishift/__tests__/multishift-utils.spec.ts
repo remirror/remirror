@@ -36,9 +36,7 @@ describe('callAllEventHandlers', () => {
   });
 
   it('stops when handler returns true', () => {
-    const handler: any = jest.fn(() => {
-      return true;
-    });
+    const handler: any = jest.fn(() => true);
     const result = callAllEventHandlers(handler, handler1, handler2);
     result(object(), 1, '2', true);
 

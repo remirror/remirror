@@ -13,8 +13,7 @@ export interface FormattingButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const FormattingButtonGroup: FC<FormattingButtonGroupProps> = ({ children }) => {
-  return (
+export const FormattingButtonGroup: FC<FormattingButtonGroupProps> = ({ children }) => (
     <CommandButtonGroup>
       <ToggleBoldButton />
       <ToggleItalicButton />
@@ -24,4 +23,3 @@ export const FormattingButtonGroup: FC<FormattingButtonGroupProps> = ({ children
       {children}
     </CommandButtonGroup>
   );
-};

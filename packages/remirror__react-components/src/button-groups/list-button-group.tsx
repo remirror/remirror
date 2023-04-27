@@ -9,8 +9,7 @@ export interface ListButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const ListButtonGroup: FC<ListButtonGroupProps> = ({ children }) => {
-  return (
+export const ListButtonGroup: FC<ListButtonGroupProps> = ({ children }) => (
     <CommandButtonGroup>
       <ToggleBulletListButton />
       <ToggleOrderedListButton />
@@ -20,4 +19,3 @@ export const ListButtonGroup: FC<ListButtonGroupProps> = ({ children }) => {
       {children}
     </CommandButtonGroup>
   );
-};

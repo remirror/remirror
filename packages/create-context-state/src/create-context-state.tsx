@@ -84,15 +84,13 @@ export function createContextState<
     const setContextRef = useRef<Dispatch<React.SetStateAction<Context>>>();
     const state = hook?.(props) as State;
 
-    const [context, setContext] = useState(() => {
-      return creator({
+    const [context, setContext] = useState(() => creator({
         get: createGet(contextRef),
         set: createSet(setContextRef),
         previousContext: undefined,
         props,
         state,
-      });
-    });
+      }));
 
     const dependencies = [...Object.values(props), state];
 
@@ -104,15 +102,13 @@ export function createContextState<
         return;
       }
 
-      setContext((previousContext) => {
-        return creator({
+      setContext((previousContext) => creator({
           get: createGet(contextRef),
           set: createSet(setContextRef),
           previousContext,
           props,
           state,
-        });
-      });
+        }));
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, dependencies);
 

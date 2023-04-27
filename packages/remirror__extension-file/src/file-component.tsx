@@ -55,8 +55,7 @@ const UploadingFileAction: React.FC<{ context: UploadContext; abort: () => void 
 const UploadedFileAction: React.FC<{
   attrs: FileAttributes;
   getPosition: () => number;
-}> = ({ attrs, getPosition }) => {
-  return (
+}> = ({ attrs, getPosition }) => (
     <>
       {attrs.error ? (
         <div className={ExtensionFileTheme.FILE_ERROR}>{attrs.error}</div>
@@ -67,10 +66,8 @@ const UploadedFileAction: React.FC<{
       <DeleteFileButton getPosition={getPosition} />
     </>
   );
-};
 
-const IconButton: React.FC<React.ComponentProps<'a'>> = (props) => {
-  return (
+const IconButton: React.FC<React.ComponentProps<'a'>> = (props) => (
     <a
       {...props}
       className={ExtensionFileTheme.FILE_ICON_BUTTON}
@@ -81,15 +78,12 @@ const IconButton: React.FC<React.ComponentProps<'a'>> = (props) => {
       {props.children}
     </a>
   );
-};
 
-const StopButton: React.FC<{ abort: () => void }> = ({ abort }) => {
-  return (
+const StopButton: React.FC<{ abort: () => void }> = ({ abort }) => (
     <IconButton onClick={abort}>
       <StopIcon />
     </IconButton>
   );
-};
 
 const DeleteFileButton: React.FC<{ getPosition: () => number }> = ({ getPosition }) => {
   const { deleteFile } = useCommands();
@@ -100,13 +94,11 @@ const DeleteFileButton: React.FC<{ getPosition: () => number }> = ({ getPosition
   );
 };
 
-const DownloadFileButton: React.FC<{ attrs: FileAttributes }> = ({ attrs }) => {
-  return (
+const DownloadFileButton: React.FC<{ attrs: FileAttributes }> = ({ attrs }) => (
     <IconButton href={attrs.url} download={attrs.fileName} target='_blank' rel='noreferrer'>
       <DownloadIcon />
     </IconButton>
   );
-};
 
 // Taken from: https://gist.github.com/zentala/1e6f72438796d74531803cc3833c039c
 function formatFileSize(bytes: number, decimals = 2): string {

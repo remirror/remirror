@@ -229,8 +229,7 @@ export function useMenuNavigation<Item = any>(
    * Automatically select the item when clicked.
    */
   const getItemProps: MultishiftPropGetters<Item>['getItemProps'] = useCallback(
-    (itemProps) => {
-      return {
+    (itemProps) => ({
         ..._getItemProps({
           ...itemProps,
           onClick: (event) => {
@@ -242,8 +241,7 @@ export function useMenuNavigation<Item = any>(
             }
           },
         }),
-      };
-    },
+      }),
     [_getItemProps, onSubmit, focus, focusOnClick],
   );
 

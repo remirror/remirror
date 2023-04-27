@@ -45,13 +45,11 @@ function SaveButton() {
   );
 }
 
-const Basic: React.FC = () => {
-  return (
+const Basic: React.FC = () => (
     <SocialEditor placeholder='Mention @joe or add #remirror' users={ALL_USERS} tags={TAGS}>
       <LoadButton />
       <SaveButton />
     </SocialEditor>
   );
-};
 
 export default Basic;

@@ -148,9 +148,7 @@ describe('pasteRules', () => {
           regexp: /(@[a-z]+)/,
           markType: schema.marks.strong,
           type: 'mark',
-          replaceSelection: (replacedText) => {
-            return !!replacedText.trim();
-          },
+          replaceSelection: (replacedText) => !!replacedText.trim(),
         },
       ]);
       createEditor(doc(p('<start>   <end>')), { plugins: [plugin1] })
@@ -211,9 +209,7 @@ describe('pasteRules', () => {
           regexp: /https:\/\/www\.[a-z]+\.com/gi,
           markType: schema.marks.strong,
           type: 'mark',
-          replaceSelection: (text) => {
-            return !!text;
-          },
+          replaceSelection: (text) => !!text,
           getAttributes: (url, isReplacement) => ({
             href: url,
             auto: !isReplacement,
@@ -246,9 +242,7 @@ describe('pasteRules', () => {
           regexp: /(@[a-z]+)/,
           markType: schema.marks.strong,
           type: 'mark',
-          replaceSelection: (replacedText) => {
-            return !!replacedText.trim();
-          },
+          replaceSelection: (replacedText) => !!replacedText.trim(),
         },
       ]);
       createEditor(doc(p('<start>foo<end>')), { plugins: [plugin] })
@@ -425,9 +419,7 @@ describe('pasteRules', () => {
           type: 'node',
           nodeType: inlineEmoji,
           getContent: () => {},
-          getAttributes: (match) => {
-            return { code: match[0] };
-          },
+          getAttributes: (match) => ({ code: match[0] }),
         },
       ]);
       createEditor(doc(p('<cursor>')), { plugins: [plugin] })

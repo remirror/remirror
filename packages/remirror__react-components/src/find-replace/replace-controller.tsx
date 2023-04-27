@@ -4,8 +4,7 @@ import React, { FC } from 'react';
 export const ReplaceController: FC<{
   replace: () => void;
   replaceAll: () => void;
-}> = ({ replace, replaceAll }) => {
-  return (
+}> = ({ replace, replaceAll }) => (
     <ButtonGroup variant='outlined' size='small'>
       <Button aria-label='Relace' sx={{ textTransform: 'none' }} onClick={replace}>
         Replace
@@ -15,4 +14,3 @@ export const ReplaceController: FC<{
       </Button>
     </ButtonGroup>
   );
-};

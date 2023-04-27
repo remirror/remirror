@@ -138,9 +138,7 @@ const Table = ({
   );
 };
 
-const Basic = (): JSX.Element => {
-  return <Table extensions={defaultExtensions} />;
-};
+const Basic = (): JSX.Element => <Table extensions={defaultExtensions} />;
 
 const defaultExtensions = () => [new ReactComponentExtension(), new TableExtension()];
 

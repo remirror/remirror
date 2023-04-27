@@ -16,8 +16,7 @@ export interface TextAlignmentButtonGroupProps {
 export const TextAlignmentButtonGroup: FC<TextAlignmentButtonGroupProps> = ({
   showAll = false,
   children,
-}) => {
-  return (
+}) => (
     <CommandButtonGroup>
       <LeftAlignButton />
       <CenterAlignButton />
@@ -26,4 +25,3 @@ export const TextAlignmentButtonGroup: FC<TextAlignmentButtonGroupProps> = ({
       {children}
     </CommandButtonGroup>
   );
-};

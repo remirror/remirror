@@ -17,12 +17,10 @@ const TableControllerCell = ({
   getPos,
   contentDOM,
 }: TableControllerCellProps): HTMLElement => {
-  const findTable = (): FindProsemirrorNodeResult | undefined => {
-    return findParentNodeOfType({
+  const findTable = (): FindProsemirrorNodeResult | undefined => findParentNodeOfType({
       types: 'table',
       selection: view.state.doc.resolve(getPos()),
     });
-  };
 
   const events = createControllerEvents({ view, findTable });
 

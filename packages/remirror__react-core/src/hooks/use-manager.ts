@@ -50,13 +50,11 @@ export function useManager<Extension extends AnyExtension = Remirror.Extensions>
 
   // Add a manager destroyed listener to only cleanup the manager when it is
   // destroyed.
-  useEffect(() => {
-    return manager.addHandler('destroy', () => {
+  useEffect(() => manager.addHandler('destroy', () => {
       // `clone` is used to ensure that that any stale extensions are
       // reinitialized.
       setManager(() => createReactManager<Extension>(extensionsRef.current, optionsRef.current));
-    });
-  }, [manager]);
+    }), [manager]);
 
   return manager;
 }

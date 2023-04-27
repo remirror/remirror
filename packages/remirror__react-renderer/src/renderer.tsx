@@ -14,9 +14,7 @@ export const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
     return null;
   }
 
-  const children = content.map((child, ii) => {
-    return <RemirrorRenderer json={child} {...props} key={ii} />;
-  });
+  const children = content.map((child, ii) => <RemirrorRenderer json={child} {...props} key={ii} />);
 
   return <div {...(node.attrs ?? object())}>{children}</div>;
 };
@@ -95,9 +93,7 @@ export const RemirrorRenderer: FC<RenderTreeProps> = (props) => {
     return <TypeHandler {...childProps} />;
   }
 
-  const children = content.map((child, ii) => {
-    return <RemirrorRenderer key={ii} json={child} {...rest} />;
-  });
+  const children = content.map((child, ii) => <RemirrorRenderer key={ii} json={child} {...rest} />);
 
   return <TypeHandler {...childProps}>{children}</TypeHandler>;
 };

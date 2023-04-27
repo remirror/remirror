@@ -1,7 +1,6 @@
 import React from 'react';
 
-export const Introduction: React.FC = () => {
-  return (
+export const Introduction: React.FC = () => (
     <div
       style={{
         display: 'flex',
@@ -26,7 +25,6 @@ export const Introduction: React.FC = () => {
       </p>
     </div>
   );
-};
 
 export default {
   component: Introduction,

@@ -78,20 +78,14 @@ export class HelpersExtension extends PlainExtension {
 
     for (const extension of this.store.extensions) {
       if (isNodeExtension(extension)) {
-        active[extension.name] = (attrs?: ProsemirrorAttributes) => {
-          return isNodeActive({ state: this.store.getState(), type: extension.type, attrs });
-        };
+        active[extension.name] = (attrs?: ProsemirrorAttributes) => isNodeActive({ state: this.store.getState(), type: extension.type, attrs });
 
-        attrs[extension.name] = (attrs?: ProsemirrorAttributes) => {
-          return getActiveNode({ state: this.store.getState(), type: extension.type, attrs })?.node
+        attrs[extension.name] = (attrs?: ProsemirrorAttributes) => getActiveNode({ state: this.store.getState(), type: extension.type, attrs })?.node
             .attrs;
-        };
       }
 
       if (isMarkExtension(extension)) {
-        active[extension.name] = (attrs?: ProsemirrorAttributes) => {
-          return isMarkActive({ trState: this.store.getState(), type: extension.type, attrs });
-        };
+        active[extension.name] = (attrs?: ProsemirrorAttributes) => isMarkActive({ trState: this.store.getState(), type: extension.type, attrs });
 
         attrs[extension.name] = (attrs?: ProsemirrorAttributes) => {
           const markRange = getMarkRange(this.store.getState().selection.$from, extension.type);

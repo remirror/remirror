@@ -70,22 +70,16 @@ export function suggest(...suggesters: Suggester[]): Plugin<SuggestState> {
       pluginState.init(view);
 
       return {
-        update: (view) => {
-          return pluginState.changeHandler(view.state.tr, false);
-        },
+        update: (view) => pluginState.changeHandler(view.state.tr, false),
       };
     },
 
     state: {
       // Initialize the state
-      init: () => {
-        return pluginState;
-      },
+      init: () => pluginState,
 
       // Apply changes to the state
-      apply: (tr, _pluginState, _oldState, state) => {
-        return pluginState.apply({ tr, state });
-      },
+      apply: (tr, _pluginState, _oldState, state) => pluginState.apply({ tr, state }),
     },
 
     /** Append a transaction via the onChange handlers */
@@ -110,9 +104,7 @@ export function suggest(...suggesters: Suggester[]): Plugin<SuggestState> {
     props: {
       // Sets up a decoration (styling options) on the currently active
       // decoration
-      decorations: (state) => {
-        return pluginState.createDecorations(state);
-      },
+      decorations: (state) => pluginState.createDecorations(state),
     },
   });
 }

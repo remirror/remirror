@@ -12,8 +12,7 @@ const WARNING_CALLOUT = { type: 'warning' };
 const ERROR_CALLOUT = { type: 'error' };
 const SUCCESS_CALLOUT = { type: 'success' };
 
-export const CalloutTypeButtonGroup: FC<CalloutTypeButtonGroupProps> = ({ children }) => {
-  return (
+export const CalloutTypeButtonGroup: FC<CalloutTypeButtonGroupProps> = ({ children }) => (
     <CommandButtonGroup>
       <ToggleCalloutButton attrs={INFO_CALLOUT} />
       <ToggleCalloutButton attrs={WARNING_CALLOUT} />
@@ -22,4 +21,3 @@ export const CalloutTypeButtonGroup: FC<CalloutTypeButtonGroupProps> = ({ childr
       {children}
     </CommandButtonGroup>
   );
-};

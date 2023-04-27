@@ -1,7 +1,6 @@
 import React from 'react';
 
-export const MdiFormatLetterCase: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
-  return (
+export const MdiFormatLetterCase: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <svg width='1em' height='1em' viewBox='0 0 24 24' {...props}>
       <path
         fill='currentColor'
@@ -9,4 +8,3 @@ export const MdiFormatLetterCase: React.FC<React.SVGProps<SVGSVGElement>> = (pro
       />
     </svg>
   );
-};

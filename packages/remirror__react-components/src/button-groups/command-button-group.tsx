@@ -5,8 +5,7 @@ export interface CommandButtonGroupProps extends Omit<BoxProps, 'children'> {
   children: ReactNode | ReactNode[];
 }
 
-export const CommandButtonGroup: FC<CommandButtonGroupProps> = (props) => {
-  return (
+export const CommandButtonGroup: FC<CommandButtonGroupProps> = (props) => (
     <Box
       sx={{
         display: 'flex',
@@ -18,4 +17,3 @@ export const CommandButtonGroup: FC<CommandButtonGroupProps> = (props) => {
       {...props}
     />
   );
-};

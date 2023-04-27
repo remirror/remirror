@@ -69,8 +69,7 @@ const Feature = (props: FeatureProps) => {
   );
 };
 
-const BannerHeader = () => {
-  return (
+const BannerHeader = () => (
     <svg viewBox='0 0 447 61' className={cx(styles.bannerHeader, styles.bottomSpacing)}>
       <title>Remirror Banner</title>
       <g fill='#FFF' fillRule='nonzero'>
@@ -78,23 +77,16 @@ const BannerHeader = () => {
       </g>
     </svg>
   );
-};
 
-const BannerPhone = () => {
-  return <img src='/img/phone.svg' className={styles.bannerPhone} />;
-};
+const BannerPhone = () => <img src='/img/phone.svg' className={styles.bannerPhone} />;
 
-const BannerLaptop = () => {
-  return <img src='/img/laptop.svg' className={styles.bannerLaptop} />;
-};
+const BannerLaptop = () => <img src='/img/laptop.svg' className={styles.bannerLaptop} />;
 
-const BannerSampleEditor = () => {
-  return (
+const BannerSampleEditor = () => (
     <div className={styles.bannerSampleEditor}>
       <Editor />
     </div>
   );
-};
 
 const Home = () => {
   const context = useDocusaurusContext();

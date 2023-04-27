@@ -304,8 +304,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       'disableDecorations',
     ]);
 
-    return this.options.matchers.map<Suggester>((matcher) => {
-      return {
+    return this.options.matchers.map<Suggester>((matcher) => ({
         ...DEFAULT_MATCHER,
         ...options,
         ...matcher,
@@ -348,8 +347,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
           // Remove the mention since it is no longer valid.
           return this.store.chain(tr).removeMention({ range }).tr();
         },
-      };
-    });
+      }));
   }
 
   /**

@@ -281,9 +281,7 @@ export class Positioner<Data = any> {
       this.#ids.push(id);
 
       elementSetters.push({
-        setElement: (element: HTMLElement) => {
-          return this.addProps({ ...props, data, element }, index);
-        },
+        setElement: (element: HTMLElement) => this.addProps({ ...props, data, element }, index),
         id,
         data,
       });
@@ -305,9 +303,7 @@ export class Positioner<Data = any> {
   readonly addListener = <Key extends keyof PositionerEvents<Data>>(
     event: Key,
     cb: PositionerEvents<Data>[Key],
-  ): Unsubscribe => {
-    return this.#handler.on(event, cb);
-  };
+  ): Unsubscribe => this.#handler.on(event, cb);
 
   private addProps(props: GetPositionProps<Data>, index: number) {
     if (this.#updated) {

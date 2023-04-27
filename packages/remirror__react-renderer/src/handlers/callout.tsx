@@ -14,9 +14,7 @@ export const Callout: FC<{
     return null;
   }
 
-  const children = content.map((node, ii) => {
-    return <RemirrorRenderer json={node} key={ii} {...props} />;
-  });
+  const children = content.map((node, ii) => <RemirrorRenderer json={node} key={ii} {...props} />);
 
   const { type, emoji } = props.node.attrs ?? {};
   const dataAttrs: Record<string, unknown> = { 'data-callout-type': type };

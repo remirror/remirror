@@ -76,9 +76,7 @@ class ToggleListItemExtension extends PlainExtension {
 
   createKeymap(): KeyBindings {
     return {
-      'Mod-Enter': (props): boolean => {
-        return this.toggleListType(props);
-      },
+      'Mod-Enter': (props): boolean => this.toggleListType(props),
     };
   }
 

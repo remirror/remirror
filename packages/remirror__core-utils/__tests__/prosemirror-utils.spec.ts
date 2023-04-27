@@ -251,6 +251,7 @@ describe('composeTransactionSteps', () => {
     const tr2 = cloneTransaction(state.tr.replaceRangeWith(5, 10, p('TWO')));
 
     const composedTr = composeTransactionSteps([tr1, tr2], state);
+    // eslint-disable-next-line jest/no-large-snapshots
     expect(composedTr.steps).toMatchInlineSnapshot(`
       [
         {

@@ -54,9 +54,7 @@ export function isNodeOfType(props: NodeEqualsTypeProps): boolean {
     return false;
   }
 
-  const matches = (type: NodeType | string) => {
-    return type === node.type || type === node.type.name;
-  };
+  const matches = (type: NodeType | string) => type === node.type || type === node.type.name;
 
   if (isArray(types)) {
     return types.some(matches);
@@ -752,9 +750,7 @@ export function mergeProsemirrorKeyBindings(
     // Convert the command to have a signature of the
     // [[`ProsemirrorCommandFunction`]].
     (command): ProsemirrorCommandFunction =>
-      (state, dispatch, view) => {
-        return command({ state, dispatch, view, tr: state.tr, next: () => false });
-      },
+      (state, dispatch, view) => command({ state, dispatch, view, tr: state.tr, next: () => false }),
   );
 }
 

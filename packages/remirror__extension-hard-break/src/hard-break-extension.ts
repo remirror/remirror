@@ -49,9 +49,7 @@ export class HardBreakExtension extends NodeExtension {
       inline: true,
       selectable: false,
       atom: true,
-      leafText: () => {
-        return '\n';
-      },
+      leafText: () => '\n',
       ...override,
       attrs: extra.defaults(),
       parseDOM: [{ tag: 'br', getAttrs: extra.parse }, ...(override.parseDOM ?? [])],

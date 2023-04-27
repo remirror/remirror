@@ -35,13 +35,11 @@ function SaveButton() {
   );
 }
 
-const Basic: React.FC = () => {
-  return (
+const Basic: React.FC = () => (
     <WysiwygEditor placeholder='Start typing...'>
       <LoadButton />
       <SaveButton />
     </WysiwygEditor>
   );
-};
 
 export default Basic;

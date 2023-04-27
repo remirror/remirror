@@ -163,10 +163,10 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
     }
 
     // Return true when the input rule should be skipped.
-    const shouldSkip: ShouldSkipFunction = ({ captureGroup }) => {
+    const shouldSkip: ShouldSkipFunction = ({ captureGroup }) => 
       // eslint-disable-next-line unicorn/prefer-array-some
-      return !captureGroup || !this.moji.find(captureGroup);
-    };
+       !captureGroup || !this.moji.find(captureGroup)
+    ;
 
     // Capture the attributes for the emoji
     const getAttributes: GetAttributes = ([, match]) => {

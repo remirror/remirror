@@ -67,8 +67,7 @@ export class TaskListItemExtension extends NodeExtension {
         },
         ...(override.parseDOM ?? []),
       ],
-      toDOM: (node) => {
-        return [
+      toDOM: (node) => [
           'li',
           {
             ...extra.dom(node),
@@ -76,8 +75,7 @@ export class TaskListItemExtension extends NodeExtension {
             'data-checked': node.attrs.checked ? '' : undefined,
           },
           0,
-        ];
-      },
+        ],
     };
   }
 
@@ -168,9 +166,7 @@ export class TaskListItemExtension extends NodeExtension {
     const regexp = /^\s*(\[( ?|x|X)]\s)$/;
 
     return [
-      wrappingInputRule(regexp, this.type, (match) => {
-        return { checked: ['x', 'X'].includes(getMatchString(match, 2)) };
-      }),
+      wrappingInputRule(regexp, this.type, (match) => ({ checked: ['x', 'X'].includes(getMatchString(match, 2)) })),
 
       new InputRule(regexp, (state, match, start, end) => {
         const tr = state.tr;

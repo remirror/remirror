@@ -7,8 +7,7 @@ export interface BasicFormattingButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const BasicFormattingButtonGroup: FC<BasicFormattingButtonGroupProps> = ({ children }) => {
-  return (
+export const BasicFormattingButtonGroup: FC<BasicFormattingButtonGroupProps> = ({ children }) => (
     <CommandButtonGroup>
       <ToggleBoldButton />
       <ToggleItalicButton />
@@ -16,4 +15,3 @@ export const BasicFormattingButtonGroup: FC<BasicFormattingButtonGroupProps> = (
       {children}
     </CommandButtonGroup>
   );
-};

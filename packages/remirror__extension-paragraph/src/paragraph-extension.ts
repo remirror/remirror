@@ -69,9 +69,7 @@ export class ParagraphExtension extends NodeExtension {
         ...(override.parseDOM ?? []),
       ],
 
-      toDOM: (node) => {
-        return ['p', extra.dom(node), 0];
-      },
+      toDOM: (node) => ['p', extra.dom(node), 0],
     };
   }
 

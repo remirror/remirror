@@ -79,9 +79,7 @@ describe('basic functionality', () => {
   it('changes when the editable prop changes', () => {
     const manager = createReactManager([]);
 
-    const El = ({ editable }: { editable: boolean }) => {
-      return <Remirror editable={editable} label={label} manager={manager} autoRender='start' />;
-    };
+    const El = ({ editable }: { editable: boolean }) => <Remirror editable={editable} label={label} manager={manager} autoRender='start' />;
 
     const { rerender, getByLabelText } = strictRender(<El editable={true} />);
     expect(getByLabelText(label)).toHaveAttribute('contenteditable', 'true');

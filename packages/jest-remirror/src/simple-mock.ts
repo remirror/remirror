@@ -23,13 +23,9 @@ export function simpleMockFn<T extends FunctionLike>(implementation: T): Mock<T>
     return implementation(...args);
   };
 
-  const getCalledTimes = () => {
-    return calledTimes;
-  };
+  const getCalledTimes = () => calledTimes;
 
-  const getCalled = () => {
-    return calledTimes > 0;
-  };
+  const getCalled = () => calledTimes > 0;
 
   mocked.getCalledTimes = getCalledTimes;
   mocked.getCalled = getCalled;

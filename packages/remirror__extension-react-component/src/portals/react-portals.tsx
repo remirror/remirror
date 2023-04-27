@@ -40,13 +40,13 @@ export function usePortals(portalContainer: PortalContainer): Array<[HTMLElement
   const [portals, setPortals] = useState(() => Array.from(portalContainer.portals.entries()));
 
   // Dispose of all portals.
-  useEffect(() => {
+  useEffect(() => 
     // Auto disposed when the component un-mounts.
-    return portalContainer.on((portalMap) => {
+     portalContainer.on((portalMap) => {
       // eslint-disable-next-line unicorn/prefer-spread
       setPortals(Array.from(portalMap.entries()));
-    });
-  }, [portalContainer]);
+    })
+  , [portalContainer]);
 
   return useMemo(() => portals, [portals]);
 }

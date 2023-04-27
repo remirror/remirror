@@ -158,8 +158,7 @@ export class DelayedCommand<Value> {
   /**
    * Generate the `remirror` command.
    */
-  readonly generateCommand = (): CommandFunction => {
-    return (props) => {
+  readonly generateCommand = (): CommandFunction => (props) => {
       let isValid = true;
       const { view, tr, dispatch } = props;
 
@@ -204,7 +203,6 @@ export class DelayedCommand<Value> {
       dispatch(tr);
       return true;
     };
-  };
 }
 
 export interface ToggleMarkProps extends MarkTypeProps, Partial<AttributesProps> {

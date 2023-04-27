@@ -1,8 +1,7 @@
 import { Stack, StackProps } from '@mui/material';
 import React, { FC } from 'react';
 
-export const Toolbar: FC<StackProps> = (props) => {
-  return (
+export const Toolbar: FC<StackProps> = (props) => (
     <Stack
       direction='row'
       spacing={1}
@@ -10,4 +9,3 @@ export const Toolbar: FC<StackProps> = (props) => {
       {...props}
     />
   );
-};

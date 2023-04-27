@@ -86,9 +86,7 @@ export class ReactFramework<Extension extends AnyExtension> extends Framework<
    */
   private readonly getRootProps = <RefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<RefKey>,
-  ) => {
-    return this.internalGetRootProps(options, null);
-  };
+  ) => this.internalGetRootProps(options, null);
 
   /**
    * Creates the props that should be spread on the root element inside which

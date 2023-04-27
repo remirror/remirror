@@ -22,18 +22,14 @@ export function createUploadContext(): UploadContext {
   const values: Record<string, unknown> = {};
   const emitter = createNanoEvents<UploadContextEvents>();
 
-  const get = (key: string): unknown => {
-    return values[key];
-  };
+  const get = (key: string): unknown => values[key];
 
   const set = (key: string, value: unknown) => {
     values[key] = value;
     emitter.emit('set', values);
   };
 
-  const addListener = (listener: UploadContextListener) => {
-    return emitter.on('set', listener);
-  };
+  const addListener = (listener: UploadContextListener) => emitter.on('set', listener);
 
   return { set, get, addListener };
 }

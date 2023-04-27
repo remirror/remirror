@@ -205,9 +205,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
               destroyPlaceholder(view, element);
             },
           },
-          onSuccess: (value, range, commandProps) => {
-            return this.insertImage(value, range)(commandProps);
-          },
+          onSuccess: (value, range, commandProps) => this.insertImage(value, range)(commandProps),
         })
         .validate(({ tr, dispatch }) => {
           const insertPos = insertPoint(tr.doc, pos, this.type);
@@ -278,9 +276,7 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
 
   createNodeViews(): NodeViewMethod | Record<string, NodeViewMethod> {
     if (this.options.enableResizing) {
-      return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => {
-        return new ResizableImageView(node, view, getPos as () => number);
-      };
+      return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => new ResizableImageView(node, view, getPos as () => number);
     }
 
     return {};

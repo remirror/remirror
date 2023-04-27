@@ -5,8 +5,7 @@ interface StoryExampleProps {
   source: React.ReactNode;
 }
 
-export const StoryExample: React.FC<StoryExampleProps> = ({ story, source }) => {
-  return (
+export const StoryExample: React.FC<StoryExampleProps> = ({ story, source }) => (
     <div>
       {story}
       <details>
@@ -15,4 +14,3 @@ export const StoryExample: React.FC<StoryExampleProps> = ({ story, source }) => 
       </details>
     </div>
   );
-};

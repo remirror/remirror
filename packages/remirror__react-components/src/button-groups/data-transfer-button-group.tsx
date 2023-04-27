@@ -7,8 +7,7 @@ export interface DataTransferButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const DataTransferButtonGroup: FC<DataTransferButtonGroupProps> = ({ children }) => {
-  return (
+export const DataTransferButtonGroup: FC<DataTransferButtonGroupProps> = ({ children }) => (
     <CommandButtonGroup>
       <CopyButton />
       <CutButton />
@@ -16,4 +15,3 @@ export const DataTransferButtonGroup: FC<DataTransferButtonGroupProps> = ({ chil
       {children}
     </CommandButtonGroup>
   );
-};

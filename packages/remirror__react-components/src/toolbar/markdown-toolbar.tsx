@@ -12,8 +12,7 @@ import {
 import { Toolbar } from './base-toolbar';
 import { VerticalDivider } from './vertical-divider';
 
-export const MarkdownToolbar: FC = () => {
-  return (
+export const MarkdownToolbar: FC = () => (
     <Toolbar>
       <CommandButtonGroup>
         <ToggleBoldButton />
@@ -32,4 +31,3 @@ export const MarkdownToolbar: FC = () => {
       <HistoryButtonGroup />
     </Toolbar>
   );
-};

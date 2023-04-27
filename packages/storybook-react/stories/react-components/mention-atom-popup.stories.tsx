@@ -29,9 +29,7 @@ const ALL_USERS = [
 export const Basic = () => {
   const [search, setSearch] = useState('');
   const { manager, state } = useRemirror({ extensions });
-  const items = useMemo(() => {
-    return ALL_USERS.filter((user) => user.label.toLowerCase().includes(search)).sort();
-  }, [search]);
+  const items = useMemo(() => ALL_USERS.filter((user) => user.label.toLowerCase().includes(search)).sort(), [search]);
 
   return (
     <ThemeProvider>

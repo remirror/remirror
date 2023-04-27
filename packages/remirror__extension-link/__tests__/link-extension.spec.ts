@@ -386,9 +386,7 @@ describe('commands', () => {
                 },
               ],
 
-              toDOM: (node) => {
-                return ['div', extra.dom(node), 0];
-              },
+              toDOM: (node) => ['div', extra.dom(node), 0],
             };
           }
         }
@@ -494,9 +492,7 @@ describe('plugin', () => {
     } = create({ openLinkOnClick: true });
     const testLink = link({ href });
 
-    jest.spyOn(global, 'open').mockImplementation(() => {
-      return null;
-    });
+    jest.spyOn(global, 'open').mockImplementation(() => null);
 
     add(doc(p(testLink('Li<cursor>nk'))))
       .fire({ event: 'click' })

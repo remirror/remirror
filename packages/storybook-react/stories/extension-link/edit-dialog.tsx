@@ -50,9 +50,7 @@ function useFloatingLinkState() {
   // A positioner which only shows for links.
   const linkPositioner = useMemo(() => createMarkPositioner({ type: 'link' }), []);
 
-  const onRemove = useCallback(() => {
-    return chain.removeLink().focus().run();
-  }, [chain]);
+  const onRemove = useCallback(() => chain.removeLink().focus().run(), [chain]);
 
   const updateReason = useUpdateReason();
 

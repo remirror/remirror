@@ -11,8 +11,7 @@ import { CreateTableButton } from '../buttons';
 import { Toolbar } from './base-toolbar';
 import { VerticalDivider } from './vertical-divider';
 
-export const WysiwygToolbar: FC = () => {
-  return (
+export const WysiwygToolbar: FC = () => (
     <Toolbar>
       <HistoryButtonGroup />
       <VerticalDivider />
@@ -27,4 +26,3 @@ export const WysiwygToolbar: FC = () => {
       </ListButtonGroup>
     </Toolbar>
   );
-};

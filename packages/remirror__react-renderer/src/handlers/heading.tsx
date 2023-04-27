@@ -14,9 +14,7 @@ export const Heading: FC<{
     return null;
   }
 
-  const children = content.map((node, ii) => {
-    return <TextHandler key={ii} {...{ ...props, node }} />;
-  });
+  const children = content.map((node, ii) => <TextHandler key={ii} {...{ ...props, node }} />);
 
   const level = (props.node.attrs?.level as number) ?? 1;
 

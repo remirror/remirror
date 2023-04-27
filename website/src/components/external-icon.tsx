@@ -5,8 +5,7 @@ import styles from './components.module.css';
 /**
  * An external icon svg.
  */
-export const ExternalIcon: React.FC = () => {
-  return (
+export const ExternalIcon: React.FC = () => (
     <svg viewBox='0 0 24 24' className={styles.externalIcon}>
       <path fill='none' d='M0 0h24v24H0z' />
       <path
@@ -17,4 +16,3 @@ export const ExternalIcon: React.FC = () => {
       />
     </svg>
   );
-};

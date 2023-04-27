@@ -18,8 +18,7 @@ export interface TableCellMenuProps {
   Component?: TableCellMenuComponent;
 }
 
-const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ setPopupOpen }) => {
-  return (
+const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ setPopupOpen }) => (
     <button
       onClick={() => {
         setPopupOpen(true);
@@ -45,7 +44,6 @@ const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ set
       v
     </button>
   );
-};
 
 interface DefaultTableCellMenuItemProps {
   label: string;
@@ -65,20 +63,16 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
   const commands = useCommands();
 
   // close the popup after clicking
-  const handleClick = (command: () => void) => {
-    return () => {
+  const handleClick = (command: () => void) => () => {
       command();
       setPopupOpen(false);
     };
-  };
 
   // Notice that we won't close the popup after changing the cell background
   // because we want users to quick try multiple colors.
-  const setTableCellBackground = (color: string | null) => {
-    return () => {
+  const setTableCellBackground = (color: string | null) => () => {
       commands.setTableCellBackground(color);
     };
-  };
 
   return (
     <div
@@ -135,14 +129,12 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
   );
 };
 
-const DefaultTableCellMenuComponent: React.FC<TableCellMenuComponentProps> = (props) => {
-  return (
+const DefaultTableCellMenuComponent: React.FC<TableCellMenuComponentProps> = (props) => (
     <>
       <DefaultTableCellMenuButton {...props} />
       <DefaultTableCellMenuPopup {...props} />
     </>
   );
-};
 
 const TableCellMenu: React.FC<TableCellMenuProps> = ({
   Component = DefaultTableCellMenuComponent,

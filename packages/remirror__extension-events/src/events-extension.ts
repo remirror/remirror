@@ -375,17 +375,10 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
     return {
       props: {
-        handleKeyPress: (_, event) => {
-          return this.options.keypress(event) || false;
-        },
-        handleKeyDown: (_, event) => {
-          return this.options.keydown(event) || false;
-        },
-        handleTextInput: (_, from, to, text) => {
-          return this.options.textInput({ from, to, text }) || false;
-        },
-        handleClickOn: (view, pos, node, nodePos, event, direct) => {
-          return runClickHandlerOn(
+        handleKeyPress: (_, event) => this.options.keypress(event) || false,
+        handleKeyDown: (_, event) => this.options.keydown(event) || false,
+        handleTextInput: (_, from, to, text) => this.options.textInput({ from, to, text }) || false,
+        handleClickOn: (view, pos, node, nodePos, event, direct) => runClickHandlerOn(
             this.options.clickMark,
             this.options.click,
             view,
@@ -394,10 +387,8 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             nodePos,
             event,
             direct,
-          );
-        },
-        handleDoubleClickOn: (view, pos, node, nodePos, event, direct) => {
-          return runClickHandlerOn(
+          ),
+        handleDoubleClickOn: (view, pos, node, nodePos, event, direct) => runClickHandlerOn(
             this.options.doubleClickMark,
             this.options.doubleClick,
             view,
@@ -406,10 +397,8 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             nodePos,
             event,
             direct,
-          );
-        },
-        handleTripleClickOn: (view, pos, node, nodePos, event, direct) => {
-          return runClickHandlerOn(
+          ),
+        handleTripleClickOn: (view, pos, node, nodePos, event, direct) => runClickHandlerOn(
             this.options.tripleClickMark,
             this.options.tripleClick,
             view,
@@ -418,17 +407,12 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             nodePos,
             event,
             direct,
-          );
-        },
+          ),
 
         handleDOMEvents: {
-          focus: (_, event: Event) => {
-            return this.options.focus(event as FocusEvent) || false;
-          },
+          focus: (_, event: Event) => this.options.focus(event as FocusEvent) || false,
 
-          blur: (_, event: Event) => {
-            return this.options.blur(event as FocusEvent) || false;
-          },
+          blur: (_, event: Event) => this.options.blur(event as FocusEvent) || false,
 
           mousedown: (_, event: Event) => {
             this.startMouseover();
@@ -450,9 +434,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             return this.options.mouseenter(event as MouseEvent) || false;
           },
 
-          keyup: (_, event: Event) => {
-            return this.options.keyup(event as KeyboardEvent) || false;
-          },
+          keyup: (_, event: Event) => this.options.keyup(event as KeyboardEvent) || false,
 
           mouseout: this.createMouseEventHandler((event, props) => {
             const state = { ...props, hovering: false };
@@ -464,25 +446,15 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             return this.options.hover(event, state) || false;
           }),
 
-          contextmenu: this.createMouseEventHandler((event, props) => {
-            return this.options.contextmenu(event, props) || false;
-          }),
+          contextmenu: this.createMouseEventHandler((event, props) => this.options.contextmenu(event, props) || false),
 
-          scroll: (_, event: Event) => {
-            return this.options.scroll(event) || false;
-          },
+          scroll: (_, event: Event) => this.options.scroll(event) || false,
 
-          copy: (_, event: Event) => {
-            return this.options.copy(event as ClipboardEvent) || false;
-          },
+          copy: (_, event: Event) => this.options.copy(event as ClipboardEvent) || false,
 
-          cut: (_, event: Event) => {
-            return this.options.cut(event as ClipboardEvent) || false;
-          },
+          cut: (_, event: Event) => this.options.cut(event as ClipboardEvent) || false,
 
-          paste: (_, event: Event) => {
-            return this.options.paste(event as ClipboardEvent) || false;
-          },
+          paste: (_, event: Event) => this.options.paste(event as ClipboardEvent) || false,
         },
       },
     };
@@ -525,8 +497,7 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
   private readonly createMouseEventHandler = (
     fn: (event: MouseEvent, props: MouseEventHandlerState) => boolean,
-  ) => {
-    return (view: EditorView, mouseEvent: Event) => {
+  ) => (view: EditorView, mouseEvent: Event) => {
       const event = mouseEvent as MouseEvent;
       const eventPosition = getPositionFromEvent(view, event);
 
@@ -605,7 +576,6 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
         },
       });
     };
-  };
 }
 
 interface CreateClickMarkStateProps extends BaseEventState {

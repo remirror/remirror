@@ -181,27 +181,21 @@ export class Keyboard {
    *
    * @param props - see {@link OptionsProps}
    */
-  keyDown = ({ options }: OptionsProps): this => {
-    return this.dispatchEvent('keydown', options);
-  };
+  keyDown = ({ options }: OptionsProps): this => this.dispatchEvent('keydown', options);
 
   /**
    * Trigger a keypress event with the provided options
    *
    * @param props - see {@link OptionsProps}
    */
-  keyPress = ({ options }: OptionsProps): this => {
-    return this.dispatchEvent('keypress', options);
-  };
+  keyPress = ({ options }: OptionsProps): this => this.dispatchEvent('keypress', options);
 
   /**
    * Trigger a keyup event with the provided options
    *
    * @param props - see {@link OptionsProps}
    */
-  keyUp = ({ options }: OptionsProps): this => {
-    return this.dispatchEvent('keyup', options);
-  };
+  keyUp = ({ options }: OptionsProps): this => this.dispatchEvent('keyup', options);
 
   /**
    * Breaks a string into single characters and fires a keyboard into the target

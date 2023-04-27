@@ -152,9 +152,7 @@ describe('commands.insertText', () => {
     const editor = renderEditor<never>([]);
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my <cursor>CODE!')));
-    const promise = sleep(100).then(() => {
-      return 'AWESOME ';
-    });
+    const promise = sleep(100).then(() => 'AWESOME ');
     editor.commands.insertText(() => promise);
 
     editor.selectText('end').press('Enter').insertText('More text here.');

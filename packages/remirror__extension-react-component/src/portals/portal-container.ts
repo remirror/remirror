@@ -67,9 +67,7 @@ export class PortalContainer {
   /**
    * Event handler for subscribing to update events from the portalContainer.
    */
-  on = (callback: (portals: PortalMap) => void): Unsubscribe => {
-    return this.#events.on('update', callback);
-  };
+  on = (callback: (portals: PortalMap) => void): Unsubscribe => this.#events.on('update', callback);
 
   /**
    * Subscribe to one event before automatically unbinding.

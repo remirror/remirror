@@ -41,9 +41,7 @@ class SecondExtension extends PlainExtension<{ option: boolean }> {
 
   createCommands() {
     return {
-      fun: (value: { key?: boolean }) => {
-        return () => false;
-      },
+      fun: (value: { key?: boolean }) => () => false,
     };
   }
 }
@@ -55,9 +53,7 @@ class ThirdExtension extends PlainExtension {
 
   createCommands() {
     return {
-      notChainable: (value: string) => {
-        return nonChainable(() => false);
-      },
+      notChainable: (value: string) => nonChainable(() => false),
     };
   }
 }

@@ -73,9 +73,7 @@ export class FindExtension extends PlainExtension<FindOptions> {
 
     this.setProps({ query, activeIndex, caseSensitive });
 
-    return ({ tr, dispatch }) => {
-      return this.updateView(tr, dispatch);
-    };
+    return ({ tr, dispatch }) => this.updateView(tr, dispatch);
   }
 
   /**
@@ -185,9 +183,7 @@ export class FindExtension extends PlainExtension<FindOptions> {
       },
 
       props: {
-        decorations: (state) => {
-          return this.getPluginState(state);
-        },
+        decorations: (state) => this.getPluginState(state),
       },
     };
   }
@@ -240,13 +236,11 @@ export class FindExtension extends PlainExtension<FindOptions> {
   }
 
   private createDecorationSet(doc: ProsemirrorNode): DecorationSet {
-    const decorations = this._ranges.map((deco, index) => {
-      return Decoration.inline(
+    const decorations = this._ranges.map((deco, index) => Decoration.inline(
         deco.from,
         deco.to,
         index === this._activeIndex ? this.options.activeDecoration : this.options.decoration,
-      );
-    });
+      ));
     return DecorationSet.create(doc, decorations);
   }
 

@@ -75,9 +75,7 @@ function useFindReplace() {
   }, [commands, state, find]);
 
   const toggleCaseSensitive = useCallback(() => {
-    setState((state) => {
-      return { ...state, caseSensitive: !state.caseSensitive };
-    });
+    setState((state) => ({ ...state, caseSensitive: !state.caseSensitive }));
   }, []);
   const setQuery = useCallback((query: string) => {
     setState((state) => ({ ...state, query }));

@@ -108,8 +108,7 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
   private readonly wrapMethod = (
     method: ProsemirrorCommandFunction,
     callback?: (success: boolean) => void,
-  ): CommandFunction => {
-    return ({ state, dispatch, view }) => {
+  ): CommandFunction => ({ state, dispatch, view }) => {
       const { getState, getDispatch } = this.options;
       const wrappedState = isFunction(getState) ? getState() : state;
       const wrappedDispatch = isFunction(getDispatch) && dispatch ? getDispatch() : dispatch;
@@ -119,7 +118,6 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
 
       return success;
     };
-  };
 
   /**
    * Adds the default key mappings for undo and redo.

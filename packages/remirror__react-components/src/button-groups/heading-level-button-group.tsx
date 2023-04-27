@@ -19,8 +19,7 @@ const LEVEL_6 = { level: 6 };
 export const HeadingLevelButtonGroup: FC<HeadingLevelButtonGroupProps> = ({
   showAll = false,
   children,
-}) => {
-  return (
+}) => (
     <CommandButtonGroup>
       <ToggleHeadingButton attrs={LEVEL_1} />
       <ToggleHeadingButton attrs={LEVEL_2} />
@@ -37,4 +36,3 @@ export const HeadingLevelButtonGroup: FC<HeadingLevelButtonGroupProps> = ({
       {children}
     </CommandButtonGroup>
   );
-};

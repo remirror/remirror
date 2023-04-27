@@ -242,9 +242,7 @@ test('keymaps', () => {
       expect(mocks.thirdEnter).not.toHaveBeenCalled();
 
       jest.clearAllMocks();
-      mocks.firstEnter.mockImplementation(({ next }) => {
-        return next();
-      });
+      mocks.firstEnter.mockImplementation(({ next }) => next());
     })
     .press('Enter')
     .callback(() => {
