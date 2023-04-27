@@ -97,7 +97,7 @@ Remirror allows you to listen multiple event types within the editor. These can 
 
 Remirror supports the following events
 
-`blur`, `focus`, `mousedown`, `mouseup`, `mouseenter`, `mouseleave`, `textInput`, `keypress`, `keyup`, `keydown`, `click`, `clickMark`, `contextmenu`, `hover`, `scroll`, `copy`, and `paste`.
+`blur`, `focus`, `mousedown`, `mouseup`, `mouseenter`, `mouseleave`, `textInput`, `keypress`, `keyup`, `keydown`, `click`, `clickMark`, `contextmenu`, `hover`, `scroll`, `copy`, `cut` and `paste`.
 
 Unless listed in the exceptions below, the event handlers have the signature.
 
