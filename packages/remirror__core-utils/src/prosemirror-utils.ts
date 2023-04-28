@@ -750,7 +750,8 @@ export function mergeProsemirrorKeyBindings(
     // Convert the command to have a signature of the
     // [[`ProsemirrorCommandFunction`]].
     (command): ProsemirrorCommandFunction =>
-      (state, dispatch, view) => command({ state, dispatch, view, tr: state.tr, next: () => false }),
+      (state, dispatch, view) =>
+        command({ state, dispatch, view, tr: state.tr, next: () => false }),
   );
 }
 

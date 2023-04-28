@@ -1,7 +1,8 @@
 import { AnyExtension, AnyExtensionConstructor, builtinPreset, KeymapExtension } from 'remirror';
 
 function isOfType<Type extends AnyExtensionConstructor>(Constructor: Type) {
-  return (extension: AnyExtension): extension is InstanceType<Type> => extension.isOfType(Constructor);
+  return (extension: AnyExtension): extension is InstanceType<Type> =>
+    extension.isOfType(Constructor);
 }
 
 test('it uses the available options', () => {

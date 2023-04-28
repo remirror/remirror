@@ -14,12 +14,12 @@ export interface FormattingButtonGroupProps {
 }
 
 export const FormattingButtonGroup: FC<FormattingButtonGroupProps> = ({ children }) => (
-    <CommandButtonGroup>
-      <ToggleBoldButton />
-      <ToggleItalicButton />
-      <ToggleUnderlineButton />
-      <ToggleStrikeButton />
-      <ToggleCodeButton />
-      {children}
-    </CommandButtonGroup>
-  );
+  <CommandButtonGroup>
+    <ToggleBoldButton />
+    <ToggleItalicButton />
+    <ToggleUnderlineButton />
+    <ToggleStrikeButton />
+    <ToggleCodeButton />
+    {children}
+  </CommandButtonGroup>
+);

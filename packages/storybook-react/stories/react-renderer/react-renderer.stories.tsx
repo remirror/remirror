@@ -42,7 +42,7 @@ const markMap: MarkMap = {
 };
 
 export const Basic = (): JSX.Element => (
-    <ThemeProvider>
-      <RemirrorRenderer json={SAMPLE_DOC} typeMap={typeMap} markMap={markMap} />
-    </ThemeProvider>
-  );
+  <ThemeProvider>
+    <RemirrorRenderer json={SAMPLE_DOC} typeMap={typeMap} markMap={markMap} />
+  </ThemeProvider>
+);

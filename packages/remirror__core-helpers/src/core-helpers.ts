@@ -364,7 +364,8 @@ export function isNativePromise(value: unknown): value is Promise<unknown> {
  * @param value - the value to check
  *
  */
-const hasPromiseAPI = (value: unknown): value is Promise<unknown> => !!(
+const hasPromiseAPI = (value: unknown): value is Promise<unknown> =>
+  !!(
     !isNull(value) &&
     (isObject(value) as unknown) &&
     isFunction((value as Promise<unknown>).then) &&

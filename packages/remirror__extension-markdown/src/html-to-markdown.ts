@@ -201,9 +201,10 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
       }
 
       // eslint-disable-next-line unicorn/prefer-array-find
-      const rows = [...(node as HTMLTableElement).rows].filter((r) => 
-        // Remove controller rows
-         !isControllerHeadingRow(r)
+      const rows = [...(node as HTMLTableElement).rows].filter(
+        (r) =>
+          // Remove controller rows
+          !isControllerHeadingRow(r),
       );
 
       return isHeadingRow(rows[0]);
@@ -221,7 +222,9 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
       return content;
     },
   })
-  .keep((node) => node.nodeName === 'TABLE' && !isHeadingRow((node as HTMLTableElement).rows[0] as any))
+  .keep(
+    (node) => node.nodeName === 'TABLE' && !isHeadingRow((node as HTMLTableElement).rows[0] as any),
+  )
   .keep((node) => node.nodeName === 'TABLE' && isNestedTable(node))
   .addRule('strikethrough', {
     filter: ['del', 's', 'strike' as 'del'],
@@ -232,7 +235,8 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
 
   // Add improved code block support from html.
   .addRule('fencedCodeBlock', {
-    filter: (node, options) => !!(
+    filter: (node, options) =>
+      !!(
         options.codeBlockStyle === 'fenced' &&
         node.nodeName === 'PRE' &&
         node.firstChild &&

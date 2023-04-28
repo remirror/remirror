@@ -13,21 +13,21 @@ import { Toolbar } from './base-toolbar';
 import { VerticalDivider } from './vertical-divider';
 
 export const MarkdownToolbar: FC = () => (
-    <Toolbar>
-      <CommandButtonGroup>
-        <ToggleBoldButton />
-        <ToggleItalicButton />
-        <ToggleStrikeButton />
-        <ToggleCodeButton />
-      </CommandButtonGroup>
-      <VerticalDivider />
-      <HeadingLevelButtonGroup showAll />
-      <VerticalDivider />
-      <CommandButtonGroup>
-        <ToggleBlockquoteButton />
-        <ToggleCodeBlockButton />
-      </CommandButtonGroup>
-      <VerticalDivider />
-      <HistoryButtonGroup />
-    </Toolbar>
-  );
+  <Toolbar>
+    <CommandButtonGroup>
+      <ToggleBoldButton />
+      <ToggleItalicButton />
+      <ToggleStrikeButton />
+      <ToggleCodeButton />
+    </CommandButtonGroup>
+    <VerticalDivider />
+    <HeadingLevelButtonGroup showAll />
+    <VerticalDivider />
+    <CommandButtonGroup>
+      <ToggleBlockquoteButton />
+      <ToggleCodeBlockButton />
+    </CommandButtonGroup>
+    <VerticalDivider />
+    <HistoryButtonGroup />
+  </Toolbar>
+);

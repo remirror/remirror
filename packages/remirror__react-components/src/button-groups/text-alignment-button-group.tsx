@@ -17,11 +17,11 @@ export const TextAlignmentButtonGroup: FC<TextAlignmentButtonGroupProps> = ({
   showAll = false,
   children,
 }) => (
-    <CommandButtonGroup>
-      <LeftAlignButton />
-      <CenterAlignButton />
-      <RightAlignButton />
-      {showAll && <JustifyAlignButton />}
-      {children}
-    </CommandButtonGroup>
-  );
+  <CommandButtonGroup>
+    <LeftAlignButton />
+    <CenterAlignButton />
+    <RightAlignButton />
+    {showAll && <JustifyAlignButton />}
+    {children}
+  </CommandButtonGroup>
+);

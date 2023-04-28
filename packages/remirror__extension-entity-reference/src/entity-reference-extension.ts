@@ -319,12 +319,13 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
     // Find entityReferences for which a part is at the requested position
     const entityReferenceIdsInPos = new Set(
       disjointedEntityReferences
-        .filter((entityReference) => (
+        .filter(
+          (entityReference) =>
             within(from, entityReference.from, entityReference.to) ||
             within(to, entityReference.from, entityReference.to) ||
             within(entityReference.from, from, to) ||
-            within(entityReference.to, from, to)
-          ))
+            within(entityReference.to, from, to),
+        )
         .map((h) => h.id),
     );
     // Find the entityReferences belonging to the matching disjoint entityReferences

@@ -25,11 +25,11 @@ interface Props {
 }
 
 const Wrapper: FC<Props> = ({ manager }) => (
-    <Remirror manager={manager} autoFocus={true}>
-      <DefaultEditor />
-      <HookConsumer />
-    </Remirror>
-  );
+  <Remirror manager={manager} autoFocus={true}>
+    <DefaultEditor />
+    <HookConsumer />
+  </Remirror>
+);
 
 test('should update in response to the editor focus state', () => {
   const editor = RemirrorTestChain.create(createReactManager([]));

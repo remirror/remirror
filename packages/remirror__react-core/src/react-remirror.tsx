@@ -68,8 +68,8 @@ export interface RemirrorProps<Extension extends AnyExtension = Remirror.Extensi
  * The default editor placeholder where the prosemirror editor will be rendered.
  */
 export const EditorComponent = (): JSX.Element => (
-    <div className={ComponentsTheme.EDITOR_WRAPPER} {...useRemirrorContext().getRootProps()} />
-  );
+  <div className={ComponentsTheme.EDITOR_WRAPPER} {...useRemirrorContext().getRootProps()} />
+);
 
 interface HookComponentProps {
   /**

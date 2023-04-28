@@ -57,10 +57,12 @@ export class ShortcutsExtension extends PlainExtension<ShortcutsOptions> {
    * Manage input rules for keyboard shortcuts
    */
   createInputRules(): InputRule[] {
-    return SHORTCUTS.map(([regexp, replace]) => plainInputRule({
+    return SHORTCUTS.map(([regexp, replace]) =>
+      plainInputRule({
         regexp,
         transformMatch: () => replace,
-      }));
+      }),
+    );
   }
 }
 

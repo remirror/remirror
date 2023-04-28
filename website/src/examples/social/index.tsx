@@ -15,11 +15,11 @@ const ALL_USERS = [
 const TAGS = ['editor', 'remirror', 'opensource', 'prosemirror'];
 
 const Editor = () => (
-    <BrowserOnly fallback={<div>Loading...</div>}>
-      {() => (
-        <SocialEditor placeholder='Mention @joe or add #remirror' users={ALL_USERS} tags={TAGS} />
-      )}
-    </BrowserOnly>
-  );
+  <BrowserOnly fallback={<div>Loading...</div>}>
+    {() => (
+      <SocialEditor placeholder='Mention @joe or add #remirror' users={ALL_USERS} tags={TAGS} />
+    )}
+  </BrowserOnly>
+);
 
 export default Editor;

@@ -8,9 +8,9 @@ export interface BaselineButtonGroupProps {
 }
 
 export const BaselineButtonGroup: FC<BaselineButtonGroupProps> = ({ children }) => (
-    <CommandButtonGroup>
-      <ToggleSubscriptButton />
-      <ToggleSuperscriptButton />
-      {children}
-    </CommandButtonGroup>
-  );
+  <CommandButtonGroup>
+    <ToggleSubscriptButton />
+    <ToggleSuperscriptButton />
+    {children}
+  </CommandButtonGroup>
+);

@@ -105,10 +105,9 @@ export class HistoryExtension extends PlainExtension<HistoryOptions> {
    *
    * @param method - the method to wrap
    */
-  private readonly wrapMethod = (
-    method: ProsemirrorCommandFunction,
-    callback?: (success: boolean) => void,
-  ): CommandFunction => ({ state, dispatch, view }) => {
+  private readonly wrapMethod =
+    (method: ProsemirrorCommandFunction, callback?: (success: boolean) => void): CommandFunction =>
+    ({ state, dispatch, view }) => {
       const { getState, getDispatch } = this.options;
       const wrappedState = isFunction(getState) ? getState() : state;
       const wrappedDispatch = isFunction(getDispatch) && dispatch ? getDispatch() : dispatch;

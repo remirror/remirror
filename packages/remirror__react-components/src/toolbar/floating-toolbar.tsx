@@ -25,7 +25,10 @@ export const FloatingToolbar: FC<FloatingToolbarProps> = ({
   children,
   ...rest
 }) => {
-  const { ref, x, y, width, height, active } = usePositioner(() => getPositioner(positioner), [positioner]);
+  const { ref, x, y, width, height, active } = usePositioner(
+    () => getPositioner(positioner),
+    [positioner],
+  );
 
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
 

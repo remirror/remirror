@@ -5,9 +5,9 @@ import React from 'react';
 import { WysiwygEditor } from '@remirror/react-editors/wysiwyg';
 
 const Editor = () => (
-    <BrowserOnly fallback={<div>Loading...</div>}>
-      {() => <WysiwygEditor placeholder='Enter text...' />}
-    </BrowserOnly>
-  );
+  <BrowserOnly fallback={<div>Loading...</div>}>
+    {() => <WysiwygEditor placeholder='Enter text...' />}
+  </BrowserOnly>
+);
 
 export default Editor;

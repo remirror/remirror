@@ -108,9 +108,9 @@ test('supports hooks state', () => {
     setValue: (value: string) => void;
   }
   const [OuterProvider, useOuter] = createContextState<OuterContext>(({ set }) => ({
-      value: 'initial',
-      setValue: (value) => set({ value }),
-    }));
+    value: 'initial',
+    setValue: (value) => set({ value }),
+  }));
 
   const [CountProvider, useCount] = createContextState<Context, Props, State>(
     ({ state, set, props, previousContext }) => ({

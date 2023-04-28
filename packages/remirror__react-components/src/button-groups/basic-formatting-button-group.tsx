@@ -8,10 +8,10 @@ export interface BasicFormattingButtonGroupProps {
 }
 
 export const BasicFormattingButtonGroup: FC<BasicFormattingButtonGroupProps> = ({ children }) => (
-    <CommandButtonGroup>
-      <ToggleBoldButton />
-      <ToggleItalicButton />
-      <ToggleUnderlineButton />
-      {children}
-    </CommandButtonGroup>
-  );
+  <CommandButtonGroup>
+    <ToggleBoldButton />
+    <ToggleItalicButton />
+    <ToggleUnderlineButton />
+    {children}
+  </CommandButtonGroup>
+);

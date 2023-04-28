@@ -332,10 +332,10 @@ test('can run multiple commands', () => {
   };
 
   const Component = () => (
-      <Remirror {...props} manager={manager}>
-        <InnerComponent />
-      </Remirror>
-    );
+    <Remirror {...props} manager={manager}>
+      <InnerComponent />
+    </Remirror>
+  );
 
   const { getByRole } = strictRender(<Component />);
 

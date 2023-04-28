@@ -8,10 +8,10 @@ export interface DataTransferButtonGroupProps {
 }
 
 export const DataTransferButtonGroup: FC<DataTransferButtonGroupProps> = ({ children }) => (
-    <CommandButtonGroup>
-      <CopyButton />
-      <CutButton />
-      <PasteButton />
-      {children}
-    </CommandButtonGroup>
-  );
+  <CommandButtonGroup>
+    <CopyButton />
+    <CutButton />
+    <PasteButton />
+    {children}
+  </CommandButtonGroup>
+);

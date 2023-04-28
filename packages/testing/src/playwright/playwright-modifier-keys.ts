@@ -282,9 +282,7 @@ export async function pressKeyWithModifier(pattern: string): Promise<void> {
 
   const list = getModifiers({ modifiers, isMac: isApple() });
 
-  await Promise.all(
-    list.map(async (modifier) => page.keyboard.down(modifier)),
-  );
+  await Promise.all(list.map(async (modifier) => page.keyboard.down(modifier)));
 
   if (!key) {
     return;
@@ -292,9 +290,7 @@ export async function pressKeyWithModifier(pattern: string): Promise<void> {
 
   await page.keyboard.press(key);
 
-  await Promise.all(
-    list.map(async (modifier) => page.keyboard.up(modifier)),
-  );
+  await Promise.all(list.map(async (modifier) => page.keyboard.up(modifier)));
 }
 
 interface GetModifiersProps {

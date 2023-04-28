@@ -71,10 +71,10 @@ test('access to context via `useRemirrorContext`', () => {
   }
 
   const Editor = ({ portals }: Props) => (
-      <Remirror manager={manager}>
-        <RemirrorPortals portals={portals} />
-      </Remirror>
-    );
+    <Remirror manager={manager}>
+      <RemirrorPortals portals={portals} />
+    </Remirror>
+  );
 
   const portalContainer = new PortalContainer();
   const { rerender } = strictRender(<Editor portals={[]} />);

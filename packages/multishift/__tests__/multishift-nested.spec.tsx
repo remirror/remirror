@@ -35,10 +35,10 @@ const Component = ({ multiple }: { multiple: boolean }) => {
         {selectedItems.length > 0 && (
           <ul>
             {selectedItems.map((item) => (
-                <li key={item.id} {...getRemoveButtonProps({ item })} data-testid={item.id}>
-                  {item.label}
-                </li>
-              ))}
+              <li key={item.id} {...getRemoveButtonProps({ item })} data-testid={item.id}>
+                {item.label}
+              </li>
+            ))}
           </ul>
         )}
         <button {...getToggleButtonProps()}>
@@ -46,10 +46,10 @@ const Component = ({ multiple }: { multiple: boolean }) => {
           <ul {...getMenuProps()}>
             {isOpen &&
               items.map((item, index) => (
-                  <li key={item.id} {...getItemProps({ index, item, disabled: item.id === 'd' })}>
-                    {item.label}
-                  </li>
-                ))}
+                <li key={item.id} {...getItemProps({ index, item, disabled: item.id === 'd' })}>
+                  {item.label}
+                </li>
+              ))}
           </ul>
         </button>
       </nav>

@@ -66,9 +66,12 @@ export function useReactFramework<Extension extends AnyExtension>(
     getProps: () => props,
   });
 
-  useEffect(() => () => {
+  useEffect(
+    () => () => {
       framework.destroy();
-    }, [framework]);
+    },
+    [framework],
+  );
 
   // Handle editor updates
   useEffect(() => {

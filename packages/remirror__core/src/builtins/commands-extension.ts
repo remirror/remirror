@@ -917,10 +917,10 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
           return '';
         },
         placeholder: { type: 'inline' },
-        onSuccess: (value, selection, props) => this.insertNode(
-            htmlToProsemirrorNode({ content: value, schema: props.state.schema }),
-            { selection },
-          )(props),
+        onSuccess: (value, selection, props) =>
+          this.insertNode(htmlToProsemirrorNode({ content: value, schema: props.state.schema }), {
+            selection,
+          })(props),
       })
       .generateCommand();
   }
@@ -1164,7 +1164,9 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       const { view } = this.store;
       const { state } = view;
 
-      lazyChain.push((dispatch?: DispatchFunction) => command(...args)({ state, dispatch, view, tr: getTr() }));
+      lazyChain.push((dispatch?: DispatchFunction) =>
+        command(...args)({ state, dispatch, view, tr: getTr() }),
+      );
 
       return chained;
     };

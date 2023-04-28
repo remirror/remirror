@@ -14,10 +14,10 @@ function createChain() {
   const { doc, p } = chain.nodes;
 
   const Wrapper: FC<{ children?: React.ReactNode }> = ({ children }) => (
-      <Remirror manager={manager} initialContent={[doc(p('Initial content ')), 'end']} autoRender>
-        {children}
-      </Remirror>
-    );
+    <Remirror manager={manager} initialContent={[doc(p('Initial content ')), 'end']} autoRender>
+      {children}
+    </Remirror>
+  );
 
   return { chain, Wrapper };
 }

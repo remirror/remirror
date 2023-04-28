@@ -47,10 +47,10 @@ function MarkdownPreview() {
 }
 
 export const Basic: React.FC = () => (
-    <MarkdownEditor placeholder='Start typing...' initialContent={basicContent}>
-      <MarkdownPreview />
-    </MarkdownEditor>
-  );
+  <MarkdownEditor placeholder='Start typing...' initialContent={basicContent}>
+    <MarkdownPreview />
+  </MarkdownEditor>
+);
 
 interface Context extends Props {
   setMarkdown: (markdown: string) => void;
@@ -63,20 +63,21 @@ interface Props {
 }
 
 const [DualEditorProvider, useDualEditor] = createContextState<Context, Props>(({ props }) => ({
-    ...props,
+  ...props,
 
-    setMarkdown: (text: string) => props.markdown.getContext()?.setContent({
-        type: 'doc',
-        content: [
-          {
-            type: 'codeBlock',
-            attrs: { language: 'markdown' },
-            content: text ? [{ type: 'text', text }] : undefined,
-          },
-        ],
-      }),
-    setVisual: (markdown: string) => props.visual.getContext()?.setContent(markdown),
-  }));
+  setMarkdown: (text: string) =>
+    props.markdown.getContext()?.setContent({
+      type: 'doc',
+      content: [
+        {
+          type: 'codeBlock',
+          attrs: { language: 'markdown' },
+          content: text ? [{ type: 'text', text }] : undefined,
+        },
+      ],
+    }),
+  setVisual: (markdown: string) => props.visual.getContext()?.setContent(markdown),
+}));
 
 const MarkdownTextEditor = () => {
   const { markdown, setVisual } = useDualEditor();

@@ -8,9 +8,9 @@ export interface HistoryButtonGroupProps {
 }
 
 export const HistoryButtonGroup: FC<HistoryButtonGroupProps> = ({ children }) => (
-    <CommandButtonGroup>
-      <UndoButton />
-      <RedoButton />
-      {children}
-    </CommandButtonGroup>
-  );
+  <CommandButtonGroup>
+    <UndoButton />
+    <RedoButton />
+    {children}
+  </CommandButtonGroup>
+);

@@ -152,7 +152,8 @@ export class TableExtension extends BaseTableExtension {
 
     const tableNodes = findChildren({
       node: doc,
-      predicate: ({ node: { type, attrs } }) => type === schema.nodes.table && attrs.isControllersInjected === false,
+      predicate: ({ node: { type, attrs } }) =>
+        type === schema.nodes.table && attrs.isControllersInjected === false,
     });
 
     if (tableNodes.length === 0) {
@@ -360,7 +361,8 @@ export class TableControllerCellExtension extends BaseTableControllerCellExtensi
   }
 
   createNodeViews(): NodeViewMethod {
-    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => new TableControllerCellView(node, view, getPos as () => number);
+    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) =>
+      new TableControllerCellView(node, view, getPos as () => number);
   }
 
   createExtensions() {

@@ -45,12 +45,12 @@ test('supports a custom ref label and passed props through', () => {
 describe('nestedRootProps', () => {
   let result: RenderResult;
   const Component = () => (
-      <div>
-        <div {...useRemirrorContext().getRootProps()} id='nested-div'>
-          <div id='wrapped-div'>Wrapped text</div>
-        </div>
+    <div>
+      <div {...useRemirrorContext().getRootProps()} id='nested-div'>
+        <div id='wrapped-div'>Wrapped text</div>
       </div>
-    );
+    </div>
+  );
 
   beforeEach(() => {
     result = strictRender(

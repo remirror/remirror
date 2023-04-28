@@ -17,7 +17,8 @@ const TableControllerCell = ({
   getPos,
   contentDOM,
 }: TableControllerCellProps): HTMLElement => {
-  const findTable = (): FindProsemirrorNodeResult | undefined => findParentNodeOfType({
+  const findTable = (): FindProsemirrorNodeResult | undefined =>
+    findParentNodeOfType({
       types: 'table',
       selection: view.state.doc.resolve(getPos()),
     });

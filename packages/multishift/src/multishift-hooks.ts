@@ -176,18 +176,20 @@ export function useOuterEventListener<Item = any>(
   const isOpen = useRef(state.isOpen);
   isOpen.current = state.isOpen;
 
-  const targetWithinMultishift = (target: Node | null, checkActiveElement = true) => [
+  const targetWithinMultishift = (target: Node | null, checkActiveElement = true) =>
+    [
       refs.comboBox.current,
       refs.menu.current,
       refs.toggleButton.current,
       refs.input.current,
       ...refs.ignored.current,
       ...refs.items.current,
-    ].some((node) => (
+    ].some(
+      (node) =>
         node &&
         (isOrContainsNode(node, target) ||
-          (checkActiveElement && isOrContainsNode(node, window.document.activeElement)))
-      ));
+          (checkActiveElement && isOrContainsNode(node, window.document.activeElement))),
+    );
 
   useEffectOnce(() => {
     // Borrowed from `downshift`

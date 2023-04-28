@@ -230,18 +230,18 @@ export function useMenuNavigation<Item = any>(
    */
   const getItemProps: MultishiftPropGetters<Item>['getItemProps'] = useCallback(
     (itemProps) => ({
-        ..._getItemProps({
-          ...itemProps,
-          onClick: (event) => {
-            itemProps.onClick?.(event);
-            onSubmit(itemProps.item, 'click');
+      ..._getItemProps({
+        ...itemProps,
+        onClick: (event) => {
+          itemProps.onClick?.(event);
+          onSubmit(itemProps.item, 'click');
 
-            if (focusOnClick) {
-              focus();
-            }
-          },
-        }),
+          if (focusOnClick) {
+            focus();
+          }
+        },
       }),
+    }),
     [_getItemProps, onSubmit, focus, focusOnClick],
   );
 

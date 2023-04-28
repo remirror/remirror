@@ -31,7 +31,10 @@ export const useCommandOptionValues = ({
   const options = getCommandOptions(commandName);
 
   const { description, label, icon, shortcut } = options || {};
-  const commandProps: CommandDecoratorMessageProps = useMemo(() => ({ active, attrs, enabled, t }), [active, attrs, enabled, t]);
+  const commandProps: CommandDecoratorMessageProps = useMemo(
+    () => ({ active, attrs, enabled, t }),
+    [active, attrs, enabled, t],
+  );
 
   const shortcutString: string | undefined = useMemo(() => {
     if (!shortcut) {
@@ -41,10 +44,13 @@ export const useCommandOptionValues = ({
     return getShortcutString(getUiShortcutString(shortcut, attrs ?? {}), { t, separator: '' });
   }, [shortcut, attrs, t]);
 
-  return useMemo(() => ({
+  return useMemo(
+    () => ({
       description: getCommandOptionValue(description, commandProps),
       label: getCommandOptionValue(label, commandProps),
       icon: getCommandOptionValue(icon, commandProps),
       shortcut: shortcutString,
-    }), [commandProps, description, label, icon, shortcutString]);
+    }),
+    [commandProps, description, label, icon, shortcutString],
+  );
 };

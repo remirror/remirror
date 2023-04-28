@@ -10,12 +10,12 @@ export interface ListButtonGroupProps {
 }
 
 export const ListButtonGroup: FC<ListButtonGroupProps> = ({ children }) => (
-    <CommandButtonGroup>
-      <ToggleBulletListButton />
-      <ToggleOrderedListButton />
-      <IfExtensionPresent extension={TaskListExtension}>
-        <ToggleTaskListButton />
-      </IfExtensionPresent>
-      {children}
-    </CommandButtonGroup>
-  );
+  <CommandButtonGroup>
+    <ToggleBulletListButton />
+    <ToggleOrderedListButton />
+    <IfExtensionPresent extension={TaskListExtension}>
+      <ToggleTaskListButton />
+    </IfExtensionPresent>
+    {children}
+  </CommandButtonGroup>
+);

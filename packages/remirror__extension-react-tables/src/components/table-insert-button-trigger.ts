@@ -123,8 +123,8 @@ const TableInsertButtonTrigger = ({
   view: EditorView;
   findTable: FindTable;
 }): HTMLElement[] => [
-    TriggerArea({ view, findTable, isTopLeft: true }),
-    TriggerArea({ view, findTable, isTopLeft: false }),
-  ];
+  TriggerArea({ view, findTable, isTopLeft: true }),
+  TriggerArea({ view, findTable, isTopLeft: false }),
+];
 
 export default TableInsertButtonTrigger;

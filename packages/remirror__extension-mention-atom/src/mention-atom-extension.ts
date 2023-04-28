@@ -265,20 +265,20 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
     ]);
 
     return this.options.matchers.map<Suggester>((matcher) => ({
-        ...DEFAULT_MATCHER,
-        ...options,
-        ...matcher,
-        onChange: (props) => {
-          const { name, range } = props;
-          const { createMentionAtom } = this.store.commands;
+      ...DEFAULT_MATCHER,
+      ...options,
+      ...matcher,
+      onChange: (props) => {
+        const { name, range } = props;
+        const { createMentionAtom } = this.store.commands;
 
-          function command(attrs: MentionAtomNodeAttributes) {
-            createMentionAtom({ name, range }, attrs);
-          }
+        function command(attrs: MentionAtomNodeAttributes) {
+          createMentionAtom({ name, range }, attrs);
+        }
 
-          this.options.onChange(props, command);
-        },
-      }));
+        this.options.onChange(props, command);
+      },
+    }));
   }
 }
 

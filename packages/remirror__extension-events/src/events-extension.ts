@@ -378,7 +378,8 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
         handleKeyPress: (_, event) => this.options.keypress(event) || false,
         handleKeyDown: (_, event) => this.options.keydown(event) || false,
         handleTextInput: (_, from, to, text) => this.options.textInput({ from, to, text }) || false,
-        handleClickOn: (view, pos, node, nodePos, event, direct) => runClickHandlerOn(
+        handleClickOn: (view, pos, node, nodePos, event, direct) =>
+          runClickHandlerOn(
             this.options.clickMark,
             this.options.click,
             view,
@@ -388,7 +389,8 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             event,
             direct,
           ),
-        handleDoubleClickOn: (view, pos, node, nodePos, event, direct) => runClickHandlerOn(
+        handleDoubleClickOn: (view, pos, node, nodePos, event, direct) =>
+          runClickHandlerOn(
             this.options.doubleClickMark,
             this.options.doubleClick,
             view,
@@ -398,7 +400,8 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             event,
             direct,
           ),
-        handleTripleClickOn: (view, pos, node, nodePos, event, direct) => runClickHandlerOn(
+        handleTripleClickOn: (view, pos, node, nodePos, event, direct) =>
+          runClickHandlerOn(
             this.options.tripleClickMark,
             this.options.tripleClick,
             view,
@@ -446,7 +449,9 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
             return this.options.hover(event, state) || false;
           }),
 
-          contextmenu: this.createMouseEventHandler((event, props) => this.options.contextmenu(event, props) || false),
+          contextmenu: this.createMouseEventHandler(
+            (event, props) => this.options.contextmenu(event, props) || false,
+          ),
 
           scroll: (_, event: Event) => this.options.scroll(event) || false,
 
@@ -495,9 +500,9 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
     this.store.commands.emptyUpdate();
   }
 
-  private readonly createMouseEventHandler = (
-    fn: (event: MouseEvent, props: MouseEventHandlerState) => boolean,
-  ) => (view: EditorView, mouseEvent: Event) => {
+  private readonly createMouseEventHandler =
+    (fn: (event: MouseEvent, props: MouseEventHandlerState) => boolean) =>
+    (view: EditorView, mouseEvent: Event) => {
       const event = mouseEvent as MouseEvent;
       const eventPosition = getPositionFromEvent(view, event);
 

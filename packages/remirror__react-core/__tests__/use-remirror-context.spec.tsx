@@ -75,10 +75,10 @@ function createTestChain() {
   const chain = RemirrorTestChain.create(createReactManager(() => [new BoldExtension()]));
 
   const Wrapper: FC<PropsWithChildren<object>> = ({ children }) => (
-      <Remirror manager={chain.manager} autoRender>
-        {children}
-      </Remirror>
-    );
+    <Remirror manager={chain.manager} autoRender>
+      {children}
+    </Remirror>
+  );
 
   return { chain, wrapper: Wrapper };
 }

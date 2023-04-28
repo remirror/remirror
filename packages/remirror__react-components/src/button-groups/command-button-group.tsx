@@ -6,14 +6,14 @@ export interface CommandButtonGroupProps extends Omit<BoxProps, 'children'> {
 }
 
 export const CommandButtonGroup: FC<CommandButtonGroupProps> = (props) => (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        width: 'fit-content',
-        bgcolor: 'background.paper',
-        color: 'text.secondary',
-      }}
-      {...props}
-    />
-  );
+  <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      width: 'fit-content',
+      bgcolor: 'background.paper',
+      color: 'text.secondary',
+    }}
+    {...props}
+  />
+);

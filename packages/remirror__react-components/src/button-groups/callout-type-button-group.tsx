@@ -13,11 +13,11 @@ const ERROR_CALLOUT = { type: 'error' };
 const SUCCESS_CALLOUT = { type: 'success' };
 
 export const CalloutTypeButtonGroup: FC<CalloutTypeButtonGroupProps> = ({ children }) => (
-    <CommandButtonGroup>
-      <ToggleCalloutButton attrs={INFO_CALLOUT} />
-      <ToggleCalloutButton attrs={WARNING_CALLOUT} />
-      <ToggleCalloutButton attrs={ERROR_CALLOUT} />
-      <ToggleCalloutButton attrs={SUCCESS_CALLOUT} />
-      {children}
-    </CommandButtonGroup>
-  );
+  <CommandButtonGroup>
+    <ToggleCalloutButton attrs={INFO_CALLOUT} />
+    <ToggleCalloutButton attrs={WARNING_CALLOUT} />
+    <ToggleCalloutButton attrs={ERROR_CALLOUT} />
+    <ToggleCalloutButton attrs={SUCCESS_CALLOUT} />
+    {children}
+  </CommandButtonGroup>
+);

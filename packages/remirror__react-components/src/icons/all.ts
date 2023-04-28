@@ -2944,13 +2944,15 @@ export const BarChartGroupedLineIcon: IconType = (props) => GenIcon(barChartGrou
  * The react component for the `bar-chart-horizontal-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Bar Chart Horizontal Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Business/bar-chart-horizontal-fill.svg)
  */
-export const BarChartHorizontalFillIcon: IconType = (props) => GenIcon(barChartHorizontalFill)(props);
+export const BarChartHorizontalFillIcon: IconType = (props) =>
+  GenIcon(barChartHorizontalFill)(props);
 
 /**
  * The react component for the `bar-chart-horizontal-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Bar Chart Horizontal Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Business/bar-chart-horizontal-line.svg)
  */
-export const BarChartHorizontalLineIcon: IconType = (props) => GenIcon(barChartHorizontalLine)(props);
+export const BarChartHorizontalLineIcon: IconType = (props) =>
+  GenIcon(barChartHorizontalLine)(props);
 
 /**
  * The react component for the `bar-chart-line.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -3940,13 +3942,15 @@ export const CentosLineIcon: IconType = (props) => GenIcon(centosLine)(props);
  * The react component for the `character-recognition-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Character Recognition Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Others/character-recognition-fill.svg)
  */
-export const CharacterRecognitionFillIcon: IconType = (props) => GenIcon(characterRecognitionFill)(props);
+export const CharacterRecognitionFillIcon: IconType = (props) =>
+  GenIcon(characterRecognitionFill)(props);
 
 /**
  * The react component for the `character-recognition-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Character Recognition Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Others/character-recognition-line.svg)
  */
-export const CharacterRecognitionLineIcon: IconType = (props) => GenIcon(characterRecognitionLine)(props);
+export const CharacterRecognitionLineIcon: IconType = (props) =>
+  GenIcon(characterRecognitionLine)(props);
 
 /**
  * The react component for the `charging-pile-2-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -4258,13 +4262,15 @@ export const CheckLineIcon: IconType = (props) => GenIcon(checkLine)(props);
  * The react component for the `checkbox-blank-circle-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Checkbox Blank Circle Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/checkbox-blank-circle-fill.svg)
  */
-export const CheckboxBlankCircleFillIcon: IconType = (props) => GenIcon(checkboxBlankCircleFill)(props);
+export const CheckboxBlankCircleFillIcon: IconType = (props) =>
+  GenIcon(checkboxBlankCircleFill)(props);
 
 /**
  * The react component for the `checkbox-blank-circle-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Checkbox Blank Circle Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/checkbox-blank-circle-line.svg)
  */
-export const CheckboxBlankCircleLineIcon: IconType = (props) => GenIcon(checkboxBlankCircleLine)(props);
+export const CheckboxBlankCircleLineIcon: IconType = (props) =>
+  GenIcon(checkboxBlankCircleLine)(props);
 
 /**
  * The react component for the `checkbox-blank-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -4294,13 +4300,15 @@ export const CheckboxFillIcon: IconType = (props) => GenIcon(checkboxFill)(props
  * The react component for the `checkbox-indeterminate-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Checkbox Indeterminate Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/checkbox-indeterminate-fill.svg)
  */
-export const CheckboxIndeterminateFillIcon: IconType = (props) => GenIcon(checkboxIndeterminateFill)(props);
+export const CheckboxIndeterminateFillIcon: IconType = (props) =>
+  GenIcon(checkboxIndeterminateFill)(props);
 
 /**
  * The react component for the `checkbox-indeterminate-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Checkbox Indeterminate Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/checkbox-indeterminate-line.svg)
  */
-export const CheckboxIndeterminateLineIcon: IconType = (props) => GenIcon(checkboxIndeterminateLine)(props);
+export const CheckboxIndeterminateLineIcon: IconType = (props) =>
+  GenIcon(checkboxIndeterminateLine)(props);
 
 /**
  * The react component for the `checkbox-line.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -4312,13 +4320,15 @@ export const CheckboxLineIcon: IconType = (props) => GenIcon(checkboxLine)(props
  * The react component for the `checkbox-multiple-blank-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Checkbox Multiple Blank Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/checkbox-multiple-blank-fill.svg)
  */
-export const CheckboxMultipleBlankFillIcon: IconType = (props) => GenIcon(checkboxMultipleBlankFill)(props);
+export const CheckboxMultipleBlankFillIcon: IconType = (props) =>
+  GenIcon(checkboxMultipleBlankFill)(props);
 
 /**
  * The react component for the `checkbox-multiple-blank-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Checkbox Multiple Blank Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/checkbox-multiple-blank-line.svg)
  */
-export const CheckboxMultipleBlankLineIcon: IconType = (props) => GenIcon(checkboxMultipleBlankLine)(props);
+export const CheckboxMultipleBlankLineIcon: IconType = (props) =>
+  GenIcon(checkboxMultipleBlankLine)(props);
 
 /**
  * The react component for the `checkbox-multiple-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -4702,13 +4712,15 @@ export const ContactsBookLineIcon: IconType = (props) => GenIcon(contactsBookLin
  * The react component for the `contacts-book-upload-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Contacts Book Upload Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Document/contacts-book-upload-fill.svg)
  */
-export const ContactsBookUploadFillIcon: IconType = (props) => GenIcon(contactsBookUploadFill)(props);
+export const ContactsBookUploadFillIcon: IconType = (props) =>
+  GenIcon(contactsBookUploadFill)(props);
 
 /**
  * The react component for the `contacts-book-upload-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Contacts Book Upload Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Document/contacts-book-upload-line.svg)
  */
-export const ContactsBookUploadLineIcon: IconType = (props) => GenIcon(contactsBookUploadLine)(props);
+export const ContactsBookUploadLineIcon: IconType = (props) =>
+  GenIcon(contactsBookUploadLine)(props);
 
 /**
  * The react component for the `contacts-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -4966,13 +4978,15 @@ export const CreativeCommonsSaLineIcon: IconType = (props) => GenIcon(creativeCo
  * The react component for the `creative-commons-zero-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Creative Commons Zero Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Business/creative-commons-zero-fill.svg)
  */
-export const CreativeCommonsZeroFillIcon: IconType = (props) => GenIcon(creativeCommonsZeroFill)(props);
+export const CreativeCommonsZeroFillIcon: IconType = (props) =>
+  GenIcon(creativeCommonsZeroFill)(props);
 
 /**
  * The react component for the `creative-commons-zero-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Creative Commons Zero Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Business/creative-commons-zero-line.svg)
  */
-export const CreativeCommonsZeroLineIcon: IconType = (props) => GenIcon(creativeCommonsZeroLine)(props);
+export const CreativeCommonsZeroLineIcon: IconType = (props) =>
+  GenIcon(creativeCommonsZeroLine)(props);
 
 /**
  * The react component for the `criminal-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -7570,13 +7584,15 @@ export const GitPullRequestLineIcon: IconType = (props) => GenIcon(gitPullReques
  * The react component for the `git-repository-commits-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Git Repository Commits Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Development/git-repository-commits-fill.svg)
  */
-export const GitRepositoryCommitsFillIcon: IconType = (props) => GenIcon(gitRepositoryCommitsFill)(props);
+export const GitRepositoryCommitsFillIcon: IconType = (props) =>
+  GenIcon(gitRepositoryCommitsFill)(props);
 
 /**
  * The react component for the `git-repository-commits-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Git Repository Commits Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Development/git-repository-commits-line.svg)
  */
-export const GitRepositoryCommitsLineIcon: IconType = (props) => GenIcon(gitRepositoryCommitsLine)(props);
+export const GitRepositoryCommitsLineIcon: IconType = (props) =>
+  GenIcon(gitRepositoryCommitsLine)(props);
 
 /**
  * The react component for the `git-repository-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -7594,13 +7610,15 @@ export const GitRepositoryLineIcon: IconType = (props) => GenIcon(gitRepositoryL
  * The react component for the `git-repository-private-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Git Repository Private Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Development/git-repository-private-fill.svg)
  */
-export const GitRepositoryPrivateFillIcon: IconType = (props) => GenIcon(gitRepositoryPrivateFill)(props);
+export const GitRepositoryPrivateFillIcon: IconType = (props) =>
+  GenIcon(gitRepositoryPrivateFill)(props);
 
 /**
  * The react component for the `git-repository-private-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Git Repository Private Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Development/git-repository-private-line.svg)
  */
-export const GitRepositoryPrivateLineIcon: IconType = (props) => GenIcon(gitRepositoryPrivateLine)(props);
+export const GitRepositoryPrivateLineIcon: IconType = (props) =>
+  GenIcon(gitRepositoryPrivateLine)(props);
 
 /**
  * The react component for the `github-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -8368,13 +8386,15 @@ export const IncreaseDecreaseLineIcon: IconType = (props) => GenIcon(increaseDec
  * The react component for the `indeterminate-circle-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Indeterminate Circle Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/indeterminate-circle-fill.svg)
  */
-export const IndeterminateCircleFillIcon: IconType = (props) => GenIcon(indeterminateCircleFill)(props);
+export const IndeterminateCircleFillIcon: IconType = (props) =>
+  GenIcon(indeterminateCircleFill)(props);
 
 /**
  * The react component for the `indeterminate-circle-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Indeterminate Circle Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/System/indeterminate-circle-line.svg)
  */
-export const IndeterminateCircleLineIcon: IconType = (props) => GenIcon(indeterminateCircleLine)(props);
+export const IndeterminateCircleLineIcon: IconType = (props) =>
+  GenIcon(indeterminateCircleLine)(props);
 
 /**
  * The react component for the `information-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -8386,13 +8406,15 @@ export const InformationFillIcon: IconType = (props) => GenIcon(informationFill)
  * The react component for the `infrared-thermometer-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Infrared Thermometer Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Health/infrared-thermometer-fill.svg)
  */
-export const InfraredThermometerFillIcon: IconType = (props) => GenIcon(infraredThermometerFill)(props);
+export const InfraredThermometerFillIcon: IconType = (props) =>
+  GenIcon(infraredThermometerFill)(props);
 
 /**
  * The react component for the `infrared-thermometer-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Infrared Thermometer Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Health/infrared-thermometer-line.svg)
  */
-export const InfraredThermometerLineIcon: IconType = (props) => GenIcon(infraredThermometerLine)(props);
+export const InfraredThermometerLineIcon: IconType = (props) =>
+  GenIcon(infraredThermometerLine)(props);
 
 /**
  * The react component for the `ink-bottle-fill.svg` icon created by [RemixIcons](https://remixicons.com).
@@ -10588,13 +10610,15 @@ export const PictureInPicture2LineIcon: IconType = (props) => GenIcon(pictureInP
  * The react component for the `picture-in-picture-exit-fill.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Picture In Picture Exit Fill Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Media/picture-in-picture-exit-fill.svg)
  */
-export const PictureInPictureExitFillIcon: IconType = (props) => GenIcon(pictureInPictureExitFill)(props);
+export const PictureInPictureExitFillIcon: IconType = (props) =>
+  GenIcon(pictureInPictureExitFill)(props);
 
 /**
  * The react component for the `picture-in-picture-exit-line.svg` icon created by [RemixIcons](https://remixicons.com).
  * ![Picture In Picture Exit Line Icon](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/Media/picture-in-picture-exit-line.svg)
  */
-export const PictureInPictureExitLineIcon: IconType = (props) => GenIcon(pictureInPictureExitLine)(props);
+export const PictureInPictureExitLineIcon: IconType = (props) =>
+  GenIcon(pictureInPictureExitLine)(props);
 
 /**
  * The react component for the `picture-in-picture-fill.svg` icon created by [RemixIcons](https://remixicons.com).

@@ -14,7 +14,9 @@ export const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
     return null;
   }
 
-  const children = content.map((child, ii) => <RemirrorRenderer json={child} {...props} key={ii} />);
+  const children = content.map((child, ii) => (
+    <RemirrorRenderer json={child} {...props} key={ii} />
+  ));
 
   return <div {...(node.attrs ?? object())}>{children}</div>;
 };

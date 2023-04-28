@@ -15,9 +15,9 @@ function MarkdownPreview() {
 }
 
 const Editor = () => (
-    <MarkdownEditor placeholder='Start typing...'>
-      <MarkdownPreview />
-    </MarkdownEditor>
-  );
+  <MarkdownEditor placeholder='Start typing...'>
+    <MarkdownPreview />
+  </MarkdownEditor>
+);
 
 export default Editor;

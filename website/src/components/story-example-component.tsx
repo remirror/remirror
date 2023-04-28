@@ -6,11 +6,11 @@ interface StoryExampleProps {
 }
 
 export const StoryExample: React.FC<StoryExampleProps> = ({ story, source }) => (
-    <div>
-      {story}
-      <details>
-        <summary>Source code</summary>
-        <div>{source}</div>
-      </details>
-    </div>
-  );
+  <div>
+    {story}
+    <details>
+      <summary>Source code</summary>
+      <div>{source}</div>
+    </details>
+  </div>
+);

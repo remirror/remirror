@@ -221,7 +221,8 @@ export type CollaborationAttributes = ProsemirrorAttributes<{
  */
 const isValidCollaborationAttributes = (
   attributes: ProsemirrorAttributes,
-): attributes is CollaborationAttributes => !(!attributes || !isArray(attributes.steps) || !isNumber(attributes.version));
+): attributes is CollaborationAttributes =>
+  !(!attributes || !isArray(attributes.steps) || !isNumber(attributes.version));
 
 declare global {
   namespace Remirror {
