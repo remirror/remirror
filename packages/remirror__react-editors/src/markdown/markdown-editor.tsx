@@ -1,9 +1,9 @@
-import '@remirror/styles/all.css';
+import "@remirror/styles/all.css";
 
-import React, { FC, PropsWithChildren, useCallback } from 'react';
-import jsx from 'refractor/lang/jsx.js';
-import typescript from 'refractor/lang/typescript.js';
-import { ExtensionPriority } from 'remirror';
+import React, { FC, PropsWithChildren, useCallback } from "react";
+import jsx from "refractor/lang/jsx.js";
+import typescript from "refractor/lang/typescript.js";
+import { ExtensionPriority } from "remirror";
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -21,21 +21,22 @@ import {
   StrikeExtension,
   TableExtension,
   TrailingNodeExtension,
-} from 'remirror/extensions';
+} from "remirror/extensions";
 import {
   EditorComponent,
   MarkdownToolbar,
   Remirror,
   ThemeProvider,
   useRemirror,
-} from '@remirror/react';
-import { AllStyledComponent } from '@remirror/styles/emotion';
+} from "@remirror/react";
+import { AllStyledComponent } from "@remirror/styles/emotion";
 
-import { ReactEditorProps } from '../types';
+import { ReactEditorProps } from "../types";
 
-export default { title: 'Editors / Markdown' };
+export default { title: "Editors / Markdown" };
 
-export interface MarkdownEditorProps extends Partial<Omit<ReactEditorProps, 'stringHandler'>> {}
+export interface MarkdownEditorProps
+  extends Partial<Omit<ReactEditorProps, "stringHandler">> {}
 
 /**
  * The editor which is used to create the annotation. Supports formatting.
@@ -43,6 +44,7 @@ export interface MarkdownEditorProps extends Partial<Omit<ReactEditorProps, 'str
 export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   placeholder,
   children,
+  theme,
   ...rest
 }) => {
   const extensions = useCallback(
@@ -56,7 +58,10 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
       new BlockquoteExtension(),
       new BulletListExtension({ enableSpine: true }),
       new OrderedListExtension(),
-      new ListItemExtension({ priority: ExtensionPriority.High, enableCollapsible: true }),
+      new ListItemExtension({
+        priority: ExtensionPriority.High,
+        enableCollapsible: true,
+      }),
       new CodeExtension(),
       new CodeBlockExtension({ supportedLanguages: [jsx, typescript] }),
       new TrailingNodeExtension(),
@@ -68,17 +73,17 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
        */
       new HardBreakExtension(),
     ],
-    [placeholder],
+    [placeholder]
   );
 
   const { manager } = useRemirror({
     extensions,
-    stringHandler: 'markdown',
+    stringHandler: "markdown",
   });
 
   return (
     <AllStyledComponent>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <Remirror manager={manager} autoFocus {...rest}>
           <MarkdownToolbar />
           <EditorComponent />
