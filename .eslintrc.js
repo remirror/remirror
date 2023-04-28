@@ -509,6 +509,14 @@ if (process.env.FULL_ESLINT_CHECK) {
     // Apply the markdown plugin
     plugins: [...config.plugins, 'markdown'],
 
+    parserOptions: {
+      ecmaVersion: 2021,
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+
     // Only apply markdown rules when not in TypeScript mode, since they are
     // currently incompatible.
     overrides: [
