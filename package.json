@@ -59,7 +59,7 @@
     "lint": "run-s lint:*",
     "lint:css": "tsx support/scripts/src/check-styles",
     "lint:es": "cross-env FULL_ESLINT_CHECK=true eslint -f unix --ext=.tsx,.ts,.js .",
-    "lint:md": "cross-env MD_ESLINT_CHECK=true eslint -f unix --ignore-pattern='*.js' --ignore-pattern='*.ts' --ignore-pattern='*.tsx' .",
+    "lint:md": "eslint -f unix --ignore-pattern='*.js' --ignore-pattern='*.ts' --ignore-pattern='*.tsx' .",
     "lint:prettier": "pnpm run run:prettier --check",
     "lint:repo": "manypkg check",
     "mutate:pr": "tsx support/scripts/src/publish-pr",

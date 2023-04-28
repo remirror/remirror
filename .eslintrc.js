@@ -505,20 +505,9 @@ if (process.env.FULL_ESLINT_CHECK) {
   };
 } else if (process.env.MD_ESLINT_CHECK) {
   config = {
+    ...config,
     // Apply the markdown plugin
-    plugins: [
-      'lit',
-      'lit-a11y',
-      // disable import sorting for now - too many errors
-      // 'simple-import-sort',
-      'markdown',
-    ],
-    extends: [],
-    parserOptions: {
-      ecmaVersion: 2021,
-      //
-      // sourceType: 'module',
-    },
+    plugins: [...config.plugins, 'markdown'],
 
     // Only apply markdown rules when not in TypeScript mode, since they are
     // currently incompatible.
@@ -530,9 +519,16 @@ if (process.env.FULL_ESLINT_CHECK) {
 
         // Set up rules to be excluded in the markdown blocks.
         rules: {
-          // ...importRules,
-          // 'simple-import-sort/exports': 'warn',
-          // 'simple-import-sort/imports': 'warn',
+          ...importRules,
+          'simple-import-sort/exports': 'warn',
+          'simple-import-sort/imports': 'warn',
+          'unicorn/filename-case': 'off',
+          '@typescript-eslint/explicit-module-boundary-types': 'off',
+          '@typescript-eslint/no-unused-vars-experimental': 'off',
+          '@typescript-eslint/no-unused-vars': 'off',
+          'react-hooks/rules-of-hooks': 'off',
+          'react/jsx-uses-react': 'off',
+          'react/react-in-jsx-scope': 'off',
         },
       },
     ],
