@@ -503,7 +503,7 @@ if (process.env.FULL_ESLINT_CHECK) {
       ...config.overrides,
     ],
   };
-} else if (process.env.MD_ESLINT_CHECK) {
+} else if (process.env.MD_ESLINT_CHECK !== 'false') {
   config = {
     ...config,
     // Apply the markdown plugin
