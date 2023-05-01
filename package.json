@@ -234,6 +234,7 @@
       "github>ocavue/config-renovate"
     ],
     "ignoreDeps": [
+      "scripts",
       "extract-domain",
       "y-prosemirror",
       "chalk",
