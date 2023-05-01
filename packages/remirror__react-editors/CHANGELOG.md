@@ -1,5 +1,13 @@
 # @remirror/react-editors
 
+## 1.0.33
+
+> 2023-05-01
+
+### Patch Changes
+
+- a690b4536: Add a new prop `theme` to `MarkdownEditor`, `SocialEditor` and `WysiwygEditor`.
+
 ## 1.0.32
 
 > 2023-04-27
