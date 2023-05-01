@@ -1,6 +1,6 @@
-export * from './types';
-
 import type { Writable } from 'type-fest';
+
+export * from './types';
 
 /** @deprecated Use built-in `Awaited` instead */
 type PromiseValue<T> = Awaited<T>;
