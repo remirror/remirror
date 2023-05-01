@@ -234,12 +234,13 @@
       "github>ocavue/config-renovate"
     ],
     "ignoreDeps": [
-      "scripts",
       "extract-domain",
       "y-prosemirror",
       "chalk",
+      "nanoevents",
+      "@remirror/cli",
       "testing",
-      "@remirror/cli"
+      "scripts"
     ],
     "dependencyDashboard": true
   }
