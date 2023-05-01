@@ -234,6 +234,15 @@
       "github>ocavue/config-renovate"
     ],
     "ignoreDeps": [
+      "cpy",
+      "cpy-cli",
+      "direction",
+      "got",
+      "write-json-file",
+      "load-json-file",
+      "p-limit",
+      "stringify-object",
+      "refractor",
       "extract-domain",
       "y-prosemirror",
       "chalk",
