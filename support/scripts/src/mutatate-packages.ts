@@ -69,7 +69,7 @@ export async function mutatePackageVersions(prerelease: string) {
 /**
  * Update the pre-release version to use the PR version.
  */
-function getPreReleaseVersion(version: string | undefined, prerelease: string) {
+function getPreReleaseVersion(version: string | undefined | null, prerelease: string) {
   const semver = parse(version);
 
   if (!semver) {
@@ -84,7 +84,7 @@ function getPreReleaseVersion(version: string | undefined, prerelease: string) {
  */
 function mutateDependencies(
   versionedNames: Record<string, string>,
-  dependencies: Record<string, string | undefined> | undefined,
+  dependencies: Record<string, string | undefined> | undefined | null,
 ) {
   if (!dependencies) {
     return;

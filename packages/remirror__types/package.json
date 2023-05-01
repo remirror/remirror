@@ -33,7 +33,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "type-fest": "^2.19.0"
+    "type-fest": "^3.9.0"
   },
   "publishConfig": {
     "exports": {

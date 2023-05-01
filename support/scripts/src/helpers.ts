@@ -180,7 +180,14 @@ export interface TsConfigMeta {
   src?: TsConfigWithPaths | false;
 }
 
-export interface Package extends Omit<PackageJson, 'name'> {
+type PackageJsonType = PackageJson.NodeJsStandard &
+  PackageJson.PackageJsonStandard &
+  PackageJson.NonStandardEntryPoints &
+  PackageJson.TypeScriptConfiguration &
+  PackageJson.YarnConfiguration &
+  PackageJson.JSPMConfiguration;
+
+export interface Package extends Omit<PackageJsonType, 'name'> {
   /**
    * The name of the package.
    */

@@ -103,7 +103,7 @@
     "ts-dedent": "^2.2.0",
     "ts-morph": "^11.0.3",
     "tslog": "^3.3.4",
-    "type-fest": "^2.19.0",
+    "type-fest": "^3.9.0",
     "write-json-file": "^4.3.0"
   },
   "publishConfig": {

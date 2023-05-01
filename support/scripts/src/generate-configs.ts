@@ -11,7 +11,7 @@ import pLimit from 'p-limit';
 import path from 'path';
 import writeJSON from 'write-json-file';
 import { assertGet, deepMerge, invariant, isEmptyObject, isString } from '@remirror/core-helpers';
-import type { PackageJson, TsConfigJson } from '@remirror/types';
+import type { TsConfigJson } from '@remirror/types';
 
 import {
   baseDir,
@@ -99,7 +99,7 @@ function prefixRelativePath<Type extends string | undefined>(path: Type): Type {
  * Get the relative path for the browser module if it exists, otherwise fallback
  * to the module or main path.
  */
-function getBrowserPath(pkg: PackageJson) {
+function getBrowserPath(pkg: Package) {
   const browserPath = isString(pkg.browser)
     ? pkg.browser
     : pkg.browser?.[prefixRelativePath(pkg.module ?? '')];
