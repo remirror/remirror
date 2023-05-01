@@ -825,8 +825,8 @@ importers:
         specifier: ^3.5.3
         version: 3.5.3
       commander:
-        specifier: ^9.5.0
-        version: 9.5.0
+        specifier: ^10.0.1
+        version: 10.0.1
       esbuild:
         specifier: ^0.17.18
         version: 0.17.18
@@ -13566,6 +13566,11 @@ packages:
   /comma-separated-tokens@1.0.8:
     resolution: {integrity: sha512-GHuDRO12Sypu2cV70d1dkA2EUmXHgntrzbpvOB+Qy+49ypNfGgFQIC2fhhXbnyrJRynDCAARsT7Ou0M6hirpfw==}
 
+  /commander@10.0.1:
+    resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
+    engines: {node: '>=14'}
+    dev: false
+
   /commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
@@ -14792,7 +14797,7 @@ packages:
     dependencies:
       semver: 7.5.0
       shelljs: 0.8.5
-      typescript: 5.1.0-dev.20230430
+      typescript: 5.1.0-dev.20230501
     dev: false
 
   /duplexer3@0.1.4:
@@ -22290,7 +22295,7 @@ packages:
   /pseudolocale@1.2.0:
     resolution: {integrity: sha512-k0OQFvIlvpRdzR0dPVrrbWX7eE9EaZ6gpZtTlFSDi1Gf9tMy9wiANCNu7JZ0drcKgUri/39a2mBbH0goiQmrmQ==}
     dependencies:
-      commander: 9.5.0
+      commander: 10.0.1
     dev: false
 
   /pseudomap@1.0.2:
@@ -25380,8 +25385,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.1.0-dev.20230430:
-    resolution: {integrity: sha512-cHvLCtfAdeoOQtEC1m7ui8Y73iXRWchKy6k5OsIYDZyEaGa2AbhA+bcpsFH+IKJuL4k8ALTYTbwtfJWRI+Uoeg==}
+  /typescript@5.1.0-dev.20230501:
+    resolution: {integrity: sha512-do/P7zywbVm6xrjV7Sa7jqgqBfME/FhvtECzxfLpAxyqYY5SFPPWb5NTposRUVKw/0hLOxAoCbvYzNHa22VOMg==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false
