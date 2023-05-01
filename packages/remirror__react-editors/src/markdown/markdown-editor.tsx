@@ -43,6 +43,7 @@ export interface MarkdownEditorProps extends Partial<Omit<ReactEditorProps, 'str
 export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   placeholder,
   children,
+  theme,
   ...rest
 }) => {
   const extensions = useCallback(
@@ -56,7 +57,10 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
       new BlockquoteExtension(),
       new BulletListExtension({ enableSpine: true }),
       new OrderedListExtension(),
-      new ListItemExtension({ priority: ExtensionPriority.High, enableCollapsible: true }),
+      new ListItemExtension({
+        priority: ExtensionPriority.High,
+        enableCollapsible: true,
+      }),
       new CodeExtension(),
       new CodeBlockExtension({ supportedLanguages: [jsx, typescript] }),
       new TrailingNodeExtension(),
@@ -78,7 +82,7 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
 
   return (
     <AllStyledComponent>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <Remirror manager={manager} autoFocus {...rest}>
           <MarkdownToolbar />
           <EditorComponent />
