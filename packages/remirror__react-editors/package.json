@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-editors",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "A showcase of possible react editors built with remirror.",
   "keywords": [
     "remirror",

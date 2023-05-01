@@ -30,7 +30,7 @@
     "@remirror/core": "^2.0.16",
     "@remirror/dev": "^2.0.17",
     "@remirror/react": "^2.0.28",
-    "@remirror/react-editors": "^1.0.32",
+    "@remirror/react-editors": "^1.0.33",
     "@remirror/styles": "^2.0.5",
     "@types/react-syntax-highlighter": "^13.5.2",
     "create-context-state": "^2.0.1",
