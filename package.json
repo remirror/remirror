@@ -247,6 +247,12 @@
       "y-prosemirror",
       "chalk",
       "nanoevents",
+      "sort-keys",
+      "@manypkg/get-packages",
+      "react",
+      "react-dom",
+      "@types/react",
+      "@types/react-dom",
       "@remirror/cli",
       "testing",
       "scripts"
