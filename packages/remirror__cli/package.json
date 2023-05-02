@@ -28,11 +28,11 @@
     "rimraf": "^4.4.1",
     "sort-keys": "^4.2.0",
     "tsup": "^6.7.0",
-    "tsx": "^3.12.6",
+    "tsx": "^3.12.7",
     "write-pkg": "^5.1.0"
   },
   "devDependencies": {
-    "@types/node": "^16.18.24",
+    "@types/node": "^16.18.25",
     "@types/prettier": "^2.7.2"
   },
   "@remirror": {

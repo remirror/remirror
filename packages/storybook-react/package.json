@@ -19,12 +19,12 @@
     ]
   },
   "dependencies": {
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.21.5",
     "@codemirror/basic-setup": "^0.20.0",
-    "@codemirror/language-data": "^6.3.0",
+    "@codemirror/language-data": "^6.3.1",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "@codemirror/view": "^6.10.0",
-    "@emotion/css": "^11.10.6",
+    "@codemirror/view": "^6.10.1",
+    "@emotion/css": "^11.10.8",
     "@joeattardi/emoji-button": "^4.6.4",
     "@popperjs/core": "^2.11.7",
     "@remirror/core": "^2.0.16",
@@ -51,7 +51,7 @@
     "@types/webpack": "^5.28.1",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^8.3.0",
-    "codemirror": "^5.65.12",
+    "codemirror": "^5.65.13",
     "create-context-state": "^2.0.1",
     "diffable-html": "^5.0.0",
     "globby": "^11.1.0",
@@ -85,7 +85,7 @@
     "@storybook/theming": "^7.0.7",
     "linkifyjs": "^3.0.5",
     "postcss": "^8.4.23",
-    "vite": "^4.3.2"
+    "vite": "^4.3.4"
   },
   "@remirror": {
     "tsconfigs": {
