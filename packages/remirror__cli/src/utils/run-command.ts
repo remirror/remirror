@@ -10,7 +10,7 @@ export async function runCommand(command: string, args: string[], { cwd }: { cwd
 
   try {
     logger.debug(`running custom command "${commandString}" on ${cwd}`);
-    await execa(command, args, { cwd, stdout: 'inherit', stderr: 'inherit' });
+    await execa(command, args, { cwd, stdout: 'inherit', stderr: 'inherit', detached: true });
   } catch (error_) {
     const error = error_ as ExecaReturnValue;
     logger.error(
