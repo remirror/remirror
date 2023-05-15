@@ -43,18 +43,18 @@
     "@remirror/messages": "^2.0.4",
     "prosemirror-model": "^1.19.0",
     "prosemirror-state": "^1.4.2",
-    "prosemirror-view": "^1.31.1",
+    "prosemirror-view": "^1.31.2",
     "y-prosemirror": "^1.0.19",
     "y-protocols": "^1.0.5"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.5",
     "y-webrtc": "^10.2.5",
-    "yjs": "^13.6.0"
+    "yjs": "^13.6.1"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5",
-    "yjs": "^13.6.0"
+    "yjs": "^13.6.1"
   },
   "publishConfig": {
     "exports": {
