@@ -64,7 +64,10 @@ export function pasteRules(pasteRules: PasteRule[]): Plugin {
 
           const firstChild = slice.content.childCount === 1 ? slice.content.firstChild : null;
           const textContent = firstChild?.textContent ?? '';
-          const canBeReplaced = !view.state.selection.empty && textContent && firstChild?.isInline;
+          const canBeReplaced =
+            !view.state.selection.empty &&
+            textContent &&
+            (firstChild?.isInline || firstChild?.textContent);
           const match = findMatches(textContent, rule.regexp)[0];
 
           if (canBeReplaced && match && rule.type === 'mark' && rule.replaceSelection) {
