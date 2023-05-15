@@ -11,7 +11,7 @@
     "api:generate-json": "tsx support/scripts/src/generate-api",
     "api:generate-md": "ts-documenter markdown -i ./support/api -o ./docs/api",
     "browser:coverage": "browserslist --coverage",
-    "build": "run-p build:core css:copy",
+    "build": "pnpm build:core && pnpm css:copy",
     "build:core": "preconstruct fix && preconstruct build && remirror-cli build",
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct fix && preconstruct dev",
