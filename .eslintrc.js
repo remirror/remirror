@@ -55,7 +55,7 @@ let config = {
     'unicorn/consistent-destructuring': 'error',
     'unicorn/error-message': 'error',
     'unicorn/escape-case': 'error',
-    'unicorn/expiring-todo-comments': 'error',
+    'unicorn/expiring-todo-comments': 'off',
     'unicorn/explicit-length-check': 'error',
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     'unicorn/import-style': 'error',
