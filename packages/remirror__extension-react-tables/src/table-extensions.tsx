@@ -170,7 +170,7 @@ export class TableExtension extends BaseTableExtension {
         table,
       });
 
-      replaceNodeAtPosition({ pos, tr, content: controlledTable });
+      replaceNodeAtPosition({ pos: tr.mapping.map(pos), tr, content: controlledTable });
     }
 
     dispatch(tr.setMeta('addToHistory', false));
@@ -267,7 +267,7 @@ export class TableExtension extends BaseTableExtension {
             table,
           });
 
-          replaceNodeAtPosition({ pos, tr, content: controlledTable });
+          replaceNodeAtPosition({ pos: tr.mapping.map(pos), tr, content: controlledTable });
         }
 
         return tr.steps.length > 0 ? tr : undefined;
