@@ -52,7 +52,7 @@
     "@remirror/core-types": "^2.0.5",
     "@remirror/core-utils": "^2.0.12",
     "@remirror/pm": "^2.0.5",
-    "@testing-library/dom": "^9.2.0",
+    "@testing-library/dom": "^9.3.0",
     "@types/stringify-object": "^3.3.1",
     "chalk": "^4.1.0",
     "jest-matcher-utils": "^29.5.0",
