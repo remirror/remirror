@@ -42,8 +42,8 @@ export function useEditorFocus(
     'blur',
     useCallback(
       (event: FocusEvent) => {
-        const focusedElement = isElementDomNode(event.target)
-          ? event.target
+        const focusedElement = isElementDomNode(event.relatedTarget)
+          ? event.relatedTarget
           : document.activeElement;
         const ignoreBlur = !blurOnInactive && !focusedElement;
 
