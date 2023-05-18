@@ -1,5 +1,15 @@
 # @remirror/extension-react-tables
 
+## 2.2.16
+
+> 2023-05-18
+
+### Patch Changes
+
+- 3eabff8f4: Use correct positions when replacing if there are multiple tables in the document.
+- Updated dependencies [02cdaba40]
+  - @remirror/react-hooks@2.0.23
+
 ## 2.2.15
 
 > 2023-04-26
