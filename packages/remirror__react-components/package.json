@@ -48,7 +48,7 @@
     "@remirror/extension-bold": "^2.0.13",
     "@remirror/extension-callout": "^2.0.14",
     "@remirror/extension-code": "^2.0.13",
-    "@remirror/extension-code-block": "^2.0.14",
+    "@remirror/extension-code-block": "^2.0.15",
     "@remirror/extension-columns": "^2.0.13",
     "@remirror/extension-find": "^0.1.6",
     "@remirror/extension-font-size": "^2.0.13",

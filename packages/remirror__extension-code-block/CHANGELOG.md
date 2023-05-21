@@ -1,5 +1,13 @@
 # @remirror/extension-code-block
 
+## 2.0.15
+
+> 2023-05-21
+
+### Patch Changes
+
+- b12e3fbfe: Remove `isolating: true` from the spec of `codeBlock` node type.
+
 ## 2.0.14
 
 > 2023-04-26
