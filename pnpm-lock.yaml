@@ -325,7 +325,7 @@ importers:
         specifier: ^2.4.3
         version: 2.4.3(prettier@2.8.8)
       remirror:
-        specifier: 2.0.31
+        specifier: 2.0.32
         version: link:packages/remirror
       rimraf:
         specifier: ^4.4.1
@@ -644,7 +644,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-code-block
       '@remirror/extension-codemirror5':
         specifier: ^2.0.13
@@ -707,7 +707,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-link
       '@remirror/extension-list':
         specifier: ^2.0.16
@@ -2533,7 +2533,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-code-block
       '@remirror/extension-drop-cursor':
         specifier: ^2.0.13
@@ -2560,7 +2560,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-link
       '@remirror/extension-list':
         specifier: ^2.0.16
@@ -2673,7 +2673,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-code-block
       '@remirror/extension-columns':
         specifier: ^2.0.13
@@ -2891,7 +2891,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 2.0.31
+        specifier: 2.0.32
         version: link:../remirror
       svgmoji:
         specifier: ^3.2.0
@@ -3186,7 +3186,7 @@ importers:
         specifier: ^2.0.28
         version: link:../remirror__react
       '@remirror/react-editors':
-        specifier: ^1.0.33
+        specifier: ^1.0.34
         version: link:../remirror__react-editors
       '@remirror/styles':
         specifier: ^2.0.5
@@ -3255,7 +3255,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 2.0.31
+        specifier: 2.0.32
         version: link:../remirror
       scripts:
         specifier: 0.0.1
@@ -3770,7 +3770,7 @@ importers:
         specifier: ^2.0.28
         version: link:../packages/remirror__react
       '@remirror/react-editors':
-        specifier: ^1.0.33
+        specifier: ^1.0.34
         version: link:../packages/remirror__react-editors
       '@remirror/styles':
         specifier: ^2.0.5
@@ -3815,7 +3815,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       remirror:
-        specifier: ^2.0.31
+        specifier: ^2.0.32
         version: link:../packages/remirror
     devDependencies:
       '@docusaurus/core':
@@ -8786,7 +8786,7 @@ packages:
     resolution: {integrity: sha512-/aFM2M4HVDBT/jjDBa84sJniv1t9Gm/rLkalaz9htOm+L+8JMj1k9w0CkUdcxNyNxZPlTxKPVko+m1VlM58ZVA==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 9.2.2
+      '@octokit/types': 9.2.3
     dev: false
 
   /@octokit/core@3.6.0:
@@ -8808,10 +8808,10 @@ packages:
     engines: {node: '>= 14'}
     dependencies:
       '@octokit/auth-token': 3.0.3
-      '@octokit/graphql': 5.0.5
+      '@octokit/graphql': 5.0.6
       '@octokit/request': 6.2.5
       '@octokit/request-error': 3.0.3
-      '@octokit/types': 9.2.2
+      '@octokit/types': 9.2.3
       before-after-hook: 2.2.3
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -8830,7 +8830,7 @@ packages:
     resolution: {integrity: sha512-LG4o4HMY1Xoaec87IqQ41TQ+glvIeTKqfjkCEmt5AIwDZJwQeVZFIEYXrYY6yLwK+pAScb9Gj4q+Nz2qSw1roA==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 9.2.2
+      '@octokit/types': 9.2.3
       is-plain-object: 5.0.0
       universal-user-agent: 6.0.0
     dev: false
@@ -8845,12 +8845,12 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/graphql@5.0.5:
-    resolution: {integrity: sha512-Qwfvh3xdqKtIznjX9lz2D458r7dJPP8l6r4GQkIdWQouZwHQK0mVT88uwiU2bdTU2OtT1uOlKpRciUWldpG0yQ==}
+  /@octokit/graphql@5.0.6:
+    resolution: {integrity: sha512-Fxyxdy/JH0MnIB5h+UQ3yCoh1FG4kWXfFKkpWqjZHw/p+Kc8Y44Hu/kCgNBT6nU1shNumEchmW/sUO1JuQnPcw==}
     engines: {node: '>= 14'}
     dependencies:
       '@octokit/request': 6.2.5
-      '@octokit/types': 9.2.2
+      '@octokit/types': 9.2.3
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
       - encoding
@@ -8932,7 +8932,7 @@ packages:
     resolution: {integrity: sha512-crqw3V5Iy2uOU5Np+8M/YexTlT8zxCfI+qu+LxUB7SZpje4Qmx3mub5DfEKSO8Ylyk0aogi6TYdf6kxzh2BguQ==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 9.2.2
+      '@octokit/types': 9.2.3
       deprecation: 2.3.1
       once: 1.4.0
     dev: false
@@ -8956,7 +8956,7 @@ packages:
     dependencies:
       '@octokit/endpoint': 7.0.5
       '@octokit/request-error': 3.0.3
-      '@octokit/types': 9.2.2
+      '@octokit/types': 9.2.3
       is-plain-object: 5.0.0
       node-fetch: 2.6.11
       universal-user-agent: 6.0.0
@@ -9011,8 +9011,8 @@ packages:
       '@octokit/openapi-types': 11.2.0
     dev: false
 
-  /@octokit/types@9.2.2:
-    resolution: {integrity: sha512-9BjDxjgQIvCjNWZsbqyH5QC2Yni16oaE6xL+8SUBMzcYPF4TGQBXGA97Cl3KceK9mwiNMb1mOYCz6FbCCLEL+g==}
+  /@octokit/types@9.2.3:
+    resolution: {integrity: sha512-MMeLdHyFIALioycq+LFcA71v0S2xpQUX2cw6pPbHQjaibcHYwLnmK/kMZaWuGfGfjBJZ3wRUq+dOaWsvrPJVvA==}
     dependencies:
       '@octokit/openapi-types': 17.2.0
     dev: false
@@ -14931,7 +14931,7 @@ packages:
     dependencies:
       semver: 7.5.1
       shelljs: 0.8.5
-      typescript: 5.2.0-dev.20230518
+      typescript: 5.2.0-dev.20230521
     dev: false
 
   /duplexer3@0.1.4:
@@ -25580,8 +25580,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.2.0-dev.20230518:
-    resolution: {integrity: sha512-lHSI4e0QtTokuq/T1UnAFtdh3S2bzTG1TrR0Z3n6ld6J97SlPwW3FKbtKZiSdUVyOBaL0KbEiEyjy9AzukpS4Q==}
+  /typescript@5.2.0-dev.20230521:
+    resolution: {integrity: sha512-FY/YyQs1rvpUaX5PaZ4HZQnzBqlgjNYeQIOCF9208PLZvMsPwiJsZS5wbf5fvdepXkzpQK6ZpjGSJTXa7Gsp3Q==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false

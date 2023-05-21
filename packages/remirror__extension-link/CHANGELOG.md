@@ -1,5 +1,13 @@
 # @remirror/extension-link
 
+## 2.0.16
+
+> 2023-05-21
+
+### Patch Changes
+
+- e59e75aec: Disable link click handler when contenteditable is `false`. This fixes an issue that causes clicking a link in an uneditable editor will open the link twice.
+
 ## 2.0.15
 
 > 2023-04-26
