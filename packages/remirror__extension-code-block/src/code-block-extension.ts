@@ -84,7 +84,6 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       content: 'text*',
       marks: '',
       defining: true,
-      isolating: true,
       draggable: false,
       ...override,
       code: true,
