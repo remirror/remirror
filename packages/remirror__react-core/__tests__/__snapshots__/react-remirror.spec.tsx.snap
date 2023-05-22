@@ -7,11 +7,11 @@ exports[`\`autoRender\` renders at the end 1`] = `
 <div class="remirror-editor-wrapper">
   <div
     contenteditable="true"
-    translate="no"
     role="textbox"
     aria-multiline="true"
     aria-label
     aria-placeholder
+    translate="no"
     class="ProseMirror remirror-editor"
   >
     <p
@@ -28,11 +28,11 @@ exports[`\`autoRender\` renders at the start 1`] = `
 <div class="remirror-editor-wrapper">
   <div
     contenteditable="true"
-    translate="no"
     role="textbox"
     aria-multiline="true"
     aria-label
     aria-placeholder
+    translate="no"
     class="ProseMirror remirror-editor"
   >
     <p
@@ -52,11 +52,11 @@ exports[`\`autoRender\` renders at the start: when set to true 1`] = `
 <div class="remirror-editor-wrapper">
   <div
     contenteditable="true"
-    translate="no"
     role="textbox"
     aria-multiline="true"
     aria-label
     aria-placeholder
+    translate="no"
     class="ProseMirror remirror-editor"
   >
     <p
@@ -76,11 +76,11 @@ exports[`\`autoRender\` renders by default with no children 1`] = `
 <div class="remirror-editor-wrapper">
   <div
     contenteditable="true"
-    translate="no"
     role="textbox"
     aria-multiline="true"
     aria-label
     aria-placeholder
+    translate="no"
     class="ProseMirror remirror-editor"
   >
     <p

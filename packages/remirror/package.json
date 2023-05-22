@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "2.0.31",
+  "version": "2.0.32",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -59,7 +59,7 @@
     "styles"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.21.5",
     "@remirror/core": "^2.0.16",
     "@remirror/core-constants": "^2.0.1",
     "@remirror/core-helpers": "^2.0.3",
@@ -72,7 +72,7 @@
     "@remirror/extension-bold": "^2.0.13",
     "@remirror/extension-callout": "^2.0.14",
     "@remirror/extension-code": "^2.0.13",
-    "@remirror/extension-code-block": "^2.0.14",
+    "@remirror/extension-code-block": "^2.0.15",
     "@remirror/extension-codemirror5": "^2.0.13",
     "@remirror/extension-collaboration": "^2.0.13",
     "@remirror/extension-columns": "^2.0.13",
@@ -93,7 +93,7 @@
     "@remirror/extension-horizontal-rule": "^2.0.13",
     "@remirror/extension-image": "^2.1.9",
     "@remirror/extension-italic": "^2.0.13",
-    "@remirror/extension-link": "^2.0.15",
+    "@remirror/extension-link": "^2.0.16",
     "@remirror/extension-list": "^2.0.16",
     "@remirror/extension-markdown": "^2.0.13",
     "@remirror/extension-mention": "^2.0.15",
@@ -123,9 +123,9 @@
     "@remirror/theme": "^2.0.8",
     "@types/codemirror": "^5.60.7",
     "@types/refractor": "^3.0.2",
-    "codemirror": "^5.65.12",
+    "codemirror": "^5.65.13",
     "refractor": "^3.6.0",
-    "yjs": "^13.6.0"
+    "yjs": "^13.6.1"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.5",

@@ -20,6 +20,7 @@ export const WysiwygEditor: FC<PropsWithChildren<WysiwygEditorProps>> = ({
   placeholder,
   stringHandler,
   children,
+  theme,
   ...rest
 }) => {
   const extensions = useCallback(
@@ -31,7 +32,7 @@ export const WysiwygEditor: FC<PropsWithChildren<WysiwygEditorProps>> = ({
 
   return (
     <AllStyledComponent>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <Remirror manager={manager} {...rest}>
           <TopToolbar />
           <EditorComponent />

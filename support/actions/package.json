@@ -40,20 +40,20 @@
     "@actions/core": "^1.10.0",
     "@actions/exec": "^1.1.1",
     "@actions/github": "^5.1.1",
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.21.5",
     "@remirror/core-helpers": "^2.0.3",
     "@types/fs-extra": "^9.0.13",
     "@types/giphy-api": "^2.0.3",
-    "@types/semver": "^7.3.13",
+    "@types/semver": "^7.5.0",
     "codesandbox": "^2.2.3",
     "fs-extra": "^10.1.0",
     "giphy-api": "^2.0.2",
     "got": "^11.8.6",
     "scripts": "0.0.1",
-    "semver": "^7.5.0"
+    "semver": "^7.5.1"
   },
   "devDependencies": {
-    "nock": "^13.3.0"
+    "nock": "^13.3.1"
   },
   "publishConfig": {
     "access": "public"

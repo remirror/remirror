@@ -1,5 +1,18 @@
 # remirror
 
+## 2.0.32
+
+> 2023-05-21
+
+### Patch Changes
+
+- e59e75aec: Disable link click handler when contenteditable is `false`. This fixes an issue that causes clicking a link in an uneditable editor will open the link twice.
+- b12e3fbfe: Remove `isolating: true` from the spec of `codeBlock` node type.
+- Updated dependencies [e59e75aec]
+- Updated dependencies [b12e3fbfe]
+  - @remirror/extension-link@2.0.16
+  - @remirror/extension-code-block@2.0.15
+
 ## 2.0.31
 
 > 2023-04-27

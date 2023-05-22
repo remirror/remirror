@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-hooks",
-  "version": "2.0.22",
+  "version": "2.0.23",
   "description": "A selection of core hooks built for working within the editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-hooks",
   "repository": {
@@ -114,7 +114,7 @@
     "use-suggest"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.21.5",
     "@remirror/core": "^2.0.16",
     "@remirror/extension-emoji": "^2.0.17",
     "@remirror/extension-events": "^2.1.15",

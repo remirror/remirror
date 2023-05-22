@@ -30,7 +30,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.0",
+    "@babel/runtime": "^7.21.5",
     "@remirror/core-constants": "^2.0.1",
     "@remirror/core-helpers": "^2.0.3",
     "escape-string-regexp": "^4.0.0"
@@ -38,12 +38,12 @@
   "devDependencies": {
     "prosemirror-model": "^1.19.0",
     "prosemirror-state": "^1.4.2",
-    "prosemirror-view": "^1.31.0"
+    "prosemirror-view": "^1.31.2"
   },
   "peerDependencies": {
     "prosemirror-model": "^1.19.0",
     "prosemirror-state": "^1.4.2",
-    "prosemirror-view": "^1.31.0"
+    "prosemirror-view": "^1.31.2"
   },
   "peerDependenciesMeta": {},
   "publishConfig": {

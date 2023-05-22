@@ -26,7 +26,10 @@ import { TopToolbar } from '../components/top-toolbar';
 import { ReactEditorProps } from '../types';
 
 const extraAttributes: IdentifierSchemaAttributes[] = [
-  { identifiers: ['mention', 'emoji'], attributes: { role: { default: 'presentation' } } },
+  {
+    identifiers: ['mention', 'emoji'],
+    attributes: { role: { default: 'presentation' } },
+  },
   { identifiers: ['mention'], attributes: { href: { default: null } } },
 ];
 
@@ -71,6 +74,7 @@ export const SocialEditor: FC<PropsWithChildren<SocialEditorProps>> = ({
   children,
   users,
   tags,
+  theme,
   ...rest
 }) => {
   const extensions = useCallback(
@@ -89,11 +93,15 @@ export const SocialEditor: FC<PropsWithChildren<SocialEditorProps>> = ({
     [placeholder],
   );
 
-  const { manager } = useRemirror({ extensions, extraAttributes, stringHandler });
+  const { manager } = useRemirror({
+    extensions,
+    extraAttributes,
+    stringHandler,
+  });
 
   return (
     <AllStyledComponent>
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <Remirror manager={manager} {...rest}>
           <TopToolbar />
           <EditorComponent />

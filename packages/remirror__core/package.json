@@ -31,8 +31,8 @@
     "style"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.0",
-    "@linaria/core": "4.2.9",
+    "@babel/runtime": "^7.21.5",
+    "@linaria/core": "4.2.10",
     "@remirror/core-constants": "^2.0.1",
     "@remirror/core-helpers": "^2.0.3",
     "@remirror/core-types": "^2.0.5",

@@ -519,6 +519,12 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
           return true;
         }
 
+        // If editable is false, the openLinkOnClick handler or the selectTextOnClick handler should
+        // not be triggered or it will conflict with the default browser event
+        if (!this.store.view.editable) {
+          return;
+        }
+
         let handled = false;
 
         if (this.options.openLinkOnClick) {

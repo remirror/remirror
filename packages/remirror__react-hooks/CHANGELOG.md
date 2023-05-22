@@ -1,5 +1,13 @@
 # @remirror/react-hooks
 
+## 2.0.23
+
+> 2023-05-18
+
+### Patch Changes
+
+- 02cdaba40: Fix an issue that causes `useEditorFocus` won't be called when blurring.
+
 ## 2.0.22
 
 > 2023-04-26

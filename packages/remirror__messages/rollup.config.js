@@ -1,11 +1,11 @@
 import { defineConfig } from 'rollup';
 
-import pacakgeJson from './package.json';
+import packageJson from './package.json' assert { type: 'json' };
 
 const dependencies = Object.keys({
-  ...pacakgeJson.dependencies,
-  ...pacakgeJson.devDependencies,
-  ...pacakgeJson.peerDependencies,
+  ...packageJson.dependencies,
+  ...packageJson.devDependencies,
+  ...packageJson.peerDependencies,
 });
 
 export default defineConfig({
