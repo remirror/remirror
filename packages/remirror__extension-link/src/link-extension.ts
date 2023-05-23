@@ -42,7 +42,7 @@ import {
 import type { CreateEventHandlers } from '@remirror/extension-events';
 import { undoDepth } from '@remirror/pm/history';
 import { MarkPasteRule } from '@remirror/pm/paste-rules';
-import { Selection, TextSelection } from '@remirror/pm/state';
+import { Selection } from '@remirror/pm/state';
 import { ReplaceAroundStep, ReplaceStep } from '@remirror/pm/transform';
 
 import { TOP_50_TLDS } from './link-extension-utils';
@@ -543,43 +543,8 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
     };
   }
 
-  /**
-   * The plugin for handling click events in the editor.
-   *
-   * TODO extract this into the events extension and move that extension into
-   * core.
-   */
   createPlugin(): CreateExtensionPlugin {
     return {
-      props: {
-        handleClick: (view, pos) => {
-          if (!this.options.selectTextOnClick && !this.options.openLinkOnClick) {
-            return false;
-          }
-
-          const { doc, tr } = view.state;
-          const range = getMarkRange(doc.resolve(pos), this.type);
-
-          if (!range) {
-            return false;
-          }
-
-          if (this.options.openLinkOnClick) {
-            const href = range.mark.attrs.href;
-            window.open(href, '_blank');
-          }
-
-          if (this.options.selectTextOnClick) {
-            const $start = doc.resolve(range.from);
-            const $end = doc.resolve(range.to);
-            const transaction = tr.setSelection(TextSelection.between($start, $end));
-
-            view.dispatch(transaction);
-          }
-
-          return true;
-        },
-      },
       appendTransaction: (transactions, prevState, state: EditorState) => {
         const transactionsWithLinkMeta = transactions.filter((tr) => !!tr.getMeta(this.name));
 
