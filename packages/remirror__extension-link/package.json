@@ -41,7 +41,7 @@
     "extract-domain": "2.2.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.5",
+    "@remirror/pm": "^2.0.6",
     "@types/extract-domain": "2.3.1",
     "linkifyjs": "^3.0.5"
   },

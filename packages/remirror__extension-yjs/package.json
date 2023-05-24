@@ -48,7 +48,7 @@
     "y-protocols": "^1.0.5"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.5",
+    "@remirror/pm": "^2.0.6",
     "y-webrtc": "^10.2.5",
     "yjs": "^13.6.1"
   },
