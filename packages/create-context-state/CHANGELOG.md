@@ -1,5 +1,13 @@
 # create-context-state
 
+## 2.0.2
+
+> 2023-05-24
+
+### Patch Changes
+
+- 60d0a8fd7: Fix the bundled `.d.ts` file for `create-context-hook`.
+
 ## 2.0.1
 
 > 2023-04-26

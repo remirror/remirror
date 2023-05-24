@@ -50,7 +50,7 @@
     "@remirror/messages": "^2.0.4",
     "@remirror/preset-core": "^2.0.16",
     "@remirror/react-components": "^2.1.12",
-    "@remirror/react-core": "^2.0.17",
+    "@remirror/react-core": "^2.0.18",
     "@remirror/react-hooks": "^2.0.23",
     "@remirror/theme": "^2.0.8",
     "jsx-dom-cjs": "^8.0.5"
