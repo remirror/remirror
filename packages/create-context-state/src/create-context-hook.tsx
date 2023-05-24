@@ -1,6 +1,6 @@
 import React, {
   ComponentType,
-  Context as ReactContext,
+  Context,
   createContext,
   FC,
   PropsWithChildren,
@@ -80,10 +80,10 @@ import React, {
  * @typeParam Props - The optional props that are passed through to the `Provider`.
  */
 export function createContextHook<
-  Context extends object,
+  Ctx extends object,
   Props extends PropsWithChildren<object> = PropsWithChildren<object>,
->(useHook: UseHook<Context, Props>): CreateContextReturn<Context, Props> {
-  const DefaultContext = createContext<Context | null>(null);
+>(useHook: UseHook<Ctx, Props>): CreateContextReturn<Ctx, Props> {
+  const DefaultContext = createContext<Ctx | null>(null);
   const useHookContext = contextHookFactory(DefaultContext);
 
   const Provider: FC<Props> = (props) => {
@@ -95,18 +95,18 @@ export function createContextHook<
   return [Provider, useHookContext, DefaultContext];
 }
 
-export type CreateContextReturn<Context extends object, Props extends object = object> = [
+export type CreateContextReturn<Ctx extends object, Props extends object = object> = [
   Provider: ComponentType<PropsWithChildren<Props>>,
-  hook: ContextHook<Context>,
-  DefaultContext: ReactContext<Context | null>,
+  hook: ContextHook<Ctx>,
+  DefaultContext: Context<Ctx | null>,
 ];
 
 type UseHook<Context extends object, Props extends object = object> = (props: Props) => Context;
 
-export function contextHookFactory<Context extends object>(
-  DefaultContext: ReactContext<Context | null>,
-): ContextHook<Context> {
-  return (selector?: unknown, equalityCheck?: EqualityChecker<Context>) => {
+export function contextHookFactory<Ctx extends object>(
+  DefaultContext: Context<Ctx | null>,
+): ContextHook<Ctx> {
+  return (selector?: unknown, equalityCheck?: EqualityChecker<Ctx>) => {
     const context = useContext(DefaultContext);
     const previousContext = usePrevious(context);
 
@@ -138,18 +138,16 @@ export function contextHookFactory<Context extends object>(
   };
 }
 
-export type ContextSelector<Context extends object, SelectedValue> = (
-  state: Context,
-) => SelectedValue;
+export type ContextSelector<Ctx extends object, SelectedValue> = (state: Ctx) => SelectedValue;
 export type EqualityChecker<SelectedValue> = (
   selectedValue: SelectedValue,
   newSelectedValue: unknown,
 ) => boolean;
 
-export interface ContextHook<Context extends object> {
-  (): Context;
+export interface ContextHook<Ctx extends object> {
+  (): Ctx;
   <SelectedValue>(
-    selector: ContextSelector<Context, SelectedValue>,
+    selector: ContextSelector<Ctx, SelectedValue>,
     equalityFn?: EqualityChecker<SelectedValue>,
   ): SelectedValue;
 }
