@@ -66,7 +66,7 @@
     "@remirror/styles": "^2.0.5",
     "@svgmoji/noto": "^3.2.0",
     "@types/refractor": "^3.0.2",
-    "create-context-state": "^2.0.1",
+    "create-context-state": "^2.0.2",
     "refractor": "^3.6.0",
     "remirror": "2.0.32",
     "svgmoji": "^3.2.0"

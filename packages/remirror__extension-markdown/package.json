@@ -37,7 +37,7 @@
     "@babel/runtime": "^7.21.5",
     "@remirror/core": "^2.0.16",
     "@remirror/messages": "^2.0.4",
-    "@types/marked": "^4.3.0",
+    "@types/marked": "^4.3.1",
     "@types/turndown": "^5.0.1",
     "marked": "^4.3.0",
     "turndown": "^7.1.2",

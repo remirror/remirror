@@ -44,7 +44,7 @@
   "devDependencies": {
     "@remirror/pm": "^2.0.6",
     "@types/jsdom": "^16.2.15",
-    "@types/node": "^16.18.30",
+    "@types/node": "^16.18.32",
     "jsdom": "^17.0.0"
   },
   "peerDependencies": {
