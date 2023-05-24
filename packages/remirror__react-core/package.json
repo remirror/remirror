@@ -47,7 +47,7 @@
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.5",
+    "@remirror/pm": "^2.0.6",
     "@remirror/react": "^2.0.28",
     "@types/jsdom": "^16.2.15",
     "@types/react": "^18.2.0",

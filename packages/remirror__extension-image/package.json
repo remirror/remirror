@@ -45,7 +45,7 @@
     "prosemirror-resizable-view": "^2.0.12"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.5"
+    "@remirror/pm": "^2.0.6"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5"
