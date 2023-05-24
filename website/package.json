@@ -33,7 +33,7 @@
     "@remirror/react-editors": "^1.0.34",
     "@remirror/styles": "^2.0.5",
     "@types/react-syntax-highlighter": "^13.5.2",
-    "create-context-state": "^2.0.1",
+    "create-context-state": "^2.0.2",
     "esbuild-loader": "^2.21.0",
     "framer-motion": "^4.1.17",
     "is-absolute-url": "^3.0.3",

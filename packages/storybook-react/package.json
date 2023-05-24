@@ -52,7 +52,7 @@
     "autoprefixer": "^10.4.14",
     "babel-loader": "^8.3.0",
     "codemirror": "^5.65.13",
-    "create-context-state": "^2.0.1",
+    "create-context-state": "^2.0.2",
     "diffable-html": "^5.0.0",
     "globby": "^11.1.0",
     "html-escaper": "^3.0.3",

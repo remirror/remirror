@@ -123,7 +123,7 @@
     "@remirror/extension-mention-atom": "^2.0.16",
     "@remirror/extension-positioner": "^2.1.8",
     "@remirror/i18n": "^2.0.3",
-    "@remirror/react-core": "^2.0.17",
+    "@remirror/react-core": "^2.0.18",
     "@remirror/react-utils": "^2.0.5",
     "multishift": "^2.0.8",
     "use-isomorphic-layout-effect": "^1.1.2",
