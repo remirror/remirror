@@ -41,7 +41,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@lingui/core": "^3.17.2",
-    "@mui/material": "^5.13.0",
+    "@mui/material": "^5.13.2",
     "@popperjs/core": "^2.11.7",
     "@remirror/core": "^2.0.16",
     "@remirror/extension-blockquote": "^2.0.14",
@@ -75,7 +75,7 @@
     "@remirror/theme": "^2.0.8",
     "@seznam/compose-react-refs": "^1.0.6",
     "@types/react-color": "^3.0.6",
-    "create-context-state": "^2.0.1",
+    "create-context-state": "^2.0.2",
     "match-sorter": "^6.3.1",
     "multishift": "^2.0.8",
     "react-color": "^2.19.3"
