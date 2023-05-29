@@ -39,7 +39,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.22.3",
     "@emotion/css": "^11.11.0",
     "@linaria/core": "4.2.10",
     "@remirror/core": "^2.0.16",

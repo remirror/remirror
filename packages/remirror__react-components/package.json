@@ -37,12 +37,12 @@
     "style"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.22.3",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@lingui/core": "^3.17.2",
     "@mui/material": "^5.13.2",
-    "@popperjs/core": "^2.11.7",
+    "@popperjs/core": "^2.11.8",
     "@remirror/core": "^2.0.16",
     "@remirror/extension-blockquote": "^2.0.14",
     "@remirror/extension-bold": "^2.0.13",

@@ -36,7 +36,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.22.3",
     "@codemirror/language": "^6.7.0",
     "@codemirror/state": "^6.2.1",
     "@codemirror/view": "^6.12.0",
