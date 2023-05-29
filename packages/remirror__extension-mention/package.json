@@ -30,7 +30,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.16",
     "@remirror/extension-events": "^2.1.15",
     "@remirror/messages": "^2.0.4",

@@ -42,7 +42,7 @@
     "styled-components"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.22.3",
     "@remirror/core-helpers": "^2.0.3"
   },
   "devDependencies": {
@@ -52,7 +52,7 @@
     "@types/react": "^18.2.0",
     "@types/styled-components": "^5.1.26",
     "react": "^18.2.0",
-    "styled-components": "^5.3.10"
+    "styled-components": "^5.3.11"
   },
   "peerDependencies": {
     "@emotion/css": "^11.11.0",
