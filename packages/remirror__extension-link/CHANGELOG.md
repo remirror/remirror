@@ -1,5 +1,13 @@
 # @remirror/extension-link
 
+## 2.0.17
+
+> 2023-05-31
+
+### Patch Changes
+
+- a05d05240: Remove duplicate click handler
+
 ## 2.0.16
 
 > 2023-05-21
