@@ -14,4 +14,4 @@ export * from './plugins-extension';
 export * from './schema-extension';
 export * from './suggest-extension';
 export * from './tags-extension';
-export * from './upload-extension';
+export * from './async-extension';
