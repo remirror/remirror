@@ -62,6 +62,7 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
     dismissKeys,
     focusOnClick,
     submitKeys,
+    replacementType,
   } = props;
   const [state, setState] = useState<MentionAtomState<Data> | null>(null);
   const helpers = useHelpers();
@@ -98,11 +99,11 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
 
       // Call the command with the item (including all the provided attributes
       // which it includes).
-      state.command(item);
+      state.command({ replacementType, ...item });
 
       return true;
     },
-    [state],
+    [state, replacementType],
   );
 
   const menu = useMenuNavigation<Data>({
