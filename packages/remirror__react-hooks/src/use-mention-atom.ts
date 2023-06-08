@@ -166,7 +166,8 @@ export function useMentionAtom<Data extends MentionAtomNodeAttributes = MentionA
 
 export interface UseMentionAtomProps<
   Data extends MentionAtomNodeAttributes = MentionAtomNodeAttributes,
-> extends MenuNavigationOptions {
+> extends MenuNavigationOptions,
+    Pick<MentionAtomNodeAttributes, 'replacementType'> {
   /**
    * The list of data from which an index can be calculated. Must include at
    * least an `id` and a `label`.
