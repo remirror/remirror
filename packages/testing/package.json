@@ -47,7 +47,7 @@
     "@remirror/core": "^2.0.16",
     "@remirror/pm": "^2.0.6",
     "@remirror/preset-core": "^2.0.16",
-    "@remirror/react": "^2.0.28",
+    "@remirror/react": "^2.0.29",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/fluent-ffmpeg": "^2.1.21",

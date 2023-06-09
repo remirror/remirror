@@ -97,7 +97,7 @@
     "@remirror/extension-list": "^2.0.16",
     "@remirror/extension-markdown": "^2.0.13",
     "@remirror/extension-mention": "^2.0.15",
-    "@remirror/extension-mention-atom": "^2.0.16",
+    "@remirror/extension-mention-atom": "^2.0.17",
     "@remirror/extension-node-formatting": "^2.0.13",
     "@remirror/extension-paragraph": "^2.0.13",
     "@remirror/extension-placeholder": "^2.0.14",
