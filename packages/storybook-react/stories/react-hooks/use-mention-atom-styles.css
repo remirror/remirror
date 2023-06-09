@@ -1,5 +1,5 @@
 .mention {
-  background: #7963d266;
+  background: var(--rmr-hue-violet-6);
   padding: 2px 4px;
   border-radius: 4px;
 }
@@ -9,6 +9,7 @@
   --rmr-space-6: 400px;
 }
 .suggestions {
+  background: var(--rmr-color-background);
   border: 1px solid darkgray;
   border-radius: 4px;
 }
@@ -16,8 +17,8 @@
   padding: 2px 8px;
 }
 .highlighted {
-  background: #7963d233;
+  background: var(--rmr-hue-violet-2);
 }
 .hovered {
-  background: #7963d222;
+  background: var(--rmr-hue-violet-1);
 }

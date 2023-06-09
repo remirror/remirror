@@ -47,7 +47,12 @@ function UserSuggestor() {
   const enabled = !!state;
 
   return (
-    <FloatingWrapper positioner='cursor' enabled={enabled} placement='bottom-start'>
+    <FloatingWrapper
+      positioner='cursor'
+      enabled={enabled}
+      placement='bottom-start'
+      renderOutsideEditor
+    >
       <div {...getMenuProps()} className='suggestions'>
         {enabled &&
           users.map((user, index) => {
@@ -107,7 +112,7 @@ const MCU_CHARACTERS: MentionAtomNodeAttributes[] = [
   },
   {
     label: 'Star-Lord',
-    id: 'spider-man',
+    id: 'star-lord',
   },
   {
     label: "T'Challa",
@@ -139,7 +144,12 @@ function MCUSuggestor() {
   const enabled = !!state;
 
   return (
-    <FloatingWrapper positioner='cursor' enabled={enabled} placement='bottom-start'>
+    <FloatingWrapper
+      positioner='cursor'
+      enabled={enabled}
+      placement='bottom-start'
+      renderOutsideEditor
+    >
       <div {...getMenuProps()} className='suggestions'>
         {enabled &&
           users.map((user, index) => {
@@ -194,7 +204,7 @@ export const PrefilledContent = (): JSX.Element => {
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoRender='end' initialContent={state}>
+      <Remirror manager={manager} autoRender='start' initialContent={state}>
         <UserSuggestor />
       </Remirror>
     </ThemeProvider>
@@ -216,13 +226,13 @@ export const IncludingWhitespace = (): JSX.Element => {
   const { manager, state } = useRemirror({
     extensions,
     content:
-      '<p>In the Marvel Cinematic Universe (MCU), @<cursor> is the superhero persona of Tony Stark.</p>',
+      '<p>In the Marvel Cinematic Universe (MCU), @ is the superhero persona of Tony Stark.</p>',
     stringHandler: 'html',
   });
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoRender='end' initialContent={state}>
+      <Remirror manager={manager} autoRender='start' initialContent={state}>
         <MCUSuggestor />
       </Remirror>
     </ThemeProvider>
