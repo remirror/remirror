@@ -219,13 +219,18 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
       message: `Invalid name '${name}' provided when creating a mention. Please ensure you only use names that were configured on the matchers when creating the \`MentionAtomExtension\`.`,
     });
 
-    const { appendText, ...rest } = attrs;
+    const { appendText, replacementType, ...rest } = attrs;
+
+    const { from, to } = {
+      from: range.from,
+      to: replacementType === 'partial' ? range.cursor : range.to,
+    };
 
     return replaceText({
       type: this.type,
       appendText: getAppendText(appendText, this.options.appendText),
       attrs: { name, ...rest },
-      range,
+      selection: { from, to },
     });
   }
 
@@ -309,10 +314,10 @@ export interface OptionalMentionAtomExtensionProps {
   appendText?: string;
 
   /**
-   * The type of replacement to use. By default the command will only replace text up the the cursor position.
+   * The type of replacement to use. By default, the command will replace the entire match.
    *
-   * To force replacement of the whole match regardless of where in the match the cursor is placed set this to
-   * `full`.
+   * To replace the match up only to where the cursor is placed set this to
+   * `partial`.
    *
    * @defaultValue 'full'
    */
