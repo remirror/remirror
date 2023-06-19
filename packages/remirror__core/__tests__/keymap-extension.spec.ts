@@ -25,6 +25,23 @@ test('supports custom keymaps', () => {
     });
 });
 
+test('supports beforeKeyhandler to prevent the execution of keyhandler', () => {
+  const mock: any = jest.fn();
+  const {
+    manager,
+    add,
+    nodes: { p, doc },
+  } = renderEditor<never>([]);
+
+  manager.getExtension(KeymapExtension).addHandler('beforeKeyhandler', () => true);
+
+  add(doc(p('Start<cursor>')))
+    .press('a')
+    .callback(() => {
+      expect(mock).toHaveBeenCalledTimes(0);
+    });
+});
+
 test('supports the default keymap', () => {
   const {
     add,
