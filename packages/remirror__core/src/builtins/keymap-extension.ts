@@ -5,6 +5,7 @@ import {
   isArray,
   isEmptyArray,
   isFunction,
+  isNullOrUndefined,
   isString,
   isUndefined,
   object,
@@ -15,6 +16,7 @@ import type {
   CommandFunction,
   CustomHandler,
   EditorView,
+  Handler,
   KeyBindingProps,
   KeyBindings,
   ProsemirrorPlugin,
@@ -119,6 +121,11 @@ export interface KeymapOptions {
    * ```
    */
   keymap?: CustomHandler<PrioritizedKeyBindings>;
+  /**
+   *  It is a hook function that executes before keyhandler.
+   *  If it exists and returns false, it will prevent the execution of keyhandler.
+   */
+  beforeKeyhandler?: Handler<(view: EditorView, event: KeyboardEvent) => boolean>;
 }
 
 /**
@@ -144,6 +151,10 @@ export interface KeymapOptions {
     exitMarksOnArrowPress: true,
   },
   customHandlerKeys: ['keymap'],
+  handlerKeys: ['beforeKeyhandler'],
+  handlerKeyOptions: {
+    beforeKeyhandler: { earlyReturnValue: true },
+  },
 })
 export class KeymapExtension extends PlainExtension<KeymapOptions> {
   get name() {
@@ -198,7 +209,10 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
       new Plugin({
         props: {
           handleKeyDown: (view, event) => {
-            return this.keydownHandler?.(view, event);
+            const flag = this.options.beforeKeyhandler?.(view, event);
+            return isNullOrUndefined(flag) || flag === true
+              ? this.keydownHandler?.(view, event)
+              : false;
           },
         },
       }),
