@@ -686,16 +686,10 @@ export function listBackspace({ view }: CommandFunctionProps): boolean {
   }
 
   {
-    const $cursor = (view.state.selection as TextSelection).$cursor;
+    const cursorState = getListItemCursorState();
 
-    if (!$cursor || $cursor.parentOffset > 0) {
-      return false;
-    }
-
-    const range = $cursor.blockRange();
-
-    if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
-      return false;
+    if (!cursorState) {
+      return cursorState;
     }
   }
 
@@ -708,17 +702,29 @@ export function listBackspace({ view }: CommandFunctionProps): boolean {
   }
 
   {
-    const $cursor = (view.state.selection as TextSelection).$cursor;
+    const cursorState = getListItemCursorState();
 
-    if (!$cursor || $cursor.parentOffset > 0) {
-      return false;
+    if (!cursorState) {
+      return cursorState;
     }
 
-    const range = $cursor.blockRange();
+    // get list node
+    const list = cursorState.$cursor.node(-2);
 
-    if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
-      return false;
+    // list should have only one list item
+    if (list.childCount <= 1) {
+      liftListItem(cursorState.range.parent.type)(view.state, view.dispatch);
     }
+  }
+
+  {
+    const cursorState = getListItemCursorState();
+
+    if (!cursorState) {
+      return cursorState;
+    }
+
+    const { $cursor, range } = cursorState;
 
     // Handle the backspace key in a three-levels list correctly:
     // * A
@@ -737,4 +743,24 @@ export function listBackspace({ view }: CommandFunctionProps): boolean {
   joinBackward(view.state, view.dispatch, view);
 
   return true;
+
+  function getListItemCursorState() {
+    if (!view) {
+      return false;
+    }
+
+    const $cursor = (view.state.selection as TextSelection).$cursor;
+
+    if (!$cursor || $cursor.parentOffset > 0) {
+      return false;
+    }
+
+    const range = $cursor.blockRange();
+
+    if (!range || !isListItemNode(range.parent) || range.startIndex !== 0) {
+      return false;
+    }
+
+    return { $cursor, range };
+  }
 }
