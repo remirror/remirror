@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-components",
-  "version": "2.1.12",
+  "version": "2.1.13",
   "description": "Components to begin your remirror journey",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-components",
   "repository": {
@@ -70,7 +70,7 @@
     "@remirror/icons": "^2.0.2",
     "@remirror/messages": "^2.0.4",
     "@remirror/react-core": "^2.0.18",
-    "@remirror/react-hooks": "^2.0.23",
+    "@remirror/react-hooks": "^2.0.24",
     "@remirror/react-utils": "^2.0.5",
     "@remirror/theme": "^2.0.8",
     "@seznam/compose-react-refs": "^1.0.6",
@@ -82,7 +82,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.6",
-    "@remirror/react": "^2.0.28",
+    "@remirror/react": "^2.0.29",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",

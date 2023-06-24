@@ -1,5 +1,27 @@
 # @remirror/react-hooks
 
+## 2.0.24
+
+> 2023-06-09
+
+### Patch Changes
+
+- 68f40117d: Fix partial matches when using mention atoms, where support characters include whitespace.
+
+  Exposed a new option `replacementType` in the `useMentionAtom` hook. This allows you to replace the match **up to where the cursor is placed**, rather than the _entire_ match.
+
+  ```tsx
+  const { state, getMenuProps, getItemProps, indexIsHovered, indexIsSelected } = useMentionAtom({
+    items,
+    replacementType: 'partial', // <-- Here
+  });
+  ```
+
+  This is of particular use if your mention atoms include whitespace. Instead of replacing the remainder of the text in a line, it will only replace up to the cursor.
+
+- Updated dependencies [68f40117d]
+  - @remirror/extension-mention-atom@2.0.17
+
 ## 2.0.23
 
 > 2023-05-18
