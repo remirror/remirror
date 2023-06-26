@@ -1,13 +1,14 @@
 import {
   Alignment,
+  autoPlacement,
   autoUpdate,
   flip,
+  FloatingPortal,
   Middleware,
   offset,
   Placement as FloatingUIPlacement,
   Strategy,
   useFloating,
-  autoPlacement,
 } from '@floating-ui/react';
 import React, {
   FC,
@@ -19,7 +20,7 @@ import React, {
   useMemo,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { cx } from '@remirror/core';
+import { cx, isObject } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
 import { useHelpers } from '@remirror/react-core';
@@ -88,6 +89,16 @@ interface BaseFloatingPositioner extends UseEditorFocusProps {
    * The strategy to use when positioning the floating element.
    */
   strategy?: Strategy;
+
+  /**
+   * Portals the floating element into a given container element — by default,
+   * outside of the app root and into the body.
+   * @see https://floating-ui.com/docs/FloatingPortal
+   * @defaultValue false
+   * @remarks This is conflict to renderOutsideEditor, and renderOutsideEditor has high priority.
+   * And this property will cause the loss of the css variable if you use remirror's internal style
+   */
+  useFloatingPortal?: boolean | Parameters<typeof FloatingPortal>[0];
 }
 
 interface FloatingWrapperProps extends BaseFloatingPositioner {
@@ -131,6 +142,7 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
     renderOutsideEditor = false,
     middleware: propsMiddleware,
     strategy,
+    useFloatingPortal,
   } = props;
 
   const [isFocused] = useEditorFocus({ blurOnInactive, ignoredElements });
@@ -176,18 +188,18 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
 
   const handleMouseDown: MouseEventHandler<HTMLDivElement> = useCallback(
     (e) => {
-      if (renderOutsideEditor) {
+      if (renderOutsideEditor || useFloatingPortal) {
         // Prevent blur events from being triggered
         e.preventDefault();
       }
     },
-    [renderOutsideEditor],
+    [renderOutsideEditor, useFloatingPortal],
   );
 
   let floatingElement = (
     <div
       aria-label={floatingLabel}
-      ref={refs.setFloating as any}
+      ref={refs.setFloating}
       style={floatingStyles}
       className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
       onMouseDown={handleMouseDown}
@@ -196,8 +208,11 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
     </div>
   );
 
-  if (!renderOutsideEditor) {
+  if (!renderOutsideEditor && !useFloatingPortal) {
     floatingElement = <PositionerPortal>{floatingElement}</PositionerPortal>;
+  } else if (useFloatingPortal) {
+    const props = isObject(useFloatingPortal) ? useFloatingPortal : {};
+    floatingElement = <FloatingPortal {...props}>{floatingElement}</FloatingPortal>;
   }
 
   return (
