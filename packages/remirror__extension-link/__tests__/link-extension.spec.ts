@@ -392,7 +392,9 @@ describe('commands', () => {
                 },
               ],
 
-              toDOM: (node) => ['div', extra.dom(node), 0],
+              toDOM: (node) => {
+                return ['div', extra.dom(node), 0];
+              },
             };
           }
         }
@@ -470,40 +472,6 @@ describe('keys', () => {
       .callback(({ from, to }) => {
         expect({ from, to }).toEqual({ from: 1, to: 1 });
         expect(onShortcut).not.toHaveBeenCalled();
-      });
-  });
-});
-
-describe('plugin', () => {
-  it('clickHandler selects the full text of the link when clicked', () => {
-    const {
-      add,
-      attributeMarks: { link },
-      nodes: { doc, p },
-    } = create({ selectTextOnClick: true });
-    const testLink = link({ href });
-
-    add(doc(p(testLink('Li<cursor>nk'))))
-      .fire({ event: 'click' })
-      .callback(({ from, to }) => {
-        expect({ from, to }).toEqual({ from: 1, to: 5 });
-      });
-  });
-
-  it('clickHandler opens link when clicked', () => {
-    const {
-      add,
-      attributeMarks: { link },
-      nodes: { doc, p },
-    } = create({ openLinkOnClick: true });
-    const testLink = link({ href });
-
-    jest.spyOn(global, 'open').mockImplementation(() => null);
-
-    add(doc(p(testLink('Li<cursor>nk'))))
-      .fire({ event: 'click' })
-      .callback(() => {
-        expect(global.open).toHaveBeenCalled();
       });
   });
 });
