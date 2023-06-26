@@ -1,9 +1,19 @@
-import { Placement } from '@popperjs/core';
+import {
+  Alignment,
+  autoUpdate,
+  flip,
+  Middleware,
+  offset,
+  Placement as FloatingUIPlacement,
+  Strategy,
+  useFloating,
+  autoPlacement,
+} from '@floating-ui/react';
 import React, {
   FC,
   MouseEventHandler,
   PropsWithChildren,
-  ReactChild,
+  ReactNode,
   Ref,
   useCallback,
   useMemo,
@@ -17,8 +27,6 @@ import { useEditorFocus, UseEditorFocusProps, usePositioner } from '@remirror/re
 import { ComponentsTheme, ExtensionPositionerTheme } from '@remirror/theme';
 
 import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
-import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
-import { usePopper } from './use-popper';
 
 interface BaseFloatingPositioner extends UseEditorFocusProps {
   /**
@@ -47,8 +55,13 @@ interface BaseFloatingPositioner extends UseEditorFocusProps {
 
   /**
    * Where to place the popover relative to the positioner.
+   * @remarks
+   * The floating-ui library has removed the auto- prefixed placement attribute types.
+   * The type declaration you see here is for compatibility with Popper.js.
+   *
+   * https://floating-ui.com/docs/autoPlacement#conflict-with-flip
    */
-  placement?: Placement;
+  placement?: FloatingUIPlacement | 'auto' | `auto-${Alignment}`;
 
   /**
    * When `true` the child component is rendered outside the `ProseMirror`
@@ -64,6 +77,17 @@ interface BaseFloatingPositioner extends UseEditorFocusProps {
    * @defaultValue false
    */
   renderOutsideEditor?: boolean;
+
+  /**
+   * Array of middleware objects to modify the positioning or provide data for
+   * rendering.
+   */
+  middleware?: Array<Middleware | null | undefined | false>;
+
+  /**
+   * The strategy to use when positioning the floating element.
+   */
+  strategy?: Strategy;
 }
 
 interface FloatingWrapperProps extends BaseFloatingPositioner {
@@ -105,6 +129,8 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
     floatingLabel,
     hideWhenInvisible = true,
     renderOutsideEditor = false,
+    middleware: propsMiddleware,
+    strategy,
   } = props;
 
   const [isFocused] = useEditorFocus({ blurOnInactive, ignoredElements });
@@ -124,9 +150,28 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
 
   const shouldShow = (hideWhenInvisible ? visible : true) && active;
   const position = useMemoizedPosition({ height, left, top, width });
-  const { popperRef, referenceRef, popoverStyles, update } = usePopper({
-    placement,
-    visible,
+
+  const _placement = useMemo(() => {
+    return isFloatingUIPlacement(placement) ? placement : undefined;
+  }, [placement]);
+
+  const middleware = useMemo(() => {
+    if (propsMiddleware) {
+      return propsMiddleware;
+    }
+
+    return [
+      _placement ? flip({ padding: 8 }) : autoPlacement({ padding: 8 }),
+      offset({ mainAxis: 12 }),
+    ];
+  }, [_placement, propsMiddleware]);
+
+  const { refs, floatingStyles } = useFloating({
+    placement: _placement,
+    open: visible,
+    whileElementsMounted: autoUpdate,
+    strategy,
+    middleware,
   });
 
   const handleMouseDown: MouseEventHandler<HTMLDivElement> = useCallback(
@@ -142,8 +187,8 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
   let floatingElement = (
     <div
       aria-label={floatingLabel}
-      ref={popperRef as any}
-      style={popoverStyles}
+      ref={refs.setFloating as any}
+      style={floatingStyles}
       className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
       onMouseDown={handleMouseDown}
     >
@@ -154,10 +199,6 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
   if (!renderOutsideEditor) {
     floatingElement = <PositionerPortal>{floatingElement}</PositionerPortal>;
   }
-
-  useIsomorphicLayoutEffect(() => {
-    update();
-  }, [shouldShow, update, height, left, top, width]);
 
   return (
     <>
@@ -170,7 +211,7 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
             width: position.width,
             height: position.height,
           }}
-          ref={composeRefs(ref, referenceRef) as Ref<any>}
+          ref={composeRefs(ref, refs.setReference) as Ref<any>}
         />
       </PositionerPortal>
       {floatingElement}
@@ -179,7 +220,7 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
 };
 
 export interface PositionerComponentProps {
-  children: ReactChild;
+  children: ReactNode;
 }
 
 /**
@@ -191,6 +232,12 @@ export const PositionerPortal: FC<PositionerComponentProps> = (props) => {
 
   return createPortal(<>{props.children}</>, container);
 };
+
+function isFloatingUIPlacement(
+  placement: BaseFloatingPositioner['placement'],
+): placement is FloatingUIPlacement {
+  return !!placement?.startsWith('auto');
+}
 
 // interface FloatingActionsMenuProps extends Partial<FloatingWrapperProps> {
 //   actions: MenuActionItemUnion[];

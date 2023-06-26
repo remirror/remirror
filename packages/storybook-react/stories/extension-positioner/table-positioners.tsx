@@ -2,7 +2,7 @@ import 'remirror/styles/all.css';
 import './styles.css';
 
 import { css } from '@emotion/css';
-import { Placement } from '@popperjs/core';
+import { Placement } from '@floating-ui/react';
 import { StoryFn } from '@storybook/react';
 import React, { ReactElement, useEffect } from 'react';
 import type { Positioner } from 'remirror/extensions';
