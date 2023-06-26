@@ -15,6 +15,7 @@ import {
 import {
   BoldExtension,
   createCoreManager,
+  EventsExtension,
   extractHref,
   LinkExtension,
   LinkOptions,
@@ -150,7 +151,12 @@ function create(options: LinkOptions = {}) {
     linkExtension.addHandler('onUpdateLink', options.onUpdateLink);
   }
 
-  return renderEditor([linkExtension, new BoldExtension(), new NoMarkBlockExtension()]);
+  return renderEditor([
+    new EventsExtension(),
+    linkExtension,
+    new BoldExtension(),
+    new NoMarkBlockExtension(),
+  ]);
 }
 
 describe('commands', () => {
@@ -1345,6 +1351,46 @@ describe('autolinking with allowed TLDs', () => {
     expect(editor.doc).toEqualRemirrorDocument(
       doc(p(link({ auto: true, href: '//business.london' })('business.london'))),
     );
+  });
+});
+
+describe('events handler', () => {
+  it('clickHandler selects the full text of the link when clicked', () => {
+    const {
+      add,
+      attributeMarks: { link },
+      nodes: { doc, p },
+      view,
+    } = create({ selectTextOnClick: true });
+    const linkMark = link({ href: '//test.com' })('test.com');
+    const node = p('first ', linkMark);
+    add(doc(node));
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {} as MouseEvent, false));
+
+    expect(view.state.selection.empty).toBeFalse();
+    expect({ from: view.state.selection.from, to: view.state.selection.to }).toEqual({
+      from: 7,
+      to: 15,
+    });
+  });
+
+  it('clickHandler opens link when clicked', () => {
+    const {
+      add,
+      attributeMarks: { link },
+      nodes: { doc, p },
+      view,
+    } = create({ openLinkOnClick: true });
+
+    jest.spyOn(global, 'open').mockImplementation(() => {
+      return null;
+    });
+
+    const linkMark = link({ href: '//test.com' })('test.com');
+    const node = p('first ', linkMark);
+    add(doc(node));
+    view.someProp('handleClickOn', (fn) => fn(view, 10, node, 1, {} as MouseEvent, false));
+    expect(global.open).toHaveBeenCalled();
   });
 });
 

@@ -1,5 +1,13 @@
 import { Placement } from '@popperjs/core';
-import React, { FC, PropsWithChildren, ReactChild, Ref, useMemo } from 'react';
+import React, {
+  FC,
+  MouseEventHandler,
+  PropsWithChildren,
+  ReactChild,
+  Ref,
+  useCallback,
+  useMemo,
+} from 'react';
 import { createPortal } from 'react-dom';
 import { cx } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
@@ -121,12 +129,23 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
     visible,
   });
 
+  const handleMouseDown: MouseEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
+      if (renderOutsideEditor) {
+        // Prevent blur events from being triggered
+        e.preventDefault();
+      }
+    },
+    [renderOutsideEditor],
+  );
+
   let floatingElement = (
     <div
       aria-label={floatingLabel}
       ref={popperRef as any}
       style={popoverStyles}
       className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
+      onMouseDown={handleMouseDown}
     >
       {shouldShow && children}
     </div>

@@ -1,5 +1,13 @@
 # @remirror/pm
 
+## 2.0.6
+
+> 2023-05-24
+
+### Patch Changes
+
+- 207ff2c72: Update all ProseMirror dependencies
+
 ## 2.0.5
 
 > 2023-04-26

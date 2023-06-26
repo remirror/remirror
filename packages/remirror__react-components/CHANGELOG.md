@@ -1,5 +1,15 @@
 # @remirror/react-components
 
+## 2.1.13
+
+> 2023-06-09
+
+### Patch Changes
+
+- 68f40117d: Prevent `FloatingWrapper` with `renderOutsideEditor` being immediately closed on click.
+- Updated dependencies [68f40117d]
+  - @remirror/react-hooks@2.0.24
+
 ## 2.1.12
 
 > 2023-04-26

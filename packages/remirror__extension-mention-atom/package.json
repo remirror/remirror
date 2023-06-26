@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-mention-atom",
-  "version": "2.0.16",
+  "version": "2.0.17",
   "description": "Atom mentions for the remirror wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-mention-atom",
   "repository": {
@@ -30,14 +30,14 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.16",
     "@remirror/extension-events": "^2.1.15",
     "@remirror/messages": "^2.0.4",
     "@remirror/theme": "^2.0.8"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.5"
+    "@remirror/pm": "^2.0.6"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5"

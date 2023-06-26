@@ -45,7 +45,7 @@
     "formatter"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.16",
     "@remirror/messages": "^2.0.4",
     "@remirror/theme": "^2.0.8",
@@ -53,7 +53,7 @@
     "refractor": "^3.6.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.5",
+    "@remirror/pm": "^2.0.6",
     "@types/jsdom": "^16.2.15",
     "@types/prettier": "^2.7.2",
     "jsdom": "^17.0.0",
