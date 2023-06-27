@@ -30,7 +30,12 @@ function createHuePalette(props: CreateHuePaletteProps): HuePalette {
   const { t, name, labelDescriptor, hueDescriptor } = props;
   const label = t(labelDescriptor);
   const hues = hueRange.map((hue) => ({
-    label: t(hueDescriptor, { hue }),
+    label: t({
+      ...hueDescriptor,
+      values: {
+        hue,
+      },
+    }),
     color: getThemeVar('hue', name, hue),
   })) as ColorWithLabelTuple;
 
@@ -41,9 +46,18 @@ function createHuePalette(props: CreateHuePaletteProps): HuePalette {
  * The default color palette which uses css properties to update the colors.
  */
 export function palette(t: I18n['_']): ColorPalette {
-  const black: ColorWithLabel = { label: t(Messages.BLACK), color: '#000' };
-  const white: ColorWithLabel = { label: t(Messages.WHITE), color: '#fff' };
-  const transparent: ColorWithLabel = { label: t(Messages.TRANSPARENT), color: 'transparent' };
+  const black: ColorWithLabel = {
+    label: t(Messages.BLACK),
+    color: '#000',
+  };
+  const white: ColorWithLabel = {
+    label: t(Messages.WHITE),
+    color: '#fff',
+  };
+  const transparent: ColorWithLabel = {
+    label: t(Messages.TRANSPARENT),
+    color: 'transparent',
+  };
   const hues: HuePaletteMap = {
     gray: createHuePalette({
       t,

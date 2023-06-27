@@ -1,7 +1,7 @@
-import type * as _ from '@lingui/core';
+import type { MessageDescriptor } from '@lingui/core';
 import { defineMessage } from '@lingui/macro';
 
-export const LABEL = defineMessage({
+export const LABEL: MessageDescriptor = defineMessage({
   id: 'extension.command.toggle-columns.label',
   comment: 'Label for columns command with support for number of columns counts.',
   message: `{count, select, 2 {Two Column Block}
@@ -10,7 +10,7 @@ export const LABEL = defineMessage({
                             other {Multi Column Block}}`,
 });
 
-export const DESCRIPTION = defineMessage({
+export const DESCRIPTION: MessageDescriptor = defineMessage({
   id: 'extension.command.toggle-columns.description',
   comment: 'Description of the columns command with support for number of columns counts.',
   message: `{count, select, 2 {Split the block into two columns}
