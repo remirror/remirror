@@ -43,29 +43,25 @@ export class CheckboxExtension extends NodeExtension<CheckboxOptions> {
       parseDOM: [
         {
           tag: 'input[type=checkbox]',
-          getAttrs: (dom) => {
-            return {
-              ...extra.parse(dom),
-              checked: (dom as HTMLInputElement).checked,
-            };
-          },
+          getAttrs: (dom) => ({
+            ...extra.parse(dom),
+            checked: (dom as HTMLInputElement).checked,
+          }),
         },
         ...(override.parseDOM ?? []),
       ],
-      toDOM: (mark) => {
-        return [
-          'label',
-          extra.dom(mark),
-          [
-            'input',
-            {
-              type: 'checkbox',
-              checked: mark.attrs.checked,
-            },
-            0,
-          ],
-        ];
-      },
+      toDOM: (mark) => [
+        'label',
+        extra.dom(mark),
+        [
+          'input',
+          {
+            type: 'checkbox',
+            checked: mark.attrs.checked,
+          },
+          0,
+        ],
+      ],
     };
   }
 

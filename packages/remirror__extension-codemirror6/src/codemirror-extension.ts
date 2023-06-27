@@ -69,8 +69,8 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
   }
 
   createNodeViews(): NodeViewMethod {
-    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) => {
-      return new CodeMirror6NodeView({
+    return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) =>
+      new CodeMirror6NodeView({
         node,
         view,
         getPos: getPos as () => number,
@@ -78,7 +78,6 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
         loadLanguage: this.loadLanguage.bind(this),
         toggleName: this.options.toggleName,
       });
-    };
   }
 
   createKeymap(): PrioritizedKeyBindings {

@@ -46,9 +46,7 @@ const atomInline: NodeSpec = {
       tag: 'span[data-node-type="atomInline"]',
     },
   ],
-  toDOM: () => {
-    return ['span', { 'data-node-type': 'atomInline' }];
-  },
+  toDOM: () => ['span', { 'data-node-type': 'atomInline' }],
 };
 
 const atomBlock: NodeSpec = {
@@ -61,9 +59,7 @@ const atomBlock: NodeSpec = {
       tag: 'div[data-node-type="atomBlock"]',
     },
   ],
-  toDOM: () => {
-    return ['div', { 'data-node-type': 'atomBlock' }];
-  },
+  toDOM: () => ['div', { 'data-node-type': 'atomBlock' }],
 };
 
 const atomContainer: NodeSpec = {
@@ -75,9 +71,7 @@ const atomContainer: NodeSpec = {
       tag: 'div[data-node-type="atomBlockContainer"]',
     },
   ],
-  toDOM: () => {
-    return ['div', { 'data-node-type': 'atomBlockContainer' }];
-  },
+  toDOM: () => ['div', { 'data-node-type': 'atomBlockContainer' }],
 };
 
 const containerWithRestrictedContent: NodeSpec = {
@@ -89,9 +83,7 @@ const containerWithRestrictedContent: NodeSpec = {
       tag: 'div[data-node-type="containerWithRestrictedContent"]',
     },
   ],
-  toDOM: () => {
-    return ['div', { 'data-node-type': 'containerWithRestrictedContent' }];
-  },
+  toDOM: () => ['div', { 'data-node-type': 'containerWithRestrictedContent' }],
 };
 
 const strike: MarkSpec = {
@@ -110,9 +102,7 @@ const strike: MarkSpec = {
       getAttrs: (node) => (node === 'line-through' ? {} : false),
     },
   ],
-  toDOM: () => {
-    return ['s', 0];
-  },
+  toDOM: () => ['s', 0],
 };
 
 export const schema = new Schema({

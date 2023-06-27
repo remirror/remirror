@@ -8,17 +8,15 @@ import { FloatingWrapper } from '../floating-menu';
 /**
  * Display the image for the emoji displayed via the CDN.
  */
-const EmojiFromCdn = (props: FlatEmojiWithUrl): JSX.Element => {
-  return (
-    <img
-      role='presentation'
-      className={ExtensionEmojiTheme.EMOJI_IMAGE}
-      aria-label={props.annotation}
-      alt={props.annotation}
-      src={props.url}
-    />
-  );
-};
+const EmojiFromCdn = (props: FlatEmojiWithUrl): JSX.Element => (
+  <img
+    role='presentation'
+    className={ExtensionEmojiTheme.EMOJI_IMAGE}
+    aria-label={props.annotation}
+    alt={props.annotation}
+    src={props.url}
+  />
+);
 
 const emptyList: never[] = [];
 

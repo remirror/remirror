@@ -70,13 +70,11 @@ test('access to context via `useRemirrorContext`', () => {
     portals: Array<[HTMLElement, MountedPortal]>;
   }
 
-  const Editor = ({ portals }: Props) => {
-    return (
-      <Remirror manager={manager}>
-        <RemirrorPortals portals={portals} />
-      </Remirror>
-    );
-  };
+  const Editor = ({ portals }: Props) => (
+    <Remirror manager={manager}>
+      <RemirrorPortals portals={portals} />
+    </Remirror>
+  );
 
   const portalContainer = new PortalContainer();
   const { rerender } = strictRender(<Editor portals={[]} />);

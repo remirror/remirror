@@ -17,7 +17,9 @@ export class DebounceExecutor {
     }
 
     this.keys.add(key);
-    this.timer = setTimeout(() => this.execute(), delay);
+    this.timer = setTimeout(() => {
+      this.execute();
+    }, delay);
   }
 
   private async execute() {

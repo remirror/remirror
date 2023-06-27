@@ -369,9 +369,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
   /**
    * Alias for add.
    */
-  readonly overwrite = (taggedDocument: TaggedProsemirrorNode): this => {
-    return this.add(taggedDocument);
-  };
+  readonly overwrite = (taggedDocument: TaggedProsemirrorNode): this => this.add(taggedDocument);
 
   /**
    * Updates the tags.

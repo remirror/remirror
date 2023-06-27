@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { darken, lighten, readableColor, transparentize } from 'color2k';
 import type * as CSS from 'csstype';
 import type { DeepPartial, DeepString } from '@remirror/core-types';

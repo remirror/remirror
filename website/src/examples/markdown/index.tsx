@@ -14,12 +14,10 @@ function MarkdownPreview() {
   );
 }
 
-const Editor = () => {
-  return (
-    <MarkdownEditor placeholder='Start typing...'>
-      <MarkdownPreview />
-    </MarkdownEditor>
-  );
-};
+const Editor = () => (
+  <MarkdownEditor placeholder='Start typing...'>
+    <MarkdownPreview />
+  </MarkdownEditor>
+);
 
 export default Editor;

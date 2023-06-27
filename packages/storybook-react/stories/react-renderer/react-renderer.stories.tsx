@@ -41,10 +41,8 @@ const markMap: MarkMap = {
   underline: 'u',
 };
 
-export const Basic = (): JSX.Element => {
-  return (
-    <ThemeProvider>
-      <RemirrorRenderer json={SAMPLE_DOC} typeMap={typeMap} markMap={markMap} />
-    </ThemeProvider>
-  );
-};
+export const Basic = (): JSX.Element => (
+  <ThemeProvider>
+    <RemirrorRenderer json={SAMPLE_DOC} typeMap={typeMap} markMap={markMap} />
+  </ThemeProvider>
+);

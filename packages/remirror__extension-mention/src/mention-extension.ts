@@ -304,52 +304,45 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       'disableDecorations',
     ]);
 
-    return this.options.matchers.map<Suggester>((matcher) => {
-      return {
-        ...DEFAULT_MATCHER,
-        ...options,
-        ...matcher,
-        onChange: (props) => {
-          const command = (attrs: MentionChangeHandlerCommandAttributes = {}) => {
-            this.mentionExitHandler(props, attrs)(this.store.helpers.getCommandProp());
-          };
+    return this.options.matchers.map<Suggester>((matcher) => ({
+      ...DEFAULT_MATCHER,
+      ...options,
+      ...matcher,
+      onChange: (props) => {
+        const command = (attrs: MentionChangeHandlerCommandAttributes = {}) => {
+          this.mentionExitHandler(props, attrs)(this.store.helpers.getCommandProp());
+        };
 
-          this.options.onChange(
-            { ...props, defaultAppendTextValue: this.options.appendText },
-            command,
-          );
-        },
-        checkNextValidSelection: ($pos, tr) => {
-          const range = getMarkRange($pos, this.type);
+        this.options.onChange(
+          { ...props, defaultAppendTextValue: this.options.appendText },
+          command,
+        );
+      },
+      checkNextValidSelection: ($pos, tr) => {
+        const range = getMarkRange($pos, this.type);
 
-          if (!range || (range.from === cachedRange?.from && range.to === cachedRange?.to)) {
-            return;
-          }
+        if (!range || (range.from === cachedRange?.from && range.to === cachedRange?.to)) {
+          return;
+        }
 
-          const text = $pos.doc.textBetween(
-            range.from,
-            range.to,
-            LEAF_NODE_REPLACING_CHARACTER,
-            ' ',
-          );
+        const text = $pos.doc.textBetween(range.from, range.to, LEAF_NODE_REPLACING_CHARACTER, ' ');
 
-          const isValidMention =
-            isValidMentionAttributes(range.mark.attrs) &&
-            this.options.isMentionValid(range.mark.attrs, text);
+        const isValidMention =
+          isValidMentionAttributes(range.mark.attrs) &&
+          this.options.isMentionValid(range.mark.attrs, text);
 
-          if (isValidMention) {
-            return;
-          }
+        if (isValidMention) {
+          return;
+        }
 
-          // Cache the range value to avoid duplicating the update and preventing
-          // the history plugin from working.
-          cachedRange = range;
+        // Cache the range value to avoid duplicating the update and preventing
+        // the history plugin from working.
+        cachedRange = range;
 
-          // Remove the mention since it is no longer valid.
-          return this.store.chain(tr).removeMention({ range }).tr();
-        },
-      };
-    });
+        // Remove the mention since it is no longer valid.
+        return this.store.chain(tr).removeMention({ range }).tr();
+      },
+    }));
   }
 
   /**

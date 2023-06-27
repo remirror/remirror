@@ -138,9 +138,7 @@ export class SearchExtension extends PlainExtension<SearchOptions> {
       },
 
       props: {
-        decorations: (state) => {
-          return this.getPluginState(state);
-        },
+        decorations: (state) => this.getPluginState(state),
       },
     };
   }

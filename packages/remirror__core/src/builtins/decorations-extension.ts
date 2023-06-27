@@ -71,9 +71,8 @@ export interface DecorationsOptions {
   handlerKeyOptions: {
     decorations: {
       reducer: {
-        accumulator: (accumulated, latestValue, state) => {
-          return accumulated.add(state.doc, latestValue.find());
-        },
+        accumulator: (accumulated, latestValue, state) =>
+          accumulated.add(state.doc, latestValue.find()),
         getDefault: () => DecorationSet.empty,
       },
     },
@@ -256,11 +255,10 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
     placeholder: DecorationPlaceholder,
     deleteSelection?: boolean,
   ): CommandFunction {
-    return ({ dispatch, tr }) => {
-      return this.addPlaceholderTransaction(id, placeholder, tr, !dispatch)
+    return ({ dispatch, tr }) =>
+      this.addPlaceholderTransaction(id, placeholder, tr, !dispatch)
         ? (dispatch?.(deleteSelection ? tr.deleteSelection() : tr), true)
         : false;
-    };
   }
 
   /**
@@ -280,11 +278,10 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    */
   @command()
   updatePlaceholder<Data = any>(id: unknown, data: Data): CommandFunction {
-    return ({ dispatch, tr }) => {
-      return this.updatePlaceholderTransaction({ id, data, tr, checkOnly: !dispatch })
+    return ({ dispatch, tr }) =>
+      this.updatePlaceholderTransaction({ id, data, tr, checkOnly: !dispatch })
         ? (dispatch?.(tr), true)
         : false;
-    };
   }
 
   /**
@@ -292,11 +289,10 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    */
   @command()
   removePlaceholder(id: unknown): CommandFunction {
-    return ({ dispatch, tr }) => {
-      return this.removePlaceholderTransaction({ id, tr, checkOnly: !dispatch })
+    return ({ dispatch, tr }) =>
+      this.removePlaceholderTransaction({ id, tr, checkOnly: !dispatch })
         ? (dispatch?.(tr), true)
         : false;
-    };
   }
 
   /**
@@ -304,11 +300,10 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
    */
   @command()
   clearPlaceholders(): CommandFunction {
-    return ({ tr, dispatch }) => {
-      return this.clearPlaceholdersTransaction({ tr, checkOnly: !dispatch })
+    return ({ tr, dispatch }) =>
+      this.clearPlaceholdersTransaction({ tr, checkOnly: !dispatch })
         ? (dispatch?.(tr), true)
         : false;
-    };
   }
 
   /**
@@ -602,9 +597,7 @@ export class DecorationsExtension extends PlainExtension<DecorationsOptions> {
     const { promise, placeholder, onFailure, onSuccess } = props;
 
     return new DelayedCommand(promise)
-      .validate((props) => {
-        return this.addPlaceholder(id, placeholder)(props);
-      })
+      .validate((props) => this.addPlaceholder(id, placeholder)(props))
       .success((props) => {
         const { state, tr, dispatch, view, value } = props;
         const range = this.store.helpers.findPlaceholder(id);

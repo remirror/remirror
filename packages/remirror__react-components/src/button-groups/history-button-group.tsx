@@ -7,12 +7,10 @@ export interface HistoryButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const HistoryButtonGroup: FC<HistoryButtonGroupProps> = ({ children }) => {
-  return (
-    <CommandButtonGroup>
-      <UndoButton />
-      <RedoButton />
-      {children}
-    </CommandButtonGroup>
-  );
-};
+export const HistoryButtonGroup: FC<HistoryButtonGroupProps> = ({ children }) => (
+  <CommandButtonGroup>
+    <UndoButton />
+    <RedoButton />
+    {children}
+  </CommandButtonGroup>
+);

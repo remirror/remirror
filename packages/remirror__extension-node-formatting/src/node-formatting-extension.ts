@@ -177,9 +177,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
    */
   @command(increaseIndentOptions)
   increaseIndent(): CommandFunction {
-    return (props) => {
-      return this.setIndent('+1')(props);
-    };
+    return (props) => this.setIndent('+1')(props);
   }
 
   /**
@@ -187,9 +185,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
    */
   @command(decreaseIndentOptions)
   decreaseIndent(): CommandFunction {
-    return (props) => {
-      return this.setIndent('-1')(props);
-    };
+    return (props) => this.setIndent('-1')(props);
   }
 
   @keyBinding({ shortcut: NamedShortcut.CenterAlignment, command: 'centerAlign' })
@@ -238,12 +234,9 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
   private nodeIndent(): SchemaAttributesObject {
     return {
       default: null,
-      parseDOM: (element) => {
-        return (
-          element.getAttribute(NODE_INDENT_ATTRIBUTE) ??
-          extractIndent(this.options.indents, element.style.marginLeft)
-        );
-      },
+      parseDOM: (element) =>
+        element.getAttribute(NODE_INDENT_ATTRIBUTE) ??
+        extractIndent(this.options.indents, element.style.marginLeft),
       toDOM: (attrs) => {
         // Ignoring the `0` value is intentional here.
         if (!attrs.nodeIndent) {
@@ -270,9 +263,8 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
   private nodeTextAlignment(): SchemaAttributesObject {
     return {
       default: null,
-      parseDOM: (element) => {
-        return element.getAttribute(NODE_TEXT_ALIGNMENT_ATTRIBUTE) ?? element.style.textAlign;
-      },
+      parseDOM: (element) =>
+        element.getAttribute(NODE_TEXT_ALIGNMENT_ATTRIBUTE) ?? element.style.textAlign,
       toDOM: (attrs) => {
         const textAlign = attrs.nodeTextAlignment;
 

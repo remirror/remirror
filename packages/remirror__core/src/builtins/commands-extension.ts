@@ -392,9 +392,7 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       .createPlaceholderCommand({
         promise: text,
         placeholder: { type: 'inline' },
-        onSuccess: (value, range, props) => {
-          return this.insertText(value, { ...options, ...range })(props);
-        },
+        onSuccess: (value, range, props) => this.insertText(value, { ...options, ...range })(props),
       })
       .generateCommand();
   }
@@ -919,12 +917,10 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
           return '';
         },
         placeholder: { type: 'inline' },
-        onSuccess: (value, selection, props) => {
-          return this.insertNode(
-            htmlToProsemirrorNode({ content: value, schema: props.state.schema }),
-            { selection },
-          )(props);
-        },
+        onSuccess: (value, selection, props) =>
+          this.insertNode(htmlToProsemirrorNode({ content: value, schema: props.state.schema }), {
+            selection,
+          })(props),
       })
       .generateCommand();
   }
@@ -1168,9 +1164,9 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
       const { view } = this.store;
       const { state } = view;
 
-      lazyChain.push((dispatch?: DispatchFunction) => {
-        return command(...args)({ state, dispatch, view, tr: getTr() });
-      });
+      lazyChain.push((dispatch?: DispatchFunction) =>
+        command(...args)({ state, dispatch, view, tr: getTr() }),
+      );
 
       return chained;
     };

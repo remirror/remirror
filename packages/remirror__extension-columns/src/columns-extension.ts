@@ -202,11 +202,8 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
     const columnSpan: SchemaAttributesObject = {
       default: null,
       parseDOM: (node) => node.getAttribute('column-span') ?? 'none',
-      toDOM: (attrs) => {
-        return attrs.columnSpan
-          ? ['column-span', attrs.columnSpan === 'all' ? 'all' : 'none']
-          : null;
-      },
+      toDOM: (attrs) =>
+        attrs.columnSpan ? ['column-span', attrs.columnSpan === 'all' ? 'all' : 'none'] : null,
     };
 
     return [

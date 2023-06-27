@@ -220,9 +220,7 @@ export const isString = isOfType<string>('string');
  * @param value - the value to check
  *
  */
-export const isNumber = isOfType<number>('number', (value) => {
-  return !Number.isNaN(value);
-});
+export const isNumber = isOfType<number>('number', (value) => !Number.isNaN(value));
 
 /**
  * Predicate check that value is a function
@@ -366,14 +364,13 @@ export function isNativePromise(value: unknown): value is Promise<unknown> {
  * @param value - the value to check
  *
  */
-const hasPromiseAPI = (value: unknown): value is Promise<unknown> => {
-  return !!(
+const hasPromiseAPI = (value: unknown): value is Promise<unknown> =>
+  !!(
     !isNull(value) &&
     (isObject(value) as unknown) &&
     isFunction((value as Promise<unknown>).then) &&
     isFunction((value as Promise<unknown>).catch)
   );
-};
 
 /**
  * Predicate check that value has the promise api implemented
@@ -916,9 +913,7 @@ export function unset(path: Array<string | number>, target: Shape): Shape {
 }
 
 function makeFunctionForUniqueBy<Item extends Shape = Shape>(value: string | string[]) {
-  return (item: Item) => {
-    return get(item, value as string);
-  };
+  return (item: Item) => get(item, value as string);
 }
 
 /**

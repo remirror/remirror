@@ -682,20 +682,21 @@ function removeOverlappingChangedRanges(ranges: ChangedRange[]): ChangedRange[] 
     ({ from, to, prevFrom, prevTo }) => `${from}_${to}_${prevFrom}_${prevTo}`,
   );
 
-  return uniqueRanges.filter((range, i, arr) => {
-    return !arr.some((otherRange, j) => {
-      if (i === j) {
-        return false;
-      }
+  return uniqueRanges.filter(
+    (range, i, arr) =>
+      !arr.some((otherRange, j) => {
+        if (i === j) {
+          return false;
+        }
 
-      return (
-        range.prevFrom >= otherRange.prevFrom &&
-        range.prevTo <= otherRange.prevTo &&
-        range.from >= otherRange.from &&
-        range.to <= otherRange.to
-      );
-    });
-  });
+        return (
+          range.prevFrom >= otherRange.prevFrom &&
+          range.prevTo <= otherRange.prevTo &&
+          range.from >= otherRange.from &&
+          range.to <= otherRange.to
+        );
+      }),
+  );
 }
 
 /**

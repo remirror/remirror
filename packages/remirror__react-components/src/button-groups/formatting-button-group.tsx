@@ -13,15 +13,13 @@ export interface FormattingButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const FormattingButtonGroup: FC<FormattingButtonGroupProps> = ({ children }) => {
-  return (
-    <CommandButtonGroup>
-      <ToggleBoldButton />
-      <ToggleItalicButton />
-      <ToggleUnderlineButton />
-      <ToggleStrikeButton />
-      <ToggleCodeButton />
-      {children}
-    </CommandButtonGroup>
-  );
-};
+export const FormattingButtonGroup: FC<FormattingButtonGroupProps> = ({ children }) => (
+  <CommandButtonGroup>
+    <ToggleBoldButton />
+    <ToggleItalicButton />
+    <ToggleUnderlineButton />
+    <ToggleStrikeButton />
+    <ToggleCodeButton />
+    {children}
+  </CommandButtonGroup>
+);

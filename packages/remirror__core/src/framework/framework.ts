@@ -464,9 +464,8 @@ export abstract class Framework<
     };
   }
 
-  protected readonly createStateFromContent: CreateStateFromContent = (content, selection) => {
-    return this.manager.createState({ content, selection });
-  };
+  protected readonly createStateFromContent: CreateStateFromContent = (content, selection) =>
+    this.manager.createState({ content, selection });
 
   /**
    * Focus the editor.

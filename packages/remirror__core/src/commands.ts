@@ -158,52 +158,50 @@ export class DelayedCommand<Value> {
   /**
    * Generate the `remirror` command.
    */
-  readonly generateCommand = (): CommandFunction => {
-    return (props) => {
-      let isValid = true;
-      const { view, tr, dispatch } = props;
+  readonly generateCommand = (): CommandFunction => (props) => {
+    let isValid = true;
+    const { view, tr, dispatch } = props;
 
-      if (!view) {
-        return false;
+    if (!view) {
+      return false;
+    }
+
+    for (const handler of this.validateHandlers) {
+      if (!handler({ ...props, dispatch: () => {} })) {
+        isValid = false;
+        break;
       }
+    }
 
-      for (const handler of this.validateHandlers) {
-        if (!handler({ ...props, dispatch: () => {} })) {
-          isValid = false;
-          break;
-        }
-      }
+    if (!dispatch || !isValid) {
+      return isValid;
+    }
 
-      if (!dispatch || !isValid) {
-        return isValid;
-      }
+    // Start the promise.
+    const deferred = this.promiseCreator(props);
 
-      // Start the promise.
-      const deferred = this.promiseCreator(props);
-
-      deferred
-        .then((value) => {
-          this.runHandlers(this.successHandlers, {
-            value,
-            state: view.state,
-            tr: view.state.tr,
-            dispatch: view.dispatch,
-            view,
-          });
-        })
-        .catch((error) => {
-          this.runHandlers(this.failureHandlers, {
-            error,
-            state: view.state,
-            tr: view.state.tr,
-            dispatch: view.dispatch,
-            view,
-          });
+    deferred
+      .then((value) => {
+        this.runHandlers(this.successHandlers, {
+          value,
+          state: view.state,
+          tr: view.state.tr,
+          dispatch: view.dispatch,
+          view,
         });
+      })
+      .catch((error) => {
+        this.runHandlers(this.failureHandlers, {
+          error,
+          state: view.state,
+          tr: view.state.tr,
+          dispatch: view.dispatch,
+          view,
+        });
+      });
 
-      dispatch(tr);
-      return true;
-    };
+    dispatch(tr);
+    return true;
   };
 }
 

@@ -129,11 +129,11 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
   }
 
   createInputRules(): InputRule[] {
-    return this.options.levels.map((level) => {
-      return textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), this.type, () => ({
+    return this.options.levels.map((level) =>
+      textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), this.type, () => ({
         level,
-      }));
-    });
+      })),
+    );
   }
 
   createPasteRules(): NodePasteRule[] {

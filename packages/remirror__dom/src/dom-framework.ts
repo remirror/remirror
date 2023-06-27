@@ -46,9 +46,7 @@ export class DomFramework<Extension extends AnyExtension> extends Framework<
       state,
       dispatchTransaction: this.dispatchTransaction,
       attributes: () => this.getAttributes(),
-      editable: () => {
-        return this.props.editable ?? true;
-      },
+      editable: () => this.props.editable ?? true,
       plugins: [],
     });
   }

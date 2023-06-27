@@ -55,41 +55,35 @@ const UploadingFileAction: React.FC<{ context: UploadContext; abort: () => void 
 const UploadedFileAction: React.FC<{
   attrs: FileAttributes;
   getPosition: () => number;
-}> = ({ attrs, getPosition }) => {
-  return (
-    <>
-      {attrs.error ? (
-        <div className={ExtensionFileTheme.FILE_ERROR}>{attrs.error}</div>
-      ) : (
-        <DownloadFileButton attrs={attrs} />
-      )}
-      <div style={{ minWidth: '8px' }} />
-      <DeleteFileButton getPosition={getPosition} />
-    </>
-  );
-};
+}> = ({ attrs, getPosition }) => (
+  <>
+    {attrs.error ? (
+      <div className={ExtensionFileTheme.FILE_ERROR}>{attrs.error}</div>
+    ) : (
+      <DownloadFileButton attrs={attrs} />
+    )}
+    <div style={{ minWidth: '8px' }} />
+    <DeleteFileButton getPosition={getPosition} />
+  </>
+);
 
-const IconButton: React.FC<React.ComponentProps<'a'>> = (props) => {
-  return (
-    <a
-      {...props}
-      className={ExtensionFileTheme.FILE_ICON_BUTTON}
-      style={{
-        cursor: props.onClick || props.href ? 'pointer' : 'default',
-      }}
-    >
-      {props.children}
-    </a>
-  );
-};
+const IconButton: React.FC<React.ComponentProps<'a'>> = (props) => (
+  <a
+    {...props}
+    className={ExtensionFileTheme.FILE_ICON_BUTTON}
+    style={{
+      cursor: props.onClick || props.href ? 'pointer' : 'default',
+    }}
+  >
+    {props.children}
+  </a>
+);
 
-const StopButton: React.FC<{ abort: () => void }> = ({ abort }) => {
-  return (
-    <IconButton onClick={abort}>
-      <StopIcon />
-    </IconButton>
-  );
-};
+const StopButton: React.FC<{ abort: () => void }> = ({ abort }) => (
+  <IconButton onClick={abort}>
+    <StopIcon />
+  </IconButton>
+);
 
 const DeleteFileButton: React.FC<{ getPosition: () => number }> = ({ getPosition }) => {
   const { deleteFile } = useCommands();
@@ -100,13 +94,11 @@ const DeleteFileButton: React.FC<{ getPosition: () => number }> = ({ getPosition
   );
 };
 
-const DownloadFileButton: React.FC<{ attrs: FileAttributes }> = ({ attrs }) => {
-  return (
-    <IconButton href={attrs.url} download={attrs.fileName} target='_blank' rel='noreferrer'>
-      <DownloadIcon />
-    </IconButton>
-  );
-};
+const DownloadFileButton: React.FC<{ attrs: FileAttributes }> = ({ attrs }) => (
+  <IconButton href={attrs.url} download={attrs.fileName} target='_blank' rel='noreferrer'>
+    <DownloadIcon />
+  </IconButton>
+);
 
 // Taken from: https://gist.github.com/zentala/1e6f72438796d74531803cc3833c039c
 function formatFileSize(bytes: number, decimals = 2): string {

@@ -20,14 +20,12 @@ interface Props {
   manager: RemirrorManager<any>;
 }
 
-const Wrapper: FC<Props> = ({ manager }) => {
-  return (
-    <Remirror manager={manager} autoFocus={true}>
-      <DefaultEditor />
-      <HookConsumer />
-    </Remirror>
-  );
-};
+const Wrapper: FC<Props> = ({ manager }) => (
+  <Remirror manager={manager} autoFocus={true}>
+    <DefaultEditor />
+    <HookConsumer />
+  </Remirror>
+);
 
 test('should update the query for each keypress', () => {
   const editor = RemirrorTestChain.create(createReactManager([]));

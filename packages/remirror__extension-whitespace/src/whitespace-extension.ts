@@ -180,12 +180,11 @@ export class WhitespaceExtension extends PlainExtension<WhitespaceOptions> {
    */
   @command(toggleWhitespaceOptions)
   toggleWhitespace(): CommandFunction {
-    return (props) => {
-      return this.store.commands.emptyUpdate.original(() => {
+    return (props) =>
+      this.store.commands.emptyUpdate.original(() => {
         this.forcedUpdate = true;
         this.active = !this.active;
       })(props);
-    };
   }
 
   /**

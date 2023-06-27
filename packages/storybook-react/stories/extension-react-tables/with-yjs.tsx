@@ -134,9 +134,7 @@ const Table = ({
   );
 };
 
-const WithYjs = (): JSX.Element => {
-  return <Table extensions={extensions} />;
-};
+const WithYjs = (): JSX.Element => <Table extensions={extensions} />;
 
 const doc = new Y.Doc();
 

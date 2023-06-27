@@ -46,9 +46,7 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
             [outFileEntry]: inFile,
           },
           format: format === 'dual' ? ['cjs', 'esm'] : format,
-          outExtension: ({ format }) => {
-            return { js: format === 'esm' ? '.js' : '.cjs' };
-          },
+          outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
           skipNodeModulesBundle: true,
           dts: {
             entry: {

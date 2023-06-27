@@ -7,12 +7,10 @@ export interface IndentationButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const IndentationButtonGroup: FC<IndentationButtonGroupProps> = ({ children }) => {
-  return (
-    <CommandButtonGroup>
-      <DecreaseIndentButton />
-      <IncreaseIndentButton />
-      {children}
-    </CommandButtonGroup>
-  );
-};
+export const IndentationButtonGroup: FC<IndentationButtonGroupProps> = ({ children }) => (
+  <CommandButtonGroup>
+    <DecreaseIndentButton />
+    <IncreaseIndentButton />
+    {children}
+  </CommandButtonGroup>
+);

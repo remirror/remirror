@@ -7,12 +7,10 @@ export interface BaselineButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const BaselineButtonGroup: FC<BaselineButtonGroupProps> = ({ children }) => {
-  return (
-    <CommandButtonGroup>
-      <ToggleSubscriptButton />
-      <ToggleSuperscriptButton />
-      {children}
-    </CommandButtonGroup>
-  );
-};
+export const BaselineButtonGroup: FC<BaselineButtonGroupProps> = ({ children }) => (
+  <CommandButtonGroup>
+    <ToggleSubscriptButton />
+    <ToggleSuperscriptButton />
+    {children}
+  </CommandButtonGroup>
+);

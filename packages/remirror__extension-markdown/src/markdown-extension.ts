@@ -204,9 +204,7 @@ export class MarkdownExtension extends PlainExtension<MarkdownOptions> {
    */
   @command()
   toggleBoldMarkdown(): CommandFunction {
-    return (_) => {
-      return false;
-    };
+    return (_) => false;
   }
 }
 

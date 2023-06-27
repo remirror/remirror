@@ -413,9 +413,7 @@ export class SuggestState {
     }
 
     const decorations = this.#ignored.find();
-    const decorationsToClear = decorations.filter(({ spec }) => {
-      return spec.name === name;
-    });
+    const decorationsToClear = decorations.filter(({ spec }) => spec.name === name);
 
     this.#ignored = this.#ignored.remove(decorationsToClear);
   };

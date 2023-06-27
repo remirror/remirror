@@ -90,9 +90,7 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
   createPlugin(): CreateExtensionPlugin {
     return {
       state: {
-        init: (_, state) => {
-          return this.createInitialState(state);
-        },
+        init: (_, state) => this.createInitialState(state),
 
         apply: (tr, pluginState: DiffPluginState, _: EditorState, state: EditorState) => {
           const newState = this.applyStateUpdates(tr, pluginState, state);
@@ -102,16 +100,10 @@ export class DiffExtension extends PlainExtension<DiffOptions> {
         },
       },
       props: {
-        decorations: (state) => {
-          return this.getPluginState<DiffPluginState>(state).decorations;
-        },
+        decorations: (state) => this.getPluginState<DiffPluginState>(state).decorations,
         handleDOMEvents: {
-          mouseover: (view, event: Event) => {
-            return this.handlerMouseOver(view, event);
-          },
-          mouseleave: (view, event: Event) => {
-            return this.handleMouseLeave(view, event);
-          },
+          mouseover: (view, event: Event) => this.handlerMouseOver(view, event),
+          mouseleave: (view, event: Event) => this.handleMouseLeave(view, event),
         },
       },
     };

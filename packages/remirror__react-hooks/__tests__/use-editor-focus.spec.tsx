@@ -22,14 +22,12 @@ interface Props {
   manager: RemirrorManager<ReactExtensions<EventsExtension>>;
 }
 
-const Wrapper: FC<Props> = ({ manager }) => {
-  return (
-    <Remirror manager={manager} autoFocus={true}>
-      <DefaultEditor />
-      <HookConsumer />
-    </Remirror>
-  );
-};
+const Wrapper: FC<Props> = ({ manager }) => (
+  <Remirror manager={manager} autoFocus={true}>
+    <DefaultEditor />
+    <HookConsumer />
+  </Remirror>
+);
 
 test('should update in response to the editor focus state', () => {
   const editor = RemirrorTestChain.create(createReactManager([new EventsExtension()]));

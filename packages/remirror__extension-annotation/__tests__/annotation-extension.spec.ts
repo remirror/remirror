@@ -630,9 +630,8 @@ describe('custom styling', () => {
   }
 
   it('should use custom styling', () => {
-    const getStyle = (annotations: Array<Omit<ColoredAnnotation, 'text'>>) => {
-      return `background: ${annotations[0]?.color}`;
-    };
+    const getStyle = (annotations: Array<Omit<ColoredAnnotation, 'text'>>) =>
+      `background: ${annotations[0]?.color}`;
 
     const extension = new AnnotationExtension<ColoredAnnotation>({ getStyle });
     type Extension = typeof extension;

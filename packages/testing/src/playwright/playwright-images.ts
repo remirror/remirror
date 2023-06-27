@@ -35,9 +35,7 @@ export function imagesMatch(image1: string | Buffer, image2: string | Buffer) {
       const { diff, one, two } = getDiffPaths();
 
       mkdir(path.dirname(diff), { recursive: true })
-        .then(() => {
-          return Promise.all([writeFile(one, image1), writeFile(two, image2)]);
-        })
+        .then(() => Promise.all([writeFile(one, image1), writeFile(two, image2)]))
         .then(() => {
           createDiff(
             {

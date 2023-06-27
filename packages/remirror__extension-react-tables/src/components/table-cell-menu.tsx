@@ -18,34 +18,32 @@ export interface TableCellMenuProps {
   Component?: TableCellMenuComponent;
 }
 
-const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ setPopupOpen }) => {
-  return (
-    <button
-      onClick={() => {
-        setPopupOpen(true);
-      }}
-      onMouseDown={(event) => {
-        // Stop the parent component from listening the onMouseDown event
-        event.preventDefault();
-        event.stopPropagation();
-      }}
-      style={{
-        position: 'relative',
-        right: '0px',
-        top: '0px',
-        height: '16px',
-        width: '16px',
-        border: '1px solid blue',
-        fontSize: '10px',
-        lineHeight: '10px',
-        cursor: 'pointer',
-      }}
-      className={ComponentsTheme.BUTTON}
-    >
-      v
-    </button>
-  );
-};
+const DefaultTableCellMenuButton: React.FC<TableCellMenuComponentProps> = ({ setPopupOpen }) => (
+  <button
+    onClick={() => {
+      setPopupOpen(true);
+    }}
+    onMouseDown={(event) => {
+      // Stop the parent component from listening the onMouseDown event
+      event.preventDefault();
+      event.stopPropagation();
+    }}
+    style={{
+      position: 'relative',
+      right: '0px',
+      top: '0px',
+      height: '16px',
+      width: '16px',
+      border: '1px solid blue',
+      fontSize: '10px',
+      lineHeight: '10px',
+      cursor: 'pointer',
+    }}
+    className={ComponentsTheme.BUTTON}
+  >
+    v
+  </button>
+);
 
 interface DefaultTableCellMenuItemProps {
   label: string;
@@ -65,19 +63,15 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
   const commands = useCommands();
 
   // close the popup after clicking
-  const handleClick = (command: () => void) => {
-    return () => {
-      command();
-      setPopupOpen(false);
-    };
+  const handleClick = (command: () => void) => () => {
+    command();
+    setPopupOpen(false);
   };
 
   // Notice that we won't close the popup after changing the cell background
   // because we want users to quick try multiple colors.
-  const setTableCellBackground = (color: string | null) => {
-    return () => {
-      commands.setTableCellBackground(color);
-    };
+  const setTableCellBackground = (color: string | null) => () => {
+    commands.setTableCellBackground(color);
   };
 
   return (
@@ -135,14 +129,12 @@ const DefaultTableCellMenuPopup: React.FC<TableCellMenuComponentProps> = ({
   );
 };
 
-const DefaultTableCellMenuComponent: React.FC<TableCellMenuComponentProps> = (props) => {
-  return (
-    <>
-      <DefaultTableCellMenuButton {...props} />
-      <DefaultTableCellMenuPopup {...props} />
-    </>
-  );
-};
+const DefaultTableCellMenuComponent: React.FC<TableCellMenuComponentProps> = (props) => (
+  <>
+    <DefaultTableCellMenuButton {...props} />
+    <DefaultTableCellMenuPopup {...props} />
+  </>
+);
 
 const TableCellMenu: React.FC<TableCellMenuProps> = ({
   Component = DefaultTableCellMenuComponent,

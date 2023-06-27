@@ -34,25 +34,21 @@ const Component = ({ multiple }: { multiple: boolean }) => {
         <label {...getLabelProps()}>Label</label>
         {selectedItems.length > 0 && (
           <ul>
-            {selectedItems.map((item) => {
-              return (
-                <li key={item.id} {...getRemoveButtonProps({ item })} data-testid={item.id}>
-                  {item.label}
-                </li>
-              );
-            })}
+            {selectedItems.map((item) => (
+              <li key={item.id} {...getRemoveButtonProps({ item })} data-testid={item.id}>
+                {item.label}
+              </li>
+            ))}
           </ul>
         )}
         <button {...getToggleButtonProps()}>Click</button>
         <ul {...getMenuProps()}>
           {isOpen &&
-            items.map((item, index) => {
-              return (
-                <li key={item.id} {...getItemProps({ index, item, disabled: item.id === 'd' })}>
-                  {item.label}
-                </li>
-              );
-            })}
+            items.map((item, index) => (
+              <li key={item.id} {...getItemProps({ index, item, disabled: item.id === 'd' })}>
+                {item.label}
+              </li>
+            ))}
         </ul>
       </nav>
     </div>

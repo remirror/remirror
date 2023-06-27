@@ -223,9 +223,8 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
 
   private readonly getPluginStateCreator =
     (key: PluginKey) =>
-    <State>(state?: EditorState): State => {
-      return key.getState(state ?? this.store.getState());
-    };
+    <State>(state?: EditorState): State =>
+      key.getState(state ?? this.store.getState());
 
   /**
    * Add or replace a plugin.
@@ -252,10 +251,10 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
       pluginMap.set(assertGet(previous, index), plugin);
     }
 
-    this.plugins = this.plugins.map((plugin) => {
+    this.plugins = this.plugins.map((plugin) =>
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return previous.includes(plugin) ? pluginMap.get(plugin)! : plugin;
-    });
+      previous.includes(plugin) ? pluginMap.get(plugin)! : plugin,
+    );
   }
 
   // Method for retrieving the plugin state by the extension name.

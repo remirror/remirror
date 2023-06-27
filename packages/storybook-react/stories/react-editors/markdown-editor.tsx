@@ -46,13 +46,11 @@ function MarkdownPreview() {
   );
 }
 
-export const Basic: React.FC = () => {
-  return (
-    <MarkdownEditor placeholder='Start typing...' initialContent={basicContent}>
-      <MarkdownPreview />
-    </MarkdownEditor>
-  );
-};
+export const Basic: React.FC = () => (
+  <MarkdownEditor placeholder='Start typing...' initialContent={basicContent}>
+    <MarkdownPreview />
+  </MarkdownEditor>
+);
 
 interface Context extends Props {
   setMarkdown: (markdown: string) => void;
@@ -64,27 +62,22 @@ interface Props {
   markdown: UseRemirrorReturn<ReactExtensions<DocExtension | CodeBlockExtension>>;
 }
 
-const [DualEditorProvider, useDualEditor] = createContextState<Context, Props>(({ props }) => {
-  return {
-    ...props,
+const [DualEditorProvider, useDualEditor] = createContextState<Context, Props>(({ props }) => ({
+  ...props,
 
-    setMarkdown: (text: string) => {
-      return props.markdown.getContext()?.setContent({
-        type: 'doc',
-        content: [
-          {
-            type: 'codeBlock',
-            attrs: { language: 'markdown' },
-            content: text ? [{ type: 'text', text }] : undefined,
-          },
-        ],
-      });
-    },
-    setVisual: (markdown: string) => {
-      return props.visual.getContext()?.setContent(markdown);
-    },
-  };
-});
+  setMarkdown: (text: string) =>
+    props.markdown.getContext()?.setContent({
+      type: 'doc',
+      content: [
+        {
+          type: 'codeBlock',
+          attrs: { language: 'markdown' },
+          content: text ? [{ type: 'text', text }] : undefined,
+        },
+      ],
+    }),
+  setVisual: (markdown: string) => props.visual.getContext()?.setContent(markdown),
+}));
 
 const MarkdownTextEditor = () => {
   const { markdown, setVisual } = useDualEditor();
@@ -124,9 +117,7 @@ const VisualEditor = () => {
       autoFocus
       manager={visual.manager}
       autoRender='end'
-      onChange={({ helpers, state }) => {
-        return setMarkdown(helpers.getMarkdown(state));
-      }}
+      onChange={({ helpers, state }) => setMarkdown(helpers.getMarkdown(state))}
       initialContent={visual.state}
       classNames={[
         css`

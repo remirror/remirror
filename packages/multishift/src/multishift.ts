@@ -209,17 +209,10 @@ export const useMultishift = <Item = any>(props: MultishiftProps<Item>): Multish
     ],
   );
 
-  const indexIsHovered = useCallback(
-    (index: number) => {
-      return index === hoveredIndex;
-    },
-    [hoveredIndex],
-  );
+  const indexIsHovered = useCallback((index: number) => index === hoveredIndex, [hoveredIndex]);
 
   const itemIsHovered = useCallback(
-    (item: Item) => {
-      return item === items[hoveredIndex];
-    },
+    (item: Item) => item === items[hoveredIndex],
     [hoveredIndex, items],
   );
 

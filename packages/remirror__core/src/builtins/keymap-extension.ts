@@ -197,9 +197,7 @@ export class KeymapExtension extends PlainExtension<KeymapOptions> {
     return [
       new Plugin({
         props: {
-          handleKeyDown: (view, event) => {
-            return this.keydownHandler?.(view, event);
-          },
+          handleKeyDown: (view, event) => this.keydownHandler?.(view, event),
         },
       }),
     ];

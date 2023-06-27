@@ -9,15 +9,13 @@ export interface ListButtonGroupProps {
   children?: ReactNode | ReactNode[];
 }
 
-export const ListButtonGroup: FC<ListButtonGroupProps> = ({ children }) => {
-  return (
-    <CommandButtonGroup>
-      <ToggleBulletListButton />
-      <ToggleOrderedListButton />
-      <IfExtensionPresent extension={TaskListExtension}>
-        <ToggleTaskListButton />
-      </IfExtensionPresent>
-      {children}
-    </CommandButtonGroup>
-  );
-};
+export const ListButtonGroup: FC<ListButtonGroupProps> = ({ children }) => (
+  <CommandButtonGroup>
+    <ToggleBulletListButton />
+    <ToggleOrderedListButton />
+    <IfExtensionPresent extension={TaskListExtension}>
+      <ToggleTaskListButton />
+    </IfExtensionPresent>
+    {children}
+  </CommandButtonGroup>
+);

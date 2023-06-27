@@ -140,9 +140,7 @@ function cell(content: string, node: Node) {
  */
 const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingStyle: 'atx' })
   .addRule('taskListItems', {
-    filter: (node) => {
-      return node.nodeName === 'LI' && node.hasAttribute('data-task-list-item');
-    },
+    filter: (node) => node.nodeName === 'LI' && node.hasAttribute('data-task-list-item'),
     replacement: (content, node) => {
       const isChecked = (node as HTMLElement).hasAttribute('data-checked');
       return `- ${isChecked ? '[x]' : '[ ]'} ${content.trimStart()}`;
@@ -203,10 +201,11 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
       }
 
       // eslint-disable-next-line unicorn/prefer-array-find
-      const rows = [...(node as HTMLTableElement).rows].filter((r) => {
-        // Remove controller rows
-        return !isControllerHeadingRow(r);
-      });
+      const rows = [...(node as HTMLTableElement).rows].filter(
+        (r) =>
+          // Remove controller rows
+          !isControllerHeadingRow(r),
+      );
 
       return isHeadingRow(rows[0]);
     },
@@ -223,12 +222,10 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
       return content;
     },
   })
-  .keep((node) => {
-    return node.nodeName === 'TABLE' && !isHeadingRow((node as HTMLTableElement).rows[0] as any);
-  })
-  .keep((node) => {
-    return node.nodeName === 'TABLE' && isNestedTable(node);
-  })
+  .keep(
+    (node) => node.nodeName === 'TABLE' && !isHeadingRow((node as HTMLTableElement).rows[0] as any),
+  )
+  .keep((node) => node.nodeName === 'TABLE' && isNestedTable(node))
   .addRule('strikethrough', {
     filter: ['del', 's', 'strike' as 'del'],
     replacement: function (content) {
@@ -238,14 +235,13 @@ const turndownService = new TurndownService({ codeBlockStyle: 'fenced', headingS
 
   // Add improved code block support from html.
   .addRule('fencedCodeBlock', {
-    filter: (node, options) => {
-      return !!(
+    filter: (node, options) =>
+      !!(
         options.codeBlockStyle === 'fenced' &&
         node.nodeName === 'PRE' &&
         node.firstChild &&
         node.firstChild.nodeName === 'CODE'
-      );
-    },
+      ),
 
     replacement: (_, node, options) => {
       invariant(isElementDomNode(node.firstChild), {

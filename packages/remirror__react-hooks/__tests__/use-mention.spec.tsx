@@ -363,14 +363,12 @@ function createEditor() {
     return null;
   };
 
-  const Wrapper: FC<Props> = (props) => {
-    return (
-      <Remirror manager={manager} initialContent={[doc(p('Initial content ')), 'end']}>
-        <DefaultEditor />
-        <Component {...props} />
-      </Remirror>
-    );
-  };
+  const Wrapper: FC<Props> = (props) => (
+    <Remirror manager={manager} initialContent={[doc(p('Initial content ')), 'end']}>
+      <DefaultEditor />
+      <Component {...props} />
+    </Remirror>
+  );
 
   return { editor, Wrapper, result };
 }

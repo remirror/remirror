@@ -1020,9 +1020,7 @@ export function getChangesFromToggleButtonKeyDown<Item = any>({
 
 export const getChangesFromInputKeyDown = <Item = any>(
   params: CreateChangesFromKeyDownProps<Item>,
-): MultishiftStateProps<Item> => {
-  return getChangesFromMenuKeyDown(params);
-};
+): MultishiftStateProps<Item> => getChangesFromMenuKeyDown(params);
 
 const modifierKeys = ['altKey', 'shiftKey', 'metaKey', 'ctrlKey'] as const;
 
