@@ -66,8 +66,12 @@ export function findUploadPlaceholderPos(state: EditorState, id: string): number
     const decorations = set.find(undefined, undefined, (spec) => spec.id === id);
     const pos = decorations?.[0]?.from;
 
-    if (pos != null) {
-      return pos;
+    if (pos != null && pos < state.doc.content.size) {
+      const $pos = state.doc.resolve(pos);
+      const node = $pos.nodeAfter;
+      if (node?.attrs.id === id) {
+        return pos;
+      }
     }
   }
 
