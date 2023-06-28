@@ -17,7 +17,11 @@ export function createSlowFileUploader(): FileUploader<FileAttributes> {
     },
 
     upload: async (context: UploadContext) => {
-      const total = 1000;
+      // We want the upload process to finish in about 8 seconds
+      const total = 8000;
+      // Update the progress every 200ms
+      const chunk = 200;
+
       let loaded = 0;
       context.set('total', total);
       context.set('loaded', loaded);
@@ -27,13 +31,14 @@ export function createSlowFileUploader(): FileUploader<FileAttributes> {
           throw new Error('Canceled');
         }
 
-        await new Promise((resolve) => setTimeout(resolve, 100));
-        loaded += Math.random() * 40;
+        await new Promise((resolve) => setTimeout(resolve, chunk));
+        loaded += 2 * Math.random() * chunk;
         loaded = Math.min(total, loaded);
+        // console.log(`Uploading ${file.name}. Progress: ${Math.floor((100 * loaded) / total)}%`);
         context.set('loaded', loaded);
       }
 
-      const url = URL.createObjectURL(file);
+      const url = URL.createObjectURL(file) + '#uploaded';
       return { ...getDefaultFileAttrs(file), url };
     },
 
