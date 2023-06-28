@@ -106,6 +106,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
             const fileName = anchor.getAttribute('data-filename');
             const fileType = anchor.getAttribute('data-filetype');
             const fileSize = anchor.getAttribute('data-filesize');
+            const id = anchor.getAttribute('data-id');
 
             return {
               ...extra.parse(dom),
@@ -113,6 +114,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
               fileName,
               fileType,
               fileSize,
+              id,
             };
           },
         },
@@ -128,6 +130,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
           'data-filename': node.attrs.fileName,
           'data-filetype': node.attrs.fileType,
           'data-filesize': node.attrs.fileSize,
+          'data-id': node.attrs.id,
         };
 
         if (error) {
