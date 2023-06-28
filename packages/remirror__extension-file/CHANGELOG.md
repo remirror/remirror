@@ -1,5 +1,15 @@
 # @remirror/extension-file
 
+## 1.0.18
+
+> 2023-06-28
+
+### Patch Changes
+
+- a1d79d23e: Make the file uploading robuster by re-checking the placeholder position when the uploading is finished.
+- Updated dependencies [a1d79d23e]
+  - @remirror/core@2.0.17
+
 ## 1.0.17
 
 > 2023-04-26

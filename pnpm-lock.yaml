@@ -294,7 +294,7 @@ importers:
         version: 3.2.4(jest@29.5.0)
       jest-github-reporter:
         specifier: ^1.1.1
-        version: 1.1.1(@octokit/core@4.2.1)(jest@29.5.0)
+        version: 1.1.1(@octokit/core@4.2.4)(jest@29.5.0)
       jest-playwright-preset:
         specifier: ^3.0.1
         version: 3.0.1(jest-circus@29.5.0)(jest-environment-node@29.5.0)(jest-runner@29.5.0)(jest@29.5.0)
@@ -436,7 +436,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/dom':
         specifier: ^2.0.16
@@ -609,7 +609,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/core-constants':
         specifier: ^2.0.1
@@ -1029,7 +1029,7 @@ importers:
         version: link:../remirror__react-core
       prosemirror-dev-toolkit:
         specifier: ^1.1.2
-        version: 1.1.2(svelte@3.59.1)
+        version: 1.1.2(svelte@4.0.0)
     devDependencies:
       '@remirror/pm':
         specifier: ^2.0.6
@@ -1056,7 +1056,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/preset-core':
         specifier: ^2.0.16
@@ -1072,7 +1072,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -1091,7 +1091,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1113,7 +1113,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1132,7 +1132,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1148,7 +1148,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1167,7 +1167,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1183,7 +1183,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1220,7 +1220,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1254,7 +1254,7 @@ importers:
         specifier: ^6.12.0
         version: 6.12.0
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
@@ -1267,7 +1267,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1283,7 +1283,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1299,7 +1299,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
@@ -1312,7 +1312,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1328,7 +1328,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1344,7 +1344,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1360,7 +1360,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1388,7 +1388,7 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1422,7 +1422,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1441,7 +1441,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1457,7 +1457,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1473,7 +1473,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-react-component':
         specifier: ^2.0.13
@@ -1507,7 +1507,7 @@ importers:
   packages/remirror__extension-find:
     dependencies:
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@types/string.prototype.matchall':
         specifier: ^4.0.1
@@ -1529,7 +1529,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1545,7 +1545,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1564,7 +1564,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1580,7 +1580,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1596,7 +1596,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1612,7 +1612,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1628,7 +1628,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1644,7 +1644,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1666,7 +1666,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1682,7 +1682,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1710,7 +1710,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1732,7 +1732,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1766,7 +1766,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1788,7 +1788,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1810,7 +1810,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1826,7 +1826,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1842,7 +1842,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1861,7 +1861,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1886,7 +1886,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -1920,7 +1920,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-react-component':
         specifier: ^2.0.13
@@ -1957,7 +1957,7 @@ importers:
         specifier: 4.2.10
         version: 4.2.10
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/core-utils':
         specifier: ^2.0.12
@@ -2021,7 +2021,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2040,7 +2040,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
@@ -2053,7 +2053,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2069,7 +2069,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2085,7 +2085,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2101,7 +2101,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -2123,7 +2123,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2139,7 +2139,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2155,7 +2155,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/i18n':
         specifier: ^2.0.3
@@ -2180,7 +2180,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-text-color':
         specifier: ^2.0.14
@@ -2199,7 +2199,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2215,7 +2215,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2231,7 +2231,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2247,7 +2247,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.4
@@ -2396,7 +2396,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-doc':
         specifier: ^2.1.5
@@ -2430,7 +2430,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-bold':
         specifier: ^2.0.13
@@ -2485,7 +2485,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-placeholder':
         specifier: ^2.0.14
@@ -2519,7 +2519,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-bidi':
         specifier: ^2.0.13
@@ -2659,7 +2659,7 @@ importers:
         specifier: ^2.11.8
         version: 2.11.8
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-blockquote':
         specifier: ^2.0.14
@@ -2792,7 +2792,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -2920,7 +2920,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-emoji':
         specifier: ^2.0.17
@@ -2987,7 +2987,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
     devDependencies:
       '@types/react':
@@ -3003,7 +3003,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/extension-react-ssr':
         specifier: ^2.0.13
@@ -3119,7 +3119,7 @@ importers:
     dependencies:
       type-fest:
         specifier: ^3.10.0
-        version: 3.10.0(typescript@5.1.3)
+        version: 3.10.0(typescript@5.1.5)
 
   packages/storybook-react:
     dependencies:
@@ -3148,7 +3148,7 @@ importers:
         specifier: ^2.11.8
         version: 2.11.8
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/dev':
         specifier: ^2.0.17
@@ -3163,7 +3163,7 @@ importers:
         specifier: ^2.2.6
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-file':
-        specifier: ^1.0.17
+        specifier: ^1.0.18
         version: link:../remirror__extension-file
       '@remirror/extension-find':
         specifier: ^0.1.6
@@ -3221,7 +3221,7 @@ importers:
         version: 10.4.14(postcss@8.4.14)
       babel-loader:
         specifier: ^8.3.0
-        version: 8.3.0(@babel/core@7.22.5)(webpack@5.86.0)
+        version: 8.3.0(@babel/core@7.22.5)(webpack@5.88.0)
       codemirror:
         specifier: ^5.65.13
         version: 5.65.13
@@ -3294,10 +3294,10 @@ importers:
         version: 7.0.18(react-dom@18.2.0)(react@18.2.0)
       '@storybook/builder-vite':
         specifier: ^7.0.18
-        version: 7.0.18(typescript@5.1.3)(vite@4.3.9)
+        version: 7.0.18(typescript@5.1.5)(vite@4.3.9)
       '@storybook/builder-webpack5':
         specifier: ^7.0.18
-        version: 7.0.18(@swc/core@1.3.60)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 7.0.18(@swc/core@1.3.60)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@storybook/cli':
         specifier: ^7.0.18
         version: 7.0.18
@@ -3309,10 +3309,10 @@ importers:
         version: 7.0.18
       '@storybook/react':
         specifier: ^7.0.18
-        version: 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@storybook/react-vite':
         specifier: ^7.0.18
-        version: 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(vite@4.3.9)
+        version: 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)(vite@4.3.9)
       '@storybook/theming':
         specifier: ^7.0.18
         version: 7.0.18(react-dom@18.2.0)(react@18.2.0)
@@ -3353,7 +3353,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__core
       '@remirror/pm':
         specifier: ^2.0.6
@@ -3671,7 +3671,7 @@ importers:
         version: 8.4.14
       postcss-loader:
         specifier: ^6.2.1
-        version: 6.2.1(postcss@8.4.14)(webpack@5.86.0)
+        version: 6.2.1(postcss@8.4.14)(webpack@5.88.0)
       postcss-nested:
         specifier: ^5.0.6
         version: 5.0.6(postcss@8.4.14)
@@ -3704,7 +3704,7 @@ importers:
         version: 3.3.4
       type-fest:
         specifier: ^3.10.0
-        version: 3.10.0(typescript@5.1.3)
+        version: 3.10.0(typescript@5.1.5)
       write-json-file:
         specifier: ^4.3.0
         version: 4.3.0
@@ -3715,7 +3715,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
@@ -3737,7 +3737,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
@@ -3768,7 +3768,7 @@ importers:
         specifier: ^1.6.22
         version: 1.6.22(react@18.2.0)
       '@remirror/core':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../packages/remirror__core
       '@remirror/dev':
         specifier: ^2.0.17
@@ -3790,7 +3790,7 @@ importers:
         version: link:../packages/create-context-state
       esbuild-loader:
         specifier: ^2.21.0
-        version: 2.21.0(webpack@5.86.0)
+        version: 2.21.0(webpack@5.88.0)
       framer-motion:
         specifier: ^4.1.17
         version: 4.1.17(react-dom@18.2.0)(react@18.2.0)
@@ -3827,34 +3827,34 @@ importers:
     devDependencies:
       '@docusaurus/core':
         specifier: ^2.4.1
-        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/module-type-aliases':
         specifier: ^2.4.1
         version: 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/plugin-client-redirects':
         specifier: ^2.4.1
-        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/plugin-content-docs':
         specifier: ^2.4.1
-        version: 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/plugin-ideal-image':
         specifier: ^2.4.1
-        version: 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/plugin-sitemap':
         specifier: ^2.4.1
-        version: 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/preset-classic':
         specifier: ^2.4.1
-        version: 2.4.1(@algolia/client-search@4.17.2)(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@algolia/client-search@4.18.0)(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/theme-classic':
         specifier: ^2.4.1
-        version: 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/theme-common':
         specifier: ^2.4.1
-        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/theme-live-codeblock':
         specifier: ^2.4.1
-        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/types':
         specifier: ^2.4.1
         version: 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
@@ -3896,13 +3896,13 @@ importers:
         version: 14.1.0(postcss@8.4.14)
       postcss-loader:
         specifier: ^6.2.1
-        version: 6.2.1(postcss@8.4.14)(webpack@5.86.0)
+        version: 6.2.1(postcss@8.4.14)(webpack@5.88.0)
       postcss-nested:
         specifier: ^5.0.6
         version: 5.0.6(postcss@8.4.14)
       raw-loader:
         specifier: ^4.0.2
-        version: 4.0.2(webpack@5.86.0)
+        version: 4.0.2(webpack@5.88.0)
 
 packages:
 
@@ -3950,14 +3950,14 @@ packages:
       '@algolia/autocomplete-shared': 1.7.1
     dev: true
 
-  /@algolia/autocomplete-preset-algolia@1.7.1(@algolia/client-search@4.17.2)(algoliasearch@4.13.1):
+  /@algolia/autocomplete-preset-algolia@1.7.1(@algolia/client-search@4.18.0)(algoliasearch@4.13.1):
     resolution: {integrity: sha512-pJwmIxeJCymU1M6cGujnaIYcY3QPOVYZOXhFkWVM7IxKzy272BwCvMFMyc5NpG/QmiObBxjo7myd060OeTNJXg==}
     peerDependencies:
       '@algolia/client-search': ^4.9.1
       algoliasearch: ^4.9.1
     dependencies:
       '@algolia/autocomplete-shared': 1.7.1
-      '@algolia/client-search': 4.17.2
+      '@algolia/client-search': 4.18.0
       algoliasearch: 4.13.1
     dev: true
 
@@ -3975,8 +3975,8 @@ packages:
     resolution: {integrity: sha512-7Vaf6IM4L0Jkl3sYXbwK+2beQOgVJ0mKFbz/4qSxKd1iy2Sp77uTAazcX+Dlexekg1fqGUOSO7HS4Sx47ZJmjA==}
     dev: true
 
-  /@algolia/cache-common@4.17.2:
-    resolution: {integrity: sha512-fojbhYIS8ovfYs6hwZpy1O4mBfVRxNgAaZRqsdVQd54hU4MxYDYFCxagYX28lOBz7btcDHld6BMoWXvjzkx6iQ==}
+  /@algolia/cache-common@4.18.0:
+    resolution: {integrity: sha512-BmxsicMR4doGbeEXQu8yqiGmiyvpNvejYJtQ7rvzttEAMxOPoWEHrWyzBQw4x7LrBY9pMrgv4ZlUaF8PGzewHg==}
     dev: true
 
   /@algolia/cache-in-memory@4.13.1:
@@ -4009,11 +4009,11 @@ packages:
       '@algolia/transporter': 4.13.1
     dev: true
 
-  /@algolia/client-common@4.17.2:
-    resolution: {integrity: sha512-gKBUnjxi0ukJYIJxVREYGt1Dmj1B3RBYbfGWi0dIPp1BC1VvQm+BOuNwsIwmq/x3MPO+sGuK978eKiP3tZDvag==}
+  /@algolia/client-common@4.18.0:
+    resolution: {integrity: sha512-7N+soJFP4wn8tjTr3MSUT/U+4xVXbz4jmeRfWfVAzdAbxLAQbHa0o/POSdTvQ8/02DjCLelloZ1bb4ZFVKg7Wg==}
     dependencies:
-      '@algolia/requester-common': 4.17.2
-      '@algolia/transporter': 4.17.2
+      '@algolia/requester-common': 4.18.0
+      '@algolia/transporter': 4.18.0
     dev: true
 
   /@algolia/client-personalization@4.13.1:
@@ -4032,12 +4032,12 @@ packages:
       '@algolia/transporter': 4.13.1
     dev: true
 
-  /@algolia/client-search@4.17.2:
-    resolution: {integrity: sha512-FUjIs+gRe0upJC++uVs4sdxMw15JxfkT86Gr/kqVwi9kcqaZhXntSbW/Fw959bIYXczjmeVQsilYvBWW4YvSZA==}
+  /@algolia/client-search@4.18.0:
+    resolution: {integrity: sha512-F9xzQXTjm6UuZtnsLIew6KSraXQ0AzS/Ee+OD+mQbtcA/K1sg89tqb8TkwjtiYZ0oij13u3EapB3gPZwm+1Y6g==}
     dependencies:
-      '@algolia/client-common': 4.17.2
-      '@algolia/requester-common': 4.17.2
-      '@algolia/transporter': 4.17.2
+      '@algolia/client-common': 4.18.0
+      '@algolia/requester-common': 4.18.0
+      '@algolia/transporter': 4.18.0
     dev: true
 
   /@algolia/events@4.0.1:
@@ -4048,8 +4048,8 @@ packages:
     resolution: {integrity: sha512-L6slbL/OyZaAXNtS/1A8SAbOJeEXD5JcZeDCPYDqSTYScfHu+2ePRTDMgUTY4gQ7HsYZ39N1LujOd8WBTmM2Aw==}
     dev: true
 
-  /@algolia/logger-common@4.17.2:
-    resolution: {integrity: sha512-EfXuweUE+1HiSMsQidaDWA5Lv4NnStYIlh7PO5pLkI+sdhbMX0e5AO5nUAMIFM1VkEANes70RA8fzhP6OqCqQQ==}
+  /@algolia/logger-common@4.18.0:
+    resolution: {integrity: sha512-46etYgSlkoKepkMSyaoriSn2JDgcrpc/nkOgou/lm0y17GuMl9oYZxwKKTSviLKI5Irk9nSKGwnBTQYwXOYdRg==}
     dev: true
 
   /@algolia/logger-console@4.13.1:
@@ -4068,8 +4068,8 @@ packages:
     resolution: {integrity: sha512-eGVf0ID84apfFEuXsaoSgIxbU3oFsIbz4XiotU3VS8qGCJAaLVUC5BUJEkiFENZIhon7hIB4d0RI13HY4RSA+w==}
     dev: true
 
-  /@algolia/requester-common@4.17.2:
-    resolution: {integrity: sha512-Rfim23ztAhYpE9qm+KCfCRo+YLJCjiiTG+IpDdzUjMpYPhUtirQT0A35YEd/gKn86YNyydxS9w8iRSjwKh+L0A==}
+  /@algolia/requester-common@4.18.0:
+    resolution: {integrity: sha512-xlT8R1qYNRBCi1IYLsx7uhftzdfsLPDGudeQs+xvYB4sQ3ya7+ppolB/8m/a4F2gCkEO6oxpp5AGemM7kD27jA==}
     dev: true
 
   /@algolia/requester-node-http@4.13.1:
@@ -4086,12 +4086,12 @@ packages:
       '@algolia/requester-common': 4.13.1
     dev: true
 
-  /@algolia/transporter@4.17.2:
-    resolution: {integrity: sha512-m8pXlz5OnNzjD1rcw+duCN4jG4yEzkJBsvKYMoN22Oq6rQwy1AY5muZ+IQUs4dL+A364CYkRMLRWhvXpCZ1x+g==}
+  /@algolia/transporter@4.18.0:
+    resolution: {integrity: sha512-xbw3YRUGtXQNG1geYFEDDuFLZt4Z8YNKbamHPkzr3rWc6qp4/BqEeXcI2u/P/oMq2yxtXgMxrCxOPA8lyIe5jw==}
     dependencies:
-      '@algolia/cache-common': 4.17.2
-      '@algolia/logger-common': 4.17.2
-      '@algolia/requester-common': 4.17.2
+      '@algolia/cache-common': 4.18.0
+      '@algolia/logger-common': 4.18.0
+      '@algolia/requester-common': 4.18.0
     dev: true
 
   /@ampproject/remapping@2.2.1:
@@ -4364,7 +4364,7 @@ packages:
       '@babel/compat-data': 7.22.5
       '@babel/core': 7.22.5
       '@babel/helper-validator-option': 7.22.5
-      browserslist: 4.21.7
+      browserslist: 4.21.9
       lru-cache: 5.1.1
       semver: 6.3.0
 
@@ -8399,7 +8399,7 @@ packages:
     resolution: {integrity: sha512-jnNrO2JVYYhj2pP2FomlHIy6220n6mrLn2t9v2/qc+rM7M/fbIcKMgk9ky4RN+L/maUEmteckzg6/PIYoAAXJg==}
     dev: true
 
-  /@docsearch/react@3.2.0(@algolia/client-search@4.17.2)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
+  /@docsearch/react@3.2.0(@algolia/client-search@4.18.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-ATS3w5JBgQGQF0kHn5iOAPfnCCaoLouZQMmI7oENV//QMFrYbjhUZxBU9lIwAT7Rzybud+Jtb4nG5IEjBk3Ixw==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 19.0.0'
@@ -8407,7 +8407,7 @@ packages:
       react-dom: '>= 16.8.0 < 19.0.0'
     dependencies:
       '@algolia/autocomplete-core': 1.7.1
-      '@algolia/autocomplete-preset-algolia': 1.7.1(@algolia/client-search@4.17.2)(algoliasearch@4.13.1)
+      '@algolia/autocomplete-preset-algolia': 1.7.1(@algolia/client-search@4.18.0)(algoliasearch@4.13.1)
       '@docsearch/css': 3.2.0
       '@types/react': 18.2.0
       algoliasearch: 4.13.1
@@ -8417,7 +8417,7 @@ packages:
       - '@algolia/client-search'
     dev: true
 
-  /@docusaurus/core@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/core@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-SNsY7PshK3Ri7vtsLXVeAJGS50nJN3RgF836zkyUfAD01Fq+sAk5EwWgLw+nnm5KVNGDu7PRR2kRGDsWvqpo0g==}
     engines: {node: '>=16.14'}
     hasBin: true
@@ -8476,7 +8476,7 @@ packages:
       postcss-loader: 7.0.0(postcss@8.4.14)(webpack@5.84.0)
       prompts: 2.4.2
       react: 18.2.0
-      react-dev-utils: 12.0.1(eslint@8.41.0)(typescript@5.1.3)(webpack@5.84.0)
+      react-dev-utils: 12.0.1(eslint@8.41.0)(typescript@5.1.5)(webpack@5.84.0)
       react-dom: 18.2.0(react@18.2.0)
       react-helmet-async: 1.3.0(react-dom@18.2.0)(react@18.2.0)
       react-loadable: /@docusaurus/react-loadable@5.5.2(react@18.2.0)
@@ -8488,7 +8488,7 @@ packages:
       semver: 7.5.1
       serve-handler: 6.1.3
       shelljs: 0.8.5
-      terser-webpack-plugin: 5.3.9(@swc/core@1.3.60)(esbuild@0.17.19)(webpack@5.86.0)
+      terser-webpack-plugin: 5.3.9(@swc/core@1.3.60)(esbuild@0.17.19)(webpack@5.88.0)
       tslib: 2.5.0
       update-notifier: 5.1.0
       url-loader: 4.1.1(file-loader@6.2.0)(webpack@5.84.0)
@@ -8604,14 +8604,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-client-redirects@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-client-redirects@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-tp0j16gaLIJ4p+IR0P6KDOFsTOGGMY54MNPnmM61Vaqqt5omLqsuKUO8UlCGU1oW/4EIQOhXYy99XYY5MjE+7A==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/logger': 2.4.1
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
       '@docusaurus/utils-common': 2.4.1(@docusaurus/types@2.4.1)
@@ -8639,14 +8639,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-content-blog@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-content-blog@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-E2i7Knz5YIbE1XELI6RlTnZnGgS52cUO4BlCiCUCvQHbR+s1xeIWz4C6BtaVnlug0Ccz7nFSksfwDpVlkujg5Q==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/logger': 2.4.1
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
@@ -8680,14 +8680,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-content-docs@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-content-docs@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-Lo7lSIcpswa2Kv4HEeUcGYqaasMUQNpjTXpV0N8G6jXgZaQurqp7E8NGYeGbDXnb48czmHWbzDL4S3+BbK0VzA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/logger': 2.4.1
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/module-type-aliases': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
@@ -8721,14 +8721,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-content-pages@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-content-pages@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-/UjuH/76KLaUlL+o1OvyORynv6FURzjurSjvn2lbWTFc4tpYY2qLYTlKpTCBVPhlLUQsfyFnshEJDLmPneq2oA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
@@ -8754,14 +8754,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-debug@2.4.1(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-debug@2.4.1(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-7Yu9UPzRShlrH/G8btOpR0e6INFZr0EegWplMjOqelIwAcx3PKyR8mgPTxGTxcqiYj6hxSCRN0D8R7YrzImwNA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
       fs-extra: 10.1.0
@@ -8787,14 +8787,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-google-analytics@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-google-analytics@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-dyZJdJiCoL+rcfnm0RPkLt/o732HvLiEwmtoNzOoz9MSZz117UH2J6U2vUDtzUzwtFLIf32KkeyzisbwUCgcaQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
       react: 18.2.0
@@ -8816,14 +8816,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-google-gtag@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-google-gtag@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-mKIefK+2kGTQBYvloNEKtDmnRD7bxHLsBcxgnbt4oZwzi2nxCGjPX6+9SQO2KCN5HZbNrYmGo5GJfMgoRvy6uA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
       react: 18.2.0
@@ -8845,14 +8845,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-google-tag-manager@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-google-tag-manager@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-Zg4Ii9CMOLfpeV2nG74lVTWNtisFaH9QNtEw48R5QE1KIwDBdTVaiSA18G1EujZjrzJJzXN79VhINSbOJO/r3g==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
       react: 18.2.0
@@ -8874,7 +8874,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-ideal-image@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-ideal-image@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-jxvgCGPmHxdae2Y2uskzxIbMCA4WLTfzkufsLbD4mEAjCRIkt6yzux6q5kqKTrO+AxzpANVcJNGmaBtKZGv5aw==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -8885,7 +8885,7 @@ packages:
       jimp:
         optional: true
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/lqip-loader': 2.4.1(webpack@5.84.0)
       '@docusaurus/responsive-loader': 1.7.0(sharp@0.30.7)
       '@docusaurus/theme-translations': 2.4.1
@@ -8915,14 +8915,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-sitemap@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/plugin-sitemap@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-lZx+ijt/+atQ3FVE8FOHV/+X3kuok688OydDXrqKRJyXBJZKgGjA2Qa8RjQ4f27V2woaXhtnyrdPop/+OjVMRg==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/logger': 2.4.1
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
@@ -8949,25 +8949,25 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/preset-classic@2.4.1(@algolia/client-search@4.17.2)(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/preset-classic@2.4.1(@algolia/client-search@4.18.0)(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-P4//+I4zDqQJ+UDgoFrjIFaQ1MeS9UD1cvxVQaI6O7iBmiHQm0MGROP1TbE7HlxlDPXFJjZUK3x3cAoK63smGQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-debug': 2.4.1(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-google-analytics': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-google-gtag': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-google-tag-manager': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-sitemap': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/theme-classic': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/theme-search-algolia': 2.4.1(@algolia/client-search@4.17.2)(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-debug': 2.4.1(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-google-analytics': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-google-gtag': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-google-tag-manager': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-sitemap': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/theme-classic': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/theme-search-algolia': 2.4.1(@algolia/client-search@4.18.0)(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -9016,20 +9016,20 @@ packages:
       sharp: 0.30.7
     dev: true
 
-  /@docusaurus/theme-classic@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/theme-classic@2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-Rz0wKUa+LTW1PLXmwnf8mn85EBzaGSt6qamqtmnh9Hflkc+EqiYMhtUJeLdV+wsgYq4aG0ANc+bpUDpsUhdnwg==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/module-type-aliases': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
-      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/theme-translations': 2.4.1
       '@docusaurus/types': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
@@ -9066,7 +9066,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/theme-common@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/theme-common@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-G7Zau1W5rQTaFFB3x3soQoZpkgMbl/SYNG8PfMFIjKa3M3q8n0m/GRf5/H/e5BqOvt8c+ZWIXGCiz+kUCSHovA==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -9075,9 +9075,9 @@ packages:
     dependencies:
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/module-type-aliases': 2.4.1(@swc/core@1.3.60)(react-dom@18.2.0)(react@18.2.0)
-      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
       '@docusaurus/utils-common': 2.4.1(@docusaurus/types@2.4.1)
       '@types/history': 4.7.11
@@ -9108,15 +9108,15 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/theme-live-codeblock@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/theme-live-codeblock@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-KBKrm34kcdNbSeEm6RujN5GWWg4F2dmAYZyHMMQM8FXokx8mNShRx6uq17WXi23JNm7niyMhNOBRfZWay+5Hkg==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/theme-translations': 2.4.1
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
       '@philpl/buble': 0.19.7
@@ -9143,18 +9143,18 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/theme-search-algolia@2.4.1(@algolia/client-search@4.17.2)(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@docusaurus/theme-search-algolia@2.4.1(@algolia/client-search@4.18.0)(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-6BcqW2lnLhZCXuMAvPRezFs1DpmEKzXFKlYjruuas+Xy3AQeFzDJKTJFIm49N77WFCTyxff8d3E4Q9pi/+5McQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docsearch/react': 3.2.0(@algolia/client-search@4.17.2)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docsearch/react': 3.2.0(@algolia/client-search@4.18.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/logger': 2.4.1
-      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
-      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
+      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@docusaurus/theme-translations': 2.4.1
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.60)
@@ -10266,7 +10266,7 @@ packages:
       twemoji: 12.1.6
     dev: false
 
-  /@joshwooding/vite-plugin-react-docgen-typescript@0.2.1(typescript@5.1.3)(vite@4.3.9):
+  /@joshwooding/vite-plugin-react-docgen-typescript@0.2.1(typescript@5.1.5)(vite@4.3.9):
     resolution: {integrity: sha512-ou4ZJSXMMWHqGS4g8uNRbC5TiTWxAgQZiVucoUrOCWuPrTbkpJbmVyIi9jU72SBry7gQtuMEDp4YR8EEXAg7VQ==}
     peerDependencies:
       typescript: '>= 4.3.x'
@@ -10278,8 +10278,8 @@ packages:
       glob: 7.2.0
       glob-promise: 4.2.2(glob@7.2.0)
       magic-string: 0.27.0
-      react-docgen-typescript: 2.2.2(typescript@5.1.3)
-      typescript: 5.1.3
+      react-docgen-typescript: 2.2.2(typescript@5.1.5)
+      typescript: 5.1.5
       vite: 4.3.9(@types/node@16.18.34)
     dev: true
 
@@ -11142,15 +11142,15 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/core@4.2.1:
-    resolution: {integrity: sha512-tEDxFx8E38zF3gT7sSMDrT1tGumDgsw5yPG6BBh/X+5ClIQfMH/Yqocxz1PnHx6CHyF6pxmovUTOfZAUvQ0Lvw==}
+  /@octokit/core@4.2.4:
+    resolution: {integrity: sha512-rYKilwgzQ7/imScn3M9/pFfUf4I1AZEH3KhyJmtPdE2zfaXAn2mFfUy4FbKewzc2We5y/LlKLj36fWJLKC2SIQ==}
     engines: {node: '>= 14'}
     dependencies:
       '@octokit/auth-token': 3.0.4
       '@octokit/graphql': 5.0.6
-      '@octokit/request': 6.2.5
+      '@octokit/request': 6.2.8
       '@octokit/request-error': 3.0.3
-      '@octokit/types': 9.2.3
+      '@octokit/types': 9.3.2
       before-after-hook: 2.2.3
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
@@ -11165,11 +11165,11 @@ packages:
       universal-user-agent: 6.0.0
     dev: false
 
-  /@octokit/endpoint@7.0.5:
-    resolution: {integrity: sha512-LG4o4HMY1Xoaec87IqQ41TQ+glvIeTKqfjkCEmt5AIwDZJwQeVZFIEYXrYY6yLwK+pAScb9Gj4q+Nz2qSw1roA==}
+  /@octokit/endpoint@7.0.6:
+    resolution: {integrity: sha512-5L4fseVRUsDFGR00tMWD/Trdeeihn999rTMGRMC1G/Ldi1uWlWJzI98H4Iak5DB/RVvQuyMYKqSK/R6mbSOQyg==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 9.2.3
+      '@octokit/types': 9.3.2
       is-plain-object: 5.0.0
       universal-user-agent: 6.0.0
     dev: false
@@ -11188,8 +11188,8 @@ packages:
     resolution: {integrity: sha512-Fxyxdy/JH0MnIB5h+UQ3yCoh1FG4kWXfFKkpWqjZHw/p+Kc8Y44Hu/kCgNBT6nU1shNumEchmW/sUO1JuQnPcw==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/request': 6.2.5
-      '@octokit/types': 9.2.3
+      '@octokit/request': 6.2.8
+      '@octokit/types': 9.3.2
       universal-user-agent: 6.0.0
     transitivePeerDependencies:
       - encoding
@@ -11199,8 +11199,8 @@ packages:
     resolution: {integrity: sha512-PBsVO+15KSlGmiI8QAzaqvsNlZlrDlyAJYcrXBCvVUxCp7VnXjkwPoFHgjEJXx3WF9BAwkA6nfCUA7i9sODzKA==}
     dev: false
 
-  /@octokit/openapi-types@17.2.0:
-    resolution: {integrity: sha512-MazrFNx4plbLsGl+LFesMo96eIXkFgEtaKbnNpdh4aQ0VM10aoylFsTYP1AEjkeoRNZiiPe3T6Gl2Hr8dJWdlQ==}
+  /@octokit/openapi-types@18.0.0:
+    resolution: {integrity: sha512-V8GImKs3TeQRxRtXFpG2wl19V7444NIOTDF24AWuIbmNaNYOQMWRbjcGDXV5B+0n887fgDcuMNOmlul+k+oJtw==}
     dev: false
 
   /@octokit/plugin-paginate-rest@1.1.2:
@@ -11226,12 +11226,12 @@ packages:
       '@octokit/core': 3.6.0
     dev: false
 
-  /@octokit/plugin-request-log@1.0.4(@octokit/core@4.2.1):
+  /@octokit/plugin-request-log@1.0.4(@octokit/core@4.2.4):
     resolution: {integrity: sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==}
     peerDependencies:
       '@octokit/core': '>=3'
     dependencies:
-      '@octokit/core': 4.2.1
+      '@octokit/core': 4.2.4
     dev: false
 
   /@octokit/plugin-rest-endpoint-methods@2.4.0:
@@ -11271,7 +11271,7 @@ packages:
     resolution: {integrity: sha512-crqw3V5Iy2uOU5Np+8M/YexTlT8zxCfI+qu+LxUB7SZpje4Qmx3mub5DfEKSO8Ylyk0aogi6TYdf6kxzh2BguQ==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 9.2.3
+      '@octokit/types': 9.3.2
       deprecation: 2.3.1
       once: 1.4.0
     dev: false
@@ -11289,13 +11289,13 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/request@6.2.5:
-    resolution: {integrity: sha512-z83E8UIlPNaJUsXpjD8E0V5o/5f+vJJNbNcBwVZsX3/vC650U41cOkTLjq4PKk9BYonQGOnx7N17gvLyNjgGcQ==}
+  /@octokit/request@6.2.8:
+    resolution: {integrity: sha512-ow4+pkVQ+6XVVsekSYBzJC0VTVvh/FCTUUgTsboGq+DTeWdyIFV8WSCdo0RIxk6wSkBTHqIK1mYuY7nOBXOchw==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/endpoint': 7.0.5
+      '@octokit/endpoint': 7.0.6
       '@octokit/request-error': 3.0.3
-      '@octokit/types': 9.2.3
+      '@octokit/types': 9.3.2
       is-plain-object: 5.0.0
       node-fetch: 2.6.11
       universal-user-agent: 6.0.0
@@ -11303,12 +11303,12 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/rest@16.43.2(@octokit/core@4.2.1):
+  /@octokit/rest@16.43.2(@octokit/core@4.2.4):
     resolution: {integrity: sha512-ngDBevLbBTFfrHZeiS7SAMAZ6ssuVmXuya+F/7RaVvlysgGa1JKJkKWY+jV6TCJYcW0OALfJ7nTIGXcBXzycfQ==}
     dependencies:
       '@octokit/auth-token': 2.5.0
       '@octokit/plugin-paginate-rest': 1.1.2
-      '@octokit/plugin-request-log': 1.0.4(@octokit/core@4.2.1)
+      '@octokit/plugin-request-log': 1.0.4(@octokit/core@4.2.4)
       '@octokit/plugin-rest-endpoint-methods': 2.4.0
       '@octokit/request': 5.6.3
       '@octokit/request-error': 1.2.1
@@ -11350,10 +11350,10 @@ packages:
       '@octokit/openapi-types': 11.2.0
     dev: false
 
-  /@octokit/types@9.2.3:
-    resolution: {integrity: sha512-MMeLdHyFIALioycq+LFcA71v0S2xpQUX2cw6pPbHQjaibcHYwLnmK/kMZaWuGfGfjBJZ3wRUq+dOaWsvrPJVvA==}
+  /@octokit/types@9.3.2:
+    resolution: {integrity: sha512-D4iHGTdAnEEVsB8fl95m1hiz7D5YiRdQ9b/OEb3BYRVwbLsGHcRVPz+u+BgRLNk0Q0/4iZCBqDN96j2XNxfXrA==}
     dependencies:
-      '@octokit/openapi-types': 17.2.0
+      '@octokit/openapi-types': 18.0.0
     dev: false
 
   /@philpl/buble@0.19.7:
@@ -12020,7 +12020,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/builder-vite@7.0.18(typescript@5.1.3)(vite@4.3.9):
+  /@storybook/builder-vite@7.0.18(typescript@5.1.5)(vite@4.3.9):
     resolution: {integrity: sha512-Qze6/PwUJq+z776dBoG5uinAEVZyPalZIaU/VOWpTrN8L9FQbL0+HDrZU2E/BMNW+ZfnSjF3V2USLyiutsC1Tw==}
     peerDependencies:
       '@preact/preset-vite': '*'
@@ -12055,13 +12055,13 @@ packages:
       remark-external-links: 8.0.0
       remark-slug: 6.1.0
       rollup: 3.23.0
-      typescript: 5.1.3
+      typescript: 5.1.5
       vite: 4.3.9(@types/node@16.18.34)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@storybook/builder-webpack5@7.0.18(@swc/core@1.3.60)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@storybook/builder-webpack5@7.0.18(@swc/core@1.3.60)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-ciDOHrnChHWjikQwsM+xGz70PGfWurcezCyRPPRY0zimyHWtlug6V1Q9dJAdEAFsxqFSZA/qg7gEcZyqdlTMaA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -12099,7 +12099,7 @@ packages:
       case-sensitive-paths-webpack-plugin: 2.4.0
       css-loader: 6.7.1(webpack@5.84.0)
       express: 4.17.3
-      fork-ts-checker-webpack-plugin: 7.3.0(typescript@5.1.3)(webpack@5.84.0)
+      fork-ts-checker-webpack-plugin: 7.3.0(typescript@5.1.5)(webpack@5.84.0)
       fs-extra: 11.1.1
       html-webpack-plugin: 5.5.0(webpack@5.84.0)
       path-browserify: 1.0.1
@@ -12110,7 +12110,7 @@ packages:
       style-loader: 3.3.1(webpack@5.84.0)
       terser-webpack-plugin: 5.3.9(@swc/core@1.3.60)(esbuild@0.17.19)(webpack@5.84.0)
       ts-dedent: 2.2.0
-      typescript: 5.1.3
+      typescript: 5.1.5
       util: 0.12.5
       util-deprecate: 1.0.2
       webpack: 5.84.0(@swc/core@1.3.60)(esbuild@0.17.19)
@@ -12485,7 +12485,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /@storybook/react-vite@7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)(vite@4.3.9):
+  /@storybook/react-vite@7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)(vite@4.3.9):
     resolution: {integrity: sha512-rxJwp/b0dPazn15xLIeRgwrdZGWmoqoLhU7Mm+AXKToXvbe77i2bjHhkFbz34dpKFtD0i/ajcZSpmsxpxfB0HA==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -12493,10 +12493,10 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
       vite: ^3.0.0 || ^4.0.0
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.2.1(typescript@5.1.3)(vite@4.3.9)
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.2.1(typescript@5.1.5)(vite@4.3.9)
       '@rollup/pluginutils': 4.2.1
-      '@storybook/builder-vite': 7.0.18(typescript@5.1.3)(vite@4.3.9)
-      '@storybook/react': 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3)
+      '@storybook/builder-vite': 7.0.18(typescript@5.1.5)(vite@4.3.9)
+      '@storybook/react': 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5)
       '@vitejs/plugin-react': 3.1.0(vite@4.3.9)
       ast-types: 0.14.2
       magic-string: 0.27.0
@@ -12511,7 +12511,7 @@ packages:
       - vite-plugin-glimmerx
     dev: true
 
-  /@storybook/react@7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.3):
+  /@storybook/react@7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.1.5):
     resolution: {integrity: sha512-lumUbHYeuL3qa4SZR9K2YC4UIt1hwW19GuI/6f2HEV5gR9QHHSJHg9HD9pjcxv4fQaiG81ACZ0Sg6lyUkcJvuQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -12544,7 +12544,7 @@ packages:
       react-element-to-jsx-string: 15.0.0(react-dom@18.2.0)(react@18.2.0)
       ts-dedent: 2.2.0
       type-fest: 2.19.0
-      typescript: 5.1.3
+      typescript: 5.1.5
       util-deprecate: 1.0.2
     transitivePeerDependencies:
       - supports-color
@@ -14094,6 +14094,13 @@ packages:
     dependencies:
       acorn: 8.8.2
 
+  /acorn-import-assertions@1.9.0(acorn@8.9.0):
+    resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}
+    peerDependencies:
+      acorn: ^8
+    dependencies:
+      acorn: 8.9.0
+
   /acorn-jsx@5.3.2(acorn@6.4.2):
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -14138,6 +14145,11 @@ packages:
 
   /acorn@8.8.2:
     resolution: {integrity: sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  /acorn@8.9.0:
+    resolution: {integrity: sha512-jaVNAFBHNLXspO543WnNNPZFRtavh3skAkITqD0/2aeMkKZTN+254PyhwxFYrk3vQ1xfY+2wbesJMs/JC8/PwQ==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -14408,6 +14420,12 @@ packages:
     dependencies:
       deep-equal: 2.2.0
 
+  /aria-query@5.3.0:
+    resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
+    dependencies:
+      dequal: 2.0.3
+    dev: false
+
   /arr-diff@4.0.0:
     resolution: {integrity: sha512-YVIQ82gZPGBebQV/a8dar4AitzCQs0jjXwMPZllpXMaGjXPYVUawSxQrRsjhjupyVxEvbHgUmIhKVlND+j02kA==}
     engines: {node: '>=0.10.0'}
@@ -14661,6 +14679,12 @@ packages:
       deep-equal: 2.2.0
     dev: false
 
+  /axobject-query@3.2.1:
+    resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
+    dependencies:
+      dequal: 2.0.3
+    dev: false
+
   /babel-code-frame@6.26.0:
     resolution: {integrity: sha512-XqYMR2dfdGMW+hd0IUZ2PwK+fGeFkOxZJ0wY+JaQAHzt1Zx8LcvpiZD2NiGkEG8qx0CfkAOr5xt76d1e8vG90g==}
     dependencies:
@@ -14709,7 +14733,7 @@ packages:
       webpack: 5.84.0(@swc/core@1.3.60)(esbuild@0.17.19)
     dev: true
 
-  /babel-loader@8.3.0(@babel/core@7.22.5)(webpack@5.86.0):
+  /babel-loader@8.3.0(@babel/core@7.22.5)(webpack@5.88.0):
     resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
     engines: {node: '>= 8.9'}
     peerDependencies:
@@ -14721,7 +14745,7 @@ packages:
       loader-utils: 2.0.4
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.86.0(@swc/core@1.3.60)(esbuild@0.17.19)
+      webpack: 5.88.0(@swc/core@1.3.60)(esbuild@0.17.19)
     dev: false
 
   /babel-loader@9.1.2(@babel/core@7.22.1)(webpack@5.84.0):
@@ -15283,15 +15307,15 @@ packages:
       node-releases: 2.0.10
       update-browserslist-db: 1.0.11(browserslist@4.21.5)
 
-  /browserslist@4.21.7:
-    resolution: {integrity: sha512-BauCXrQ7I2ftSqd2mvKHGo85XR0u7Ru3C/Hxsy/0TkfCtjrmAbPdzLGasmoiBxplpDXlPvdjX9u7srIMfgasNA==}
+  /browserslist@4.21.9:
+    resolution: {integrity: sha512-M0MFoZzbUrRU4KNfCrDLnvyE7gub+peetoTid3TBIqtunaDJyXlwhakT+/VkvSXcfIzFfK/nkCs4nmyTmxdNSg==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001497
-      electron-to-chromium: 1.4.425
+      caniuse-lite: 1.0.30001509
+      electron-to-chromium: 1.4.442
       node-releases: 2.0.12
-      update-browserslist-db: 1.0.11(browserslist@4.21.7)
+      update-browserslist-db: 1.0.11(browserslist@4.21.9)
 
   /bser@2.1.1:
     resolution: {integrity: sha512-gQxTNE/GAfIIrmHLUE3oJyp5FO6HRBfhjnw4/wMmA63ZGDJnWBmgY/lyQBpnDUkGmAhbSe39tx2d/iTOAfglwQ==}
@@ -15573,8 +15597,8 @@ packages:
   /caniuse-lite@1.0.30001464:
     resolution: {integrity: sha512-oww27MtUmusatpRpCGSOneQk2/l5czXANDSFvsc7VuOQ86s3ANhZetpwXNf1zY/zdfP63Xvjz325DAdAoES13g==}
 
-  /caniuse-lite@1.0.30001497:
-    resolution: {integrity: sha512-I4/duVK4wL6rAK/aKZl3HXB4g+lIZvaT4VLAn2rCgJ38jVLb0lv2Xug6QuqmxXFVRJMF74SPPWPJ/1Sdm3vCzw==}
+  /caniuse-lite@1.0.30001509:
+    resolution: {integrity: sha512-2uDDk+TRiTX5hMcUYT/7CSyzMZxjfGu0vAUjS2g0LSD8UoXOv0LtpH4LxGMemsiPq6LCVIUjNwVM0erkOkGCDA==}
 
   /capture-stack-trace@1.0.1:
     resolution: {integrity: sha512-mYQLZnx5Qt1JgB1WEiMCf2647plpGeQ2NMR/5L0HNZzGQo4fuSPnK+wjfPnKZV0aiJDgzmWqqkV/g7JD+DW0qw==}
@@ -15886,6 +15910,16 @@ packages:
 
   /code-block-writer@10.1.1:
     resolution: {integrity: sha512-67ueh2IRGst/51p0n6FvPrnRjAGHY5F8xdjkgrYE7DDzpJe6qA07RYQ9VcoUeo5ATOjSOiWpSL3SWBRRbempMw==}
+    dev: false
+
+  /code-red@1.0.3:
+    resolution: {integrity: sha512-kVwJELqiILQyG5aeuyKFbdsI1fmQy1Cmf7dQ8eGmVuJoaRVdwey7WaMknr2ZFeVSYSKT0rExsa8EGw0aoI/1QQ==}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.15
+      '@types/estree': 1.0.1
+      acorn: 8.9.0
+      estree-walker: 3.0.3
+      periscopic: 3.1.0
     dev: false
 
   /codemirror@5.65.13:
@@ -16544,6 +16578,14 @@ packages:
       mdn-data: 2.0.14
       source-map: 0.6.1
 
+  /css-tree@2.3.1:
+    resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
+    dependencies:
+      mdn-data: 2.0.30
+      source-map-js: 1.0.2
+    dev: false
+
   /css-what@3.4.2:
     resolution: {integrity: sha512-ACUm3L0/jiZTqfzRM3Hi9Q8eZqd6IK37mMWPLz9PJxkLWllYeRf+EHUSHYEtFop2Eqytaq1FizFVh7XfBnXCDQ==}
     engines: {node: '>= 6'}
@@ -16968,7 +17010,6 @@ packages:
   /dequal@2.0.3:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
     engines: {node: '>=6'}
-    dev: true
 
   /destroy@1.0.4:
     resolution: {integrity: sha512-3NdhDuEXnfun/z7x9GOElY49LoqVHoGScmOKwmxhsS8N5Y+Z8KyPPDnaSzqWgYt/ji4mqwfTS34Htrk0zPIXVg==}
@@ -17261,7 +17302,7 @@ packages:
     dependencies:
       semver: 7.5.1
       shelljs: 0.8.5
-      typescript: 5.2.0-dev.20230609
+      typescript: 5.2.0-dev.20230628
     dev: false
 
   /duplexer3@0.1.4:
@@ -17311,8 +17352,8 @@ packages:
   /electron-to-chromium@1.4.371:
     resolution: {integrity: sha512-jlBzY4tFcJaiUjzhRTCWAqRvTO/fWzjA3Bls0mykzGZ7zvcMP7h05W6UcgzfT9Ca1SW2xyKDOFRyI0pQeRNZGw==}
 
-  /electron-to-chromium@1.4.425:
-    resolution: {integrity: sha512-wv1NufHxu11zfDbY4fglYQApMswleE9FL/DSeyOyauVXDZ+Kco96JK/tPfBUaDqfRarYp2WH2hJ/5UnVywp9Jg==}
+  /electron-to-chromium@1.4.442:
+    resolution: {integrity: sha512-RkrZF//Ya+0aJq2NM3OdisNh5ZodZq1rdXOS96G8DdDgpDKqKE81yTbbQ3F/4CKm1JBPsGu1Lp/akkna2xO06Q==}
 
   /emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -17385,6 +17426,13 @@ packages:
 
   /enhanced-resolve@5.14.1:
     resolution: {integrity: sha512-Vklwq2vDKtl0y/vtwjSesgJ5MYS7Etuk5txS8VdKL4AOS1aUlD96zqIfsOSLQsdv3xgMRbtkWM8eG9XDfKUPow==}
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      graceful-fs: 4.2.11
+      tapable: 2.2.1
+
+  /enhanced-resolve@5.15.0:
+    resolution: {integrity: sha512-LXYT42KJ7lpIKECr2mAXIaMldcNCh/7E0KBKOu4KSfkHmP+mZmSs+8V5gBAqisWBy0OO4W5Oyys0GO1Y8KtdKg==}
     engines: {node: '>=10.13.0'}
     dependencies:
       graceful-fs: 4.2.11
@@ -17511,6 +17559,9 @@ packages:
   /es-module-lexer@1.2.1:
     resolution: {integrity: sha512-9978wrXM50Y4rTMmW5kXIC09ZdXQZqkE4mxhwkd8VbzsGkXGPgV4zWuqQJgCEzYngdo2dYDa0l8xhX4fkSwJSg==}
 
+  /es-module-lexer@1.3.0:
+    resolution: {integrity: sha512-vZK7T0N2CBmBOixhmjdqx2gWVbFZ4DXZ/NyRMZVlJXPa7CyFS+/a4QQsDGDQy9ZfEzxFuNEsMLeQJnKP2p5/JA==}
+
   /es-set-tostringtag@2.0.1:
     resolution: {integrity: sha512-g3OMbtlwY3QewlqAiMLI47KywjWZoEytKr8pf6iTC8uJq5bIAH52Z9pnQ8pVL6whrCto53JZDuUIsifGeLorTg==}
     engines: {node: '>= 0.4'}
@@ -17553,7 +17604,7 @@ packages:
       es6-promise: 4.2.8
     dev: false
 
-  /esbuild-loader@2.21.0(webpack@5.86.0):
+  /esbuild-loader@2.21.0(webpack@5.88.0):
     resolution: {integrity: sha512-k7ijTkCT43YBSZ6+fBCW1Gin7s46RrJ0VQaM8qA7lq7W+OLsGgtLyFV8470FzYi/4TeDexniTBTPTwZUnXXR5g==}
     peerDependencies:
       webpack: ^4.40.0 || ^5.0.0
@@ -17563,7 +17614,7 @@ packages:
       json5: 2.2.3
       loader-utils: 2.0.4
       tapable: 2.2.1
-      webpack: 5.86.0(@swc/core@1.3.60)(esbuild@0.17.19)
+      webpack: 5.88.0(@swc/core@1.3.60)(esbuild@0.17.19)
       webpack-sources: 1.4.3
     dev: false
 
@@ -18173,6 +18224,12 @@ packages:
 
   /estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
+
+  /estree-walker@3.0.3:
+    resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
+    dependencies:
+      '@types/estree': 1.0.1
+    dev: false
 
   /esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
@@ -18805,7 +18862,7 @@ packages:
       cross-spawn: 7.0.3
       signal-exit: 3.0.7
 
-  /fork-ts-checker-webpack-plugin@6.5.1(eslint@8.41.0)(typescript@5.1.3)(webpack@5.84.0):
+  /fork-ts-checker-webpack-plugin@6.5.1(eslint@8.41.0)(typescript@5.1.5)(webpack@5.84.0):
     resolution: {integrity: sha512-x1wumpHOEf4gDROmKTaB6i4/Q6H3LwmjVO7fIX47vBwlZbtPjU33hgoMuD/Q/y6SU8bnuYSoN6ZQOLshGp0T/g==}
     engines: {node: '>=10', yarn: '>=1.0.0'}
     peerDependencies:
@@ -18833,11 +18890,11 @@ packages:
       schema-utils: 2.7.0
       semver: 7.5.1
       tapable: 1.1.3
-      typescript: 5.1.3
+      typescript: 5.1.5
       webpack: 5.84.0(@swc/core@1.3.60)(esbuild@0.17.19)
     dev: true
 
-  /fork-ts-checker-webpack-plugin@7.3.0(typescript@5.1.3)(webpack@5.84.0):
+  /fork-ts-checker-webpack-plugin@7.3.0(typescript@5.1.5)(webpack@5.84.0):
     resolution: {integrity: sha512-IN+XTzusCjR5VgntYFgxbxVx3WraPRnKehBFrf00cMSrtUuW9MsG9dhL6MWpY6MkjC3wVwoujfCDgZZCQwbswA==}
     engines: {node: '>=12.13.0', yarn: '>=1.0.0'}
     peerDependencies:
@@ -18860,7 +18917,7 @@ packages:
       schema-utils: 3.1.2
       semver: 7.5.1
       tapable: 2.2.1
-      typescript: 5.1.3
+      typescript: 5.1.5
       webpack: 5.84.0(@swc/core@1.3.60)(esbuild@0.17.19)
     dev: true
 
@@ -20672,6 +20729,12 @@ packages:
       '@types/estree': 1.0.1
     dev: false
 
+  /is-reference@3.0.1:
+    resolution: {integrity: sha512-baJJdQLiYaJdvFbJqXrcGv3WU3QCzBlUcI5QhbesIm6/xPsvmO+2CDoi/GMOFBQEQm+PXkwOPrp9KK5ozZsp2w==}
+    dependencies:
+      '@types/estree': 1.0.1
+    dev: false
+
   /is-regex@1.1.4:
     resolution: {integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==}
     engines: {node: '>= 0.4'}
@@ -21141,12 +21204,12 @@ packages:
     resolution: {integrity: sha512-J5Xez4nRRMjk8emnTpWrlkyb9pfRQQanDrvWHhsR1+VUfbwxi30eVcZFlcdGInRibU4G5LwHXpI7IRHU0CY+gg==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  /jest-github-reporter@1.1.1(@octokit/core@4.2.1)(jest@29.5.0):
+  /jest-github-reporter@1.1.1(@octokit/core@4.2.4)(jest@29.5.0):
     resolution: {integrity: sha512-+Gvsu9TCQkvVZud29hqoOti8Uc1IDO+5pZzp7Hi8YkdwQGLsa0KuEvt7SdDwDDFmz9pPrv//97FEkcTy/3Fxbg==}
     peerDependencies:
       jest: '>= 24.x'
     dependencies:
-      '@octokit/rest': 16.43.2(@octokit/core@4.2.1)
+      '@octokit/rest': 16.43.2(@octokit/core@4.2.4)
       create-check: 0.6.40
       execa: 1.0.0
       jest: 29.5.0(@types/node@16.18.34)(ts-node@10.9.1)
@@ -22013,6 +22076,10 @@ packages:
     engines: {node: '>= 12.13.0'}
     dev: true
 
+  /locate-character@3.0.0:
+    resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
+    dev: false
+
   /locate-path@3.0.0:
     resolution: {integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==}
     engines: {node: '>=6'}
@@ -22411,6 +22478,10 @@ packages:
 
   /mdn-data@2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
+
+  /mdn-data@2.0.30:
+    resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
+    dev: false
 
   /mdn-data@2.0.4:
     resolution: {integrity: sha512-iV3XNKw06j5Q7mi6h+9vbx23Tv7JkjEVgKHW4pimwyDGWm0OIQntJJ+u1C6mg6mK1EaTv42XQ7w76yuzH7M2cA==}
@@ -23851,6 +23922,14 @@ packages:
   /pend@1.2.0:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
 
+  /periscopic@3.1.0:
+    resolution: {integrity: sha512-vKiQ8RRtkl9P+r/+oefh25C3fhybptkHKCZSPlcXiJux2tJF55GnEj3BVn4A5gKfq9NWWXXrxkHBwVPUfH0opw==}
+    dependencies:
+      '@types/estree': 1.0.1
+      estree-walker: 3.0.3
+      is-reference: 3.0.1
+    dev: false
+
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
@@ -24094,7 +24173,7 @@ packages:
       yaml: 1.10.2
     dev: false
 
-  /postcss-loader@6.2.1(postcss@8.4.14)(webpack@5.86.0):
+  /postcss-loader@6.2.1(postcss@8.4.14)(webpack@5.88.0):
     resolution: {integrity: sha512-WbbYpmAaKcux/P66bZ40bpWsBucjx/TTgVVzRZ9yUO8yQfVBlameJ0ZGVaPfH64hNSBh63a+ICP5nqOpBA0w+Q==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
@@ -24105,7 +24184,7 @@ packages:
       klona: 2.0.5
       postcss: 8.4.14
       semver: 7.5.1
-      webpack: 5.86.0(@swc/core@1.3.60)(esbuild@0.17.19)
+      webpack: 5.88.0(@swc/core@1.3.60)(esbuild@0.17.19)
 
   /postcss-loader@7.0.0(postcss@8.4.14)(webpack@5.84.0):
     resolution: {integrity: sha512-IDyttebFzTSY6DI24KuHUcBjbAev1i+RyICoPEWcAstZsj03r533uMXtDn506l6/wlsRYiS5XBdx7TpccCsyUg==}
@@ -24655,12 +24734,12 @@ packages:
       prosemirror-transform: 1.7.2
     dev: false
 
-  /prosemirror-dev-toolkit@1.1.2(svelte@3.59.1):
+  /prosemirror-dev-toolkit@1.1.2(svelte@4.0.0):
     resolution: {integrity: sha512-LeBknQEHB+75F8zU9dg2hCox9c9pYj+LmaCnKYn3ym4pEB0EDKCgI7W28osr2z5CeDCtz87Ib5MAQC8LocVj3A==}
     dependencies:
       html: 1.0.0
       prosemirror-model: 1.19.2
-      svelte-tree-view: 1.3.3(svelte@3.59.1)
+      svelte-tree-view: 1.3.3(svelte@4.0.0)
     transitivePeerDependencies:
       - svelte
     dev: false
@@ -24978,7 +25057,7 @@ packages:
       unpipe: 1.0.0
     dev: true
 
-  /raw-loader@4.0.2(webpack@5.86.0):
+  /raw-loader@4.0.2(webpack@5.88.0):
     resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -24986,7 +25065,7 @@ packages:
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.1.2
-      webpack: 5.86.0(@swc/core@1.3.60)(esbuild@0.17.19)
+      webpack: 5.88.0(@swc/core@1.3.60)(esbuild@0.17.19)
     dev: true
 
   /rc@1.2.8:
@@ -25040,7 +25119,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /react-dev-utils@12.0.1(eslint@8.41.0)(typescript@5.1.3)(webpack@5.84.0):
+  /react-dev-utils@12.0.1(eslint@8.41.0)(typescript@5.1.5)(webpack@5.84.0):
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -25059,7 +25138,7 @@ packages:
       escape-string-regexp: 4.0.0
       filesize: 8.0.7
       find-up: 5.0.0
-      fork-ts-checker-webpack-plugin: 6.5.1(eslint@8.41.0)(typescript@5.1.3)(webpack@5.84.0)
+      fork-ts-checker-webpack-plugin: 6.5.1(eslint@8.41.0)(typescript@5.1.5)(webpack@5.84.0)
       global-modules: 2.0.0
       globby: 11.1.0
       gzip-size: 6.0.0
@@ -25074,7 +25153,7 @@ packages:
       shell-quote: 1.7.3
       strip-ansi: 6.0.1
       text-table: 0.2.0
-      typescript: 5.1.3
+      typescript: 5.1.5
       webpack: 5.84.0(@swc/core@1.3.60)(esbuild@0.17.19)
     transitivePeerDependencies:
       - eslint
@@ -25082,12 +25161,12 @@ packages:
       - vue-template-compiler
     dev: true
 
-  /react-docgen-typescript@2.2.2(typescript@5.1.3):
+  /react-docgen-typescript@2.2.2(typescript@5.1.5):
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
     peerDependencies:
       typescript: '>= 4.3.x'
     dependencies:
-      typescript: 5.1.3
+      typescript: 5.1.5
     dev: true
 
   /react-docgen@6.0.0-alpha.3:
@@ -26165,8 +26244,8 @@ packages:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
 
-  /schema-utils@3.2.0:
-    resolution: {integrity: sha512-0zTyLGyDJYd/MBxG1AhJkKa6fpEBds4OQO2ut0w7OYG+ZGhGea09lijvzsqegYSik88zc7cUtIlnnO+/BvD6gQ==}
+  /schema-utils@3.3.0:
+    resolution: {integrity: sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
       '@types/json-schema': 7.0.12
@@ -27172,17 +27251,31 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /svelte-tree-view@1.3.3(svelte@3.59.1):
+  /svelte-tree-view@1.3.3(svelte@4.0.0):
     resolution: {integrity: sha512-MkpOC/+FK1cMRDUy9H4O82s+B20oKBYcq9B1ql+xQ46tueRnqHUC5tRmFpOG1slHy+ZijSEmA0zwtwO1h174Cg==}
     peerDependencies:
       svelte: '>=3'
     dependencies:
-      svelte: 3.59.1
+      svelte: 4.0.0
     dev: false
 
-  /svelte@3.59.1:
-    resolution: {integrity: sha512-pKj8fEBmqf6mq3/NfrB9SLtcJcUvjYSWyePlfCqN9gujLB25RitWK8PvFzlwim6hD/We35KbPlRteuA6rnPGcQ==}
-    engines: {node: '>= 8'}
+  /svelte@4.0.0:
+    resolution: {integrity: sha512-+yCYu3AEUu9n91dnQNGIbnVp8EmNQtuF/YImW4+FTXRHard7NMo+yTsWzggPAbj3fUEJ1FBJLkql/jkp6YB5pg==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@ampproject/remapping': 2.2.1
+      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/trace-mapping': 0.3.18
+      acorn: 8.9.0
+      aria-query: 5.3.0
+      axobject-query: 3.2.1
+      code-red: 1.0.3
+      css-tree: 2.3.1
+      estree-walker: 3.0.3
+      is-reference: 3.0.1
+      locate-character: 3.0.0
+      magic-string: 0.30.0
+      periscopic: 3.1.0
     dev: false
 
   /svg-parser@2.0.4:
@@ -27380,7 +27473,7 @@ packages:
       terser: 5.17.6
       webpack: 5.84.0(@swc/core@1.3.60)(esbuild@0.17.19)
 
-  /terser-webpack-plugin@5.3.9(@swc/core@1.3.60)(esbuild@0.17.19)(webpack@5.86.0):
+  /terser-webpack-plugin@5.3.9(@swc/core@1.3.60)(esbuild@0.17.19)(webpack@5.88.0):
     resolution: {integrity: sha512-ZuXsqE07EcggTWQjXUj+Aot/OMcD0bMKGgF63f7UxYcu5/AJF53aIpK1YoP5xR9l6s/Hy2b+t1AM0bLNPRuhwA==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -27403,7 +27496,7 @@ packages:
       schema-utils: 3.1.2
       serialize-javascript: 6.0.1
       terser: 5.17.6
-      webpack: 5.86.0(@swc/core@1.3.60)(esbuild@0.17.19)
+      webpack: 5.88.0(@swc/core@1.3.60)(esbuild@0.17.19)
 
   /terser@4.8.0:
     resolution: {integrity: sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==}
@@ -27687,7 +27780,7 @@ packages:
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
       '@types/node': 16.18.34
-      acorn: 8.8.2
+      acorn: 8.9.0
       acorn-walk: 8.2.0
       arg: 4.1.3
       create-require: 1.1.1
@@ -27885,13 +27978,13 @@ packages:
       typescript: 5.0.4
     dev: false
 
-  /type-fest@3.10.0(typescript@5.1.3):
+  /type-fest@3.10.0(typescript@5.1.5):
     resolution: {integrity: sha512-hmAPf1datm+gt3c2mvu0sJyhFy6lTkIGf0GzyaZWxRLnabQfPUqg6tF95RPg6sLxKI7nFLGdFxBcf2/7+GXI+A==}
     engines: {node: '>=14.16'}
     peerDependencies:
       typescript: '>=4.7.0'
     dependencies:
-      typescript: 5.1.3
+      typescript: 5.1.5
     dev: false
 
   /type-is@1.6.18:
@@ -27923,13 +28016,13 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.1.3:
-    resolution: {integrity: sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==}
+  /typescript@5.1.5:
+    resolution: {integrity: sha512-FOH+WN/DQjUvN6WgW+c4Ml3yi0PH+a/8q+kNIfRehv1wLhWONedw85iu+vQ39Wp49IzTJEsZ2lyLXpBF7mkF1g==}
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /typescript@5.2.0-dev.20230609:
-    resolution: {integrity: sha512-K2ANmDIAXPbor3BkY3Fg8eQAeZwvXNWtrtP280muI0V2S9WRaw/EYgDC08dectU5OUQJ8AvEqEYnRN9Hg4zeEw==}
+  /typescript@5.2.0-dev.20230628:
+    resolution: {integrity: sha512-dWItHqHLu37lksKsUBRDXlnWdI8WVhKQoVRxlv8w2XfbL/jAA6vFeJLtmb6C3pQKm1X0Sl9BFHJgYWdyiN3u9g==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false
@@ -28192,13 +28285,13 @@ packages:
       escalade: 3.1.1
       picocolors: 1.0.0
 
-  /update-browserslist-db@1.0.11(browserslist@4.21.7):
+  /update-browserslist-db@1.0.11(browserslist@4.21.9):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
-      browserslist: 4.21.7
+      browserslist: 4.21.9
       escalade: 3.1.1
       picocolors: 1.0.0
 
@@ -28782,8 +28875,8 @@ packages:
       - esbuild
       - uglify-js
 
-  /webpack@5.86.0(@swc/core@1.3.60)(esbuild@0.17.19):
-    resolution: {integrity: sha512-3BOvworZ8SO/D4GVP+GoRC3fVeg5MO4vzmq8TJJEkdmopxyazGDxN8ClqN12uzrZW9Tv8EED8v5VSb6Sqyi0pg==}
+  /webpack@5.88.0(@swc/core@1.3.60)(esbuild@0.17.19):
+    resolution: {integrity: sha512-O3jDhG5e44qIBSi/P6KpcCcH7HD+nYIHVBhdWFxcLOcIGN8zGo5nqF3BjyNCxIh4p1vFdNnreZv2h2KkoAw3lw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -28797,12 +28890,12 @@ packages:
       '@webassemblyjs/ast': 1.11.6
       '@webassemblyjs/wasm-edit': 1.11.6
       '@webassemblyjs/wasm-parser': 1.11.6
-      acorn: 8.8.2
-      acorn-import-assertions: 1.9.0(acorn@8.8.2)
-      browserslist: 4.21.7
+      acorn: 8.9.0
+      acorn-import-assertions: 1.9.0(acorn@8.9.0)
+      browserslist: 4.21.9
       chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.14.1
-      es-module-lexer: 1.2.1
+      enhanced-resolve: 5.15.0
+      es-module-lexer: 1.3.0
       eslint-scope: 5.1.1
       events: 3.3.0
       glob-to-regexp: 0.4.1
@@ -28811,9 +28904,9 @@ packages:
       loader-runner: 4.3.0
       mime-types: 2.1.35
       neo-async: 2.6.2
-      schema-utils: 3.2.0
+      schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.9(@swc/core@1.3.60)(esbuild@0.17.19)(webpack@5.86.0)
+      terser-webpack-plugin: 5.3.9(@swc/core@1.3.60)(esbuild@0.17.19)(webpack@5.88.0)
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:
