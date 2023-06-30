@@ -86,7 +86,12 @@ HTML is a great format for demo code because it's compact and easy to read. It's
 Hence, you want to persist Remirror's native JSON format, and load this in your editor:
 
 ```tsx
-import { BoldExtension, CalloutExtension, ItalicExtension } from 'remirror/extensions';
+import {
+  BoldExtension,
+  CalloutExtension,
+  ItalicExtension,
+  HeadingExtension,
+} from 'remirror/extensions';
 import { useRemirror } from '@remirror/react';
 
 const remirrorJsonFromStorage = {
@@ -105,6 +110,7 @@ const remirrorJsonFromStorage = {
 
 const { manager, state } = useRemirror({
   extensions: () => [
+    new HeadingExtension(),
     new BoldExtension(),
     new ItalicExtension(),
     new CalloutExtension({ defaultType: 'warn' }),
