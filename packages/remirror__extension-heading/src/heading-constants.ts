@@ -8,7 +8,13 @@ const { LABEL } = ExtensionHeadingMessages;
  */
 export const toggleHeadingOptions: Remirror.CommandDecoratorOptions = {
   icon: ({ attrs }) => `h${attrs?.level ?? '1'}` as CoreIcon,
-  label: ({ t, attrs }) => t(LABEL, { level: attrs?.level }),
+  label: ({ t, attrs }) =>
+    t({
+      ...LABEL,
+      values: {
+        level: attrs?.level,
+      },
+    }),
 };
 
 /**

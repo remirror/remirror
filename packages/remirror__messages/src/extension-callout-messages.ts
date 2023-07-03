@@ -1,7 +1,7 @@
-import type * as _ from '@lingui/core';
+import type { MessageDescriptor } from '@lingui/core';
 import { defineMessage } from '@lingui/macro';
 
-export const LABEL = defineMessage({
+export const LABEL: MessageDescriptor = defineMessage({
   id: 'extension.command.toggle-callout.label',
   comment: 'Label for callout command with support for callout types.',
   message: `{type, select, info {Information Callout}
@@ -11,7 +11,7 @@ export const LABEL = defineMessage({
                             other {Callout}}`,
 });
 
-export const DESCRIPTION = defineMessage({
+export const DESCRIPTION: MessageDescriptor = defineMessage({
   id: 'extension.command.toggle-callout.description',
   comment: 'Description of the callout command with support for callout types.',
   message: `{type, select, info {Create an information callout block}

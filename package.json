@@ -121,9 +121,9 @@
     "@linaria/cli": "4.1.17",
     "@linaria/shaker": "4.2.11",
     "@linaria/webpack-loader": "4.1.17",
-    "@lingui/cli": "^3.17.2",
-    "@lingui/macro": "^3.17.2",
-    "@lingui/react": "^3.17.2",
+    "@lingui/cli": "^4.2.0",
+    "@lingui/macro": "^4.2.0",
+    "@lingui/react": "^4.2.0",
     "@manypkg/cli": "^0.20.0",
     "@microsoft/api-extractor": "^7.35.0",
     "@preconstruct/cli": "^2.7.0",
@@ -216,10 +216,10 @@
       "postcss": ">= 8.0.0"
     },
     "patchedDependencies": {
-      "@lingui/detect-locale@3.17.2": "patches/@lingui__detect-locale@3.17.2.patch",
       "y-prosemirror@1.2.1": "patches/y-prosemirror@1.2.1.patch",
       "y-webrtc@10.2.5": "patches/y-webrtc@10.2.5.patch",
-      "svgmoji@3.2.0": "patches/svgmoji@3.2.0.patch"
+      "svgmoji@3.2.0": "patches/svgmoji@3.2.0.patch",
+      "@lingui/detect-locale@4.2.0": "patches/@lingui__detect-locale@4.2.0.patch"
     }
   },
   "preconstruct": {

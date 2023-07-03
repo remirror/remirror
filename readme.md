@@ -174,7 +174,7 @@ View our documentation website [**here**][introduction].
 ## Features
 
 - A11y focused and ARIA compatible.
-- I18n support via [lingui](https://github.com/lingui/js-lingui).
+- I18n support via [lingui](https://lingui.dev).
 - Great support for mobile devices.
 - Out-of-the-box editors, or create own by composing extensions.
 - Create your own extensions for bare-metal ProseMirror integration.
