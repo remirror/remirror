@@ -195,7 +195,7 @@
     "playwright-testing-library": "^4.5.0",
     "prettier": "^2.8.8",
     "prettier-plugin-packagejson": "^2.4.3",
-    "remirror": "2.0.32",
+    "remirror": "2.0.33",
     "rimraf": "^4.4.1",
     "size-limit": "^8.2.4",
     "snapshot-diff": "^0.10.0",

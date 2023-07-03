@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-editors",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "description": "A showcase of possible react editors built with remirror.",
   "keywords": [
     "remirror",
@@ -62,13 +62,13 @@
     "@remirror/core-helpers": "^2.0.3",
     "@remirror/extension-react-tables": "^2.2.16",
     "@remirror/pm": "^2.0.6",
-    "@remirror/react": "^2.0.29",
+    "@remirror/react": "^2.0.30",
     "@remirror/styles": "^2.0.5",
     "@svgmoji/noto": "^3.2.0",
     "@types/refractor": "^3.0.2",
     "create-context-state": "^2.0.2",
     "refractor": "^3.6.0",
-    "remirror": "2.0.32",
+    "remirror": "2.0.33",
     "svgmoji": "^3.2.0"
   },
   "devDependencies": {

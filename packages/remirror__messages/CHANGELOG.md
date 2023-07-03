@@ -1,5 +1,13 @@
 # @remirror/messages
 
+## 2.0.5
+
+> 2023-07-03
+
+### Patch Changes
+
+- 2d3fdc511: Update lingui to latest version
+
 ## 2.0.4
 
 > 2023-04-27

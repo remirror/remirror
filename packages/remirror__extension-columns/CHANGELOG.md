@@ -1,5 +1,15 @@
 # @remirror/extension-columns
 
+## 2.0.14
+
+> 2023-07-03
+
+### Patch Changes
+
+- 2d3fdc511: Update lingui to latest version
+- Updated dependencies [2d3fdc511]
+  - @remirror/messages@2.0.5
+
 ## 2.0.13
 
 > 2023-04-26

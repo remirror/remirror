@@ -1,5 +1,16 @@
 # @remirror/extension-text-color
 
+## 2.0.15
+
+> 2023-07-03
+
+### Patch Changes
+
+- 2d3fdc511: Update lingui to latest version
+- Updated dependencies [2d3fdc511]
+  - @remirror/messages@2.0.5
+  - @remirror/i18n@2.0.4
+
 ## 2.0.14
 
 > 2023-04-26
