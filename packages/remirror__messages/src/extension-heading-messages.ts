@@ -1,7 +1,7 @@
-import type * as _ from '@lingui/core';
+import type { MessageDescriptor } from '@lingui/core';
 import { defineMessage } from '@lingui/macro';
 
-export const LABEL = defineMessage({
+export const LABEL: MessageDescriptor = defineMessage({
   id: 'extension.command.toggle-heading.label',
   comment: 'Label for heading command with support for levels.',
   message: `{level, select, 1 {Heading 1}

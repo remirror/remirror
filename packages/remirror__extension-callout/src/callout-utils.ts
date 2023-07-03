@@ -65,7 +65,10 @@ export function updateNodeAttributes(type: NodeType) {
         return false;
       }
 
-      tr.setNodeMarkup(parent.pos, type, { ...parent.node.attrs, ...attributes });
+      tr.setNodeMarkup(parent.pos, type, {
+        ...parent.node.attrs,
+        ...attributes,
+      });
 
       if (dispatch) {
         dispatch(tr);
@@ -90,8 +93,20 @@ export const toggleCalloutOptions: Remirror.CommandDecoratorOptions = {
         return 'informationLine';
     }
   },
-  description: ({ t, attrs }) => t(DESCRIPTION, { type: attrs?.type }),
-  label: ({ t, attrs }) => t(LABEL, { type: attrs?.type }),
+  description: ({ t, attrs }) =>
+    t({
+      ...DESCRIPTION,
+      values: {
+        type: attrs?.type,
+      },
+    }),
+  label: ({ t, attrs }) =>
+    t({
+      ...LABEL,
+      values: {
+        type: attrs?.type,
+      },
+    }),
 };
 
 /**

@@ -25,8 +25,20 @@ import { ExtensionBidiMessages } from '@remirror/messages';
 
 const setTextDirectionOptions: Remirror.CommandDecoratorOptions = {
   icon: ({ attrs }) => (attrs?.dir === 'ltr' ? 'textDirectionL' : 'textDirectionR'),
-  description: ({ t, attrs }) => t(ExtensionBidiMessages.DESCRIPTION, { dir: attrs?.dir }),
-  label: ({ t, attrs }) => t(ExtensionBidiMessages.LABEL, { dir: attrs?.dir }),
+  description: ({ t, attrs }) =>
+    t({
+      ...ExtensionBidiMessages.DESCRIPTION,
+      values: {
+        dir: attrs?.dir,
+      },
+    }),
+  label: ({ t, attrs }) =>
+    t({
+      ...ExtensionBidiMessages.LABEL,
+      values: {
+        dir: attrs?.dir,
+      },
+    }),
 };
 
 export interface BidiOptions {
@@ -77,9 +89,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
    */
   createAttributes(): ProsemirrorAttributes {
     if (this.options.defaultDirection) {
-      return {
-        dir: this.options.defaultDirection,
-      };
+      return { dir: this.options.defaultDirection };
     }
 
     return {};
@@ -158,7 +168,10 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
         this._ignoreNextUpdate = true;
         return this.store
           .chain(tr)
-          .updateNodeAttributes(pos, { ...node.attrs, dir })
+          .updateNodeAttributes(pos, {
+            ...node.attrs,
+            dir,
+          })
           .tr();
       },
     };
@@ -229,7 +242,10 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
         return false;
       }
 
-      return cmd(parent.pos, { dir, ignoreBidiAutoUpdate: dir ? true : dir })(props);
+      return cmd(parent.pos, {
+        dir,
+        ignoreBidiAutoUpdate: dir ? true : dir,
+      })(props);
     };
   }
 }

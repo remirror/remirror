@@ -40,7 +40,7 @@
     "@babel/runtime": "^7.22.3",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@lingui/core": "^3.17.2",
+    "@lingui/core": "^4.2.0",
     "@mui/material": "^5.13.2",
     "@remirror/core": "^2.0.17",
     "@remirror/extension-blockquote": "^2.0.14",

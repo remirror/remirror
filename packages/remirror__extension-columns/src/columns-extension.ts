@@ -20,9 +20,24 @@ import {
 import { ExtensionColumnsMessages as Messages } from '@remirror/messages';
 
 export const toggleColumnsOptions: Remirror.CommandDecoratorOptions = {
-  icon: ({ attrs }) => ({ name: 'layoutColumnLine', sup: attrs?.count as string }),
-  label: ({ t, attrs }) => t(Messages.LABEL, { count: attrs?.count }),
-  description: ({ t, attrs }) => t(Messages.DESCRIPTION, { count: attrs?.count }),
+  icon: ({ attrs }) => ({
+    name: 'layoutColumnLine',
+    sup: attrs?.count as string,
+  }),
+  label: ({ t, attrs }) =>
+    t({
+      ...Messages.LABEL,
+      values: {
+        count: attrs?.count,
+      },
+    }),
+  description: ({ t, attrs }) =>
+    t({
+      ...Messages.DESCRIPTION,
+      values: {
+        count: attrs?.count,
+      },
+    }),
 };
 
 export const DEFAULT_COLUMN_ATTRIBUTES: Required<BaseColumnAttributes> = {
@@ -132,13 +147,27 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
       content: 'block+',
       attrs: {
         ...extra.defaults(),
-        count: { default: this.options.defaults.count },
-        fill: { default: this.options.defaults.fill },
-        gap: { default: this.options.defaults.gap },
-        ruleColor: { default: this.options.defaults.ruleColor },
-        ruleStyle: { default: this.options.defaults.ruleStyle },
-        ruleWidth: { default: this.options.defaults.ruleWidth },
-        width: { default: this.options.defaults.width },
+        count: {
+          default: this.options.defaults.count,
+        },
+        fill: {
+          default: this.options.defaults.fill,
+        },
+        gap: {
+          default: this.options.defaults.gap,
+        },
+        ruleColor: {
+          default: this.options.defaults.ruleColor,
+        },
+        ruleStyle: {
+          default: this.options.defaults.ruleStyle,
+        },
+        ruleWidth: {
+          default: this.options.defaults.ruleWidth,
+        },
+        width: {
+          default: this.options.defaults.width,
+        },
       },
       parseDOM: [
         {
@@ -188,7 +217,12 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
           },
           currentStyle,
         );
-        const attributes = { ...rest, ...other, style, [COLUMN_DATA_ATTRIBUTE]: 'true' };
+        const attributes = {
+          ...rest,
+          ...other,
+          style,
+          [COLUMN_DATA_ATTRIBUTE]: 'true',
+        };
 
         return ['div', attributes, 0];
       },
@@ -213,7 +247,9 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
           type: 'node',
           excludeNames: ['columns'],
         },
-        attributes: { columnSpan },
+        attributes: {
+          columnSpan,
+        },
       },
     ];
   }

@@ -11,7 +11,7 @@ export const [I18nProvider, useI18n] = createContextState<UseI18nReturn, I18nPro
   const locale = props.locale ?? 'en';
   const i18n = props.i18n ?? defaultI18n;
   const supportedLocales = props.supportedLocales ?? [locale];
-  const t: I18n['_'] = (...args) => i18n._(...args);
+  const t: I18n['_'] = i18n._;
 
   return { locale, i18n, supportedLocales, t };
 });
