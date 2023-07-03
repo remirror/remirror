@@ -163,9 +163,7 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
   const shouldShow = (hideWhenInvisible ? visible : true) && active;
   const position = useMemoizedPosition({ height, left, top, width });
 
-  const _placement = useMemo(() => {
-    return isFloatingUIPlacement(placement) ? placement : undefined;
-  }, [placement]);
+  const _placement = isFloatingUIPlacement(placement) ? placement : undefined;
 
   const middleware = useMemo(() => {
     if (propsMiddleware) {
