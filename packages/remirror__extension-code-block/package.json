@@ -47,7 +47,7 @@
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.17",
-    "@remirror/messages": "^2.0.4",
+    "@remirror/messages": "^2.0.5",
     "@remirror/theme": "^2.0.8",
     "@types/refractor": "^3.0.2",
     "refractor": "^3.6.0"

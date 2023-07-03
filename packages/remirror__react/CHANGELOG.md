@@ -1,5 +1,17 @@
 # @remirror/react
 
+## 2.0.30
+
+> 2023-07-03
+
+### Patch Changes
+
+- f1f992510: Replace [Popper](https://popper.js.org/) with [Floating UI](https://floating-ui.com/).
+- Updated dependencies [2d3fdc511]
+- Updated dependencies [f1f992510]
+  - @remirror/react-components@2.1.14
+  - @remirror/react-core@2.0.19
+
 ## 2.0.29
 
 > 2023-06-09

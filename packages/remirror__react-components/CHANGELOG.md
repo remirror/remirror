@@ -1,5 +1,22 @@
 # @remirror/react-components
 
+## 2.1.14
+
+> 2023-07-03
+
+### Patch Changes
+
+- 2d3fdc511: Update lingui to latest version
+- f1f992510: Replace [Popper](https://popper.js.org/) with [Floating UI](https://floating-ui.com/).
+- Updated dependencies [2d3fdc511]
+  - @remirror/extension-text-color@2.0.15
+  - @remirror/extension-callout@2.0.15
+  - @remirror/extension-columns@2.0.14
+  - @remirror/extension-heading@2.0.14
+  - @remirror/react-core@2.0.19
+  - @remirror/messages@2.0.5
+  - @remirror/i18n@2.0.4
+
 ## 2.1.13
 
 > 2023-06-09

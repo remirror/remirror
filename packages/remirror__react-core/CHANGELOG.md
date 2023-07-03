@@ -1,5 +1,15 @@
 # @remirror/react-core
 
+## 2.0.19
+
+> 2023-07-03
+
+### Patch Changes
+
+- 2d3fdc511: Update lingui to latest version
+- Updated dependencies [2d3fdc511]
+  - @remirror/i18n@2.0.4
+
 ## 2.0.18
 
 > 2023-05-24

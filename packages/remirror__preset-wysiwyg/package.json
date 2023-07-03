@@ -37,7 +37,7 @@
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.17",
-    "@remirror/extension-bidi": "^2.0.13",
+    "@remirror/extension-bidi": "^2.0.14",
     "@remirror/extension-blockquote": "^2.0.14",
     "@remirror/extension-bold": "^2.0.13",
     "@remirror/extension-code": "^2.0.13",
@@ -46,7 +46,7 @@
     "@remirror/extension-embed": "^2.0.13",
     "@remirror/extension-gap-cursor": "^2.0.13",
     "@remirror/extension-hard-break": "^2.0.13",
-    "@remirror/extension-heading": "^2.0.13",
+    "@remirror/extension-heading": "^2.0.14",
     "@remirror/extension-horizontal-rule": "^2.0.13",
     "@remirror/extension-image": "^2.1.9",
     "@remirror/extension-italic": "^2.0.13",

@@ -1,5 +1,19 @@
 # remirror
 
+## 2.0.33
+
+> 2023-07-03
+
+### Patch Changes
+
+- 2d3fdc511: Update lingui to latest version
+- Updated dependencies [2d3fdc511]
+  - @remirror/extension-text-color@2.0.15
+  - @remirror/extension-callout@2.0.15
+  - @remirror/extension-columns@2.0.14
+  - @remirror/extension-heading@2.0.14
+  - @remirror/extension-bidi@2.0.14
+
 ## 2.0.32
 
 > 2023-05-21
