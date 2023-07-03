@@ -135,6 +135,12 @@ The provided extension is invalid.
 
 The provided preset is invalid.
 
+### RMR0021
+
+> Invalid Content
+
+The content provided to the editor is not supported.
+
 ### RMR0050
 
 > Invalid Name
