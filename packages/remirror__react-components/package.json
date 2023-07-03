@@ -42,7 +42,6 @@
     "@emotion/styled": "^11.11.0",
     "@lingui/core": "^4.2.0",
     "@mui/material": "^5.13.2",
-    "@popperjs/core": "^2.11.8",
     "@remirror/core": "^2.0.17",
     "@remirror/extension-blockquote": "^2.0.14",
     "@remirror/extension-bold": "^2.0.13",
@@ -81,6 +80,7 @@
     "react-color": "^2.19.3"
   },
   "devDependencies": {
+    "@floating-ui/react": "^0.24.3",
     "@remirror/pm": "^2.0.6",
     "@remirror/react": "^2.0.29",
     "@types/react": "^18.2.0",
@@ -89,6 +89,7 @@
     "react-dom": "^18.2.0"
   },
   "peerDependencies": {
+    "@floating-ui/react": "^0.24.3",
     "@remirror/pm": "^2.0.5",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",

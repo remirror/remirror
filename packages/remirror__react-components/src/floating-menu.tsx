@@ -1,15 +1,26 @@
-import { Placement } from '@popperjs/core';
+import {
+  Alignment,
+  autoPlacement,
+  autoUpdate,
+  flip,
+  FloatingPortal,
+  Middleware,
+  offset,
+  Placement as FloatingUIPlacement,
+  Strategy,
+  useFloating,
+} from '@floating-ui/react';
 import React, {
   FC,
   MouseEventHandler,
   PropsWithChildren,
-  ReactChild,
+  ReactNode,
   Ref,
   useCallback,
   useMemo,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { cx } from '@remirror/core';
+import { cx, isObject } from '@remirror/core';
 import type { PositionerParam } from '@remirror/extension-positioner';
 import { getPositioner } from '@remirror/extension-positioner';
 import { useHelpers } from '@remirror/react-core';
@@ -17,8 +28,6 @@ import { useEditorFocus, UseEditorFocusProps, usePositioner } from '@remirror/re
 import { ComponentsTheme, ExtensionPositionerTheme } from '@remirror/theme';
 
 import { composeRefs } from './commonjs-packages/seznam-compose-react-refs';
-import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
-import { usePopper } from './use-popper';
 
 interface BaseFloatingPositioner extends UseEditorFocusProps {
   /**
@@ -47,8 +56,13 @@ interface BaseFloatingPositioner extends UseEditorFocusProps {
 
   /**
    * Where to place the popover relative to the positioner.
+   * @remarks
+   * The floating-ui library has removed the auto- prefixed placement attribute types.
+   * The type declaration you see here is for compatibility with Popper.js.
+   *
+   * https://floating-ui.com/docs/autoPlacement#conflict-with-flip
    */
-  placement?: Placement;
+  placement?: FloatingUIPlacement | 'auto' | `auto-${Alignment}`;
 
   /**
    * When `true` the child component is rendered outside the `ProseMirror`
@@ -64,6 +78,27 @@ interface BaseFloatingPositioner extends UseEditorFocusProps {
    * @defaultValue false
    */
   renderOutsideEditor?: boolean;
+
+  /**
+   * Array of middleware objects to modify the positioning or provide data for
+   * rendering.
+   */
+  middleware?: Array<Middleware | null | undefined | false>;
+
+  /**
+   * The strategy to use when positioning the floating element.
+   */
+  strategy?: Strategy;
+
+  /**
+   * Portals the floating element into a given container element — by default,
+   * outside of the app root and into the body.
+   * @see https://floating-ui.com/docs/FloatingPortal
+   * @defaultValue false
+   * @remarks This is conflict to renderOutsideEditor, and renderOutsideEditor has high priority.
+   * And this property will cause the loss of the css variable if you use remirror's internal style
+   */
+  useFloatingPortal?: boolean | Parameters<typeof FloatingPortal>[0];
 }
 
 interface FloatingWrapperProps extends BaseFloatingPositioner {
@@ -105,6 +140,9 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
     floatingLabel,
     hideWhenInvisible = true,
     renderOutsideEditor = false,
+    middleware: propsMiddleware,
+    strategy,
+    useFloatingPortal,
   } = props;
 
   const [isFocused] = useEditorFocus({ blurOnInactive, ignoredElements });
@@ -124,26 +162,43 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
 
   const shouldShow = (hideWhenInvisible ? visible : true) && active;
   const position = useMemoizedPosition({ height, left, top, width });
-  const { popperRef, referenceRef, popoverStyles, update } = usePopper({
-    placement,
-    visible,
+
+  const _placement = isFloatingUIPlacement(placement) ? placement : undefined;
+
+  const middleware = useMemo(() => {
+    if (propsMiddleware) {
+      return propsMiddleware;
+    }
+
+    return [
+      _placement ? flip({ padding: 8 }) : autoPlacement({ padding: 8 }),
+      offset({ mainAxis: 12 }),
+    ];
+  }, [_placement, propsMiddleware]);
+
+  const { refs, floatingStyles } = useFloating({
+    placement: _placement,
+    open: visible,
+    whileElementsMounted: autoUpdate,
+    strategy,
+    middleware,
   });
 
   const handleMouseDown: MouseEventHandler<HTMLDivElement> = useCallback(
     (e) => {
-      if (renderOutsideEditor) {
+      if (renderOutsideEditor || useFloatingPortal) {
         // Prevent blur events from being triggered
         e.preventDefault();
       }
     },
-    [renderOutsideEditor],
+    [renderOutsideEditor, useFloatingPortal],
   );
 
   let floatingElement = (
     <div
       aria-label={floatingLabel}
-      ref={popperRef as any}
-      style={popoverStyles}
+      ref={refs.setFloating}
+      style={floatingStyles}
       className={cx(ComponentsTheme.FLOATING_POPOVER, containerClass)}
       onMouseDown={handleMouseDown}
     >
@@ -151,13 +206,12 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
     </div>
   );
 
-  if (!renderOutsideEditor) {
+  if (!renderOutsideEditor && !useFloatingPortal) {
     floatingElement = <PositionerPortal>{floatingElement}</PositionerPortal>;
+  } else if (useFloatingPortal) {
+    const props = isObject(useFloatingPortal) ? useFloatingPortal : {};
+    floatingElement = <FloatingPortal {...props}>{floatingElement}</FloatingPortal>;
   }
-
-  useIsomorphicLayoutEffect(() => {
-    update();
-  }, [shouldShow, update, height, left, top, width]);
 
   return (
     <>
@@ -170,7 +224,7 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
             width: position.width,
             height: position.height,
           }}
-          ref={composeRefs(ref, referenceRef) as Ref<any>}
+          ref={composeRefs(ref, refs.setReference) as Ref<any>}
         />
       </PositionerPortal>
       {floatingElement}
@@ -179,7 +233,7 @@ export const FloatingWrapper: FC<PropsWithChildren<FloatingWrapperProps>> = (
 };
 
 export interface PositionerComponentProps {
-  children: ReactChild;
+  children: ReactNode;
 }
 
 /**
@@ -191,6 +245,12 @@ export const PositionerPortal: FC<PositionerComponentProps> = (props) => {
 
   return createPortal(<>{props.children}</>, container);
 };
+
+function isFloatingUIPlacement(
+  placement: BaseFloatingPositioner['placement'],
+): placement is FloatingUIPlacement {
+  return !!placement?.startsWith('auto');
+}
 
 // interface FloatingActionsMenuProps extends Partial<FloatingWrapperProps> {
 //   actions: MenuActionItemUnion[];
