@@ -8,6 +8,7 @@
 '@remirror/react-core': patch
 '@remirror/messages': patch
 '@remirror/i18n': patch
+'remirror': patch
 ---
 
 Update lingui to latest version
