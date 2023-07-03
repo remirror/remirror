@@ -136,7 +136,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.4.3",
-    "@types/eslint": "^7.29.0",
+    "@types/eslint": "^8.40.2",
     "@types/jest": "^29.5.1",
     "@types/jest-axe": "^3.5.5",
     "@types/node": "^16.18.34",
