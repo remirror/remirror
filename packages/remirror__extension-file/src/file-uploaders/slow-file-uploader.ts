@@ -38,7 +38,7 @@ export function createSlowFileUploader(): FileUploader<FileAttributes> {
         context.set('loaded', loaded);
       }
 
-      const url = URL.createObjectURL(file) + '#uploaded';
+      const url = `${URL.createObjectURL(file)}#uploaded`;
       return { ...getDefaultFileAttrs(file), url };
     },
 
