@@ -89,8 +89,8 @@ Hence, you want to persist Remirror's native JSON format, and load this in your 
 import {
   BoldExtension,
   CalloutExtension,
-  ItalicExtension,
   HeadingExtension,
+  ItalicExtension,
 } from 'remirror/extensions';
 import { useRemirror } from '@remirror/react';
 
