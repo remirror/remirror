@@ -1,5 +1,15 @@
 # @remirror/react
 
+## 2.0.31
+
+> 2023-07-04
+
+### Patch Changes
+
+- ac118c32b: Add `@floating-ui/react` into `dependencies`.
+- Updated dependencies [ac118c32b]
+  - @remirror/react-components@2.1.15
+
 ## 2.0.30
 
 > 2023-07-03
