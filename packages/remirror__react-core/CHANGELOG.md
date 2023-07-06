@@ -1,5 +1,13 @@
 # @remirror/react-core
 
+## 2.0.20
+
+> 2023-07-06
+
+### Patch Changes
+
+- 28b3b3dc8: Fix the lingui runtime crash `Cannot read properties of undefined (reading "messages")`.
+
 ## 2.0.19
 
 > 2023-07-03

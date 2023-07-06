@@ -1,5 +1,16 @@
 # @remirror/react-components
 
+## 2.1.16
+
+> 2023-07-06
+
+### Patch Changes
+
+- 28b3b3dc8: Fix the lingui runtime crash `Cannot read properties of undefined (reading "messages")`.
+- Updated dependencies [28b3b3dc8]
+  - @remirror/react-core@2.0.20
+  - @remirror/react-hooks@2.0.25
+
 ## 2.1.15
 
 > 2023-07-04
