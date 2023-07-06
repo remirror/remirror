@@ -38,7 +38,7 @@
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.17",
     "@remirror/extension-react-component": "^2.0.13",
-    "@remirror/react-core": "^2.0.19",
+    "@remirror/react-core": "^2.0.20",
     "@remirror/theme": "^2.0.8",
     "nanoevents": "^5.1.13"
   },
