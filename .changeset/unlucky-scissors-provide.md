@@ -6,9 +6,10 @@
 '@remirror/react-components': patch
 '@remirror/extension-bidi': patch
 '@remirror/react-core': patch
+'@remirror/react': patch
 '@remirror/messages': patch
 '@remirror/i18n': patch
 'remirror': patch
 ---
 
-Fix lingui runtime crash
+Fix the lingui runtime crash `Cannot read properties of undefined (reading "messages")`.
