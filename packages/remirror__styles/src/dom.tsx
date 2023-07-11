@@ -715,6 +715,20 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     white-space: pre-wrap !important;
   }
 
+  .remirror-language-select pre[class*='language-'] {
+    padding: 2em 1em !important;
+  }
+
+  .remirror-language-select-positioner {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+  }
+
+  .remirror-language-select-width {
+    width: var(--w);
+  }
+
   .remirror-a11y-dark code[class*='language-'],
   .remirror-a11y-dark pre[class*='language-'] {
     color: #f8f8f2;

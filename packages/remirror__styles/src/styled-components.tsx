@@ -2,8 +2,8 @@
  * AUTO GENERATED FILE - TO UPDATE RUN: `pnpm -w run fix:css`
  */
 
-import StyledComponents, { css } from 'styled-components';
 import { defaultImport } from '@remirror/core-helpers';
+import StyledComponents, { css } from 'styled-components';
 
 const styled = defaultImport(StyledComponents);
 
@@ -730,6 +730,20 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
  */
   .remirror-wrap {
     white-space: pre-wrap !important;
+  }
+
+  .remirror-language-select pre[class*='language-'] {
+    padding: 2em 1em !important;
+  }
+
+  .remirror-language-select-positioner {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+  }
+
+  .remirror-language-select-width {
+    width: var(--w);
   }
 
   .remirror-a11y-dark code[class*='language-'],

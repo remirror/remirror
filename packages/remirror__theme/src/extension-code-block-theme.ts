@@ -7,6 +7,22 @@ export const WRAP = css`
   white-space: pre-wrap !important;
 `;
 
+export const LANGUAGE_SELECT = css`
+  pre[class*='language-'] {
+    padding: 2em 1em !important;
+  }
+`;
+
+export const LANGUAGE_SELECT_POSITIONER = css`
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+`;
+
+export const LANGUAGE_SELECT_WIDTH = css`
+  width: var(--w);
+`;
+
 /**
  * a11y-dark theme for JavaScript, CSS, and HTML Based on the okaidia theme:
  * https://github.com/PrismJS/prism/blob/gh-pages/themes/prism-okaidia.css
