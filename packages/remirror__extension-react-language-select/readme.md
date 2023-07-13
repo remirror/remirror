@@ -29,7 +29,6 @@ npm install @remirror/extension-react-language-select
 
 The following code creates an instance of this extension.
 
-
 ```tsx
 import React from 'react';
 import css from 'refractor/lang/css.js';
