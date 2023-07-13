@@ -1,1 +1,1 @@
-export * from './code-block-language-select';
+export * from './language-select';
