@@ -139,6 +139,21 @@ export interface ChainedCommandProps {
   enabled: () => boolean;
 }
 
+export interface NewChainedCommandProps<
+  Extension extends AnyExtension,
+  Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>,
+> {
+  /**
+   * Returns a new chain, with an empty command set.
+   *
+   * ```ts
+   * chain.toggleBold();
+   * chain.new().toggleItalic().run(); // Only toggleItalic would be run
+   * ```
+   */
+  new: (tr?: Transaction) => ChainedFromExtensions<Extension, Chained>;
+}
+
 export type ChainedIntersection<Extension extends AnyExtension> = UnionToIntersection<
   MapToChainedCommand<GetCommands<Extension> | GetDecoratedCommands<Extension>>
 >;
@@ -152,11 +167,12 @@ export type ChainedFromExtensions<
 type _ChainedFromExtensions<
   Extension extends AnyExtension,
   Chained extends ChainedIntersection<Extension> = ChainedIntersection<Extension>,
-> = ChainedCommandProps & {
-  [Command in keyof Chained]: Chained[Command] extends (...args: any[]) => any
-    ? (...args: Parameters<Chained[Command]>) => ChainedFromExtensions<Extension>
-    : never;
-};
+> = ChainedCommandProps &
+  NewChainedCommandProps<Extension, Chained> & {
+    [Command in keyof Chained]: Chained[Command] extends (...args: any[]) => any
+      ? (...args: Parameters<Chained[Command]>) => ChainedFromExtensions<Extension>
+      : never;
+  };
 
 /**
  * Utility type for pulling all the command names from a list
