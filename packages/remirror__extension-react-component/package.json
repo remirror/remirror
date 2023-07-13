@@ -36,13 +36,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.17",
+    "@remirror/core": "^2.0.18",
     "@remirror/messages": "^2.0.5",
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.6",
-    "@remirror/react": "^2.0.32",
+    "@remirror/react": "^2.0.33",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",

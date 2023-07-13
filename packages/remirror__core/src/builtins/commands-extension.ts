@@ -255,6 +255,10 @@ export class CommandsExtension extends PlainExtension<CommandOptions> {
         return true;
       };
 
+      customChain.new = (tr?: Transaction) => {
+        return chain(tr);
+      };
+
       return customChain;
     };
 
@@ -1279,7 +1283,7 @@ interface ChainedFactoryProps {
 /**
  * The names that are forbidden from being used as a command name.
  */
-const forbiddenNames = new Set(['run', 'chain', 'original', 'raw', 'enabled', 'tr']);
+const forbiddenNames = new Set(['run', 'chain', 'original', 'raw', 'enabled', 'tr', 'new']);
 
 declare global {
   namespace Remirror {

@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.17",
+    "@remirror/core": "^2.0.18",
     "@remirror/messages": "^2.0.5",
     "@remirror/theme": "^2.0.8"
   },

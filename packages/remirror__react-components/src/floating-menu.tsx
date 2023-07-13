@@ -249,7 +249,8 @@ export const PositionerPortal: FC<PositionerComponentProps> = (props) => {
 function isFloatingUIPlacement(
   placement: BaseFloatingPositioner['placement'],
 ): placement is FloatingUIPlacement {
-  return !!placement?.startsWith('auto');
+  // Compare to previous PopperJS, FloatingUI doesn't support "auto" placement anymore.
+  return !placement?.startsWith('auto');
 }
 
 // interface FloatingActionsMenuProps extends Partial<FloatingWrapperProps> {

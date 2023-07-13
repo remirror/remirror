@@ -1,5 +1,13 @@
 # @remirror/react-components
 
+## 2.1.17
+
+> 2023-07-13
+
+### Patch Changes
+
+- c0de2e190: Respect floating-ui placement prop.
+
 ## 2.1.16
 
 > 2023-07-06
