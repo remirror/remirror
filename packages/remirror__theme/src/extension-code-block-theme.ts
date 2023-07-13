@@ -7,12 +7,6 @@ export const WRAP = css`
   white-space: pre-wrap !important;
 `;
 
-export const LANGUAGE_SELECT = css`
-  pre[class*='language-'] {
-    padding: 2em 1em !important;
-  }
-`;
-
 export const LANGUAGE_SELECT_POSITIONER = css`
   position: absolute;
   top: var(--y);

@@ -733,10 +733,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     white-space: pre-wrap !important;
   }
 
-  .remirror-language-select pre[class*='language-'] {
-    padding: 2em 1em !important;
-  }
-
   .remirror-language-select-positioner {
     position: absolute;
     top: var(--y);
