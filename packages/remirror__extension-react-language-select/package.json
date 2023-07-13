@@ -1,6 +1,6 @@
 {
-  "name": "@remirror/extension-react-code-block-language-select",
-  "version": "1.0.0",
+  "name": "@remirror/extension-react-language-select",
+  "version": "0.1.0",
   "private": true,
   "description": "A floating language select dropdown for the code block extension",
   "keywords": [
@@ -12,11 +12,11 @@
     "editor",
     "language select"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-code-block-language-select",
+  "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-react-language-select",
   "repository": {
     "type": "git",
     "url": "https://github.com/remirror/remirror.git",
-    "directory": "packages/remirror__extension-react-code-block-language-select"
+    "directory": "packages/remirror__extension-react-language-select"
   },
   "license": "MIT",
   "contributors": [
@@ -27,13 +27,13 @@
   "exports": {
     ".": {
       "types": "./dist-types/index.d.ts",
-      "import": "./dist/remirror-extension-react-code-block-language-select.js",
-      "require": "./dist/remirror-extension-react-code-block-language-select.cjs"
+      "import": "./dist/remirror-extension-react-language-select.js",
+      "require": "./dist/remirror-extension-react-language-select.cjs"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/remirror-extension-react-code-block-language-select.cjs",
-  "module": "./dist/remirror-extension-react-code-block-language-select.js",
+  "main": "./dist/remirror-extension-react-language-select.cjs",
+  "module": "./dist/remirror-extension-react-language-select.js",
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
@@ -64,16 +64,16 @@
   "publishConfig": {
     "exports": {
       ".": {
-        "types": "./dist/remirror-extension-react-code-block-language-select.d.ts",
-        "import": "./dist/remirror-extension-react-code-block-language-select.js",
-        "require": "./dist/remirror-extension-react-code-block-language-select.cjs"
+        "types": "./dist/remirror-extension-react-language-select.d.ts",
+        "import": "./dist/remirror-extension-react-language-select.js",
+        "require": "./dist/remirror-extension-react-language-select.cjs"
       },
       "./package.json": "./package.json"
     },
-    "main": "./dist/remirror-extension-react-code-block-language-select.cjs",
-    "module": "./dist/remirror-extension-react-code-block-language-select.js",
+    "main": "./dist/remirror-extension-react-language-select.cjs",
+    "module": "./dist/remirror-extension-react-language-select.js",
     "type": "module",
-    "types": "./dist/remirror-extension-react-code-block-language-select.d.ts"
+    "types": "./dist/remirror-extension-react-language-select.d.ts"
   },
   "@remirror": {
     "sizeLimit": "5 KB"

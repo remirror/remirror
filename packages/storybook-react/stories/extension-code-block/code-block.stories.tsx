@@ -1,6 +1,6 @@
 import Basic from './basic';
-import WithLanguageSelect from './width-language-select';
 import WithIncorrectLanguage from './with-incorrect-language';
+import WithLanguageSelect from './with-language-select';
 
 export default { title: 'Extensions / CodeBlock' };
 

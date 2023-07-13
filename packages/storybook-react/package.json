@@ -36,7 +36,7 @@
     "@remirror/extension-find": "^0.1.6",
     "@remirror/extension-mention": "^2.0.15",
     "@remirror/extension-mention-atom": "^2.0.17",
-    "@remirror/extension-react-code-block-language-select": "^1.0.0",
+    "@remirror/extension-react-language-select": "^0.1.0",
     "@remirror/extension-react-tables": "^2.2.17",
     "@remirror/messages": "^2.0.5",
     "@remirror/pm": "^2.0.6",

@@ -1,5 +1,5 @@
 ---
-'@remirror/extension-react-code-block-language-select': patch
+'@remirror/extension-react-language-select': minor
 '@remirror/extension-code-block': patch
 '@remirror/styles': patch
 '@remirror/theme': patch

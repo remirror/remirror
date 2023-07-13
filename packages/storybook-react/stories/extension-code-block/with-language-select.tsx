@@ -6,7 +6,7 @@ import markdown from 'refractor/lang/markdown.js';
 import typescript from 'refractor/lang/typescript.js';
 import { cx } from 'remirror';
 import { CodeBlockExtension } from 'remirror/extensions';
-import { CodeBlockLanguageSelect } from '@remirror/extension-react-code-block-language-select';
+import { CodeBlockLanguageSelect } from '@remirror/extension-react-language-select';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 import { ExtensionCodeBlockTheme } from '@remirror/theme';
 

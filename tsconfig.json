@@ -348,7 +348,7 @@
       "path": "packages/remirror__extension-positioner/src"
     },
     {
-      "path": "packages/remirror__extension-react-code-block-language-select/src"
+      "path": "packages/remirror__extension-react-language-select/src"
     },
     {
       "path": "packages/remirror__extension-react-component/__tests__"
