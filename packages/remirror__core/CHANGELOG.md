@@ -1,5 +1,22 @@
 # @remirror/core
 
+## 2.0.18
+
+> 2023-07-13
+
+### Patch Changes
+
+- 1b377164c: Add the ability to reset a command chain with `.new()`.
+
+  ```ts
+  chain.toggleBold();
+  chain.new().toggleItalic().run(); // Only toggleItalic would be run
+  ```
+
+  This is automatically executed for you when using the `useChainedCommands()` hook.
+
+  This ensures that when calling the hook multiple times, each command chain is independent of the other.
+
 ## 2.0.17
 
 > 2023-06-28

@@ -39,7 +39,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.17",
+    "@remirror/core": "^2.0.18",
     "@remirror/extension-react-component": "^2.0.13",
     "@remirror/messages": "^2.0.5",
     "@remirror/react-utils": "^2.0.5"

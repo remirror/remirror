@@ -436,7 +436,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/dom':
         specifier: ^2.0.16
@@ -609,7 +609,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/core-constants':
         specifier: ^2.0.1
@@ -1025,7 +1025,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/react-core':
-        specifier: ^2.0.20
+        specifier: ^2.0.21
         version: link:../remirror__react-core
       prosemirror-dev-toolkit:
         specifier: ^1.1.2
@@ -1056,7 +1056,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/preset-core':
         specifier: ^2.0.16
@@ -1072,7 +1072,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -1091,7 +1091,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1113,7 +1113,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1132,7 +1132,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1148,7 +1148,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1167,7 +1167,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1183,7 +1183,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1220,7 +1220,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1254,7 +1254,7 @@ importers:
         specifier: ^6.12.0
         version: 6.12.0
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
@@ -1267,7 +1267,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1283,7 +1283,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1299,7 +1299,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
@@ -1312,7 +1312,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1328,7 +1328,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1344,7 +1344,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1360,7 +1360,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1388,7 +1388,7 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1422,7 +1422,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1441,7 +1441,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1457,7 +1457,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1473,13 +1473,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-react-component':
         specifier: ^2.0.13
         version: link:../remirror__extension-react-component
       '@remirror/react-core':
-        specifier: ^2.0.20
+        specifier: ^2.0.21
         version: link:../remirror__react-core
       '@remirror/theme':
         specifier: ^2.0.8
@@ -1507,7 +1507,7 @@ importers:
   packages/remirror__extension-find:
     dependencies:
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@types/string.prototype.matchall':
         specifier: ^4.0.1
@@ -1529,7 +1529,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1545,7 +1545,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1564,7 +1564,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1580,7 +1580,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1596,7 +1596,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1612,7 +1612,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1628,7 +1628,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1644,7 +1644,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1666,7 +1666,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1682,7 +1682,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1710,7 +1710,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1732,7 +1732,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1766,7 +1766,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1788,7 +1788,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1810,7 +1810,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1826,7 +1826,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1842,7 +1842,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1861,7 +1861,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-events':
         specifier: ^2.1.15
@@ -1886,7 +1886,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -1920,7 +1920,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-react-component':
         specifier: ^2.0.13
@@ -1957,7 +1957,7 @@ importers:
         specifier: 4.2.10
         version: 4.2.10
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/core-utils':
         specifier: ^2.0.12
@@ -1981,7 +1981,7 @@ importers:
         specifier: ^2.1.17
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: ^2.0.20
+        specifier: ^2.0.21
         version: link:../remirror__react-core
       '@remirror/react-hooks':
         specifier: ^2.0.25
@@ -2021,7 +2021,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2040,7 +2040,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
     devDependencies:
       '@remirror/pm':
@@ -2053,7 +2053,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2069,7 +2069,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2085,7 +2085,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2101,7 +2101,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -2123,7 +2123,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2139,7 +2139,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2155,7 +2155,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/i18n':
         specifier: ^2.0.4
@@ -2180,7 +2180,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-text-color':
         specifier: ^2.0.15
@@ -2199,7 +2199,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2215,7 +2215,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2231,7 +2231,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2247,7 +2247,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/messages':
         specifier: ^2.0.5
@@ -2396,7 +2396,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-doc':
         specifier: ^2.1.5
@@ -2430,7 +2430,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-bold':
         specifier: ^2.0.13
@@ -2485,7 +2485,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-placeholder':
         specifier: ^2.0.14
@@ -2519,7 +2519,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-bidi':
         specifier: ^2.0.14
@@ -2613,7 +2613,7 @@ importers:
         specifier: ^2.1.17
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: ^2.0.20
+        specifier: ^2.0.21
         version: link:../remirror__react-core
       '@remirror/react-hooks':
         specifier: ^2.0.25
@@ -2659,7 +2659,7 @@ importers:
         specifier: ^5.13.2
         version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-blockquote':
         specifier: ^2.0.14
@@ -2737,7 +2737,7 @@ importers:
         specifier: ^2.0.5
         version: link:../remirror__messages
       '@remirror/react-core':
-        specifier: ^2.0.20
+        specifier: ^2.0.21
         version: link:../remirror__react-core
       '@remirror/react-hooks':
         specifier: ^2.0.25
@@ -2792,7 +2792,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -2920,7 +2920,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-emoji':
         specifier: ^2.0.17
@@ -2944,7 +2944,7 @@ importers:
         specifier: ^2.0.4
         version: link:../remirror__i18n
       '@remirror/react-core':
-        specifier: ^2.0.20
+        specifier: ^2.0.21
         version: link:../remirror__react-core
       '@remirror/react-utils':
         specifier: ^2.0.5
@@ -2987,7 +2987,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
     devDependencies:
       '@types/react':
@@ -3003,7 +3003,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/extension-react-ssr':
         specifier: ^2.0.13
@@ -3148,7 +3148,7 @@ importers:
         specifier: ^4.6.4
         version: 4.6.4
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/dev':
         specifier: ^2.0.17
@@ -3353,7 +3353,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__core
       '@remirror/pm':
         specifier: ^2.0.6
@@ -3715,7 +3715,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
@@ -3737,7 +3737,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
@@ -3768,7 +3768,7 @@ importers:
         specifier: ^1.6.22
         version: 1.6.22(react@18.2.0)
       '@remirror/core':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../packages/remirror__core
       '@remirror/dev':
         specifier: ^2.0.17
