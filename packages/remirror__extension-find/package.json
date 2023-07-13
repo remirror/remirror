@@ -34,7 +34,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@remirror/core": "^2.0.17",
+    "@remirror/core": "^2.0.18",
     "@types/string.prototype.matchall": "^4.0.1",
     "escape-string-regexp": "^4.0.0",
     "string.prototype.matchall": "^4.0.8"

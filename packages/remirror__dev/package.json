@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/react-core": "^2.0.20",
+    "@remirror/react-core": "^2.0.21",
     "prosemirror-dev-toolkit": "^1.1.2"
   },
   "devDependencies": {
