@@ -32,6 +32,38 @@ test('can chain commands', () => {
   expect(editor.state.doc).toEqualRemirrorDocument(doc(p(bold(italic('my content')))));
 });
 
+test('can create a new command chain with `new()`', () => {
+  const editor = renderEditor([new BoldExtension(), new ItalicExtension()]);
+  const { doc, p } = editor.nodes;
+  const { italic } = editor.marks;
+  const { chain } = editor;
+
+  editor.add(doc(p('<start>my content<end>')));
+  chain.toggleBold();
+  chain.new().toggleItalic().run();
+
+  expect(editor.state.doc).toEqualRemirrorDocument(doc(p(italic('my content'))));
+});
+
+test('can use multiple commands chains with `.new()`', () => {
+  const editor = renderEditor([new BoldExtension(), new ItalicExtension()]);
+  const { doc, p } = editor.nodes;
+  const { bold, italic } = editor.marks;
+  const { chain: chain1 } = editor;
+
+  editor.add(doc(p('<start>my content<end>')));
+  chain1.toggleBold();
+
+  const chain2 = chain1.new();
+  chain2.toggleItalic().run();
+
+  expect(editor.state.doc).toEqualRemirrorDocument(doc(p(italic('my content'))));
+
+  chain1.run();
+
+  expect(editor.state.doc).toEqualRemirrorDocument(doc(p(bold(italic('my content')))));
+});
+
 test('clears range selection', () => {
   const text = 'my content';
 

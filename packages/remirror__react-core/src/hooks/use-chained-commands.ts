@@ -24,5 +24,5 @@ import { useRemirrorContext } from './use-remirror-context';
 export function useChainedCommands<
   Extension extends AnyExtension = Remirror.Extensions | AnyExtension,
 >(): ChainedFromExtensions<Extension> {
-  return useRemirrorContext<Extension>().chain;
+  return useRemirrorContext<Extension>().chain.new();
 }
