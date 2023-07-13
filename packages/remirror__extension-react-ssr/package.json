@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.6",
-    "@remirror/react": "^2.0.32",
+    "@remirror/react": "^2.0.33",
     "@types/react": "^18.2.0",
     "react": "^18.2.0"
   },

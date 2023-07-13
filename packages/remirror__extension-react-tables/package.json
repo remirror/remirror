@@ -49,7 +49,7 @@
     "@remirror/icons": "^2.0.2",
     "@remirror/messages": "^2.0.5",
     "@remirror/preset-core": "^2.0.16",
-    "@remirror/react-components": "^2.1.16",
+    "@remirror/react-components": "^2.1.17",
     "@remirror/react-core": "^2.0.20",
     "@remirror/react-hooks": "^2.0.25",
     "@remirror/theme": "^2.0.8",
