@@ -253,6 +253,7 @@ function isFloatingUIPlacement(
   if (placement && placement.startsWith('auto')) {
     return false;
   }
+
   return true;
 }
 
