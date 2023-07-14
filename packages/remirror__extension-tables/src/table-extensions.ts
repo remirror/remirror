@@ -29,6 +29,7 @@ import {
   addRowAfter,
   addRowBefore,
   CellSelection,
+  columnIsHeader,
   columnResizing,
   deleteColumn,
   deleteRow,
@@ -37,10 +38,13 @@ import {
   fixTablesKey,
   isCellSelection,
   mergeCells,
+  rowIsHeader,
   setCellAttr,
   splitCell,
   tableEditing,
+  TableMap,
   TableView,
+  toggleHeader,
   toggleHeaderCell,
   toggleHeaderColumn,
   toggleHeaderRow,
@@ -295,6 +299,14 @@ export class TableExtension extends NodeExtension<TableOptions> {
   }
 
   /**
+   * Toggles between row/column header and normal cells (Only applies to first row/column).
+   */
+  @command()
+  toggleTableHeader(type: 'column' | 'row' = 'row'): CommandFunction {
+    return convertCommand(toggleHeader(type));
+  }
+
+  /**
    * Toggles a column as the header column.
    */
   @command()
@@ -347,6 +359,28 @@ export class TableExtension extends NodeExtension<TableOptions> {
       document.execCommand('enableInlineTableEditing', false, 'false');
       tablesEnabled = true;
     }
+  }
+
+  /**
+   * Determines if the first row/column is a header row/column
+   */
+  @helper()
+  tableHasHeader(
+    type: 'column' | 'row' = 'row',
+    state: EditorState = this.store.getState(),
+  ): Helper<boolean> {
+    const { selection } = state;
+    const table = findParentNodeOfType({ selection, types: 'table' });
+
+    if (!table) {
+      return false;
+    }
+
+    const { node } = table;
+    const map = TableMap.get(node);
+
+    const isHeaderFunc = type === 'column' ? columnIsHeader : rowIsHeader;
+    return isHeaderFunc(map, node, 0);
   }
 
   /**

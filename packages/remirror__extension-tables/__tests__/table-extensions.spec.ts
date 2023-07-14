@@ -62,6 +62,29 @@ describe('commands', () => {
       return table(...rows.map((r) => row(...r.map((content) => cell(p(content))))));
     };
 
+    const buildWithHeader = (type: 'row' | 'column', ...rows: string[][]) => {
+      // Ensure that all rows have same length
+      expect([...new Set(rows.map((row) => row.length))]).toHaveLength(1);
+
+      return table(
+        ...rows.map((r, i) => {
+          if (type === 'row' && i === 0) {
+            return row(...r.map((content) => header(p(content))));
+          }
+
+          return row(
+            ...r.map((content, j) => {
+              if (type === 'column' && j === 0) {
+                return header(p(content));
+              }
+
+              return cell(p(content));
+            }),
+          );
+        }),
+      );
+    };
+
     return {
       editor,
       commands,
@@ -74,6 +97,7 @@ describe('commands', () => {
       header,
       table,
       build,
+      buildWithHeader,
     };
   };
 
@@ -174,6 +198,118 @@ describe('commands', () => {
       commands.createTable({ columnsCount: 2, rowsCount: 2, withHeaderRow: false });
 
       expect(view.state.doc).toEqualRemirrorDocument(doc(p('text')));
+    });
+  });
+
+  describe('toggleTableHeader', () => {
+    it('can toggle the first row of cells into a header row', () => {
+      const { build, buildWithHeader, add, view, commands, doc } = setup();
+
+      const table = build(['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3<cursor>', 'C3']);
+      add(doc(table));
+
+      commands.toggleTableHeader();
+
+      expect(view.state.doc).toEqualRemirrorDocument(
+        doc(buildWithHeader('row', ['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3'])),
+      );
+    });
+
+    it('can toggle the first row of header cells into a normal cell row', () => {
+      const { build, buildWithHeader, add, view, commands, doc } = setup();
+
+      const table = buildWithHeader(
+        'row',
+        ['A1', 'B1', 'C1'],
+        ['A2<cursor>', 'B2', 'C2'],
+        ['A3', 'B3', 'C3'],
+      );
+      add(doc(table));
+
+      commands.toggleTableHeader();
+
+      expect(view.state.doc).toEqualRemirrorDocument(
+        doc(build(['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3'])),
+      );
+    });
+
+    it('can toggle the first column of cells into a header column', () => {
+      const { build, buildWithHeader, add, view, commands, doc } = setup();
+
+      const table = build(['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3<cursor>', 'C3']);
+      add(doc(table));
+
+      commands.toggleTableHeader('column');
+
+      expect(view.state.doc).toEqualRemirrorDocument(
+        doc(buildWithHeader('column', ['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3'])),
+      );
+    });
+
+    it('can toggle the first column of header cells into a normal cell column', () => {
+      const { build, buildWithHeader, add, view, commands, doc } = setup();
+
+      const table = buildWithHeader(
+        'column',
+        ['A1', 'B1', 'C1'],
+        ['A2<cursor>', 'B2', 'C2'],
+        ['A3', 'B3', 'C3'],
+      );
+      add(doc(table));
+
+      commands.toggleTableHeader('column');
+
+      expect(view.state.doc).toEqualRemirrorDocument(
+        doc(build(['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3'])),
+      );
+    });
+  });
+
+  describe('tableHasHeader (helper)', () => {
+    it('detects when the table has a header row', () => {
+      const { buildWithHeader, add, editor, doc } = setup();
+
+      const table = buildWithHeader(
+        'row',
+        ['A1', 'B1', 'C1'],
+        ['A2<cursor>', 'B2', 'C2'],
+        ['A3', 'B3', 'C3'],
+      );
+      add(doc(table));
+
+      expect(editor.helpers.tableHasHeader()).toBeTrue();
+    });
+
+    it('detects when the table does NOT have a header row', () => {
+      const { build, add, editor, doc } = setup();
+
+      const table = build(['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3<cursor>', 'C3']);
+      add(doc(table));
+
+      expect(editor.helpers.tableHasHeader()).toBeFalse();
+    });
+
+    it('detects when the table has a header column', () => {
+      const { buildWithHeader, add, editor, doc } = setup();
+
+      const table = buildWithHeader(
+        'column',
+        ['A1', 'B1', 'C1'],
+        ['A2<cursor>', 'B2', 'C2'],
+        ['A3', 'B3', 'C3'],
+      );
+      add(doc(table));
+
+      expect(editor.helpers.tableHasHeader('column')).toBeTrue();
+    });
+
+    it('detects when the table does NOT have a header column', () => {
+      const { build, add, editor, doc } = setup();
+
+      const table = build(['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3<cursor>', 'C3']);
+      add(doc(table));
+
+      expect(editor.helpers.tableHasHeader('column')).toBeFalse();
     });
   });
 });
