@@ -1,5 +1,13 @@
 # @remirror/react
 
+## 2.0.34
+
+> 2023-07-14
+
+### Patch Changes
+
+- 2ff2a02e2: Bump the package for the changes included in https://github.com/remirror/remirror/pull/2119
+
 ## 2.0.33
 
 > 2023-07-13

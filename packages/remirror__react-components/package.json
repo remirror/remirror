@@ -62,7 +62,7 @@
     "@remirror/extension-strike": "^2.0.13",
     "@remirror/extension-sub": "^2.0.13",
     "@remirror/extension-sup": "^2.0.13",
-    "@remirror/extension-tables": "^2.2.10",
+    "@remirror/extension-tables": "^2.3.0",
     "@remirror/extension-text-color": "^2.0.15",
     "@remirror/extension-underline": "^2.0.13",
     "@remirror/extension-whitespace": "^2.0.13",
@@ -82,7 +82,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.6",
-    "@remirror/react": "^2.0.33",
+    "@remirror/react": "^2.0.34",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",
