@@ -49,6 +49,9 @@ export const A11Y_DARK = css`
     overflow: auto;
     border-radius: 0.3em;
   }
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
+  }
   :not(pre) > code[class*='language-'],
   pre[class*='language-'] {
     background: #2b2b2b;
@@ -189,6 +192,9 @@ export const ATOM_DARK = css`
     margin: 0.5em 0;
     overflow: auto;
     border-radius: 0.3em;
+  }
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
   :not(pre) > code[class*='language-'],
   pre[class*='language-'] {
@@ -331,6 +337,9 @@ export const BASE16_ATELIERSULPHURPOOL_LIGHT = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
+  }
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
   /* Inline code */
   :not(pre) > code[class*='language-'] {
@@ -486,6 +495,10 @@ export const CB = css`
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
     border-radius: 8px;
+  }
+
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -667,6 +680,10 @@ export const DARCULA = css`
     overflow: auto;
   }
 
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
+  }
+
   :not(pre) > code[class*='language-'],
   pre[class*='language-'] {
     background: #2b2b2b;
@@ -817,6 +834,10 @@ export const DRACULA = css`
     border-radius: 0.3em;
   }
 
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
+  }
+
   :not(pre) > code[class*='language-'],
   pre[class*='language-'] {
     background: #282a36;
@@ -962,6 +983,10 @@ export const DUOTONE_DARK = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
+  }
+
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -1143,6 +1168,10 @@ export const DUOTONE_EARTH = css`
     overflow: auto;
   }
 
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
+  }
+
   /* Inline code */
   :not(pre) > code[class*='language-'] {
     padding: 0.1em;
@@ -1320,6 +1349,10 @@ export const DUOTONE_FOREST = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
+  }
+
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -1501,6 +1534,10 @@ export const DUOTONE_LIGHT = css`
     overflow: auto;
   }
 
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
+  }
+
   /* Inline code */
   :not(pre) > code[class*='language-'] {
     padding: 0.1em;
@@ -1678,6 +1715,10 @@ export const DUOTONE_SEA = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
+  }
+
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -1859,6 +1900,10 @@ export const DUOTONE_SPACE = css`
     overflow: auto;
   }
 
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
+  }
+
   /* Inline code */
   :not(pre) > code[class*='language-'] {
     padding: 0.1em;
@@ -2030,6 +2075,10 @@ export const GH_COLORS = css`
     background-color: white;
   }
 
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
+  }
+
   :not(pre) > code[class*='language-'],
   pre[class*='language-'] {
   }
@@ -2144,6 +2193,10 @@ export const HOPSCOTCH = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
+  }
+
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -2270,6 +2323,10 @@ export const POJOAQUE = css`
   pre[class*='language-'] {
     padding: 12px;
     overflow: auto;
+  }
+
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
 
   :not(pre) > code[class*='language-'] {
@@ -2401,6 +2458,10 @@ export const VS = css`
     overflow: auto;
     border: 1px solid #dddddd;
     background-color: white;
+  }
+
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -2551,6 +2612,10 @@ export const XONOKAI = css`
     border-radius: 4px;
     border: 1px solid #e1e1e8;
     overflow: auto;
+  }
+
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em;
   }
 
   pre[class*='language-'] {

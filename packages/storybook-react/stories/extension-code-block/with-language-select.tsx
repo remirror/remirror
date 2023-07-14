@@ -12,7 +12,6 @@ import { ExtensionCodeBlockTheme } from '@remirror/theme';
 
 const extensions = () => [
   new CodeBlockExtension({
-    extraAttributes: { style: 'padding: 2em 1em;' },
     supportedLanguages: [css, javascript, json, markdown, typescript],
   }),
 ];

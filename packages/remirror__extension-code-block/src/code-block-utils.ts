@@ -244,10 +244,12 @@ export function getLanguage(props: GetLanguageProps): string {
  */
 export function codeBlockToDOM(node: ProsemirrorNode, extra: ApplySchemaAttributes): DOMOutputSpec {
   const { language, wrap } = omitExtraAttributes(node.attrs, extra);
-  const { ...extraAttrs } = extra.dom(node);
+  const { style: _, ...extraAttrs } = extra.dom(node);
   let style = extraAttrs.style;
 
-  style = wrap ? joinStyles({ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }, style) : style;
+  if (wrap) {
+    style = joinStyles({ whiteSpace: 'pre-wrap', wordBreak: 'break-all' }, style);
+  }
 
   const attributes = {
     spellcheck: 'false',
