@@ -52,7 +52,7 @@ describe('commands', () => {
   const setup = () => {
     const editor = create();
 
-    const { commands, view, add, helpers } = editor;
+    const { commands, view, add } = editor;
     const { doc, p, table, tableRow: row, tableCell: cell, tableHeaderCell: header } = editor.nodes;
 
     const build = (...rows: string[][]) => {
