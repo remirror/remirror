@@ -750,7 +750,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: ^2.2.10
+        specifier: ^2.3.0
         version: link:../remirror__extension-tables
       '@remirror/extension-text':
         specifier: ^2.0.13
@@ -1899,7 +1899,7 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -1936,7 +1936,7 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -1966,7 +1966,7 @@ importers:
         specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/extension-tables':
-        specifier: ^2.2.10
+        specifier: ^2.3.0
         version: link:../remirror__extension-tables
       '@remirror/icons':
         specifier: ^2.0.2
@@ -2716,7 +2716,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: ^2.2.10
+        specifier: ^2.3.0
         version: link:../remirror__extension-tables
       '@remirror/extension-text-color':
         specifier: ^2.0.15
@@ -2771,7 +2771,7 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -2838,7 +2838,7 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@types/jsdom':
         specifier: ^16.2.15
@@ -2874,7 +2874,7 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@remirror/styles':
         specifier: ^2.0.5
@@ -2963,7 +2963,7 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -3013,7 +3013,7 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -3184,7 +3184,7 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@remirror/react-editors':
         specifier: ^1.0.35
@@ -3362,7 +3362,7 @@ importers:
         specifier: ^2.0.16
         version: link:../remirror__preset-core
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../remirror__react
       '@testing-library/react':
         specifier: ^14.0.0
@@ -3774,7 +3774,7 @@ importers:
         specifier: ^2.0.17
         version: link:../packages/remirror__dev
       '@remirror/react':
-        specifier: ^2.0.33
+        specifier: ^2.0.34
         version: link:../packages/remirror__react
       '@remirror/react-editors':
         specifier: ^1.0.35
@@ -17889,7 +17889,7 @@ packages:
     dependencies:
       semver: 7.5.1
       shelljs: 0.8.5
-      typescript: 5.2.0-dev.20230713
+      typescript: 5.2.0-dev.20230714
     dev: false
 
   /duplexer3@0.1.4:
@@ -28917,8 +28917,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /typescript@5.2.0-dev.20230713:
-    resolution: {integrity: sha512-A/crla7nXo4d7TVRlV4CUzxW218b2WupUrIMnnGBV1o0SQnckrszm0CUMRAYeKAB9lFIo/B1Gx1cBdvNQYiD4A==}
+  /typescript@5.2.0-dev.20230714:
+    resolution: {integrity: sha512-BZAU6XIqRwO7gRelEoc6iunX6belf+IGyqA79LQqldafiBahXQKYTeyW8V0/ABk7/FpWWk4qRIDDCy8DKWo4XQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false

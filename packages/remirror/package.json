@@ -107,7 +107,7 @@
     "@remirror/extension-strike": "^2.0.13",
     "@remirror/extension-sub": "^2.0.13",
     "@remirror/extension-sup": "^2.0.13",
-    "@remirror/extension-tables": "^2.2.10",
+    "@remirror/extension-tables": "^2.3.0",
     "@remirror/extension-text": "^2.0.13",
     "@remirror/extension-text-case": "^2.0.13",
     "@remirror/extension-text-color": "^2.0.15",
