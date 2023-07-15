@@ -15,5 +15,27 @@
     "outDir": "../dist-types"
   },
   "include": ["./"],
-  "references": []
+  "references": [
+    {
+      "path": "../../remirror__core/src"
+    },
+    {
+      "path": "../../remirror__core-utils/src"
+    },
+    {
+      "path": "../../remirror__extension-positioner/src"
+    },
+    {
+      "path": "../../remirror__react-components/src"
+    },
+    {
+      "path": "../../remirror__react-core/src"
+    },
+    {
+      "path": "../../remirror__react-hooks/src"
+    },
+    {
+      "path": "../../remirror__pm/src"
+    }
+  ]
 }
