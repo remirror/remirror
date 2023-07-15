@@ -1,0 +1,8 @@
+---
+'@remirror/extension-react-language-select': minor
+'@remirror/extension-code-block': patch
+'@remirror/styles': patch
+'@remirror/theme': patch
+---
+
+add code block language select component

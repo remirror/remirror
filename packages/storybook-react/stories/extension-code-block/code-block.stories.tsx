@@ -1,5 +1,6 @@
 import Basic from './basic';
 import WithIncorrectLanguage from './with-incorrect-language';
+import WithLanguageSelect from './with-language-select';
 
 export default { title: 'Extensions / CodeBlock' };
 
@@ -8,4 +9,4 @@ export default { title: 'Extensions / CodeBlock' };
   openLinkOnClick: true,
 };
 
-export { Basic, WithIncorrectLanguage };
+export { Basic, WithIncorrectLanguage, WithLanguageSelect };
