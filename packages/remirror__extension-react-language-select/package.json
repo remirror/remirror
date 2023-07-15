@@ -2,9 +2,10 @@
   "name": "@remirror/extension-react-language-select",
   "version": "0.0.0",
   "private": false,
-  "description": "A floating language select dropdown for the code block extension",
+  "description": "A React floating language select dropdown component for the code block extension",
   "keywords": [
     "remirror",
+    "ProseMirror",
     "extension",
     "code block",
     "refractor",
