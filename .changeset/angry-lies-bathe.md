@@ -5,4 +5,4 @@
 '@remirror/theme': patch
 ---
 
-add code block language select component
+Add code block language select component.
