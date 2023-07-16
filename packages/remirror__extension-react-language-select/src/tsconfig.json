@@ -23,6 +23,9 @@
       "path": "../../remirror__core-utils/src"
     },
     {
+      "path": "../../remirror__extension-code-block/src"
+    },
+    {
       "path": "../../remirror__extension-positioner/src"
     },
     {
