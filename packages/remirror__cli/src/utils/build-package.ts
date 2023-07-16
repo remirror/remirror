@@ -252,7 +252,7 @@ function buildPackageJson(
           packageDir,
           packageJsonDir,
           entryPoints,
-          { exports: packageJson.exports, access: 'publish' },
+          { exports: packageJson.exports, access: 'public' },
           true,
         )
       : undefined;
