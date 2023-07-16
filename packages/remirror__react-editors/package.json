@@ -63,7 +63,7 @@
     "@remirror/extension-react-tables": "^2.2.17",
     "@remirror/pm": "^2.0.6",
     "@remirror/react": "^2.0.34",
-    "@remirror/styles": "^2.0.5",
+    "@remirror/styles": "^2.0.6",
     "@svgmoji/noto": "^3.2.0",
     "@types/refractor": "^3.0.2",
     "create-context-state": "^2.0.2",

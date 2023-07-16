@@ -1,5 +1,13 @@
 # @remirror/styles
 
+## 2.0.6
+
+> 2023-07-16
+
+### Patch Changes
+
+- aace73396: Add code block language select component.
+
 ## 2.0.5
 
 > 2023-04-26
