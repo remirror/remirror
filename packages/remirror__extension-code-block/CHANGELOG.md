@@ -1,5 +1,15 @@
 # @remirror/extension-code-block
 
+## 2.0.16
+
+> 2023-07-16
+
+### Patch Changes
+
+- aace73396: Add code block language select component.
+- Updated dependencies [aace73396]
+  - @remirror/theme@2.0.9
+
 ## 2.0.15
 
 > 2023-05-21
