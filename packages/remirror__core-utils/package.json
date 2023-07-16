@@ -57,6 +57,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-core-utils.d.ts",

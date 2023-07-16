@@ -47,6 +47,7 @@
   },
   "peerDependenciesMeta": {},
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/prosemirror-paste-rules.d.ts",

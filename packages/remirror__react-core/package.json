@@ -72,6 +72,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-react-core.d.ts",

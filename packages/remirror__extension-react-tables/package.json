@@ -78,6 +78,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-extension-react-tables.d.ts",

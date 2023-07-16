@@ -147,6 +147,7 @@
     "prosemirror-view": "^1.31.3"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-pm.d.ts",

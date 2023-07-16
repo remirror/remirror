@@ -48,6 +48,7 @@
     "@remirror/pm": "^2.0.5"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-extension-drop-cursor.d.ts",

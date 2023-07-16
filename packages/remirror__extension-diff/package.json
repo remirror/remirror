@@ -45,6 +45,7 @@
     "@remirror/pm": "^2.0.5"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-extension-diff.d.ts",

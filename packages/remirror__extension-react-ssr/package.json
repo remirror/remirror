@@ -61,6 +61,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-extension-react-ssr.d.ts",

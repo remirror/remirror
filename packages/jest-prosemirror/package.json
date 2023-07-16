@@ -74,6 +74,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/jest-prosemirror.d.ts",

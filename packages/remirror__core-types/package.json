@@ -41,6 +41,7 @@
     "@remirror/pm": "^2.0.5"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-core-types.d.ts",

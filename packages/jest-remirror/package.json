@@ -68,6 +68,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/jest-remirror.d.ts",

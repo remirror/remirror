@@ -84,6 +84,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       "./*": "./*",
       "./dom": {
