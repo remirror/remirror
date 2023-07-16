@@ -1,10 +1,11 @@
 {
   "name": "@remirror/extension-react-language-select",
-  "version": "0.1.0",
-  "private": true,
-  "description": "A floating language select dropdown for the code block extension",
+  "version": "0.0.0",
+  "private": false,
+  "description": "A React floating language select dropdown component for the code block extension",
   "keywords": [
     "remirror",
+    "ProseMirror",
     "extension",
     "code block",
     "refractor",
@@ -43,6 +44,7 @@
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.15",
     "@remirror/core-utils": "^2.0.12",
+    "@remirror/extension-code-block": "^2.0.15",
     "@remirror/extension-positioner": "^2.1.8",
     "@remirror/react-components": "^2.1.12",
     "@remirror/react-core": "^2.0.17",
@@ -50,7 +52,6 @@
     "lodash.memoize": "^4.1.2"
   },
   "devDependencies": {
-    "@remirror/core-types": "^2.0.5",
     "@remirror/pm": "^2.0.5",
     "@types/lodash.memoize": "^4.1.7",
     "@types/react": "^18.2.0",
@@ -59,7 +60,17 @@
     "react-dom": "^18.2.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.5"
+    "@remirror/pm": "^2.0.5",
+    "react": "^16.14.0 || ^17 || ^18",
+    "react-dom": "^16.14.0 || ^17 || ^18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "exports": {

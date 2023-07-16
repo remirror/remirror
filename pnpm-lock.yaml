@@ -1925,6 +1925,9 @@ importers:
       '@remirror/core-utils':
         specifier: ^2.0.12
         version: link:../remirror__core-utils
+      '@remirror/extension-code-block':
+        specifier: ^2.0.15
+        version: link:../remirror__extension-code-block
       '@remirror/extension-positioner':
         specifier: ^2.1.8
         version: link:../remirror__extension-positioner
@@ -1941,9 +1944,6 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
     devDependencies:
-      '@remirror/core-types':
-        specifier: ^2.0.5
-        version: link:../remirror__core-types
       '@remirror/pm':
         specifier: ^2.0.5
         version: link:../remirror__pm
@@ -3224,7 +3224,7 @@ importers:
         specifier: ^2.0.17
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-react-language-select':
-        specifier: ^0.1.0
+        specifier: ^0.0.0
         version: link:../remirror__extension-react-language-select
       '@remirror/extension-react-tables':
         specifier: ^2.2.17
@@ -17975,7 +17975,7 @@ packages:
     dependencies:
       semver: 7.5.1
       shelljs: 0.8.5
-      typescript: 5.2.0-dev.20230714
+      typescript: 5.2.0-dev.20230715
     dev: false
 
   /duplexer3@0.1.4:
@@ -28987,8 +28987,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.2.0-dev.20230714:
-    resolution: {integrity: sha512-BZAU6XIqRwO7gRelEoc6iunX6belf+IGyqA79LQqldafiBahXQKYTeyW8V0/ABk7/FpWWk4qRIDDCy8DKWo4XQ==}
+  /typescript@5.2.0-dev.20230715:
+    resolution: {integrity: sha512-HGxy4eGjQ+n36knjF2SR2qiHPlOYkNKh/xZrhxlJTP1kznazQBYe/vZySoEntvGGLYuzc+O/H6D+TkcxrjcTUQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false

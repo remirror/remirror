@@ -8,15 +8,15 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import type { FindProsemirrorNodeResult } from '@remirror/core';
+import { findParentNodeOfType, isElementDomNode, uniqueBy } from '@remirror/core';
+import { CodeBlockExtension } from '@remirror/extension-code-block';
 import {
-  CodeBlockExtension,
   defaultAbsolutePosition,
   hasStateChanged,
   isPositionVisible,
   Positioner,
-} from 'remirror/extensions';
-import type { FindProsemirrorNodeResult } from '@remirror/core';
-import { findParentNodeOfType, isElementDomNode, uniqueBy } from '@remirror/core';
+} from '@remirror/extension-positioner';
 import { PositionerPortal } from '@remirror/react-components';
 import { useCommands, useRemirrorContext } from '@remirror/react-core';
 import { usePositioner } from '@remirror/react-hooks';

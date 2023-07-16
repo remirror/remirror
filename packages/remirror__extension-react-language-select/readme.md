@@ -10,7 +10,7 @@
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-react-language-select/red?icon=npm
 
-A floating language select dropdown for the code block extension
+A React floating language select dropdown component for the code block extension.
 
 ## Installation
 
