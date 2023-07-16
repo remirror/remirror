@@ -57,6 +57,7 @@
     "yjs": "^13.6.1"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-extension-yjs.d.ts",

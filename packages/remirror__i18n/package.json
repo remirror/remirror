@@ -53,6 +53,7 @@
     "make-plural": "^6.2.2"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-i18n.d.ts",

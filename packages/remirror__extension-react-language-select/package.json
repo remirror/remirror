@@ -1,7 +1,6 @@
 {
   "name": "@remirror/extension-react-language-select",
   "version": "0.1.0",
-  "private": false,
   "description": "A React floating language select dropdown component for the code block extension",
   "keywords": [
     "remirror",
@@ -73,6 +72,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-extension-react-language-select.d.ts",

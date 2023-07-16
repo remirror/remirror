@@ -48,6 +48,7 @@
   },
   "peerDependenciesMeta": {},
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/prosemirror-suggest.d.ts",

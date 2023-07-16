@@ -41,6 +41,7 @@
     "@remirror/core-types": "^2.0.5"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/test-keyboard.d.ts",

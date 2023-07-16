@@ -33,6 +33,7 @@
     "@babel/runtime": "^7.22.3"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-core-constants.d.ts",

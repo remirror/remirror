@@ -52,6 +52,7 @@
     "codemirror": "^5.65.13"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-extension-codemirror5.d.ts",

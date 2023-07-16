@@ -36,6 +36,7 @@
     "type-fest": "^3.10.0"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-types.d.ts",

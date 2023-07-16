@@ -47,6 +47,7 @@
     "throttle-debounce": "^3.0.1"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-core-helpers.d.ts",

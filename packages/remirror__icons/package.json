@@ -43,6 +43,7 @@
     "@remirror/core-helpers": "^2.0.3"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/remirror-icons.d.ts",

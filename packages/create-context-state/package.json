@@ -50,6 +50,7 @@
     }
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/create-context-state.d.ts",
