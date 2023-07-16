@@ -1925,6 +1925,9 @@ importers:
       '@remirror/core-utils':
         specifier: ^2.0.12
         version: link:../remirror__core-utils
+      '@remirror/extension-code-block':
+        specifier: ^2.0.15
+        version: link:../remirror__extension-code-block
       '@remirror/extension-positioner':
         specifier: ^2.1.8
         version: link:../remirror__extension-positioner
@@ -1941,9 +1944,6 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
     devDependencies:
-      '@remirror/core-types':
-        specifier: ^2.0.5
-        version: link:../remirror__core-types
       '@remirror/pm':
         specifier: ^2.0.5
         version: link:../remirror__pm

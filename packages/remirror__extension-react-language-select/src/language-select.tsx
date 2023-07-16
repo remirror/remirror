@@ -8,13 +8,13 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { CodeBlockExtension } from '@remirror/extension-code-block';
 import {
-  CodeBlockExtension,
-  defaultAbsolutePosition,
-  hasStateChanged,
   isPositionVisible,
   Positioner,
-} from 'remirror/extensions';
+  defaultAbsolutePosition,
+  hasStateChanged,
+} from '@remirror/extension-positioner';
 import type { FindProsemirrorNodeResult } from '@remirror/core';
 import { findParentNodeOfType, isElementDomNode, uniqueBy } from '@remirror/core';
 import { PositionerPortal } from '@remirror/react-components';
