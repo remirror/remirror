@@ -41,7 +41,6 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@floating-ui/react": "^0.24.3",
-    "@lingui/core": "^4.2.0",
     "@mui/material": "^5.13.2",
     "@remirror/core": "^2.0.19",
     "@remirror/extension-blockquote": "^2.0.14",
