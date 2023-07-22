@@ -176,6 +176,12 @@ export interface EventsOptions {
    * which was hovered at the current position.
    */
   hover?: Handler<HoverEventHandler>;
+
+  /**
+   * Listen for editable changed and pass through previous editable state and
+   * current editable state
+   */
+  editable?: Handler<EditableEventHandler>;
 }
 
 export type FocusEventHandler = (event: FocusEvent) => boolean | undefined | void;
@@ -204,6 +210,7 @@ export type HoverEventHandler = (
   event: MouseEvent,
   state: HoverEventHandlerState,
 ) => boolean | undefined | void;
+export type EditableEventHandler = (currentEditable: boolean) => void;
 
 /**
  * The events extension which listens to events which occur within the
@@ -233,6 +240,7 @@ export type HoverEventHandler = (
     'copy',
     'cut',
     'paste',
+    'editable',
   ],
   handlerKeyOptions: {
     blur: { earlyReturnValue: true },
@@ -461,6 +469,20 @@ export class EventsExtension extends PlainExtension<EventsOptions> {
 
           paste: (_, event: Event) => this.options.paste(event as ClipboardEvent) || false,
         },
+      },
+      view: (_view: EditorView) => {
+        let prevEditable = _view.editable;
+        const options = this.options;
+        return {
+          update(view) {
+            const currentEditable = view.editable;
+
+            if (currentEditable !== prevEditable) {
+              options.editable(currentEditable);
+              prevEditable = currentEditable;
+            }
+          },
+        };
       },
     };
   }
