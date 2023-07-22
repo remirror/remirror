@@ -23,7 +23,7 @@ export type {
   UpdateStateProps,
 } from './framework';
 export { Framework } from './framework';
-export {type ClassName, cx} from './helpers'
+export { type ClassName, cx } from './helpers';
 export type { AnyRemirrorManager, CreateEditorStateProps, ManagerEvents } from './manager';
 export { isRemirrorManager, RemirrorManager } from './manager';
 export type {
