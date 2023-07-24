@@ -47,8 +47,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core-constants": "^2.0.1",
-    "@remirror/core-helpers": "^2.0.3",
+    "@remirror/core-constants": "^2.0.2",
+    "@remirror/core-helpers": "^2.0.4",
     "@remirror/core-types": "^2.0.5",
     "@remirror/core-utils": "^2.0.12",
     "@remirror/pm": "^2.0.6",
