@@ -17965,7 +17965,7 @@ packages:
     dependencies:
       semver: 7.5.1
       shelljs: 0.8.5
-      typescript: 5.2.0-dev.20230722
+      typescript: 5.2.0-dev.20230724
     dev: false
 
   /duplexer3@0.1.4:
@@ -24406,7 +24406,7 @@ packages:
       levn: 0.3.0
       prelude-ls: 1.1.2
       type-check: 0.3.2
-      word-wrap: 1.2.3
+      word-wrap: 1.2.5
 
   /optionator@0.9.1:
     resolution: {integrity: sha512-74RlY5FCnhq4jRxVUPKDaRwrVNXMqsGsiW6AJw4XK8hmtm10wC0ypZBLw5IIp85NZMr91+qd1RvvENwg7jjRFw==}
@@ -24417,7 +24417,7 @@ packages:
       levn: 0.4.1
       prelude-ls: 1.2.1
       type-check: 0.4.0
-      word-wrap: 1.2.3
+      word-wrap: 1.2.5
 
   /ora@1.4.0:
     resolution: {integrity: sha512-iMK1DOQxzzh2MBlVsU42G80mnrvUhqsMh74phHtDlrcTZPK0pH6o7l7DRshK+0YsxDyEuaOkziVdvM3T0QTzpw==}
@@ -28977,8 +28977,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.2.0-dev.20230722:
-    resolution: {integrity: sha512-4xNgjOKKAWIYxNXlxeEZX+EqD+ve0tugfhkck66/bljxbCknP8fnSdVeiwSZ+q/YvouZEzzuUfFkIlWNnXwhrQ==}
+  /typescript@5.2.0-dev.20230724:
+    resolution: {integrity: sha512-imp5MKTFe3BmE+opYLWqglHjPJ3HQtmwcFX0zYKhky/m/ncUpMqnVnjZSoncvTkKGI8s4Ng88LqOEgvLa4brFg==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false
@@ -30015,8 +30015,8 @@ packages:
       execa: 1.0.0
     dev: false
 
-  /word-wrap@1.2.3:
-    resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
+  /word-wrap@1.2.5:
+    resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
 
   /wordwrap@1.0.0:
