@@ -30,7 +30,6 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
     "@remirror/core-constants": "^2.0.1",
     "@remirror/core-helpers": "^2.0.3",
     "escape-string-regexp": "^4.0.0"

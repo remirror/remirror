@@ -29,9 +29,7 @@
     "dist",
     "dist-types"
   ],
-  "dependencies": {
-    "@babel/runtime": "^7.22.3"
-  },
+  "dependencies": {},
   "publishConfig": {
     "access": "public",
     "exports": {
