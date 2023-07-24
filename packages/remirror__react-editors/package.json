@@ -59,7 +59,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core-helpers": "^2.0.3",
+    "@remirror/core-helpers": "^2.0.4",
     "@remirror/extension-react-tables": "^2.2.17",
     "@remirror/pm": "^2.0.6",
     "@remirror/react": "^2.0.34",

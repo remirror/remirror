@@ -1,5 +1,16 @@
 # prosemirror-trailing-node
 
+## 2.0.5
+
+> 2023-07-24
+
+### Patch Changes
+
+- b893fe8fa: remove @babel/runtime dependency for some packages
+- Updated dependencies [b893fe8fa]
+  - @remirror/core-constants@2.0.2
+  - @remirror/core-helpers@2.0.4
+
 ## 2.0.4
 
 > 2023-04-26
