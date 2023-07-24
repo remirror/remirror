@@ -27,4 +27,4 @@ export * as ExtensionTextHighlightMessages from './extension-text-highlight-mess
 export * as ExtensionUnderlineMessages from './extension-underline-messages';
 export * as ExtensionWhitespaceMessages from './extension-whitespace-messages';
 export * as ReactComponentMessages from './react-components-messages';
-export type { MessageDescriptor } from '@lingui/core';
+export type { RemirrorMessage } from '@remirror/core-types';

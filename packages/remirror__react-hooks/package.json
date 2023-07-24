@@ -122,7 +122,6 @@
     "@remirror/extension-mention": "^2.0.15",
     "@remirror/extension-mention-atom": "^2.0.17",
     "@remirror/extension-positioner": "^2.1.8",
-    "@remirror/i18n": "^2.0.5",
     "@remirror/react-core": "^2.0.21",
     "@remirror/react-utils": "^2.0.6",
     "multishift": "^2.0.9",

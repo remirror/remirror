@@ -84,7 +84,6 @@
       "@remirror/core-helpers",
       "@remirror/core-types",
       "@remirror/core-utils",
-      "@remirror/i18n",
       "@remirror/icons",
       "@remirror/messages"
     ],
@@ -643,13 +642,7 @@
     "name": "@remirror/extension-text-color",
     "limit": "5 KB",
     "path": "packages/remirror__extension-text-color/dist/remirror-extension-text-color.js",
-    "ignore": [
-      "@remirror/pm",
-      "@remirror/core",
-      "@remirror/i18n",
-      "@remirror/messages",
-      "@remirror/theme"
-    ],
+    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages", "@remirror/theme"],
     "running": false,
     "gzip": true
   },
@@ -702,7 +695,7 @@
     "name": "@remirror/i18n",
     "limit": "50 KB",
     "path": "packages/remirror__i18n/dist/remirror-i18n.js",
-    "ignore": ["@remirror/core-helpers"],
+    "ignore": ["@remirror/core-helpers", "@remirror/core-types"],
     "running": false,
     "gzip": true
   },
@@ -718,7 +711,7 @@
     "name": "@remirror/messages",
     "limit": "50 KB",
     "path": "packages/remirror__messages/dist/remirror-messages.js",
-    "ignore": ["@remirror/core-helpers"],
+    "ignore": ["@remirror/core-helpers", "@remirror/core-types"],
     "running": false,
     "gzip": true
   },
@@ -848,7 +841,6 @@
       "@remirror/extension-text-color",
       "@remirror/extension-underline",
       "@remirror/extension-whitespace",
-      "@remirror/i18n",
       "@remirror/icons",
       "@remirror/messages",
       "@remirror/react-core",
@@ -876,7 +868,6 @@
       "@remirror/extension-mention",
       "@remirror/extension-mention-atom",
       "@remirror/extension-positioner",
-      "@remirror/i18n",
       "@remirror/react-core",
       "@remirror/react-utils"
     ],

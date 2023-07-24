@@ -3,6 +3,7 @@ import 'remirror/styles/all.css';
 import React, { useCallback } from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { CalloutExtension } from 'remirror/extensions';
+import { i18nFormat } from '@remirror/i18n';
 import {
   CalloutTypeButtonGroup,
   Remirror,
@@ -31,6 +32,7 @@ const Basic = (): JSX.Element => {
         onChange={onChange}
         initialContent={state}
         autoRender='end'
+        i18nFormat={i18nFormat}
       >
         <Toolbar>
           <CalloutTypeButtonGroup />

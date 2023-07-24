@@ -65,7 +65,6 @@
     "@remirror/extension-text-color": "^2.0.15",
     "@remirror/extension-underline": "^2.0.13",
     "@remirror/extension-whitespace": "^2.0.13",
-    "@remirror/i18n": "^2.0.5",
     "@remirror/icons": "^2.0.3",
     "@remirror/messages": "^2.0.6",
     "@remirror/react-core": "^2.0.21",

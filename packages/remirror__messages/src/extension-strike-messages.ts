@@ -1,14 +1,13 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { defineMessage } from '@lingui/macro';
+import type { RemirrorMessage } from '@remirror/core-types';
 
-export const LABEL: MessageDescriptor = defineMessage({
+export const LABEL: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-strike.label',
   comment: 'Label for strike formatting command.',
   message: 'Strikethrough',
-});
+};
 
-export const DESCRIPTION: MessageDescriptor = defineMessage({
+export const DESCRIPTION: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-strike.description',
   comment: 'Description for strike formatting command.',
   message: 'Strikethrough the selected text',
-});
+};

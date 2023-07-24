@@ -4,6 +4,7 @@ import {
   CommandDecoratorShortcut,
   CommandDecoratorValue,
   getShortcutSymbols,
+  I18nFormatter,
   includes,
   isArray,
   isEqual,
@@ -11,7 +12,6 @@ import {
   isString,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import type { I18n } from '@remirror/i18n';
 
 /**
  * Get the value from the option passed into the command.
@@ -97,7 +97,7 @@ interface ShortcutStringOptions {
    * A translation utility for translating a predefined string / or message
    * descriptor.
    */
-  t: I18n['_'];
+  t: I18nFormatter;
 }
 
 const CASINGS = {

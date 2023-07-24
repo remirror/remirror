@@ -1,6 +1,6 @@
 const path = require('path');
 
-const rootDir = path.resolve(__dirname);
+const rootDir = path.resolve(path.join(__dirname, '..', '..'));
 
 module.exports = {
   locales: ['en'],

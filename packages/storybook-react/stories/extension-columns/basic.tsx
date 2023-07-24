@@ -3,6 +3,7 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { ColumnAttributes, ColumnsExtension } from 'remirror/extensions';
+import { i18nFormat } from '@remirror/i18n';
 import {
   CommandButtonGroup,
   Remirror,
@@ -46,6 +47,7 @@ const Basic = (): JSX.Element => {
         onChange={onChange}
         initialContent={state}
         autoRender='end'
+        i18nFormat={i18nFormat}
       >
         <Toolbar>
           <CommandButtonGroup>

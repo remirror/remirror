@@ -1,4 +1,4 @@
-import { CoreUtilsMessages as Messages, MessageDescriptor } from '@remirror/messages';
+import { CoreUtilsMessages as Messages, RemirrorMessage } from '@remirror/messages';
 
 import { environment } from './environment';
 
@@ -41,7 +41,7 @@ interface I18nKeyboardSymbol extends BaseKeyboardSymbol {
   /**
    * The internationalized representation of the key.
    */
-  i18n: MessageDescriptor;
+  i18n: RemirrorMessage;
 }
 
 interface ModifierKeyboardSymbol extends I18nKeyboardSymbol {

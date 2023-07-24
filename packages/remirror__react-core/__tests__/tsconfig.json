@@ -62,9 +62,6 @@
       "path": "../../remirror__theme/src"
     },
     {
-      "path": "../../create-context-state/src"
-    },
-    {
       "path": "../../remirror__pm/src"
     }
   ]

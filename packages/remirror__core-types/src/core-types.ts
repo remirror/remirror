@@ -413,3 +413,16 @@ export type SchemaAttributes = Record<
   string,
   SchemaAttributesObject | string | DynamicAttributeCreator
 >;
+
+export interface RemirrorMessage {
+  id: string;
+  comment: string;
+  message: string;
+}
+
+export type I18nFormatter = (
+  message: RemirrorMessage,
+  values?: Record<string, any>,
+  locale?: string,
+  supportedLocales?: string[],
+) => string;

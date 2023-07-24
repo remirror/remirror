@@ -86,6 +86,15 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
     }
   }
 
+  const generateScript = (pkg.packageJson as any)?.scripts?.generate;
+
+  if (generateScript) {
+    logger.info(
+      `${colors.blue(pkg.packageJson.name)} building with its custom generation script...`,
+    );
+    promises.push(runCustomScript(pkg, 'generate'));
+  }
+
   if (writePackageJson) {
     for (const entryPoint of entryPoints.filter((entryPoint) => !entryPoint.isMain)) {
       promises.push(writeSubpathPackageJson(pkg, entryPoint));
