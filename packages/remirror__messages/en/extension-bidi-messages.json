@@ -1,0 +1,4 @@
+{
+  "extension.command.set-text-direction.description": "{dir, select, ltr {Set the text direction from left to right}\n                          rtl {Set the text direction from right to left}\n                          other {Reset text direction}}",
+  "extension.command.set-text-direction.label": "{dir, select, ltr {Left-To-Right}\n                          rtl {Right-To-Left}\n                          other {Reset Direction}}"
+}

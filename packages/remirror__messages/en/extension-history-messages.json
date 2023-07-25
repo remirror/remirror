@@ -1,0 +1,6 @@
+{
+  "extension.command.redo.description": "Redo the most recent action",
+  "extension.command.redo.label": "Redo",
+  "extension.command.undo.description": "Undo the most recent action",
+  "extension.command.undo.label": "Undo"
+}

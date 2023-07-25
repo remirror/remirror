@@ -1,0 +1,6 @@
+{
+  "extension.command.convert-paragraph.description": "Convert current block into a paragraph block.",
+  "extension.command.convert-paragraph.label": "Convert Paragraph",
+  "extension.command.insert-paragraph.description": "Insert a new paragraph",
+  "extension.command.insert-paragraph.label": "Insert Paragraph"
+}

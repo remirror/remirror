@@ -462,9 +462,6 @@
       "path": "packages/remirror__icons/src"
     },
     {
-      "path": "packages/remirror__messages/src"
-    },
-    {
       "path": "packages/remirror__pm/__tests__"
     },
     {

@@ -1,0 +1,4 @@
+{
+  "extension.command.toggle-blockquote.description": "Add blockquote formatting to the selected text",
+  "extension.command.toggle-blockquote.label": "Blockquote"
+}

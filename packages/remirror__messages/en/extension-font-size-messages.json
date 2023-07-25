@@ -1,0 +1,8 @@
+{
+  "extension.command.decrease-font-size.description": "Decrease the font size.",
+  "extension.command.decrease-font-size.label": "Decrease",
+  "extension.command.increase-font-size.description": "Increase the font size",
+  "extension.command.increase-font-size.label": "Increase",
+  "extension.command.set-font-size.description": "Set the font size for the selected text.",
+  "extension.command.set-font-size.label": "Font size"
+}
