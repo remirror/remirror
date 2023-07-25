@@ -1,5 +1,5 @@
-import { I18nFormatter, range } from '@remirror/core';
-import { ExtensionTextColorMessages as Messages, RemirrorMessage } from '@remirror/messages';
+import { I18nFormatter, range, RemirrorMessage } from '@remirror/core';
+import { ExtensionTextColorMessages as Messages } from '@remirror/messages';
 import { getThemeVar } from '@remirror/theme';
 
 import {

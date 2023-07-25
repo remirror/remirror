@@ -1,4 +1,5 @@
-import { CoreUtilsMessages as Messages, RemirrorMessage } from '@remirror/messages';
+import type { RemirrorMessage } from '@remirror/core-types';
+import { CoreUtilsMessages as Messages } from '@remirror/messages';
 
 import { environment } from './environment';
 
