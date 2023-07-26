@@ -2828,9 +2828,6 @@ importers:
       '@remirror/extension-react-component':
         specifier: ^2.0.13
         version: link:../remirror__extension-react-component
-      '@remirror/i18n':
-        specifier: ^2.0.5
-        version: link:../remirror__i18n
       '@remirror/preset-core':
         specifier: ^2.0.16
         version: link:../remirror__preset-core
