@@ -1,7 +1,6 @@
 import { createNanoEvents } from 'nanoevents';
 import { ErrorConstant } from '@remirror/core-constants';
 import {
-  cx,
   invariant,
   isEmptyArray,
   isFunction,
@@ -23,6 +22,7 @@ import type {
 
 import type { BuiltinPreset, UpdatableViewProps } from '../builtins';
 import type { AnyExtension, CommandsFromExtensions } from '../extension';
+import { cx } from '../helpers';
 import type { RemirrorManager } from '../manager';
 import type { FocusType, StateUpdateLifecycleProps } from '../types';
 import type {
