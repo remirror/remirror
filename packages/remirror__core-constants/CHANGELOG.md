@@ -1,5 +1,13 @@
 # @remirror/core-constants
 
+## 2.0.2
+
+> 2023-07-24
+
+### Patch Changes
+
+- b893fe8fa: remove @babel/runtime dependency for some packages
+
 ## 2.0.1
 
 > 2023-04-26
