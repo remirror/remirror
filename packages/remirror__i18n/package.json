@@ -45,11 +45,6 @@
     "en",
     "plurals"
   ],
-  "scripts": {
-    "compile": "lingui compile",
-    "extract": "lingui extract",
-    "generate": "run-s extract compile"
-  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@lingui/core": "^4.2.0",
@@ -57,9 +52,6 @@
     "@remirror/core-helpers": "^3.0.0",
     "@remirror/core-types": "^2.0.5",
     "make-plural": "^6.2.2"
-  },
-  "devDependencies": {
-    "@lingui/cli": "^4.2.0"
   },
   "publishConfig": {
     "access": "public",
