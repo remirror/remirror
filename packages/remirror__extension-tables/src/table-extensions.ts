@@ -6,7 +6,6 @@ import {
   convertCommand,
   CreateExtensionPlugin,
   EditorState,
-  EditorView,
   extension,
   ExtensionPriority,
   ExtensionTag,
@@ -22,6 +21,7 @@ import {
   ProsemirrorPlugin,
   StateUpdateLifecycleProps,
 } from '@remirror/core';
+import { CreateEventHandlers } from '@remirror/extension-events';
 import { TextSelection } from '@remirror/pm/state';
 import {
   addColumnAfter,
@@ -124,10 +124,12 @@ export class TableExtension extends NodeExtension<TableOptions> {
     }
   }
 
-  onView(_: EditorView): void {
-    if (this.store.helpers.isViewEditable() === false) {
-      this.store.updateExtensionPlugins(this);
-    }
+  createEventHandlers(): CreateEventHandlers {
+    return {
+      editable: () => {
+        this.store.updateExtensionPlugins(this);
+      },
+    };
   }
 
   /**
