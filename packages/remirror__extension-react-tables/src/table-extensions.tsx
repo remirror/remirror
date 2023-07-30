@@ -131,8 +131,6 @@ export class TableExtension extends BaseTableExtension {
   }
 
   onView(view: EditorView): void {
-    super.onView(view);
-
     // We have multiple node types which share a eom table_row in this
     // extension. In order to make the function `tableNodeTypes` from
     // `prosemirror-extension-tables` return the correct node type, we

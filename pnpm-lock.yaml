@@ -2139,6 +2139,9 @@ importers:
       '@remirror/core':
         specifier: ^2.0.18
         version: link:../remirror__core
+      '@remirror/extension-events':
+        specifier: ^2.1.15
+        version: link:../remirror__extension-events
       '@remirror/extension-positioner':
         specifier: ^2.1.8
         version: link:../remirror__extension-positioner
@@ -17962,7 +17965,7 @@ packages:
     dependencies:
       semver: 7.5.1
       shelljs: 0.8.5
-      typescript: 5.2.0-dev.20230727
+      typescript: 5.2.0-dev.20230728
     dev: false
 
   /duplexer3@0.1.4:
@@ -28974,8 +28977,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.2.0-dev.20230727:
-    resolution: {integrity: sha512-HTNqxwU5roYnvWrrdTxKLREZ+fygKOpf7q2DAhfZntqgyQNxZzZdDypigMS8tNmeQN2X/ohbNzX9PnhHoCCmfw==}
+  /typescript@5.2.0-dev.20230728:
+    resolution: {integrity: sha512-pI6gdSexHd/ESfy6Vwmd6bdId1UIYl1fkE8d2o/n/frQCeD6oupH93WTh0syCk3mYMpnx++flvR1X2WHJS1oVg==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false

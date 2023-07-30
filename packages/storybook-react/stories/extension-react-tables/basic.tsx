@@ -124,10 +124,16 @@ const Table = ({
   extensions: () => AnyExtension[];
 }): JSX.Element => {
   const { manager, state } = useRemirror({ extensions });
-
+  const [editable, setEditable] = useState(true);
   return (
     <ThemeProvider>
-      <Remirror manager={manager} initialContent={state}>
+      <button
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => setEditable(!editable)}
+      >
+        Toggle editable (currently {editable.toString()})
+      </button>
+      <Remirror manager={manager} initialContent={state} editable={editable}>
         <EditorComponent />
         <TableComponents />
         <CommandMenu />
