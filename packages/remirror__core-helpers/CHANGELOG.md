@@ -1,5 +1,13 @@
 # @remirror/core-helpers
 
+## 3.0.0
+
+> 2023-07-30
+
+### Major Changes
+
+- 2f542ccb0: move cx function from core helpers to core package
+
 ## 2.0.4
 
 > 2023-07-24

@@ -1,5 +1,14 @@
 # prosemirror-trailing-node
 
+## 2.0.6
+
+> 2023-07-30
+
+### Patch Changes
+
+- Updated dependencies [2f542ccb0]
+  - @remirror/core-helpers@3.0.0
+
 ## 2.0.5
 
 > 2023-07-24

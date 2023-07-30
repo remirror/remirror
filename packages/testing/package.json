@@ -44,8 +44,8 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@jest/globals": "^29.5.0",
     "@react-spring/mock-raf": "^1.1.1",
-    "@remirror/core": "^2.0.18",
-    "@remirror/pm": "^2.0.6",
+    "@remirror/core": "^2.0.19",
+    "@remirror/pm": "^2.0.7",
     "@remirror/preset-core": "^2.0.16",
     "@remirror/react": "^2.0.34",
     "@testing-library/react": "^14.0.0",
@@ -71,7 +71,7 @@
     "playwright-testing-library": "^4.5.0",
     "react-test-renderer": "^18.2.0",
     "signal-exit": "^3.0.7",
-    "test-keyboard": "2.0.5"
+    "test-keyboard": "2.0.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
