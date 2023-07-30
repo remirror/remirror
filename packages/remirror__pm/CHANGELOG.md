@@ -1,5 +1,17 @@
 # @remirror/pm
 
+## 2.0.7
+
+> 2023-07-30
+
+### Patch Changes
+
+- Updated dependencies [2f542ccb0]
+  - @remirror/core-helpers@3.0.0
+  - prosemirror-paste-rules@2.0.6
+  - prosemirror-suggest@2.0.5
+  - prosemirror-trailing-node@2.0.6
+
 ## 2.0.6
 
 > 2023-05-24

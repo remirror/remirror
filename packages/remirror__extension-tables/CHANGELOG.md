@@ -1,5 +1,19 @@
 # @remirror/extension-tabless
 
+## 2.3.1
+
+> 2023-07-30
+
+### Patch Changes
+
+- a5bd32cf0: add editable event hook and fix the bug in react table caused by the update of the "editable".
+- Updated dependencies [a5bd32cf0]
+- Updated dependencies [2f542ccb0]
+  - @remirror/extension-events@2.1.16
+  - @remirror/core@2.0.19
+  - @remirror/messages@2.0.6
+  - @remirror/pm@2.0.7
+
 ## 2.3.0
 
 > 2023-07-14

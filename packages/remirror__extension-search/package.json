@@ -35,12 +35,12 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.18",
-    "@remirror/messages": "^2.0.5",
+    "@remirror/core": "^2.0.19",
+    "@remirror/messages": "^2.0.6",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.6"
+    "@remirror/pm": "^2.0.7"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5"

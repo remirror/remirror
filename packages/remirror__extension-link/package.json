@@ -35,13 +35,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.18",
-    "@remirror/extension-events": "^2.1.15",
-    "@remirror/messages": "^2.0.5",
+    "@remirror/core": "^2.0.19",
+    "@remirror/extension-events": "^2.1.16",
+    "@remirror/messages": "^2.0.6",
     "extract-domain": "2.2.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.6",
+    "@remirror/pm": "^2.0.7",
     "@types/extract-domain": "2.3.1",
     "linkifyjs": "^3.0.5"
   },

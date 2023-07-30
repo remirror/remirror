@@ -1,5 +1,20 @@
 # @remirror/core
 
+## 2.0.19
+
+> 2023-07-30
+
+### Patch Changes
+
+- 2f542ccb0: move cx function from core helpers to core package
+- Updated dependencies [2f542ccb0]
+  - @remirror/core-helpers@3.0.0
+  - @remirror/core-utils@2.0.13
+  - @remirror/i18n@2.0.5
+  - @remirror/icons@2.0.3
+  - @remirror/messages@2.0.6
+  - @remirror/pm@2.0.7
+
 ## 2.0.18
 
 > 2023-07-13

@@ -38,13 +38,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.18",
+    "@remirror/core": "^2.0.19",
     "@remirror/extension-placeholder": "^2.0.14",
     "@remirror/extension-react-component": "^2.0.13",
-    "@remirror/react-utils": "^2.0.5"
+    "@remirror/react-utils": "^2.0.6"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.6",
+    "@remirror/pm": "^2.0.7",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",

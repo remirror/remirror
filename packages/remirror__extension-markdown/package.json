@@ -35,8 +35,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.18",
-    "@remirror/messages": "^2.0.5",
+    "@remirror/core": "^2.0.19",
+    "@remirror/messages": "^2.0.6",
     "@types/marked": "^4.3.1",
     "@types/turndown": "^5.0.1",
     "marked": "^4.3.0",
@@ -44,8 +44,8 @@
     "turndown-plugin-gfm": "^1.0.2"
   },
   "devDependencies": {
-    "@remirror/extension-react-tables": "^2.2.17",
-    "@remirror/pm": "^2.0.6"
+    "@remirror/extension-react-tables": "^2.2.18",
+    "@remirror/pm": "^2.0.7"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5"
