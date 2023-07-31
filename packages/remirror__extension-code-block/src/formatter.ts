@@ -5,28 +5,11 @@
  * `@remirror/extension-code-block/formatter`.
  */
 
+import Prettier from '@prettier/sync';
 import type { BuiltInParserName, CursorOptions, CursorResult } from 'prettier';
-import babelPlugin from 'prettier/parser-babel';
-import graphqlPlugin from 'prettier/parser-graphql';
-import htmlPlugin from 'prettier/parser-html';
-import markdownPlugin from 'prettier/parser-markdown';
-import cssPlugin from 'prettier/parser-postcss';
-import typescriptPlugin from 'prettier/parser-typescript';
-import yamlPlugin from 'prettier/parser-yaml';
-import { default as Prettier } from 'prettier/standalone';
 
 import type { FormattedContent, FormatterProps } from './code-block-types';
 
-// TODO load this asynchronously
-const plugins = [
-  babelPlugin,
-  htmlPlugin,
-  typescriptPlugin,
-  markdownPlugin,
-  graphqlPlugin,
-  cssPlugin,
-  yamlPlugin,
-];
 const options: Partial<CursorOptions> = {
   bracketSpacing: true,
   arrowParens: 'always',
@@ -55,11 +38,10 @@ interface FormatCodeProps {
 /**
  * Wrapper around the prettier formatWithCursor.
  */
-function formatCode({ parser, source, cursorOffset }: FormatCodeProps) {
+function formatCode({ parser, source, cursorOffset }: FormatCodeProps): CursorResult {
   return Prettier.formatWithCursor(source, {
     ...options,
     cursorOffset,
-    plugins,
     parser,
   });
 }
