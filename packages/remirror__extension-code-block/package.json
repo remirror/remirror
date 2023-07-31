@@ -60,7 +60,7 @@
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5",
-    "prettier": "^3.0.0"
+    "prettier": ">= 2.8.8"
   },
   "peerDependenciesMeta": {
     "@types/refractor": {
