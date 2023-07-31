@@ -46,6 +46,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
+    "@prettier/sync": "^0.3.0",
     "@remirror/core": "^2.0.19",
     "@remirror/messages": "^2.0.6",
     "@remirror/theme": "^2.0.9",

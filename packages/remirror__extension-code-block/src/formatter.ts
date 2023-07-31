@@ -5,6 +5,7 @@
  * `@remirror/extension-code-block/formatter`.
  */
 
+import { default as Prettier } from '@prettier/sync';
 import type { BuiltInParserName, CursorOptions, CursorResult } from 'prettier';
 import babelPlugin from 'prettier/parser-babel';
 import graphqlPlugin from 'prettier/parser-graphql';
@@ -13,8 +14,6 @@ import markdownPlugin from 'prettier/parser-markdown';
 import cssPlugin from 'prettier/parser-postcss';
 import typescriptPlugin from 'prettier/parser-typescript';
 import yamlPlugin from 'prettier/parser-yaml';
-import { default as Prettier } from 'prettier/standalone';
-
 import type { FormattedContent, FormatterProps } from './code-block-types';
 
 // TODO load this asynchronously
@@ -55,7 +54,7 @@ interface FormatCodeProps {
 /**
  * Wrapper around the prettier formatWithCursor.
  */
-function formatCode({ parser, source, cursorOffset }: FormatCodeProps) {
+function formatCode({ parser, source, cursorOffset }: FormatCodeProps): CursorResult {
   return Prettier.formatWithCursor(source, {
     ...options,
     cursorOffset,

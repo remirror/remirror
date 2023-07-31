@@ -1166,6 +1166,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.22.3
         version: 7.22.3
+      '@prettier/sync':
+        specifier: ^0.3.0
+        version: 0.3.0(prettier@3.0.0)
       '@remirror/core':
         specifier: ^2.0.19
         version: link:../remirror__core
@@ -12020,6 +12023,14 @@ packages:
       - supports-color
     dev: false
 
+  /@prettier/sync@0.3.0(prettier@3.0.0):
+    resolution: {integrity: sha512-3dcmCyAxIcxy036h1I7MQU/uEEBq8oLwf1CE3xeze+MPlgkdlb/+w6rGR/1dhp6Hqi17fRS6nvwnOzkESxEkOw==}
+    peerDependencies:
+      prettier: ^3.0.0
+    dependencies:
+      prettier: 3.0.0
+    dev: false
+
   /@react-spring/mock-raf@1.1.1:
     resolution: {integrity: sha512-SPgq9cenqdkqzxg1zYKEOkao5Boob2sG8QTxiSoHT7NyZoTZKnDcalvRtW9AmZBcbUHy8UtqCKfBWKyB2PSlmQ==}
     dev: false
@@ -17966,7 +17977,7 @@ packages:
     dependencies:
       semver: 7.5.1
       shelljs: 0.8.5
-      typescript: 5.2.0-dev.20230727
+      typescript: 5.2.0-dev.20230731
     dev: false
 
   /duplexer3@0.1.4:
@@ -28976,8 +28987,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.2.0-dev.20230727:
-    resolution: {integrity: sha512-HTNqxwU5roYnvWrrdTxKLREZ+fygKOpf7q2DAhfZntqgyQNxZzZdDypigMS8tNmeQN2X/ohbNzX9PnhHoCCmfw==}
+  /typescript@5.2.0-dev.20230731:
+    resolution: {integrity: sha512-RJVLgnDgu67ZrohYy0aBea+5TICfRod36+24zw0bR/KJDQJO9mlIjTC0k+/PKw87fXP5JuUHqepEk15PvFya7A==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false
