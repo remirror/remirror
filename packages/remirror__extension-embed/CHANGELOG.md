@@ -1,5 +1,16 @@
 # @remirror/extension-embed
 
+## 2.0.14
+
+> 2023-07-31
+
+### Patch Changes
+
+- d50dadf27: Update dependencies.
+- Updated dependencies [d50dadf27]
+  - prosemirror-resizable-view@2.0.14
+  - @remirror/pm@2.0.8
+
 ## 2.0.13
 
 > 2023-04-26

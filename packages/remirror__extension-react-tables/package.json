@@ -56,7 +56,7 @@
     "jsx-dom-cjs": "^8.0.6"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.7",
+    "@remirror/pm": "^2.0.8",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",

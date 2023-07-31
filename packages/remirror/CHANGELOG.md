@@ -1,5 +1,20 @@
 # remirror
 
+## 2.0.35
+
+> 2023-07-31
+
+### Patch Changes
+
+- 149511224: Update dependency prettier to v3
+- Updated dependencies [149511224]
+- Updated dependencies [d50dadf27]
+  - @remirror/extension-code-block@2.0.17
+  - @remirror/extension-embed@2.0.14
+  - @remirror/extension-image@2.1.10
+  - @remirror/extension-yjs@3.0.15
+  - @remirror/pm@2.0.8
+
 ## 2.0.34
 
 > 2023-07-30
