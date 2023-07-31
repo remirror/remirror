@@ -1,5 +1,15 @@
 # jest-prosemirror
 
+## 2.1.5
+
+> 2023-07-31
+
+### Patch Changes
+
+- d50dadf27: Update dependencies.
+- Updated dependencies [d50dadf27]
+  - @remirror/pm@2.0.8
+
 ## 2.1.4
 
 > 2023-07-30

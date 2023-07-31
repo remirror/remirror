@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "2.0.34",
+  "version": "2.0.35",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -72,14 +72,14 @@
     "@remirror/extension-bold": "^2.0.13",
     "@remirror/extension-callout": "^2.0.15",
     "@remirror/extension-code": "^2.0.13",
-    "@remirror/extension-code-block": "^2.0.16",
+    "@remirror/extension-code-block": "^2.0.17",
     "@remirror/extension-codemirror5": "^2.0.13",
     "@remirror/extension-collaboration": "^2.0.13",
     "@remirror/extension-columns": "^2.0.14",
     "@remirror/extension-diff": "^2.0.13",
     "@remirror/extension-doc": "^2.1.5",
     "@remirror/extension-drop-cursor": "^2.0.13",
-    "@remirror/extension-embed": "^2.0.13",
+    "@remirror/extension-embed": "^2.0.14",
     "@remirror/extension-emoji": "^2.0.17",
     "@remirror/extension-entity-reference": "^2.2.6",
     "@remirror/extension-epic-mode": "^2.0.13",
@@ -91,7 +91,7 @@
     "@remirror/extension-heading": "^2.0.14",
     "@remirror/extension-history": "^2.0.13",
     "@remirror/extension-horizontal-rule": "^2.0.13",
-    "@remirror/extension-image": "^2.1.9",
+    "@remirror/extension-image": "^2.1.10",
     "@remirror/extension-italic": "^2.0.13",
     "@remirror/extension-link": "^2.0.17",
     "@remirror/extension-list": "^2.0.16",
@@ -115,7 +115,7 @@
     "@remirror/extension-trailing-node": "^2.0.13",
     "@remirror/extension-underline": "^2.0.13",
     "@remirror/extension-whitespace": "^2.0.13",
-    "@remirror/extension-yjs": "^3.0.14",
+    "@remirror/extension-yjs": "^3.0.15",
     "@remirror/icons": "^2.0.3",
     "@remirror/preset-core": "^2.0.16",
     "@remirror/preset-formatting": "^2.0.14",
@@ -128,11 +128,11 @@
     "yjs": "^13.6.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.7",
+    "@remirror/pm": "^2.0.8",
     "prettier": "^3.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.7",
+    "@remirror/pm": "^2.0.8",
     "prettier": "^3.0.0"
   },
   "peerDependenciesMeta": {

@@ -1,5 +1,13 @@
 # prosemirror-paste-rules
 
+## 2.0.7
+
+> 2023-07-31
+
+### Patch Changes
+
+- d50dadf27: Update dependencies.
+
 ## 2.0.6
 
 > 2023-07-30
