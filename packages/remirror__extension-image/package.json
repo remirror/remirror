@@ -42,7 +42,7 @@
     "@remirror/core": "^2.0.19",
     "@remirror/messages": "^2.0.6",
     "@remirror/theme": "^2.0.9",
-    "prosemirror-resizable-view": "^2.0.12"
+    "prosemirror-resizable-view": "^2.0.13"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.7"

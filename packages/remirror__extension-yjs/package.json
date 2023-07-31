@@ -41,9 +41,9 @@
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.19",
     "@remirror/messages": "^2.0.6",
-    "prosemirror-model": "^1.19.2",
+    "prosemirror-model": "^1.19.3",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.31.3",
+    "prosemirror-view": "^1.31.7",
     "y-prosemirror": "^1.0.19",
     "y-protocols": "^1.0.5"
   },
