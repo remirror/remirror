@@ -14,6 +14,7 @@ import markdownPlugin from 'prettier/parser-markdown';
 import cssPlugin from 'prettier/parser-postcss';
 import typescriptPlugin from 'prettier/parser-typescript';
 import yamlPlugin from 'prettier/parser-yaml';
+
 import type { FormattedContent, FormatterProps } from './code-block-types';
 
 // TODO load this asynchronously
