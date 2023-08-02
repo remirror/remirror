@@ -3,7 +3,12 @@ import { fireEvent } from '@testing-library/dom';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import { LinkExtension } from 'remirror/extensions';
 
-import { ContextMenuEventHandlerState, EventsExtension, HoverEventHandlerState } from '../';
+import {
+  ClickMarkHandlerState,
+  ContextMenuEventHandlerState,
+  EventsExtension,
+  HoverEventHandlerState,
+} from '../';
 
 extensionValidityTest(EventsExtension);
 
@@ -85,6 +90,24 @@ describe('events', () => {
       expect(clickHandler).toHaveBeenCalled();
     },
   );
+
+  it('click events can be obtained for individual string link', () => {
+    const eventsExtension = new EventsExtension();
+    const editor = renderEditor([eventsExtension, new LinkExtension()]);
+    const { doc, p } = editor.nodes;
+    const { link } = editor.attributeMarks;
+    const { view, add } = editor;
+    const clickHandler: any = jest.fn((_: MouseEvent, __: ClickMarkHandlerState) => true);
+    eventsExtension.addHandler('clickMark', clickHandler);
+    const node = p('1', link({ href: 'https://example.com' })('l'));
+
+    add(doc(node));
+
+    view.someProp('handleClickOn', (fn) => fn(view, 2, node, 0, {} as MouseEvent, true));
+    expect(clickHandler).toHaveBeenCalledTimes(1);
+    expect(clickHandler.mock.calls[0]?.[1].getMark).toBeFunction();
+    expect(clickHandler.mock.calls[0]?.[1].getMark('link')).toBeDefined();
+  });
 
   it('should not throw when clicked on before first state called', () => {
     const eventsExtension = new EventsExtension();
