@@ -1,6 +1,7 @@
-import Prettier from '@prettier/sync';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
+import typescriptPlugin from 'prettier/parser-typescript';
+import { default as Prettier } from 'prettier/standalone';
 import refractor from 'refractor/core.js';
 import graphql from 'refractor/lang/graphql.js';
 import javascript from 'refractor/lang/javascript.js';
@@ -339,6 +340,7 @@ describe('commands', () => {
       if (getLanguage({ fallback: 'text', language }) === 'typescript') {
         return Prettier.formatWithCursor(source, {
           cursorOffset,
+          plugins: [typescriptPlugin],
           parser: 'typescript',
           singleQuote: true,
         });
