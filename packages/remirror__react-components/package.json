@@ -48,7 +48,7 @@
     "@remirror/extension-bold": "^2.0.13",
     "@remirror/extension-callout": "^2.0.15",
     "@remirror/extension-code": "^2.0.13",
-    "@remirror/extension-code-block": "^2.0.17",
+    "@remirror/extension-code-block": "^2.0.18",
     "@remirror/extension-columns": "^2.0.14",
     "@remirror/extension-find": "^0.1.6",
     "@remirror/extension-font-size": "^2.0.13",
@@ -82,7 +82,7 @@
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.8",
-    "@remirror/react": "^2.0.34",
+    "@remirror/react": "^2.0.35",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",
