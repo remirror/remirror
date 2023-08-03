@@ -26,7 +26,7 @@ export const useCommandOptionValues = ({
   enabled,
   attrs,
 }: UseCommandOptionValuesParams): UseCommandOptionValuesResult => {
-  const { t } = useI18n();
+  const t = useI18n();
   const { getCommandOptions } = useHelpers();
   const options = getCommandOptions(commandName);
 

@@ -15,7 +15,7 @@ msgstr ""
 
 #. Label for toggling between upper and lower case.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-case-messages.ts:4
+#: packages/remirror__messages/src/extension-text-case-messages.ts:3
 msgid "extension.command.toggle-upper-case.label"
 msgstr ""
 "{case, select, upper {Uppercase}\n"
@@ -26,19 +26,19 @@ msgstr ""
 
 #. The number of columns
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-tables-messages.ts:19
+#: packages/remirror__messages/src/extension-tables-messages.ts:18
 msgid "extension.table.column_count"
 msgstr "{count, plural, one {# column} other {# columns}}"
 
 #. The number of rows
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-tables-messages.ts:28
+#: packages/remirror__messages/src/extension-tables-messages.ts:27
 msgid "extension.table.row_count"
 msgstr "{count, plural, one {# row} other {# rows}}"
 
 #. Description of the columns command with support for number of columns counts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-columns-messages.ts:13
+#: packages/remirror__messages/src/extension-columns-messages.ts:12
 msgid "extension.command.toggle-columns.description"
 msgstr ""
 "{count, select, 2 {Split the block into two columns}\n"
@@ -48,7 +48,7 @@ msgstr ""
 
 #. Label for columns command with support for number of columns counts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-columns-messages.ts:4
+#: packages/remirror__messages/src/extension-columns-messages.ts:3
 msgid "extension.command.toggle-columns.label"
 msgstr ""
 "{count, select, 2 {Two Column Block}\n"
@@ -58,7 +58,7 @@ msgstr ""
 
 #. Label for setting the text direction.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-bidi-messages.ts:4
+#: packages/remirror__messages/src/extension-bidi-messages.ts:3
 msgid "extension.command.set-text-direction.label"
 msgstr ""
 "{dir, select, ltr {Left-To-Right}\n"
@@ -67,7 +67,7 @@ msgstr ""
 
 #. Description for setting the text direction.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-bidi-messages.ts:12
+#: packages/remirror__messages/src/extension-bidi-messages.ts:11
 msgid "extension.command.set-text-direction.description"
 msgstr ""
 "{dir, select, ltr {Set the text direction from left to right}\n"
@@ -76,7 +76,7 @@ msgstr ""
 
 #. Label for heading command with support for levels.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-heading-messages.ts:4
+#: packages/remirror__messages/src/extension-heading-messages.ts:3
 msgid "extension.command.toggle-heading.label"
 msgstr ""
 "{level, select, 1 {Heading 1}\n"
@@ -89,7 +89,7 @@ msgstr ""
 
 #. Description of the callout command with support for callout types.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-callout-messages.ts:14
+#: packages/remirror__messages/src/extension-callout-messages.ts:13
 msgid "extension.command.toggle-callout.description"
 msgstr ""
 "{type, select, info {Create an information callout block}\n"
@@ -100,7 +100,7 @@ msgstr ""
 
 #. Label for callout command with support for callout types.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-callout-messages.ts:4
+#: packages/remirror__messages/src/extension-callout-messages.ts:3
 msgid "extension.command.toggle-callout.label"
 msgstr ""
 "{type, select, info {Information Callout}\n"
@@ -111,133 +111,133 @@ msgstr ""
 
 #. Description for the code block command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-code-block-messages.ts:10
+#: packages/remirror__messages/src/extension-code-block-messages.ts:9
 msgid "extension.command.toggle-code-block.description"
 msgstr "Add a code block"
 
 #. Label for adding an annotation.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-annotation-messages.ts:4
+#: packages/remirror__messages/src/extension-annotation-messages.ts:3
 msgid "extension.command.add-annotation.label"
 msgstr "Add annotation"
 
 #. Description for blockquote formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-blockquote-messages.ts:10
+#: packages/remirror__messages/src/extension-blockquote-messages.ts:9
 msgid "extension.command.toggle-blockquote.description"
 msgstr "Add blockquote formatting to the selected text"
 
 #. Description for bold formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-bold-messages.ts:10
+#: packages/remirror__messages/src/extension-bold-messages.ts:9
 msgid "extension.command.toggle-bold.description"
 msgstr "Add bold formatting to the selected text"
 
 #. Description for the inline code formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-code-messages.ts:10
+#: packages/remirror__messages/src/extension-code-messages.ts:9
 msgid "extension.command.toggle-code.description"
 msgstr "Add inline code formatting to the selected text"
 
 #. Label for alt key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:34
+#: packages/remirror__messages/src/core-utils-messages.ts:33
 msgid "keyboard.shortcut.alt"
 msgstr "Alt"
 
 #. Label for arrowDown key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:112
+#: packages/remirror__messages/src/core-utils-messages.ts:111
 msgid "keyboard.shortcut.arrowDown"
 msgstr "Arrow Down"
 
 #. Label for arrow left key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:94
+#: packages/remirror__messages/src/core-utils-messages.ts:93
 msgid "keyboard.shortcut.arrowLeft"
 msgstr "Arrow Left"
 
 #. Label for arrow right key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:100
+#: packages/remirror__messages/src/core-utils-messages.ts:99
 msgid "keyboard.shortcut.arrowRight"
 msgstr "Arrow Right"
 
 #. Label for arrow up key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:106
+#: packages/remirror__messages/src/core-utils-messages.ts:105
 msgid "keyboard.shortcut.arrowUp"
 msgstr "Arrow Up"
 
 #. Label for backspace key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:46
+#: packages/remirror__messages/src/core-utils-messages.ts:45
 msgid "keyboard.shortcut.backspace"
 msgstr "Backspace"
 
 #. Black color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:28
+#: packages/remirror__messages/src/extension-text-color-messages.ts:27
 msgid "ui.text-color.black"
 msgstr "Black"
 
 #. Label for blockquote formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-blockquote-messages.ts:4
+#: packages/remirror__messages/src/extension-blockquote-messages.ts:3
 msgid "extension.command.toggle-blockquote.label"
 msgstr "Blockquote"
 
 #. Blue color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:106
+#: packages/remirror__messages/src/extension-text-color-messages.ts:105
 msgid "ui.text-color.blue"
 msgstr "Blue"
 
 #. Blue color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:112
+#: packages/remirror__messages/src/extension-text-color-messages.ts:111
 msgid "ui.text-color.blue.hue"
 msgstr "Blue {hue}"
 
 #. Label for bold formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-bold-messages.ts:4
+#: packages/remirror__messages/src/extension-bold-messages.ts:3
 msgid "extension.command.toggle-bold.label"
 msgstr "Bold"
 
 #. Description for inserting a bullet list into the editor.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-list-messages.ts:10
+#: packages/remirror__messages/src/extension-list-messages.ts:9
 msgid "extension.command.toggle-bullet-list.description"
 msgstr "Bulleted list"
 
 #. Label for caps lock key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:40
+#: packages/remirror__messages/src/core-utils-messages.ts:39
 msgid "keyboard.shortcut.capsLock"
 msgstr "Caps Lock"
 
 #. Center align the text in the current node.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-node-formatting-messages.ts:16
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:15
 msgid "extension.command.center-align.label"
 msgstr "Center align"
 
 #. Label for the inline code formatting.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-code-messages.ts:4
+#: packages/remirror__messages/src/extension-code-messages.ts:3
 msgid "extension.command.toggle-code.label"
 msgstr "Code"
 
 #. Label for the code block command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-code-block-messages.ts:4
+#: packages/remirror__messages/src/extension-code-block-messages.ts:3
 msgid "extension.command.toggle-code-block.label"
 msgstr "Codeblock"
 
 #. Label for command key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:10
+#: packages/remirror__messages/src/core-utils-messages.ts:9
 msgid "keyboard.shortcut.command"
 msgstr "Command"
 
@@ -278,115 +278,115 @@ msgstr "Command"
 
 #. Label for control key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:16
+#: packages/remirror__messages/src/core-utils-messages.ts:15
 msgid "keyboard.shortcut.control"
 msgstr "Control"
 
 #. Description for converting a paragraph.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-paragraph-messages.ts:22
+#: packages/remirror__messages/src/extension-paragraph-messages.ts:21
 msgid "extension.command.convert-paragraph.description"
 msgstr "Convert current block into a paragraph block."
 
 #. Label for converting the current node into a paragraph.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-paragraph-messages.ts:16
+#: packages/remirror__messages/src/extension-paragraph-messages.ts:15
 msgid "extension.command.convert-paragraph.label"
 msgstr "Convert Paragraph"
 
 #. Label for copy command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-messages.ts:4
+#: packages/remirror__messages/src/core-messages.ts:3
 msgid "extension.command.copy.label"
 msgstr "Copy"
 
 #. Description for copy command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-messages.ts:10
+#: packages/remirror__messages/src/core-messages.ts:9
 msgid "extension.command.copy.description"
 msgstr "Copy the selected text"
 
 #. Description for creating a table
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-tables-messages.ts:10
+#: packages/remirror__messages/src/extension-tables-messages.ts:9
 msgid "extension.command.create-table.description"
 msgstr "Create a table with set number of rows and columns."
 
 #. Label for creating a table
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-tables-messages.ts:4
+#: packages/remirror__messages/src/extension-tables-messages.ts:3
 msgid "extension.command.create-table.label"
 msgstr "Create table"
 
 #. Label for cut command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-messages.ts:16
+#: packages/remirror__messages/src/core-messages.ts:15
 msgid "extension.command.cut.label"
 msgstr "Cut"
 
 #. Description for cut command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-messages.ts:22
+#: packages/remirror__messages/src/core-messages.ts:21
 msgid "extension.command.cut.description"
 msgstr "Cut the selected text"
 
 #. Cyan color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:118
+#: packages/remirror__messages/src/extension-text-color-messages.ts:117
 msgid "ui.text-color.cyan"
 msgstr "Cyan"
 
 #. Cyan color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:124
+#: packages/remirror__messages/src/extension-text-color-messages.ts:123
 msgid "ui.text-color.cyan.hue"
 msgstr "Cyan {hue}"
 
 #. Label for decreasing the font size.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-font-size-messages.ts:28
+#: packages/remirror__messages/src/extension-font-size-messages.ts:27
 msgid "extension.command.decrease-font-size.label"
 msgstr "Decrease"
 
 #. Label for decreasing the indentation level of the current node block.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-node-formatting-messages.ts:10
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:9
 msgid "extension.command.decrease-indent.label"
 msgstr "Decrease indentation"
 
 #. Description for decreasing the font size.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-font-size-messages.ts:34
+#: packages/remirror__messages/src/extension-font-size-messages.ts:33
 msgid "extension.command.decrease-font-size.description"
 msgstr "Decrease the font size."
 
 #. Label for delete key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:64
+#: packages/remirror__messages/src/core-utils-messages.ts:63
 msgid "keyboard.shortcut.delete"
 msgstr "Delete"
 
 #. Label for inserting a horizontal rule (divider) command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-horizontal-rule-messages.ts:4
+#: packages/remirror__messages/src/extension-horizontal-rule-messages.ts:3
 msgid "extension.command.insert-horizontal-rule.label"
 msgstr "Divider"
 
 #. Label for end key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:88
+#: packages/remirror__messages/src/core-utils-messages.ts:87
 msgid "keyboard.shortcut.end"
 msgstr "End"
 
 #. Label for escape key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:4
+#: packages/remirror__messages/src/core-utils-messages.ts:3
 msgid "keyboard.shortcut.escape"
 msgstr "Enter"
 
 #. Label for enter key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:22
+#: packages/remirror__messages/src/core-utils-messages.ts:21
 msgid "keyboard.shortcut.enter"
 msgstr "Enter"
 
@@ -788,115 +788,115 @@ msgstr "Enter"
 
 #. Label for adding a font size.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-font-size-messages.ts:4
+#: packages/remirror__messages/src/extension-font-size-messages.ts:3
 msgid "extension.command.set-font-size.label"
 msgstr "Font size"
 
 #. Grape color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:70
+#: packages/remirror__messages/src/extension-text-color-messages.ts:69
 msgid "ui.text-color.grape"
 msgstr "Grape"
 
 #. Grape color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:76
+#: packages/remirror__messages/src/extension-text-color-messages.ts:75
 msgid "ui.text-color.grape.hue"
 msgstr "Grape {hue}"
 
 #. Gray color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:34
+#: packages/remirror__messages/src/extension-text-color-messages.ts:33
 msgid "ui.text-color.gray"
 msgstr "Gray"
 
 #. Gray color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:40
+#: packages/remirror__messages/src/extension-text-color-messages.ts:39
 msgid "ui.text-color.gray.hue"
 msgstr "Gray {hue}"
 
 #. Green color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:142
+#: packages/remirror__messages/src/extension-text-color-messages.ts:141
 msgid "ui.text-color.green"
 msgstr "Green"
 
 #. Green color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:148
+#: packages/remirror__messages/src/extension-text-color-messages.ts:147
 msgid "ui.text-color.green.hue"
 msgstr "Green {hue}"
 
 #. Label for home key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:82
+#: packages/remirror__messages/src/core-utils-messages.ts:81
 msgid "keyboard.shortcut.home"
 msgstr "Home"
 
 #. Label for increasing the font size.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-font-size-messages.ts:16
+#: packages/remirror__messages/src/extension-font-size-messages.ts:15
 msgid "extension.command.increase-font-size.label"
 msgstr "Increase"
 
 #. Label for increasing the indentation level.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-node-formatting-messages.ts:4
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:3
 msgid "extension.command.increase-indent.label"
 msgstr "Increase indentation"
 
 #. Description for increasing the font size.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-font-size-messages.ts:22
+#: packages/remirror__messages/src/extension-font-size-messages.ts:21
 msgid "extension.command.increase-font-size.description"
 msgstr "Increase the font size"
 
 #. Indigo color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:94
+#: packages/remirror__messages/src/extension-text-color-messages.ts:93
 msgid "ui.text-color.indigo"
 msgstr "Indigo"
 
 #. Indigo color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:100
+#: packages/remirror__messages/src/extension-text-color-messages.ts:99
 msgid "ui.text-color.indigo.hue"
 msgstr "Indigo {hue}"
 
 #. Description for inserting a paragraph.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-paragraph-messages.ts:10
+#: packages/remirror__messages/src/extension-paragraph-messages.ts:9
 msgid "extension.command.insert-paragraph.description"
 msgstr "Insert a new paragraph"
 
 #. Label for inserting an emoji.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-emoji-messages.ts:4
+#: packages/remirror__messages/src/extension-emoji-messages.ts:3
 msgid "extension.command.insert-emoji.label"
 msgstr "Insert Emoji"
 
 #. Label for inserting a paragraph.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-paragraph-messages.ts:4
+#: packages/remirror__messages/src/extension-paragraph-messages.ts:3
 msgid "extension.command.insert-paragraph.label"
 msgstr "Insert Paragraph"
 
 #. Label for italic formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-italic-messages.ts:4
+#: packages/remirror__messages/src/extension-italic-messages.ts:3
 msgid "extension.command.toggle-italic.label"
 msgstr "Italic"
 
 #. Description for italic formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-italic-messages.ts:10
+#: packages/remirror__messages/src/extension-italic-messages.ts:9
 msgid "extension.command.toggle-italic.description"
 msgstr "Italicize the selected text"
 
 #. Justify the alignment of the selected nodes.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-node-formatting-messages.ts:22
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:21
 msgid "extension.command.justify-align.label"
 msgstr "Justify"
 
@@ -997,79 +997,79 @@ msgstr "Justify"
 
 #. Left align the selected nodes.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-node-formatting-messages.ts:34
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:33
 msgid "extension.command.left-align.label"
 msgstr "Left align"
 
 #. Lime color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:154
+#: packages/remirror__messages/src/extension-text-color-messages.ts:153
 msgid "ui.text-color.lime"
 msgstr "Lime"
 
 #. Lime color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:160
+#: packages/remirror__messages/src/extension-text-color-messages.ts:159
 msgid "ui.text-color.lime.hue"
 msgstr "Lime {hue}"
 
 #. Shown when no popup items are available
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/react-components-messages.ts:4
+#: packages/remirror__messages/src/react-components-messages.ts:3
 msgid "react-components.mention-atom-component.zero-items"
 msgstr "No items available"
 
 #. Orange color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:178
+#: packages/remirror__messages/src/extension-text-color-messages.ts:177
 msgid "ui.text-color.orange"
 msgstr "Orange"
 
 #. Orange color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:184
+#: packages/remirror__messages/src/extension-text-color-messages.ts:183
 msgid "ui.text-color.orange.hue"
 msgstr "Orange {hue}"
 
 #. Label for inserting an ordered list into the editor.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-list-messages.ts:4
+#: packages/remirror__messages/src/extension-list-messages.ts:3
 msgid "extension.command.toggle-ordered-list.label"
 msgstr "Ordered list"
 
 #. Label for page down key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:76
+#: packages/remirror__messages/src/core-utils-messages.ts:75
 msgid "keyboard.shortcut.pageDown"
 msgstr "Page Down"
 
 #. Label for page up key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:70
+#: packages/remirror__messages/src/core-utils-messages.ts:69
 msgid "keyboard.shortcut.pageUp"
 msgstr "Page Up"
 
 #. Label for paste command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-messages.ts:28
+#: packages/remirror__messages/src/core-messages.ts:27
 msgid "extension.command.paste.label"
 msgstr "Paste"
 
 #. Description for paste command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-messages.ts:34
+#: packages/remirror__messages/src/core-messages.ts:33
 msgid "extension.command.paste.description"
 msgstr "Paste content into the editor"
 
 #. Pink color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:58
+#: packages/remirror__messages/src/extension-text-color-messages.ts:57
 msgid "ui.text-color.pink"
 msgstr "Pink"
 
 #. Pink color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:64
+#: packages/remirror__messages/src/extension-text-color-messages.ts:63
 msgid "ui.text-color.pink.hue"
 msgstr "Pink {hue}"
 
@@ -1085,169 +1085,169 @@ msgstr "Pink {hue}"
 
 #. Red color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:46
+#: packages/remirror__messages/src/extension-text-color-messages.ts:45
 msgid "ui.text-color.red"
 msgstr "Red"
 
 #. Red color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:52
+#: packages/remirror__messages/src/extension-text-color-messages.ts:51
 msgid "ui.text-color.red.hue"
 msgstr "Red {hue}"
 
 #. Label for redo.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-history-messages.ts:16
+#: packages/remirror__messages/src/extension-history-messages.ts:15
 msgid "extension.command.redo.label"
 msgstr "Redo"
 
 #. Description for redo.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-history-messages.ts:22
+#: packages/remirror__messages/src/extension-history-messages.ts:21
 msgid "extension.command.redo.description"
 msgstr "Redo the most recent action"
 
 #. Label for removing an annotation.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-annotation-messages.ts:16
+#: packages/remirror__messages/src/extension-annotation-messages.ts:15
 msgid "extension.command.remove-annotation.label"
 msgstr "Remove annotation"
 
 #. Right align the selected nodes.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-node-formatting-messages.ts:28
+#: packages/remirror__messages/src/extension-node-formatting-messages.ts:27
 msgid "extension.command.right-align.label"
 msgstr "Right align"
 
 #. Label for select all command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-messages.ts:40
+#: packages/remirror__messages/src/core-messages.ts:39
 msgid "extension.command.select-all.label"
 msgstr "Select all"
 
 #. Description for select all command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-messages.ts:46
+#: packages/remirror__messages/src/core-messages.ts:45
 msgid "extension.command.select-all.description"
 msgstr "Select all content within the editor"
 
 #. Description for inserting a horizontal rule (divider) command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-horizontal-rule-messages.ts:10
+#: packages/remirror__messages/src/extension-horizontal-rule-messages.ts:9
 msgid "extension.command.insert-horizontal-rule.description"
 msgstr "Separate content with a diving horizontal line"
 
 #. Label for setting the case.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-case-messages.ts:14
+#: packages/remirror__messages/src/extension-text-case-messages.ts:13
 msgid "extension.command.set-casing.label"
 msgstr "Set text case"
 
 #. Description for adding a font size.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-font-size-messages.ts:10
+#: packages/remirror__messages/src/extension-font-size-messages.ts:9
 msgid "extension.command.set-font-size.description"
 msgstr "Set the font size for the selected text."
 
 #. Description for color formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:10
+#: packages/remirror__messages/src/extension-text-color-messages.ts:9
 msgid "extension.command.set-text-color.description"
 msgstr "Set the text color for the selected text."
 
 #. Description for adding a text highlight.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-highlight-messages.ts:10
+#: packages/remirror__messages/src/extension-text-highlight-messages.ts:9
 msgid "extension.command.set-text-highlight.description"
 msgstr "Set the text highlight color for the selected text."
 
 #. Label for shift key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:28
+#: packages/remirror__messages/src/core-utils-messages.ts:27
 msgid "keyboard.shortcut.shift"
 msgstr "Shift"
 
 #. Description for displaying whitespace characters.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-whitespace-messages.ts:10
+#: packages/remirror__messages/src/extension-whitespace-messages.ts:9
 msgid "extension.command.toggle-whitespace.description"
 msgstr "Show hidden whitespace characters in your editor."
 
 #. Label for space key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:58
+#: packages/remirror__messages/src/core-utils-messages.ts:57
 msgid "keyboard.shortcut.space"
 msgstr "Space"
 
 #. Label for strike formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-strike-messages.ts:4
+#: packages/remirror__messages/src/extension-strike-messages.ts:3
 msgid "extension.command.toggle-strike.label"
 msgstr "Strikethrough"
 
 #. Description for strike formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-strike-messages.ts:10
+#: packages/remirror__messages/src/extension-strike-messages.ts:9
 msgid "extension.command.toggle-strike.description"
 msgstr "Strikethrough the selected text"
 
 #. Label for toggling a subscript.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-sub-messages.ts:4
+#: packages/remirror__messages/src/extension-sub-messages.ts:3
 msgid "extension.command.toggle-subscript.label"
 msgstr "Subscript"
 
 #. Label for toggling a superscript.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-sup-messages.ts:4
+#: packages/remirror__messages/src/extension-sup-messages.ts:3
 msgid "extension.command.toggle-superscript.label"
 msgstr "Superscript"
 
 #. Label for tab key in shortcuts.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/core-utils-messages.ts:52
+#: packages/remirror__messages/src/core-utils-messages.ts:51
 msgid "keyboard.shortcut.tab"
 msgstr "Tab"
 
 #. Description for inserting a task list into the editor.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-list-messages.ts:16
+#: packages/remirror__messages/src/extension-list-messages.ts:15
 msgid "extension.command.toggle-task-list.description"
 msgstr "Tasked list"
 
 #. Teal color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:130
+#: packages/remirror__messages/src/extension-text-color-messages.ts:129
 msgid "ui.text-color.teal"
 msgstr "Teal"
 
 #. Teal color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:136
+#: packages/remirror__messages/src/extension-text-color-messages.ts:135
 msgid "ui.text-color.teal.hue"
 msgstr "Teal {hue}"
 
 #. Label for color formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:4
+#: packages/remirror__messages/src/extension-text-color-messages.ts:3
 msgid "extension.command.set-text-color.label"
 msgstr "Text color"
 
 #. Label for adding a text highlight.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-highlight-messages.ts:4
+#: packages/remirror__messages/src/extension-text-highlight-messages.ts:3
 msgid "extension.command.set-text-highlight.label"
 msgstr "Text highlight"
 
 #. Label for displaying whitespace characters.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-whitespace-messages.ts:4
+#: packages/remirror__messages/src/extension-whitespace-messages.ts:3
 msgid "extension.command.toggle-whitespace.label"
 msgstr "Toggle Whitespace"
 
 #. Transparent color label.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:16
+#: packages/remirror__messages/src/extension-text-color-messages.ts:15
 msgid "ui.text-color.transparent"
 msgstr "Transparent"
 
@@ -1398,60 +1398,60 @@ msgstr "Transparent"
 
 #. Label for underline formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-underline-messages.ts:4
+#: packages/remirror__messages/src/extension-underline-messages.ts:3
 msgid "extension.command.toggle-underline.label"
 msgstr "Underline"
 
 #. Description for underline formatting command.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-underline-messages.ts:10
+#: packages/remirror__messages/src/extension-underline-messages.ts:9
 msgid "extension.command.toggle-underline.description"
 msgstr "Underline the selected text"
 
 #. Label for undo.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-history-messages.ts:4
+#: packages/remirror__messages/src/extension-history-messages.ts:3
 msgid "extension.command.undo.label"
 msgstr "Undo"
 
 #. Description for undo.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-history-messages.ts:10
+#: packages/remirror__messages/src/extension-history-messages.ts:9
 msgid "extension.command.undo.description"
 msgstr "Undo the most recent action"
 
 #. Label for updating an annotation.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-annotation-messages.ts:10
+#: packages/remirror__messages/src/extension-annotation-messages.ts:9
 msgid "extension.command.update-annotation.label"
 msgstr "Update annotation"
 
 #. Violet color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:82
+#: packages/remirror__messages/src/extension-text-color-messages.ts:81
 msgid "ui.text-color.violet"
 msgstr "Violet"
 
 #. Violet color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:88
+#: packages/remirror__messages/src/extension-text-color-messages.ts:87
 msgid "ui.text-color.violet.hue"
 msgstr "Violet {hue}"
 
 #. White color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:22
+#: packages/remirror__messages/src/extension-text-color-messages.ts:21
 msgid "ui.text-color.white"
 msgstr "White"
 
 #. Yellow color.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:166
+#: packages/remirror__messages/src/extension-text-color-messages.ts:165
 msgid "ui.text-color.yellow"
 msgstr "Yellow"
 
 #. Yellow color hues.
 #. js-lingui-explicit-id
-#: packages/remirror__messages/src/extension-text-color-messages.ts:172
+#: packages/remirror__messages/src/extension-text-color-messages.ts:171
 msgid "ui.text-color.yellow.hue"
 msgstr "Yellow {hue}"

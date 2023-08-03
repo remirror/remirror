@@ -1,0 +1,6 @@
+{
+  "extension.table.column_count": "{count, plural, one {# column} other {# columns}}",
+  "extension.command.create-table.description": "Create a table with set number of rows and columns.",
+  "extension.command.create-table.label": "Create table",
+  "extension.table.row_count": "{count, plural, one {# row} other {# rows}}"
+}

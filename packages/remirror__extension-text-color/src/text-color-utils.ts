@@ -1,5 +1,4 @@
-import { range } from '@remirror/core';
-import { I18n, MessageDescriptor } from '@remirror/i18n';
+import { I18nFormatter, range, RemirrorMessage } from '@remirror/core';
 import { ExtensionTextColorMessages as Messages } from '@remirror/messages';
 import { getThemeVar } from '@remirror/theme';
 
@@ -20,22 +19,17 @@ export const setTextColorOptions: Remirror.CommandDecoratorOptions = {
 const hueRange = range([10]);
 
 interface CreateHuePaletteProps {
-  t: I18n['_'];
+  t: I18nFormatter;
   name: keyof Remirror.ThemeHue;
-  labelDescriptor: MessageDescriptor;
-  hueDescriptor: MessageDescriptor;
+  labelDescriptor: RemirrorMessage;
+  hueDescriptor: RemirrorMessage;
 }
 
 function createHuePalette(props: CreateHuePaletteProps): HuePalette {
   const { t, name, labelDescriptor, hueDescriptor } = props;
   const label = t(labelDescriptor);
   const hues = hueRange.map((hue) => ({
-    label: t({
-      ...hueDescriptor,
-      values: {
-        hue,
-      },
-    }),
+    label: t(hueDescriptor, { hue }),
     color: getThemeVar('hue', name, hue),
   })) as ColorWithLabelTuple;
 
@@ -45,7 +39,7 @@ function createHuePalette(props: CreateHuePaletteProps): HuePalette {
 /**
  * The default color palette which uses css properties to update the colors.
  */
-export function palette(t: I18n['_']): ColorPalette {
+export function palette(t: I18nFormatter): ColorPalette {
   const black: ColorWithLabel = {
     label: t(Messages.BLACK),
     color: '#000',

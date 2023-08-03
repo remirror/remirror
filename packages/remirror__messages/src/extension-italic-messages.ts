@@ -1,14 +1,13 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { defineMessage } from '@lingui/macro';
+import type { RemirrorMessage } from '@remirror/core-types';
 
-export const LABEL: MessageDescriptor = defineMessage({
+export const LABEL: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-italic.label',
   comment: 'Label for italic formatting command.',
   message: 'Italic',
-});
+};
 
-export const DESCRIPTION: MessageDescriptor = defineMessage({
+export const DESCRIPTION: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-italic.description',
   comment: 'Description for italic formatting command.',
   message: 'Italicize the selected text',
-});
+};

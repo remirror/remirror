@@ -117,6 +117,6 @@ function DefaultItemComponent<Data extends MentionAtomNodeAttributes = MentionAt
 }
 
 const DefaultZeroItemsComponent: FC = () => {
-  const { t } = useI18n();
+  const t = useI18n();
   return <span className={Theme.MENTION_ATOM_ZERO_ITEMS}>{t(Messages.NO_ITEMS_AVAILABLE)}</span>;
 };

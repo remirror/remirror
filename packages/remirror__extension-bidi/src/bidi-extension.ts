@@ -25,20 +25,8 @@ import { ExtensionBidiMessages } from '@remirror/messages';
 
 const setTextDirectionOptions: Remirror.CommandDecoratorOptions = {
   icon: ({ attrs }) => (attrs?.dir === 'ltr' ? 'textDirectionL' : 'textDirectionR'),
-  description: ({ t, attrs }) =>
-    t({
-      ...ExtensionBidiMessages.DESCRIPTION,
-      values: {
-        dir: attrs?.dir,
-      },
-    }),
-  label: ({ t, attrs }) =>
-    t({
-      ...ExtensionBidiMessages.LABEL,
-      values: {
-        dir: attrs?.dir,
-      },
-    }),
+  description: ({ t, attrs }) => t(ExtensionBidiMessages.DESCRIPTION, { dir: attrs?.dir }),
+  label: ({ t, attrs }) => t(ExtensionBidiMessages.LABEL, { dir: attrs?.dir }),
 };
 
 export interface BidiOptions {

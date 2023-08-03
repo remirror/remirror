@@ -24,20 +24,8 @@ export const toggleColumnsOptions: Remirror.CommandDecoratorOptions = {
     name: 'layoutColumnLine',
     sup: attrs?.count as string,
   }),
-  label: ({ t, attrs }) =>
-    t({
-      ...Messages.LABEL,
-      values: {
-        count: attrs?.count,
-      },
-    }),
-  description: ({ t, attrs }) =>
-    t({
-      ...Messages.DESCRIPTION,
-      values: {
-        count: attrs?.count,
-      },
-    }),
+  label: ({ t, attrs }) => t(Messages.LABEL, { count: attrs?.count }),
+  description: ({ t, attrs }) => t(Messages.DESCRIPTION, { count: attrs?.count }),
 };
 
 export const DEFAULT_COLUMN_ATTRIBUTES: Required<BaseColumnAttributes> = {

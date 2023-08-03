@@ -1,0 +1,4 @@
+{
+  "extension.command.set-casing.label": "Set text case",
+  "extension.command.toggle-upper-case.label": "{case, select, upper {Uppercase}\n                          lower {Lowercase}\n                          capitalize {Sentence case}\n                          smallCaps {Small caps}\n                          other {Text case}}"
+}

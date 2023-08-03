@@ -22,6 +22,7 @@ import {
   TableExtension,
   TrailingNodeExtension,
 } from 'remirror/extensions';
+import { i18nFormat } from '@remirror/i18n';
 import {
   EditorComponent,
   MarkdownToolbar,
@@ -83,7 +84,7 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   return (
     <AllStyledComponent>
       <ThemeProvider theme={theme}>
-        <Remirror manager={manager} autoFocus {...rest}>
+        <Remirror manager={manager} i18nFormat={i18nFormat} autoFocus {...rest}>
           <MarkdownToolbar />
           <EditorComponent />
           {children}

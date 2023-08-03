@@ -1,0 +1,4 @@
+{
+  "extension.command.toggle-columns.description": "{count, select, 2 {Split the block into two columns}\n                            3 {Split the current block into three columns}\n                            4 {Split the current block into four columns}\n                            other {Split the current block into multiple columns}}",
+  "extension.command.toggle-columns.label": "{count, select, 2 {Two Column Block}\n                            3 {Three Column Block}\n                            4 {Four Column Block}\n                            other {Multi Column Block}}"
+}

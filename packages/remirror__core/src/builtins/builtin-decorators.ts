@@ -2,6 +2,7 @@ import type { ExtensionPriority } from '@remirror/core-constants';
 import type {
   AnyFunction,
   CommandFunction,
+  I18nFormatter,
   KeyBindingCommandFunction,
   Listable,
   LiteralUnion,
@@ -9,7 +10,6 @@ import type {
   ProsemirrorAttributes,
   Shape,
 } from '@remirror/core-types';
-import type { I18n } from '@remirror/i18n';
 import type { CoreIcon } from '@remirror/icons';
 
 import type { AnyExtension, HelperAnnotation } from '../extension';
@@ -293,7 +293,7 @@ export interface CommandDecoratorMessageProps {
    * A translation utility for translating a predefined string / or message
    * descriptor.
    */
-  t: I18n['_'];
+  t: I18nFormatter;
 }
 
 /**

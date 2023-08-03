@@ -1,7 +1,6 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { defineMessage } from '@lingui/macro';
+import type { RemirrorMessage } from '@remirror/core-types';
 
-export const LABEL: MessageDescriptor = defineMessage({
+export const LABEL: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-callout.label',
   comment: 'Label for callout command with support for callout types.',
   message: `{type, select, info {Information Callout}
@@ -9,9 +8,9 @@ export const LABEL: MessageDescriptor = defineMessage({
                             error {Error Callout}
                             success {Success Callout}
                             other {Callout}}`,
-});
+};
 
-export const DESCRIPTION: MessageDescriptor = defineMessage({
+export const DESCRIPTION: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-callout.description',
   comment: 'Description of the callout command with support for callout types.',
   message: `{type, select, info {Create an information callout block}
@@ -19,4 +18,4 @@ export const DESCRIPTION: MessageDescriptor = defineMessage({
                             error {Create an error callout block}
                             success {Create a success callout block}
                             other {Create a callout block}}`,
-});
+};
