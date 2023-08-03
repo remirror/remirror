@@ -41,7 +41,7 @@
     "@remirror/extension-blockquote": "^2.0.14",
     "@remirror/extension-bold": "^2.0.13",
     "@remirror/extension-code": "^2.0.13",
-    "@remirror/extension-code-block": "^2.0.17",
+    "@remirror/extension-code-block": "^2.0.18",
     "@remirror/extension-drop-cursor": "^2.0.13",
     "@remirror/extension-embed": "^2.0.14",
     "@remirror/extension-gap-cursor": "^2.0.13",
