@@ -414,12 +414,37 @@ export type SchemaAttributes = Record<
   SchemaAttributesObject | string | DynamicAttributeCreator
 >;
 
+/**
+ * The definition for a translatable string in Remirror
+ */
 export interface RemirrorMessage {
+  /**
+   * The unique id of this message within the Remirror code base
+   *
+   * These are namespaced via dot separation. I.e. "extension.command.toggle-bold.label"
+   */
   id: string;
+  /**
+   * Context and/or description of this message's purpose
+   */
   comment: string;
+  /**
+   * The default text for this message, this may be using ICU message format, and require an appropriate library to parse it.
+   *
+   * @see https://formatjs.io/docs/core-concepts/icu-syntax/
+   */
   message: string;
 }
 
+/**
+ * The method signature used to translate messages using your chosen i18n solution
+ *
+ * @param message - the RemirrorMessage object containing an ICU formatted message
+ * @param [values] - key value pairs to insert into the ICU message (optional)
+ * @param [locale] - the locale code of the locale currently in use
+ * @param [supportedLocales[]] - a list of locale codes supported by the parent application
+ * @returns a string containing the translated text from an ICU message formatter
+ */
 export type I18nFormatter = (
   message: RemirrorMessage,
   values?: Record<string, any>,
