@@ -7,9 +7,6 @@ module.exports = {
   sourceLocale: 'en',
   format: 'po',
   rootDir,
-  extractBabelOptions: {
-    rootMode: 'upward',
-  },
   catalogs: [
     {
       path: '<rootDir>/packages/remirror__i18n/src/{locale}/messages',
