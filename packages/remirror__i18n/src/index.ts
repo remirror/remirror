@@ -1,13 +1,7 @@
-import {i18n, Messages} from '@lingui/core';
-import {
-  detect,
-  fromHtmlTag,
-  fromNavigator,
-  fromStorage,
-  fromUrl
-} from '@lingui/detect-locale';
+import { i18n, Messages } from '@lingui/core';
+import { detect, fromHtmlTag, fromNavigator, fromStorage, fromUrl } from '@lingui/detect-locale';
 
-import {messages as enMessages} from './en/messages';
+import { messages as enMessages } from './en/messages';
 
 i18n.load('en', enMessages as Messages);
 i18n.activate('en');
@@ -20,17 +14,10 @@ export type {
   LocaleData,
   Locales,
   MessageDescriptor,
-  Messages
-}
-from '@lingui/core';
-export {
-  formats,
-  setupI18n
-}
-from '@lingui/core';
-export {
-  i18n
-};
+  Messages,
+} from '@lingui/core';
+export { formats, setupI18n } from '@lingui/core';
+export { i18n };
 
 /**
  * Detect the locale that is being
