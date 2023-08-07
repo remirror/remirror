@@ -29,12 +29,7 @@
       "import": "./en/dist/remirror-i18n-en.js",
       "require": "./en/dist/remirror-i18n-en.cjs"
     },
-    "./package.json": "./package.json",
-    "./plurals": {
-      "types": "./dist-types/plurals.d.ts",
-      "import": "./plurals/dist/remirror-i18n-plurals.js",
-      "require": "./plurals/dist/remirror-i18n-plurals.cjs"
-    }
+    "./package.json": "./package.json"
   },
   "main": "./dist/remirror-i18n.cjs",
   "module": "./dist/remirror-i18n.js",
@@ -42,15 +37,13 @@
   "files": [
     "dist",
     "dist-types",
-    "en",
-    "plurals"
+    "en"
   ],
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@lingui/core": "^4.2.0",
     "@lingui/detect-locale": "^4.2.0",
-    "@remirror/core-helpers": "^3.0.0",
-    "make-plural": "^6.2.2"
+    "@remirror/core-helpers": "^3.0.0"
   },
   "publishConfig": {
     "access": "public",
@@ -65,12 +58,7 @@
         "import": "./en/dist/remirror-i18n-en.js",
         "require": "./en/dist/remirror-i18n-en.cjs"
       },
-      "./package.json": "./package.json",
-      "./plurals": {
-        "types": "./plurals/dist/remirror-i18n-plurals.d.ts",
-        "import": "./plurals/dist/remirror-i18n-plurals.js",
-        "require": "./plurals/dist/remirror-i18n-plurals.cjs"
-      }
+      "./package.json": "./package.json"
     },
     "main": "./dist/remirror-i18n.cjs",
     "module": "./dist/remirror-i18n.js",
@@ -83,7 +71,6 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "plurals.ts",
       "en/index.ts"
     ]
   }
