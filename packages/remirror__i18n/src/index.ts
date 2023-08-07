@@ -2,9 +2,7 @@ import { i18n, Messages } from '@lingui/core';
 import { detect, fromHtmlTag, fromNavigator, fromStorage, fromUrl } from '@lingui/detect-locale';
 
 import { messages as enMessages } from './en/messages';
-import { en } from './plurals';
 
-i18n.loadLocaleData('en', { plurals: en });
 i18n.load('en', enMessages as Messages);
 i18n.activate('en');
 

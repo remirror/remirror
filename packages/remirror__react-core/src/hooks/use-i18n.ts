@@ -30,9 +30,6 @@ export interface I18nProps {
    * import { i18n } from '@remirror/i18n';
    * import esLocale from '@remirror/i18n/es';
    * import { SocialEditor } from '@remirror/react-social-editor';
-   * import { es } from 'make-plural/plurals';
-   *
-   * i18n.loadLocaleData('es', { plurals: es });
    *
    * i18n.load({
    *   es: esLocale.messages,
