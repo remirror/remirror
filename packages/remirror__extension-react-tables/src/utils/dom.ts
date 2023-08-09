@@ -4,13 +4,14 @@ export type { HTMLAttributes };
 export function h<T extends keyof HTMLElementTagNameMap>(
   tagName: T,
   attrs?: HTMLAttributes<T> | null,
-  ...children: (string | Node)[]
+  ...children: Array<string | Node>
 ): HTMLElementTagNameMap[T] {
   const element = document.createElement(tagName);
 
   if (attrs) {
     for (let [key, value] of Object.entries(attrs)) {
       key = key.toLowerCase();
+
       if (key.length >= 3 && key.startsWith('on') && typeof value === 'function') {
         // @ts-expect-error: ignore type error
         element.addEventListener(key.slice(2), value);

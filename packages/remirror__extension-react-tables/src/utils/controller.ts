@@ -8,8 +8,8 @@ import { ReactTableNodeAttrs } from '../table-extensions';
 import { resetControllerPluginMeta, setControllerPluginMeta } from '../table-plugins';
 import { cellSelectionToSelection } from '../utils/prosemirror';
 import { repeat } from './array';
-import { CellAxis, FindTable } from './types';
 import { DOMEvents } from './dom';
+import { CellAxis, FindTable } from './types';
 
 export interface InjectControllersProps {
   schema: EditorSchema;
