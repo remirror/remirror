@@ -15,6 +15,10 @@ export function h<T extends keyof HTMLElementTagNameMap>(
       if (key.length >= 3 && key.startsWith('on') && typeof value === 'function') {
         // @ts-expect-error: ignore type error
         element.addEventListener(key.slice(2), value);
+      } else if (key === 'dataset') {
+        for (let [dataKey, dataValue] of Object.entries(value as Record<string, string>)) {
+          element.dataset[dataKey] = dataValue;
+        }
       } else {
         // @ts-expect-error: ignore type error
         element.setAttribute(key, value);
