@@ -52,8 +52,7 @@
     "@remirror/react-components": "^2.1.17",
     "@remirror/react-core": "^2.0.21",
     "@remirror/react-hooks": "^2.0.25",
-    "@remirror/theme": "^2.0.9",
-    "jsx-dom-cjs": "^8.0.6"
+    "@remirror/theme": "^2.0.9"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.8",
