@@ -10,18 +10,22 @@ export function h<T extends keyof HTMLElementTagNameMap>(
 
   if (attrs) {
     for (let [key, value] of Object.entries(attrs)) {
+      if (value == null) {
+        continue;
+      }
+
       key = key.toLowerCase();
 
       if (key.length >= 3 && key.startsWith('on') && typeof value === 'function') {
-        // @ts-expect-error: ignore type error
-        element.addEventListener(key.slice(2), value);
+        element.addEventListener(key.slice(2), value as EventHandler);
       } else if (key === 'dataset') {
-        for (let [dataKey, dataValue] of Object.entries(value as Record<string, string>)) {
+        for (const [dataKey, dataValue] of Object.entries(value as Record<string, string>)) {
           element.dataset[dataKey] = dataValue;
         }
+      } else if (['number', 'boolean', 'string'].includes(typeof value)) {
+        element.setAttribute(key, value.toString());
       } else {
-        // @ts-expect-error: ignore type error
-        element.setAttribute(key, value);
+        throw new TypeError(`Unexpected ${typeof value} value for attribute "${key}"`);
       }
     }
   }
@@ -56,7 +60,7 @@ export function getAbsoluteCoord(relativeCoord: Coord, parent: Element): Coord {
   };
 }
 
-type EventHandler<E extends Event, T> = (this: T, event: E) => void;
+type EventHandler<E extends Event = Event, T = Element> = (this: T, event: E) => void;
 
 type ClipboardEventHandler<T = Element> = EventHandler<ClipboardEvent, T>;
 type CompositionEventHandler<T = Element> = EventHandler<CompositionEvent, T>;
