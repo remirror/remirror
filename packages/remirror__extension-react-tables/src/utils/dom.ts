@@ -18,7 +18,7 @@ export function h<T extends keyof HTMLElementTagNameMap>(
 
       if (key.length >= 3 && key.startsWith('on') && typeof value === 'function') {
         element.addEventListener(key.slice(2), value as EventHandler);
-      } else if (key === 'class' || key === 'classname') {
+      } else if (['class', 'classname'].includes(key)) {
         const classes = String(Array.isArray(value) ? value.join(' ') : value);
         element.classList.add(...classes.split(/\s+/));
       } else if (key === 'dataset') {
