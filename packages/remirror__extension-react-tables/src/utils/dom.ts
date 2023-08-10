@@ -26,7 +26,7 @@ export function h<T extends keyof HTMLElementTagNameMap>(
           element.dataset[dataKey] = dataValue;
         }
       } else if (['number', 'boolean', 'string'].includes(typeof value)) {
-        element.setAttribute(key, value.toString());
+        element.setAttribute(key, `${value}`);
       } else {
         throw new TypeError(`Unexpected ${typeof value} value for attribute "${key}"`);
       }
