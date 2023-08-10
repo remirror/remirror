@@ -1,5 +1,4 @@
 import { cx, isNullOrUndefined } from '@remirror/core';
-import React from 'react';
 
 export type { HTMLAttributes };
 
