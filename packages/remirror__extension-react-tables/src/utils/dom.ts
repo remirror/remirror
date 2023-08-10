@@ -1,4 +1,5 @@
-// Re-export from jsx-dom so that we can easily switch the implement behind.
+import React from 'react';
+
 export type { HTMLAttributes };
 
 export function h<T extends keyof HTMLElementTagNameMap>(
@@ -221,3 +222,13 @@ type HTMLAttributes<T extends keyof HTMLElementTagNameMap> = Partial<
   Omit<HTMLElementTagNameMap[T], 'style'> & { style: Partial<HTMLElement['style']> }
 > &
   DOMEvents<HTMLElementTagNameMap[T]>;
+
+let domEventHandler: ClipboardEventHandler = (_event: ClipboardEvent) => void 0;
+let reactEventHandler: React.ClipboardEventHandler = (_event: React.ClipboardEvent) => void 0;
+
+let el = document.createElement('intput');
+el.addEventListener('copy', domEventHandler);
+el.addEventListener('copy', reactEventHandler);
+
+reactEventHandler = () => {};
+domEventHandler = () => {};
