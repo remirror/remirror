@@ -1,3 +1,4 @@
+import { cx, isNullOrUndefined } from '@remirror/core';
 import React from 'react';
 
 export type { HTMLAttributes };
@@ -11,7 +12,7 @@ export function h<T extends keyof HTMLElementTagNameMap>(
 
   if (attrs) {
     for (let [key, value] of Object.entries(attrs)) {
-      if (value == null) {
+      if (isNullOrUndefined(value)) {
         continue;
       }
 
@@ -20,8 +21,7 @@ export function h<T extends keyof HTMLElementTagNameMap>(
       if (key.length >= 3 && key.startsWith('on') && typeof value === 'function') {
         element.addEventListener(key.slice(2), value as EventHandler);
       } else if (['class', 'classname'].includes(key)) {
-        const classes = String(Array.isArray(value) ? value.join(' ') : value);
-        element.classList.add(...classes.split(/\s+/));
+        element.classList.add(...cx(value as string).split(' '));
       } else if (key === 'dataset') {
         for (const [dataKey, dataValue] of Object.entries(value as Record<string, string>)) {
           element.dataset[dataKey] = dataValue;
