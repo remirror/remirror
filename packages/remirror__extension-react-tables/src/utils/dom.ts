@@ -1,7 +1,5 @@
 import { cx, isNullOrUndefined } from '@remirror/core';
 
-export type { HTMLAttributes };
-
 export function h<T extends keyof HTMLElementTagNameMap>(
   tagName: T,
   attrs?: HTMLAttributes<T> | null,
