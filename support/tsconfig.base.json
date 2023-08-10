@@ -3,9 +3,16 @@
     "allowJs": true,
     "module": "ESNext",
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "jsx": "react",
-    "types": ["node", "@jest/globals"],
+    "types": [
+      "node",
+      "@jest/globals"
+    ],
     "moduleResolution": "bundler",
     "useDefineForClassFields": true,
     "sourceMap": true,
@@ -17,7 +24,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     // "noImplicitOverride": true, // TODO add this in a PR.
-    "experimentalDecorators": true,
+    "experimentalDecorators": false,
     // Import rules
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
