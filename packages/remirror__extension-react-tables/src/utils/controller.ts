@@ -6,9 +6,9 @@ import { cellAround, CellSelection, TableMap } from '@remirror/pm/tables';
 import { domCellAround } from '../table-column-resizing';
 import { ReactTableNodeAttrs } from '../table-extensions';
 import { resetControllerPluginMeta, setControllerPluginMeta } from '../table-plugins';
-import { Events } from '../utils/jsx';
 import { cellSelectionToSelection } from '../utils/prosemirror';
 import { repeat } from './array';
+import { DOMEvents } from './dom';
 import { CellAxis, FindTable } from './types';
 
 export interface InjectControllersProps {
@@ -62,7 +62,7 @@ export function createControllerEvents({
 }: {
   view: EditorView;
   findTable: FindTable;
-}): Events {
+}): DOMEvents<HTMLElement> {
   return {
     onClick: (event) => {
       const axis = getCellAxisByMouseEvent(view, event);
