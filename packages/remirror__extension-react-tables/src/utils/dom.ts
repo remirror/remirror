@@ -18,7 +18,7 @@ export function h<T extends keyof HTMLElementTagNameMap>(
 
       key = key.toLowerCase();
 
-      if (key.length >= 3 && key.startsWith('on') && typeof value === 'function') {
+      if (/^on[a-z]+/.test(key) && typeof value === 'function') {
         element.addEventListener(key.slice(2), value as EventHandler);
       } else if (['class', 'classname'].includes(key)) {
         element.classList.add(...cx(value as string).split(' '));
