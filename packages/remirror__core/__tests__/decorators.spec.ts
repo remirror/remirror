@@ -51,6 +51,7 @@ describe('@extension', () => {
           return 'test' as const;
         }
       },
+      { kind: 'class' } as any,
     );
 
     expect(TestExtension.staticKeys).toEqual(['type']);
