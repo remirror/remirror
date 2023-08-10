@@ -222,13 +222,3 @@ type HTMLAttributes<T extends keyof HTMLElementTagNameMap> = Partial<
   Omit<HTMLElementTagNameMap[T], 'style'> & { style: Partial<HTMLElement['style']> }
 > &
   DOMEvents<HTMLElementTagNameMap[T]>;
-
-let domEventHandler: ClipboardEventHandler = (_event: ClipboardEvent) => void 0;
-let reactEventHandler: React.ClipboardEventHandler = (_event: React.ClipboardEvent) => void 0;
-
-let el = document.createElement('intput');
-el.addEventListener('copy', domEventHandler);
-el.addEventListener('copy', reactEventHandler);
-
-reactEventHandler = () => {};
-domEventHandler = () => {};
