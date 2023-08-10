@@ -69,7 +69,7 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
               resolveJsonModule: true,
               preserveWatchOutput: true,
               skipLibCheck: true,
-              experimentalDecorators: true,
+              experimentalDecorators: false,
               isolatedModules: true,
               allowSyntheticDefaultImports: true,
               esModuleInterop: true,
