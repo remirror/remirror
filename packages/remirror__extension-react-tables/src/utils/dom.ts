@@ -20,7 +20,7 @@ export function h<T extends keyof HTMLElementTagNameMap>(
       if (/^on[a-z]+/.test(key) && typeof value === 'function') {
         element.addEventListener(key.slice(2), value as EventHandler);
       } else if (['class', 'classname'].includes(key)) {
-        element.classList.add(...cx(value as string).split(' '));
+        element.className = cx(value as string);
       } else if (key === 'dataset') {
         for (const [dataKey, dataValue] of Object.entries(value as Record<string, string>)) {
           element.dataset[dataKey] = dataValue;
