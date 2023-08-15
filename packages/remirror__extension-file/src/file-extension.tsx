@@ -154,9 +154,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
             pos = props.pos;
           }
 
-          for (const file of props.files) {
-            this.uploadFile(file, pos);
-          }
+          this.uploadFile(props.files, pos);
 
           return true;
         },
@@ -167,9 +165,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
   @command()
   uploadFiles(files: File[]): CommandFunction {
     return () => {
-      for (const file of files) {
-        this.uploadFile(file);
-      }
+      this.uploadFile(files);
 
       return true;
     };
@@ -253,9 +249,9 @@ export class FileExtension extends NodeExtension<FileOptions> {
     return false;
   }
 
-  private uploadFile(file: File, pos?: number | undefined): void {
+  private uploadFile(files: File[], pos?: number | undefined): void {
     return uploadFile({
-      file,
+      files,
       pos,
       view: this.store.view,
       fileType: this.type,
