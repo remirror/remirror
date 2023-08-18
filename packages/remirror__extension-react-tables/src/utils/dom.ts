@@ -23,6 +23,8 @@ export function h<T extends keyof HTMLElementTagNameMap>(
         for (const [dataKey, dataValue] of Object.entries(value as Record<string, string>)) {
           element.dataset[dataKey] = dataValue;
         }
+      } else if (key === 'style' && typeof value === 'object') {
+        Object.assign(element.style, value);
       } else if (['number', 'boolean', 'string'].includes(typeof value)) {
         element.setAttribute(key, `${value}`);
       } else {
