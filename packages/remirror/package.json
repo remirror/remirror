@@ -83,7 +83,7 @@
     "@remirror/extension-emoji": "^2.0.17",
     "@remirror/extension-entity-reference": "^2.2.6",
     "@remirror/extension-epic-mode": "^2.0.13",
-    "@remirror/extension-events": "^2.1.16",
+    "@remirror/extension-events": "^2.1.17",
     "@remirror/extension-font-family": "^2.0.13",
     "@remirror/extension-font-size": "^2.0.13",
     "@remirror/extension-gap-cursor": "^2.0.13",

@@ -34,7 +34,7 @@
     "@remirror/extension-placeholder": "^2.0.14",
     "@remirror/extension-positioner": "^2.1.8",
     "@remirror/extension-react-component": "^2.0.13",
-    "@remirror/extension-react-tables": "^2.2.18",
+    "@remirror/extension-react-tables": "^2.2.19",
     "@remirror/preset-react": "^2.0.14",
     "@remirror/react-components": "^2.1.17",
     "@remirror/react-core": "^2.0.21",
