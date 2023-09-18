@@ -39,7 +39,7 @@
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.19",
-    "@remirror/extension-events": "^2.1.16",
+    "@remirror/extension-events": "^2.1.17",
     "@remirror/messages": "^2.0.6",
     "@remirror/theme": "^2.0.9"
   },

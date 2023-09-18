@@ -1,5 +1,13 @@
 # @remirror/extension-events
 
+## 2.1.17
+
+> 2023-08-25
+
+### Patch Changes
+
+- d5c1e576b: enable click events for individual string link.
+
 ## 2.1.16
 
 > 2023-07-30

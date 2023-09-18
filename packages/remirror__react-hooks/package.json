@@ -117,7 +117,7 @@
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.19",
     "@remirror/extension-emoji": "^2.0.17",
-    "@remirror/extension-events": "^2.1.16",
+    "@remirror/extension-events": "^2.1.17",
     "@remirror/extension-history": "^2.0.13",
     "@remirror/extension-mention": "^2.0.15",
     "@remirror/extension-mention-atom": "^2.0.17",
