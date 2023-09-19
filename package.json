@@ -125,7 +125,7 @@
     "@lingui/macro": "^4.2.0",
     "@lingui/react": "^4.2.0",
     "@manypkg/cli": "^0.20.0",
-    "@microsoft/api-extractor": "^7.35.0",
+    "@microsoft/api-extractor": "^7.37.0",
     "@preconstruct/cli": "^2.7.0",
     "@remirror/cli": "1.0.1",
     "@size-limit/preset-small-lib": "^8.2.4",

@@ -41,6 +41,10 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
       const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
       promises.push(
         tsupBuild({
+          // Current ESBuild version (0.19.3) doesn't support compiling ES
+          // Stage-3 decorators, so we need to set the target to esnext to avoid
+          // the error.
+          target: 'esnext',
           outDir: path.dirname(outFile),
           entry: {
             [outFileEntry]: inFile,
@@ -48,39 +52,44 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
           format: format === 'dual' ? ['cjs', 'esm'] : format,
           outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
           skipNodeModulesBundle: true,
-          dts: {
+          experimentalDts: {
             entry: {
               [outFileEntry]: inDtsFile,
             },
-            compilerOptions: {
-              allowJs: true,
-              module: 'ESNext',
-              target: 'ESNext',
-              lib: ['DOM', 'DOM.Iterable', 'ESNext'],
-              jsx: 'react',
-              types: ['node', '@jest/globals'],
-              moduleResolution: 'node',
-              useDefineForClassFields: true,
-              sourceMap: true,
-              declaration: true,
-              pretty: true,
-              noEmit: true,
-              strict: true,
-              resolveJsonModule: true,
-              preserveWatchOutput: true,
-              skipLibCheck: true,
-              experimentalDecorators: false,
-              isolatedModules: true,
-              allowSyntheticDefaultImports: true,
-              esModuleInterop: true,
-              importsNotUsedAsValues: 'remove',
-              noUnusedLocals: true,
-              noUnusedParameters: true,
-              allowUnreachableCode: false,
-              forceConsistentCasingInFileNames: true,
-              noImplicitReturns: true,
-            },
           },
+          // dts: {
+          //   entry: {
+          //     [outFileEntry]: inDtsFile,
+          //   },
+          //   compilerOptions: {
+          //     allowJs: true,
+          //     module: 'ESNext',
+          //     target: 'ESNext',
+          //     lib: ['DOM', 'DOM.Iterable', 'ESNext'],
+          //     jsx: 'react',
+          //     types: ['node', '@jest/globals'],
+          //     moduleResolution: 'node',
+          //     useDefineForClassFields: true,
+          //     sourceMap: true,
+          //     declaration: true,
+          //     pretty: true,
+          //     noEmit: true,
+          //     strict: true,
+          //     resolveJsonModule: true,
+          //     preserveWatchOutput: true,
+          //     skipLibCheck: true,
+          //     experimentalDecorators: false,
+          //     isolatedModules: true,
+          //     allowSyntheticDefaultImports: true,
+          //     esModuleInterop: true,
+          //     importsNotUsedAsValues: 'remove',
+          //     noUnusedLocals: true,
+          //     noUnusedParameters: true,
+          //     allowUnreachableCode: false,
+          //     forceConsistentCasingInFileNames: true,
+          //     noImplicitReturns: true,
+          //   },
+          // },
         }),
       );
     }
