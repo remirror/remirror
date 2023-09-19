@@ -615,6 +615,7 @@
     "ignore": [
       "@remirror/pm",
       "@remirror/core",
+      "@remirror/extension-events",
       "@remirror/extension-positioner",
       "@remirror/messages",
       "@remirror/theme"

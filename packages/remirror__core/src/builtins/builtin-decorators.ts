@@ -66,8 +66,9 @@ export function helper(options: HelperDecoratorOptions = {}) {
     context: ClassMethodDecoratorContext<Extension>,
   ) => {
     const methodName = context.name;
+
     if (typeof methodName !== 'string') {
-      throw new Error('Invalid method name provided');
+      throw new TypeError('Invalid method name provided');
     }
 
     context.addInitializer(function () {
@@ -142,8 +143,9 @@ export function command(
 ): ExtensionDecorator<AnyExtension, any, void> {
   return (method, context) => {
     const methodName = context.name;
+
     if (typeof methodName !== 'string') {
-      throw new Error('Invalid method name provided');
+      throw new TypeError('Invalid method name provided');
     }
 
     context.addInitializer(function () {
@@ -171,8 +173,9 @@ export function keyBinding<Extension extends AnyExtension>(
 ) {
   return (method: KeyBindingCommandFunction, context: ClassMethodDecoratorContext<Extension>) => {
     const methodName = context.name;
+
     if (typeof methodName !== 'string') {
-      throw new Error('Invalid method name provided');
+      throw new TypeError('Invalid method name provided');
     }
 
     context.addInitializer(function () {

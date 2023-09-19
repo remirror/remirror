@@ -1,9 +1,12 @@
 import * as babel from '@babel/core';
+//@ts-expect-error no type for @types/babel__plugin-proposal-decorators
+import babelPluginDecorators from '@babel/plugin-proposal-decorators';
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
 import path from 'node:path';
 import sortKeys from 'sort-keys';
 import { build as tsupBuild } from 'tsup';
+
 import { logger } from '../logger';
 import { colors } from './colors';
 import { ensureCjsFilename, ensureDtsFilename } from './ensure-cjs-filename';
@@ -14,9 +17,6 @@ import { removeFileExt } from './remove-file-ext';
 import { runCustomScript } from './run-custom-script';
 import { slugify } from './slugify';
 import { writePackageJson } from './write-package-json';
-
-//@ts-expect-error no type for @types/babel__plugin-proposal-decorators
-import babelPluginDecorators from '@babel/plugin-proposal-decorators';
 
 /**
  * Bundle a package using esbuild and update `package.json` if necessary.
