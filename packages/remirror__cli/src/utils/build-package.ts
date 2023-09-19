@@ -1,9 +1,9 @@
+import * as babel from '@babel/core';
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
 import path from 'node:path';
 import sortKeys from 'sort-keys';
 import { build as tsupBuild } from 'tsup';
-
 import { logger } from '../logger';
 import { colors } from './colors';
 import { ensureCjsFilename, ensureDtsFilename } from './ensure-cjs-filename';
@@ -14,6 +14,9 @@ import { removeFileExt } from './remove-file-ext';
 import { runCustomScript } from './run-custom-script';
 import { slugify } from './slugify';
 import { writePackageJson } from './write-package-json';
+
+//@ts-expect-error no type for @types/babel__plugin-proposal-decorators
+import babelPluginDecorators from '@babel/plugin-proposal-decorators';
 
 /**
  * Bundle a package using esbuild and update `package.json` if necessary.
@@ -57,6 +60,25 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
               [outFileEntry]: inDtsFile,
             },
           },
+          plugins: [
+            {
+              name: 'remirror-es-decorator-state-3',
+              renderChunk: async (code) => {
+                if (!code.includes('@')) {
+                  return;
+                }
+
+                const transformed = await babel.transformAsync(code, {
+                  plugins: [[babelPluginDecorators, { version: '2023-05' }]],
+                  // Don't look for babel.config.js
+                  configFile: false,
+                });
+
+                const transformedCode = transformed?.code;
+                return { code: transformedCode || code };
+              },
+            },
+          ],
           // dts: {
           //   entry: {
           //     [outFileEntry]: inDtsFile,
