@@ -72,6 +72,7 @@ export function helper(options: HelperDecoratorOptions = {}) {
     }
 
     context.addInitializer(function () {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const ExtensionClass = this;
       (ExtensionClass.decoratedHelpers ??= {})[methodName] = options;
     });
@@ -149,6 +150,7 @@ export function command(
     }
 
     context.addInitializer(function () {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const ExtensionClass = this;
       (ExtensionClass.decoratedCommands ??= {})[methodName] = options;
     });
@@ -179,6 +181,7 @@ export function keyBinding<Extension extends AnyExtension>(
     }
 
     context.addInitializer(function () {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const ExtensionClass = this;
       (ExtensionClass.decoratedKeybindings ??= {})[methodName] =
         options as KeybindingDecoratorOptions;
