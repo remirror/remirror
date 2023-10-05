@@ -33,5 +33,5 @@ runs:
       shell: bash
 
     - name: build packages
-      run: pnpm remirror-cli build
+      run: pnpm build:packages
       shell: bash
