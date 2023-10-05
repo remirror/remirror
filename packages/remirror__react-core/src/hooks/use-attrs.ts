@@ -10,7 +10,7 @@ import { useRemirrorContext } from './use-remirror-context';
  * import { useAttrs } from '@remirror/react';
  *
  * const EditorButton = () => {
- *   const attrs = useAttrs();;;;;;;;;;
+ *   const attrs = useAttrs();
  *   const { link } = attrs;
  *
  *   return <a href={link.href}>{link().href}</a>;
