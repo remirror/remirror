@@ -29,9 +29,12 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {},
   "devDependencies": {
-    "@remirror/cli": "workspace:*"
+    "@remirror/cli": "1.0.1"
   },
   "publishConfig": {
     "access": "public",
@@ -50,8 +53,5 @@
   },
   "@remirror": {
     "sizeLimit": "2 KB"
-  },
-  "scripts": {
-    "build": "remirror-cli build"
   }
 }

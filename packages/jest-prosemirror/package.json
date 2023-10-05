@@ -45,6 +45,9 @@
     "environment",
     "serializer"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core-constants": "^2.0.2",
@@ -63,8 +66,8 @@
     "test-keyboard": "2.0.6"
   },
   "devDependencies": {
-    "jest": "^29.5.0",
-    "@remirror/cli": "workspace:*"
+    "@remirror/cli": "1.0.1",
+    "jest": "^29.5.0"
   },
   "peerDependencies": {
     "jest": ">= 24.9.0"
@@ -116,8 +119,5 @@
       "environment.ts",
       "serializer.cts"
     ]
-  },
-  "scripts": {
-    "build": "remirror-cli build"
   }
 }

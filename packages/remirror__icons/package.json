@@ -38,9 +38,15 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core-helpers": "^3.0.0"
+  },
+  "devDependencies": {
+    "@remirror/cli": "1.0.1"
   },
   "publishConfig": {
     "access": "public",
@@ -70,11 +76,5 @@
       "all.ts",
       "index.ts"
     ]
-  },
-  "scripts": {
-    "build": "remirror-cli build"
-  },
-  "devDependencies": {
-    "@remirror/cli": "workspace:*"
   }
 }

@@ -33,6 +33,9 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@remirror/core": "^2.0.19",
     "@types/string.prototype.matchall": "^4.0.1",
@@ -40,8 +43,8 @@
     "string.prototype.matchall": "^4.0.8"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.7",
-    "@remirror/cli": "workspace:*"
+    "@remirror/cli": "1.0.1",
+    "@remirror/pm": "^2.0.7"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5"
@@ -63,8 +66,5 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
-  },
-  "scripts": {
-    "build": "remirror-cli build"
   }
 }

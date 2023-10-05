@@ -1,7 +1,6 @@
 const delay = 300;
 
 export class DebounceExecutor {
-  private timer: ReturnType<typeof setTimeout> | undefined;
   private readonly keys: Set<string>;
   private busy = false;
 
@@ -25,6 +24,7 @@ export class DebounceExecutor {
       await new Promise((resolve) => setTimeout(resolve, delay));
 
       const key = this.popKey();
+
       if (key === null) {
         return;
       }
@@ -41,11 +41,13 @@ export class DebounceExecutor {
 
   private popKey() {
     const keys = [...this.keys];
+
     if (keys.length > 0) {
-      let key = keys[0];
+      const key = keys[0];
       this.keys.delete(key);
       return key;
     }
+
     return null;
   }
 }

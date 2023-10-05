@@ -33,6 +33,9 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.19",
@@ -41,8 +44,8 @@
     "direction": "^1.0.4"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.7",
-    "@remirror/cli": "workspace:*"
+    "@remirror/cli": "1.0.1",
+    "@remirror/pm": "^2.0.7"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5"
@@ -64,8 +67,5 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
-  },
-  "scripts": {
-    "build": "remirror-cli build"
   }
 }

@@ -28,10 +28,16 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@types/throttle-debounce": "^2.1.0",
     "throttle-debounce": "^3.0.1"
+  },
+  "devDependencies": {
+    "@remirror/cli": "1.0.1"
   },
   "publishConfig": {
     "access": "public",
@@ -50,11 +56,5 @@
   },
   "@remirror": {
     "sizeLimit": "1 KB"
-  },
-  "scripts": {
-    "build": "remirror-cli build"
-  },
-  "devDependencies": {
-    "@remirror/cli": "workspace:*"
   }
 }

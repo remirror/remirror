@@ -12,9 +12,9 @@ import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { act, fireEvent, render, strictRender } from 'testing/react';
 
 import {
+  createReactManager,
   ReactExtensions,
   Remirror,
-  createReactManager,
   useRemirror,
   useRemirrorContext,
 } from '../';

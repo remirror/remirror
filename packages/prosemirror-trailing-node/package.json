@@ -29,16 +29,19 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@remirror/core-constants": "^2.0.2",
     "@remirror/core-helpers": "^3.0.0",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
+    "@remirror/cli": "1.0.1",
     "prosemirror-model": "^1.19.2",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.31.3",
-    "@remirror/cli": "workspace:*"
+    "prosemirror-view": "^1.31.3"
   },
   "peerDependencies": {
     "prosemirror-model": "^1.19.0",
@@ -63,8 +66,5 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "scripts": {
-    "build": "remirror-cli build"
   }
 }

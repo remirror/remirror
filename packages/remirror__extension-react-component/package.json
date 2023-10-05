@@ -34,6 +34,9 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.19",
@@ -45,7 +48,7 @@
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {
-    "@remirror/cli": "workspace:*",
+    "@remirror/cli": "1.0.1",
     "@remirror/pm": "^2.0.7",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
@@ -84,8 +87,5 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
-  },
-  "scripts": {
-    "build": "remirror-cli build"
   }
 }

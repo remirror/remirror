@@ -28,6 +28,9 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core-helpers": "^3.0.0",
@@ -39,10 +42,10 @@
     "w3c-keyname": "^2.2.7"
   },
   "devDependencies": {
+    "@remirror/cli": "1.0.1",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.0",
-    "react": "^18.2.0",
-    "@remirror/cli": "workspace:*"
+    "react": "^18.2.0"
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17 || ^18",
@@ -70,8 +73,5 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
-  },
-  "scripts": {
-    "build": "remirror-cli build"
   }
 }

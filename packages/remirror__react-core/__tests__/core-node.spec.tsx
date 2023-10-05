@@ -7,6 +7,7 @@ import { JSDOM } from 'jsdom';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { hideConsoleError } from 'testing';
+
 import { createReactManager, Remirror } from '../src';
 
 const window = new JSDOM().window;

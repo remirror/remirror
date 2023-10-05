@@ -3,6 +3,7 @@ import * as babel from '@babel/core';
 import babelPluginDecorators from '@babel/plugin-proposal-decorators';
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
+import { findUp } from 'find-up';
 import path from 'node:path';
 import sortKeys from 'sort-keys';
 import { build as tsupBuild } from 'tsup';
@@ -16,7 +17,6 @@ import { getRoot } from './get-root';
 import { removeFileExt } from './remove-file-ext';
 import { runCustomScript } from './run-custom-script';
 import { slugify } from './slugify';
-import { findUp } from 'find-up';
 import { writePackageJson } from './write-package-json';
 
 /**

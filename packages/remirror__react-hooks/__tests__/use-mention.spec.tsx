@@ -8,8 +8,8 @@ import { MentionExtension, MentionExtensionAttributes } from '@remirror/extensio
 import { ChangeReason } from '@remirror/pm/suggest';
 import { createReactManager, Remirror } from '@remirror/react-core';
 
-import { MentionState, useMention, UseMentionExitHandler } from '../src/use-mention';
 import { MenuDirection } from '../src';
+import { MentionState, useMention, UseMentionExitHandler } from '../src/use-mention';
 
 describe('useMention', () => {
   it('should respond to mention changes', () => {

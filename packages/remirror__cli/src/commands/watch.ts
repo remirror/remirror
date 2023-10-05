@@ -1,11 +1,11 @@
-import path from 'node:path';
-
 import { execa } from 'execa';
+import path from 'node:path';
+import { readPackageUp } from 'read-pkg-up';
+
 import { logger } from '../logger';
 import { DebounceExecutor } from '../utils/debounce-executor';
 import { getRoot } from '../utils/get-root';
 import { listPackagesToBuild } from '../utils/list-packages';
-import { readPackageUp } from 'read-pkg-up';
 
 export async function watch(options: { skipBuild?: boolean }) {
   logger.debug(`current working directory: ${process.cwd()}`);

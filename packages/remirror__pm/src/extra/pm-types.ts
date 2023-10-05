@@ -22,8 +22,8 @@ export {
   Transaction,
 } from 'prosemirror-state';
 export { Mapping } from 'prosemirror-transform';
-export { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
 export type { NodeView } from 'prosemirror-view';
+export { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
 
 declare const _brand: unique symbol;
 interface Branding<Type> {

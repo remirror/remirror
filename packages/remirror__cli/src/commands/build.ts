@@ -1,13 +1,13 @@
 import process from 'process';
-
 import { readPackageUp } from 'read-pkg-up';
+
 import { logger } from '../logger';
 import { buildPackage } from '../utils/build-package';
 import { listPackagesToBuild } from '../utils/list-packages';
 
 export async function build() {
   logger.debug(`current working directory: ${process.cwd()}`);
-  let packages = await listPackagesToBuild();
+  const packages = await listPackagesToBuild();
 
   const currentPackage = await readPackageUp();
 

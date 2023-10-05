@@ -3,6 +3,7 @@ import { RemirrorTestChain } from 'jest-remirror';
 import React, { useState } from 'react';
 import { hideConsoleError, rafMock } from 'testing';
 import { act, fireEvent, render, strictRender } from 'testing/react';
+
 import {
   createReactManager,
   ReactFrameworkOutput,

@@ -41,6 +41,9 @@
     "emotion",
     "styled-components"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core-helpers": "^3.0.0"
@@ -49,11 +52,11 @@
     "@emotion/css": "^11.11.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@remirror/cli": "1.0.1",
     "@types/react": "^18.2.0",
     "@types/styled-components": "^5.1.26",
     "react": "^18.2.0",
-    "styled-components": "^5.3.11",
-    "@remirror/cli": "workspace:*"
+    "styled-components": "^5.3.11"
   },
   "peerDependencies": {
     "@emotion/css": "^11.11.0",
@@ -113,8 +116,5 @@
       "styled-components.tsx",
       "dom.tsx"
     ]
-  },
-  "scripts": {
-    "build": "remirror-cli build"
   }
 }

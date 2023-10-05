@@ -1,3 +1,4 @@
+import React, { ComponentType, FunctionComponent, RefCallback } from 'react';
 import { ErrorConstant, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
 import {
   entries,
@@ -13,7 +14,6 @@ import { isDomNode, isElementDomNode, isNodeOfType } from '@remirror/core-utils'
 import { Decoration, EditorView, NodeView, ProsemirrorNode } from '@remirror/pm';
 import { DOMSerializer } from '@remirror/pm/model';
 import { NodeSelection } from '@remirror/pm/state';
-import React, { ComponentType, FunctionComponent, RefCallback } from 'react';
 
 import type {
   CreateNodeViewProps,
