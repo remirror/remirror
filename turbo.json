@@ -1,0 +1,15 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "outputs": [
+        "dist/**"
+      ],
+      // A workspace's `build` command depends on its dependencies'
+      // and devDependencies' `build` commands being completed first
+      "dependsOn": [
+        "^build"
+      ]
+    }
+  }
+}
