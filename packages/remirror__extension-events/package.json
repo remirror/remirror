@@ -39,7 +39,8 @@
     "@remirror/messages": "^2.0.6"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.7"
+    "@remirror/pm": "^2.0.7",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.7"
@@ -61,5 +62,8 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

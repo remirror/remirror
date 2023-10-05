@@ -48,7 +48,8 @@
     "@remirror/pm": "^2.0.7",
     "@remirror/react": "^2.0.34",
     "@types/react": "^18.2.0",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5",
@@ -77,5 +78,8 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

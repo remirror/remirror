@@ -261,5 +261,11 @@
       "transform.ts",
       "view.ts"
     ]
+  },
+  "scripts": {
+    "build": "remirror-cli build"
+  },
+  "devDependencies": {
+    "@remirror/cli": "workspace:*"
   }
 }

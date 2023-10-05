@@ -58,5 +58,11 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
+  },
+  "devDependencies": {
+    "@remirror/cli": "workspace:*"
   }
 }

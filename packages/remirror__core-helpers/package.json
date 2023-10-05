@@ -69,5 +69,11 @@
         }
       }
     }
+  },
+  "scripts": {
+    "build": "remirror-cli build"
+  },
+  "devDependencies": {
+    "@remirror/cli": "workspace:*"
   }
 }

@@ -48,7 +48,8 @@
     "@babel/preset-typescript": "^7.21.5",
     "babel-plugin-macros": "^3.1.0",
     "rollup": "^3.23.0",
-    "tsx": "^3.12.7"
+    "tsx": "^3.12.7",
+    "@remirror/cli": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

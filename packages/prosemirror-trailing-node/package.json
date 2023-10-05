@@ -37,7 +37,8 @@
   "devDependencies": {
     "prosemirror-model": "^1.19.2",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.31.3"
+    "prosemirror-view": "^1.31.3",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "prosemirror-model": "^1.19.0",
@@ -62,5 +63,8 @@
   },
   "@remirror": {
     "sizeLimit": "10 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

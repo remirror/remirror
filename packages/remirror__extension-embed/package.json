@@ -43,7 +43,8 @@
     "querystringify": "^2.2.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.7"
+    "@remirror/pm": "^2.0.7",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5"
@@ -65,5 +66,8 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

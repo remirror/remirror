@@ -43,7 +43,8 @@
   "devDependencies": {
     "@remirror/pm": "^2.0.7",
     "@types/extract-domain": "2.3.1",
-    "linkifyjs": "^3.0.5"
+    "linkifyjs": "^3.0.5",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5"
@@ -65,5 +66,8 @@
   },
   "@remirror": {
     "sizeLimit": "5 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

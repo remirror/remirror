@@ -38,7 +38,8 @@
     "@babel/plugin-proposal-decorators": "^7.22.3",
     "@types/babel__core": "^7.20.2",
     "@types/node": "^16.18.34",
-    "@types/prettier": "^2.7.2"
+    "@types/prettier": "^2.7.2",
+    "@remirror/cli": "workspace:*"
   },
   "@remirror": {
     "tsconfigs": {
@@ -50,5 +51,8 @@
         }
       }
     }
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

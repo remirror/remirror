@@ -62,7 +62,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "y-webrtc": "^10.2.5",
-    "yjs": "^13.6.1"
+    "yjs": "^13.6.1",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.7",
@@ -94,5 +95,8 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

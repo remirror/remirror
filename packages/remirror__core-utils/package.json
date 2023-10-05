@@ -45,7 +45,8 @@
     "@remirror/pm": "^2.0.7",
     "@types/jsdom": "^16.2.15",
     "@types/node": "^16.18.34",
-    "jsdom": "^17.0.0"
+    "jsdom": "^17.0.0",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.7",
@@ -73,5 +74,8 @@
   },
   "@remirror": {
     "sizeLimit": "25 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

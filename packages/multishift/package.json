@@ -41,7 +41,8 @@
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.0",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17 || ^18",
@@ -69,5 +70,8 @@
   },
   "@remirror": {
     "sizeLimit": "20 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

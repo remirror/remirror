@@ -50,5 +50,8 @@
   },
   "@remirror": {
     "sizeLimit": "2 KB"
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

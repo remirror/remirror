@@ -135,7 +135,8 @@
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "svgmoji": "^3.2.0"
+    "svgmoji": "^3.2.0",
+    "@remirror/cli": "workspace:*"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.5",
@@ -264,5 +265,8 @@
       "use-positioner.ts",
       "use-suggest.ts"
     ]
+  },
+  "scripts": {
+    "build": "remirror-cli build"
   }
 }

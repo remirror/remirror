@@ -364,6 +364,10 @@ importers:
       throttle-debounce:
         specifier: ^3.0.1
         version: 3.0.1
+    devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
 
   packages/create-context-state:
     dependencies:
@@ -371,6 +375,9 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@testing-library/react':
         specifier: ^14.0.0
         version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -429,6 +436,9 @@ importers:
         specifier: 2.0.6
         version: link:../test-keyboard
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       jest:
         specifier: ^29.5.0
         version: 29.5.0(@types/node@16.18.34)
@@ -466,6 +476,9 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@types/node':
         specifier: ^16.18.34
         version: 16.18.34
@@ -500,6 +513,9 @@ importers:
         specifier: ^2.2.7
         version: 2.2.7
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@testing-library/react':
         specifier: ^14.0.0
         version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -525,6 +541,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       prosemirror-model:
         specifier: ^1.19.2
         version: 1.19.2
@@ -552,6 +571,10 @@ importers:
       prosemirror-view:
         specifier: ^1.31.3
         version: 1.31.3
+    devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
 
   packages/prosemirror-suggest:
     dependencies:
@@ -571,6 +594,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       prosemirror-model:
         specifier: ^1.19.2
         version: 1.19.2
@@ -593,6 +619,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       prosemirror-model:
         specifier: ^1.19.2
         version: 1.19.2
@@ -807,6 +836,9 @@ importers:
         specifier: ^13.6.1
         version: 13.6.1
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -871,6 +903,9 @@ importers:
       '@babel/plugin-proposal-decorators':
         specifier: ^7.22.3
         version: 7.22.3(@babel/core@7.22.9)
+      '@remirror/cli':
+        specifier: workspace:*
+        version: 'link:'
       '@types/babel__core':
         specifier: ^7.20.2
         version: 7.20.2
@@ -914,6 +949,9 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -965,6 +1003,10 @@ importers:
       throttle-debounce:
         specifier: ^3.0.1
         version: 3.0.1
+    devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
 
   packages/remirror__core-types:
     dependencies:
@@ -975,6 +1017,9 @@ importers:
         specifier: ^1.0.1
         version: link:../remirror__types
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1012,6 +1057,9 @@ importers:
         specifier: ^3.1.8
         version: 3.1.8
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1037,6 +1085,9 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(svelte@4.1.1)
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1068,6 +1119,9 @@ importers:
         specifier: ^2.0.16
         version: link:../remirror__preset-core
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1087,6 +1141,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1109,6 +1166,9 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1128,6 +1188,9 @@ importers:
         specifier: ^2.0.9
         version: link:../remirror__theme
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1144,6 +1207,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1163,6 +1229,9 @@ importers:
         specifier: ^2.0.9
         version: link:../remirror__theme
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1179,6 +1248,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1204,6 +1276,9 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1232,6 +1307,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/core-helpers':
         specifier: ^3.0.0
         version: link:../remirror__core-helpers
@@ -1263,6 +1341,9 @@ importers:
         specifier: ^2.0.19
         version: link:../remirror__core
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1279,6 +1360,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1295,6 +1379,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1308,6 +1395,9 @@ importers:
         specifier: ^2.0.19
         version: link:../remirror__core
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1324,6 +1414,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1340,6 +1433,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1356,6 +1452,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1381,6 +1480,9 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1418,6 +1520,9 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(patch_hash=hb5tifrnyoxxmogod3ui2wx6rq)
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1437,6 +1542,9 @@ importers:
         specifier: ^2.1.8
         version: link:../remirror__extension-positioner
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1453,6 +1561,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1469,6 +1580,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1494,6 +1608,9 @@ importers:
         specifier: ^5.1.13
         version: 5.1.13
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1525,6 +1642,9 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1541,6 +1661,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1560,6 +1683,9 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1576,6 +1702,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1592,6 +1721,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1608,6 +1740,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1624,6 +1759,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1640,6 +1778,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1662,6 +1803,9 @@ importers:
         specifier: ^2.0.12
         version: link:../prosemirror-resizable-view
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1678,6 +1822,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1700,6 +1847,9 @@ importers:
         specifier: 2.2.1
         version: 2.2.1
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1728,6 +1878,9 @@ importers:
         specifier: ^2.0.9
         version: link:../remirror__theme
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1759,6 +1912,9 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/extension-react-tables':
         specifier: ^2.2.18
         version: link:../remirror__extension-react-tables
@@ -1784,6 +1940,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1806,6 +1965,9 @@ importers:
         specifier: ^2.0.9
         version: link:../remirror__theme
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1822,6 +1984,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1838,6 +2003,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1857,6 +2025,9 @@ importers:
         specifier: ^2.0.9
         version: link:../remirror__theme
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1882,6 +2053,9 @@ importers:
         specifier: ^5.1.13
         version: 5.1.13
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1901,6 +2075,9 @@ importers:
         specifier: ^5.1.13
         version: 5.1.13
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1950,6 +2127,9 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -1987,6 +2167,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__react-utils
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2048,6 +2231,9 @@ importers:
         specifier: ^8.0.6
         version: 8.0.6
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2085,6 +2271,9 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2098,6 +2287,9 @@ importers:
         specifier: ^2.0.19
         version: link:../remirror__core
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2114,6 +2306,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2130,6 +2325,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2146,6 +2344,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2171,6 +2372,9 @@ importers:
         specifier: ^2.0.9
         version: link:../remirror__theme
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2187,6 +2391,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2203,6 +2410,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2225,6 +2435,9 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2244,6 +2457,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2260,6 +2476,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2276,6 +2495,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2292,6 +2514,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__messages
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2323,6 +2548,9 @@ importers:
         specifier: ^1.0.5
         version: 1.0.5
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2353,6 +2581,10 @@ importers:
       make-plural:
         specifier: ^6.2.2
         version: 6.2.2
+    devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
 
   packages/remirror__icons:
     dependencies:
@@ -2362,6 +2594,10 @@ importers:
       '@remirror/core-helpers':
         specifier: ^3.0.0
         version: link:../remirror__core-helpers
+    devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
 
   packages/remirror__messages:
     dependencies:
@@ -2381,6 +2617,9 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.21.5
         version: 7.21.5(@babel/core@7.22.9)
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       babel-plugin-macros:
         specifier: ^3.1.0
         version: 3.1.0
@@ -2450,6 +2689,10 @@ importers:
       prosemirror-view:
         specifier: ^1.31.3
         version: 1.31.3
+    devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
 
   packages/remirror__preset-core:
     dependencies:
@@ -2481,6 +2724,9 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-text
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2536,6 +2782,9 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-whitespace
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2558,6 +2807,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__react-utils
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2646,6 +2898,9 @@ importers:
         specifier: ^2.0.16
         version: link:../remirror__preset-core
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2686,6 +2941,9 @@ importers:
         specifier: ^2.0.6
         version: link:../remirror__react-utils
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
@@ -2822,6 +3080,9 @@ importers:
         specifier: ^2.19.3
         version: 2.19.3(react@18.2.0)
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2883,6 +3144,9 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -2953,6 +3217,9 @@ importers:
       '@emotion/css':
         specifier: ^11.11.0
         version: 11.11.0
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
@@ -3008,6 +3275,9 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(@types/react@18.2.0)(react@18.2.0)
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -3039,6 +3309,9 @@ importers:
         specifier: ^2.0.19
         version: link:../remirror__core
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
@@ -3058,6 +3331,9 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-react-ssr
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@remirror/pm':
         specifier: ^2.0.7
         version: link:../remirror__pm
@@ -3092,6 +3368,9 @@ importers:
         specifier: ^2.0.5
         version: link:../remirror__core-types
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
@@ -3117,6 +3396,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
@@ -3160,6 +3442,9 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.21.5
         version: 7.21.5(@babel/core@7.22.1)
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       rollup:
         specifier: ^3.23.0
         version: 3.23.0
@@ -3169,6 +3454,10 @@ importers:
       type-fest:
         specifier: ^3.10.0
         version: 3.10.0(typescript@5.0.4)
+    devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
 
   packages/storybook-react:
     dependencies:
@@ -3350,6 +3639,9 @@ importers:
         specifier: ^13.6.1
         version: 13.6.1
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@storybook/addon-actions':
         specifier: ^7.0.18
         version: 7.0.18(react-dom@18.2.0)(react@18.2.0)
@@ -3410,6 +3702,10 @@ importers:
       '@remirror/core-types':
         specifier: ^2.0.5
         version: link:../remirror__core-types
+    devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
 
   packages/testing:
     dependencies:
@@ -3510,6 +3806,9 @@ importers:
         specifier: 2.0.6
         version: link:../test-keyboard
     devDependencies:
+      '@remirror/cli':
+        specifier: workspace:*
+        version: link:../remirror__cli
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0

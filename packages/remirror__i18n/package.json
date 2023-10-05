@@ -87,5 +87,11 @@
       "plurals.ts",
       "en/index.ts"
     ]
+  },
+  "scripts": {
+    "build": "remirror-cli build"
+  },
+  "devDependencies": {
+    "@remirror/cli": "workspace:*"
   }
 }
