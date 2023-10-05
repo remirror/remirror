@@ -12,10 +12,11 @@
     "api:generate-md": "ts-documenter markdown -i ./support/api -o ./docs/api",
     "browser:coverage": "browserslist --coverage",
     "build": "pnpm build:core && pnpm css:copy",
-    "build:core": "preconstruct fix && preconstruct build && remirror-cli build",
+    "build:core": "preconstruct fix && preconstruct build && pnpm build:packages",
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct fix && preconstruct dev",
     "build:docs": "run-s docs:prod docs:redirects",
+    "build:packages": "turbo run build --filter='./packages/*' && pnpm typecheck",
     "changeset": "changeset",
     "checks": "run-s lint typecheck test",
     "checks:fix": "run-s -c fix typecheck test build size build:dev",
@@ -71,7 +72,7 @@
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm install;",
     "run:prettier": "prettier --loglevel warn --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
-    "storybook": "pnpm remirror-cli build && run-p watch:skip-build storybook:start",
+    "storybook": "pnpm build:packages && run-p watch:skip-build storybook:start",
     "storybook:build": "pnpm run --filter storybook-react build",
     "storybook:start": "pnpm run --filter storybook-react start",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --verbose",
@@ -89,7 +90,7 @@
     "version:date": "tsx support/scripts/src/changelog-dates",
     "version:lockfile": "pnpm install --lockfile-only",
     "watch": "remirror-cli watch",
-    "watch:skip-build": "remirror-cli watch --skip-build"
+    "watch:skip-build": "pnpm build:packages --skip-build"
   },
   "browserslist": [
     "since 2017"
