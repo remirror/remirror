@@ -1,15 +1,15 @@
 import type { ComponentType, RefCallback } from 'react';
-import type {
-  Decoration,
-  Dynamic,
-  EditorViewProps,
-  GetFixed,
-  NodeWithAttributesProps,
-  ProsemirrorAttributes,
-  Static,
-} from '@remirror/core';
 
 import type { PortalContainer } from './portals';
+import {
+  Static,
+  Dynamic,
+  EditorViewProps,
+  NodeWithAttributesProps,
+  ProsemirrorAttributes,
+  GetFixed,
+} from '@remirror/core-types';
+import { Decoration } from '@remirror/pm';
 
 export type ReactComponentEnvironment = 'ssr' | 'dom' | 'both';
 

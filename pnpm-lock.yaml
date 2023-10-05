@@ -2062,6 +2062,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.22.3
         version: 7.22.3
+      '@remirror/core':
+        specifier: ^2.0.19
+        version: link:../remirror__core
       '@remirror/core-constants':
         specifier: ^2.0.2
         version: link:../remirror__core-constants

@@ -1,13 +1,4 @@
 import type { ComponentType } from 'react';
-import {
-  AnyExtension,
-  entries,
-  extension,
-  isNodeExtension,
-  NodeViewMethod,
-  object,
-  PlainExtension,
-} from '@remirror/core';
 
 import type {
   NodeViewComponentProps,
@@ -16,6 +7,9 @@ import type {
 } from './node-view-types';
 import { PortalContainer } from './portals';
 import { ReactNodeView } from './react-node-view';
+import { object, entries } from '@remirror/core-helpers';
+import { NodeViewMethod } from '@remirror/core-types';
+import { AnyExtension, PlainExtension, extension, isNodeExtension } from '@remirror/core';
 
 /**
  * The extension transforms the `ReactComponent` property on extensions into the
