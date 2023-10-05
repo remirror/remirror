@@ -33,96 +33,86 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
 
   const promises: Array<Promise<unknown>> = [];
 
-  const buildScript = (pkg.packageJson as any)?.scripts?.build;
+  for (const entryPoint of entryPoints) {
+    const { format, outFile, inFile } = entryPoint;
+    const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
+    const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
 
-  // TODO: remove & false
-  if (buildScript && false) {
-    logger.info(`${colors.blue(pkg.packageJson.name)} building with its custom build script...`);
-    promises.push(runCustomScript(pkg, 'build'));
-  } else {
-    for (const entryPoint of entryPoints) {
-      const { format, outFile, inFile } = entryPoint;
-      const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
-      const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
+    const tsconfigPath = await findUp('tsconfig.json', { cwd: entryPoint.inFile });
 
-      const tsconfigPath = await findUp('tsconfig.json', { cwd: entryPoint.inFile });
-
-      console.log('DEBUG PWD', process.cwd());
-      console.log('DEBUG tsconfigPath', tsconfigPath);
-      promises.push(
-        tsupBuild({
-          // Current ESBuild version (0.19.3) doesn't support compiling ES
-          // Stage-3 decorators, so we need to set the target to esnext to avoid
-          // the error.
-          target: 'esnext',
-          outDir: path.dirname(outFile),
+    promises.push(
+      tsupBuild({
+        // Current ESBuild version (0.19.3) doesn't support compiling ES
+        // Stage-3 decorators, so we need to set the target to esnext to avoid
+        // the error.
+        target: 'esnext',
+        outDir: path.dirname(outFile),
+        entry: {
+          [outFileEntry]: inFile,
+        },
+        format: format === 'dual' ? ['cjs', 'esm'] : format,
+        outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
+        skipNodeModulesBundle: true,
+        tsconfig: tsconfigPath,
+        experimentalDts: {
           entry: {
-            [outFileEntry]: inFile,
+            [outFileEntry]: inDtsFile,
           },
-          format: format === 'dual' ? ['cjs', 'esm'] : format,
-          outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
-          skipNodeModulesBundle: true,
-          tsconfig: tsconfigPath,
-          experimentalDts: {
-            entry: {
-              [outFileEntry]: inDtsFile,
+        },
+        plugins: [
+          {
+            name: 'remirror-es-decorator-state-3',
+            renderChunk: async (code) => {
+              if (!code.includes('@')) {
+                return;
+              }
+
+              const transformed = await babel.transformAsync(code, {
+                plugins: [[babelPluginDecorators, { version: '2023-05' }]],
+                // Don't look for babel.config.js
+                configFile: false,
+              });
+
+              const transformedCode = transformed?.code;
+              return { code: transformedCode || code };
             },
           },
-          plugins: [
-            {
-              name: 'remirror-es-decorator-state-3',
-              renderChunk: async (code) => {
-                if (!code.includes('@')) {
-                  return;
-                }
-
-                const transformed = await babel.transformAsync(code, {
-                  plugins: [[babelPluginDecorators, { version: '2023-05' }]],
-                  // Don't look for babel.config.js
-                  configFile: false,
-                });
-
-                const transformedCode = transformed?.code;
-                return { code: transformedCode || code };
-              },
-            },
-          ],
-          // dts: {
-          //   entry: {
-          //     [outFileEntry]: inDtsFile,
-          //   },
-          //   compilerOptions: {
-          //     allowJs: true,
-          //     module: 'ESNext',
-          //     target: 'ESNext',
-          //     lib: ['DOM', 'DOM.Iterable', 'ESNext'],
-          //     jsx: 'react',
-          //     types: ['node', '@jest/globals'],
-          //     moduleResolution: 'node',
-          //     useDefineForClassFields: true,
-          //     sourceMap: true,
-          //     declaration: true,
-          //     pretty: true,
-          //     noEmit: true,
-          //     strict: true,
-          //     resolveJsonModule: true,
-          //     preserveWatchOutput: true,
-          //     skipLibCheck: true,
-          //     experimentalDecorators: false,
-          //     isolatedModules: true,
-          //     allowSyntheticDefaultImports: true,
-          //     esModuleInterop: true,
-          //     importsNotUsedAsValues: 'remove',
-          //     noUnusedLocals: true,
-          //     noUnusedParameters: true,
-          //     allowUnreachableCode: false,
-          //     forceConsistentCasingInFileNames: true,
-          //     noImplicitReturns: true,
-          //   },
-          // },
-        }),
-      );
-    }
+        ],
+        // dts: {
+        //   entry: {
+        //     [outFileEntry]: inDtsFile,
+        //   },
+        //   compilerOptions: {
+        //     allowJs: true,
+        //     module: 'ESNext',
+        //     target: 'ESNext',
+        //     lib: ['DOM', 'DOM.Iterable', 'ESNext'],
+        //     jsx: 'react',
+        //     types: ['node', '@jest/globals'],
+        //     moduleResolution: 'node',
+        //     useDefineForClassFields: true,
+        //     sourceMap: true,
+        //     declaration: true,
+        //     pretty: true,
+        //     noEmit: true,
+        //     strict: true,
+        //     resolveJsonModule: true,
+        //     preserveWatchOutput: true,
+        //     skipLibCheck: true,
+        //     experimentalDecorators: false,
+        //     isolatedModules: true,
+        //     allowSyntheticDefaultImports: true,
+        //     esModuleInterop: true,
+        //     importsNotUsedAsValues: 'remove',
+        //     noUnusedLocals: true,
+        //     noUnusedParameters: true,
+        //     allowUnreachableCode: false,
+        //     forceConsistentCasingInFileNames: true,
+        //     noImplicitReturns: true,
+        //   },
+        // },
+      }),
+    );
   }
 
   const generateScript = (pkg.packageJson as any)?.scripts?.generate;
