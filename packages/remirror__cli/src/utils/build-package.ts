@@ -35,7 +35,8 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
 
   const buildScript = (pkg.packageJson as any)?.scripts?.build;
 
-  if (buildScript) {
+  // TODO: remove & false
+  if (buildScript && false) {
     logger.info(`${colors.blue(pkg.packageJson.name)} building with its custom build script...`);
     promises.push(runCustomScript(pkg, 'build'));
   } else {
