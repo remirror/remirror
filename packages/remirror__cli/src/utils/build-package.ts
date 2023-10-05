@@ -38,7 +38,8 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
     const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
     const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
 
-    const tsconfigPath = await findUp('tsconfig.json', { cwd: entryPoint.inFile });
+    const cwd = entryPoint.inFile;
+    const tsconfigPath = await findUp('tsconfig.json', { cwd });
 
     promises.push(
       tsupBuild({

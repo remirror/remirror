@@ -52,7 +52,6 @@ export async function watch(options: { skipBuild?: boolean }) {
   });
 
   const executor = new DebounceExecutor(async (dir: string) => {
-    console.log(`Building ${dir}`);
     const currentPackage = await readPackageUp({ cwd: dir });
 
     if (!currentPackage) {

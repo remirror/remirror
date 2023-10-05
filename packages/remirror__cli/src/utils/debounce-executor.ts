@@ -1,3 +1,5 @@
+import { logger } from '../logger';
+
 const delay = 300;
 
 export class DebounceExecutor {
@@ -32,7 +34,7 @@ export class DebounceExecutor {
       try {
         await this.fn(key);
       } catch (error) {
-        console.error(error);
+        logger.error(error);
       }
     }
 
