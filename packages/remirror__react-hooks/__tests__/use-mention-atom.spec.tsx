@@ -6,7 +6,8 @@ import { act, DefaultEditor, render, strictRender } from 'testing/react';
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { MentionAtomExtension, MentionAtomNodeAttributes } from '@remirror/extension-mention-atom';
 import { ChangeReason } from '@remirror/pm/suggest';
-import { createReactManager, MenuDirection, Remirror, useRemirror } from '@remirror/react';
+import { createReactManager, Remirror, useRemirror } from '@remirror/react-core';
+import { MenuDirection } from '../src';
 
 import { MentionAtomState, useMentionAtom } from '../src/use-mention-atom';
 

@@ -23,7 +23,9 @@
     "skipLibCheck": true,
     "importsNotUsedAsValues": "remove"
   },
-  "include": ["./"],
+  "include": [
+    "./"
+  ],
   "references": [
     {
       "path": "../src"

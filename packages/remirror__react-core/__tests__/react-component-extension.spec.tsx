@@ -9,10 +9,10 @@ import {
   NodeExtensionSpec,
   setBlockType,
 } from '@remirror/core';
-import { createReactManager, Remirror } from '@remirror/react';
+import { createReactManager, Remirror } from '../src';
 
-import type { NodeViewComponentProps } from '../';
-import { ReactComponentExtension } from '../';
+import type { NodeViewComponentProps } from '@remirror/extension-react-component';
+import { ReactComponentExtension } from '@remirror/extension-react-component';
 
 extensionValidityTest(ReactComponentExtension);
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { act as renderAct, render } from 'testing/react';
 import type { AnyExtension, AnyRemirrorManager } from '@remirror/core';
 import { ReactExtension } from '@remirror/preset-react';
-import { useManager } from '@remirror/react';
+import { useManager } from '../src';
 
 // TODO: `jest.mock` doesn't work on ESM environments.
 describe.skip('useManager', () => {

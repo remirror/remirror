@@ -9,7 +9,7 @@ import {
   Remirror,
   useRemirror,
   useRemirrorContext,
-} from '@remirror/react';
+} from '../src';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
