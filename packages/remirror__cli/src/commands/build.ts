@@ -1,13 +1,22 @@
 import process from 'process';
 
+import { readPackageUp } from 'read-pkg-up';
 import { logger } from '../logger';
 import { buildPackage } from '../utils/build-package';
 import { listPackagesToBuild } from '../utils/list-packages';
-import { runTsc } from '../utils/run-tsc';
 
 export async function build(packageNames?: string[]) {
   logger.debug(`current working directory: ${process.cwd()}`);
   let packages = await listPackagesToBuild();
+
+  const currentPackage = await readPackageUp();
+  if (
+    !packageNames?.length &&
+    currentPackage &&
+    currentPackage.packageJson.name !== 'remirror-monorepo'
+  ) {
+    packageNames = [currentPackage.packageJson.name];
+  }
 
   if (packageNames && packageNames.length > 0) {
     const names = new Set(packageNames);
@@ -24,7 +33,11 @@ export async function build(packageNames?: string[]) {
     }
   }
 
-  await runTsc();
+  if (packages.length > 1) {
+    logger.debug(`building ${packages.length} packages`);
+  } else {
+    logger.debug(`building ${packages[0].packageJson.name}`);
+  }
 
   for (const pkg of packages) {
     await buildPackage(pkg);
