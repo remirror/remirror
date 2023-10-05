@@ -25,10 +25,11 @@
     "execa": "^6.1.0",
     "fast-deep-equal": "^3.1.3",
     "fast-glob": "^3.2.12",
+    "find-up": "^6.3.0",
     "read-pkg-up": "^10.1.0",
     "rimraf": "^4.4.1",
     "sort-keys": "^4.2.0",
-    "tsup": "https://github.com/ocavue/tsup/tarball/ocavue-release-2023-09-19-b",
+    "tsup": "https://github.com/ocavue/tsup/tarball/ocavue-release-2023-10-05-a",
     "tsx": "^3.12.7",
     "write-pkg": "^5.1.0"
   },

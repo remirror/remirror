@@ -30,6 +30,9 @@
     "dist-types"
   ],
   "dependencies": {},
+  "devDependencies": {
+    "@remirror/cli": "workspace:*"
+  },
   "publishConfig": {
     "access": "public",
     "exports": {

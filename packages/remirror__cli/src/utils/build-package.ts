@@ -16,6 +16,7 @@ import { getRoot } from './get-root';
 import { removeFileExt } from './remove-file-ext';
 import { runCustomScript } from './run-custom-script';
 import { slugify } from './slugify';
+import { findUp } from 'find-up';
 import { writePackageJson } from './write-package-json';
 
 /**
@@ -42,6 +43,11 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
       const { format, outFile, inFile } = entryPoint;
       const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
       const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
+
+      const tsconfigPath = await findUp('tsconfig.json', { cwd: entryPoint.inFile });
+
+      console.log('DEBUG PWD', process.cwd());
+      console.log('DEBUG tsconfigPath', tsconfigPath);
       promises.push(
         tsupBuild({
           // Current ESBuild version (0.19.3) doesn't support compiling ES
@@ -55,6 +61,7 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
           format: format === 'dual' ? ['cjs', 'esm'] : format,
           outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
           skipNodeModulesBundle: true,
+          tsconfig: tsconfigPath,
           experimentalDts: {
             entry: {
               [outFileEntry]: inDtsFile,
