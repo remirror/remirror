@@ -70,7 +70,6 @@
 '@remirror/preset-core': major
 '@remirror/react-hooks': major
 '@remirror/react-utils': major
-'create-context-state': major
 '@remirror/core-types': major
 '@remirror/core-utils': major
 '@remirror/react-core': major
@@ -86,13 +85,9 @@
 '@remirror/core': major
 '@remirror/i18n': major
 'jest-remirror': major
-'@remirror/cli': major
 '@remirror/dev': major
 '@remirror/dom': major
-'test-keyboard': major
 '@remirror/pm': major
-'a11y-status': major
-'multishift': major
 'remirror': major
 '@remirror/extension-find': minor
 ---
