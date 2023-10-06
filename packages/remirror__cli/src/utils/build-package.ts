@@ -4,6 +4,7 @@ import babelPluginDecorators from '@babel/plugin-proposal-decorators';
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
 import { findUp } from 'find-up';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sortKeys from 'sort-keys';
 import { build as tsupBuild } from 'tsup';
@@ -18,7 +19,6 @@ import { removeFileExt } from './remove-file-ext';
 import { runCustomScript } from './run-custom-script';
 import { slugify } from './slugify';
 import { writePackageJson } from './write-package-json';
-import { readFile, writeFile } from 'node:fs/promises';
 
 /**
  * Bundle a package using esbuild and update `package.json` if necessary.
@@ -364,15 +364,17 @@ async function copyNamespace(pkg: Package) {
     absolute: true,
   });
 
-  let chunks: string[] = [];
+  const chunks: string[] = [];
 
-  for (let filePath of sourceFiles) {
+  for (const filePath of sourceFiles) {
     const content = await readFile(filePath, { encoding: 'utf-8' });
     const lines = content.split('\n');
-    const startIndex = lines.findIndex((line) => line === 'declare global {');
+    const startIndex = lines.indexOf('declare global {');
+
     if (startIndex === -1) {
       continue;
     }
+
     chunks.push(lines.slice(startIndex).join('\n'));
   }
 
@@ -380,14 +382,14 @@ async function copyNamespace(pkg: Package) {
     return;
   }
 
-  let code = '\n' + chunks.join('\n\n');
+  const code = `\n${chunks.join('\n\n')}`;
 
   const destFiles = await glob(['_tsup-dts-rollup*'], {
     cwd: path.join(pkg.dir, 'dist'),
     absolute: true,
   });
 
-  for (let filePath of destFiles) {
+  for (const filePath of destFiles) {
     const content = await readFile(filePath, { encoding: 'utf-8' });
     await writeFile(filePath, content + code);
   }
