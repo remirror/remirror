@@ -1,6 +1,6 @@
 {
   "name": "@remirror/messages",
-  "version": "2.0.6",
+  "version": "3.0.0-beta.0",
   "description": "Internalization strings which are used throughout the remirror core codebase.",
   "keywords": [
     "remirror"
@@ -40,8 +40,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core-helpers": "^3.0.0",
-    "@remirror/core-types": "^2.0.5"
+    "@remirror/core-helpers": "4.0.0-beta.0",
+    "@remirror/core-types": "3.0.0-beta.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",

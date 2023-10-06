@@ -1,5 +1,19 @@
 # @remirror/core-helpers
 
+## 4.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-constants@3.0.0-beta.0
+  - @remirror/types@2.0.0-beta.0
+
 ## 3.0.0
 
 > 2023-07-30

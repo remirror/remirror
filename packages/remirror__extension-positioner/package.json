@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-positioner",
-  "version": "2.1.8",
+  "version": "3.0.0-beta.0",
   "description": "Reposition your elements with every state update.",
   "keywords": [
     "remirror",
@@ -40,18 +40,18 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.19",
-    "@remirror/extension-events": "^2.1.17",
-    "@remirror/messages": "^2.0.6",
-    "@remirror/theme": "^2.0.9",
+    "@remirror/core": "3.0.0-beta.0",
+    "@remirror/extension-events": "3.0.0-beta.0",
+    "@remirror/messages": "3.0.0-beta.0",
+    "@remirror/theme": "3.0.0-beta.0",
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "@remirror/pm": "^2.0.8"
+    "@remirror/pm": "3.0.0-beta.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.5"
+    "@remirror/pm": "^3.0.0-beta.0"
   },
   "publishConfig": {
     "access": "public",

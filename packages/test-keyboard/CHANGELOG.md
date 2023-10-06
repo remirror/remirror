@@ -1,5 +1,16 @@
 # test-keyboard
 
+## 2.0.7-beta.0
+
+> 2023-10-06
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-types@3.0.0-beta.0
+  - @remirror/core-helpers@4.0.0-beta.0
+
 ## 2.0.6
 
 > 2023-07-30

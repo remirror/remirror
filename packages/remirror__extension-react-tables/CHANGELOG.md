@@ -1,5 +1,29 @@
 # @remirror/extension-react-tables
 
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-utils@3.0.0-beta.0
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/messages@3.0.0-beta.0
+  - @remirror/react-components@3.0.0-beta.0
+  - @remirror/react-core@3.0.0-beta.0
+  - @remirror/react-hooks@3.0.0-beta.0
+  - @remirror/extension-positioner@3.0.0-beta.0
+  - @remirror/extension-tables@3.0.0-beta.0
+  - @remirror/icons@3.0.0-beta.0
+  - @remirror/theme@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+
 ## 2.2.19
 
 > 2023-08-25

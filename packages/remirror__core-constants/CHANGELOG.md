@@ -1,5 +1,13 @@
 # @remirror/core-constants
 
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
 ## 2.0.2
 
 > 2023-07-24

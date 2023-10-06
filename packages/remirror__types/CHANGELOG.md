@@ -1,5 +1,13 @@
 # @remirror/types
 
+## 2.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
 ## 1.0.1
 
 > 2023-04-26
