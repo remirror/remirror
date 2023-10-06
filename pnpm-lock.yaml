@@ -2090,9 +2090,6 @@ importers:
       '@remirror/pm':
         specifier: ^2.0.8
         version: link:../remirror__pm
-      '@remirror/react':
-        specifier: ^2.0.35
-        version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
@@ -2221,9 +2218,6 @@ importers:
       '@remirror/messages':
         specifier: ^2.0.6
         version: link:../remirror__messages
-      '@remirror/preset-core':
-        specifier: ^2.0.16
-        version: link:../remirror__preset-core
       '@remirror/react-components':
         specifier: ^2.1.17
         version: link:../remirror__react-components
@@ -3092,9 +3086,6 @@ importers:
       '@remirror/pm':
         specifier: ^2.0.8
         version: link:../remirror__pm
-      '@remirror/react':
-        specifier: ^2.0.35
-        version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
@@ -3156,9 +3147,6 @@ importers:
       '@remirror/pm':
         specifier: ^2.0.8
         version: link:../remirror__pm
-      '@remirror/react':
-        specifier: ^2.0.35
-        version: link:../remirror__react
       '@types/jsdom':
         specifier: ^16.2.15
         version: 16.2.15
@@ -3293,9 +3281,6 @@ importers:
       '@remirror/pm':
         specifier: ^2.0.8
         version: link:../remirror__pm
-      '@remirror/react':
-        specifier: ^2.0.35
-        version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
