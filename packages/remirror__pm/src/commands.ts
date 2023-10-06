@@ -17,6 +17,7 @@ export {
   macBaseKeymap,
   newlineInCode,
   pcBaseKeymap,
+  chainCommands as pmChainCommands,
   selectAll,
   selectNodeBackward,
   selectNodeForward,

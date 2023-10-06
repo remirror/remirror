@@ -32,11 +32,7 @@ import {
   isStartOfTextBlock,
   mergeProsemirrorKeyBindings,
 } from '@remirror/core-utils';
-import {
-  baseKeymap,
-  chainCommands as pmChainCommands,
-  selectParentNode,
-} from '@remirror/pm/commands';
+import { baseKeymap, pmChainCommands, selectParentNode } from '@remirror/pm/commands';
 import { undoInputRule } from '@remirror/pm/inputrules';
 import { keydownHandler } from '@remirror/pm/keymap';
 import { Plugin } from '@remirror/pm/state';
