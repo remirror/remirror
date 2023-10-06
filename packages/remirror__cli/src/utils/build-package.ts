@@ -18,6 +18,7 @@ import { removeFileExt } from './remove-file-ext';
 import { runCustomScript } from './run-custom-script';
 import { slugify } from './slugify';
 import { writePackageJson } from './write-package-json';
+import { readFile, writeFile } from 'node:fs/promises';
 
 /**
  * Bundle a package using esbuild and update `package.json` if necessary.
@@ -131,6 +132,9 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
   }
 
   await Promise.all(promises);
+
+  await copyNamespace(pkg);
+
   logger.info(`${colors.blue(pkg.packageJson.name)} done`);
 }
 
@@ -350,4 +354,41 @@ function buildCondictionalExports(
         : {}),
     },
   };
+}
+
+// api-extractor doesn't support `declare global`. This function is a workaround for it.
+// See also https://github.com/microsoft/rushstack/issues/1709
+async function copyNamespace(pkg: Package) {
+  const sourceFiles = await glob(['**/*.ts', '**/*.tsx'], {
+    cwd: path.join(pkg.dir, 'src'),
+    absolute: true,
+  });
+
+  let chunks: string[] = [];
+
+  for (let filePath of sourceFiles) {
+    const content = await readFile(filePath, { encoding: 'utf-8' });
+    const lines = content.split('\n');
+    const startIndex = lines.findIndex((line) => line === 'declare global {');
+    if (startIndex === -1) {
+      continue;
+    }
+    chunks.push(lines.slice(startIndex).join('\n'));
+  }
+
+  if (chunks.length === 0) {
+    return;
+  }
+
+  let code = '\n' + chunks.join('\n\n');
+
+  const destFiles = await glob(['_tsup-dts-rollup*'], {
+    cwd: path.join(pkg.dir, 'dist'),
+    absolute: true,
+  });
+
+  for (let filePath of destFiles) {
+    const content = await readFile(filePath, { encoding: 'utf-8' });
+    await writeFile(filePath, content + code);
+  }
 }
