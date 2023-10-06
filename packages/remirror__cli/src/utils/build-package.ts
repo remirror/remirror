@@ -133,7 +133,7 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
 
   await Promise.all(promises);
 
-  await copyNamespace(pkg);
+  await copyDeclare(pkg);
 
   logger.info(`${colors.blue(pkg.packageJson.name)} done`);
 }
@@ -358,7 +358,7 @@ function buildCondictionalExports(
 
 // api-extractor doesn't support `declare global`. This function is a workaround for it.
 // See also https://github.com/microsoft/rushstack/issues/1709
-async function copyNamespace(pkg: Package) {
+async function copyDeclare(pkg: Package) {
   const sourceFiles = await glob(['**/*.ts', '**/*.tsx'], {
     cwd: path.join(pkg.dir, 'src'),
     absolute: true,
