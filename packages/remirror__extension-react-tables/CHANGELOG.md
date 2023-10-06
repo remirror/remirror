@@ -1,5 +1,14 @@
 # @remirror/extension-react-tables
 
+## 2.2.19
+
+> 2023-08-25
+
+### Patch Changes
+
+- 533870b7f: Remove `jsx-dom-cjs` from the dependencies.
+- a152cf24f: Handle object style.
+
 ## 2.2.18
 
 > 2023-07-30

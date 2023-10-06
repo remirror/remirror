@@ -1,5 +1,15 @@
 # @remirror/dev
 
+## 2.0.18
+
+> 2023-07-31
+
+### Patch Changes
+
+- d50dadf27: Update dependencies.
+- Updated dependencies [d50dadf27]
+  - @remirror/pm@2.0.8
+
 ## 2.0.17
 
 > 2023-04-26

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-events",
-  "version": "2.1.16",
+  "version": "2.1.17",
   "description": "Manage your remirror editor dom events.",
   "keywords": [
     "remirror",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "@remirror/pm": "^2.0.7"
+    "@remirror/pm": "^2.0.8"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.7"

@@ -630,7 +630,7 @@ function createClickMarkState(props: CreateClickMarkStateProps): ClickMarkHandle
     return clickState;
   }
 
-  for (const { type } of $pos.marks()) {
+  for (const { type } of $pos.marksAcross($pos) ?? []) {
     const range = getMarkRange($pos, type);
 
     if (range) {

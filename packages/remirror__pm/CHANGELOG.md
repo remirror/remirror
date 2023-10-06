@@ -1,5 +1,17 @@
 # @remirror/pm
 
+## 2.0.8
+
+> 2023-07-31
+
+### Patch Changes
+
+- d50dadf27: Update dependencies.
+- Updated dependencies [d50dadf27]
+  - prosemirror-trailing-node@2.0.7
+  - prosemirror-paste-rules@2.0.7
+  - prosemirror-suggest@2.0.6
+
 ## 2.0.7
 
 > 2023-07-30

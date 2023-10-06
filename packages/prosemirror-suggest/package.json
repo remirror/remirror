@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-suggest",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Primitives for building your prosemirror suggestion and autocomplete functionality",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/prosemirror-suggest",
   "repository": {
@@ -41,9 +41,9 @@
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "prosemirror-model": "^1.19.2",
+    "prosemirror-model": "^1.19.3",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.31.3"
+    "prosemirror-view": "^1.31.7"
   },
   "peerDependencies": {
     "prosemirror-model": "^1.19.0",

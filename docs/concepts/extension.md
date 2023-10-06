@@ -13,7 +13,7 @@ Each extension provides a wealth of functionality - like **keyboard shortcuts**,
 
 This doc refers to "Extension" as a concept.
 
-You can find a list of Remirror's provided extensions [here](/docs/extensions/index).
+You can find a list of Remirror's provided extensions [here](/docs/extensions/).
 
 :::note
 

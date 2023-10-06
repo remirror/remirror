@@ -45,12 +45,12 @@
     "@remirror/core": "^2.0.19",
     "@remirror/extension-react-component": "^2.0.13",
     "@remirror/messages": "^2.0.6",
-    "@remirror/react-utils": "^2.0.6"
+    "@remirror/react-utils": "^2.0.7"
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "@remirror/pm": "^2.0.7",
-    "@remirror/react": "^2.0.34",
+    "@remirror/pm": "^2.0.8",
+    "@remirror/react": "^2.0.35",
     "@types/react": "^18.2.0",
     "react": "^18.2.0"
   },

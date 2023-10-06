@@ -1,5 +1,16 @@
 # @remirror/extension-image
 
+## 2.1.10
+
+> 2023-07-31
+
+### Patch Changes
+
+- d50dadf27: Update dependencies.
+- Updated dependencies [d50dadf27]
+  - prosemirror-resizable-view@2.0.14
+  - @remirror/pm@2.0.8
+
 ## 2.1.9
 
 > 2023-04-26
