@@ -1,5 +1,41 @@
 # @remirror/preset-wysiwyg
 
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/extension-bidi@3.0.0-beta.0
+  - @remirror/extension-heading@3.0.0-beta.0
+  - @remirror/extension-horizontal-rule@3.0.0-beta.0
+  - @remirror/extension-trailing-node@3.0.0-beta.0
+  - @remirror/extension-drop-cursor@3.0.0-beta.0
+  - @remirror/extension-blockquote@3.0.0-beta.0
+  - @remirror/extension-code-block@3.0.0-beta.0
+  - @remirror/extension-gap-cursor@3.0.0-beta.0
+  - @remirror/extension-hard-break@3.0.0-beta.0
+  - @remirror/extension-shortcuts@3.0.0-beta.0
+  - @remirror/extension-underline@3.0.0-beta.0
+  - @remirror/extension-italic@3.0.0-beta.0
+  - @remirror/extension-search@3.0.0-beta.0
+  - @remirror/extension-strike@3.0.0-beta.0
+  - @remirror/extension-embed@3.0.0-beta.0
+  - @remirror/extension-image@3.0.0-beta.0
+  - @remirror/extension-bold@3.0.0-beta.0
+  - @remirror/extension-code@3.0.0-beta.0
+  - @remirror/extension-link@3.0.0-beta.0
+  - @remirror/extension-list@3.0.0-beta.0
+  - @remirror/preset-core@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+
 ## 2.0.19
 
 > 2023-04-26

@@ -1,5 +1,34 @@
 # @remirror/preset-formatting
 
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/extension-columns@3.0.0-beta.0
+  - @remirror/extension-heading@3.0.0-beta.0
+  - @remirror/extension-text-color@3.0.0-beta.0
+  - @remirror/extension-node-formatting@3.0.0-beta.0
+  - @remirror/extension-text-highlight@3.0.0-beta.0
+  - @remirror/extension-whitespace@3.0.0-beta.0
+  - @remirror/extension-font-size@3.0.0-beta.0
+  - @remirror/extension-text-case@3.0.0-beta.0
+  - @remirror/extension-underline@3.0.0-beta.0
+  - @remirror/extension-italic@3.0.0-beta.0
+  - @remirror/extension-strike@3.0.0-beta.0
+  - @remirror/extension-bold@3.0.0-beta.0
+  - @remirror/extension-sub@3.0.0-beta.0
+  - @remirror/extension-sup@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+
 ## 2.0.14
 
 > 2023-04-26

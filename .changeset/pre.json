@@ -108,5 +108,5 @@
     "@remirror/preset-template": "2.0.7",
     "website": "0.0.0"
   },
-  "changesets": []
+  "changesets": ["pretty-donkeys-crash", "wet-lizards-sniff"]
 }
