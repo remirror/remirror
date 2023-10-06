@@ -47,10 +47,10 @@
       "path": "../../remirror__extension-react-language-select/src"
     },
     {
-      "path": "../../remirror__i18n/src"
+      "path": "../../remirror__extension-react-tables/src"
     },
     {
-      "path": "../../remirror__extension-react-tables/src"
+      "path": "../../remirror__i18n/src"
     },
     {
       "path": "../../remirror__messages/src"

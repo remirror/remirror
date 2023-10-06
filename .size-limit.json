@@ -579,7 +579,6 @@
       "@remirror/extension-tables",
       "@remirror/icons",
       "@remirror/messages",
-      "@remirror/preset-core",
       "@remirror/react-components",
       "@remirror/react-core",
       "@remirror/react-hooks",

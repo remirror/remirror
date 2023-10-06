@@ -13,6 +13,10 @@ on:
       - v1
       - v3
 
+env:
+  TURBO_TOKEN: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
 jobs:
   # Update package versions with changesets.
   version:

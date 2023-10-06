@@ -10,6 +10,10 @@ on:
       - v1
       - main
 
+env:
+  TURBO_TOKEN: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
 jobs:
   deploy_docs:
     timeout-minutes: 30
