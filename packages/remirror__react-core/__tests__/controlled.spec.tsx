@@ -10,10 +10,14 @@ import {
 } from 'remirror';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { act, fireEvent, render, strictRender } from 'testing/react';
-import { useRemirror } from '@remirror/react';
 
-import type { ReactExtensions } from '../';
-import { createReactManager, Remirror, useRemirrorContext } from '../';
+import {
+  createReactManager,
+  ReactExtensions,
+  Remirror,
+  useRemirror,
+  useRemirrorContext,
+} from '../';
 
 const label = 'Remirror editor';
 const props = { label, stringHandler: 'text' as const };

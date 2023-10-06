@@ -1,32 +1,29 @@
 import process from 'process';
+import { readPackageUp } from 'read-pkg-up';
 
 import { logger } from '../logger';
 import { buildPackage } from '../utils/build-package';
 import { listPackagesToBuild } from '../utils/list-packages';
-import { runTsc } from '../utils/run-tsc';
 
-export async function build(packageNames?: string[]) {
+export async function build() {
   logger.debug(`current working directory: ${process.cwd()}`);
-  let packages = await listPackagesToBuild();
+  const packages = await listPackagesToBuild();
 
-  if (packageNames && packageNames.length > 0) {
-    const names = new Set(packageNames);
-    packages = packages.filter((pkg) => names.has(pkg.packageJson.name));
+  const currentPackage = await readPackageUp();
 
-    if (packages.length < names.size) {
-      const usedName = new Set(names);
-
-      for (const pkg of packages) {
-        usedName.delete(pkg.packageJson.name);
-      }
-
-      logger.error(`No packages found for names: ${[...usedName].join(', ')}`);
-    }
+  if (!currentPackage) {
+    throw new Error(`No package.json found in ${process.cwd()}`);
   }
 
-  await runTsc();
-
-  for (const pkg of packages) {
-    await buildPackage(pkg);
+  if (currentPackage.packageJson.name === 'remirror-monorepo') {
+    throw new Error('You need to run this command from within a package directory');
   }
+
+  const pkg = packages.find((pkg) => pkg.packageJson.name === currentPackage.packageJson.name);
+
+  if (!pkg) {
+    throw new Error(`This command cannot build ${currentPackage.packageJson.name}`);
+  }
+
+  await buildPackage(pkg);
 }

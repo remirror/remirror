@@ -17,7 +17,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     // "noImplicitOverride": true, // TODO add this in a PR.
-    "experimentalDecorators": true,
+    "experimentalDecorators": false,
     // Import rules
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,

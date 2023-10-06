@@ -29,6 +29,9 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/extension-placeholder": "^2.0.14",
@@ -43,6 +46,7 @@
     "@remirror/react-utils": "^2.0.6"
   },
   "devDependencies": {
+    "@remirror/cli": "1.0.1",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",

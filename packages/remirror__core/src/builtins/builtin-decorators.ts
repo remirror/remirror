@@ -13,7 +13,7 @@ import type {
 import type { CoreIcon } from '@remirror/icons';
 
 import type { AnyExtension, HelperAnnotation } from '../extension';
-import type { GetOptions, TypedPropertyDescriptor } from '../types';
+import type { GetOptions } from '../types';
 
 /**
  * A decorator which can be applied to top level methods on an extension to
@@ -62,16 +62,22 @@ import type { GetOptions, TypedPropertyDescriptor } from '../types';
  */
 export function helper(options: HelperDecoratorOptions = {}) {
   return <Extension extends AnyExtension, Type>(
-    target: Extension,
-    propertyKey: string,
-    _descriptor: TypedPropertyDescriptor<
-      // This type signature helps enforce the need for the `Helper` annotation
-      // while allowing for `null | undefined`.
-      AnyFunction<NonNullable<Type> extends HelperAnnotation ? Type : never>
-    >,
-  ): void => {
-    // Attach the options to the `decoratedCommands` property for this extension.
-    (target.decoratedHelpers ??= {})[propertyKey] = options;
+    method: AnyFunction<NonNullable<Type> extends HelperAnnotation ? Type : never>,
+    context: ClassMethodDecoratorContext<Extension>,
+  ) => {
+    const methodName = context.name;
+
+    if (typeof methodName !== 'string') {
+      throw new TypeError('Invalid method name provided');
+    }
+
+    context.addInitializer(function () {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const ExtensionClass = this;
+      (ExtensionClass.decoratedHelpers ??= {})[methodName] = options;
+    });
+
+    return method;
   };
 }
 
@@ -133,10 +139,23 @@ export function command<Extension extends AnyExtension>(
 export function command<Extension extends AnyExtension>(
   options: NonChainableCommandDecoratorOptions<Required<GetOptions<Extension>>>,
 ): ExtensionDecorator<Extension, NonChainableCommandFunction, void>;
-export function command(options: CommandDecoratorOptions = {}): any {
-  return (target: any, propertyKey: string, _descriptor: any): void => {
-    // Attach the options to the decoratedCommands property for this extension.
-    (target.decoratedCommands ??= {})[propertyKey] = options;
+export function command(
+  options: CommandDecoratorOptions = {},
+): ExtensionDecorator<AnyExtension, any, void> {
+  return (method, context) => {
+    const methodName = context.name;
+
+    if (typeof methodName !== 'string') {
+      throw new TypeError('Invalid method name provided');
+    }
+
+    context.addInitializer(function () {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const ExtensionClass = this;
+      (ExtensionClass.decoratedCommands ??= {})[methodName] = options;
+    });
+
+    return method;
   };
 }
 
@@ -154,13 +173,21 @@ export function command(options: CommandDecoratorOptions = {}): any {
 export function keyBinding<Extension extends AnyExtension>(
   options: KeybindingDecoratorOptions<Required<GetOptions<Extension>>>,
 ) {
-  return (
-    target: Extension,
-    propertyKey: string,
-    _descriptor: TypedPropertyDescriptor<KeyBindingCommandFunction>,
-  ): void => {
-    // Attach the options to the decoratedCommands property for this extension.
-    (target.decoratedKeybindings ??= {})[propertyKey] = options as any;
+  return (method: KeyBindingCommandFunction, context: ClassMethodDecoratorContext<Extension>) => {
+    const methodName = context.name;
+
+    if (typeof methodName !== 'string') {
+      throw new TypeError('Invalid method name provided');
+    }
+
+    context.addInitializer(function () {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const ExtensionClass = this;
+      (ExtensionClass.decoratedKeybindings ??= {})[methodName] =
+        options as KeybindingDecoratorOptions;
+    });
+
+    return method;
   };
 }
 
@@ -215,9 +242,8 @@ export interface KeybindingDecoratorOptions<Options extends Shape = Shape> {
 }
 
 type ExtensionDecorator<Extension extends AnyExtension, Fn, Return> = (
-  target: Extension,
-  propertyKey: string,
-  _descriptor: TypedPropertyDescriptor<AnyFunction<Fn>>,
+  method: AnyFunction<Fn>,
+  context: ClassMethodDecoratorContext<Extension, AnyFunction<Fn>>,
 ) => Return;
 
 export interface CommandUiIcon {

@@ -353,18 +353,6 @@ export interface CreateExtensionPlugin<PluginState = any>
 }
 
 /**
- * A helper interface for creating strongly typed decorators.
- */
-export interface TypedPropertyDescriptor<Type> {
-  configurable?: boolean;
-  enumerable?: boolean;
-  value?: Type;
-  writable?: boolean;
-  get?: () => Type;
-  set?: (v: Type) => void;
-}
-
-/**
  * The type of arguments acceptable for the focus parameter.
  *
  * - Can be a prosemirror selection

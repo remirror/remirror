@@ -35,6 +35,9 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core-constants": "^2.0.2",
@@ -42,6 +45,7 @@
     "@remirror/core-types": "^2.0.5"
   },
   "devDependencies": {
+    "@remirror/cli": "1.0.1",
     "@types/react": "^18.2.0",
     "react": "^18.2.0"
   },

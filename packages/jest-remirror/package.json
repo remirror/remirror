@@ -39,6 +39,9 @@
     "dist-types",
     "environment"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.19",
@@ -52,6 +55,7 @@
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
+    "@remirror/cli": "1.0.1",
     "@types/node": "^16.18.34",
     "jest": "^29.5.0"
   },

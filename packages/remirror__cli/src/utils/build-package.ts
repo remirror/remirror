@@ -1,5 +1,10 @@
+import * as babel from '@babel/core';
+//@ts-expect-error no type for @types/babel__plugin-proposal-decorators
+import babelPluginDecorators from '@babel/plugin-proposal-decorators';
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
+import { findUp } from 'find-up';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sortKeys from 'sort-keys';
 import { build as tsupBuild } from 'tsup';
@@ -29,61 +34,86 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
 
   const promises: Array<Promise<unknown>> = [];
 
-  const buildScript = (pkg.packageJson as any)?.scripts?.build;
+  for (const entryPoint of entryPoints) {
+    const { format, outFile, inFile } = entryPoint;
+    const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
+    const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
 
-  if (buildScript) {
-    logger.info(`${colors.blue(pkg.packageJson.name)} building with its custom build script...`);
-    promises.push(runCustomScript(pkg, 'build'));
-  } else {
-    for (const entryPoint of entryPoints) {
-      const { format, outFile, inFile } = entryPoint;
-      const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
-      const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
-      promises.push(
-        tsupBuild({
-          outDir: path.dirname(outFile),
+    const tsconfigPath = await findUp('tsconfig.json', { cwd: inFile });
+
+    promises.push(
+      tsupBuild({
+        // Current ESBuild version (0.19.3) doesn't support compiling ES
+        // Stage-3 decorators, so we need to set the target to esnext to avoid
+        // the error.
+        target: 'esnext',
+        outDir: path.dirname(outFile),
+        entry: {
+          [outFileEntry]: inFile,
+        },
+        format: format === 'dual' ? ['cjs', 'esm'] : format,
+        outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
+        skipNodeModulesBundle: true,
+        tsconfig: tsconfigPath,
+        experimentalDts: {
           entry: {
-            [outFileEntry]: inFile,
+            [outFileEntry]: inDtsFile,
           },
-          format: format === 'dual' ? ['cjs', 'esm'] : format,
-          outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
-          skipNodeModulesBundle: true,
-          dts: {
-            entry: {
-              [outFileEntry]: inDtsFile,
-            },
-            compilerOptions: {
-              allowJs: true,
-              module: 'ESNext',
-              target: 'ESNext',
-              lib: ['DOM', 'DOM.Iterable', 'ESNext'],
-              jsx: 'react',
-              types: ['node', '@jest/globals'],
-              moduleResolution: 'node',
-              useDefineForClassFields: true,
-              sourceMap: true,
-              declaration: true,
-              pretty: true,
-              noEmit: true,
-              strict: true,
-              resolveJsonModule: true,
-              preserveWatchOutput: true,
-              skipLibCheck: true,
-              experimentalDecorators: true,
-              isolatedModules: true,
-              allowSyntheticDefaultImports: true,
-              esModuleInterop: true,
-              importsNotUsedAsValues: 'remove',
-              noUnusedLocals: true,
-              noUnusedParameters: true,
-              allowUnreachableCode: false,
-              forceConsistentCasingInFileNames: true,
-              noImplicitReturns: true,
+        },
+        plugins: [
+          {
+            name: 'remirror-es-decorator-state-3',
+            renderChunk: async (code) => {
+              if (!code.includes('@')) {
+                return;
+              }
+
+              const transformed = await babel.transformAsync(code, {
+                plugins: [[babelPluginDecorators, { version: '2023-05' }]],
+                // Don't look for babel.config.js
+                configFile: false,
+              });
+
+              const transformedCode = transformed?.code;
+              return { code: transformedCode || code };
             },
           },
-        }),
-      );
-    }
+        ],
+        // dts: {
+        //   entry: {
+        //     [outFileEntry]: inDtsFile,
+        //   },
+        //   compilerOptions: {
+        //     allowJs: true,
+        //     module: 'ESNext',
+        //     target: 'ESNext',
+        //     lib: ['DOM', 'DOM.Iterable', 'ESNext'],
+        //     jsx: 'react',
+        //     types: ['node', '@jest/globals'],
+        //     moduleResolution: 'node',
+        //     useDefineForClassFields: true,
+        //     sourceMap: true,
+        //     declaration: true,
+        //     pretty: true,
+        //     noEmit: true,
+        //     strict: true,
+        //     resolveJsonModule: true,
+        //     preserveWatchOutput: true,
+        //     skipLibCheck: true,
+        //     experimentalDecorators: false,
+        //     isolatedModules: true,
+        //     allowSyntheticDefaultImports: true,
+        //     esModuleInterop: true,
+        //     importsNotUsedAsValues: 'remove',
+        //     noUnusedLocals: true,
+        //     noUnusedParameters: true,
+        //     allowUnreachableCode: false,
+        //     forceConsistentCasingInFileNames: true,
+        //     noImplicitReturns: true,
+        //   },
+        // },
+      }),
+    );
   }
 
   const generateScript = (pkg.packageJson as any)?.scripts?.generate;
@@ -102,6 +132,9 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
   }
 
   await Promise.all(promises);
+
+  await copyDeclare(pkg);
+
   logger.info(`${colors.blue(pkg.packageJson.name)} done`);
 }
 
@@ -321,4 +354,43 @@ function buildCondictionalExports(
         : {}),
     },
   };
+}
+
+// api-extractor doesn't support `declare global`. This function is a workaround for it.
+// See also https://github.com/microsoft/rushstack/issues/1709
+async function copyDeclare(pkg: Package) {
+  const sourceFiles = await glob(['**/*.ts', '**/*.tsx'], {
+    cwd: path.join(pkg.dir, 'src'),
+    absolute: true,
+  });
+
+  const chunks: string[] = [];
+
+  for (const filePath of sourceFiles) {
+    const content = await readFile(filePath, { encoding: 'utf-8' });
+    const lines = content.split('\n');
+    const startIndex = lines.indexOf('declare global {');
+
+    if (startIndex === -1) {
+      continue;
+    }
+
+    chunks.push(lines.slice(startIndex).join('\n'));
+  }
+
+  if (chunks.length === 0) {
+    return;
+  }
+
+  const code = `\n${chunks.join('\n\n')}`;
+
+  const destFiles = await glob(['_tsup-dts-rollup*'], {
+    cwd: path.join(pkg.dir, 'dist'),
+    absolute: true,
+  });
+
+  for (const filePath of destFiles) {
+    const content = await readFile(filePath, { encoding: 'utf-8' });
+    await writeFile(filePath, content + code);
+  }
 }

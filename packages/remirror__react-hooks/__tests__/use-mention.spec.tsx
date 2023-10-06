@@ -6,8 +6,9 @@ import { act, DefaultEditor, strictRender } from 'testing/react';
 import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
 import { MentionExtension, MentionExtensionAttributes } from '@remirror/extension-mention';
 import { ChangeReason } from '@remirror/pm/suggest';
-import { createReactManager, MenuDirection, Remirror } from '@remirror/react';
+import { createReactManager, Remirror } from '@remirror/react-core';
 
+import { MenuDirection } from '../src';
 import { MentionState, useMention, UseMentionExitHandler } from '../src/use-mention';
 
 describe('useMention', () => {

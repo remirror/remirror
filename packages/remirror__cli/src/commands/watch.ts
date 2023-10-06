@@ -1,12 +1,11 @@
+import { execa } from 'execa';
 import path from 'node:path';
+import { readPackageUp } from 'read-pkg-up';
 
 import { logger } from '../logger';
-import { buildPackage } from '../utils/build-package';
 import { DebounceExecutor } from '../utils/debounce-executor';
 import { getRoot } from '../utils/get-root';
 import { listPackagesToBuild } from '../utils/list-packages';
-import { runTsc } from '../utils/run-tsc';
-import { build } from './build';
 
 export async function watch(options: { skipBuild?: boolean }) {
   logger.debug(`current working directory: ${process.cwd()}`);
@@ -15,7 +14,7 @@ export async function watch(options: { skipBuild?: boolean }) {
   logger.info('Building all packages...');
   try {
     if (!options.skipBuild) {
-      await build();
+      await execa('pnpm', [`build:packages`]);
     }
   } catch (error) {
     logger.error('Failed to build all packages:', error);
@@ -41,13 +40,31 @@ export async function watch(options: { skipBuild?: boolean }) {
 
   const chokidar = await import('chokidar');
   const watcher = chokidar.watch(getRoot(), {
-    ignored: ['**/{.git,node_modules,dist,dist-types}/**', /temp/, /tmp/, '**/package.json'],
+    ignored: [
+      '**/{.git,node_modules,dist,dist-types}/**',
+      /temp/,
+      /tmp/,
+      /\.tsup/,
+      '**/package.json',
+    ],
     ignoreInitial: true,
     ignorePermissionErrors: true,
   });
+
   const executor = new DebounceExecutor(async (dir: string) => {
-    await runTsc();
-    await buildPackage(packageDirMap[dir], false);
+    const currentPackage = await readPackageUp({ cwd: dir });
+
+    if (!currentPackage) {
+      return;
+    }
+
+    const packageName = currentPackage.packageJson.name;
+    logger.info(`Building ${packageName}`);
+
+    await execa('turbo', ['build', `--filter=${packageName}`], {
+      stdout: 'inherit',
+      stderr: 'inherit',
+    });
   });
 
   watcher.on('all', (event, filePath) => {

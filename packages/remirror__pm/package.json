@@ -125,6 +125,9 @@
     "transform",
     "view"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core-constants": "^2.0.2",
@@ -145,6 +148,9 @@
     "prosemirror-trailing-node": "^2.0.6",
     "prosemirror-transform": "^1.7.2",
     "prosemirror-view": "^1.31.3"
+  },
+  "devDependencies": {
+    "@remirror/cli": "1.0.1"
   },
   "publishConfig": {
     "access": "public",

@@ -1,9 +1,14 @@
 import { jest } from '@jest/globals';
 import React from 'react';
 import { act, strictRender } from 'testing/react';
-import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
+import {
+  MountedPortal,
+  PortalContainer,
+  RemirrorPortals,
+  usePortals,
+} from '@remirror/extension-react-component';
 
-import { MountedPortal, PortalContainer, RemirrorPortals, usePortals } from '../';
+import { createReactManager, Remirror, useRemirrorContext } from '../src';
 
 test('PortalContainer', () => {
   const portalContainer = new PortalContainer();

@@ -34,6 +34,9 @@
     "dist-types",
     "style"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@remirror/core": "^2.0.19",
@@ -41,6 +44,7 @@
     "@remirror/theme": "^2.0.9"
   },
   "devDependencies": {
+    "@remirror/cli": "1.0.1",
     "@remirror/pm": "^2.0.7"
   },
   "peerDependencies": {

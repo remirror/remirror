@@ -521,6 +521,10 @@
       "react",
       "react-dom",
       "@remirror/core",
+      "@remirror/core-constants",
+      "@remirror/core-helpers",
+      "@remirror/core-types",
+      "@remirror/core-utils",
       "@remirror/messages"
     ],
     "running": false,
@@ -615,6 +619,7 @@
     "ignore": [
       "@remirror/pm",
       "@remirror/core",
+      "@remirror/extension-events",
       "@remirror/extension-positioner",
       "@remirror/messages",
       "@remirror/theme"
@@ -862,6 +867,8 @@
       "react",
       "react-dom",
       "@remirror/core",
+      "@remirror/core-constants",
+      "@remirror/core-helpers",
       "@remirror/extension-emoji",
       "@remirror/extension-events",
       "@remirror/extension-history",
