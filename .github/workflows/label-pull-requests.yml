@@ -3,6 +3,10 @@ name: label pr
 on:
   - pull_request_target
 
+env:
+  TURBO_TOKEN: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
 jobs:
   labeler:
     runs-on: ubuntu-latest

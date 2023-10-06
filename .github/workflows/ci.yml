@@ -12,6 +12,10 @@ on:
     branches:
       - main
 
+env:
+  TURBO_TOKEN: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
 jobs:
   # Lint the project
   lint:
