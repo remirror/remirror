@@ -35,3 +35,5 @@ docs/api/
 docs/examples/
 website/extension-examples/
 *.api.md
+.turboe
+.tsup
