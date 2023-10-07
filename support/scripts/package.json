@@ -91,7 +91,7 @@
     "mustache": "^4.2.0",
     "node-cleanup": "^2.1.2",
     "p-limit": "^3.1.0",
-    "postcss": "^8.4.24",
+    "postcss": "^8.4.31",
     "postcss-loader": "^6.2.1",
     "postcss-nested": "^5.0.6",
     "prettier": "^2.8.8",
