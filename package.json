@@ -66,7 +66,7 @@
     "mutate:pr": "tsx support/scripts/src/publish-pr",
     "refresh": "pnpm clean:all; pnpm install;",
     "release": "pnpm if-publishable run-s release",
-    "release:beta": "pnpm publish -r --tag beta",
+    "release:beta": "pnpm publish -r --tag beta --publish-branch v3",
     "release:latest": "pnpm publish -r",
     "release:next": "pnpm publish -r --tag next",
     "reset": "pnpm clean:all; rm pnpm-lock.yaml; pnpm install;",
