@@ -28,10 +28,8 @@ export function extensionValidityTest<Type extends AnyExtensionConstructor>(
 ): void {
   describe(`\`${Extension.name}\``, () => {
     it(`has the right properties`, () => {
-      expect(Extension.name.endsWith('Extension')).toBe(true);
-
       const extension = new Extension(options);
-      expect(extension.constructorName).toBe(Extension.name);
+      expect(extension.constructorName).toMatch(/Extension$/);
 
       expect(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

@@ -8,7 +8,7 @@ import { MentionAtomExtension, MentionAtomNodeAttributes } from '@remirror/exten
 import { ChangeReason } from '@remirror/pm/suggest';
 import { createReactManager, Remirror, useRemirror } from '@remirror/react-core';
 
-import { MenuDirection } from '../src';
+import { MenuDirection } from '../';
 import { MentionAtomState, useMentionAtom } from '../src/use-mention-atom';
 
 describe('useMentionAtom', () => {

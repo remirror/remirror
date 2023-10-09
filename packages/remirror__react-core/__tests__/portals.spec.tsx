@@ -8,7 +8,7 @@ import {
   usePortals,
 } from '@remirror/extension-react-component';
 
-import { createReactManager, Remirror, useRemirrorContext } from '../src';
+import { createReactManager, Remirror, useRemirrorContext } from '../';
 
 test('PortalContainer', () => {
   const portalContainer = new PortalContainer();

@@ -12,7 +12,7 @@ import {
 import type { NodeViewComponentProps } from '@remirror/extension-react-component';
 import { ReactComponentExtension } from '@remirror/extension-react-component';
 
-import { createReactManager, Remirror } from '../src';
+import { createReactManager, Remirror } from '../';
 
 extensionValidityTest(ReactComponentExtension);
 
