@@ -10,6 +10,8 @@ env:
   TURBO_TOKEN: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
+concurrency: publish_workflow
+
 jobs:
   # Publish the public packages to npm
   npm:

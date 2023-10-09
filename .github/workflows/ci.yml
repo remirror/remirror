@@ -7,10 +7,12 @@ on:
   push:
     branches:
       - main
+      - v3
 
   pull_request:
     branches:
       - main
+      - v3
 
 env:
   TURBO_TOKEN: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
