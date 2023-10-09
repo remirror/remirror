@@ -17,7 +17,11 @@ export async function main() {
         `${colors.yellow('yes')} to see more information.)`,
     );
 
-  program.command('build').description(`Build the current NPM package using tsup.`).action(build);
+  program
+    .command('build')
+    .option('--no-types', 'Do not generate .d.ts files.')
+    .description(`Build the current NPM package using tsup.`)
+    .action(build);
 
   program
     .command('watch')

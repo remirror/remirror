@@ -5,7 +5,7 @@ import { logger } from '../logger';
 import { buildPackage } from '../utils/build-package';
 import { listPackagesToBuild } from '../utils/list-packages';
 
-export async function build() {
+export async function build(options: { types?: boolean }) {
   logger.debug(`current working directory: ${process.cwd()}`);
   const packages = await listPackagesToBuild();
 
@@ -25,5 +25,5 @@ export async function build() {
     throw new Error(`This command cannot build ${currentPackage.packageJson.name}`);
   }
 
-  await buildPackage(pkg);
+  await buildPackage(pkg, { types: !!options.types });
 }

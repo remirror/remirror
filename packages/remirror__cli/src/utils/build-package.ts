@@ -23,7 +23,16 @@ import { writePackageJson } from './write-package-json';
 /**
  * Bundle a package using esbuild and update `package.json` if necessary.
  */
-export async function buildPackage(pkg: Package, writePackageJson = true) {
+export async function buildPackage(
+  pkg: Package,
+  {
+    writePackageJson = true,
+    types = true,
+  }: {
+    writePackageJson?: boolean;
+    types?: boolean;
+  } = {},
+) {
   logger.info(`${colors.blue(pkg.packageJson.name)} building...`);
 
   const entryPoints = await parseEntryPoints(pkg);
@@ -55,11 +64,13 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
         outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
         skipNodeModulesBundle: true,
         tsconfig: tsconfigPath,
-        experimentalDts: {
-          entry: {
-            [outFileEntry]: inDtsFile,
-          },
-        },
+        experimentalDts: types
+          ? {
+              entry: {
+                [outFileEntry]: inDtsFile,
+              },
+            }
+          : undefined,
         plugins: [
           {
             name: 'remirror-es-decorator-state-3',
