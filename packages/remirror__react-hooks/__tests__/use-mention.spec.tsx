@@ -1,12 +1,12 @@
 import { jest } from '@jest/globals';
-import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
-import { MentionExtension, MentionExtensionAttributes } from '@remirror/extension-mention';
-import { ChangeReason } from '@remirror/pm/suggest';
-import { createReactManager, Remirror } from '@remirror/react-core';
 import { RemirrorTestChain } from 'jest-remirror';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { assertGet } from 'remirror';
 import { act, DefaultEditor, strictRender } from 'testing/react';
+import { NON_BREAKING_SPACE_CHAR } from '@remirror/core';
+import { MentionExtension, MentionExtensionAttributes } from '@remirror/extension-mention';
+import { ChangeReason } from '@remirror/pm/suggest';
+import { createReactManager, Remirror } from '@remirror/react-core';
 
 import { MentionState, MenuDirection, useMention, UseMentionExitHandler } from '../';
 
