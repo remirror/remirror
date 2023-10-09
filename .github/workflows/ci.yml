@@ -19,7 +19,7 @@ env:
 jobs:
   # Lint the project
   lint:
-    timeout-minutes: 30
+    timeout-minutes: 50
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -47,7 +47,7 @@ jobs:
 
   # Typecheck the project
   typecheck:
-    timeout-minutes: 30
+    timeout-minutes: 50
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -63,7 +63,7 @@ jobs:
 
   # Unit test
   unit_test:
-    timeout-minutes: 30
+    timeout-minutes: 50
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
@@ -94,7 +94,7 @@ jobs:
 
   # Build the project and run tests on built files.
   build_test:
-    timeout-minutes: 30
+    timeout-minutes: 50
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -120,7 +120,7 @@ jobs:
 
   # Check that package sizes are within their boundaries
   size_check:
-    timeout-minutes: 30
+    timeout-minutes: 50
     runs-on: ubuntu-latest
     steps:
       - name: checkout code repository
