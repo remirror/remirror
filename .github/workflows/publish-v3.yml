@@ -1,9 +1,9 @@
-name: publish-v1
+name: publish-v3
 
 on:
   workflow_run:
     workflows: [ci]
-    branches: [v1]
+    branches: [v3]
     types: [completed]
 
 concurrency: publish_workflow
@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: 'v1'
+          ref: 'v3'
 
       - name: install and audit
         uses: ./support/actions/pnpm
@@ -31,7 +31,7 @@ jobs:
       - name: publish npm release
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > $HOME/.npmrc
-          pnpm release:latest
+          pnpm release:beta
           rm $HOME/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
       - name: create release for @remirror/react
         uses: ncipollo/release-action@v1
         with:
-          commit: v1
+          commit: v3-beta
           tag: '@remirror/react@${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_react.outputs.parsed).versions[0].body }}'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -60,7 +60,7 @@ jobs:
       - name: create release for @remirror/pm
         uses: ncipollo/release-action@v1
         with:
-          commit: v1
+          commit: v3-beta
           tag: '@remirror/pm@${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror_pm.outputs.parsed).versions[0].body }}'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -76,7 +76,7 @@ jobs:
       - name: create release for remirror
         uses: ncipollo/release-action@v1
         with:
-          commit: v1
+          commit: v3-beta
           tag: 'remirror@${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].version }}'
           body: '${{ fromJSON(steps.changelog_remirror.outputs.parsed).versions[0].body }}'
           token: ${{ secrets.GITHUB_TOKEN }}

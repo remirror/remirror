@@ -6,6 +6,8 @@ on:
     branches: [main]
     types: [completed]
 
+concurrency: publish_workflow
+
 jobs:
   # Publish the public packages to npm
   npm:
