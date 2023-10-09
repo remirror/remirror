@@ -5,10 +5,14 @@ on:
     branches:
       - main
 
+env:
+  TURBO_TOKEN: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
 jobs:
   # Run the e2e playwright tests
   playwright:
-    timeout-minutes: 30
+    timeout-minutes: 50
     runs-on: ubuntu-latest
     strategy:
       matrix:

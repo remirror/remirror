@@ -6,13 +6,17 @@ on:
     branches: [v3]
     types: [completed]
 
+env:
+  TURBO_TOKEN: ${{ secrets.VERCEL_STORYBOOK_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
 concurrency: publish_workflow
 
 jobs:
   # Publish the public packages to npm
   npm:
     if: github.event.workflow_run.conclusion == 'success'
-    timeout-minutes: 30
+    timeout-minutes: 50
     runs-on: ubuntu-latest
 
     steps:
