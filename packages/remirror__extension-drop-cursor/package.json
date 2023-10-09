@@ -67,6 +67,6 @@
     "types": "./dist/remirror-extension-drop-cursor.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

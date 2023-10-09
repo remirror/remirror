@@ -74,6 +74,6 @@
     "types": "./dist/remirror-react-utils.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

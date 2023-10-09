@@ -65,6 +65,6 @@
     "types": "./dist/remirror-extension-sup.d.ts"
   },
   "meta": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

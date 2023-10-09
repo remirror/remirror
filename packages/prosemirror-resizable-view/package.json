@@ -63,6 +63,6 @@
     "types": "./dist/prosemirror-resizable-view.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

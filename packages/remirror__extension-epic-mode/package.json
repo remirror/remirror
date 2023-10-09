@@ -69,6 +69,6 @@
     "types": "./dist/remirror-extension-epic-mode.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

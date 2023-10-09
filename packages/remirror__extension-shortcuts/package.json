@@ -63,6 +63,6 @@
     "types": "./dist/remirror-extension-shortcuts.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

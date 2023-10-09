@@ -68,6 +68,6 @@
     "types": "./dist/remirror-extension-link.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

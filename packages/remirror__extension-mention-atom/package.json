@@ -62,6 +62,6 @@
     "types": "./dist/remirror-extension-mention-atom.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

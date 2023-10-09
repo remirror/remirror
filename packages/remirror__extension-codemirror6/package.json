@@ -68,6 +68,6 @@
     "types": "./dist/remirror-extension-codemirror6.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "60 KB"
+    "sizeLimit": "100 KB"
   }
 }

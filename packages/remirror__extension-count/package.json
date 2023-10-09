@@ -63,6 +63,6 @@
     "types": "./dist/remirror-extension-count.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

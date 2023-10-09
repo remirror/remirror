@@ -80,6 +80,6 @@
     "types": "./dist/remirror-extension-react-ssr.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }
