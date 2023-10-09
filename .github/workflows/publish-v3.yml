@@ -1,4 +1,4 @@
-name: publish
+name: publish-v3
 
 on:
   workflow_run:
