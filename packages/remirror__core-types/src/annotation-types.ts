@@ -118,13 +118,13 @@ export type AcceptUndefined<Type> = Type & AcceptUndefinedAnnotation;
  * created to automate this.
  *
  * ```ts
- * import { PlainExtension, extensionDecorator } from 'remirror';
+ * import { PlainExtension, extension } from 'remirror';
  * interface CustomOptions {
  *   simple: boolean; // Automatically a dynamic property
  *   onChange: Handler<(value: string) => void>;
  * }
  *
- * @extensionDecorator({ handlerKeys: ['onChange'] }) class CustomExtension
+ * @extension({ handlerKeys: ['onChange'] }) class CustomExtension
  * extends PlainExtension<CustomOptions> {get name() {return 'custom' as const;
  *   }
  * }

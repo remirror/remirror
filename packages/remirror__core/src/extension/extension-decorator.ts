@@ -201,8 +201,3 @@ export function extension<Options extends Shape = EmptyShape>(
     return Cast<Type>(Constructor);
   };
 }
-
-/**
- * @deprecated use `extension` instead.
- */
-export const extensionDecorator = extension;

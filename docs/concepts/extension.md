@@ -77,7 +77,7 @@ Options are used to configure the extension at runtime. They come in four differ
 import {
   CustomHandler,
   Dynamic,
-  extensionDecoration,
+  extension,
   ExtensionPriority,
   Handler,
   PlainExtension,
