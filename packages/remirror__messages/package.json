@@ -35,7 +35,7 @@
     "en"
   ],
   "scripts": {
-    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.cjs --format cjs && cp public/* dist/",
+    "build": "tsc -b src && babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.cjs --format cjs && cp public/* dist/",
     "generate": "tsx scripts/messages-to-json.ts"
   },
   "dependencies": {
