@@ -16,7 +16,7 @@
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct fix && preconstruct dev",
     "build:docs": "run-s docs:prod docs:redirects",
-    "build:packages": "turbo run build --filter='./packages/*' --filter='!./packages/storybook-react' && pnpm typecheck",
+    "build:packages": "pnpm typecheck && turbo run build --filter='./packages/*' --filter='!./packages/storybook-react'",
     "changeset": "changeset",
     "checks": "run-s lint typecheck test",
     "checks:fix": "run-s -c fix typecheck test build size build:dev",
