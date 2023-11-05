@@ -525,6 +525,9 @@
       "path": "packages/remirror__react-ssr/src"
     },
     {
+      "path": "packages/remirror__react-ui/src"
+    },
+    {
       "path": "packages/remirror__react-utils/__tests__"
     },
     {

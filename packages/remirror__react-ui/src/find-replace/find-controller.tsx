@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import React, { FC } from 'react';
+import { Icon } from '@remirror/react-components';
 
-import { Icon } from '../icons';
 import { MdiFormatLetterCase } from './letter-icon';
 
 export const FindController: FC<{

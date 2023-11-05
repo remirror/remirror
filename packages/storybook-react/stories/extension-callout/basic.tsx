@@ -4,13 +4,8 @@ import React, { useCallback } from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { CalloutExtension } from 'remirror/extensions';
 import { i18nFormat } from '@remirror/i18n';
-import {
-  CalloutTypeButtonGroup,
-  Remirror,
-  ThemeProvider,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { CalloutTypeButtonGroup, Toolbar } from '@remirror/react-ui';
 
 const Basic = (): JSX.Element => {
   const basicExtensions = useCallback(() => [new CalloutExtension()], []);

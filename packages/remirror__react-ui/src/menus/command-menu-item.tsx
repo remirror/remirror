@@ -1,8 +1,8 @@
 import { ListItemIcon, ListItemText, MenuItem, MenuItemProps, Typography } from '@mui/material';
 import React, { FC, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { CoreIcon, isString } from '@remirror/core';
+import { Icon } from '@remirror/react-components';
 
-import { Icon } from '../icons';
 import { useCommandOptionValues, UseCommandOptionValuesParams } from '../use-command-option-values';
 
 interface ButtonIconProps {

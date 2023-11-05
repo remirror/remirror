@@ -23,13 +23,8 @@ import {
   TrailingNodeExtension,
 } from 'remirror/extensions';
 import { i18nFormat } from '@remirror/i18n';
-import {
-  EditorComponent,
-  MarkdownToolbar,
-  Remirror,
-  ThemeProvider,
-  useRemirror,
-} from '@remirror/react';
+import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { MarkdownToolbar } from '@remirror/react-ui';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
 import { ReactEditorProps } from '../types';

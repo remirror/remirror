@@ -3,13 +3,8 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { wysiwygPreset } from 'remirror/extensions';
 import { FindExtension } from '@remirror/extension-find';
-import {
-  EditorComponent,
-  FindReplaceComponent,
-  Remirror,
-  ThemeProvider,
-  useRemirror,
-} from '@remirror/react';
+import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { FindReplaceComponent } from '@remirror/react-ui';
 
 const extensions = () => [...wysiwygPreset(), new FindExtension()];
 

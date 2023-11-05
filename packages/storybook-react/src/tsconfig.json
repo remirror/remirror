@@ -62,6 +62,9 @@
       "path": "../../remirror__react/src"
     },
     {
+      "path": "../../remirror__react-ui/src"
+    },
+    {
       "path": "../../remirror__react-editors/src"
     },
     {
