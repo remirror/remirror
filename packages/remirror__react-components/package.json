@@ -41,8 +41,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
     "@floating-ui/react": "^0.24.3",
     "@remirror/core": "3.0.0-beta.0",
     "@remirror/extension-positioner": "3.0.0-beta.0",

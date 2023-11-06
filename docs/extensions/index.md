@@ -21,9 +21,11 @@ The following extensions are bundled together with Remirror:
 
 **[CodeExtension](./code-extension.mdx)**<br /> Makes the text under the cursor / or at the provided position range `code`
 
-**[CollaborationExtension](./collaboration-extension.mdx)**<br /> Adds collaborative functionality
+**[CollaborationExtension](./collaboration-extension.mdx)**<br /> Adds collaborative functionality powered by `prosemirror-collab`
 
 **[ColumnsExtension](./columns-extension.mdx)**<br /> Add column support to the nodes
+
+**[DocExtension](./doc-extension.mdx)**<br /> The root node in your editor. Allows you to customise attributes and valid `content`.
 
 **[DropCursorExtension](./drop-cursor-extension.mdx)**<br /> Shows a line indicator for where the drop target will be
 
@@ -31,9 +33,11 @@ The following extensions are bundled together with Remirror:
 
 **[EmojiExtension](./emoji-extension.mdx)**<br /> Adds emoji support
 
-**[EventsExtension](./events-extension.mdx)**<br /> Listens to events which occur within the editor
+**[EntityReferenceExtension](./entity-reference-extension.mdx)**<br /> Allows you to reference external entities in the content of your editor.
 
-**[FileExtension](./file-extension.mdx)** <span class="beta" /><br /> Adds a file node
+**[EpicModeExtension](./epic-mode-extension.mdx)**<br /> Shows the editor in epic mode.
+
+**[EventsExtension](./events-extension.mdx)**<br /> Listens to events which occur within the editor
 
 **[FontFamilyExtension](./font-family-extension.mdx)**<br /> Add a font family to the selected text
 
@@ -42,6 +46,8 @@ The following extensions are bundled together with Remirror:
 **[GapCursorExtension](./gap-cursor-extension.mdx)**<br /> This will capture clicks near and arrow-key-motion past places that don't have a normally selectable position nearby, and create a gap cursor selection for them.
 
 **[HardBreakExtension](./hard-break-extension.mdx)**<br /> Inserts a `hardBreak` `<br />` tag into the editor
+
+**[HeadingExtension](./heading-extension.mdx)**<br /> Adds headings to the editor
 
 **[HistoryExtension](./history-extension.mdx)**<br /> Provides undo and redo commands
 
@@ -73,15 +79,31 @@ The following extensions are bundled together with Remirror:
 
 **[SupExtension](./sup-extension.mdx)**<br /> Adds a `sup` mark to the editor. This is used to mark inline text as a <sup>superscript</sup> snippet
 
+**[TablesExtension](./tables-extension.mdx)**<br /> Adds simple tables to the editor
+
 **[TextCaseExtension](./text-case-extension.mdx)**<br /> Formatting for text casing in the editor
 
 **[TextColorExtension](./text-color-extension.mdx)**<br /> Makes the text under the cursor / or at the provided position range have the specified color
+
+**[TextHighlightExtension](./text-highlight-extension.mdx)**<br /> Add a highlight color to the selected text
 
 **[TrailingNodeExtension](./trailing-node-extension.mdx)**<br /> Ensure that there's always a trailing paragraph at the end of the document
 
 **[UnderlineExtension](./underline-extension.mdx)**<br /> Makes the text under the cursor / or at the provided position range <u>underline</u>
 
 **[WhitespaceExtension](./whitespace-extension.mdx)**<br /> Manage whitespace characters within the editor
+
+**[YjsExtension](./yjs-extension.mdx)**<br /> The recommended extension for creating a collaborative editor, powered by `Yjs`.
+
+## Additional extensions
+
+The following extensions are _not_ bundled with the `remirror` package, and must be installed manually.
+
+**[CountExtension](./count-extension.mdx)** <br /> Adds ability to count characters or words in your editor, and optionally highlight to a user when they have exceeded a specified limit.
+
+**[FileExtension](./file-extension.mdx)** <br /> Adds the ability to upload arbitrary files to the editor.
+
+**[FindExtension](./find-extension.mdx)** <br /> Add find and replace functionality to your editor.
 
 ## Community extensions
 

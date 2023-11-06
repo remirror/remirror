@@ -2962,12 +2962,6 @@ importers:
       '@babel/runtime':
         specifier: ^7.22.3
         version: 7.22.3
-      '@emotion/react':
-        specifier: ^11.11.0
-        version: 11.11.0(@types/react@18.2.0)(react@18.2.0)
-      '@emotion/styled':
-        specifier: ^11.11.0
-        version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@floating-ui/react':
         specifier: ^0.24.3
         version: 0.24.3(react-dom@18.2.0)(react@18.2.0)
@@ -3292,12 +3286,18 @@ importers:
       '@babel/runtime':
         specifier: ^7.22.3
         version: 7.22.3
+      '@emotion/react':
+        specifier: ^11.11.0
+        version: 11.11.0(@types/react@18.2.0)(react@18.2.0)
+      '@emotion/styled':
+        specifier: ^11.11.0
+        version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@mui/material':
         specifier: ^5.13.2
-        version: 5.13.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@mui/system':
         specifier: ^5.13.2
-        version: 5.13.2(@types/react@18.2.0)(react@18.2.0)
+        version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@remirror/core':
         specifier: 3.0.0-beta.0
         version: link:../remirror__core
@@ -3531,6 +3531,12 @@ importers:
       '@emotion/css':
         specifier: ^11.11.0
         version: 11.11.0
+      '@emotion/react':
+        specifier: ^11.11.0
+        version: 11.11.0(@types/react@18.2.0)(react@18.2.0)
+      '@emotion/styled':
+        specifier: ^11.11.0
+        version: 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@floating-ui/react':
         specifier: ^0.24.3
         version: 0.24.3(react-dom@18.2.0)(react@18.2.0)
@@ -3542,7 +3548,7 @@ importers:
         version: 4.6.4
       '@mui/material':
         specifier: ^5.13.2
-        version: 5.13.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
+        version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
         specifier: 3.0.0-beta.0
         version: link:../remirror__core
@@ -11474,7 +11480,7 @@ packages:
     resolution: {integrity: sha512-aOLCXMCySMFL2WmUhnz+DjF84AoFVu8rn35OsL759HXOZMz8zhEwVf5w/xxkWx7DycM2KXDTgAvYW48nTfqTLA==}
     dev: false
 
-  /@mui/material@5.13.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
+  /@mui/material@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Pfke1l0GG2OJb/Nr10aVr8huoBFcBTdWKV5iFSTEHqf9c2C1ZlyYMISn7ui6X3Gix8vr+hP5kVqH1LAWwQSb6w==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -11492,9 +11498,11 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.22.6
+      '@emotion/react': 11.11.0(@types/react@18.2.0)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@mui/base': 5.0.0-beta.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@mui/core-downloads-tracker': 5.13.2
-      '@mui/system': 5.13.2(@types/react@18.2.0)(react@18.2.0)
+      '@mui/system': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@mui/types': 7.2.4(@types/react@18.2.0)
       '@mui/utils': 5.13.1(react@18.2.0)
       '@types/react': 18.2.0
@@ -11525,7 +11533,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@mui/styled-engine@5.13.2(react@18.2.0):
+  /@mui/styled-engine@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(react@18.2.0):
     resolution: {integrity: sha512-VCYCU6xVtXOrIN8lcbuPmoG+u7FYuOERG++fpY74hPpEWkyFQG97F+/XfTQVYzlR2m7nPjnwVUgATcTCMEaMvw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -11540,12 +11548,14 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.6
       '@emotion/cache': 11.11.0
+      '@emotion/react': 11.11.0(@types/react@18.2.0)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       csstype: 3.1.2
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
 
-  /@mui/system@5.13.2(@types/react@18.2.0)(react@18.2.0):
+  /@mui/system@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-TPyWmRJPt0JPVxacZISI4o070xEJ7ftxpVtu6LWuYVOUOINlhoGOclam4iV8PDT3EMQEHuUrwU49po34UdWLlw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -11562,8 +11572,10 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.22.6
+      '@emotion/react': 11.11.0(@types/react@18.2.0)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@mui/private-theming': 5.13.1(@types/react@18.2.0)(react@18.2.0)
-      '@mui/styled-engine': 5.13.2(react@18.2.0)
+      '@mui/styled-engine': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(react@18.2.0)
       '@mui/types': 7.2.4(@types/react@18.2.0)
       '@mui/utils': 5.13.1(react@18.2.0)
       '@types/react': 18.2.0

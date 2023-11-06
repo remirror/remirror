@@ -1,8 +1,7 @@
 import 'remirror/styles/all.css';
 
-import { Paper } from '@mui/material';
+import { alpha, createTheme, Paper, ThemeProvider as MuiThemeProvider } from '@mui/material';
 import { green, red } from '@mui/material/colors';
-import { alpha, createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { wysiwygPreset } from 'remirror/extensions';
 import { TableExtension } from '@remirror/extension-react-tables';

@@ -1,4 +1,4 @@
-import { createTheme, Theme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { createTheme, Theme, ThemeProvider as MuiThemeProvider } from '@mui/material';
 import { useTheme as useMuiTheme } from '@mui/system';
 import React, { ReactElement, ReactNode, useMemo } from 'react';
 import { useTheme } from '@remirror/react-components';
