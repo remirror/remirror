@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-underline",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "description": "Add underline formatting to your text editor.",
   "keywords": [
     "remirror",
@@ -38,15 +38,15 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.0",
-    "@remirror/messages": "3.0.0-beta.0"
+    "@remirror/core": "3.0.0-beta.1",
+    "@remirror/messages": "3.0.0-beta.1"
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "@remirror/pm": "3.0.0-beta.0"
+    "@remirror/pm": "3.0.0-beta.1"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.0"
+    "@remirror/pm": "^3.0.0-beta.1"
   },
   "publishConfig": {
     "access": "public",

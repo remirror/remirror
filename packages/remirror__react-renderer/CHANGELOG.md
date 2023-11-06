@@ -1,5 +1,15 @@
 # @remirror/react-renderer
 
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [d3954076f]
+- Updated dependencies [0e4abae1b]
+  - @remirror/core@3.0.0-beta.1
+
 ## 3.0.0-beta.0
 
 > 2023-10-06

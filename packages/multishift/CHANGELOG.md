@@ -1,5 +1,14 @@
 # multishift
 
+## 2.0.10-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [d3954076f]
+  - @remirror/core-types@3.0.0-beta.1
+
 ## 2.0.10-beta.0
 
 > 2023-10-06
