@@ -5,7 +5,7 @@ import { FloatingToolbar, HeadingLevelButtonGroup } from '@remirror/react-ui';
 
 import { hugeContent } from './sample-content/huge';
 
-export default { title: 'Components (labs) / Floating Menu' };
+export default { title: 'React UI (labs) / Floating Menu' };
 
 const extensions = () => [...wysiwygPreset(), new ColumnsExtension()];
 

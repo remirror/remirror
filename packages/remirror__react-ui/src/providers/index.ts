@@ -1,1 +1,1 @@
-export * from './ui-theme-provider';
+export { useRemirrorDefaultMuiTheme } from './ui-theme-provider';

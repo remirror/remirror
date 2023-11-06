@@ -1,10 +1,6 @@
-/**
- * @module
- *
- * The `ThemeProvider` to wrap your editor with when using these components.
- */
-import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material';
-import React, { ReactElement, ReactNode } from 'react';
+import { createTheme, Theme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { useTheme as useMuiTheme } from '@mui/system';
+import React, { ReactElement, ReactNode, useMemo } from 'react';
 import { useTheme } from '@remirror/react-components';
 import { defaultRemirrorTheme } from '@remirror/theme';
 
@@ -12,32 +8,39 @@ export interface UiThemeProviderProps {
   children: ReactNode;
 }
 
+export function useRemirrorDefaultMuiTheme(): Theme {
+  const { theme } = useTheme();
+
+  return useMemo(
+    () =>
+      createTheme({
+        palette: {
+          primary: {
+            main: theme.color?.primary ?? defaultRemirrorTheme.color.primary,
+            dark: theme.color?.hover?.primary ?? defaultRemirrorTheme.color.hover.primary,
+            contrastText: theme.color?.primaryText ?? defaultRemirrorTheme.color.primaryText,
+          },
+          secondary: {
+            main: theme.color?.secondary ?? defaultRemirrorTheme.color.secondary,
+            dark: theme.color?.hover?.secondary ?? defaultRemirrorTheme.color.hover.secondary,
+            contrastText: theme.color?.secondaryText ?? defaultRemirrorTheme.color.secondaryText,
+          },
+        },
+      }),
+    [theme],
+  );
+}
+
 /**
- * This the `ThemeProvider`. Wrap your editor with it to customise the theming
- * of content within your editor.
- *
- * Please be aware that this wraps your component in an extra dom layer.
+ * `UIThemeProvider` uses the parent app's MUI theme, or applies Remirror's default
  */
 export const UiThemeProvider = (
   props: UiThemeProviderProps,
 ): ReactElement<UiThemeProviderProps> => {
   const { children } = props;
-  const { theme } = useTheme();
 
-  const muiTheme = createTheme({
-    palette: {
-      primary: {
-        main: theme.color?.primary ?? defaultRemirrorTheme.color.primary,
-        dark: theme.color?.hover?.primary ?? defaultRemirrorTheme.color.hover.primary,
-        contrastText: theme.color?.primaryText ?? defaultRemirrorTheme.color.primaryText,
-      },
-      secondary: {
-        main: theme.color?.secondary ?? defaultRemirrorTheme.color.secondary,
-        dark: theme.color?.hover?.secondary ?? defaultRemirrorTheme.color.hover.secondary,
-        contrastText: theme.color?.secondaryText ?? defaultRemirrorTheme.color.secondaryText,
-      },
-    },
-  });
+  const remirrorDefaultTheme = useRemirrorDefaultMuiTheme();
+  const muiTheme = useMuiTheme(remirrorDefaultTheme);
 
   return <MuiThemeProvider theme={muiTheme}>{children}</MuiThemeProvider>;
 };

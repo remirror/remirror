@@ -8,7 +8,7 @@ import { FindReplaceComponent } from '@remirror/react-ui';
 
 import { mediumContent } from './sample-content/medium';
 
-export default { title: 'Components (labs) / Find and Replace' };
+export default { title: 'React UI (labs) / Find and Replace' };
 
 const extensions = () => [...wysiwygPreset(), new FindExtension()];
 

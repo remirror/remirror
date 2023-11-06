@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import React, { FC } from 'react';
 
-import { UiThemeProvider } from '../providers';
+import { UiThemeProvider } from '../providers/ui-theme-provider';
 import { FindController } from './find-controller';
 import { FindInput } from './find-input';
 import { ReplaceController } from './replace-controller';

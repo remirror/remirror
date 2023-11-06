@@ -9,7 +9,7 @@ import { FloatingToolbar, WysiwygToolbar } from '@remirror/react-ui';
 
 import { mediumContent } from './sample-content/medium';
 
-export default { title: 'Components (labs) / Toolbar' };
+export default { title: 'React UI (labs) / Toolbar' };
 
 const extensions = () => [...wysiwygPreset(), new TableExtension()];
 
