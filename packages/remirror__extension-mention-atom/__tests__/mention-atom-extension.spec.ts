@@ -32,6 +32,10 @@ describe('schema', () => {
     `);
   });
 
+  it('creates the correct plain text, including the mention label', () => {
+    expect(p('Hello ', mentionAtom()).textContent).toBe('Hello @test');
+  });
+
   it('parses the dom structure and finds itself', () => {
     const node = htmlToProsemirrorNode({
       schema,

@@ -238,6 +238,7 @@ export type NodeSpecOverride = Pick<
   | 'defining'
   | 'isolating'
   | 'parseDOM'
+  | 'leafText'
 >;
 
 /**
