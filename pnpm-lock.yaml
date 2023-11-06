@@ -3540,6 +3540,9 @@ importers:
       '@joeattardi/emoji-button':
         specifier: ^4.6.4
         version: 4.6.4
+      '@mui/material':
+        specifier: ^5.13.2
+        version: 5.13.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
         specifier: 3.0.0-beta.0
         version: link:../remirror__core
