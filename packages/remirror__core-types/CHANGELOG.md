@@ -1,5 +1,18 @@
 # @remirror/core-types
 
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- d3954076f: Return a mention atom' label via leaf text, so it is returned in the plain text of a document.
+
+  Allow this to be overriden via the `nodeOverrides` API
+
+- Updated dependencies [b1d683fdb]
+  - @remirror/pm@3.0.0-beta.1
+
 ## 3.0.0-beta.0
 
 > 2023-10-06

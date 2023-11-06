@@ -106,7 +106,15 @@
     "@remirror/extension-template": "2.0.7",
     "@remirror/minimal-template": "0.0.6",
     "@remirror/preset-template": "2.0.7",
-    "website": "0.0.0"
+    "website": "0.0.0",
+    "@remirror/react-ui": "0.1.0-beta.0"
   },
-  "changesets": ["pretty-donkeys-crash", "wet-lizards-sniff"]
+  "changesets": [
+    "clever-lions-breathe",
+    "friendly-pears-promise",
+    "pretty-donkeys-crash",
+    "smart-garlics-bow",
+    "three-schools-build",
+    "wet-lizards-sniff"
+  ]
 }

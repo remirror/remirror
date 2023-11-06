@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-hooks",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "description": "A selection of core hooks built for working within the editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-hooks",
   "repository": {
@@ -118,24 +118,24 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.0",
+    "@remirror/core": "3.0.0-beta.1",
     "@remirror/core-constants": "3.0.0-beta.0",
     "@remirror/core-helpers": "4.0.0-beta.0",
-    "@remirror/extension-emoji": "3.0.0-beta.0",
-    "@remirror/extension-events": "3.0.0-beta.0",
-    "@remirror/extension-history": "3.0.0-beta.0",
-    "@remirror/extension-mention": "3.0.0-beta.0",
-    "@remirror/extension-mention-atom": "3.0.0-beta.0",
-    "@remirror/extension-positioner": "3.0.0-beta.0",
-    "@remirror/react-core": "3.0.0-beta.0",
-    "@remirror/react-utils": "3.0.0-beta.0",
-    "multishift": "2.0.10-beta.0",
+    "@remirror/extension-emoji": "3.0.0-beta.1",
+    "@remirror/extension-events": "3.0.0-beta.1",
+    "@remirror/extension-history": "3.0.0-beta.1",
+    "@remirror/extension-mention": "3.0.0-beta.1",
+    "@remirror/extension-mention-atom": "3.0.0-beta.1",
+    "@remirror/extension-positioner": "3.0.0-beta.1",
+    "@remirror/react-core": "3.0.0-beta.1",
+    "@remirror/react-utils": "3.0.0-beta.1",
+    "multishift": "2.0.10-beta.1",
     "use-isomorphic-layout-effect": "^1.1.2",
     "use-previous": "^1.2.0"
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "@remirror/pm": "3.0.0-beta.0",
+    "@remirror/pm": "3.0.0-beta.1",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",
@@ -143,7 +143,7 @@
     "svgmoji": "^3.2.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.0",
+    "@remirror/pm": "^3.0.0-beta.1",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",

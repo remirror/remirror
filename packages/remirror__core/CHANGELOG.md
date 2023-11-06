@@ -1,5 +1,26 @@
 # @remirror/core
 
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- d3954076f: Return a mention atom' label via leaf text, so it is returned in the plain text of a document.
+
+  Allow this to be overriden via the `nodeOverrides` API
+
+- 0e4abae1b: 💥 BREAKING 💥: Remove deprecated decorator `extensionDecorator`. Please use `extension` instead
+
+  Make `extension` decorator backwards compatible when called directly as a function.
+
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [d3954076f]
+  - @remirror/pm@3.0.0-beta.1
+  - @remirror/core-types@3.0.0-beta.1
+  - @remirror/core-utils@3.0.0-beta.1
+  - @remirror/messages@3.0.0-beta.1
+
 ## 3.0.0-beta.0
 
 > 2023-10-06

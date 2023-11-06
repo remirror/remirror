@@ -1,5 +1,17 @@
 # prosemirror-resizable-view
 
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- b1d683fdb: Update ProseMirror packages to latest versions.
+
+  Use newly provided `Transform.setDocAttribute` to update doc node attributes, rather than custom step type.
+
+  - @remirror/core-utils@3.0.0-beta.1
+
 ## 3.0.0-beta.0
 
 > 2023-10-06
