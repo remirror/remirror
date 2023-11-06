@@ -25,6 +25,4 @@ pnpm add @remirror/react-ui @remirror/react
 npm install @remirror/react-ui @remirror/react
 ```
 
-## Usage
-
-When using the components from this library make sure to wrap your editor in the `ThemeProvider`.
+This is **NOT** included by default when you install the recommended `@remirror/react` package.
