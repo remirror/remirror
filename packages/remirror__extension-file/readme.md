@@ -12,10 +12,6 @@
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-file/red?icon=npm
 
-## Beta
-
-Note this extension is in beta, so its API may change without a bump to the major semver version.
-
 ## Installation
 
 ```bash
