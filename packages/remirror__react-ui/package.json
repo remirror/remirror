@@ -1,7 +1,7 @@
 {
   "name": "@remirror/react-ui",
-  "version": "3.0.0-beta.0",
-  "description": "Components to begin your remirror journey",
+  "version": "0.1.0-beta.0",
+  "description": "A selection of optional react components for your remirror editor, powered by @mui/material",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-ui",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>"
+    "Will Hawker <w.hawker@hotmail.co.uk>"
   ],
   "sideEffects": false,
   "type": "module",

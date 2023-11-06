@@ -3121,7 +3121,7 @@ importers:
         specifier: 3.0.0-beta.0
         version: link:../remirror__react
       '@remirror/react-ui':
-        specifier: 3.0.0-beta.0
+        specifier: 0.1.0-beta.0
         version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0-beta.0
@@ -3592,7 +3592,7 @@ importers:
         specifier: 2.0.0-beta.0
         version: link:../remirror__react-editors
       '@remirror/react-ui':
-        specifier: 3.0.0-beta.0
+        specifier: 0.1.0-beta.0
         version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0-beta.0
