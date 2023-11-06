@@ -46,6 +46,76 @@ test('supports docAttributes with default values', () => {
   });
 });
 
+describe('commands', () => {
+  describe('setDocAttributes', () => {
+    it('can set all of the known doc attributes', () => {
+      const { add, nodes, attributeNodes, commands, view } = renderEditor([
+        new DocExtension({ docAttributes: ['foo', 'baz'] }),
+      ]);
+      const { p } = nodes;
+      const { doc } = attributeNodes;
+
+      add(doc()(p('')));
+
+      expect(view.state.doc.attrs).toEqual({ foo: null, baz: null });
+
+      commands.setDocAttributes({ foo: 'bar', baz: 'qux' });
+
+      expect(view.state.doc).toEqualProsemirrorNode(
+        //
+        doc({ foo: 'bar', baz: 'qux' })(
+          //
+          p(),
+        ),
+      );
+    });
+
+    it('ignores unknown doc attributes', () => {
+      const { add, nodes, attributeNodes, commands, view } = renderEditor([
+        new DocExtension({ docAttributes: ['foo', 'baz'] }),
+      ]);
+      const { p } = nodes;
+      const { doc } = attributeNodes;
+
+      add(doc()(p('')));
+
+      expect(view.state.doc.attrs).toEqual({ foo: null, baz: null });
+
+      commands.setDocAttributes({ not: 'exists' });
+
+      expect(view.state.doc).toEqualProsemirrorNode(
+        //
+        doc({ foo: null, baz: null })(
+          //
+          p(),
+        ),
+      );
+    });
+
+    it('can set a subset of the known doc attributes', () => {
+      const { add, nodes, attributeNodes, commands, view } = renderEditor([
+        new DocExtension({ docAttributes: ['foo', 'baz'] }),
+      ]);
+      const { p } = nodes;
+      const { doc } = attributeNodes;
+
+      add(doc()(p('')));
+
+      expect(view.state.doc.attrs).toEqual({ foo: null, baz: null });
+
+      commands.setDocAttributes({ baz: 'qux' });
+
+      expect(view.state.doc).toEqualProsemirrorNode(
+        //
+        doc({ foo: null, baz: 'qux' })(
+          //
+          p(),
+        ),
+      );
+    });
+  });
+});
+
 describe('helpers', () => {
   describe('`isDefaultDocNode`', () => {
     it('returns true if the current doc contains the default content', () => {
