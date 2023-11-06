@@ -91,7 +91,7 @@
     "version:date": "tsx support/scripts/src/changelog-dates",
     "version:lockfile": "pnpm install --lockfile-only",
     "watch": "remirror-cli watch",
-    "watch:skip-build": "pnpm build:packages --skip-build"
+    "watch:skip-build": "pnpm watch --skip-build"
   },
   "browserslist": [
     "since 2017"
