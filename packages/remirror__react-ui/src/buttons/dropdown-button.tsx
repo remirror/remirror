@@ -1,8 +1,7 @@
 import { IconButton, Menu, MenuProps, Tooltip } from '@mui/material';
 import React, { FC, MouseEventHandler, ReactNode, useCallback, useRef, useState } from 'react';
 import { CoreIcon, isString, uniqueId } from '@remirror/core';
-
-import { Icon } from '../icons';
+import { Icon } from '@remirror/react-components';
 
 interface ButtonIconProps {
   icon: CoreIcon | JSX.Element | null;

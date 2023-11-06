@@ -4,14 +4,8 @@ import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { ColumnAttributes, ColumnsExtension } from 'remirror/extensions';
 import { i18nFormat } from '@remirror/i18n';
-import {
-  CommandButtonGroup,
-  Remirror,
-  ThemeProvider,
-  ToggleColumnsButton,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { CommandButtonGroup, ToggleColumnsButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new ColumnsExtension()];
 

@@ -1,8 +1,7 @@
 import { Badge } from '@mui/material';
 import React, { FC, ReactNode } from 'react';
 import { CommandUiIcon, CoreIcon, isPlainObject, isString } from '@remirror/core';
-
-import { Icon } from '../icons';
+import { Icon } from '@remirror/react-components';
 
 const isCommandUiIcon = (val: unknown): val is CommandUiIcon => {
   if (!isPlainObject(val)) {

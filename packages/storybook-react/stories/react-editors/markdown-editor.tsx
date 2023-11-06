@@ -26,7 +26,6 @@ import {
   TrailingNodeExtension,
 } from 'remirror/extensions';
 import {
-  MarkdownToolbar,
   ReactExtensions,
   Remirror,
   ThemeProvider,
@@ -35,6 +34,7 @@ import {
   UseRemirrorReturn,
 } from '@remirror/react';
 import { MarkdownEditor } from '@remirror/react-editors/markdown';
+import { MarkdownToolbar } from '@remirror/react-ui';
 
 function MarkdownPreview() {
   const { getMarkdown } = useHelpers(true);

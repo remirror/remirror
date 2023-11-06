@@ -2971,78 +2971,12 @@ importers:
       '@floating-ui/react':
         specifier: ^0.24.3
         version: 0.24.3(react-dom@18.2.0)(react@18.2.0)
-      '@mui/material':
-        specifier: ^5.13.2
-        version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
         specifier: 3.0.0-beta.0
         version: link:../remirror__core
-      '@remirror/extension-blockquote':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-blockquote
-      '@remirror/extension-bold':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-bold
-      '@remirror/extension-callout':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-callout
-      '@remirror/extension-code':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-code
-      '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-code-block
-      '@remirror/extension-columns':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-columns
-      '@remirror/extension-find':
-        specifier: 1.0.0-beta.0
-        version: link:../remirror__extension-find
-      '@remirror/extension-font-size':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-font-size
-      '@remirror/extension-heading':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-heading
-      '@remirror/extension-history':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-history
-      '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-horizontal-rule
-      '@remirror/extension-italic':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-italic
-      '@remirror/extension-list':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-list
-      '@remirror/extension-node-formatting':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-node-formatting
       '@remirror/extension-positioner':
         specifier: 3.0.0-beta.0
         version: link:../remirror__extension-positioner
-      '@remirror/extension-strike':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-strike
-      '@remirror/extension-sub':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-sub
-      '@remirror/extension-sup':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-sup
-      '@remirror/extension-tables':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-tables
-      '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-text-color
-      '@remirror/extension-underline':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-underline
-      '@remirror/extension-whitespace':
-        specifier: 3.0.0-beta.0
-        version: link:../remirror__extension-whitespace
       '@remirror/icons':
         specifier: 3.0.0-beta.0
         version: link:../remirror__icons
@@ -3186,6 +3120,9 @@ importers:
       '@remirror/react':
         specifier: 3.0.0-beta.0
         version: link:../remirror__react
+      '@remirror/react-ui':
+        specifier: 0.1.0-beta.0
+        version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0-beta.0
         version: link:../remirror__styles
@@ -3350,6 +3287,124 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
 
+  packages/remirror__react-ui:
+    dependencies:
+      '@babel/runtime':
+        specifier: ^7.22.3
+        version: 7.22.3
+      '@mui/material':
+        specifier: ^5.13.2
+        version: 5.13.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/system':
+        specifier: ^5.13.2
+        version: 5.13.2(@types/react@18.2.0)(react@18.2.0)
+      '@remirror/core':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__core
+      '@remirror/extension-blockquote':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-blockquote
+      '@remirror/extension-bold':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-bold
+      '@remirror/extension-callout':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-callout
+      '@remirror/extension-code':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-code
+      '@remirror/extension-code-block':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-code-block
+      '@remirror/extension-columns':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-columns
+      '@remirror/extension-find':
+        specifier: 1.0.0-beta.0
+        version: link:../remirror__extension-find
+      '@remirror/extension-font-size':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-font-size
+      '@remirror/extension-heading':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-heading
+      '@remirror/extension-history':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-history
+      '@remirror/extension-horizontal-rule':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-horizontal-rule
+      '@remirror/extension-italic':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-italic
+      '@remirror/extension-list':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-list
+      '@remirror/extension-node-formatting':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-node-formatting
+      '@remirror/extension-positioner':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-positioner
+      '@remirror/extension-strike':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-strike
+      '@remirror/extension-sub':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-sub
+      '@remirror/extension-sup':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-sup
+      '@remirror/extension-tables':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-tables
+      '@remirror/extension-text-color':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-text-color
+      '@remirror/extension-underline':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-underline
+      '@remirror/extension-whitespace':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__extension-whitespace
+      '@remirror/icons':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__icons
+      '@remirror/messages':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__messages
+      '@remirror/react-components':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__react-components
+      '@remirror/react-core':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__react-core
+      '@remirror/react-hooks':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__react-hooks
+      '@remirror/theme':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__theme
+    devDependencies:
+      '@remirror/cli':
+        specifier: 1.0.1
+        version: link:../remirror__cli
+      '@remirror/pm':
+        specifier: 3.0.0-beta.0
+        version: link:../remirror__pm
+      '@types/react':
+        specifier: ^18.2.0
+        version: 18.2.0
+      '@types/react-dom':
+        specifier: ^18.2.0
+        version: 18.2.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+
   packages/remirror__react-utils:
     dependencies:
       '@babel/runtime':
@@ -3485,6 +3540,9 @@ importers:
       '@joeattardi/emoji-button':
         specifier: ^4.6.4
         version: 4.6.4
+      '@mui/material':
+        specifier: ^5.13.2
+        version: 5.13.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
         specifier: 3.0.0-beta.0
         version: link:../remirror__core
@@ -3533,6 +3591,9 @@ importers:
       '@remirror/react-editors':
         specifier: 2.0.0-beta.0
         version: link:../remirror__react-editors
+      '@remirror/react-ui':
+        specifier: 0.1.0-beta.0
+        version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0-beta.0
         version: link:../remirror__styles
@@ -11413,7 +11474,7 @@ packages:
     resolution: {integrity: sha512-aOLCXMCySMFL2WmUhnz+DjF84AoFVu8rn35OsL759HXOZMz8zhEwVf5w/xxkWx7DycM2KXDTgAvYW48nTfqTLA==}
     dev: false
 
-  /@mui/material@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
+  /@mui/material@5.13.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Pfke1l0GG2OJb/Nr10aVr8huoBFcBTdWKV5iFSTEHqf9c2C1ZlyYMISn7ui6X3Gix8vr+hP5kVqH1LAWwQSb6w==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -11431,11 +11492,9 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.22.6
-      '@emotion/react': 11.11.0(@types/react@18.2.0)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@mui/base': 5.0.0-beta.2(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@mui/core-downloads-tracker': 5.13.2
-      '@mui/system': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react@18.2.0)
+      '@mui/system': 5.13.2(@types/react@18.2.0)(react@18.2.0)
       '@mui/types': 7.2.4(@types/react@18.2.0)
       '@mui/utils': 5.13.1(react@18.2.0)
       '@types/react': 18.2.0
@@ -11466,7 +11525,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@mui/styled-engine@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(react@18.2.0):
+  /@mui/styled-engine@5.13.2(react@18.2.0):
     resolution: {integrity: sha512-VCYCU6xVtXOrIN8lcbuPmoG+u7FYuOERG++fpY74hPpEWkyFQG97F+/XfTQVYzlR2m7nPjnwVUgATcTCMEaMvw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -11481,14 +11540,12 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.6
       '@emotion/cache': 11.11.0
-      '@emotion/react': 11.11.0(@types/react@18.2.0)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       csstype: 3.1.2
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
 
-  /@mui/system@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react@18.2.0):
+  /@mui/system@5.13.2(@types/react@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-TPyWmRJPt0JPVxacZISI4o070xEJ7ftxpVtu6LWuYVOUOINlhoGOclam4iV8PDT3EMQEHuUrwU49po34UdWLlw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -11505,10 +11562,8 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.22.6
-      '@emotion/react': 11.11.0(@types/react@18.2.0)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@mui/private-theming': 5.13.1(@types/react@18.2.0)(react@18.2.0)
-      '@mui/styled-engine': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(react@18.2.0)
+      '@mui/styled-engine': 5.13.2(react@18.2.0)
       '@mui/types': 7.2.4(@types/react@18.2.0)
       '@mui/utils': 5.13.1(react@18.2.0)
       '@types/react': 18.2.0
@@ -17757,7 +17812,7 @@ packages:
     dependencies:
       semver: 7.5.4
       shelljs: 0.8.5
-      typescript: 5.4.0-dev.20231105
+      typescript: 5.4.0-dev.20231106
     dev: false
 
   /duplexer3@0.1.4:
@@ -28691,8 +28746,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.4.0-dev.20231105:
-    resolution: {integrity: sha512-TN7QRSjarOvoxvHuZdVmofCnXJYklxsiZ1tyJKiKkghPWXwrkQ68R3NN3vhtS8B+jIeZoETKssmfbmhCl8rwxQ==}
+  /typescript@5.4.0-dev.20231106:
+    resolution: {integrity: sha512-Uxjjt7meOHOSXpQJkiObTPUXfQKqSkdcMQOV+ZAjo3U1w/D/1Qah5Pdg0x/jt/fIA6laCNWLogS+QiaT5HOohw==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false

@@ -4,13 +4,8 @@ import './styles.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { UnderlineExtension } from 'remirror/extensions';
-import {
-  Remirror,
-  ThemeProvider,
-  ToggleUnderlineButton,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { ToggleUnderlineButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new UnderlineExtension()];
 

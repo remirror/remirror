@@ -5,13 +5,8 @@ import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { HeadingExtension } from 'remirror/extensions';
 import { i18nFormat } from '@remirror/i18n';
-import {
-  HeadingLevelButtonGroup,
-  Remirror,
-  ThemeProvider,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { HeadingLevelButtonGroup, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new HeadingExtension()];
 

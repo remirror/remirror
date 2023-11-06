@@ -4,18 +4,12 @@ import React from 'react';
 import { wysiwygPreset } from 'remirror/extensions';
 import { TableExtension } from '@remirror/extension-react-tables';
 import { i18nFormat } from '@remirror/i18n';
-import {
-  EditorComponent,
-  FloatingToolbar,
-  Remirror,
-  ThemeProvider,
-  useRemirror,
-  WysiwygToolbar,
-} from '@remirror/react';
+import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { FloatingToolbar, WysiwygToolbar } from '@remirror/react-ui';
 
 import { mediumContent } from './sample-content/medium';
 
-export default { title: 'Components (labs) / Toolbar' };
+export default { title: 'React UI (labs) / Toolbar' };
 
 const extensions = () => [...wysiwygPreset(), new TableExtension()];
 

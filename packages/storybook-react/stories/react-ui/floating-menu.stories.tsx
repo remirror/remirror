@@ -1,17 +1,11 @@
 import React from 'react';
 import { ColumnsExtension, wysiwygPreset } from 'remirror/extensions';
-import {
-  EditorComponent,
-  FloatingToolbar,
-  HeadingLevelButtonGroup,
-  Remirror,
-  ThemeProvider,
-  useRemirror,
-} from '@remirror/react';
+import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { FloatingToolbar, HeadingLevelButtonGroup } from '@remirror/react-ui';
 
 import { hugeContent } from './sample-content/huge';
 
-export default { title: 'Components (labs) / Floating Menu' };
+export default { title: 'React UI (labs) / Floating Menu' };
 
 const extensions = () => [...wysiwygPreset(), new ColumnsExtension()];
 

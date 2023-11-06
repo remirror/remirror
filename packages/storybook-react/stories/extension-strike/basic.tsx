@@ -4,7 +4,8 @@ import './styles.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { StrikeExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, ToggleStrikeButton, Toolbar, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { ToggleStrikeButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new StrikeExtension()];
 

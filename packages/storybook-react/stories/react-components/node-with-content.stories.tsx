@@ -16,7 +16,7 @@ const userAttrs = {
 };
 const UserCardContent = `<div data-user-id="${userAttrs.id}" data-user-name="${userAttrs.name}" data-user-image-url="${userAttrs.src}"><p>This is editable content...</p></div>`;
 
-export default { title: 'Components (labs) / Card with content' };
+export default { title: 'Components / Card with content' };
 
 class UserCardExtension extends NodeExtension {
   get name() {

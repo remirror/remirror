@@ -11,7 +11,7 @@ import {
   useRemirror,
 } from '@remirror/react';
 
-export default { title: 'Components (labs) / Emoji Popup' };
+export default { title: 'Components / Emoji Popup' };
 
 export const PlainText = () => {
   const extensions = useCallback(

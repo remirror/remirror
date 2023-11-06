@@ -67,6 +67,7 @@
     "@remirror/i18n": "3.0.0-beta.0",
     "@remirror/pm": "3.0.0-beta.0",
     "@remirror/react": "3.0.0-beta.0",
+    "@remirror/react-ui": "0.1.0-beta.0",
     "@remirror/styles": "3.0.0-beta.0",
     "@svgmoji/noto": "^3.2.0",
     "@types/refractor": "^3.0.2",

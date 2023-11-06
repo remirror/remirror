@@ -8,7 +8,7 @@ import {
   useRemirror,
 } from '@remirror/react';
 
-export default { title: 'Components (labs) / MentionAtom Popup' };
+export default { title: 'Components / MentionAtom Popup' };
 
 const extensions = () => [
   new MentionAtomExtension({
