@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- 47bda7aab: Downgrade build target to support node.js 14
+
 ## 3.0.0-beta.1
 
 > 2023-11-06

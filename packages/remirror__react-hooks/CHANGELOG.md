@@ -1,5 +1,21 @@
 # @remirror/react-hooks
 
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+  - @remirror/extension-emoji@3.0.0-beta.2
+  - @remirror/extension-events@3.0.0-beta.2
+  - @remirror/extension-history@3.0.0-beta.2
+  - @remirror/extension-mention@3.0.0-beta.2
+  - @remirror/extension-mention-atom@3.0.0-beta.2
+  - @remirror/extension-positioner@3.0.0-beta.2
+  - @remirror/react-core@3.0.0-beta.2
+
 ## 3.0.0-beta.1
 
 > 2023-11-06

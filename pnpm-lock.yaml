@@ -302,7 +302,7 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:packages/jest-prosemirror
       jest-remirror:
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:packages/jest-remirror
       jest-watch-typeahead:
         specifier: ^2.2.2
@@ -326,7 +326,7 @@ importers:
         specifier: ^2.4.3
         version: 2.4.3(prettier@2.8.8)
       remirror:
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:packages/remirror
       rimraf:
         specifier: ^4.4.1
@@ -449,16 +449,16 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/dom':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__dom
       '@remirror/pm':
         specifier: 3.0.0-beta.1
         version: link:../remirror__pm
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-core
       '@testing-library/dom':
         specifier: ^9.3.0
@@ -638,7 +638,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/core-constants':
         specifier: 3.0.0-beta.0
@@ -653,169 +653,169 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:../remirror__core-utils
       '@remirror/dom':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__dom
       '@remirror/extension-annotation':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-annotation
       '@remirror/extension-bidi':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-code-block
       '@remirror/extension-codemirror5':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-codemirror5
       '@remirror/extension-collaboration':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-collaboration
       '@remirror/extension-columns':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-columns
       '@remirror/extension-diff':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-diff
       '@remirror/extension-doc':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-doc
       '@remirror/extension-drop-cursor':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-embed
       '@remirror/extension-emoji':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-emoji
       '@remirror/extension-entity-reference':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-epic-mode':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-epic-mode
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/extension-font-family':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-font-family
       '@remirror/extension-font-size':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-font-size
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-hard-break':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-history
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-list
       '@remirror/extension-markdown':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-markdown
       '@remirror/extension-mention':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-paragraph':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-paragraph
       '@remirror/extension-placeholder':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-placeholder
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/extension-search':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-search
       '@remirror/extension-shortcuts':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-shortcuts
       '@remirror/extension-strike':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-tables
       '@remirror/extension-text':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text
       '@remirror/extension-text-case':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-trailing-node':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-trailing-node
       '@remirror/extension-underline':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-whitespace
       '@remirror/extension-yjs':
-        specifier: 4.0.0-beta.1
+        specifier: 4.0.0-beta.2
         version: link:../remirror__extension-yjs
       '@remirror/icons':
         specifier: 3.0.0-beta.0
         version: link:../remirror__icons
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-core
       '@remirror/preset-formatting':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-formatting
       '@remirror/preset-wysiwyg':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-wysiwyg
       '@remirror/theme':
         specifier: 3.0.0-beta.1
@@ -880,7 +880,7 @@ importers:
         version: 6.3.0
       read-pkg-up:
         specifier: ^10.1.0
-        version: 10.1.0(typescript@5.0.4)
+        version: 10.1.0(typescript@5.2.2)
       rimraf:
         specifier: ^4.4.1
         version: 4.4.1
@@ -889,7 +889,7 @@ importers:
         version: 4.2.0
       tsup:
         specifier: https://github.com/ocavue/tsup/tarball/ocavue-release-2023-10-05-a
-        version: '@github.com/ocavue/tsup/tarball/ocavue-release-2023-10-05-a(@microsoft/api-extractor@7.37.0)(@swc/core@1.3.76)(typescript@5.0.4)'
+        version: '@github.com/ocavue/tsup/tarball/ocavue-release-2023-10-05-a(@microsoft/api-extractor@7.37.0)(@swc/core@1.3.76)(typescript@5.2.2)'
       tsx:
         specifier: ^3.12.7
         version: 3.12.7
@@ -1079,7 +1079,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/react-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-core
       prosemirror-dev-toolkit:
         specifier: ^1.1.4
@@ -1113,10 +1113,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-core
     devDependencies:
       '@remirror/cli':
@@ -1132,10 +1132,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1154,7 +1154,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1179,7 +1179,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1201,7 +1201,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1220,7 +1220,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1242,7 +1242,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1261,7 +1261,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1301,7 +1301,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1338,7 +1338,7 @@ importers:
         specifier: ^6.12.0
         version: 6.12.0
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -1354,7 +1354,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1373,7 +1373,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1392,7 +1392,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -1408,7 +1408,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1427,7 +1427,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1446,7 +1446,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1465,7 +1465,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1496,7 +1496,7 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1533,13 +1533,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
     devDependencies:
       '@remirror/cli':
@@ -1555,7 +1555,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1574,7 +1574,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1593,13 +1593,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-component
       '@remirror/react-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-core
       '@remirror/theme':
         specifier: 3.0.0-beta.1
@@ -1630,7 +1630,7 @@ importers:
   packages/remirror__extension-find:
     dependencies:
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@types/string.prototype.matchall':
         specifier: ^4.0.1
@@ -1655,7 +1655,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1674,7 +1674,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1696,7 +1696,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1715,7 +1715,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1734,7 +1734,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1753,7 +1753,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1772,7 +1772,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1791,7 +1791,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1816,7 +1816,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1835,10 +1835,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1866,10 +1866,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1891,7 +1891,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1916,7 +1916,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-tables
       '@remirror/pm':
         specifier: 3.0.0-beta.1
@@ -1928,10 +1928,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1953,10 +1953,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1978,7 +1978,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -1997,7 +1997,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2016,7 +2016,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2038,10 +2038,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2066,7 +2066,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/core-constants':
         specifier: 3.0.0-beta.0
@@ -2112,25 +2112,25 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/core-utils':
         specifier: 3.0.0-beta.1
         version: link:../remirror__core-utils
       '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-code-block
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/react-components':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-hooks
       lodash.memoize:
         specifier: ^4.1.2
@@ -2164,10 +2164,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-component
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2183,7 +2183,7 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -2204,16 +2204,16 @@ importers:
         specifier: 4.2.10
         version: 4.2.10
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/core-utils':
         specifier: 3.0.0-beta.1
         version: link:../remirror__core-utils
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/extension-tables':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-tables
       '@remirror/icons':
         specifier: 3.0.0-beta.0
@@ -2222,13 +2222,13 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:../remirror__messages
       '@remirror/react-components':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-hooks
       '@remirror/theme':
         specifier: 3.0.0-beta.1
@@ -2265,7 +2265,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2287,7 +2287,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -2303,7 +2303,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2322,7 +2322,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2341,7 +2341,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2360,13 +2360,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2388,7 +2388,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2407,7 +2407,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2426,7 +2426,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2451,10 +2451,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text-color
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2473,7 +2473,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2492,7 +2492,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2511,7 +2511,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2530,7 +2530,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0-beta.1
@@ -2703,28 +2703,28 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-doc':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-doc
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-history':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-history
       '@remirror/extension-paragraph':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-paragraph
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/extension-text':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text
     devDependencies:
       '@remirror/cli':
@@ -2740,49 +2740,49 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-bold':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-bold
       '@remirror/extension-columns':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-columns
       '@remirror/extension-font-size':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-heading
       '@remirror/extension-italic':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-italic
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-strike':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-sup
       '@remirror/extension-text-case':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-underline':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-whitespace
     devDependencies:
       '@remirror/cli':
@@ -2798,13 +2798,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-placeholder':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-placeholder
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-component
       '@remirror/react-utils':
         specifier: 3.0.0-beta.1
@@ -2835,70 +2835,70 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-bidi':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-bold
       '@remirror/extension-code':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-code-block
       '@remirror/extension-drop-cursor':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-embed
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-hard-break':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-heading
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-list
       '@remirror/extension-search':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-search
       '@remirror/extension-shortcuts':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-shortcuts
       '@remirror/extension-strike':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-strike
       '@remirror/extension-trailing-node':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-trailing-node
       '@remirror/extension-underline':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-underline
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-core
     devDependencies:
       '@remirror/cli':
@@ -2914,31 +2914,31 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/extension-placeholder':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-placeholder
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-component
       '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-tables
       '@remirror/preset-react':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-react
       '@remirror/react-components':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-hooks
       '@remirror/react-renderer':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-renderer
       '@remirror/react-utils':
         specifier: 3.0.0-beta.1
@@ -2969,10 +2969,10 @@ importers:
         specifier: ^0.24.3
         version: 0.24.3(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/icons':
         specifier: 3.0.0-beta.0
@@ -2981,10 +2981,10 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:../remirror__messages
       '@remirror/react-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-hooks
       '@remirror/react-utils':
         specifier: 3.0.0-beta.1
@@ -3036,22 +3036,22 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-component
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-core
       '@remirror/preset-react':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-react
       '@remirror/react-renderer':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-renderer
       '@remirror/react-utils':
         specifier: 3.0.0-beta.1
@@ -3106,7 +3106,7 @@ importers:
         specifier: 4.0.0-beta.0
         version: link:../remirror__core-helpers
       '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-tables
       '@remirror/i18n':
         specifier: 3.0.0-beta.1
@@ -3115,10 +3115,10 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react
       '@remirror/react-ui':
-        specifier: 0.1.0-beta.1
+        specifier: 0.1.0-beta.2
         version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0-beta.0
@@ -3136,7 +3136,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror
       svgmoji:
         specifier: ^3.2.0
@@ -3167,7 +3167,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/core-constants':
         specifier: 3.0.0-beta.0
@@ -3176,25 +3176,25 @@ importers:
         specifier: 4.0.0-beta.0
         version: link:../remirror__core-helpers
       '@remirror/extension-emoji':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-emoji
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-events
       '@remirror/extension-history':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-history
       '@remirror/extension-mention':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/react-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-core
       '@remirror/react-utils':
         specifier: 3.0.0-beta.1
@@ -3237,7 +3237,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -3256,10 +3256,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-react-ssr':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-ssr
     devDependencies:
       '@remirror/cli':
@@ -3269,7 +3269,7 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -3302,73 +3302,73 @@ importers:
         specifier: ^5.13.2
         version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/extension-blockquote':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-code-block
       '@remirror/extension-columns':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-columns
       '@remirror/extension-find':
-        specifier: 1.0.0-beta.1
+        specifier: 1.0.0-beta.2
         version: link:../remirror__extension-find
       '@remirror/extension-font-size':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-history
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-italic':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-italic
       '@remirror/extension-list':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-list
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-positioner
       '@remirror/extension-strike':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-tables
       '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-text-color
       '@remirror/extension-underline':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-whitespace
       '@remirror/icons':
         specifier: 3.0.0-beta.0
@@ -3377,13 +3377,13 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:../remirror__messages
       '@remirror/react-components':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-hooks
       '@remirror/theme':
         specifier: 3.0.0-beta.1
@@ -3508,7 +3508,7 @@ importers:
     dependencies:
       type-fest:
         specifier: ^3.10.0
-        version: 3.10.0(typescript@5.0.4)
+        version: 3.10.0(typescript@5.2.2)
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
@@ -3545,7 +3545,7 @@ importers:
         version: 0.24.3(react-dom@18.2.0)(react@18.2.0)
       '@formatjs/intl':
         specifier: ^2.9.0
-        version: 2.9.0(typescript@5.0.4)
+        version: 2.9.0(typescript@5.2.2)
       '@joeattardi/emoji-button':
         specifier: ^4.6.4
         version: 4.6.4
@@ -3553,37 +3553,37 @@ importers:
         specifier: ^5.13.2
         version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/dev':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__dev
       '@remirror/extension-codemirror6':
-        specifier: 2.0.0-beta.1
+        specifier: 2.0.0-beta.2
         version: link:../remirror__extension-codemirror6
       '@remirror/extension-count':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-count
       '@remirror/extension-entity-reference':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-file':
-        specifier: 2.0.0-beta.1
+        specifier: 2.0.0-beta.2
         version: link:../remirror__extension-file
       '@remirror/extension-find':
-        specifier: 1.0.0-beta.1
+        specifier: 1.0.0-beta.2
         version: link:../remirror__extension-find
       '@remirror/extension-mention':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-react-language-select':
-        specifier: 1.0.0-beta.1
+        specifier: 1.0.0-beta.2
         version: link:../remirror__extension-react-language-select
       '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__extension-react-tables
       '@remirror/i18n':
         specifier: 3.0.0-beta.1
@@ -3595,13 +3595,13 @@ importers:
         specifier: 3.0.0-beta.1
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react
       '@remirror/react-editors':
-        specifier: 2.0.0-beta.1
+        specifier: 2.0.0-beta.2
         version: link:../remirror__react-editors
       '@remirror/react-ui':
-        specifier: 0.1.0-beta.1
+        specifier: 0.1.0-beta.2
         version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0-beta.0
@@ -3662,7 +3662,7 @@ importers:
         version: 23.2.11
       i18next-icu:
         specifier: ^2.3.0
-        version: 2.3.0(intl-messageformat@10.5.4)
+        version: 2.3.0(intl-messageformat@10.5.5)
       is-ci:
         specifier: ^3.0.1
         version: 3.0.1
@@ -3680,7 +3680,7 @@ importers:
         version: 13.0.2(i18next@23.2.11)(react-dom@18.2.0)(react@18.2.0)
       react-intl:
         specifier: ^6.4.4
-        version: 6.4.4(react@18.2.0)(typescript@5.0.4)
+        version: 6.4.4(react@18.2.0)(typescript@5.2.2)
       react-is:
         specifier: ^18.2.0
         version: 18.2.0
@@ -3691,7 +3691,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror
       scripts:
         specifier: 0.0.1
@@ -3723,10 +3723,10 @@ importers:
         version: 7.0.18(react-dom@18.2.0)(react@18.2.0)
       '@storybook/builder-vite':
         specifier: ^7.0.18
-        version: 7.0.18(typescript@5.0.4)(vite@4.3.9)
+        version: 7.0.18(typescript@5.2.2)(vite@4.3.9)
       '@storybook/builder-webpack5':
         specifier: ^7.0.18
-        version: 7.0.18(@swc/core@1.3.76)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 7.0.18(@swc/core@1.3.76)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@storybook/cli':
         specifier: ^7.0.18
         version: 7.0.18
@@ -3738,10 +3738,10 @@ importers:
         version: 7.0.18
       '@storybook/react':
         specifier: ^7.0.18
-        version: 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@storybook/react-vite':
         specifier: ^7.0.18
-        version: 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(vite@4.3.9)
+        version: 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)(vite@4.3.9)
       '@storybook/theming':
         specifier: ^7.0.18
         version: 7.0.18(react-dom@18.2.0)(react@18.2.0)
@@ -3786,16 +3786,16 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core
       '@remirror/pm':
         specifier: 3.0.0-beta.1
         version: link:../remirror__pm
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__preset-core
       '@remirror/react':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react
       '@testing-library/react':
         specifier: ^14.0.0
@@ -4140,7 +4140,7 @@ importers:
         version: 3.3.4
       type-fest:
         specifier: ^3.10.0
-        version: 3.10.0(typescript@5.0.4)
+        version: 3.10.0(typescript@5.2.2)
       write-json-file:
         specifier: ^4.3.0
         version: 4.3.0
@@ -4151,7 +4151,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
@@ -4173,7 +4173,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
@@ -4204,16 +4204,16 @@ importers:
         specifier: ^1.6.22
         version: 1.6.22(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../packages/remirror__core
       '@remirror/dev':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../packages/remirror__dev
       '@remirror/react':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../packages/remirror__react
       '@remirror/react-editors':
-        specifier: 2.0.0-beta.1
+        specifier: 2.0.0-beta.2
         version: link:../packages/remirror__react-editors
       '@remirror/styles':
         specifier: 3.0.0-beta.0
@@ -4258,39 +4258,39 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       remirror:
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../packages/remirror
     devDependencies:
       '@docusaurus/core':
         specifier: ^2.4.1
-        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/module-type-aliases':
         specifier: ^2.4.1
         version: 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/plugin-client-redirects':
         specifier: ^2.4.1
-        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/plugin-content-docs':
         specifier: ^2.4.1
-        version: 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/plugin-ideal-image':
         specifier: ^2.4.1
-        version: 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/plugin-sitemap':
         specifier: ^2.4.1
-        version: 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/preset-classic':
         specifier: ^2.4.1
-        version: 2.4.1(@algolia/client-search@4.20.0)(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@algolia/client-search@4.20.0)(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/theme-classic':
         specifier: ^2.4.1
-        version: 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/theme-common':
         specifier: ^2.4.1
-        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/theme-live-codeblock':
         specifier: ^2.4.1
-        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+        version: 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/types':
         specifier: ^2.4.1
         version: 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
@@ -9129,7 +9129,7 @@ packages:
       - '@algolia/client-search'
     dev: true
 
-  /@docusaurus/core@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/core@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-SNsY7PshK3Ri7vtsLXVeAJGS50nJN3RgF836zkyUfAD01Fq+sAk5EwWgLw+nnm5KVNGDu7PRR2kRGDsWvqpo0g==}
     engines: {node: '>=16.14'}
     hasBin: true
@@ -9188,7 +9188,7 @@ packages:
       postcss-loader: 7.0.0(postcss@8.4.14)(webpack@5.88.2)
       prompts: 2.4.2
       react: 18.2.0
-      react-dev-utils: 12.0.1(eslint@8.41.0)(typescript@5.0.4)(webpack@5.88.2)
+      react-dev-utils: 12.0.1(eslint@8.41.0)(typescript@5.2.2)(webpack@5.88.2)
       react-dom: 18.2.0(react@18.2.0)
       react-helmet-async: 1.3.0(react-dom@18.2.0)(react@18.2.0)
       react-loadable: /@docusaurus/react-loadable@5.5.2(react@18.2.0)
@@ -9316,14 +9316,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-client-redirects@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-client-redirects@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-tp0j16gaLIJ4p+IR0P6KDOFsTOGGMY54MNPnmM61Vaqqt5omLqsuKUO8UlCGU1oW/4EIQOhXYy99XYY5MjE+7A==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/logger': 2.4.1
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
       '@docusaurus/utils-common': 2.4.1(@docusaurus/types@2.4.1)
@@ -9351,14 +9351,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-content-blog@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-content-blog@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-E2i7Knz5YIbE1XELI6RlTnZnGgS52cUO4BlCiCUCvQHbR+s1xeIWz4C6BtaVnlug0Ccz7nFSksfwDpVlkujg5Q==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/logger': 2.4.1
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
@@ -9392,14 +9392,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-content-docs@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-content-docs@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-Lo7lSIcpswa2Kv4HEeUcGYqaasMUQNpjTXpV0N8G6jXgZaQurqp7E8NGYeGbDXnb48czmHWbzDL4S3+BbK0VzA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/logger': 2.4.1
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/module-type-aliases': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
@@ -9433,14 +9433,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-content-pages@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-content-pages@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-/UjuH/76KLaUlL+o1OvyORynv6FURzjurSjvn2lbWTFc4tpYY2qLYTlKpTCBVPhlLUQsfyFnshEJDLmPneq2oA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
@@ -9466,14 +9466,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-debug@2.4.1(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-debug@2.4.1(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-7Yu9UPzRShlrH/G8btOpR0e6INFZr0EegWplMjOqelIwAcx3PKyR8mgPTxGTxcqiYj6hxSCRN0D8R7YrzImwNA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
       fs-extra: 10.1.0
@@ -9499,14 +9499,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-google-analytics@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-google-analytics@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-dyZJdJiCoL+rcfnm0RPkLt/o732HvLiEwmtoNzOoz9MSZz117UH2J6U2vUDtzUzwtFLIf32KkeyzisbwUCgcaQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
       react: 18.2.0
@@ -9528,14 +9528,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-google-gtag@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-google-gtag@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-mKIefK+2kGTQBYvloNEKtDmnRD7bxHLsBcxgnbt4oZwzi2nxCGjPX6+9SQO2KCN5HZbNrYmGo5GJfMgoRvy6uA==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
       react: 18.2.0
@@ -9557,14 +9557,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-google-tag-manager@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-google-tag-manager@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-Zg4Ii9CMOLfpeV2nG74lVTWNtisFaH9QNtEw48R5QE1KIwDBdTVaiSA18G1EujZjrzJJzXN79VhINSbOJO/r3g==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
       react: 18.2.0
@@ -9586,7 +9586,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-ideal-image@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-ideal-image@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-jxvgCGPmHxdae2Y2uskzxIbMCA4WLTfzkufsLbD4mEAjCRIkt6yzux6q5kqKTrO+AxzpANVcJNGmaBtKZGv5aw==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -9597,7 +9597,7 @@ packages:
       jimp:
         optional: true
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/lqip-loader': 2.4.1(webpack@5.88.2)
       '@docusaurus/responsive-loader': 1.7.0(sharp@0.30.7)
       '@docusaurus/theme-translations': 2.4.1
@@ -9627,14 +9627,14 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/plugin-sitemap@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/plugin-sitemap@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-lZx+ijt/+atQ3FVE8FOHV/+X3kuok688OydDXrqKRJyXBJZKgGjA2Qa8RjQ4f27V2woaXhtnyrdPop/+OjVMRg==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/logger': 2.4.1
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
@@ -9661,25 +9661,25 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/preset-classic@2.4.1(@algolia/client-search@4.20.0)(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/preset-classic@2.4.1(@algolia/client-search@4.20.0)(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-P4//+I4zDqQJ+UDgoFrjIFaQ1MeS9UD1cvxVQaI6O7iBmiHQm0MGROP1TbE7HlxlDPXFJjZUK3x3cAoK63smGQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-debug': 2.4.1(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-google-analytics': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-google-gtag': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-google-tag-manager': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-sitemap': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/theme-classic': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/theme-search-algolia': 2.4.1(@algolia/client-search@4.20.0)(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-debug': 2.4.1(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-google-analytics': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-google-gtag': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-google-tag-manager': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-sitemap': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/theme-classic': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/theme-search-algolia': 2.4.1(@algolia/client-search@4.20.0)(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -9728,20 +9728,20 @@ packages:
       sharp: 0.30.7
     dev: true
 
-  /@docusaurus/theme-classic@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/theme-classic@2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-Rz0wKUa+LTW1PLXmwnf8mn85EBzaGSt6qamqtmnh9Hflkc+EqiYMhtUJeLdV+wsgYq4aG0ANc+bpUDpsUhdnwg==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/module-type-aliases': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
-      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/theme-translations': 2.4.1
       '@docusaurus/types': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
@@ -9778,7 +9778,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/theme-common@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/theme-common@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-G7Zau1W5rQTaFFB3x3soQoZpkgMbl/SYNG8PfMFIjKa3M3q8n0m/GRf5/H/e5BqOvt8c+ZWIXGCiz+kUCSHovA==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -9787,9 +9787,9 @@ packages:
     dependencies:
       '@docusaurus/mdx-loader': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
       '@docusaurus/module-type-aliases': 2.4.1(@swc/core@1.3.76)(react-dom@18.2.0)(react@18.2.0)
-      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/plugin-content-blog': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/plugin-content-pages': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
       '@docusaurus/utils-common': 2.4.1(@docusaurus/types@2.4.1)
       '@types/history': 4.7.11
@@ -9820,15 +9820,15 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/theme-live-codeblock@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/theme-live-codeblock@2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-KBKrm34kcdNbSeEm6RujN5GWWg4F2dmAYZyHMMQM8FXokx8mNShRx6uq17WXi23JNm7niyMhNOBRfZWay+5Hkg==}
     engines: {node: '>=16.14'}
     peerDependencies:
       react: ^16.8.4 || ^17.0.0
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/theme-translations': 2.4.1
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
       '@philpl/buble': 0.19.7
@@ -9855,7 +9855,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@docusaurus/theme-search-algolia@2.4.1(@algolia/client-search@4.20.0)(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@docusaurus/theme-search-algolia@2.4.1(@algolia/client-search@4.20.0)(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(@types/react@18.2.0)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-6BcqW2lnLhZCXuMAvPRezFs1DpmEKzXFKlYjruuas+Xy3AQeFzDJKTJFIm49N77WFCTyxff8d3E4Q9pi/+5McQ==}
     engines: {node: '>=16.14'}
     peerDependencies:
@@ -9863,10 +9863,10 @@ packages:
       react-dom: ^16.8.4 || ^17.0.0
     dependencies:
       '@docsearch/react': 3.2.0(@algolia/client-search@4.20.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
-      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/core': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/logger': 2.4.1
-      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
-      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@docusaurus/plugin-content-docs': 2.4.1(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@docusaurus/theme-common': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)(eslint@8.41.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@docusaurus/theme-translations': 2.4.1
       '@docusaurus/utils': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
       '@docusaurus/utils-validation': 2.4.1(@docusaurus/types@2.4.1)(@swc/core@1.3.76)
@@ -10696,10 +10696,10 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@formatjs/ecma402-abstract@1.17.2:
-    resolution: {integrity: sha512-k2mTh0m+IV1HRdU0xXM617tSQTi53tVR2muvYOsBeYcUgEAyxV1FOC7Qj279th3fBVQ+Dj6muvNJZcHSPNdbKg==}
+  /@formatjs/ecma402-abstract@1.17.3:
+    resolution: {integrity: sha512-2Q4hmKQ6CM30mRG/YMdSBW8LXf32BfuOb1FZgG+uVWPC/SQMoiVFz5JaeOukt96v6TZ4ddE+bHCmd611PW38QA==}
     dependencies:
-      '@formatjs/intl-localematcher': 0.4.2
+      '@formatjs/intl-localematcher': 0.5.0
       tslib: 2.6.2
     dev: false
 
@@ -10717,11 +10717,11 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@formatjs/icu-messageformat-parser@2.7.0:
-    resolution: {integrity: sha512-7uqC4C2RqOaBQtcjqXsSpGRYVn+ckjhNga5T/otFh6MgxRrCJQqvjfbrGLpX1Lcbxdm5WH3Z2WZqt1+Tm/cn/Q==}
+  /@formatjs/icu-messageformat-parser@2.7.1:
+    resolution: {integrity: sha512-ErnXyRdk8AlpGcKskKVYn23aAlWXhI1kt5ek2o3pJwVeMTcrosSESQ8baztdTtJjfQHlB4NBeocfRA5C6DKv2g==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.17.2
-      '@formatjs/icu-skeleton-parser': 1.6.2
+      '@formatjs/ecma402-abstract': 1.17.3
+      '@formatjs/icu-skeleton-parser': 1.6.3
       tslib: 2.6.2
     dev: false
 
@@ -10732,10 +10732,10 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@formatjs/icu-skeleton-parser@1.6.2:
-    resolution: {integrity: sha512-VtB9Slo4ZL6QgtDFJ8Injvscf0xiDd4bIV93SOJTBjUF4xe2nAWOoSjLEtqIG+hlIs1sNrVKAaFo3nuTI4r5ZA==}
+  /@formatjs/icu-skeleton-parser@1.6.3:
+    resolution: {integrity: sha512-Viggz4Pic7oC4uR8z2VroL8H9boiUTTB0TqEsiRb6DHZv7QEcg1BoVQZBkBdLmvxhBS7nwBNrTdbaiW8GOV58Q==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.17.2
+      '@formatjs/ecma402-abstract': 1.17.3
       tslib: 2.6.2
     dev: false
 
@@ -10761,13 +10761,13 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@formatjs/intl-localematcher@0.4.2:
-    resolution: {integrity: sha512-BGdtJFmaNJy5An/Zan4OId/yR9Ih1OojFjcduX/xOvq798OgWSyDtd6Qd5jqJXwJs1ipe4Fxu9+cshic5Ox2tA==}
+  /@formatjs/intl-localematcher@0.5.0:
+    resolution: {integrity: sha512-K1Xpg/8oyfCMxisJQa/fILoeoeyndcM0wcN8QiNG/uM5OAe1BcO1+2yd0gIboDI2tRJEsUi/sSBEYPbgkIdq4A==}
     dependencies:
       tslib: 2.6.2
     dev: false
 
-  /@formatjs/intl@2.9.0(typescript@5.0.4):
+  /@formatjs/intl@2.9.0(typescript@5.2.2):
     resolution: {integrity: sha512-Ym0trUoC/VO6wQu4YHa0H1VR2tEixFRmwZgADkDLm7nD+vv1Ob+/88mUAoT0pwvirFqYKgUKEwp1tFepqyqvVA==}
     peerDependencies:
       typescript: ^4.7 || 5
@@ -10782,7 +10782,7 @@ packages:
       '@formatjs/intl-listformat': 7.4.0
       intl-messageformat: 10.5.0
       tslib: 2.6.2
-      typescript: 5.0.4
+      typescript: 5.2.2
     dev: false
 
   /@fortawesome/fontawesome-common-types@0.2.36:
@@ -11130,7 +11130,7 @@ packages:
       twemoji: 12.1.6
     dev: false
 
-  /@joshwooding/vite-plugin-react-docgen-typescript@0.2.1(typescript@5.0.4)(vite@4.3.9):
+  /@joshwooding/vite-plugin-react-docgen-typescript@0.2.1(typescript@5.2.2)(vite@4.3.9):
     resolution: {integrity: sha512-ou4ZJSXMMWHqGS4g8uNRbC5TiTWxAgQZiVucoUrOCWuPrTbkpJbmVyIi9jU72SBry7gQtuMEDp4YR8EEXAg7VQ==}
     peerDependencies:
       typescript: '>= 4.3.x'
@@ -11142,8 +11142,8 @@ packages:
       glob: 7.2.3
       glob-promise: 4.2.2(glob@7.2.3)
       magic-string: 0.27.0
-      react-docgen-typescript: 2.2.2(typescript@5.0.4)
-      typescript: 5.0.4
+      react-docgen-typescript: 2.2.2(typescript@5.2.2)
+      typescript: 5.2.2
       vite: 4.3.9(@types/node@16.18.34)
     dev: true
 
@@ -12847,7 +12847,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/builder-vite@7.0.18(typescript@5.0.4)(vite@4.3.9):
+  /@storybook/builder-vite@7.0.18(typescript@5.2.2)(vite@4.3.9):
     resolution: {integrity: sha512-Qze6/PwUJq+z776dBoG5uinAEVZyPalZIaU/VOWpTrN8L9FQbL0+HDrZU2E/BMNW+ZfnSjF3V2USLyiutsC1Tw==}
     peerDependencies:
       '@preact/preset-vite': '*'
@@ -12882,13 +12882,13 @@ packages:
       remark-external-links: 8.0.0
       remark-slug: 6.1.0
       rollup: 3.29.4
-      typescript: 5.0.4
+      typescript: 5.2.2
       vite: 4.3.9(@types/node@16.18.34)
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@storybook/builder-webpack5@7.0.18(@swc/core@1.3.76)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@storybook/builder-webpack5@7.0.18(@swc/core@1.3.76)(esbuild@0.17.19)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-ciDOHrnChHWjikQwsM+xGz70PGfWurcezCyRPPRY0zimyHWtlug6V1Q9dJAdEAFsxqFSZA/qg7gEcZyqdlTMaA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -12926,7 +12926,7 @@ packages:
       case-sensitive-paths-webpack-plugin: 2.4.0
       css-loader: 6.7.1(webpack@5.88.2)
       express: 4.17.3
-      fork-ts-checker-webpack-plugin: 7.3.0(typescript@5.0.4)(webpack@5.88.2)
+      fork-ts-checker-webpack-plugin: 7.3.0(typescript@5.2.2)(webpack@5.88.2)
       fs-extra: 11.1.1
       html-webpack-plugin: 5.5.0(webpack@5.88.2)
       path-browserify: 1.0.1
@@ -12937,7 +12937,7 @@ packages:
       style-loader: 3.3.1(webpack@5.88.2)
       terser-webpack-plugin: 5.3.9(@swc/core@1.3.76)(esbuild@0.17.19)(webpack@5.88.2)
       ts-dedent: 2.2.0
-      typescript: 5.0.4
+      typescript: 5.2.2
       util: 0.12.5
       util-deprecate: 1.0.2
       webpack: 5.88.2(@swc/core@1.3.76)(esbuild@0.17.19)
@@ -13312,7 +13312,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /@storybook/react-vite@7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)(vite@4.3.9):
+  /@storybook/react-vite@7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)(vite@4.3.9):
     resolution: {integrity: sha512-rxJwp/b0dPazn15xLIeRgwrdZGWmoqoLhU7Mm+AXKToXvbe77i2bjHhkFbz34dpKFtD0i/ajcZSpmsxpxfB0HA==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -13320,10 +13320,10 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
       vite: ^3.0.0 || ^4.0.0
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.2.1(typescript@5.0.4)(vite@4.3.9)
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.2.1(typescript@5.2.2)(vite@4.3.9)
       '@rollup/pluginutils': 4.2.1
-      '@storybook/builder-vite': 7.0.18(typescript@5.0.4)(vite@4.3.9)
-      '@storybook/react': 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4)
+      '@storybook/builder-vite': 7.0.18(typescript@5.2.2)(vite@4.3.9)
+      '@storybook/react': 7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@vitejs/plugin-react': 3.1.0(vite@4.3.9)
       ast-types: 0.14.2
       magic-string: 0.27.0
@@ -13338,7 +13338,7 @@ packages:
       - vite-plugin-glimmerx
     dev: true
 
-  /@storybook/react@7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.4):
+  /@storybook/react@7.0.18(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-lumUbHYeuL3qa4SZR9K2YC4UIt1hwW19GuI/6f2HEV5gR9QHHSJHg9HD9pjcxv4fQaiG81ACZ0Sg6lyUkcJvuQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -13371,7 +13371,7 @@ packages:
       react-element-to-jsx-string: 15.0.0(react-dom@18.2.0)(react@18.2.0)
       ts-dedent: 2.2.0
       type-fest: 2.19.0
-      typescript: 5.0.4
+      typescript: 5.2.2
       util-deprecate: 1.0.2
     transitivePeerDependencies:
       - supports-color
@@ -13984,11 +13984,11 @@ packages:
       '@types/eslint': 8.44.3
       '@types/estree': 1.0.2
 
-  /@types/eslint-scope@3.7.6:
-    resolution: {integrity: sha512-zfM4ipmxVKWdxtDaJ3MP3pBurDXOCoyjvlpE3u6Qzrmw4BPbfm4/ambIeTk/r/J0iq/+2/xp0Fmt+gFvXJY2PQ==}
+  /@types/eslint-scope@3.7.7:
+    resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
     dependencies:
-      '@types/eslint': 8.44.6
-      '@types/estree': 1.0.4
+      '@types/eslint': 8.44.7
+      '@types/estree': 1.0.5
 
   /@types/eslint@8.40.2:
     resolution: {integrity: sha512-PRVjQ4Eh9z9pmmtaq8nTjZjQwKFk7YIHIud3lRoKRBgUQjgjRmoGxxGEPXQkF+lH7QkHJRNr5F4aBgYCW0lqpQ==}
@@ -14003,11 +14003,11 @@ packages:
       '@types/estree': 1.0.2
       '@types/json-schema': 7.0.13
 
-  /@types/eslint@8.44.6:
-    resolution: {integrity: sha512-P6bY56TVmX8y9J87jHNgQh43h6VVU+6H7oN7hgvivV81K2XY8qJZ5vqPy/HdUoVIelii2kChYVzQanlswPWVFw==}
+  /@types/eslint@8.44.7:
+    resolution: {integrity: sha512-f5ORu2hcBbKei97U73mf+l9t4zTGl74IqZ0GQk4oVea/VS8tQZYkUveSYojk+frraAVYId0V2WC9O4PTNru2FQ==}
     dependencies:
-      '@types/estree': 1.0.4
-      '@types/json-schema': 7.0.14
+      '@types/estree': 1.0.5
+      '@types/json-schema': 7.0.15
 
   /@types/estree@0.0.39:
     resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
@@ -14020,8 +14020,8 @@ packages:
   /@types/estree@1.0.2:
     resolution: {integrity: sha512-VeiPZ9MMwXjO32/Xu7+OwflfmeoRwkE/qzndw42gGtgJwZopBnzy2gD//NN1+go1mADzkDcqf/KnFRSjTJ8xJA==}
 
-  /@types/estree@1.0.4:
-    resolution: {integrity: sha512-2JwWnHK9H+wUZNorf2Zr6ves96WHoWDJIftkcxPKsS7Djta6Zu519LarhRNljPXkpsZR2ZMwNCPeW7omW07BJw==}
+  /@types/estree@1.0.5:
+    resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
   /@types/exit@0.1.31:
     resolution: {integrity: sha512-ghT0E6Bw64RXc6lM30ExMNlYbUCsyR8oucl/q+ESGGhNOXOmBPpZHYGXCH2T/yTFq9YtudNCnZEQ4puX6aq87A==}
@@ -14190,8 +14190,8 @@ packages:
   /@types/json-schema@7.0.13:
     resolution: {integrity: sha512-RbSSoHliUbnXj3ny0CNFOoxrIDV6SUGyStHsvDqosw6CkdPV8TtWGlfecuK4ToyMEAql6pzNxgCFKanovUzlgQ==}
 
-  /@types/json-schema@7.0.14:
-    resolution: {integrity: sha512-U3PUjAudAdJBeC2pgN8uTIKgxrb4nlDF3SF0++EldXQvQBGkpFZMSnwQiIoDU77tv45VgNkl/L4ouD+rEomujw==}
+  /@types/json-schema@7.0.15:
+    resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
@@ -16809,7 +16809,7 @@ packages:
     resolution: {integrity: sha512-7qJWqItLA8/VPVlKJlFXU+NBlo/qyfs39aJcuMT/2ere32ZqvF5OSxgdM5xOfJJ7O429gg2HM47y8v9P+9wrNw==}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
-      '@types/estree': 1.0.4
+      '@types/estree': 1.0.5
       acorn: 8.11.2
       estree-walker: 3.0.3
       periscopic: 3.1.0
@@ -18166,7 +18166,7 @@ packages:
     dependencies:
       semver: 7.5.4
       shelljs: 0.8.5
-      typescript: 5.3.0-dev.20231101
+      typescript: 5.4.0-dev.20231107
     dev: false
 
   /duplexer3@0.1.4:
@@ -19065,7 +19065,7 @@ packages:
   /estree-walker@3.0.3:
     resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
     dependencies:
-      '@types/estree': 1.0.4
+      '@types/estree': 1.0.5
     dev: false
 
   /esutils@2.0.3:
@@ -19718,7 +19718,7 @@ packages:
       cross-spawn: 7.0.3
       signal-exit: 3.0.7
 
-  /fork-ts-checker-webpack-plugin@6.5.1(eslint@8.41.0)(typescript@5.0.4)(webpack@5.88.2):
+  /fork-ts-checker-webpack-plugin@6.5.1(eslint@8.41.0)(typescript@5.2.2)(webpack@5.88.2):
     resolution: {integrity: sha512-x1wumpHOEf4gDROmKTaB6i4/Q6H3LwmjVO7fIX47vBwlZbtPjU33hgoMuD/Q/y6SU8bnuYSoN6ZQOLshGp0T/g==}
     engines: {node: '>=10', yarn: '>=1.0.0'}
     peerDependencies:
@@ -19746,11 +19746,11 @@ packages:
       schema-utils: 2.7.0
       semver: 7.5.4
       tapable: 1.1.3
-      typescript: 5.0.4
+      typescript: 5.2.2
       webpack: 5.88.2(@swc/core@1.3.76)(esbuild@0.17.19)
     dev: true
 
-  /fork-ts-checker-webpack-plugin@7.3.0(typescript@5.0.4)(webpack@5.88.2):
+  /fork-ts-checker-webpack-plugin@7.3.0(typescript@5.2.2)(webpack@5.88.2):
     resolution: {integrity: sha512-IN+XTzusCjR5VgntYFgxbxVx3WraPRnKehBFrf00cMSrtUuW9MsG9dhL6MWpY6MkjC3wVwoujfCDgZZCQwbswA==}
     engines: {node: '>=12.13.0', yarn: '>=1.0.0'}
     peerDependencies:
@@ -19773,7 +19773,7 @@ packages:
       schema-utils: 3.3.0
       semver: 7.5.4
       tapable: 2.2.1
-      typescript: 5.0.4
+      typescript: 5.2.2
       webpack: 5.88.2(@swc/core@1.3.76)(esbuild@0.17.19)
     dev: true
 
@@ -20980,12 +20980,12 @@ packages:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
     dev: false
 
-  /i18next-icu@2.3.0(intl-messageformat@10.5.4):
+  /i18next-icu@2.3.0(intl-messageformat@10.5.5):
     resolution: {integrity: sha512-x+j7kd5nDJCfbU53uwsMfXD7ALPu5uv0bqjAMQ5nVvXRoj1L7gkmswKtM3XDWYo4YUHf1jznlhSdPyy0xEwU+Q==}
     peerDependencies:
       intl-messageformat: ^10.3.3
     dependencies:
-      intl-messageformat: 10.5.4
+      intl-messageformat: 10.5.5
     dev: false
 
   /i18next@23.2.11:
@@ -21213,12 +21213,12 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /intl-messageformat@10.5.4:
-    resolution: {integrity: sha512-z+hrFdiJ/heRYlzegrdFYqU1m/KOMOVMqNilIArj+PbsuU8TNE7v4TWdQgSoxlxbT4AcZH3Op3/Fu15QTp+W1w==}
+  /intl-messageformat@10.5.5:
+    resolution: {integrity: sha512-sF+cJCfMn+kGcSeGGRcB1UpBH0/+Ko2KByHj2RpL2qIkRvsrnuDl8zufEkvk+GPosk932C6W1Kq24xWaw+2jDA==}
     dependencies:
-      '@formatjs/ecma402-abstract': 1.17.2
+      '@formatjs/ecma402-abstract': 1.17.3
       '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.7.0
+      '@formatjs/icu-messageformat-parser': 2.7.1
       tslib: 2.6.2
     dev: false
 
@@ -21637,7 +21637,7 @@ packages:
   /is-reference@3.0.2:
     resolution: {integrity: sha512-v3rht/LgVcsdZa3O2Nqs+NMowLOxeOm7Ay9+/ARQ2F+qEoANRcqrjAZKGN0v8ymUetZGgkp26LTnGT7H0Qo9Pg==}
     dependencies:
-      '@types/estree': 1.0.4
+      '@types/estree': 1.0.5
     dev: false
 
   /is-regex@1.1.4:
@@ -22973,8 +22973,8 @@ packages:
   /lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
-  /lines-and-columns@2.0.3:
-    resolution: {integrity: sha512-cNOjgCnLB+FnvWWtyRTzmB3POJ+cXxTA81LoW7u8JdmhfXzriropYwpjShnz1QLLWsQwY7nIxoDmcPTwphDK9w==}
+  /lines-and-columns@2.0.4:
+    resolution: {integrity: sha512-wM1+Z03eypVAVUCE7QdSqpVIvelbOakn1M0bPDoA4SGWPx3sNDVUiMo3L6To6WWGClB7VyXnhQ4Sn7gxiJbE6A==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
@@ -24774,15 +24774,15 @@ packages:
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
 
-  /parse-json@7.1.0(typescript@5.0.4):
+  /parse-json@7.1.0(typescript@5.2.2):
     resolution: {integrity: sha512-ihtdrgbqdONYD156Ap6qTcaGcGdkdAxodO1wLqQ/j7HP1u2sFYppINiq4jyC8F+Nm+4fVufylCV00QmkTHkSUg==}
     engines: {node: '>=16'}
     dependencies:
       '@babel/code-frame': 7.22.13
       error-ex: 1.3.2
       json-parse-even-better-errors: 3.0.0
-      lines-and-columns: 2.0.3
-      type-fest: 3.10.0(typescript@5.0.4)
+      lines-and-columns: 2.0.4
+      type-fest: 3.10.0(typescript@5.2.2)
     transitivePeerDependencies:
       - typescript
     dev: false
@@ -24940,7 +24940,7 @@ packages:
   /periscopic@3.1.0:
     resolution: {integrity: sha512-vKiQ8RRtkl9P+r/+oefh25C3fhybptkHKCZSPlcXiJux2tJF55GnEj3BVn4A5gKfq9NWWXXrxkHBwVPUfH0opw==}
     dependencies:
-      '@types/estree': 1.0.4
+      '@types/estree': 1.0.5
       estree-walker: 3.0.3
       is-reference: 3.0.2
     dev: false
@@ -26131,7 +26131,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /react-dev-utils@12.0.1(eslint@8.41.0)(typescript@5.0.4)(webpack@5.88.2):
+  /react-dev-utils@12.0.1(eslint@8.41.0)(typescript@5.2.2)(webpack@5.88.2):
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -26150,7 +26150,7 @@ packages:
       escape-string-regexp: 4.0.0
       filesize: 8.0.7
       find-up: 5.0.0
-      fork-ts-checker-webpack-plugin: 6.5.1(eslint@8.41.0)(typescript@5.0.4)(webpack@5.88.2)
+      fork-ts-checker-webpack-plugin: 6.5.1(eslint@8.41.0)(typescript@5.2.2)(webpack@5.88.2)
       global-modules: 2.0.0
       globby: 11.1.0
       gzip-size: 6.0.0
@@ -26165,7 +26165,7 @@ packages:
       shell-quote: 1.7.3
       strip-ansi: 6.0.1
       text-table: 0.2.0
-      typescript: 5.0.4
+      typescript: 5.2.2
       webpack: 5.88.2(@swc/core@1.3.76)(esbuild@0.17.19)
     transitivePeerDependencies:
       - eslint
@@ -26173,12 +26173,12 @@ packages:
       - vue-template-compiler
     dev: true
 
-  /react-docgen-typescript@2.2.2(typescript@5.0.4):
+  /react-docgen-typescript@2.2.2(typescript@5.2.2):
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
     peerDependencies:
       typescript: '>= 4.3.x'
     dependencies:
-      typescript: 5.0.4
+      typescript: 5.2.2
     dev: true
 
   /react-docgen@6.0.0-alpha.3:
@@ -26291,7 +26291,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-intl@6.4.4(react@18.2.0)(typescript@5.0.4):
+  /react-intl@6.4.4(react@18.2.0)(typescript@5.2.2):
     resolution: {integrity: sha512-/C9Sl/5//ohfkNG6AWlJuf4BhTXsbzyk93K62A4zRhSPANyOGpKZ+fWhN+TLfFd5YjDUHy+exU/09y0w1bO4Xw==}
     peerDependencies:
       react: ^16.6.0 || 17 || 18
@@ -26302,7 +26302,7 @@ packages:
     dependencies:
       '@formatjs/ecma402-abstract': 1.17.0
       '@formatjs/icu-messageformat-parser': 2.6.0
-      '@formatjs/intl': 2.9.0(typescript@5.0.4)
+      '@formatjs/intl': 2.9.0(typescript@5.2.2)
       '@formatjs/intl-displaynames': 6.5.0
       '@formatjs/intl-listformat': 7.4.0
       '@types/hoist-non-react-statics': 3.3.1
@@ -26311,7 +26311,7 @@ packages:
       intl-messageformat: 10.5.0
       react: 18.2.0
       tslib: 2.6.2
-      typescript: 5.0.4
+      typescript: 5.2.2
     dev: false
 
   /react-is@16.13.1:
@@ -26540,12 +26540,12 @@ packages:
       pify: 2.3.0
     dev: true
 
-  /read-pkg-up@10.1.0(typescript@5.0.4):
+  /read-pkg-up@10.1.0(typescript@5.2.2):
     resolution: {integrity: sha512-aNtBq4jR8NawpKJQldrQcSW9y/d+KWH4v24HWkHljOZ7H0av+YTGANBzRh9A5pw7v/bLVsLVPpOhJ7gHNVy8lA==}
     engines: {node: '>=16'}
     dependencies:
       find-up: 6.3.0
-      read-pkg: 8.1.0(typescript@5.0.4)
+      read-pkg: 8.1.0(typescript@5.2.2)
       type-fest: 4.3.1
     transitivePeerDependencies:
       - typescript
@@ -26577,13 +26577,13 @@ packages:
       parse-json: 5.2.0
       type-fest: 0.6.0
 
-  /read-pkg@8.1.0(typescript@5.0.4):
+  /read-pkg@8.1.0(typescript@5.2.2):
     resolution: {integrity: sha512-PORM8AgzXeskHO/WEv312k9U03B8K9JSiWF/8N9sUuFjBa+9SF2u6K7VClzXwDXab51jCd8Nd36CNM+zR97ScQ==}
     engines: {node: '>=16'}
     dependencies:
       '@types/normalize-package-data': 2.4.1
       normalize-package-data: 6.0.0
-      parse-json: 7.1.0(typescript@5.0.4)
+      parse-json: 7.1.0(typescript@5.2.2)
       type-fest: 4.3.1
     transitivePeerDependencies:
       - typescript
@@ -29064,6 +29064,15 @@ packages:
       typescript: 5.0.4
     dev: false
 
+  /type-fest@3.10.0(typescript@5.2.2):
+    resolution: {integrity: sha512-hmAPf1datm+gt3c2mvu0sJyhFy6lTkIGf0GzyaZWxRLnabQfPUqg6tF95RPg6sLxKI7nFLGdFxBcf2/7+GXI+A==}
+    engines: {node: '>=14.16'}
+    peerDependencies:
+      typescript: '>=4.7.0'
+    dependencies:
+      typescript: 5.2.2
+    dev: false
+
   /type-fest@4.3.1:
     resolution: {integrity: sha512-pphNW/msgOUSkJbH58x8sqpq8uQj6b0ZKGxEsLKMUnGorRcDjrUaLS+39+/ub41JNTwrrMyJcUB8+YZs3mbwqw==}
     engines: {node: '>=16'}
@@ -29097,9 +29106,15 @@ packages:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
     engines: {node: '>=12.20'}
     hasBin: true
+    dev: false
 
-  /typescript@5.3.0-dev.20231101:
-    resolution: {integrity: sha512-yt5zz7L+TBfzeJhMA/tAEO1YU8J2DWsFN3LbeMslNPXL3S0lR3yvePdl6fXCk7QFjnfaRtXH0noNdWg2imHWXg==}
+  /typescript@5.2.2:
+    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  /typescript@5.4.0-dev.20231107:
+    resolution: {integrity: sha512-4bQlfsyFjzZMo1bSLEkFJEcvuQ64pgE0S/BpdWu16lYsQOfJZtntZIyWdED3h+e96IMtVgrC6sxzfPZhj4J/dw==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false
@@ -29958,8 +29973,8 @@ packages:
       webpack-cli:
         optional: true
     dependencies:
-      '@types/eslint-scope': 3.7.6
-      '@types/estree': 1.0.4
+      '@types/eslint-scope': 3.7.7
+      '@types/estree': 1.0.5
       '@webassemblyjs/ast': 1.11.6
       '@webassemblyjs/wasm-edit': 1.11.6
       '@webassemblyjs/wasm-parser': 1.11.6
@@ -30488,7 +30503,7 @@ packages:
   /zwitch@1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
 
-  '@github.com/ocavue/tsup/tarball/ocavue-release-2023-10-05-a(@microsoft/api-extractor@7.37.0)(@swc/core@1.3.76)(typescript@5.0.4)':
+  '@github.com/ocavue/tsup/tarball/ocavue-release-2023-10-05-a(@microsoft/api-extractor@7.37.0)(@swc/core@1.3.76)(typescript@5.2.2)':
     resolution: {tarball: https://github.com/ocavue/tsup/tarball/ocavue-release-2023-10-05-a}
     id: '@github.com/ocavue/tsup/tarball/ocavue-release-2023-10-05-a'
     name: tsup
@@ -30526,7 +30541,7 @@ packages:
       source-map: 0.8.0-beta.0
       sucrase: 3.34.0
       tree-kill: 1.2.2
-      typescript: 5.0.4
+      typescript: 5.2.2
     transitivePeerDependencies:
       - supports-color
       - ts-node
