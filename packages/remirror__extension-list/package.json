@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-list",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.2",
   "description": "The list extensions.",
   "keywords": [
     "remirror",
@@ -41,8 +41,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.1",
-    "@remirror/extension-events": "3.0.0-beta.1",
+    "@remirror/core": "3.0.0-beta.2",
+    "@remirror/extension-events": "3.0.0-beta.2",
     "@remirror/messages": "3.0.0-beta.1",
     "@remirror/theme": "3.0.0-beta.1"
   },

@@ -1,5 +1,35 @@
 # @remirror/preset-wysiwyg
 
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+  - @remirror/extension-bidi@3.0.0-beta.2
+  - @remirror/extension-blockquote@3.0.0-beta.2
+  - @remirror/extension-bold@3.0.0-beta.2
+  - @remirror/extension-code@3.0.0-beta.2
+  - @remirror/extension-code-block@3.0.0-beta.2
+  - @remirror/extension-drop-cursor@3.0.0-beta.2
+  - @remirror/extension-embed@3.0.0-beta.2
+  - @remirror/extension-gap-cursor@3.0.0-beta.2
+  - @remirror/extension-hard-break@3.0.0-beta.2
+  - @remirror/extension-heading@3.0.0-beta.2
+  - @remirror/extension-horizontal-rule@3.0.0-beta.2
+  - @remirror/extension-image@3.0.0-beta.2
+  - @remirror/extension-italic@3.0.0-beta.2
+  - @remirror/extension-link@3.0.0-beta.2
+  - @remirror/extension-list@3.0.0-beta.2
+  - @remirror/extension-search@3.0.0-beta.2
+  - @remirror/extension-shortcuts@3.0.0-beta.2
+  - @remirror/extension-strike@3.0.0-beta.2
+  - @remirror/extension-trailing-node@3.0.0-beta.2
+  - @remirror/extension-underline@3.0.0-beta.2
+  - @remirror/preset-core@3.0.0-beta.2
+
 ## 3.0.0-beta.1
 
 > 2023-11-06

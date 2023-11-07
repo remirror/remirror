@@ -1,5 +1,16 @@
 # jest-remirror
 
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+  - @remirror/dom@3.0.0-beta.2
+  - @remirror/preset-core@3.0.0-beta.2
+
 ## 3.0.0-beta.1
 
 > 2023-11-06

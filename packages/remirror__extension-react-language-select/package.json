@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-language-select",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A React floating language select dropdown component for the code block extension",
   "keywords": [
     "remirror",
@@ -44,13 +44,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.1",
+    "@remirror/core": "3.0.0-beta.2",
     "@remirror/core-utils": "3.0.0-beta.1",
-    "@remirror/extension-code-block": "3.0.0-beta.1",
-    "@remirror/extension-positioner": "3.0.0-beta.1",
-    "@remirror/react-components": "3.0.0-beta.1",
-    "@remirror/react-core": "3.0.0-beta.1",
-    "@remirror/react-hooks": "3.0.0-beta.1",
+    "@remirror/extension-code-block": "3.0.0-beta.2",
+    "@remirror/extension-positioner": "3.0.0-beta.2",
+    "@remirror/react-components": "3.0.0-beta.2",
+    "@remirror/react-core": "3.0.0-beta.2",
+    "@remirror/react-hooks": "3.0.0-beta.2",
     "lodash.memoize": "^4.1.2"
   },
   "devDependencies": {
