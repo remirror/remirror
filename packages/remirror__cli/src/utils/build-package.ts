@@ -83,7 +83,19 @@ export async function buildPackage(
                 // We need to set the ESBuild target to esnext so that it can
                 // pass through the decorators syntax. So we need another layer
                 // to do the transpilation. This is inefficient but it works.
-                presets: [['@babel/preset-env', { targets: { node: 14 }, modules: false }]],
+                presets: [
+                  [
+                    '@babel/preset-env',
+                    {
+                      targets: {
+                        node: '14',
+                        // See https://remirror.io/docs/advanced/browser-support
+                        browsers: 'since 2017',
+                      },
+                      modules: false,
+                    },
+                  ],
+                ],
 
                 // Don't look for babel.config.js
                 configFile: false,
