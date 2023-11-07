@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.2",
     "@babel/plugin-proposal-decorators": "^7.22.3",
     "@types/babel__core": "^7.20.2",
     "@types/node": "^16.18.34",
