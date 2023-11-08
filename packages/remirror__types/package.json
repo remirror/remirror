@@ -1,6 +1,6 @@
 {
   "name": "@remirror/types",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "description": "Base types used throughout the remirror packages.",
   "keywords": [
     "remirror"

@@ -1,5 +1,27 @@
 # @remirror/react-hooks
 
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-mention-atom@3.0.0-beta.4
+  - @remirror/extension-positioner@3.0.0-beta.4
+  - @remirror/extension-history@3.0.0-beta.4
+  - @remirror/extension-mention@3.0.0-beta.4
+  - @remirror/extension-events@3.0.0-beta.4
+  - @remirror/extension-emoji@3.0.0-beta.4
+  - @remirror/core-constants@3.0.0-beta.1
+  - @remirror/core-helpers@4.0.0-beta.1
+  - @remirror/react-utils@3.0.0-beta.2
+  - @remirror/react-core@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+  - multishift@2.0.10-beta.2
+
 ## 3.0.0-beta.3
 
 > 2023-11-08

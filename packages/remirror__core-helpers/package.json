@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-helpers",
-  "version": "4.0.0-beta.0",
+  "version": "4.0.0-beta.1",
   "description": "Provide helper functions for the remirror codebase, kinda like a tiny lodash",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core-helpers",
   "repository": {
@@ -33,8 +33,8 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@remirror/core-constants": "3.0.0-beta.0",
-    "@remirror/types": "2.0.0-beta.0",
+    "@remirror/core-constants": "3.0.0-beta.1",
+    "@remirror/types": "2.0.0-beta.1",
     "@types/object.omit": "^3.0.0",
     "@types/object.pick": "^1.3.2",
     "@types/throttle-debounce": "^2.1.0",

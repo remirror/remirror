@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-horizontal-rule@3.0.0-beta.4
+  - @remirror/extension-trailing-node@3.0.0-beta.4
+  - @remirror/extension-drop-cursor@3.0.0-beta.4
+  - @remirror/extension-blockquote@3.0.0-beta.4
+  - @remirror/extension-code-block@3.0.0-beta.4
+  - @remirror/extension-gap-cursor@3.0.0-beta.4
+  - @remirror/extension-hard-break@3.0.0-beta.4
+  - @remirror/extension-shortcuts@3.0.0-beta.4
+  - @remirror/extension-underline@3.0.0-beta.4
+  - @remirror/extension-heading@3.0.0-beta.4
+  - @remirror/extension-italic@3.0.0-beta.4
+  - @remirror/extension-search@3.0.0-beta.4
+  - @remirror/extension-strike@3.0.0-beta.4
+  - @remirror/extension-embed@3.0.0-beta.4
+  - @remirror/extension-image@3.0.0-beta.4
+  - @remirror/extension-bidi@3.0.0-beta.4
+  - @remirror/extension-bold@3.0.0-beta.4
+  - @remirror/extension-code@3.0.0-beta.4
+  - @remirror/extension-link@3.0.0-beta.4
+  - @remirror/extension-list@3.0.0-beta.4
+  - @remirror/preset-core@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
 ## 3.0.0-beta.3
 
 > 2023-11-08

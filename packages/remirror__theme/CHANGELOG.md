@@ -1,5 +1,15 @@
 # @remirror/theme
 
+## 3.0.0-beta.2
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core-types@3.0.0-beta.2
+
 ## 3.0.0-beta.1
 
 > 2023-11-06

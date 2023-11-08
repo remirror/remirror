@@ -1,5 +1,22 @@
 # @remirror/react-editors
 
+## 2.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-react-tables@3.0.0-beta.4
+  - @remirror/core-helpers@4.0.0-beta.1
+  - @remirror/styles@3.0.0-beta.1
+  - @remirror/react@3.0.0-beta.4
+  - @remirror/i18n@3.0.0-beta.2
+  - @remirror/pm@3.0.0-beta.2
+  - remirror@3.0.0-beta.4
+  - @remirror/react-ui@0.1.0-beta.4
+
 ## 2.0.0-beta.3
 
 > 2023-11-08

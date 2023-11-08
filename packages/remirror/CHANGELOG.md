@@ -1,5 +1,76 @@
 # remirror
 
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-entity-reference@3.0.0-beta.4
+  - @remirror/extension-horizontal-rule@3.0.0-beta.4
+  - @remirror/extension-node-formatting@3.0.0-beta.4
+  - @remirror/extension-text-highlight@3.0.0-beta.4
+  - @remirror/extension-collaboration@3.0.0-beta.4
+  - @remirror/extension-trailing-node@3.0.0-beta.4
+  - @remirror/extension-mention-atom@3.0.0-beta.4
+  - @remirror/extension-codemirror5@3.0.0-beta.4
+  - @remirror/extension-drop-cursor@3.0.0-beta.4
+  - @remirror/extension-font-family@3.0.0-beta.4
+  - @remirror/extension-placeholder@3.0.0-beta.4
+  - @remirror/extension-annotation@3.0.0-beta.4
+  - @remirror/extension-blockquote@3.0.0-beta.4
+  - @remirror/extension-code-block@3.0.0-beta.4
+  - @remirror/extension-gap-cursor@3.0.0-beta.4
+  - @remirror/extension-hard-break@3.0.0-beta.4
+  - @remirror/extension-positioner@3.0.0-beta.4
+  - @remirror/extension-text-color@3.0.0-beta.4
+  - @remirror/extension-whitespace@3.0.0-beta.4
+  - @remirror/extension-epic-mode@3.0.0-beta.4
+  - @remirror/extension-font-size@3.0.0-beta.4
+  - @remirror/extension-paragraph@3.0.0-beta.4
+  - @remirror/extension-shortcuts@3.0.0-beta.4
+  - @remirror/extension-text-case@3.0.0-beta.4
+  - @remirror/extension-underline@3.0.0-beta.4
+  - @remirror/extension-markdown@3.0.0-beta.4
+  - @remirror/extension-callout@3.0.0-beta.4
+  - @remirror/extension-columns@3.0.0-beta.4
+  - @remirror/extension-heading@3.0.0-beta.4
+  - @remirror/extension-history@3.0.0-beta.4
+  - @remirror/extension-mention@3.0.0-beta.4
+  - @remirror/preset-formatting@3.0.0-beta.4
+  - @remirror/extension-events@3.0.0-beta.4
+  - @remirror/extension-italic@3.0.0-beta.4
+  - @remirror/extension-search@3.0.0-beta.4
+  - @remirror/extension-strike@3.0.0-beta.4
+  - @remirror/extension-tables@3.0.0-beta.4
+  - @remirror/extension-embed@3.0.0-beta.4
+  - @remirror/extension-emoji@3.0.0-beta.4
+  - @remirror/extension-image@3.0.0-beta.4
+  - @remirror/core-constants@3.0.0-beta.1
+  - @remirror/extension-bidi@3.0.0-beta.4
+  - @remirror/extension-bold@3.0.0-beta.4
+  - @remirror/extension-code@3.0.0-beta.4
+  - @remirror/extension-diff@3.0.0-beta.4
+  - @remirror/extension-link@3.0.0-beta.4
+  - @remirror/extension-list@3.0.0-beta.4
+  - @remirror/extension-text@3.0.0-beta.4
+  - @remirror/preset-wysiwyg@3.0.0-beta.4
+  - @remirror/extension-doc@3.0.0-beta.4
+  - @remirror/extension-sub@3.0.0-beta.4
+  - @remirror/extension-sup@3.0.0-beta.4
+  - @remirror/extension-yjs@4.0.0-beta.4
+  - @remirror/core-helpers@4.0.0-beta.1
+  - @remirror/preset-core@3.0.0-beta.4
+  - @remirror/core-types@3.0.0-beta.2
+  - @remirror/core-utils@3.0.0-beta.2
+  - @remirror/icons@3.0.0-beta.1
+  - @remirror/theme@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/dom@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
 ## 3.0.0-beta.3
 
 > 2023-11-08

@@ -1,5 +1,16 @@
 # @remirror/core-helpers
 
+## 4.0.0-beta.1
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core-constants@3.0.0-beta.1
+  - @remirror/types@2.0.0-beta.1
+
 ## 4.0.0-beta.0
 
 > 2023-10-06

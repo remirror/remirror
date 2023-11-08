@@ -1,5 +1,15 @@
 # @remirror/extension-template
 
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
 ## 3.0.0-beta.3
 
 > 2023-11-08
