@@ -1,5 +1,43 @@
 # @remirror/react-ui
 
+## 0.1.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-horizontal-rule@3.0.0-beta.4
+  - @remirror/extension-node-formatting@3.0.0-beta.4
+  - @remirror/extension-blockquote@3.0.0-beta.4
+  - @remirror/extension-code-block@3.0.0-beta.4
+  - @remirror/extension-positioner@3.0.0-beta.4
+  - @remirror/extension-text-color@3.0.0-beta.4
+  - @remirror/extension-whitespace@3.0.0-beta.4
+  - @remirror/extension-font-size@3.0.0-beta.4
+  - @remirror/extension-underline@3.0.0-beta.4
+  - @remirror/extension-callout@3.0.0-beta.4
+  - @remirror/extension-columns@3.0.0-beta.4
+  - @remirror/extension-heading@3.0.0-beta.4
+  - @remirror/extension-history@3.0.0-beta.4
+  - @remirror/extension-italic@3.0.0-beta.4
+  - @remirror/extension-strike@3.0.0-beta.4
+  - @remirror/extension-tables@3.0.0-beta.4
+  - @remirror/react-components@3.0.0-beta.4
+  - @remirror/extension-bold@3.0.0-beta.4
+  - @remirror/extension-code@3.0.0-beta.4
+  - @remirror/extension-list@3.0.0-beta.4
+  - @remirror/extension-sub@3.0.0-beta.4
+  - @remirror/extension-sup@3.0.0-beta.4
+  - @remirror/react-hooks@3.0.0-beta.4
+  - @remirror/react-core@3.0.0-beta.4
+  - @remirror/messages@3.0.0-beta.2
+  - @remirror/icons@3.0.0-beta.1
+  - @remirror/theme@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+  - @remirror/extension-find@1.0.0-beta.4
+
 ## 0.1.0-beta.3
 
 > 2023-11-08

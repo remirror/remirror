@@ -1,5 +1,20 @@
 # @remirror/extension-tabless
 
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-positioner@3.0.0-beta.4
+  - @remirror/extension-events@3.0.0-beta.4
+  - @remirror/messages@3.0.0-beta.2
+  - @remirror/theme@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
 ## 3.0.0-beta.3
 
 > 2023-11-08

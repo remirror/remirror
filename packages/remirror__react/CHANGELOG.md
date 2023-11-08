@@ -1,5 +1,24 @@
 # @remirror/react
 
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-react-component@3.0.0-beta.4
+  - @remirror/extension-react-tables@3.0.0-beta.4
+  - @remirror/extension-placeholder@3.0.0-beta.4
+  - @remirror/extension-positioner@3.0.0-beta.4
+  - @remirror/react-components@3.0.0-beta.4
+  - @remirror/react-renderer@3.0.0-beta.4
+  - @remirror/preset-react@3.0.0-beta.4
+  - @remirror/react-hooks@3.0.0-beta.4
+  - @remirror/react-utils@3.0.0-beta.2
+  - @remirror/react-core@3.0.0-beta.4
+
 ## 3.0.0-beta.3
 
 > 2023-11-08

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-tables",
-  "version": "3.0.0-beta.3",
+  "version": "3.0.0-beta.4",
   "description": "A table a day keeps the doctor away. Remirror and play keeps the bad times at bay.",
   "keywords": [
     "remirror",
@@ -43,18 +43,18 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.3",
-    "@remirror/extension-events": "3.0.0-beta.3",
-    "@remirror/extension-positioner": "3.0.0-beta.3",
-    "@remirror/messages": "3.0.0-beta.1",
-    "@remirror/theme": "3.0.0-beta.1"
+    "@remirror/core": "3.0.0-beta.4",
+    "@remirror/extension-events": "3.0.0-beta.4",
+    "@remirror/extension-positioner": "3.0.0-beta.4",
+    "@remirror/messages": "3.0.0-beta.2",
+    "@remirror/theme": "3.0.0-beta.2"
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "@remirror/pm": "3.0.0-beta.1"
+    "@remirror/pm": "3.0.0-beta.2"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.1"
+    "@remirror/pm": "^3.0.0-beta.2"
   },
   "publishConfig": {
     "access": "public",

@@ -1,5 +1,15 @@
 # @remirror/react-renderer
 
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core@3.0.0-beta.4
+
 ## 3.0.0-beta.3
 
 > 2023-11-08

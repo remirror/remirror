@@ -299,10 +299,10 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(jest-circus@29.5.0)(jest-environment-node@29.7.0)(jest-runner@29.7.0)(jest@29.5.0)
       jest-prosemirror:
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:packages/jest-prosemirror
       jest-remirror:
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:packages/jest-remirror
       jest-watch-typeahead:
         specifier: ^2.2.2
@@ -326,7 +326,7 @@ importers:
         specifier: ^2.4.3
         version: 2.4.3(prettier@2.8.8)
       remirror:
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:packages/remirror
       rimraf:
         specifier: ^4.4.1
@@ -394,19 +394,19 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
       '@remirror/core-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-utils
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@testing-library/dom':
         specifier: ^9.3.0
@@ -433,7 +433,7 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       test-keyboard:
-        specifier: 2.0.7-beta.1
+        specifier: 2.0.7-beta.2
         version: link:../test-keyboard
     devDependencies:
       '@remirror/cli':
@@ -449,16 +449,16 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/dom':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__dom
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-core
       '@testing-library/dom':
         specifier: ^9.3.0
@@ -467,7 +467,7 @@ importers:
         specifier: ^2.9.0
         version: 2.9.0
       jest-prosemirror:
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../jest-prosemirror
       sanitize-html:
         specifier: ^2.10.0
@@ -492,10 +492,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
       '@seznam/compose-react-refs':
         specifier: ^1.0.6
@@ -532,10 +532,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       escape-string-regexp:
         specifier: ^4.0.0
@@ -560,10 +560,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-utils
       prosemirror-model:
         specifier: ^1.19.3
@@ -582,13 +582,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/types':
-        specifier: 2.0.0-beta.0
+        specifier: 2.0.0-beta.1
         version: link:../remirror__types
       escape-string-regexp:
         specifier: ^4.0.0
@@ -610,10 +610,10 @@ importers:
   packages/prosemirror-trailing-node:
     dependencies:
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       escape-string-regexp:
         specifier: ^4.0.0
@@ -638,187 +638,187 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
       '@remirror/core-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-utils
       '@remirror/dom':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__dom
       '@remirror/extension-annotation':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-annotation
       '@remirror/extension-bidi':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-code-block
       '@remirror/extension-codemirror5':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-codemirror5
       '@remirror/extension-collaboration':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-collaboration
       '@remirror/extension-columns':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-columns
       '@remirror/extension-diff':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-diff
       '@remirror/extension-doc':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-doc
       '@remirror/extension-drop-cursor':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-embed
       '@remirror/extension-emoji':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-emoji
       '@remirror/extension-entity-reference':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-epic-mode':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-epic-mode
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/extension-font-family':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-font-family
       '@remirror/extension-font-size':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-font-size
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-hard-break':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-history
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-list
       '@remirror/extension-markdown':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-markdown
       '@remirror/extension-mention':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-paragraph':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-paragraph
       '@remirror/extension-placeholder':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-placeholder
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/extension-search':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-search
       '@remirror/extension-shortcuts':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-shortcuts
       '@remirror/extension-strike':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-tables
       '@remirror/extension-text':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text
       '@remirror/extension-text-case':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-trailing-node':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-trailing-node
       '@remirror/extension-underline':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-whitespace
       '@remirror/extension-yjs':
-        specifier: 4.0.0-beta.3
+        specifier: 4.0.0-beta.4
         version: link:../remirror__extension-yjs
       '@remirror/icons':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__icons
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-core
       '@remirror/preset-formatting':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-formatting
       '@remirror/preset-wysiwyg':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-wysiwyg
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       '@types/codemirror':
         specifier: ^5.60.7
@@ -840,7 +840,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/prettier':
         specifier: ^2.7.2
@@ -925,22 +925,22 @@ importers:
         specifier: 4.2.10
         version: 4.2.10
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
       '@remirror/core-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-utils
       '@remirror/icons':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__icons
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       nanoevents:
         specifier: ^5.1.13
@@ -953,7 +953,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__core-constants:
@@ -965,10 +965,10 @@ importers:
   packages/remirror__core-helpers:
     dependencies:
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/types':
-        specifier: 2.0.0-beta.0
+        specifier: 2.0.0-beta.1
         version: link:../remirror__types
       '@types/object.omit':
         specifier: ^3.0.0
@@ -1011,17 +1011,17 @@ importers:
   packages/remirror__core-types:
     dependencies:
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/types':
-        specifier: 2.0.0-beta.0
+        specifier: 2.0.0-beta.1
         version: link:../remirror__types
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__core-utils:
@@ -1030,16 +1030,16 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@types/min-document':
         specifier: ^2.19.0
@@ -1061,7 +1061,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/jsdom':
         specifier: ^16.2.15
@@ -1079,7 +1079,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/react-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-core
       prosemirror-dev-toolkit:
         specifier: ^1.1.4
@@ -1089,7 +1089,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@testing-library/react':
         specifier: ^14.0.0
@@ -1113,17 +1113,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-core
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-annotation:
@@ -1132,20 +1132,20 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-bidi:
@@ -1154,10 +1154,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@types/direction':
         specifier: ^1.0.0
@@ -1170,7 +1170,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-blockquote:
@@ -1179,20 +1179,20 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-bold:
@@ -1201,17 +1201,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-callout:
@@ -1220,20 +1220,20 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-code:
@@ -1242,17 +1242,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-code-block:
@@ -1261,13 +1261,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       '@types/refractor':
         specifier: ^3.0.2
@@ -1280,7 +1280,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/jsdom':
         specifier: ^16.2.15
@@ -1301,20 +1301,20 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/codemirror':
         specifier: ^5.60.7
@@ -1338,14 +1338,14 @@ importers:
         specifier: ^6.12.0
         version: 6.12.0
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-collaboration:
@@ -1354,17 +1354,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-columns:
@@ -1373,17 +1373,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-count:
@@ -1392,14 +1392,14 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-diff:
@@ -1408,17 +1408,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-doc:
@@ -1427,17 +1427,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-drop-cursor:
@@ -1446,17 +1446,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-embed:
@@ -1465,16 +1465,16 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@types/querystringify':
         specifier: ^2.0.0
         version: 2.0.0
       prosemirror-resizable-view:
-        specifier: ^3.0.0-beta.1
+        specifier: ^3.0.0-beta.2
         version: link:../prosemirror-resizable-view
       querystringify:
         specifier: ^2.2.0
@@ -1484,7 +1484,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-emoji:
@@ -1496,13 +1496,13 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       emojibase:
         specifier: ^6.1.0
@@ -1524,7 +1524,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-entity-reference:
@@ -1533,20 +1533,20 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-epic-mode:
@@ -1555,17 +1555,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-events:
@@ -1574,17 +1574,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-file:
@@ -1593,16 +1593,16 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-component
       '@remirror/react-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-core
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       nanoevents:
         specifier: ^5.1.13
@@ -1612,7 +1612,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -1630,7 +1630,7 @@ importers:
   packages/remirror__extension-find:
     dependencies:
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@types/string.prototype.matchall':
         specifier: ^4.0.1
@@ -1646,7 +1646,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-font-family:
@@ -1655,17 +1655,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-font-size:
@@ -1674,10 +1674,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       round:
         specifier: ^2.0.1
@@ -1687,7 +1687,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-gap-cursor:
@@ -1696,17 +1696,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-hard-break:
@@ -1715,17 +1715,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-heading:
@@ -1734,17 +1734,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-history:
@@ -1753,17 +1753,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-horizontal-rule:
@@ -1772,17 +1772,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-image:
@@ -1791,23 +1791,23 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       prosemirror-resizable-view:
-        specifier: ^3.0.0-beta.1
+        specifier: ^3.0.0-beta.2
         version: link:../prosemirror-resizable-view
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-italic:
@@ -1816,17 +1816,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-link:
@@ -1835,13 +1835,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       extract-domain:
         specifier: 2.2.1
@@ -1851,7 +1851,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/extract-domain':
         specifier: 2.3.1
@@ -1866,23 +1866,23 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-markdown:
@@ -1891,10 +1891,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@types/marked':
         specifier: ^4.3.1
@@ -1916,10 +1916,10 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-tables
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-mention:
@@ -1928,13 +1928,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       escape-string-regexp:
         specifier: ^4.0.0
@@ -1944,7 +1944,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-mention-atom:
@@ -1953,23 +1953,23 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-node-formatting:
@@ -1978,17 +1978,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-paragraph:
@@ -1997,17 +1997,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-placeholder:
@@ -2016,20 +2016,20 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-positioner:
@@ -2038,16 +2038,16 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       nanoevents:
         specifier: ^5.1.13
@@ -2057,7 +2057,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-react-component:
@@ -2066,22 +2066,22 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
       '@remirror/core-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-utils
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       nanoevents:
         specifier: ^5.1.13
@@ -2091,7 +2091,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2112,25 +2112,25 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/core-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-utils
       '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-code-block
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/react-components':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-hooks
       lodash.memoize:
         specifier: ^4.1.2
@@ -2140,7 +2140,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/lodash.memoize':
         specifier: ^4.1.7
@@ -2164,26 +2164,26 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-component
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/react-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-utils
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -2204,41 +2204,41 @@ importers:
         specifier: 4.2.10
         version: 4.2.10
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/core-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-utils
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/extension-tables':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-tables
       '@remirror/icons':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__icons
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/react-components':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-hooks
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2265,10 +2265,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       escape-string-regexp:
         specifier: ^4.0.0
@@ -2278,7 +2278,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-shortcuts:
@@ -2287,14 +2287,14 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-strike:
@@ -2303,17 +2303,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-sub:
@@ -2322,17 +2322,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-sup:
@@ -2341,17 +2341,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-tables:
@@ -2360,26 +2360,26 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-text:
@@ -2388,17 +2388,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-text-case:
@@ -2407,17 +2407,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-text-color:
@@ -2426,13 +2426,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       color2k:
         specifier: ^2.0.2
@@ -2442,7 +2442,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-text-highlight:
@@ -2451,20 +2451,20 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text-color
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-trailing-node:
@@ -2473,17 +2473,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-underline:
@@ -2492,17 +2492,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-whitespace:
@@ -2511,17 +2511,17 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__extension-yjs:
@@ -2530,10 +2530,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       prosemirror-model:
         specifier: ^1.19.3
@@ -2555,7 +2555,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       y-webrtc:
         specifier: ^10.2.5
@@ -2576,10 +2576,10 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0(patch_hash=uzqgblaxvgmluh5mph5ydlgsdm)
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
       make-plural:
         specifier: ^6.2.2
@@ -2595,7 +2595,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
     devDependencies:
       '@remirror/cli':
@@ -2608,10 +2608,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
     devDependencies:
       '@babel/cli':
@@ -2639,10 +2639,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       prosemirror-collab:
         specifier: ^1.3.1
@@ -2669,7 +2669,7 @@ importers:
         specifier: ^1.19.3
         version: 1.19.3
       prosemirror-paste-rules:
-        specifier: ^3.0.0-beta.1
+        specifier: ^3.0.0-beta.2
         version: link:../prosemirror-paste-rules
       prosemirror-schema-list:
         specifier: ^1.3.0
@@ -2678,13 +2678,13 @@ importers:
         specifier: ^1.4.3
         version: 1.4.3
       prosemirror-suggest:
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../prosemirror-suggest
       prosemirror-tables:
         specifier: ^1.3.4
         version: 1.3.4
       prosemirror-trailing-node:
-        specifier: ^3.0.0-beta.1
+        specifier: ^3.0.0-beta.2
         version: link:../prosemirror-trailing-node
       prosemirror-transform:
         specifier: ^1.8.0
@@ -2703,35 +2703,35 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-doc':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-doc
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-history':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-history
       '@remirror/extension-paragraph':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-paragraph
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/extension-text':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__preset-formatting:
@@ -2740,56 +2740,56 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-bold':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-bold
       '@remirror/extension-columns':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-columns
       '@remirror/extension-font-size':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-heading
       '@remirror/extension-italic':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-italic
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-strike':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-sup
       '@remirror/extension-text-case':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-underline':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-whitespace
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__preset-react:
@@ -2798,23 +2798,23 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-placeholder':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-placeholder
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-component
       '@remirror/react-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-utils
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2835,77 +2835,77 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-bidi':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-bold
       '@remirror/extension-code':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-code-block
       '@remirror/extension-drop-cursor':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-embed
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-hard-break':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-heading
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-list
       '@remirror/extension-search':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-search
       '@remirror/extension-shortcuts':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-shortcuts
       '@remirror/extension-strike':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-strike
       '@remirror/extension-trailing-node':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-trailing-node
       '@remirror/extension-underline':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-underline
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-core
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
 
   packages/remirror__react:
@@ -2914,34 +2914,34 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/extension-placeholder':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-placeholder
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-component
       '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-tables
       '@remirror/preset-react':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-react
       '@remirror/react-components':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-hooks
       '@remirror/react-renderer':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-renderer
       '@remirror/react-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-utils
     devDependencies:
       '@remirror/cli':
@@ -2969,28 +2969,28 @@ importers:
         specifier: ^0.24.3
         version: 0.24.3(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/icons':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__icons
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/react-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-hooks
       '@remirror/react-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-utils
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       '@seznam/compose-react-refs':
         specifier: ^1.0.6
@@ -3005,7 +3005,7 @@ importers:
         specifier: ^6.3.1
         version: 6.3.1
       multishift:
-        specifier: 2.0.10-beta.1
+        specifier: 2.0.10-beta.2
         version: link:../multishift
       react-color:
         specifier: ^2.19.3
@@ -3015,7 +3015,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -3036,28 +3036,28 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-component
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-core
       '@remirror/preset-react':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-react
       '@remirror/react-renderer':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-renderer
       '@remirror/react-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-utils
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       '@seznam/compose-react-refs':
         specifier: ^1.0.6
@@ -3076,7 +3076,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/jsdom':
         specifier: ^16.2.15
@@ -3103,25 +3103,25 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-tables
       '@remirror/i18n':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__i18n
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react
       '@remirror/react-ui':
-        specifier: 0.1.0-beta.3
+        specifier: 0.1.0-beta.4
         version: link:../remirror__react-ui
       '@remirror/styles':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__styles
       '@svgmoji/noto':
         specifier: ^3.2.0
@@ -3136,7 +3136,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror
       svgmoji:
         specifier: ^3.2.0
@@ -3167,40 +3167,40 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/extension-emoji':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-emoji
       '@remirror/extension-events':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
       '@remirror/extension-history':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-history
       '@remirror/extension-mention':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/react-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-core
       '@remirror/react-utils':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__react-utils
       multishift:
-        specifier: 2.0.10-beta.1
+        specifier: 2.0.10-beta.2
         version: link:../multishift
       use-isomorphic-layout-effect:
         specifier: ^1.1.2
@@ -3213,7 +3213,7 @@ importers:
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -3237,7 +3237,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -3256,20 +3256,20 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-react-ssr':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-ssr
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -3302,98 +3302,98 @@ importers:
         specifier: ^5.13.2
         version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/extension-blockquote':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-code-block
       '@remirror/extension-columns':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-columns
       '@remirror/extension-find':
-        specifier: 1.0.0-beta.3
+        specifier: 1.0.0-beta.4
         version: link:../remirror__extension-find
       '@remirror/extension-font-size':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-history
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-italic':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-italic
       '@remirror/extension-list':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-list
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
       '@remirror/extension-strike':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-tables
       '@remirror/extension-text-color':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-text-color
       '@remirror/extension-underline':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-whitespace
       '@remirror/icons':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__icons
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/react-components':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react-hooks
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
     devDependencies:
       '@remirror/cli':
         specifier: 1.0.1
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -3414,13 +3414,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-constants':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__core-constants
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
     devDependencies:
       '@remirror/cli':
@@ -3439,7 +3439,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
     devDependencies:
       '@emotion/css':
@@ -3476,7 +3476,7 @@ importers:
         specifier: 4.2.10
         version: 4.2.10
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
       color2k:
         specifier: ^2.0.2
@@ -3553,61 +3553,61 @@ importers:
         specifier: ^5.13.2
         version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/dev':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__dev
       '@remirror/extension-codemirror6':
-        specifier: 2.0.0-beta.3
+        specifier: 2.0.0-beta.4
         version: link:../remirror__extension-codemirror6
       '@remirror/extension-count':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-count
       '@remirror/extension-entity-reference':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-file':
-        specifier: 2.0.0-beta.3
+        specifier: 2.0.0-beta.4
         version: link:../remirror__extension-file
       '@remirror/extension-find':
-        specifier: 1.0.0-beta.3
+        specifier: 1.0.0-beta.4
         version: link:../remirror__extension-find
       '@remirror/extension-mention':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-react-language-select':
-        specifier: 1.0.0-beta.3
+        specifier: 1.0.0-beta.4
         version: link:../remirror__extension-react-language-select
       '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__extension-react-tables
       '@remirror/i18n':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__i18n
       '@remirror/messages':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__messages
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react
       '@remirror/react-editors':
-        specifier: 2.0.0-beta.3
+        specifier: 2.0.0-beta.4
         version: link:../remirror__react-editors
       '@remirror/react-ui':
-        specifier: 0.1.0-beta.3
+        specifier: 0.1.0-beta.4
         version: link:../remirror__react-ui
       '@remirror/styles':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../remirror__styles
       '@remirror/theme':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__theme
       '@svgmoji/blob':
         specifier: ^3.2.0
@@ -3691,7 +3691,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror
       scripts:
         specifier: 0.0.1
@@ -3761,10 +3761,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../remirror__core-helpers
       '@remirror/core-types':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__core-types
     devDependencies:
       '@remirror/cli':
@@ -3786,16 +3786,16 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__core
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../remirror__pm
       '@remirror/preset-core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__preset-core
       '@remirror/react':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../remirror__react
       '@testing-library/react':
         specifier: ^14.0.0
@@ -3867,7 +3867,7 @@ importers:
         specifier: ^3.0.7
         version: 3.0.7
       test-keyboard:
-        specifier: 2.0.7-beta.1
+        specifier: 2.0.7-beta.2
         version: link:../test-keyboard
     devDependencies:
       '@remirror/cli':
@@ -3883,7 +3883,7 @@ importers:
   support:
     dependencies:
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../packages/remirror__core-helpers
       diffable-html:
         specifier: ^5.0.0
@@ -3904,7 +3904,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../../packages/remirror__core-helpers
       '@types/fs-extra':
         specifier: ^9.0.13
@@ -3974,13 +3974,13 @@ importers:
         specifier: ^7.37.0
         version: 7.37.0(@types/node@16.18.34)
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../../packages/remirror__core-helpers
       '@remirror/icons':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../../packages/remirror__icons
       '@remirror/types':
-        specifier: 2.0.0-beta.0
+        specifier: 2.0.0-beta.1
         version: link:../../packages/remirror__types
       '@types/autoprefixer':
         specifier: ^9.7.2
@@ -4151,11 +4151,11 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../../../packages/remirror__pm
 
   support/templates/minimal-template:
@@ -4164,7 +4164,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core-helpers':
-        specifier: 4.0.0-beta.0
+        specifier: 4.0.0-beta.1
         version: link:../../../packages/remirror__core-helpers
 
   support/templates/preset-template:
@@ -4173,11 +4173,11 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: 3.0.0-beta.1
+        specifier: 3.0.0-beta.2
         version: link:../../../packages/remirror__pm
 
   website:
@@ -4204,19 +4204,19 @@ importers:
         specifier: ^1.6.22
         version: 1.6.22(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../packages/remirror__core
       '@remirror/dev':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../packages/remirror__dev
       '@remirror/react':
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../packages/remirror__react
       '@remirror/react-editors':
-        specifier: 2.0.0-beta.3
+        specifier: 2.0.0-beta.4
         version: link:../packages/remirror__react-editors
       '@remirror/styles':
-        specifier: 3.0.0-beta.0
+        specifier: 3.0.0-beta.1
         version: link:../packages/remirror__styles
       '@types/react-syntax-highlighter':
         specifier: ^13.5.2
@@ -4258,7 +4258,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       remirror:
-        specifier: 3.0.0-beta.3
+        specifier: 3.0.0-beta.4
         version: link:../packages/remirror
     devDependencies:
       '@docusaurus/core':

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-react-component",
-  "version": "3.0.0-beta.3",
+  "version": "3.0.0-beta.4",
   "description": "Create prosemirror node views from your react components",
   "keywords": [
     "remirror",
@@ -39,24 +39,24 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.3",
-    "@remirror/core-constants": "3.0.0-beta.0",
-    "@remirror/core-helpers": "4.0.0-beta.0",
-    "@remirror/core-types": "3.0.0-beta.1",
-    "@remirror/core-utils": "3.0.0-beta.1",
-    "@remirror/messages": "3.0.0-beta.1",
+    "@remirror/core": "3.0.0-beta.4",
+    "@remirror/core-constants": "3.0.0-beta.1",
+    "@remirror/core-helpers": "4.0.0-beta.1",
+    "@remirror/core-types": "3.0.0-beta.2",
+    "@remirror/core-utils": "3.0.0-beta.2",
+    "@remirror/messages": "3.0.0-beta.2",
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "@remirror/pm": "3.0.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.2",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.1",
+    "@remirror/pm": "^3.0.0-beta.2",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",
