@@ -1,5 +1,16 @@
 # @remirror/react-editors
 
+## 2.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- remirror@3.0.0-beta.3
+- @remirror/extension-react-tables@3.0.0-beta.3
+- @remirror/react-ui@0.1.0-beta.3
+- @remirror/react@3.0.0-beta.3
+
 ## 2.0.0-beta.2
 
 > 2023-11-07

@@ -1,5 +1,17 @@
 # @remirror/react-components
 
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+  - @remirror/extension-positioner@3.0.0-beta.3
+  - @remirror/react-core@3.0.0-beta.3
+  - @remirror/react-hooks@3.0.0-beta.3
+
 ## 3.0.0-beta.2
 
 > 2023-11-07

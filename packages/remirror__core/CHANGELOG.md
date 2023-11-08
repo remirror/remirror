@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- 46e903ed9: Downgrade build target to support browsers since 2017, as per docs.
+
 ## 3.0.0-beta.2
 
 > 2023-11-07

@@ -1,5 +1,13 @@
 # @remirror/dev
 
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- @remirror/react-core@3.0.0-beta.3
+
 ## 3.0.0-beta.2
 
 > 2023-11-07

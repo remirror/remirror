@@ -1,5 +1,68 @@
 # remirror
 
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+  - @remirror/dom@3.0.0-beta.3
+  - @remirror/extension-annotation@3.0.0-beta.3
+  - @remirror/extension-bidi@3.0.0-beta.3
+  - @remirror/extension-blockquote@3.0.0-beta.3
+  - @remirror/extension-bold@3.0.0-beta.3
+  - @remirror/extension-callout@3.0.0-beta.3
+  - @remirror/extension-code@3.0.0-beta.3
+  - @remirror/extension-code-block@3.0.0-beta.3
+  - @remirror/extension-codemirror5@3.0.0-beta.3
+  - @remirror/extension-collaboration@3.0.0-beta.3
+  - @remirror/extension-columns@3.0.0-beta.3
+  - @remirror/extension-diff@3.0.0-beta.3
+  - @remirror/extension-doc@3.0.0-beta.3
+  - @remirror/extension-drop-cursor@3.0.0-beta.3
+  - @remirror/extension-embed@3.0.0-beta.3
+  - @remirror/extension-emoji@3.0.0-beta.3
+  - @remirror/extension-entity-reference@3.0.0-beta.3
+  - @remirror/extension-epic-mode@3.0.0-beta.3
+  - @remirror/extension-events@3.0.0-beta.3
+  - @remirror/extension-font-family@3.0.0-beta.3
+  - @remirror/extension-font-size@3.0.0-beta.3
+  - @remirror/extension-gap-cursor@3.0.0-beta.3
+  - @remirror/extension-hard-break@3.0.0-beta.3
+  - @remirror/extension-heading@3.0.0-beta.3
+  - @remirror/extension-history@3.0.0-beta.3
+  - @remirror/extension-horizontal-rule@3.0.0-beta.3
+  - @remirror/extension-image@3.0.0-beta.3
+  - @remirror/extension-italic@3.0.0-beta.3
+  - @remirror/extension-link@3.0.0-beta.3
+  - @remirror/extension-list@3.0.0-beta.3
+  - @remirror/extension-markdown@3.0.0-beta.3
+  - @remirror/extension-mention@3.0.0-beta.3
+  - @remirror/extension-mention-atom@3.0.0-beta.3
+  - @remirror/extension-node-formatting@3.0.0-beta.3
+  - @remirror/extension-paragraph@3.0.0-beta.3
+  - @remirror/extension-placeholder@3.0.0-beta.3
+  - @remirror/extension-positioner@3.0.0-beta.3
+  - @remirror/extension-search@3.0.0-beta.3
+  - @remirror/extension-shortcuts@3.0.0-beta.3
+  - @remirror/extension-strike@3.0.0-beta.3
+  - @remirror/extension-sub@3.0.0-beta.3
+  - @remirror/extension-sup@3.0.0-beta.3
+  - @remirror/extension-tables@3.0.0-beta.3
+  - @remirror/extension-text@3.0.0-beta.3
+  - @remirror/extension-text-case@3.0.0-beta.3
+  - @remirror/extension-text-color@3.0.0-beta.3
+  - @remirror/extension-text-highlight@3.0.0-beta.3
+  - @remirror/extension-trailing-node@3.0.0-beta.3
+  - @remirror/extension-underline@3.0.0-beta.3
+  - @remirror/extension-whitespace@3.0.0-beta.3
+  - @remirror/extension-yjs@4.0.0-beta.3
+  - @remirror/preset-core@3.0.0-beta.3
+  - @remirror/preset-formatting@3.0.0-beta.3
+  - @remirror/preset-wysiwyg@3.0.0-beta.3
+
 ## 3.0.0-beta.2
 
 > 2023-11-07

@@ -110,6 +110,7 @@
     "@remirror/react-ui": "0.1.0-beta.0"
   },
   "changesets": [
+    "chilled-teachers-promise",
     "clever-lions-breathe",
     "friendly-pears-promise",
     "pretty-donkeys-crash",

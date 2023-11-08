@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-entity-reference",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "Allow users to highlight important content",
   "keywords": [
     "remirror",
@@ -39,9 +39,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.2",
-    "@remirror/extension-events": "3.0.0-beta.2",
-    "@remirror/extension-positioner": "3.0.0-beta.2"
+    "@remirror/core": "3.0.0-beta.3",
+    "@remirror/extension-events": "3.0.0-beta.3",
+    "@remirror/extension-positioner": "3.0.0-beta.3"
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",

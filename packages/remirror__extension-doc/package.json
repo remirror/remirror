@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-doc",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "The root of your text-editor. One doc to rule them all.",
   "keywords": [
     "remirror",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.2",
+    "@remirror/core": "3.0.0-beta.3",
     "@remirror/messages": "3.0.0-beta.1"
   },
   "devDependencies": {

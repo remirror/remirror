@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-columns",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "Add column support to the nodes in your editor.",
   "keywords": [
     "remirror",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.2",
+    "@remirror/core": "3.0.0-beta.3",
     "@remirror/messages": "3.0.0-beta.1"
   },
   "devDependencies": {
