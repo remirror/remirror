@@ -1,5 +1,28 @@
 # @remirror/preset-formatting
 
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+  - @remirror/extension-bold@3.0.0-beta.3
+  - @remirror/extension-columns@3.0.0-beta.3
+  - @remirror/extension-font-size@3.0.0-beta.3
+  - @remirror/extension-heading@3.0.0-beta.3
+  - @remirror/extension-italic@3.0.0-beta.3
+  - @remirror/extension-node-formatting@3.0.0-beta.3
+  - @remirror/extension-strike@3.0.0-beta.3
+  - @remirror/extension-sub@3.0.0-beta.3
+  - @remirror/extension-sup@3.0.0-beta.3
+  - @remirror/extension-text-case@3.0.0-beta.3
+  - @remirror/extension-text-color@3.0.0-beta.3
+  - @remirror/extension-text-highlight@3.0.0-beta.3
+  - @remirror/extension-underline@3.0.0-beta.3
+  - @remirror/extension-whitespace@3.0.0-beta.3
+
 ## 3.0.0-beta.2
 
 > 2023-11-07
