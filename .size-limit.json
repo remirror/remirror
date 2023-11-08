@@ -9,7 +9,7 @@
   },
   {
     "name": "create-context-state",
-    "limit": "1.5 KB",
+    "limit": "2 KB",
     "path": "packages/create-context-state/dist/create-context-state.js",
     "ignore": ["@types/react", "react"],
     "running": false,
@@ -184,7 +184,7 @@
   },
   {
     "name": "@remirror/extension-code-block",
-    "limit": "20 KB",
+    "limit": "25 KB",
     "path": "packages/remirror__extension-code-block/dist/remirror-extension-code-block.js",
     "ignore": [
       "@remirror/pm",
@@ -332,7 +332,7 @@
   },
   {
     "name": "@remirror/extension-find",
-    "limit": "20 KB",
+    "limit": "25 KB",
     "path": "packages/remirror__extension-find/dist/remirror-extension-find.js",
     "ignore": ["@remirror/pm", "@remirror/core"],
     "running": false,

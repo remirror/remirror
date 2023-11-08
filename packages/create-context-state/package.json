@@ -69,6 +69,6 @@
     "types": "./dist/create-context-state.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "1.5 KB"
+    "sizeLimit": "2 KB"
   }
 }

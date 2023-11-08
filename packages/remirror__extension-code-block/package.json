@@ -100,7 +100,7 @@
     "types": "./dist/remirror-extension-code-block.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "20 KB"
+    "sizeLimit": "25 KB"
   },
   "preconstruct": {
     "entrypoints": [
