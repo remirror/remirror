@@ -1,19 +1,20 @@
+import 'remirror/styles/all.css';
+
 import React from 'react';
 import css from 'refractor/lang/css.js';
 import javascript from 'refractor/lang/javascript.js';
 import json from 'refractor/lang/json.js';
 import markdown from 'refractor/lang/markdown.js';
 import typescript from 'refractor/lang/typescript.js';
-import { cx } from 'remirror';
-import { CodeBlockExtension } from 'remirror/extensions';
-import { CodeBlockLanguageSelect } from '@remirror/extension-react-language-select';
+import { CodeBlockExtension, TrailingNodeExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-import { ExtensionCodeBlockTheme } from '@remirror/theme';
+import { CodeBlockLanguageSelect } from '@remirror/react-ui';
 
 const extensions = () => [
   new CodeBlockExtension({
     supportedLanguages: [css, javascript, json, markdown, typescript],
   }),
+  new TrailingNodeExtension(),
 ];
 
 const content = `
@@ -35,13 +36,7 @@ const Basic = (): JSX.Element => {
   return (
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state} autoRender>
-        <CodeBlockLanguageSelect
-          offset={{ x: 5, y: 5 }}
-          className={cx(
-            ExtensionCodeBlockTheme.LANGUAGE_SELECT_POSITIONER,
-            ExtensionCodeBlockTheme.LANGUAGE_SELECT_WIDTH,
-          )}
-        />
+        <CodeBlockLanguageSelect />
       </Remirror>
     </ThemeProvider>
   );

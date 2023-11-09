@@ -531,25 +531,6 @@
     "gzip": true
   },
   {
-    "name": "@remirror/extension-react-language-select",
-    "limit": "10 KB",
-    "path": "packages/remirror__extension-react-language-select/dist/remirror-extension-react-language-select.js",
-    "ignore": [
-      "@remirror/pm",
-      "react",
-      "react-dom",
-      "@remirror/core",
-      "@remirror/core-utils",
-      "@remirror/extension-code-block",
-      "@remirror/extension-positioner",
-      "@remirror/react-components",
-      "@remirror/react-core",
-      "@remirror/react-hooks"
-    ],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/extension-react-ssr",
     "limit": "10 KB",
     "path": "packages/remirror__extension-react-ssr/dist/remirror-extension-react-ssr.js",

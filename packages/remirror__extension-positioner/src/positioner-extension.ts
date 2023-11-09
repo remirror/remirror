@@ -176,6 +176,7 @@ export class PositionerExtension extends PlainExtension<PositionerOptions> {
   private createElement() {
     const element = document.createElement('span');
     element.dataset.id = POSITIONER_WIDGET_KEY;
+    element.classList.add(POSITIONER_WIDGET_KEY);
     element.setAttribute('role', 'presentation');
 
     return element;
