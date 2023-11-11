@@ -23,7 +23,7 @@ import {
   MarkExtension,
   MarkExtensionSpec,
   MarkSpecOverride,
-} from '@remirror/core';
+} from 'remirror';
 
 export interface SampOptions {}
 
@@ -61,8 +61,17 @@ export class SampExtension extends MarkExtension<SampOptions> {
 By now, our editor knows about `samp` marks but we still can't create a UI to interact with them. For that, we need to add a couple of commands:
 
 ```tsx
+import {
+  // remirror imports as before
+  command,
+  CommandFunction,
+  getTextSelection,
+  PrimitiveSelection,
+  toggleMark,
+} from 'remirror';
+
 export class SampExtension extends MarkExtension<SampOptions> {
-  // ...
+  // ...as before
 
   @command()
   toggleSamp(selection?: PrimitiveSelection): CommandFunction {
@@ -103,6 +112,7 @@ Our custom extension is identical to any other extension provided by Remirror. H
 ```tsx
 import 'remirror/styles/all.css';
 
+import React from 'react';
 import { EditorComponent, Remirror, useCommands, useRemirror } from '@remirror/react';
 
 import { SampExtension } from './samp-extension';
