@@ -62,7 +62,7 @@ By now, our editor knows about `samp` marks but we still can't create a UI to in
 
 ```tsx
 import {
-  // remirror imports as before 
+  // remirror imports as before
   command,
   CommandFunction,
   getTextSelection,
@@ -71,7 +71,7 @@ import {
 } from 'remirror';
 
 export class SampExtension extends MarkExtension<SampOptions> {
-  // ...as before 
+  // ...as before
 
   @command()
   toggleSamp(selection?: PrimitiveSelection): CommandFunction {
