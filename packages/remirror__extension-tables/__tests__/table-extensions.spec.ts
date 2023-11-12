@@ -9,6 +9,7 @@ import {
   TableHeaderCellExtension,
   TableRowExtension,
 } from '../';
+import { TableOptions } from '../src';
 
 extensionValidityTest(TableExtension);
 extensionValidityTest(TableCellExtension);
@@ -44,15 +45,15 @@ describe('schema', () => {
   });
 });
 
-function create() {
-  return renderEditor<TableExtension>([new TableExtension()]);
+function create(options?: TableOptions) {
+  return renderEditor<TableExtension>([new TableExtension(options)]);
 }
 
 describe('commands', () => {
-  const setup = () => {
-    const editor = create();
+  const setup = (options?: TableOptions) => {
+    const editor = create(options);
 
-    const { commands, view, add } = editor;
+    const { commands, view, add, press } = editor;
     const { doc, p, table, tableRow: row, tableCell: cell, tableHeaderCell: header } = editor.nodes;
 
     const build = (...rows: string[][]) => {
@@ -90,6 +91,7 @@ describe('commands', () => {
       commands,
       view,
       add,
+      press,
       doc,
       p,
       row,
@@ -310,6 +312,62 @@ describe('commands', () => {
       add(doc(table));
 
       expect(editor.helpers.tableHasHeader('column')).toBeFalse();
+    });
+  });
+
+  describe('keyboard shortcuts', () => {
+    it('pressing Tab does nothing by default', () => {
+      const { build, add, press, view, doc } = setup();
+
+      const table = build(['A1', 'B1<cursor>', 'C1']);
+      add(doc(table));
+
+      press('Tab');
+
+      const { from, to } = view.state.selection;
+      expect(from).toBe(12);
+      expect(to).toBe(12);
+    });
+
+    it('pressing Shift-Tab does nothing', () => {
+      const { build, add, press, view, doc } = setup();
+
+      const table = build(['A1', 'B1<cursor>', 'C1']);
+      add(doc(table));
+
+      press('Shift-Tab');
+
+      const { from, to } = view.state.selection;
+      expect(from).toBe(12);
+      expect(to).toBe(12);
+    });
+
+    it('pressing Tab takes me to the next cell if `tabKeyboardShortcuts` is enabled', () => {
+      const { build, add, press, view, doc } = setup({ tabKeyboardShortcuts: true });
+
+      const table = build(['A1', 'B1<cursor>', 'C1']);
+      add(doc(table));
+
+      press('Tab');
+
+      const { from, to } = view.state.selection;
+      expect(from).toBe(16);
+      expect(to).toBe(18);
+      expect(view.state.doc.textBetween(16, 18)).toBe('C1');
+    });
+
+    it('pressing Shift-Tab takes me to the previous cell if `tabKeyboardShortcuts` is enabled', () => {
+      const { build, add, press, view, doc } = setup({ tabKeyboardShortcuts: true });
+
+      const table = build(['A1', 'B1<cursor>', 'C1']);
+      add(doc(table));
+
+      press('Shift-Tab');
+
+      const { from, to } = view.state.selection;
+      expect(from).toBe(4);
+      expect(to).toBe(6);
+      expect(view.state.doc.textBetween(4, 6)).toBe('A1');
     });
   });
 });
