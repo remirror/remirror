@@ -231,48 +231,48 @@ describe('tags', () => {
   });
 
   it('supports <cursor>', () => {
-    const { start, end } = add(doc(p('This is a <cursor>position')));
+    const { from, to } = add(doc(p('This is a <cursor>position')));
 
-    expect(start).toBe(11);
-    expect(start).toBe(view.state.selection.from);
-    expect(end).toBe(11);
-    expect(end).toBe(view.state.selection.to);
+    expect(from).toBe(11);
+    expect(from).toBe(view.state.selection.from);
+    expect(to).toBe(11);
+    expect(to).toBe(view.state.selection.to);
   });
 
   it('supports <start>', () => {
-    const { start, end } = add(doc(p('This is a <start>position')));
+    const { from, to } = add(doc(p('This is a <start>position')));
 
-    expect(start).toBe(11);
-    expect(start).toBe(view.state.selection.from);
-    expect(end).toBe(19);
-    expect(end).toBe(view.state.selection.to);
+    expect(from).toBe(11);
+    expect(from).toBe(view.state.selection.from);
+    expect(to).toBe(19);
+    expect(to).toBe(view.state.selection.to);
   });
 
   it('supports <start> / <end>', () => {
-    const { start, end } = add(doc(p('This is a <start>pos<end>ition')));
+    const { from, to } = add(doc(p('This is a <start>pos<end>ition')));
 
-    expect(start).toBe(11);
-    expect(start).toBe(view.state.selection.from);
-    expect(end).toBe(14);
-    expect(end).toBe(view.state.selection.to);
+    expect(from).toBe(11);
+    expect(from).toBe(view.state.selection.from);
+    expect(to).toBe(14);
+    expect(to).toBe(view.state.selection.to);
   });
 
   it('supports <all>', () => {
-    const { start, end } = add(doc(p('This is an <all>position')));
+    const { from, to } = add(doc(p('This is an <all>position')));
 
-    expect(start).toBe(0);
-    expect(start).toBe(view.state.selection.from);
-    expect(end).toBe(21);
-    expect(end).toBe(view.state.selection.to);
+    expect(from).toBe(0);
+    expect(from).toBe(view.state.selection.from);
+    expect(to).toBe(21);
+    expect(to).toBe(view.state.selection.to);
   });
 
   it('supports <node>', () => {
-    const { start, end, state } = add(doc(p('Hello'), p('<node>Text here')));
+    const { from, to, state } = add(doc(p('Hello'), p('<node>Text here')));
 
     expect(state.selection).toBeInstanceOf(NodeSelection);
-    expect(start).toBe(7);
-    expect(start).toBe(view.state.selection.from);
-    expect(end).toBe(18);
-    expect(end).toBe(view.state.selection.to);
+    expect(from).toBe(7);
+    expect(from).toBe(view.state.selection.from);
+    expect(to).toBe(18);
+    expect(to).toBe(view.state.selection.to);
   });
 });
