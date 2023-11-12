@@ -13,6 +13,8 @@ import {
   Helper,
   helper,
   isElementDomNode,
+  keyBinding,
+  KeyBindingProps,
   NodeExtension,
   NodeSpecOverride,
   nonChainable,
@@ -36,6 +38,7 @@ import {
   deleteTable,
   fixTables,
   fixTablesKey,
+  goToNextCell,
   isCellSelection,
   mergeCells,
   rowIsHeader,
@@ -77,6 +80,13 @@ export interface TableOptions {
    * The options passed to the column resizing plugin
    */
   resizeableOptions?: TableResizableOptions;
+
+  /**
+   * Whether to use Tab and Shift-Tab to navigate between cells
+   *
+   * @defaultValue: false
+   */
+  tabKeyboardShortcuts?: boolean;
 }
 
 let tablesEnabled = false;
@@ -85,6 +95,7 @@ let tablesEnabled = false;
   defaultOptions: {
     resizable: true,
     resizeableOptions: {},
+    tabKeyboardShortcuts: false,
   },
   defaultPriority: ExtensionPriority.Default,
 })
@@ -449,6 +460,22 @@ export class TableExtension extends NodeExtension<TableOptions> {
       dispatch?.(tr);
       return true;
     };
+  }
+
+  @keyBinding<TableExtension>({
+    shortcut: 'Tab',
+    isActive: (options) => options.tabKeyboardShortcuts,
+  })
+  goToNextCell(props: KeyBindingProps): boolean {
+    return convertCommand(goToNextCell(1))(props);
+  }
+
+  @keyBinding<TableExtension>({
+    shortcut: 'Shift-Tab',
+    isActive: (options) => options.tabKeyboardShortcuts,
+  })
+  goToPreviousCell(props: KeyBindingProps): boolean {
+    return convertCommand(goToNextCell(-1))(props);
   }
 
   /**

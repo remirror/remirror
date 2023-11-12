@@ -495,6 +495,16 @@
   - @remirror/dom@3.0.0-beta.0
   - @remirror/pm@3.0.0-beta.0
 
+## 2.0.37
+
+> 2023-11-12
+
+### Patch Changes
+
+- 2c6456fbe: Add a `tabKeyboardShortcuts` option to `TableExtension` to enable `Tab` and `Shift-Tab` keyboard shortcuts for navigating between table cells. Defaults to `false`.
+- Updated dependencies [2c6456fbe]
+  - @remirror/extension-tables@2.4.0
+
 ## 2.0.36
 
 > 2023-08-03
