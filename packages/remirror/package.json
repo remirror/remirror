@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "2.0.36",
+  "version": "2.0.37",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -107,7 +107,7 @@
     "@remirror/extension-strike": "^2.0.13",
     "@remirror/extension-sub": "^2.0.13",
     "@remirror/extension-sup": "^2.0.13",
-    "@remirror/extension-tables": "^2.3.1",
+    "@remirror/extension-tables": "^2.4.0",
     "@remirror/extension-text": "^2.0.13",
     "@remirror/extension-text-case": "^2.0.13",
     "@remirror/extension-text-color": "^2.0.15",
