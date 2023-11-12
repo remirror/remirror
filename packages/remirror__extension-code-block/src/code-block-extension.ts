@@ -279,7 +279,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * to change the language.
    *
    * ```ts
-   * if (commands.updateCodeBlock.isEnabled()) {
+   * if (commands.updateCodeBlock.enabled()) {
    *   commands.updateCodeBlock({ language: 'markdown' });
    * }
    * ```
@@ -437,7 +437,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       return false;
     }
 
-    const enabled = commands.formatCodeBlock.isEnabled();
+    const enabled = commands.formatCodeBlock.enabled();
 
     if (enabled) {
       commands.formatCodeBlock();
