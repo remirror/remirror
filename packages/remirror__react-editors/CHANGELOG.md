@@ -1,5 +1,14 @@
 # @remirror/react-editors
 
+## 1.0.39
+
+> 2023-11-12
+
+### Patch Changes
+
+- Updated dependencies [2c6456fbe]
+  - remirror@2.0.37
+
 ## 1.0.38
 
 > 2023-08-03

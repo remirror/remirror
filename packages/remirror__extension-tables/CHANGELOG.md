@@ -1,5 +1,13 @@
 # @remirror/extension-tabless
 
+## 2.4.0
+
+> 2023-11-12
+
+### Minor Changes
+
+- 2c6456fbe: Add a `tabKeyboardShortcuts` option to `TableExtension` to enable `Tab` and `Shift-Tab` keyboard shortcuts for navigating between table cells. Defaults to `false`.
+
 ## 2.3.1
 
 > 2023-07-30
