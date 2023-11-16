@@ -1,5 +1,5 @@
 ---
-'@remirror/extension-mention-atom': patch
+'@remirror/extension-mention-atom': minor
 '@remirror/core-types': patch
 'remirror': patch
 '@remirror/core': patch

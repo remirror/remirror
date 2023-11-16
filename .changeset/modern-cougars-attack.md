@@ -1,8 +1,8 @@
 ---
-'@remirror/extension-codemirror5': patch
-'@remirror/extension-codemirror6': patch
-'@remirror/extension-code-block': patch
-'@remirror/core': patch
+'@remirror/extension-codemirror5': major
+'@remirror/extension-codemirror6': major
+'@remirror/extension-code-block': major
+'@remirror/core': major
 ---
 
 Remove deprecated command dry run function `isEnabled`, use `enabled` instead.

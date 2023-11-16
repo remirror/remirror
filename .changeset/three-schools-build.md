@@ -1,8 +1,8 @@
 ---
-'@remirror/react-components': patch
+'@remirror/react-components': major
 '@remirror/react-editors': patch
 '@remirror/react-ui': patch
-'@remirror/react': patch
+'@remirror/react': major
 ---
 
 Based on community feedback, we have decided to decouple the React core of Remirror from MUI, a popular React component library (but you probably already knew that).
