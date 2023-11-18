@@ -109,7 +109,7 @@ export interface ExtensionHelperReturn {
 }
 
 /**
- * The type of a non chainable command. It is a function with an `isEnabled`
+ * The type of a non chainable command. It is a function with an `enabled`
  * method to check whether the command can be run.
  */
 export interface CommandShape<Parameter extends any[] = []> {
@@ -122,17 +122,12 @@ export interface CommandShape<Parameter extends any[] = []> {
    *
    * Some commands can have rules and restrictions. For example, formatting like
    *`bold` is disabled within a `codeBlock`. In this case
-   *`commands.toggleBold.isEnabled()` returns `false` when within a `codeBlock`
+   *`commands.toggleBold.enabled()` returns `false` when within a `codeBlock`
    *and `true` when outside.
    *
    * @param args - The same arguments that are applied to the command function.
    */
   enabled: (...args: Parameter) => boolean;
-
-  /**
-   * @deprecated use `enabled` instead.
-   */
-  isEnabled: (...args: Parameter) => boolean;
 
   /**
    * This function gives you access to the original command defined by the

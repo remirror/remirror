@@ -232,20 +232,6 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
   }
 
   /**
-   * @deprecated use `from` instead
-   */
-  get start(): number {
-    return this.state.selection.from;
-  }
-
-  /**
-   * @deprecated use `to` instead
-   */
-  get end(): number {
-    return this.state.selection.to;
-  }
-
-  /**
    * The content to write to the clipboard if copy the current selection.
    */
   get copied(): { text: string; html: string } {
@@ -420,24 +406,11 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
     fn: (
       content: Pick<
         this,
-        'helpers' | 'commands' | 'to' | 'state' | 'tags' | 'from' | 'start' | 'end' | 'doc' | 'view'
+        'helpers' | 'commands' | 'to' | 'state' | 'tags' | 'from' | 'doc' | 'view'
       >,
     ) => void,
   ): this => {
-    fn(
-      pick(this, [
-        'helpers',
-        'commands',
-        'to',
-        'state',
-        'tags',
-        'from',
-        'start',
-        'end',
-        'doc',
-        'view',
-      ]),
-    );
+    fn(pick(this, ['helpers', 'commands', 'to', 'state', 'tags', 'from', 'doc', 'view']));
 
     return this;
   };
@@ -445,7 +418,7 @@ export class RemirrorTestChain<Extension extends AnyExtension> {
   /**
    * Runs a keyboard shortcut. e.g. `Mod-X`
    *
-   * @param shortcut
+   * @param text
    */
   readonly shortcut = (text: string): this => {
     shortcut({ shortcut: text, view: this.view });

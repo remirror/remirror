@@ -384,11 +384,11 @@ describe('commands', () => {
         .callback(({ commands }) => {
           commands.formatCodeBlock();
         })
-        .callback(({ state, start, end }) => {
+        .callback(({ state, from, to }) => {
           expect(state.doc).toEqualRemirrorDocument(
             doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
           );
-          expect([start, end]).toEqual([1, 26]);
+          expect([from, to]).toEqual([1, 26]);
         });
     });
 

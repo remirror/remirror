@@ -1,6 +1,6 @@
 ---
-'@remirror/core': patch
-'remirror': patch
+'@remirror/core': major
+'remirror': major
 ---
 
 💥 BREAKING 💥: Remove deprecated decorator `extensionDecorator`. Please use `extension` instead

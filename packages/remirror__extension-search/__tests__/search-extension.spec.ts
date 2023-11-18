@@ -66,12 +66,12 @@ describe('commands', () => {
     add(node);
 
     commands.search('friend');
-    expect(commands.replaceAllSearchResults.isEnabled('')).toBeTrue();
+    expect(commands.replaceAllSearchResults.enabled('')).toBeTrue();
 
     commands.replaceAllSearchResults('enemy');
     expect(view.dom).toMatchSnapshot();
 
-    expect(commands.replaceAllSearchResults.isEnabled('')).toBeFalse();
+    expect(commands.replaceAllSearchResults.enabled('')).toBeFalse();
   });
 
   it('#clearSearch', () => {

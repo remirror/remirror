@@ -36,16 +36,6 @@ export function ignoreJSDOMWarnings(shouldIgnore = true): void {
 }
 
 /**
- * This method adds fixes to the jsdom environment so that `jest-remirror`
- * tests can be run.
- *
- * @deprecated - Use `jsdomPolyfill` instead.
- */
-export function jsdomExtras(): void {
-  // Will be removed in the beta release.
-}
-
-/**
  * Add pseudo support for bounding client rects.
  */
 function supportBoundingClientRect() {
