@@ -7,7 +7,7 @@ on:
   pull_request:
     types: [opened, synchronize]
     branches:
-      - v1
+      - v3
       - main
 
 env:

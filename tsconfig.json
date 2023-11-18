@@ -354,9 +354,6 @@
       "path": "packages/remirror__extension-react-component/src"
     },
     {
-      "path": "packages/remirror__extension-react-language-select/src"
-    },
-    {
       "path": "packages/remirror__extension-react-ssr/__tests__"
     },
     {
