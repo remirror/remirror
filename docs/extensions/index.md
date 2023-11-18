@@ -39,6 +39,8 @@ The following extensions are bundled together with Remirror:
 
 **[EventsExtension](./events-extension.mdx)**<br /> Listens to events which occur within the editor
 
+**[FindExtension](./find-extension.mdx)** <br /> Add find and replace functionality to your editor.
+
 **[FontFamilyExtension](./font-family-extension.mdx)**<br /> Add a font family to the selected text
 
 **[FontSizeExtension](./font-size-extension.mdx)**<br /> Add a font size to the selected text
@@ -71,8 +73,6 @@ The following extensions are bundled together with Remirror:
 
 **[PlaceholderExtension](./placeholder-extension.mdx)**<br /> Shows a configurable placeholder when the **ProseMirror** content of your editor is empty
 
-**[SearchExtension](./search-extension.mdx)**<br /> This extension add search functionality to your editor
-
 **[StrikeExtension](./strike-extension.mdx)**<br /> Makes the text under the cursor / or at the provided position range ~~strike~~
 
 **[SubExtension](./sub-extension.mdx)**<br /> Adds a `sub` mark to the editor. This is used to mark inline text as a <sub>subscript</sub> snippet
@@ -102,8 +102,6 @@ The following extensions are _not_ bundled with the `remirror` package, and must
 **[CountExtension](./count-extension.mdx)** <br /> Adds ability to count characters or words in your editor, and optionally highlight to a user when they have exceeded a specified limit.
 
 **[FileExtension](./file-extension.mdx)** <br /> Adds the ability to upload arbitrary files to the editor.
-
-**[FindExtension](./find-extension.mdx)** <br /> Add find and replace functionality to your editor.
 
 ## Community extensions
 

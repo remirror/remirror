@@ -24,3 +24,15 @@ pnpm add @remirror/extension-find
 # npm
 npm install @remirror/extension-find
 ```
+
+This is included by default when you install the recommended `remirror` package. All exports are also available via the entry-point, `remirror/extensions`.
+
+## Usage
+
+The following code creates an instance of this extension.
+
+```ts
+import { FindExtension } from 'remirror/extensions';
+
+const extension = new FindExtension();
+```

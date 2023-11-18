@@ -39,7 +39,6 @@
 'prosemirror-resizable-view': major
 '@remirror/extension-events': major
 '@remirror/extension-italic': major
-'@remirror/extension-search': major
 '@remirror/extension-strike': major
 '@remirror/extension-tables': major
 '@remirror/react-components': major

@@ -366,12 +366,6 @@
       "path": "packages/remirror__extension-react-tables/src"
     },
     {
-      "path": "packages/remirror__extension-search/__tests__"
-    },
-    {
-      "path": "packages/remirror__extension-search/src"
-    },
-    {
       "path": "packages/remirror__extension-shortcuts/__tests__"
     },
     {

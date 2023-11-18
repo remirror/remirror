@@ -569,14 +569,6 @@
     "gzip": true
   },
   {
-    "name": "@remirror/extension-search",
-    "limit": "10 KB",
-    "path": "packages/remirror__extension-search/dist/remirror-extension-search.js",
-    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/extension-shortcuts",
     "limit": "10 KB",
     "path": "packages/remirror__extension-shortcuts/dist/remirror-extension-shortcuts.js",
@@ -775,6 +767,7 @@
       "@remirror/extension-code-block",
       "@remirror/extension-drop-cursor",
       "@remirror/extension-embed",
+      "@remirror/extension-find",
       "@remirror/extension-gap-cursor",
       "@remirror/extension-hard-break",
       "@remirror/extension-heading",
@@ -783,7 +776,6 @@
       "@remirror/extension-italic",
       "@remirror/extension-link",
       "@remirror/extension-list",
-      "@remirror/extension-search",
       "@remirror/extension-shortcuts",
       "@remirror/extension-strike",
       "@remirror/extension-trailing-node",
