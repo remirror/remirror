@@ -82,6 +82,38 @@ export const blockNodePositioner = Positioner.create<FindProsemirrorNodeResult>(
 });
 
 /**
+ * Creates a positioner for the visible portion editor.
+ */
+export const editorPositioner = Positioner.create<boolean>({
+  hasChanged: hasStateChanged,
+
+  /**
+   * This is only active for empty top level nodes. The data is the cursor start
+   * and end position.
+   */
+  getActive() {
+    return [true];
+  },
+
+  getPosition(props) {
+    const { view } = props;
+
+    const rect = view.dom.getBoundingClientRect();
+
+    // The width and height of the current selected block node.
+    const height = view.dom.scrollHeight;
+    const width = view.dom.scrollWidth;
+
+    // The top and left relative to the parent `editorRect`.
+    const left = view.dom.scrollLeft;
+    const top = view.dom.scrollTop;
+    const visible = true;
+
+    return { y: top, x: left, height, width, rect, visible };
+  },
+});
+
+/**
  * Returns the block node position only when it is empty and the selection is
  * empty.
  */
@@ -363,4 +395,9 @@ export const positioners = {
    * Create a rect which surrounds the nearest word.
    */
   nearestWord: nearestWordPositioner,
+
+  /**
+   * Create a rect which surrounds the visible portion of the editor.
+   */
+  editor: editorPositioner,
 };

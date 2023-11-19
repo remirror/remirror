@@ -6,6 +6,7 @@ export * from './cut-button';
 export * from './decrease-font-size-button';
 export * from './decrease-indent-button';
 export * from './dropdown-button';
+export * from './find-button';
 export * from './increase-font-size-button';
 export * from './increase-indent-button';
 export * from './insert-horizontal-rule-button';
