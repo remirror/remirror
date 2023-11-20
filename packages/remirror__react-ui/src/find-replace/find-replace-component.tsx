@@ -45,6 +45,12 @@ export const FindReplaceComponent: FC<FindReplaceComponentProps> = ({
     }
   }, [isReplaceVisible, setReplacement]);
 
+  useEffect(() => {
+    return () => {
+      stopFind();
+    };
+  }, [stopFind]);
+
   const label = isReplaceVisible ? 'Hide replace field' : 'Show replace field';
 
   return (

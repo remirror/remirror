@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ClickAwayListener, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 import React, { FC, useCallback, useState } from 'react';
 import { PositionerPortal } from '@remirror/react-components';
 import { usePositioner } from '@remirror/react-hooks';
@@ -7,10 +7,12 @@ import { usePositioner } from '@remirror/react-hooks';
 import { FindReplaceComponent } from '../find-replace';
 import { CommandButton, CommandButtonProps } from './command-button';
 
-const Menu = styled.div`
-  min-width: 30rem;
-  max-width: 100%;
+const EditorViewport = styled.div`
   position: absolute;
+  pointer-events: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
 `;
 
 export interface FindButtonProps
@@ -19,7 +21,7 @@ export interface FindButtonProps
 export const FindButton: FC<FindButtonProps> = (props) => {
   const [showFind, setShowFind] = useState<boolean>(false);
 
-  const { ref, y, active } = usePositioner('editor');
+  const { ref, x, y, width, height, active } = usePositioner('editor');
 
   const handleSelect = useCallback(() => {
     setShowFind((bool) => !bool);
@@ -43,13 +45,20 @@ export const FindButton: FC<FindButtonProps> = (props) => {
 
       <PositionerPortal>
         {active && showFind && (
-          <Menu ref={ref} style={{ top: y, right: 0 }}>
-            <ClickAwayListener onClickAway={hideFind}>
-              <Paper sx={{ m: 1, p: 1 }} elevation={3}>
-                <FindReplaceComponent canToggleReplace onDismiss={hideFind} />
-              </Paper>
-            </ClickAwayListener>
-          </Menu>
+          <EditorViewport ref={ref} style={{ left: x, top: y, width, height }}>
+            <Paper
+              elevation={3}
+              sx={{
+                m: 1,
+                p: 1,
+                width: 'var(--rmr-space-8)',
+                maxWidth: '100%',
+                pointerEvents: 'all',
+              }}
+            >
+              <FindReplaceComponent canToggleReplace onDismiss={hideFind} />
+            </Paper>
+          </EditorViewport>
         )}
       </PositionerPortal>
     </>

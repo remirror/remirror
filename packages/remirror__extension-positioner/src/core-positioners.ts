@@ -83,13 +83,14 @@ export const blockNodePositioner = Positioner.create<FindProsemirrorNodeResult>(
 
 /**
  * Creates a positioner for the visible portion editor.
+ *
+ * E.g. The "viewport" of the editor inside any scrollable area.
  */
 export const editorPositioner = Positioner.create<boolean>({
   hasChanged: hasStateChanged,
 
   /**
-   * This is only active for empty top level nodes. The data is the cursor start
-   * and end position.
+   * This is always active, regardless of selection position
    */
   getActive() {
     return [true];
@@ -100,11 +101,11 @@ export const editorPositioner = Positioner.create<boolean>({
 
     const rect = view.dom.getBoundingClientRect();
 
-    // The width and height of the current selected block node.
-    const height = view.dom.scrollHeight;
-    const width = view.dom.scrollWidth;
+    // The width and height of the visible portion of the editor.
+    const height = Math.min(view.dom.clientHeight, rect.height);
+    const width = Math.min(view.dom.clientWidth, rect.width);
 
-    // The top and left relative to the parent `editorRect`.
+    // The top and left values are the internal scroll positions of the editor.
     const left = view.dom.scrollLeft;
     const top = view.dom.scrollTop;
     const visible = true;
