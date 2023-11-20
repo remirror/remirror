@@ -1,5 +1,16 @@
 # @remirror/react-utils
 
+## 3.0.0-beta.3
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/core-helpers@4.0.0-beta.2
+  - @remirror/core-types@3.0.0-beta.3
+
 ## 3.0.0-beta.2
 
 > 2023-11-08

@@ -1,5 +1,19 @@
 # @remirror/preset-react
 
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/extension-react-component@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/react-utils@3.0.0-beta.3
+  - @remirror/extension-placeholder@3.0.0-beta.5
+
 ## 3.0.0-beta.4
 
 > 2023-11-08

@@ -1,5 +1,37 @@
 # @remirror/react-hooks
 
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated `useSuggester`, use `useSuggest` instead.
+
+  Rename type `UseSuggesterProps` to `UseSuggestProps` for consistency.
+
+### Patch Changes
+
+- Updated dependencies [ae349d806]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [9549c8f88]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/extension-positioner@3.0.0-beta.5
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/extension-events@3.0.0-beta.5
+  - @remirror/react-core@3.0.0-beta.5
+  - @remirror/core-helpers@4.0.0-beta.2
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/react-utils@3.0.0-beta.3
+  - @remirror/extension-emoji@3.0.0-beta.5
+  - @remirror/extension-history@3.0.0-beta.5
+  - @remirror/extension-mention@3.0.0-beta.5
+  - @remirror/extension-mention-atom@3.0.0-beta.5
+  - multishift@2.0.10-beta.3
+
 ## 3.0.0-beta.4
 
 > 2023-11-08

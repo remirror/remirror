@@ -1,5 +1,26 @@
 # @remirror/preset-core
 
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [ae349d806]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [9549c8f88]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/extension-positioner@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/extension-events@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/extension-doc@3.0.0-beta.5
+  - @remirror/extension-gap-cursor@3.0.0-beta.5
+  - @remirror/extension-history@3.0.0-beta.5
+  - @remirror/extension-paragraph@3.0.0-beta.5
+  - @remirror/extension-text@3.0.0-beta.5
+
 ## 3.0.0-beta.4
 
 > 2023-11-08

@@ -1,5 +1,17 @@
 # @remirror/core-types
 
+## 3.0.0-beta.3
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/types@2.0.0-beta.2
+  - @remirror/pm@3.0.0-beta.3
+
 ## 3.0.0-beta.2
 
 > 2023-11-08

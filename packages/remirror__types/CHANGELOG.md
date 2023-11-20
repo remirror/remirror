@@ -1,5 +1,15 @@
 # @remirror/types
 
+## 2.0.0-beta.2
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated type `PromiseValue`, use built-in `Awaited` instead.
+
+  Remove deprecated type `Mutable`, use `Writable` instead.
+
 ## 2.0.0-beta.1
 
 > 2023-11-08

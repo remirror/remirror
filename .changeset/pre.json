@@ -110,14 +110,25 @@
     "@remirror/react-ui": "0.1.0-beta.0"
   },
   "changesets": [
+    "chilled-singers-push",
     "chilled-teachers-promise",
     "clever-lions-breathe",
+    "forty-clocks-share",
     "friendly-pears-promise",
+    "giant-jobs-obey",
     "lovely-bottles-compare",
+    "mean-bugs-burn",
+    "modern-cougars-attack",
+    "nice-llamas-boil",
     "pretty-donkeys-crash",
     "quick-trainers-decide",
+    "sixty-olives-appear",
     "smart-garlics-bow",
+    "tender-bears-repeat",
     "three-schools-build",
-    "wet-lizards-sniff"
+    "twelve-pumpkins-serve",
+    "twelve-ravens-rhyme",
+    "wet-lizards-sniff",
+    "wild-feet-mate"
   ]
 }
