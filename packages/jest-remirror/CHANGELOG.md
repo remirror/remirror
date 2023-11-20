@@ -1,5 +1,26 @@
 # jest-remirror
 
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated properties `start` and `end`, use `from` and `to` respectively instead.
+
+  Remove deprecated function `jsdomExtras`, use `jsdomPolyfills` instead.
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - jest-prosemirror@3.0.0-beta.3
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/preset-core@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/dom@3.0.0-beta.5
+
 ## 3.0.0-beta.4
 
 > 2023-11-08

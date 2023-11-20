@@ -1,5 +1,13 @@
 # @remirror/core-constants
 
+## 3.0.0-beta.2
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove `deprecated` error code `RMR0000`, as we no longer hide error details in production.
+
 ## 3.0.0-beta.1
 
 > 2023-11-08

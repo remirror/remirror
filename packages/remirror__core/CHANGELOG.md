@@ -1,5 +1,48 @@
 # @remirror/core
 
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated command dry run function `isEnabled`, use `enabled` instead.
+
+  ```tsx
+  const { toggleBold } = useCommands();
+
+  const handleClick = useCallback(() => {
+    if (toggleBold.isEnabled()) {
+      toggleBold();
+    }
+  }, [toggleBold]);
+  ```
+
+  ```diff
+  const { toggleBold } = useCommands();
+
+  const handleClick = useCallback(() => {
+  -  if (toggleBold.isEnabled()) {
+  +  if (toggleBold.enabled()) {
+      toggleBold();
+    }
+  }, [toggleBold]);
+  ```
+
+- 469d7ce8f: Remove deprecated helper `getRemirrorJSON`, use `getJSON` instead.
+
+### Patch Changes
+
+- Updated dependencies [ae349d806]
+- Updated dependencies [469d7ce8f]
+  - @remirror/icons@3.0.0-beta.2
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/core-helpers@4.0.0-beta.2
+  - @remirror/core-types@3.0.0-beta.3
+  - @remirror/core-utils@3.0.0-beta.3
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/messages@3.0.0-beta.3
+
 ## 3.0.0-beta.4
 
 > 2023-11-08

@@ -1,5 +1,22 @@
 # @remirror/react-editors
 
+## 2.0.0-beta.5
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [ae349d806]
+- Updated dependencies [9549c8f88]
+  - remirror@3.0.0-beta.5
+  - @remirror/react-ui@0.1.0-beta.5
+  - @remirror/styles@3.0.0-beta.2
+  - @remirror/extension-react-tables@3.0.0-beta.5
+  - @remirror/react@3.0.0-beta.5
+  - @remirror/core-helpers@4.0.0-beta.2
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/i18n@3.0.0-beta.3
+
 ## 2.0.0-beta.4
 
 > 2023-11-08

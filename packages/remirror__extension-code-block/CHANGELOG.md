@@ -1,5 +1,45 @@
 # @remirror/extension-code-block
 
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated command dry run function `isEnabled`, use `enabled` instead.
+
+  ```tsx
+  const { toggleBold } = useCommands();
+
+  const handleClick = useCallback(() => {
+    if (toggleBold.isEnabled()) {
+      toggleBold();
+    }
+  }, [toggleBold]);
+  ```
+
+  ```diff
+  const { toggleBold } = useCommands();
+
+  const handleClick = useCallback(() => {
+  -  if (toggleBold.isEnabled()) {
+  +  if (toggleBold.enabled()) {
+      toggleBold();
+    }
+  }, [toggleBold]);
+  ```
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [9549c8f88]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/theme@3.0.0-beta.3
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/messages@3.0.0-beta.3
+
 ## 3.0.0-beta.4
 
 > 2023-11-08

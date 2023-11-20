@@ -1,5 +1,13 @@
 # @remirror/minimal-template
 
+## 0.0.7-beta.2
+
+> 2023-11-20
+
+### Patch Changes
+
+- @remirror/core-helpers@4.0.0-beta.2
+
 ## 0.0.7-beta.1
 
 > 2023-11-08

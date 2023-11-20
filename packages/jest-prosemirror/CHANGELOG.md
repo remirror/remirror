@@ -1,5 +1,23 @@
 # jest-prosemirror
 
+## 3.0.0-beta.3
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated function `jumpTo`, just `selectText` instead.
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/core-helpers@4.0.0-beta.2
+  - @remirror/core-types@3.0.0-beta.3
+  - @remirror/core-utils@3.0.0-beta.3
+  - @remirror/pm@3.0.0-beta.3
+  - test-keyboard@2.0.7-beta.3
+
 ## 3.0.0-beta.2
 
 > 2023-11-08
