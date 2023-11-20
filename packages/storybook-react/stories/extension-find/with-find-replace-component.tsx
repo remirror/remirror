@@ -2,15 +2,12 @@ import 'remirror/styles/all.css';
 
 import React from 'react';
 import { wysiwygPreset } from 'remirror/extensions';
-import { FindExtension } from '@remirror/extension-find';
 import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 import { FindReplaceComponent } from '@remirror/react-ui';
 
-const extensions = () => [...wysiwygPreset(), new FindExtension()];
-
 const WithFindReplaceComponent: React.FC = () => {
   const { manager, state } = useRemirror({
-    extensions,
+    extensions: wysiwygPreset,
     content: {
       type: 'doc',
       attrs: { version: 5 },

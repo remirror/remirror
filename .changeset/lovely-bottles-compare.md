@@ -39,7 +39,6 @@
 'prosemirror-resizable-view': patch
 '@remirror/extension-events': patch
 '@remirror/extension-italic': patch
-'@remirror/extension-search': patch
 '@remirror/extension-strike': patch
 '@remirror/extension-tables': patch
 '@remirror/react-components': patch

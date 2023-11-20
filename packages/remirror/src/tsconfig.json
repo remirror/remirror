@@ -89,6 +89,9 @@
       "path": "../../remirror__extension-events/src"
     },
     {
+      "path": "../../remirror__extension-find/src"
+    },
+    {
       "path": "../../remirror__extension-font-family/src"
     },
     {
@@ -141,9 +144,6 @@
     },
     {
       "path": "../../remirror__extension-positioner/src"
-    },
-    {
-      "path": "../../remirror__extension-search/src"
     },
     {
       "path": "../../remirror__extension-shortcuts/src"

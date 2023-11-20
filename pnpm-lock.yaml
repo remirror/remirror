@@ -709,6 +709,9 @@ importers:
       '@remirror/extension-events':
         specifier: 3.0.0-beta.4
         version: link:../remirror__extension-events
+      '@remirror/extension-find':
+        specifier: 1.0.0-beta.4
+        version: link:../remirror__extension-find
       '@remirror/extension-font-family':
         specifier: 3.0.0-beta.4
         version: link:../remirror__extension-font-family
@@ -763,9 +766,6 @@ importers:
       '@remirror/extension-positioner':
         specifier: 3.0.0-beta.4
         version: link:../remirror__extension-positioner
-      '@remirror/extension-search':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__extension-search
       '@remirror/extension-shortcuts':
         specifier: 3.0.0-beta.4
         version: link:../remirror__extension-shortcuts
@@ -2106,58 +2106,6 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
 
-  packages/remirror__extension-react-language-select:
-    dependencies:
-      '@babel/runtime':
-        specifier: ^7.22.3
-        version: 7.22.3
-      '@remirror/core':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__core
-      '@remirror/core-utils':
-        specifier: 3.0.0-beta.2
-        version: link:../remirror__core-utils
-      '@remirror/extension-code-block':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__extension-code-block
-      '@remirror/extension-positioner':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__extension-positioner
-      '@remirror/react-components':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__react-components
-      '@remirror/react-core':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__react-core
-      '@remirror/react-hooks':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__react-hooks
-      lodash.memoize:
-        specifier: ^4.1.2
-        version: 4.1.2
-    devDependencies:
-      '@remirror/cli':
-        specifier: 1.0.1
-        version: link:../remirror__cli
-      '@remirror/pm':
-        specifier: 3.0.0-beta.2
-        version: link:../remirror__pm
-      '@types/lodash.memoize':
-        specifier: ^4.1.7
-        version: 4.1.7
-      '@types/react':
-        specifier: ^18.2.0
-        version: 18.2.0
-      '@types/react-dom':
-        specifier: ^18.2.0
-        version: 18.2.0
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
   packages/remirror__extension-react-ssr:
     dependencies:
       '@babel/runtime':
@@ -2258,28 +2206,6 @@ importers:
       yjs:
         specifier: ^13.6.1
         version: 13.6.1
-
-  packages/remirror__extension-search:
-    dependencies:
-      '@babel/runtime':
-        specifier: ^7.22.3
-        version: 7.22.3
-      '@remirror/core':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__core
-      '@remirror/messages':
-        specifier: 3.0.0-beta.2
-        version: link:../remirror__messages
-      escape-string-regexp:
-        specifier: ^4.0.0
-        version: 4.0.0
-    devDependencies:
-      '@remirror/cli':
-        specifier: 1.0.1
-        version: link:../remirror__cli
-      '@remirror/pm':
-        specifier: 3.0.0-beta.2
-        version: link:../remirror__pm
 
   packages/remirror__extension-shortcuts:
     dependencies:
@@ -2858,6 +2784,9 @@ importers:
       '@remirror/extension-embed':
         specifier: 3.0.0-beta.4
         version: link:../remirror__extension-embed
+      '@remirror/extension-find':
+        specifier: 1.0.0-beta.4
+        version: link:../remirror__extension-find
       '@remirror/extension-gap-cursor':
         specifier: 3.0.0-beta.4
         version: link:../remirror__extension-gap-cursor
@@ -2882,9 +2811,6 @@ importers:
       '@remirror/extension-list':
         specifier: 3.0.0-beta.4
         version: link:../remirror__extension-list
-      '@remirror/extension-search':
-        specifier: 3.0.0-beta.4
-        version: link:../remirror__extension-search
       '@remirror/extension-shortcuts':
         specifier: 3.0.0-beta.4
         version: link:../remirror__extension-shortcuts
@@ -14232,12 +14158,6 @@ packages:
       '@types/lodash': 4.14.176
     dev: false
 
-  /@types/lodash.memoize@4.1.7:
-    resolution: {integrity: sha512-lGN7WeO4vO6sICVpf041Q7BX/9k1Y24Zo3FY0aUezr1QlKznpjzsDk3T3wvH8ofYzoK0QupN9TWcFAFZlyPwQQ==}
-    dependencies:
-      '@types/lodash': 4.14.176
-    dev: true
-
   /@types/lodash@4.14.176:
     resolution: {integrity: sha512-xZmuPTa3rlZoIbtDUyJKZQimJV3bxCmzMIO2c9Pz9afyDro6kr7R79GwcB6mRhuoPmV2p1Vb66WOJH7F886WKQ==}
 
@@ -18184,7 +18104,7 @@ packages:
     dependencies:
       semver: 7.5.4
       shelljs: 0.8.5
-      typescript: 5.4.0-dev.20231109
+      typescript: 5.4.0-dev.20231118
     dev: false
 
   /duplexer3@0.1.4:
@@ -23152,6 +23072,7 @@ packages:
 
   /lodash.memoize@4.1.2:
     resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}
+    dev: true
 
   /lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -29176,8 +29097,8 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
 
-  /typescript@5.4.0-dev.20231109:
-    resolution: {integrity: sha512-wX5CSyZbJ0xsgAe0Fyefs8eqEe7o7mp7Nv5EHydBYFpJI/FWZFc4rSF2mGNNZ/1D7JMQgwjCAkZd/2TTF3m/Uw==}
+  /typescript@5.4.0-dev.20231118:
+    resolution: {integrity: sha512-ZrQd4CI6YXINmXfnDSNG26zo+qAAh3UXig2GREmT9wOqmxceVHE7wbeP4PU3IBIpea8P22WEcB/cP33yPsxjsA==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false

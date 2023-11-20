@@ -1,5 +1,6 @@
-import { Box } from '@mui/material';
-import React, { FC } from 'react';
+import { Box, IconButton } from '@mui/material';
+import React, { FC, useCallback, useEffect, useState } from 'react';
+import { Icon } from '@remirror/react-components';
 
 import { UiThemeProvider } from '../providers/ui-theme-provider';
 import { FindController } from './find-controller';
@@ -9,10 +10,15 @@ import { ReplaceInput } from './replace-input';
 import { useFindReplace } from './use-find-replace';
 
 export interface FindReplaceComponentProps {
+  canToggleReplace?: boolean;
   onDismiss?: () => void;
 }
 
-export const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss }) => {
+export const FindReplaceComponent: FC<FindReplaceComponentProps> = ({
+  canToggleReplace = false,
+  onDismiss,
+}) => {
+  const [isReplaceVisible, setIsReplaceVisible] = useState<boolean>(!canToggleReplace);
   const {
     query,
     setQuery,
@@ -29,18 +35,43 @@ export const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss 
     replaceAll,
   } = useFindReplace();
 
+  const handleToggleReplace = useCallback(() => {
+    setIsReplaceVisible((bool) => !bool);
+  }, []);
+
+  useEffect(() => {
+    if (!isReplaceVisible) {
+      setReplacement('');
+    }
+  }, [isReplaceVisible, setReplacement]);
+
+  useEffect(() => {
+    return () => {
+      stopFind();
+    };
+  }, [stopFind]);
+
+  const label = isReplaceVisible ? 'Hide replace field' : 'Show replace field';
+
   return (
     <UiThemeProvider>
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: '1fr max-content',
-          gridTemplateRows: '1fr 1fr',
+          gridTemplateColumns: canToggleReplace ? 'max-content 1fr max-content' : '1fr max-content',
+          gridTemplateRows: isReplaceVisible ? '32px 32px' : '32px',
           rowGap: 1,
           columnGap: 1,
           alignItems: 'center',
         }}
       >
+        {canToggleReplace && (
+          <Box>
+            <IconButton onClick={handleToggleReplace} size='small' title={label} aria-label={label}>
+              <Icon name={'arrowRightSFill'} />
+            </IconButton>
+          </Box>
+        )}
         <Box>
           <FindInput query={query} setQuery={setQuery} total={total} activeIndex={activeIndex} />
         </Box>
@@ -54,12 +85,17 @@ export const FindReplaceComponent: FC<FindReplaceComponentProps> = ({ onDismiss 
             onDismiss={onDismiss}
           />
         </Box>
-        <Box>
-          <ReplaceInput replacement={replacement} setReplacement={setReplacement} />
-        </Box>
-        <Box sx={{ justifySelf: 'end' }}>
-          <ReplaceController replace={replace} replaceAll={replaceAll} />
-        </Box>
+        {isReplaceVisible && (
+          <>
+            {canToggleReplace && <Box />}
+            <Box>
+              <ReplaceInput replacement={replacement} setReplacement={setReplacement} />
+            </Box>
+            <Box sx={{ justifySelf: 'end' }}>
+              <ReplaceController replace={replace} replaceAll={replaceAll} />
+            </Box>
+          </>
+        )}
       </Box>
     </UiThemeProvider>
   );

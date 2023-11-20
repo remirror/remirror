@@ -6,10 +6,10 @@ export const ReplaceController: FC<{
   replaceAll: () => void;
 }> = ({ replace, replaceAll }) => (
   <ButtonGroup variant='outlined' size='small'>
-    <Button aria-label='Relace' sx={{ textTransform: 'none' }} onClick={replace}>
+    <Button aria-label='Replace' sx={{ textTransform: 'none' }} onClick={replace}>
       Replace
     </Button>
-    <Button aria-label='Relace all' sx={{ textTransform: 'none' }} onClick={replaceAll}>
+    <Button aria-label='Replace all' sx={{ textTransform: 'none' }} onClick={replaceAll}>
       All
     </Button>
   </ButtonGroup>
