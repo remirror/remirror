@@ -1,5 +1,4 @@
 ---
-'@remirror/extension-react-language-select': patch
 '@remirror/extension-entity-reference': patch
 '@remirror/extension-horizontal-rule': patch
 '@remirror/extension-node-formatting': patch
