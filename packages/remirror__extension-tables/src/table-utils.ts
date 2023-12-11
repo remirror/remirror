@@ -86,7 +86,7 @@ function setCellAttrs(node: ProsemirrorNode) {
   }
 
   if (node.attrs.background) {
-    attrs.style = `${attrs.style ?? ''}background-color: ${node.attrs.background as string};`;
+    attrs.style = `${node.attrs.style ?? ''}background-color: ${node.attrs.background as string};`;
     attrs['data-background-color'] = node.attrs.background;
   }
 
