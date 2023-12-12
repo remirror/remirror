@@ -11,5 +11,5 @@ outputs:
   tag:
     description: The tag that will be created when releasing the PR.
 runs:
-  using: 'node16'
+  using: 'node20'
   main: './pr.mjs'
