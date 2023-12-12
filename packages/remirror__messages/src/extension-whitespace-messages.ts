@@ -1,14 +1,13 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { defineMessage } from '@lingui/macro';
+import type { RemirrorMessage } from '@remirror/core-types';
 
-export const LABEL: MessageDescriptor = defineMessage({
+export const LABEL: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-whitespace.label',
   comment: 'Label for displaying whitespace characters.',
   message: 'Toggle Whitespace',
-});
+};
 
-export const DESCRIPTION: MessageDescriptor = defineMessage({
+export const DESCRIPTION: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-whitespace.description',
   comment: 'Description for displaying whitespace characters.',
   message: 'Show hidden whitespace characters in your editor.',
-});
+};

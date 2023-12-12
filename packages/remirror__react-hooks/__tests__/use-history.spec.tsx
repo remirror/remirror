@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { act, DefaultEditor, strictRender } from 'testing/react';
 import type { RemirrorManager } from '@remirror/core';
 import type { HistoryExtension } from '@remirror/extension-history';
-import { createReactManager, ReactExtensions, Remirror } from '@remirror/react';
+import { createReactManager, ReactExtensions, Remirror } from '@remirror/react-core';
 
 import { useHistory } from '../src/use-history';
 

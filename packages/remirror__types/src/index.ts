@@ -1,15 +1,4 @@
-import type { Writable } from 'type-fest';
-
 export * from './types';
-
-/** @deprecated Use built-in `Awaited` instead */
-type PromiseValue<T> = Awaited<T>;
-
-/** @deprecated Renamed to `Writable` */
-type Mutable<BaseType, Keys extends keyof BaseType = keyof BaseType> = Writable<BaseType, Keys>;
-
-export type { Mutable, PromiseValue };
-
 export type {
   Asyncify,
   AsyncReturnType,

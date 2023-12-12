@@ -6,6 +6,7 @@ import { CodeExtension } from '@remirror/extension-code';
 import { CodeBlockExtension, CodeBlockOptions } from '@remirror/extension-code-block';
 import { DropCursorExtension, DropCursorOptions } from '@remirror/extension-drop-cursor';
 import { IframeExtension } from '@remirror/extension-embed';
+import { FindExtension, FindOptions } from '@remirror/extension-find';
 import { GapCursorExtension } from '@remirror/extension-gap-cursor';
 import { HardBreakExtension } from '@remirror/extension-hard-break';
 import { HeadingExtension, HeadingOptions } from '@remirror/extension-heading';
@@ -18,7 +19,6 @@ import {
   OrderedListExtension,
   TaskListExtension,
 } from '@remirror/extension-list';
-import { SearchExtension, SearchOptions } from '@remirror/extension-search';
 import { ShortcutsExtension } from '@remirror/extension-shortcuts';
 import { StrikeExtension } from '@remirror/extension-strike';
 import { TrailingNodeExtension, TrailingNodeOptions } from '@remirror/extension-trailing-node';
@@ -29,9 +29,9 @@ export interface WysiwygOptions
     BoldOptions,
     CodeBlockOptions,
     DropCursorOptions,
+    FindOptions,
     HeadingOptions,
     LinkOptions,
-    SearchOptions,
     TrailingNodeOptions {}
 
 const DEFAULT_OPTIONS = {
@@ -39,7 +39,7 @@ const DEFAULT_OPTIONS = {
   ...BoldExtension.defaultOptions,
   ...CodeBlockExtension.defaultOptions,
   ...DropCursorExtension.defaultOptions,
-  ...SearchExtension.defaultOptions,
+  ...FindExtension.defaultOptions,
   ...TrailingNodeExtension.defaultOptions,
   ...HeadingExtension.defaultOptions,
 };
@@ -93,9 +93,9 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
   const { defaultLevel, levels } = options;
   const headingExtension = new HeadingExtension({ defaultLevel, levels });
 
-  const { alwaysSearch } = options;
-  const searchExtension = new SearchExtension({
-    alwaysSearch,
+  const { alwaysFind } = options;
+  const findExtension = new FindExtension({
+    alwaysFind,
   });
 
   const { disableTags, ignoredNodes, nodeName } = options;
@@ -110,7 +110,7 @@ export function wysiwygPreset(options: GetStaticAndDynamic<WysiwygOptions> = {})
     bidiExtension,
     dropCursorExtension,
     gapCursorExtension,
-    searchExtension,
+    findExtension,
     shortcutsExtension,
     trailingNodeExtension,
 
@@ -156,7 +156,7 @@ export type WysiwygPreset =
   | CodeBlockExtension
   | DropCursorExtension
   | HeadingExtension
-  | SearchExtension
+  | FindExtension
   | TrailingNodeExtension
   | IframeExtension
   | BulletListExtension

@@ -4,7 +4,8 @@ import './styles.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { BoldExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { ToggleBoldButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new BoldExtension()];
 

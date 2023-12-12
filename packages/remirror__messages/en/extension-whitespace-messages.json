@@ -1,0 +1,4 @@
+{
+  "extension.command.toggle-whitespace.description": "Show hidden whitespace characters in your editor.",
+  "extension.command.toggle-whitespace.label": "Toggle Whitespace"
+}

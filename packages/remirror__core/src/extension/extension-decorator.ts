@@ -154,7 +154,16 @@ export type ExtensionDecoratorOptions<Options extends Shape = EmptyShape> = Defa
 export function extension<Options extends Shape = EmptyShape>(
   options: ExtensionDecoratorOptions<Options>,
 ) {
-  return <Type extends AnyExtensionConstructor>(ReadonlyConstructor: Type): Type => {
+  return <Type extends AnyExtensionConstructor>(
+    ReadonlyConstructor: Type,
+    context?: ClassDecoratorContext<Type>,
+  ): Type => {
+    // context may be undefined if this decorator is called as a function
+    // which is supported for backward compatibility
+    if (context && context.kind !== 'class') {
+      throw new Error(`The extension decorator can only be used on a class.`);
+    }
+
     const {
       defaultOptions,
       customHandlerKeys,
@@ -194,8 +203,3 @@ export function extension<Options extends Shape = EmptyShape>(
     return Cast<Type>(Constructor);
   };
 }
-
-/**
- * @deprecated use `extension` instead.
- */
-export const extensionDecorator = extension;

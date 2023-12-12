@@ -1,5 +1,4 @@
-import { PrimitiveSelection, Static, TupleOf } from '@remirror/core';
-import { I18n } from '@remirror/i18n';
+import { I18nFormatter, PrimitiveSelection, Static, TupleOf } from '@remirror/core';
 
 export interface TextColorAttributes {
   /**
@@ -56,4 +55,4 @@ export interface ColorPalette {
 /**
  * Create a palette the `t` method provided for internalization.
  */
-export type Palette = (t: I18n['_']) => ColorPalette;
+export type Palette = (t: I18nFormatter) => ColorPalette;

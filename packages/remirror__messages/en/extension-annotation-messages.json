@@ -1,0 +1,5 @@
+{
+  "extension.command.add-annotation.label": "Add annotation",
+  "extension.command.remove-annotation.label": "Remove annotation",
+  "extension.command.update-annotation.label": "Update annotation"
+}

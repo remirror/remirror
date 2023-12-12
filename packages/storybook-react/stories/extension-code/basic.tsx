@@ -4,7 +4,8 @@ import './styles.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { CodeExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, ToggleCodeButton, Toolbar, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { ToggleCodeButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new CodeExtension()];
 

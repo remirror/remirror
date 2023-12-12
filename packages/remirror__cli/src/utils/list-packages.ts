@@ -23,7 +23,7 @@ export async function listPackages({ isPrivate = null }: { isPrivate?: boolean |
 
 export async function listPackagesToBuild() {
   // The following packages are still handled by the old build system (preconstruct)
-  const excutedPackageNames = new Set([
+  const executedPackageNames = new Set([
     '@remirror/cli',
     'storybook-react',
     'support',
@@ -34,5 +34,5 @@ export async function listPackagesToBuild() {
     '@remirror/preset-template',
     'website',
   ]);
-  return (await listPackages()).filter((pkg) => !excutedPackageNames.has(pkg.packageJson.name));
+  return (await listPackages()).filter((pkg) => !executedPackageNames.has(pkg.packageJson.name));
 }

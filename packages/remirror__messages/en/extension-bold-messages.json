@@ -1,0 +1,4 @@
+{
+  "extension.command.toggle-bold.description": "Add bold formatting to the selected text",
+  "extension.command.toggle-bold.label": "Bold"
+}

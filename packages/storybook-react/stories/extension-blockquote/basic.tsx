@@ -4,13 +4,8 @@ import './styles.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { BlockquoteExtension } from 'remirror/extensions';
-import {
-  Remirror,
-  ThemeProvider,
-  ToggleBlockquoteButton,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { ToggleBlockquoteButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new BlockquoteExtension()];
 

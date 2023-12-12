@@ -316,6 +316,18 @@ An error occurred within a remirror hook.
 
 <br />
 
+### RMR0000
+
+:::info
+
+This error code has been removed from the Remirror code base, but is listed here for posterity.
+
+:::
+
+> Production Error
+
+An error occurred in production and details are intentionally being hidden.
+
 ### RMR0300
 
 > I18N Context

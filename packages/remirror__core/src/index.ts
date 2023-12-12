@@ -49,7 +49,6 @@ export type {
   OptionsOfConstructor,
   PickChanged,
   StateUpdateLifecycleProps,
-  TypedPropertyDescriptor,
   UpdateReason,
   UpdateReasonProps,
 } from './types';

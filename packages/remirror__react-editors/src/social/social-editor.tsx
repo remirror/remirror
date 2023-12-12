@@ -9,6 +9,7 @@ import {
 } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
 import { TableExtension } from '@remirror/extension-react-tables';
+import { i18nFormat } from '@remirror/i18n';
 import {
   EditorComponent,
   EmojiPopupComponent,
@@ -102,7 +103,7 @@ export const SocialEditor: FC<PropsWithChildren<SocialEditorProps>> = ({
   return (
     <AllStyledComponent>
       <ThemeProvider theme={theme}>
-        <Remirror manager={manager} {...rest}>
+        <Remirror manager={manager} i18nFormat={i18nFormat} {...rest}>
           <TopToolbar />
           <EditorComponent />
           <EmojiPopupComponent />

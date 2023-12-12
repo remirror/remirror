@@ -1,25 +1,29 @@
 /* Alias Types */
 
-export type EditorSchema = import('../model').Schema;
-export type EditorView = import('../view').EditorView;
-export type Selection = import('../state').Selection;
-export type DecorationSet = import('../view').DecorationSet;
-export type Transaction = import('../state').Transaction;
-export type PluginKey<PluginState = any> = import('../state').PluginKey<PluginState>;
+import { EditorState, Transaction } from 'prosemirror-state';
+import { EditorView } from 'prosemirror-view';
 
-export type Mark = import('../model').Mark;
-export type ResolvedPos = import('../model').ResolvedPos;
-export type InputRule = import('../inputrules').InputRule;
-export type Fragment = import('../model').Fragment;
-export type NodeView = import('../view').NodeView;
-export type ProsemirrorNode = import('../model').Node;
-export type ProsemirrorPlugin<PluginState = any> = import('../state').Plugin<PluginState>;
-export type MarkType = import('../model').MarkType;
-export type NodeType = import('../model').NodeType;
-export type EditorState = Readonly<import('../state').EditorState>;
-export type Slice = import('../model').Slice;
-export type Decoration = import('../view').Decoration;
-export type Mapping = import('../transform').Mapping;
+export { InputRule } from 'prosemirror-inputrules';
+export {
+  Schema as EditorSchema,
+  Fragment,
+  Mark,
+  MarkType,
+  NodeType,
+  Node as ProsemirrorNode,
+  ResolvedPos,
+  Slice,
+} from 'prosemirror-model';
+export {
+  EditorState,
+  PluginKey,
+  Plugin as ProsemirrorPlugin,
+  Selection,
+  Transaction,
+} from 'prosemirror-state';
+export { Mapping } from 'prosemirror-transform';
+export type { NodeView } from 'prosemirror-view';
+export { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
 
 declare const _brand: unique symbol;
 interface Branding<Type> {

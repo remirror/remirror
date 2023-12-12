@@ -1,14 +1,13 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { defineMessage } from '@lingui/macro';
+import type { RemirrorMessage } from '@remirror/core-types';
 
-export const LABEL: MessageDescriptor = defineMessage({
+export const LABEL: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.insert-horizontal-rule.label',
   comment: 'Label for inserting a horizontal rule (divider) command.',
   message: 'Divider',
-});
+};
 
-export const DESCRIPTION: MessageDescriptor = defineMessage({
+export const DESCRIPTION: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.insert-horizontal-rule.description',
   comment: 'Description for inserting a horizontal rule (divider) command.',
   message: 'Separate content with a diving horizontal line',
-});
+};

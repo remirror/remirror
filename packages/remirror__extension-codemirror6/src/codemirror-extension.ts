@@ -205,7 +205,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
    * to change the language.
    *
    * ```ts
-   * if (commands.updateCodeMirror.isEnabled()) {
+   * if (commands.updateCodeMirror.enabled()) {
    *   commands.updateCodeMirror({ language: 'markdown' });
    * }
    * ```

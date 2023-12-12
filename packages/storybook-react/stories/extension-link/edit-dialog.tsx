@@ -2,9 +2,7 @@ import type { ChangeEvent, HTMLProps, KeyboardEvent } from 'react';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createMarkPositioner, LinkExtension, ShortcutHandlerProps } from 'remirror/extensions';
 import {
-  CommandButton,
   EditorComponent,
-  FloatingToolbar,
   FloatingWrapper,
   Remirror,
   ThemeProvider,
@@ -16,6 +14,7 @@ import {
   useRemirror,
   useUpdateReason,
 } from '@remirror/react';
+import { CommandButton, FloatingToolbar } from '@remirror/react-ui';
 
 function useLinkShortcut() {
   const [linkShortcut, setLinkShortcut] = useState<ShortcutHandlerProps | undefined>();

@@ -3,7 +3,6 @@ import { logger } from '../logger';
 const delay = 300;
 
 export class DebounceExecutor {
-  private timer: ReturnType<typeof setTimeout> | undefined;
   private readonly keys: Set<string>;
   private busy = false;
 
@@ -12,38 +11,45 @@ export class DebounceExecutor {
   }
 
   public push(key: string) {
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-
     this.keys.add(key);
-    this.timer = setTimeout(() => {
-      this.execute();
-    }, delay);
+    this.execute();
   }
 
   private async execute() {
-    if (this.keys.size === 0 || this.busy) {
+    if (this.busy) {
       return;
     }
 
-    if (this.timer) {
-      this.timer = undefined;
-    }
-
     this.busy = true;
-    const keys = [...this.keys];
-    this.keys.clear();
 
-    try {
-      for (const key of keys) {
-        await this.fn(key);
+    while (this.keys.size > 0) {
+      await new Promise((resolve) => setTimeout(resolve, delay));
+
+      const key = this.popKey();
+
+      if (key === null) {
+        return;
       }
-    } catch (error) {
-      logger.error(error);
+
+      try {
+        await this.fn(key);
+      } catch (error) {
+        logger.error(error);
+      }
     }
 
     this.busy = false;
-    this.execute();
+  }
+
+  private popKey() {
+    const keys = [...this.keys];
+
+    if (keys.length > 0) {
+      const key = keys[0];
+      this.keys.delete(key);
+      return key;
+    }
+
+    return null;
   }
 }

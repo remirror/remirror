@@ -1,0 +1,4 @@
+{
+  "extension.command.toggle-callout.description": "{type, select, info {Create an information callout block}\n                            warning {Create a warning callout block}\n                            error {Create an error callout block}\n                            success {Create a success callout block}\n                            other {Create a callout block}}",
+  "extension.command.toggle-callout.label": "{type, select, info {Information Callout}\n                            warning {Warning Callout}\n                            error {Error Callout}\n                            success {Success Callout}\n                            other {Callout}}"
+}

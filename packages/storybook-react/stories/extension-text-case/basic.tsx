@@ -3,17 +3,8 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { TextCaseExtension } from 'remirror/extensions';
-import {
-  CommandButtonGroup,
-  CommandMenuItem,
-  DropdownButton,
-  Remirror,
-  ThemeProvider,
-  Toolbar,
-  useActive,
-  useCommands,
-  useRemirror,
-} from '@remirror/react';
+import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
+import { CommandButtonGroup, CommandMenuItem, DropdownButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new TextCaseExtension()];
 

@@ -43,7 +43,7 @@ import {
  *
  * The cursor has exited and entered (changed) at the same time.
  */
-export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
+export function useSuggest(props: UseSuggestProps): UseSuggestReturn {
   const { helpers } = useRemirrorContext<BuiltinPreset>();
   const [hookState, setHookState] = useState<UseSuggestState>(() => ({
     change: undefined,
@@ -162,12 +162,7 @@ export function useSuggest(props: UseSuggesterProps): UseSuggestReturn {
   );
 }
 
-/**
- * @deprecated - use `useSuggest`
- */
-export const useSuggester = useSuggest;
-
-export interface UseSuggesterProps extends Except<Suggester, 'onChange'> {
+export interface UseSuggestProps extends Except<Suggester, 'onChange'> {
   /**
    * Set to `true` to ignore changes which are purely caused by focus events.
    *

@@ -7,7 +7,7 @@
       "decoratorsBeforeExport": true
     },
     "transform": {
-      "legacyDecorator": true
+      "decoratorVersion": "2022-03"
     },
     "target": "es2020"
   }

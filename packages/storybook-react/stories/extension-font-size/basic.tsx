@@ -3,19 +3,15 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { FontSizeExtension } from 'remirror/extensions';
+import { Remirror, ThemeProvider, useActive, useCommands, useRemirror } from '@remirror/react';
 import {
   CommandButtonGroup,
   CommandMenuItem,
   DecreaseFontSizeButton,
   DropdownButton,
   IncreaseFontSizeButton,
-  Remirror,
-  ThemeProvider,
   Toolbar,
-  useActive,
-  useCommands,
-  useRemirror,
-} from '@remirror/react';
+} from '@remirror/react-ui';
 
 const extensions = () => [new FontSizeExtension({ defaultSize: '16', unit: 'px' })];
 

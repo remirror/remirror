@@ -1,5 +1,6 @@
+export type { I18nProps } from './contexts';
+export { I18nProvider } from './contexts';
 export type {
-  I18nProps,
   UpdateReason,
   UseExtensionCallback,
   UseI18nReturn,
@@ -7,7 +8,6 @@ export type {
   UseRemirrorReturn,
 } from './hooks';
 export {
-  I18nProvider,
   RemirrorContext,
   useActive,
   useAttrs,

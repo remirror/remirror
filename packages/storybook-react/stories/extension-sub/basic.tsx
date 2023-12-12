@@ -3,13 +3,8 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { SubExtension } from 'remirror/extensions';
-import {
-  Remirror,
-  ThemeProvider,
-  ToggleSubscriptButton,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { ToggleSubscriptButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new SubExtension()];
 

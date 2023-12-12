@@ -18,13 +18,13 @@ The following is an example where the enter key can be customised to ignore all 
 The `next` method allows full control beyond the return value. It allows both calling all lower priority key bindings regardless of whether true or false has been called.
 
 ```tsx
-import { BaseExtensionOptions, extensionDecorator, KeyBindings, PlainExtension } from 'remirror';
+import { BaseExtensionOptions, extension, KeyBindings, PlainExtension } from 'remirror';
 
 interface CustomKeymapExtensionOptions {
   override?: boolean;
 }
 
-@extensionDecorator({ defaultOptions: { override: false } })
+@extension({ defaultOptions: { override: false } })
 export class CustomKeymapExtension extends PlainExtension<CustomKeymapExtensionOptions> {
   get name() {
     return 'customKeymap' as const;

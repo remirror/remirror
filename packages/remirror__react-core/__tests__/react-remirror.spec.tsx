@@ -4,8 +4,9 @@ import React, { FC } from 'react';
 import { BoldExtension, ItalicExtension } from 'remirror/extensions';
 import { docNodeBasicJSON } from 'testing';
 import { fireEvent, strictRender } from 'testing/react';
+import type { I18nFormatter, RemirrorMessage } from '@remirror/core';
 
-import { createReactManager, Remirror, useRemirrorContext } from '../';
+import { createReactManager, Remirror, useI18n, useRemirrorContext } from '../';
 
 test('`Remirror`', () => {
   const TestComponent: FC = () => {
@@ -164,5 +165,75 @@ describe('`autoRender`', () => {
     const { container } = strictRender(<Remirror manager={manager} />);
 
     expect(container.innerHTML).toMatchSnapshot();
+  });
+});
+
+describe('i18nFormat', () => {
+  const message: RemirrorMessage = {
+    id: 'some.test.id',
+    message: 'Some ICU formatted message to be parsed with {blank}',
+    comment: 'This is a message for unit test purposes',
+  };
+
+  const values = {
+    blank: 'your chosen i18n library',
+  };
+
+  const TestComponent: FC = () => {
+    const t = useI18n();
+    return <button>{t(message, values)}</button>;
+  };
+
+  it('exposes the passed i18nFormat function on the useI18n hook', () => {
+    const i18nFormat = jest.fn<I18nFormatter>().mockImplementation(({ id }) => id);
+    const manager = createReactManager(() => []);
+    strictRender(
+      <Remirror manager={manager} i18nFormat={i18nFormat}>
+        <TestComponent />
+      </Remirror>,
+    );
+
+    expect(i18nFormat).toHaveBeenCalledWith(message, values, 'en', ['en']);
+  });
+
+  it('exposes the passed locale information on the useI18n hook', () => {
+    const i18nFormat = jest.fn<I18nFormatter>().mockImplementation(({ id }) => id);
+    const manager = createReactManager(() => []);
+    strictRender(
+      <Remirror
+        manager={manager}
+        i18nFormat={i18nFormat}
+        locale='fr'
+        supportedLocales={['fr', 'de']}
+      >
+        <TestComponent />
+      </Remirror>,
+    );
+
+    expect(i18nFormat).toHaveBeenCalledWith(message, values, 'fr', ['fr', 'de']);
+  });
+
+  it('useI18n returns the value returned by the i18nFormat function', () => {
+    const i18nFormat = jest.fn<I18nFormatter>().mockImplementation((msg, values = {}) => {
+      let { message } = msg;
+
+      for (const [key, value] of Object.entries(values)) {
+        message = message.replaceAll(`{${key}}`, value);
+      }
+
+      return message;
+    });
+    const manager = createReactManager(() => []);
+    const { getByRole } = strictRender(
+      <Remirror manager={manager} i18nFormat={i18nFormat}>
+        <TestComponent />
+      </Remirror>,
+    );
+
+    expect(getByRole('button')).toMatchInlineSnapshot(`
+      <button>
+        Some ICU formatted message to be parsed with your chosen i18n library
+      </button>
+    `);
   });
 });

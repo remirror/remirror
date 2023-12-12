@@ -652,11 +652,6 @@ function createClickMarkState(props: CreateClickMarkStateProps): ClickMarkHandle
   return clickState;
 }
 
-/**
- * @deprecated use [[`ClickEventHandler`]] instead.
- */
-export type ClickHandler = ClickEventHandler;
-
 export interface ClickMarkHandlerState extends BaseEventState {
   /**
    * Return the mark range if it exists for the clicked position.
@@ -669,11 +664,6 @@ export interface ClickMarkHandlerState extends BaseEventState {
    */
   markRanges: GetMarkRange[];
 }
-
-/**
- * @deprecated use [[`ClickMarkEventHandler`]] instead.
- */
-export type ClickMarkHandler = ClickMarkEventHandler;
 
 /**
  * The helpers passed into the `ClickHandler`.

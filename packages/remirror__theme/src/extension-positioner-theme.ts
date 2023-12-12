@@ -17,7 +17,7 @@ export const POSITIONER = css`
 `;
 
 export const POSITIONER_WIDGET = css`
+  display: block;
   width: 0;
   height: 0;
-  position: absolute;
 `;

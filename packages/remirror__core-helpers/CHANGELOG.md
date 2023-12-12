@@ -1,5 +1,41 @@
 # @remirror/core-helpers
 
+## 4.0.0-beta.2
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/types@2.0.0-beta.2
+
+## 4.0.0-beta.1
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core-constants@3.0.0-beta.1
+  - @remirror/types@2.0.0-beta.1
+
+## 4.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-constants@3.0.0-beta.0
+  - @remirror/types@2.0.0-beta.0
+
 ## 3.0.0
 
 > 2023-07-30

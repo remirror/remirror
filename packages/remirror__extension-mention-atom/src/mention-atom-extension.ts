@@ -13,6 +13,7 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   NodeSpecOverride,
+  NodeWithAttributes,
   NodeWithPosition,
   omitExtraAttributes,
   pick,
@@ -150,6 +151,7 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
       selectable: this.options.selectable,
       draggable: this.options.draggable,
       atom: true,
+      leafText: (node: NodeWithAttributes) => node.attrs.label,
       ...override,
       attrs: {
         ...extra.defaults(),

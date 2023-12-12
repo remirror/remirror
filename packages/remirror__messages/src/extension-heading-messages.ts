@@ -1,7 +1,6 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { defineMessage } from '@lingui/macro';
+import type { RemirrorMessage } from '@remirror/core-types';
 
-export const LABEL: MessageDescriptor = defineMessage({
+export const LABEL: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-heading.label',
   comment: 'Label for heading command with support for levels.',
   message: `{level, select, 1 {Heading 1}
@@ -11,4 +10,4 @@ export const LABEL: MessageDescriptor = defineMessage({
                             5 {Heading 5}
                             6 {Heading 6}
                             other {Heading}}`,
-});
+};

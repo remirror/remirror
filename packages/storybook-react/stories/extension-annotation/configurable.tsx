@@ -10,9 +10,7 @@ import {
   UnderlineExtension,
 } from 'remirror/extensions';
 import {
-  CommandButton,
   EditorComponent,
-  FloatingToolbar,
   PositionerPortal,
   Remirror,
   ThemeProvider,
@@ -21,6 +19,7 @@ import {
   usePositioner,
   useRemirror,
 } from '@remirror/react';
+import { CommandButton, FloatingToolbar } from '@remirror/react-ui';
 
 const simpleExtensions = [new BoldExtension({}), new UnderlineExtension(), new ItalicExtension()];
 

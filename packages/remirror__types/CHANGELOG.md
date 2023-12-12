@@ -1,5 +1,31 @@
 # @remirror/types
 
+## 2.0.0-beta.2
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated type `PromiseValue`, use built-in `Awaited` instead.
+
+  Remove deprecated type `Mutable`, use `Writable` instead.
+
+## 2.0.0-beta.1
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+
+## 2.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
 ## 1.0.1
 
 > 2023-04-26

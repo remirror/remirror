@@ -1,0 +1,4 @@
+{
+  "extension.command.set-text-highlight.description": "Set the text highlight color for the selected text.",
+  "extension.command.set-text-highlight.label": "Text highlight"
+}

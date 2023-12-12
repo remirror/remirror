@@ -4,13 +4,8 @@ import { AnyExtension, isNullOrUndefined, RemirrorManager } from '@remirror/core
 import { RemirrorPortals, usePortals } from '@remirror/extension-react-component';
 import { ComponentsTheme } from '@remirror/theme';
 
-import {
-  I18nProps,
-  I18nProvider,
-  RemirrorContext,
-  useReactFramework,
-  useRemirrorContext,
-} from './hooks';
+import { I18nProps, I18nProvider } from './contexts';
+import { RemirrorContext, useReactFramework, useRemirrorContext } from './hooks';
 import type { ReactFrameworkProps } from './react-framework';
 
 /**
@@ -108,7 +103,7 @@ export function Remirror<Extension extends AnyExtension = Remirror.Extensions>(
   const {
     children,
     autoRender,
-    i18n,
+    i18nFormat,
     locale,
     supportedLocales,
     hooks = [],
@@ -129,7 +124,7 @@ export function Remirror<Extension extends AnyExtension = Remirror.Extensions>(
   const autoRenderAtEnd = autoRender === 'end';
 
   return (
-    <I18nProvider i18n={i18n} locale={locale} supportedLocales={supportedLocales}>
+    <I18nProvider i18nFormat={i18nFormat} locale={locale} supportedLocales={supportedLocales}>
       <RemirrorContext.Provider value={context}>
         <RemirrorPortals portals={portals} />
         {hooks.map((hook, index) => (

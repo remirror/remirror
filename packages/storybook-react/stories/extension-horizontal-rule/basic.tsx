@@ -3,13 +3,8 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { HorizontalRuleExtension } from 'remirror/extensions';
-import {
-  InsertHorizontalRuleButton,
-  Remirror,
-  ThemeProvider,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { InsertHorizontalRuleButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new HorizontalRuleExtension()];
 

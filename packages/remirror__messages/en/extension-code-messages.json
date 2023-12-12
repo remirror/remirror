@@ -1,0 +1,4 @@
+{
+  "extension.command.toggle-code.description": "Add inline code formatting to the selected text",
+  "extension.command.toggle-code.label": "Code"
+}

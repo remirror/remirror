@@ -1,0 +1,21 @@
+{
+  "keyboard.shortcut.alt": "Alt",
+  "keyboard.shortcut.arrowDown": "Arrow Down",
+  "keyboard.shortcut.arrowLeft": "Arrow Left",
+  "keyboard.shortcut.arrowRight": "Arrow Right",
+  "keyboard.shortcut.arrowUp": "Arrow Up",
+  "keyboard.shortcut.backspace": "Backspace",
+  "keyboard.shortcut.capsLock": "Caps Lock",
+  "keyboard.shortcut.command": "Command",
+  "keyboard.shortcut.control": "Control",
+  "keyboard.shortcut.delete": "Delete",
+  "keyboard.shortcut.end": "End",
+  "keyboard.shortcut.enter": "Enter",
+  "keyboard.shortcut.escape": "Enter",
+  "keyboard.shortcut.home": "Home",
+  "keyboard.shortcut.pageDown": "Page Down",
+  "keyboard.shortcut.pageUp": "Page Up",
+  "keyboard.shortcut.shift": "Shift",
+  "keyboard.shortcut.space": "Space",
+  "keyboard.shortcut.tab": "Tab"
+}

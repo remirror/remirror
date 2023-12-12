@@ -1,5 +1,70 @@
 # jest-prosemirror
 
+## 3.0.0-beta.3
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated function `jumpTo`, just `selectText` instead.
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/core-helpers@4.0.0-beta.2
+  - @remirror/core-types@3.0.0-beta.3
+  - @remirror/core-utils@3.0.0-beta.3
+  - @remirror/pm@3.0.0-beta.3
+  - test-keyboard@2.0.7-beta.3
+
+## 3.0.0-beta.2
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core-constants@3.0.0-beta.1
+  - @remirror/core-helpers@4.0.0-beta.1
+  - @remirror/core-types@3.0.0-beta.2
+  - @remirror/core-utils@3.0.0-beta.2
+  - @remirror/pm@3.0.0-beta.2
+  - test-keyboard@2.0.7-beta.2
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [d3954076f]
+  - @remirror/pm@3.0.0-beta.1
+  - @remirror/core-types@3.0.0-beta.1
+  - @remirror/core-utils@3.0.0-beta.1
+  - test-keyboard@2.0.7-beta.1
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-types@3.0.0-beta.0
+  - @remirror/core-utils@3.0.0-beta.0
+  - @remirror/core-constants@3.0.0-beta.0
+  - @remirror/core-helpers@4.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+  - test-keyboard@2.0.7-beta.0
+
 ## 2.1.5
 
 > 2023-07-31

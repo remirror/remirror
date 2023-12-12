@@ -719,6 +719,7 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     position: absolute;
     top: var(--y);
     left: var(--x);
+    transform: translateX(var(--translate-x));
   }
 
   .remirror-language-select-width {
@@ -750,10 +751,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     margin: 0.5em 0;
     overflow: auto;
     border-radius: 0.3em;
-  }
-
-  .remirror-a11y-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   .remirror-a11y-dark :not(pre) > code[class*='language-'],
@@ -904,10 +901,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     margin: 0.5em 0;
     overflow: auto;
     border-radius: 0.3em;
-  }
-
-  .remirror-atom-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   .remirror-atom-dark :not(pre) > code[class*='language-'],
@@ -1077,12 +1070,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-base16-ateliersulphurpool-light
-    :has(.remirror-language-select-positioner)
-    ~ pre[class*='language-'] {
-    padding: 2em 1em;
-  }
-
   /* Inline code */
 
   .remirror-base16-ateliersulphurpool-light :not(pre) > code[class*='language-'] {
@@ -1249,10 +1236,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     margin: 1em 0;
     overflow: auto;
     border-radius: 8px;
-  }
-
-  .remirror-cb :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -1429,10 +1412,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-darcula :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
-  }
-
   .remirror-darcula :not(pre) > code[class*='language-'],
   .remirror-darcula pre[class*='language-'] {
     background: #2b2b2b;
@@ -1577,10 +1556,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     border-radius: 0.3em;
   }
 
-  .remirror-dracula :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
-  }
-
   .remirror-dracula :not(pre) > code[class*='language-'],
   .remirror-dracula pre[class*='language-'] {
     background: #282a36;
@@ -1723,10 +1698,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-  }
-
-  .remirror-duotone-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -1906,10 +1877,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-earth :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
-  }
-
   /* Inline code */
 
   .remirror-duotone-earth :not(pre) > code[class*='language-'] {
@@ -2085,10 +2052,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-  }
-
-  .remirror-duotone-forest :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -2268,10 +2231,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-light :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
-  }
-
   /* Inline code */
 
   .remirror-duotone-light :not(pre) > code[class*='language-'] {
@@ -2447,10 +2406,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-  }
-
-  .remirror-duotone-sea :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -2630,10 +2585,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-space :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
-  }
-
   /* Inline code */
 
   .remirror-duotone-space :not(pre) > code[class*='language-'] {
@@ -2807,10 +2758,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     background-color: white;
   }
 
-  .remirror-gh-colors :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
-  }
-
   .remirror-gh-colors :not(pre) > code[class*='language-'],
   .remirror-gh-colors pre[class*='language-'] {
   }
@@ -2919,10 +2866,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     padding: 1em;
     margin: 0.5em 0;
     overflow: auto;
-  }
-
-  .remirror-hopscotch :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   /* Inline code */
@@ -3046,10 +2989,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
   .remirror-pojoaque pre[class*='language-'] {
     padding: 12px;
     overflow: auto;
-  }
-
-  .remirror-pojoaque :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   .remirror-pojoaque :not(pre) > code[class*='language-'] {
@@ -3195,10 +3134,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     background-color: white;
   }
 
-  .remirror-vs :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
-  }
-
   /* Inline code */
 
   .remirror-vs :not(pre) > code[class*='language-'] {
@@ -3342,10 +3277,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     border-radius: 4px;
     border: 1px solid #e1e1e8;
     overflow: auto;
-  }
-
-  .remirror-xonokai :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
   }
 
   .remirror-xonokai pre[class*='language-'] {
@@ -3884,9 +3815,9 @@ export const extensionPositionerStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-positioner-widget {
+    display: block;
     width: 0;
     height: 0;
-    position: absolute;
   }
 `;
 

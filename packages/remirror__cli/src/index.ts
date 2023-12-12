@@ -19,8 +19,8 @@ export async function main() {
 
   program
     .command('build')
-    .argument('[name...]', 'The package you want to build.')
-    .description(`Build NPM packages in current monorepo.`)
+    .option('--no-types', 'Do not generate .d.ts files.')
+    .description(`Build the current NPM package using tsup.`)
     .action(build);
 
   program

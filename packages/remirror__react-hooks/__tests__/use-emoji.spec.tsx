@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 import { EmojiExtension } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
 import { act as renderAct, strictRender } from 'testing/react';
-import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react';
+import { createReactManager, Remirror, useRemirrorContext } from '@remirror/react-core';
 
 import { useEmoji, UseEmojiReturn } from '../src/use-emoji';
 

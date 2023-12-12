@@ -1,13 +1,7 @@
 import type { ComponentType } from 'react';
-import {
-  AnyExtension,
-  entries,
-  extension,
-  isNodeExtension,
-  NodeViewMethod,
-  object,
-  PlainExtension,
-} from '@remirror/core';
+import { AnyExtension, extension, isNodeExtension, PlainExtension } from '@remirror/core';
+import { entries, object } from '@remirror/core-helpers';
+import { NodeViewMethod } from '@remirror/core-types';
 
 import type {
   NodeViewComponentProps,

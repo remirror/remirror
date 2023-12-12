@@ -164,14 +164,6 @@ export class HelpersExtension extends PlainExtension {
   }
 
   /**
-   * @deprecated use `getJSON` instead.
-   */
-  @helper()
-  getRemirrorJSON(state: EditorState = this.store.getState()): Helper<RemirrorJSON> {
-    return this.getJSON(state);
-  }
-
-  /**
    * Insert a html string as a ProseMirror Node.
    *
    * @category Builtin Command

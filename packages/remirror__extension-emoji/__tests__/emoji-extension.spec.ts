@@ -166,9 +166,9 @@ describe('plainText', () => {
         })
         .overwrite(doc(p('a:cde')))
         .callback(({ commands }) => {
-          expect(commands.suggestEmoji.isEnabled({ from: 3, to: 4 })).toBe(false);
-          expect(commands.suggestEmoji.isEnabled('end')).toBe(true);
-          expect(commands.suggestEmoji.isEnabled('start')).toBe(true);
+          expect(commands.suggestEmoji.enabled({ from: 3, to: 4 })).toBe(false);
+          expect(commands.suggestEmoji.enabled('end')).toBe(true);
+          expect(commands.suggestEmoji.enabled('start')).toBe(true);
         });
     });
 

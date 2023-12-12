@@ -140,7 +140,7 @@ describe('commands.clearRangeSelection', () => {
     const { doc, p } = editor.nodes;
     editor.add(doc(p('my content<head><anchor> is chill')));
 
-    expect(editor.commands.emptySelection.isEnabled()).toBeFalse();
+    expect(editor.commands.emptySelection.enabled()).toBeFalse();
   });
 });
 

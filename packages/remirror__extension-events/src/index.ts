@@ -1,9 +1,7 @@
 export type {
   ClickEventHandler,
-  ClickHandler,
   ClickHandlerState,
   ClickMarkEventHandler,
-  ClickMarkHandler,
   ClickMarkHandlerState,
   ContextMenuEventHandler,
   ContextMenuEventHandlerState,

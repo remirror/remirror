@@ -3,14 +3,9 @@ import 'remirror/styles/all.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { ColumnAttributes, ColumnsExtension } from 'remirror/extensions';
-import {
-  CommandButtonGroup,
-  Remirror,
-  ThemeProvider,
-  ToggleColumnsButton,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { i18nFormat } from '@remirror/i18n';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { CommandButtonGroup, ToggleColumnsButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new ColumnsExtension()];
 
@@ -46,6 +41,7 @@ const Basic = (): JSX.Element => {
         onChange={onChange}
         initialContent={state}
         autoRender='end'
+        i18nFormat={i18nFormat}
       >
         <Toolbar>
           <CommandButtonGroup>

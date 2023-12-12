@@ -1,0 +1,4 @@
+{
+  "extension.command.toggle-strike.description": "Strikethrough the selected text",
+  "extension.command.toggle-strike.label": "Strikethrough"
+}

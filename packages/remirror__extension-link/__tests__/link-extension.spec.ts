@@ -209,33 +209,33 @@ describe('commands', () => {
       });
     });
 
-    describe('.isEnabled()', () => {
+    describe('.enabled()', () => {
       it('is not enabled when not selected', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph<cursor> ', testLink('A link'))));
 
-        expect(commands.removeLink.isEnabled()).toBeFalse();
+        expect(commands.removeLink.enabled()).toBeFalse();
       });
 
       it('is enabled with selection wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
 
-        expect(commands.removeLink.isEnabled()).toBeTrue();
+        expect(commands.removeLink.enabled()).toBeTrue();
       });
 
       it('is enabled with cursor within link', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
 
-        expect(commands.removeLink.isEnabled()).toBeTrue();
+        expect(commands.removeLink.enabled()).toBeTrue();
       });
 
       it('is enabled with selection of multiple nodes', () => {
         const testLink = link({ href });
         add(doc(p('<all>Paragraph ', testLink('A link'))));
 
-        expect(commands.removeLink.isEnabled()).toBeTrue();
+        expect(commands.removeLink.enabled()).toBeTrue();
       });
     });
   });
@@ -349,23 +349,23 @@ describe('commands', () => {
       });
     });
 
-    describe('.isEnabled()', () => {
+    describe('.enabled()', () => {
       it('is enabled when text is selected', () => {
         add(doc(p('Paragraph <start>A<end> link')));
 
-        expect(commands.updateLink.isEnabled({ href: '' })).toBeTrue();
+        expect(commands.updateLink.enabled({ href: '' })).toBeTrue();
       });
 
       it('is not enabled for empty selections', () => {
         add(doc(p('Paragraph <cursor>A link')));
 
-        expect(commands.updateLink.isEnabled({ href: '' })).toBeFalse();
+        expect(commands.updateLink.enabled({ href: '' })).toBeFalse();
       });
 
       it('is not enabled for node selections', () => {
         add(doc(p('Paragraph <node>A link')));
 
-        expect(commands.updateLink.isEnabled({ href: '' })).toBeFalse();
+        expect(commands.updateLink.enabled({ href: '' })).toBeFalse();
       });
 
       it('is not enabled for nodes that are not applicable', () => {
@@ -407,7 +407,7 @@ describe('commands', () => {
 
         add(doc(noMarks('No marks <start>A<end> link')));
 
-        expect(commands.updateLink.isEnabled({ href: '' })).toBeFalse();
+        expect(commands.updateLink.enabled({ href: '' })).toBeFalse();
       });
     });
   });

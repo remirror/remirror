@@ -1,0 +1,10 @@
+{
+  "extension.command.copy.description": "Copy the selected text",
+  "extension.command.copy.label": "Copy",
+  "extension.command.cut.description": "Cut the selected text",
+  "extension.command.cut.label": "Cut",
+  "extension.command.paste.description": "Paste content into the editor",
+  "extension.command.paste.label": "Paste",
+  "extension.command.select-all.description": "Select all content within the editor",
+  "extension.command.select-all.label": "Select all"
+}

@@ -1,7 +1,7 @@
 import { extensionValidityTest } from 'jest-remirror';
 import { htmlToProsemirrorNode } from '@remirror/core';
 
-import { TaskListItemExtension } from '../src';
+import { TaskListItemExtension } from '../';
 import { setupListEditor } from './list-setup';
 
 extensionValidityTest(TaskListItemExtension);

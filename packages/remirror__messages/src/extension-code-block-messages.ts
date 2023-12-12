@@ -1,14 +1,13 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { defineMessage } from '@lingui/macro';
+import type { RemirrorMessage } from '@remirror/core-types';
 
-export const LABEL: MessageDescriptor = defineMessage({
+export const LABEL: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-code-block.label',
   comment: 'Label for the code block command.',
   message: 'Codeblock',
-});
+};
 
-export const DESCRIPTION: MessageDescriptor = defineMessage({
+export const DESCRIPTION: RemirrorMessage = /*i18n*/ {
   id: 'extension.command.toggle-code-block.description',
   comment: 'Description for the code block command.',
   message: 'Add a code block',
-});
+};

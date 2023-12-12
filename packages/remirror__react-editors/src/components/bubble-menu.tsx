@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { FloatingToolbar } from '@remirror/react';
+import { FloatingToolbar } from '@remirror/react-ui';
 
 /**
  * Bubble menu for the pre-packaged editors

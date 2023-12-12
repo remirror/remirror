@@ -38,6 +38,12 @@
       "path": "../../remirror__core/src"
     },
     {
+      "path": "../../remirror__core-constants/src"
+    },
+    {
+      "path": "../../remirror__core-helpers/src"
+    },
+    {
       "path": "../../remirror__extension-emoji/src"
     },
     {
@@ -54,9 +60,6 @@
     },
     {
       "path": "../../remirror__extension-positioner/src"
-    },
-    {
-      "path": "../../remirror__i18n/src"
     },
     {
       "path": "../../remirror__react-core/src"
