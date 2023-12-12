@@ -48,6 +48,7 @@ export async function buildPackage(pkg: Package, writePackageJson = true) {
           format: format === 'dual' ? ['cjs', 'esm'] : format,
           outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
           skipNodeModulesBundle: true,
+          tsconfig: path.join(getRoot(), 'support', 'tsconfig.base.json'),
           dts: {
             entry: {
               [outFileEntry]: inDtsFile,
