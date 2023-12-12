@@ -1,5 +1,13 @@
 # @remirror/extension-tabless
 
+## 2.4.1
+
+> 2023-12-12
+
+### Patch Changes
+
+- 55602747f: Fix a bug where calling `commands.setTableCellBackground` overrides the style attribute of the table cell node.
+
 ## 2.4.0
 
 > 2023-11-12

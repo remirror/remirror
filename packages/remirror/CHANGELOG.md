@@ -1,5 +1,15 @@
 # remirror
 
+## 2.0.38
+
+> 2023-12-12
+
+### Patch Changes
+
+- 55602747f: Fix a bug where calling `commands.setTableCellBackground` overrides the style attribute of the table cell node.
+- Updated dependencies [55602747f]
+  - @remirror/extension-tables@2.4.1
+
 ## 2.0.37
 
 > 2023-11-12
