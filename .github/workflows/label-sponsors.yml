@@ -8,7 +8,7 @@ on:
 
 jobs:
   label_sponsors:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: JasonEtco/is-sponsor-label-action@v1
         with:

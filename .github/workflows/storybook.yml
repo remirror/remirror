@@ -17,7 +17,7 @@ env:
 jobs:
   deploy_docs:
     timeout-minutes: 50
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: checkout code repository

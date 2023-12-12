@@ -9,7 +9,7 @@ env:
 
 jobs:
   publish_comment:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '/publish' && (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'COLLABORATOR') }}
     steps:
       - name: get pr information

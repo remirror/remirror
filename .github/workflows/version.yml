@@ -21,7 +21,7 @@ jobs:
   # Update package versions with changesets.
   version:
     timeout-minutes: 50
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: ${{ false == contains(github.ref, 'changeset') && github.repository == 'remirror/remirror' }}
     steps:
       - name: checkout code repository

@@ -13,7 +13,7 @@ jobs:
   # Run the e2e playwright tests
   playwright:
     timeout-minutes: 50
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         server: [next, docs, storybook-react]
