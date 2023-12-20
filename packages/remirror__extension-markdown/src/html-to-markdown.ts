@@ -12,7 +12,11 @@ const TurndownService = defaultImport(_TurndownService);
 /**
  * Converts the provide HTML to markdown.
  */
-export function htmlToMarkdown(html: string): string {
+export function htmlToMarkdown(html: string, escape?: (input: string) => string): string {
+  if (escape) {
+    turndownService.escape = escape;
+  }
+
   return turndownService.turndown(html);
 }
 
