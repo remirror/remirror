@@ -32,5 +32,9 @@ marked.use({
  * Converts the provided markdown to HTML.
  */
 export function markdownToHtml(markdown: string, sanitizer?: (html: string) => string): string {
-  return marked(markdown, { gfm: true, smartLists: true, xhtml: true, sanitizer });
+  const html = marked(markdown, { gfm: true, smartLists: true, xhtml: true });
+  if (sanitizer) {
+    return sanitizer(html);
+  }
+  return html;
 }
