@@ -1,5 +1,13 @@
 # @remirror/extension-markdown
 
+## 2.0.14
+
+> 2024-02-21
+
+### Patch Changes
+
+- 00a41e38f: Fix the html sanitizing on HTML output from markdown. Removed the default html sanitizer because it doesn't provide any security guarantees and it's not been called due to a bug in the markdown extension.
+
 ## 2.0.13
 
 > 2023-04-26
