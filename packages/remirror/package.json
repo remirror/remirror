@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "2.0.38",
+  "version": "2.0.39",
   "description": "One editing package to rule them all, one editing package to bind them.",
   "keywords": [
     "prosemirror",
@@ -95,7 +95,7 @@
     "@remirror/extension-italic": "^2.0.13",
     "@remirror/extension-link": "^2.0.17",
     "@remirror/extension-list": "^2.0.16",
-    "@remirror/extension-markdown": "^2.0.13",
+    "@remirror/extension-markdown": "^2.0.14",
     "@remirror/extension-mention": "^2.0.15",
     "@remirror/extension-mention-atom": "^2.0.17",
     "@remirror/extension-node-formatting": "^2.0.13",
