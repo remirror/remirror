@@ -33,8 +33,10 @@ marked.use({
  */
 export function markdownToHtml(markdown: string, sanitizer?: (html: string) => string): string {
   const html = marked(markdown, { gfm: true, smartLists: true, xhtml: true });
+
   if (sanitizer) {
     return sanitizer(html);
   }
+
   return html;
 }
