@@ -31,7 +31,6 @@
   ],
   "dependencies": {
     "@remirror/core-constants": "^2.0.2",
-    "@remirror/core-helpers": "^3.0.0",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
