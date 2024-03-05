@@ -2,4 +2,4 @@
 'prosemirror-trailing-node': patch
 ---
 
-remove dependency on `@remirror/core-helpers`
+Remove dependency of `prosemirror-trailing-node` on `@remirror/core-helpers`.
