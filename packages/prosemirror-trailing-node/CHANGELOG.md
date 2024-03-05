@@ -1,5 +1,13 @@
 # prosemirror-trailing-node
 
+## 2.0.8
+
+> 2024-03-05
+
+### Patch Changes
+
+- 45886720e: Remove dependency of `prosemirror-trailing-node` on `@remirror/core-helpers`.
+
 ## 2.0.7
 
 > 2023-07-31
