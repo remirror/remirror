@@ -30,13 +30,13 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.24.1",
     "@remirror/react-core": "^2.0.21",
-    "prosemirror-dev-toolkit": "^1.1.4"
+    "prosemirror-dev-toolkit": "^1.1.6"
   },
   "devDependencies": {
     "@remirror/pm": "^2.0.8",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^14.2.2",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",

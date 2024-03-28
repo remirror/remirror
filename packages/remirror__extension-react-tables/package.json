@@ -39,9 +39,9 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
-    "@emotion/css": "^11.11.0",
-    "@linaria/core": "4.2.10",
+    "@babel/runtime": "^7.24.1",
+    "@emotion/css": "^11.11.2",
+    "@linaria/core": "4.5.4",
     "@remirror/core": "^2.0.19",
     "@remirror/core-utils": "^2.0.13",
     "@remirror/extension-positioner": "^2.1.8",
@@ -60,8 +60,8 @@
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "y-webrtc": "^10.2.5",
-    "yjs": "^13.6.1"
+    "y-webrtc": "^10.3.0",
+    "yjs": "^13.6.14"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.7",

@@ -36,15 +36,15 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.24.1",
     "@remirror/core": "^2.0.19",
     "@remirror/messages": "^2.0.6"
   },
   "devDependencies": {
     "@remirror/core-helpers": "^3.0.0",
     "@remirror/pm": "^2.0.8",
-    "@types/codemirror": "^5.60.7",
-    "codemirror": "^5.65.13"
+    "@types/codemirror": "^5.60.15",
+    "codemirror": "^5.65.16"
   },
   "peerDependencies": {
     "@remirror/pm": "^2.0.7",
