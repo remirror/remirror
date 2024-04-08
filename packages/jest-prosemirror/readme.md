@@ -137,7 +137,7 @@ Create a test prosemirror editor.
 The call to create editor can be chained with various commands to enable testing of the editor at each step without the need for intermediate holding variables.
 
 ```ts
-import { createEditor, doc, p } from 'jest-remirror';
+import { createEditor, doc, p } from 'jest-prosemirror';
 import { suggest } from 'prosemirror-suggest';
 
 test('`keyBindings`', () => {
