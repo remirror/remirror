@@ -244,6 +244,7 @@ export class TableExtension extends BaseTableExtension {
         const { schema, tr } = state;
 
         const tableNodes = getChangedNodes(composedTransaction, {
+          descend: true,
           predicate: ({ type }: ProsemirrorNode) => type === schema.nodes.table,
         });
 
