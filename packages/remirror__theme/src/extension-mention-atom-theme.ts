@@ -41,7 +41,9 @@ export const MENTION_ATOM_POPUP_WRAPPER = css`
   padding-bottom: 8px;
   margin: 0 auto;
   border-radius: 8px;
-  box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+  box-shadow:
+    hsla(205, 70%, 15%, 0.25) 0 4px 8px,
+    hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
   background-color: white;
   z-index: 10;
   max-height: 250px;
