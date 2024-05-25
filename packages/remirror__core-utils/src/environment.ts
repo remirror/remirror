@@ -53,8 +53,8 @@ export const environment = {
     return environment.isNode
       ? process.platform === 'darwin'
       : environment.isBrowser
-      ? /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
-      : false;
+        ? /Mac|iPod|iPhone|iPad/.test(window.navigator.platform)
+        : false;
   },
 
   /**

@@ -187,7 +187,6 @@
     "path": "packages/remirror__extension-code-block/dist/remirror-extension-code-block.js",
     "ignore": [
       "@remirror/pm",
-      "@types/prettier",
       "prettier",
       "@remirror/core",
       "@remirror/messages",

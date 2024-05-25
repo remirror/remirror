@@ -37,8 +37,11 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
     white-space: nowrap;
     color: var(--rmr-color-text);
     background-color: var(--rmr-color-background);
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition:
+      color 0.15s ease-in-out,
+      background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
     font-size: 100%;
   }
 
@@ -404,7 +407,9 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 
   .remirror-animated-popover {
-    transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
+    transition:
+      opacity 250ms ease-in-out,
+      transform 250ms ease-in-out;
     opacity: 0;
     transform-origin: top center;
     transform: translate3d(0, -20px, 0);
@@ -3487,7 +3492,9 @@ export const extensionEmojiStyledCss: ReturnType<typeof css> = css`
     padding-bottom: 8px;
     margin: 0 auto;
     border-radius: 8px;
-    box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+    box-shadow:
+      hsla(205, 70%, 15%, 0.25) 0 4px 8px,
+      hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
     background-color: white;
     z-index: 10;
     max-height: 250px;
@@ -3750,7 +3757,9 @@ export const extensionMentionAtomStyledCss: ReturnType<typeof css> = css`
     padding-bottom: 8px;
     margin: 0 auto;
     border-radius: 8px;
-    box-shadow: hsla(205, 70%, 15%, 0.25) 0 4px 8px, hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
+    box-shadow:
+      hsla(205, 70%, 15%, 0.25) 0 4px 8px,
+      hsla(205, 70%, 15%, 0.31) 0px 0px 1px;
     background-color: white;
     z-index: 10;
     max-height: 250px;

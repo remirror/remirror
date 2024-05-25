@@ -167,8 +167,8 @@ function generateIconExport(iconName: string, iconData: IconTree[] | undefined, 
   return `\
 /**
  * ${description} ![${capitalCase(
-    iconName,
-  )}](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/${cdnPath})
+   iconName,
+ )}](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/${cdnPath})
  */
 export const ${iconName}: IconTree[] = ${JSON.stringify(iconData ?? [])};`;
 }
@@ -184,8 +184,8 @@ function generateComponentExport(componentName: string, iconName: string, cdnPat
   return `\
 /**
  * ${description} ![${capitalCase(
-    componentName,
-  )}](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/${cdnPath})
+   componentName,
+ )}](https://cdn.jsdelivr.net/npm/remixicon@2.5.0/icons/${cdnPath})
  */
 export const ${componentName}: IconType = (props) => {
   return GenIcon(${iconName})(props);

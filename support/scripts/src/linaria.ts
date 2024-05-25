@@ -95,8 +95,10 @@ async function formatContents(
   contents: string,
   parser: 'css' | 'typescript' = 'css',
 ): Promise<string> {
+  const extension = parser === 'typescript' ? '.ts' : '.css';
+  const sampleFile = path.join(baseDir(), `sample${extension}`);
   // Check if the prettier config has been retrieved. If not, retrieve it.
-  prettierConfig ??= (await prettier.resolveConfig(baseDir())) ?? {};
+  prettierConfig ??= (await prettier.resolveConfig(sampleFile)) ?? {};
 
   return prettier.format(contents, { ...prettierConfig, parser });
 }

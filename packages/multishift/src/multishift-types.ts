@@ -132,13 +132,14 @@ export type ActionCreatorMapToDispatch<CreatorMap extends ActionCreatorsMapObjec
 /**
  * Infers Action union-type from action-creator map object
  */
-type ActionType<ActionCreatorMap> = ActionCreatorMap extends ActionCreator<any>
-  ? ReturnType<ActionCreatorMap>
-  : ActionCreatorMap extends Record<any, any>
-  ? {
-      [K in keyof ActionCreatorMap]: ActionType<ActionCreatorMap[K]>;
-    }[keyof ActionCreatorMap]
-  : never;
+type ActionType<ActionCreatorMap> =
+  ActionCreatorMap extends ActionCreator<any>
+    ? ReturnType<ActionCreatorMap>
+    : ActionCreatorMap extends Record<any, any>
+      ? {
+          [K in keyof ActionCreatorMap]: ActionType<ActionCreatorMap[K]>;
+        }[keyof ActionCreatorMap]
+      : never;
 
 export type AllMultishiftActions<Item = any> = Multishift.Actions<Item> &
   Multishift.CoreActions<Item>;
