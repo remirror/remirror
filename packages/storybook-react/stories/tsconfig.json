@@ -22,6 +22,9 @@
       "path": "../../remirror__dev/src"
     },
     {
+      "path": "../../remirror__extension-code-block/src"
+    },
+    {
       "path": "../../remirror__extension-codemirror6/src"
     },
     {
@@ -41,6 +44,9 @@
     },
     {
       "path": "../../remirror__extension-mention-atom/src"
+    },
+    {
+      "path": "../../remirror__extension-react-format-code/src"
     },
     {
       "path": "../../remirror__extension-react-language-select/src"

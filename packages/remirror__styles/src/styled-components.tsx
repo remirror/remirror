@@ -747,6 +747,12 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     width: var(--w);
   }
 
+  .remirror-format-code-positioner {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+  }
+
   .remirror-a11y-dark code[class*='language-'],
   .remirror-a11y-dark pre[class*='language-'] {
     color: #f8f8f2;
@@ -774,8 +780,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     border-radius: 0.3em;
   }
 
-  .remirror-a11y-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-a11y-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-a11y-dark :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   .remirror-a11y-dark :not(pre) > code[class*='language-'],
@@ -928,8 +935,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     border-radius: 0.3em;
   }
 
-  .remirror-atom-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-atom-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-atom-dark :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   .remirror-atom-dark :not(pre) > code[class*='language-'],
@@ -1101,8 +1109,11 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
 
   .remirror-base16-ateliersulphurpool-light
     :has(.remirror-language-select-positioner)
+    ~ pre[class*='language-'],
+  .remirror-base16-ateliersulphurpool-light
+    :has(.remirror-format-code-positioner)
     ~ pre[class*='language-'] {
-    padding: 2em 1em;
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -1273,8 +1284,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     border-radius: 8px;
   }
 
-  .remirror-cb :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-cb :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-cb :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -1451,8 +1463,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-darcula :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-darcula :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-darcula :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   .remirror-darcula :not(pre) > code[class*='language-'],
@@ -1599,8 +1612,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     border-radius: 0.3em;
   }
 
-  .remirror-dracula :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-dracula :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-dracula :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   .remirror-dracula :not(pre) > code[class*='language-'],
@@ -1747,8 +1761,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-duotone-dark :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-duotone-dark :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -1928,8 +1943,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-earth :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-duotone-earth :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-duotone-earth :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -2109,8 +2125,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-forest :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-duotone-forest :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-duotone-forest :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -2290,8 +2307,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-light :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-duotone-light :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-duotone-light :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -2471,8 +2489,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-sea :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-duotone-sea :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-duotone-sea :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -2652,8 +2671,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-duotone-space :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-duotone-space :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-duotone-space :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -2829,8 +2849,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     background-color: white;
   }
 
-  .remirror-gh-colors :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-gh-colors :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-gh-colors :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   .remirror-gh-colors :not(pre) > code[class*='language-'],
@@ -2943,8 +2964,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-hopscotch :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-hopscotch :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-hopscotch :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -3070,8 +3092,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-pojoaque :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-pojoaque :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-pojoaque :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   .remirror-pojoaque :not(pre) > code[class*='language-'] {
@@ -3217,8 +3240,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     background-color: white;
   }
 
-  .remirror-vs :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-vs :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-vs :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -3366,8 +3390,9 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     overflow: auto;
   }
 
-  .remirror-xonokai :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  .remirror-xonokai :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  .remirror-xonokai :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   .remirror-xonokai pre[class*='language-'] {
