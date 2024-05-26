@@ -22,6 +22,9 @@
       "path": "../../remirror__dev/src"
     },
     {
+      "path": "../../remirror__extension-code-block/src"
+    },
+    {
       "path": "../../remirror__extension-codemirror5/src"
     },
     {

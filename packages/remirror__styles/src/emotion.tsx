@@ -749,6 +749,13 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     width: var(--w);
   }
 
+  .remirror-format-code-positioner {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    transform: translateX(var(--translate-x));
+  }
+
   .remirror-a11y-dark code[class*='language-'],
   .remirror-a11y-dark pre[class*='language-'] {
     color: #f8f8f2;

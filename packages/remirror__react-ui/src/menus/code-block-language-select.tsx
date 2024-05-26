@@ -1,20 +1,15 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React, { CSSProperties, PointerEvent, useEffect, useMemo } from 'react';
 import type { FindProsemirrorNodeResult } from '@remirror/core';
-import { findParentNodeOfType, isElementDomNode, uniqueBy } from '@remirror/core';
+import { uniqueBy } from '@remirror/core';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
-import {
-  defaultAbsolutePosition,
-  hasStateChanged,
-  isPositionVisible,
-  Positioner,
-} from '@remirror/extension-positioner';
 import { PositionerPortal } from '@remirror/react-components';
 import { useCommands, useExtension } from '@remirror/react-core';
 import { usePositioner } from '@remirror/react-hooks';
 import { ExtensionCodeBlockTheme } from '@remirror/theme';
 
 import { UiThemeProvider } from '../providers/ui-theme-provider';
+import { createPositioner } from './code-block-utils';
 
 export interface CodeBlockLanguageSelectProps {
   languages?: Array<{ displayName: string; value?: string }>;
@@ -145,46 +140,3 @@ export const CodeBlockLanguageSelect = ({
     </UiThemeProvider>
   );
 };
-
-function createPositioner(): Positioner<FindProsemirrorNodeResult> {
-  return Positioner.create<FindProsemirrorNodeResult>({
-    getActive(props) {
-      const { selection, schema } = props.state;
-      const parent = findParentNodeOfType({
-        selection,
-        types: schema.nodes.codeBlock,
-      });
-
-      if (!parent) {
-        return Positioner.EMPTY;
-      }
-
-      return [parent];
-    },
-
-    getPosition(props) {
-      const { data, view } = props;
-      const node = view.nodeDOM(data.pos);
-
-      if (!isElementDomNode(node)) {
-        return defaultAbsolutePosition;
-      }
-
-      const rect = node.getBoundingClientRect();
-      const editorRect = view.dom.getBoundingClientRect();
-      const left = view.dom.scrollLeft + rect.left - editorRect.left;
-      const top = view.dom.scrollTop + rect.top - editorRect.top;
-
-      return {
-        x: left - 1,
-        y: top - 1,
-        width: rect.width,
-        height: rect.height,
-        rect,
-        visible: isPositionVisible(rect, view.dom),
-      };
-    },
-
-    hasChanged: hasStateChanged,
-  });
-}

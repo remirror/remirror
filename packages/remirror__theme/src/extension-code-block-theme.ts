@@ -18,6 +18,13 @@ export const LANGUAGE_SELECT_WIDTH = css`
   width: var(--w);
 `;
 
+export const FORMAT_CODE_POSITIONER = css`
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  transform: translateX(var(--translate-x));
+`;
+
 /**
  * a11y-dark theme for JavaScript, CSS, and HTML Based on the okaidia theme:
  * https://github.com/PrismJS/prism/blob/gh-pages/themes/prism-okaidia.css
