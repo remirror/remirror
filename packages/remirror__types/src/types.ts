@@ -384,11 +384,8 @@ type NeverBrand = Brand<object, never>;
  * This is useful for dynamically setting the parameter list of a method call
  * depending on whether keys are required.
  */
-export type IfNoRequiredProperties<
-  Type extends object,
-  Then,
-  Else,
-> = GetRequiredKeys<Type> extends NeverBrand ? Then : Else;
+export type IfNoRequiredProperties<Type extends object, Then, Else> =
+  GetRequiredKeys<Type> extends NeverBrand ? Then : Else;
 
 /**
  * Get all the keys for required properties on this type.

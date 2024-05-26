@@ -69,9 +69,9 @@ commands.free(0);
 const commandOutput: void = commands.free();
 commands.notChainable('works');
 
-const love: Chainable['love'] = (value: number) => ({} as Chainable);
+const love: Chainable['love'] = (value: number) => ({}) as Chainable;
 // @ts-expect-error
-const loveFail: Chainable['love'] = (value: string) => ({} as Chainable);
+const loveFail: Chainable['love'] = (value: string) => ({}) as Chainable;
 
 const chain: Chainable = object();
 

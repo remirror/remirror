@@ -8,7 +8,11 @@ export class TableControllerCellView implements NodeView {
   public dom: HTMLElement;
   public contentDOM: HTMLElement;
 
-  constructor(public node: ProsemirrorNode, public view: EditorView, public getPos: () => number) {
+  constructor(
+    public node: ProsemirrorNode,
+    public view: EditorView,
+    public getPos: () => number,
+  ) {
     this.contentDOM = h('div', { contentEditable: 'false' });
     this.dom = TableControllerCell({
       view,

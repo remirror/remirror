@@ -31,6 +31,6 @@ export function indexFromArrowPress({
       ? 0
       : previousIndex + 1
     : previousIndex - 1 < 0
-    ? matchLength - 1
-    : previousIndex - 1;
+      ? matchLength - 1
+      : previousIndex - 1;
 }

@@ -17,6 +17,12 @@ export const LANGUAGE_SELECT_WIDTH = css`
   width: var(--w);
 `;
 
+export const FORMAT_CODE_POSITIONER = css`
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+`;
+
 /**
  * a11y-dark theme for JavaScript, CSS, and HTML Based on the okaidia theme:
  * https://github.com/PrismJS/prism/blob/gh-pages/themes/prism-okaidia.css
@@ -49,8 +55,9 @@ export const A11Y_DARK = css`
     overflow: auto;
     border-radius: 0.3em;
   }
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
   :not(pre) > code[class*='language-'],
   pre[class*='language-'] {
@@ -193,8 +200,9 @@ export const ATOM_DARK = css`
     overflow: auto;
     border-radius: 0.3em;
   }
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
   :not(pre) > code[class*='language-'],
   pre[class*='language-'] {
@@ -338,8 +346,9 @@ export const BASE16_ATELIERSULPHURPOOL_LIGHT = css`
     margin: 0.5em 0;
     overflow: auto;
   }
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
   /* Inline code */
   :not(pre) > code[class*='language-'] {
@@ -497,8 +506,9 @@ export const CB = css`
     border-radius: 8px;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -680,8 +690,9 @@ export const DARCULA = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   :not(pre) > code[class*='language-'],
@@ -834,8 +845,9 @@ export const DRACULA = css`
     border-radius: 0.3em;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   :not(pre) > code[class*='language-'],
@@ -985,8 +997,9 @@ export const DUOTONE_DARK = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -1168,8 +1181,9 @@ export const DUOTONE_EARTH = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -1351,8 +1365,9 @@ export const DUOTONE_FOREST = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -1534,8 +1549,9 @@ export const DUOTONE_LIGHT = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -1717,8 +1733,9 @@ export const DUOTONE_SEA = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -1900,8 +1917,9 @@ export const DUOTONE_SPACE = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -2075,8 +2093,9 @@ export const GH_COLORS = css`
     background-color: white;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   :not(pre) > code[class*='language-'],
@@ -2195,8 +2214,9 @@ export const HOPSCOTCH = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -2325,8 +2345,9 @@ export const POJOAQUE = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   :not(pre) > code[class*='language-'] {
@@ -2460,8 +2481,9 @@ export const VS = css`
     background-color: white;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   /* Inline code */
@@ -2614,8 +2636,9 @@ export const XONOKAI = css`
     overflow: auto;
   }
 
-  :has(.remirror-language-select-positioner) ~ pre[class*='language-'] {
-    padding: 2em 1em;
+  :has(.remirror-language-select-positioner) ~ pre[class*='language-'],
+  :has(.remirror-format-code-positioner) ~ pre[class*='language-'] {
+    padding: 2em 1em 1em;
   }
 
   pre[class*='language-'] {

@@ -60,4 +60,4 @@ manager.store.chain.updateCodeBlock({ language: 'js' }).formatCodeBlock().run();
 
 If you would like to format code, you can import from the `@remirror/extension-code-block/formatter` endpoint.
 
-The formatter requires `prettier@2` to be installed as a peer dependency.
+The formatter requires `prettier@3.2` to be installed as a peer dependency.

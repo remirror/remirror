@@ -520,10 +520,10 @@ export function getMostRecentHighlightIndex(lastHighlight: GetLastHighlightProps
   return isValidIndex(highlightedGroupEndIndex)
     ? highlightedGroupEndIndex
     : isValidIndex(highlightedGroupStartIndex)
-    ? highlightedGroupStartIndex
-    : isValidIndex(lastIndex)
-    ? lastIndex
-    : -1;
+      ? highlightedGroupStartIndex
+      : isValidIndex(lastIndex)
+        ? lastIndex
+        : -1;
 }
 
 /**
@@ -924,11 +924,11 @@ export function getChangesFromMenuKeyDown<Item = any>({
           highlightedGroupEndIndex: endIndex,
         }
       : isValidIndex(mostRecentHighlightIndex)
-      ? {
-          highlightedGroupStartIndex: mostRecentHighlightIndex,
-          highlightedGroupEndIndex: endIndex,
-        }
-      : { highlightedGroupStartIndex: index, highlightedGroupEndIndex: endIndex };
+        ? {
+            highlightedGroupStartIndex: mostRecentHighlightIndex,
+            highlightedGroupEndIndex: endIndex,
+          }
+        : { highlightedGroupStartIndex: index, highlightedGroupEndIndex: endIndex };
 
     return omitUnchangedState(changes, params);
   }

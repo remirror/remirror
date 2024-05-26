@@ -68,8 +68,7 @@
       "prosemirror-model",
       "prosemirror-state",
       "prosemirror-view",
-      "@remirror/core-constants",
-      "@remirror/core-helpers"
+      "@remirror/core-constants"
     ],
     "running": false,
     "gzip": true
@@ -189,7 +188,6 @@
     "path": "packages/remirror__extension-code-block/dist/remirror-extension-code-block.js",
     "ignore": [
       "@remirror/pm",
-      "@types/prettier",
       "prettier",
       "@remirror/core",
       "@remirror/messages",
@@ -523,6 +521,25 @@
       "react-dom",
       "@remirror/core",
       "@remirror/messages"
+    ],
+    "running": false,
+    "gzip": true
+  },
+  {
+    "name": "@remirror/extension-react-format-code",
+    "limit": "5 KB",
+    "path": "packages/remirror__extension-react-format-code/dist/remirror-extension-react-format-code.js",
+    "ignore": [
+      "@remirror/pm",
+      "react",
+      "react-dom",
+      "@remirror/core",
+      "@remirror/core-utils",
+      "@remirror/extension-code-block",
+      "@remirror/extension-positioner",
+      "@remirror/react-components",
+      "@remirror/react-core",
+      "@remirror/react-hooks"
     ],
     "running": false,
     "gzip": true
