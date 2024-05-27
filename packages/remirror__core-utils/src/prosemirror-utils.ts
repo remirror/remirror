@@ -232,8 +232,8 @@ export function findParentNode(props: FindParentNodeProps): FindProsemirrorNodeR
   const $pos = isEditorState(selection)
     ? selection.selection.$from
     : isSelection(selection)
-    ? selection.$from
-    : selection;
+      ? selection.$from
+      : selection;
 
   for (let depth = $pos.depth; depth > 0; depth--) {
     const node = $pos.node(depth);
@@ -311,8 +311,8 @@ export function findPositionOfNodeBefore(
   const $pos = isResolvedPos(value)
     ? value
     : isSelection(value)
-    ? value.$from
-    : value.selection.$from;
+      ? value.$from
+      : value.selection.$from;
 
   if (isNullOrUndefined($pos)) {
     throw new Error('Invalid value passed in.');
@@ -444,8 +444,8 @@ export function findPositionOfNodeAfter(
   const $pos = isResolvedPos(value)
     ? value
     : isSelection(value)
-    ? value.$from
-    : value.selection.$from;
+      ? value.$from
+      : value.selection.$from;
 
   if (isNullOrUndefined($pos)) {
     throw new Error('Invalid value passed in.');

@@ -143,8 +143,8 @@ export function splitListItem(
           $from.indexAfter(-1) < $from.node(-2).childCount
             ? 1
             : $from.indexAfter(-2) < $from.node(-3).childCount
-            ? 2
-            : 3;
+              ? 2
+              : 3;
 
         tr.replace(
           $from.before(keepItem ? undefined : -1),

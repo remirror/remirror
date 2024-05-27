@@ -6,25 +6,27 @@
  */
 
 import type { BuiltInParserName, CursorOptions, CursorResult } from 'prettier';
-import babelPlugin from 'prettier/parser-babel';
-import graphqlPlugin from 'prettier/parser-graphql';
-import htmlPlugin from 'prettier/parser-html';
-import markdownPlugin from 'prettier/parser-markdown';
-import cssPlugin from 'prettier/parser-postcss';
-import typescriptPlugin from 'prettier/parser-typescript';
-import yamlPlugin from 'prettier/parser-yaml';
-import { default as Prettier } from 'prettier/standalone';
+import babelPlugin from 'prettier/plugins/babel';
+import estreePlugin from 'prettier/plugins/estree';
+import graphqlPlugin from 'prettier/plugins/graphql';
+import htmlPlugin from 'prettier/plugins/html';
+import markdownPlugin from 'prettier/plugins/markdown';
+import postcssPlugin from 'prettier/plugins/postcss';
+import typescriptPlugin from 'prettier/plugins/typescript';
+import yamlPlugin from 'prettier/plugins/yaml';
+import { formatWithCursor } from 'prettier/standalone';
 
 import type { FormattedContent, FormatterProps } from './code-block-types';
 
 // TODO load this asynchronously
 const plugins = [
   babelPlugin,
+  estreePlugin,
   htmlPlugin,
   typescriptPlugin,
   markdownPlugin,
   graphqlPlugin,
-  cssPlugin,
+  postcssPlugin,
   yamlPlugin,
 ];
 const options: Partial<CursorOptions> = {
@@ -56,7 +58,7 @@ interface FormatCodeProps {
  * Wrapper around the prettier formatWithCursor.
  */
 function formatCode({ parser, source, cursorOffset }: FormatCodeProps) {
-  return Prettier.formatWithCursor(source, {
+  return formatWithCursor(source, {
     ...options,
     cursorOffset,
     plugins,
@@ -90,7 +92,7 @@ function offsetIncrement(
  * A prettier based code formatter which can be dropped in for use within the
  * `CodeBlockExtension`.
  */
-export function formatter(props: FormatterProps): FormattedContent | undefined {
+export async function formatter(props: FormatterProps): Promise<FormattedContent | undefined> {
   const { cursorOffset, language, source } = props;
 
   const fn = (
@@ -110,37 +112,52 @@ export function formatter(props: FormatterProps): FormattedContent | undefined {
     return { ...result, cursorOffset: result.cursorOffset + increment };
   };
 
+  let parser: BuiltInParserName;
+
+  switch (language) {
+    case 'typescript':
+    case 'ts':
+    case 'tsx':
+      parser = 'typescript';
+      break;
+    case 'javascript':
+    case 'jsx':
+    case 'js':
+      parser = 'babel-flow';
+      break;
+    case 'markdown':
+    case 'md':
+      parser = 'markdown';
+      break;
+    case 'mdx':
+      parser = 'mdx';
+      break;
+    case 'yml':
+    case 'yaml':
+      parser = 'yaml';
+      break;
+    case 'html':
+      parser = 'html';
+      break;
+    case 'css':
+      parser = 'css';
+      break;
+    case 'less':
+      parser = 'less';
+      break;
+    case 'json':
+      parser = 'json';
+      break;
+    case 'json5':
+      parser = 'json5';
+      break;
+    default:
+      return;
+  }
+
   try {
-    switch (language) {
-      case 'typescript':
-      case 'ts':
-      case 'tsx':
-        return fn(formatCode({ source, cursorOffset, parser: 'typescript' }));
-      case 'javascript':
-      case 'jsx':
-      case 'js':
-        return fn(formatCode({ source, cursorOffset, parser: 'babel-flow' }));
-      case 'markdown':
-      case 'md':
-        return fn(formatCode({ source, cursorOffset, parser: 'markdown' }));
-      case 'mdx':
-        return fn(formatCode({ source, cursorOffset, parser: 'mdx' }));
-      case 'yml':
-      case 'yaml':
-        return fn(formatCode({ source, cursorOffset, parser: 'yaml' }));
-      case 'html':
-        return fn(formatCode({ source, cursorOffset, parser: 'html' }));
-      case 'css':
-        return fn(formatCode({ source, cursorOffset, parser: 'css' }));
-      case 'less':
-        return fn(formatCode({ source, cursorOffset, parser: 'less' }));
-      case 'json':
-        return fn(formatCode({ source, cursorOffset, parser: 'json' }));
-      case 'json5':
-        return fn(formatCode({ source, cursorOffset, parser: 'json5' }));
-      default:
-        return;
-    }
+    const formatResult = await formatCode({ source, cursorOffset, parser });
+    return fn(formatResult);
   } catch {
     return;
   }

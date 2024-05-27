@@ -41,8 +41,11 @@ export const BUTTON = css`
   white-space: nowrap;
   color: ${text};
   background-color: ${background};
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
   font-size: 100%;
   &[aria-disabled='true'] {
     cursor: auto;
@@ -411,7 +414,9 @@ export const POPOVER = css`
 ` as 'remirror-popover';
 
 export const ANIMATED_POPOVER = css`
-  transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
+  transition:
+    opacity 250ms ease-in-out,
+    transform 250ms ease-in-out;
   opacity: 0;
   transform-origin: top center;
   transform: translate3d(0, -20px, 0);

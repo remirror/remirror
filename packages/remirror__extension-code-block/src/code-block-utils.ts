@@ -26,7 +26,7 @@ import { ExtensionCodeBlockMessages } from '@remirror/messages';
 import { TextSelection } from '@remirror/pm/state';
 import { Decoration } from '@remirror/pm/view';
 
-import type { CodeBlockAttributes, CodeBlockOptions, FormattedContent } from './code-block-types';
+import type { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';
 
 export const LANGUAGE_ATTRIBUTE = 'data-code-block-language';
 export const WRAP_ATTRIBUTE = 'data-code-block-wrap';
@@ -292,41 +292,47 @@ export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
       const offsetStart = from - start;
       const offsetEnd = to - start;
       const language = getLanguage({ language: attrs.language, fallback });
-      const formatStart = formatter({ source: textContent, language, cursorOffset: offsetStart });
-      let formatEnd: FormattedContent | undefined;
+
+      const formatStartPromise = formatter({
+        source: textContent,
+        language,
+        cursorOffset: offsetStart,
+      });
 
       // When the user has a selection
-      if (offsetStart !== offsetEnd) {
-        formatEnd = formatter({ source: textContent, language, cursorOffset: offsetEnd });
-      }
+      const formatEndPromise =
+        offsetStart !== offsetEnd
+          ? formatter({ source: textContent, language, cursorOffset: offsetEnd })
+          : // eslint-disable-next-line unicorn/no-useless-undefined
+            Promise.resolve(undefined);
 
-      if (!formatStart) {
-        return false;
-      }
+      Promise.all([formatStartPromise, formatEndPromise])
+        .then(([formatStart, formatEnd]) => {
+          // Do nothing if nothing has changed
+          if (!formatStart || formatStart.formatted === textContent) {
+            return;
+          }
 
-      const { cursorOffset, formatted } = formatStart;
+          const end = start + textContent.length;
 
-      // Do nothing if nothing has changed
-      if (formatted === textContent) {
-        return false;
-      }
+          // Replace the codeBlock content with the transformed text.
+          tr.insertText(formatStart.formatted, start, end);
 
-      const end = start + textContent.length;
+          // Set the new selection
+          const anchor = start + formatStart.cursorOffset;
+          const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
 
-      // Replace the codeBlock content with the transformed text.
-      tr.insertText(formatted, start, end);
+          tr.setSelection(
+            TextSelection.between(tr.doc.resolve(anchor), tr.doc.resolve(head ?? anchor)),
+          );
 
-      // Set the new selection
-      const anchor = start + cursorOffset;
-      const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
-
-      tr.setSelection(
-        TextSelection.between(tr.doc.resolve(anchor), tr.doc.resolve(head ?? anchor)),
-      );
-
-      if (dispatch) {
-        dispatch(tr);
-      }
+          if (dispatch) {
+            dispatch(tr);
+          }
+        })
+        .catch(() => {
+          // Do nothing
+        });
 
       return true;
     };

@@ -51,7 +51,7 @@ import {
   defaultOptions: {
     supportedLanguages: [],
     toggleName: 'paragraph',
-    formatter: ({ source }) => ({ cursorOffset: 0, formatted: source }),
+    formatter: async ({ source }) => ({ cursorOffset: 0, formatted: source }),
     syntaxTheme: 'a11y_dark',
     defaultLanguage: 'markup',
     defaultWrap: false,
@@ -292,6 +292,10 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   /**
    * Format the code block with the code formatting function passed as an
    * option.
+   *
+   * The formatter runs asynchronously. This should not be immediately followed
+   * by additional commands. It is not yet possible to track completion of this
+   * command; it is best to use as a standalone response to a user action.
    *
    * Code formatters (like prettier) add a lot to the bundle size and hence
    * it is up to you to provide a formatter which will be run on the entire

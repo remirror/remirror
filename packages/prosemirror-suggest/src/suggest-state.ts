@@ -120,8 +120,8 @@ export class SuggestState {
     return this.#next
       ? this.#next
       : this.#prev && this.#handlerMatches.exit
-      ? this.#prev
-      : undefined;
+        ? this.#prev
+        : undefined;
   }
 
   /**
