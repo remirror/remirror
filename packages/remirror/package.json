@@ -135,6 +135,11 @@
     "@remirror/pm": "^2.0.8",
     "prettier": "^3.2.0"
   },
+  "peerDependenciesMeta": {
+    "prettier": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public",
     "exports": {
