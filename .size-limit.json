@@ -68,8 +68,7 @@
       "prosemirror-model",
       "prosemirror-state",
       "prosemirror-view",
-      "@remirror/core-constants",
-      "@remirror/core-helpers"
+      "@remirror/core-constants"
     ],
     "running": false,
     "gzip": true
