@@ -112,14 +112,13 @@ export function createEditor(
 ): ProsemirrorTestChain {
   const { plugins = [], rules = [], autoClean = true, ...editorOptions } = options;
   const element = document.createElement('div');
+  document.body.append(element);
   const state = createState(taggedDocument, [...plugins, inputRules({ rules })]);
   const view = new EditorView(element, {
     state,
     plugins: [],
     ...editorOptions,
   }) as TestEditorView;
-
-  document.body.append(element);
 
   if (autoClean) {
     cleanupItems.add([view, element]);
