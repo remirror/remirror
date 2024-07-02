@@ -35,10 +35,10 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.24.7",
     "@remirror/core": "^2.0.19",
     "@remirror/messages": "^2.0.6",
-    "@types/querystringify": "^2.0.0",
+    "@types/querystringify": "^2.0.2",
     "prosemirror-resizable-view": "^2.0.14",
     "querystringify": "^2.2.0"
   },
