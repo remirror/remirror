@@ -34,13 +34,13 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.24.7",
     "@remirror/core": "^2.0.19",
     "@remirror/messages": "^2.0.6",
-    "@types/marked": "^4.3.1",
-    "@types/turndown": "^5.0.1",
+    "@types/marked": "^4.3.2",
+    "@types/turndown": "^5.0.4",
     "marked": "^4.3.0",
-    "turndown": "^7.1.2",
+    "turndown": "^7.2.0",
     "turndown-plugin-gfm": "^1.0.2"
   },
   "devDependencies": {

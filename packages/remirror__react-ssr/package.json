@@ -33,7 +33,7 @@
     "dist-types"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.24.7",
     "@remirror/core": "^2.0.19",
     "@remirror/extension-react-ssr": "^2.0.13"
   },
