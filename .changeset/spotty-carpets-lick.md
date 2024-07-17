@@ -15,6 +15,6 @@
 'jest-prosemirror': patch
 ---
 
-Bump ProseMirror to latest versions to address potentially XSS vulnerability found in ProseMirror's DOMSerializer
+Bump ProseMirror to latest versions to address potential XSS vulnerability found in ProseMirror's DOMSerializer
 
 See: https://discuss.prosemirror.net/t/heads-up-xss-risk-in-domserializer/6572
