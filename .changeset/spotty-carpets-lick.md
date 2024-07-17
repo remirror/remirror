@@ -1,5 +1,5 @@
 ---
-'@remirror/pm': minor
+'@remirror/pm': patch
 '@remirror/extension-entity-reference': patch
 '@remirror/extension-text-highlight': patch
 '@remirror/extension-font-family': patch
