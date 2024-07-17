@@ -41,7 +41,7 @@
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.8",
+    "@remirror/pm": "^2.0.9",
     "@remirror/react": "^2.0.35",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

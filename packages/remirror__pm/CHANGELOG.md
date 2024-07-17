@@ -1,5 +1,22 @@
 # @remirror/pm
 
+## 2.0.9
+
+> 2024-07-17
+
+### Patch Changes
+
+- 7caff8388: Add a validate property to each of the Node or Mark attributes used in Remirror
+- 7caff8388: Bump ProseMirror to latest versions to address potential XSS vulnerability found in ProseMirror's DOMSerializer
+
+  See: https://discuss.prosemirror.net/t/heads-up-xss-risk-in-domserializer/6572
+
+- Updated dependencies [7caff8388]
+- Updated dependencies [7caff8388]
+  - prosemirror-trailing-node@2.0.9
+  - prosemirror-paste-rules@2.0.8
+  - prosemirror-suggest@2.0.7
+
 ## 2.0.8
 
 > 2023-07-31

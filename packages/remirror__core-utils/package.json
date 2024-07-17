@@ -33,7 +33,7 @@
     "@babel/runtime": "^7.22.3",
     "@remirror/core-constants": "^2.0.2",
     "@remirror/core-helpers": "^3.0.0",
-    "@remirror/core-types": "^2.0.5",
+    "@remirror/core-types": "^2.0.6",
     "@remirror/messages": "^2.0.6",
     "@types/min-document": "^2.19.0",
     "css-in-js-utils": "^3.1.0",
@@ -42,7 +42,7 @@
     "parenthesis": "^3.1.8"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.8",
+    "@remirror/pm": "^2.0.9",
     "@types/jsdom": "^16.2.15",
     "@types/node": "^16.18.34",
     "jsdom": "^17.0.0"

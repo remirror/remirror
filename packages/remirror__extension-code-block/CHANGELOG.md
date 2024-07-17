@@ -1,5 +1,16 @@
 # @remirror/extension-code-block
 
+## 2.0.19
+
+> 2024-07-17
+
+### Patch Changes
+
+- 7caff8388: Add a validate property to each of the Node or Mark attributes used in Remirror
+- Updated dependencies [7caff8388]
+- Updated dependencies [7caff8388]
+  - @remirror/pm@2.0.9
+
 ## 2.0.18
 
 > 2023-08-03
