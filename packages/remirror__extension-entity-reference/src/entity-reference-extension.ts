@@ -22,7 +22,7 @@ import {
   within,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
-import { Node } from '@remirror/pm/model';
+import { Node, TagParseRule } from '@remirror/pm/model';
 import { EditorStateConfig, TextSelection } from '@remirror/pm/state';
 import { DecorationSet } from '@remirror/pm/view';
 
@@ -107,7 +107,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
             const id = node.getAttribute(idAttr);
             return { ...extra.parse(node), id };
           },
-        },
+        } satisfies TagParseRule,
         ...(override.parseDOM ?? []),
       ],
     };

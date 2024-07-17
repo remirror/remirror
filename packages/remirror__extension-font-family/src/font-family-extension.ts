@@ -14,6 +14,7 @@ import {
   omitExtraAttributes,
   ProsemirrorAttributes,
 } from '@remirror/core';
+import type { StyleParseRule, TagParseRule } from '@remirror/pm/model';
 
 const FONT_FAMILY_ATTRIBUTE = 'data-font-family';
 
@@ -54,7 +55,7 @@ export class FontFamilyExtension extends MarkExtension {
 
             return { ...extra.parse(dom), fontFamily };
           },
-        },
+        } satisfies TagParseRule,
         {
           // Get the color from the css style property. This is useful for pasted content.
           style: 'font-family',
@@ -68,7 +69,7 @@ export class FontFamilyExtension extends MarkExtension {
               fontFamily: fontFamily ? fontFamily.replace(/["']/g, '') : '',
             };
           },
-        },
+        } satisfies StyleParseRule,
         ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => {

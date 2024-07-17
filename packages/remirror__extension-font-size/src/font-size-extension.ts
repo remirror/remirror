@@ -30,6 +30,7 @@ import {
   parseSizeUnit,
   PrimitiveSelection,
 } from '@remirror/core';
+import type { StyleParseRule, TagParseRule } from '@remirror/pm/model';
 
 import { FontSizeAttributes, FontSizeOptions } from './font-size-types';
 import {
@@ -87,7 +88,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
 
             return { ...extra.parse(dom), size };
           },
-        },
+        } satisfies TagParseRule,
         {
           // Get the color from the css style property. This is useful for pasted content.
           style: 'font-size',
@@ -101,7 +102,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
 
             return { size };
           },
-        },
+        } satisfies StyleParseRule,
         ...(override.parseDOM ?? []),
       ],
       toDOM: (mark: Mark) => {

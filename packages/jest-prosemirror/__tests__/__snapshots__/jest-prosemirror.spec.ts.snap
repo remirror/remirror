@@ -26,7 +26,8 @@ Prosemirror schema: {
     "orderedList": {
       "attrs": {
         "order": {
-          "default": 1
+          "default": 1,
+          "validate": "number"
         }
       },
       "parseDOM": [
@@ -204,7 +205,8 @@ Prosemirror schema: {
     "heading": {
       "attrs": {
         "level": {
-          "default": 1
+          "default": 1,
+          "validate": "number"
         }
       },
       "content": "inline*",
@@ -275,12 +277,16 @@ Prosemirror schema: {
     "image": {
       "inline": true,
       "attrs": {
-        "src": {},
+        "src": {
+          "validate": "string"
+        },
         "alt": {
-          "default": null
+          "default": null,
+          "validate": "string|null"
         },
         "title": {
-          "default": null
+          "default": null,
+          "validate": "string|null"
         }
       },
       "group": "inline",
@@ -295,9 +301,12 @@ Prosemirror schema: {
   "marks": {
     "link": {
       "attrs": {
-        "href": {},
+        "href": {
+          "validate": "string"
+        },
         "title": {
-          "default": null
+          "default": null,
+          "validate": "string|null"
         }
       },
       "inclusive": false,
