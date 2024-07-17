@@ -73,9 +73,9 @@ describe('schema', () => {
 
     it('sets the extra attributes', () => {
       expect(schema.marks.link.spec.attrs).toEqual({
-        href: {},
-        target: { default: null },
-        auto: { default: false },
+        href: { validate: 'string|null' },
+        target: { default: null, validate: 'string|null' },
+        auto: { default: false, validate: 'boolean' },
         title: { default: null },
         custom: { default: 'failure' },
       });
@@ -94,9 +94,9 @@ describe('schema', () => {
       expect(schema.marks.link.spec.attrs).toEqual({
         custom: { default: 'failure' },
         title: { default: null },
-        href: {},
-        target: { default: null },
-        auto: { default: false },
+        href: { validate: 'string|null' },
+        target: { default: null, validate: 'string|null' },
+        auto: { default: false, validate: 'boolean' },
       });
     });
 

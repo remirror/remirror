@@ -43,7 +43,7 @@ describe('schema', () => {
 
     it('sets the extra attributes', () => {
       expect(schema.nodes.heading.spec.attrs).toEqual({
-        level: { default: 1 },
+        level: { default: 1, validate: 'number' },
         title: { default: null },
         custom: { default: 'failure' },
       });
@@ -55,7 +55,7 @@ describe('schema', () => {
       ]);
 
       expect(schema.nodes.heading.spec.attrs).toEqual({
-        level: { default: 1 },
+        level: { default: 1, validate: 'number' },
       });
     });
   });
