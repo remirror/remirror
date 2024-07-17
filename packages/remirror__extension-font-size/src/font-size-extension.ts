@@ -68,7 +68,7 @@ export class FontSizeExtension extends MarkExtension<FontSizeOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        size: { default: this.options.defaultSize },
+        size: { default: this.options.defaultSize, validate: 'string|number|null' },
       },
       parseDOM: [
         {

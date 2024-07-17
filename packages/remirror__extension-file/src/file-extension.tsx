@@ -84,12 +84,12 @@ export class FileExtension extends NodeExtension<FileOptions> {
     return {
       attrs: {
         ...extra.defaults(),
-        id: { default: null },
-        url: { default: '' },
-        fileName: { default: '' },
-        fileType: { default: '' },
-        fileSize: { default: 0 },
-        error: { default: null },
+        id: { default: null, validate: 'string|null' },
+        url: { default: '', validate: 'string' },
+        fileName: { default: '', validate: 'string' },
+        fileType: { default: '', validate: 'string' },
+        fileSize: { default: 0, validate: 'number' },
+        error: { default: null, validate: 'string|null' },
       },
       selectable: true,
       draggable: true,

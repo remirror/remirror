@@ -38,7 +38,7 @@ export class FontFamilyExtension extends MarkExtension {
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
       ...override,
-      attrs: { ...extra.defaults(), fontFamily: { default: null } },
+      attrs: { ...extra.defaults(), fontFamily: { default: null, validate: 'string|null' } },
       parseDOM: [
         {
           tag: `span[${FONT_FAMILY_ATTRIBUTE}]`,

@@ -51,7 +51,7 @@ export class TextColorExtension extends MarkExtension<TextColorOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        color: { default: this.options.defaultColor },
+        color: { default: this.options.defaultColor, validate: 'string|null' },
       },
       parseDOM: [
         {

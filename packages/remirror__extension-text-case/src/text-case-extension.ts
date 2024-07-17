@@ -44,7 +44,10 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
       ...override,
-      attrs: { ...extra.defaults(), casing: { default: this.options.defaultCasing } },
+      attrs: {
+        ...extra.defaults(),
+        casing: { default: this.options.defaultCasing, validate: 'string' },
+      },
       parseDOM: [
         {
           tag: `span[${TEXT_CASE_ATTRIBUTE}]`,

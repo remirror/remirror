@@ -121,16 +121,16 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        alt: { default: '' },
-        crop: { default: null },
-        height: { default: null },
-        width: { default: null },
-        rotate: { default: null },
-        src: { default: null },
-        title: { default: '' },
-        fileName: { default: null },
+        alt: { default: '', validate: 'string' },
+        crop: { default: null, validate: 'string|null' },
+        height: { default: null, validate: 'number|null' },
+        width: { default: null, validate: 'number|null' },
+        rotate: { default: null, validate: 'string|null' },
+        src: { default: null, validate: 'string|null' },
+        title: { default: '', validate: 'string' },
+        fileName: { default: null, validate: 'string|null' },
 
-        resizable: { default: false },
+        resizable: { default: false, validate: 'boolean' },
       },
       parseDOM: [
         {

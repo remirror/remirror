@@ -12,7 +12,7 @@ import type {
   ResolvedPos,
   Selection,
 } from '@remirror/pm';
-import type { MarkSpec, NodeSpec } from '@remirror/pm/model';
+import type { AttributeSpec, MarkSpec, NodeSpec } from '@remirror/pm/model';
 import { Decoration, DecorationSource, NodeView } from '@remirror/pm/view';
 import type { JsonPrimitive, Literal, ObjectMark, ProsemirrorAttributes } from '@remirror/types';
 
@@ -334,7 +334,7 @@ export type DynamicAttributeCreator = (nodeOrMark: ProsemirrorNode | Mark) => Js
  * TODO #462 is being added to support migrations so that breaking changes can
  * be handled automatically.
  */
-export interface SchemaAttributesObject {
+export interface SchemaAttributesObject extends Pick<AttributeSpec, 'validate'> {
   /**
    * The default value for the attribute being added, if set to `null` then the
    * initial value for any nodes is not required.
