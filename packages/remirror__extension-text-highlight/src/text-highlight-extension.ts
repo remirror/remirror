@@ -18,6 +18,7 @@ import {
 } from '@remirror/core';
 import { Palette, palette } from '@remirror/extension-text-color';
 import { ExtensionTextHighlightMessages as Messages } from '@remirror/messages';
+import type { StyleParseRule, TagParseRule } from '@remirror/pm/model';
 
 const setTextHighlightOptions: Remirror.CommandDecoratorOptions = {
   icon: 'markPenLine',
@@ -52,7 +53,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
       ...override,
       attrs: {
         ...extra.defaults(),
-        highlight: { default: this.options.defaultHighlight },
+        highlight: { default: this.options.defaultHighlight, validate: 'string|null' },
       },
       parseDOM: [
         {
@@ -70,7 +71,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
 
             return { ...extra.parse(dom), highlight };
           },
-        },
+        } satisfies TagParseRule,
         {
           tag: `span[${TEXT_HIGHLIGHT_ATTRIBUTE}]`,
           getAttrs: (dom) => {
@@ -86,7 +87,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
 
             return { ...extra.parse(dom), highlight };
           },
-        },
+        } satisfies TagParseRule,
         {
           // Get the color from the css style property. This is useful for pasted content.
           style: 'background-color',
@@ -98,7 +99,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
 
             return { highlight };
           },
-        },
+        } satisfies StyleParseRule,
         ...(override.parseDOM ?? []),
       ],
       toDOM: (mark: Mark) => {

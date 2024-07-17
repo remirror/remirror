@@ -48,8 +48,8 @@ export class ListItemExtension extends NodeExtension<ListItemOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        closed: { default: false },
-        nested: { default: false },
+        closed: { default: false, validate: 'boolean' },
+        nested: { default: false, validate: 'boolean' },
       },
       parseDOM: [
         {

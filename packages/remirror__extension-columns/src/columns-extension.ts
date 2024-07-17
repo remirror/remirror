@@ -149,24 +149,31 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
         ...extra.defaults(),
         count: {
           default: this.options.defaults.count,
+          validate: 'string|number|null',
         },
         fill: {
           default: this.options.defaults.fill,
+          validate: 'string|null',
         },
         gap: {
           default: this.options.defaults.gap,
+          validate: 'string|null',
         },
         ruleColor: {
           default: this.options.defaults.ruleColor,
+          validate: 'string|null',
         },
         ruleStyle: {
           default: this.options.defaults.ruleStyle,
+          validate: 'string|null',
         },
         ruleWidth: {
           default: this.options.defaults.ruleWidth,
+          validate: 'string|null',
         },
         width: {
           default: this.options.defaults.width,
+          validate: 'string|null',
         },
       },
       parseDOM: [
@@ -235,6 +242,7 @@ export class ColumnsExtension extends NodeExtension<ColumnsOptions> {
   createSchemaAttributes(): IdentifierSchemaAttributes[] {
     const columnSpan: SchemaAttributesObject = {
       default: null,
+      validate: 'string|null',
       parseDOM: (node) => node.getAttribute('column-span') ?? 'none',
       toDOM: (attrs) =>
         attrs.columnSpan ? ['column-span', attrs.columnSpan === 'all' ? 'all' : 'none'] : null,

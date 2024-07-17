@@ -90,8 +90,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
 
       attrs: {
         ...extra.defaults(),
-        language: { default: this.options.defaultLanguage },
-        wrap: { default: this.options.defaultWrap },
+        language: { default: this.options.defaultLanguage, validate: 'string' },
+        wrap: { default: this.options.defaultWrap, validate: 'boolean' },
       },
       parseDOM: [
         // Add support for github code blocks.

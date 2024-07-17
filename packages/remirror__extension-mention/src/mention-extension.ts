@@ -30,6 +30,7 @@ import {
   Static,
 } from '@remirror/core';
 import type { CreateEventHandlers } from '@remirror/extension-events';
+import type { TagParseRule } from '@remirror/pm/model';
 import { MarkPasteRule } from '@remirror/pm/paste-rules';
 import {
   createRegexFromSuggester,
@@ -182,9 +183,9 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        id: {},
-        label: {},
-        name: {},
+        id: { validate: 'string|null' },
+        label: { validate: 'string|null' },
+        name: { validate: 'string|null' },
       },
       parseDOM: [
         {
@@ -199,7 +200,7 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
             const label = element.textContent;
             return { ...extra.parse(element), id, label, name };
           },
-        },
+        } satisfies TagParseRule,
         ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => {

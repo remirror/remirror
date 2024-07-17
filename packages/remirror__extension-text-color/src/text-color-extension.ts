@@ -17,6 +17,7 @@ import {
   MarkSpecOverride,
   omitExtraAttributes,
 } from '@remirror/core';
+import type { StyleParseRule, TagParseRule } from '@remirror/pm/model';
 
 import { SetTextColorOptions, TextColorAttributes, TextColorOptions } from './text-color-types';
 import {
@@ -50,7 +51,7 @@ export class TextColorExtension extends MarkExtension<TextColorOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        color: { default: this.options.defaultColor },
+        color: { default: this.options.defaultColor, validate: 'string|null' },
       },
       parseDOM: [
         {
@@ -68,7 +69,7 @@ export class TextColorExtension extends MarkExtension<TextColorOptions> {
 
             return { ...extra.parse(dom), color };
           },
-        },
+        } satisfies TagParseRule,
         {
           // Get the color from the css style property. This is useful for pasted content.
           style: 'color',
@@ -80,7 +81,7 @@ export class TextColorExtension extends MarkExtension<TextColorOptions> {
 
             return { color };
           },
-        },
+        } satisfies StyleParseRule,
         ...(override.parseDOM ?? []),
       ],
       toDOM: (mark: Mark) => {

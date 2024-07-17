@@ -44,7 +44,7 @@ export class TaskListItemExtension extends NodeExtension {
       ...override,
       attrs: {
         ...extra.defaults(),
-        checked: { default: false },
+        checked: { default: false, validate: 'boolean' },
       },
       parseDOM: [
         {

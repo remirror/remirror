@@ -93,8 +93,8 @@ export class CalloutExtension extends NodeExtension<CalloutOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        type: { default: defaultType },
-        emoji: { default: defaultEmoji },
+        type: { default: defaultType, validate: 'string' },
+        emoji: { default: defaultEmoji, validate: 'string' },
       },
       parseDOM: [
         {
