@@ -91,6 +91,25 @@
   - @remirror/theme@3.0.0-beta.0
   - @remirror/pm@3.0.0-beta.0
 
+## 2.4.2
+
+> 2024-07-17
+
+### Patch Changes
+
+- 7caff8388: Add a validate property to each of the Node or Mark attributes used in Remirror
+- Updated dependencies [7caff8388]
+- Updated dependencies [7caff8388]
+  - @remirror/pm@2.0.9
+
+## 2.4.1
+
+> 2023-12-12
+
+### Patch Changes
+
+- 55602747f: Fix a bug where calling `commands.setTableCellBackground` overrides the style attribute of the table cell node.
+
 ## 2.4.0
 
 > 2023-11-12

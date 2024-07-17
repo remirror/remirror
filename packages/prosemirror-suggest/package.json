@@ -41,14 +41,14 @@
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1",
-    "prosemirror-model": "^1.19.3",
+    "prosemirror-model": "^1.22.1",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.32.3"
+    "prosemirror-view": "^1.33.8"
   },
   "peerDependencies": {
-    "prosemirror-model": "^1.19.0",
+    "prosemirror-model": "^1.22.1",
     "prosemirror-state": "^1.4.2",
-    "prosemirror-view": "^1.32.3"
+    "prosemirror-view": "^1.33.8"
   },
   "peerDependenciesMeta": {},
   "publishConfig": {

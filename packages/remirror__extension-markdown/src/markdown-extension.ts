@@ -20,7 +20,6 @@ import { DOMSerializer, Fragment } from '@remirror/pm/model';
 
 import { htmlToMarkdown } from './html-to-markdown';
 import { markdownToHtml } from './markdown-to-html';
-import { htmlSanitizer } from './markdown-utils';
 
 export interface MarkdownOptions {
   /**
@@ -38,13 +37,8 @@ export interface MarkdownOptions {
   markdownToHtml?: Static<(markdown: string, sanitizer?: (html: string) => string) => string>;
 
   /**
-   * Provide a sanitizer to prevent XSS attacks.
-   *
-   * The default sanitizer has **zero** security guarantees so it's recommended
-   * that you provide your own html sanitizer here.
-   *
-   * If you want to sanitize on the backend as well you will need to override
-   * this method.
+   * Provide a sanitizer to prevent XSS attacks. Remirror does not provide any
+   * sanitization by default.
    */
   htmlSanitizer?: Static<(html: string) => string>;
 
@@ -88,7 +82,7 @@ export interface MarkdownOptions {
   defaultOptions: {
     htmlToMarkdown,
     markdownToHtml,
-    htmlSanitizer,
+    htmlSanitizer: undefined,
     activeNodes: [ExtensionTag.Code],
     copyAsMarkdown: false,
   },

@@ -399,6 +399,24 @@
   - @remirror/styles@3.0.0-beta.0
   - @remirror/pm@3.0.0-beta.0
 
+## 1.0.41
+
+> 2024-02-21
+
+### Patch Changes
+
+- Updated dependencies [00a41e38f]
+  - remirror@2.0.39
+
+## 1.0.40
+
+> 2023-12-12
+
+### Patch Changes
+
+- Updated dependencies [55602747f]
+  - remirror@2.0.38
+
 ## 1.0.39
 
 > 2023-11-12

@@ -13,6 +13,7 @@ import {
   omitExtraAttributes,
   PrimitiveSelection,
 } from '@remirror/core';
+import type { StyleParseRule, TagParseRule } from '@remirror/pm/model';
 
 import {
   isValidCasing,
@@ -43,7 +44,10 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
   createMarkSpec(extra: ApplySchemaAttributes, override: MarkSpecOverride): MarkExtensionSpec {
     return {
       ...override,
-      attrs: { ...extra.defaults(), casing: { default: this.options.defaultCasing } },
+      attrs: {
+        ...extra.defaults(),
+        casing: { default: this.options.defaultCasing, validate: 'string' },
+      },
       parseDOM: [
         {
           tag: `span[${TEXT_CASE_ATTRIBUTE}]`,
@@ -60,7 +64,7 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
 
             return { ...extra.parse(dom), casing };
           },
-        },
+        } satisfies TagParseRule,
         {
           // Get the color from the css style property. This is useful for pasted content.
           style: 'text-transform',
@@ -72,7 +76,7 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
 
             return { casing };
           },
-        },
+        } satisfies StyleParseRule,
         {
           // Get the color from the css style property. This is useful for pasted content.
           style: 'font-variant',
@@ -84,7 +88,7 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
 
             return { casing };
           },
-        },
+        } satisfies StyleParseRule,
         ...(override.parseDOM ?? []),
       ],
       toDOM: (mark) => {

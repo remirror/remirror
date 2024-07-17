@@ -79,6 +79,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
           nodeLineHeight: this.nodeLineHeight(),
           style: {
             default: '',
+            validate: 'string',
             parseDOM: () => '',
             toDOM: ({ nodeIndent, nodeTextAlignment, nodeLineHeight, style }) => {
               const marginLeft = nodeIndent ? this.options.indents[nodeIndent] : undefined;
@@ -234,6 +235,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
   private nodeIndent(): SchemaAttributesObject {
     return {
       default: null,
+      validate: 'string|null',
       parseDOM: (element) =>
         element.getAttribute(NODE_INDENT_ATTRIBUTE) ??
         extractIndent(this.options.indents, element.style.marginLeft),
@@ -263,6 +265,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
   private nodeTextAlignment(): SchemaAttributesObject {
     return {
       default: null,
+      validate: 'string|null',
       parseDOM: (element) =>
         element.getAttribute(NODE_TEXT_ALIGNMENT_ATTRIBUTE) ?? element.style.textAlign,
       toDOM: (attrs) => {
@@ -285,6 +288,7 @@ export class NodeFormattingExtension extends PlainExtension<NodeFormattingOption
   private nodeLineHeight(): SchemaAttributesObject {
     return {
       default: null,
+      validate: 'number|null',
       parseDOM: (element) => {
         const val = element.getAttribute(NODE_LINE_HEIGHT_ATTRIBUTE);
         return extractLineHeight(val) ?? extractLineHeight(element.style.lineHeight);

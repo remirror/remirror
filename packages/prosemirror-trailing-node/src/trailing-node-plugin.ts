@@ -1,6 +1,5 @@
 import { NodeType } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { includes, uniqueArray } from '@remirror/core-helpers';
 
 export interface TrailingNodePluginOptions {
   /**
@@ -41,7 +40,7 @@ export function trailingNode(options?: TrailingNodePluginOptions): Plugin<boolea
   const { ignoredNodes = [], nodeName = 'paragraph' } = options ?? {};
 
   // The names of the nodes for which this rule should not be applied.
-  const ignoredNodeNames: string[] = uniqueArray([...ignoredNodes, nodeName]);
+  const ignoredNodeNames: Set<string> = new Set([...ignoredNodes, nodeName]);
 
   // The node that will be inserted when the criteria match.
   let type: NodeType;
@@ -75,16 +74,16 @@ export function trailingNode(options?: TrailingNodePluginOptions): Plugin<boolea
         type = nodeType;
         types = Object.values(schema.nodes)
           .map((node) => node)
-          .filter((node) => !ignoredNodeNames.includes(node.name));
+          .filter((node) => !ignoredNodeNames.has(node.name));
 
-        return includes(types, doc.lastChild?.type);
+        return types.includes(doc.lastChild?.type as (typeof types)[number]);
       },
       apply: (tr, value) => {
         if (!tr.docChanged) {
           return value;
         }
 
-        return includes(types, tr.doc.lastChild?.type);
+        return types.includes(tr.doc.lastChild?.type as (typeof types)[number]);
       },
     },
   });

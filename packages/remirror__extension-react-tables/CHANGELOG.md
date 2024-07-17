@@ -117,6 +117,18 @@
   - @remirror/theme@3.0.0-beta.0
   - @remirror/pm@3.0.0-beta.0
 
+## 2.2.20
+
+> 2024-07-17
+
+### Patch Changes
+
+- 7caff8388: Add a validate property to each of the Node or Mark attributes used in Remirror
+- Updated dependencies [7caff8388]
+- Updated dependencies [7caff8388]
+  - @remirror/extension-tables@2.4.2
+  - @remirror/pm@2.0.9
+
 ## 2.2.19
 
 > 2023-08-25

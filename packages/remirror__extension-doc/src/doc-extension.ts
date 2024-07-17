@@ -115,11 +115,11 @@ export class DocExtension extends NodeExtension<DocOptions> {
 
     if (isPlainObject(docAttributes)) {
       for (const [key, value] of entries(docAttributes)) {
-        attrs[key] = { default: value };
+        attrs[key] = { default: value, validate: 'string|null' };
       }
     } else {
       for (const key of docAttributes) {
-        attrs[key] = { default: null };
+        attrs[key] = { default: null, validate: 'string|null' };
       }
     }
 

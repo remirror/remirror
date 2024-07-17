@@ -61,6 +61,7 @@ export async function buildPackage(
         format: format === 'dual' ? ['cjs', 'esm'] : format,
         outExtension: ({ format }) => ({ js: format === 'esm' ? '.js' : '.cjs' }),
         skipNodeModulesBundle: true,
+        // tsconfig: path.join(getRoot(), 'support', 'tsconfig.base.json'),
         tsconfig: tsconfigPath,
         experimentalDts: types
           ? {

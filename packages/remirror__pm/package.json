@@ -136,18 +136,18 @@
     "prosemirror-commands": "^1.5.2",
     "prosemirror-dropcursor": "^1.8.1",
     "prosemirror-gapcursor": "^1.3.2",
-    "prosemirror-history": "^1.3.2",
-    "prosemirror-inputrules": "^1.2.1",
+    "prosemirror-history": "^1.4.1",
+    "prosemirror-inputrules": "^1.4.0",
     "prosemirror-keymap": "^1.2.2",
-    "prosemirror-model": "^1.19.3",
-    "prosemirror-paste-rules": "^3.0.0-beta.3",
-    "prosemirror-schema-list": "^1.3.0",
+    "prosemirror-model": "^1.22.1",
+    "prosemirror-paste-rules": "^2.0.8",
+    "prosemirror-schema-list": "^1.4.1",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-suggest": "3.0.0-beta.3",
-    "prosemirror-tables": "^1.3.4",
-    "prosemirror-trailing-node": "^3.0.0-beta.3",
-    "prosemirror-transform": "^1.8.0",
-    "prosemirror-view": "^1.32.3"
+    "prosemirror-suggest": "^2.0.7",
+    "prosemirror-tables": "^1.3.7",
+    "prosemirror-trailing-node": "^2.0.9",
+    "prosemirror-transform": "^1.9.0",
+    "prosemirror-view": "^1.33.8"
   },
   "devDependencies": {
     "@remirror/cli": "1.0.1"

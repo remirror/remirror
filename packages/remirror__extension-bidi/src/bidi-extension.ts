@@ -179,6 +179,7 @@ export class BidiExtension extends PlainExtension<BidiOptions> {
   private dir(): SchemaAttributesObject {
     return {
       default: this.options.defaultDirection ?? null,
+      validate: 'string',
       parseDOM: (element) => element.getAttribute('dir') ?? this.getDirection(element.textContent),
       toDOM: (_, { node }) => {
         if (!node) {
