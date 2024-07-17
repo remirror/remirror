@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-font-size",
-  "version": "2.0.13",
+  "version": "2.0.14",
   "description": "Add font size to the selected text, or text within the provided range.",
   "keywords": [
     "remirror",
@@ -40,10 +40,10 @@
     "round": "^2.0.1"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.8"
+    "@remirror/pm": "^2.0.9"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.5"
+    "@remirror/pm": "^2.0.9"
   },
   "publishConfig": {
     "access": "public",

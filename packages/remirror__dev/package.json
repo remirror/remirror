@@ -35,7 +35,7 @@
     "prosemirror-dev-toolkit": "^1.1.4"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.8",
+    "@remirror/pm": "^2.0.9",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

@@ -1,5 +1,21 @@
 # jest-prosemirror
 
+## 2.1.6
+
+> 2024-07-17
+
+### Patch Changes
+
+- 7caff8388: Add a validate property to each of the Node or Mark attributes used in Remirror
+- 7caff8388: Bump ProseMirror to latest versions to address potential XSS vulnerability found in ProseMirror's DOMSerializer
+
+  See: https://discuss.prosemirror.net/t/heads-up-xss-risk-in-domserializer/6572
+
+- Updated dependencies [7caff8388]
+- Updated dependencies [7caff8388]
+  - @remirror/core-types@2.0.6
+  - @remirror/pm@2.0.9
+
 ## 2.1.5
 
 > 2023-07-31
