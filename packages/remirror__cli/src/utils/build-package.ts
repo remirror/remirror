@@ -1,4 +1,4 @@
-import * as babel from '@babel/core';
+// import * as babel from '@babel/core';
 import { Package } from '@manypkg/get-packages';
 import glob from 'fast-glob';
 import { findUp } from 'find-up';
@@ -70,43 +70,43 @@ export async function buildPackage(
               },
             }
           : undefined,
-        plugins: [
-          {
-            name: 'remirror-es-decorator-state-3',
-            renderChunk: async (code) => {
-              if (!code.includes('@')) {
-                return;
-              }
-
-              const transformed = await babel.transformAsync(code, {
-                plugins: [['@babel/plugin-proposal-decorators', { version: '2023-05' }]],
-
-                // We need to set the ESBuild target to esnext so that it can
-                // pass through the decorators syntax. So we need another layer
-                // to do the transpilation. This is inefficient but it works.
-                presets: [
-                  [
-                    '@babel/preset-env',
-                    {
-                      targets: {
-                        node: '14',
-                        // See https://remirror.io/docs/advanced/browser-support
-                        browsers: 'since 2017',
-                      },
-                      modules: false,
-                    },
-                  ],
-                ],
-
-                // Don't look for babel.config.js
-                configFile: false,
-              });
-
-              const transformedCode = transformed?.code;
-              return { code: transformedCode || code };
-            },
-          },
-        ],
+        // plugins: [
+        //   {
+        //     name: 'remirror-es-decorator-state-3',
+        //     renderChunk: async (code) => {
+        //       if (!code.includes('@')) {
+        //         return;
+        //       }
+        //
+        //       const transformed = await babel.transformAsync(code, {
+        //         plugins: [['@babel/plugin-proposal-decorators', { version: '2023-05' }]],
+        //
+        //         // We need to set the ESBuild target to esnext so that it can
+        //         // pass through the decorators syntax. So we need another layer
+        //         // to do the transpilation. This is inefficient but it works.
+        //         presets: [
+        //           [
+        //             '@babel/preset-env',
+        //             {
+        //               targets: {
+        //                 node: '14',
+        //                 // See https://remirror.io/docs/advanced/browser-support
+        //                 browsers: 'since 2017',
+        //               },
+        //               modules: false,
+        //             },
+        //           ],
+        //         ],
+        //
+        //         // Don't look for babel.config.js
+        //         configFile: false,
+        //       });
+        //
+        //       const transformedCode = transformed?.code;
+        //       return { code: transformedCode || code };
+        //     },
+        //   },
+        // ],
         // dts: {
         //   entry: {
         //     [outFileEntry]: inDtsFile,
