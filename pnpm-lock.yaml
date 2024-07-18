@@ -6,6 +6,7 @@ settings:
 
 overrides:
   postcss: '>= 8.0.0'
+  typescript: ~5.0.4
 
 patchedDependencies:
   '@lingui/detect-locale@4.2.0':
@@ -18858,7 +18859,7 @@ packages:
     dependencies:
       semver: 7.5.4
       shelljs: 0.8.5
-      typescript: 5.6.0-dev.20240717
+      typescript: 5.0.4
     dev: false
 
   /duplexer3@0.1.4:
@@ -30287,12 +30288,6 @@ packages:
     resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
     engines: {node: '>=12.20'}
     hasBin: true
-
-  /typescript@5.6.0-dev.20240717:
-    resolution: {integrity: sha512-W2qNu1NDYC0GopCV4ZR0pr7hdSlG59txBbYYJaMBFLxZAdmQBUa7lIQsClSzHGPlIZZADKcP9jSoAYDbIrihRA==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-    dev: false
 
   /ua-parser-js@0.7.31:
     resolution: {integrity: sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==}

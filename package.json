@@ -216,7 +216,8 @@
   },
   "pnpm": {
     "overrides": {
-      "postcss": ">= 8.0.0"
+      "postcss": ">= 8.0.0",
+      "typescript": "~5.0.4"
     },
     "patchedDependencies": {
       "y-prosemirror@1.2.1": "patches/y-prosemirror@1.2.1.patch",
