@@ -1,5 +1,13 @@
 # @remirror/extension-file
 
+## 1.0.20
+
+> 2024-07-18
+
+### Patch Changes
+
+- 29b02cca2: Allow file node attr `fileSize` to be a string.
+
 ## 1.0.19
 
 > 2024-07-17

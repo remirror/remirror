@@ -1,5 +1,13 @@
 # remirror
 
+## 2.0.40
+
+> 2024-07-18
+
+### Patch Changes
+
+- 29b02cca2: Allow file node attr `fileSize` to be a string.
+
 ## 2.0.39
 
 > 2024-02-21
