@@ -44,8 +44,6 @@ export async function buildPackage(
   for (const entryPoint of entryPoints) {
     const { format, outFile, inFile } = entryPoint;
     const outFileEntry = path.basename(outFile).split('.').slice(0, -1).join('.');
-    const inDtsFile = inFile.replace('/src/', '/dist-types/').replace(/\.([cm]?ts)x?$/, '.d.$1');
-
     const tsconfigPath = await findUp('tsconfig.json', { cwd: inFile });
 
     promises.push(
@@ -63,7 +61,7 @@ export async function buildPackage(
         experimentalDts: types
           ? {
               entry: {
-                [outFileEntry]: inDtsFile,
+                [outFileEntry]: inFile,
               },
             }
           : undefined,
