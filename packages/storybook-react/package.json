@@ -28,7 +28,7 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@floating-ui/react": "^0.24.3",
-    "@formatjs/intl": "^2.9.0",
+    "@formatjs/intl": "^2.10.0",
     "@joeattardi/emoji-button": "^4.6.4",
     "@mui/material": "^5.13.2",
     "@remirror/core": "3.0.0-beta.5",
