@@ -1,5 +1,30 @@
 # @remirror/preset-formatting
 
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-node-formatting@3.0.0-beta.6
+  - @remirror/extension-text-highlight@3.0.0-beta.6
+  - @remirror/extension-text-color@3.0.0-beta.6
+  - @remirror/extension-whitespace@3.0.0-beta.6
+  - @remirror/extension-font-size@3.0.0-beta.6
+  - @remirror/extension-text-case@3.0.0-beta.6
+  - @remirror/extension-underline@3.0.0-beta.6
+  - @remirror/extension-columns@3.0.0-beta.6
+  - @remirror/extension-heading@3.0.0-beta.6
+  - @remirror/extension-italic@3.0.0-beta.6
+  - @remirror/extension-strike@3.0.0-beta.6
+  - @remirror/extension-bold@3.0.0-beta.6
+  - @remirror/extension-sub@3.0.0-beta.6
+  - @remirror/extension-sup@3.0.0-beta.6
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
 ## 3.0.0-beta.5
 
 > 2023-11-20

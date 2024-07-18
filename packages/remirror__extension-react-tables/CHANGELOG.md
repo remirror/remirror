@@ -1,5 +1,25 @@
 # @remirror/extension-react-tables
 
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-positioner@3.0.0-beta.6
+  - @remirror/extension-tables@3.0.0-beta.6
+  - @remirror/react-components@3.0.0-beta.6
+  - @remirror/react-hooks@3.0.0-beta.6
+  - @remirror/core-utils@3.0.0-beta.4
+  - @remirror/react-core@3.0.0-beta.6
+  - @remirror/messages@3.0.0-beta.4
+  - @remirror/icons@3.0.0-beta.3
+  - @remirror/theme@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
 ## 3.0.0-beta.5
 
 > 2023-11-20

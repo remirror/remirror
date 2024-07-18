@@ -1,6 +1,6 @@
 {
   "name": "create-context-state",
-  "version": "2.0.2",
+  "version": "2.0.3-beta.0",
   "description": "Create a context hook and provider for managing the state of your react application",
   "keywords": [
     "remirror"
@@ -39,7 +39,7 @@
     "@babel/runtime": "^7.22.3"
   },
   "devDependencies": {
-    "@remirror/cli": "1.0.1",
+    "@remirror/cli": "1.1.0-beta.0",
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.0",
     "react": "^18.2.0"

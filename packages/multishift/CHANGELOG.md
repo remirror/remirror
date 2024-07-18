@@ -1,5 +1,17 @@
 # multishift
 
+## 2.0.10-beta.4
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/core-helpers@4.0.0-beta.3
+  - @remirror/core-types@3.0.0-beta.4
+  - a11y-status@2.0.2-beta.0
+
 ## 2.0.10-beta.3
 
 > 2023-11-20

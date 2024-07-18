@@ -1,5 +1,20 @@
 # jest-prosemirror
 
+## 3.0.0-beta.4
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/core-constants@3.0.0-beta.3
+  - @remirror/core-helpers@4.0.0-beta.3
+  - @remirror/core-types@3.0.0-beta.4
+  - @remirror/core-utils@3.0.0-beta.4
+  - test-keyboard@2.0.7-beta.4
+  - @remirror/pm@3.0.0-beta.4
+
 ## 3.0.0-beta.3
 
 > 2023-11-20
