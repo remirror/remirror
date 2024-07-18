@@ -402,6 +402,7 @@
 ## 1.0.42
 
 > 2024-07-18
+
 ### Patch Changes
 
 - Updated dependencies [29b02cca2]
