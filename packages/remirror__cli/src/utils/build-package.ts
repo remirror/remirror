@@ -50,10 +50,7 @@ export async function buildPackage(
 
     promises.push(
       tsupBuild({
-        // Current ESBuild version (0.19.3) doesn't support compiling ES
-        // Stage-3 decorators, so we need to set the target to esnext to avoid
-        // the error.
-        target: 'esnext',
+        target: ['es2020', 'chrome60', 'firefox60', 'safari11', 'edge18', 'node12'],
         outDir: path.dirname(outFile),
         entry: {
           [outFileEntry]: inFile,
