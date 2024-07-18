@@ -88,7 +88,7 @@ export class FileExtension extends NodeExtension<FileOptions> {
         url: { default: '', validate: 'string' },
         fileName: { default: '', validate: 'string' },
         fileType: { default: '', validate: 'string' },
-        fileSize: { default: 0, validate: 'number' },
+        fileSize: { default: 0, validate: 'string|number' },
         error: { default: null, validate: 'string|null' },
       },
       selectable: true,
