@@ -1,5 +1,16 @@
 # prosemirror-resizable-view
 
+## 3.0.0-beta.4
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/core-helpers@4.0.0-beta.3
+  - @remirror/core-utils@3.0.0-beta.4
+
 ## 3.0.0-beta.3
 
 > 2023-11-20

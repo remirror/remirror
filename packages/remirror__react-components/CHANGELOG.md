@@ -1,5 +1,25 @@
 # @remirror/react-components
 
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-positioner@3.0.0-beta.6
+  - @remirror/react-hooks@3.0.0-beta.6
+  - @remirror/react-utils@3.0.0-beta.4
+  - create-context-state@2.0.3-beta.0
+  - @remirror/react-core@3.0.0-beta.6
+  - @remirror/messages@3.0.0-beta.4
+  - @remirror/icons@3.0.0-beta.3
+  - @remirror/theme@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+  - multishift@2.0.10-beta.4
+
 ## 3.0.0-beta.5
 
 > 2023-11-20

@@ -1,5 +1,13 @@
 # @remirror/types
 
+## 2.0.0-beta.3
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+
 ## 2.0.0-beta.2
 
 > 2023-11-20

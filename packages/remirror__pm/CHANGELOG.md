@@ -1,5 +1,19 @@
 # @remirror/pm
 
+## 3.0.0-beta.4
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - prosemirror-trailing-node@3.0.0-beta.4
+  - @remirror/core-constants@3.0.0-beta.3
+  - prosemirror-paste-rules@3.0.0-beta.4
+  - @remirror/core-helpers@4.0.0-beta.3
+  - prosemirror-suggest@3.0.0-beta.4
+
 ## 3.0.0-beta.3
 
 > 2023-11-20
