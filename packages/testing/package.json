@@ -47,10 +47,10 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@jest/globals": "^29.5.0",
     "@react-spring/mock-raf": "^1.1.1",
-    "@remirror/core": "3.0.0-beta.5",
-    "@remirror/pm": "3.0.0-beta.3",
-    "@remirror/preset-core": "3.0.0-beta.5",
-    "@remirror/react": "3.0.0-beta.5",
+    "@remirror/core": "3.0.0-beta.6",
+    "@remirror/pm": "3.0.0-beta.4",
+    "@remirror/preset-core": "3.0.0-beta.6",
+    "@remirror/react": "3.0.0-beta.6",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/fluent-ffmpeg": "^2.1.21",
@@ -74,10 +74,10 @@
     "playwright-testing-library": "^4.5.0",
     "react-test-renderer": "^18.2.0",
     "signal-exit": "^3.0.7",
-    "test-keyboard": "2.0.7-beta.3"
+    "test-keyboard": "2.0.7-beta.4"
   },
   "devDependencies": {
-    "@remirror/cli": "1.0.1",
+    "@remirror/cli": "1.1.0-beta.0",
     "@types/react": "^18.2.0",
     "react": "^18.2.0"
   },

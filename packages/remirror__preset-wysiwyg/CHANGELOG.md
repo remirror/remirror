@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-horizontal-rule@3.0.0-beta.6
+  - @remirror/extension-trailing-node@3.0.0-beta.6
+  - @remirror/extension-drop-cursor@3.0.0-beta.6
+  - @remirror/extension-blockquote@3.0.0-beta.6
+  - @remirror/extension-code-block@3.0.0-beta.6
+  - @remirror/extension-gap-cursor@3.0.0-beta.6
+  - @remirror/extension-hard-break@3.0.0-beta.6
+  - @remirror/extension-shortcuts@3.0.0-beta.6
+  - @remirror/extension-underline@3.0.0-beta.6
+  - @remirror/extension-heading@3.0.0-beta.6
+  - @remirror/extension-italic@3.0.0-beta.6
+  - @remirror/extension-strike@3.0.0-beta.6
+  - @remirror/extension-embed@3.0.0-beta.6
+  - @remirror/extension-image@3.0.0-beta.6
+  - @remirror/extension-bidi@3.0.0-beta.6
+  - @remirror/extension-bold@3.0.0-beta.6
+  - @remirror/extension-code@3.0.0-beta.6
+  - @remirror/extension-find@1.0.0-beta.6
+  - @remirror/extension-link@3.0.0-beta.6
+  - @remirror/extension-list@3.0.0-beta.6
+  - @remirror/preset-core@3.0.0-beta.6
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
 ## 3.0.0-beta.5
 
 > 2023-11-20

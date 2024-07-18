@@ -1,5 +1,17 @@
 # @remirror/extension-trailing-node
 
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/messages@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
 ## 3.0.0-beta.5
 
 > 2023-11-20

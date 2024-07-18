@@ -1,5 +1,21 @@
 # @remirror/extension-react-component
 
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/core-constants@3.0.0-beta.3
+  - @remirror/core-helpers@4.0.0-beta.3
+  - @remirror/core-types@3.0.0-beta.4
+  - @remirror/core-utils@3.0.0-beta.4
+  - @remirror/messages@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
 ## 3.0.0-beta.5
 
 > 2023-11-20

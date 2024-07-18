@@ -1,5 +1,13 @@
 # @remirror/cli
 
+## 1.1.0-beta.0
+
+> 2024-07-18
+
+### Minor Changes
+
+- 0b571c886: Use esbuild to build packages, now that it supports ES Decorators
+
 ## 1.0.1
 
 > 2023-04-26
