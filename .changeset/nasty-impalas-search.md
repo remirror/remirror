@@ -1,4 +1,5 @@
 ---
+'remirror': patch
 '@remirror/extension-file': patch
 ---
 
