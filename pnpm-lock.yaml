@@ -326,7 +326,7 @@ importers:
         specifier: ^2.4.3
         version: 2.4.3(prettier@2.8.8)
       remirror:
-        specifier: 2.0.39
+        specifier: 2.0.40
         version: link:packages/remirror
       rimraf:
         specifier: ^4.4.1
@@ -2925,7 +2925,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 2.0.39
+        specifier: 2.0.40
         version: link:../remirror
       svgmoji:
         specifier: ^3.2.0
@@ -3196,7 +3196,7 @@ importers:
         specifier: ^2.2.7
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-file':
-        specifier: ^1.0.19
+        specifier: ^1.0.20
         version: link:../remirror__extension-file
       '@remirror/extension-find':
         specifier: ^0.1.6
@@ -3223,7 +3223,7 @@ importers:
         specifier: ^2.0.35
         version: link:../remirror__react
       '@remirror/react-editors':
-        specifier: ^1.0.41
+        specifier: ^1.0.42
         version: link:../remirror__react-editors
       '@remirror/styles':
         specifier: ^2.0.7
@@ -3301,7 +3301,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 2.0.39
+        specifier: 2.0.40
         version: link:../remirror
       scripts:
         specifier: 0.0.1
@@ -3816,7 +3816,7 @@ importers:
         specifier: ^2.0.35
         version: link:../packages/remirror__react
       '@remirror/react-editors':
-        specifier: ^1.0.41
+        specifier: ^1.0.42
         version: link:../packages/remirror__react-editors
       '@remirror/styles':
         specifier: ^2.0.7
@@ -3861,7 +3861,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       remirror:
-        specifier: ^2.0.39
+        specifier: ^2.0.40
         version: link:../packages/remirror
     devDependencies:
       '@docusaurus/core':
