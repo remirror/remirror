@@ -52,7 +52,7 @@ export class CodeMirrorExtension extends NodeExtension<CodeMirrorExtensionOption
       attrs: {
         ...extra.defaults(),
         codeMirrorConfig: { default: undefined },
-        language: { default: undefined, validate: 'string|null' },
+        language: { default: undefined },
       },
       parseDOM: [
         {

@@ -102,10 +102,10 @@ export function createTableNodeSchema(
 ): Record<'table' | 'tableRow' | 'tableCell' | 'tableHeaderCell', TableSchemaSpec> {
   const cellAttrs = {
     ...extra.defaults(),
-    colspan: { default: 1, validate: 'number' },
-    rowspan: { default: 1, validate: 'number' },
-    colwidth: { default: null, validate: 'number|null' },
-    background: { default: null, validate: 'string|null' },
+    colspan: { default: 1 },
+    rowspan: { default: 1 },
+    colwidth: { default: null },
+    background: { default: null },
   };
 
   return {

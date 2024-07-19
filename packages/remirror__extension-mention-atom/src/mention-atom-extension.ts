@@ -153,9 +153,9 @@ export class MentionAtomExtension extends NodeExtension<MentionAtomOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        id: { validate: 'string|null' },
-        label: { validate: 'string|null' },
-        name: { validate: 'string|null' },
+        id: {},
+        label: {},
+        name: {},
       },
       parseDOM: [
         ...this.options.matchers.map((matcher) => ({
