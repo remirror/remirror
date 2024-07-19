@@ -84,7 +84,7 @@ export class EmojiExtension extends NodeExtension<EmojiOptions> {
       inline: true,
 
       atom: true,
-      attrs: { ...extra.defaults(), code: { validate: 'string|null' } },
+      attrs: { ...extra.defaults(), code: {} },
       parseDOM: [
         {
           tag: `span[${EMOJI_DATA_ATTRIBUTE}`,

@@ -87,6 +87,18 @@
   - @remirror/messages@3.0.0-beta.0
   - @remirror/pm@3.0.0-beta.0
 
+## 2.1.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- f160fbac1: Drop the explicit `validate` property, added to attributes in 2.0.39
+
+  Some users have reported issues with legacy JSON data in JavaScript repos where attribute types have not been strictly checked (i.e. calling a command with a string attribute value instead of a number).
+
+  The XSS issue in ProseMirror has been largely resolved since the changes added in prosemirror-model 1.22.1, which actively guards against corrupted-attribute XSS attacks in DOMSerializer. This makes the additional protection of an explicit `validate` attribute largely redundant.
+
 ## 2.1.6
 
 > 2024-07-17

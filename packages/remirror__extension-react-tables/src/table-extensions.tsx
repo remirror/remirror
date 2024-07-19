@@ -88,8 +88,8 @@ export class TableExtension extends BaseTableExtension {
       isolating: true,
       attrs: {
         ...extra.defaults(),
-        isControllersInjected: { default: false, validate: 'boolean' },
-        insertButtonAttrs: { default: null, validate: 'boolean|null' },
+        isControllersInjected: { default: false },
+        insertButtonAttrs: { default: null },
       },
       content: 'tableRow+',
       tableRole: 'table',
@@ -338,10 +338,10 @@ export class TableControllerCellExtension extends BaseTableControllerCellExtensi
     const cellAttrs = {
       ...extra.defaults(),
 
-      colspan: { default: 1, validate: 'number' },
-      rowspan: { default: 1, validate: 'number' },
-      colwidth: { default: null, validate: 'number|null' },
-      background: { default: null, validate: 'string|null' },
+      colspan: { default: 1 },
+      rowspan: { default: 1 },
+      colwidth: { default: null },
+      background: { default: null },
     };
 
     return {
