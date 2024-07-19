@@ -1,5 +1,76 @@
 # remirror
 
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-entity-reference@3.0.0-beta.7
+  - @remirror/extension-horizontal-rule@3.0.0-beta.7
+  - @remirror/extension-node-formatting@3.0.0-beta.7
+  - @remirror/extension-text-highlight@3.0.0-beta.7
+  - @remirror/extension-collaboration@3.0.0-beta.7
+  - @remirror/extension-trailing-node@3.0.0-beta.7
+  - @remirror/extension-mention-atom@3.0.0-beta.7
+  - @remirror/extension-codemirror5@3.0.0-beta.7
+  - @remirror/extension-drop-cursor@3.0.0-beta.7
+  - @remirror/extension-font-family@3.0.0-beta.7
+  - @remirror/extension-placeholder@3.0.0-beta.7
+  - @remirror/extension-annotation@3.0.0-beta.7
+  - @remirror/extension-blockquote@3.0.0-beta.7
+  - @remirror/extension-code-block@3.0.0-beta.7
+  - @remirror/extension-gap-cursor@3.0.0-beta.7
+  - @remirror/extension-hard-break@3.0.0-beta.7
+  - @remirror/extension-positioner@3.0.0-beta.7
+  - @remirror/extension-text-color@3.0.0-beta.7
+  - @remirror/extension-whitespace@3.0.0-beta.7
+  - @remirror/extension-epic-mode@3.0.0-beta.7
+  - @remirror/extension-font-size@3.0.0-beta.7
+  - @remirror/extension-paragraph@3.0.0-beta.7
+  - @remirror/extension-shortcuts@3.0.0-beta.7
+  - @remirror/extension-text-case@3.0.0-beta.7
+  - @remirror/extension-underline@3.0.0-beta.7
+  - @remirror/extension-markdown@3.0.0-beta.7
+  - @remirror/extension-callout@3.0.0-beta.7
+  - @remirror/extension-columns@3.0.0-beta.7
+  - @remirror/extension-heading@3.0.0-beta.7
+  - @remirror/extension-history@3.0.0-beta.7
+  - @remirror/extension-mention@3.0.0-beta.7
+  - @remirror/preset-formatting@3.0.0-beta.7
+  - @remirror/extension-events@3.0.0-beta.7
+  - @remirror/extension-italic@3.0.0-beta.7
+  - @remirror/extension-strike@3.0.0-beta.7
+  - @remirror/extension-tables@3.0.0-beta.7
+  - @remirror/extension-embed@3.0.0-beta.7
+  - @remirror/extension-emoji@3.0.0-beta.7
+  - @remirror/extension-image@3.0.0-beta.7
+  - @remirror/core-constants@3.0.0-beta.4
+  - @remirror/extension-bidi@3.0.0-beta.7
+  - @remirror/extension-bold@3.0.0-beta.7
+  - @remirror/extension-code@3.0.0-beta.7
+  - @remirror/extension-diff@3.0.0-beta.7
+  - @remirror/extension-find@1.0.0-beta.7
+  - @remirror/extension-link@3.0.0-beta.7
+  - @remirror/extension-list@3.0.0-beta.7
+  - @remirror/extension-text@3.0.0-beta.7
+  - @remirror/preset-wysiwyg@3.0.0-beta.7
+  - @remirror/extension-doc@3.0.0-beta.7
+  - @remirror/extension-sub@3.0.0-beta.7
+  - @remirror/extension-sup@3.0.0-beta.7
+  - @remirror/extension-yjs@4.0.0-beta.7
+  - @remirror/core-helpers@4.0.0-beta.4
+  - @remirror/preset-core@3.0.0-beta.7
+  - @remirror/core-types@3.0.0-beta.5
+  - @remirror/core-utils@3.0.0-beta.5
+  - @remirror/icons@3.0.0-beta.4
+  - @remirror/theme@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/dom@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
 ## 3.0.0-beta.6
 
 > 2024-07-18

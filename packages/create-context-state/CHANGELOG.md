@@ -1,5 +1,13 @@
 # create-context-state
 
+## 2.0.3-beta.1
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+
 ## 2.0.3-beta.0
 
 > 2024-07-18

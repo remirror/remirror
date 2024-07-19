@@ -1,5 +1,23 @@
 # @remirror/react-editors
 
+## 2.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-react-tables@3.0.0-beta.7
+  - @remirror/core-helpers@4.0.0-beta.4
+  - create-context-state@2.0.3-beta.1
+  - @remirror/react-ui@0.1.0-beta.7
+  - @remirror/styles@3.0.0-beta.4
+  - @remirror/react@3.0.0-beta.7
+  - @remirror/i18n@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.5
+  - remirror@3.0.0-beta.7
+
 ## 2.0.0-beta.6
 
 > 2024-07-18

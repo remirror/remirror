@@ -1,5 +1,16 @@
 # @remirror/extension-find
 
+## 1.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
 ## 1.0.0-beta.6
 
 > 2024-07-18

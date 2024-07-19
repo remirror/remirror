@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-strike",
-  "version": "3.0.0-beta.6",
+  "version": "3.0.0-beta.7",
   "description": "Add strikethrough formatting to your text editor.",
   "keywords": [
     "remirror",
@@ -38,15 +38,15 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.6",
-    "@remirror/messages": "3.0.0-beta.4"
+    "@remirror/core": "3.0.0-beta.7",
+    "@remirror/messages": "3.0.0-beta.5"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0-beta.0",
-    "@remirror/pm": "3.0.0-beta.4"
+    "@remirror/cli": "1.1.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.5"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.4"
+    "@remirror/pm": "^3.0.0-beta.5"
   },
   "publishConfig": {
     "access": "public",

@@ -1,5 +1,13 @@
 # a11y-status
 
+## 2.0.2-beta.1
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+
 ## 2.0.2-beta.0
 
 > 2024-07-18

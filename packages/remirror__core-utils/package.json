@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-utils",
-  "version": "3.0.0-beta.4",
+  "version": "3.0.0-beta.5",
   "description": "Core utilities for dealing with the dom and prosemirror within remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core-utils",
   "repository": {
@@ -34,10 +34,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core-constants": "3.0.0-beta.3",
-    "@remirror/core-helpers": "4.0.0-beta.3",
-    "@remirror/core-types": "3.0.0-beta.4",
-    "@remirror/messages": "3.0.0-beta.4",
+    "@remirror/core-constants": "3.0.0-beta.4",
+    "@remirror/core-helpers": "4.0.0-beta.4",
+    "@remirror/core-types": "3.0.0-beta.5",
+    "@remirror/messages": "3.0.0-beta.5",
     "@types/min-document": "^2.19.0",
     "css-in-js-utils": "^3.1.0",
     "get-dom-document": "^0.1.3",
@@ -45,14 +45,14 @@
     "parenthesis": "^3.1.8"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0-beta.0",
-    "@remirror/pm": "3.0.0-beta.4",
+    "@remirror/cli": "1.1.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.5",
     "@types/jsdom": "^16.2.15",
     "@types/node": "^16.18.34",
     "jsdom": "^17.0.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.4",
+    "@remirror/pm": "^3.0.0-beta.5",
     "@types/node": "*"
   },
   "peerDependenciesMeta": {

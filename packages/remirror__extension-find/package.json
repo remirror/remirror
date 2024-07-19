@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-find",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.7",
   "description": "Find and replace text in the remirror editor.",
   "keywords": [
     "remirror",
@@ -37,17 +37,17 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@remirror/core": "3.0.0-beta.6",
+    "@remirror/core": "3.0.0-beta.7",
     "@types/string.prototype.matchall": "^4.0.1",
     "escape-string-regexp": "^4.0.0",
     "string.prototype.matchall": "^4.0.8"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0-beta.0",
-    "@remirror/pm": "3.0.0-beta.4"
+    "@remirror/cli": "1.1.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.5"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.4"
+    "@remirror/pm": "^3.0.0-beta.5"
   },
   "publishConfig": {
     "access": "public",
