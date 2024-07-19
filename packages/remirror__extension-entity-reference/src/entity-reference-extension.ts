@@ -86,7 +86,7 @@ export class EntityReferenceExtension extends MarkExtension<EntityReferenceOptio
       excludes: '',
       attrs: {
         ...extra.defaults(),
-        id: { default: '', validate: 'string' },
+        id: { default: '' },
       },
       toDOM: (mark: Mark) => [
         'span',

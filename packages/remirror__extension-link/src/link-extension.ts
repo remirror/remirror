@@ -319,9 +319,9 @@ export class LinkExtension extends MarkExtension<LinkOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        href: { validate: 'string|null' },
-        target: { default: this.options.defaultTarget, validate: 'string|null' },
-        auto: { default: false, validate: 'boolean' },
+        href: {},
+        target: { default: this.options.defaultTarget },
+        auto: { default: false },
       },
       parseDOM: [
         {

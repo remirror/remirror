@@ -42,7 +42,6 @@ export class OrderedListExtension extends NodeExtension {
         ...extra.defaults(),
         order: {
           default: 1,
-          validate: 'number',
         },
       },
       parseDOM: [

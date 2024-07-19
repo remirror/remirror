@@ -46,7 +46,7 @@ export class TextCaseExtension extends MarkExtension<TextCaseOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        casing: { default: this.options.defaultCasing, validate: 'string' },
+        casing: { default: this.options.defaultCasing },
       },
       parseDOM: [
         {

@@ -74,7 +74,6 @@ export class HeadingExtension extends NodeExtension<HeadingOptions> {
         ...extra.defaults(),
         level: {
           default: this.options.defaultLevel,
-          validate: 'number',
         },
       },
       parseDOM: [

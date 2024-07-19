@@ -73,14 +73,12 @@ export class IframeExtension extends NodeExtension<IframeOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        src: defaultSource
-          ? { default: defaultSource, validate: 'string' }
-          : { validate: 'string|null' },
-        allowFullScreen: { default: true, validate: 'boolean' },
-        frameBorder: { default: 0, validate: 'number' },
-        type: { default: 'custom', validate: 'string' },
-        width: { default: null, validate: 'number|null' },
-        height: { default: null, validate: 'number|null' },
+        src: defaultSource ? { default: defaultSource } : {},
+        allowFullScreen: { default: true },
+        frameBorder: { default: 0 },
+        type: { default: 'custom' },
+        width: { default: null },
+        height: { default: null },
       },
       parseDOM: [
         {

@@ -183,9 +183,9 @@ export class MentionExtension extends MarkExtension<MentionOptions> {
       ...override,
       attrs: {
         ...extra.defaults(),
-        id: { validate: 'string|null' },
-        label: { validate: 'string|null' },
-        name: { validate: 'string|null' },
+        id: {},
+        label: {},
+        name: {},
       },
       parseDOM: [
         {

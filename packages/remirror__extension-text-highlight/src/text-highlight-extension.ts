@@ -53,7 +53,7 @@ export class TextHighlightExtension extends MarkExtension<TextHighlightOptions> 
       ...override,
       attrs: {
         ...extra.defaults(),
-        highlight: { default: this.options.defaultHighlight, validate: 'string|null' },
+        highlight: { default: this.options.defaultHighlight },
       },
       parseDOM: [
         {
