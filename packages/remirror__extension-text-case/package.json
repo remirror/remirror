@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-text-case",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "description": "Formatting for text casing in your editor.",
   "keywords": [
     "remirror",

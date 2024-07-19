@@ -624,7 +624,7 @@ importers:
         specifier: ^2.0.16
         version: link:../remirror__extension-annotation
       '@remirror/extension-bidi':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
         specifier: ^2.0.14
@@ -633,40 +633,40 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
         specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.19
+        specifier: ^2.0.20
         version: link:../remirror__extension-code-block
       '@remirror/extension-codemirror5':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-codemirror5
       '@remirror/extension-collaboration':
         specifier: ^2.0.13
         version: link:../remirror__extension-collaboration
       '@remirror/extension-columns':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-columns
       '@remirror/extension-diff':
         specifier: ^2.0.13
         version: link:../remirror__extension-diff
       '@remirror/extension-doc':
-        specifier: ^2.1.6
+        specifier: ^2.1.7
         version: link:../remirror__extension-doc
       '@remirror/extension-drop-cursor':
         specifier: ^2.0.13
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-embed
       '@remirror/extension-emoji':
-        specifier: ^2.0.18
+        specifier: ^2.0.19
         version: link:../remirror__extension-emoji
       '@remirror/extension-entity-reference':
-        specifier: ^2.2.7
+        specifier: ^2.2.8
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-epic-mode':
         specifier: ^2.0.13
@@ -675,10 +675,10 @@ importers:
         specifier: ^2.1.17
         version: link:../remirror__extension-events
       '@remirror/extension-font-family':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-font-family
       '@remirror/extension-font-size':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-font-size
       '@remirror/extension-gap-cursor':
         specifier: ^2.0.13
@@ -687,7 +687,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
         specifier: ^2.0.13
@@ -696,28 +696,28 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: ^2.1.11
+        specifier: ^2.1.12
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
         specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: ^2.0.18
+        specifier: ^2.0.19
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__extension-list
       '@remirror/extension-markdown':
         specifier: ^2.0.14
         version: link:../remirror__extension-markdown
       '@remirror/extension-mention':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: ^2.0.18
+        specifier: ^2.0.19
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-node-formatting':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-paragraph':
         specifier: ^2.0.13
@@ -744,19 +744,19 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: ^2.4.2
+        specifier: ^2.4.3
         version: link:../remirror__extension-tables
       '@remirror/extension-text':
         specifier: ^2.0.13
         version: link:../remirror__extension-text
       '@remirror/extension-text-case':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-trailing-node':
         specifier: ^2.0.13
@@ -1738,7 +1738,7 @@ importers:
         version: 1.0.2
     devDependencies:
       '@remirror/extension-react-tables':
-        specifier: ^2.2.20
+        specifier: ^2.2.21
         version: link:../remirror__extension-react-tables
       '@remirror/pm':
         specifier: ^2.0.9
@@ -1910,7 +1910,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__core-utils
       '@remirror/extension-code-block':
-        specifier: ^2.0.19
+        specifier: ^2.0.20
         version: link:../remirror__extension-code-block
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -1999,7 +1999,7 @@ importers:
         specifier: ^2.1.8
         version: link:../remirror__extension-positioner
       '@remirror/extension-tables':
-        specifier: ^2.4.2
+        specifier: ^2.4.3
         version: link:../remirror__extension-tables
       '@remirror/icons':
         specifier: ^2.0.3
@@ -2216,7 +2216,7 @@ importers:
         specifier: ^2.0.19
         version: link:../remirror__core
       '@remirror/extension-text-color':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-text-color
       '@remirror/messages':
         specifier: ^2.0.6
@@ -2432,7 +2432,7 @@ importers:
         specifier: ^2.0.19
         version: link:../remirror__core
       '@remirror/extension-doc':
-        specifier: ^2.1.6
+        specifier: ^2.1.7
         version: link:../remirror__extension-doc
       '@remirror/extension-events':
         specifier: ^2.1.17
@@ -2469,19 +2469,19 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-bold
       '@remirror/extension-columns':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-columns
       '@remirror/extension-font-size':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-heading
       '@remirror/extension-italic':
         specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-node-formatting':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-strike':
         specifier: ^2.0.13
@@ -2493,13 +2493,13 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-sup
       '@remirror/extension-text-case':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-underline':
         specifier: ^2.0.13
@@ -2555,7 +2555,7 @@ importers:
         specifier: ^2.0.19
         version: link:../remirror__core
       '@remirror/extension-bidi':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
         specifier: ^2.0.14
@@ -2567,13 +2567,13 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.19
+        specifier: ^2.0.20
         version: link:../remirror__extension-code-block
       '@remirror/extension-drop-cursor':
         specifier: ^2.0.13
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-embed
       '@remirror/extension-gap-cursor':
         specifier: ^2.0.13
@@ -2582,22 +2582,22 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-heading
       '@remirror/extension-horizontal-rule':
         specifier: ^2.0.13
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: ^2.1.11
+        specifier: ^2.1.12
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
         specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: ^2.0.18
+        specifier: ^2.0.19
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__extension-list
       '@remirror/extension-search':
         specifier: ^2.0.14
@@ -2637,7 +2637,7 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-react-component
       '@remirror/extension-react-tables':
-        specifier: ^2.2.20
+        specifier: ^2.2.21
         version: link:../remirror__extension-react-tables
       '@remirror/preset-react':
         specifier: ^2.0.14
@@ -2701,25 +2701,25 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
         specifier: ^2.0.13
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: ^2.0.19
+        specifier: ^2.0.20
         version: link:../remirror__extension-code-block
       '@remirror/extension-columns':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-columns
       '@remirror/extension-find':
         specifier: ^0.1.6
         version: link:../remirror__extension-find
       '@remirror/extension-font-size':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: ^2.0.15
+        specifier: ^2.0.16
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
         specifier: ^2.0.13
@@ -2731,10 +2731,10 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-italic
       '@remirror/extension-list':
-        specifier: ^2.0.17
+        specifier: ^2.0.18
         version: link:../remirror__extension-list
       '@remirror/extension-node-formatting':
-        specifier: ^2.0.14
+        specifier: ^2.0.15
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -2749,10 +2749,10 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: ^2.4.2
+        specifier: ^2.4.3
         version: link:../remirror__extension-tables
       '@remirror/extension-text-color':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-text-color
       '@remirror/extension-underline':
         specifier: ^2.0.13
@@ -2901,7 +2901,7 @@ importers:
         specifier: ^3.0.0
         version: link:../remirror__core-helpers
       '@remirror/extension-react-tables':
-        specifier: ^2.2.20
+        specifier: ^2.2.21
         version: link:../remirror__extension-react-tables
       '@remirror/pm':
         specifier: ^2.0.9
@@ -2956,7 +2956,7 @@ importers:
         specifier: ^2.0.19
         version: link:../remirror__core
       '@remirror/extension-emoji':
-        specifier: ^2.0.18
+        specifier: ^2.0.19
         version: link:../remirror__extension-emoji
       '@remirror/extension-events':
         specifier: ^2.1.17
@@ -2965,10 +2965,10 @@ importers:
         specifier: ^2.0.13
         version: link:../remirror__extension-history
       '@remirror/extension-mention':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: ^2.0.18
+        specifier: ^2.0.19
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-positioner':
         specifier: ^2.1.8
@@ -3187,31 +3187,31 @@ importers:
         specifier: ^2.0.18
         version: link:../remirror__dev
       '@remirror/extension-codemirror6':
-        specifier: ^1.0.14
+        specifier: ^1.0.15
         version: link:../remirror__extension-codemirror6
       '@remirror/extension-count':
         specifier: ^2.0.13
         version: link:../remirror__extension-count
       '@remirror/extension-entity-reference':
-        specifier: ^2.2.7
+        specifier: ^2.2.8
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-file':
-        specifier: ^1.0.20
+        specifier: ^1.0.21
         version: link:../remirror__extension-file
       '@remirror/extension-find':
         specifier: ^0.1.6
         version: link:../remirror__extension-find
       '@remirror/extension-mention':
-        specifier: ^2.0.16
+        specifier: ^2.0.17
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: ^2.0.18
+        specifier: ^2.0.19
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-react-language-select':
         specifier: ^0.1.0
         version: link:../remirror__extension-react-language-select
       '@remirror/extension-react-tables':
-        specifier: ^2.2.20
+        specifier: ^2.2.21
         version: link:../remirror__extension-react-tables
       '@remirror/messages':
         specifier: ^2.0.6
@@ -16372,7 +16372,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001642
-      electron-to-chromium: 1.4.829
+      electron-to-chromium: 1.4.830
       node-releases: 2.0.17
       update-browserslist-db: 1.1.0(browserslist@4.23.2)
 
@@ -18408,7 +18408,7 @@ packages:
     dependencies:
       semver: 7.5.4
       shelljs: 0.8.5
-      typescript: 5.6.0-dev.20240717
+      typescript: 5.6.0-dev.20240719
     dev: false
 
   /duplexer3@0.1.4:
@@ -18458,8 +18458,8 @@ packages:
   /electron-to-chromium@1.4.581:
     resolution: {integrity: sha512-6uhqWBIapTJUxgPTCHH9sqdbxIMPt7oXl0VcAL1kOtlU6aECdcMncCrX5Z7sHQ/invtrC9jUQUef7+HhO8vVFw==}
 
-  /electron-to-chromium@1.4.829:
-    resolution: {integrity: sha512-5qp1N2POAfW0u1qGAxXEtz6P7bO1m6gpZr5hdf5ve6lxpLM7MpiM4jIPz7xcrNlClQMafbyUDDWjlIQZ1Mw0Rw==}
+  /electron-to-chromium@1.4.830:
+    resolution: {integrity: sha512-TrPKKH20HeN0J1LHzsYLs2qwXrp8TF4nHdu4sq61ozGbzMpWhI7iIOPYPPkxeq1azMT9PZ8enPFcftbs/Npcjg==}
 
   /emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -29401,8 +29401,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /typescript@5.6.0-dev.20240717:
-    resolution: {integrity: sha512-W2qNu1NDYC0GopCV4ZR0pr7hdSlG59txBbYYJaMBFLxZAdmQBUa7lIQsClSzHGPlIZZADKcP9jSoAYDbIrihRA==}
+  /typescript@5.6.0-dev.20240719:
+    resolution: {integrity: sha512-gwHt3fdLbe+LLgZJnPaGZ7v9MHTkjrqjf4NpxznO0SmFVSu7cEd8IwEsePtmQQZAX3FtPdgfwDmeNktid848Hw==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false

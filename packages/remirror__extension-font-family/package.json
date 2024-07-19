@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-font-family",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "description": "Add a font family to selected text, or text within the provided range.",
   "keywords": [
     "remirror",
