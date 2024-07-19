@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-core",
-  "version": "3.0.0-beta.6",
+  "version": "3.0.0-beta.7",
   "description": "The core `React` library which can be used if you want to create a specialized bundle without the extra hooks and components available via `@remirror/react`.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__react-core",
   "repository": {
@@ -34,22 +34,22 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.6",
-    "@remirror/extension-positioner": "3.0.0-beta.6",
-    "@remirror/extension-react-component": "3.0.0-beta.6",
-    "@remirror/preset-core": "3.0.0-beta.6",
-    "@remirror/preset-react": "3.0.0-beta.6",
-    "@remirror/react-renderer": "3.0.0-beta.6",
-    "@remirror/react-utils": "3.0.0-beta.4",
-    "@remirror/theme": "3.0.0-beta.4",
+    "@remirror/core": "3.0.0-beta.7",
+    "@remirror/extension-positioner": "3.0.0-beta.7",
+    "@remirror/extension-react-component": "3.0.0-beta.7",
+    "@remirror/preset-core": "3.0.0-beta.7",
+    "@remirror/preset-react": "3.0.0-beta.7",
+    "@remirror/react-renderer": "3.0.0-beta.7",
+    "@remirror/react-utils": "3.0.0-beta.5",
+    "@remirror/theme": "3.0.0-beta.5",
     "@seznam/compose-react-refs": "^1.0.6",
     "fast-deep-equal": "^3.1.3",
     "resize-observer-polyfill": "^1.5.1",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0-beta.0",
-    "@remirror/pm": "3.0.0-beta.4",
+    "@remirror/cli": "1.1.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.5",
     "@types/jsdom": "^16.2.15",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
@@ -58,7 +58,7 @@
     "react-dom": "^18.2.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.4",
+    "@remirror/pm": "^3.0.0-beta.5",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",

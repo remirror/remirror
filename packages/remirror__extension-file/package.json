@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-file",
-  "version": "2.0.0-beta.6",
+  "version": "2.0.0-beta.7",
   "description": "",
   "keywords": [
     "remirror",
@@ -39,22 +39,22 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.6",
-    "@remirror/extension-react-component": "3.0.0-beta.6",
-    "@remirror/react-core": "3.0.0-beta.6",
-    "@remirror/theme": "3.0.0-beta.4",
+    "@remirror/core": "3.0.0-beta.7",
+    "@remirror/extension-react-component": "3.0.0-beta.7",
+    "@remirror/react-core": "3.0.0-beta.7",
+    "@remirror/theme": "3.0.0-beta.5",
     "nanoevents": "^5.1.13"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0-beta.0",
-    "@remirror/pm": "3.0.0-beta.4",
+    "@remirror/cli": "1.1.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.5",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.4",
+    "@remirror/pm": "^3.0.0-beta.5",
     "@types/react": "^16.14.0 || ^17 || ^18",
     "@types/react-dom": "^16.9.0 || ^17 || ^18",
     "react": "^16.14.0 || ^17 || ^18",

@@ -1,5 +1,15 @@
 # @remirror/minimal-template
 
+## 0.0.7-beta.4
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/core-helpers@4.0.0-beta.4
+
 ## 0.0.7-beta.3
 
 > 2024-07-18

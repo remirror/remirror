@@ -1,5 +1,30 @@
 # @remirror/preset-formatting
 
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-node-formatting@3.0.0-beta.7
+  - @remirror/extension-text-highlight@3.0.0-beta.7
+  - @remirror/extension-text-color@3.0.0-beta.7
+  - @remirror/extension-whitespace@3.0.0-beta.7
+  - @remirror/extension-font-size@3.0.0-beta.7
+  - @remirror/extension-text-case@3.0.0-beta.7
+  - @remirror/extension-underline@3.0.0-beta.7
+  - @remirror/extension-columns@3.0.0-beta.7
+  - @remirror/extension-heading@3.0.0-beta.7
+  - @remirror/extension-italic@3.0.0-beta.7
+  - @remirror/extension-strike@3.0.0-beta.7
+  - @remirror/extension-bold@3.0.0-beta.7
+  - @remirror/extension-sub@3.0.0-beta.7
+  - @remirror/extension-sup@3.0.0-beta.7
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
 ## 3.0.0-beta.6
 
 > 2024-07-18

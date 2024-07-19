@@ -1,5 +1,21 @@
 # @remirror/extension-react-component
 
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/core-constants@3.0.0-beta.4
+  - @remirror/core-helpers@4.0.0-beta.4
+  - @remirror/core-types@3.0.0-beta.5
+  - @remirror/core-utils@3.0.0-beta.5
+  - @remirror/messages@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
 ## 3.0.0-beta.6
 
 > 2024-07-18

@@ -1,5 +1,37 @@
 # @remirror/preset-wysiwyg
 
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-horizontal-rule@3.0.0-beta.7
+  - @remirror/extension-trailing-node@3.0.0-beta.7
+  - @remirror/extension-drop-cursor@3.0.0-beta.7
+  - @remirror/extension-blockquote@3.0.0-beta.7
+  - @remirror/extension-code-block@3.0.0-beta.7
+  - @remirror/extension-gap-cursor@3.0.0-beta.7
+  - @remirror/extension-hard-break@3.0.0-beta.7
+  - @remirror/extension-shortcuts@3.0.0-beta.7
+  - @remirror/extension-underline@3.0.0-beta.7
+  - @remirror/extension-heading@3.0.0-beta.7
+  - @remirror/extension-italic@3.0.0-beta.7
+  - @remirror/extension-strike@3.0.0-beta.7
+  - @remirror/extension-embed@3.0.0-beta.7
+  - @remirror/extension-image@3.0.0-beta.7
+  - @remirror/extension-bidi@3.0.0-beta.7
+  - @remirror/extension-bold@3.0.0-beta.7
+  - @remirror/extension-code@3.0.0-beta.7
+  - @remirror/extension-find@1.0.0-beta.7
+  - @remirror/extension-link@3.0.0-beta.7
+  - @remirror/extension-list@3.0.0-beta.7
+  - @remirror/preset-core@3.0.0-beta.7
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
 ## 3.0.0-beta.6
 
 > 2024-07-18
