@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-codemirror6",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Add CodeMirror6 to your editor.",
   "keywords": [
     "remirror",

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-callout",
-  "version": "2.0.16",
+  "version": "2.0.17",
   "description": "Add callouts to your text editor.",
   "keywords": [
     "remirror",

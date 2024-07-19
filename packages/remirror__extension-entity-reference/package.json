@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-entity-reference",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "description": "Allow users to highlight important content",
   "keywords": [
     "remirror",

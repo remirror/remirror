@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-doc",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "The root of your text-editor. One doc to rule them all.",
   "keywords": [
     "remirror",

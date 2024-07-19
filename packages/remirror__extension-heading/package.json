@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-heading",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Add headings to your text editor.",
   "keywords": [
     "remirror",
