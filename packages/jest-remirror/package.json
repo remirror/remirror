@@ -47,7 +47,7 @@
     "@remirror/preset-core": "^2.0.16",
     "@testing-library/dom": "^9.3.0",
     "@types/sanitize-html": "^2.9.0",
-    "jest-prosemirror": "^2.1.6",
+    "jest-prosemirror": "^2.2.0",
     "sanitize-html": "^2.10.0",
     "tiny-warning": "^1.0.3"
   },
