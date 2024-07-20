@@ -93,7 +93,7 @@ const selectionArgs: TemplateArgs = {
   placement: 'bottom',
   label: 'Anchored to the range text selection',
 };
-export const Selection: Story = (args) => <Template {...{ ...selectionArgs, ...args }} />;
+export const Selection: Story = (args) => <Template {...selectionArgs} {...args} />;
 Selection.args = { ...selectionArgs };
 
 const cursorArgs: TemplateArgs = {
@@ -102,7 +102,7 @@ const cursorArgs: TemplateArgs = {
   placement: 'bottom',
   label: 'Anchored to the empty selection (cursor)',
 };
-export const Cursor: Story = (args) => <Template {...{ ...cursorArgs, ...args }} />;
+export const Cursor: Story = (args) => <Template {...cursorArgs} {...args} />;
 Cursor.args = { ...cursorArgs };
 
 const alwaysArgs: TemplateArgs = {
@@ -112,7 +112,7 @@ const alwaysArgs: TemplateArgs = {
   placement: 'bottom',
   label: 'Anchored to the both range and empty selections',
 };
-export const Always: Story = (args) => <Template {...{ ...alwaysArgs, ...args }} />;
+export const Always: Story = (args) => <Template {...alwaysArgs} {...args} />;
 Always.args = { ...alwaysArgs };
 
 const blockArgs: TemplateArgs = {
@@ -121,7 +121,7 @@ const blockArgs: TemplateArgs = {
   placement: 'bottom',
   label: 'Takes the width of the current block node, placement prop can be changed',
 };
-export const Block: Story = (args) => <Template {...{ ...blockArgs, ...args }} />;
+export const Block: Story = (args) => <Template {...blockArgs} {...args} />;
 Block.args = { ...blockArgs };
 
 const emptyBlockArgs: TemplateArgs = {
@@ -131,7 +131,7 @@ const emptyBlockArgs: TemplateArgs = {
   placement: 'bottom',
   label: 'Takes the width of the current EMPTY block node, placement prop can be changed',
 };
-export const EmptyBlock: Story = (args) => <Template {...{ ...emptyBlockArgs, ...args }} />;
+export const EmptyBlock: Story = (args) => <Template {...emptyBlockArgs} {...args} />;
 EmptyBlock.args = { ...emptyBlockArgs };
 
 const emptyBlockStartArgs: TemplateArgs = {
@@ -140,9 +140,7 @@ const emptyBlockStartArgs: TemplateArgs = {
   placement: 'right',
   label: 'Positioned at the start of an EMPTY block node',
 };
-export const EmptyBlockStart: Story = (args) => (
-  <Template {...{ ...emptyBlockStartArgs, ...args }} />
-);
+export const EmptyBlockStart: Story = (args) => <Template {...emptyBlockStartArgs} {...args} />;
 EmptyBlockStart.args = { ...emptyBlockStartArgs };
 
 const emptyBlockEndArgs: TemplateArgs = {
@@ -151,7 +149,7 @@ const emptyBlockEndArgs: TemplateArgs = {
   placement: 'left',
   label: 'Positioned at the end of an EMPTY block node',
 };
-export const EmptyBlockEnd: Story = (args) => <Template {...{ ...emptyBlockEndArgs, ...args }} />;
+export const EmptyBlockEnd: Story = (args) => <Template {...emptyBlockEndArgs} {...args} />;
 EmptyBlockEnd.args = { ...emptyBlockEndArgs };
 
 export default Cursor;
