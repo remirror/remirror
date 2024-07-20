@@ -95,6 +95,14 @@
   - @remirror/pm@3.0.0-beta.0
   - test-keyboard@2.0.7-beta.0
 
+## 2.2.0
+
+> 2024-07-20
+
+### Minor Changes
+
+- e1f006f89: The editor element in `createEditor` is now appended to `document.body` before `EditorView` is initialized. This allows the use of `createEditor` with plugins that depend on the DOM.
+
 ## 2.1.6
 
 > 2024-07-17

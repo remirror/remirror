@@ -87,62 +87,69 @@ const Template: Story = ({ content, positioner, placement, label }: TemplateArgs
   );
 };
 
-export const Selection: Story = Template.bind({});
-Selection.args = {
+const selectionArgs: TemplateArgs = {
   content: '<p>Creates a rect which wraps the current selection.</p>',
   positioner: 'selection',
   placement: 'bottom',
   label: 'Anchored to the range text selection',
 };
+export const Selection: Story = (args) => <Template {...selectionArgs} {...args} />;
+Selection.args = { ...selectionArgs };
 
-export const Cursor: Story = Template.bind({});
-Cursor.args = {
+const cursorArgs: TemplateArgs = {
   content: '<p>Creates a rect for the cursor. Is inactive for empty selections.</p>',
   positioner: 'cursor',
   placement: 'bottom',
   label: 'Anchored to the empty selection (cursor)',
 };
+export const Cursor: Story = (args) => <Template {...cursorArgs} {...args} />;
+Cursor.args = { ...cursorArgs };
 
-export const Always: Story = Template.bind({});
-Always.args = {
+const alwaysArgs: TemplateArgs = {
   content:
     '<p>Creates a positioner which always shows the position of the selection whether empty or not.</p>',
   positioner: 'always',
   placement: 'bottom',
   label: 'Anchored to the both range and empty selections',
 };
+export const Always: Story = (args) => <Template {...alwaysArgs} {...args} />;
+Always.args = { ...alwaysArgs };
 
-export const Block: Story = Template.bind({});
-Block.args = {
+const blockArgs: TemplateArgs = {
   content: '<p>Creates a rect which wraps the entire selected block node.</p>',
   positioner: 'block',
   placement: 'bottom',
   label: 'Takes the width of the current block node, placement prop can be changed',
 };
+export const Block: Story = (args) => <Template {...blockArgs} {...args} />;
+Block.args = { ...blockArgs };
 
-export const EmptyBlock: Story = Template.bind({});
-EmptyBlock.args = {
+const emptyBlockArgs: TemplateArgs = {
   content:
     '<p>Creates a rect which wraps the entire selected block node, but only when it is empty.</p>',
   positioner: 'emptyBlock',
   placement: 'bottom',
   label: 'Takes the width of the current EMPTY block node, placement prop can be changed',
 };
+export const EmptyBlock: Story = (args) => <Template {...emptyBlockArgs} {...args} />;
+EmptyBlock.args = { ...emptyBlockArgs };
 
-export const EmptyBlockStart: Story = Template.bind({});
-EmptyBlockStart.args = {
+const emptyBlockStartArgs: TemplateArgs = {
   content: '<p>Creates a rect which indicates the <em>start</em> of an empty block node.</p>',
   positioner: 'emptyBlockStart',
   placement: 'right',
   label: 'Positioned at the start of an EMPTY block node',
 };
+export const EmptyBlockStart: Story = (args) => <Template {...emptyBlockStartArgs} {...args} />;
+EmptyBlockStart.args = { ...emptyBlockStartArgs };
 
-export const EmptyBlockEnd: Story = Template.bind({});
-EmptyBlockEnd.args = {
+const emptyBlockEndArgs: TemplateArgs = {
   content: '<p>Creates a rect which indicates the <em>end</em> of an empty block node.</p>',
   positioner: 'emptyBlockEnd',
   placement: 'left',
   label: 'Positioned at the end of an EMPTY block node',
 };
+export const EmptyBlockEnd: Story = (args) => <Template {...emptyBlockEndArgs} {...args} />;
+EmptyBlockEnd.args = { ...emptyBlockEndArgs };
 
 export default Cursor;
