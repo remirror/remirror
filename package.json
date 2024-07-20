@@ -186,7 +186,7 @@
     "jest-extended": "^3.2.4",
     "jest-github-reporter": "^1.1.1",
     "jest-playwright-preset": "^3.0.1",
-    "jest-prosemirror": "^2.1.6",
+    "jest-prosemirror": "^2.2.0",
     "jest-remirror": "^2.1.5",
     "jest-watch-typeahead": "^2.2.2",
     "npm-run-all": "^4.1.5",

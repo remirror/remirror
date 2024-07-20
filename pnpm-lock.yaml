@@ -299,7 +299,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1(jest-circus@29.5.0)(jest-environment-node@29.7.0)(jest-runner@29.7.0)(jest@29.5.0)
       jest-prosemirror:
-        specifier: ^2.1.6
+        specifier: ^2.2.0
         version: link:packages/jest-prosemirror
       jest-remirror:
         specifier: ^2.1.5
@@ -454,7 +454,7 @@ importers:
         specifier: ^2.9.0
         version: 2.9.0
       jest-prosemirror:
-        specifier: ^2.1.6
+        specifier: ^2.2.0
         version: link:../jest-prosemirror
       sanitize-html:
         specifier: ^2.10.0
@@ -16372,7 +16372,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001642
-      electron-to-chromium: 1.4.830
+      electron-to-chromium: 1.4.832
       node-releases: 2.0.17
       update-browserslist-db: 1.1.0(browserslist@4.23.2)
 
@@ -18408,7 +18408,7 @@ packages:
     dependencies:
       semver: 7.5.4
       shelljs: 0.8.5
-      typescript: 5.6.0-dev.20240719
+      typescript: 5.6.0-dev.20240720
     dev: false
 
   /duplexer3@0.1.4:
@@ -18458,8 +18458,8 @@ packages:
   /electron-to-chromium@1.4.581:
     resolution: {integrity: sha512-6uhqWBIapTJUxgPTCHH9sqdbxIMPt7oXl0VcAL1kOtlU6aECdcMncCrX5Z7sHQ/invtrC9jUQUef7+HhO8vVFw==}
 
-  /electron-to-chromium@1.4.830:
-    resolution: {integrity: sha512-TrPKKH20HeN0J1LHzsYLs2qwXrp8TF4nHdu4sq61ozGbzMpWhI7iIOPYPPkxeq1azMT9PZ8enPFcftbs/Npcjg==}
+  /electron-to-chromium@1.4.832:
+    resolution: {integrity: sha512-cTen3SB0H2SGU7x467NRe1eVcQgcuS6jckKfWJHia2eo0cHIGOqHoAxevIYZD4eRHcWjkvFzo93bi3vJ9W+1lA==}
 
   /emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -29401,8 +29401,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /typescript@5.6.0-dev.20240719:
-    resolution: {integrity: sha512-gwHt3fdLbe+LLgZJnPaGZ7v9MHTkjrqjf4NpxznO0SmFVSu7cEd8IwEsePtmQQZAX3FtPdgfwDmeNktid848Hw==}
+  /typescript@5.6.0-dev.20240720:
+    resolution: {integrity: sha512-Ge3ruIOs9B3a2ePioDbn5kGuR+ImXQiPceXKaKXt/Ak8yQxtaOzcC+KkrjKBhaKdT95bDeHMAZZ1hnlvnX7XVw==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false
