@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import type { AnyExtension } from 'remirror';
-import { TableExtension } from '@remirror/extension-react-tables';
+import {
+  TableComponents,
+  tableControllerPluginKey,
+  TableExtension,
+} from '@remirror/extension-react-tables';
 import {
   EditorComponent,
   ReactComponentExtension,
   Remirror,
-  TableComponents,
-  tableControllerPluginKey,
   ThemeProvider,
   useCommands,
   useRemirror,

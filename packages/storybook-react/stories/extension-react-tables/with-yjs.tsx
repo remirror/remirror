@@ -3,13 +3,15 @@ import type { AnyExtension } from 'remirror';
 import { YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';
 import * as Y from 'yjs';
-import { TableExtension } from '@remirror/extension-react-tables';
+import {
+  TableComponents,
+  tableControllerPluginKey,
+  TableExtension,
+} from '@remirror/extension-react-tables';
 import {
   EditorComponent,
   ReactComponentExtension,
   Remirror,
-  TableComponents,
-  tableControllerPluginKey,
   ThemeProvider,
   useCommands,
   useRemirror,

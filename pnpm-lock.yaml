@@ -2849,9 +2849,6 @@ importers:
       '@remirror/extension-react-component':
         specifier: 3.0.0-beta.7
         version: link:../remirror__extension-react-component
-      '@remirror/extension-react-tables':
-        specifier: 3.0.0-beta.7
-        version: link:../remirror__extension-react-tables
       '@remirror/preset-react':
         specifier: 3.0.0-beta.7
         version: link:../remirror__preset-react
