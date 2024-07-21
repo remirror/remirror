@@ -47,6 +47,9 @@
       "path": "../../remirror__extension-react-tables/src"
     },
     {
+      "path": "../../remirror__extension-yjs/src"
+    },
+    {
       "path": "../../remirror__i18n/src"
     },
     {

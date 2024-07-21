@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import type { AnyExtension } from 'remirror';
-import { YjsExtension } from 'remirror/extensions';
 import { WebrtcProvider } from 'y-webrtc';
 import * as Y from 'yjs';
 import {
@@ -8,6 +7,7 @@ import {
   tableControllerPluginKey,
   TableExtension,
 } from '@remirror/extension-react-tables';
+import { YjsExtension } from '@remirror/extension-yjs';
 import {
   EditorComponent,
   ReactComponentExtension,

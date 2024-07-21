@@ -118,7 +118,6 @@
     "@remirror/extension-trailing-node": "3.0.0-beta.7",
     "@remirror/extension-underline": "3.0.0-beta.7",
     "@remirror/extension-whitespace": "3.0.0-beta.7",
-    "@remirror/extension-yjs": "4.0.0-beta.7",
     "@remirror/icons": "3.0.0-beta.4",
     "@remirror/preset-core": "3.0.0-beta.7",
     "@remirror/preset-formatting": "3.0.0-beta.7",
@@ -127,8 +126,7 @@
     "@types/codemirror": "^5.60.7",
     "@types/refractor": "^3.0.2",
     "codemirror": "^5.65.13",
-    "refractor": "^3.6.0",
-    "yjs": "^13.6.1"
+    "refractor": "^3.6.0"
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0-beta.1",
