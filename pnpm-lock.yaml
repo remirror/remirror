@@ -907,9 +907,6 @@ importers:
       '@babel/runtime':
         specifier: ^7.22.3
         version: 7.22.3
-      '@linaria/core':
-        specifier: 4.2.10
-        version: 4.2.10
       '@remirror/core-constants':
         specifier: 3.0.0-beta.4
         version: link:../remirror__core-constants
@@ -968,6 +965,9 @@ importers:
       case-anything:
         specifier: ^2.1.13
         version: 2.1.13
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       dash-get:
         specifier: ^1.0.2
         version: 1.0.2
@@ -7048,7 +7048,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.23.0
-      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.23.0)
+      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.24.9)
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/helper-simple-access': 7.22.5
 
@@ -17709,6 +17709,11 @@ packages:
   /clsx@1.2.1:
     resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
+
+  /clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
+    dev: false
 
   /co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
