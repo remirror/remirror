@@ -674,9 +674,6 @@ importers:
       '@remirror/extension-code-block':
         specifier: 3.0.0-beta.7
         version: link:../remirror__extension-code-block
-      '@remirror/extension-codemirror5':
-        specifier: 3.0.0-beta.7
-        version: link:../remirror__extension-codemirror5
       '@remirror/extension-collaboration':
         specifier: 3.0.0-beta.7
         version: link:../remirror__extension-collaboration
@@ -815,15 +812,9 @@ importers:
       '@remirror/theme':
         specifier: 3.0.0-beta.5
         version: link:../remirror__theme
-      '@types/codemirror':
-        specifier: ^5.60.7
-        version: 5.60.7
       '@types/refractor':
         specifier: ^3.0.2
         version: 3.0.2
-      codemirror:
-        specifier: ^5.65.13
-        version: 5.65.13
       refractor:
         specifier: ^3.6.0
         version: 3.6.0
@@ -3476,6 +3467,9 @@ importers:
       '@remirror/dev':
         specifier: 3.0.0-beta.7
         version: link:../remirror__dev
+      '@remirror/extension-codemirror5':
+        specifier: 3.0.0-beta.7
+        version: link:../remirror__extension-codemirror5
       '@remirror/extension-codemirror6':
         specifier: 2.0.0-beta.7
         version: link:../remirror__extension-codemirror6
@@ -7054,7 +7048,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.23.0
-      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.24.9)
+      '@babel/helper-module-transforms': 7.23.0(@babel/core@7.23.0)
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/helper-simple-access': 7.22.5
 

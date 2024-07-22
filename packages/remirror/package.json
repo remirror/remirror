@@ -76,7 +76,6 @@
     "@remirror/extension-callout": "3.0.0-beta.7",
     "@remirror/extension-code": "3.0.0-beta.7",
     "@remirror/extension-code-block": "3.0.0-beta.7",
-    "@remirror/extension-codemirror5": "3.0.0-beta.7",
     "@remirror/extension-collaboration": "3.0.0-beta.7",
     "@remirror/extension-columns": "3.0.0-beta.7",
     "@remirror/extension-diff": "3.0.0-beta.7",
@@ -123,9 +122,7 @@
     "@remirror/preset-formatting": "3.0.0-beta.7",
     "@remirror/preset-wysiwyg": "3.0.0-beta.7",
     "@remirror/theme": "3.0.0-beta.5",
-    "@types/codemirror": "^5.60.7",
     "@types/refractor": "^3.0.2",
-    "codemirror": "^5.65.13",
     "refractor": "^3.6.0"
   },
   "devDependencies": {

@@ -6,7 +6,6 @@ export * from '@remirror/extension-bold';
 export * from '@remirror/extension-callout';
 export * from '@remirror/extension-code';
 export * from '@remirror/extension-code-block';
-export * from '@remirror/extension-codemirror5';
 export * from '@remirror/extension-collaboration';
 export * from '@remirror/extension-columns';
 export * from '@remirror/extension-diff';
