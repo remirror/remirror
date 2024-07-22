@@ -1,5 +1,21 @@
 # @remirror/react-core
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/extension-react-component@3.0.0-beta.8
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/react-utils@3.0.0-beta.6
+  - @remirror/extension-positioner@3.0.0-beta.8
+  - @remirror/preset-core@3.0.0-beta.8
+  - @remirror/preset-react@3.0.0-beta.8
+  - @remirror/react-renderer@3.0.0-beta.8
+
 ## 3.0.0-beta.7
 
 > 2024-07-19

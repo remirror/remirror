@@ -1,6 +1,5 @@
-import { cx as classNames } from '@linaria/core';
 import { ErrorConstant } from '@remirror/core-constants';
-import { freeze, invariant, keys, object, uniqueArray } from '@remirror/core-helpers';
+import { freeze, invariant, keys, object } from '@remirror/core-helpers';
 import type { GetFixedDynamic, GetPartialDynamic, ValidOptions } from '@remirror/core-types';
 
 import type { GetChangeOptionsReturn, PickChanged } from './types';
@@ -106,10 +105,4 @@ export function throwIfNameNotUnique(props: IsNameUniqueProps): void {
   });
 
   set.add(name);
-}
-
-export type ClassName<T = string> = T | false | void | null | 0 | '';
-
-export function cx(...classes: ClassName[]): string {
-  return uniqueArray(classNames(...classes).split(' ')).join(' ');
 }

@@ -1,8 +1,7 @@
-import { object } from '@remirror/core-helpers';
+import { ClassName, cx, object } from '@remirror/core-helpers';
 import type { ProsemirrorAttributes } from '@remirror/core-types';
 
 import { AnyExtension, PlainExtension } from '../extension';
-import { ClassName, cx } from '../helpers';
 
 /**
  * This extension allows others extension to add the `createAttributes` method

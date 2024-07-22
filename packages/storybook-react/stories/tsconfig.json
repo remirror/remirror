@@ -22,6 +22,9 @@
       "path": "../../remirror__dev/src"
     },
     {
+      "path": "../../remirror__extension-codemirror5/src"
+    },
+    {
       "path": "../../remirror__extension-codemirror6/src"
     },
     {
@@ -44,6 +47,9 @@
     },
     {
       "path": "../../remirror__extension-react-tables/src"
+    },
+    {
+      "path": "../../remirror__extension-yjs/src"
     },
     {
       "path": "../../remirror__i18n/src"

@@ -6,7 +6,6 @@ export * from '@remirror/extension-bold';
 export * from '@remirror/extension-callout';
 export * from '@remirror/extension-code';
 export * from '@remirror/extension-code-block';
-export * from '@remirror/extension-codemirror5';
 export * from '@remirror/extension-collaboration';
 export * from '@remirror/extension-columns';
 export * from '@remirror/extension-diff';
@@ -48,7 +47,6 @@ export * from '@remirror/extension-text-highlight';
 export * from '@remirror/extension-trailing-node';
 export * from '@remirror/extension-underline';
 export * from '@remirror/extension-whitespace';
-export * from '@remirror/extension-yjs';
 
 // Presets
 export * from '@remirror/preset-core';

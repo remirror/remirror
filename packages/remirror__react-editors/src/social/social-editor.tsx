@@ -8,7 +8,7 @@ import {
   wysiwygPreset,
 } from 'remirror/extensions';
 import data from 'svgmoji/emoji.json';
-import { TableExtension } from '@remirror/extension-react-tables';
+import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
 import { i18nFormat } from '@remirror/i18n';
 import {
   EditorComponent,
@@ -16,7 +16,6 @@ import {
   MentionAtomPopupComponent,
   MentionAtomState,
   Remirror,
-  TableComponents,
   ThemeProvider,
   useRemirror,
 } from '@remirror/react';

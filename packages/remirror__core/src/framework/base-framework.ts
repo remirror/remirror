@@ -1,4 +1,5 @@
 import type { Unsubscribe } from 'nanoevents';
+import type { ClassName } from '@remirror/core-helpers';
 import type {
   EditorState,
   EditorStateProps,
@@ -14,7 +15,6 @@ import type { DirectEditorProps } from '@remirror/pm/view';
 
 import type { UpdatableViewProps } from '../builtins';
 import type { AnyExtension, AnyExtensionConstructor } from '../extension';
-import { ClassName } from '../helpers';
 import type { ManagerEvents, RemirrorManager } from '../manager';
 import type { FocusType } from '../types';
 

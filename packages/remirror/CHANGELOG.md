@@ -1,5 +1,110 @@
 # remirror
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- f2425a391: ## 💥 BREAKING CHANGES! 💥
+
+  ### CodemirrorExtension is no longer bundled with `remirror`
+
+  In an effort to slim down the number of dependencies required when installing Remirror, the `CodemirrorExtension` (version 5) has been removed, from the main entry point `remirror`.
+
+  If you still need the functionality provided by this extension, simply add `@remirror/extension-codemirror5` as a direct dependency to your application.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import { CodemirrorExtension } from 'remirror/extensions';
+  ```
+
+  #### After: Remirror v3 example
+
+  ```tsx
+  import { CodemirrorExtension } from '@remirror/extension-codemirror5';
+  ```
+
+- 16660dded: ## 💥 BREAKING CHANGES! 💥
+
+  ### YjsExtension is no longer bundled with `remirror`
+
+  In an effort to slim down the number of dependencies required when installing Remirror, the `YjsExtension` has been removed, from the main entry point `remirror`.
+
+  If you still need the functionality provided by this extension, simply add `@remirror/extension-yjs` as a direct dependency to your application.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import { YjsExtension } from 'remirror/extensions';
+  ```
+
+  #### After: Remirror v3 example
+
+  ```tsx
+  import { YjsExtension } from '@remirror/extension-yjs';
+  ```
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core-helpers@4.0.0-beta.5
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/core-utils@3.0.0-beta.6
+  - @remirror/icons@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/dom@3.0.0-beta.8
+  - @remirror/extension-annotation@3.0.0-beta.8
+  - @remirror/extension-bidi@3.0.0-beta.8
+  - @remirror/extension-blockquote@3.0.0-beta.8
+  - @remirror/extension-bold@3.0.0-beta.8
+  - @remirror/extension-callout@3.0.0-beta.8
+  - @remirror/extension-code@3.0.0-beta.8
+  - @remirror/extension-code-block@3.0.0-beta.8
+  - @remirror/extension-collaboration@3.0.0-beta.8
+  - @remirror/extension-columns@3.0.0-beta.8
+  - @remirror/extension-diff@3.0.0-beta.8
+  - @remirror/extension-doc@3.0.0-beta.8
+  - @remirror/extension-drop-cursor@3.0.0-beta.8
+  - @remirror/extension-embed@3.0.0-beta.8
+  - @remirror/extension-emoji@3.0.0-beta.8
+  - @remirror/extension-entity-reference@3.0.0-beta.8
+  - @remirror/extension-epic-mode@3.0.0-beta.8
+  - @remirror/extension-events@3.0.0-beta.8
+  - @remirror/extension-find@1.0.0-beta.8
+  - @remirror/extension-font-family@3.0.0-beta.8
+  - @remirror/extension-font-size@3.0.0-beta.8
+  - @remirror/extension-gap-cursor@3.0.0-beta.8
+  - @remirror/extension-hard-break@3.0.0-beta.8
+  - @remirror/extension-heading@3.0.0-beta.8
+  - @remirror/extension-history@3.0.0-beta.8
+  - @remirror/extension-horizontal-rule@3.0.0-beta.8
+  - @remirror/extension-image@3.0.0-beta.8
+  - @remirror/extension-italic@3.0.0-beta.8
+  - @remirror/extension-link@3.0.0-beta.8
+  - @remirror/extension-list@3.0.0-beta.8
+  - @remirror/extension-markdown@3.0.0-beta.8
+  - @remirror/extension-mention@3.0.0-beta.8
+  - @remirror/extension-mention-atom@3.0.0-beta.8
+  - @remirror/extension-node-formatting@3.0.0-beta.8
+  - @remirror/extension-paragraph@3.0.0-beta.8
+  - @remirror/extension-placeholder@3.0.0-beta.8
+  - @remirror/extension-positioner@3.0.0-beta.8
+  - @remirror/extension-shortcuts@3.0.0-beta.8
+  - @remirror/extension-strike@3.0.0-beta.8
+  - @remirror/extension-sub@3.0.0-beta.8
+  - @remirror/extension-sup@3.0.0-beta.8
+  - @remirror/extension-tables@3.0.0-beta.8
+  - @remirror/extension-text@3.0.0-beta.8
+  - @remirror/extension-text-case@3.0.0-beta.8
+  - @remirror/extension-text-color@3.0.0-beta.8
+  - @remirror/extension-text-highlight@3.0.0-beta.8
+  - @remirror/extension-trailing-node@3.0.0-beta.8
+  - @remirror/extension-underline@3.0.0-beta.8
+  - @remirror/extension-whitespace@3.0.0-beta.8
+  - @remirror/preset-core@3.0.0-beta.8
+  - @remirror/preset-formatting@3.0.0-beta.8
+  - @remirror/preset-wysiwyg@3.0.0-beta.8
+
 ## 3.0.0-beta.7
 
 > 2024-07-19

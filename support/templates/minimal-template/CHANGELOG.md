@@ -1,5 +1,14 @@
 # @remirror/minimal-template
 
+## 0.0.7-beta.5
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core-helpers@4.0.0-beta.5
+
 ## 0.0.7-beta.4
 
 > 2024-07-19

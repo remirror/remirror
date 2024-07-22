@@ -6,7 +6,7 @@ import 'codemirror/theme/nord.css';
 
 import CodeMirror from 'codemirror';
 import React from 'react';
-import { CodeMirrorExtension } from 'remirror/extensions';
+import { CodeMirrorExtension } from '@remirror/extension-codemirror5';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
 const extensions = () => [
