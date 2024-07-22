@@ -1,5 +1,24 @@
 # @remirror/react-editors
 
+## 2.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [f2425a391]
+- Updated dependencies [bffe2fd61]
+- Updated dependencies [7aa698996]
+- Updated dependencies [16660dded]
+  - remirror@3.0.0-beta.8
+  - @remirror/core-helpers@4.0.0-beta.5
+  - @remirror/react@3.0.0-beta.8
+  - @remirror/i18n@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/styles@3.0.0-beta.5
+  - @remirror/extension-react-tables@3.0.0-beta.8
+  - @remirror/react-ui@0.1.0-beta.8
+
 ## 2.0.0-beta.7
 
 > 2024-07-19

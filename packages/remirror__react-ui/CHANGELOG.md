@@ -1,5 +1,42 @@
 # @remirror/react-ui
 
+## 0.1.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/icons@3.0.0-beta.5
+  - @remirror/messages@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/react-hooks@3.0.0-beta.8
+  - @remirror/extension-blockquote@3.0.0-beta.8
+  - @remirror/extension-bold@3.0.0-beta.8
+  - @remirror/extension-callout@3.0.0-beta.8
+  - @remirror/extension-code@3.0.0-beta.8
+  - @remirror/extension-code-block@3.0.0-beta.8
+  - @remirror/extension-columns@3.0.0-beta.8
+  - @remirror/extension-find@1.0.0-beta.8
+  - @remirror/extension-font-size@3.0.0-beta.8
+  - @remirror/extension-heading@3.0.0-beta.8
+  - @remirror/extension-history@3.0.0-beta.8
+  - @remirror/extension-horizontal-rule@3.0.0-beta.8
+  - @remirror/extension-italic@3.0.0-beta.8
+  - @remirror/extension-list@3.0.0-beta.8
+  - @remirror/extension-node-formatting@3.0.0-beta.8
+  - @remirror/extension-positioner@3.0.0-beta.8
+  - @remirror/extension-strike@3.0.0-beta.8
+  - @remirror/extension-sub@3.0.0-beta.8
+  - @remirror/extension-sup@3.0.0-beta.8
+  - @remirror/extension-tables@3.0.0-beta.8
+  - @remirror/extension-text-color@3.0.0-beta.8
+  - @remirror/extension-underline@3.0.0-beta.8
+  - @remirror/extension-whitespace@3.0.0-beta.8
+  - @remirror/react-components@3.0.0-beta.8
+  - @remirror/react-core@3.0.0-beta.8
+
 ## 0.1.0-beta.7
 
 > 2024-07-19

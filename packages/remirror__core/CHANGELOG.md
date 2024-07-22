@@ -1,5 +1,19 @@
 # @remirror/core
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- bffe2fd61: Export `cx` util from `@remirror/core-helpers` using `clsx` instead of Linaria
+- Updated dependencies [bffe2fd61]
+  - @remirror/core-helpers@4.0.0-beta.5
+  - @remirror/core-utils@3.0.0-beta.6
+  - @remirror/icons@3.0.0-beta.5
+  - @remirror/messages@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.6
+
 ## 3.0.0-beta.7
 
 > 2024-07-19

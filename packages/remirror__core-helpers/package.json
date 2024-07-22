@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-helpers",
-  "version": "4.0.0-beta.4",
+  "version": "4.0.0-beta.5",
   "description": "Provide helper functions for the remirror codebase, kinda like a tiny lodash",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__core-helpers",
   "repository": {

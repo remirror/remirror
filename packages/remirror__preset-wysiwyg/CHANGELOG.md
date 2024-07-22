@@ -1,5 +1,36 @@
 # @remirror/preset-wysiwyg
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/extension-bidi@3.0.0-beta.8
+  - @remirror/extension-blockquote@3.0.0-beta.8
+  - @remirror/extension-bold@3.0.0-beta.8
+  - @remirror/extension-code@3.0.0-beta.8
+  - @remirror/extension-code-block@3.0.0-beta.8
+  - @remirror/extension-drop-cursor@3.0.0-beta.8
+  - @remirror/extension-embed@3.0.0-beta.8
+  - @remirror/extension-find@1.0.0-beta.8
+  - @remirror/extension-gap-cursor@3.0.0-beta.8
+  - @remirror/extension-hard-break@3.0.0-beta.8
+  - @remirror/extension-heading@3.0.0-beta.8
+  - @remirror/extension-horizontal-rule@3.0.0-beta.8
+  - @remirror/extension-image@3.0.0-beta.8
+  - @remirror/extension-italic@3.0.0-beta.8
+  - @remirror/extension-link@3.0.0-beta.8
+  - @remirror/extension-list@3.0.0-beta.8
+  - @remirror/extension-shortcuts@3.0.0-beta.8
+  - @remirror/extension-strike@3.0.0-beta.8
+  - @remirror/extension-trailing-node@3.0.0-beta.8
+  - @remirror/extension-underline@3.0.0-beta.8
+  - @remirror/preset-core@3.0.0-beta.8
+
 ## 3.0.0-beta.7
 
 > 2024-07-19
