@@ -1,5 +1,14 @@
 # multishift
 
+## 2.0.10-beta.6
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core-helpers@4.0.0-beta.5
+
 ## 2.0.10-beta.5
 
 > 2024-07-19

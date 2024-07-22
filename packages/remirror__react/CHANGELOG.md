@@ -1,5 +1,47 @@
 # @remirror/react
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- 7aa698996: ## 💥 BREAKING CHANGES! 💥
+
+  ### (React) Table Extension is no longer bundled with `@remirror/react`
+
+  The `TableExtension` also known as ReactTableExtension exposed via `@remirror/react` (_not_ `remirror`) adds significant bloat to the core package.
+
+  Furthermore, since the addition of Table positioners [added in Remirror 2.0.12](https://github.com/remirror/remirror/pull/1915) this function has become largely redundant.
+
+  If you still need the functionality provided by this extension, simply add `@remirror/extension-react-tables` as a direct dependency to your application.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import { TableComponents, tableControllerPluginKey, TableExtension } from '@remirror/react';
+  ```
+
+  #### After: Remirror v3 example
+
+  ```tsx
+  import {
+    TableComponents,
+    tableControllerPluginKey,
+    TableExtension,
+  } from '@remirror/extension-react-tables';
+  ```
+
+  - @remirror/extension-react-component@3.0.0-beta.8
+  - @remirror/react-hooks@3.0.0-beta.8
+  - @remirror/react-utils@3.0.0-beta.6
+  - @remirror/extension-placeholder@3.0.0-beta.8
+  - @remirror/extension-positioner@3.0.0-beta.8
+  - @remirror/preset-react@3.0.0-beta.8
+  - @remirror/react-components@3.0.0-beta.8
+  - @remirror/react-core@3.0.0-beta.8
+  - @remirror/react-renderer@3.0.0-beta.8
+
 ## 3.0.0-beta.7
 
 > 2024-07-19

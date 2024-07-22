@@ -1,5 +1,25 @@
 # @remirror/react-hooks
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core-helpers@4.0.0-beta.5
+  - @remirror/core@3.0.0-beta.8
+  - multishift@2.0.10-beta.6
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/react-utils@3.0.0-beta.6
+  - @remirror/extension-emoji@3.0.0-beta.8
+  - @remirror/extension-events@3.0.0-beta.8
+  - @remirror/extension-history@3.0.0-beta.8
+  - @remirror/extension-mention@3.0.0-beta.8
+  - @remirror/extension-mention-atom@3.0.0-beta.8
+  - @remirror/extension-positioner@3.0.0-beta.8
+  - @remirror/react-core@3.0.0-beta.8
+
 ## 3.0.0-beta.7
 
 > 2024-07-19

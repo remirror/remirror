@@ -1,5 +1,14 @@
 # @remirror/react-renderer
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+
 ## 3.0.0-beta.7
 
 > 2024-07-19

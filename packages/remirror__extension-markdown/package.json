@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-markdown",
-  "version": "3.0.0-beta.7",
+  "version": "3.0.0-beta.8",
   "description": "Generate markdown output from your editor",
   "keywords": [
     "remirror",
@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.7",
-    "@remirror/messages": "3.0.0-beta.5",
+    "@remirror/core": "3.0.0-beta.8",
+    "@remirror/messages": "3.0.0-beta.6",
     "@types/marked": "^4.3.1",
     "@types/turndown": "^5.0.1",
     "marked": "^4.3.0",
@@ -48,12 +48,12 @@
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0-beta.1",
-    "@remirror/extension-react-tables": "3.0.0-beta.7",
-    "@remirror/pm": "3.0.0-beta.5"
+    "@remirror/extension-react-tables": "3.0.0-beta.8",
+    "@remirror/pm": "3.0.0-beta.6"
   },
   "peerDependencies": {
-    "@remirror/extension-react-tables": "3.0.0-beta.7",
-    "@remirror/pm": "^3.0.0-beta.5"
+    "@remirror/extension-react-tables": "3.0.0-beta.8",
+    "@remirror/pm": "^3.0.0-beta.6"
   },
   "peerDependenciesMeta": {
     "@remirror/extension-react-tables": {

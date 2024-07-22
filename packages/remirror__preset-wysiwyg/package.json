@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "3.0.0-beta.7",
+  "version": "3.0.0-beta.8",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -39,35 +39,35 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0-beta.7",
-    "@remirror/extension-bidi": "3.0.0-beta.7",
-    "@remirror/extension-blockquote": "3.0.0-beta.7",
-    "@remirror/extension-bold": "3.0.0-beta.7",
-    "@remirror/extension-code": "3.0.0-beta.7",
-    "@remirror/extension-code-block": "3.0.0-beta.7",
-    "@remirror/extension-drop-cursor": "3.0.0-beta.7",
-    "@remirror/extension-embed": "3.0.0-beta.7",
-    "@remirror/extension-find": "1.0.0-beta.7",
-    "@remirror/extension-gap-cursor": "3.0.0-beta.7",
-    "@remirror/extension-hard-break": "3.0.0-beta.7",
-    "@remirror/extension-heading": "3.0.0-beta.7",
-    "@remirror/extension-horizontal-rule": "3.0.0-beta.7",
-    "@remirror/extension-image": "3.0.0-beta.7",
-    "@remirror/extension-italic": "3.0.0-beta.7",
-    "@remirror/extension-link": "3.0.0-beta.7",
-    "@remirror/extension-list": "3.0.0-beta.7",
-    "@remirror/extension-shortcuts": "3.0.0-beta.7",
-    "@remirror/extension-strike": "3.0.0-beta.7",
-    "@remirror/extension-trailing-node": "3.0.0-beta.7",
-    "@remirror/extension-underline": "3.0.0-beta.7",
-    "@remirror/preset-core": "3.0.0-beta.7"
+    "@remirror/core": "3.0.0-beta.8",
+    "@remirror/extension-bidi": "3.0.0-beta.8",
+    "@remirror/extension-blockquote": "3.0.0-beta.8",
+    "@remirror/extension-bold": "3.0.0-beta.8",
+    "@remirror/extension-code": "3.0.0-beta.8",
+    "@remirror/extension-code-block": "3.0.0-beta.8",
+    "@remirror/extension-drop-cursor": "3.0.0-beta.8",
+    "@remirror/extension-embed": "3.0.0-beta.8",
+    "@remirror/extension-find": "1.0.0-beta.8",
+    "@remirror/extension-gap-cursor": "3.0.0-beta.8",
+    "@remirror/extension-hard-break": "3.0.0-beta.8",
+    "@remirror/extension-heading": "3.0.0-beta.8",
+    "@remirror/extension-horizontal-rule": "3.0.0-beta.8",
+    "@remirror/extension-image": "3.0.0-beta.8",
+    "@remirror/extension-italic": "3.0.0-beta.8",
+    "@remirror/extension-link": "3.0.0-beta.8",
+    "@remirror/extension-list": "3.0.0-beta.8",
+    "@remirror/extension-shortcuts": "3.0.0-beta.8",
+    "@remirror/extension-strike": "3.0.0-beta.8",
+    "@remirror/extension-trailing-node": "3.0.0-beta.8",
+    "@remirror/extension-underline": "3.0.0-beta.8",
+    "@remirror/preset-core": "3.0.0-beta.8"
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0-beta.1",
-    "@remirror/pm": "3.0.0-beta.5"
+    "@remirror/pm": "3.0.0-beta.6"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0-beta.5"
+    "@remirror/pm": "^3.0.0-beta.6"
   },
   "publishConfig": {
     "access": "public",
