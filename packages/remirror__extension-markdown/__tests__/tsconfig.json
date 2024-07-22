@@ -38,6 +38,9 @@
       "path": "../../remirror__core/src"
     },
     {
+      "path": "../../remirror__extension-react-tables/src"
+    },
+    {
       "path": "../../remirror__messages/src"
     },
     {
