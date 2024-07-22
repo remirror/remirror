@@ -89,6 +89,44 @@ function offsetIncrement(
 }
 
 /**
+ * Determine the parser to use based on the code block language
+ * @param language Code block language
+ * @returns Parser name
+ */
+function identifyParser(language: string): BuiltInParserName | undefined {
+  switch (language) {
+    case 'typescript':
+    case 'ts':
+    case 'tsx':
+      return 'typescript';
+    case 'javascript':
+    case 'jsx':
+    case 'js':
+      return 'babel-flow';
+    case 'markdown':
+    case 'md':
+      return 'markdown';
+    case 'mdx':
+      return 'mdx';
+    case 'yml':
+    case 'yaml':
+      return 'yaml';
+    case 'html':
+      return 'html';
+    case 'css':
+      return 'css';
+    case 'less':
+      return 'less';
+    case 'json':
+      return 'json';
+    case 'json5':
+      return 'json5';
+    default:
+      return;
+  }
+}
+
+/**
  * A prettier based code formatter which can be dropped in for use within the
  * `CodeBlockExtension`.
  */
@@ -112,47 +150,10 @@ export async function formatter(props: FormatterProps): Promise<FormattedContent
     return { ...result, cursorOffset: result.cursorOffset + increment };
   };
 
-  let parser: BuiltInParserName;
+  const parser = identifyParser(language);
 
-  switch (language) {
-    case 'typescript':
-    case 'ts':
-    case 'tsx':
-      parser = 'typescript';
-      break;
-    case 'javascript':
-    case 'jsx':
-    case 'js':
-      parser = 'babel-flow';
-      break;
-    case 'markdown':
-    case 'md':
-      parser = 'markdown';
-      break;
-    case 'mdx':
-      parser = 'mdx';
-      break;
-    case 'yml':
-    case 'yaml':
-      parser = 'yaml';
-      break;
-    case 'html':
-      parser = 'html';
-      break;
-    case 'css':
-      parser = 'css';
-      break;
-    case 'less':
-      parser = 'less';
-      break;
-    case 'json':
-      parser = 'json';
-      break;
-    case 'json5':
-      parser = 'json5';
-      break;
-    default:
-      return;
+  if (!parser) {
+    return;
   }
 
   try {
