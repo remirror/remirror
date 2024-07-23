@@ -1,10 +1,5 @@
 ---
-'@remirror/cli': patch
 '@remirror/extension-code-block': patch
-'@remirror/extension-react-language-select': patch
-'@remirror/preset-wysiwyg': patch
-'@remirror/react-components': patch
-'@remirror/react-editor': patch
 'remirror': patch
 ---
 
