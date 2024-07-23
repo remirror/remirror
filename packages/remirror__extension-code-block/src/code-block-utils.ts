@@ -2,7 +2,9 @@ import refractor, { RefractorNode } from 'refractor/core.js';
 import {
   ApplySchemaAttributes,
   CommandFunction,
+  CommandFunctionProps,
   cx,
+  DelayedPromiseCreator,
   DOMOutputSpec,
   findParentNodeOfType,
   flattenArray,
@@ -14,7 +16,6 @@ import {
   NodeType,
   NodeTypeProps,
   NodeWithPosition,
-  object,
   omitExtraAttributes,
   PosProps,
   ProsemirrorAttributes,
@@ -23,7 +24,7 @@ import {
   TextProps,
 } from '@remirror/core';
 import { ExtensionCodeBlockMessages } from '@remirror/messages';
-import { TextSelection } from '@remirror/pm/state';
+import { EditorState } from '@remirror/pm/state';
 import { Decoration } from '@remirror/pm/view';
 
 import type { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';
@@ -260,82 +261,108 @@ export function codeBlockToDOM(node: ProsemirrorNode, extra: ApplySchemaAttribut
   return ['pre', attributes, ['code', { [LANGUAGE_ATTRIBUTE]: language, style }, 0]];
 }
 
-interface FormatCodeBlockFactoryProps
-  extends NodeTypeProps,
-    Required<Pick<CodeBlockOptions, 'formatter' | 'defaultLanguage'>> {}
+type FormatCodeProps = NodeTypeProps &
+  Required<Pick<CodeBlockOptions, 'formatter' | 'defaultLanguage'>> &
+  Partial<PosProps> & { state: EditorState };
+
+export interface FormatCodeResult {
+  /**
+   * Formatted code
+   */
+  formatted: string;
+
+  /**
+   * The original range that should be replaced in the code block
+   */
+  range: { from: number; to: number };
+
+  /**
+   * Updated selection coordinates for the formatted code
+   */
+  selection: { anchor: number; head?: number };
+}
 
 /**
- * A factory for creating a command which can format a selected codeBlock (or
- * one located at the provided position).
+ * Format the contents of a selected codeBlock or one located at the provided
+ * position.
  */
-export function formatCodeBlockFactory(props: FormatCodeBlockFactoryProps) {
-  return ({ pos }: Partial<PosProps> = object()): CommandFunction =>
-    ({ tr, dispatch }) => {
-      const { type, formatter, defaultLanguage: fallback } = props;
+export async function formatCode(props: FormatCodeProps): Promise<FormatCodeResult> {
+  const { type, formatter, defaultLanguage: fallback, pos, state } = props;
+  const { selection, doc } = state;
 
-      const { from, to } = pos ? { from: pos, to: pos } : tr.selection;
+  const codeBlock = findParentNodeOfType({
+    types: type,
+    selection: pos !== undefined ? doc.resolve(pos) : selection,
+  });
 
-      // Find the current codeBlock the cursor is positioned in.
-      const codeBlock = findParentNodeOfType({ types: type, selection: tr.selection });
+  if (!codeBlock) {
+    throw new Error(
+      `Unable to find node with type ${type} based on ${pos !== undefined ? 'position' : 'selection'}`,
+    );
+  }
 
-      if (!codeBlock) {
-        return false;
-      }
+  const {
+    node: { attrs, textContent },
+    start,
+  } = codeBlock;
 
-      // Get the `language`, `source` and `cursorOffset` for the block and run the
-      // formatter
-      const {
-        node: { attrs, textContent },
-        start,
-      } = codeBlock;
+  const { from, to } = pos !== undefined ? { from: pos, to: pos } : selection;
+  const offsetStart = from - start;
+  const offsetEnd = to - start;
+  const language = getLanguage({ language: attrs.language, fallback });
 
-      const offsetStart = from - start;
-      const offsetEnd = to - start;
-      const language = getLanguage({ language: attrs.language, fallback });
+  const formatStartPromise = formatter({
+    source: textContent,
+    language,
+    cursorOffset: offsetStart,
+  });
 
-      const formatStartPromise = formatter({
-        source: textContent,
-        language,
-        cursorOffset: offsetStart,
-      });
+  // If the user has a selection, format again using the end of the selection as
+  // the cursor offset so that the new selection end can be determined.
+  const formatEndPromise =
+    offsetEnd !== offsetStart
+      ? formatter({ source: textContent, language, cursorOffset: offsetEnd })
+      : Promise.resolve();
 
-      // When the user has a selection
-      const formatEndPromise =
-        offsetStart !== offsetEnd
-          ? formatter({ source: textContent, language, cursorOffset: offsetEnd })
-          : // eslint-disable-next-line unicorn/no-useless-undefined
-            Promise.resolve(undefined);
+  const [formatStart, formatEnd] = await Promise.all([formatStartPromise, formatEndPromise]);
 
-      Promise.all([formatStartPromise, formatEndPromise])
-        .then(([formatStart, formatEnd]) => {
-          // Do nothing if nothing has changed
-          if (!formatStart || formatStart.formatted === textContent) {
-            return;
-          }
+  if (!formatStart) {
+    throw new Error('Formatter failed');
+  }
 
-          const end = start + textContent.length;
+  if (formatStart.formatted === textContent) {
+    throw new Error('Already formatted');
+  }
 
-          // Replace the codeBlock content with the transformed text.
-          tr.insertText(formatStart.formatted, start, end);
+  return {
+    formatted: formatStart.formatted,
+    range: {
+      from: start,
+      to: start + textContent.length,
+    },
+    selection: {
+      anchor: start + formatStart.cursorOffset,
+      head: formatEnd ? start + formatEnd.cursorOffset : undefined,
+    },
+  };
+}
 
-          // Set the new selection
-          const anchor = start + formatStart.cursorOffset;
-          const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
+export interface DelayedFormatCodeBlockProps<Value> {
+  /**
+   * A function that returns a promise.
+   */
+  promise: DelayedPromiseCreator<Value>;
 
-          tr.setSelection(
-            TextSelection.between(tr.doc.resolve(anchor), tr.doc.resolve(head ?? anchor)),
-          );
+  /**
+   * Called when the promise succeeds and the formatted code is available. If
+   * formatting fails, the failure handler is called instead.
+   */
+  onSuccess: (value: Value, commandProps: CommandFunctionProps) => boolean;
 
-          if (dispatch) {
-            dispatch(tr);
-          }
-        })
-        .catch(() => {
-          // Do nothing
-        });
-
-      return true;
-    };
+  /**
+   * Called when a failure is encountered.
+   */
+  onFailure?: CommandFunction<{ error: unknown }>;
 }
 
 /**

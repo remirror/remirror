@@ -5,6 +5,7 @@ import {
   command,
   CommandFunction,
   CreateExtensionPlugin,
+  DelayedCommand,
   extension,
   ExtensionTag,
   findNodeAtSelection,
@@ -40,7 +41,8 @@ import { CodeBlockState } from './code-block-plugin';
 import type { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';
 import {
   codeBlockToDOM,
-  formatCodeBlockFactory,
+  DelayedFormatCodeBlockProps,
+  formatCode,
   getLanguage,
   getLanguageFromDom,
   toggleCodeBlockOptions,
@@ -195,6 +197,10 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     }
   }
 
+  onCreate(): void {
+    this.store.setExtensionStore('createFormatCodeBlockCommand', this.createFormatCodeBlockCommand);
+  }
+
   /**
    * Create the custom code block plugin which handles the delete key amongst other things.
    */
@@ -293,29 +299,47 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * Format the code block with the code formatting function passed as an
    * option.
    *
-   * The formatter runs asynchronously. This should not be immediately followed
-   * by additional commands. It is not yet possible to track completion of this
-   * command; it is best to use as a standalone response to a user action.
-   *
    * Code formatters (like prettier) add a lot to the bundle size and hence
    * it is up to you to provide a formatter which will be run on the entire
    * code block when this method is used.
    *
    * ```ts
-   * if (actions.formatCodeBlock.isActive()) {
-   *   actions.formatCodeBlockFactory();
-   *   // Or with a specific position
-   *   actions.formatCodeBlock({ pos: 100 }) // to format a separate code block
+   * if (actions.formatCodeBlock.enabled()) {
+   *   actions.formatCodeBlock();
+   *   // Or to format a separate code block via position
+   *   actions.formatCodeBlock({ pos: 100 });
    * }
    * ```
    */
   @command()
   formatCodeBlock(props?: Partial<PosProps>): CommandFunction {
-    return formatCodeBlockFactory({
-      type: this.type,
-      formatter: this.options.formatter,
-      defaultLanguage: this.options.defaultLanguage,
-    })(props);
+    return this.store
+      .createFormatCodeBlockCommand({
+        promise: () =>
+          formatCode({
+            type: this.type,
+            formatter: this.options.formatter,
+            defaultLanguage: this.options.defaultLanguage,
+            state: this.store.getState(),
+            ...props,
+          }),
+        onSuccess({ formatted, range, selection }, { tr, dispatch }) {
+          tr.insertText(formatted, range.from, range.to);
+          tr.setSelection(
+            TextSelection.between(
+              tr.doc.resolve(selection.anchor),
+              tr.doc.resolve(selection.head ?? selection.anchor),
+            ),
+          );
+
+          if (dispatch) {
+            dispatch(tr);
+          }
+
+          return true;
+        },
+      })
+      .generateCommand();
   }
 
   @keyBinding({ shortcut: 'Tab' })
@@ -458,12 +482,39 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       refractor.register(language);
     }
   }
+
+  /**
+   * Create delayed format command.
+   */
+  private readonly createFormatCodeBlockCommand = <Value>(
+    props: DelayedFormatCodeBlockProps<Value>,
+  ): DelayedCommand<Value> => {
+    const { promise, onFailure, onSuccess } = props;
+
+    return new DelayedCommand(promise)
+      .success((props) => {
+        const { value, ...commandProps } = props;
+        return onSuccess(value, commandProps);
+      })
+      .failure((props) => {
+        return onFailure?.(props) ?? false;
+      });
+  };
 }
 
 export { getLanguage };
 
 declare global {
   namespace Remirror {
+    interface ExtensionStore {
+      /**
+       * Create delayed command which formats code block contents.
+       */
+      createFormatCodeBlockCommand<Value = any>(
+        props: DelayedFormatCodeBlockProps<Value>,
+      ): DelayedCommand<Value>;
+    }
+
     interface AllExtensions {
       codeBlock: CodeBlockExtension;
     }

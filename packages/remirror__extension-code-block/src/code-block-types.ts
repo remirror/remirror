@@ -113,7 +113,7 @@ export interface CodeBlockOptions {
  * TODO - possibly allow error management if failure is because of invalid
  * syntax
  */
-export type CodeBlockFormatter = (params: FormatterProps) => Promise<FormattedContent | undefined>;
+export type CodeBlockFormatter = (params: FormatterProps) => Promise<FormattedContent | void>;
 
 export interface FormatterProps {
   /**
