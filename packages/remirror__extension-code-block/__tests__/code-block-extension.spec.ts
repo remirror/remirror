@@ -1,8 +1,5 @@
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import estreePlugin from 'prettier/plugins/estree';
-import typescriptPlugin from 'prettier/plugins/typescript';
-import { formatWithCursor } from 'prettier/standalone';
 import refractor from 'refractor/core.js';
 import graphql from 'refractor/lang/graphql.js';
 import javascript from 'refractor/lang/javascript.js';
@@ -14,19 +11,22 @@ import {
   BlockquoteExtension,
   BoldExtension,
   CodeBlockExtension,
+  CodeBlockFormatter,
   CodeBlockOptions,
   CodeExtension,
   createCoreManager,
-  FormatterProps,
   getLanguage,
   HardBreakExtension,
 } from 'remirror/extensions';
+import { delay } from 'testing';
 import {
   ExtensionPriority,
   htmlToProsemirrorNode,
   object,
   prosemirrorNodeToHtml,
 } from '@remirror/core';
+
+import { formatter } from '../src/formatter';
 
 extensionValidityTest(CodeBlockExtension);
 
@@ -337,111 +337,61 @@ describe('commands', () => {
   });
 
   describe('formatCodeBlock', () => {
-    interface FormatterStatus {
-      /** Number of times the formatter has been called */
-      count: number;
-      /** Total calls expected */
-      total: number;
-      /** Completion callback */
-      done: () => void;
-    }
-
-    // Do not destructure status parameter; it intentionally mutates across and
-    // during tests.
-    const formatterSpy = (status: FormatterStatus) =>
-      async function formatter({ cursorOffset, language, source }: FormatterProps) {
-        let result: Awaited<ReturnType<typeof formatWithCursor> | undefined>;
-
-        if (getLanguage({ fallback: 'text', language }) === 'typescript') {
-          try {
-            result = await formatWithCursor(source, {
-              cursorOffset,
-              plugins: [estreePlugin, typescriptPlugin],
-              parser: 'typescript',
-              singleQuote: true,
-            });
-          } catch {
-            status.count = status.total;
-          }
-        }
-
-        if (++status.count >= status.total) {
-          status.done();
-        }
-
-        return result;
-      };
-
-    const waitATick = () => new Promise((resolve) => process.nextTick(resolve));
-
-    // Awaiting waitForFormatters ensures the formatter has been called as many
-    // times as is expected. It does not signal the end of formatCodeBlock(),
-    // which still must dispatch the update, so waiting a tick beyond this
-    // promise is required.
-    let waitForFormatters: Promise<void>;
-    const formatter_status: FormatterStatus = {
-      count: 0,
-      total: 1,
-      done: () => {},
-    };
-
-    const {
+    let {
       add,
-      attributeNodes: { codeBlock },
-      nodes: { doc, p },
-    } = create({ formatter: formatterSpy(formatter_status) });
-    const tsBlock = codeBlock({ language: 'typescript' });
+      nodes: { codeBlock, doc, p },
+      commands,
+    } = create({ defaultLanguage: 'typescript', formatter });
 
     beforeEach(() => {
-      formatter_status.count = 0;
-      formatter_status.total = 1;
-
-      waitForFormatters = new Promise((resolve) => {
-        formatter_status.done = resolve;
-      });
+      ({
+        add,
+        nodes: { codeBlock, doc, p },
+        commands,
+      } = create({ defaultLanguage: 'typescript', formatter }));
     });
 
-    it('can format the codebase', async () => {
+    it('can format the code block', async () => {
       const testChain = add(
-        doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")<cursor>`)),
-      ).callback(({ commands }) => {
-        commands.formatCodeBlock();
-      });
+        doc(codeBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")<cursor>`)),
+      );
 
-      await waitForFormatters;
-      await waitATick();
+      commands.formatCodeBlock();
+      await delay(1);
+
       testChain.callback(({ view }) => {
         expect(view.state.doc).toEqualRemirrorDocument(
-          doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
+          doc(codeBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
         );
       });
     });
 
     it('maintains cursor position after formatting', async () => {
       const testChain = add(
-        doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)),
-      ).callback(({ commands }) => commands.formatCodeBlock());
+        doc(codeBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)),
+      );
 
-      await waitForFormatters;
-      await waitATick();
+      commands.formatCodeBlock();
+      await delay(1);
+
       testChain.insertText('ing').callback(({ state }) => {
         expect(state.doc).toEqualRemirrorDocument(
-          doc(tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`)),
+          doc(codeBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`)),
         );
       });
     });
 
     it('formats text selections', async () => {
-      formatter_status.total = 2;
       const testChain = add(
-        doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
-      ).callback(({ commands }) => commands.formatCodeBlock());
+        doc(codeBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
+      );
 
-      await waitForFormatters;
-      await waitATick();
+      commands.formatCodeBlock();
+      await delay(1);
+
       testChain.callback(({ state, from, to }) => {
         expect(state.doc).toEqualRemirrorDocument(
-          doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
+          doc(codeBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
         );
         expect([from, to]).toEqual([1, 26]);
       });
@@ -449,26 +399,27 @@ describe('commands', () => {
 
     it('can format complex scenarios', async () => {
       const content = p('Hello darkness, my old friend.');
-      const otherCode = tsBlock(`document.addEventListener("click",  log)`);
+      const otherCode = codeBlock(`document.addEventListener("click",  log)`);
       const testChain = add(
         doc(
           content,
           content,
-          tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`),
+          codeBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`),
           content,
           content,
           otherCode,
         ),
-      ).callback(({ commands }) => commands.formatCodeBlock());
+      );
 
-      await waitForFormatters;
-      await waitATick();
+      commands.formatCodeBlock();
+      await delay(1);
+
       testChain.insertText('ing').callback(({ state }) => {
         expect(state.doc).toEqualRemirrorDocument(
           doc(
             content,
             content,
-            tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`),
+            codeBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`),
             content,
             content,
             otherCode,
@@ -479,15 +430,42 @@ describe('commands', () => {
 
     it('does not alter invalid content', async () => {
       const invalidSource = `const a: string\n = ('test'  ;\n\n\nlog("welcome friends")<cursor>`;
-      const testChain = add(doc(tsBlock(invalidSource))).callback(({ commands }) => {
-        commands.formatCodeBlock();
-      });
+      const testChain = add(doc(codeBlock(invalidSource)));
 
-      await waitForFormatters;
-      await waitATick();
+      commands.formatCodeBlock();
+      await delay(1);
+
       testChain.callback(({ view }) => {
-        expect(view.state.doc).toEqualRemirrorDocument(doc(tsBlock(invalidSource)));
+        expect(view.state.doc).toEqualRemirrorDocument(doc(codeBlock(invalidSource)));
       });
+    });
+
+    it('is NOT enabled if not within a codeBlock', () => {
+      add(
+        doc(
+          codeBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")`),
+          p(`I'm not a code block!<cursor>`),
+        ),
+      );
+
+      expect(commands.formatCodeBlock.enabled()).toBe(false);
+    });
+
+    it('supports custom formatters', async () => {
+      const toastFormatter: CodeBlockFormatter = async () =>
+        Promise.resolve({ formatted: `It's all toast to me!`, cursorOffset: 0 });
+      const editor = create({ formatter: toastFormatter });
+
+      const { doc, codeBlock } = editor.nodes;
+
+      editor.add(
+        doc(codeBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
+      );
+
+      editor.commands.formatCodeBlock();
+      await delay(1);
+
+      expect(editor.doc).toEqualRemirrorDocument(doc(codeBlock(`It's all toast to me!`)));
     });
   });
 });
