@@ -439,7 +439,12 @@
     "name": "@remirror/extension-markdown",
     "limit": "25 KB",
     "path": "packages/remirror__extension-markdown/dist/remirror-extension-markdown.js",
-    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
+    "ignore": [
+      "@remirror/extension-react-tables",
+      "@remirror/pm",
+      "@remirror/core",
+      "@remirror/messages"
+    ],
     "running": false,
     "gzip": true
   },

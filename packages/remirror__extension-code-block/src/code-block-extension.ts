@@ -25,6 +25,8 @@ import {
   NodeExtensionSpec,
   nodeInputRule,
   NodeSpecOverride,
+  nonChainable,
+  NonChainableCommandFunction,
   OnSetOptionsProps,
   PosProps,
   ProsemirrorAttributes,
@@ -307,9 +309,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * }
    * ```
    */
-  @command()
-  formatCodeBlock({ pos }: Partial<PosProps> = {}): CommandFunction {
-    return this.createFormatCodeBlockCommand({
+  @command({
+    disableChaining: true,
+  })
+  formatCodeBlock({ pos }: Partial<PosProps> = {}): NonChainableCommandFunction {
+    const command = this.createFormatCodeBlockCommand({
       pos,
       promise: (props) =>
         formatCode({
@@ -334,13 +338,13 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
           ),
         );
 
-        if (dispatch) {
-          dispatch(tr);
-        }
+        dispatch?.(tr);
 
         return true;
       },
     }).generateCommand();
+
+    return nonChainable(command);
   }
 
   @keyBinding({ shortcut: 'Tab' })
