@@ -197,10 +197,6 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
     }
   }
 
-  onCreate(): void {
-    this.store.setExtensionStore('createFormatCodeBlockCommand', this.createFormatCodeBlockCommand);
-  }
-
   /**
    * Create the custom code block plugin which handles the delete key amongst other things.
    */
@@ -312,34 +308,39 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * ```
    */
   @command()
-  formatCodeBlock(props?: Partial<PosProps>): CommandFunction {
-    return this.store
-      .createFormatCodeBlockCommand({
-        promise: () =>
-          formatCode({
-            type: this.type,
-            formatter: this.options.formatter,
-            defaultLanguage: this.options.defaultLanguage,
-            state: this.store.getState(),
-            ...props,
-          }),
-        onSuccess({ formatted, range, selection }, { tr, dispatch }) {
-          tr.insertText(formatted, range.from, range.to);
-          tr.setSelection(
-            TextSelection.between(
-              tr.doc.resolve(selection.anchor),
-              tr.doc.resolve(selection.head ?? selection.anchor),
-            ),
-          );
+  formatCodeBlock({ pos }: Partial<PosProps> = {}): CommandFunction {
+    return this.createFormatCodeBlockCommand({
+      pos,
+      promise: (props) =>
+        formatCode({
+          type: this.type,
+          formatter: this.options.formatter,
+          defaultLanguage: this.options.defaultLanguage,
+          pos,
+          ...props,
+        }),
 
-          if (dispatch) {
-            dispatch(tr);
-          }
-
+      onSuccess(value, { tr, dispatch }) {
+        if (!value) {
           return true;
-        },
-      })
-      .generateCommand();
+        }
+
+        const { formatted, range, selection } = value;
+        tr.insertText(formatted, range.from, range.to);
+        tr.setSelection(
+          TextSelection.between(
+            tr.doc.resolve(selection.anchor),
+            tr.doc.resolve(selection.head ?? selection.anchor),
+          ),
+        );
+
+        if (dispatch) {
+          dispatch(tr);
+        }
+
+        return true;
+      },
+    }).generateCommand();
   }
 
   @keyBinding({ shortcut: 'Tab' })
@@ -489,9 +490,19 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
   private readonly createFormatCodeBlockCommand = <Value>(
     props: DelayedFormatCodeBlockProps<Value>,
   ): DelayedCommand<Value> => {
-    const { promise, onFailure, onSuccess } = props;
+    const { pos, promise, onFailure, onSuccess } = props;
 
     return new DelayedCommand(promise)
+      .validate(({ tr }) => {
+        // Find the codeBlock corresponding to the current selection or the
+        // optional prosemirror position argument.
+        const codeBlock = findParentNodeOfType({
+          types: this.type,
+          selection: pos !== undefined ? tr.doc.resolve(pos) : tr.selection,
+        });
+
+        return !!codeBlock;
+      })
       .success((props) => {
         const { value, ...commandProps } = props;
         return onSuccess(value, commandProps);
@@ -506,15 +517,6 @@ export { getLanguage };
 
 declare global {
   namespace Remirror {
-    interface ExtensionStore {
-      /**
-       * Create delayed command which formats code block contents.
-       */
-      createFormatCodeBlockCommand<Value = any>(
-        props: DelayedFormatCodeBlockProps<Value>,
-      ): DelayedCommand<Value>;
-    }
-
     interface AllExtensions {
       codeBlock: CodeBlockExtension;
     }

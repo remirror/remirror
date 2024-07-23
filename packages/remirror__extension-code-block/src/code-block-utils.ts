@@ -7,6 +7,7 @@ import {
   DelayedPromiseCreator,
   DOMOutputSpec,
   findParentNodeOfType,
+  FindProsemirrorNodeResult,
   flattenArray,
   FromToProps,
   isEqual,
@@ -24,7 +25,6 @@ import {
   TextProps,
 } from '@remirror/core';
 import { ExtensionCodeBlockMessages } from '@remirror/messages';
-import { EditorState } from '@remirror/pm/state';
 import { Decoration } from '@remirror/pm/view';
 
 import type { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';
@@ -263,7 +263,8 @@ export function codeBlockToDOM(node: ProsemirrorNode, extra: ApplySchemaAttribut
 
 type FormatCodeProps = NodeTypeProps &
   Required<Pick<CodeBlockOptions, 'formatter' | 'defaultLanguage'>> &
-  Partial<PosProps> & { state: EditorState };
+  Partial<PosProps> &
+  CommandFunctionProps;
 
 export interface FormatCodeResult {
   /**
@@ -286,20 +287,15 @@ export interface FormatCodeResult {
  * Format the contents of a selected codeBlock or one located at the provided
  * position.
  */
-export async function formatCode(props: FormatCodeProps): Promise<FormatCodeResult> {
-  const { type, formatter, defaultLanguage: fallback, pos, state } = props;
-  const { selection, doc } = state;
+export async function formatCode(props: FormatCodeProps): Promise<FormatCodeResult | undefined> {
+  const { type, formatter, defaultLanguage: fallback, pos, tr } = props;
+  const { selection, doc } = tr;
 
+  // This is verified to exist during DelayedCommand.validate().
   const codeBlock = findParentNodeOfType({
     types: type,
     selection: pos !== undefined ? doc.resolve(pos) : selection,
-  });
-
-  if (!codeBlock) {
-    throw new Error(
-      `Unable to find node with type ${type} based on ${pos !== undefined ? 'position' : 'selection'}`,
-    );
-  }
+  }) as FindProsemirrorNodeResult;
 
   const {
     node: { attrs, textContent },
@@ -327,11 +323,11 @@ export async function formatCode(props: FormatCodeProps): Promise<FormatCodeResu
   const [formatStart, formatEnd] = await Promise.all([formatStartPromise, formatEndPromise]);
 
   if (!formatStart) {
-    throw new Error('Formatter failed');
+    return;
   }
 
   if (formatStart.formatted === textContent) {
-    throw new Error('Already formatted');
+    return;
   }
 
   return {
@@ -348,6 +344,11 @@ export async function formatCode(props: FormatCodeProps): Promise<FormatCodeResu
 }
 
 export interface DelayedFormatCodeBlockProps<Value> {
+  /**
+   * Optionally specify a position to identify a code block.
+   */
+  pos?: PosProps['pos'];
+
   /**
    * A function that returns a promise.
    */
