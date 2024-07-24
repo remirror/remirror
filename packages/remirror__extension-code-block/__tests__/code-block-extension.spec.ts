@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
 import refractor from 'refractor/core.js';
@@ -11,7 +12,6 @@ import {
   BlockquoteExtension,
   BoldExtension,
   CodeBlockExtension,
-  CodeBlockFormatter,
   CodeBlockOptions,
   CodeExtension,
   createCoreManager,
@@ -452,20 +452,45 @@ describe('commands', () => {
     });
 
     it('supports custom formatters', async () => {
-      const toastFormatter: CodeBlockFormatter = async () =>
-        Promise.resolve({ formatted: `It's all toast to me!`, cursorOffset: 0 });
-      const editor = create({ formatter: toastFormatter });
+      const options: CodeBlockOptions = {
+        defaultLanguage: 'typescript',
+        formatter: async () =>
+          Promise.resolve({
+            formatted: `var name = "Remirror";\nlog("Hello ".concat(name, "!"));`,
+            cursorOffset: 0,
+          }),
+      };
+      jest.spyOn(options, 'formatter');
+
+      const editor = create(options);
 
       const { doc, codeBlock } = editor.nodes;
 
       editor.add(
-        doc(codeBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
+        doc(
+          codeBlock("<start>const name: string\n = 'Remirror'  ;<end>\n\n\nlog(`Hello ${name}!`)"),
+        ),
       );
 
       editor.commands.formatCodeBlock();
       await delay(1);
 
-      expect(editor.doc).toEqualRemirrorDocument(doc(codeBlock(`It's all toast to me!`)));
+      expect(options.formatter).toHaveBeenCalledTimes(2);
+      const textContent = "const name: string\n = 'Remirror'  ;\n\n\nlog(`Hello ${name}!`)";
+      expect(options.formatter).toHaveBeenCalledWith({
+        cursorOffset: 0,
+        source: textContent,
+        language: 'typescript',
+      });
+      expect(options.formatter).toHaveBeenCalledWith({
+        cursorOffset: 35,
+        source: textContent,
+        language: 'typescript',
+      });
+
+      expect(editor.doc).toEqualRemirrorDocument(
+        doc(codeBlock(`var name = "Remirror";\nlog("Hello ".concat(name, "!"));`)),
+      );
     });
   });
 });

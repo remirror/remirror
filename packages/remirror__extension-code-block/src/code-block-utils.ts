@@ -326,6 +326,7 @@ export async function formatCode(props: FormatCodeProps): Promise<FormatCodeResu
     return;
   }
 
+  // Do nothing if nothing has changed
   if (formatStart.formatted === textContent) {
     return;
   }
