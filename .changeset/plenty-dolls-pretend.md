@@ -2,9 +2,24 @@
 '@remirror/react-ui': patch
 ---
 
-## Updates
+## 💥 BREAKING CHANGES! 💥
 
-A new code block formatting component has been added to `@remirror/react-ui`. This component renders a MUI `Button` in code blocks that can be clicked to automatically format code in the block. You have the option of supplying your own formatter or using the default formatter supplied by `@remirror/extension-code-block/formatter` which is based on Prettier.
+The `CodeBlockLanguageSelect` component has been refactored (again) to reside inside a more general `CodeBlockTools` component. A new format button component has been added alongside language select. These tools can be enabled independently or at the same time:
+
+```tsx
+<CodeBlockTools
+  enableFormatButton={true/undefined}
+  formatButtonOptions={{...}}
+  enableLanguageSelect={true/undefined}
+  languageSelectOptions={{...}}
+/>
+```
+
+TODO: Update `tender-bears-repeat.md` since this would break that breaking change.
+
+TODO: Add more complete migration and usage instructions here (replace most of what's below).
+
+For the new format tool, you can supply your own formatter or use the default formatter from `@remirror/extension-code-block/formatter` which is based on Prettier.
 
 ### Usage example 1: Use the formatter extension
 
@@ -15,7 +30,7 @@ import typescript from 'refractor/lang/typescript.js';
 import { CodeBlockExtension } from 'remirror/extensions';
 import { formatter } from '@remirror/extension-code-block/formatter';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-import { CodeBlockFormatCode } from '@remirror/react-ui';
+import { CodeBlockTools } from '@remirror/react-ui';
 
 const extensions = () => [
   new CodeBlockExtension({
@@ -30,7 +45,7 @@ export default function FormatterCodeBlock(): JSX.Element {
   return (
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state} autoRender>
-        <CodeBlockFormatCode />
+        <CodeBlockTools enableFormatButton />
       </Remirror>
     </ThemeProvider>
   );
@@ -40,16 +55,16 @@ export default function FormatterCodeBlock(): JSX.Element {
 ### Usage example 2: Supply your own formatter
 
 ```tsx
-import { formatWithCursor } from 'prettier/standalone';
 import babelPlugin from 'prettier/plugins/babel';
 import estreePlugin from 'prettier/plugins/estree';
+import { formatWithCursor } from 'prettier/standalone';
 import React from 'react';
 import json from 'refractor/lang/json.js';
 import typescript from 'refractor/lang/typescript.js';
 import type { CodeBlockFormatter } from 'remirror/extensions';
 import { CodeBlockExtension } from 'remirror/extensions';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-import { CodeBlockFormatCode } from '@remirror/react-ui';
+import { CodeBlockTools } from '@remirror/react-ui';
 
 const formatter: CodeBlockFormatter = ({ source, language, cursorOffset }) => {
   const parser = language === 'typescript' ? 'babel-ts' : language === 'json' ? 'json' : undefined;
@@ -80,7 +95,7 @@ export default function FormatterCodeBlock(): JSX.Element {
   return (
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state} autoRender>
-        <CodeBlockFormatCode />
+        <CodeBlockTools enableFormatButton />
       </Remirror>
     </ThemeProvider>
   );

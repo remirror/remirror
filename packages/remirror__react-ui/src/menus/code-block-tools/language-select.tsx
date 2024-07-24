@@ -1,39 +1,29 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import React, { CSSProperties, PointerEvent, useEffect, useMemo } from 'react';
+import React, { PointerEvent, useEffect, useMemo } from 'react';
 import type { FindProsemirrorNodeResult } from '@remirror/core';
 import { uniqueBy } from '@remirror/core';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
-import { PositionerPortal } from '@remirror/react-components';
 import { useCommands, useExtension } from '@remirror/react-core';
-import { usePositioner } from '@remirror/react-hooks';
-import { ExtensionCodeBlockTheme } from '@remirror/theme';
+import type { UsePositionerReturn } from '@remirror/react-hooks';
 
-import { UiThemeProvider } from '../providers/ui-theme-provider';
-import { createPositioner } from './code-block-utils';
-
-export interface CodeBlockLanguageSelectProps {
+export interface LanguageSelectProps {
+  positioner: UsePositionerReturn<FindProsemirrorNodeResult>;
   languages?: Array<{ displayName: string; value?: string }>;
+  className?: string;
   onLanguageChange?: (language: string, element: HTMLElement | undefined) => boolean;
-  position?: 'left' | 'right';
-  offset?: { x: number; y: number };
   onPointerDownSelect?: (event: PointerEvent<HTMLDivElement>) => boolean;
   onSelectChange?: (event: SelectChangeEvent) => boolean;
-  className?: string;
 }
 
-export const CodeBlockLanguageSelect = ({
+export const LanguageSelect = ({
+  positioner,
   languages = [],
+  className,
   onLanguageChange,
-  position = 'right',
-  offset = { x: 0, y: 0 },
   onPointerDownSelect,
   onSelectChange,
-  className = '',
-}: CodeBlockLanguageSelectProps): JSX.Element | null => {
-  const { ref, element, x, y, width, data, active } = usePositioner<FindProsemirrorNodeResult>(
-    createPositioner,
-    [],
-  );
+}: LanguageSelectProps): JSX.Element | null => {
+  const { element, data, active } = positioner;
   const { focus, updateCodeBlock } = useCommands();
 
   const { defaultLanguage, supportedLanguages } = useExtension(CodeBlockExtension).options;
@@ -102,41 +92,23 @@ export const CodeBlockLanguageSelect = ({
   };
 
   return (
-    <UiThemeProvider>
-      <PositionerPortal>
-        {active && (
-          <div
-            ref={ref}
-            className={ExtensionCodeBlockTheme.LANGUAGE_SELECT_POSITIONER}
-            style={
-              {
-                '--x': position === 'right' ? `${x + width + offset.x}px` : `${x + offset.x}px`,
-                '--y': `${y + offset.y}px`,
-                '--translate-x': position === 'right' ? '-100%' : '0',
-              } as CSSProperties
-            }
-          >
-            <FormControl margin='none' size='small' sx={{ m: 1 }} className={className}>
-              <Select
-                sx={{
-                  bgcolor: 'background.paper',
-                }}
-                onBlur={() => focus()}
-                onChange={handleChange}
-                onPointerDown={onPointerDownSelect}
-                value={currentDisplayLanguage}
-                autoWidth
-              >
-                {languageOptions.map(({ displayName, value }) => (
-                  <MenuItem key={displayName} value={value ?? displayName}>
-                    {displayName}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-        )}
-      </PositionerPortal>
-    </UiThemeProvider>
+    <FormControl margin='none' size='small' sx={{ m: 1 }} className={className}>
+      <Select
+        sx={{
+          bgcolor: 'background.paper',
+        }}
+        onBlur={() => focus()}
+        onChange={handleChange}
+        onPointerDown={onPointerDownSelect}
+        value={currentDisplayLanguage}
+        autoWidth
+      >
+        {languageOptions.map(({ displayName, value }) => (
+          <MenuItem key={displayName} value={value ?? displayName}>
+            {displayName}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };

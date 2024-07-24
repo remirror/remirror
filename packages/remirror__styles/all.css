@@ -703,7 +703,7 @@ button:active .remirror-menu-pane-shortcut,
   white-space: pre-wrap !important;
 }
 
-.remirror-language-select-positioner {
+.remirror-code-block-tools-positioner {
   position: absolute;
   top: var(--y);
   left: var(--x);
@@ -712,13 +712,6 @@ button:active .remirror-menu-pane-shortcut,
 
 .remirror-language-select-width {
   width: var(--w);
-}
-
-.remirror-format-code-positioner {
-  position: absolute;
-  top: var(--y);
-  left: var(--x);
-  transform: translateX(var(--translate-x));
 }
 
 .remirror-a11y-dark code[class*='language-'],

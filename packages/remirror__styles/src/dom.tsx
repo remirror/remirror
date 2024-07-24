@@ -720,7 +720,7 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     white-space: pre-wrap !important;
   }
 
-  .remirror-language-select-positioner {
+  .remirror-code-block-tools-positioner {
     position: absolute;
     top: var(--y);
     left: var(--x);
@@ -729,13 +729,6 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
 
   .remirror-language-select-width {
     width: var(--w);
-  }
-
-  .remirror-format-code-positioner {
-    position: absolute;
-    top: var(--y);
-    left: var(--x);
-    transform: translateX(var(--translate-x));
   }
 
   .remirror-a11y-dark code[class*='language-'],
