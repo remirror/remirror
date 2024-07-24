@@ -127,7 +127,7 @@ export async function formatFiles(
 
   if (formatter !== 'eslint') {
     promises.push(
-      execFile(`prettier`, [`--loglevel`, `warn`, ...paths, `--write`], {
+      execFile(`prettier`, [`--log-level`, `warn`, ...paths, `--write`], {
         // @ts-expect-error
         stdio: 'pipe',
       }),
