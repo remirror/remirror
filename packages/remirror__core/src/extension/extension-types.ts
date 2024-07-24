@@ -265,11 +265,11 @@ export type GetExtensions<Extension> =
   AnyExtension extends Extension
     ? AnyExtension
     : // Make sure the extension is valid
-    Extension extends AnyExtension
-    ? // Now create the union of the provided extension and it's recursively
-      // calculated nested extensions.
-      Extension | GetExtensions<Extension['~E']>
-    : AnyExtension;
+      Extension extends AnyExtension
+      ? // Now create the union of the provided extension and it's recursively
+        // calculated nested extensions.
+        Extension | GetExtensions<Extension['~E']>
+      : AnyExtension;
 
 /**
  * Extract the function return type if the generic type is a function, otherwise

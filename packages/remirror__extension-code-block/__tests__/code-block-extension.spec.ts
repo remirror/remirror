@@ -1,7 +1,6 @@
+import { jest } from '@jest/globals';
 import { pmBuild } from 'jest-prosemirror';
 import { extensionValidityTest, renderEditor } from 'jest-remirror';
-import typescriptPlugin from 'prettier/parser-typescript';
-import { default as Prettier } from 'prettier/standalone';
 import refractor from 'refractor/core.js';
 import graphql from 'refractor/lang/graphql.js';
 import javascript from 'refractor/lang/javascript.js';
@@ -16,16 +15,18 @@ import {
   CodeBlockOptions,
   CodeExtension,
   createCoreManager,
-  FormatterProps,
   getLanguage,
   HardBreakExtension,
 } from 'remirror/extensions';
+import { delay } from 'testing';
 import {
   ExtensionPriority,
   htmlToProsemirrorNode,
   object,
   prosemirrorNodeToHtml,
 } from '@remirror/core';
+
+import { formatter } from '../src/formatter';
 
 extensionValidityTest(CodeBlockExtension);
 
@@ -336,89 +337,160 @@ describe('commands', () => {
   });
 
   describe('formatCodeBlock', () => {
-    function formatter({ cursorOffset, language, source }: FormatterProps) {
-      if (getLanguage({ fallback: 'text', language }) === 'typescript') {
-        return Prettier.formatWithCursor(source, {
-          cursorOffset,
-          plugins: [typescriptPlugin],
-          parser: 'typescript',
-          singleQuote: true,
-        });
-      }
-
-      return;
-    }
-
-    const {
+    let {
       add,
-      attributeNodes: { codeBlock },
-      nodes: { doc, p },
-    } = create({ formatter });
-    const tsBlock = codeBlock({ language: 'typescript' });
+      nodes: { codeBlock, doc, p },
+      commands,
+    } = create({ defaultLanguage: 'typescript', formatter });
 
-    it('can format the codebase', () => {
-      add(
-        doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")<cursor>`)),
-      ).callback(({ commands, view }) => {
-        commands.formatCodeBlock();
+    beforeEach(() => {
+      ({
+        add,
+        nodes: { codeBlock, doc, p },
+        commands,
+      } = create({ defaultLanguage: 'typescript', formatter }));
+    });
 
+    it('can format the code block', async () => {
+      const testChain = add(
+        doc(codeBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")<cursor>`)),
+      );
+
+      commands.formatCodeBlock();
+      await delay(1);
+
+      testChain.callback(({ view }) => {
         expect(view.state.doc).toEqualRemirrorDocument(
-          doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
+          doc(codeBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
         );
       });
     });
 
-    it('maintains cursor position after formatting', () => {
-      add(doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)))
-        .callback(({ commands }) => commands.formatCodeBlock())
-        .insertText('ing')
-        .callback(({ state }) => {
-          expect(state.doc).toEqualRemirrorDocument(
-            doc(tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`)),
-          );
-        });
+    it('maintains cursor position after formatting', async () => {
+      const testChain = add(
+        doc(codeBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)),
+      );
+
+      commands.formatCodeBlock();
+      await delay(1);
+
+      testChain.insertText('ing').callback(({ state }) => {
+        expect(state.doc).toEqualRemirrorDocument(
+          doc(codeBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`)),
+        );
+      });
     });
 
-    it('formats text selections', () => {
-      add(doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)))
-        .callback(({ commands }) => {
-          commands.formatCodeBlock();
-        })
-        .callback(({ state, from, to }) => {
-          expect(state.doc).toEqualRemirrorDocument(
-            doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
-          );
-          expect([from, to]).toEqual([1, 26]);
-        });
+    it('formats text selections', async () => {
+      const testChain = add(
+        doc(codeBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
+      );
+
+      commands.formatCodeBlock();
+      await delay(1);
+
+      testChain.callback(({ state, from, to }) => {
+        expect(state.doc).toEqualRemirrorDocument(
+          doc(codeBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
+        );
+        expect([from, to]).toEqual([1, 26]);
+      });
     });
 
-    it('can format complex scenarios', () => {
+    it('can format complex scenarios', async () => {
       const content = p('Hello darkness, my old friend.');
-      const otherCode = tsBlock(`document.addEventListener("click",  log)`);
-      add(
+      const otherCode = codeBlock(`document.addEventListener("click",  log)`);
+      const testChain = add(
         doc(
           content,
           content,
-          tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`),
+          codeBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`),
           content,
           content,
           otherCode,
         ),
-      )
-        .callback(({ commands }) => commands.formatCodeBlock())
-        .insertText('ing')
-        .callback(({ state }) => {
-          expect(state.doc).toEqualRemirrorDocument(
-            doc(
-              content,
-              content,
-              tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`),
-              content,
-              content,
-              otherCode,
-            ),
-          );
-        });
+      );
+
+      commands.formatCodeBlock();
+      await delay(1);
+
+      testChain.insertText('ing').callback(({ state }) => {
+        expect(state.doc).toEqualRemirrorDocument(
+          doc(
+            content,
+            content,
+            codeBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`),
+            content,
+            content,
+            otherCode,
+          ),
+        );
+      });
+    });
+
+    it('does not alter invalid content', async () => {
+      const invalidSource = `const a: string\n = ('test'  ;\n\n\nlog("welcome friends")<cursor>`;
+      const testChain = add(doc(codeBlock(invalidSource)));
+
+      commands.formatCodeBlock();
+      await delay(1);
+
+      testChain.callback(({ view }) => {
+        expect(view.state.doc).toEqualRemirrorDocument(doc(codeBlock(invalidSource)));
+      });
+    });
+
+    it('is NOT enabled if not within a codeBlock', () => {
+      add(
+        doc(
+          codeBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")`),
+          p(`I'm not a code block!<cursor>`),
+        ),
+      );
+
+      expect(commands.formatCodeBlock.enabled()).toBe(false);
+    });
+
+    it('supports custom formatters', async () => {
+      const options: CodeBlockOptions = {
+        defaultLanguage: 'typescript',
+        formatter: async () =>
+          Promise.resolve({
+            formatted: `var name = "Remirror";\nlog("Hello ".concat(name, "!"));`,
+            cursorOffset: 0,
+          }),
+      };
+      jest.spyOn(options, 'formatter');
+
+      const editor = create(options);
+
+      const { doc, codeBlock } = editor.nodes;
+
+      editor.add(
+        doc(
+          codeBlock("<start>const name: string\n = 'Remirror'  ;<end>\n\n\nlog(`Hello ${name}!`)"),
+        ),
+      );
+
+      editor.commands.formatCodeBlock();
+      await delay(1);
+
+      expect(options.formatter).toHaveBeenCalledTimes(2);
+      const textContent = "const name: string\n = 'Remirror'  ;\n\n\nlog(`Hello ${name}!`)";
+      expect(options.formatter).toHaveBeenCalledWith({
+        cursorOffset: 0,
+        source: textContent,
+        language: 'typescript',
+      });
+      expect(options.formatter).toHaveBeenCalledWith({
+        cursorOffset: 35,
+        source: textContent,
+        language: 'typescript',
+      });
+
+      expect(editor.doc).toEqualRemirrorDocument(
+        doc(codeBlock(`var name = "Remirror";\nlog("Hello ".concat(name, "!"));`)),
+      );
     });
   });
 });

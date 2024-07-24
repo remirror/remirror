@@ -5,6 +5,7 @@ import {
   command,
   CommandFunction,
   CreateExtensionPlugin,
+  DelayedCommand,
   extension,
   ExtensionTag,
   findNodeAtSelection,
@@ -24,6 +25,8 @@ import {
   NodeExtensionSpec,
   nodeInputRule,
   NodeSpecOverride,
+  nonChainable,
+  NonChainableCommandFunction,
   OnSetOptionsProps,
   PosProps,
   ProsemirrorAttributes,
@@ -40,7 +43,8 @@ import { CodeBlockState } from './code-block-plugin';
 import type { CodeBlockAttributes, CodeBlockOptions } from './code-block-types';
 import {
   codeBlockToDOM,
-  formatCodeBlockFactory,
+  DelayedFormatCodeBlockProps,
+  formatCode,
   getLanguage,
   getLanguageFromDom,
   toggleCodeBlockOptions,
@@ -51,7 +55,7 @@ import {
   defaultOptions: {
     supportedLanguages: [],
     toggleName: 'paragraph',
-    formatter: ({ source }) => ({ cursorOffset: 0, formatted: source }),
+    formatter: async ({ source }) => ({ cursorOffset: 0, formatted: source }),
     syntaxTheme: 'a11y_dark',
     defaultLanguage: 'markup',
     defaultWrap: false,
@@ -298,20 +302,49 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
    * code block when this method is used.
    *
    * ```ts
-   * if (actions.formatCodeBlock.isActive()) {
-   *   actions.formatCodeBlockFactory();
-   *   // Or with a specific position
-   *   actions.formatCodeBlock({ pos: 100 }) // to format a separate code block
+   * if (actions.formatCodeBlock.enabled()) {
+   *   actions.formatCodeBlock();
+   *   // Or to format a separate code block via position
+   *   actions.formatCodeBlock({ pos: 100 });
    * }
    * ```
    */
-  @command()
-  formatCodeBlock(props?: Partial<PosProps>): CommandFunction {
-    return formatCodeBlockFactory({
-      type: this.type,
-      formatter: this.options.formatter,
-      defaultLanguage: this.options.defaultLanguage,
-    })(props);
+  @command({
+    disableChaining: true,
+  })
+  formatCodeBlock({ pos }: Partial<PosProps> = {}): NonChainableCommandFunction {
+    const command = this.createFormatCodeBlockCommand({
+      pos,
+      promise: (props) =>
+        formatCode({
+          type: this.type,
+          formatter: this.options.formatter,
+          defaultLanguage: this.options.defaultLanguage,
+          pos,
+          ...props,
+        }),
+
+      onSuccess(value, { tr, dispatch }) {
+        if (!value) {
+          return true;
+        }
+
+        const { formatted, range, selection } = value;
+        tr.insertText(formatted, range.from, range.to);
+        tr.setSelection(
+          TextSelection.between(
+            tr.doc.resolve(selection.anchor),
+            tr.doc.resolve(selection.head ?? selection.anchor),
+          ),
+        );
+
+        dispatch?.(tr);
+
+        return true;
+      },
+    }).generateCommand();
+
+    return nonChainable(command);
   }
 
   @keyBinding({ shortcut: 'Tab' })
@@ -454,6 +487,34 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockOptions> {
       refractor.register(language);
     }
   }
+
+  /**
+   * Create delayed format command.
+   */
+  private readonly createFormatCodeBlockCommand = <Value>(
+    props: DelayedFormatCodeBlockProps<Value>,
+  ): DelayedCommand<Value> => {
+    const { pos, promise, onFailure, onSuccess } = props;
+
+    return new DelayedCommand(promise)
+      .validate(({ tr }) => {
+        // Find the codeBlock corresponding to the current selection or the
+        // optional prosemirror position argument.
+        const codeBlock = findParentNodeOfType({
+          types: this.type,
+          selection: pos !== undefined ? tr.doc.resolve(pos) : tr.selection,
+        });
+
+        return !!codeBlock;
+      })
+      .success((props) => {
+        const { value, ...commandProps } = props;
+        return onSuccess(value, commandProps);
+      })
+      .failure((props) => {
+        return onFailure?.(props) ?? false;
+      });
+  };
 }
 
 export { getLanguage };
