@@ -1,5 +1,15 @@
 # @remirror/preset-wysiwyg
 
+## 3.0.0-rc.9
+
+> 2024-07-25
+
+### Patch Changes
+
+- Updated dependencies [b23f87320]
+- Updated dependencies [5c686c3f3]
+  - @remirror/extension-code-block@3.0.0-rc.9
+
 ## 3.0.0-beta.8
 
 > 2024-07-22
@@ -2680,7 +2690,9 @@
   ```ts
   import { LinkExtension, TOP_50_TLDS } from 'remirror/extensions';
   const extensions = () => [
-    new LinkExtension({ autoLinkAllowedTLDs: [...TOP_50_TLDS, 'london', 'tech'] }),
+    new LinkExtension({
+      autoLinkAllowedTLDs: [...TOP_50_TLDS, 'london', 'tech'],
+    }),
   ];
   ```
 
@@ -3512,7 +3524,9 @@
   import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
   function Editor(): JSX.Element {
-    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    const { manager } = useRemirror({
+      builtin: { persistentSelectionClass: 'selection' },
+    });
     return (
       <ThemeProvider>
         <Remirror manager={manager} />

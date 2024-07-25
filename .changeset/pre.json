@@ -110,6 +110,7 @@
     "@remirror/react-ui": "0.1.0-beta.0"
   },
   "changesets": [
+    "calm-kangaroos-change",
     "chilled-singers-push",
     "chilled-teachers-promise",
     "clever-lions-breathe",
@@ -127,6 +128,7 @@
     "nice-llamas-boil",
     "pretty-donkeys-crash",
     "quick-trainers-decide",
+    "rude-cars-laugh",
     "silver-clocks-wash",
     "sixty-olives-appear",
     "smart-garlics-bow",

@@ -1,5 +1,145 @@
 # @remirror/extension-code-block
 
+## 3.0.0-rc.9
+
+> 2024-07-25
+
+### Patch Changes
+
+- b23f87320: ## Updates
+
+  Update dependency prettier to v3.2.5.
+
+  ## 💥 BREAKING CHANGES! 💥
+
+  The `formatter` prop for extension `@remirror/extension-code-block` now expects an asynchronous function.
+
+  ```ts
+  new CodeBlockExtension({
+    formatter: async ({ source, language, cursorOffset }) => {
+      /* format source */
+    },
+  });
+  ```
+
+  This change was made to support prettier v3 which no longer provides a synchronous `formatWithCursor()` function. The formatter available from `@remirror/extension-code-block/formatter` has been updated to use prettier v3 and satisfies the updated `formatter` signature.
+
+  As a consequence, the command `formatCodeBlock` must also be asynchronous, and hence **is no longer chainable**.
+
+- 5c686c3f3: ## 💥 BREAKING CHANGES! 💥
+
+  The `CodeBlockLanguageSelect` component needs to wrapped within a `CodeBlockTools` component to be position correctly with a code block.
+
+  ```tsx
+  import { CodeBlockLanguageSelect, CodeBlockTools } from '@remirror/react-ui';
+
+  const MyComponent = (): JSX.Element => (
+    <CodeBlockTools>
+      <CodeBlockLanguageSelect />
+    </CodeBlockTools>
+  );
+  ```
+
+  ## Updates
+
+  A `CodeBlockFormatButton` component has been added to `@remirror/react-ui`, this allows you to format code blocks with the formatter of your choice.
+
+  You can supply your own formatter or use the default formatter from `@remirror/extension-code-block/formatter` which is based on Prettier.
+
+  ### Usage example 1: Use the formatter extension
+
+  ```tsx
+  import React from 'react';
+  import json from 'refractor/lang/json.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  import { formatter } from '@remirror/extension-code-block/formatter';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { CodeBlockFormatButton, CodeBlockTools } from '@remirror/react-ui';
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [json, typescript],
+      formatter,
+    }),
+  ];
+
+  export default function FormatterCodeBlock(): JSX.Element {
+    const { manager, state } = useRemirror({
+      extensions,
+      content: '',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockTools>
+            <CodeBlockFormatButton />
+          </CodeBlockTools>
+        </Remirror>
+      </ThemeProvider>
+    );
+  }
+  ```
+
+  ### Usage example 2: Supply your own formatter
+
+  ```tsx
+  import babelPlugin from 'prettier/plugins/babel';
+  import estreePlugin from 'prettier/plugins/estree';
+  import { formatWithCursor } from 'prettier/standalone';
+  import React from 'react';
+  import json from 'refractor/lang/json.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import type { CodeBlockFormatter } from 'remirror/extensions';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { CodeBlockFormatButton, CodeBlockTools } from '@remirror/react-ui';
+
+  const myCustomFormatter: CodeBlockFormatter = ({ source, language, cursorOffset }) => {
+    const parser =
+      language === 'typescript' ? 'babel-ts' : language === 'json' ? 'json' : undefined;
+
+    if (!parser) {
+      throw new Error('Unsupported language');
+    }
+
+    // Prettier standalone documentation: https://prettier.io/docs/en/browser
+    return formatWithCursor(source, {
+      cursorOffset,
+      parser,
+      plugins: [estreePlugin, babelPlugin],
+      experimentalTernaries: true,
+    });
+  };
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [json, typescript],
+      formatter: myCustomFormatter,
+    }),
+  ];
+
+  export default function FormatterCodeBlock(): JSX.Element {
+    const { manager, state } = useRemirror({
+      extensions,
+      content: '',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockTools>
+            <CodeBlockFormatButton />
+          </CodeBlockTools>
+        </Remirror>
+      </ThemeProvider>
+    );
+  }
+  ```
+
 ## 3.0.0-beta.8
 
 > 2024-07-22
@@ -1538,7 +1678,9 @@
   import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
   function Editor(): JSX.Element {
-    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    const { manager } = useRemirror({
+      builtin: { persistentSelectionClass: 'selection' },
+    });
     return (
       <ThemeProvider>
         <Remirror manager={manager} />
