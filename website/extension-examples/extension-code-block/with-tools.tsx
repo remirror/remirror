@@ -9,7 +9,7 @@
 import React from 'react';
 import CodeBlock from '@theme/CodeBlock';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-code-block/with-language-select.tsx';
+import ComponentSource from '!!raw-loader!../../../packages/storybook-react/stories/extension-code-block/with-tools.tsx';
 
 import { StoryExample } from '../../src/components/story-example-component';
 
@@ -17,7 +17,7 @@ const ExampleComponent = (): JSX.Element => {
   const story = (
     <BrowserOnly>
       {() => {
-        const ComponentStory = require('../../../packages/storybook-react/stories/extension-code-block/with-language-select').default
+        const ComponentStory = require('../../../packages/storybook-react/stories/extension-code-block/with-tools').default
         return <ComponentStory/>
       }}
     </BrowserOnly>

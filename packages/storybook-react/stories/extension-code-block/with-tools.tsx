@@ -9,7 +9,7 @@ import typescript from 'refractor/lang/typescript.js';
 import { CodeBlockExtension, TrailingNodeExtension } from 'remirror/extensions';
 import { formatter } from '@remirror/extension-code-block/formatter';
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
-import { CodeBlockTools } from '@remirror/react-ui';
+import { CodeBlockFormatButton, CodeBlockLanguageSelect, CodeBlockTools } from '@remirror/react-ui';
 
 const extensions = () => [
   new CodeBlockExtension({
@@ -40,7 +40,10 @@ const WithTools = (): JSX.Element => {
   return (
     <ThemeProvider>
       <Remirror manager={manager} initialContent={state} autoRender>
-        <CodeBlockTools enableFormatButton enableLanguageSelect />
+        <CodeBlockTools>
+          <CodeBlockFormatButton />
+          <CodeBlockLanguageSelect />
+        </CodeBlockTools>
       </Remirror>
     </ThemeProvider>
   );

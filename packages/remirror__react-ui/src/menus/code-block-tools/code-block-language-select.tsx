@@ -1,13 +1,11 @@
 import { FormControl, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import React, { PointerEvent, useEffect, useMemo } from 'react';
-import type { FindProsemirrorNodeResult } from '@remirror/core';
 import { uniqueBy } from '@remirror/core';
-import { CodeBlockExtension } from '@remirror/extension-code-block';
+import { CodeBlockExtension, codeBlockPositioner } from '@remirror/extension-code-block';
 import { useCommands, useExtension } from '@remirror/react-core';
-import type { UsePositionerReturn } from '@remirror/react-hooks';
+import { usePositioner } from '@remirror/react-hooks';
 
-export interface LanguageSelectProps {
-  positioner: UsePositionerReturn<FindProsemirrorNodeResult>;
+export interface CodeBlockLanguageSelectProps {
   languages?: Array<{ displayName: string; value?: string }>;
   className?: string;
   onLanguageChange?: (language: string, element: HTMLElement | undefined) => boolean;
@@ -15,15 +13,14 @@ export interface LanguageSelectProps {
   onSelectChange?: (event: SelectChangeEvent) => boolean;
 }
 
-export const LanguageSelect = ({
-  positioner,
+export const CodeBlockLanguageSelect = ({
   languages = [],
   className,
   onLanguageChange,
   onPointerDownSelect,
   onSelectChange,
-}: LanguageSelectProps): JSX.Element | null => {
-  const { element, data, active } = positioner;
+}: CodeBlockLanguageSelectProps): JSX.Element | null => {
+  const { ref, element, data, active } = usePositioner(codeBlockPositioner, []);
   const { focus, updateCodeBlock } = useCommands();
 
   const { defaultLanguage, supportedLanguages } = useExtension(CodeBlockExtension).options;
@@ -91,8 +88,12 @@ export const LanguageSelect = ({
     });
   };
 
+  if (!active) {
+    return null;
+  }
+
   return (
-    <FormControl margin='none' size='small' sx={{ m: 1 }} className={className}>
+    <FormControl ref={ref} margin='none' size='small' sx={{ m: 1 }} className={className}>
       <Select
         sx={{
           bgcolor: 'background.paper',

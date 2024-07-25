@@ -1,25 +1,23 @@
 import { Button, FormControl } from '@mui/material';
 import React, { MouseEvent } from 'react';
-import type { FindProsemirrorNodeResult } from '@remirror/core';
+import { codeBlockPositioner } from '@remirror/extension-code-block';
 import { useCommands } from '@remirror/react-core';
-import type { UsePositionerReturn } from '@remirror/react-hooks';
+import { usePositioner } from '@remirror/react-hooks';
 
 const defaultButtonText = 'format';
 
-export interface FormatButtonProps {
-  positioner: UsePositionerReturn<FindProsemirrorNodeResult>;
+export interface CodeBlockFormatButtonProps {
   text?: string;
   className?: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => boolean;
 }
 
-export const FormatButton = ({
-  positioner,
+export const CodeBlockFormatButton = ({
   text = defaultButtonText,
   className = '',
   onClick,
-}: FormatButtonProps): JSX.Element | null => {
-  const { data, active } = positioner;
+}: CodeBlockFormatButtonProps): JSX.Element | null => {
+  const { ref, data, active } = usePositioner(codeBlockPositioner, []);
   const { focus, formatCodeBlock } = useCommands();
 
   const nodeLanguage: string | undefined = active ? data.node.attrs.language : undefined;
@@ -37,8 +35,12 @@ export const FormatButton = ({
     focus();
   };
 
+  if (!active) {
+    return null;
+  }
+
   return (
-    <FormControl margin='none' size='small' sx={{ m: 1 }} className={className}>
+    <FormControl ref={ref} margin='none' size='small' sx={{ m: 1 }} className={className}>
       <Button
         type='button'
         color='primary'

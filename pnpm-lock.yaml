@@ -1246,6 +1246,9 @@ importers:
       '@remirror/core':
         specifier: 3.0.0-beta.8
         version: link:../remirror__core
+      '@remirror/extension-positioner':
+        specifier: 3.0.0-beta.8
+        version: link:../remirror__extension-positioner
       '@remirror/messages':
         specifier: 3.0.0-beta.6
         version: link:../remirror__messages
@@ -26853,7 +26856,6 @@ packages:
     resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: false
 
   /pretty-error@4.0.0:
     resolution: {integrity: sha512-AoJ5YMAcXKYxKhuJGdcvse+Voc6v1RgnsR3nWcYU7q4t6z0Q6T86sv5Zq8VIRbOWWFpvdGE83LtdSMNd+6Y0xw==}

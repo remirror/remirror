@@ -189,6 +189,7 @@
       "@remirror/pm",
       "prettier",
       "@remirror/core",
+      "@remirror/extension-positioner",
       "@remirror/messages",
       "@remirror/theme"
     ],
