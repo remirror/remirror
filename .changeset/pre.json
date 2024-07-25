@@ -1,6 +1,6 @@
 {
   "mode": "pre",
-  "tag": "beta",
+  "tag": "rc",
   "initialVersions": {
     "a11y-status": "2.0.1",
     "create-context-state": "2.0.2",
