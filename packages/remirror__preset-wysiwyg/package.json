@@ -1,6 +1,6 @@
 {
   "name": "@remirror/preset-wysiwyg",
-  "version": "3.0.0-beta.8",
+  "version": "3.0.0-rc.9",
   "description": "The preset for your wysiwyg editor.",
   "keywords": [
     "remirror",
@@ -44,7 +44,7 @@
     "@remirror/extension-blockquote": "3.0.0-beta.8",
     "@remirror/extension-bold": "3.0.0-beta.8",
     "@remirror/extension-code": "3.0.0-beta.8",
-    "@remirror/extension-code-block": "3.0.0-beta.8",
+    "@remirror/extension-code-block": "3.0.0-rc.9",
     "@remirror/extension-drop-cursor": "3.0.0-beta.8",
     "@remirror/extension-embed": "3.0.0-beta.8",
     "@remirror/extension-find": "1.0.0-beta.8",
