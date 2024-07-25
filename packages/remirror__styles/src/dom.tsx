@@ -720,7 +720,7 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
     white-space: pre-wrap !important;
   }
 
-  .remirror-language-select-positioner {
+  .remirror-code-block-tools-positioner {
     position: absolute;
     top: var(--y);
     left: var(--x);

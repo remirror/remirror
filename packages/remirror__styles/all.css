@@ -703,7 +703,7 @@ button:active .remirror-menu-pane-shortcut,
   white-space: pre-wrap !important;
 }
 
-.remirror-language-select-positioner {
+.remirror-code-block-tools-positioner {
   position: absolute;
   top: var(--y);
   left: var(--x);

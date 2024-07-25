@@ -7,7 +7,7 @@ export const WRAP = css`
   white-space: pre-wrap !important;
 `;
 
-export const LANGUAGE_SELECT_POSITIONER = css`
+export const CODE_BLOCK_TOOLS_POSITIONER = css`
   position: absolute;
   top: var(--y);
   left: var(--x);
