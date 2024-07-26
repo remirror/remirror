@@ -23,9 +23,7 @@ export const CodeBlockFormatButton = ({
   const nodeLanguage: string | undefined = active ? data.node.attrs.language : undefined;
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    if (onClick?.(e)) {
-      return;
-    }
+    onClick?.(e);
 
     if (!nodeLanguage) {
       return;
