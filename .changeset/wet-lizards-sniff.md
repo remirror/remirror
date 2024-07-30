@@ -1,5 +1,4 @@
 ---
-'@remirror/extension-react-language-select': major
 '@remirror/extension-entity-reference': major
 '@remirror/extension-horizontal-rule': major
 '@remirror/extension-node-formatting': major
