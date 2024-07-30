@@ -9,7 +9,7 @@
   },
   {
     "name": "create-context-state",
-    "limit": "1.5 KB",
+    "limit": "2 KB",
     "path": "packages/create-context-state/dist/create-context-state.js",
     "ignore": ["@types/react", "react"],
     "running": false,
@@ -39,7 +39,7 @@
   },
   {
     "name": "prosemirror-resizable-view",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/prosemirror-resizable-view/dist/prosemirror-resizable-view.js",
     "ignore": ["@remirror/core-helpers", "@remirror/core-utils"],
     "running": false,
@@ -83,7 +83,6 @@
       "@remirror/core-helpers",
       "@remirror/core-types",
       "@remirror/core-utils",
-      "@remirror/i18n",
       "@remirror/icons",
       "@remirror/messages"
     ],
@@ -123,7 +122,7 @@
   },
   {
     "name": "@remirror/dom",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__dom/dist/remirror-dom.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/preset-core"],
     "running": false,
@@ -131,7 +130,7 @@
   },
   {
     "name": "@remirror/extension-annotation",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-annotation/dist/remirror-extension-annotation.js",
     "ignore": [
       "@remirror/pm",
@@ -144,7 +143,7 @@
   },
   {
     "name": "@remirror/extension-bidi",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-bidi/dist/remirror-extension-bidi.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -152,7 +151,7 @@
   },
   {
     "name": "@remirror/extension-blockquote",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-blockquote/dist/remirror-extension-blockquote.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages", "@remirror/theme"],
     "running": false,
@@ -160,7 +159,7 @@
   },
   {
     "name": "@remirror/extension-bold",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-bold/dist/remirror-extension-bold.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -176,7 +175,7 @@
   },
   {
     "name": "@remirror/extension-code",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-code/dist/remirror-extension-code.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -184,13 +183,13 @@
   },
   {
     "name": "@remirror/extension-code-block",
-    "limit": "20 KB",
+    "limit": "25 KB",
     "path": "packages/remirror__extension-code-block/dist/remirror-extension-code-block.js",
     "ignore": [
       "@remirror/pm",
-      "@types/prettier",
       "prettier",
       "@remirror/core",
+      "@remirror/extension-positioner",
       "@remirror/messages",
       "@remirror/theme"
     ],
@@ -213,7 +212,7 @@
   },
   {
     "name": "@remirror/extension-codemirror6",
-    "limit": "60 KB",
+    "limit": "100 KB",
     "path": "packages/remirror__extension-codemirror6/dist/remirror-extension-codemirror6.js",
     "ignore": ["@remirror/pm", "@remirror/core"],
     "running": false,
@@ -221,7 +220,7 @@
   },
   {
     "name": "@remirror/extension-collaboration",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-collaboration/dist/remirror-extension-collaboration.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -229,7 +228,7 @@
   },
   {
     "name": "@remirror/extension-columns",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-columns/dist/remirror-extension-columns.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -237,7 +236,7 @@
   },
   {
     "name": "@remirror/extension-count",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-count/dist/remirror-extension-count.js",
     "ignore": ["@remirror/pm", "@remirror/core"],
     "running": false,
@@ -245,7 +244,7 @@
   },
   {
     "name": "@remirror/extension-diff",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-diff/dist/remirror-extension-diff.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -253,7 +252,7 @@
   },
   {
     "name": "@remirror/extension-doc",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-doc/dist/remirror-extension-doc.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -261,7 +260,7 @@
   },
   {
     "name": "@remirror/extension-drop-cursor",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-drop-cursor/dist/remirror-extension-drop-cursor.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -285,7 +284,7 @@
   },
   {
     "name": "@remirror/extension-entity-reference",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-entity-reference/dist/remirror-extension-entity-reference.js",
     "ignore": [
       "@remirror/pm",
@@ -298,7 +297,7 @@
   },
   {
     "name": "@remirror/extension-epic-mode",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-epic-mode/dist/remirror-extension-epic-mode.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -306,7 +305,7 @@
   },
   {
     "name": "@remirror/extension-events",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-events/dist/remirror-extension-events.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -332,7 +331,7 @@
   },
   {
     "name": "@remirror/extension-find",
-    "limit": "20 KB",
+    "limit": "25 KB",
     "path": "packages/remirror__extension-find/dist/remirror-extension-find.js",
     "ignore": ["@remirror/pm", "@remirror/core"],
     "running": false,
@@ -340,7 +339,7 @@
   },
   {
     "name": "@remirror/extension-font-family",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-font-family/dist/remirror-extension-font-family.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -348,7 +347,7 @@
   },
   {
     "name": "@remirror/extension-font-size",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-font-size/dist/remirror-extension-font-size.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -356,7 +355,7 @@
   },
   {
     "name": "@remirror/extension-gap-cursor",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-gap-cursor/dist/remirror-extension-gap-cursor.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -364,7 +363,7 @@
   },
   {
     "name": "@remirror/extension-hard-break",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-hard-break/dist/remirror-extension-hard-break.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -372,7 +371,7 @@
   },
   {
     "name": "@remirror/extension-heading",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-heading/dist/remirror-extension-heading.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -380,7 +379,7 @@
   },
   {
     "name": "@remirror/extension-history",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-history/dist/remirror-extension-history.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -388,7 +387,7 @@
   },
   {
     "name": "@remirror/extension-horizontal-rule",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-horizontal-rule/dist/remirror-extension-horizontal-rule.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -404,7 +403,7 @@
   },
   {
     "name": "@remirror/extension-italic",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-italic/dist/remirror-extension-italic.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -412,7 +411,7 @@
   },
   {
     "name": "@remirror/extension-link",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-link/dist/remirror-extension-link.js",
     "ignore": [
       "@remirror/pm",
@@ -441,13 +440,18 @@
     "name": "@remirror/extension-markdown",
     "limit": "25 KB",
     "path": "packages/remirror__extension-markdown/dist/remirror-extension-markdown.js",
-    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
+    "ignore": [
+      "@remirror/extension-react-tables",
+      "@remirror/pm",
+      "@remirror/core",
+      "@remirror/messages"
+    ],
     "running": false,
     "gzip": true
   },
   {
     "name": "@remirror/extension-mention",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-mention/dist/remirror-extension-mention.js",
     "ignore": [
       "@remirror/pm",
@@ -460,7 +464,7 @@
   },
   {
     "name": "@remirror/extension-mention-atom",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-mention-atom/dist/remirror-extension-mention-atom.js",
     "ignore": [
       "@remirror/pm",
@@ -474,7 +478,7 @@
   },
   {
     "name": "@remirror/extension-node-formatting",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-node-formatting/dist/remirror-extension-node-formatting.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -482,7 +486,7 @@
   },
   {
     "name": "@remirror/extension-paragraph",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-paragraph/dist/remirror-extension-paragraph.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -490,7 +494,7 @@
   },
   {
     "name": "@remirror/extension-placeholder",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-placeholder/dist/remirror-extension-placeholder.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages", "@remirror/theme"],
     "running": false,
@@ -498,7 +502,7 @@
   },
   {
     "name": "@remirror/extension-positioner",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-positioner/dist/remirror-extension-positioner.js",
     "ignore": [
       "@remirror/pm",
@@ -521,33 +525,18 @@
       "react",
       "react-dom",
       "@remirror/core",
+      "@remirror/core-constants",
+      "@remirror/core-helpers",
+      "@remirror/core-types",
+      "@remirror/core-utils",
       "@remirror/messages"
     ],
     "running": false,
     "gzip": true
   },
   {
-    "name": "@remirror/extension-react-language-select",
-    "limit": "5 KB",
-    "path": "packages/remirror__extension-react-language-select/dist/remirror-extension-react-language-select.js",
-    "ignore": [
-      "@remirror/pm",
-      "react",
-      "react-dom",
-      "@remirror/core",
-      "@remirror/core-utils",
-      "@remirror/extension-code-block",
-      "@remirror/extension-positioner",
-      "@remirror/react-components",
-      "@remirror/react-core",
-      "@remirror/react-hooks"
-    ],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/extension-react-ssr",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-react-ssr/dist/remirror-extension-react-ssr.js",
     "ignore": [
       "@remirror/pm",
@@ -575,7 +564,6 @@
       "@remirror/extension-tables",
       "@remirror/icons",
       "@remirror/messages",
-      "@remirror/preset-core",
       "@remirror/react-components",
       "@remirror/react-core",
       "@remirror/react-hooks",
@@ -585,16 +573,8 @@
     "gzip": true
   },
   {
-    "name": "@remirror/extension-search",
-    "limit": "5 KB",
-    "path": "packages/remirror__extension-search/dist/remirror-extension-search.js",
-    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
-    "running": false,
-    "gzip": true
-  },
-  {
     "name": "@remirror/extension-shortcuts",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-shortcuts/dist/remirror-extension-shortcuts.js",
     "ignore": ["@remirror/pm", "@remirror/core"],
     "running": false,
@@ -602,7 +582,7 @@
   },
   {
     "name": "@remirror/extension-strike",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-strike/dist/remirror-extension-strike.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -625,7 +605,7 @@
   },
   {
     "name": "@remirror/extension-text",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-text/dist/remirror-extension-text.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -633,7 +613,7 @@
   },
   {
     "name": "@remirror/extension-text-case",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-text-case/dist/remirror-extension-text-case.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -641,21 +621,15 @@
   },
   {
     "name": "@remirror/extension-text-color",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-text-color/dist/remirror-extension-text-color.js",
-    "ignore": [
-      "@remirror/pm",
-      "@remirror/core",
-      "@remirror/i18n",
-      "@remirror/messages",
-      "@remirror/theme"
-    ],
+    "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages", "@remirror/theme"],
     "running": false,
     "gzip": true
   },
   {
     "name": "@remirror/extension-text-highlight",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-text-highlight/dist/remirror-extension-text-highlight.js",
     "ignore": [
       "@remirror/pm",
@@ -668,7 +642,7 @@
   },
   {
     "name": "@remirror/extension-trailing-node",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-trailing-node/dist/remirror-extension-trailing-node.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -676,7 +650,7 @@
   },
   {
     "name": "@remirror/extension-underline",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-underline/dist/remirror-extension-underline.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -684,7 +658,7 @@
   },
   {
     "name": "@remirror/extension-whitespace",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__extension-whitespace/dist/remirror-extension-whitespace.js",
     "ignore": ["@remirror/pm", "@remirror/core", "@remirror/messages"],
     "running": false,
@@ -702,7 +676,7 @@
     "name": "@remirror/i18n",
     "limit": "50 KB",
     "path": "packages/remirror__i18n/dist/remirror-i18n.js",
-    "ignore": ["@remirror/core-helpers"],
+    "ignore": ["@remirror/core-helpers", "@remirror/core-types"],
     "running": false,
     "gzip": true
   },
@@ -718,7 +692,7 @@
     "name": "@remirror/messages",
     "limit": "50 KB",
     "path": "packages/remirror__messages/dist/remirror-messages.js",
-    "ignore": ["@remirror/core-helpers"],
+    "ignore": ["@remirror/core-helpers", "@remirror/core-types"],
     "running": false,
     "gzip": true
   },
@@ -797,6 +771,7 @@
       "@remirror/extension-code-block",
       "@remirror/extension-drop-cursor",
       "@remirror/extension-embed",
+      "@remirror/extension-find",
       "@remirror/extension-gap-cursor",
       "@remirror/extension-hard-break",
       "@remirror/extension-heading",
@@ -805,7 +780,6 @@
       "@remirror/extension-italic",
       "@remirror/extension-link",
       "@remirror/extension-list",
-      "@remirror/extension-search",
       "@remirror/extension-shortcuts",
       "@remirror/extension-strike",
       "@remirror/extension-trailing-node",
@@ -826,29 +800,7 @@
       "react",
       "react-dom",
       "@remirror/core",
-      "@remirror/extension-blockquote",
-      "@remirror/extension-bold",
-      "@remirror/extension-callout",
-      "@remirror/extension-code",
-      "@remirror/extension-code-block",
-      "@remirror/extension-columns",
-      "@remirror/extension-find",
-      "@remirror/extension-font-size",
-      "@remirror/extension-heading",
-      "@remirror/extension-history",
-      "@remirror/extension-horizontal-rule",
-      "@remirror/extension-italic",
-      "@remirror/extension-list",
-      "@remirror/extension-node-formatting",
       "@remirror/extension-positioner",
-      "@remirror/extension-strike",
-      "@remirror/extension-sub",
-      "@remirror/extension-sup",
-      "@remirror/extension-tables",
-      "@remirror/extension-text-color",
-      "@remirror/extension-underline",
-      "@remirror/extension-whitespace",
-      "@remirror/i18n",
       "@remirror/icons",
       "@remirror/messages",
       "@remirror/react-core",
@@ -870,13 +822,14 @@
       "react",
       "react-dom",
       "@remirror/core",
+      "@remirror/core-constants",
+      "@remirror/core-helpers",
       "@remirror/extension-emoji",
       "@remirror/extension-events",
       "@remirror/extension-history",
       "@remirror/extension-mention",
       "@remirror/extension-mention-atom",
       "@remirror/extension-positioner",
-      "@remirror/i18n",
       "@remirror/react-core",
       "@remirror/react-utils"
     ],
@@ -908,8 +861,51 @@
     "gzip": true
   },
   {
+    "name": "@remirror/react-ui",
+    "limit": "200 KB",
+    "path": "packages/remirror__react-ui/dist/remirror-react-ui.js",
+    "ignore": [
+      "@remirror/pm",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom",
+      "@remirror/core",
+      "@remirror/extension-blockquote",
+      "@remirror/extension-bold",
+      "@remirror/extension-callout",
+      "@remirror/extension-code",
+      "@remirror/extension-code-block",
+      "@remirror/extension-columns",
+      "@remirror/extension-find",
+      "@remirror/extension-font-size",
+      "@remirror/extension-heading",
+      "@remirror/extension-history",
+      "@remirror/extension-horizontal-rule",
+      "@remirror/extension-italic",
+      "@remirror/extension-list",
+      "@remirror/extension-node-formatting",
+      "@remirror/extension-positioner",
+      "@remirror/extension-strike",
+      "@remirror/extension-sub",
+      "@remirror/extension-sup",
+      "@remirror/extension-tables",
+      "@remirror/extension-text-color",
+      "@remirror/extension-underline",
+      "@remirror/extension-whitespace",
+      "@remirror/icons",
+      "@remirror/messages",
+      "@remirror/react-components",
+      "@remirror/react-core",
+      "@remirror/react-hooks",
+      "@remirror/theme"
+    ],
+    "running": false,
+    "gzip": true
+  },
+  {
     "name": "@remirror/react-utils",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "packages/remirror__react-utils/dist/remirror-react-utils.js",
     "ignore": [
       "@types/react",
@@ -947,7 +943,7 @@
   },
   {
     "name": "@remirror/extension-template",
-    "limit": "5 KB",
+    "limit": "10 KB",
     "path": "support/templates/extension-template/dist/remirror-extension-template.browser.esm.js",
     "ignore": ["@remirror/pm", "@remirror/core"],
     "running": false,

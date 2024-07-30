@@ -1,0 +1,5 @@
+{
+  "extension.command.toggle-bullet-list.description": "Bulleted list",
+  "extension.command.toggle-ordered-list.label": "Ordered list",
+  "extension.command.toggle-task-list.description": "Tasked list"
+}

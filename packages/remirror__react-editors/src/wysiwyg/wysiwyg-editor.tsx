@@ -1,13 +1,8 @@
 import React, { FC, PropsWithChildren, useCallback } from 'react';
 import { PlaceholderExtension, wysiwygPreset } from 'remirror/extensions';
-import { TableExtension } from '@remirror/extension-react-tables';
-import {
-  EditorComponent,
-  Remirror,
-  TableComponents,
-  ThemeProvider,
-  useRemirror,
-} from '@remirror/react';
+import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
+import { i18nFormat } from '@remirror/i18n';
+import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 import { AllStyledComponent } from '@remirror/styles/emotion';
 
 import { BubbleMenu } from '../components/bubble-menu';
@@ -33,7 +28,7 @@ export const WysiwygEditor: FC<PropsWithChildren<WysiwygEditorProps>> = ({
   return (
     <AllStyledComponent>
       <ThemeProvider theme={theme}>
-        <Remirror manager={manager} {...rest}>
+        <Remirror manager={manager} i18nFormat={i18nFormat} {...rest}>
           <TopToolbar />
           <EditorComponent />
           <BubbleMenu />

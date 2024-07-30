@@ -17,10 +17,10 @@ describe('commands', () => {
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
       .callback(({ commands }) => {
-        expect(commands.undo.isEnabled()).toBeTrue();
+        expect(commands.undo.enabled()).toBeTrue();
 
         commands.undo();
-        expect(commands.undo.isEnabled()).toBeFalse();
+        expect(commands.undo.enabled()).toBeFalse();
       })
       .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('')));
@@ -35,13 +35,13 @@ describe('commands', () => {
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
       .callback(({ commands }) => {
-        expect(commands.redo.isEnabled()).toBeFalse();
+        expect(commands.redo.enabled()).toBeFalse();
 
         commands.undo();
-        expect(commands.redo.isEnabled()).toBeTrue();
+        expect(commands.redo.enabled()).toBeTrue();
 
         commands.redo();
-        expect(commands.redo.isEnabled()).toBeFalse();
+        expect(commands.redo.enabled()).toBeFalse();
       })
       .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('Text goes here')));

@@ -23,7 +23,7 @@ Extensions manage similar concerns. It allows for grouping items that affect:
 
 - How the editor displays certain content, i.e. **bold**, _italic_, <u>underline</u>.
 - Makes certain commands available e.g. `commands.toggleBold()` to toggle the bold formatting of the currently selected text.
-- Check if a command can be run for the current selection `commands.undo.isEnabled()`.
+- Check if a command can be run for the current selection `commands.undo.enabled()`.
 - Check if a mark is active at the current selection, `active.italic()`.
 - Register ProseMirror plugins, keymaps, input rules, paste rules, and custom nodeViews, which affect the behaviour of the editor.
 
@@ -77,7 +77,7 @@ Options are used to configure the extension at runtime. They come in four differ
 import {
   CustomHandler,
   Dynamic,
-  extensionDecoration,
+  extension,
   ExtensionPriority,
   Handler,
   PlainExtension,

@@ -1,16 +1,260 @@
 # @remirror/extension-callout
 
-## 2.0.17
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/messages@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.6
+
+## 3.0.0-beta.7
 
 > 2024-07-19
 
 ### Patch Changes
 
-- f160fbac1: Drop the explicit `validate` property, added to attributes in 2.0.39
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/messages@3.0.0-beta.5
+  - @remirror/theme@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
 
-  Some users have reported issues with legacy JSON data in JavaScript repos where attribute types have not been strictly checked (i.e. calling a command with a string attribute value instead of a number).
+## 3.0.0-beta.6
 
-  The XSS issue in ProseMirror has been largely resolved since the changes added in prosemirror-model 1.22.1, which actively guards against corrupted-attribute XSS attacks in DOMSerializer. This makes the additional protection of an explicit `validate` attribute largely redundant.
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/messages@3.0.0-beta.4
+  - @remirror/theme@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [9549c8f88]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/theme@3.0.0-beta.3
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/messages@3.0.0-beta.3
+
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/messages@3.0.0-beta.2
+  - @remirror/theme@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [d3954076f]
+- Updated dependencies [0e4abae1b]
+  - @remirror/pm@3.0.0-beta.1
+  - @remirror/core@3.0.0-beta.1
+  - @remirror/messages@3.0.0-beta.1
+  - @remirror/theme@3.0.0-beta.1
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 3f76519f3: Based on community feedback, we have decided to decouple the core of Remirror from Lingui, an internationalisation (a.k.a. i18n) library.
+
+  Thereby making it possible to use _any_ i18n solution with Remirror 🙌🙌🙌.
+
+  **N.B.** To use the translatable strings provided by Remirror, the i18n library you use needs to support [ICU message formatting](https://formatjs.io/docs/core-concepts/icu-syntax/).
+
+  This change aims to make it **easier to use Remirror in existing applications**, by not imposing _our_ architectural decisions on to you.
+
+  There are example integrations with many different i18n libraries [in our Storybook](https://pr2128-remirror-ocavue.vercel.app/?path=/story/i18n-format-js--basic).
+
+  ### NOTE: "Out-of-the-box" editors unaffected
+
+  If you are using editors provided by the `@remirror/react-editors` package, you are unaffected by these changes. These editors have been updated to keep existing behaviour.
+
+  ## 💥 BREAKING CHANGES! 💥
+
+  ## `i18n` prop removed from the `<Remirror />` root component
+
+  In previous versions of Remirror, the `i18n` prop of the root Remirror component allowed you to pass a customised **Lingui** instance.
+
+  With this version, we want to allow _**any**_ i18n library to be used with Remirror, so the `i18n` prop has been removed, and **replaced with an `i18nFormat` _function_**.
+
+  This allows users to plug in _any_ i18n library, by implementing a definition for this function.
+
+  This function is described by the TypeScript type [`I18nFormatter`](https://github.com/remirror/remirror/blob/32d8d00587f2f0bce8c1fa59164e15b3569a7e96/packages/remirror__core-types/src/core-types.ts#L417-L453).
+
+  #### Example: Using `react-i18next`
+
+  ```tsx
+  import { useTranslation } from 'react-i18next';
+  import { Remirror, useRemirror } from '@remirror/react';
+
+  const Editor: React.FC = () => {
+    const { t } = useTranslation();
+
+    const i18nFormat: I18nFormatter = useCallback(
+      (message, values) => {
+        // Note only using the message ID here, more on this later
+        return t(message.id, values);
+      },
+      [t],
+    );
+
+    const { manager } = useRemirror({
+      extensions: () => [
+        // Some extensions here
+      ],
+    });
+
+    return <Remirror manager={manager} i18nFormat={i18nFormat} />;
+  };
+  ```
+
+  `react-i18next`, like many i18n solutions, requires you define your translatable strings up front, via key-value pairs.
+
+  To facilitate this, the `@remirror/messages` package **now exposes the translatable strings as JSON files**.
+
+  These messages are provided as key value pairs, so they can be loaded into your chosen i18n library.
+
+  Currently, only English locale (`en`) messages are provided.
+
+  ```ts
+  import i18n from 'i18next';
+  import ICU from 'i18next-icu';
+  import { initReactI18next } from 'react-i18next';
+  import type { I18nFormatter } from 'remirror';
+  import allMessages from '@remirror/messages/en/all-messages.json';
+
+  // or messages for specific extension(s)
+  // import boldMessages from '@remirror/messages/en/extension-bold-messages.json';
+  // import italicMessages from '@remirror/messages/en/extension-italic-messages.json';
+
+  i18n
+    .use(ICU) // Required if using the provided messages from @remirror/messages
+    .use(initReactI18next)
+    .init({
+      resources: {
+        en: {
+          translation: allMessages,
+        },
+      },
+      lng: 'en',
+      fallbackLng: 'en',
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+  ```
+
+  You do not _have_ to use the messages in these key value pairs, you could replace them with your own. They are provided for convenience, and to expose the message IDs Remirror uses.
+
+  ### Restoring the previous behaviour
+
+  If you wish to carry on using Remirror's default i18n solution (powered by Lingui), **you will need to install the `@remirror/i18n` package, as this is now an optional package**.
+
+  #### Example: Continue using `@remirror/i18n`
+
+  Install the i18n package, as it is now optional, and not installed by default.
+
+  ```sh
+  npm add @remirror/i18n
+  ```
+
+  ```tsx
+  import { i18nFormat } from '@remirror/i18n';
+  import { Remirror, useRemirror } from '@remirror/react';
+
+  const Editor: React.FC = () => {
+    const { manager } = useRemirror({
+      extensions: () => [
+        // Some extensions here
+      ],
+    });
+
+    return <Remirror manager={manager} i18nFormat={i18nFormat} />;
+  };
+  ```
+
+  ## The `useI18n` hook has a different return value
+
+  As a consequence of the above, the `useI18n` no longer returns an _object_ containing the Lingui `i18n` instance.
+
+  It now returns the `i18nFormat` _function_ that was passed to the root `<Remirror />` component.
+
+  #### Before
+
+  ```tsx
+  const { t, i18n } = useI18n();
+  ```
+
+  #### After
+
+  ```tsx
+  const t = useI18n();
+
+  // Where "t" is the same function that was passed via `i18nFormat`
+  ```
+
+  ## Feedback
+
+  As always, we value your feedback on how we can improve Remirror. Please raise your proposals via [issues on GitHub](https://github.com/remirror/remirror/issues) or via our [Discord server](https://remirror.io/chat).
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/messages@3.0.0-beta.0
+  - @remirror/theme@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
 
 ## 2.0.16
 

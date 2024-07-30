@@ -1,5 +1,503 @@
 # @remirror/react
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- 7aa698996: ## 💥 BREAKING CHANGES! 💥
+
+  ### (React) Table Extension is no longer bundled with `@remirror/react`
+
+  The `TableExtension` also known as ReactTableExtension exposed via `@remirror/react` (_not_ `remirror`) adds significant bloat to the core package.
+
+  Furthermore, since the addition of Table positioners [added in Remirror 2.0.12](https://github.com/remirror/remirror/pull/1915) this function has become largely redundant.
+
+  If you still need the functionality provided by this extension, simply add `@remirror/extension-react-tables` as a direct dependency to your application.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import { TableComponents, tableControllerPluginKey, TableExtension } from '@remirror/react';
+  ```
+
+  #### After: Remirror v3 example
+
+  ```tsx
+  import {
+    TableComponents,
+    tableControllerPluginKey,
+    TableExtension,
+  } from '@remirror/extension-react-tables';
+  ```
+
+  - @remirror/extension-react-component@3.0.0-beta.8
+  - @remirror/react-hooks@3.0.0-beta.8
+  - @remirror/react-utils@3.0.0-beta.6
+  - @remirror/extension-placeholder@3.0.0-beta.8
+  - @remirror/extension-positioner@3.0.0-beta.8
+  - @remirror/preset-react@3.0.0-beta.8
+  - @remirror/react-components@3.0.0-beta.8
+  - @remirror/react-core@3.0.0-beta.8
+  - @remirror/react-renderer@3.0.0-beta.8
+
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-react-component@3.0.0-beta.7
+  - @remirror/extension-react-tables@3.0.0-beta.7
+  - @remirror/extension-placeholder@3.0.0-beta.7
+  - @remirror/extension-positioner@3.0.0-beta.7
+  - @remirror/react-components@3.0.0-beta.7
+  - @remirror/react-renderer@3.0.0-beta.7
+  - @remirror/preset-react@3.0.0-beta.7
+  - @remirror/react-hooks@3.0.0-beta.7
+  - @remirror/react-utils@3.0.0-beta.5
+  - @remirror/react-core@3.0.0-beta.7
+
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-react-component@3.0.0-beta.6
+  - @remirror/extension-react-tables@3.0.0-beta.6
+  - @remirror/extension-placeholder@3.0.0-beta.6
+  - @remirror/extension-positioner@3.0.0-beta.6
+  - @remirror/react-components@3.0.0-beta.6
+  - @remirror/react-renderer@3.0.0-beta.6
+  - @remirror/preset-react@3.0.0-beta.6
+  - @remirror/react-hooks@3.0.0-beta.6
+  - @remirror/react-utils@3.0.0-beta.4
+  - @remirror/react-core@3.0.0-beta.6
+
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [ae349d806]
+- Updated dependencies [9549c8f88]
+  - @remirror/react-hooks@3.0.0-beta.5
+  - @remirror/extension-positioner@3.0.0-beta.5
+  - @remirror/react-components@3.0.0-beta.5
+  - @remirror/extension-react-tables@3.0.0-beta.5
+  - @remirror/react-core@3.0.0-beta.5
+  - @remirror/extension-react-component@3.0.0-beta.5
+  - @remirror/react-utils@3.0.0-beta.3
+  - @remirror/extension-placeholder@3.0.0-beta.5
+  - @remirror/preset-react@3.0.0-beta.5
+  - @remirror/react-renderer@3.0.0-beta.5
+
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-react-component@3.0.0-beta.4
+  - @remirror/extension-react-tables@3.0.0-beta.4
+  - @remirror/extension-placeholder@3.0.0-beta.4
+  - @remirror/extension-positioner@3.0.0-beta.4
+  - @remirror/react-components@3.0.0-beta.4
+  - @remirror/react-renderer@3.0.0-beta.4
+  - @remirror/preset-react@3.0.0-beta.4
+  - @remirror/react-hooks@3.0.0-beta.4
+  - @remirror/react-utils@3.0.0-beta.2
+  - @remirror/react-core@3.0.0-beta.4
+
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- @remirror/extension-placeholder@3.0.0-beta.3
+- @remirror/extension-positioner@3.0.0-beta.3
+- @remirror/extension-react-component@3.0.0-beta.3
+- @remirror/extension-react-tables@3.0.0-beta.3
+- @remirror/preset-react@3.0.0-beta.3
+- @remirror/react-components@3.0.0-beta.3
+- @remirror/react-core@3.0.0-beta.3
+- @remirror/react-hooks@3.0.0-beta.3
+- @remirror/react-renderer@3.0.0-beta.3
+
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- @remirror/extension-placeholder@3.0.0-beta.2
+- @remirror/extension-positioner@3.0.0-beta.2
+- @remirror/extension-react-component@3.0.0-beta.2
+- @remirror/extension-react-tables@3.0.0-beta.2
+- @remirror/preset-react@3.0.0-beta.2
+- @remirror/react-components@3.0.0-beta.2
+- @remirror/react-core@3.0.0-beta.2
+- @remirror/react-hooks@3.0.0-beta.2
+- @remirror/react-renderer@3.0.0-beta.2
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- 60a3796b0: Based on community feedback, we have decided to decouple the React core of Remirror from MUI, a popular React component library (but you probably already knew that).
+
+  This means installing `@remirror/react` will no longer bundle `@mui/material` too. The MUI components exposed by `@remirror/react` have been moved to a new _optional_ package - `@remirror/react-ui`.
+
+  This change aims to make it **easier to use Remirror in existing applications**, by not imposing _our_ architectural decisions on to you.
+
+  ### NOTE: "Out-of-the-box" editors unaffected
+
+  If you are using editors provided by the `@remirror/react-editors` package, you are unaffected by these changes. These editors have been updated to keep existing behaviour.
+
+  ## 💥 BREAKING CHANGES! 💥
+
+  ## MUI based components no longer exposed via `@remirror/react`, moved to new _optional_ package.
+
+  In previous versions of Remirror, menus/toolbar/buttons and "find and replace" components were exposed from `@remirror/react`.
+
+  As `@remirror/react` is a required module for Remirror, it meant `@mui/material` was bundled regardless of whether you used these components or not.
+
+  With this version, **these components have been moved to a new _optional_ package** - `@remirror/react-ui`.
+
+  Other than the change in import path, **there should be no changes to the MUI components themselves**. The full list of affected components is included below.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import React from 'react';
+  import { BoldExtension } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+
+  const extensions = () => [new BoldExtension()];
+
+  const ToggleBold = (): JSX.Element => {
+    const { manager, state, onChange } = useRemirror({
+      extensions: extensions,
+      content: '<p>Text in <b>bold</b></p>',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror
+          manager={manager}
+          autoFocus
+          onChange={onChange}
+          initialContent={state}
+          autoRender='end'
+        >
+          <Toolbar>
+            <ToggleBoldButton />
+          </Toolbar>
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default ToggleBold;
+  ```
+
+  #### After: Diff for Remirror v3 example
+
+  ```diff
+  import React from 'react';
+  import { BoldExtension } from 'remirror/extensions';
+  - import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+  + import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  + import { ToggleBoldButton, Toolbar } from '@remirror/react-ui';
+
+  const extensions = () => [new BoldExtension()];
+
+  const ToggleBold = (): JSX.Element => {
+    const { manager, state, onChange } = useRemirror({
+      extensions: extensions,
+      content: '<p>Text in <b>bold</b></p>',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror
+          manager={manager}
+          autoFocus
+          onChange={onChange}
+          initialContent={state}
+          autoRender='end'
+        >
+          <Toolbar>
+            <ToggleBoldButton />
+          </Toolbar>
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default ToggleBold;
+  ```
+
+  ## Features
+
+  As part of our initiative to "play nicer" with existing applications, the MUI components provided by `@remirror/react-ui` **should now utilise any _existing_ MUI theme** (assuming a MUI `ThemeProvider` is present), rather than imposing our _own_ MUI theme.
+
+  If you need access to Remirror's _default_ MUI theme, this is available via the `useRemirrorDefaultMuiTheme` hook.
+
+  ### Full list of affected components
+
+  These components have been moved from `@remirror/react` to the new _optional_ packages `@remirror/react-ui`.
+
+  - `Toolbar`
+  - `FloatingToolbar`
+  - `MarkdownToolbar`
+  - `WysiwygToolbar`
+  - `VerticalDivider`
+  - `CenterAlignButton`
+  - `CommandButton`
+  - `CopyButton`
+  - `CreateTableButton`
+  - `CutButton`
+  - `DecreaseFontSizeButton`
+  - `DecreaseIndentButton`
+  - `DropdownButton`
+  - `IncreaseFontSizeButton`
+  - `IncreaseIndentButton`
+  - `InsertHorizontalRuleButton`
+  - `JustifyAlignButton`
+  - `LeftAlignButton`
+  - `PasteButton`
+  - `RedoButton`
+  - `RightAlignButton`
+  - `ToggleBlockquoteButton`
+  - `ToggleBoldButton`
+  - `ToggleBulletListButton`
+  - `ToggleCalloutButton`
+  - `ToggleCodeBlockButton`
+  - `ToggleCodeButton`
+  - `ToggleColumnsButton`
+  - `ToggleHeadingButton`
+  - `ToggleItalicButton`
+  - `ToggleOrderedListButton`
+  - `ToggleStrikeButton`
+  - `ToggleSubscriptButton`
+  - `ToggleSuperscriptButton`
+  - `ToggleTaskListButton`
+  - `ToggleUnderlineButton`
+  - `ToggleWhitespaceButton`
+  - `UndoButton`
+  - `BaselineButtonGroup`
+  - `BasicFormattingButtonGroup`
+  - `CalloutTypeButtonGroup`
+  - `CommandButtonGroup`
+  - `DataTransferButtonGroup`
+  - `FormattingButtonGroup`
+  - `HeadingLevelButtonGroup`
+  - `HistoryButtonGroup`
+  - `IndentationButtonGroup`
+  - `ListButtonGroup`
+  - `TextAlignmentButtonGroup`
+  - `FindReplaceComponent`
+  - `CommandMenuItem`
+  - `ToggleCalloutMenuItem`
+  - `ToggleHeadingMenuItem`
+
+  ## Feedback
+
+  As always, we value your feedback on how we can improve Remirror. Please raise your proposals via [issues on GitHub](https://github.com/remirror/remirror/issues) or via our [Discord server](https://remirror.io/chat).
+
+- Updated dependencies [60a3796b0]
+  - @remirror/react-components@3.0.0-beta.1
+  - @remirror/extension-placeholder@3.0.0-beta.1
+  - @remirror/extension-positioner@3.0.0-beta.1
+  - @remirror/extension-react-component@3.0.0-beta.1
+  - @remirror/extension-react-tables@3.0.0-beta.1
+  - @remirror/preset-react@3.0.0-beta.1
+  - @remirror/react-core@3.0.0-beta.1
+  - @remirror/react-hooks@3.0.0-beta.1
+  - @remirror/react-utils@3.0.0-beta.1
+  - @remirror/react-renderer@3.0.0-beta.1
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 3f76519f3: Based on community feedback, we have decided to decouple the core of Remirror from Lingui, an internationalisation (a.k.a. i18n) library.
+
+  Thereby making it possible to use _any_ i18n solution with Remirror 🙌🙌🙌.
+
+  **N.B.** To use the translatable strings provided by Remirror, the i18n library you use needs to support [ICU message formatting](https://formatjs.io/docs/core-concepts/icu-syntax/).
+
+  This change aims to make it **easier to use Remirror in existing applications**, by not imposing _our_ architectural decisions on to you.
+
+  There are example integrations with many different i18n libraries [in our Storybook](https://pr2128-remirror-ocavue.vercel.app/?path=/story/i18n-format-js--basic).
+
+  ### NOTE: "Out-of-the-box" editors unaffected
+
+  If you are using editors provided by the `@remirror/react-editors` package, you are unaffected by these changes. These editors have been updated to keep existing behaviour.
+
+  ## 💥 BREAKING CHANGES! 💥
+
+  ## `i18n` prop removed from the `<Remirror />` root component
+
+  In previous versions of Remirror, the `i18n` prop of the root Remirror component allowed you to pass a customised **Lingui** instance.
+
+  With this version, we want to allow _**any**_ i18n library to be used with Remirror, so the `i18n` prop has been removed, and **replaced with an `i18nFormat` _function_**.
+
+  This allows users to plug in _any_ i18n library, by implementing a definition for this function.
+
+  This function is described by the TypeScript type [`I18nFormatter`](https://github.com/remirror/remirror/blob/32d8d00587f2f0bce8c1fa59164e15b3569a7e96/packages/remirror__core-types/src/core-types.ts#L417-L453).
+
+  #### Example: Using `react-i18next`
+
+  ```tsx
+  import { useTranslation } from 'react-i18next';
+  import { Remirror, useRemirror } from '@remirror/react';
+
+  const Editor: React.FC = () => {
+    const { t } = useTranslation();
+
+    const i18nFormat: I18nFormatter = useCallback(
+      (message, values) => {
+        // Note only using the message ID here, more on this later
+        return t(message.id, values);
+      },
+      [t],
+    );
+
+    const { manager } = useRemirror({
+      extensions: () => [
+        // Some extensions here
+      ],
+    });
+
+    return <Remirror manager={manager} i18nFormat={i18nFormat} />;
+  };
+  ```
+
+  `react-i18next`, like many i18n solutions, requires you define your translatable strings up front, via key-value pairs.
+
+  To facilitate this, the `@remirror/messages` package **now exposes the translatable strings as JSON files**.
+
+  These messages are provided as key value pairs, so they can be loaded into your chosen i18n library.
+
+  Currently, only English locale (`en`) messages are provided.
+
+  ```ts
+  import i18n from 'i18next';
+  import ICU from 'i18next-icu';
+  import { initReactI18next } from 'react-i18next';
+  import type { I18nFormatter } from 'remirror';
+  import allMessages from '@remirror/messages/en/all-messages.json';
+
+  // or messages for specific extension(s)
+  // import boldMessages from '@remirror/messages/en/extension-bold-messages.json';
+  // import italicMessages from '@remirror/messages/en/extension-italic-messages.json';
+
+  i18n
+    .use(ICU) // Required if using the provided messages from @remirror/messages
+    .use(initReactI18next)
+    .init({
+      resources: {
+        en: {
+          translation: allMessages,
+        },
+      },
+      lng: 'en',
+      fallbackLng: 'en',
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+  ```
+
+  You do not _have_ to use the messages in these key value pairs, you could replace them with your own. They are provided for convenience, and to expose the message IDs Remirror uses.
+
+  ### Restoring the previous behaviour
+
+  If you wish to carry on using Remirror's default i18n solution (powered by Lingui), **you will need to install the `@remirror/i18n` package, as this is now an optional package**.
+
+  #### Example: Continue using `@remirror/i18n`
+
+  Install the i18n package, as it is now optional, and not installed by default.
+
+  ```sh
+  npm add @remirror/i18n
+  ```
+
+  ```tsx
+  import { i18nFormat } from '@remirror/i18n';
+  import { Remirror, useRemirror } from '@remirror/react';
+
+  const Editor: React.FC = () => {
+    const { manager } = useRemirror({
+      extensions: () => [
+        // Some extensions here
+      ],
+    });
+
+    return <Remirror manager={manager} i18nFormat={i18nFormat} />;
+  };
+  ```
+
+  ## The `useI18n` hook has a different return value
+
+  As a consequence of the above, the `useI18n` no longer returns an _object_ containing the Lingui `i18n` instance.
+
+  It now returns the `i18nFormat` _function_ that was passed to the root `<Remirror />` component.
+
+  #### Before
+
+  ```tsx
+  const { t, i18n } = useI18n();
+  ```
+
+  #### After
+
+  ```tsx
+  const t = useI18n();
+
+  // Where "t" is the same function that was passed via `i18nFormat`
+  ```
+
+  ## Feedback
+
+  As always, we value your feedback on how we can improve Remirror. Please raise your proposals via [issues on GitHub](https://github.com/remirror/remirror/issues) or via our [Discord server](https://remirror.io/chat).
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/react-components@3.0.0-beta.0
+  - @remirror/react-core@3.0.0-beta.0
+  - @remirror/react-hooks@3.0.0-beta.0
+  - @remirror/extension-react-component@3.0.0-beta.0
+  - @remirror/extension-react-tables@3.0.0-beta.0
+  - @remirror/extension-placeholder@3.0.0-beta.0
+  - @remirror/extension-positioner@3.0.0-beta.0
+  - @remirror/react-renderer@3.0.0-beta.0
+  - @remirror/preset-react@3.0.0-beta.0
+  - @remirror/react-utils@3.0.0-beta.0
+
 ## 2.0.35
 
 > 2023-08-03

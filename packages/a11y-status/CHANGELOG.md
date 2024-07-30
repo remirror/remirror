@@ -1,5 +1,21 @@
 # a11y-status
 
+## 2.0.2-beta.1
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+
+## 2.0.2-beta.0
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+
 ## 2.0.1
 
 > 2023-04-26

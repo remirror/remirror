@@ -7,18 +7,15 @@ import {
   BulletListExtension,
   NodeFormattingExtension,
 } from 'remirror/extensions';
+import { Remirror, ThemeProvider, useCommands, useRemirror } from '@remirror/react';
 import {
   CommandButtonGroup,
   CommandMenuItem,
   DropdownButton,
   IndentationButtonGroup,
-  Remirror,
   TextAlignmentButtonGroup,
-  ThemeProvider,
   Toolbar,
-  useCommands,
-  useRemirror,
-} from '@remirror/react';
+} from '@remirror/react-ui';
 
 const Basic: React.FC = () => {
   const { manager, state, onChange } = useRemirror({

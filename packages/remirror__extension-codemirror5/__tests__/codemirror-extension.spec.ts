@@ -127,10 +127,10 @@ describe('nodeView', () => {
     it('can be selected around', () => {
       const { add, plainBlock, doc, p, view } = create();
       const chain = add(doc(p('1<start>2'), plainBlock(`3`), p('4<end>5')));
-      expect(chain.start).toBe(2);
-      expect(chain.start).toBe(view.state.selection.from);
-      expect(chain.end).toBe(9);
-      expect(chain.end).toBe(view.state.selection.to);
+      expect(chain.from).toBe(2);
+      expect(chain.from).toBe(view.state.selection.from);
+      expect(chain.to).toBe(9);
+      expect(chain.to).toBe(view.state.selection.to);
     });
 
     it('can be selected around and deleted', () => {
@@ -138,8 +138,8 @@ describe('nodeView', () => {
 
       for (const key of ['Delete', 'Backspace']) {
         const chain = add(doc(p('1<start>2'), plainBlock(`3`), p('4<end>5'))).press(key);
-        expect(chain.start).toBe(2);
-        expect(chain.end).toBe(2);
+        expect(chain.from).toBe(2);
+        expect(chain.to).toBe(2);
         expect(chain.doc).toEqualRemirrorDocument(doc(p('15')));
       }
     });

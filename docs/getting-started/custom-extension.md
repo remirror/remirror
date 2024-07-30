@@ -24,6 +24,7 @@ import {
   MarkExtensionSpec,
   MarkSpecOverride,
 } from 'remirror';
+import type { TagParseRule } from '@remirror/pm/model';
 
 export interface SampOptions {}
 
@@ -45,7 +46,7 @@ export class SampExtension extends MarkExtension<SampOptions> {
         {
           tag: 'samp',
           getAttrs: extra.parse,
-        },
+        } satisfies TagParseRule,
         ...(override.parseDOM ?? []),
       ],
       toDOM: (node) => {

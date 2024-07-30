@@ -1,6 +1,6 @@
 {
   "name": "@remirror/theme",
-  "version": "2.0.9",
+  "version": "3.0.0-beta.5",
   "description": "The configurable theme for the remirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__theme",
   "repository": {
@@ -31,12 +31,12 @@
     "style"
   ],
   "scripts": {
-    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.cjs --format cjs && pnpm -w fix:css && cp public/* dist/"
+    "build": "tsc -b src && babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-theme.cjs --format cjs && pnpm -w fix:css && cp public/* dist/"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@linaria/core": "4.2.10",
-    "@remirror/core-types": "^2.0.6",
+    "@remirror/core-types": "3.0.0-beta.5",
     "color2k": "^2.0.2",
     "csstype": "^3.1.2"
   },
@@ -45,6 +45,7 @@
     "@babel/core": "^7.22.1",
     "@babel/plugin-transform-typescript": "^7.22.3",
     "@babel/preset-typescript": "^7.21.5",
+    "@remirror/cli": "1.1.0-beta.1",
     "rollup": "^3.23.0"
   },
   "publishConfig": {

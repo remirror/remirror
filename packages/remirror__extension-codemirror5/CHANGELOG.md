@@ -1,5 +1,136 @@
 # @remirror/extension-codemirror5
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/messages@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.6
+
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/messages@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/messages@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated command dry run function `isEnabled`, use `enabled` instead.
+
+  ```tsx
+  const { toggleBold } = useCommands();
+
+  const handleClick = useCallback(() => {
+    if (toggleBold.isEnabled()) {
+      toggleBold();
+    }
+  }, [toggleBold]);
+  ```
+
+  ```diff
+  const { toggleBold } = useCommands();
+
+  const handleClick = useCallback(() => {
+  -  if (toggleBold.isEnabled()) {
+  +  if (toggleBold.enabled()) {
+      toggleBold();
+    }
+  }, [toggleBold]);
+  ```
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/messages@3.0.0-beta.3
+
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/messages@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [d3954076f]
+- Updated dependencies [0e4abae1b]
+  - @remirror/pm@3.0.0-beta.1
+  - @remirror/core@3.0.0-beta.1
+  - @remirror/messages@3.0.0-beta.1
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/messages@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+
 ## 2.0.15
 
 > 2024-07-19

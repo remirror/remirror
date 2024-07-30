@@ -1,5 +1,1183 @@
 # remirror
 
+## 3.0.0-rc.9
+
+> 2024-07-25
+
+### Patch Changes
+
+- b23f87320: ## Updates
+
+  Update dependency prettier to v3.2.5.
+
+  ## 💥 BREAKING CHANGES! 💥
+
+  The `formatter` prop for extension `@remirror/extension-code-block` now expects an asynchronous function.
+
+  ```ts
+  new CodeBlockExtension({
+    formatter: async ({ source, language, cursorOffset }) => {
+      /* format source */
+    },
+  });
+  ```
+
+  This change was made to support prettier v3 which no longer provides a synchronous `formatWithCursor()` function. The formatter available from `@remirror/extension-code-block/formatter` has been updated to use prettier v3 and satisfies the updated `formatter` signature.
+
+  As a consequence, the command `formatCodeBlock` must also be asynchronous, and hence **is no longer chainable**.
+
+- 5c686c3f3: ## 💥 BREAKING CHANGES! 💥
+
+  The `CodeBlockLanguageSelect` component needs to wrapped within a `CodeBlockTools` component to be position correctly with a code block.
+
+  ```tsx
+  import { CodeBlockLanguageSelect, CodeBlockTools } from '@remirror/react-ui';
+
+  const MyComponent = (): JSX.Element => (
+    <CodeBlockTools>
+      <CodeBlockLanguageSelect />
+    </CodeBlockTools>
+  );
+  ```
+
+  ## Updates
+
+  A `CodeBlockFormatButton` component has been added to `@remirror/react-ui`, this allows you to format code blocks with the formatter of your choice.
+
+  You can supply your own formatter or use the default formatter from `@remirror/extension-code-block/formatter` which is based on Prettier.
+
+  ### Usage example 1: Use the formatter extension
+
+  ```tsx
+  import React from 'react';
+  import json from 'refractor/lang/json.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  import { formatter } from '@remirror/extension-code-block/formatter';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { CodeBlockFormatButton, CodeBlockTools } from '@remirror/react-ui';
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [json, typescript],
+      formatter,
+    }),
+  ];
+
+  export default function FormatterCodeBlock(): JSX.Element {
+    const { manager, state } = useRemirror({
+      extensions,
+      content: '',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockTools>
+            <CodeBlockFormatButton />
+          </CodeBlockTools>
+        </Remirror>
+      </ThemeProvider>
+    );
+  }
+  ```
+
+  ### Usage example 2: Supply your own formatter
+
+  ```tsx
+  import babelPlugin from 'prettier/plugins/babel';
+  import estreePlugin from 'prettier/plugins/estree';
+  import { formatWithCursor } from 'prettier/standalone';
+  import React from 'react';
+  import json from 'refractor/lang/json.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import type { CodeBlockFormatter } from 'remirror/extensions';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { CodeBlockFormatButton, CodeBlockTools } from '@remirror/react-ui';
+
+  const myCustomFormatter: CodeBlockFormatter = ({ source, language, cursorOffset }) => {
+    const parser =
+      language === 'typescript' ? 'babel-ts' : language === 'json' ? 'json' : undefined;
+
+    if (!parser) {
+      throw new Error('Unsupported language');
+    }
+
+    // Prettier standalone documentation: https://prettier.io/docs/en/browser
+    return formatWithCursor(source, {
+      cursorOffset,
+      parser,
+      plugins: [estreePlugin, babelPlugin],
+      experimentalTernaries: true,
+    });
+  };
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [json, typescript],
+      formatter: myCustomFormatter,
+    }),
+  ];
+
+  export default function FormatterCodeBlock(): JSX.Element {
+    const { manager, state } = useRemirror({
+      extensions,
+      content: '',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockTools>
+            <CodeBlockFormatButton />
+          </CodeBlockTools>
+        </Remirror>
+      </ThemeProvider>
+    );
+  }
+  ```
+
+- Updated dependencies [b23f87320]
+- Updated dependencies [5c686c3f3]
+  - @remirror/extension-code-block@3.0.0-rc.9
+  - @remirror/preset-wysiwyg@3.0.0-rc.9
+
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- f2425a391: ## 💥 BREAKING CHANGES! 💥
+
+  ### CodemirrorExtension is no longer bundled with `remirror`
+
+  In an effort to slim down the number of dependencies required when installing Remirror, the `CodemirrorExtension` (version 5) has been removed, from the main entry point `remirror`.
+
+  If you still need the functionality provided by this extension, simply add `@remirror/extension-codemirror5` as a direct dependency to your application.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import { CodemirrorExtension } from 'remirror/extensions';
+  ```
+
+  #### After: Remirror v3 example
+
+  ```tsx
+  import { CodemirrorExtension } from '@remirror/extension-codemirror5';
+  ```
+
+- 16660dded: ## 💥 BREAKING CHANGES! 💥
+
+  ### YjsExtension is no longer bundled with `remirror`
+
+  In an effort to slim down the number of dependencies required when installing Remirror, the `YjsExtension` has been removed, from the main entry point `remirror`.
+
+  If you still need the functionality provided by this extension, simply add `@remirror/extension-yjs` as a direct dependency to your application.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import { YjsExtension } from 'remirror/extensions';
+  ```
+
+  #### After: Remirror v3 example
+
+  ```tsx
+  import { YjsExtension } from '@remirror/extension-yjs';
+  ```
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core-helpers@4.0.0-beta.5
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/core-utils@3.0.0-beta.6
+  - @remirror/icons@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/dom@3.0.0-beta.8
+  - @remirror/extension-annotation@3.0.0-beta.8
+  - @remirror/extension-bidi@3.0.0-beta.8
+  - @remirror/extension-blockquote@3.0.0-beta.8
+  - @remirror/extension-bold@3.0.0-beta.8
+  - @remirror/extension-callout@3.0.0-beta.8
+  - @remirror/extension-code@3.0.0-beta.8
+  - @remirror/extension-code-block@3.0.0-beta.8
+  - @remirror/extension-collaboration@3.0.0-beta.8
+  - @remirror/extension-columns@3.0.0-beta.8
+  - @remirror/extension-diff@3.0.0-beta.8
+  - @remirror/extension-doc@3.0.0-beta.8
+  - @remirror/extension-drop-cursor@3.0.0-beta.8
+  - @remirror/extension-embed@3.0.0-beta.8
+  - @remirror/extension-emoji@3.0.0-beta.8
+  - @remirror/extension-entity-reference@3.0.0-beta.8
+  - @remirror/extension-epic-mode@3.0.0-beta.8
+  - @remirror/extension-events@3.0.0-beta.8
+  - @remirror/extension-find@1.0.0-beta.8
+  - @remirror/extension-font-family@3.0.0-beta.8
+  - @remirror/extension-font-size@3.0.0-beta.8
+  - @remirror/extension-gap-cursor@3.0.0-beta.8
+  - @remirror/extension-hard-break@3.0.0-beta.8
+  - @remirror/extension-heading@3.0.0-beta.8
+  - @remirror/extension-history@3.0.0-beta.8
+  - @remirror/extension-horizontal-rule@3.0.0-beta.8
+  - @remirror/extension-image@3.0.0-beta.8
+  - @remirror/extension-italic@3.0.0-beta.8
+  - @remirror/extension-link@3.0.0-beta.8
+  - @remirror/extension-list@3.0.0-beta.8
+  - @remirror/extension-markdown@3.0.0-beta.8
+  - @remirror/extension-mention@3.0.0-beta.8
+  - @remirror/extension-mention-atom@3.0.0-beta.8
+  - @remirror/extension-node-formatting@3.0.0-beta.8
+  - @remirror/extension-paragraph@3.0.0-beta.8
+  - @remirror/extension-placeholder@3.0.0-beta.8
+  - @remirror/extension-positioner@3.0.0-beta.8
+  - @remirror/extension-shortcuts@3.0.0-beta.8
+  - @remirror/extension-strike@3.0.0-beta.8
+  - @remirror/extension-sub@3.0.0-beta.8
+  - @remirror/extension-sup@3.0.0-beta.8
+  - @remirror/extension-tables@3.0.0-beta.8
+  - @remirror/extension-text@3.0.0-beta.8
+  - @remirror/extension-text-case@3.0.0-beta.8
+  - @remirror/extension-text-color@3.0.0-beta.8
+  - @remirror/extension-text-highlight@3.0.0-beta.8
+  - @remirror/extension-trailing-node@3.0.0-beta.8
+  - @remirror/extension-underline@3.0.0-beta.8
+  - @remirror/extension-whitespace@3.0.0-beta.8
+  - @remirror/preset-core@3.0.0-beta.8
+  - @remirror/preset-formatting@3.0.0-beta.8
+  - @remirror/preset-wysiwyg@3.0.0-beta.8
+
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-entity-reference@3.0.0-beta.7
+  - @remirror/extension-horizontal-rule@3.0.0-beta.7
+  - @remirror/extension-node-formatting@3.0.0-beta.7
+  - @remirror/extension-text-highlight@3.0.0-beta.7
+  - @remirror/extension-collaboration@3.0.0-beta.7
+  - @remirror/extension-trailing-node@3.0.0-beta.7
+  - @remirror/extension-mention-atom@3.0.0-beta.7
+  - @remirror/extension-codemirror5@3.0.0-beta.7
+  - @remirror/extension-drop-cursor@3.0.0-beta.7
+  - @remirror/extension-font-family@3.0.0-beta.7
+  - @remirror/extension-placeholder@3.0.0-beta.7
+  - @remirror/extension-annotation@3.0.0-beta.7
+  - @remirror/extension-blockquote@3.0.0-beta.7
+  - @remirror/extension-code-block@3.0.0-beta.7
+  - @remirror/extension-gap-cursor@3.0.0-beta.7
+  - @remirror/extension-hard-break@3.0.0-beta.7
+  - @remirror/extension-positioner@3.0.0-beta.7
+  - @remirror/extension-text-color@3.0.0-beta.7
+  - @remirror/extension-whitespace@3.0.0-beta.7
+  - @remirror/extension-epic-mode@3.0.0-beta.7
+  - @remirror/extension-font-size@3.0.0-beta.7
+  - @remirror/extension-paragraph@3.0.0-beta.7
+  - @remirror/extension-shortcuts@3.0.0-beta.7
+  - @remirror/extension-text-case@3.0.0-beta.7
+  - @remirror/extension-underline@3.0.0-beta.7
+  - @remirror/extension-markdown@3.0.0-beta.7
+  - @remirror/extension-callout@3.0.0-beta.7
+  - @remirror/extension-columns@3.0.0-beta.7
+  - @remirror/extension-heading@3.0.0-beta.7
+  - @remirror/extension-history@3.0.0-beta.7
+  - @remirror/extension-mention@3.0.0-beta.7
+  - @remirror/preset-formatting@3.0.0-beta.7
+  - @remirror/extension-events@3.0.0-beta.7
+  - @remirror/extension-italic@3.0.0-beta.7
+  - @remirror/extension-strike@3.0.0-beta.7
+  - @remirror/extension-tables@3.0.0-beta.7
+  - @remirror/extension-embed@3.0.0-beta.7
+  - @remirror/extension-emoji@3.0.0-beta.7
+  - @remirror/extension-image@3.0.0-beta.7
+  - @remirror/core-constants@3.0.0-beta.4
+  - @remirror/extension-bidi@3.0.0-beta.7
+  - @remirror/extension-bold@3.0.0-beta.7
+  - @remirror/extension-code@3.0.0-beta.7
+  - @remirror/extension-diff@3.0.0-beta.7
+  - @remirror/extension-find@1.0.0-beta.7
+  - @remirror/extension-link@3.0.0-beta.7
+  - @remirror/extension-list@3.0.0-beta.7
+  - @remirror/extension-text@3.0.0-beta.7
+  - @remirror/preset-wysiwyg@3.0.0-beta.7
+  - @remirror/extension-doc@3.0.0-beta.7
+  - @remirror/extension-sub@3.0.0-beta.7
+  - @remirror/extension-sup@3.0.0-beta.7
+  - @remirror/extension-yjs@4.0.0-beta.7
+  - @remirror/core-helpers@4.0.0-beta.4
+  - @remirror/preset-core@3.0.0-beta.7
+  - @remirror/core-types@3.0.0-beta.5
+  - @remirror/core-utils@3.0.0-beta.5
+  - @remirror/icons@3.0.0-beta.4
+  - @remirror/theme@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/dom@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-entity-reference@3.0.0-beta.6
+  - @remirror/extension-horizontal-rule@3.0.0-beta.6
+  - @remirror/extension-node-formatting@3.0.0-beta.6
+  - @remirror/extension-text-highlight@3.0.0-beta.6
+  - @remirror/extension-collaboration@3.0.0-beta.6
+  - @remirror/extension-trailing-node@3.0.0-beta.6
+  - @remirror/extension-mention-atom@3.0.0-beta.6
+  - @remirror/extension-codemirror5@3.0.0-beta.6
+  - @remirror/extension-drop-cursor@3.0.0-beta.6
+  - @remirror/extension-font-family@3.0.0-beta.6
+  - @remirror/extension-placeholder@3.0.0-beta.6
+  - @remirror/extension-annotation@3.0.0-beta.6
+  - @remirror/extension-blockquote@3.0.0-beta.6
+  - @remirror/extension-code-block@3.0.0-beta.6
+  - @remirror/extension-gap-cursor@3.0.0-beta.6
+  - @remirror/extension-hard-break@3.0.0-beta.6
+  - @remirror/extension-positioner@3.0.0-beta.6
+  - @remirror/extension-text-color@3.0.0-beta.6
+  - @remirror/extension-whitespace@3.0.0-beta.6
+  - @remirror/extension-epic-mode@3.0.0-beta.6
+  - @remirror/extension-font-size@3.0.0-beta.6
+  - @remirror/extension-paragraph@3.0.0-beta.6
+  - @remirror/extension-shortcuts@3.0.0-beta.6
+  - @remirror/extension-text-case@3.0.0-beta.6
+  - @remirror/extension-underline@3.0.0-beta.6
+  - @remirror/extension-markdown@3.0.0-beta.6
+  - @remirror/extension-callout@3.0.0-beta.6
+  - @remirror/extension-columns@3.0.0-beta.6
+  - @remirror/extension-heading@3.0.0-beta.6
+  - @remirror/extension-history@3.0.0-beta.6
+  - @remirror/extension-mention@3.0.0-beta.6
+  - @remirror/preset-formatting@3.0.0-beta.6
+  - @remirror/extension-events@3.0.0-beta.6
+  - @remirror/extension-italic@3.0.0-beta.6
+  - @remirror/extension-strike@3.0.0-beta.6
+  - @remirror/extension-tables@3.0.0-beta.6
+  - @remirror/extension-embed@3.0.0-beta.6
+  - @remirror/extension-emoji@3.0.0-beta.6
+  - @remirror/extension-image@3.0.0-beta.6
+  - @remirror/core-constants@3.0.0-beta.3
+  - @remirror/extension-bidi@3.0.0-beta.6
+  - @remirror/extension-bold@3.0.0-beta.6
+  - @remirror/extension-code@3.0.0-beta.6
+  - @remirror/extension-diff@3.0.0-beta.6
+  - @remirror/extension-find@1.0.0-beta.6
+  - @remirror/extension-link@3.0.0-beta.6
+  - @remirror/extension-list@3.0.0-beta.6
+  - @remirror/extension-text@3.0.0-beta.6
+  - @remirror/preset-wysiwyg@3.0.0-beta.6
+  - @remirror/extension-doc@3.0.0-beta.6
+  - @remirror/extension-sub@3.0.0-beta.6
+  - @remirror/extension-sup@3.0.0-beta.6
+  - @remirror/extension-yjs@4.0.0-beta.6
+  - @remirror/core-helpers@4.0.0-beta.3
+  - @remirror/preset-core@3.0.0-beta.6
+  - @remirror/core-types@3.0.0-beta.4
+  - @remirror/core-utils@3.0.0-beta.4
+  - @remirror/icons@3.0.0-beta.3
+  - @remirror/theme@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/dom@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Major Changes
+
+- ae349d806: ## 💥 BREAKING CHANGES! 💥
+
+  ## Removed deprecated `SearchExtension` in favour of `FindExtension`
+
+  TLDR: `SearchExtension` has been removed from Remirror v3 completely, please use `FindExtension` instead.
+
+  `SearchExtension` has been deprecated since we released `FindExtension`, as `FindExtension` offers more features and is more performant.
+
+  Furthermore, as `SearchExtension` was previously exposed directly via `remirror/extensions`, and configurable via `presetWysiwyg` - we have updated both of these access points to expose `FindExtension` instead.
+
+  If using `presetWysiwyg`, the config options for `SearchExtension` will need updating to their `FindExtension` equivalents.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import React from 'react';
+  import { wysiwygPreset } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+
+  const extensions = () =>
+    wysiwygPreset({
+      alwaysSearch: true,
+    });
+
+  const UsingWysiwygPreset = (): JSX.Element => {
+    const { manager, state, onChange } = useRemirror({
+      extensions: extensions,
+      content: '<p>Text to search</p>',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror
+          manager={manager}
+          autoFocus
+          onChange={onChange}
+          initialContent={state}
+          autoRender='end'
+        />
+      </ThemeProvider>
+    );
+  };
+
+  export default UsingWysiwygPreset;
+  ```
+
+  #### After: Diff for Remirror v3 example
+
+  ```diff
+  import React from 'react';
+  import { wysiwygPreset } from "remirror/extensions";
+  import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+
+  const extensions = () => wysiwygPreset({
+  -  alwaysSearch: true,
+  +  alwaysFind: true,
+  });
+
+  // Rest as above
+  ```
+
+  ## Features
+
+  To make the find functionality easy to use "out-of-the-box" we have added a new `<FindButton />` component to the _optional_ `@remirror/react-ui` package.
+
+  This button can be used within a `Toolbar` (also exposed via `@remirror/react-ui`) to present a find and replace popup in the top right of your editor.
+
+  ![A screenshot of the find and replace popup from the FindButton](https://github.com/remirror/remirror/assets/2003804/eaada9b5-fc85-4705-876a-e994d82c5fa8)
+
+  ### Example usage of `FindButton`
+
+  This following example is taken from our [Storybook](https://remirror.vercel.app/?path=/story/extensions-find--basic).
+
+  ```tsx
+  import 'remirror/styles/all.css';
+
+  import React from 'react';
+  import { wysiwygPreset } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { FindButton, Toolbar } from '@remirror/react-ui';
+
+  const FindButtonExample: React.FC = () => {
+    const { manager, state, onChange } = useRemirror({
+      extensions: wysiwygPreset,
+      content:
+        '<p>Using the <code>&lt;FindButton /&gt;</code> from <code>@remirror/react-ui</code>.',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror
+          manager={manager}
+          autoFocus
+          onChange={onChange}
+          initialContent={state}
+          autoRender='end'
+        >
+          <Toolbar>
+            <FindButton />
+          </Toolbar>
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default FindButtonExample;
+  ```
+
+### Patch Changes
+
+- 9549c8f88: ## 💥 BREAKING CHANGES! 💥
+
+  ## `CodeBlockLanguageSelector` component moved to `@remirror/react-ui` package
+
+  The `CodeBlockLanguageSelector` component has been moved from `@remirror/extension-react-language-select` to `@remirror/react-ui`.
+
+  While it was originally named as an "extension", upon closer examination, we've realised that its role aligns more with that of a component, rather than a true extension.
+
+  To maintain the integrity of our [definition of an extension](https://remirror.io/docs/concepts/extension), we believe this move is necessary. This is to help provide a more accurate representation of functionality, and enhance overall understanding and usage of the library.
+
+  Additionally `CodeBlockLanguageSelector` now renders a MUI `Select` component, rather than a native `select` element. This enables us to utilise the "auto width" behaviour, rather than implementing this behaviour ourselves.
+
+  Furthermore, it will now render in the top _right_ corner of the code block by default, rather than the top left. Passing `position='left'` will revert to rendering in the top left corner as before.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import 'remirror/styles/all.css';
+
+  import React from 'react';
+  import css from 'refractor/lang/css.js';
+  import javascript from 'refractor/lang/javascript.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  import { CodeBlockLanguageSelect } from '@remirror/extension-react-language-select';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [css, javascript, json, markdown, typescript],
+    }),
+  ];
+
+  const content = `
+  <pre><code data-code-block-language="typescript">function sayHello {
+    console.log('Hello world, TypeScript!')
+  }</code></pre>
+  `;
+
+  const EditorWithCodeBlocks = (): JSX.Element => {
+    const { manager, state } = useRemirror({
+      extensions,
+      content,
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockLanguageSelect />
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default EditorWithCodeBlocks;
+  ```
+
+  #### After: Diff for Remirror v3 example
+
+  ```diff
+  import 'remirror/styles/all.css';
+
+  import React from 'react';
+  import css from 'refractor/lang/css.js';
+  import javascript from 'refractor/lang/javascript.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  - import { CodeBlockLanguageSelect } from '@remirror/extension-react-language-select';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  + import { CodeBlockLanguageSelect } from '@remirror/react-ui';
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [css, javascript, json, markdown, typescript],
+    }),
+  ];
+
+  const content = `
+  <pre><code data-code-block-language="typescript">function sayHello {
+    console.log('Hello world, TypeScript!')
+  }</code></pre>
+  `;
+
+  const EditorWithCodeBlocks = (): JSX.Element => {
+    const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockLanguageSelect />
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default EditorWithCodeBlocks;
+  ```
+
+  ## Feedback
+
+  As always, we value your feedback on how we can improve Remirror. Please raise your proposals via [issues on GitHub](https://github.com/remirror/remirror/issues) or via our [Discord server](https://remirror.io/chat).
+
+- Updated dependencies [ae349d806]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [9549c8f88]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/preset-wysiwyg@3.0.0-beta.5
+  - @remirror/extension-positioner@3.0.0-beta.5
+  - @remirror/icons@3.0.0-beta.2
+  - @remirror/extension-find@1.0.0-beta.5
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/extension-codemirror5@3.0.0-beta.5
+  - @remirror/extension-code-block@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/theme@3.0.0-beta.3
+  - @remirror/extension-events@3.0.0-beta.5
+  - @remirror/extension-annotation@3.0.0-beta.5
+  - @remirror/extension-entity-reference@3.0.0-beta.5
+  - @remirror/extension-tables@3.0.0-beta.5
+  - @remirror/preset-core@3.0.0-beta.5
+  - @remirror/core-helpers@4.0.0-beta.2
+  - @remirror/core-types@3.0.0-beta.3
+  - @remirror/core-utils@3.0.0-beta.3
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/dom@3.0.0-beta.5
+  - @remirror/extension-bidi@3.0.0-beta.5
+  - @remirror/extension-blockquote@3.0.0-beta.5
+  - @remirror/extension-bold@3.0.0-beta.5
+  - @remirror/extension-callout@3.0.0-beta.5
+  - @remirror/extension-code@3.0.0-beta.5
+  - @remirror/extension-collaboration@3.0.0-beta.5
+  - @remirror/extension-columns@3.0.0-beta.5
+  - @remirror/extension-diff@3.0.0-beta.5
+  - @remirror/extension-doc@3.0.0-beta.5
+  - @remirror/extension-drop-cursor@3.0.0-beta.5
+  - @remirror/extension-embed@3.0.0-beta.5
+  - @remirror/extension-emoji@3.0.0-beta.5
+  - @remirror/extension-epic-mode@3.0.0-beta.5
+  - @remirror/extension-font-family@3.0.0-beta.5
+  - @remirror/extension-font-size@3.0.0-beta.5
+  - @remirror/extension-gap-cursor@3.0.0-beta.5
+  - @remirror/extension-hard-break@3.0.0-beta.5
+  - @remirror/extension-heading@3.0.0-beta.5
+  - @remirror/extension-history@3.0.0-beta.5
+  - @remirror/extension-horizontal-rule@3.0.0-beta.5
+  - @remirror/extension-image@3.0.0-beta.5
+  - @remirror/extension-italic@3.0.0-beta.5
+  - @remirror/extension-link@3.0.0-beta.5
+  - @remirror/extension-list@3.0.0-beta.5
+  - @remirror/extension-markdown@3.0.0-beta.5
+  - @remirror/extension-mention@3.0.0-beta.5
+  - @remirror/extension-mention-atom@3.0.0-beta.5
+  - @remirror/extension-node-formatting@3.0.0-beta.5
+  - @remirror/extension-paragraph@3.0.0-beta.5
+  - @remirror/extension-placeholder@3.0.0-beta.5
+  - @remirror/extension-shortcuts@3.0.0-beta.5
+  - @remirror/extension-strike@3.0.0-beta.5
+  - @remirror/extension-sub@3.0.0-beta.5
+  - @remirror/extension-sup@3.0.0-beta.5
+  - @remirror/extension-text@3.0.0-beta.5
+  - @remirror/extension-text-case@3.0.0-beta.5
+  - @remirror/extension-text-color@3.0.0-beta.5
+  - @remirror/extension-text-highlight@3.0.0-beta.5
+  - @remirror/extension-trailing-node@3.0.0-beta.5
+  - @remirror/extension-underline@3.0.0-beta.5
+  - @remirror/extension-whitespace@3.0.0-beta.5
+  - @remirror/extension-yjs@4.0.0-beta.5
+  - @remirror/preset-formatting@3.0.0-beta.5
+
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-entity-reference@3.0.0-beta.4
+  - @remirror/extension-horizontal-rule@3.0.0-beta.4
+  - @remirror/extension-node-formatting@3.0.0-beta.4
+  - @remirror/extension-text-highlight@3.0.0-beta.4
+  - @remirror/extension-collaboration@3.0.0-beta.4
+  - @remirror/extension-trailing-node@3.0.0-beta.4
+  - @remirror/extension-mention-atom@3.0.0-beta.4
+  - @remirror/extension-codemirror5@3.0.0-beta.4
+  - @remirror/extension-drop-cursor@3.0.0-beta.4
+  - @remirror/extension-font-family@3.0.0-beta.4
+  - @remirror/extension-placeholder@3.0.0-beta.4
+  - @remirror/extension-annotation@3.0.0-beta.4
+  - @remirror/extension-blockquote@3.0.0-beta.4
+  - @remirror/extension-code-block@3.0.0-beta.4
+  - @remirror/extension-gap-cursor@3.0.0-beta.4
+  - @remirror/extension-hard-break@3.0.0-beta.4
+  - @remirror/extension-positioner@3.0.0-beta.4
+  - @remirror/extension-text-color@3.0.0-beta.4
+  - @remirror/extension-whitespace@3.0.0-beta.4
+  - @remirror/extension-epic-mode@3.0.0-beta.4
+  - @remirror/extension-font-size@3.0.0-beta.4
+  - @remirror/extension-paragraph@3.0.0-beta.4
+  - @remirror/extension-shortcuts@3.0.0-beta.4
+  - @remirror/extension-text-case@3.0.0-beta.4
+  - @remirror/extension-underline@3.0.0-beta.4
+  - @remirror/extension-markdown@3.0.0-beta.4
+  - @remirror/extension-callout@3.0.0-beta.4
+  - @remirror/extension-columns@3.0.0-beta.4
+  - @remirror/extension-heading@3.0.0-beta.4
+  - @remirror/extension-history@3.0.0-beta.4
+  - @remirror/extension-mention@3.0.0-beta.4
+  - @remirror/preset-formatting@3.0.0-beta.4
+  - @remirror/extension-events@3.0.0-beta.4
+  - @remirror/extension-italic@3.0.0-beta.4
+  - @remirror/extension-search@3.0.0-beta.4
+  - @remirror/extension-strike@3.0.0-beta.4
+  - @remirror/extension-tables@3.0.0-beta.4
+  - @remirror/extension-embed@3.0.0-beta.4
+  - @remirror/extension-emoji@3.0.0-beta.4
+  - @remirror/extension-image@3.0.0-beta.4
+  - @remirror/core-constants@3.0.0-beta.1
+  - @remirror/extension-bidi@3.0.0-beta.4
+  - @remirror/extension-bold@3.0.0-beta.4
+  - @remirror/extension-code@3.0.0-beta.4
+  - @remirror/extension-diff@3.0.0-beta.4
+  - @remirror/extension-link@3.0.0-beta.4
+  - @remirror/extension-list@3.0.0-beta.4
+  - @remirror/extension-text@3.0.0-beta.4
+  - @remirror/preset-wysiwyg@3.0.0-beta.4
+  - @remirror/extension-doc@3.0.0-beta.4
+  - @remirror/extension-sub@3.0.0-beta.4
+  - @remirror/extension-sup@3.0.0-beta.4
+  - @remirror/extension-yjs@4.0.0-beta.4
+  - @remirror/core-helpers@4.0.0-beta.1
+  - @remirror/preset-core@3.0.0-beta.4
+  - @remirror/core-types@3.0.0-beta.2
+  - @remirror/core-utils@3.0.0-beta.2
+  - @remirror/icons@3.0.0-beta.1
+  - @remirror/theme@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/dom@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+  - @remirror/dom@3.0.0-beta.3
+  - @remirror/extension-annotation@3.0.0-beta.3
+  - @remirror/extension-bidi@3.0.0-beta.3
+  - @remirror/extension-blockquote@3.0.0-beta.3
+  - @remirror/extension-bold@3.0.0-beta.3
+  - @remirror/extension-callout@3.0.0-beta.3
+  - @remirror/extension-code@3.0.0-beta.3
+  - @remirror/extension-code-block@3.0.0-beta.3
+  - @remirror/extension-codemirror5@3.0.0-beta.3
+  - @remirror/extension-collaboration@3.0.0-beta.3
+  - @remirror/extension-columns@3.0.0-beta.3
+  - @remirror/extension-diff@3.0.0-beta.3
+  - @remirror/extension-doc@3.0.0-beta.3
+  - @remirror/extension-drop-cursor@3.0.0-beta.3
+  - @remirror/extension-embed@3.0.0-beta.3
+  - @remirror/extension-emoji@3.0.0-beta.3
+  - @remirror/extension-entity-reference@3.0.0-beta.3
+  - @remirror/extension-epic-mode@3.0.0-beta.3
+  - @remirror/extension-events@3.0.0-beta.3
+  - @remirror/extension-font-family@3.0.0-beta.3
+  - @remirror/extension-font-size@3.0.0-beta.3
+  - @remirror/extension-gap-cursor@3.0.0-beta.3
+  - @remirror/extension-hard-break@3.0.0-beta.3
+  - @remirror/extension-heading@3.0.0-beta.3
+  - @remirror/extension-history@3.0.0-beta.3
+  - @remirror/extension-horizontal-rule@3.0.0-beta.3
+  - @remirror/extension-image@3.0.0-beta.3
+  - @remirror/extension-italic@3.0.0-beta.3
+  - @remirror/extension-link@3.0.0-beta.3
+  - @remirror/extension-list@3.0.0-beta.3
+  - @remirror/extension-markdown@3.0.0-beta.3
+  - @remirror/extension-mention@3.0.0-beta.3
+  - @remirror/extension-mention-atom@3.0.0-beta.3
+  - @remirror/extension-node-formatting@3.0.0-beta.3
+  - @remirror/extension-paragraph@3.0.0-beta.3
+  - @remirror/extension-placeholder@3.0.0-beta.3
+  - @remirror/extension-positioner@3.0.0-beta.3
+  - @remirror/extension-search@3.0.0-beta.3
+  - @remirror/extension-shortcuts@3.0.0-beta.3
+  - @remirror/extension-strike@3.0.0-beta.3
+  - @remirror/extension-sub@3.0.0-beta.3
+  - @remirror/extension-sup@3.0.0-beta.3
+  - @remirror/extension-tables@3.0.0-beta.3
+  - @remirror/extension-text@3.0.0-beta.3
+  - @remirror/extension-text-case@3.0.0-beta.3
+  - @remirror/extension-text-color@3.0.0-beta.3
+  - @remirror/extension-text-highlight@3.0.0-beta.3
+  - @remirror/extension-trailing-node@3.0.0-beta.3
+  - @remirror/extension-underline@3.0.0-beta.3
+  - @remirror/extension-whitespace@3.0.0-beta.3
+  - @remirror/extension-yjs@4.0.0-beta.3
+  - @remirror/preset-core@3.0.0-beta.3
+  - @remirror/preset-formatting@3.0.0-beta.3
+  - @remirror/preset-wysiwyg@3.0.0-beta.3
+
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+  - @remirror/dom@3.0.0-beta.2
+  - @remirror/extension-annotation@3.0.0-beta.2
+  - @remirror/extension-bidi@3.0.0-beta.2
+  - @remirror/extension-blockquote@3.0.0-beta.2
+  - @remirror/extension-bold@3.0.0-beta.2
+  - @remirror/extension-callout@3.0.0-beta.2
+  - @remirror/extension-code@3.0.0-beta.2
+  - @remirror/extension-code-block@3.0.0-beta.2
+  - @remirror/extension-codemirror5@3.0.0-beta.2
+  - @remirror/extension-collaboration@3.0.0-beta.2
+  - @remirror/extension-columns@3.0.0-beta.2
+  - @remirror/extension-diff@3.0.0-beta.2
+  - @remirror/extension-doc@3.0.0-beta.2
+  - @remirror/extension-drop-cursor@3.0.0-beta.2
+  - @remirror/extension-embed@3.0.0-beta.2
+  - @remirror/extension-emoji@3.0.0-beta.2
+  - @remirror/extension-entity-reference@3.0.0-beta.2
+  - @remirror/extension-epic-mode@3.0.0-beta.2
+  - @remirror/extension-events@3.0.0-beta.2
+  - @remirror/extension-font-family@3.0.0-beta.2
+  - @remirror/extension-font-size@3.0.0-beta.2
+  - @remirror/extension-gap-cursor@3.0.0-beta.2
+  - @remirror/extension-hard-break@3.0.0-beta.2
+  - @remirror/extension-heading@3.0.0-beta.2
+  - @remirror/extension-history@3.0.0-beta.2
+  - @remirror/extension-horizontal-rule@3.0.0-beta.2
+  - @remirror/extension-image@3.0.0-beta.2
+  - @remirror/extension-italic@3.0.0-beta.2
+  - @remirror/extension-link@3.0.0-beta.2
+  - @remirror/extension-list@3.0.0-beta.2
+  - @remirror/extension-markdown@3.0.0-beta.2
+  - @remirror/extension-mention@3.0.0-beta.2
+  - @remirror/extension-mention-atom@3.0.0-beta.2
+  - @remirror/extension-node-formatting@3.0.0-beta.2
+  - @remirror/extension-paragraph@3.0.0-beta.2
+  - @remirror/extension-placeholder@3.0.0-beta.2
+  - @remirror/extension-positioner@3.0.0-beta.2
+  - @remirror/extension-search@3.0.0-beta.2
+  - @remirror/extension-shortcuts@3.0.0-beta.2
+  - @remirror/extension-strike@3.0.0-beta.2
+  - @remirror/extension-sub@3.0.0-beta.2
+  - @remirror/extension-sup@3.0.0-beta.2
+  - @remirror/extension-tables@3.0.0-beta.2
+  - @remirror/extension-text@3.0.0-beta.2
+  - @remirror/extension-text-case@3.0.0-beta.2
+  - @remirror/extension-text-color@3.0.0-beta.2
+  - @remirror/extension-text-highlight@3.0.0-beta.2
+  - @remirror/extension-trailing-node@3.0.0-beta.2
+  - @remirror/extension-underline@3.0.0-beta.2
+  - @remirror/extension-whitespace@3.0.0-beta.2
+  - @remirror/extension-yjs@4.0.0-beta.2
+  - @remirror/preset-core@3.0.0-beta.2
+  - @remirror/preset-formatting@3.0.0-beta.2
+  - @remirror/preset-wysiwyg@3.0.0-beta.2
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- b1d683fdb: Update ProseMirror packages to latest versions.
+
+  Use newly provided `Transform.setDocAttribute` to update doc node attributes, rather than custom step type.
+
+- d3954076f: Return a mention atom' label via leaf text, so it is returned in the plain text of a document.
+
+  Allow this to be overriden via the `nodeOverrides` API
+
+- 0e4abae1b: 💥 BREAKING 💥: Remove deprecated decorator `extensionDecorator`. Please use `extension` instead
+
+  Make `extension` decorator backwards compatible when called directly as a function.
+
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [d3954076f]
+- Updated dependencies [0e4abae1b]
+  - @remirror/extension-doc@3.0.0-beta.1
+  - @remirror/extension-yjs@4.0.0-beta.1
+  - @remirror/pm@3.0.0-beta.1
+  - @remirror/extension-mention-atom@3.0.0-beta.1
+  - @remirror/core-types@3.0.0-beta.1
+  - @remirror/core@3.0.0-beta.1
+  - @remirror/preset-core@3.0.0-beta.1
+  - @remirror/core-utils@3.0.0-beta.1
+  - @remirror/dom@3.0.0-beta.1
+  - @remirror/extension-annotation@3.0.0-beta.1
+  - @remirror/extension-bidi@3.0.0-beta.1
+  - @remirror/extension-blockquote@3.0.0-beta.1
+  - @remirror/extension-bold@3.0.0-beta.1
+  - @remirror/extension-callout@3.0.0-beta.1
+  - @remirror/extension-code@3.0.0-beta.1
+  - @remirror/extension-code-block@3.0.0-beta.1
+  - @remirror/extension-codemirror5@3.0.0-beta.1
+  - @remirror/extension-collaboration@3.0.0-beta.1
+  - @remirror/extension-columns@3.0.0-beta.1
+  - @remirror/extension-diff@3.0.0-beta.1
+  - @remirror/extension-drop-cursor@3.0.0-beta.1
+  - @remirror/extension-embed@3.0.0-beta.1
+  - @remirror/extension-emoji@3.0.0-beta.1
+  - @remirror/extension-entity-reference@3.0.0-beta.1
+  - @remirror/extension-epic-mode@3.0.0-beta.1
+  - @remirror/extension-events@3.0.0-beta.1
+  - @remirror/extension-font-family@3.0.0-beta.1
+  - @remirror/extension-font-size@3.0.0-beta.1
+  - @remirror/extension-gap-cursor@3.0.0-beta.1
+  - @remirror/extension-hard-break@3.0.0-beta.1
+  - @remirror/extension-heading@3.0.0-beta.1
+  - @remirror/extension-history@3.0.0-beta.1
+  - @remirror/extension-horizontal-rule@3.0.0-beta.1
+  - @remirror/extension-image@3.0.0-beta.1
+  - @remirror/extension-italic@3.0.0-beta.1
+  - @remirror/extension-link@3.0.0-beta.1
+  - @remirror/extension-list@3.0.0-beta.1
+  - @remirror/extension-markdown@3.0.0-beta.1
+  - @remirror/extension-mention@3.0.0-beta.1
+  - @remirror/extension-node-formatting@3.0.0-beta.1
+  - @remirror/extension-paragraph@3.0.0-beta.1
+  - @remirror/extension-placeholder@3.0.0-beta.1
+  - @remirror/extension-positioner@3.0.0-beta.1
+  - @remirror/extension-search@3.0.0-beta.1
+  - @remirror/extension-shortcuts@3.0.0-beta.1
+  - @remirror/extension-strike@3.0.0-beta.1
+  - @remirror/extension-sub@3.0.0-beta.1
+  - @remirror/extension-sup@3.0.0-beta.1
+  - @remirror/extension-tables@3.0.0-beta.1
+  - @remirror/extension-text@3.0.0-beta.1
+  - @remirror/extension-text-case@3.0.0-beta.1
+  - @remirror/extension-text-color@3.0.0-beta.1
+  - @remirror/extension-text-highlight@3.0.0-beta.1
+  - @remirror/extension-trailing-node@3.0.0-beta.1
+  - @remirror/extension-underline@3.0.0-beta.1
+  - @remirror/extension-whitespace@3.0.0-beta.1
+  - @remirror/preset-formatting@3.0.0-beta.1
+  - @remirror/preset-wysiwyg@3.0.0-beta.1
+  - @remirror/theme@3.0.0-beta.1
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 3f76519f3: Based on community feedback, we have decided to decouple the core of Remirror from Lingui, an internationalisation (a.k.a. i18n) library.
+
+  Thereby making it possible to use _any_ i18n solution with Remirror 🙌🙌🙌.
+
+  **N.B.** To use the translatable strings provided by Remirror, the i18n library you use needs to support [ICU message formatting](https://formatjs.io/docs/core-concepts/icu-syntax/).
+
+  This change aims to make it **easier to use Remirror in existing applications**, by not imposing _our_ architectural decisions on to you.
+
+  There are example integrations with many different i18n libraries [in our Storybook](https://pr2128-remirror-ocavue.vercel.app/?path=/story/i18n-format-js--basic).
+
+  ### NOTE: "Out-of-the-box" editors unaffected
+
+  If you are using editors provided by the `@remirror/react-editors` package, you are unaffected by these changes. These editors have been updated to keep existing behaviour.
+
+  ## 💥 BREAKING CHANGES! 💥
+
+  ## `i18n` prop removed from the `<Remirror />` root component
+
+  In previous versions of Remirror, the `i18n` prop of the root Remirror component allowed you to pass a customised **Lingui** instance.
+
+  With this version, we want to allow _**any**_ i18n library to be used with Remirror, so the `i18n` prop has been removed, and **replaced with an `i18nFormat` _function_**.
+
+  This allows users to plug in _any_ i18n library, by implementing a definition for this function.
+
+  This function is described by the TypeScript type [`I18nFormatter`](https://github.com/remirror/remirror/blob/32d8d00587f2f0bce8c1fa59164e15b3569a7e96/packages/remirror__core-types/src/core-types.ts#L417-L453).
+
+  #### Example: Using `react-i18next`
+
+  ```tsx
+  import { useTranslation } from 'react-i18next';
+  import { Remirror, useRemirror } from '@remirror/react';
+
+  const Editor: React.FC = () => {
+    const { t } = useTranslation();
+
+    const i18nFormat: I18nFormatter = useCallback(
+      (message, values) => {
+        // Note only using the message ID here, more on this later
+        return t(message.id, values);
+      },
+      [t],
+    );
+
+    const { manager } = useRemirror({
+      extensions: () => [
+        // Some extensions here
+      ],
+    });
+
+    return <Remirror manager={manager} i18nFormat={i18nFormat} />;
+  };
+  ```
+
+  `react-i18next`, like many i18n solutions, requires you define your translatable strings up front, via key-value pairs.
+
+  To facilitate this, the `@remirror/messages` package **now exposes the translatable strings as JSON files**.
+
+  These messages are provided as key value pairs, so they can be loaded into your chosen i18n library.
+
+  Currently, only English locale (`en`) messages are provided.
+
+  ```ts
+  import i18n from 'i18next';
+  import ICU from 'i18next-icu';
+  import { initReactI18next } from 'react-i18next';
+  import type { I18nFormatter } from 'remirror';
+  import allMessages from '@remirror/messages/en/all-messages.json';
+
+  // or messages for specific extension(s)
+  // import boldMessages from '@remirror/messages/en/extension-bold-messages.json';
+  // import italicMessages from '@remirror/messages/en/extension-italic-messages.json';
+
+  i18n
+    .use(ICU) // Required if using the provided messages from @remirror/messages
+    .use(initReactI18next)
+    .init({
+      resources: {
+        en: {
+          translation: allMessages,
+        },
+      },
+      lng: 'en',
+      fallbackLng: 'en',
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+  ```
+
+  You do not _have_ to use the messages in these key value pairs, you could replace them with your own. They are provided for convenience, and to expose the message IDs Remirror uses.
+
+  ### Restoring the previous behaviour
+
+  If you wish to carry on using Remirror's default i18n solution (powered by Lingui), **you will need to install the `@remirror/i18n` package, as this is now an optional package**.
+
+  #### Example: Continue using `@remirror/i18n`
+
+  Install the i18n package, as it is now optional, and not installed by default.
+
+  ```sh
+  npm add @remirror/i18n
+  ```
+
+  ```tsx
+  import { i18nFormat } from '@remirror/i18n';
+  import { Remirror, useRemirror } from '@remirror/react';
+
+  const Editor: React.FC = () => {
+    const { manager } = useRemirror({
+      extensions: () => [
+        // Some extensions here
+      ],
+    });
+
+    return <Remirror manager={manager} i18nFormat={i18nFormat} />;
+  };
+  ```
+
+  ## The `useI18n` hook has a different return value
+
+  As a consequence of the above, the `useI18n` no longer returns an _object_ containing the Lingui `i18n` instance.
+
+  It now returns the `i18nFormat` _function_ that was passed to the root `<Remirror />` component.
+
+  #### Before
+
+  ```tsx
+  const { t, i18n } = useI18n();
+  ```
+
+  #### After
+
+  ```tsx
+  const t = useI18n();
+
+  // Where "t" is the same function that was passed via `i18nFormat`
+  ```
+
+  ## Feedback
+
+  As always, we value your feedback on how we can improve Remirror. Please raise your proposals via [issues on GitHub](https://github.com/remirror/remirror/issues) or via our [Discord server](https://remirror.io/chat).
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-types@3.0.0-beta.0
+  - @remirror/core-utils@3.0.0-beta.0
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/extension-bidi@3.0.0-beta.0
+  - @remirror/extension-callout@3.0.0-beta.0
+  - @remirror/extension-columns@3.0.0-beta.0
+  - @remirror/extension-heading@3.0.0-beta.0
+  - @remirror/extension-text-color@3.0.0-beta.0
+  - @remirror/extension-entity-reference@3.0.0-beta.0
+  - @remirror/extension-horizontal-rule@3.0.0-beta.0
+  - @remirror/extension-node-formatting@3.0.0-beta.0
+  - @remirror/extension-text-highlight@3.0.0-beta.0
+  - @remirror/extension-collaboration@3.0.0-beta.0
+  - @remirror/extension-trailing-node@3.0.0-beta.0
+  - @remirror/extension-mention-atom@3.0.0-beta.0
+  - @remirror/extension-codemirror5@3.0.0-beta.0
+  - @remirror/extension-drop-cursor@3.0.0-beta.0
+  - @remirror/extension-font-family@3.0.0-beta.0
+  - @remirror/extension-placeholder@3.0.0-beta.0
+  - @remirror/extension-annotation@3.0.0-beta.0
+  - @remirror/extension-blockquote@3.0.0-beta.0
+  - @remirror/extension-code-block@3.0.0-beta.0
+  - @remirror/extension-gap-cursor@3.0.0-beta.0
+  - @remirror/extension-hard-break@3.0.0-beta.0
+  - @remirror/extension-positioner@3.0.0-beta.0
+  - @remirror/extension-whitespace@3.0.0-beta.0
+  - @remirror/extension-epic-mode@3.0.0-beta.0
+  - @remirror/extension-font-size@3.0.0-beta.0
+  - @remirror/extension-paragraph@3.0.0-beta.0
+  - @remirror/extension-shortcuts@3.0.0-beta.0
+  - @remirror/extension-text-case@3.0.0-beta.0
+  - @remirror/extension-underline@3.0.0-beta.0
+  - @remirror/extension-markdown@3.0.0-beta.0
+  - @remirror/extension-history@3.0.0-beta.0
+  - @remirror/extension-mention@3.0.0-beta.0
+  - @remirror/preset-formatting@3.0.0-beta.0
+  - @remirror/extension-events@3.0.0-beta.0
+  - @remirror/extension-italic@3.0.0-beta.0
+  - @remirror/extension-search@3.0.0-beta.0
+  - @remirror/extension-strike@3.0.0-beta.0
+  - @remirror/extension-tables@3.0.0-beta.0
+  - @remirror/extension-embed@3.0.0-beta.0
+  - @remirror/extension-emoji@3.0.0-beta.0
+  - @remirror/extension-image@3.0.0-beta.0
+  - @remirror/core-constants@3.0.0-beta.0
+  - @remirror/extension-bold@3.0.0-beta.0
+  - @remirror/extension-code@3.0.0-beta.0
+  - @remirror/extension-diff@3.0.0-beta.0
+  - @remirror/extension-link@3.0.0-beta.0
+  - @remirror/extension-list@3.0.0-beta.0
+  - @remirror/extension-text@3.0.0-beta.0
+  - @remirror/preset-wysiwyg@3.0.0-beta.0
+  - @remirror/extension-doc@3.0.0-beta.0
+  - @remirror/extension-sub@3.0.0-beta.0
+  - @remirror/extension-sup@3.0.0-beta.0
+  - @remirror/extension-yjs@4.0.0-beta.0
+  - @remirror/core-helpers@4.0.0-beta.0
+  - @remirror/preset-core@3.0.0-beta.0
+  - @remirror/icons@3.0.0-beta.0
+  - @remirror/theme@3.0.0-beta.0
+  - @remirror/dom@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+
 ## 2.0.40
 
 > 2024-07-18
@@ -4162,7 +5340,9 @@
   ```ts
   import { LinkExtension, TOP_50_TLDS } from 'remirror/extensions';
   const extensions = () => [
-    new LinkExtension({ autoLinkAllowedTLDs: [...TOP_50_TLDS, 'london', 'tech'] }),
+    new LinkExtension({
+      autoLinkAllowedTLDs: [...TOP_50_TLDS, 'london', 'tech'],
+    }),
   ];
   ```
 
@@ -5577,7 +6757,9 @@
   import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
   function Editor(): JSX.Element {
-    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    const { manager } = useRemirror({
+      builtin: { persistentSelectionClass: 'selection' },
+    });
     return (
       <ThemeProvider>
         <Remirror manager={manager} />

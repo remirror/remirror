@@ -62,16 +62,16 @@ type Chainable = ChainedFromExtensions<FirstExtension | SecondExtension | ThirdE
 type Commands = CommandsFromExtensions<FirstExtension | SecondExtension | ThirdExtension>;
 
 const commands: Commands = object();
-const isEnabled: boolean = commands.free.isEnabled();
+const isEnabled: boolean = commands.free.enabled();
 commands.free('');
 // @ts-expect-error
 commands.free(0);
 const commandOutput: void = commands.free();
 commands.notChainable('works');
 
-const love: Chainable['love'] = (value: number) => ({} as Chainable);
+const love: Chainable['love'] = (value: number) => ({}) as Chainable;
 // @ts-expect-error
-const loveFail: Chainable['love'] = (value: string) => ({} as Chainable);
+const loveFail: Chainable['love'] = (value: string) => ({}) as Chainable;
 
 const chain: Chainable = object();
 
@@ -84,7 +84,7 @@ chain.free('asdf').love(20).notChainable().run();
 // Any extension should be loose.
 const anyCommands: CommandsFromExtensions<AnyExtension> = object();
 const doSomethingReturn: void = anyCommands.doSomething?.();
-const doSomethingIsEnabled: boolean | undefined = anyCommands.doSomething?.isEnabled();
+const doSomethingIsEnabled: boolean | undefined = anyCommands.doSomething?.enabled();
 
 class SubbedExtension extends PlainExtension {
   get name() {

@@ -1,5 +1,416 @@
 # @remirror/preset-wysiwyg
 
+## 3.0.0-rc.9
+
+> 2024-07-25
+
+### Patch Changes
+
+- Updated dependencies [b23f87320]
+- Updated dependencies [5c686c3f3]
+  - @remirror/extension-code-block@3.0.0-rc.9
+
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/extension-bidi@3.0.0-beta.8
+  - @remirror/extension-blockquote@3.0.0-beta.8
+  - @remirror/extension-bold@3.0.0-beta.8
+  - @remirror/extension-code@3.0.0-beta.8
+  - @remirror/extension-code-block@3.0.0-beta.8
+  - @remirror/extension-drop-cursor@3.0.0-beta.8
+  - @remirror/extension-embed@3.0.0-beta.8
+  - @remirror/extension-find@1.0.0-beta.8
+  - @remirror/extension-gap-cursor@3.0.0-beta.8
+  - @remirror/extension-hard-break@3.0.0-beta.8
+  - @remirror/extension-heading@3.0.0-beta.8
+  - @remirror/extension-horizontal-rule@3.0.0-beta.8
+  - @remirror/extension-image@3.0.0-beta.8
+  - @remirror/extension-italic@3.0.0-beta.8
+  - @remirror/extension-link@3.0.0-beta.8
+  - @remirror/extension-list@3.0.0-beta.8
+  - @remirror/extension-shortcuts@3.0.0-beta.8
+  - @remirror/extension-strike@3.0.0-beta.8
+  - @remirror/extension-trailing-node@3.0.0-beta.8
+  - @remirror/extension-underline@3.0.0-beta.8
+  - @remirror/preset-core@3.0.0-beta.8
+
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-horizontal-rule@3.0.0-beta.7
+  - @remirror/extension-trailing-node@3.0.0-beta.7
+  - @remirror/extension-drop-cursor@3.0.0-beta.7
+  - @remirror/extension-blockquote@3.0.0-beta.7
+  - @remirror/extension-code-block@3.0.0-beta.7
+  - @remirror/extension-gap-cursor@3.0.0-beta.7
+  - @remirror/extension-hard-break@3.0.0-beta.7
+  - @remirror/extension-shortcuts@3.0.0-beta.7
+  - @remirror/extension-underline@3.0.0-beta.7
+  - @remirror/extension-heading@3.0.0-beta.7
+  - @remirror/extension-italic@3.0.0-beta.7
+  - @remirror/extension-strike@3.0.0-beta.7
+  - @remirror/extension-embed@3.0.0-beta.7
+  - @remirror/extension-image@3.0.0-beta.7
+  - @remirror/extension-bidi@3.0.0-beta.7
+  - @remirror/extension-bold@3.0.0-beta.7
+  - @remirror/extension-code@3.0.0-beta.7
+  - @remirror/extension-find@1.0.0-beta.7
+  - @remirror/extension-link@3.0.0-beta.7
+  - @remirror/extension-list@3.0.0-beta.7
+  - @remirror/preset-core@3.0.0-beta.7
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-horizontal-rule@3.0.0-beta.6
+  - @remirror/extension-trailing-node@3.0.0-beta.6
+  - @remirror/extension-drop-cursor@3.0.0-beta.6
+  - @remirror/extension-blockquote@3.0.0-beta.6
+  - @remirror/extension-code-block@3.0.0-beta.6
+  - @remirror/extension-gap-cursor@3.0.0-beta.6
+  - @remirror/extension-hard-break@3.0.0-beta.6
+  - @remirror/extension-shortcuts@3.0.0-beta.6
+  - @remirror/extension-underline@3.0.0-beta.6
+  - @remirror/extension-heading@3.0.0-beta.6
+  - @remirror/extension-italic@3.0.0-beta.6
+  - @remirror/extension-strike@3.0.0-beta.6
+  - @remirror/extension-embed@3.0.0-beta.6
+  - @remirror/extension-image@3.0.0-beta.6
+  - @remirror/extension-bidi@3.0.0-beta.6
+  - @remirror/extension-bold@3.0.0-beta.6
+  - @remirror/extension-code@3.0.0-beta.6
+  - @remirror/extension-find@1.0.0-beta.6
+  - @remirror/extension-link@3.0.0-beta.6
+  - @remirror/extension-list@3.0.0-beta.6
+  - @remirror/preset-core@3.0.0-beta.6
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Major Changes
+
+- ae349d806: ## 💥 BREAKING CHANGES! 💥
+
+  ## Removed deprecated `SearchExtension` in favour of `FindExtension`
+
+  TLDR: `SearchExtension` has been removed from Remirror v3 completely, please use `FindExtension` instead.
+
+  `SearchExtension` has been deprecated since we released `FindExtension`, as `FindExtension` offers more features and is more performant.
+
+  Furthermore, as `SearchExtension` was previously exposed directly via `remirror/extensions`, and configurable via `presetWysiwyg` - we have updated both of these access points to expose `FindExtension` instead.
+
+  If using `presetWysiwyg`, the config options for `SearchExtension` will need updating to their `FindExtension` equivalents.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import React from 'react';
+  import { wysiwygPreset } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+
+  const extensions = () =>
+    wysiwygPreset({
+      alwaysSearch: true,
+    });
+
+  const UsingWysiwygPreset = (): JSX.Element => {
+    const { manager, state, onChange } = useRemirror({
+      extensions: extensions,
+      content: '<p>Text to search</p>',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror
+          manager={manager}
+          autoFocus
+          onChange={onChange}
+          initialContent={state}
+          autoRender='end'
+        />
+      </ThemeProvider>
+    );
+  };
+
+  export default UsingWysiwygPreset;
+  ```
+
+  #### After: Diff for Remirror v3 example
+
+  ```diff
+  import React from 'react';
+  import { wysiwygPreset } from "remirror/extensions";
+  import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+
+  const extensions = () => wysiwygPreset({
+  -  alwaysSearch: true,
+  +  alwaysFind: true,
+  });
+
+  // Rest as above
+  ```
+
+  ## Features
+
+  To make the find functionality easy to use "out-of-the-box" we have added a new `<FindButton />` component to the _optional_ `@remirror/react-ui` package.
+
+  This button can be used within a `Toolbar` (also exposed via `@remirror/react-ui`) to present a find and replace popup in the top right of your editor.
+
+  ![A screenshot of the find and replace popup from the FindButton](https://github.com/remirror/remirror/assets/2003804/eaada9b5-fc85-4705-876a-e994d82c5fa8)
+
+  ### Example usage of `FindButton`
+
+  This following example is taken from our [Storybook](https://remirror.vercel.app/?path=/story/extensions-find--basic).
+
+  ```tsx
+  import 'remirror/styles/all.css';
+
+  import React from 'react';
+  import { wysiwygPreset } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { FindButton, Toolbar } from '@remirror/react-ui';
+
+  const FindButtonExample: React.FC = () => {
+    const { manager, state, onChange } = useRemirror({
+      extensions: wysiwygPreset,
+      content:
+        '<p>Using the <code>&lt;FindButton /&gt;</code> from <code>@remirror/react-ui</code>.',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror
+          manager={manager}
+          autoFocus
+          onChange={onChange}
+          initialContent={state}
+          autoRender='end'
+        >
+          <Toolbar>
+            <FindButton />
+          </Toolbar>
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default FindButtonExample;
+  ```
+
+### Patch Changes
+
+- Updated dependencies [ae349d806]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/extension-find@1.0.0-beta.5
+  - @remirror/extension-code-block@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/preset-core@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/extension-bidi@3.0.0-beta.5
+  - @remirror/extension-blockquote@3.0.0-beta.5
+  - @remirror/extension-bold@3.0.0-beta.5
+  - @remirror/extension-code@3.0.0-beta.5
+  - @remirror/extension-drop-cursor@3.0.0-beta.5
+  - @remirror/extension-embed@3.0.0-beta.5
+  - @remirror/extension-gap-cursor@3.0.0-beta.5
+  - @remirror/extension-hard-break@3.0.0-beta.5
+  - @remirror/extension-heading@3.0.0-beta.5
+  - @remirror/extension-horizontal-rule@3.0.0-beta.5
+  - @remirror/extension-image@3.0.0-beta.5
+  - @remirror/extension-italic@3.0.0-beta.5
+  - @remirror/extension-link@3.0.0-beta.5
+  - @remirror/extension-list@3.0.0-beta.5
+  - @remirror/extension-shortcuts@3.0.0-beta.5
+  - @remirror/extension-strike@3.0.0-beta.5
+  - @remirror/extension-trailing-node@3.0.0-beta.5
+  - @remirror/extension-underline@3.0.0-beta.5
+
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-horizontal-rule@3.0.0-beta.4
+  - @remirror/extension-trailing-node@3.0.0-beta.4
+  - @remirror/extension-drop-cursor@3.0.0-beta.4
+  - @remirror/extension-blockquote@3.0.0-beta.4
+  - @remirror/extension-code-block@3.0.0-beta.4
+  - @remirror/extension-gap-cursor@3.0.0-beta.4
+  - @remirror/extension-hard-break@3.0.0-beta.4
+  - @remirror/extension-shortcuts@3.0.0-beta.4
+  - @remirror/extension-underline@3.0.0-beta.4
+  - @remirror/extension-heading@3.0.0-beta.4
+  - @remirror/extension-italic@3.0.0-beta.4
+  - @remirror/extension-search@3.0.0-beta.4
+  - @remirror/extension-strike@3.0.0-beta.4
+  - @remirror/extension-embed@3.0.0-beta.4
+  - @remirror/extension-image@3.0.0-beta.4
+  - @remirror/extension-bidi@3.0.0-beta.4
+  - @remirror/extension-bold@3.0.0-beta.4
+  - @remirror/extension-code@3.0.0-beta.4
+  - @remirror/extension-link@3.0.0-beta.4
+  - @remirror/extension-list@3.0.0-beta.4
+  - @remirror/preset-core@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+  - @remirror/extension-bidi@3.0.0-beta.3
+  - @remirror/extension-blockquote@3.0.0-beta.3
+  - @remirror/extension-bold@3.0.0-beta.3
+  - @remirror/extension-code@3.0.0-beta.3
+  - @remirror/extension-code-block@3.0.0-beta.3
+  - @remirror/extension-drop-cursor@3.0.0-beta.3
+  - @remirror/extension-embed@3.0.0-beta.3
+  - @remirror/extension-gap-cursor@3.0.0-beta.3
+  - @remirror/extension-hard-break@3.0.0-beta.3
+  - @remirror/extension-heading@3.0.0-beta.3
+  - @remirror/extension-horizontal-rule@3.0.0-beta.3
+  - @remirror/extension-image@3.0.0-beta.3
+  - @remirror/extension-italic@3.0.0-beta.3
+  - @remirror/extension-link@3.0.0-beta.3
+  - @remirror/extension-list@3.0.0-beta.3
+  - @remirror/extension-search@3.0.0-beta.3
+  - @remirror/extension-shortcuts@3.0.0-beta.3
+  - @remirror/extension-strike@3.0.0-beta.3
+  - @remirror/extension-trailing-node@3.0.0-beta.3
+  - @remirror/extension-underline@3.0.0-beta.3
+  - @remirror/preset-core@3.0.0-beta.3
+
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+  - @remirror/extension-bidi@3.0.0-beta.2
+  - @remirror/extension-blockquote@3.0.0-beta.2
+  - @remirror/extension-bold@3.0.0-beta.2
+  - @remirror/extension-code@3.0.0-beta.2
+  - @remirror/extension-code-block@3.0.0-beta.2
+  - @remirror/extension-drop-cursor@3.0.0-beta.2
+  - @remirror/extension-embed@3.0.0-beta.2
+  - @remirror/extension-gap-cursor@3.0.0-beta.2
+  - @remirror/extension-hard-break@3.0.0-beta.2
+  - @remirror/extension-heading@3.0.0-beta.2
+  - @remirror/extension-horizontal-rule@3.0.0-beta.2
+  - @remirror/extension-image@3.0.0-beta.2
+  - @remirror/extension-italic@3.0.0-beta.2
+  - @remirror/extension-link@3.0.0-beta.2
+  - @remirror/extension-list@3.0.0-beta.2
+  - @remirror/extension-search@3.0.0-beta.2
+  - @remirror/extension-shortcuts@3.0.0-beta.2
+  - @remirror/extension-strike@3.0.0-beta.2
+  - @remirror/extension-trailing-node@3.0.0-beta.2
+  - @remirror/extension-underline@3.0.0-beta.2
+  - @remirror/preset-core@3.0.0-beta.2
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [d3954076f]
+- Updated dependencies [0e4abae1b]
+  - @remirror/pm@3.0.0-beta.1
+  - @remirror/core@3.0.0-beta.1
+  - @remirror/preset-core@3.0.0-beta.1
+  - @remirror/extension-bidi@3.0.0-beta.1
+  - @remirror/extension-blockquote@3.0.0-beta.1
+  - @remirror/extension-bold@3.0.0-beta.1
+  - @remirror/extension-code@3.0.0-beta.1
+  - @remirror/extension-code-block@3.0.0-beta.1
+  - @remirror/extension-drop-cursor@3.0.0-beta.1
+  - @remirror/extension-embed@3.0.0-beta.1
+  - @remirror/extension-gap-cursor@3.0.0-beta.1
+  - @remirror/extension-hard-break@3.0.0-beta.1
+  - @remirror/extension-heading@3.0.0-beta.1
+  - @remirror/extension-horizontal-rule@3.0.0-beta.1
+  - @remirror/extension-image@3.0.0-beta.1
+  - @remirror/extension-italic@3.0.0-beta.1
+  - @remirror/extension-link@3.0.0-beta.1
+  - @remirror/extension-list@3.0.0-beta.1
+  - @remirror/extension-search@3.0.0-beta.1
+  - @remirror/extension-shortcuts@3.0.0-beta.1
+  - @remirror/extension-strike@3.0.0-beta.1
+  - @remirror/extension-trailing-node@3.0.0-beta.1
+  - @remirror/extension-underline@3.0.0-beta.1
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/extension-bidi@3.0.0-beta.0
+  - @remirror/extension-heading@3.0.0-beta.0
+  - @remirror/extension-horizontal-rule@3.0.0-beta.0
+  - @remirror/extension-trailing-node@3.0.0-beta.0
+  - @remirror/extension-drop-cursor@3.0.0-beta.0
+  - @remirror/extension-blockquote@3.0.0-beta.0
+  - @remirror/extension-code-block@3.0.0-beta.0
+  - @remirror/extension-gap-cursor@3.0.0-beta.0
+  - @remirror/extension-hard-break@3.0.0-beta.0
+  - @remirror/extension-shortcuts@3.0.0-beta.0
+  - @remirror/extension-underline@3.0.0-beta.0
+  - @remirror/extension-italic@3.0.0-beta.0
+  - @remirror/extension-search@3.0.0-beta.0
+  - @remirror/extension-strike@3.0.0-beta.0
+  - @remirror/extension-embed@3.0.0-beta.0
+  - @remirror/extension-image@3.0.0-beta.0
+  - @remirror/extension-bold@3.0.0-beta.0
+  - @remirror/extension-code@3.0.0-beta.0
+  - @remirror/extension-link@3.0.0-beta.0
+  - @remirror/extension-list@3.0.0-beta.0
+  - @remirror/preset-core@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+
 ## 2.0.19
 
 > 2023-04-26
@@ -2279,7 +2690,9 @@
   ```ts
   import { LinkExtension, TOP_50_TLDS } from 'remirror/extensions';
   const extensions = () => [
-    new LinkExtension({ autoLinkAllowedTLDs: [...TOP_50_TLDS, 'london', 'tech'] }),
+    new LinkExtension({
+      autoLinkAllowedTLDs: [...TOP_50_TLDS, 'london', 'tech'],
+    }),
   ];
   ```
 
@@ -3111,7 +3524,9 @@
   import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
   function Editor(): JSX.Element {
-    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    const { manager } = useRemirror({
+      builtin: { persistentSelectionClass: 'selection' },
+    });
     return (
       <ThemeProvider>
         <Remirror manager={manager} />

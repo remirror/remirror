@@ -1,5 +1,21 @@
 # create-context-state
 
+## 2.0.3-beta.1
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+
+## 2.0.3-beta.0
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+
 ## 2.0.2
 
 > 2023-05-24

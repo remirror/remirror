@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-mention-atom",
-  "version": "2.0.19",
+  "version": "3.0.0-beta.8",
   "description": "Atom mentions for the remirror wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__extension-mention-atom",
   "repository": {
@@ -29,18 +29,22 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.19",
-    "@remirror/extension-events": "^2.1.17",
-    "@remirror/messages": "^2.0.6",
-    "@remirror/theme": "^2.0.9"
+    "@remirror/core": "3.0.0-beta.8",
+    "@remirror/extension-events": "3.0.0-beta.8",
+    "@remirror/messages": "3.0.0-beta.6",
+    "@remirror/theme": "3.0.0-beta.5"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.9"
+    "@remirror/cli": "1.1.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.6"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.9"
+    "@remirror/pm": "^3.0.0-beta.6"
   },
   "publishConfig": {
     "access": "public",
@@ -58,6 +62,6 @@
     "types": "./dist/remirror-extension-mention-atom.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

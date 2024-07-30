@@ -1,6 +1,6 @@
 {
   "name": "@remirror/messages",
-  "version": "2.0.6",
+  "version": "3.0.0-beta.6",
   "description": "Internalization strings which are used throughout the remirror core codebase.",
   "keywords": [
     "remirror"
@@ -23,6 +23,7 @@
       "import": "./dist/remirror-messages.js",
       "require": "./dist/remirror-messages.cjs"
     },
+    "./en/*.json": "./en/*.json",
     "./package.json": "./package.json"
   },
   "main": "./dist/remirror-messages.cjs",
@@ -30,21 +31,25 @@
   "types": "./dist-types/index.d.ts",
   "files": [
     "dist",
-    "dist-types"
+    "dist-types",
+    "en"
   ],
   "scripts": {
-    "build": "babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.cjs --format cjs && cp public/* dist/"
+    "build": "tsc -b src && babel -x .ts,.tsx src --out-dir dist-tmp && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.js --format es && rollup -c rollup.config.js dist-tmp/index.js --file dist/remirror-messages.cjs --format cjs && cp public/* dist/",
+    "generate": "tsx scripts/messages-to-json.ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@lingui/core": "^4.2.0",
-    "@remirror/core-helpers": "^3.0.0"
+    "@remirror/core-helpers": "4.0.0-beta.5",
+    "@remirror/core-types": "3.0.0-beta.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.5",
     "@babel/preset-typescript": "^7.21.5",
+    "@remirror/cli": "1.1.0-beta.1",
     "babel-plugin-macros": "^3.1.0",
-    "rollup": "^3.23.0"
+    "rollup": "^3.23.0",
+    "tsx": "^4.6.2"
   },
   "publishConfig": {
     "access": "public",
@@ -54,6 +59,7 @@
         "import": "./dist/remirror-messages.js",
         "require": "./dist/remirror-messages.cjs"
       },
+      "./en/*.json": "./en/*.json",
       "./package.json": "./package.json"
     },
     "main": "./dist/remirror-messages.cjs",
@@ -62,6 +68,25 @@
     "types": "./dist/remirror-messages.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "50 KB"
+    "sizeLimit": "50 KB",
+    "tsconfigs": {
+      "src": false,
+      "./": {
+        "compilerOptions": {
+          "types": [
+            "node"
+          ],
+          "allowJs": true,
+          "checkJs": true,
+          "noEmit": false
+        },
+        "exclude": [
+          "src"
+        ],
+        "include": [
+          "scripts"
+        ]
+      }
+    }
   }
 }

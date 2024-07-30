@@ -637,26 +637,6 @@ export class ProsemirrorTestChain {
   }
 
   /**
-   * Jump to the specified position in the editor.
-   *
-   * @param start - a number position or the shorthand 'start' | 'end'
-   * @param [end] - the option end position of the new selection
-   *
-   * @deprecated - use `selectText` instead.
-   */
-  jumpTo(start: 'start' | 'end' | number, end?: number): this {
-    if (start === 'start') {
-      dispatchTextSelection({ view: this.view, start: 1 });
-    } else if (start === 'end') {
-      dispatchTextSelection({ view: this.view, start: this.doc.content.size - 1 });
-    } else {
-      dispatchTextSelection({ view: this.view, start, end });
-    }
-
-    return this;
-  }
-
-  /**
    * Selects the text between the provided selection primitive.
    */
   readonly selectText = (selection: PrimitiveSelection): this => {

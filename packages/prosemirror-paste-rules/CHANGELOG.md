@@ -1,5 +1,81 @@
 # prosemirror-paste-rules
 
+## 3.0.0-beta.6
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core-helpers@4.0.0-beta.5
+
+## 3.0.0-beta.5
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/core-constants@3.0.0-beta.4
+  - @remirror/core-helpers@4.0.0-beta.4
+
+## 3.0.0-beta.4
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/core-constants@3.0.0-beta.3
+  - @remirror/core-helpers@4.0.0-beta.3
+
+## 3.0.0-beta.3
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/core-helpers@4.0.0-beta.2
+
+## 3.0.0-beta.2
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core-constants@3.0.0-beta.1
+  - @remirror/core-helpers@4.0.0-beta.1
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- b1d683fdb: Update ProseMirror packages to latest versions.
+
+  Use newly provided `Transform.setDocAttribute` to update doc node attributes, rather than custom step type.
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-constants@3.0.0-beta.0
+  - @remirror/core-helpers@4.0.0-beta.0
+
 ## 2.0.8
 
 > 2024-07-17

@@ -1,5 +1,180 @@
 # @remirror/extension-react-tables
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/core-utils@3.0.0-beta.6
+  - @remirror/icons@3.0.0-beta.5
+  - @remirror/messages@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/react-hooks@3.0.0-beta.8
+  - @remirror/extension-positioner@3.0.0-beta.8
+  - @remirror/extension-tables@3.0.0-beta.8
+  - @remirror/react-components@3.0.0-beta.8
+  - @remirror/react-core@3.0.0-beta.8
+
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-positioner@3.0.0-beta.7
+  - @remirror/extension-tables@3.0.0-beta.7
+  - @remirror/react-components@3.0.0-beta.7
+  - @remirror/react-hooks@3.0.0-beta.7
+  - @remirror/core-utils@3.0.0-beta.5
+  - @remirror/react-core@3.0.0-beta.7
+  - @remirror/messages@3.0.0-beta.5
+  - @remirror/icons@3.0.0-beta.4
+  - @remirror/theme@3.0.0-beta.5
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-positioner@3.0.0-beta.6
+  - @remirror/extension-tables@3.0.0-beta.6
+  - @remirror/react-components@3.0.0-beta.6
+  - @remirror/react-hooks@3.0.0-beta.6
+  - @remirror/core-utils@3.0.0-beta.4
+  - @remirror/react-core@3.0.0-beta.6
+  - @remirror/messages@3.0.0-beta.4
+  - @remirror/icons@3.0.0-beta.3
+  - @remirror/theme@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [ae349d806]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [9549c8f88]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/react-hooks@3.0.0-beta.5
+  - @remirror/extension-positioner@3.0.0-beta.5
+  - @remirror/react-components@3.0.0-beta.5
+  - @remirror/icons@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/theme@3.0.0-beta.3
+  - @remirror/extension-tables@3.0.0-beta.5
+  - @remirror/react-core@3.0.0-beta.5
+  - @remirror/core-utils@3.0.0-beta.3
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/messages@3.0.0-beta.3
+
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-positioner@3.0.0-beta.4
+  - @remirror/extension-tables@3.0.0-beta.4
+  - @remirror/react-components@3.0.0-beta.4
+  - @remirror/react-hooks@3.0.0-beta.4
+  - @remirror/core-utils@3.0.0-beta.2
+  - @remirror/react-core@3.0.0-beta.4
+  - @remirror/messages@3.0.0-beta.2
+  - @remirror/icons@3.0.0-beta.1
+  - @remirror/theme@3.0.0-beta.2
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+  - @remirror/extension-positioner@3.0.0-beta.3
+  - @remirror/extension-tables@3.0.0-beta.3
+  - @remirror/react-components@3.0.0-beta.3
+  - @remirror/react-core@3.0.0-beta.3
+  - @remirror/react-hooks@3.0.0-beta.3
+
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+  - @remirror/extension-positioner@3.0.0-beta.2
+  - @remirror/extension-tables@3.0.0-beta.2
+  - @remirror/react-components@3.0.0-beta.2
+  - @remirror/react-core@3.0.0-beta.2
+  - @remirror/react-hooks@3.0.0-beta.2
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [d3954076f]
+- Updated dependencies [0e4abae1b]
+- Updated dependencies [60a3796b0]
+  - @remirror/pm@3.0.0-beta.1
+  - @remirror/core@3.0.0-beta.1
+  - @remirror/react-components@3.0.0-beta.1
+  - @remirror/core-utils@3.0.0-beta.1
+  - @remirror/extension-positioner@3.0.0-beta.1
+  - @remirror/extension-tables@3.0.0-beta.1
+  - @remirror/react-core@3.0.0-beta.1
+  - @remirror/react-hooks@3.0.0-beta.1
+  - @remirror/messages@3.0.0-beta.1
+  - @remirror/theme@3.0.0-beta.1
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-utils@3.0.0-beta.0
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/messages@3.0.0-beta.0
+  - @remirror/react-components@3.0.0-beta.0
+  - @remirror/react-core@3.0.0-beta.0
+  - @remirror/react-hooks@3.0.0-beta.0
+  - @remirror/extension-positioner@3.0.0-beta.0
+  - @remirror/extension-tables@3.0.0-beta.0
+  - @remirror/icons@3.0.0-beta.0
+  - @remirror/theme@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+
 ## 2.2.21
 
 > 2024-07-19

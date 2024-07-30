@@ -1,25 +1,17 @@
 import React, { ComponentType, FunctionComponent, RefCallback } from 'react';
+import { ErrorConstant, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
 import {
-  Decoration,
-  EditorView,
   entries,
-  ErrorConstant,
-  GetFixed,
   invariant,
-  isDomNode,
-  isElementDomNode,
   isFunction,
-  isNodeOfType,
   isPlainObject,
   isString,
   kebabCase,
-  NodeView,
-  NodeWithAttributes,
   pascalCase,
-  ProsemirrorAttributes,
-  ProsemirrorNode,
-  SELECTED_NODE_CLASS_NAME,
-} from '@remirror/core';
+} from '@remirror/core-helpers';
+import { GetFixed, NodeWithAttributes, ProsemirrorAttributes } from '@remirror/core-types';
+import { isDomNode, isElementDomNode, isNodeOfType } from '@remirror/core-utils';
+import { Decoration, EditorView, NodeView, ProsemirrorNode } from '@remirror/pm';
 import { DOMSerializer } from '@remirror/pm/model';
 import { NodeSelection } from '@remirror/pm/state';
 
@@ -253,9 +245,7 @@ export class ReactNodeView implements NodeView {
 
     invariant(this.#contentDOMWrapper, {
       code: ErrorConstant.REACT_NODE_VIEW,
-      message: `You have applied a ref to a node view provided for '${
-        this.#node.type.name
-      }' which doesn't support content.`,
+      message: `You have applied a ref to a node view provided for '${this.#node.type.name}' which doesn't support content.`,
     });
 
     node.append(this.#contentDOMWrapper);
@@ -271,9 +261,7 @@ export class ReactNodeView implements NodeView {
 
     invariant(ReactComponent, {
       code: ErrorConstant.REACT_NODE_VIEW,
-      message: `The custom react node view provided for ${
-        this.#node.type.name
-      } doesn't have a valid ReactComponent`,
+      message: `The custom react node view provided for ${this.#node.type.name} doesn't have a valid ReactComponent`,
     });
 
     return (

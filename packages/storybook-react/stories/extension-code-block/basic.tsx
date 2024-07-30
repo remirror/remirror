@@ -14,7 +14,7 @@ const extensions = () => [
 ];
 
 const content = `
-<pre><code data-code-block-language="typescript">function sayHello {
+<pre><code data-code-block-language="typescript">function sayHello() {
   console.log('Hello world, TypeScript!')
 }</code></pre>
 <pre><code data-code-block-language="markdown">Hello _world_, **Markdown**</code></pre>

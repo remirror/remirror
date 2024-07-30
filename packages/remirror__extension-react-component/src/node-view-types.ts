@@ -1,13 +1,13 @@
 import type { ComponentType, RefCallback } from 'react';
-import type {
-  Decoration,
+import {
   Dynamic,
   EditorViewProps,
   GetFixed,
   NodeWithAttributesProps,
   ProsemirrorAttributes,
   Static,
-} from '@remirror/core';
+} from '@remirror/core-types';
+import { Decoration } from '@remirror/pm';
 
 import type { PortalContainer } from './portals';
 

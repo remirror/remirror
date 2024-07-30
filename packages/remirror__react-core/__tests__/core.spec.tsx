@@ -3,13 +3,14 @@ import { RemirrorTestChain } from 'jest-remirror';
 import React, { useState } from 'react';
 import { hideConsoleError, rafMock } from 'testing';
 import { act, fireEvent, render, strictRender } from 'testing/react';
+
 import {
   createReactManager,
   ReactFrameworkOutput,
   Remirror,
   useRemirror,
   useRemirrorContext,
-} from '@remirror/react';
+} from '../';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';

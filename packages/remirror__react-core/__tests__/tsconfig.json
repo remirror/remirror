@@ -44,9 +44,6 @@
       "path": "../../remirror__extension-react-component/src"
     },
     {
-      "path": "../../remirror__i18n/src"
-    },
-    {
       "path": "../../remirror__preset-core/src"
     },
     {
@@ -60,9 +57,6 @@
     },
     {
       "path": "../../remirror__theme/src"
-    },
-    {
-      "path": "../../create-context-state/src"
     },
     {
       "path": "../../remirror__pm/src"

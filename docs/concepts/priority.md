@@ -26,9 +26,9 @@ Now your customExtension will have a priority level that's higher than other ext
 If you have full control of the extension you can also set the `defaultPriority` as a static property with the `extension.
 
 ```ts
-import { Extension, extensionDecorator, ExtensionPriority } from 'remirror';
+import { Extension, extension, ExtensionPriority } from 'remirror';
 
-@extensionDecorator({
+@extension({
   // Now every custom extension created will have a `High` priority than default.
   defaultPriority: ExtensionPriority.High,
 })

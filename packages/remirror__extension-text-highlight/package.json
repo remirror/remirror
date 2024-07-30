@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-text-highlight",
-  "version": "2.0.16",
+  "version": "3.0.0-beta.8",
   "description": "Add a color background to the selected text (or text within a specified range).",
   "keywords": [
     "remirror",
@@ -33,17 +33,21 @@
     "dist",
     "dist-types"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.19",
-    "@remirror/extension-text-color": "^2.0.17",
-    "@remirror/messages": "^2.0.6"
+    "@remirror/core": "3.0.0-beta.8",
+    "@remirror/extension-text-color": "3.0.0-beta.8",
+    "@remirror/messages": "3.0.0-beta.6"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.9"
+    "@remirror/cli": "1.1.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.6"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.9"
+    "@remirror/pm": "^3.0.0-beta.6"
   },
   "publishConfig": {
     "access": "public",
@@ -61,6 +65,6 @@
     "types": "./dist/remirror-extension-text-highlight.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "10 KB"
   }
 }

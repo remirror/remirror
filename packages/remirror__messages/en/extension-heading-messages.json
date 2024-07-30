@@ -1,0 +1,3 @@
+{
+  "extension.command.toggle-heading.label": "{level, select, 1 {Heading 1}\n                            2 {Heading 2}\n                            3 {Heading 3}\n                            4 {Heading 4}\n                            5 {Heading 5}\n                            6 {Heading 6}\n                            other {Heading}}"
+}

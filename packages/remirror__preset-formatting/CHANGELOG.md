@@ -1,5 +1,230 @@
 # @remirror/preset-formatting
 
+## 3.0.0-beta.8
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core@3.0.0-beta.8
+  - @remirror/pm@3.0.0-beta.6
+  - @remirror/extension-bold@3.0.0-beta.8
+  - @remirror/extension-columns@3.0.0-beta.8
+  - @remirror/extension-font-size@3.0.0-beta.8
+  - @remirror/extension-heading@3.0.0-beta.8
+  - @remirror/extension-italic@3.0.0-beta.8
+  - @remirror/extension-node-formatting@3.0.0-beta.8
+  - @remirror/extension-strike@3.0.0-beta.8
+  - @remirror/extension-sub@3.0.0-beta.8
+  - @remirror/extension-sup@3.0.0-beta.8
+  - @remirror/extension-text-case@3.0.0-beta.8
+  - @remirror/extension-text-color@3.0.0-beta.8
+  - @remirror/extension-text-highlight@3.0.0-beta.8
+  - @remirror/extension-underline@3.0.0-beta.8
+  - @remirror/extension-whitespace@3.0.0-beta.8
+
+## 3.0.0-beta.7
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/extension-node-formatting@3.0.0-beta.7
+  - @remirror/extension-text-highlight@3.0.0-beta.7
+  - @remirror/extension-text-color@3.0.0-beta.7
+  - @remirror/extension-whitespace@3.0.0-beta.7
+  - @remirror/extension-font-size@3.0.0-beta.7
+  - @remirror/extension-text-case@3.0.0-beta.7
+  - @remirror/extension-underline@3.0.0-beta.7
+  - @remirror/extension-columns@3.0.0-beta.7
+  - @remirror/extension-heading@3.0.0-beta.7
+  - @remirror/extension-italic@3.0.0-beta.7
+  - @remirror/extension-strike@3.0.0-beta.7
+  - @remirror/extension-bold@3.0.0-beta.7
+  - @remirror/extension-sub@3.0.0-beta.7
+  - @remirror/extension-sup@3.0.0-beta.7
+  - @remirror/core@3.0.0-beta.7
+  - @remirror/pm@3.0.0-beta.5
+
+## 3.0.0-beta.6
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/extension-node-formatting@3.0.0-beta.6
+  - @remirror/extension-text-highlight@3.0.0-beta.6
+  - @remirror/extension-text-color@3.0.0-beta.6
+  - @remirror/extension-whitespace@3.0.0-beta.6
+  - @remirror/extension-font-size@3.0.0-beta.6
+  - @remirror/extension-text-case@3.0.0-beta.6
+  - @remirror/extension-underline@3.0.0-beta.6
+  - @remirror/extension-columns@3.0.0-beta.6
+  - @remirror/extension-heading@3.0.0-beta.6
+  - @remirror/extension-italic@3.0.0-beta.6
+  - @remirror/extension-strike@3.0.0-beta.6
+  - @remirror/extension-bold@3.0.0-beta.6
+  - @remirror/extension-sub@3.0.0-beta.6
+  - @remirror/extension-sup@3.0.0-beta.6
+  - @remirror/core@3.0.0-beta.6
+  - @remirror/pm@3.0.0-beta.4
+
+## 3.0.0-beta.5
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/core@3.0.0-beta.5
+  - @remirror/pm@3.0.0-beta.3
+  - @remirror/extension-bold@3.0.0-beta.5
+  - @remirror/extension-columns@3.0.0-beta.5
+  - @remirror/extension-font-size@3.0.0-beta.5
+  - @remirror/extension-heading@3.0.0-beta.5
+  - @remirror/extension-italic@3.0.0-beta.5
+  - @remirror/extension-node-formatting@3.0.0-beta.5
+  - @remirror/extension-strike@3.0.0-beta.5
+  - @remirror/extension-sub@3.0.0-beta.5
+  - @remirror/extension-sup@3.0.0-beta.5
+  - @remirror/extension-text-case@3.0.0-beta.5
+  - @remirror/extension-text-color@3.0.0-beta.5
+  - @remirror/extension-text-highlight@3.0.0-beta.5
+  - @remirror/extension-underline@3.0.0-beta.5
+  - @remirror/extension-whitespace@3.0.0-beta.5
+
+## 3.0.0-beta.4
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/extension-node-formatting@3.0.0-beta.4
+  - @remirror/extension-text-highlight@3.0.0-beta.4
+  - @remirror/extension-text-color@3.0.0-beta.4
+  - @remirror/extension-whitespace@3.0.0-beta.4
+  - @remirror/extension-font-size@3.0.0-beta.4
+  - @remirror/extension-text-case@3.0.0-beta.4
+  - @remirror/extension-underline@3.0.0-beta.4
+  - @remirror/extension-columns@3.0.0-beta.4
+  - @remirror/extension-heading@3.0.0-beta.4
+  - @remirror/extension-italic@3.0.0-beta.4
+  - @remirror/extension-strike@3.0.0-beta.4
+  - @remirror/extension-bold@3.0.0-beta.4
+  - @remirror/extension-sub@3.0.0-beta.4
+  - @remirror/extension-sup@3.0.0-beta.4
+  - @remirror/core@3.0.0-beta.4
+  - @remirror/pm@3.0.0-beta.2
+
+## 3.0.0-beta.3
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [46e903ed9]
+  - @remirror/core@3.0.0-beta.3
+  - @remirror/extension-bold@3.0.0-beta.3
+  - @remirror/extension-columns@3.0.0-beta.3
+  - @remirror/extension-font-size@3.0.0-beta.3
+  - @remirror/extension-heading@3.0.0-beta.3
+  - @remirror/extension-italic@3.0.0-beta.3
+  - @remirror/extension-node-formatting@3.0.0-beta.3
+  - @remirror/extension-strike@3.0.0-beta.3
+  - @remirror/extension-sub@3.0.0-beta.3
+  - @remirror/extension-sup@3.0.0-beta.3
+  - @remirror/extension-text-case@3.0.0-beta.3
+  - @remirror/extension-text-color@3.0.0-beta.3
+  - @remirror/extension-text-highlight@3.0.0-beta.3
+  - @remirror/extension-underline@3.0.0-beta.3
+  - @remirror/extension-whitespace@3.0.0-beta.3
+
+## 3.0.0-beta.2
+
+> 2023-11-07
+
+### Patch Changes
+
+- Updated dependencies [47bda7aab]
+  - @remirror/core@3.0.0-beta.2
+  - @remirror/extension-bold@3.0.0-beta.2
+  - @remirror/extension-columns@3.0.0-beta.2
+  - @remirror/extension-font-size@3.0.0-beta.2
+  - @remirror/extension-heading@3.0.0-beta.2
+  - @remirror/extension-italic@3.0.0-beta.2
+  - @remirror/extension-node-formatting@3.0.0-beta.2
+  - @remirror/extension-strike@3.0.0-beta.2
+  - @remirror/extension-sub@3.0.0-beta.2
+  - @remirror/extension-sup@3.0.0-beta.2
+  - @remirror/extension-text-case@3.0.0-beta.2
+  - @remirror/extension-text-color@3.0.0-beta.2
+  - @remirror/extension-text-highlight@3.0.0-beta.2
+  - @remirror/extension-underline@3.0.0-beta.2
+  - @remirror/extension-whitespace@3.0.0-beta.2
+
+## 3.0.0-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [d3954076f]
+- Updated dependencies [0e4abae1b]
+  - @remirror/pm@3.0.0-beta.1
+  - @remirror/core@3.0.0-beta.1
+  - @remirror/extension-bold@3.0.0-beta.1
+  - @remirror/extension-columns@3.0.0-beta.1
+  - @remirror/extension-font-size@3.0.0-beta.1
+  - @remirror/extension-heading@3.0.0-beta.1
+  - @remirror/extension-italic@3.0.0-beta.1
+  - @remirror/extension-node-formatting@3.0.0-beta.1
+  - @remirror/extension-strike@3.0.0-beta.1
+  - @remirror/extension-sub@3.0.0-beta.1
+  - @remirror/extension-sup@3.0.0-beta.1
+  - @remirror/extension-text-case@3.0.0-beta.1
+  - @remirror/extension-text-color@3.0.0-beta.1
+  - @remirror/extension-text-highlight@3.0.0-beta.1
+  - @remirror/extension-underline@3.0.0-beta.1
+  - @remirror/extension-whitespace@3.0.0-beta.1
+
+## 3.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core@3.0.0-beta.0
+  - @remirror/extension-columns@3.0.0-beta.0
+  - @remirror/extension-heading@3.0.0-beta.0
+  - @remirror/extension-text-color@3.0.0-beta.0
+  - @remirror/extension-node-formatting@3.0.0-beta.0
+  - @remirror/extension-text-highlight@3.0.0-beta.0
+  - @remirror/extension-whitespace@3.0.0-beta.0
+  - @remirror/extension-font-size@3.0.0-beta.0
+  - @remirror/extension-text-case@3.0.0-beta.0
+  - @remirror/extension-underline@3.0.0-beta.0
+  - @remirror/extension-italic@3.0.0-beta.0
+  - @remirror/extension-strike@3.0.0-beta.0
+  - @remirror/extension-bold@3.0.0-beta.0
+  - @remirror/extension-sub@3.0.0-beta.0
+  - @remirror/extension-sup@3.0.0-beta.0
+  - @remirror/pm@3.0.0-beta.0
+
 ## 2.0.14
 
 > 2023-04-26

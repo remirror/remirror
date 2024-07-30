@@ -93,20 +93,8 @@ export const toggleCalloutOptions: Remirror.CommandDecoratorOptions = {
         return 'informationLine';
     }
   },
-  description: ({ t, attrs }) =>
-    t({
-      ...DESCRIPTION,
-      values: {
-        type: attrs?.type,
-      },
-    }),
-  label: ({ t, attrs }) =>
-    t({
-      ...LABEL,
-      values: {
-        type: attrs?.type,
-      },
-    }),
+  description: ({ t, attrs }) => t(DESCRIPTION, { type: attrs?.type }),
+  label: ({ t, attrs }) => t(LABEL, { type: attrs?.type }),
 };
 
 /**

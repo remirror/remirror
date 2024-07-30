@@ -9,14 +9,8 @@ import {
   OrderedListExtension,
   TaskListExtension,
 } from 'remirror/extensions';
-import {
-  EditorComponent,
-  ListButtonGroup,
-  Remirror,
-  ThemeProvider,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { EditorComponent, Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { ListButtonGroup, Toolbar } from '@remirror/react-ui';
 
 const Basic = (): JSX.Element => {
   const { manager, state } = useRemirror({

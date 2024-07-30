@@ -4,13 +4,9 @@ import './styles.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { HeadingExtension } from 'remirror/extensions';
-import {
-  HeadingLevelButtonGroup,
-  Remirror,
-  ThemeProvider,
-  Toolbar,
-  useRemirror,
-} from '@remirror/react';
+import { i18nFormat } from '@remirror/i18n';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { HeadingLevelButtonGroup, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new HeadingExtension()];
 
@@ -29,6 +25,7 @@ const Basic = (): JSX.Element => {
         onChange={onChange}
         initialContent={state}
         autoRender='end'
+        i18nFormat={i18nFormat}
       >
         <Toolbar>
           <HeadingLevelButtonGroup showAll />

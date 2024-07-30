@@ -3,7 +3,6 @@
  *
  * The `ThemeProvider` to wrap your editor with when using these components.
  */
-import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material';
 import React, {
   createContext,
   ElementType,
@@ -75,28 +74,11 @@ export const ThemeProvider = (props: ThemeProviderProps): ReactElement<ThemeProv
   const { children, as: Component = 'div' } = props;
   const { theme, style, className } = useTheme({ theme: props.theme ?? defaultRemirrorTheme });
 
-  const muiTheme = createTheme({
-    palette: {
-      primary: {
-        main: theme.color?.primary ?? defaultRemirrorTheme.color.primary,
-        dark: theme.color?.hover?.primary ?? defaultRemirrorTheme.color.hover.primary,
-        contrastText: theme.color?.primaryText ?? defaultRemirrorTheme.color.primaryText,
-      },
-      secondary: {
-        main: theme.color?.secondary ?? defaultRemirrorTheme.color.secondary,
-        dark: theme.color?.hover?.secondary ?? defaultRemirrorTheme.color.hover.secondary,
-        contrastText: theme.color?.secondaryText ?? defaultRemirrorTheme.color.secondaryText,
-      },
-    },
-  });
-
   return (
-    <MuiThemeProvider theme={muiTheme}>
-      <ThemeContext.Provider value={theme}>
-        <Component style={style} className={className}>
-          {children}
-        </Component>
-      </ThemeContext.Provider>
-    </MuiThemeProvider>
+    <ThemeContext.Provider value={theme}>
+      <Component style={style} className={className}>
+        {children}
+      </Component>
+    </ThemeContext.Provider>
   );
 };

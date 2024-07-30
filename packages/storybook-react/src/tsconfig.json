@@ -23,6 +23,12 @@
       "path": "../../remirror__dev/src"
     },
     {
+      "path": "../../remirror__extension-code-block/src"
+    },
+    {
+      "path": "../../remirror__extension-codemirror5/src"
+    },
+    {
       "path": "../../remirror__extension-codemirror6/src"
     },
     {
@@ -44,10 +50,13 @@
       "path": "../../remirror__extension-mention-atom/src"
     },
     {
-      "path": "../../remirror__extension-react-language-select/src"
+      "path": "../../remirror__extension-react-tables/src"
     },
     {
-      "path": "../../remirror__extension-react-tables/src"
+      "path": "../../remirror__extension-yjs/src"
+    },
+    {
+      "path": "../../remirror__i18n/src"
     },
     {
       "path": "../../remirror__messages/src"
@@ -60,6 +69,9 @@
     },
     {
       "path": "../../remirror__react-editors/src"
+    },
+    {
+      "path": "../../remirror__react-ui/src"
     },
     {
       "path": "../../remirror__styles/src"

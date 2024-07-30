@@ -39,15 +39,18 @@
     "playwright",
     "react"
   ],
+  "scripts": {
+    "build": "remirror-cli build --no-types"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@jest/globals": "^29.5.0",
     "@react-spring/mock-raf": "^1.1.1",
-    "@remirror/core": "^2.0.19",
-    "@remirror/pm": "^2.0.9",
-    "@remirror/preset-core": "^2.0.16",
-    "@remirror/react": "^2.0.35",
+    "@remirror/core": "3.0.0-beta.8",
+    "@remirror/pm": "3.0.0-beta.6",
+    "@remirror/preset-core": "3.0.0-beta.8",
+    "@remirror/react": "3.0.0-beta.8",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/fluent-ffmpeg": "^2.1.21",
@@ -71,9 +74,10 @@
     "playwright-testing-library": "^4.5.0",
     "react-test-renderer": "^18.2.0",
     "signal-exit": "^3.0.7",
-    "test-keyboard": "2.0.6"
+    "test-keyboard": "2.0.7-beta.6"
   },
   "devDependencies": {
+    "@remirror/cli": "1.1.0-beta.1",
     "@types/react": "^18.2.0",
     "react": "^18.2.0"
   },

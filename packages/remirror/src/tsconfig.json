@@ -56,9 +56,6 @@
       "path": "../../remirror__extension-code-block/src"
     },
     {
-      "path": "../../remirror__extension-codemirror5/src"
-    },
-    {
       "path": "../../remirror__extension-collaboration/src"
     },
     {
@@ -87,6 +84,9 @@
     },
     {
       "path": "../../remirror__extension-events/src"
+    },
+    {
+      "path": "../../remirror__extension-find/src"
     },
     {
       "path": "../../remirror__extension-font-family/src"
@@ -143,9 +143,6 @@
       "path": "../../remirror__extension-positioner/src"
     },
     {
-      "path": "../../remirror__extension-search/src"
-    },
-    {
       "path": "../../remirror__extension-shortcuts/src"
     },
     {
@@ -180,9 +177,6 @@
     },
     {
       "path": "../../remirror__extension-whitespace/src"
-    },
-    {
-      "path": "../../remirror__extension-yjs/src"
     },
     {
       "path": "../../remirror__icons/src"

@@ -64,7 +64,7 @@ export type ExtensionConstructorProps<Options extends ValidOptions> = Constructo
  * - Which commands should be made available e.g. `commands.toggleBold()` to
  *   toggle the weight of the selected text.
  * - Check if a command is currently enabled (i.e a successful dry run) e.g.
- *   `commands.toggleBold.isEnabled()`.
+ *   `commands.toggleBold.enabled()`.
  * - Register Prosemirror `Plugin`s, `keymap`s, `InputRule`s `PasteRule`s,
  *   `Suggestions`, and custom `nodeViews` which affect the behavior of the
  *   editor.

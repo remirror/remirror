@@ -3,7 +3,6 @@ import {
   command,
   CommandFunction,
   DefaultDocNodeOptions,
-  EditorSchema,
   EditorStateProps,
   entries,
   extension,
@@ -19,8 +18,7 @@ import {
   ProsemirrorAttributes,
   Static,
 } from '@remirror/core';
-import { AttributeSpec, Node } from '@remirror/pm/model';
-import { Step, StepResult } from '@remirror/pm/transform';
+import { AttributeSpec } from '@remirror/pm/model';
 
 export interface DocOptions {
   /**
@@ -140,7 +138,7 @@ export class DocExtension extends NodeExtension<DocOptions> {
     return ({ tr, dispatch }) => {
       if (dispatch) {
         for (const [key, value] of Object.entries(attrs)) {
-          tr.step(new SetDocAttributeStep(key, value));
+          tr.setDocAttribute(key, value);
         }
 
         dispatch(tr);
@@ -159,101 +157,11 @@ export class DocExtension extends NodeExtension<DocOptions> {
   }
 }
 
-interface SetDocAttrStepJSONValue {
-  key: string;
-  stepType: string;
-  value: any;
-}
-
-const STEP_TYPE = 'SetDocAttribute';
-const REVERT_STEP_TYPE = 'RevertSetDocAttribute';
-
-/**
- * A transaction step for updating the top level `doc` node attributes.
- *
- * This is required as mentioned in this discussion
- * https://discuss.prosemirror.net/t/changing-doc-attrs/784/17
- */
-export class SetDocAttributeStep extends Step {
-  static fromJSON(_: EditorSchema, json: SetDocAttrStepJSONValue): SetDocAttributeStep {
-    return new SetDocAttributeStep(json.key, json.value, json.stepType);
-  }
-
-  /**
-   * The attribute key.
-   */
-  readonly key: string;
-
-  /**
-   * A custom name for the step type.
-   *
-   * @defaultValue 'SetDocAttribute'
-   */
-  readonly stepType: string;
-
-  /**
-   * The value to be added.
-   */
-  readonly value: any;
-
-  /**
-   * The previous value.
-   */
-  previous?: any;
-
-  constructor(key: string, value: unknown, stepType = STEP_TYPE) {
-    super();
-    this.stepType = stepType;
-    this.key = key;
-    this.value = value;
-  }
-
-  apply(doc: Node): StepResult {
-    this.previous = doc.attrs[this.key];
-
-    const attrs = {
-      ...doc.attrs,
-      [this.key]: this.value,
-    };
-
-    return StepResult.ok(doc.type.create(attrs, doc.content, doc.marks));
-  }
-
-  invert(): SetDocAttributeStep {
-    return new SetDocAttributeStep(this.key, this.previous, REVERT_STEP_TYPE);
-  }
-
-  /**
-   * The position never changes so `map` should return the current step.
-   */
-  map(): this {
-    return this;
-  }
-
-  toJSON(): SetDocAttrStepJSONValue {
-    return {
-      stepType: this.stepType,
-      key: this.key,
-      value: this.value,
-    };
-  }
-}
-
 interface IsDefaultDocNodeHelperOptions extends Partial<EditorStateProps> {
   /**
    * The options passed to the isDefaultDocNode util
    */
   options?: DefaultDocNodeOptions;
-}
-
-try {
-  // Register the steps.
-  Step.jsonID(STEP_TYPE, SetDocAttributeStep);
-  Step.jsonID(REVERT_STEP_TYPE, SetDocAttributeStep);
-} catch (error: any) {
-  if (!error.message.startsWith(`Duplicate use of step JSON ID`)) {
-    throw error;
-  }
 }
 
 declare global {

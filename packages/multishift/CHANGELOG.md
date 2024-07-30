@@ -1,5 +1,77 @@
 # multishift
 
+## 2.0.10-beta.6
+
+> 2024-07-22
+
+### Patch Changes
+
+- Updated dependencies [bffe2fd61]
+  - @remirror/core-helpers@4.0.0-beta.5
+
+## 2.0.10-beta.5
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/core-helpers@4.0.0-beta.4
+  - @remirror/core-types@3.0.0-beta.5
+  - a11y-status@2.0.2-beta.1
+
+## 2.0.10-beta.4
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/core-helpers@4.0.0-beta.3
+  - @remirror/core-types@3.0.0-beta.4
+  - a11y-status@2.0.2-beta.0
+
+## 2.0.10-beta.3
+
+> 2023-11-20
+
+### Patch Changes
+
+- @remirror/core-helpers@4.0.0-beta.2
+- @remirror/core-types@3.0.0-beta.3
+
+## 2.0.10-beta.2
+
+> 2023-11-08
+
+### Patch Changes
+
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core-helpers@4.0.0-beta.1
+  - @remirror/core-types@3.0.0-beta.2
+
+## 2.0.10-beta.1
+
+> 2023-11-06
+
+### Patch Changes
+
+- Updated dependencies [d3954076f]
+  - @remirror/core-types@3.0.0-beta.1
+
+## 2.0.10-beta.0
+
+> 2023-10-06
+
+### Patch Changes
+
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-types@3.0.0-beta.0
+  - @remirror/core-helpers@4.0.0-beta.0
+
 ## 2.0.9
 
 > 2023-07-30

@@ -1,0 +1,8 @@
+{
+  "extension.command.center-align.label": "Center align",
+  "extension.command.decrease-indent.label": "Decrease indentation",
+  "extension.command.increase-indent.label": "Increase indentation",
+  "extension.command.justify-align.label": "Justify",
+  "extension.command.left-align.label": "Left align",
+  "extension.command.right-align.label": "Right align"
+}

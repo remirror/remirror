@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-code-block",
-  "version": "2.0.20",
+  "version": "3.0.0-rc.9",
   "description": "Unleash the inner coder with code blocks for your remirror editor.",
   "keywords": [
     "remirror",
@@ -44,30 +44,30 @@
     "dist-types",
     "formatter"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "^2.0.19",
-    "@remirror/messages": "^2.0.6",
-    "@remirror/theme": "^2.0.9",
+    "@remirror/core": "3.0.0-beta.8",
+    "@remirror/extension-positioner": "3.0.0-beta.8",
+    "@remirror/messages": "3.0.0-beta.6",
+    "@remirror/theme": "3.0.0-beta.5",
     "@types/refractor": "^3.0.2",
     "refractor": "^3.6.0"
   },
   "devDependencies": {
-    "@remirror/pm": "^2.0.9",
+    "@remirror/cli": "1.1.0-beta.1",
+    "@remirror/pm": "3.0.0-beta.6",
     "@types/jsdom": "^16.2.15",
-    "@types/prettier": "^2.7.2",
     "jsdom": "^17.0.0",
-    "prettier": "^2.8.8"
+    "prettier": "^3.2.5"
   },
   "peerDependencies": {
-    "@remirror/pm": "^2.0.9",
-    "@types/prettier": "^2.7.2",
-    "prettier": "^2.8.8"
+    "@remirror/pm": "^3.0.0-beta.6",
+    "prettier": "^3.2.0"
   },
   "peerDependenciesMeta": {
-    "@types/prettier": {
-      "optional": true
-    },
     "@types/refractor": {
       "optional": true
     },
@@ -96,7 +96,7 @@
     "types": "./dist/remirror-extension-code-block.d.ts"
   },
   "@remirror": {
-    "sizeLimit": "20 KB"
+    "sizeLimit": "25 KB"
   },
   "preconstruct": {
     "entrypoints": [

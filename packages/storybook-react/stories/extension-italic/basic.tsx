@@ -4,7 +4,8 @@ import './styles.css';
 import React from 'react';
 import { htmlToProsemirrorNode } from 'remirror';
 import { ItalicExtension } from 'remirror/extensions';
-import { Remirror, ThemeProvider, ToggleItalicButton, Toolbar, useRemirror } from '@remirror/react';
+import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+import { ToggleItalicButton, Toolbar } from '@remirror/react-ui';
 
 const extensions = () => [new ItalicExtension()];
 

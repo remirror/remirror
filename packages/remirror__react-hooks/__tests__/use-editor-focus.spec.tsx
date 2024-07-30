@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { act, DefaultEditor, fireEvent, strictRender } from 'testing/react';
 import type { RemirrorManager } from '@remirror/core';
 import { EventsExtension } from '@remirror/extension-events';
-import { createReactManager, ReactExtensions, Remirror } from '@remirror/react';
+import { createReactManager, ReactExtensions, Remirror } from '@remirror/react-core';
 
 import { useEditorFocus } from '../src/use-editor-focus';
 

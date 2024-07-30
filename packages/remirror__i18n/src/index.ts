@@ -1,5 +1,6 @@
 import { i18n, Messages } from '@lingui/core';
 import { detect, fromHtmlTag, fromNavigator, fromStorage, fromUrl } from '@lingui/detect-locale';
+import type { I18nFormatter } from '@remirror/core-types';
 
 import { messages as enMessages } from './en/messages';
 import { en } from './plurals';
@@ -27,3 +28,7 @@ export { i18n };
 export function detectLocale(key = 'lang', fallback = 'en'): string {
   return detect(fromUrl(key), fromHtmlTag('html'), fromStorage(key), fromNavigator()) ?? fallback;
 }
+
+export const i18nFormat: I18nFormatter = (message, values) => {
+  return i18n.t({ ...message, values });
+};

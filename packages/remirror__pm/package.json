@@ -1,6 +1,6 @@
 {
   "name": "@remirror/pm",
-  "version": "2.0.9",
+  "version": "3.0.0-beta.6",
   "description": "A bundled library containing all the core prosemirror libraries required for using remirror",
   "homepage": "https://github.com/remirror/remirror/tree/HEAD/packages/remirror__pm",
   "repository": {
@@ -125,10 +125,13 @@
     "transform",
     "view"
   ],
+  "scripts": {
+    "build": "remirror-cli build"
+  },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core-constants": "^2.0.2",
-    "@remirror/core-helpers": "^3.0.0",
+    "@remirror/core-constants": "3.0.0-beta.4",
+    "@remirror/core-helpers": "4.0.0-beta.5",
     "prosemirror-collab": "^1.3.1",
     "prosemirror-commands": "^1.5.2",
     "prosemirror-dropcursor": "^1.8.1",
@@ -137,14 +140,17 @@
     "prosemirror-inputrules": "^1.4.0",
     "prosemirror-keymap": "^1.2.2",
     "prosemirror-model": "^1.22.1",
-    "prosemirror-paste-rules": "^2.0.8",
+    "prosemirror-paste-rules": "3.0.0-beta.6",
     "prosemirror-schema-list": "^1.4.1",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-suggest": "^2.0.7",
+    "prosemirror-suggest": "3.0.0-beta.6",
     "prosemirror-tables": "^1.3.7",
-    "prosemirror-trailing-node": "^2.0.9",
+    "prosemirror-trailing-node": "3.0.0-beta.5",
     "prosemirror-transform": "^1.9.0",
     "prosemirror-view": "^1.33.8"
+  },
+  "devDependencies": {
+    "@remirror/cli": "1.1.0-beta.1"
   },
   "publishConfig": {
     "access": "public",

@@ -1,5 +1,71 @@
 # @remirror/core-helpers
 
+## 4.0.0-beta.5
+
+> 2024-07-22
+
+### Patch Changes
+
+- bffe2fd61: Export `cx` util from `@remirror/core-helpers` using `clsx` instead of Linaria
+
+## 4.0.0-beta.4
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- Updated dependencies [c4c4fa512]
+  - @remirror/core-constants@3.0.0-beta.4
+  - @remirror/types@2.0.0-beta.4
+
+## 4.0.0-beta.3
+
+> 2024-07-18
+
+### Patch Changes
+
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [760d9739d]
+  - @remirror/core-constants@3.0.0-beta.3
+  - @remirror/types@2.0.0-beta.3
+
+## 4.0.0-beta.2
+
+> 2023-11-20
+
+### Patch Changes
+
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+  - @remirror/core-constants@3.0.0-beta.2
+  - @remirror/types@2.0.0-beta.2
+
+## 4.0.0-beta.1
+
+> 2023-11-08
+
+### Patch Changes
+
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [93f4ebdc2]
+  - @remirror/core-constants@3.0.0-beta.1
+  - @remirror/types@2.0.0-beta.1
+
+## 4.0.0-beta.0
+
+> 2023-10-06
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-constants@3.0.0-beta.0
+  - @remirror/types@2.0.0-beta.0
+
 ## 3.0.0
 
 > 2023-07-30

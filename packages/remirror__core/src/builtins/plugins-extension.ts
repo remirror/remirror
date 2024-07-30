@@ -291,8 +291,8 @@ export class PluginsExtension extends PlainExtension<PluginsOptions> {
     const extension = isExtension(value)
       ? value
       : isExtensionConstructor(value)
-      ? this.store.manager.getExtension(value)
-      : this.store.extensions.find((extension) => extension.name === value);
+        ? this.store.manager.getExtension(value)
+        : this.store.extensions.find((extension) => extension.name === value);
 
     invariant(extension, {
       code: ErrorConstant.INVALID_MANAGER_EXTENSION,

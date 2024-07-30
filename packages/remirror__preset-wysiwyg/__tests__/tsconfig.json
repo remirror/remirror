@@ -59,6 +59,9 @@
       "path": "../../remirror__extension-embed/src"
     },
     {
+      "path": "../../remirror__extension-find/src"
+    },
+    {
       "path": "../../remirror__extension-gap-cursor/src"
     },
     {
@@ -81,9 +84,6 @@
     },
     {
       "path": "../../remirror__extension-list/src"
-    },
-    {
-      "path": "../../remirror__extension-search/src"
     },
     {
       "path": "../../remirror__extension-shortcuts/src"

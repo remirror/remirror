@@ -1,5 +1,21 @@
 # @remirror/cli
 
+## 1.1.0-beta.1
+
+> 2024-07-19
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+
+## 1.1.0-beta.0
+
+> 2024-07-18
+
+### Minor Changes
+
+- 0b571c886: Use esbuild to build packages, now that it supports ES Decorators
+
 ## 1.0.1
 
 > 2023-04-26
