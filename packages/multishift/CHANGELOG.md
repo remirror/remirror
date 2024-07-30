@@ -1,5 +1,24 @@
 # multishift
 
+## 2.0.10
+
+> 2024-07-30
+
+### Patch Changes
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+  - @remirror/core-helpers@4.0.0
+  - @remirror/core-types@3.0.0
+  - a11y-status@2.0.2
+
 ## 2.0.10-beta.6
 
 > 2024-07-22

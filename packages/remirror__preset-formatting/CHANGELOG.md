@@ -1,5 +1,48 @@
 # @remirror/preset-formatting
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- f6185b950: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- f6185b950: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+  - @remirror/core@3.0.0
+  - @remirror/pm@3.0.0
+  - @remirror/extension-node-formatting@3.0.0
+  - @remirror/extension-text-highlight@3.0.0
+  - @remirror/extension-text-color@3.0.0
+  - @remirror/extension-whitespace@3.0.0
+  - @remirror/extension-font-size@3.0.0
+  - @remirror/extension-text-case@3.0.0
+  - @remirror/extension-underline@3.0.0
+  - @remirror/extension-columns@3.0.0
+  - @remirror/extension-heading@3.0.0
+  - @remirror/extension-italic@3.0.0
+  - @remirror/extension-strike@3.0.0
+  - @remirror/extension-bold@3.0.0
+  - @remirror/extension-sub@3.0.0
+  - @remirror/extension-sup@3.0.0
+
 ## 3.0.0-beta.8
 
 > 2024-07-22
@@ -2255,7 +2298,9 @@
   import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
   function Editor(): JSX.Element {
-    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    const { manager } = useRemirror({
+      builtin: { persistentSelectionClass: 'selection' },
+    });
     return (
       <ThemeProvider>
         <Remirror manager={manager} />

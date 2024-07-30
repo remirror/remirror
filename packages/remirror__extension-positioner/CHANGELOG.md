@@ -1,5 +1,255 @@
 # @remirror/extension-positioner
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- f6185b950: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Minor Changes
+
+- f6185b950: ## 💥 BREAKING CHANGES! 💥
+
+  ## Removed deprecated `SearchExtension` in favour of `FindExtension`
+
+  TLDR: `SearchExtension` has been removed from Remirror v3 completely, please use `FindExtension` instead.
+
+  `SearchExtension` has been deprecated since we released `FindExtension`, as `FindExtension` offers more features and is more performant.
+
+  Furthermore, as `SearchExtension` was previously exposed directly via `remirror/extensions`, and configurable via `presetWysiwyg` - we have updated both of these access points to expose `FindExtension` instead.
+
+  If using `presetWysiwyg`, the config options for `SearchExtension` will need updating to their `FindExtension` equivalents.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import React from 'react';
+  import { wysiwygPreset } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+
+  const extensions = () =>
+    wysiwygPreset({
+      alwaysSearch: true,
+    });
+
+  const UsingWysiwygPreset = (): JSX.Element => {
+    const { manager, state, onChange } = useRemirror({
+      extensions: extensions,
+      content: '<p>Text to search</p>',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror
+          manager={manager}
+          autoFocus
+          onChange={onChange}
+          initialContent={state}
+          autoRender='end'
+        />
+      </ThemeProvider>
+    );
+  };
+
+  export default UsingWysiwygPreset;
+  ```
+
+  #### After: Diff for Remirror v3 example
+
+  ```diff
+  import React from 'react';
+  import { wysiwygPreset } from "remirror/extensions";
+  import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+
+  const extensions = () => wysiwygPreset({
+  -  alwaysSearch: true,
+  +  alwaysFind: true,
+  });
+
+  // Rest as above
+  ```
+
+  ## Features
+
+  To make the find functionality easy to use "out-of-the-box" we have added a new `<FindButton />` component to the _optional_ `@remirror/react-ui` package.
+
+  This button can be used within a `Toolbar` (also exposed via `@remirror/react-ui`) to present a find and replace popup in the top right of your editor.
+
+  ![A screenshot of the find and replace popup from the FindButton](https://github.com/remirror/remirror/assets/2003804/eaada9b5-fc85-4705-876a-e994d82c5fa8)
+
+  ### Example usage of `FindButton`
+
+  This following example is taken from our [Storybook](https://remirror.vercel.app/?path=/story/extensions-find--basic).
+
+  ```tsx
+  import 'remirror/styles/all.css';
+
+  import React from 'react';
+  import { wysiwygPreset } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { FindButton, Toolbar } from '@remirror/react-ui';
+
+  const FindButtonExample: React.FC = () => {
+    const { manager, state, onChange } = useRemirror({
+      extensions: wysiwygPreset,
+      content:
+        '<p>Using the <code>&lt;FindButton /&gt;</code> from <code>@remirror/react-ui</code>.',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror
+          manager={manager}
+          autoFocus
+          onChange={onChange}
+          initialContent={state}
+          autoRender='end'
+        >
+          <Toolbar>
+            <FindButton />
+          </Toolbar>
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default FindButtonExample;
+  ```
+
+### Patch Changes
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- f6185b950: Bump all packages to rebuild for browsers since 2017
+- f6185b950: ## 💥 BREAKING CHANGES! 💥
+
+  ## `CodeBlockLanguageSelector` component moved to `@remirror/react-ui` package
+
+  The `CodeBlockLanguageSelector` component has been moved from `@remirror/extension-react-language-select` to `@remirror/react-ui`.
+
+  While it was originally named as an "extension", upon closer examination, we've realised that its role aligns more with that of a component, rather than a true extension.
+
+  To maintain the integrity of our [definition of an extension](https://remirror.io/docs/concepts/extension), we believe this move is necessary. This is to help provide a more accurate representation of functionality, and enhance overall understanding and usage of the library.
+
+  Additionally `CodeBlockLanguageSelector` now renders a MUI `Select` component, rather than a native `select` element. This enables us to utilise the "auto width" behaviour, rather than implementing this behaviour ourselves.
+
+  Furthermore, it will now render in the top _right_ corner of the code block by default, rather than the top left. Passing `position='left'` will revert to rendering in the top left corner as before.
+
+  #### Before: Remirror v2 example
+
+  ```tsx
+  import 'remirror/styles/all.css';
+
+  import React from 'react';
+  import css from 'refractor/lang/css.js';
+  import javascript from 'refractor/lang/javascript.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  import { CodeBlockLanguageSelect } from '@remirror/extension-react-language-select';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [css, javascript, json, markdown, typescript],
+    }),
+  ];
+
+  const content = `
+  <pre><code data-code-block-language="typescript">function sayHello {
+    console.log('Hello world, TypeScript!')
+  }</code></pre>
+  `;
+
+  const EditorWithCodeBlocks = (): JSX.Element => {
+    const { manager, state } = useRemirror({
+      extensions,
+      content,
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockLanguageSelect />
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default EditorWithCodeBlocks;
+  ```
+
+  #### After: Diff for Remirror v3 example
+
+  ```diff
+  import 'remirror/styles/all.css';
+
+  import React from 'react';
+  import css from 'refractor/lang/css.js';
+  import javascript from 'refractor/lang/javascript.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  - import { CodeBlockLanguageSelect } from '@remirror/extension-react-language-select';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  + import { CodeBlockLanguageSelect } from '@remirror/react-ui';
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [css, javascript, json, markdown, typescript],
+    }),
+  ];
+
+  const content = `
+  <pre><code data-code-block-language="typescript">function sayHello {
+    console.log('Hello world, TypeScript!')
+  }</code></pre>
+  `;
+
+  const EditorWithCodeBlocks = (): JSX.Element => {
+    const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockLanguageSelect />
+        </Remirror>
+      </ThemeProvider>
+    );
+  };
+
+  export default EditorWithCodeBlocks;
+  ```
+
+  ## Feedback
+
+  As always, we value your feedback on how we can improve Remirror. Please raise your proposals via [issues on GitHub](https://github.com/remirror/remirror/issues) or via our [Discord server](https://remirror.io/chat).
+
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+  - @remirror/core@3.0.0
+  - @remirror/pm@3.0.0
+  - @remirror/extension-events@3.0.0
+  - @remirror/messages@3.0.0
+  - @remirror/theme@3.0.0
+
 ## 3.0.0-beta.8
 
 > 2024-07-22
@@ -198,7 +448,11 @@
   `;
 
   const EditorWithCodeBlocks = (): JSX.Element => {
-    const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
+    const { manager, state } = useRemirror({
+      extensions,
+      content,
+      stringHandler: 'html',
+    });
 
     return (
       <ThemeProvider>
@@ -1817,7 +2071,9 @@
   import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
   function Editor(): JSX.Element {
-    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    const { manager } = useRemirror({
+      builtin: { persistentSelectionClass: 'selection' },
+    });
     return (
       <ThemeProvider>
         <Remirror manager={manager} />

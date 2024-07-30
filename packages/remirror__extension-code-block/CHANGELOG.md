@@ -1,5 +1,197 @@
 # @remirror/extension-code-block
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- f6185b950: Remove deprecated command dry run function `isEnabled`, use `enabled` instead.
+
+  ```tsx
+  const { toggleBold } = useCommands();
+
+  const handleClick = useCallback(() => {
+    if (toggleBold.isEnabled()) {
+      toggleBold();
+    }
+  }, [toggleBold]);
+  ```
+
+  ```diff
+  const { toggleBold } = useCommands();
+
+  const handleClick = useCallback(() => {
+  -  if (toggleBold.isEnabled()) {
+  +  if (toggleBold.enabled()) {
+      toggleBold();
+    }
+  }, [toggleBold]);
+  ```
+
+- f6185b950: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- f6185b950: ## Updates
+
+  Update dependency prettier to v3.2.5.
+
+  ## 💥 BREAKING CHANGES! 💥
+
+  The `formatter` prop for extension `@remirror/extension-code-block` now expects an asynchronous function.
+
+  ```ts
+  new CodeBlockExtension({
+    formatter: async ({ source, language, cursorOffset }) => {
+      /* format source */
+    },
+  });
+  ```
+
+  This change was made to support prettier v3 which no longer provides a synchronous `formatWithCursor()` function. The formatter available from `@remirror/extension-code-block/formatter` has been updated to use prettier v3 and satisfies the updated `formatter` signature.
+
+  As a consequence, the command `formatCodeBlock` must also be asynchronous, and hence **is no longer chainable**.
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- f6185b950: Bump all packages to rebuild for browsers since 2017
+- f6185b950: ## 💥 BREAKING CHANGES! 💥
+
+  The `CodeBlockLanguageSelect` component needs to wrapped within a `CodeBlockTools` component to be position correctly with a code block.
+
+  ```tsx
+  import { CodeBlockLanguageSelect, CodeBlockTools } from '@remirror/react-ui';
+
+  const MyComponent = (): JSX.Element => (
+    <CodeBlockTools>
+      <CodeBlockLanguageSelect />
+    </CodeBlockTools>
+  );
+  ```
+
+  ## Updates
+
+  A `CodeBlockFormatButton` component has been added to `@remirror/react-ui`, this allows you to format code blocks with the formatter of your choice.
+
+  You can supply your own formatter or use the default formatter from `@remirror/extension-code-block/formatter` which is based on Prettier.
+
+  ### Usage example 1: Use the formatter extension
+
+  ```tsx
+  import React from 'react';
+  import json from 'refractor/lang/json.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  import { formatter } from '@remirror/extension-code-block/formatter';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { CodeBlockFormatButton, CodeBlockTools } from '@remirror/react-ui';
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [json, typescript],
+      formatter,
+    }),
+  ];
+
+  export default function FormatterCodeBlock(): JSX.Element {
+    const { manager, state } = useRemirror({
+      extensions,
+      content: '',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockTools>
+            <CodeBlockFormatButton />
+          </CodeBlockTools>
+        </Remirror>
+      </ThemeProvider>
+    );
+  }
+  ```
+
+  ### Usage example 2: Supply your own formatter
+
+  ```tsx
+  import babelPlugin from 'prettier/plugins/babel';
+  import estreePlugin from 'prettier/plugins/estree';
+  import { formatWithCursor } from 'prettier/standalone';
+  import React from 'react';
+  import json from 'refractor/lang/json.js';
+  import typescript from 'refractor/lang/typescript.js';
+  import type { CodeBlockFormatter } from 'remirror/extensions';
+  import { CodeBlockExtension } from 'remirror/extensions';
+  import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
+  import { CodeBlockFormatButton, CodeBlockTools } from '@remirror/react-ui';
+
+  const myCustomFormatter: CodeBlockFormatter = ({ source, language, cursorOffset }) => {
+    const parser =
+      language === 'typescript' ? 'babel-ts' : language === 'json' ? 'json' : undefined;
+
+    if (!parser) {
+      throw new Error('Unsupported language');
+    }
+
+    // Prettier standalone documentation: https://prettier.io/docs/en/browser
+    return formatWithCursor(source, {
+      cursorOffset,
+      parser,
+      plugins: [estreePlugin, babelPlugin],
+      experimentalTernaries: true,
+    });
+  };
+
+  const extensions = () => [
+    new CodeBlockExtension({
+      supportedLanguages: [json, typescript],
+      formatter: myCustomFormatter,
+    }),
+  ];
+
+  export default function FormatterCodeBlock(): JSX.Element {
+    const { manager, state } = useRemirror({
+      extensions,
+      content: '',
+      stringHandler: 'html',
+    });
+
+    return (
+      <ThemeProvider>
+        <Remirror manager={manager} initialContent={state} autoRender>
+          <CodeBlockTools>
+            <CodeBlockFormatButton />
+          </CodeBlockTools>
+        </Remirror>
+      </ThemeProvider>
+    );
+  }
+  ```
+
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+  - @remirror/core@3.0.0
+  - @remirror/pm@3.0.0
+  - @remirror/extension-positioner@3.0.0
+  - @remirror/messages@3.0.0
+  - @remirror/theme@3.0.0
+
 ## 3.0.0-rc.9
 
 > 2024-07-25
