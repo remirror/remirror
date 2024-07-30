@@ -1,5 +1,29 @@
 # @remirror/preset-template
 
+## 3.0.0
+
+> 2024-07-30
+
+### Patch Changes
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+  - @remirror/core@3.0.0
+  - @remirror/pm@3.0.0
+
 ## 3.0.0-beta.8
 
 > 2024-07-22

@@ -1,5 +1,23 @@
 # test-keyboard
 
+## 2.0.7
+
+> 2024-07-30
+
+### Patch Changes
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+  - @remirror/core-helpers@4.0.0
+  - @remirror/core-types@3.0.0
+
 ## 2.0.7-beta.6
 
 > 2024-07-22

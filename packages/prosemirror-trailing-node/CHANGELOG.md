@@ -1,5 +1,29 @@
 # prosemirror-trailing-node
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- f6185b950: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- f6185b950: Update ProseMirror packages to latest versions.
+
+  Use newly provided `Transform.setDocAttribute` to update doc node attributes, rather than custom step type.
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- f6185b950: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+  - @remirror/core-constants@3.0.0
+
 ## 3.0.0-beta.5
 
 > 2024-07-19

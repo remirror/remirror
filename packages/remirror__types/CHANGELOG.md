@@ -1,5 +1,23 @@
 # @remirror/types
 
+## 2.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- f6185b950: Remove deprecated type `PromiseValue`, use built-in `Awaited` instead.
+
+  Remove deprecated type `Mutable`, use `Writable` instead.
+
+- f6185b950: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- f6185b950: Bump all packages to rebuild for browsers since 2017
+
 ## 2.0.0-beta.4
 
 > 2024-07-19

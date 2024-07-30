@@ -1,5 +1,42 @@
 # @remirror/extension-tabless
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- f6185b950: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- f6185b950: Forward-port the removal of the validate property from `main`
+- f6185b950: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- f6185b950: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+- Updated dependencies [f6185b950]
+  - @remirror/core@3.0.0
+  - @remirror/pm@3.0.0
+  - @remirror/extension-positioner@3.0.0
+  - @remirror/extension-events@3.0.0
+  - @remirror/messages@3.0.0
+  - @remirror/theme@3.0.0
+
 ## 3.0.0-beta.8
 
 > 2024-07-22
@@ -1607,7 +1644,9 @@
   import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
   function Editor(): JSX.Element {
-    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    const { manager } = useRemirror({
+      builtin: { persistentSelectionClass: 'selection' },
+    });
     return (
       <ThemeProvider>
         <Remirror manager={manager} />
