@@ -1,5 +1,20 @@
 # @remirror/core-constants
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- 469d7ce8f: Remove `deprecated` error code `RMR0000`, as we no longer hide error details in production.
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+
 ## 3.0.0-beta.4
 
 > 2024-07-19

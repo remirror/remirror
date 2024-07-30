@@ -1,5 +1,20 @@
 # @remirror/minimal-template
 
+## 0.0.7
+
+> 2024-07-30
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- Updated dependencies [c4c4fa512]
+- Updated dependencies [bffe2fd61]
+- Updated dependencies [760d9739d]
+- Updated dependencies [93f4ebdc2]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-helpers@4.0.0
+
 ## 0.0.7-beta.5
 
 > 2024-07-22

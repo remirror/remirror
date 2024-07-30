@@ -1,5 +1,33 @@
 # prosemirror-suggest
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- b1d683fdb: Update ProseMirror packages to latest versions.
+
+  Use newly provided `Transform.setDocAttribute` to update doc node attributes, rather than custom step type.
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [c4c4fa512]
+- Updated dependencies [bffe2fd61]
+- Updated dependencies [760d9739d]
+- Updated dependencies [93f4ebdc2]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [8f5467ae6]
+  - @remirror/core-constants@3.0.0
+  - @remirror/core-helpers@4.0.0
+  - @remirror/types@2.0.0
+
 ## 3.0.0-beta.6
 
 > 2024-07-22

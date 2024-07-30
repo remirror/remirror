@@ -1,5 +1,42 @@
 # jest-remirror
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated properties `start` and `end`, use `from` and `to` respectively instead.
+
+  Remove deprecated function `jsdomExtras`, use `jsdomPolyfills` instead.
+
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [46e903ed9]
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [c4c4fa512]
+- Updated dependencies [bffe2fd61]
+- Updated dependencies [d3954076f]
+- Updated dependencies [760d9739d]
+- Updated dependencies [93f4ebdc2]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [3f76519f3]
+- Updated dependencies [47bda7aab]
+- Updated dependencies [0e4abae1b]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [8f5467ae6]
+  - jest-prosemirror@3.0.0
+  - @remirror/core@3.0.0
+  - @remirror/pm@3.0.0
+  - @remirror/preset-core@3.0.0
+  - @remirror/dom@3.0.0
+
 ## 3.0.0-beta.8
 
 > 2024-07-22
@@ -2244,7 +2281,9 @@
   import { Remirror, ThemeProvider, useRemirror } from '@remirror/react';
 
   function Editor(): JSX.Element {
-    const { manager } = useRemirror({ builtin: { persistentSelectionClass: 'selection' } });
+    const { manager } = useRemirror({
+      builtin: { persistentSelectionClass: 'selection' },
+    });
     return (
       <ThemeProvider>
         <Remirror manager={manager} />
@@ -2566,7 +2605,9 @@
   ];
 
   const Editor = () => {
-    const { manager } = useRemirror({ extensions: () => [new BoldExtension()] });
+    const { manager } = useRemirror({
+      extensions: () => [new BoldExtension()],
+    });
 
     return <Remirror manager={manager} hooks={hooks} />;
   };

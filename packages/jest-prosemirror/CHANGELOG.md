@@ -1,5 +1,35 @@
 # jest-prosemirror
 
+## 3.0.0
+
+> 2024-07-30
+
+### Major Changes
+
+- 469d7ce8f: Remove deprecated function `jumpTo`, just `selectText` instead.
+- 8f5467ae6: Use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax.
+
+### Patch Changes
+
+- c4c4fa512: Forward-port the removal of the validate property from `main`
+- 760d9739d: Add a validate property to each of the Node or Mark attributes used in Remirror (v3 branch)
+- 93f4ebdc2: Bump all packages to rebuild for browsers since 2017
+- Updated dependencies [b1d683fdb]
+- Updated dependencies [c4c4fa512]
+- Updated dependencies [bffe2fd61]
+- Updated dependencies [d3954076f]
+- Updated dependencies [760d9739d]
+- Updated dependencies [93f4ebdc2]
+- Updated dependencies [469d7ce8f]
+- Updated dependencies [3f76519f3]
+- Updated dependencies [8f5467ae6]
+  - @remirror/pm@3.0.0
+  - @remirror/core-constants@3.0.0
+  - @remirror/core-helpers@4.0.0
+  - @remirror/core-types@3.0.0
+  - @remirror/core-utils@3.0.0
+  - test-keyboard@2.0.7
+
 ## 3.0.0-beta.6
 
 > 2024-07-22
@@ -1524,7 +1554,9 @@
   ];
 
   const Editor = () => {
-    const { manager } = useRemirror({ extensions: () => [new BoldExtension()] });
+    const { manager } = useRemirror({
+      extensions: () => [new BoldExtension()],
+    });
 
     return <Remirror manager={manager} hooks={hooks} />;
   };
