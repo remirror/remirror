@@ -8,7 +8,7 @@ import { defaultImport } from '@remirror/core-helpers';
 
 const styled = defaultImport(emotionStyled);
 
-export const componentsStyledCss: ReturnType<typeof css> = css`
+export const componentsStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/components-theme.ts
  */
@@ -594,11 +594,11 @@ export const componentsStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ComponentsStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ComponentsStyledComponent = styled.div`
   ${componentsStyledCss}
 `;
 
-export const coreStyledCss: ReturnType<typeof css> = css`
+export const coreStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/core-theme.ts
  */
@@ -665,11 +665,11 @@ export const coreStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const CoreStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const CoreStyledComponent = styled.div`
   ${coreStyledCss}
 `;
 
-export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
+export const extensionBlockquoteStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-blockquote-theme.ts
  */
@@ -685,11 +685,11 @@ export const extensionBlockquoteStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionBlockquoteStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionBlockquoteStyledComponent = styled.div`
   ${extensionBlockquoteStyledCss}
 `;
 
-export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
+export const extensionCalloutStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-callout-theme.ts
  */
@@ -726,11 +726,11 @@ export const extensionCalloutStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionCalloutStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionCalloutStyledComponent = styled.div`
   ${extensionCalloutStyledCss}
 `;
 
-export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
+export const extensionCodeBlockStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-code-block-theme.ts
  */
@@ -3459,11 +3459,11 @@ export const extensionCodeBlockStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionCodeBlockStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionCodeBlockStyledComponent = styled.div`
   ${extensionCodeBlockStyledCss}
 `;
 
-export const extensionCountStyledCss: ReturnType<typeof css> = css`
+export const extensionCountStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-count-theme.ts
  */
@@ -3472,11 +3472,11 @@ export const extensionCountStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionCountStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionCountStyledComponent = styled.div`
   ${extensionCountStyledCss}
 `;
 
-export const extensionEmojiStyledCss: ReturnType<typeof css> = css`
+export const extensionEmojiStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-emoji-theme.ts
  */
@@ -3537,11 +3537,11 @@ export const extensionEmojiStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionEmojiStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionEmojiStyledComponent = styled.div`
   ${extensionEmojiStyledCss}
 `;
 
-export const extensionFileStyledCss: ReturnType<typeof css> = css`
+export const extensionFileStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-file-theme.ts
  */
@@ -3594,11 +3594,11 @@ export const extensionFileStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionFileStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionFileStyledComponent = styled.div`
   ${extensionFileStyledCss}
 `;
 
-export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
+export const extensionGapCursorStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-gap-cursor-theme.ts
  */
@@ -3627,11 +3627,11 @@ export const extensionGapCursorStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionGapCursorStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionGapCursorStyledComponent = styled.div`
   ${extensionGapCursorStyledCss}
 `;
 
-export const extensionImageStyledCss: ReturnType<typeof css> = css`
+export const extensionImageStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-image-theme.ts
  */
@@ -3654,11 +3654,11 @@ export const extensionImageStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionImageStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionImageStyledComponent = styled.div`
   ${extensionImageStyledCss}
 `;
 
-export const extensionListStyledCss: ReturnType<typeof css> = css`
+export const extensionListStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-list-theme.ts
  */
@@ -3754,11 +3754,11 @@ export const extensionListStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionListStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionListStyledComponent = styled.div`
   ${extensionListStyledCss}
 `;
 
-export const extensionMentionAtomStyledCss: ReturnType<typeof css> = css`
+export const extensionMentionAtomStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-mention-atom-theme.ts
  */
@@ -3826,11 +3826,11 @@ export const extensionMentionAtomStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionMentionAtomStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionMentionAtomStyledComponent = styled.div`
   ${extensionMentionAtomStyledCss}
 `;
 
-export const extensionNodeFormattingStyledCss: ReturnType<typeof css> = css`
+export const extensionNodeFormattingStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-node-formatting-theme.ts
  */
@@ -3838,11 +3838,11 @@ export const extensionNodeFormattingStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionNodeFormattingStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionNodeFormattingStyledComponent = styled.div`
   ${extensionNodeFormattingStyledCss}
 `;
 
-export const extensionPlaceholderStyledCss: ReturnType<typeof css> = css`
+export const extensionPlaceholderStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-placeholder-theme.ts
  */
@@ -3856,11 +3856,11 @@ export const extensionPlaceholderStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionPlaceholderStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionPlaceholderStyledComponent = styled.div`
   ${extensionPlaceholderStyledCss}
 `;
 
-export const extensionPositionerStyledCss: ReturnType<typeof css> = css`
+export const extensionPositionerStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-positioner-theme.ts
  */
@@ -3888,11 +3888,11 @@ export const extensionPositionerStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionPositionerStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionPositionerStyledComponent = styled.div`
   ${extensionPositionerStyledCss}
 `;
 
-export const extensionTablesStyledCss: ReturnType<typeof css> = css`
+export const extensionTablesStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-tables-theme.ts
  */
@@ -4260,11 +4260,11 @@ export const extensionTablesStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionTablesStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionTablesStyledComponent = styled.div`
   ${extensionTablesStyledCss}
 `;
 
-export const extensionWhitespaceStyledCss: ReturnType<typeof css> = css`
+export const extensionWhitespaceStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-whitespace-theme.ts
  */
@@ -4295,11 +4295,11 @@ export const extensionWhitespaceStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionWhitespaceStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionWhitespaceStyledComponent = styled.div`
   ${extensionWhitespaceStyledCss}
 `;
 
-export const extensionYjsStyledCss: ReturnType<typeof css> = css`
+export const extensionYjsStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/extension-yjs-theme.ts
  */
@@ -4344,11 +4344,11 @@ export const extensionYjsStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ExtensionYjsStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ExtensionYjsStyledComponent = styled.div`
   ${extensionYjsStyledCss}
 `;
 
-export const themeStyledCss: ReturnType<typeof css> = css`
+export const themeStyledCss = css`
   /**
  * Styles extracted from: packages/remirror__theme/src/theme.ts
  */
@@ -4651,11 +4651,11 @@ export const themeStyledCss: ReturnType<typeof css> = css`
   }
 `;
 
-export const ThemeStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const ThemeStyledComponent = styled.div`
   ${themeStyledCss}
 `;
 
-export const allStyledCss: ReturnType<typeof css> = css`
+export const allStyledCss = css`
   ${componentsStyledCss}
   ${coreStyledCss}
   ${extensionBlockquoteStyledCss}
@@ -4677,7 +4677,7 @@ export const allStyledCss: ReturnType<typeof css> = css`
   ${themeStyledCss}
 `;
 
-export const AllStyledComponent: ReturnType<typeof styled.div> = styled.div`
+export const AllStyledComponent = styled.div`
   ${componentsStyledCss}
   ${coreStyledCss}
   ${extensionBlockquoteStyledCss}
