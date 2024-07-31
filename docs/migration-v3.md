@@ -1,18 +1,18 @@
 ---
 hide_title: true
-title: Migration to v3 beta
+title: Migration to v3
 ---
 
-# Migration to Remirror v3 beta
+# Migration to Remirror v3
 
-This guide lays out the required steps to migrate from Remirror v2 to Remirror v3 beta.
+This guide lays out the required steps to migrate from Remirror v2 to Remirror v3.
 
-Consult the [announcement post](/blog/announcement-v3-beta) to learn more about the v3 beta release, and what we're trying to achieve.
+Consult the [announcement post](/blog/announcement-v3) to learn more about the v3 release, and what we're trying to achieve.
 
 ## Installing
 
 ```bash
-npm add --save remirror@beta @remirror/react@beta @remirror/pm@beta
+npm add --save remirror@latest @remirror/react@latest @remirror/pm@latest
 ```
 
 ## `i18n` prop removed from `<Remirror />`
@@ -459,6 +459,140 @@ const EditorWithCodeBlocks = (): JSX.Element => {
 };
 
 export default EditorWithCodeBlocks;
+```
+
+## Removed CodeMirror and Yjs extensions from default `remirror` bundle
+
+The CodeMirror (v5) and Yjs extensions are no longer bundled with Remirror by default. If you require these extensions, Remirror v3 requires you to install these extensions directly.
+
+#### Before: Remirror v2 example
+
+```ts
+import React from 'react';
+import { BlockquoteExtension, CodeMirrorExtension, YjsExtension } from 'remirror/extensions';
+import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
+
+const extensions = () => [
+  // Extension options omitted for brevity
+  new BlockquoteExtension(),
+  new CodeMirrorExtension(),
+  new YjsExtension(),
+];
+
+/*
+ Then load your extensions into Remirror
+
+ const { manager, state, onChange } = useRemirror({
+    extensions: extensions,
+    content: '<p>Hello Remirror!</p>',
+    stringHandler: 'html',
+  });
+ */
+```
+
+### After Remirror v3 example
+
+```diff
+import React from 'react';
+- import { BlockquoteExtension, CodeMirrorExtension, YjsExtension } from 'remirror/extensions';
++ import { BlockquoteExtension } from 'remirror/extensions';
+import { Remirror, ThemeProvider, ToggleBoldButton, Toolbar, useRemirror } from '@remirror/react';
++ import { CodeMirrorExtension } from '@remirror/extension-codemirror5';
++ import { YjsExtension } from '@remirror/extension-yjs';
+
+const extensions = () => [
+  // Extension options omitted for brevity (unchanged from v2)
+  new BlockquoteExtension(),
+  new CodeMirrorExtension(),
+  new YjsExtension(),
+];
+
+/*
+ Then load your extensions into Remirror
+
+ const { manager, state, onChange } = useRemirror({
+    extensions: extensions,
+    content: '<p>Hello Remirror!</p>',
+    stringHandler: 'html',
+  });
+ */
+```
+
+## Removed React Tables extension from default `@remirror/react` bundle
+
+The **_React_** Tables extension is no longer bundled with Remirror by default. If you require this extension, Remirror v3 requires you to install the extension directly.
+
+#### Before: Remirror v2 example
+
+```tsx
+import React from 'react';
+import { BoldExtension } from 'remirror/extensions';
+import {
+  Remirror,
+  TableComponents,
+  TableExtension,
+  ThemeProvider,
+  useRemirror,
+} from '@remirror/react';
+
+const extensions = () => [
+  // Extension options omitted for brevity
+  new BoldExtension(),
+  new TableExtension(),
+];
+
+const content = '<p>Hello Remirror!</p>';
+
+const EditorWithReactTables = (): JSX.Element => {
+  const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
+
+  return (
+    <ThemeProvider>
+      <Remirror manager={manager} initialContent={state} autoRender>
+        <TableComponents />
+      </Remirror>
+    </ThemeProvider>
+  );
+};
+
+export default EditorWithReactTables;
+```
+
+### After Remirror v3 example
+
+```diff
+import React from 'react';
+import { BoldExtension } from 'remirror/extensions';
++ import { TableComponents, TableExtension } from '@remirror/extension-react-tables';
+import {
+  Remirror,
+-  TableComponents,
+-  TableExtension,
+  ThemeProvider,
+  useRemirror,
+} from '@remirror/react';
+
+const extensions = () => [
+  // Extension options omitted for brevity (unchanged from v2)
+  new BoldExtension(),
+  new TableExtension(),
+];
+
+const content = '<p>Hello Remirror!</p>';
+
+const EditorWithReactTables = (): JSX.Element => {
+  const { manager, state } = useRemirror({ extensions, content, stringHandler: 'html' });
+
+  return (
+    <ThemeProvider>
+      <Remirror manager={manager} initialContent={state} autoRender>
+        <TableComponents />
+      </Remirror>
+    </ThemeProvider>
+  );
+};
+
+export default EditorWithReactTables;
 ```
 
 ## Update any usages of `extensionDecorator` to `extension`

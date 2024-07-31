@@ -1,18 +1,18 @@
 ---
-slug: announcement-v3-beta
-title: Announcing Remirror v3 beta 🎉
+slug: announcement-v3
+title: Introducing Remirror v3 🎉
 author: Will Hawker
 author_title: Remirror Maintainer
 author_url: https://github.com/whawker
 author_image_url: https://avatars.githubusercontent.com/u/2003804?v=4
-tags: [remirror, announcement, beta]
+tags: [remirror, announcement]
 ---
 
 _TLDR: Remirror aims to be a better citizen, by not imposing our architectural decisions on to you._
 
 <!-- truncate -->
 
-Introducing Remirror v3 beta 🎉
+Introducing Remirror v3 🎉
 
 ## 🧐 Why?
 
@@ -84,6 +84,30 @@ This is an internal change, **there should be no breaking changes to the public 
 
 Our decorators (i.e. `@extension`, `@command`, `@keyBinding`, etc), have been updated to use ES [Stage-3 decorators](https://github.com/tc39/proposal-decorators) syntax, instead of [TypeScript's experimental decorator](https://www.typescriptlang.org/tsconfig#experimentalDecorators) syntax.
 
+### Some extensions are no longer provided as part of the default installation
+
+:::info
+
+"Out-of-the-box" (`@remirror/react-editors`) editors unaffected, they did not utilize these features
+
+:::
+
+Remirror v3 decouples the core of Remirror from CodeMirror 5 and Yjs, reducing the size of `@remirror/core` (and hence the main entry point `remirror`).
+
+If you require CodeMirror (v5) and Yjs (collaborative editing) features in your editor, **you will need to install the extensions directly**.
+
+Additionally, the **_React_** Tables extension is no longer bundled with the `@remirror/react` entry point - **you will need to install the extension directly**.
+
+These extensions are still supported, the only difference is they are no longer bundled by default. Please **consult the [migration guide](/docs/migration-v3)**.
+
+### Updating third party dependencies to latest versions
+
+We have upgraded Prettier and Styled Components to their latest versions to ensure Remirror doesn't hinder your codebase from updating these dependencies in your codebase.
+
+Prettier is used to power the default formatter of the CodeBlock extension, however as Prettier's **v3** API is _asynchronous_, the `formatCodeBlock` command can no longer be chained with other commands.
+
+In addition, if you provide your own `formatter` to `CodeBlockExtension` it is now expected that the formatter is asynchronous. I.e. it _resolves_ formatted code via a Promise.
+
 ### Mention atoms as plain text
 
 We've made a small change to ensure mention atoms are included in plain text by returning their `label` attribute value.
@@ -92,7 +116,7 @@ This can be modified using the `nodeOverrides` API and overriding the `leafText`
 
 ### Removal of deprecated features
 
-Remirror v3 also removes deprecated features, but in the vast majority of changes alternatives exist. We have highlighted a few of the key removals below, but the rest with be covered in the **[migration guide](/docs/migration-v3-beta)**
+Remirror v3 also removes deprecated features, but in the vast majority of changes alternatives exist. We have highlighted a few of the key removals below, but the rest with be covered in the **[migration guide](/docs/migration-v3)**
 
 #### `SearchExtension` removed, please use `FindExtension` instead
 
@@ -114,10 +138,14 @@ For instance, you can check if `toggleBold` is enabled by running `toggleBold.en
 
 ## ⬆️ How to migrate?
 
-Please **consult the [migration guide](/docs/migration-v3-beta)** and reach out on [Discord](https://remirror.io/chat) if you run into any issues.
+Please **consult the [migration guide](/docs/migration-v3)** and reach out on [Discord](https://remirror.io/chat) if you run into any issues.
 
 ## 👂 Feedback
 
-As this is a beta version **we'd really love your feedback** to check everything works as expected. Please raise any [issues on GitHub](https://github.com/remirror/remirror/issues) or via our [Discord server](https://remirror.io/chat).
+As always **we'd really love your feedback**. Please raise any [issues on GitHub](https://github.com/remirror/remirror/issues) or via our [Discord server](https://remirror.io/chat).
 
 As always, reach out to use via our [Discord server](https://remirror.io/chat) if you have any suggestions on how we could improve Remirror in general.
+
+## 🙏 Thanks
+
+Massive thanks to [ocavue](https://github.com/ocavue) and [mdmower](https://github.com/mdmower) for all their help and contributions, bringing v3 to reality.

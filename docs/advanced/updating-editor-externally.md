@@ -36,6 +36,8 @@ const EditorWithRef = forwardRef((_, ref) => {
     />
   );
 });
+
+EditorWithRef.displayName = 'EditorWithRef';
 ```
 
 Here's the **TypeScript** version which, as a bonus should pass type checks.
@@ -64,4 +66,6 @@ const EditorWithRef = forwardRef<ReactFrameworkOutput<Extensions>>((_, ref) => {
     />
   );
 });
+
+EditorWithRef.displayName = 'EditorWithRef';
 ```
