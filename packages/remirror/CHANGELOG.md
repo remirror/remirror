@@ -1,5 +1,67 @@
 # remirror
 
+## 3.0.1
+
+> 2024-08-01
+
+### Patch Changes
+
+- 38f997dbb: Expose the previous versions of Remirror's decorators with a _legacy_ prefix, so users who are unable to use Stage 3 decorators are not blocked updating to Remirror v3.
+- Updated dependencies [38f997dbb]
+  - @remirror/core@3.0.1
+  - @remirror/dom@3.0.1
+  - @remirror/extension-annotation@3.0.1
+  - @remirror/extension-bidi@3.0.1
+  - @remirror/extension-blockquote@3.0.1
+  - @remirror/extension-bold@3.0.1
+  - @remirror/extension-callout@3.0.1
+  - @remirror/extension-code@3.0.1
+  - @remirror/extension-code-block@3.0.1
+  - @remirror/extension-collaboration@3.0.1
+  - @remirror/extension-columns@3.0.1
+  - @remirror/extension-diff@3.0.1
+  - @remirror/extension-doc@3.0.1
+  - @remirror/extension-drop-cursor@3.0.1
+  - @remirror/extension-embed@3.0.1
+  - @remirror/extension-emoji@3.0.1
+  - @remirror/extension-entity-reference@3.0.1
+  - @remirror/extension-epic-mode@3.0.1
+  - @remirror/extension-events@3.0.1
+  - @remirror/extension-find@1.0.1
+  - @remirror/extension-font-family@3.0.1
+  - @remirror/extension-font-size@3.0.1
+  - @remirror/extension-gap-cursor@3.0.1
+  - @remirror/extension-hard-break@3.0.1
+  - @remirror/extension-heading@3.0.1
+  - @remirror/extension-history@3.0.1
+  - @remirror/extension-horizontal-rule@3.0.1
+  - @remirror/extension-image@3.0.1
+  - @remirror/extension-italic@3.0.1
+  - @remirror/extension-link@3.0.1
+  - @remirror/extension-list@3.0.1
+  - @remirror/extension-markdown@3.0.1
+  - @remirror/extension-mention@3.0.1
+  - @remirror/extension-mention-atom@3.0.1
+  - @remirror/extension-node-formatting@3.0.1
+  - @remirror/extension-paragraph@3.0.1
+  - @remirror/extension-placeholder@3.0.1
+  - @remirror/extension-positioner@3.0.1
+  - @remirror/extension-shortcuts@3.0.1
+  - @remirror/extension-strike@3.0.1
+  - @remirror/extension-sub@3.0.1
+  - @remirror/extension-sup@3.0.1
+  - @remirror/extension-tables@3.0.1
+  - @remirror/extension-text@3.0.1
+  - @remirror/extension-text-case@3.0.1
+  - @remirror/extension-text-color@3.0.1
+  - @remirror/extension-text-highlight@3.0.1
+  - @remirror/extension-trailing-node@3.0.1
+  - @remirror/extension-underline@3.0.1
+  - @remirror/extension-whitespace@3.0.1
+  - @remirror/preset-core@3.0.1
+  - @remirror/preset-formatting@3.0.1
+  - @remirror/preset-wysiwyg@3.0.1
+
 ## 3.0.0
 
 > 2024-07-30

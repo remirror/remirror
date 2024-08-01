@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-drop-cursor",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A cursor for the ages. Drag and drop content in your editor with class.",
   "keywords": [
     "remirror",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0",
+    "@remirror/core": "3.0.1",
     "@remirror/messages": "3.0.0"
   },
   "devDependencies": {

@@ -1,5 +1,21 @@
 # @remirror/react-hooks
 
+## 3.0.1
+
+> 2024-08-01
+
+### Patch Changes
+
+- Updated dependencies [38f997dbb]
+  - @remirror/core@3.0.1
+  - @remirror/extension-emoji@3.0.1
+  - @remirror/extension-events@3.0.1
+  - @remirror/extension-history@3.0.1
+  - @remirror/extension-mention@3.0.1
+  - @remirror/extension-mention-atom@3.0.1
+  - @remirror/extension-positioner@3.0.1
+  - @remirror/react-core@3.0.1
+
 ## 3.0.0
 
 > 2024-07-30

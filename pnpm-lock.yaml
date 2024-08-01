@@ -303,7 +303,7 @@ importers:
         specifier: 3.0.0
         version: link:packages/jest-prosemirror
       jest-remirror:
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:packages/jest-remirror
       jest-watch-typeahead:
         specifier: ^2.2.2
@@ -327,7 +327,7 @@ importers:
         specifier: ^2.4.3
         version: 2.4.3(prettier@3.2.5)
       remirror:
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:packages/remirror
       rimraf:
         specifier: ^4.4.1
@@ -450,16 +450,16 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/dom':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__dom
       '@remirror/pm':
         specifier: 3.0.0
         version: link:../remirror__pm
       '@remirror/preset-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-core
       '@testing-library/dom':
         specifier: ^9.3.0
@@ -636,7 +636,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/core-constants':
         specifier: 3.0.0
@@ -651,163 +651,163 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__core-utils
       '@remirror/dom':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__dom
       '@remirror/extension-annotation':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-annotation
       '@remirror/extension-bidi':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-code-block
       '@remirror/extension-collaboration':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-collaboration
       '@remirror/extension-columns':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-columns
       '@remirror/extension-diff':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-diff
       '@remirror/extension-doc':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-doc
       '@remirror/extension-drop-cursor':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-embed
       '@remirror/extension-emoji':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-emoji
       '@remirror/extension-entity-reference':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-epic-mode':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-epic-mode
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/extension-find':
-        specifier: 1.0.0
+        specifier: 1.0.1
         version: link:../remirror__extension-find
       '@remirror/extension-font-family':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-font-family
       '@remirror/extension-font-size':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-font-size
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-hard-break':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-history
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-list
       '@remirror/extension-markdown':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-markdown
       '@remirror/extension-mention':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-paragraph':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-paragraph
       '@remirror/extension-placeholder':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-placeholder
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/extension-shortcuts':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-shortcuts
       '@remirror/extension-strike':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-tables
       '@remirror/extension-text':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text
       '@remirror/extension-text-case':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-trailing-node':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-trailing-node
       '@remirror/extension-underline':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-whitespace
       '@remirror/icons':
         specifier: 3.0.0
         version: link:../remirror__icons
       '@remirror/preset-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-core
       '@remirror/preset-formatting':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-formatting
       '@remirror/preset-wysiwyg':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-wysiwyg
       '@remirror/theme':
         specifier: 3.0.0
@@ -1062,7 +1062,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/react-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-core
       prosemirror-dev-toolkit:
         specifier: ^1.1.4
@@ -1096,10 +1096,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/preset-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-core
     devDependencies:
       '@remirror/cli':
@@ -1115,10 +1115,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/messages':
         specifier: 3.0.0
@@ -1137,7 +1137,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1162,7 +1162,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1184,7 +1184,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1203,7 +1203,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1225,7 +1225,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1244,10 +1244,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/messages':
         specifier: 3.0.0
@@ -1284,7 +1284,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1321,7 +1321,7 @@ importers:
         specifier: ^6.12.0
         version: 6.12.0
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -1337,7 +1337,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1356,7 +1356,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1375,7 +1375,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -1391,7 +1391,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1410,7 +1410,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1429,7 +1429,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1448,7 +1448,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1479,7 +1479,7 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1516,13 +1516,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
     devDependencies:
       '@remirror/cli':
@@ -1538,7 +1538,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1557,7 +1557,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1576,13 +1576,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-component
       '@remirror/react-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-core
       '@remirror/theme':
         specifier: 3.0.0
@@ -1613,7 +1613,7 @@ importers:
   packages/remirror__extension-find:
     dependencies:
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@types/string.prototype.matchall':
         specifier: ^4.0.1
@@ -1638,7 +1638,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1657,7 +1657,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1679,7 +1679,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1698,7 +1698,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1717,7 +1717,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1736,7 +1736,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1755,7 +1755,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1774,7 +1774,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1799,7 +1799,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1818,10 +1818,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0
@@ -1849,10 +1849,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0
@@ -1874,7 +1874,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1899,7 +1899,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/extension-react-tables':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-tables
       '@remirror/pm':
         specifier: 3.0.0
@@ -1911,10 +1911,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0
@@ -1936,10 +1936,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0
@@ -1961,7 +1961,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1980,7 +1980,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -1999,7 +1999,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2021,10 +2021,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/messages':
         specifier: 3.0.0
@@ -2049,7 +2049,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/core-constants':
         specifier: 3.0.0
@@ -2095,10 +2095,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-component
       '@remirror/messages':
         specifier: 3.0.0
@@ -2114,7 +2114,7 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -2135,16 +2135,16 @@ importers:
         specifier: 4.2.10
         version: 4.2.10
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/core-utils':
         specifier: 3.0.0
         version: link:../remirror__core-utils
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/extension-tables':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-tables
       '@remirror/icons':
         specifier: 3.0.0
@@ -2153,13 +2153,13 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__messages
       '@remirror/react-components':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-hooks
       '@remirror/theme':
         specifier: 3.0.0
@@ -2196,7 +2196,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -2212,7 +2212,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2231,7 +2231,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2250,7 +2250,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2269,13 +2269,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/messages':
         specifier: 3.0.0
@@ -2297,7 +2297,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2316,7 +2316,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2335,7 +2335,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2360,10 +2360,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-text-color':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text-color
       '@remirror/messages':
         specifier: 3.0.0
@@ -2382,7 +2382,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2401,7 +2401,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2420,7 +2420,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2439,7 +2439,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/messages':
         specifier: 3.0.0
@@ -2612,28 +2612,28 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-doc':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-doc
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-history':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-history
       '@remirror/extension-paragraph':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-paragraph
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/extension-text':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text
     devDependencies:
       '@remirror/cli':
@@ -2649,49 +2649,49 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-bold':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-bold
       '@remirror/extension-columns':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-columns
       '@remirror/extension-font-size':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-heading
       '@remirror/extension-italic':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-italic
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-strike':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-sup
       '@remirror/extension-text-case':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text-case
       '@remirror/extension-text-color':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text-color
       '@remirror/extension-text-highlight':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text-highlight
       '@remirror/extension-underline':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-whitespace
     devDependencies:
       '@remirror/cli':
@@ -2707,13 +2707,13 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-placeholder':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-placeholder
       '@remirror/extension-react-component':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-component
       '@remirror/react-utils':
         specifier: 3.0.0
@@ -2744,70 +2744,70 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-bidi':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-bidi
       '@remirror/extension-blockquote':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-bold
       '@remirror/extension-code':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-code-block
       '@remirror/extension-drop-cursor':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-drop-cursor
       '@remirror/extension-embed':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-embed
       '@remirror/extension-find':
-        specifier: 1.0.0
+        specifier: 1.0.1
         version: link:../remirror__extension-find
       '@remirror/extension-gap-cursor':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-gap-cursor
       '@remirror/extension-hard-break':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-hard-break
       '@remirror/extension-heading':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-heading
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-image':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-image
       '@remirror/extension-italic':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-italic
       '@remirror/extension-link':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-link
       '@remirror/extension-list':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-list
       '@remirror/extension-shortcuts':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-shortcuts
       '@remirror/extension-strike':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-strike
       '@remirror/extension-trailing-node':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-trailing-node
       '@remirror/extension-underline':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-underline
       '@remirror/preset-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-core
     devDependencies:
       '@remirror/cli':
@@ -2823,28 +2823,28 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/extension-placeholder':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-placeholder
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-component
       '@remirror/preset-react':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-react
       '@remirror/react-components':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-hooks
       '@remirror/react-renderer':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-renderer
       '@remirror/react-utils':
         specifier: 3.0.0
@@ -2875,10 +2875,10 @@ importers:
         specifier: ^0.24.3
         version: 0.24.3(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/icons':
         specifier: 3.0.0
@@ -2887,10 +2887,10 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__messages
       '@remirror/react-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-hooks
       '@remirror/react-utils':
         specifier: 3.0.0
@@ -2942,22 +2942,22 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-component
       '@remirror/preset-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-core
       '@remirror/preset-react':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-react
       '@remirror/react-renderer':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-renderer
       '@remirror/react-utils':
         specifier: 3.0.0
@@ -3012,7 +3012,7 @@ importers:
         specifier: 4.0.0
         version: link:../remirror__core-helpers
       '@remirror/extension-react-tables':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-tables
       '@remirror/i18n':
         specifier: 3.0.0
@@ -3021,10 +3021,10 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react
       '@remirror/react-ui':
-        specifier: 1.0.0
+        specifier: 1.0.1
         version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0
@@ -3042,7 +3042,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror
       svgmoji:
         specifier: ^3.2.0
@@ -3073,7 +3073,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/core-constants':
         specifier: 3.0.0
@@ -3082,25 +3082,25 @@ importers:
         specifier: 4.0.0
         version: link:../remirror__core-helpers
       '@remirror/extension-emoji':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-emoji
       '@remirror/extension-events':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-events
       '@remirror/extension-history':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-history
       '@remirror/extension-mention':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/react-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-core
       '@remirror/react-utils':
         specifier: 3.0.0
@@ -3143,7 +3143,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
     devDependencies:
       '@remirror/cli':
@@ -3162,10 +3162,10 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-react-ssr':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-ssr
     devDependencies:
       '@remirror/cli':
@@ -3175,7 +3175,7 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -3208,73 +3208,73 @@ importers:
         specifier: ^5.13.2
         version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-blockquote':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-blockquote
       '@remirror/extension-bold':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-bold
       '@remirror/extension-callout':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-callout
       '@remirror/extension-code':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-code
       '@remirror/extension-code-block':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-code-block
       '@remirror/extension-columns':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-columns
       '@remirror/extension-find':
-        specifier: 1.0.0
+        specifier: 1.0.1
         version: link:../remirror__extension-find
       '@remirror/extension-font-size':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-font-size
       '@remirror/extension-heading':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-heading
       '@remirror/extension-history':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-history
       '@remirror/extension-horizontal-rule':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-horizontal-rule
       '@remirror/extension-italic':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-italic
       '@remirror/extension-list':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-list
       '@remirror/extension-node-formatting':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-node-formatting
       '@remirror/extension-positioner':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/extension-strike':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-strike
       '@remirror/extension-sub':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-sub
       '@remirror/extension-sup':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-sup
       '@remirror/extension-tables':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-tables
       '@remirror/extension-text-color':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-text-color
       '@remirror/extension-underline':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-underline
       '@remirror/extension-whitespace':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-whitespace
       '@remirror/icons':
         specifier: 3.0.0
@@ -3283,13 +3283,13 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__messages
       '@remirror/react-components':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react-hooks
       '@remirror/theme':
         specifier: 3.0.0
@@ -3456,43 +3456,43 @@ importers:
         specifier: ^5.13.2
         version: 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.0)(react-dom@18.2.0)(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/dev':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__dev
       '@remirror/extension-code-block':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-code-block
       '@remirror/extension-codemirror5':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-codemirror5
       '@remirror/extension-codemirror6':
-        specifier: 2.0.0
+        specifier: 2.0.1
         version: link:../remirror__extension-codemirror6
       '@remirror/extension-count':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-count
       '@remirror/extension-entity-reference':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-file':
-        specifier: 2.0.0
+        specifier: 2.0.1
         version: link:../remirror__extension-file
       '@remirror/extension-find':
-        specifier: 1.0.0
+        specifier: 1.0.1
         version: link:../remirror__extension-find
       '@remirror/extension-mention':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-mention
       '@remirror/extension-mention-atom':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-react-tables':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__extension-react-tables
       '@remirror/extension-yjs':
-        specifier: 4.0.0
+        specifier: 4.0.1
         version: link:../remirror__extension-yjs
       '@remirror/i18n':
         specifier: 3.0.0
@@ -3504,13 +3504,13 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react
       '@remirror/react-editors':
-        specifier: 2.0.0
+        specifier: 2.0.1
         version: link:../remirror__react-editors
       '@remirror/react-ui':
-        specifier: 1.0.0
+        specifier: 1.0.1
         version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0
@@ -3603,7 +3603,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror
       scripts:
         specifier: 0.0.1
@@ -3698,16 +3698,16 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/pm':
         specifier: 3.0.0
         version: link:../remirror__pm
       '@remirror/preset-core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__preset-core
       '@remirror/react':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__react
       '@testing-library/react':
         specifier: ^14.0.0
@@ -4060,7 +4060,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
@@ -4082,7 +4082,7 @@ importers:
         specifier: ^7.22.3
         version: 7.22.3
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
@@ -4113,16 +4113,16 @@ importers:
         specifier: ^1.6.22
         version: 1.6.22(react@18.2.0)
       '@remirror/core':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../packages/remirror__core
       '@remirror/dev':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../packages/remirror__dev
       '@remirror/react':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../packages/remirror__react
       '@remirror/react-editors':
-        specifier: 2.0.0
+        specifier: 2.0.1
         version: link:../packages/remirror__react-editors
       '@remirror/styles':
         specifier: 3.0.0
@@ -4167,7 +4167,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       remirror:
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../packages/remirror
     devDependencies:
       '@docusaurus/core':
@@ -4649,9 +4649,9 @@ packages:
       '@babel/helper-compilation-targets': 7.25.2
       '@babel/helper-module-transforms': 7.25.2(@babel/core@7.25.2)
       '@babel/helpers': 7.25.0
-      '@babel/parser': 7.25.0
+      '@babel/parser': 7.25.3
       '@babel/template': 7.25.0
-      '@babel/traverse': 7.25.2
+      '@babel/traverse': 7.25.3
       '@babel/types': 7.25.2
       convert-source-map: 2.0.0
       debug: 4.3.6
@@ -5070,7 +5070,7 @@ packages:
       '@babel/helper-module-imports': 7.24.7
       '@babel/helper-simple-access': 7.24.7
       '@babel/helper-validator-identifier': 7.24.7
-      '@babel/traverse': 7.25.2
+      '@babel/traverse': 7.25.3
     transitivePeerDependencies:
       - supports-color
 
@@ -5283,8 +5283,8 @@ packages:
     dependencies:
       '@babel/types': 7.24.9
 
-  /@babel/parser@7.25.0:
-    resolution: {integrity: sha512-CzdIU9jdP0dg7HdyB+bHvDJGagUv+qtzZt5rYCWwW6tITNqV9odjp6Qu41gkG0ca5UfdDUWrKkiAnHHdGRnOrA==}
+  /@babel/parser@7.25.3:
+    resolution: {integrity: sha512-iLTJKDbJ4hMvFPgQwwsVoxtHyWpKKPBrxkANrSYewDPaPpT5py5yeVkgPIJ7XYXhndxJpaA3PyALSXQ7u8e/Dw==}
     engines: {node: '>=6.0.0'}
     hasBin: true
     dependencies:
@@ -8600,7 +8600,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.24.7
-      '@babel/parser': 7.25.0
+      '@babel/parser': 7.25.3
       '@babel/types': 7.25.2
 
   /@babel/traverse@7.21.5:
@@ -8655,13 +8655,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@babel/traverse@7.25.2:
-    resolution: {integrity: sha512-s4/r+a7xTnny2O6FcZzqgT6nE4/GHEdcqj4qAeglbUOh0TeglEfmNJFAd/OLoVtGd6ZhAO8GCVvCNUO5t/VJVQ==}
+  /@babel/traverse@7.25.3:
+    resolution: {integrity: sha512-HefgyP1x754oGCsKmV5reSmtV7IXj/kpaE1XYY+D9G5PvKKoFfSbiS4M77MdjuwlZKDIKFCffq9rPU+H/s3ZdQ==}
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.24.7
       '@babel/generator': 7.25.0
-      '@babel/parser': 7.25.0
+      '@babel/parser': 7.25.3
       '@babel/template': 7.25.0
       '@babel/types': 7.25.2
       debug: 4.3.6
