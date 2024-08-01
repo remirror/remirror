@@ -1,5 +1,17 @@
 # @remirror/react-editors
 
+## 2.0.1
+
+> 2024-08-01
+
+### Patch Changes
+
+- Updated dependencies [38f997dbb]
+  - remirror@3.0.1
+  - @remirror/extension-react-tables@3.0.1
+  - @remirror/react-ui@1.0.1
+  - @remirror/react@3.0.1
+
 ## 2.0.0
 
 > 2024-07-30

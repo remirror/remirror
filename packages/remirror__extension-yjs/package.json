@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-yjs",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Realtime collaboration with yjs",
   "keywords": [
     "remirror",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.22.3",
-    "@remirror/core": "3.0.0",
+    "@remirror/core": "3.0.1",
     "@remirror/messages": "3.0.0",
     "prosemirror-model": "^1.22.1",
     "prosemirror-state": "^1.4.3",

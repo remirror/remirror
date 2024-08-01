@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 3.0.1
+
+> 2024-08-01
+
+### Patch Changes
+
+- 38f997dbb: Expose the previous versions of Remirror's decorators with a _legacy_ prefix, so users who are unable to use Stage 3 decorators are not blocked updating to Remirror v3.
+
 ## 3.0.0
 
 > 2024-07-30

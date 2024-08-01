@@ -1,5 +1,20 @@
 # @remirror/react
 
+## 3.0.1
+
+> 2024-08-01
+
+### Patch Changes
+
+- @remirror/extension-placeholder@3.0.1
+- @remirror/extension-positioner@3.0.1
+- @remirror/extension-react-component@3.0.1
+- @remirror/preset-react@3.0.1
+- @remirror/react-components@3.0.1
+- @remirror/react-core@3.0.1
+- @remirror/react-hooks@3.0.1
+- @remirror/react-renderer@3.0.1
+
 ## 3.0.0
 
 > 2024-07-30
