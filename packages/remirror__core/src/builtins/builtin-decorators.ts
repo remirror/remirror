@@ -82,7 +82,7 @@ export function helper(options: HelperDecoratorOptions = {}) {
 }
 
 /**
- * A legacy decorator (pre ES2023) which can be applied to top level methods
+ * A legacy decorator (pre Stage 3) which can be applied to top level methods
  * on an extension to identify them as helpers. This can be used as a
  * replacement for the `createHelpers` method.
  *
@@ -221,7 +221,7 @@ export function command(
 }
 
 /**
- * A legacy decorator (pre ES2023) which can be applied to top level methods
+ * A legacy decorator (pre Stage 3) which can be applied to top level methods
  * on an extension to identify them as commands. This can be used as a
  * replacement for the `createCommands` method.
  *
@@ -321,7 +321,7 @@ export function keyBinding<Extension extends AnyExtension>(
 }
 
 /**
- * A legacy decorator (pre ES2023) which can be applied to an extension
+ * A legacy decorator (pre Stage 3) which can be applied to an extension
  * method to identify as a key binding method. This can be used as a
  * replacement for the `createKeymap` method depending on your
  * preference.

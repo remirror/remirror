@@ -15,9 +15,9 @@ Consult the [announcement post](/blog/announcement-v3) to learn more about the v
 npm add --save remirror@latest @remirror/react@latest @remirror/pm@latest
 ```
 
-## ES2023 decorators
+## Stage 3 decorators
 
-Remirror v3 has been updated to use ES2023 decorators, now they have [reached Stage 3](https://github.com/tc39/proposal-decorators), and [esbuild supports them](https://github.com/evanw/esbuild/releases/tag/v0.21.0). Previously Remirror used TypeScript's experimental decorators, which use an older version of the spec.
+Remirror v3 has been updated to use [Stage 3 decorators](https://github.com/tc39/proposal-decorators), now they have reached candidate status, and [esbuild supports them](https://github.com/evanw/esbuild/releases/tag/v0.21.0). Previously Remirror used TypeScript's experimental decorators, which use an older version of the spec.
 
 If you use Remirror's decorators (`@extension`, `@command`, `@helper` and `@keyBinding`) in your custom extensions, you may find they no longer work. Here are a few things to try
 
@@ -51,7 +51,7 @@ Update your Babel config to use the latest version of the decorator spec.
 
 ### Next.js
 
-At time of writing [SWC does not support the latest decorator syntax](https://github.com/vitejs/vite-plugin-react-swc/issues/86).
+At time of writing [Next.js does not support Stage 3 decorators](https://github.com/vercel/next.js/issues/48360).
 
 We recommend using our _legacy_ decorators (see below).
 
