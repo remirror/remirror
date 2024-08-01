@@ -127,8 +127,10 @@ const docs = [
   {
     type: 'category',
     label: 'More',
-    items: ['contributing', 'tooling', 'errors', 'projects', 'migration-v2', 'migration-v3'],
+    items: ['contributing', 'tooling', 'errors', 'projects'],
   },
+  'migration-v2',
+  'migration-v3',
 ];
 
 if (getApiItems().length > 0) {

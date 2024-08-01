@@ -26,3 +26,31 @@ npm install @remirror/react-ui @remirror/react
 ```
 
 This is **NOT** included by default when you install the recommended `@remirror/react` package.
+
+## Translations
+
+The components used here expect a translation library to be present to render tooltips etc.
+
+This can be provided via the `i18nFormat` prop to the root `Remirror` component.
+
+You can use the provided `@remirror/i18n` package, or you can provide your own i18n library (see the [i18n examples in Storybook](https://remirror.vercel.app/?path=/story/i18n-react-i18next--basic))
+
+```tsx
+import { i18nFormat } from '@remirror/i18n';
+import { Remirror, useRemirror } from '@remirror/react';
+import { TopToolbar } from '@remirror/react';
+
+const Editor: React.FC = () => {
+  const { manager } = useRemirror({
+    extensions: () => [
+      // Some extensions here
+    ],
+  });
+
+  return (
+    <Remirror manager={manager} i18nFormat={i18nFormat} autoRender='end'>
+      <TopToolbar />
+    </Remirror>
+  );
+};
+```
