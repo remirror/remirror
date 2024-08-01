@@ -15,6 +15,66 @@ Consult the [announcement post](/blog/announcement-v3) to learn more about the v
 npm add --save remirror@latest @remirror/react@latest @remirror/pm@latest
 ```
 
+## Stage 3 decorators
+
+Remirror v3 has been updated to use [Stage 3 decorators](https://github.com/tc39/proposal-decorators), now they have reached candidate status, and [esbuild supports them](https://github.com/evanw/esbuild/releases/tag/v0.21.0). Previously Remirror used TypeScript's experimental decorators, which use an older version of the spec.
+
+If you use Remirror's decorators (`@extension`, `@command`, `@helper` and `@keyBinding`) in your custom extensions, you may find they no longer work. Here are a few things to try
+
+### TypeScript
+
+Set `experimentalDecorators` to **false** in your `tsconfig`. This ensures you don't use the older version of the decorator spec.
+
+### Vite
+
+If you are using Vite with the SWC plugin, see Next.js below, otherwise:
+
+Ensure the `esbuild` version you use is _at least_ `0.21.0`, and update the `target` your Vite config
+
+```json
+{
+  "esbuild": {
+    "target": "ES2020"
+  }
+}
+```
+
+### Babel
+
+Update your Babel config to use the latest version of the decorator spec.
+
+```json
+{
+  "plugins": [["@babel/plugin-proposal-decorators", { "version": "2023-11" }]]
+}
+```
+
+### Next.js
+
+At time of writing [Next.js does not support Stage 3 decorators](https://github.com/vercel/next.js/issues/48360).
+
+We recommend using our _legacy_ decorators (see below).
+
+### Help! None of the above worked
+
+If all else fails, you can revert to using the legacy decorators. Please update your imports so that
+
+| Old name     | New name           |
+| ------------ | ------------------ |
+| `command`    | `legacyCommand`    |
+| `helper`     | `legacyHelper`     |
+| `keyBinding` | `legacyKeyBinding` |
+
+i.e.
+
+```ts
+import { legacyCommand as command } from 'remirror';
+```
+
+The `extension` decorator is backwards compatible, so does not need updating.
+
+Please bear in mind that these legacy decorators **are considered deprecated**, and will be removed in a future release of Remirror.
+
 ## `i18n` prop removed from `<Remirror />`
 
 In previous versions of Remirror, the `i18n` prop of the root `<Remirror />` component allowed you to pass a customised **Lingui** instance.
