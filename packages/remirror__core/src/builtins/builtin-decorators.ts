@@ -24,9 +24,9 @@ import type { GetOptions } from '../types';
  * your methods with the following type signature.
  *
  * ```ts
- * import { CommandFunction } from '@remirror/core';
+ * import { Helper } from '@remirror/core';
  *
- * type Signature = (...args: any[]) => CommandFunction;
+ * type Signature = (...args: any[]) => Helper<SomeReturnType>;
  * ```
  *
  * The following is an example of how this can be used within your extension.
@@ -64,7 +64,7 @@ export function helper(options: HelperDecoratorOptions = {}) {
   return <Extension extends AnyExtension, Type>(
     method: AnyFunction<NonNullable<Type> extends HelperAnnotation ? Type : never>,
     context: ClassMethodDecoratorContext<Extension>,
-  ) => {
+  ): AnyFunction<NonNullable<Type> extends HelperAnnotation ? Type : never> => {
     const methodName = context.name;
 
     if (typeof methodName !== 'string') {
@@ -78,6 +78,67 @@ export function helper(options: HelperDecoratorOptions = {}) {
     });
 
     return method;
+  };
+}
+
+/**
+ * A legacy decorator (pre ES2023) which can be applied to top level methods
+ * on an extension to identify them as helpers. This can be used as a
+ * replacement for the `createHelpers` method.
+ *
+ * To allow the TypeScript compiler to automatically infer types, please create
+ * your methods with the following type signature.
+ *
+ * ```ts
+ * import { Helper } from '@remirror/core';
+ *
+ * type Signature = (...args: any[]) => Helper<SomeReturnType>;
+ * ```
+ *
+ * The following is an example of how this can be used within your extension.
+ *
+ * ```ts
+ * import { legacyHelper, Helper } from '@remirror/core';
+ *
+ * class MyExtension {
+ *   get name() {
+ *     return 'my';
+ *   }
+ *
+ *   @legacyHelper()
+ *   alwaysTrue(): Helper<boolean> {
+ *     return true;
+ *   }
+ * }
+ * ```
+ *
+ * The above helper can now be used within your editor instance.
+ *
+ * ```tsx
+ * import { useRemirrorContext } from '@remirror/react';
+ *
+ * const MyEditorButton = () => {
+ *   const { helpers } = useRemirrorContext();
+ *
+ *   return helpers.alwaysTrue() ? <button>My Button</button> : null
+ * }
+ * ```
+ *
+ * @category Method Decorator
+ * @deprecated legacy - please use the ES2023 decorator `@helper`
+ */
+export function legacyHelper(options: HelperDecoratorOptions = {}) {
+  return <Extension extends AnyExtension, Type>(
+    target: Extension,
+    propertyKey: string,
+    _descriptor: TypedPropertyDescriptor<
+      // This type signature helps enforce the need for the `Helper` annotation
+      // while allowing for `null | undefined`.
+      AnyFunction<NonNullable<Type> extends HelperAnnotation ? Type : never>
+    >,
+  ): void => {
+    // Attach the options to the `decoratedCommands` property for this extension.
+    (target.decoratedHelpers ??= {})[propertyKey] = options;
   };
 }
 
@@ -160,6 +221,72 @@ export function command(
 }
 
 /**
+ * A legacy decorator (pre ES2023) which can be applied to top level methods
+ * on an extension to identify them as commands. This can be used as a
+ * replacement for the `createCommands` method.
+ *
+ * If you prefer not to use decorators, then you can continue using
+ * `createCommands`. Internally the decorators are being used as they are better
+ * for documentation purposes.
+ *
+ * For automated type inference methods that use this decorator must implement
+ * the following type signature.
+ *
+ * ```ts
+ * import { CommandFunction } from '@remirror/core';
+ *
+ * type Signature = (...args: any[]) => CommandFunction;
+ * ```
+ *
+ * The following is an example of how this can be used within your extension.
+ *
+ * ```ts
+ * import { legacyCommand, CommandFunction } from '@remirror/core';
+ *
+ * class MyExtension {
+ *   get name() {
+ *     return 'my';
+ *   }
+ *
+ *   @legacyCommand()
+ *   myCommand(text: string): CommandFunction {
+ *     return ({ tr, dispatch }) => {
+ *       dispatch?.(tr.insertText('my command ' + text));
+ *       return true;
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * The above command can now be used within your editor instance.
+ *
+ * ```tsx
+ * import { useRemirrorContext } from '@remirror/react';
+ *
+ * const MyEditorButton = () => {
+ *   const { commands } = useRemirrorContext();
+ *
+ *   return <button onClick={() => commands.myCommand('hello')}>My Button</button>
+ * }
+ * ```
+ *
+ * @category Method Decorator
+ * @deprecated legacy - please use the ES2023 decorator `@command`
+ */
+export function legacyCommand<Extension extends AnyExtension>(
+  options?: ChainableCommandDecoratorOptions<Required<GetOptions<Extension>>>,
+): ExtensionDecorator<Extension, CommandFunction, void>;
+export function legacyCommand<Extension extends AnyExtension>(
+  options: NonChainableCommandDecoratorOptions<Required<GetOptions<Extension>>>,
+): ExtensionDecorator<Extension, NonChainableCommandFunction, void>;
+export function legacyCommand(options: CommandDecoratorOptions = {}): any {
+  return (target: any, propertyKey: string, _descriptor: any): void => {
+    // Attach the options to the decoratedCommands property for this extension.
+    (target.decoratedCommands ??= {})[propertyKey] = options;
+  };
+}
+
+/**
  * A decorator which can be applied to an extension method to
  * identify as a key binding method. This can be used as a replacement for
  * the `createKeymap` method depending on your preference.
@@ -169,11 +296,13 @@ export function command(
  *
  * @category Method Decorator
  */
-
 export function keyBinding<Extension extends AnyExtension>(
   options: KeybindingDecoratorOptions<Required<GetOptions<Extension>>>,
 ) {
-  return (method: KeyBindingCommandFunction, context: ClassMethodDecoratorContext<Extension>) => {
+  return (
+    method: KeyBindingCommandFunction,
+    context: ClassMethodDecoratorContext<Extension>,
+  ): KeyBindingCommandFunction => {
     const methodName = context.name;
 
     if (typeof methodName !== 'string') {
@@ -188,6 +317,31 @@ export function keyBinding<Extension extends AnyExtension>(
     });
 
     return method;
+  };
+}
+
+/**
+ * A legacy decorator (pre ES2023) which can be applied to an extension
+ * method to identify as a key binding method. This can be used as a
+ * replacement for the `createKeymap` method depending on your
+ * preference.
+ *
+ * If you prefer not to use decorators, then you can continue using
+ * `createKeymap`.
+ *
+ * @category Method Decorator
+ * @deprecated legacy - please use the ES2023 decorator `@keyBinding`
+ */
+export function legacyKeyBinding<Extension extends AnyExtension>(
+  options: KeybindingDecoratorOptions<Required<GetOptions<Extension>>>,
+) {
+  return (
+    target: Extension,
+    propertyKey: string,
+    _descriptor: TypedPropertyDescriptor<KeyBindingCommandFunction>,
+  ): void => {
+    // Attach the options to the decoratedCommands property for this extension.
+    (target.decoratedKeybindings ??= {})[propertyKey] = options as any;
   };
 }
 
