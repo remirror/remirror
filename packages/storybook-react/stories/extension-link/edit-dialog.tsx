@@ -164,7 +164,6 @@ const FloatingLinkToolbar = () => {
         positioner='always'
         placement='bottom'
         enabled={isEditing}
-        renderOutsideEditor
       >
         <DelayAutoFocusInput
           style={{ zIndex: 20 }}
