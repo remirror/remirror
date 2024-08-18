@@ -1,7 +1,11 @@
 import { EditorState, Plugin, PluginKey, Transaction } from '@remirror/pm/state';
 import { Decoration, DecorationSet } from '@remirror/pm/view';
 
-import { ActionType, PlaceholderPluginAction } from './file-placeholder-actions';
+import {
+  ActionType,
+  PlaceholderPluginAction,
+  PlaceholderPluginMeta,
+} from './file-placeholder-actions';
 
 interface UploadPlaceholderPluginData {
   set: DecorationSet;
@@ -21,18 +25,24 @@ export function createUploadPlaceholderPlugin(): Plugin<UploadPlaceholderPluginD
         // Adjust decoration positions to changes made by the transaction
         set = set.map(tr.mapping, tr.doc);
         // See if the transaction adds or removes any placeholders
-        const action = tr.getMeta(plugin) as PlaceholderPluginAction | null;
+        const metaInfo = tr.getMeta(plugin) as PlaceholderPluginMeta | null;
 
-        if (action) {
-          if (action.type === ActionType.ADD_PLACEHOLDER) {
+        if (metaInfo) {
+          metaInfo?.added.forEach((addedItem) => {
             const widget = document.createElement('placeholder');
-            const deco = Decoration.widget(action.pos, widget, { id: action.id });
+            const deco = Decoration.widget(addedItem.pos, widget, { id: addedItem.id });
             set = set.add(tr.doc, [deco]);
-            payloads.set(action.id, action.payload);
-          } else if (action.type === ActionType.REMOVE_PLACEHOLDER) {
-            set = set.remove(set.find(undefined, undefined, (spec) => spec.id === action.id));
-            payloads.delete(action.id);
-          }
+            payloads.set(addedItem.id, addedItem.payload);
+          });
+
+          metaInfo.updated.forEach((updatedItem) => {
+            payloads.has(updatedItem.id) && payloads.set(updatedItem.id, updatedItem.payload);
+          });
+
+          metaInfo.removed.forEach((removeItem) => {
+            set = set.remove(set.find(undefined, undefined, (spec) => spec.id === removeItem.id));
+            payloads.delete(removeItem.id);
+          });
         }
 
         return { set, payloads };
@@ -117,5 +127,28 @@ export function setUploadPlaceholderAction(
   tr: Transaction,
   action: PlaceholderPluginAction,
 ): Transaction {
-  return tr.setMeta(key, action);
+  let metaInfo: PlaceholderPluginMeta = tr.getMeta(key) ?? {
+    added: [],
+    removed: [],
+    updated: [],
+  };
+
+  if (action.type === ActionType.ADD_PLACEHOLDER) {
+    metaInfo = {
+      ...metaInfo,
+      added: [...metaInfo.added, { id: action.id, payload: action.payload, pos: action.pos }],
+    };
+  } else if (action.type === ActionType.REMOVE_PLACEHOLDER) {
+    metaInfo = {
+      ...metaInfo,
+      removed: [...metaInfo.removed, { id: action.id }],
+    };
+  } else {
+    metaInfo = {
+      ...metaInfo,
+      updated: [...metaInfo.updated, { id: action.id, payload: action.payload }],
+    };
+  }
+
+  return tr.setMeta(key, metaInfo);
 }
