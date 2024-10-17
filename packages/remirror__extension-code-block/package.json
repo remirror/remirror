@@ -48,12 +48,12 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.25.7",
     "@remirror/core": "3.0.1",
     "@remirror/extension-positioner": "3.0.1",
     "@remirror/messages": "3.0.0",
     "@remirror/theme": "3.0.0",
-    "@types/refractor": "^3.0.2",
+    "@types/refractor": "^3.4.1",
     "refractor": "^3.6.0"
   },
   "devDependencies": {
@@ -61,7 +61,7 @@
     "@remirror/pm": "3.0.0",
     "@types/jsdom": "^16.2.15",
     "jsdom": "^17.0.0",
-    "prettier": "^3.2.5"
+    "prettier": "^3.3.3"
   },
   "peerDependencies": {
     "@remirror/pm": "^3.0.0",
