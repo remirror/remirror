@@ -38,9 +38,9 @@
   },
   "dependencies": {
     "@remirror/core": "3.0.1",
-    "@types/string.prototype.matchall": "^4.0.1",
+    "@types/string.prototype.matchall": "^4.0.4",
     "escape-string-regexp": "^4.0.0",
-    "string.prototype.matchall": "^4.0.8"
+    "string.prototype.matchall": "^4.0.11"
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0",

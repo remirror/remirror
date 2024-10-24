@@ -39,7 +39,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.25.9",
     "@remirror/core": "3.0.1",
     "@remirror/messages": "3.0.0"
   },
@@ -47,8 +47,8 @@
     "@remirror/cli": "1.1.0",
     "@remirror/core-helpers": "4.0.0",
     "@remirror/pm": "3.0.0",
-    "@types/codemirror": "^5.60.7",
-    "codemirror": "^5.65.13"
+    "@types/codemirror": "^5.60.15",
+    "codemirror": "^5.65.18"
   },
   "peerDependencies": {
     "@remirror/pm": "^3.0.0",
