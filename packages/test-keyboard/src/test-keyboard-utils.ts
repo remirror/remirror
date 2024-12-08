@@ -1,4 +1,3 @@
-import { omit } from '@remirror/core-helpers';
 import type { Shape } from '@remirror/core-types';
 
 import type { KeyboardEventName, ModifierInformation } from './test-keyboard-types';
@@ -74,5 +73,6 @@ export function getModifierInformation(props: GetModifierInformationProps): Modi
  * @param key
  */
 export function cleanKey(key: SupportedCharacters): Omit<KeyDefinition, 'shiftKey'> {
-  return omit(usKeyboardLayout[key], ['shiftKey']);
+  const { shiftKey, ...keyDefinition } = usKeyboardLayout[key];
+  return keyDefinition;
 }

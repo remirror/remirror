@@ -3672,9 +3672,6 @@ importers:
       '@babel/runtime':
         specifier: ^7.22.3
         version: 7.22.3
-      '@remirror/core-helpers':
-        specifier: 4.0.0
-        version: link:../remirror__core-helpers
       '@remirror/core-types':
         specifier: 3.0.0
         version: link:../remirror__core-types
