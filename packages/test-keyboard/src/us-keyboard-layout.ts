@@ -1,5 +1,3 @@
-import { isString } from '@remirror/core-helpers';
-
 /**
  * See
  * {@link https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js}
@@ -421,5 +419,5 @@ export type SupportedCharacters = Extract<keyof USKeyboardLayout, string>;
  * @param char
  */
 export function isUSKeyboardCharacter(char: unknown): char is SupportedCharacters {
-  return isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
+  return typeof char === 'string' && Object.keys(rawUSKeyboardLayout).includes(char);
 }

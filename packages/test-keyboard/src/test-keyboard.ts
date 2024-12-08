@@ -1,5 +1,3 @@
-import { includes, object, take } from '@remirror/core-helpers';
-
 import type {
   KeyboardConstructorProps,
   KeyboardEventName,
@@ -150,7 +148,7 @@ export class Keyboard {
    *
    * @param props - see {@link TextInputProps}
    */
-  usChar({ text, options = object(), typing = false }: TextInputProps<SupportedCharacters>): this {
+  usChar({ text, options = {}, typing = false }: TextInputProps<SupportedCharacters>): this {
     if (!isUSKeyboardCharacter(text)) {
       throw new Error(
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
@@ -203,7 +201,7 @@ export class Keyboard {
    *
    * @param props - see {@link TypingInputProps}
    */
-  type({ text, options = object() }: TypingInputProps): this {
+  type({ text, options = {} }: TypingInputProps): this {
     for (const char of text) {
       this.char({ text: char, options, typing: true });
     }
@@ -224,10 +222,10 @@ export class Keyboard {
    *
    * @param props - see {@link TextInputProps}
    */
-  mod({ text, options = object() }: TextInputProps): this {
+  mod({ text, options = {} }: TextInputProps): this {
     let modifiers = text.split(/-(?!$)/);
     let result = modifiers[modifiers.length - 1] ?? '';
-    modifiers = take(modifiers, modifiers.length - 1);
+    modifiers = modifiers.slice(0, -1);
 
     if (result === 'Space') {
       result = ' ';
@@ -251,13 +249,14 @@ export class Keyboard {
     this.keyDown({ options });
 
     if (
-      !includes(noKeyPress, options.key) ||
-      (typing && isUSKeyboardCharacter(options.key) && usKeyboardLayout[options.key].text)
+      options.key &&
+      (!noKeyPress.includes(options.key) ||
+        (typing && isUSKeyboardCharacter(options.key) && usKeyboardLayout[options.key].text))
     ) {
       this.keyPress({ options });
     }
 
-    if (!includes(noKeyUp, options.key)) {
+    if (options.key && !noKeyUp.includes(options.key)) {
       this.keyUp({ options });
     }
 
