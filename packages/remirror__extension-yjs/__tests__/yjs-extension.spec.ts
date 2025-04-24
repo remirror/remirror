@@ -68,10 +68,10 @@ describe('configuration', () => {
     const { manager } = create();
 
     const state = manager.createState();
-    const initialUndoManager = yUndoPluginKey.getState(state).undoManager;
+    const initialUndoManager = yUndoPluginKey.getState(state)!.undoManager;
 
     const secondState = manager.createState();
-    const secondUndoManager = yUndoPluginKey.getState(secondState).undoManager;
+    const secondUndoManager = yUndoPluginKey.getState(secondState)!.undoManager;
     expect(secondUndoManager).toBe(initialUndoManager);
   });
 });
