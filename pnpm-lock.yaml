@@ -15,9 +15,6 @@ patchedDependencies:
   svgmoji@3.2.0:
     hash: hb5tifrnyoxxmogod3ui2wx6rq
     path: patches/svgmoji@3.2.0.patch
-  y-prosemirror@1.2.1:
-    hash: qmoqv2ukd266e4uf7e6uwxdto4
-    path: patches/y-prosemirror@1.2.1.patch
   y-webrtc@10.2.5:
     hash: 4m5fkqkkfxtu7lybpna26wm2ia
     path: patches/y-webrtc@10.2.5.patch
@@ -2454,8 +2451,8 @@ importers:
         specifier: ^1.39.2
         version: 1.39.2
       y-prosemirror:
-        specifier: ^1.0.19
-        version: 1.2.1(patch_hash=qmoqv2ukd266e4uf7e6uwxdto4)(prosemirror-model@1.25.1)(prosemirror-state@1.4.3)(prosemirror-view@1.39.2)(y-protocols@1.0.5)(yjs@13.6.1)
+        specifier: ^1.3.4
+        version: 1.3.4(prosemirror-model@1.25.1)(prosemirror-state@1.4.3)(prosemirror-view@1.39.2)(y-protocols@1.0.5)(yjs@13.6.1)
       y-protocols:
         specifier: ^1.0.5
         version: 1.0.5
@@ -22016,6 +22013,14 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
+  /lib0@0.2.104:
+    resolution: {integrity: sha512-1tqKRANSPTcjs/yjPoKh52oRM2u5AYdd8jie8sDiN8/5kpWWiQSHUGgtB4VEXLw1chVL3QPSPp8q9RWqzSn2FA==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      isomorphic.js: 0.2.4
+    dev: false
+
   /lib0@0.2.74:
     resolution: {integrity: sha512-roj9i46/JwG5ik5KNTkxP2IytlnrssAkD/OhlAVtE+GqectrdkfR+pttszVLrOzMDeXNs1MPt6yo66MUolWSiA==}
     engines: {node: '>=14'}
@@ -29614,8 +29619,9 @@ packages:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
 
-  /y-prosemirror@1.2.1(patch_hash=qmoqv2ukd266e4uf7e6uwxdto4)(prosemirror-model@1.25.1)(prosemirror-state@1.4.3)(prosemirror-view@1.39.2)(y-protocols@1.0.5)(yjs@13.6.1):
-    resolution: {integrity: sha512-czMBfB1eL2awqmOSxQM8cS/fsUOGE6fjvyPLInrh4crPxFiw67wDpwIW+EGBYKRa04sYbS0ScGj7ZgvWuDrmBQ==}
+  /y-prosemirror@1.3.4(prosemirror-model@1.25.1)(prosemirror-state@1.4.3)(prosemirror-view@1.39.2)(y-protocols@1.0.5)(yjs@13.6.1):
+    resolution: {integrity: sha512-fvklwVnjowbrtmM5PkyIrHNoqe7Bt1KEtBvucsJNCSZwOQYNR5UcKwJmhUOaEHUAyYPg7RrVqnMK/3DvMBU8dA==}
+    engines: {node: '>=16.0.0', npm: '>=8.0.0'}
     peerDependencies:
       prosemirror-model: ^1.7.1
       prosemirror-state: ^1.2.3
@@ -29623,14 +29629,13 @@ packages:
       y-protocols: ^1.0.1
       yjs: ^13.5.38
     dependencies:
-      lib0: 0.2.74
+      lib0: 0.2.104
       prosemirror-model: 1.25.1
       prosemirror-state: 1.4.3
       prosemirror-view: 1.39.2
       y-protocols: 1.0.5
       yjs: 13.6.1
     dev: false
-    patched: true
 
   /y-protocols@1.0.5:
     resolution: {integrity: sha512-Wil92b7cGk712lRHDqS4T90IczF6RkcvCwAD0A2OPg+adKmOe+nOiT/N2hvpQIWS3zfjmtL4CPaH5sIW1Hkm/A==}
