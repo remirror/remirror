@@ -37,7 +37,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@remirror/core": "3.0.1",
     "@remirror/messages": "3.0.0",
     "round": "^2.0.1"

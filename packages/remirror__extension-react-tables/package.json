@@ -42,7 +42,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@emotion/css": "^11.11.0",
     "@linaria/core": "4.2.10",
     "@remirror/core": "3.0.1",
@@ -61,8 +61,8 @@
     "@remirror/pm": "3.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "y-webrtc": "^10.2.5",
     "yjs": "^13.6.1"
   },
