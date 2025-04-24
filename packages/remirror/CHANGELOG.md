@@ -1,5 +1,16 @@
 # remirror
 
+## 3.0.2
+
+> 2025-04-24
+
+### Patch Changes
+
+- 98710d923: Update ProseMirror dependencies.
+- Updated dependencies [98710d923]
+  - @remirror/pm@3.0.1
+  - @remirror/extension-markdown@3.0.2
+
 ## 3.0.1
 
 > 2024-08-01

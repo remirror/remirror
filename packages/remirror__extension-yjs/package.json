@@ -52,12 +52,12 @@
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0",
-    "@remirror/pm": "3.0.0",
+    "@remirror/pm": "3.0.1",
     "y-webrtc": "^10.2.5",
     "yjs": "^13.6.1"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.0",
+    "@remirror/pm": "^3.0.1",
     "yjs": "^13.6.1"
   },
   "publishConfig": {
