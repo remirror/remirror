@@ -14,6 +14,7 @@ import { isDomNode, isElementDomNode, isNodeOfType } from '@remirror/core-utils'
 import { Decoration, EditorView, NodeView, ProsemirrorNode } from '@remirror/pm';
 import { DOMSerializer } from '@remirror/pm/model';
 import { NodeSelection } from '@remirror/pm/state';
+import type { ViewMutationRecord } from '@remirror/pm/view';
 
 import type {
   CreateNodeViewProps,
@@ -385,7 +386,7 @@ export class ReactNodeView implements NodeView {
   /**
    * The handler which decides when mutations should be ignored.
    */
-  ignoreMutation(mutation: IgnoreMutationProps): boolean {
+  ignoreMutation(mutation: ViewMutationRecord): boolean {
     if (mutation.type === 'selection') {
       // If a node type is unselectable, then ignore all selection mutations.
       return !this.#node.type.spec.selectable;
@@ -455,8 +456,6 @@ export class ReactNodeView implements NodeView {
     return true;
   }
 }
-
-type IgnoreMutationProps = MutationRecord | { type: 'selection'; target: Element };
 
 function isDomNodeOutputSpec(value: unknown): value is Node | { dom: Node; contentDOM?: Node } {
   return isDomNode(value) || (isPlainObject(value) && isDomNode(value.dom));

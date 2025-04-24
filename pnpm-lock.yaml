@@ -422,11 +422,11 @@ importers:
         specifier: ^29.5.0
         version: 29.5.0
       prosemirror-schema-basic:
-        specifier: ^1.2.3
-        version: 1.2.3
+        specifier: ^1.2.4
+        version: 1.2.4
       prosemirror-tables:
-        specifier: ^1.3.7
-        version: 1.3.7
+        specifier: ^1.7.1
+        version: 1.7.1
       prosemirror-test-builder:
         specifier: ^1.1.1
         version: 1.1.1
@@ -546,14 +546,14 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       prosemirror-model:
-        specifier: ^1.22.1
-        version: 1.22.1
+        specifier: ^1.25.1
+        version: 1.25.1
       prosemirror-state:
         specifier: ^1.4.3
         version: 1.4.3
       prosemirror-view:
-        specifier: ^1.33.8
-        version: 1.33.8
+        specifier: ^1.39.2
+        version: 1.39.2
 
   packages/prosemirror-resizable-view:
     dependencies:
@@ -567,11 +567,11 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__core-utils
       prosemirror-model:
-        specifier: ^1.22.1
-        version: 1.22.1
+        specifier: ^1.25.1
+        version: 1.25.1
       prosemirror-view:
-        specifier: ^1.33.8
-        version: 1.33.8
+        specifier: ^1.39.2
+        version: 1.39.2
     devDependencies:
       '@remirror/cli':
         specifier: 1.1.0
@@ -599,14 +599,14 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       prosemirror-model:
-        specifier: ^1.22.1
-        version: 1.22.1
+        specifier: ^1.25.1
+        version: 1.25.1
       prosemirror-state:
         specifier: ^1.4.3
         version: 1.4.3
       prosemirror-view:
-        specifier: ^1.33.8
-        version: 1.33.8
+        specifier: ^1.39.2
+        version: 1.39.2
 
   packages/prosemirror-trailing-node:
     dependencies:
@@ -621,14 +621,14 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       prosemirror-model:
-        specifier: ^1.22.1
-        version: 1.22.1
+        specifier: ^1.25.1
+        version: 1.25.1
       prosemirror-state:
         specifier: ^1.4.3
         version: 1.4.3
       prosemirror-view:
-        specifier: ^1.33.8
-        version: 1.33.8
+        specifier: ^1.39.2
+        version: 1.39.2
 
   packages/remirror:
     dependencies:
@@ -1065,8 +1065,8 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__react-core
       prosemirror-dev-toolkit:
-        specifier: ^1.1.4
-        version: 1.1.4(svelte@4.2.18)
+        specifier: ^1.1.8
+        version: 1.1.8(svelte@4.2.18)
     devDependencies:
       '@remirror/cli':
         specifier: 1.1.0
@@ -2445,17 +2445,17 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__messages
       prosemirror-model:
-        specifier: ^1.22.1
-        version: 1.22.1
+        specifier: ^1.25.1
+        version: 1.25.1
       prosemirror-state:
         specifier: ^1.4.3
         version: 1.4.3
       prosemirror-view:
-        specifier: ^1.33.8
-        version: 1.33.8
+        specifier: ^1.39.2
+        version: 1.39.2
       y-prosemirror:
         specifier: ^1.0.19
-        version: 1.2.1(patch_hash=qmoqv2ukd266e4uf7e6uwxdto4)(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.5)(yjs@13.6.1)
+        version: 1.2.1(patch_hash=qmoqv2ukd266e4uf7e6uwxdto4)(prosemirror-model@1.25.1)(prosemirror-state@1.4.3)(prosemirror-view@1.39.2)(y-protocols@1.0.5)(yjs@13.6.1)
       y-protocols:
         specifier: ^1.0.5
         version: 1.0.5
@@ -2557,11 +2557,11 @@ importers:
         specifier: ^1.3.1
         version: 1.3.1
       prosemirror-commands:
-        specifier: ^1.5.2
-        version: 1.5.2
+        specifier: ^1.7.1
+        version: 1.7.1
       prosemirror-dropcursor:
-        specifier: ^1.8.1
-        version: 1.8.1
+        specifier: ^1.8.2
+        version: 1.8.2
       prosemirror-gapcursor:
         specifier: ^1.3.2
         version: 1.3.2
@@ -2569,20 +2569,20 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       prosemirror-inputrules:
-        specifier: ^1.4.0
-        version: 1.4.0
+        specifier: ^1.5.0
+        version: 1.5.0
       prosemirror-keymap:
         specifier: ^1.2.2
         version: 1.2.2
       prosemirror-model:
-        specifier: ^1.22.1
-        version: 1.22.1
+        specifier: ^1.25.1
+        version: 1.25.1
       prosemirror-paste-rules:
         specifier: 3.0.0
         version: link:../prosemirror-paste-rules
       prosemirror-schema-list:
-        specifier: ^1.4.1
-        version: 1.4.1
+        specifier: ^1.5.1
+        version: 1.5.1
       prosemirror-state:
         specifier: ^1.4.3
         version: 1.4.3
@@ -2590,17 +2590,17 @@ importers:
         specifier: 3.0.0
         version: link:../prosemirror-suggest
       prosemirror-tables:
-        specifier: ^1.3.7
-        version: 1.3.7
+        specifier: ^1.7.1
+        version: 1.7.1
       prosemirror-trailing-node:
         specifier: 3.0.0
         version: link:../prosemirror-trailing-node
       prosemirror-transform:
-        specifier: ^1.9.0
-        version: 1.9.0
+        specifier: ^1.10.4
+        version: 1.10.4
       prosemirror-view:
-        specifier: ^1.33.8
-        version: 1.33.8
+        specifier: ^1.39.2
+        version: 1.39.2
     devDependencies:
       '@remirror/cli':
         specifier: 1.1.0
@@ -19285,6 +19285,7 @@ packages:
   /eslint@8.41.0:
     resolution: {integrity: sha512-WQDQpzGBOP5IrXPo4Hc0814r4/v2rrIsB0rhT7jtunIalgg6gYXWhRMOejVO8yH21T/FGaxjmFjBMNqcIlmH1Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.41.0)
@@ -23534,6 +23535,7 @@ packages:
 
   /lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
     dev: false
 
   /lodash.groupby@4.6.0:
@@ -23550,6 +23552,7 @@ packages:
 
   /lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
     dev: false
 
   /lodash.isinteger@4.0.4:
@@ -26234,55 +26237,55 @@ packages:
       prosemirror-state: 1.4.3
     dev: false
 
-  /prosemirror-commands@1.5.2:
-    resolution: {integrity: sha512-hgLcPaakxH8tu6YvVAaILV2tXYsW3rAdDR8WNkeKGcgeMVQg3/TMhPdVoh7iAmfgVjZGtcOSjKiQaoeKjzd2mQ==}
+  /prosemirror-commands@1.7.1:
+    resolution: {integrity: sha512-rT7qZnQtx5c0/y/KlYaGvtG411S97UaL6gdp6RIZ23DLHanMYLyfGBV5DtSnZdthQql7W+lEVbpSfwtO8T+L2w==}
     dependencies:
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
       prosemirror-state: 1.4.3
-      prosemirror-transform: 1.9.0
+      prosemirror-transform: 1.10.4
     dev: false
 
-  /prosemirror-dev-toolkit@1.1.4(svelte@4.2.18):
-    resolution: {integrity: sha512-iHM57hCq7gLwRCfBe9aaI9zSsJCawCPKCJwxQNonTtazXjPDo7y6NxS2CKzTlODJVvQ8DvlWcR+ncC5lJDBO9A==}
+  /prosemirror-dev-toolkit@1.1.8(svelte@4.2.18):
+    resolution: {integrity: sha512-Qi549XA+DqU5cCkn/xv+M53gy1sQbyOTjiOfiG7Gjq5gm6ZxLilGN04UITWTAYx9kzLBi7Y9RJmvmWB4xiRauA==}
     dependencies:
       html: 1.0.0
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
       svelte-tree-view: 1.4.2(svelte@4.2.18)
     transitivePeerDependencies:
       - svelte
     dev: false
 
-  /prosemirror-dropcursor@1.8.1:
-    resolution: {integrity: sha512-M30WJdJZLyXHi3N8vxN6Zh5O8ZBbQCz0gURTfPmTIBNQ5pxrdU7A58QkNqfa98YEjSAL1HUyyU34f6Pm5xBSGw==}
+  /prosemirror-dropcursor@1.8.2:
+    resolution: {integrity: sha512-CCk6Gyx9+Tt2sbYk5NK0nB1ukHi2ryaRgadV/LvyNuO3ena1payM2z6Cg0vO1ebK8cxbzo41ku2DE5Axj1Zuiw==}
     dependencies:
       prosemirror-state: 1.4.3
-      prosemirror-transform: 1.9.0
-      prosemirror-view: 1.33.8
+      prosemirror-transform: 1.10.4
+      prosemirror-view: 1.39.2
     dev: false
 
   /prosemirror-gapcursor@1.3.2:
     resolution: {integrity: sha512-wtjswVBd2vaQRrnYZaBCbyDqr232Ed4p2QPtRIUK5FuqHYKGWkEwl08oQM4Tw7DOR0FsasARV5uJFvMZWxdNxQ==}
     dependencies:
       prosemirror-keymap: 1.2.2
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
       prosemirror-state: 1.4.3
-      prosemirror-view: 1.33.8
+      prosemirror-view: 1.39.2
     dev: false
 
   /prosemirror-history@1.4.1:
     resolution: {integrity: sha512-2JZD8z2JviJrboD9cPuX/Sv/1ChFng+xh2tChQ2X4bB2HeK+rra/bmJ3xGntCcjhOqIzSDG6Id7e8RJ9QPXLEQ==}
     dependencies:
       prosemirror-state: 1.4.3
-      prosemirror-transform: 1.9.0
-      prosemirror-view: 1.33.8
+      prosemirror-transform: 1.10.4
+      prosemirror-view: 1.39.2
       rope-sequence: 1.3.2
     dev: false
 
-  /prosemirror-inputrules@1.4.0:
-    resolution: {integrity: sha512-6ygpPRuTJ2lcOXs9JkefieMst63wVJBgHZGl5QOytN7oSZs3Co/BYbc3Yx9zm9H37Bxw8kVzCnDsihsVsL4yEg==}
+  /prosemirror-inputrules@1.5.0:
+    resolution: {integrity: sha512-K0xJRCmt+uSw7xesnHmcn72yBGTbY45vm8gXI4LZXbx2Z0jwh5aF9xrGQgrVPu0WbyFVFF3E/o9VhJYz6SQWnA==}
     dependencies:
       prosemirror-state: 1.4.3
-      prosemirror-transform: 1.9.0
+      prosemirror-transform: 1.10.4
     dev: false
 
   /prosemirror-keymap@1.2.2:
@@ -26292,61 +26295,61 @@ packages:
       w3c-keyname: 2.2.7
     dev: false
 
-  /prosemirror-model@1.22.1:
-    resolution: {integrity: sha512-gMrxal+F3higDFxCkBK5iQXckRVYvIu/3dopERJ6b20xfwZ9cbYvQvuldqaN+v/XytNPGyURYUpUU23kBRxWCQ==}
+  /prosemirror-model@1.25.1:
+    resolution: {integrity: sha512-AUvbm7qqmpZa5d9fPKMvH1Q5bqYQvAZWOGRvxsB6iFLyycvC9MwNemNVjHVrWgjaoxAfY8XVg7DbvQ/qxvI9Eg==}
     dependencies:
       orderedmap: 2.0.0
 
-  /prosemirror-schema-basic@1.2.3:
-    resolution: {integrity: sha512-h+H0OQwZVqMon1PNn0AG9cTfx513zgIG2DY00eJ00Yvgb3UD+GQ/VlWW5rcaxacpCGT1Yx8nuhwXk4+QbXUfJA==}
+  /prosemirror-schema-basic@1.2.4:
+    resolution: {integrity: sha512-ELxP4TlX3yr2v5rM7Sb70SqStq5NvI15c0j9j/gjsrO5vaw+fnnpovCLEGIcpeGfifkuqJwl4fon6b+KdrODYQ==}
     dependencies:
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
     dev: false
 
-  /prosemirror-schema-list@1.4.1:
-    resolution: {integrity: sha512-jbDyaP/6AFfDfu70VzySsD75Om2t3sXTOdl5+31Wlxlg62td1haUpty/ybajSfJ1pkGadlOfwQq9kgW5IMo1Rg==}
+  /prosemirror-schema-list@1.5.1:
+    resolution: {integrity: sha512-927lFx/uwyQaGwJxLWCZRkjXG0p48KpMj6ueoYiu4JX05GGuGcgzAy62dfiV8eFZftgyBUvLx76RsMe20fJl+Q==}
     dependencies:
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
       prosemirror-state: 1.4.3
-      prosemirror-transform: 1.9.0
+      prosemirror-transform: 1.10.4
     dev: false
 
   /prosemirror-state@1.4.3:
     resolution: {integrity: sha512-goFKORVbvPuAQaXhpbemJFRKJ2aixr+AZMGiquiqKxaucC6hlpHNZHWgz5R7dS4roHiwq9vDctE//CZ++o0W1Q==}
     dependencies:
-      prosemirror-model: 1.22.1
-      prosemirror-transform: 1.9.0
-      prosemirror-view: 1.33.8
+      prosemirror-model: 1.25.1
+      prosemirror-transform: 1.10.4
+      prosemirror-view: 1.39.2
 
-  /prosemirror-tables@1.3.7:
-    resolution: {integrity: sha512-oEwX1wrziuxMtwFvdDWSFHVUWrFJWt929kVVfHvtTi8yvw+5ppxjXZkMG/fuTdFo+3DXyIPSKfid+Be1npKXDA==}
+  /prosemirror-tables@1.7.1:
+    resolution: {integrity: sha512-eRQ97Bf+i9Eby99QbyAiyov43iOKgWa7QCGly+lrDt7efZ1v8NWolhXiB43hSDGIXT1UXgbs4KJN3a06FGpr1Q==}
     dependencies:
       prosemirror-keymap: 1.2.2
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
       prosemirror-state: 1.4.3
-      prosemirror-transform: 1.9.0
-      prosemirror-view: 1.33.8
+      prosemirror-transform: 1.10.4
+      prosemirror-view: 1.39.2
     dev: false
 
   /prosemirror-test-builder@1.1.1:
     resolution: {integrity: sha512-DJ1+4TNTE9ZcYN/ozXCaWJVrGA99UttMoVvZuidvAotRg7FaiNtEYxL/vlDwfZDRnzJDXNYhmM3XPv3EweK7yA==}
     dependencies:
-      prosemirror-model: 1.22.1
-      prosemirror-schema-basic: 1.2.3
-      prosemirror-schema-list: 1.4.1
+      prosemirror-model: 1.25.1
+      prosemirror-schema-basic: 1.2.4
+      prosemirror-schema-list: 1.5.1
     dev: false
 
-  /prosemirror-transform@1.9.0:
-    resolution: {integrity: sha512-5UXkr1LIRx3jmpXXNKDhv8OyAOeLTGuXNwdVfg8x27uASna/wQkr9p6fD3eupGOi4PLJfbezxTyi/7fSJypXHg==}
+  /prosemirror-transform@1.10.4:
+    resolution: {integrity: sha512-pwDy22nAnGqNR1feOQKHxoFkkUtepoFAd3r2hbEDsnf4wp57kKA36hXsB3njA9FtONBEwSDnDeCiJe+ItD+ykw==}
     dependencies:
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
 
-  /prosemirror-view@1.33.8:
-    resolution: {integrity: sha512-4PhMr/ufz2cdvFgpUAnZfs+0xij3RsFysreeG9V/utpwX7AJtYCDVyuRxzWoMJIEf4C7wVihuBNMPpFLPCiLQw==}
+  /prosemirror-view@1.39.2:
+    resolution: {integrity: sha512-BmOkml0QWNob165gyUxXi5K5CVUgVPpqMEAAml/qzgKn9boLUWVPzQ6LtzXw8Cn1GtRQX4ELumPxqtLTDaAKtg==}
     dependencies:
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
       prosemirror-state: 1.4.3
-      prosemirror-transform: 1.9.0
+      prosemirror-transform: 1.10.4
 
   /protoduck@4.0.0:
     resolution: {integrity: sha512-9sxuz0YTU/68O98xuDn8NBxTVH9EuMhrBTxZdiBL0/qxRmWhB/5a8MagAebDa+98vluAZTs8kMZibCdezbRCeQ==}
@@ -30938,7 +30941,7 @@ packages:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
 
-  /y-prosemirror@1.2.1(patch_hash=qmoqv2ukd266e4uf7e6uwxdto4)(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.5)(yjs@13.6.1):
+  /y-prosemirror@1.2.1(patch_hash=qmoqv2ukd266e4uf7e6uwxdto4)(prosemirror-model@1.25.1)(prosemirror-state@1.4.3)(prosemirror-view@1.39.2)(y-protocols@1.0.5)(yjs@13.6.1):
     resolution: {integrity: sha512-czMBfB1eL2awqmOSxQM8cS/fsUOGE6fjvyPLInrh4crPxFiw67wDpwIW+EGBYKRa04sYbS0ScGj7ZgvWuDrmBQ==}
     peerDependencies:
       prosemirror-model: ^1.7.1
@@ -30948,9 +30951,9 @@ packages:
       yjs: ^13.5.38
     dependencies:
       lib0: 0.2.74
-      prosemirror-model: 1.22.1
+      prosemirror-model: 1.25.1
       prosemirror-state: 1.4.3
-      prosemirror-view: 1.33.8
+      prosemirror-view: 1.39.2
       y-protocols: 1.0.5
       yjs: 13.6.1
     dev: false

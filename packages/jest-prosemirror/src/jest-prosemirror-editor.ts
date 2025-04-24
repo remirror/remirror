@@ -32,8 +32,6 @@ import { cellAround, CellSelection } from '@remirror/pm/tables';
 import {
   // @ts-expect-error: __parseFromClipboard is not typed
   __parseFromClipboard,
-  // @ts-expect-error: __serializeForClipboard is not typed
-  __serializeForClipboard,
   DirectEditorProps,
   EditorView,
 } from '@remirror/pm/view';
@@ -50,10 +48,19 @@ export const parseFromClipboard: (
   $context: ResolvedPos,
 ) => Slice | null = __parseFromClipboard;
 
-export const serializeForClipboard: (
+/**
+ * @deprecated You can now use `view.serializeForClipboard()` directly.
+ */
+export function serializeForClipboard(
   view: EditorView,
   slice: Slice,
-) => { dom: HTMLDivElement; text: string } = __serializeForClipboard;
+): {
+  dom: HTMLElement;
+  text: string;
+  slice: Slice;
+} {
+  return view.serializeForClipboard(slice);
+}
 
 const cleanupItems = new Set<[TestEditorView, HTMLElement]>();
 
@@ -191,7 +198,7 @@ export function pasteContent(props: {
  */
 export function copyContent(props: { view: EditorView }): { html: string; text: string } {
   const { view } = props;
-  const { dom, text } = serializeForClipboard(view, view.state.selection.content());
+  const { dom, text } = view.serializeForClipboard(view.state.selection.content());
   const html = dom.innerHTML;
   return { html, text };
 }
