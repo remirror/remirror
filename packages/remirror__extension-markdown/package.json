@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-markdown",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Generate markdown output from your editor",
   "keywords": [
     "remirror",
@@ -48,12 +48,12 @@
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0",
-    "@remirror/extension-react-tables": "3.0.1",
-    "@remirror/pm": "3.0.0"
+    "@remirror/extension-react-tables": "3.0.2",
+    "@remirror/pm": "3.0.1"
   },
   "peerDependencies": {
-    "@remirror/extension-react-tables": "3.0.1",
-    "@remirror/pm": "^3.0.0"
+    "@remirror/extension-react-tables": "3.0.2",
+    "@remirror/pm": "^3.0.1"
   },
   "peerDependenciesMeta": {
     "@remirror/extension-react-tables": {
