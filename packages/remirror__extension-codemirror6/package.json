@@ -39,7 +39,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@codemirror/language": "^6.7.0",
     "@codemirror/state": "^6.2.1",
     "@codemirror/view": "^6.12.0",

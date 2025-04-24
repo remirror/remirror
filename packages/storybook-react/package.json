@@ -19,7 +19,7 @@
     ]
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@codemirror/basic-setup": "^0.20.0",
     "@codemirror/language-data": "^6.3.1",
     "@codemirror/theme-one-dark": "^6.1.2",

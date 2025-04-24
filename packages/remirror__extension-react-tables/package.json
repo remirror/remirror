@@ -42,7 +42,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@emotion/css": "^11.11.0",
     "@linaria/core": "4.2.10",
     "@remirror/core": "3.0.1",

@@ -33,7 +33,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@remirror/react-core": "3.0.1",
     "prosemirror-dev-toolkit": "^1.1.8"
   },

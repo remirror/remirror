@@ -43,7 +43,7 @@
     "build:custom": "node ./build.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@ocavue/svgmoji-cjs": "^0.1.1",
     "@remirror/core": "3.0.1",
     "@remirror/messages": "3.0.0",
