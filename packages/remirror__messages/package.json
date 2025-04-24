@@ -39,13 +39,13 @@
     "generate": "tsx scripts/messages-to-json.ts"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@remirror/core-helpers": "4.0.0",
     "@remirror/core-types": "3.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
-    "@babel/preset-typescript": "^7.21.5",
+    "@babel/cli": "^7.27.0",
+    "@babel/preset-typescript": "^7.27.0",
     "@remirror/cli": "1.1.0",
     "babel-plugin-macros": "^3.1.0",
     "rollup": "^3.23.0",

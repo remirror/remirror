@@ -43,7 +43,7 @@
     "build": "remirror-cli build --no-types"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@jest/globals": "^29.5.0",
     "@react-spring/mock-raf": "^1.1.1",
