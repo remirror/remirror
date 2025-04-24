@@ -52,7 +52,7 @@
     "@remirror/pm": "3.0.0",
     "@remirror/react": "3.0.1",
     "@types/react": "^18.2.0",
-    "react": "^18.2.0"
+    "react": "^18.3.1"
   },
   "peerDependencies": {
     "@remirror/pm": "^3.0.0",
