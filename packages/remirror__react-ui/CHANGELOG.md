@@ -1,5 +1,17 @@
 # @remirror/react-ui
 
+## 1.0.2
+
+> 2025-04-24
+
+### Patch Changes
+
+- Updated dependencies [98710d923]
+  - @remirror/pm@3.0.1
+  - @remirror/react-components@3.0.2
+  - @remirror/react-core@3.0.2
+  - @remirror/react-hooks@3.0.2
+
 ## 1.0.1
 
 > 2024-08-01

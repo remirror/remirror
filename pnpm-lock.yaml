@@ -292,15 +292,15 @@ importers:
         version: 3.2.4(jest@29.5.0)
       jest-github-reporter:
         specifier: ^1.1.1
-        version: 1.1.1(@octokit/core@6.1.2)(jest@29.5.0)
+        version: 1.1.1(@octokit/core@6.1.5)(jest@29.5.0)
       jest-playwright-preset:
         specifier: ^3.0.1
         version: 3.0.1(jest-circus@29.7.0)(jest-environment-node@29.7.0)(jest-runner@29.7.0)(jest@29.5.0)
       jest-prosemirror:
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:packages/jest-prosemirror
       jest-remirror:
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:packages/jest-remirror
       jest-watch-typeahead:
         specifier: ^2.2.2
@@ -324,7 +324,7 @@ importers:
         specifier: ^2.4.3
         version: 2.4.3(prettier@3.2.5)
       remirror:
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:packages/remirror
       rimraf:
         specifier: ^4.4.1
@@ -404,7 +404,7 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__core-utils
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@testing-library/dom':
         specifier: ^9.3.0
@@ -453,7 +453,7 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__dom
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@remirror/preset-core':
         specifier: 3.0.1
@@ -465,7 +465,7 @@ importers:
         specifier: ^2.9.0
         version: 2.9.0
       jest-prosemirror:
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../jest-prosemirror
       sanitize-html:
         specifier: ^2.10.0
@@ -738,7 +738,7 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__extension-list
       '@remirror/extension-markdown':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-markdown
       '@remirror/extension-mention':
         specifier: 3.0.1
@@ -820,7 +820,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       prettier:
         specifier: ^3.2.5
@@ -930,7 +930,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__core-constants:
@@ -1001,7 +1001,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__core-utils:
@@ -1041,7 +1041,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/jsdom':
         specifier: ^16.2.15
@@ -1059,17 +1059,17 @@ importers:
         specifier: ^7.27.0
         version: 7.27.0
       '@remirror/react-core':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-core
       prosemirror-dev-toolkit:
         specifier: ^1.1.8
-        version: 1.1.8(svelte@4.2.18)
+        version: 1.1.8(svelte@5.28.2)
     devDependencies:
       '@remirror/cli':
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@testing-library/react':
         specifier: ^14.0.0
@@ -1103,7 +1103,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-annotation:
@@ -1125,7 +1125,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-bidi:
@@ -1150,7 +1150,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-blockquote:
@@ -1172,7 +1172,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-bold:
@@ -1191,7 +1191,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-callout:
@@ -1213,7 +1213,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-code:
@@ -1232,7 +1232,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-code-block:
@@ -1263,7 +1263,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/jsdom':
         specifier: ^16.2.15
@@ -1294,7 +1294,7 @@ importers:
         specifier: 4.0.0
         version: link:../remirror__core-helpers
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/codemirror':
         specifier: ^5.60.7
@@ -1325,7 +1325,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-collaboration:
@@ -1344,7 +1344,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-columns:
@@ -1363,7 +1363,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-count:
@@ -1379,7 +1379,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-diff:
@@ -1398,7 +1398,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-doc:
@@ -1417,7 +1417,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-drop-cursor:
@@ -1436,7 +1436,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-embed:
@@ -1464,7 +1464,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-emoji:
@@ -1504,7 +1504,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-entity-reference:
@@ -1526,7 +1526,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-epic-mode:
@@ -1545,7 +1545,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-events:
@@ -1564,7 +1564,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-file:
@@ -1576,10 +1576,10 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-component
       '@remirror/react-core':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-core
       '@remirror/theme':
         specifier: 3.0.0
@@ -1592,7 +1592,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -1626,7 +1626,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-font-family:
@@ -1645,7 +1645,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-font-size:
@@ -1667,7 +1667,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-gap-cursor:
@@ -1686,7 +1686,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-hard-break:
@@ -1705,7 +1705,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-heading:
@@ -1724,7 +1724,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-history:
@@ -1743,7 +1743,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-horizontal-rule:
@@ -1762,7 +1762,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-image:
@@ -1787,7 +1787,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-italic:
@@ -1806,7 +1806,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-link:
@@ -1831,7 +1831,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/extract-domain':
         specifier: 2.3.1
@@ -1862,7 +1862,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-markdown:
@@ -1896,10 +1896,10 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/extension-react-tables':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-tables
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-mention:
@@ -1924,7 +1924,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-mention-atom:
@@ -1949,7 +1949,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-node-formatting:
@@ -1968,7 +1968,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-paragraph:
@@ -1987,7 +1987,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-placeholder:
@@ -2009,7 +2009,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-positioner:
@@ -2037,7 +2037,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-react-component:
@@ -2071,7 +2071,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2095,7 +2095,7 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-react-component':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-component
       '@remirror/messages':
         specifier: 3.0.0
@@ -2108,10 +2108,10 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -2150,13 +2150,13 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__messages
       '@remirror/react-components':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-hooks
       '@remirror/theme':
         specifier: 3.0.0
@@ -2166,7 +2166,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2200,7 +2200,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-strike:
@@ -2219,7 +2219,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-sub:
@@ -2238,7 +2238,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-sup:
@@ -2257,7 +2257,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-tables:
@@ -2285,7 +2285,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-text:
@@ -2304,7 +2304,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-text-case:
@@ -2323,7 +2323,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-text-color:
@@ -2348,7 +2348,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-text-highlight:
@@ -2370,7 +2370,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-trailing-node:
@@ -2389,7 +2389,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-underline:
@@ -2408,7 +2408,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-whitespace:
@@ -2427,7 +2427,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__extension-yjs:
@@ -2461,7 +2461,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       y-webrtc:
         specifier: ^10.2.5
@@ -2637,7 +2637,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__preset-formatting:
@@ -2695,7 +2695,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__preset-react:
@@ -2710,7 +2710,7 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__extension-placeholder
       '@remirror/extension-react-component':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-component
       '@remirror/react-utils':
         specifier: 3.0.0
@@ -2720,7 +2720,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2811,7 +2811,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
 
   packages/remirror__react:
@@ -2826,19 +2826,19 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-component
       '@remirror/preset-react':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__preset-react
       '@remirror/react-components':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-hooks
       '@remirror/react-renderer':
         specifier: 3.0.1
@@ -2884,10 +2884,10 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__messages
       '@remirror/react-core':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-hooks
       '@remirror/react-utils':
         specifier: 3.0.0
@@ -2918,7 +2918,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -2945,13 +2945,13 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/extension-react-component':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-component
       '@remirror/preset-core':
         specifier: 3.0.1
         version: link:../remirror__preset-core
       '@remirror/preset-react':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__preset-react
       '@remirror/react-renderer':
         specifier: 3.0.1
@@ -2979,7 +2979,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/jsdom':
         specifier: ^16.2.15
@@ -3009,19 +3009,19 @@ importers:
         specifier: 4.0.0
         version: link:../remirror__core-helpers
       '@remirror/extension-react-tables':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-tables
       '@remirror/i18n':
         specifier: 3.0.0
         version: link:../remirror__i18n
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react
       '@remirror/react-ui':
-        specifier: 1.0.1
+        specifier: 1.0.2
         version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0
@@ -3039,7 +3039,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror
       svgmoji:
         specifier: ^3.2.0
@@ -3097,7 +3097,7 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__extension-positioner
       '@remirror/react-core':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-core
       '@remirror/react-utils':
         specifier: 3.0.0
@@ -3116,7 +3116,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -3162,17 +3162,17 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/extension-react-ssr':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-ssr
     devDependencies:
       '@remirror/cli':
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react
       '@types/react':
         specifier: ^18.2.0
@@ -3280,13 +3280,13 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__messages
       '@remirror/react-components':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-components
       '@remirror/react-core':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-core
       '@remirror/react-hooks':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react-hooks
       '@remirror/theme':
         specifier: 3.0.0
@@ -3296,7 +3296,7 @@ importers:
         specifier: 1.1.0
         version: link:../remirror__cli
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@types/react':
         specifier: ^18.2.0
@@ -3365,7 +3365,7 @@ importers:
         version: 18.3.1
       styled-components:
         specifier: ^6.1.12
-        version: 6.1.12(react-dom@18.3.1)(react@18.3.1)
+        version: 6.1.12(react-dom@19.1.0)(react@18.3.1)
 
   packages/remirror__theme:
     dependencies:
@@ -3424,7 +3424,7 @@ importers:
         version: 0.20.0
       '@codemirror/language-data':
         specifier: ^6.3.1
-        version: 6.3.1(@codemirror/view@6.12.0)(@lezer/common@1.2.1)
+        version: 6.3.1(@codemirror/view@6.12.0)(@lezer/common@1.2.3)
       '@codemirror/theme-one-dark':
         specifier: ^6.1.2
         version: 6.1.2
@@ -3456,7 +3456,7 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/dev':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__dev
       '@remirror/extension-code-block':
         specifier: 3.0.1
@@ -3474,7 +3474,7 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__extension-entity-reference
       '@remirror/extension-file':
-        specifier: 2.0.1
+        specifier: 2.0.2
         version: link:../remirror__extension-file
       '@remirror/extension-find':
         specifier: 1.0.1
@@ -3486,7 +3486,7 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__extension-mention-atom
       '@remirror/extension-react-tables':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__extension-react-tables
       '@remirror/extension-yjs':
         specifier: 4.0.1
@@ -3498,16 +3498,16 @@ importers:
         specifier: 3.0.0
         version: link:../remirror__messages
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@remirror/react':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react
       '@remirror/react-editors':
-        specifier: 2.0.1
+        specifier: 2.0.2
         version: link:../remirror__react-editors
       '@remirror/react-ui':
-        specifier: 1.0.1
+        specifier: 1.0.2
         version: link:../remirror__react-ui
       '@remirror/styles':
         specifier: 3.0.0
@@ -3544,7 +3544,7 @@ importers:
         version: 10.4.14(postcss@8.4.40)
       babel-loader:
         specifier: ^8.3.0
-        version: 8.3.0(@babel/core@7.26.10)(webpack@5.93.0)
+        version: 8.3.0(@babel/core@7.26.10)(webpack@5.99.6)
       codemirror:
         specifier: ^5.65.13
         version: 5.65.13
@@ -3568,7 +3568,7 @@ importers:
         version: 23.2.11
       i18next-icu:
         specifier: ^2.3.0
-        version: 2.3.0(intl-messageformat@10.5.14)
+        version: 2.3.0(intl-messageformat@10.7.16)
       is-ci:
         specifier: ^3.0.1
         version: 3.0.1
@@ -3600,7 +3600,7 @@ importers:
         specifier: ^3.6.0
         version: 3.6.0
       remirror:
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror
       scripts:
         specifier: 0.0.1
@@ -3698,13 +3698,13 @@ importers:
         specifier: 3.0.1
         version: link:../remirror__core
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../remirror__pm
       '@remirror/preset-core':
         specifier: 3.0.1
         version: link:../remirror__preset-core
       '@remirror/react':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../remirror__react
       '@testing-library/react':
         specifier: ^14.0.0
@@ -4013,7 +4013,7 @@ importers:
         version: 8.4.40
       postcss-loader:
         specifier: ^6.2.1
-        version: 6.2.1(postcss@8.4.40)(webpack@5.93.0)
+        version: 6.2.1(postcss@8.4.40)(webpack@5.99.6)
       postcss-nested:
         specifier: ^5.0.6
         version: 5.0.6(postcss@8.4.40)
@@ -4061,7 +4061,7 @@ importers:
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../../../packages/remirror__pm
 
   support/templates/minimal-template:
@@ -4083,7 +4083,7 @@ importers:
         version: link:../../../packages/remirror__core
     devDependencies:
       '@remirror/pm':
-        specifier: 3.0.0
+        specifier: 3.0.1
         version: link:../../../packages/remirror__pm
 
   website:
@@ -4113,13 +4113,13 @@ importers:
         specifier: 3.0.1
         version: link:../packages/remirror__core
       '@remirror/dev':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../packages/remirror__dev
       '@remirror/react':
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../packages/remirror__react
       '@remirror/react-editors':
-        specifier: 2.0.1
+        specifier: 2.0.2
         version: link:../packages/remirror__react-editors
       '@remirror/styles':
         specifier: 3.0.0
@@ -4132,7 +4132,7 @@ importers:
         version: link:../packages/create-context-state
       esbuild-loader:
         specifier: ^4.0.2
-        version: 4.0.2(webpack@5.93.0)
+        version: 4.0.2(webpack@5.99.6)
       framer-motion:
         specifier: ^4.1.17
         version: 4.1.17(react-dom@18.3.1)(react@18.3.1)
@@ -4164,7 +4164,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       remirror:
-        specifier: 3.0.1
+        specifier: 3.0.2
         version: link:../packages/remirror
     devDependencies:
       '@docusaurus/core':
@@ -4238,13 +4238,13 @@ importers:
         version: 14.1.0(postcss@8.4.40)
       postcss-loader:
         specifier: ^6.2.1
-        version: 6.2.1(postcss@8.4.40)(webpack@5.93.0)
+        version: 6.2.1(postcss@8.4.40)(webpack@5.99.6)
       postcss-nested:
         specifier: ^5.0.6
         version: 5.0.6(postcss@8.4.40)
       raw-loader:
         specifier: ^4.0.2
-        version: 4.0.2(webpack@5.93.0)
+        version: 4.0.2(webpack@5.99.6)
 
 packages:
 
@@ -7229,6 +7229,20 @@ packages:
       '@lezer/common': 1.2.1
     dev: false
 
+  /@codemirror/autocomplete@6.0.2(@codemirror/language@6.7.0)(@codemirror/state@6.2.1)(@codemirror/view@6.12.0)(@lezer/common@1.2.3):
+    resolution: {integrity: sha512-9PDjnllmXan/7Uax87KGORbxerDJ/cu10SB+n4Jz0zXMEvIh3+TGgZxhIvDOtaQ4jDBQEM7kHYW4vLdQB0DGZQ==}
+    peerDependencies:
+      '@codemirror/language': ^6.0.0
+      '@codemirror/state': ^6.0.0
+      '@codemirror/view': ^6.0.0
+      '@lezer/common': ^1.0.0
+    dependencies:
+      '@codemirror/language': 6.7.0
+      '@codemirror/state': 6.2.1
+      '@codemirror/view': 6.12.0
+      '@lezer/common': 1.2.3
+    dev: false
+
   /@codemirror/basic-setup@0.20.0:
     resolution: {integrity: sha512-W/ERKMLErWkrVLyP5I8Yh8PXl4r+WFNkdYVSzkXYPQv2RMPSkWpr2BgggiSJ8AHF/q3GuApncDD8I4BZz65fyg==}
     deprecated: In version 6.0, this package has been renamed to just 'codemirror'
@@ -7382,10 +7396,10 @@ packages:
       - '@codemirror/view'
     dev: false
 
-  /@codemirror/lang-sql@6.0.0(@codemirror/view@6.12.0)(@lezer/common@1.2.1):
+  /@codemirror/lang-sql@6.0.0(@codemirror/view@6.12.0)(@lezer/common@1.2.3):
     resolution: {integrity: sha512-mq4NwTDbbo7QZktfgPsS+ms0FmAceH4WM2jLbgf+N28FoKUy0JzGe3XJymgnTewXnNUwujKBxArQzibxSDdVyQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.0.2(@codemirror/language@6.7.0)(@codemirror/state@6.2.1)(@codemirror/view@6.12.0)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.0.2(@codemirror/language@6.7.0)(@codemirror/state@6.2.1)(@codemirror/view@6.12.0)(@lezer/common@1.2.3)
       '@codemirror/language': 6.7.0
       '@codemirror/state': 6.2.1
       '@lezer/highlight': 1.0.0
@@ -7428,7 +7442,7 @@ packages:
       - '@codemirror/view'
     dev: false
 
-  /@codemirror/language-data@6.3.1(@codemirror/view@6.12.0)(@lezer/common@1.2.1):
+  /@codemirror/language-data@6.3.1(@codemirror/view@6.12.0)(@lezer/common@1.2.3):
     resolution: {integrity: sha512-p6jhJmvhGe1TG1EGNhwH7nFWWFSTJ8NDKnB2fVx5g3t+PpO0+63R7GJNxjS0TmmH3cdMxZbzejsik+rlEh1EyQ==}
     dependencies:
       '@codemirror/lang-angular': 0.1.0(@codemirror/view@6.12.0)
@@ -7444,7 +7458,7 @@ packages:
       '@codemirror/lang-python': 6.0.0
       '@codemirror/lang-rust': 6.0.0
       '@codemirror/lang-sass': 6.0.1(@codemirror/view@6.12.0)
-      '@codemirror/lang-sql': 6.0.0(@codemirror/view@6.12.0)(@lezer/common@1.2.1)
+      '@codemirror/lang-sql': 6.0.0(@codemirror/view@6.12.0)(@lezer/common@1.2.3)
       '@codemirror/lang-vue': 0.1.1(@codemirror/view@6.12.0)
       '@codemirror/lang-wast': 6.0.0
       '@codemirror/lang-xml': 6.0.0(@codemirror/view@6.12.0)
@@ -9522,17 +9536,33 @@ packages:
       tslib: 2.6.3
     dev: false
 
-  /@formatjs/ecma402-abstract@2.0.0:
-    resolution: {integrity: sha512-rRqXOqdFmk7RYvj4khklyqzcfQl9vEL/usogncBHRZfZBDOwMGuSRNFl02fu5KGHXdbinju+YXyuR+Nk8xlr/g==}
+  /@formatjs/ecma402-abstract@2.3.4:
+    resolution: {integrity: sha512-qrycXDeaORzIqNhBOx0btnhpD1c+/qFIHAN9znofuMJX6QBwtbrmlpWfD4oiUUD2vJUOIYFA/gYtg2KAMGG7sA==}
     dependencies:
-      '@formatjs/intl-localematcher': 0.5.4
-      tslib: 2.6.3
+      '@formatjs/fast-memoize': 2.2.7
+      '@formatjs/intl-localematcher': 0.6.1
+      decimal.js: 10.5.0
+      tslib: 2.8.1
     dev: false
 
   /@formatjs/fast-memoize@2.2.0:
     resolution: {integrity: sha512-hnk/nY8FyrL5YxwP9e4r9dqeM6cAbo8PeU9UjyXojZMNvVad2Z06FAVHyR3Ecw6fza+0GH7vdJgiKIVXTMbSBA==}
     dependencies:
       tslib: 2.6.3
+    dev: false
+
+  /@formatjs/fast-memoize@2.2.7:
+    resolution: {integrity: sha512-Yabmi9nSvyOMrlSeGGWDiH7rf3a7sIwplbvo/dlz9WCIjzIQAfy1RMf4S0X3yG724n5Ghu2GmEl5NJIV6O9sZQ==}
+    dependencies:
+      tslib: 2.8.1
+    dev: false
+
+  /@formatjs/icu-messageformat-parser@2.11.2:
+    resolution: {integrity: sha512-AfiMi5NOSo2TQImsYAg8UYddsNJ/vUEv/HaNqiFjnI3ZFfWihUtD5QtuX6kHl8+H+d3qvnE/3HZrfzgdWpsLNA==}
+    dependencies:
+      '@formatjs/ecma402-abstract': 2.3.4
+      '@formatjs/icu-skeleton-parser': 1.8.14
+      tslib: 2.8.1
     dev: false
 
   /@formatjs/icu-messageformat-parser@2.6.0:
@@ -9551,14 +9581,6 @@ packages:
       tslib: 2.6.3
     dev: false
 
-  /@formatjs/icu-messageformat-parser@2.7.8:
-    resolution: {integrity: sha512-nBZJYmhpcSX0WeJ5SDYUkZ42AgR3xiyhNCsQweFx3cz/ULJjym8bHAzWKvG5e2+1XO98dBYC0fWeeAECAVSwLA==}
-    dependencies:
-      '@formatjs/ecma402-abstract': 2.0.0
-      '@formatjs/icu-skeleton-parser': 1.8.2
-      tslib: 2.6.3
-    dev: false
-
   /@formatjs/icu-skeleton-parser@1.6.0:
     resolution: {integrity: sha512-eMmxNpoX/J1IPUjPGSZwo0Wh+7CEvdEMddP2Jxg1gQJXfGfht/FdW2D5XDFj3VMbOTUQlDIdZJY7uC6O6gjPoA==}
     dependencies:
@@ -9573,11 +9595,11 @@ packages:
       tslib: 2.6.3
     dev: false
 
-  /@formatjs/icu-skeleton-parser@1.8.2:
-    resolution: {integrity: sha512-k4ERKgw7aKGWJZgTarIcNEmvyTVD9FYh0mTrrBMHZ1b8hUu6iOJ4SzsZlo3UNAvHYa+PnvntIwRPt1/vy4nA9Q==}
+  /@formatjs/icu-skeleton-parser@1.8.14:
+    resolution: {integrity: sha512-i4q4V4qslThK4Ig8SxyD76cp3+QJ3sAqr7f6q9VVfeGtxG9OhiAk3y9XF6Q41OymsKzsGQ6OQQoJNY4/lI8TcQ==}
     dependencies:
-      '@formatjs/ecma402-abstract': 2.0.0
-      tslib: 2.6.3
+      '@formatjs/ecma402-abstract': 2.3.4
+      tslib: 2.8.1
     dev: false
 
   /@formatjs/intl-displaynames@6.5.0:
@@ -9622,6 +9644,12 @@ packages:
     resolution: {integrity: sha512-zTwEpWOzZ2CiKcB93BLngUX59hQkuZjT2+SAQEscSm52peDW/getsawMcWF1rGRpMCX6D7nSJA3CzJ8gn13N/g==}
     dependencies:
       tslib: 2.6.3
+    dev: false
+
+  /@formatjs/intl-localematcher@0.6.1:
+    resolution: {integrity: sha512-ePEgLgVCqi2BBFnTMWPfIghu6FkbZnnBVhO2sSxvLfrdFw7wCHAHiDoM2h4NRgjbaY7+B7HgOLZGkK187pZTZg==}
+    dependencies:
+      tslib: 2.8.1
     dev: false
 
   /@formatjs/intl@2.10.0(typescript@5.0.4):
@@ -10057,6 +10085,10 @@ packages:
 
   /@lezer/common@1.2.1:
     resolution: {integrity: sha512-yemX0ZD2xS/73llMZIK6KplkjIjf2EvAHcinDi/TfJ9hS25G0388+ClHt6/3but0oOxinTcQHJLDXh6w1crzFQ==}
+    dev: false
+
+  /@lezer/common@1.2.3:
+    resolution: {integrity: sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==}
     dev: false
 
   /@lezer/cpp@1.0.0:
@@ -10815,8 +10847,8 @@ packages:
       '@octokit/types': 6.34.0
     dev: false
 
-  /@octokit/auth-token@5.1.1:
-    resolution: {integrity: sha512-rh3G3wDO8J9wSjfI436JUKzHIxq8NaiL0tVeB2aXmG6p/9859aUOAjA9pmSPNGGZxfwmaJ9ozOJImuNVJdpvbA==}
+  /@octokit/auth-token@5.1.2:
+    resolution: {integrity: sha512-JcQDsBdg49Yky2w2ld20IHAlwr8d/d8N6NiOXbtuoPCqzbsiJgF633mVUw3x4mo0H5ypataQIX7SFu3yy44Mpw==}
     engines: {node: '>= 18'}
     dev: false
 
@@ -10834,24 +10866,24 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/core@6.1.2:
-    resolution: {integrity: sha512-hEb7Ma4cGJGEUNOAVmyfdB/3WirWMg5hDuNFVejGEDFqupeOysLc2sG6HJxY2etBp5YQu5Wtxwi020jS9xlUwg==}
+  /@octokit/core@6.1.5:
+    resolution: {integrity: sha512-vvmsN0r7rguA+FySiCsbaTTobSftpIDIpPW81trAmsv9TGxg3YCujAxRYp/Uy8xmDgYCzzgulG62H7KYUFmeIg==}
     engines: {node: '>= 18'}
     dependencies:
-      '@octokit/auth-token': 5.1.1
-      '@octokit/graphql': 8.1.1
-      '@octokit/request': 9.1.3
-      '@octokit/request-error': 6.1.4
-      '@octokit/types': 13.5.0
+      '@octokit/auth-token': 5.1.2
+      '@octokit/graphql': 8.2.2
+      '@octokit/request': 9.2.3
+      '@octokit/request-error': 6.1.8
+      '@octokit/types': 14.0.0
       before-after-hook: 3.0.2
       universal-user-agent: 7.0.2
     dev: false
 
-  /@octokit/endpoint@10.1.1:
-    resolution: {integrity: sha512-JYjh5rMOwXMJyUpj028cu0Gbp7qe/ihxfJMLc8VZBMMqSwLgOxDI1911gV4Enl1QSavAQNJcwmwBF9M0VvLh6Q==}
+  /@octokit/endpoint@10.1.4:
+    resolution: {integrity: sha512-OlYOlZIsfEVZm5HCSR8aSg02T2lbUWOsCQoPKfTXJwDzcHQBrVBGdGXb89dv2Kw2ToZaRtudp8O3ZIYoaOjKlA==}
     engines: {node: '>= 18'}
     dependencies:
-      '@octokit/types': 13.5.0
+      '@octokit/types': 14.0.0
       universal-user-agent: 7.0.2
     dev: false
 
@@ -10873,12 +10905,12 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/graphql@8.1.1:
-    resolution: {integrity: sha512-ukiRmuHTi6ebQx/HFRCXKbDlOh/7xEV6QUXaE7MJEKGNAncGI/STSbOkl12qVXZrfZdpXctx5O9X1AIaebiDBg==}
+  /@octokit/graphql@8.2.2:
+    resolution: {integrity: sha512-Yi8hcoqsrXGdt0yObxbebHXFOiUA+2v3n53epuOg1QUgOB6c4XzvisBNVXJSl8RYA5KrDuSL2yq9Qmqe5N0ryA==}
     engines: {node: '>= 18'}
     dependencies:
-      '@octokit/request': 9.1.3
-      '@octokit/types': 13.5.0
+      '@octokit/request': 9.2.3
+      '@octokit/types': 14.0.0
       universal-user-agent: 7.0.2
     dev: false
 
@@ -10886,8 +10918,8 @@ packages:
     resolution: {integrity: sha512-PBsVO+15KSlGmiI8QAzaqvsNlZlrDlyAJYcrXBCvVUxCp7VnXjkwPoFHgjEJXx3WF9BAwkA6nfCUA7i9sODzKA==}
     dev: false
 
-  /@octokit/openapi-types@22.2.0:
-    resolution: {integrity: sha512-QBhVjcUa9W7Wwhm6DBFu6ZZ+1/t/oYxqc2tp81Pi41YNuJinbFRx8B133qVOrAaBbF7D/m0Et6f9/pZt9Rc+tg==}
+  /@octokit/openapi-types@25.0.0:
+    resolution: {integrity: sha512-FZvktFu7HfOIJf2BScLKIEYjDsw6RKc7rBJCdvCTfKsVnx2GEB/Nbzjr29DUdb7vQhlzS/j8qDzdditP0OC6aw==}
     dev: false
 
   /@octokit/plugin-paginate-rest@1.1.2:
@@ -10913,12 +10945,12 @@ packages:
       '@octokit/core': 3.6.0
     dev: false
 
-  /@octokit/plugin-request-log@1.0.4(@octokit/core@6.1.2):
+  /@octokit/plugin-request-log@1.0.4(@octokit/core@6.1.5):
     resolution: {integrity: sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==}
     peerDependencies:
       '@octokit/core': '>=3'
     dependencies:
-      '@octokit/core': 6.1.2
+      '@octokit/core': 6.1.5
     dev: false
 
   /@octokit/plugin-rest-endpoint-methods@2.4.0:
@@ -10954,11 +10986,11 @@ packages:
       once: 1.4.0
     dev: false
 
-  /@octokit/request-error@6.1.4:
-    resolution: {integrity: sha512-VpAhIUxwhWZQImo/dWAN/NpPqqojR6PSLgLYAituLM6U+ddx9hCioFGwBr5Mi+oi5CLeJkcAs3gJ0PYYzU6wUg==}
+  /@octokit/request-error@6.1.8:
+    resolution: {integrity: sha512-WEi/R0Jmq+IJKydWlKDmryPcmdYSVjL3ekaiEL1L9eo1sUnqMJ+grqmC9cjk7CA7+b2/T397tO5d8YLOH3qYpQ==}
     engines: {node: '>= 18'}
     dependencies:
-      '@octokit/types': 13.5.0
+      '@octokit/types': 14.0.0
     dev: false
 
   /@octokit/request@5.6.3:
@@ -10974,22 +11006,23 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/request@9.1.3:
-    resolution: {integrity: sha512-V+TFhu5fdF3K58rs1pGUJIDH5RZLbZm5BI+MNF+6o/ssFNT4vWlCh/tVpF3NxGtP15HUxTTMUbsG5llAuU2CZA==}
+  /@octokit/request@9.2.3:
+    resolution: {integrity: sha512-Ma+pZU8PXLOEYzsWf0cn/gY+ME57Wq8f49WTXA8FMHp2Ps9djKw//xYJ1je8Hm0pR2lU9FUGeJRWOtxq6olt4w==}
     engines: {node: '>= 18'}
     dependencies:
-      '@octokit/endpoint': 10.1.1
-      '@octokit/request-error': 6.1.4
-      '@octokit/types': 13.5.0
+      '@octokit/endpoint': 10.1.4
+      '@octokit/request-error': 6.1.8
+      '@octokit/types': 14.0.0
+      fast-content-type-parse: 2.0.1
       universal-user-agent: 7.0.2
     dev: false
 
-  /@octokit/rest@16.43.2(@octokit/core@6.1.2):
+  /@octokit/rest@16.43.2(@octokit/core@6.1.5):
     resolution: {integrity: sha512-ngDBevLbBTFfrHZeiS7SAMAZ6ssuVmXuya+F/7RaVvlysgGa1JKJkKWY+jV6TCJYcW0OALfJ7nTIGXcBXzycfQ==}
     dependencies:
       '@octokit/auth-token': 2.5.0
       '@octokit/plugin-paginate-rest': 1.1.2
-      '@octokit/plugin-request-log': 1.0.4(@octokit/core@6.1.2)
+      '@octokit/plugin-request-log': 1.0.4(@octokit/core@6.1.5)
       '@octokit/plugin-rest-endpoint-methods': 2.4.0
       '@octokit/request': 5.6.3
       '@octokit/request-error': 1.2.1
@@ -11019,10 +11052,10 @@ packages:
       - encoding
     dev: false
 
-  /@octokit/types@13.5.0:
-    resolution: {integrity: sha512-HdqWTf5Z3qwDVlzCrP8UJquMwunpDiMPt5er+QjGzL4hqr/vBVY/MauQgS1xWxCDT1oMx1EULyqxncdCY/NVSQ==}
+  /@octokit/types@14.0.0:
+    resolution: {integrity: sha512-VVmZP0lEhbo2O1pdq63gZFiGCKkm8PPp8AUOijlwPO6hojEVjspA0MWKP7E4hbvGxzFKNqKr6p0IYtOH/Wf/zA==}
     dependencies:
-      '@octokit/openapi-types': 22.2.0
+      '@octokit/openapi-types': 25.0.0
     dev: false
 
   /@octokit/types@2.16.2:
@@ -12462,6 +12495,14 @@ packages:
       file-system-cache: 2.0.2
     dev: true
 
+  /@sveltejs/acorn-typescript@1.0.5(acorn@8.14.1):
+    resolution: {integrity: sha512-IwQk4yfwLdibDlrXVE04jTZYlLnwsTT2PIOQQGNLWfjavGifnk1JD1LcZjZaBTRcxZu2FfPfNLOE04DSu9lqtQ==}
+    peerDependencies:
+      acorn: ^8.9.0
+    dependencies:
+      acorn: 8.14.1
+    dev: false
+
   /@svgmoji/blob@3.2.0:
     resolution: {integrity: sha512-N96WOrH9GxPSPZ/FuvZl6T9Rh54stAEuUcBppIRFh9/WwkU7Hczrjabw4uunwxFLX5TgR+rHlKJl3/jaTnXJrQ==}
     dependencies:
@@ -13050,6 +13091,9 @@ packages:
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  /@types/estree@1.0.7:
+    resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
 
   /@types/exit@0.1.31:
     resolution: {integrity: sha512-ghT0E6Bw64RXc6lM30ExMNlYbUCsyR8oucl/q+ESGGhNOXOmBPpZHYGXCH2T/yTFq9YtudNCnZEQ4puX6aq87A==}
@@ -13799,14 +13843,29 @@ packages:
       '@webassemblyjs/helper-numbers': 1.11.6
       '@webassemblyjs/helper-wasm-bytecode': 1.11.6
 
+  /@webassemblyjs/ast@1.14.1:
+    resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
+    dependencies:
+      '@webassemblyjs/helper-numbers': 1.13.2
+      '@webassemblyjs/helper-wasm-bytecode': 1.13.2
+
   /@webassemblyjs/floating-point-hex-parser@1.11.6:
     resolution: {integrity: sha512-ejAj9hfRJ2XMsNHk/v6Fu2dGS+i4UaXBXGemOfQ/JfQ6mdQg/WXtwleQRLLS4OvfDhv8rYnVwH27YJLMyYsxhw==}
+
+  /@webassemblyjs/floating-point-hex-parser@1.13.2:
+    resolution: {integrity: sha512-6oXyTOzbKxGH4steLbLNOu71Oj+C8Lg34n6CqRvqfS2O71BxY6ByfMDRhBytzknj9yGUPVJ1qIKhRlAwO1AovA==}
 
   /@webassemblyjs/helper-api-error@1.11.6:
     resolution: {integrity: sha512-o0YkoP4pVu4rN8aTJgAyj9hC2Sv5UlkzCHhxqWj8butaLvnpdc2jOwh4ewE6CX0txSfLn/UYaV/pheS2Txg//Q==}
 
+  /@webassemblyjs/helper-api-error@1.13.2:
+    resolution: {integrity: sha512-U56GMYxy4ZQCbDZd6JuvvNV/WFildOjsaWD3Tzzvmw/mas3cXzRJPMjP83JqEsgSbyrmaGjBfDtV7KDXV9UzFQ==}
+
   /@webassemblyjs/helper-buffer@1.12.1:
     resolution: {integrity: sha512-nzJwQw99DNDKr9BVCOZcLuJJUlqkJh+kVzVl6Fmq/tI5ZtEyWT1KZMyOXltXLZJmDtvLCDgwsyrkohEtopTXCw==}
+
+  /@webassemblyjs/helper-buffer@1.14.1:
+    resolution: {integrity: sha512-jyH7wtcHiKssDtFPRB+iQdxlDf96m0E39yb0k5uJVhFGleZFoNw1c4aeIcVUPPbXUVJ94wwnMOAqUHyzoEPVMA==}
 
   /@webassemblyjs/helper-numbers@1.11.6:
     resolution: {integrity: sha512-vUIhZ8LZoIWHBohiEObxVm6hwP034jwmc9kuq5GdHZH0wiLVLIPcMCdpJzG4C11cHoQ25TFIQj9kaVADVX7N3g==}
@@ -13815,8 +13874,18 @@ packages:
       '@webassemblyjs/helper-api-error': 1.11.6
       '@xtuc/long': 4.2.2
 
+  /@webassemblyjs/helper-numbers@1.13.2:
+    resolution: {integrity: sha512-FE8aCmS5Q6eQYcV3gI35O4J789wlQA+7JrqTTpJqn5emA4U2hvwJmvFRC0HODS+3Ye6WioDklgd6scJ3+PLnEA==}
+    dependencies:
+      '@webassemblyjs/floating-point-hex-parser': 1.13.2
+      '@webassemblyjs/helper-api-error': 1.13.2
+      '@xtuc/long': 4.2.2
+
   /@webassemblyjs/helper-wasm-bytecode@1.11.6:
     resolution: {integrity: sha512-sFFHKwcmBprO9e7Icf0+gddyWYDViL8bpPjJJl0WHxCdETktXdmtWLGVzoHbqUcY4Be1LkNfwTmXOJUFZYSJdA==}
+
+  /@webassemblyjs/helper-wasm-bytecode@1.13.2:
+    resolution: {integrity: sha512-3QbLKy93F0EAIXLh0ogEVR6rOubA9AoZ+WRYhNbFyuB70j3dRdwH9g+qXhLAO0kiYGlg3TxDV+I4rQTr/YNXkA==}
 
   /@webassemblyjs/helper-wasm-section@1.12.1:
     resolution: {integrity: sha512-Jif4vfB6FJlUlSbgEMHUyk1j234GTNG9dBJ4XJdOySoj518Xj0oGsNi59cUQF4RRMS9ouBUxDDdyBVfPTypa5g==}
@@ -13826,8 +13895,21 @@ packages:
       '@webassemblyjs/helper-wasm-bytecode': 1.11.6
       '@webassemblyjs/wasm-gen': 1.12.1
 
+  /@webassemblyjs/helper-wasm-section@1.14.1:
+    resolution: {integrity: sha512-ds5mXEqTJ6oxRoqjhWDU83OgzAYjwsCV8Lo/N+oRsNDmx/ZDpqalmrtgOMkHwxsG0iI//3BwWAErYRHtgn0dZw==}
+    dependencies:
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/helper-buffer': 1.14.1
+      '@webassemblyjs/helper-wasm-bytecode': 1.13.2
+      '@webassemblyjs/wasm-gen': 1.14.1
+
   /@webassemblyjs/ieee754@1.11.6:
     resolution: {integrity: sha512-LM4p2csPNvbij6U1f19v6WR56QZ8JcHg3QIJTlSwzFcmx6WSORicYj6I63f9yU1kEUtrpG+kjkiIAkevHpDXrg==}
+    dependencies:
+      '@xtuc/ieee754': 1.2.0
+
+  /@webassemblyjs/ieee754@1.13.2:
+    resolution: {integrity: sha512-4LtOzh58S/5lX4ITKxnAK2USuNEvpdVV9AlgGQb8rJDHaLeHciwG4zlGr0j/SNWlr7x3vO1lDEsuePvtcDNCkw==}
     dependencies:
       '@xtuc/ieee754': 1.2.0
 
@@ -13836,8 +13918,16 @@ packages:
     dependencies:
       '@xtuc/long': 4.2.2
 
+  /@webassemblyjs/leb128@1.13.2:
+    resolution: {integrity: sha512-Lde1oNoIdzVzdkNEAWZ1dZ5orIbff80YPdHx20mrHwHrVNNTjNr8E3xz9BdpcGqRQbAEa+fkrCb+fRFTl/6sQw==}
+    dependencies:
+      '@xtuc/long': 4.2.2
+
   /@webassemblyjs/utf8@1.11.6:
     resolution: {integrity: sha512-vtXf2wTQ3+up9Zsg8sa2yWiQpzSsMyXj0qViVP6xKGCUT8p8YJ6HqI7l5eCnWx1T/FYdsv07HQs2wTFbbof/RA==}
+
+  /@webassemblyjs/utf8@1.13.2:
+    resolution: {integrity: sha512-3NQWGjKTASY1xV5m7Hr0iPeXD9+RDobLll3T9d2AO+g3my8xy5peVyjSag4I50mR1bBSN/Ct12lo+R9tJk0NZQ==}
 
   /@webassemblyjs/wasm-edit@1.12.1:
     resolution: {integrity: sha512-1DuwbVvADvS5mGnXbE+c9NfA8QRcZ6iKquqjjmR10k6o+zzsRVesil54DKexiowcFCPdr/Q0qaMgB01+SQ1u6g==}
@@ -13851,6 +13941,18 @@ packages:
       '@webassemblyjs/wasm-parser': 1.12.1
       '@webassemblyjs/wast-printer': 1.12.1
 
+  /@webassemblyjs/wasm-edit@1.14.1:
+    resolution: {integrity: sha512-RNJUIQH/J8iA/1NzlE4N7KtyZNHi3w7at7hDjvRNm5rcUXa00z1vRz3glZoULfJ5mpvYhLybmVcwcjGrC1pRrQ==}
+    dependencies:
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/helper-buffer': 1.14.1
+      '@webassemblyjs/helper-wasm-bytecode': 1.13.2
+      '@webassemblyjs/helper-wasm-section': 1.14.1
+      '@webassemblyjs/wasm-gen': 1.14.1
+      '@webassemblyjs/wasm-opt': 1.14.1
+      '@webassemblyjs/wasm-parser': 1.14.1
+      '@webassemblyjs/wast-printer': 1.14.1
+
   /@webassemblyjs/wasm-gen@1.12.1:
     resolution: {integrity: sha512-TDq4Ojh9fcohAw6OIMXqiIcTq5KUXTGRkVxbSo1hQnSy6lAM5GSdfwWeSxpAo0YzgsgF182E/U0mDNhuA0tW7w==}
     dependencies:
@@ -13860,6 +13962,15 @@ packages:
       '@webassemblyjs/leb128': 1.11.6
       '@webassemblyjs/utf8': 1.11.6
 
+  /@webassemblyjs/wasm-gen@1.14.1:
+    resolution: {integrity: sha512-AmomSIjP8ZbfGQhumkNvgC33AY7qtMCXnN6bL2u2Js4gVCg8fp735aEiMSBbDR7UQIj90n4wKAFUSEd0QN2Ukg==}
+    dependencies:
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/helper-wasm-bytecode': 1.13.2
+      '@webassemblyjs/ieee754': 1.13.2
+      '@webassemblyjs/leb128': 1.13.2
+      '@webassemblyjs/utf8': 1.13.2
+
   /@webassemblyjs/wasm-opt@1.12.1:
     resolution: {integrity: sha512-Jg99j/2gG2iaz3hijw857AVYekZe2SAskcqlWIZXjji5WStnOpVoat3gQfT/Q5tb2djnCjBtMocY/Su1GfxPBg==}
     dependencies:
@@ -13867,6 +13978,14 @@ packages:
       '@webassemblyjs/helper-buffer': 1.12.1
       '@webassemblyjs/wasm-gen': 1.12.1
       '@webassemblyjs/wasm-parser': 1.12.1
+
+  /@webassemblyjs/wasm-opt@1.14.1:
+    resolution: {integrity: sha512-PTcKLUNvBqnY2U6E5bdOQcSM+oVP/PmrDY9NzowJjislEjwP/C4an2303MCVS2Mg9d3AJpIGdUFIQQWbPds0Sw==}
+    dependencies:
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/helper-buffer': 1.14.1
+      '@webassemblyjs/wasm-gen': 1.14.1
+      '@webassemblyjs/wasm-parser': 1.14.1
 
   /@webassemblyjs/wasm-parser@1.12.1:
     resolution: {integrity: sha512-xikIi7c2FHXysxXe3COrVUPSheuBtpcfhbpFj4gmu7KRLYOzANztwUU0IbsqvMqzuNK2+glRGWCEqZo1WCLyAQ==}
@@ -13878,10 +13997,26 @@ packages:
       '@webassemblyjs/leb128': 1.11.6
       '@webassemblyjs/utf8': 1.11.6
 
+  /@webassemblyjs/wasm-parser@1.14.1:
+    resolution: {integrity: sha512-JLBl+KZ0R5qB7mCnud/yyX08jWFw5MsoalJ1pQ4EdFlgj9VdXKGuENGsiCIjegI1W7p91rUlcB/LB5yRJKNTcQ==}
+    dependencies:
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/helper-api-error': 1.13.2
+      '@webassemblyjs/helper-wasm-bytecode': 1.13.2
+      '@webassemblyjs/ieee754': 1.13.2
+      '@webassemblyjs/leb128': 1.13.2
+      '@webassemblyjs/utf8': 1.13.2
+
   /@webassemblyjs/wast-printer@1.12.1:
     resolution: {integrity: sha512-+X4WAlOisVWQMikjbcvY2e0rwPsKQ9F688lksZhBcPycBBuii3O7m8FACbDMWDojpAqvjIncrG8J0XHKyQfVeA==}
     dependencies:
       '@webassemblyjs/ast': 1.12.1
+      '@xtuc/long': 4.2.2
+
+  /@webassemblyjs/wast-printer@1.14.1:
+    resolution: {integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==}
+    dependencies:
+      '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
   /@xtuc/ieee754@1.2.0:
@@ -13997,6 +14132,11 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
+  /acorn@8.14.1:
+    resolution: {integrity: sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
   /address@1.1.2:
     resolution: {integrity: sha512-aT6camzM4xEA54YVJYSqxz1kv4IHnQZRtThJJHhUMRExaU5spC7jX5ugSwTaTgJliIgs4VhZOk7htClvQ/LmRA==}
     engines: {node: '>= 0.12.0'}
@@ -14055,6 +14195,16 @@ packages:
       ajv: 8.11.0
     dev: true
 
+  /ajv-formats@2.1.1(ajv@8.17.1):
+    resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependencies:
+      ajv: ^8.0.0
+    peerDependenciesMeta:
+      ajv:
+        optional: true
+    dependencies:
+      ajv: 8.17.1
+
   /ajv-keywords@3.5.2(ajv@6.12.6):
     resolution: {integrity: sha512-5p6WTN0DdTGVQk6VjcEju19IgaHudalcfabD7yhDGeA6bcQnmL+CpveLJq/3hvfwd1aof6L386Ougkx6RfyMIQ==}
     peerDependencies:
@@ -14070,6 +14220,14 @@ packages:
       ajv: 8.11.0
       fast-deep-equal: 3.1.3
     dev: true
+
+  /ajv-keywords@5.1.0(ajv@8.17.1):
+    resolution: {integrity: sha512-YCS/JNFAUyr5vAuhk1DWm1CBxRHW9LbJ2ozWeemrIqpbsqKjHVxYPyi5GC0rjZIT5JxJ3virVTS8wk4i/Z+krw==}
+    peerDependencies:
+      ajv: ^8.8.2
+    dependencies:
+      ajv: 8.17.1
+      fast-deep-equal: 3.1.3
 
   /ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
@@ -14087,6 +14245,14 @@ packages:
       require-from-string: 2.0.2
       uri-js: 4.4.1
     dev: true
+
+  /ajv@8.17.1:
+    resolution: {integrity: sha512-B/gBuNg5SiMTrPkC+A2+cW0RszwxYmn6VYxB/inlBStS5nx6xHIt/ehKRhIMhqusl7a8LjQoZnjCs5vhwxOQ1g==}
+    dependencies:
+      fast-deep-equal: 3.1.3
+      fast-uri: 3.0.6
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
 
   /algoliasearch-helper@3.11.0(algoliasearch@4.13.1):
     resolution: {integrity: sha512-TLl/MSjtQ98mgkd8hngWkzSjE+dAWldZ1NpJtv2mT+ZoFJ2P2zDE85oF9WafJOXWN9FbVRmyxpO5H+qXcNaFng==}
@@ -14276,6 +14442,11 @@ packages:
     resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
     dependencies:
       dequal: 2.0.3
+
+  /aria-query@5.3.2:
+    resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
+    engines: {node: '>= 0.4'}
+    dev: false
 
   /arr-diff@4.0.0:
     resolution: {integrity: sha512-YVIQ82gZPGBebQV/a8dar4AitzCQs0jjXwMPZllpXMaGjXPYVUawSxQrRsjhjupyVxEvbHgUmIhKVlND+j02kA==}
@@ -14591,7 +14762,23 @@ packages:
       loader-utils: 2.0.4
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.93.0(@swc/core@1.3.76)(esbuild@0.17.19)
+      webpack: 5.93.0(@swc/core@1.3.76)
+    dev: true
+
+  /babel-loader@8.3.0(@babel/core@7.26.10)(webpack@5.99.6):
+    resolution: {integrity: sha512-H8SvsMF+m9t15HNLMipppzkC+Y2Yq+v3SonZyU70RBL/h1gxPkH08Ot8pEE9Z4Kd+czyWJClmFS8qzIP9OZ04Q==}
+    engines: {node: '>= 8.9'}
+    peerDependencies:
+      '@babel/core': ^7.0.0
+      webpack: '>=2'
+    dependencies:
+      '@babel/core': 7.26.10
+      find-cache-dir: 3.3.2
+      loader-utils: 2.0.4
+      make-dir: 3.1.0
+      schema-utils: 2.7.1
+      webpack: 5.99.6(@swc/core@1.3.76)(esbuild@0.17.19)
+    dev: false
 
   /babel-loader@9.1.2(@babel/core@7.26.10)(webpack@5.93.0):
     resolution: {integrity: sha512-mN14niXW43tddohGl8HPu5yfQq70iUThvFL/4QzESA7GcZoC0eVOhvWdQ8+3UlSjaDE9MVtsW9mxDY07W7VpVA==}
@@ -14876,8 +15063,14 @@ packages:
     dev: false
     optional: true
 
-  /bare-fs@2.3.1:
-    resolution: {integrity: sha512-W/Hfxc/6VehXlsgFtbB5B4xFcsCl+pAh30cYhoFyXErf6oGrwjh8SwiPAdHgpmWonKuYpZgGywN0SXt7dgsADA==}
+  /bare-events@2.5.4:
+    resolution: {integrity: sha512-+gFfDkR8pj4/TrWCGUGWmJIkBwuxPS5F+a5yWjOHQt2hHvNZd5YLzadjmDUtFmMM4y429bnKLa8bYBMHcYdnQA==}
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /bare-fs@2.3.5:
+    resolution: {integrity: sha512-SlE9eTxifPDJrT6YgemQ1WGFleevzwY+XAP1Xqgl56HtcrisC2CHCZ2tq6dBpcH2TnNxwUEUGhweo+lrQtYuiw==}
     requiresBuild: true
     dependencies:
       bare-events: 2.4.2
@@ -15758,16 +15951,6 @@ packages:
     resolution: {integrity: sha512-67ueh2IRGst/51p0n6FvPrnRjAGHY5F8xdjkgrYE7DDzpJe6qA07RYQ9VcoUeo5ATOjSOiWpSL3SWBRRbempMw==}
     dev: false
 
-  /code-red@1.0.4:
-    resolution: {integrity: sha512-7qJWqItLA8/VPVlKJlFXU+NBlo/qyfs39aJcuMT/2ere32ZqvF5OSxgdM5xOfJJ7O429gg2HM47y8v9P+9wrNw==}
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.0
-      '@types/estree': 1.0.5
-      acorn: 8.12.1
-      estree-walker: 3.0.3
-      periscopic: 3.1.0
-    dev: false
-
   /codemirror@5.65.13:
     resolution: {integrity: sha512-SVWEzKXmbHmTQQWaz03Shrh4nybG0wXx2MEu3FO4ezbPW8IbnZEd5iGHGEffSUaitKYa3i+pHpBsSvw8sPHtzg==}
 
@@ -16415,14 +16598,6 @@ packages:
       mdn-data: 2.0.14
       source-map: 0.6.1
 
-  /css-tree@2.3.1:
-    resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
-    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
-    dependencies:
-      mdn-data: 2.0.30
-      source-map-js: 1.2.0
-    dev: false
-
   /css-what@3.4.2:
     resolution: {integrity: sha512-ACUm3L0/jiZTqfzRM3Hi9Q8eZqd6IK37mMWPLz9PJxkLWllYeRf+EHUSHYEtFop2Eqytaq1FizFVh7XfBnXCDQ==}
     engines: {node: '>= 6'}
@@ -16696,6 +16871,10 @@ packages:
 
   /decimal.js@10.4.3:
     resolution: {integrity: sha512-VBBaLc1MgL5XpzgIP7ny5Z6Nx3UrRkIViUkPUdtl9aya5amy3De1gsUUSB1g3+3sExYNjCAsAznmukyxCb1GRA==}
+
+  /decimal.js@10.5.0:
+    resolution: {integrity: sha512-8vDa8Qxvr/+d94hSh5P3IJwI5t8/c0KsMp+g8bNw9cY2icONa5aPfvKeieW1WlG0WQYwwhJ7mjui2xtiePQSXw==}
+    dev: false
 
   /decode-uri-component@0.2.0:
     resolution: {integrity: sha512-hjf+xovcEn31w/EUYdTXQh/8smFL/dzYjohQGEIgjyNavaJfBY2p5F527Bo1VPATxv0VYTUC2bOcXvqFwk78Og==}
@@ -17275,6 +17454,13 @@ packages:
       graceful-fs: 4.2.11
       tapable: 2.2.1
 
+  /enhanced-resolve@5.18.1:
+    resolution: {integrity: sha512-ZSW3ma5GkcQBIpwZTSRAI8N71Uuwgs93IezB7mf7R60tC8ZbJideoDNKjHn2O9KIlx6rkGTTEk1xUCK2E1Y2Yg==}
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      graceful-fs: 4.2.11
+      tapable: 2.2.1
+
   /enquirer@2.3.6:
     resolution: {integrity: sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==}
     engines: {node: '>=8.6'}
@@ -17384,6 +17570,9 @@ packages:
   /es-module-lexer@1.5.4:
     resolution: {integrity: sha512-MVNK56NiMrOwitFB7cqDwq0CQutbw+0BvLshJSse0MUNU+y1FC3bUS/AQg7oUng+/wKrrki7JfmwtVHkVfPLlw==}
 
+  /es-module-lexer@1.7.0:
+    resolution: {integrity: sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==}
+
   /es-set-tostringtag@2.0.1:
     resolution: {integrity: sha512-g3OMbtlwY3QewlqAiMLI47KywjWZoEytKr8pf6iTC8uJq5bIAH52Z9pnQ8pVL6whrCto53JZDuUIsifGeLorTg==}
     engines: {node: '>= 0.4'}
@@ -17426,7 +17615,7 @@ packages:
       es6-promise: 4.2.8
     dev: false
 
-  /esbuild-loader@4.0.2(webpack@5.93.0):
+  /esbuild-loader@4.0.2(webpack@5.99.6):
     resolution: {integrity: sha512-kj88m0yrtTEJDeUEF+3TZsq7t9VPzQQj7UmXAzUbIaipoYSrd0UxKAcg4l9CBgP8uVoploiw+nKr8DIv6Y9gXw==}
     peerDependencies:
       webpack: ^4.40.0 || ^5.0.0
@@ -17434,7 +17623,7 @@ packages:
       esbuild: 0.19.9
       get-tsconfig: 4.7.5
       loader-utils: 2.0.4
-      webpack: 5.93.0(@swc/core@1.3.76)
+      webpack: 5.99.6(@swc/core@1.3.76)
       webpack-sources: 1.4.3
     dev: false
 
@@ -18033,6 +18222,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /esm-env@1.2.2:
+    resolution: {integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==}
+    dev: false
+
   /esm@3.2.25:
     resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
     engines: {node: '>=6'}
@@ -18056,6 +18249,12 @@ packages:
     engines: {node: '>=0.10'}
     dependencies:
       estraverse: 5.3.0
+
+  /esrap@1.4.6:
+    resolution: {integrity: sha512-F/D2mADJ9SHY3IwksD4DAXjTt7qt7GWUf3/8RhCNWmC/67tyb55dpimHmy7EplakFaflV0R/PC+fdSPqrRHAQw==}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.0
+    dev: false
 
   /esrecurse@4.3.0:
     resolution: {integrity: sha512-KmfKL3b6G+RXvP8N1vr3Tq1kL/oCFgn2NYXEtqP8/L3pKapUA4G8cFVaoF3SU323CD4XypR/ffioHmkti6/Tag==}
@@ -18104,12 +18303,6 @@ packages:
 
   /estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
-
-  /estree-walker@3.0.3:
-    resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
-    dependencies:
-      '@types/estree': 1.0.5
-    dev: false
 
   /esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
@@ -18383,6 +18576,10 @@ packages:
       - supports-color
     dev: false
 
+  /fast-content-type-parse@2.0.1:
+    resolution: {integrity: sha512-nGqtvLrj5w0naR6tDPfB4cUmYCqouzyQiz6C5y/LtcDllJdrcc6WaWW6iXyIIOErTa/XRybj28aasdn4LkVk6Q==}
+    dev: false
+
   /fast-deep-equal@2.0.1:
     resolution: {integrity: sha512-bCK/2Z4zLidyB4ReuIsvALH6w31YfAQDmXMqMx6FyfHqvBxtjC0eRumeSu4Bs3XtXwpyIywtSTrVT99BxY1f9w==}
     dev: false
@@ -18423,6 +18620,9 @@ packages:
 
   /fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
+
+  /fast-uri@3.0.6:
+    resolution: {integrity: sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw==}
 
   /fast-url-parser@1.1.3:
     resolution: {integrity: sha512-5jOCVXADYNuRkKFzNJ0dCCewsZiYo0dz8QNYljkOpFC6r2U4OBmKtvm/Tsuh4w1YYdDqDb31a8TVhBJ2OJKdqQ==}
@@ -19554,7 +19754,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.19.1
+      uglify-js: 3.19.3
     dev: true
 
   /hard-rejection@2.1.0:
@@ -20076,12 +20276,12 @@ packages:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
     dev: false
 
-  /i18next-icu@2.3.0(intl-messageformat@10.5.14):
+  /i18next-icu@2.3.0(intl-messageformat@10.7.16):
     resolution: {integrity: sha512-x+j7kd5nDJCfbU53uwsMfXD7ALPu5uv0bqjAMQ5nVvXRoj1L7gkmswKtM3XDWYo4YUHf1jznlhSdPyy0xEwU+Q==}
     peerDependencies:
       intl-messageformat: ^10.3.3
     dependencies:
-      intl-messageformat: 10.5.14
+      intl-messageformat: 10.7.16
     dev: false
 
   /i18next@23.2.11:
@@ -20319,13 +20519,13 @@ packages:
       tslib: 2.6.3
     dev: false
 
-  /intl-messageformat@10.5.14:
-    resolution: {integrity: sha512-IjC6sI0X7YRjjyVH9aUgdftcmZK7WXdHeil4KwbjDnRWjnVitKpAx3rr6t6di1joFp5188VqKcobOPA6mCLG/w==}
+  /intl-messageformat@10.7.16:
+    resolution: {integrity: sha512-UmdmHUmp5CIKKjSoE10la5yfU+AYJAaiYLsodbjL4lji83JNvgOQUjGaGhGrpFCb0Uh7sl7qfP1IyILa8Z40ug==}
     dependencies:
-      '@formatjs/ecma402-abstract': 2.0.0
-      '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.7.8
-      tslib: 2.6.3
+      '@formatjs/ecma402-abstract': 2.3.4
+      '@formatjs/fast-memoize': 2.2.7
+      '@formatjs/icu-messageformat-parser': 2.11.2
+      tslib: 2.8.1
     dev: false
 
   /invariant@2.2.4:
@@ -20752,10 +20952,10 @@ packages:
       '@types/estree': 1.0.5
     dev: false
 
-  /is-reference@3.0.2:
-    resolution: {integrity: sha512-v3rht/LgVcsdZa3O2Nqs+NMowLOxeOm7Ay9+/ARQ2F+qEoANRcqrjAZKGN0v8ymUetZGgkp26LTnGT7H0Qo9Pg==}
+  /is-reference@3.0.3:
+    resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.7
     dev: false
 
   /is-regex@1.1.4:
@@ -21221,12 +21421,12 @@ packages:
     resolution: {integrity: sha512-zrteXnqYxfQh7l5FHyL38jL39di8H8rHoecLH3JNxH3BwOrBsNeabdap5e0I23lD4HHI8W5VFBZqG4Eaq5LNcw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  /jest-github-reporter@1.1.1(@octokit/core@6.1.2)(jest@29.5.0):
+  /jest-github-reporter@1.1.1(@octokit/core@6.1.5)(jest@29.5.0):
     resolution: {integrity: sha512-+Gvsu9TCQkvVZud29hqoOti8Uc1IDO+5pZzp7Hi8YkdwQGLsa0KuEvt7SdDwDDFmz9pPrv//97FEkcTy/3Fxbg==}
     peerDependencies:
       jest: '>= 24.x'
     dependencies:
-      '@octokit/rest': 16.43.2(@octokit/core@6.1.2)
+      '@octokit/rest': 16.43.2(@octokit/core@6.1.5)
       create-check: 0.6.40
       execa: 1.0.0
       jest: 29.5.0(@types/node@16.18.34)(babel-plugin-macros@3.1.0)
@@ -21811,7 +22011,6 @@ packages:
 
   /json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
-    dev: true
 
   /json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
@@ -22351,6 +22550,12 @@ packages:
       '@jridgewell/sourcemap-codec': 1.5.0
     dev: false
 
+  /magic-string@0.30.17:
+    resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.0
+    dev: false
+
   /make-dir@1.3.0:
     resolution: {integrity: sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==}
     engines: {node: '>=4'}
@@ -22527,10 +22732,6 @@ packages:
 
   /mdn-data@2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
-
-  /mdn-data@2.0.30:
-    resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
-    dev: false
 
   /mdn-data@2.0.4:
     resolution: {integrity: sha512-iV3XNKw06j5Q7mi6h+9vbx23Tv7JkjEVgKHW4pimwyDGWm0OIQntJJ+u1C6mg6mK1EaTv42XQ7w76yuzH7M2cA==}
@@ -24054,14 +24255,6 @@ packages:
   /pend@1.2.0:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
 
-  /periscopic@3.1.0:
-    resolution: {integrity: sha512-vKiQ8RRtkl9P+r/+oefh25C3fhybptkHKCZSPlcXiJux2tJF55GnEj3BVn4A5gKfq9NWWXXrxkHBwVPUfH0opw==}
-    dependencies:
-      '@types/estree': 1.0.5
-      estree-walker: 3.0.3
-      is-reference: 3.0.2
-    dev: false
-
   /picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
@@ -24306,7 +24499,7 @@ packages:
       tsx: 4.6.2
     dev: false
 
-  /postcss-loader@6.2.1(postcss@8.4.40)(webpack@5.93.0):
+  /postcss-loader@6.2.1(postcss@8.4.40)(webpack@5.99.6):
     resolution: {integrity: sha512-WbbYpmAaKcux/P66bZ40bpWsBucjx/TTgVVzRZ9yUO8yQfVBlameJ0ZGVaPfH64hNSBh63a+ICP5nqOpBA0w+Q==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
@@ -24317,7 +24510,7 @@ packages:
       klona: 2.0.5
       postcss: 8.4.40
       semver: 7.6.3
-      webpack: 5.93.0(@swc/core@1.3.76)
+      webpack: 5.99.6(@swc/core@1.3.76)
 
   /postcss-loader@7.0.0(postcss@8.4.40)(webpack@5.93.0):
     resolution: {integrity: sha512-IDyttebFzTSY6DI24KuHUcBjbAev1i+RyICoPEWcAstZsj03r533uMXtDn506l6/wlsRYiS5XBdx7TpccCsyUg==}
@@ -24868,12 +25061,12 @@ packages:
       prosemirror-transform: 1.10.4
     dev: false
 
-  /prosemirror-dev-toolkit@1.1.8(svelte@4.2.18):
+  /prosemirror-dev-toolkit@1.1.8(svelte@5.28.2):
     resolution: {integrity: sha512-Qi549XA+DqU5cCkn/xv+M53gy1sQbyOTjiOfiG7Gjq5gm6ZxLilGN04UITWTAYx9kzLBi7Y9RJmvmWB4xiRauA==}
     dependencies:
       html: 1.0.0
       prosemirror-model: 1.25.1
-      svelte-tree-view: 1.4.2(svelte@4.2.18)
+      svelte-tree-view: 1.4.2(svelte@5.28.2)
     transitivePeerDependencies:
       - svelte
     dev: false
@@ -25209,7 +25402,7 @@ packages:
       unpipe: 1.0.0
     dev: true
 
-  /raw-loader@4.0.2(webpack@5.93.0):
+  /raw-loader@4.0.2(webpack@5.99.6):
     resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -25217,7 +25410,7 @@ packages:
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.93.0(@swc/core@1.3.76)
+      webpack: 5.99.6(@swc/core@1.3.76)
     dev: true
 
   /rc@1.2.8:
@@ -25348,6 +25541,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.3.1
       scheduler: 0.23.2
+
+  /react-dom@19.1.0(react@18.3.1):
+    resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
+    peerDependencies:
+      react: ^19.1.0
+    dependencies:
+      react: 18.3.1
+      scheduler: 0.26.0
+    dev: true
 
   /react-element-to-jsx-string@15.0.0(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-UDg4lXB6BzlobN60P8fHWVPX3Kyw8ORrTeBtClmIlGdkOOE+GYQSFvmEU5iLLpwp/6v42DINwNcwOhOLfQ//FQ==}
@@ -26154,7 +26356,6 @@ packages:
   /require-from-string@2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /require-like@0.1.2:
     resolution: {integrity: sha512-oyrU88skkMtDdauHDuKVrgR+zuItqr6/c//FXzvmxRGMexSDc6hNvJInGW3LL46n+8b50RykrvwSUIIQH2LQ5A==}
@@ -26487,6 +26688,10 @@ packages:
     dependencies:
       loose-envify: 1.4.0
 
+  /scheduler@0.26.0:
+    resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
+    dev: true
+
   /schema-utils@2.7.0:
     resolution: {integrity: sha512-0ilKFI6QQF5nxDZLFn2dMjvc4hjg/Wkg7rHd3jK6/A4a1Hl9VFdQWvgB1UMGoU94pad1P/8N7fMcEnLnSiju8A==}
     engines: {node: '>= 8.9.0'}
@@ -26521,6 +26726,15 @@ packages:
       ajv-formats: 2.1.1(ajv@8.11.0)
       ajv-keywords: 5.1.0(ajv@8.11.0)
     dev: true
+
+  /schema-utils@4.3.2:
+    resolution: {integrity: sha512-Gn/JaSk/Mt9gYubxTtSn/QCV4em9mpAPiR1rqy/Ocu19u/G9J5WWdNoUT4SiV6mFC3y6cxyFcFwdzPM3FgxGAQ==}
+    engines: {node: '>= 10.13.0'}
+    dependencies:
+      '@types/json-schema': 7.0.15
+      ajv: 8.17.1
+      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-keywords: 5.1.0(ajv@8.17.1)
 
   /section-matter@1.0.0:
     resolution: {integrity: sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==}
@@ -27257,7 +27471,7 @@ packages:
       queue-tick: 1.0.1
       text-decoder: 1.1.1
     optionalDependencies:
-      bare-events: 2.4.2
+      bare-events: 2.5.4
     dev: false
 
   /string-argv@0.3.1:
@@ -27470,7 +27684,7 @@ packages:
       tslib: 2.6.3
     dev: false
 
-  /styled-components@6.1.12(react-dom@18.3.1)(react@18.3.1):
+  /styled-components@6.1.12(react-dom@19.1.0)(react@18.3.1):
     resolution: {integrity: sha512-n/O4PzRPhbYI0k1vKKayfti3C/IGcPf+DqcrOB7O/ab9x4u/zjqraneT5N45+sIe87cxrCApXM8Bna7NYxwoTA==}
     engines: {node: '>= 16'}
     peerDependencies:
@@ -27484,7 +27698,7 @@ packages:
       csstype: 3.1.3
       postcss: 8.4.40
       react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react-dom: 19.1.0(react@18.3.1)
       shallowequal: 1.1.0
       stylis: 4.3.2
       tslib: 2.6.2
@@ -27561,32 +27775,32 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  /svelte-tree-view@1.4.2(svelte@4.2.18):
+  /svelte-tree-view@1.4.2(svelte@5.28.2):
     resolution: {integrity: sha512-z3yQq+/4CceyefVj03t9BG9AiZ7syovmRRo96aj8V65d1FsRS/BL2AxzcD4vl5GJg7o9qbz2mWWJzyFWENISCQ==}
     peerDependencies:
       svelte: '>=3'
     dependencies:
-      svelte: 4.2.18
+      svelte: 5.28.2
     dev: false
 
-  /svelte@4.2.18:
-    resolution: {integrity: sha512-d0FdzYIiAePqRJEb90WlJDkjUEx42xhivxN8muUBmfZnP+tzUgz12DJ2hRJi8sIHCME7jeK1PTMgKPSfTd8JrA==}
-    engines: {node: '>=16'}
+  /svelte@5.28.2:
+    resolution: {integrity: sha512-FbWBxgWOpQfhKvoGJv/TFwzqb4EhJbwCD17dB0tEpQiw1XyUEKZJtgm4nA4xq3LLsMo7hu5UY/BOFmroAxKTMg==}
+    engines: {node: '>=18'}
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
-      '@jridgewell/trace-mapping': 0.3.25
-      '@types/estree': 1.0.5
-      acorn: 8.12.1
-      aria-query: 5.3.0
+      '@sveltejs/acorn-typescript': 1.0.5(acorn@8.14.1)
+      '@types/estree': 1.0.7
+      acorn: 8.14.1
+      aria-query: 5.3.2
       axobject-query: 4.1.0
-      code-red: 1.0.4
-      css-tree: 2.3.1
-      estree-walker: 3.0.3
-      is-reference: 3.0.2
+      clsx: 2.1.1
+      esm-env: 1.2.2
+      esrap: 1.4.6
+      is-reference: 3.0.3
       locate-character: 3.0.0
-      magic-string: 0.30.11
-      periscopic: 3.1.0
+      magic-string: 0.30.17
+      zimmerframe: 1.1.2
     dev: false
 
   /svg-parser@2.0.4:
@@ -27694,7 +27908,7 @@ packages:
       pump: 3.0.0
       tar-stream: 3.1.7
     optionalDependencies:
-      bare-fs: 2.3.1
+      bare-fs: 2.3.5
       bare-path: 2.1.3
     dev: false
 
@@ -27704,7 +27918,7 @@ packages:
       pump: 3.0.0
       tar-stream: 3.1.7
     optionalDependencies:
-      bare-fs: 2.3.1
+      bare-fs: 2.3.5
       bare-path: 2.1.3
     dev: false
 
@@ -27841,6 +28055,57 @@ packages:
       serialize-javascript: 6.0.2
       terser: 5.31.3
       webpack: 5.93.0(@swc/core@1.3.76)
+    dev: true
+
+  /terser-webpack-plugin@5.3.14(@swc/core@1.3.76)(esbuild@0.17.19)(webpack@5.99.6):
+    resolution: {integrity: sha512-vkZjpUjb6OMS7dhV+tILUW6BhpDR7P2L/aQSAv+Uwk+m8KATX9EccViHTJR2qDtACKPIYndLGCyl3FMo+r2LMw==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      '@swc/core': '*'
+      esbuild: '*'
+      uglify-js: '*'
+      webpack: ^5.1.0
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      esbuild:
+        optional: true
+      uglify-js:
+        optional: true
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.25
+      '@swc/core': 1.3.76
+      esbuild: 0.17.19
+      jest-worker: 27.5.1
+      schema-utils: 4.3.2
+      serialize-javascript: 6.0.2
+      terser: 5.39.0
+      webpack: 5.99.6(@swc/core@1.3.76)(esbuild@0.17.19)
+    dev: false
+
+  /terser-webpack-plugin@5.3.14(@swc/core@1.3.76)(webpack@5.99.6):
+    resolution: {integrity: sha512-vkZjpUjb6OMS7dhV+tILUW6BhpDR7P2L/aQSAv+Uwk+m8KATX9EccViHTJR2qDtACKPIYndLGCyl3FMo+r2LMw==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      '@swc/core': '*'
+      esbuild: '*'
+      uglify-js: '*'
+      webpack: ^5.1.0
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      esbuild:
+        optional: true
+      uglify-js:
+        optional: true
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.25
+      '@swc/core': 1.3.76
+      jest-worker: 27.5.1
+      schema-utils: 4.3.2
+      serialize-javascript: 6.0.2
+      terser: 5.39.0
+      webpack: 5.99.6(@swc/core@1.3.76)
 
   /terser@4.8.0:
     resolution: {integrity: sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==}
@@ -27860,6 +28125,16 @@ packages:
     dependencies:
       '@jridgewell/source-map': 0.3.6
       acorn: 8.12.1
+      commander: 2.20.3
+      source-map-support: 0.5.21
+
+  /terser@5.39.0:
+    resolution: {integrity: sha512-LBAhFyLho16harJoWMg/nZsQYgTrg5jXOn2nCYjRUcZZEdE3qa2zb8QEDRUGVZBW4rlazf2fxkg8tztybTaqWw==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      '@jridgewell/source-map': 0.3.6
+      acorn: 8.14.1
       commander: 2.20.3
       source-map-support: 0.5.21
 
@@ -28129,6 +28404,10 @@ packages:
 
   /tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
+
+  /tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+    dev: false
 
   /tslog@3.3.4:
     resolution: {integrity: sha512-N0HHuHE0e/o75ALfkioFObknHR5dVchUad4F0XyFf3gXJYB++DewEzwGI/uIOM216E5a43ovnRNEeQIq9qgm4Q==}
@@ -28400,8 +28679,8 @@ packages:
     resolution: {integrity: sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==}
     dev: true
 
-  /uglify-js@3.19.1:
-    resolution: {integrity: sha512-y/2wiW+ceTYR2TSSptAhfnEtpLaQ4Ups5zrjB2d3kuVxHj16j/QJwPl5PvuGy9uARb39J0+iKxcRPvtpsx4A4A==}
+  /uglify-js@3.19.3:
+    resolution: {integrity: sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true
@@ -29063,6 +29342,13 @@ packages:
       glob-to-regexp: 0.4.1
       graceful-fs: 4.2.11
 
+  /watchpack@2.4.2:
+    resolution: {integrity: sha512-TnbFSbcOCcDgjZ4piURLCbJ3nJhznVh9kw6F6iokjiFPl8ONxe9A6nMDVXDiNbrSfLILs6vB07F7wLBrwPYzJw==}
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+
   /wbuf@1.7.3:
     resolution: {integrity: sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA==}
     dependencies:
@@ -29248,6 +29534,7 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+    dev: true
 
   /webpack@5.93.0(@swc/core@1.3.76)(esbuild@0.17.19):
     resolution: {integrity: sha512-Y0m5oEY1LRuwly578VqluorkXbvXKh7U3rLoQCEO04M97ScRr44afGVkI0FQFsXzysk5OgFAxjZAb9rsGQVihA==}
@@ -29287,6 +29574,83 @@ packages:
       - '@swc/core'
       - esbuild
       - uglify-js
+
+  /webpack@5.99.6(@swc/core@1.3.76):
+    resolution: {integrity: sha512-TJOLrJ6oeccsGWPl7ujCYuc0pIq2cNsuD6GZDma8i5o5Npvcco/z+NKvZSFsP0/x6SShVb0+X2JK/JHUjKY9dQ==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    peerDependencies:
+      webpack-cli: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+    dependencies:
+      '@types/eslint-scope': 3.7.7
+      '@types/estree': 1.0.7
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/wasm-edit': 1.14.1
+      '@webassemblyjs/wasm-parser': 1.14.1
+      acorn: 8.14.1
+      browserslist: 4.24.4
+      chrome-trace-event: 1.0.4
+      enhanced-resolve: 5.18.1
+      es-module-lexer: 1.7.0
+      eslint-scope: 5.1.1
+      events: 3.3.0
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+      json-parse-even-better-errors: 2.3.1
+      loader-runner: 4.3.0
+      mime-types: 2.1.35
+      neo-async: 2.6.2
+      schema-utils: 4.3.2
+      tapable: 2.2.1
+      terser-webpack-plugin: 5.3.14(@swc/core@1.3.76)(webpack@5.99.6)
+      watchpack: 2.4.2
+      webpack-sources: 3.2.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
+
+  /webpack@5.99.6(@swc/core@1.3.76)(esbuild@0.17.19):
+    resolution: {integrity: sha512-TJOLrJ6oeccsGWPl7ujCYuc0pIq2cNsuD6GZDma8i5o5Npvcco/z+NKvZSFsP0/x6SShVb0+X2JK/JHUjKY9dQ==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    peerDependencies:
+      webpack-cli: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+    dependencies:
+      '@types/eslint-scope': 3.7.7
+      '@types/estree': 1.0.7
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/wasm-edit': 1.14.1
+      '@webassemblyjs/wasm-parser': 1.14.1
+      acorn: 8.14.1
+      browserslist: 4.24.4
+      chrome-trace-event: 1.0.4
+      enhanced-resolve: 5.18.1
+      es-module-lexer: 1.7.0
+      eslint-scope: 5.1.1
+      events: 3.3.0
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+      json-parse-even-better-errors: 2.3.1
+      loader-runner: 4.3.0
+      mime-types: 2.1.35
+      neo-async: 2.6.2
+      schema-utils: 4.3.2
+      tapable: 2.2.1
+      terser-webpack-plugin: 5.3.14(@swc/core@1.3.76)(esbuild@0.17.19)(webpack@5.99.6)
+      watchpack: 2.4.2
+      webpack-sources: 3.2.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
+    dev: false
 
   /webpackbar@5.0.2(webpack@5.93.0):
     resolution: {integrity: sha512-BmFJo7veBDgQzfWXl/wwYXr/VFus0614qZ8i9znqcl9fnEdiVkdbi0TedLQ6xAK92HZHDJ0QmyQ0fmuZPAgCYQ==}
@@ -29774,6 +30138,10 @@ packages:
       validator: 13.7.0
     optionalDependencies:
       commander: 2.20.3
+    dev: false
+
+  /zimmerframe@1.1.2:
+    resolution: {integrity: sha512-rAbqEGa8ovJy4pyBxZM70hg4pE6gDgaQ0Sl9M3enG3I0d6H4XSAM3GeNGLKnsBpuijUow064sf7ww1nutC5/3w==}
     dev: false
 
   /zod@3.22.4:
