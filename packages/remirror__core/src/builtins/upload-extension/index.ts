@@ -1,3 +1,5 @@
+export type { PlaceholderPluginAction, PlaceholderPluginMeta } from './file-placeholder-actions';
+export { ActionType } from './file-placeholder-actions';
 export {
   findUploadPlaceholderPayload,
   findUploadPlaceholderPos,
