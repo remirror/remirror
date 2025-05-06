@@ -35,7 +35,7 @@ import { ExtensionPriority, RemirrorManager } from 'remirror';
 import { BoldExtension, CorePreset } from 'remirror/extensions';
 
 // Create the bold extension
-const boldExtension = new BoldExtension({ weight: '500' });
+const boldExtension = new BoldExtension({ weight: 'bold' });
 const corePreset = new CorePreset();
 
 // Create the Editor Manager with the bold extension passed through.
