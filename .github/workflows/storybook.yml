@@ -37,7 +37,7 @@ jobs:
           pnpm storybook:build
 
       - name: deploy storybook for pull request
-        uses: amondnet/vercel-action@v25.1.1
+        uses: amondnet/vercel-action@v25.2.0
         if: github.ref != 'refs/heads/main' && github.event.pull_request.head.repo.full_name == github.repository # don't run this job from a fork repository
         with:
           working-directory: ./packages/storybook-react/storybook-static
@@ -51,7 +51,7 @@ jobs:
             pr{{PR_NUMBER}}-remirror-ocavue.vercel.app
 
       - name: deploy storybook for production
-        uses: amondnet/vercel-action@v25.1.1
+        uses: amondnet/vercel-action@v25.2.0
         if: github.ref == 'refs/heads/main'
         with:
           working-directory: ./packages/storybook-react/storybook-static
