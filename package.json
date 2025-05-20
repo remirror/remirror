@@ -217,6 +217,7 @@
   "pnpm": {
     "overrides": {
       "postcss": ">= 8.0.0",
+      "prismjs": ">= 1.30.0",
       "typescript": "~5.0.4"
     },
     "patchedDependencies": {
