@@ -33,7 +33,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@remirror/core-constants": "3.0.0",
     "@remirror/core-helpers": "4.0.0",
     "@remirror/types": "2.0.0",
@@ -41,9 +41,9 @@
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0",
-    "prosemirror-model": "^1.22.1",
+    "prosemirror-model": "^1.25.1",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.33.8"
+    "prosemirror-view": "^1.39.2"
   },
   "peerDependencies": {
     "prosemirror-model": "^1.22.1",

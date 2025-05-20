@@ -1,5 +1,15 @@
 # @remirror/extension-react-ssr
 
+## 3.0.2
+
+> 2025-04-24
+
+### Patch Changes
+
+- Updated dependencies [98710d923]
+  - @remirror/pm@3.0.1
+  - @remirror/extension-react-component@3.0.2
+
 ## 3.0.1
 
 > 2024-08-01

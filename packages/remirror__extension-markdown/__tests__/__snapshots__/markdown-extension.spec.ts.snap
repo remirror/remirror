@@ -13,7 +13,7 @@ exports[`commands.insertMarkdown can insert basic tables from markdown 1`] = `
     class="tableWrapper"
   >
     <table
-      style="min-width: 50px;"
+      style="--default-cell-min-width: 100px; min-width: 200px;"
     >
       <colgroup>
         <col />

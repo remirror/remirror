@@ -36,13 +36,13 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@remirror/core": "3.0.1"
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0",
     "@types/react": "^18.2.0",
-    "react": "^18.2.0"
+    "react": "^18.3.1"
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17 || ^18",

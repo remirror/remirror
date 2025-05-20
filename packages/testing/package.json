@@ -43,14 +43,14 @@
     "build": "remirror-cli build --no-types"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.3",
+    "@babel/runtime": "^7.27.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@jest/globals": "^29.5.0",
     "@react-spring/mock-raf": "^1.1.1",
     "@remirror/core": "3.0.1",
-    "@remirror/pm": "3.0.0",
+    "@remirror/pm": "3.0.1",
     "@remirror/preset-core": "3.0.1",
-    "@remirror/react": "3.0.1",
+    "@remirror/react": "3.0.2",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/fluent-ffmpeg": "^2.1.21",
@@ -79,7 +79,7 @@
   "devDependencies": {
     "@remirror/cli": "1.1.0",
     "@types/react": "^18.2.0",
-    "react": "^18.2.0"
+    "react": "^18.3.1"
   },
   "peerDependencies": {
     "@types/react": "^16.14.0 || ^17 || ^18",

@@ -142,10 +142,12 @@ Prosemirror schema: {
       "content": "block+",
       "attrs": {
         "colspan": {
-          "default": 1
+          "default": 1,
+          "validate": "number"
         },
         "rowspan": {
-          "default": 1
+          "default": 1,
+          "validate": "number"
         },
         "colwidth": {
           "default": null
@@ -169,10 +171,12 @@ Prosemirror schema: {
       "content": "block+",
       "attrs": {
         "colspan": {
-          "default": 1
+          "default": 1,
+          "validate": "number"
         },
         "rowspan": {
-          "default": 1
+          "default": 1,
+          "validate": "number"
         },
         "colwidth": {
           "default": null
@@ -349,6 +353,7 @@ Prosemirror schema: {
       ]
     },
     "code": {
+      "code": true,
       "parseDOM": [
         {
           "tag": "code"
