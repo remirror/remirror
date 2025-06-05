@@ -10,6 +10,7 @@ import {
   useAttrs,
   useChainedCommands,
   useCurrentSelection,
+  useExtension,
   useExtensionEvent,
   useRemirror,
   useUpdateReason,
@@ -42,12 +43,17 @@ function useFloatingLinkState() {
   const chain = useChainedCommands();
   const { isEditing, linkShortcut, setIsEditing } = useLinkShortcut();
   const { to, empty } = useCurrentSelection();
+  const extension = useExtension(LinkExtension);
 
   const url = (useAttrs().link()?.href as string) ?? '';
   const [href, setHref] = useState<string>(url);
 
   // A positioner which only shows for links.
   const linkPositioner = useMemo(() => createMarkPositioner({ type: 'link' }), []);
+
+  const onLinkOpen = useCallback(() => {
+    window.open(url, extension.options.defaultTarget ?? '_blank');
+  }, [extension.options.defaultTarget, url]);
 
   const onRemove = useCallback(() => chain.removeLink().focus().run(), [chain]);
 
@@ -101,10 +107,21 @@ function useFloatingLinkState() {
       isEditing,
       clickEdit,
       onRemove,
+      onLinkOpen,
       submitHref,
       cancelHref,
     }),
-    [href, linkShortcut, linkPositioner, isEditing, clickEdit, onRemove, submitHref, cancelHref],
+    [
+      href,
+      linkShortcut,
+      linkPositioner,
+      isEditing,
+      clickEdit,
+      onLinkOpen,
+      onRemove,
+      submitHref,
+      cancelHref,
+    ],
   );
 }
 
@@ -129,8 +146,17 @@ const DelayAutoFocusInput = ({ autoFocus, ...rest }: HTMLProps<HTMLInputElement>
 };
 
 const FloatingLinkToolbar = () => {
-  const { isEditing, linkPositioner, clickEdit, onRemove, submitHref, href, setHref, cancelHref } =
-    useFloatingLinkState();
+  const {
+    isEditing,
+    linkPositioner,
+    clickEdit,
+    onLinkOpen,
+    onRemove,
+    submitHref,
+    href,
+    setHref,
+    cancelHref,
+  } = useFloatingLinkState();
   const active = useActive();
   const activeLink = active.link();
   const { empty } = useCurrentSelection();
@@ -148,6 +174,12 @@ const FloatingLinkToolbar = () => {
         enabled
       />
       <CommandButton commandName='removeLink' onSelect={onRemove} icon='linkUnlink' enabled />
+      <CommandButton
+        commandName='activateLink'
+        onSelect={onLinkOpen}
+        icon='externalLinkFill'
+        enabled
+      />
     </>
   ) : (
     <CommandButton commandName='updateLink' onSelect={handleClickEdit} icon='link' enabled />
