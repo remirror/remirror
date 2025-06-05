@@ -164,7 +164,7 @@ const FloatingLinkToolbar = () => {
         positioner='always'
         placement='bottom'
         enabled={isEditing}
-        renderOutsideEditor
+        renderOutsideEditor={!isEditing}
       >
         <DelayAutoFocusInput
           style={{ zIndex: 20 }}
@@ -172,7 +172,7 @@ const FloatingLinkToolbar = () => {
           placeholder='Enter link...'
           onChange={(event: ChangeEvent<HTMLInputElement>) => setHref(event.target.value)}
           value={href}
-          onKeyPress={(event: KeyboardEvent<HTMLInputElement>) => {
+          onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
             const { code } = event;
 
             if (code === 'Enter') {
