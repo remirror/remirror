@@ -1,12 +1,13 @@
 import { css } from '@emotion/css';
 import type { ChangeEvent, HTMLProps, KeyboardEvent } from 'react';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   createMarkPositioner,
   LinkExtension,
   ShortcutHandlerProps,
   StringPositioner,
 } from 'remirror/extensions';
+import { cx } from '@remirror/core';
 import {
   EditorComponent,
   FloatingWrapper,
@@ -98,7 +99,6 @@ function useFloatingLinkState() {
   return useMemo(
     () => ({
       href,
-      url,
       setHref,
       linkShortcut,
       linkPositioner,
@@ -112,7 +112,6 @@ function useFloatingLinkState() {
     }),
     [
       href,
-      url,
       linkShortcut,
       linkPositioner,
       isEditing,
@@ -145,11 +144,15 @@ const PositionerIllustration = ({ positioner }: PositionerIllustrationProps) => 
   return (
     <div
       ref={ref}
-      className={css`
-        border: 1px solid var(--rmr-hue-red-9);
-        position: absolute;
-        pointer-events: none;
-      `}
+      className={cx(
+        'link-highlight',
+        css`
+          background-color: var(--rmr-hue-blue-7);
+          opacity: 0.2;
+          pointer-events: none;
+          position: absolute;
+        `,
+      )}
       style={{
         left: x,
         top: y,
@@ -212,7 +215,6 @@ const FloatingLinkToolbar = () => {
     onRemoveLink,
     onUpdateLink,
     href,
-    url,
     setHref,
     cancelHref,
   } = useFloatingLinkState();
@@ -246,7 +248,6 @@ const FloatingLinkToolbar = () => {
 
   return (
     <>
-      <Debug isEditing={isEditing} emptySelection={emptySelection} url={url} href={href} />
       {!isEditing && <FloatingToolbar>{linkEditButtons}</FloatingToolbar>}
       {!isEditing && emptySelection && (
         <FloatingToolbar positioner={linkPositioner}>{linkEditButtons}</FloatingToolbar>
@@ -281,27 +282,6 @@ const FloatingLinkToolbar = () => {
       <PositionerPortal>
         <PositionerIllustration positioner='selection' />
       </PositionerPortal>
-    </>
-  );
-};
-
-const Debug = ({
-  isEditing,
-  emptySelection,
-  url,
-  href,
-}: {
-  isEditing: boolean;
-  emptySelection: boolean;
-  url: string;
-  href: string;
-}) => {
-  return (
-    <>
-      <p>isEditing: {String(isEditing)}</p>
-      <p>emptySelection: {String(emptySelection)}</p>
-      <p>href: {href}</p>
-      <p>url: {url}</p>
     </>
   );
 };
