@@ -1,6 +1,12 @@
+import { css } from '@emotion/css';
 import type { ChangeEvent, HTMLProps, KeyboardEvent } from 'react';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { createMarkPositioner, LinkExtension, ShortcutHandlerProps } from 'remirror/extensions';
+import {
+  createMarkPositioner,
+  LinkExtension,
+  ShortcutHandlerProps,
+  StringPositioner,
+} from 'remirror/extensions';
 import {
   EditorComponent,
   FloatingWrapper,
@@ -13,8 +19,8 @@ import {
   useExtension,
   useExtensionEvent,
   useRemirror,
-  useUpdateReason,
 } from '@remirror/react';
+import { PositionerPortal, useCommands, usePositioner } from '@remirror/react';
 import { CommandButton, FloatingToolbar } from '@remirror/react-ui';
 
 function useLinkShortcut() {
@@ -42,7 +48,7 @@ function useLinkShortcut() {
 function useFloatingLinkState() {
   const chain = useChainedCommands();
   const { isEditing, linkShortcut, setIsEditing } = useLinkShortcut();
-  const { to, empty } = useCurrentSelection();
+  const { to, empty: emptySelection } = useCurrentSelection();
   const extension = useExtension(LinkExtension);
 
   const url = (useAttrs().link()?.href as string) ?? '';
@@ -55,32 +61,23 @@ function useFloatingLinkState() {
     window.open(url, extension.options.defaultTarget ?? '_blank');
   }, [extension.options.defaultTarget, url]);
 
-  const onRemove = useCallback(() => chain.removeLink().focus().run(), [chain]);
-
-  const updateReason = useUpdateReason();
-
-  useLayoutEffect(() => {
-    if (!isEditing) {
-      return;
-    }
-
-    if (updateReason.doc || updateReason.selection) {
-      setIsEditing(false);
-    }
-  }, [isEditing, setIsEditing, updateReason.doc, updateReason.selection]);
+  const onRemoveLink = useCallback(() => {
+    chain.removeLink().focus().run();
+    setIsEditing(false);
+  }, [chain, setIsEditing]);
 
   useEffect(() => {
     setHref(url);
   }, [url]);
 
-  const submitHref = useCallback(() => {
+  const onUpdateLink = useCallback(() => {
     setIsEditing(false);
     const range = linkShortcut ?? undefined;
 
     if (href === '') {
       chain.removeLink();
     } else {
-      chain.updateLink({ href, auto: false }, range);
+      chain.updateLink({ href, auto: false }, range).run();
     }
 
     chain.focus(range?.to ?? to).run();
@@ -90,43 +87,103 @@ function useFloatingLinkState() {
     setIsEditing(false);
   }, [setIsEditing]);
 
-  const clickEdit = useCallback(() => {
-    if (empty) {
-      chain.selectLink();
+  const onEditLink = useCallback(() => {
+    if (emptySelection) {
+      chain.selectLink().run();
     }
 
     setIsEditing(true);
-  }, [chain, empty, setIsEditing]);
+  }, [chain, emptySelection, setIsEditing]);
 
   return useMemo(
     () => ({
       href,
+      url,
       setHref,
       linkShortcut,
       linkPositioner,
       isEditing,
-      clickEdit,
-      onRemove,
+      setIsEditing,
+      onEditLink,
+      onRemoveLink,
       onLinkOpen,
-      submitHref,
+      onUpdateLink,
       cancelHref,
     }),
     [
       href,
+      url,
       linkShortcut,
       linkPositioner,
       isEditing,
-      clickEdit,
+      setIsEditing,
+      onEditLink,
       onLinkOpen,
-      onRemove,
-      submitHref,
+      onRemoveLink,
+      onUpdateLink,
       cancelHref,
     ],
   );
 }
 
-const DelayAutoFocusInput = ({ autoFocus, ...rest }: HTMLProps<HTMLInputElement>) => {
+interface PositionerIllustrationProps {
+  positioner: StringPositioner;
+}
+
+const PositionerIllustration = ({ positioner }: PositionerIllustrationProps) => {
+  const { ref, x, y, width, height, active } = usePositioner(positioner);
+  const { forceUpdatePositioners } = useCommands();
+
+  useEffect(() => {
+    forceUpdatePositioners();
+  }, [forceUpdatePositioners]);
+
+  if (!active) {
+    return null;
+  }
+
+  return (
+    <div
+      ref={ref}
+      className={css`
+        border: 1px solid var(--rmr-hue-red-9);
+        position: absolute;
+        pointer-events: none;
+      `}
+      style={{
+        left: x,
+        top: y,
+        width,
+        height,
+      }}
+    >
+      &nbsp;
+    </div>
+  );
+};
+
+interface DelayAutoFocusInput extends HTMLProps<HTMLInputElement> {
+  setOpen: (open: boolean) => void;
+}
+
+const DelayAutoFocusInput = ({ setOpen, autoFocus, ...rest }: DelayAutoFocusInput) => {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    },
+    [setOpen, inputRef],
+  );
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [handleClickOutside]);
 
   useEffect(() => {
     if (!autoFocus) {
@@ -142,38 +199,40 @@ const DelayAutoFocusInput = ({ autoFocus, ...rest }: HTMLProps<HTMLInputElement>
     };
   }, [autoFocus]);
 
-  return <input ref={inputRef} {...rest} />;
+  return <input id='link-url-input' ref={inputRef} {...rest} />;
 };
 
 const FloatingLinkToolbar = () => {
   const {
     isEditing,
+    setIsEditing,
     linkPositioner,
-    clickEdit,
+    onEditLink,
     onLinkOpen,
-    onRemove,
-    submitHref,
+    onRemoveLink,
+    onUpdateLink,
     href,
+    url,
     setHref,
     cancelHref,
   } = useFloatingLinkState();
   const active = useActive();
   const activeLink = active.link();
-  const { empty } = useCurrentSelection();
+  const { empty: emptySelection } = useCurrentSelection();
 
-  const handleClickEdit = useCallback(() => {
-    clickEdit();
-  }, [clickEdit]);
+  const handleonEditLink = useCallback(() => {
+    onEditLink();
+  }, [onEditLink]);
 
   const linkEditButtons = activeLink ? (
     <>
       <CommandButton
         commandName='updateLink'
-        onSelect={handleClickEdit}
+        onSelect={handleonEditLink}
         icon='pencilLine'
         enabled
       />
-      <CommandButton commandName='removeLink' onSelect={onRemove} icon='linkUnlink' enabled />
+      <CommandButton commandName='removeLink' onSelect={onRemoveLink} icon='linkUnlink' enabled />
       <CommandButton
         commandName='activateLink'
         onSelect={onLinkOpen}
@@ -182,23 +241,25 @@ const FloatingLinkToolbar = () => {
       />
     </>
   ) : (
-    <CommandButton commandName='updateLink' onSelect={handleClickEdit} icon='link' enabled />
+    <CommandButton commandName='updateLink' onSelect={handleonEditLink} icon='link' enabled />
   );
 
   return (
     <>
+      <Debug isEditing={isEditing} emptySelection={emptySelection} url={url} href={href} />
       {!isEditing && <FloatingToolbar>{linkEditButtons}</FloatingToolbar>}
-      {!isEditing && empty && (
+      {!isEditing && emptySelection && (
         <FloatingToolbar positioner={linkPositioner}>{linkEditButtons}</FloatingToolbar>
       )}
 
       <FloatingWrapper
-        positioner='always'
-        placement='bottom'
         enabled={isEditing}
-        renderOutsideEditor={!isEditing}
+        placement='bottom-start'
+        positioner='selection'
+        renderOutsideEditor={false}
       >
         <DelayAutoFocusInput
+          setOpen={setIsEditing}
           style={{ zIndex: 20 }}
           autoFocus
           placeholder='Enter link...'
@@ -208,7 +269,7 @@ const FloatingLinkToolbar = () => {
             const { code } = event;
 
             if (code === 'Enter') {
-              submitHref();
+              onUpdateLink();
             }
 
             if (code === 'Escape') {
@@ -217,6 +278,30 @@ const FloatingLinkToolbar = () => {
           }}
         />
       </FloatingWrapper>
+      <PositionerPortal>
+        <PositionerIllustration positioner='selection' />
+      </PositionerPortal>
+    </>
+  );
+};
+
+const Debug = ({
+  isEditing,
+  emptySelection,
+  url,
+  href,
+}: {
+  isEditing: boolean;
+  emptySelection: boolean;
+  url: string;
+  href: string;
+}) => {
+  return (
+    <>
+      <p>isEditing: {String(isEditing)}</p>
+      <p>emptySelection: {String(emptySelection)}</p>
+      <p>href: {href}</p>
+      <p>url: {url}</p>
     </>
   );
 };
