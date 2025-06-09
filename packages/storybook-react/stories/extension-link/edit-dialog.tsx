@@ -49,7 +49,7 @@ function useLinkShortcut() {
 function useFloatingLinkState() {
   const chain = useChainedCommands();
   const { isEditing, linkShortcut, setIsEditing } = useLinkShortcut();
-  const { to, empty: emptySelection } = useCurrentSelection();
+  const { to, empty: isSelectionEmpty } = useCurrentSelection();
   const extension = useExtension(LinkExtension);
 
   const url = (useAttrs().link()?.href as string) ?? '';
@@ -71,7 +71,7 @@ function useFloatingLinkState() {
     setHref(url);
   }, [url]);
 
-  const onUpdateLink = useCallback(() => {
+  const handleUpdatelink = useCallback(() => {
     setIsEditing(false);
     const range = linkShortcut ?? undefined;
 
@@ -84,17 +84,18 @@ function useFloatingLinkState() {
     chain.focus(range?.to ?? to).run();
   }, [setIsEditing, linkShortcut, chain, href, to]);
 
-  const cancelHref = useCallback(() => {
+  const handleCancelEdit = useCallback(() => {
     setIsEditing(false);
-  }, [setIsEditing]);
+    chain.emptySelection().run();
+  }, [chain, setIsEditing]);
 
   const onEditLink = useCallback(() => {
-    if (emptySelection) {
+    if (isSelectionEmpty) {
       chain.selectLink().run();
     }
 
     setIsEditing(true);
-  }, [chain, emptySelection, setIsEditing]);
+  }, [chain, isSelectionEmpty, setIsEditing]);
 
   return useMemo(
     () => ({
@@ -107,8 +108,8 @@ function useFloatingLinkState() {
       onEditLink,
       onRemoveLink,
       onLinkOpen,
-      onUpdateLink,
-      cancelHref,
+      handleUpdatelink,
+      handleCancelEdit,
     }),
     [
       href,
@@ -119,17 +120,17 @@ function useFloatingLinkState() {
       onEditLink,
       onLinkOpen,
       onRemoveLink,
-      onUpdateLink,
-      cancelHref,
+      handleUpdatelink,
+      handleCancelEdit,
     ],
   );
 }
 
-interface PositionerIllustrationProps {
+interface LinkHighlightProps {
   positioner: StringPositioner;
 }
 
-const PositionerIllustration = ({ positioner }: PositionerIllustrationProps) => {
+const LinkHighlight = ({ positioner }: LinkHighlightProps) => {
   const { ref, x, y, width, height, active } = usePositioner(positioner);
   const { forceUpdatePositioners } = useCommands();
 
@@ -213,14 +214,14 @@ const FloatingLinkToolbar = () => {
     onEditLink,
     onLinkOpen,
     onRemoveLink,
-    onUpdateLink,
+    handleUpdatelink,
     href,
     setHref,
-    cancelHref,
+    handleCancelEdit,
   } = useFloatingLinkState();
   const active = useActive();
   const activeLink = active.link();
-  const { empty: emptySelection } = useCurrentSelection();
+  const { empty: isSelectionEmpty } = useCurrentSelection();
 
   const handleonEditLink = useCallback(() => {
     onEditLink();
@@ -249,7 +250,7 @@ const FloatingLinkToolbar = () => {
   return (
     <>
       {!isEditing && <FloatingToolbar>{linkEditButtons}</FloatingToolbar>}
-      {!isEditing && emptySelection && (
+      {!isEditing && isSelectionEmpty && (
         <FloatingToolbar positioner={linkPositioner}>{linkEditButtons}</FloatingToolbar>
       )}
 
@@ -270,17 +271,17 @@ const FloatingLinkToolbar = () => {
             const { code } = event;
 
             if (code === 'Enter') {
-              onUpdateLink();
+              handleUpdatelink();
             }
 
             if (code === 'Escape') {
-              cancelHref();
+              handleCancelEdit();
             }
           }}
         />
       </FloatingWrapper>
       <PositionerPortal>
-        <PositionerIllustration positioner='selection' />
+        <LinkHighlight positioner='selection' />
       </PositionerPortal>
     </>
   );
