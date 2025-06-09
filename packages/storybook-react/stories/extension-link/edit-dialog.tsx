@@ -20,6 +20,7 @@ import {
   useExtension,
   useExtensionEvent,
   useRemirror,
+  useSelectedText,
 } from '@remirror/react';
 import { PositionerPortal, useCommands, usePositioner } from '@remirror/react';
 import { CommandButton, FloatingToolbar } from '@remirror/react-ui';
@@ -50,17 +51,18 @@ function useFloatingLinkState() {
   const chain = useChainedCommands();
   const { isEditing, linkShortcut, setIsEditing } = useLinkShortcut();
   const { to, empty: isSelectionEmpty } = useCurrentSelection();
+  const text = useSelectedText() ?? '';
+  const [editingText, setEditingText] = useState<string>(text);
+  const href = (useAttrs().link()?.href as string) ?? '';
+  const [editingHref, setEditingHref] = useState<string>(href);
   const extension = useExtension(LinkExtension);
-
-  const url = (useAttrs().link()?.href as string) ?? '';
-  const [href, setHref] = useState<string>(url);
 
   // A positioner which only shows for links.
   const linkPositioner = useMemo(() => createMarkPositioner({ type: 'link' }), []);
 
   const onLinkOpen = useCallback(() => {
-    window.open(url, extension.options.defaultTarget ?? '_blank');
-  }, [extension.options.defaultTarget, url]);
+    window.open(href, extension.options.defaultTarget ?? '_blank');
+  }, [extension.options.defaultTarget, href]);
 
   const onRemoveLink = useCallback(() => {
     chain.removeLink().focus().run();
@@ -68,21 +70,28 @@ function useFloatingLinkState() {
   }, [chain, setIsEditing]);
 
   useEffect(() => {
-    setHref(url);
-  }, [url]);
+    setEditingHref(href);
+    setEditingText(text);
+  }, [href, text]);
 
   const handleUpdatelink = useCallback(() => {
     setIsEditing(false);
     const range = linkShortcut ?? undefined;
 
-    if (href === '') {
+    if (editingHref === '') {
       chain.removeLink();
     } else {
-      chain.updateLink({ href, auto: false }, range).run();
+      chain
+        .replaceText({
+          content: editingText,
+          range,
+        })
+        .updateLink({ href: editingHref, auto: false }, range)
+        .run();
     }
 
     chain.focus(range?.to ?? to).run();
-  }, [setIsEditing, linkShortcut, chain, href, to]);
+  }, [setIsEditing, linkShortcut, chain, editingHref, editingText, to]);
 
   const handleCancelEdit = useCallback(() => {
     setIsEditing(false);
@@ -99,8 +108,10 @@ function useFloatingLinkState() {
 
   return useMemo(
     () => ({
-      href,
-      setHref,
+      editingText,
+      setEditingText,
+      editingHref,
+      setEditingHref,
       linkShortcut,
       linkPositioner,
       isEditing,
@@ -112,14 +123,17 @@ function useFloatingLinkState() {
       handleCancelEdit,
     }),
     [
-      href,
+      editingText,
+      setEditingText,
+      editingHref,
+      setEditingHref,
       linkShortcut,
       linkPositioner,
       isEditing,
       setIsEditing,
       onEditLink,
-      onLinkOpen,
       onRemoveLink,
+      onLinkOpen,
       handleUpdatelink,
       handleCancelEdit,
     ],
@@ -168,26 +182,18 @@ const LinkHighlight = ({ positioner }: LinkHighlightProps) => {
 
 interface DelayAutoFocusInput extends HTMLProps<HTMLInputElement> {
   setOpen: (open: boolean) => void;
+  handleSubmit: () => void;
+  handleCancel: () => void;
 }
 
-const DelayAutoFocusInput = ({ setOpen, autoFocus, ...rest }: DelayAutoFocusInput) => {
+const DelayAutoFocusInput = ({
+  handleSubmit,
+  handleCancel,
+  setOpen,
+  autoFocus,
+  ...rest
+}: DelayAutoFocusInput) => {
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleClickOutside = useCallback(
-    (event: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    },
-    [setOpen, inputRef],
-  );
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [handleClickOutside]);
 
   useEffect(() => {
     if (!autoFocus) {
@@ -203,11 +209,29 @@ const DelayAutoFocusInput = ({ setOpen, autoFocus, ...rest }: DelayAutoFocusInpu
     };
   }, [autoFocus]);
 
-  return <input id='link-url-input' ref={inputRef} {...rest} />;
+  return (
+    <input
+      ref={inputRef}
+      {...rest}
+      onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
+        const { code } = event;
+
+        if (code === 'Enter') {
+          handleSubmit();
+        }
+
+        if (code === 'Escape') {
+          handleCancel();
+        }
+      }}
+    />
+  );
 };
 
 const FloatingLinkToolbar = () => {
   const {
+    editingText,
+    setEditingText,
     isEditing,
     setIsEditing,
     linkPositioner,
@@ -215,8 +239,8 @@ const FloatingLinkToolbar = () => {
     onLinkOpen,
     onRemoveLink,
     handleUpdatelink,
-    href,
-    setHref,
+    editingHref,
+    setEditingHref,
     handleCancelEdit,
   } = useFloatingLinkState();
   const active = useActive();
@@ -274,30 +298,97 @@ const FloatingLinkToolbar = () => {
         positioner='selection'
         renderOutsideEditor={false}
       >
-        <DelayAutoFocusInput
+        <EditLinkDialog
           setOpen={setIsEditing}
-          style={{ zIndex: 20 }}
-          autoFocus
-          placeholder='Enter link...'
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setHref(event.target.value)}
-          value={href}
-          onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
-            const { code } = event;
-
-            if (code === 'Enter') {
-              handleUpdatelink();
-            }
-
-            if (code === 'Escape') {
-              handleCancelEdit();
-            }
-          }}
+          editingHref={editingHref}
+          setEditingHref={setEditingHref}
+          editingText={editingText}
+          setEditingText={setEditingText}
+          handleUpdatelink={handleUpdatelink}
+          handleCancelEdit={handleCancelEdit}
         />
       </FloatingWrapper>
       <PositionerPortal>
         <LinkHighlight positioner='selection' />
       </PositionerPortal>
     </>
+  );
+};
+
+interface EditLinkDialogProps {
+  setOpen: (open: boolean) => void;
+  editingHref: string;
+  setEditingHref: (href: string) => void;
+  editingText: string;
+  setEditingText: (text: string) => void;
+  handleUpdatelink: () => void;
+  handleCancelEdit: () => void;
+}
+
+const EditLinkDialog = ({
+  setOpen,
+  editingHref,
+  setEditingHref,
+  editingText,
+  setEditingText,
+  handleUpdatelink,
+  handleCancelEdit,
+}: EditLinkDialogProps) => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    },
+    [setOpen, wrapperRef],
+  );
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
+  return (
+    <div
+      ref={wrapperRef}
+      className={cx(
+        'edit-link-dialog',
+        css`
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 8px;
+          background-color: var(--rmr-hue-gray-1);
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          position: relative;
+          border: 1px solid var(--rmr-hue-gray-7);
+        `,
+      )}
+    >
+      <DelayAutoFocusInput
+        setOpen={setOpen}
+        autoFocus
+        placeholder='Enter link...'
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setEditingHref(event.target.value)}
+        value={editingHref}
+        handleSubmit={handleUpdatelink}
+        handleCancel={handleCancelEdit}
+      />
+      <DelayAutoFocusInput
+        setOpen={setOpen}
+        autoFocus={false}
+        placeholder='Enter text...'
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setEditingText(event.target.value)}
+        value={editingText}
+        handleSubmit={handleUpdatelink}
+        handleCancel={handleCancelEdit}
+      />
+    </div>
   );
 };
 
