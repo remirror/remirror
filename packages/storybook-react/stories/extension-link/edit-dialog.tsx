@@ -223,37 +223,51 @@ const FloatingLinkToolbar = () => {
   const activeLink = active.link();
   const { empty: isSelectionEmpty } = useCurrentSelection();
 
-  const handleonEditLink = useCallback(() => {
+  const handleOnEditLink = useCallback(() => {
     onEditLink();
   }, [onEditLink]);
 
-  const linkEditButtons = activeLink ? (
-    <>
-      <CommandButton
-        commandName='updateLink'
-        onSelect={handleonEditLink}
-        icon='pencilLine'
-        enabled
-      />
-      <CommandButton commandName='removeLink' onSelect={onRemoveLink} icon='linkUnlink' enabled />
-      <CommandButton
-        commandName='activateLink'
-        onSelect={onLinkOpen}
-        icon='externalLinkFill'
-        enabled
-      />
-    </>
-  ) : (
-    <CommandButton commandName='updateLink' onSelect={handleonEditLink} icon='link' enabled />
-  );
+  const linkMenuButtons = useMemo(() => {
+    if (activeLink) {
+      return (
+        <>
+          <CommandButton
+            commandName='updateLink'
+            onSelect={handleOnEditLink}
+            icon='pencilLine'
+            enabled
+          />
+          <CommandButton
+            commandName='removeLink'
+            onSelect={onRemoveLink}
+            icon='linkUnlink'
+            enabled
+          />
+          <CommandButton
+            commandName='activateLink'
+            onSelect={onLinkOpen}
+            icon='externalLinkFill'
+            enabled
+          />
+        </>
+      );
+    }
+
+    if (!isSelectionEmpty) {
+      return (
+        <CommandButton commandName='updateLink' onSelect={handleOnEditLink} icon='link' enabled />
+      );
+    }
+
+    return <></>;
+  }, [activeLink, isSelectionEmpty, handleOnEditLink, onRemoveLink, onLinkOpen]);
 
   return (
     <>
-      {!isEditing && <FloatingToolbar>{linkEditButtons}</FloatingToolbar>}
+      {!isEditing && <FloatingToolbar>{linkMenuButtons}</FloatingToolbar>}
       {!isEditing && isSelectionEmpty && (
-        <FloatingToolbar positioner={linkPositioner}>{linkEditButtons}</FloatingToolbar>
+        <FloatingToolbar positioner={linkPositioner}>{linkMenuButtons}</FloatingToolbar>
       )}
-
       <FloatingWrapper
         enabled={isEditing}
         placement='bottom-start'
