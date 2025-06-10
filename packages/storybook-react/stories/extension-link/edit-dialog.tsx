@@ -5,7 +5,7 @@ import {
   createMarkPositioner,
   LinkExtension,
   ShortcutHandlerProps,
-  StringPositioner,
+  TextHighlightExtension,
 } from 'remirror/extensions';
 import { cx } from '@remirror/core';
 import {
@@ -16,13 +16,13 @@ import {
   useActive,
   useAttrs,
   useChainedCommands,
+  useCommands,
   useCurrentSelection,
   useExtension,
   useExtensionEvent,
   useRemirror,
   useSelectedText,
 } from '@remirror/react';
-import { PositionerPortal, useCommands, usePositioner } from '@remirror/react';
 import { CommandButton, FloatingToolbar } from '@remirror/react-ui';
 
 function useLinkShortcut() {
@@ -49,6 +49,7 @@ function useLinkShortcut() {
 
 function useFloatingLinkState() {
   const chain = useChainedCommands();
+  const commands = useCommands();
   const { isEditing, linkShortcut, setIsEditing } = useLinkShortcut();
   const { to, empty: isSelectionEmpty } = useCurrentSelection();
   const text = useSelectedText() ?? '';
@@ -95,7 +96,7 @@ function useFloatingLinkState() {
 
   const handleCancelEdit = useCallback(() => {
     setIsEditing(false);
-    chain.emptySelection().run();
+    chain.removeTextHighlight().emptySelection().run();
   }, [chain, setIsEditing]);
 
   const onEditLink = useCallback(() => {
@@ -103,8 +104,10 @@ function useFloatingLinkState() {
       chain.selectLink().run();
     }
 
+    commands.setTextHighlight('red');
+
     setIsEditing(true);
-  }, [chain, isSelectionEmpty, setIsEditing]);
+  }, [chain, commands, isSelectionEmpty, setIsEditing]);
 
   return useMemo(
     () => ({
@@ -140,48 +143,7 @@ function useFloatingLinkState() {
   );
 }
 
-interface LinkHighlightProps {
-  positioner: StringPositioner;
-}
-
-const LinkHighlight = ({ positioner }: LinkHighlightProps) => {
-  const { ref, x, y, width, height, active } = usePositioner(positioner);
-  const { forceUpdatePositioners } = useCommands();
-
-  useEffect(() => {
-    forceUpdatePositioners();
-  }, [forceUpdatePositioners]);
-
-  if (!active) {
-    return null;
-  }
-
-  return (
-    <div
-      ref={ref}
-      className={cx(
-        'link-highlight',
-        css`
-          background-color: var(--rmr-hue-blue-7);
-          opacity: 0.2;
-          pointer-events: none;
-          position: absolute;
-        `,
-      )}
-      style={{
-        left: x,
-        top: y,
-        width,
-        height,
-      }}
-    >
-      &nbsp;
-    </div>
-  );
-};
-
 interface DelayAutoFocusInput extends HTMLProps<HTMLInputElement> {
-  setOpen: (open: boolean) => void;
   handleSubmit: () => void;
   handleCancel: () => void;
 }
@@ -189,7 +151,6 @@ interface DelayAutoFocusInput extends HTMLProps<HTMLInputElement> {
 const DelayAutoFocusInput = ({
   handleSubmit,
   handleCancel,
-  setOpen,
   autoFocus,
   ...rest
 }: DelayAutoFocusInput) => {
@@ -233,7 +194,6 @@ const FloatingLinkToolbar = () => {
     editingText,
     setEditingText,
     isEditing,
-    setIsEditing,
     linkPositioner,
     onEditLink,
     onLinkOpen,
@@ -299,7 +259,6 @@ const FloatingLinkToolbar = () => {
         renderOutsideEditor={false}
       >
         <EditLinkDialog
-          setOpen={setIsEditing}
           editingHref={editingHref}
           setEditingHref={setEditingHref}
           editingText={editingText}
@@ -308,15 +267,11 @@ const FloatingLinkToolbar = () => {
           handleCancelEdit={handleCancelEdit}
         />
       </FloatingWrapper>
-      <PositionerPortal>
-        <LinkHighlight positioner='selection' />
-      </PositionerPortal>
     </>
   );
 };
 
 interface EditLinkDialogProps {
-  setOpen: (open: boolean) => void;
   editingHref: string;
   setEditingHref: (href: string) => void;
   editingText: string;
@@ -326,7 +281,6 @@ interface EditLinkDialogProps {
 }
 
 const EditLinkDialog = ({
-  setOpen,
   editingHref,
   setEditingHref,
   editingText,
@@ -339,10 +293,10 @@ const EditLinkDialog = ({
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-        setOpen(false);
+        handleCancelEdit();
       }
     },
-    [setOpen, wrapperRef],
+    [handleCancelEdit, wrapperRef],
   );
 
   useEffect(() => {
@@ -371,7 +325,6 @@ const EditLinkDialog = ({
       )}
     >
       <DelayAutoFocusInput
-        setOpen={setOpen}
         autoFocus
         placeholder='Enter link...'
         onChange={(event: ChangeEvent<HTMLInputElement>) => setEditingHref(event.target.value)}
@@ -380,7 +333,6 @@ const EditLinkDialog = ({
         handleCancel={handleCancelEdit}
       />
       <DelayAutoFocusInput
-        setOpen={setOpen}
         autoFocus={false}
         placeholder='Enter text...'
         onChange={(event: ChangeEvent<HTMLInputElement>) => setEditingText(event.target.value)}
@@ -394,7 +346,7 @@ const EditLinkDialog = ({
 
 const EditDialog = (): JSX.Element => {
   const { manager, state } = useRemirror({
-    extensions: () => [new LinkExtension({ autoLink: true })],
+    extensions: () => [new LinkExtension({ autoLink: true }), new TextHighlightExtension()],
     content: `Click this <a href="https://remirror.io" target="_blank">link</a> to edit it`,
     stringHandler: 'html',
   });
