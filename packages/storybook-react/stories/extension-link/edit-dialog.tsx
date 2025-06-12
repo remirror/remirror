@@ -205,7 +205,11 @@ const FloatingLinkToolbar = () => {
   } = useFloatingLinkState();
   const active = useActive();
   const activeLink = active.link();
-  const { empty: isSelectionEmpty } = useCurrentSelection();
+  const selection = useCurrentSelection();
+
+  // If a selection spans across multiple lines, things get more complicated.
+  // Prevent the floating toolbar from showing in this case.
+  const isMultilineSelection = !selection.$from.sameParent(selection.$to);
 
   const handleOnEditLink = useCallback(() => {
     onEditLink();
@@ -237,19 +241,19 @@ const FloatingLinkToolbar = () => {
       );
     }
 
-    if (!isSelectionEmpty) {
+    if (!selection.empty) {
       return (
         <CommandButton commandName='updateLink' onSelect={handleOnEditLink} icon='link' enabled />
       );
     }
 
     return <></>;
-  }, [activeLink, isSelectionEmpty, handleOnEditLink, onRemoveLink, onLinkOpen]);
+  }, [activeLink, selection.empty, handleOnEditLink, onRemoveLink, onLinkOpen]);
 
   return (
     <>
-      {!isEditing && <FloatingToolbar>{linkMenuButtons}</FloatingToolbar>}
-      {!isEditing && isSelectionEmpty && (
+      {!isEditing && !isMultilineSelection && <FloatingToolbar>{linkMenuButtons}</FloatingToolbar>}
+      {!isEditing && selection.empty && !isMultilineSelection && (
         <FloatingToolbar positioner={linkPositioner}>{linkMenuButtons}</FloatingToolbar>
       )}
       <FloatingWrapper
