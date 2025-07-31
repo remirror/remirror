@@ -275,10 +275,10 @@ export function command(
  */
 export function legacyCommand<Extension extends AnyExtension>(
   options?: ChainableCommandDecoratorOptions<Required<GetOptions<Extension>>>,
-): ExtensionDecorator<Extension, CommandFunction, void>;
+): LegacyExtensionDecorator<Extension, CommandFunction, void>;
 export function legacyCommand<Extension extends AnyExtension>(
   options: NonChainableCommandDecoratorOptions<Required<GetOptions<Extension>>>,
-): ExtensionDecorator<Extension, NonChainableCommandFunction, void>;
+): LegacyExtensionDecorator<Extension, NonChainableCommandFunction, void>;
 export function legacyCommand(options: CommandDecoratorOptions = {}): any {
   return (target: any, propertyKey: string, _descriptor: any): void => {
     // Attach the options to the decoratedCommands property for this extension.
@@ -398,6 +398,12 @@ export interface KeybindingDecoratorOptions<Options extends Shape = Shape> {
 type ExtensionDecorator<Extension extends AnyExtension, Fn, Return> = (
   method: AnyFunction<Fn>,
   context: ClassMethodDecoratorContext<Extension, AnyFunction<Fn>>,
+) => Return;
+
+type LegacyExtensionDecorator<Extension extends AnyExtension, Fn, Return> = (
+  target: Extension,
+  propertyKey: string,
+  _descriptor: TypedPropertyDescriptor<AnyFunction<Fn>>,
 ) => Return;
 
 export interface CommandUiIcon {
