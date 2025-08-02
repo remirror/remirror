@@ -1,5 +1,13 @@
 # @remirror/core
 
+## 3.0.2
+
+> 2025-08-02
+
+### Patch Changes
+
+- 02c3cb151: Use the original typing for legacy command decorator.
+
 ## 3.0.1
 
 > 2024-08-01
