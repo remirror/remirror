@@ -1,5 +1,15 @@
 # @remirror/extension-annotation
 
+## 3.0.2
+
+> 2025-08-02
+
+### Patch Changes
+
+- Updated dependencies [02c3cb151]
+  - @remirror/core@3.0.2
+  - @remirror/extension-positioner@3.0.2
+
 ## 3.0.1
 
 > 2024-08-01

@@ -1,5 +1,16 @@
 # @remirror/preset-react
 
+## 3.0.3
+
+> 2025-08-02
+
+### Patch Changes
+
+- Updated dependencies [02c3cb151]
+  - @remirror/core@3.0.2
+  - @remirror/extension-placeholder@3.0.2
+  - @remirror/extension-react-component@3.0.3
+
 ## 3.0.2
 
 > 2025-04-24

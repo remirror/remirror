@@ -1,5 +1,19 @@
 # @remirror/react-core
 
+## 3.0.3
+
+> 2025-08-02
+
+### Patch Changes
+
+- Updated dependencies [02c3cb151]
+  - @remirror/core@3.0.2
+  - @remirror/extension-positioner@3.0.2
+  - @remirror/extension-react-component@3.0.3
+  - @remirror/preset-core@3.0.2
+  - @remirror/preset-react@3.0.3
+  - @remirror/react-renderer@3.0.2
+
 ## 3.0.2
 
 > 2025-04-24

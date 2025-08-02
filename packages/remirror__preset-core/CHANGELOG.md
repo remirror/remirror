@@ -1,5 +1,21 @@
 # @remirror/preset-core
 
+## 3.0.2
+
+> 2025-08-02
+
+### Patch Changes
+
+- Updated dependencies [02c3cb151]
+  - @remirror/core@3.0.2
+  - @remirror/extension-doc@3.0.2
+  - @remirror/extension-events@3.0.2
+  - @remirror/extension-gap-cursor@3.0.2
+  - @remirror/extension-history@3.0.2
+  - @remirror/extension-paragraph@3.0.2
+  - @remirror/extension-positioner@3.0.2
+  - @remirror/extension-text@3.0.2
+
 ## 3.0.1
 
 > 2024-08-01

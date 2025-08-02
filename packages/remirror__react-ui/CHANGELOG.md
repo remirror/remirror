@@ -1,5 +1,39 @@
 # @remirror/react-ui
 
+## 1.0.3
+
+> 2025-08-02
+
+### Patch Changes
+
+- Updated dependencies [02c3cb151]
+  - @remirror/core@3.0.2
+  - @remirror/extension-blockquote@3.0.2
+  - @remirror/extension-bold@3.0.2
+  - @remirror/extension-callout@3.0.2
+  - @remirror/extension-code@3.0.2
+  - @remirror/extension-code-block@3.0.2
+  - @remirror/extension-columns@3.0.2
+  - @remirror/extension-find@1.0.2
+  - @remirror/extension-font-size@3.0.2
+  - @remirror/extension-heading@3.0.2
+  - @remirror/extension-history@3.0.2
+  - @remirror/extension-horizontal-rule@3.0.2
+  - @remirror/extension-italic@3.0.2
+  - @remirror/extension-list@3.0.2
+  - @remirror/extension-node-formatting@3.0.2
+  - @remirror/extension-positioner@3.0.2
+  - @remirror/extension-strike@3.0.2
+  - @remirror/extension-sub@3.0.2
+  - @remirror/extension-sup@3.0.2
+  - @remirror/extension-tables@3.0.2
+  - @remirror/extension-text-color@3.0.2
+  - @remirror/extension-underline@3.0.2
+  - @remirror/extension-whitespace@3.0.2
+  - @remirror/react-components@3.0.3
+  - @remirror/react-core@3.0.3
+  - @remirror/react-hooks@3.0.3
+
 ## 1.0.2
 
 > 2025-04-24
