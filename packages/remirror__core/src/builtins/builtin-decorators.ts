@@ -400,7 +400,7 @@ type ExtensionDecorator<Extension extends AnyExtension, Fn, Return> = (
   context: ClassMethodDecoratorContext<Extension, AnyFunction<Fn>>,
 ) => Return;
 
-type LegacyExtensionDecorator<Extension extends AnyExtension, Fn, Return> = (
+export type LegacyExtensionDecorator<Extension extends AnyExtension, Fn, Return> = (
   target: Extension,
   propertyKey: string,
   _descriptor: TypedPropertyDescriptor<AnyFunction<Fn>>,
