@@ -263,9 +263,9 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       }
 
       const { state, dispatch } = props;
-      const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
+      const undoManager = yUndoPluginKey.getState(state)?.undoManager;
 
-      if (undoManager.undoStack.length === 0) {
+      if (!undoManager || undoManager.undoStack.length === 0) {
         return false;
       }
 
@@ -296,9 +296,9 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       }
 
       const { state, dispatch } = props;
-      const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
+      const undoManager = yUndoPluginKey.getState(state)?.undoManager;
 
-      if (undoManager.redoStack.length === 0) {
+      if (!undoManager || undoManager.redoStack.length === 0) {
         return false;
       }
 
