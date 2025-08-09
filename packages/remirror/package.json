@@ -62,7 +62,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.2",
     "@remirror/core": "3.0.2",
     "@remirror/core-constants": "3.0.0",
     "@remirror/core-helpers": "4.0.0",
@@ -122,13 +122,13 @@
     "@remirror/preset-formatting": "3.0.2",
     "@remirror/preset-wysiwyg": "3.0.2",
     "@remirror/theme": "3.0.0",
-    "@types/refractor": "^3.0.2",
+    "@types/refractor": "^3.4.1",
     "refractor": "^3.6.0"
   },
   "devDependencies": {
     "@remirror/cli": "1.1.0",
     "@remirror/pm": "3.0.1",
-    "prettier": "^3.2.5"
+    "prettier": "^3.6.2"
   },
   "peerDependencies": {
     "@remirror/pm": "^3.0.1",
