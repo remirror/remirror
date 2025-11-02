@@ -2,6 +2,7 @@ import {
   defaultCursorBuilder,
   defaultDeleteFilter,
   defaultSelectionBuilder,
+  initProseMirrorDoc,
   redo,
   undo,
   yCursorPlugin,
@@ -182,8 +183,10 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     const yDoc = this.provider.doc;
     const type = yDoc.getXmlFragment('prosemirror');
 
+    const { mapping } = initProseMirrorDoc(type, this.store.schema);
+
     const plugins = [
-      ySyncPlugin(type, syncPluginOptions),
+      ySyncPlugin(type, { ...syncPluginOptions, mapping }),
       yCursorPlugin(
         this.provider.awareness,
         { cursorBuilder, getSelection, selectionBuilder },
@@ -263,9 +266,9 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       }
 
       const { state, dispatch } = props;
-      const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
+      const undoManager = yUndoPluginKey.getState(state)?.undoManager;
 
-      if (undoManager.undoStack.length === 0) {
+      if (!undoManager || undoManager.undoStack.length === 0) {
         return false;
       }
 
@@ -296,9 +299,9 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       }
 
       const { state, dispatch } = props;
-      const undoManager: UndoManager = yUndoPluginKey.getState(state).undoManager;
+      const undoManager = yUndoPluginKey.getState(state)?.undoManager;
 
-      if (undoManager.redoStack.length === 0) {
+      if (!undoManager || undoManager.redoStack.length === 0) {
         return false;
       }
 

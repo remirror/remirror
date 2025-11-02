@@ -47,7 +47,7 @@
     "prosemirror-model": "^1.25.1",
     "prosemirror-state": "^1.4.3",
     "prosemirror-view": "^1.39.2",
-    "y-prosemirror": "^1.0.19",
+    "y-prosemirror": "^1.3.7",
     "y-protocols": "^1.0.5"
   },
   "devDependencies": {
