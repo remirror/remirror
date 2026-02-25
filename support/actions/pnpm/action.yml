@@ -5,7 +5,7 @@ inputs:
   node-version:
     description: 'The version of Node.js'
     required: true
-    default: '18.x'
+    default: '20.x'
 
 runs:
   using: 'composite'
@@ -15,7 +15,7 @@ runs:
       shell: bash
 
     - name: setup node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         cache: pnpm
