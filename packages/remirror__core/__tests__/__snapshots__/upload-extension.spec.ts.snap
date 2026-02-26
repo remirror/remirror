@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add multiple placeholder 1`] = `
+<div
+  contenteditable="true"
+  role="textbox"
+  aria-multiline="true"
+  aria-label
+  translate="no"
+  class="ProseMirror remirror-editor"
+>
+  <p>
+    upload
+    <placeholder class="ProseMirror-widget">
+    </placeholder>
+    <placeholder class="ProseMirror-widget">
+    </placeholder>
+    placeholder
+  </p>
+</div>
+`;
+
+exports[`add single placeholder 1`] = `
+<div
+  contenteditable="true"
+  role="textbox"
+  aria-multiline="true"
+  aria-label
+  translate="no"
+  class="ProseMirror remirror-editor"
+>
+  <p>
+    upload
+    <placeholder class="ProseMirror-widget">
+    </placeholder>
+    placeholder
+  </p>
+</div>
+`;
+
+exports[`remove multiple placeholder 1`] = `
+<div
+  contenteditable="true"
+  role="textbox"
+  aria-multiline="true"
+  aria-label
+  translate="no"
+  class="ProseMirror remirror-editor"
+>
+  <p>
+    upload placeholder
+  </p>
+</div>
+`;
+
+exports[`remove single placeholder 1`] = `
+<div
+  contenteditable="true"
+  role="textbox"
+  aria-multiline="true"
+  aria-label
+  translate="no"
+  class="ProseMirror remirror-editor"
+>
+  <p>
+    upload placeholder
+  </p>
+</div>
+`;

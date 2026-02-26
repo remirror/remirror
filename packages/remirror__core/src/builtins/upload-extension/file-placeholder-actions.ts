@@ -1,6 +1,7 @@
 export enum ActionType {
   ADD_PLACEHOLDER,
   REMOVE_PLACEHOLDER,
+  UPDATE_PLACEHOLDER,
 }
 
 interface AddPlaceholderAction {
@@ -15,4 +16,19 @@ interface RemovePlaceholderAction {
   id: string;
 }
 
-export type PlaceholderPluginAction = AddPlaceholderAction | RemovePlaceholderAction;
+interface UpdatPlaceholderAction {
+  type: ActionType.UPDATE_PLACEHOLDER;
+  id: string;
+  payload: any;
+}
+
+export type PlaceholderPluginAction =
+  | AddPlaceholderAction
+  | RemovePlaceholderAction
+  | UpdatPlaceholderAction;
+
+export interface PlaceholderPluginMeta {
+  added: Array<Omit<AddPlaceholderAction, 'type'>>;
+  removed: Array<Omit<RemovePlaceholderAction, 'type'>>;
+  updated: Array<Omit<UpdatPlaceholderAction, 'type'>>;
+}
