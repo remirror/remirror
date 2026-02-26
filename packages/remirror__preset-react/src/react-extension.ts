@@ -39,6 +39,7 @@ export class ReactExtension extends PlainExtension<ReactExtensionOptions> {
     const {
       emptyNodeClass,
       placeholder,
+      disabled,
       defaultBlockNode,
       defaultContentNode,
       defaultEnvironment,
@@ -50,6 +51,7 @@ export class ReactExtension extends PlainExtension<ReactExtensionOptions> {
       new PlaceholderExtension({
         emptyNodeClass,
         placeholder,
+        disabled,
         priority: ExtensionPriority.Low,
       }),
       new ReactComponentExtension({
