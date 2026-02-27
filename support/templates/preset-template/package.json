@@ -31,13 +31,13 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core": "3.0.2"
+    "@remirror/core": "workspace:*"
   },
   "devDependencies": {
-    "@remirror/pm": "3.0.1"
+    "@remirror/pm": "workspace:*"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.1"
+    "@remirror/pm": "workspace:^"
   },
   "publishConfig": {
     "access": "public"

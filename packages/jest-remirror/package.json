@@ -44,18 +44,18 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core": "3.0.2",
-    "@remirror/dom": "3.0.2",
-    "@remirror/pm": "3.0.1",
-    "@remirror/preset-core": "3.0.2",
+    "@remirror/core": "workspace:*",
+    "@remirror/dom": "workspace:*",
+    "@remirror/pm": "workspace:*",
+    "@remirror/preset-core": "workspace:*",
     "@testing-library/dom": "^9.3.0",
     "@types/sanitize-html": "^2.9.0",
-    "jest-prosemirror": "3.0.1",
+    "jest-prosemirror": "workspace:*",
     "sanitize-html": "^2.10.0",
     "tiny-warning": "^1.0.3"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
+    "@remirror/cli": "workspace:*",
     "@types/node": "^16.18.34",
     "jest": "^29.5.0"
   },

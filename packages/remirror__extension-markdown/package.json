@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core": "3.0.2",
-    "@remirror/messages": "3.0.0",
+    "@remirror/core": "workspace:*",
+    "@remirror/messages": "workspace:*",
     "@types/marked": "^4.3.1",
     "@types/turndown": "^5.0.1",
     "marked": "^4.3.0",
@@ -47,13 +47,13 @@
     "turndown-plugin-gfm": "^1.0.2"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
-    "@remirror/extension-react-tables": "3.0.3",
-    "@remirror/pm": "3.0.1"
+    "@remirror/cli": "workspace:*",
+    "@remirror/extension-react-tables": "workspace:*",
+    "@remirror/pm": "workspace:*"
   },
   "peerDependencies": {
-    "@remirror/extension-react-tables": "3.0.3",
-    "@remirror/pm": "^3.0.1"
+    "@remirror/extension-react-tables": "workspace:*",
+    "@remirror/pm": "workspace:^"
   },
   "peerDependenciesMeta": {
     "@remirror/extension-react-tables": {

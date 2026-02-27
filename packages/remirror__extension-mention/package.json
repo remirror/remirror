@@ -34,17 +34,17 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core": "3.0.2",
-    "@remirror/extension-events": "3.0.2",
-    "@remirror/messages": "3.0.0",
+    "@remirror/core": "workspace:*",
+    "@remirror/extension-events": "workspace:*",
+    "@remirror/messages": "workspace:*",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
-    "@remirror/pm": "3.0.1"
+    "@remirror/cli": "workspace:*",
+    "@remirror/pm": "workspace:*"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.1"
+    "@remirror/pm": "workspace:^"
   },
   "publishConfig": {
     "access": "public",

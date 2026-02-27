@@ -37,17 +37,17 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@remirror/core": "3.0.2",
+    "@remirror/core": "workspace:*",
     "@types/string.prototype.matchall": "^4.0.1",
     "escape-string-regexp": "^4.0.0",
     "string.prototype.matchall": "^4.0.8"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
-    "@remirror/pm": "3.0.1"
+    "@remirror/cli": "workspace:*",
+    "@remirror/pm": "workspace:*"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.1"
+    "@remirror/pm": "workspace:^"
   },
   "publishConfig": {
     "access": "public",

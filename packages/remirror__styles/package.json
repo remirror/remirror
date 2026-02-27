@@ -46,13 +46,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core-helpers": "4.0.0"
+    "@remirror/core-helpers": "workspace:*"
   },
   "devDependencies": {
     "@emotion/css": "^11.11.0",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@remirror/cli": "1.1.0",
+    "@remirror/cli": "workspace:*",
     "@types/react": "^18.2.0",
     "react": "^18.3.1",
     "styled-components": "^6.1.12"

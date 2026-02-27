@@ -40,11 +40,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core-helpers": "4.0.0",
-    "@remirror/core-types": "3.0.0"
+    "@remirror/core-helpers": "workspace:*",
+    "@remirror/core-types": "workspace:*"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0"
+    "@remirror/cli": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

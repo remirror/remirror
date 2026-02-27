@@ -34,7 +34,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@remirror/cli": "1.1.0"
+    "@remirror/cli": "workspace:*"
   },
   "publishConfig": {
     "access": "public",
