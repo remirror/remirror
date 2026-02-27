@@ -94,59 +94,6 @@
   "browserslist": [
     "since 2017"
   ],
-  "packageManager": "pnpm@9.15.9",
-  "engines": {
-    "node": ">=v14.21.3"
-  },
-  "manypkg": {
-    "defaultBranch": "HEAD"
-  },
-  "pnpm": {
-    "overrides": {
-      "postcss": ">= 8.0.0",
-      "typescript": "~5.0.4"
-    },
-    "patchedDependencies": {
-      "y-webrtc@10.2.5": "patches/y-webrtc@10.2.5.patch",
-      "svgmoji@3.2.0": "patches/svgmoji@3.2.0.patch",
-      "@lingui/detect-locale@4.2.0": "patches/@lingui__detect-locale@4.2.0.patch"
-    }
-  },
-  "preconstruct": {
-    "packages": [
-      "support/scripts",
-      "support/templates/*"
-    ]
-  },
-  "renovate": {
-    "extends": [
-      "github>ocavue/config-renovate"
-    ],
-    "ignoreDeps": [
-      "cpy",
-      "cpy-cli",
-      "direction",
-      "got",
-      "write-json-file",
-      "load-json-file",
-      "p-limit",
-      "stringify-object",
-      "refractor",
-      "extract-domain",
-      "chalk",
-      "nanoevents",
-      "sort-keys",
-      "@manypkg/get-packages",
-      "react",
-      "react-dom",
-      "@types/react",
-      "@types/react-dom",
-      "@remirror/cli",
-      "testing",
-      "scripts"
-    ],
-    "dependencyDashboard": true
-  },
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@babel/parser": "^7.27.0",
@@ -257,5 +204,58 @@
     "tsx": "^4.6.2",
     "turbo": "^1.10.13",
     "typescript": "~5.0.4"
+  },
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=v14.21.3"
+  },
+  "manypkg": {
+    "defaultBranch": "HEAD"
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": ">= 8.0.0",
+      "typescript": "~5.0.4"
+    },
+    "patchedDependencies": {
+      "y-webrtc@10.2.5": "patches/y-webrtc@10.2.5.patch",
+      "svgmoji@3.2.0": "patches/svgmoji@3.2.0.patch",
+      "@lingui/detect-locale@4.2.0": "patches/@lingui__detect-locale@4.2.0.patch"
+    }
+  },
+  "preconstruct": {
+    "packages": [
+      "support/scripts",
+      "support/templates/*"
+    ]
+  },
+  "renovate": {
+    "extends": [
+      "github>ocavue/config-renovate"
+    ],
+    "ignoreDeps": [
+      "cpy",
+      "cpy-cli",
+      "direction",
+      "got",
+      "write-json-file",
+      "load-json-file",
+      "p-limit",
+      "stringify-object",
+      "refractor",
+      "extract-domain",
+      "chalk",
+      "nanoevents",
+      "sort-keys",
+      "@manypkg/get-packages",
+      "react",
+      "react-dom",
+      "@types/react",
+      "@types/react-dom",
+      "@remirror/cli",
+      "testing",
+      "scripts"
+    ],
+    "dependencyDashboard": true
   }
 }
