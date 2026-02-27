@@ -43,7 +43,7 @@
     "@remirror/extension-mention": "3.0.2",
     "@remirror/extension-mention-atom": "3.0.2",
     "@remirror/extension-react-tables": "3.0.3",
-    "@remirror/extension-yjs": "4.0.2",
+    "@remirror/extension-yjs": "4.0.3",
     "@remirror/i18n": "3.0.0",
     "@remirror/messages": "3.0.0",
     "@remirror/pm": "3.0.1",

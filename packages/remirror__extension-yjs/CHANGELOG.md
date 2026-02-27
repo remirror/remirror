@@ -1,5 +1,13 @@
 # @remirror/extension-yjs
 
+## 4.0.3
+
+> 2026-02-27
+
+### Patch Changes
+
+- da2ae867d: fix: Fix error when using YjsExtension with y-prosemirror version >1.2.4
+
 ## 4.0.2
 
 > 2025-08-02
