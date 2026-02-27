@@ -121,3 +121,48 @@ The workspace specifier is derived from the original version string's prefix:
 - Exact versions (`"3.0.0"`) → `workspace:*` (publishes as exact version)
 - Caret versions (`"^3.0.1"`) → `workspace:^` (publishes as `^x.y.z`)
 - External deps like `@babel/runtime` stay as-is
+
+---
+
+## TODO
+
+### Phase 1: Write migration script
+
+- [ ] Create `migrate-to-workspace.mjs` in the repo root
+- [ ] Collect all workspace package names by running `pnpm ls -r --json --depth 0` and parsing output
+- [ ] Build a `Set<string>` of workspace package names for fast lookup
+- [ ] For each workspace package directory, read `package.json`
+- [ ] Implement `toWorkspaceSpecifier(version)` helper:
+  - `"^x.y.z"` → `"workspace:^"`
+  - `"~x.y.z"` → `"workspace:~"`
+  - `"x.y.z"` (no prefix) → `"workspace:*"`
+  - any other range (e.g. `">=x.y.z"`, `"*"`) → `"workspace:*"`
+- [ ] Iterate over `dependencies`, `devDependencies`, `peerDependencies` in each `package.json`
+  - For each entry where the dep name is in the workspace set → replace version using `toWorkspaceSpecifier`
+  - Skip entries where the dep name is NOT a workspace package
+- [ ] Write modified JSON back with `JSON.stringify(json, null, 2) + '\n'` to match existing formatting
+- [ ] Handle the root `package.json` the same way (it follows the same prefix-preserving logic)
+
+### Phase 2: Run migration and regenerate lockfile
+
+- [ ] Run `node migrate-to-workspace.mjs`
+- [ ] Spot-check 3-5 `package.json` files to confirm correct replacement:
+  - `packages/remirror__core/package.json` — has exact versions in deps, exact in devDeps, caret in peerDeps
+  - `packages/remirror/package.json` — has 50+ internal deps, all exact
+  - `packages/remirror__react/package.json` — has exact deps and caret peerDeps
+  - Root `package.json` — has a few internal deps with mixed prefixes
+  - `support/scripts/package.json` — support workspace package
+- [ ] Verify no external deps were accidentally changed (grep for `workspace:` and confirm all matches are workspace package names)
+- [ ] Run `pnpm install` to regenerate `pnpm-lock.yaml`
+
+### Phase 3: Verify builds and tooling
+
+- [ ] Run `pnpm build` — confirm the full build succeeds
+- [ ] Run `pnpm lint:repo` (`manypkg check`) — confirm monorepo validation passes
+- [ ] Run `pnpm typecheck` — confirm TypeScript still resolves all types
+- [ ] Run `pnpm test` — confirm tests pass
+
+### Phase 4: Clean up and commit
+
+- [ ] Delete `migrate-to-workspace.mjs`
+- [ ] Commit all changes

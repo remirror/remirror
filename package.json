@@ -86,7 +86,7 @@
     "preversion:changeset": "tsx support/scripts/src/changeset-forced-update",
     "version:changeset": "changeset version",
     "postversion:changeset": "tsx support/scripts/src/changeset-forced-update --clean",
-    "version:ci": "run-s version:changeset version:date fix:repo fix:prettier version:lockfile",
+    "version:ci": "run-s version:changeset version:date fix:repo fix:prettier",
     "version:date": "tsx support/scripts/src/changelog-dates",
     "watch": "remirror-cli watch",
     "watch:skip-build": "pnpm watch --skip-build"
