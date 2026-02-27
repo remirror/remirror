@@ -23,9 +23,12 @@ Write a Node.js script (`migrate-to-workspace.mjs`) that:
 
 1. Reads all workspace package names (via `pnpm ls -r --json` or by scanning `packages/*/package.json`)
 2. For each workspace `package.json`, in `dependencies`, `devDependencies`, and `peerDependencies`:
-   - If a dep name matches a workspace package → replace the version with `workspace:^`
-3. For the root `package.json` (private, never published) → use `workspace:*` instead
-4. Writes modified JSON back preserving formatting
+   - If a dep name matches a workspace package → replace the version, preserving the original prefix:
+     - `"^1.2.3"` → `"workspace:^"`
+     - `"~1.2.3"` → `"workspace:~"`
+     - `"1.2.3"` (exact, no prefix) → `"workspace:*"`
+     - `">=1.2.3"` or other ranges → `"workspace:*"` (fallback)
+3. Writes modified JSON back preserving formatting
 
 ### Step 2: Run the migration
 
@@ -52,12 +55,13 @@ pnpm install
 
 ## Version specifier choice
 
-| Dep type | Specifier | At publish time becomes | Rationale |
-|---|---|---|---|
-| `dependencies` | `workspace:^` | `^3.0.2` | Standard for regular deps; allows compatible versions |
-| `devDependencies` | `workspace:^` | `^3.0.2` | Same as deps; devDeps aren't published anyway |
-| `peerDependencies` | `workspace:^` | `^3.0.2` | Matches the existing `^3.0.1` pattern already used |
-| Root `dependencies` | `workspace:*` | `3.0.2` | Root is private, never published; `*` is simplest |
+The workspace specifier is derived from the original version string's prefix:
+
+| Original version | Workspace specifier | At publish time becomes |
+|---|---|---|
+| `"3.0.0"` (exact) | `workspace:*` | `3.0.0` |
+| `"^3.0.0"` (caret) | `workspace:^` | `^3.0.0` |
+| `"~3.0.0"` (tilde) | `workspace:~` | `~3.0.0` |
 
 ## What does NOT need to change
 
@@ -84,12 +88,15 @@ pnpm install
   "@babel/runtime": "^7.27.0",
   "@remirror/core-constants": "3.0.0",
   "@remirror/core-helpers": "4.0.0",
-  "@remirror/core-types": "3.0.0",
-  "@remirror/core-utils": "3.0.0",
   "@remirror/icons": "3.0.0",
-  "@remirror/messages": "3.0.0",
-  "nanoevents": "^5.1.13",
-  "tiny-warning": "^1.0.3"
+  "nanoevents": "^5.1.13"
+},
+"devDependencies": {
+  "@remirror/cli": "1.1.0",
+  "@remirror/pm": "3.0.1"
+},
+"peerDependencies": {
+  "@remirror/pm": "^3.0.1"
 }
 ```
 
@@ -97,15 +104,20 @@ pnpm install
 ```json
 "dependencies": {
   "@babel/runtime": "^7.27.0",
-  "@remirror/core-constants": "workspace:^",
-  "@remirror/core-helpers": "workspace:^",
-  "@remirror/core-types": "workspace:^",
-  "@remirror/core-utils": "workspace:^",
-  "@remirror/icons": "workspace:^",
-  "@remirror/messages": "workspace:^",
-  "nanoevents": "^5.1.13",
-  "tiny-warning": "^1.0.3"
+  "@remirror/core-constants": "workspace:*",
+  "@remirror/core-helpers": "workspace:*",
+  "@remirror/icons": "workspace:*",
+  "nanoevents": "^5.1.13"
+},
+"devDependencies": {
+  "@remirror/cli": "workspace:*",
+  "@remirror/pm": "workspace:*"
+},
+"peerDependencies": {
+  "@remirror/pm": "workspace:^"
 }
 ```
 
-Only workspace packages are changed; external deps like `@babel/runtime` stay as-is.
+- Exact versions (`"3.0.0"`) → `workspace:*` (publishes as exact version)
+- Caret versions (`"^3.0.1"`) → `workspace:^` (publishes as `^x.y.z`)
+- External deps like `@babel/runtime` stay as-is
