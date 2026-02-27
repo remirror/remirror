@@ -37,4 +37,4 @@ website/extension-examples/
 *.api.md
 .turboe
 .tsup
-rollup.config.js
+rollup.config.js # The eslint v8 we're using doesn't support the syntax used in rollup.config.js. We can remove this once we upgrade to eslint v10.
