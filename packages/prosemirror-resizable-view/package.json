@@ -39,13 +39,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core-helpers": "4.0.0",
-    "@remirror/core-utils": "3.0.0",
+    "@remirror/core-helpers": "workspace:*",
+    "@remirror/core-utils": "workspace:*",
     "prosemirror-model": "^1.25.1",
     "prosemirror-view": "^1.39.2"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0"
+    "@remirror/cli": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

@@ -34,18 +34,18 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/extension-placeholder": "3.0.2",
-    "@remirror/extension-positioner": "3.0.2",
-    "@remirror/extension-react-component": "3.0.3",
-    "@remirror/preset-react": "3.0.3",
-    "@remirror/react-components": "3.0.3",
-    "@remirror/react-core": "3.0.3",
-    "@remirror/react-hooks": "3.0.3",
-    "@remirror/react-renderer": "3.0.2",
-    "@remirror/react-utils": "3.0.0"
+    "@remirror/extension-placeholder": "workspace:*",
+    "@remirror/extension-positioner": "workspace:*",
+    "@remirror/extension-react-component": "workspace:*",
+    "@remirror/preset-react": "workspace:*",
+    "@remirror/react-components": "workspace:*",
+    "@remirror/react-core": "workspace:*",
+    "@remirror/react-hooks": "workspace:*",
+    "@remirror/react-renderer": "workspace:*",
+    "@remirror/react-utils": "workspace:*"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
+    "@remirror/cli": "workspace:*",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react": "^18.3.1",

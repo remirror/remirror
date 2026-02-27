@@ -33,11 +33,11 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@remirror/core-constants": "3.0.0",
+    "@remirror/core-constants": "workspace:*",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
+    "@remirror/cli": "workspace:*",
     "prosemirror-model": "^1.25.1",
     "prosemirror-state": "^1.4.3",
     "prosemirror-view": "^1.39.2"

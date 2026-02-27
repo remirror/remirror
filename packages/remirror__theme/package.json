@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.27.0",
     "@linaria/core": "4.2.10",
-    "@remirror/core-types": "3.0.0",
+    "@remirror/core-types": "workspace:*",
     "color2k": "^2.0.2",
     "csstype": "^3.1.2"
   },
@@ -45,7 +45,7 @@
     "@babel/core": "^7.26.10",
     "@babel/plugin-transform-typescript": "^7.27.0",
     "@babel/preset-typescript": "^7.27.0",
-    "@remirror/cli": "1.1.0",
+    "@remirror/cli": "workspace:*",
     "rollup": "^3.23.0"
   },
   "publishConfig": {

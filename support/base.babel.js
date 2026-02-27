@@ -17,7 +17,7 @@ const plugins = [
   'babel-plugin-macros',
   [
     '@babel/plugin-transform-runtime',
-    { version: require('../package.json').dependencies['@babel/runtime'] },
+    { version: require('../package.json').devDependencies['@babel/runtime'] },
     'deduplicate',
   ],
   ['@babel/plugin-transform-template-literals', {}, 'deduplicate'],

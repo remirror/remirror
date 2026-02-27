@@ -40,21 +40,21 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core": "3.0.2",
-    "@remirror/extension-doc": "3.0.2",
-    "@remirror/extension-events": "3.0.2",
-    "@remirror/extension-gap-cursor": "3.0.2",
-    "@remirror/extension-history": "3.0.2",
-    "@remirror/extension-paragraph": "3.0.2",
-    "@remirror/extension-positioner": "3.0.2",
-    "@remirror/extension-text": "3.0.2"
+    "@remirror/core": "workspace:*",
+    "@remirror/extension-doc": "workspace:*",
+    "@remirror/extension-events": "workspace:*",
+    "@remirror/extension-gap-cursor": "workspace:*",
+    "@remirror/extension-history": "workspace:*",
+    "@remirror/extension-paragraph": "workspace:*",
+    "@remirror/extension-positioner": "workspace:*",
+    "@remirror/extension-text": "workspace:*"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
-    "@remirror/pm": "3.0.1"
+    "@remirror/cli": "workspace:*",
+    "@remirror/pm": "workspace:*"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.1"
+    "@remirror/pm": "workspace:^"
   },
   "publishConfig": {
     "access": "public",

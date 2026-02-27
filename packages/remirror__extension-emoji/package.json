@@ -45,9 +45,9 @@
   "dependencies": {
     "@babel/runtime": "^7.27.0",
     "@ocavue/svgmoji-cjs": "^0.1.1",
-    "@remirror/core": "3.0.2",
-    "@remirror/messages": "3.0.0",
-    "@remirror/theme": "3.0.0",
+    "@remirror/core": "workspace:*",
+    "@remirror/messages": "workspace:*",
+    "@remirror/theme": "workspace:*",
     "emojibase": "^6.1.0",
     "emojibase-data": "^6.2.0",
     "emojibase-regex": "^6.0.1",
@@ -55,11 +55,11 @@
     "svgmoji": "^3.2.0"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
-    "@remirror/pm": "3.0.1"
+    "@remirror/cli": "workspace:*",
+    "@remirror/pm": "workspace:*"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.1"
+    "@remirror/pm": "workspace:^"
   },
   "publishConfig": {
     "access": "public",

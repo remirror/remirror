@@ -130,8 +130,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@remirror/core-constants": "3.0.0",
-    "@remirror/core-helpers": "4.0.0",
+    "@remirror/core-constants": "workspace:*",
+    "@remirror/core-helpers": "workspace:*",
     "prosemirror-collab": "^1.3.1",
     "prosemirror-commands": "^1.7.1",
     "prosemirror-dropcursor": "^1.8.2",
@@ -140,17 +140,17 @@
     "prosemirror-inputrules": "^1.5.0",
     "prosemirror-keymap": "^1.2.2",
     "prosemirror-model": "^1.25.1",
-    "prosemirror-paste-rules": "3.0.0",
+    "prosemirror-paste-rules": "workspace:*",
     "prosemirror-schema-list": "^1.5.1",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-suggest": "3.0.0",
+    "prosemirror-suggest": "workspace:*",
     "prosemirror-tables": "^1.7.1",
-    "prosemirror-trailing-node": "3.0.0",
+    "prosemirror-trailing-node": "workspace:*",
     "prosemirror-transform": "^1.10.4",
     "prosemirror-view": "^1.39.2"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0"
+    "@remirror/cli": "workspace:*"
   },
   "publishConfig": {
     "access": "public",

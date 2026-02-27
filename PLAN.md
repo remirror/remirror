@@ -75,7 +75,7 @@ The workspace specifier is derived from the original version string's prefix:
 
 | Risk | Mitigation |
 |---|---|
-| `manypkg check` rejects `workspace:` values | `@manypkg/cli@0.20.0` supports workspace protocol |
+| `manypkg check` rejects `workspace:` values | Updated `@manypkg/cli` from `0.20.0` to `^0.21.3` (workspace:* support added in 0.21.3) |
 | Changesets doesn't update `workspace:` deps correctly | `@changesets/cli@^2.26.1` has full support |
 | PR release script breaks | `mutateDependencies()` overwrites by name — already works |
 | External tools choke on `workspace:` syntax | Only pnpm reads these values; all other tools read from `node_modules` |
@@ -128,32 +128,32 @@ The workspace specifier is derived from the original version string's prefix:
 
 ### Phase 1: Write migration script
 
-- [ ] Create `migrate-to-workspace.mjs` in the repo root
-- [ ] Collect all workspace package names by running `pnpm ls -r --json --depth 0` and parsing output
-- [ ] Build a `Set<string>` of workspace package names for fast lookup
-- [ ] For each workspace package directory, read `package.json`
-- [ ] Implement `toWorkspaceSpecifier(version)` helper:
+- [x] Create `migrate-to-workspace.mjs` in the repo root
+- [x] Collect all workspace package names by running `pnpm ls -r --json --depth 0` and parsing output
+- [x] Build a `Set<string>` of workspace package names for fast lookup
+- [x] For each workspace package directory, read `package.json`
+- [x] Implement `toWorkspaceSpecifier(version)` helper:
   - `"^x.y.z"` → `"workspace:^"`
   - `"~x.y.z"` → `"workspace:~"`
   - `"x.y.z"` (no prefix) → `"workspace:*"`
   - any other range (e.g. `">=x.y.z"`, `"*"`) → `"workspace:*"`
-- [ ] Iterate over `dependencies`, `devDependencies`, `peerDependencies` in each `package.json`
+- [x] Iterate over `dependencies`, `devDependencies`, `peerDependencies` in each `package.json`
   - For each entry where the dep name is in the workspace set → replace version using `toWorkspaceSpecifier`
   - Skip entries where the dep name is NOT a workspace package
-- [ ] Write modified JSON back with `JSON.stringify(json, null, 2) + '\n'` to match existing formatting
-- [ ] Handle the root `package.json` the same way (it follows the same prefix-preserving logic)
+- [x] Write modified JSON back with `JSON.stringify(json, null, 2) + '\n'` to match existing formatting
+- [x] Handle the root `package.json` the same way (it follows the same prefix-preserving logic)
 
 ### Phase 2: Run migration and regenerate lockfile
 
-- [ ] Run `node migrate-to-workspace.mjs`
-- [ ] Spot-check 3-5 `package.json` files to confirm correct replacement:
+- [x] Run `node migrate-to-workspace.mjs`
+- [x] Spot-check 3-5 `package.json` files to confirm correct replacement:
   - `packages/remirror__core/package.json` — has exact versions in deps, exact in devDeps, caret in peerDeps
   - `packages/remirror/package.json` — has 50+ internal deps, all exact
   - `packages/remirror__react/package.json` — has exact deps and caret peerDeps
   - Root `package.json` — has a few internal deps with mixed prefixes
   - `support/scripts/package.json` — support workspace package
-- [ ] Verify no external deps were accidentally changed (grep for `workspace:` and confirm all matches are workspace package names)
-- [ ] Run `pnpm install` to regenerate `pnpm-lock.yaml`
+- [x] Verify no external deps were accidentally changed (grep for `workspace:` and confirm all matches are workspace package names)
+- [x] Run `pnpm install` to regenerate `pnpm-lock.yaml`
 
 ### Phase 3: Verify builds and tooling
 

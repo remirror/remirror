@@ -34,15 +34,15 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@remirror/core-constants": "3.0.0",
-    "@remirror/types": "2.0.0"
+    "@remirror/core-constants": "workspace:*",
+    "@remirror/types": "workspace:*"
   },
   "devDependencies": {
-    "@remirror/cli": "1.1.0",
-    "@remirror/pm": "3.0.1"
+    "@remirror/cli": "workspace:*",
+    "@remirror/pm": "workspace:*"
   },
   "peerDependencies": {
-    "@remirror/pm": "^3.0.1"
+    "@remirror/pm": "workspace:^"
   },
   "publishConfig": {
     "access": "public",
