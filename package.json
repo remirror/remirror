@@ -16,8 +16,8 @@
     "build:custom": "pnpm recursive run build:custom",
     "build:dev": "preconstruct fix && preconstruct dev",
     "build:docs": "run-s docs:prod docs:redirects",
-    "build:packages": "pnpm typecheck && turbo run build --filter='./packages/*' --filter='!./packages/storybook-react'",
-    "build:packages:force": "pnpm typecheck && turbo run build --force --filter='./packages/*' --filter='!./packages/storybook-react'",
+    "build:packages": "pnpm typecheck && turbo run build --concurrency 1 --filter='./packages/*' --filter='!./packages/storybook-react'",
+    "build:packages:force": "pnpm typecheck && turbo run build --force --concurrency 1 --filter='./packages/*' --filter='!./packages/storybook-react'",
     "changeset": "changeset",
     "checks": "run-s lint typecheck test",
     "checks:fix": "run-s -c fix typecheck test build size build:dev",
@@ -207,7 +207,7 @@
     "turbo": "^1.10.13",
     "typescript": "~5.0.4"
   },
-  "packageManager": "pnpm@8.15.9",
+  "packageManager": "pnpm@9.15.9",
   "engines": {
     "node": ">=v14.21.3"
   },

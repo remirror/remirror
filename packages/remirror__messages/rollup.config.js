@@ -1,6 +1,6 @@
 import { defineConfig } from 'rollup';
 
-import packageJson from './package.json' assert { type: 'json' };
+import packageJson from './package.json' with { type: 'json' };
 
 const dependencies = Object.keys({
   ...packageJson.dependencies,
