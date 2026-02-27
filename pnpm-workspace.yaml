@@ -5,3 +5,5 @@ packages:
   - 'support/scripts'
   - 'support/templates/*'
   - 'website'
+
+ignoreWorkspaceRootCheck: true
