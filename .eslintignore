@@ -37,3 +37,4 @@ website/extension-examples/
 *.api.md
 .turboe
 .tsup
+rollup.config.js
