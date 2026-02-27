@@ -88,7 +88,6 @@
     "postversion:changeset": "tsx support/scripts/src/changeset-forced-update --clean",
     "version:ci": "run-s version:changeset version:date fix:repo fix:prettier version:lockfile",
     "version:date": "tsx support/scripts/src/changelog-dates",
-    "version:lockfile": "pnpm install --lockfile-only",
     "watch": "remirror-cli watch",
     "watch:skip-build": "pnpm watch --skip-build"
   },
