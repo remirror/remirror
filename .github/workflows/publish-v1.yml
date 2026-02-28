@@ -40,7 +40,7 @@ jobs:
 
       - name: parse changelog for @remirror/react
         id: changelog_remirror_react
-        uses: ocavue/changelog-parser-action@v1
+        uses: ocavue/changelog-parser-action@0260f7a77c97ed295575683c8036b81724fd34f5 # v1.2.0
         with:
           filePath: 'packages/remirror__react/CHANGELOG.md'
 
@@ -55,7 +55,7 @@ jobs:
 
       - name: parse changelog for @remirror/pm
         id: changelog_remirror_pm
-        uses: ocavue/changelog-parser-action@v1
+        uses: ocavue/changelog-parser-action@0260f7a77c97ed295575683c8036b81724fd34f5 # v1.2.0
         with:
           filePath: 'packages/remirror__pm/CHANGELOG.md'
 
@@ -71,7 +71,7 @@ jobs:
       # make sure that `remirror` is the last one so that it can at the top of the release list
       - name: parse changelog for remirror
         id: changelog_remirror
-        uses: ocavue/changelog-parser-action@v1
+        uses: ocavue/changelog-parser-action@0260f7a77c97ed295575683c8036b81724fd34f5 # v1.2.0
         with:
           filePath: 'packages/remirror/CHANGELOG.md'
 

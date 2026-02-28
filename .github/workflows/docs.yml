@@ -27,7 +27,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: rlespinasse/github-slug-action@v4
+      - uses: rlespinasse/github-slug-action@797d68864753cbceedc271349d402da4590e6302 # v4.5.0
 
       - name: 'print current git reference after'
         run: |

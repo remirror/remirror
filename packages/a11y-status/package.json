@@ -32,7 +32,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@types/throttle-debounce": "^2.1.0",
     "throttle-debounce": "^3.0.1"
   },

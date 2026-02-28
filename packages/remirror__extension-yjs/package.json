@@ -41,20 +41,20 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core": "workspace:*",
     "@remirror/messages": "workspace:*",
-    "prosemirror-model": "^1.25.1",
-    "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.39.2",
+    "prosemirror-model": "^1.25.4",
+    "prosemirror-state": "^1.4.4",
+    "prosemirror-view": "^1.41.6",
     "y-prosemirror": "^1.3.7",
-    "y-protocols": "^1.0.5"
+    "y-protocols": "^1.0.7"
   },
   "devDependencies": {
     "@remirror/cli": "workspace:*",
     "@remirror/pm": "workspace:*",
-    "y-webrtc": "^10.2.5",
-    "yjs": "^13.6.1"
+    "y-webrtc": "^10.3.0",
+    "yjs": "^13.6.29"
   },
   "peerDependencies": {
     "@remirror/pm": "workspace:^",

@@ -39,7 +39,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core-constants": "workspace:*",
     "@remirror/core-helpers": "workspace:*",
     "@remirror/core-types": "workspace:*"

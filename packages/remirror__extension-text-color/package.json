@@ -37,11 +37,11 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core": "workspace:*",
     "@remirror/messages": "workspace:*",
     "@remirror/theme": "workspace:*",
-    "color2k": "^2.0.2"
+    "color2k": "^2.0.3"
   },
   "devDependencies": {
     "@remirror/cli": "workspace:*",

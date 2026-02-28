@@ -117,7 +117,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core": "workspace:*",
     "@remirror/core-constants": "workspace:*",
     "@remirror/core-helpers": "workspace:*",
@@ -130,7 +130,7 @@
     "@remirror/react-core": "workspace:*",
     "@remirror/react-utils": "workspace:*",
     "multishift": "workspace:*",
-    "use-isomorphic-layout-effect": "^1.1.2",
+    "use-isomorphic-layout-effect": "^1.2.1",
     "use-previous": "^1.2.0"
   },
   "devDependencies": {

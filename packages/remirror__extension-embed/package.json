@@ -38,10 +38,10 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core": "workspace:*",
     "@remirror/messages": "workspace:*",
-    "@types/querystringify": "^2.0.0",
+    "@types/querystringify": "^2.0.2",
     "prosemirror-resizable-view": "workspace:^",
     "querystringify": "^2.2.0"
   },

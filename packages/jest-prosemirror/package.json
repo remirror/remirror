@@ -49,25 +49,25 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core-constants": "workspace:*",
     "@remirror/core-helpers": "workspace:*",
     "@remirror/core-types": "workspace:*",
     "@remirror/core-utils": "workspace:*",
     "@remirror/pm": "workspace:*",
-    "@testing-library/dom": "^9.3.0",
+    "@testing-library/dom": "^9.3.4",
     "@types/stringify-object": "^3.3.1",
     "chalk": "^4.1.0",
-    "jest-matcher-utils": "^29.5.0",
+    "jest-matcher-utils": "^29.7.0",
     "prosemirror-schema-basic": "^1.2.4",
-    "prosemirror-tables": "^1.7.1",
+    "prosemirror-tables": "^1.8.5",
     "prosemirror-test-builder": "^1.1.1",
     "stringify-object": "^3.3.0",
     "test-keyboard": "workspace:*"
   },
   "devDependencies": {
     "@remirror/cli": "workspace:*",
-    "jest": "^29.5.0"
+    "jest": "^29.7.0"
   },
   "peerDependencies": {
     "jest": ">= 24.9.0"

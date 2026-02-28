@@ -34,11 +34,11 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.13.2",
-    "@mui/system": "^5.13.2",
+    "@babel/runtime": "^7.28.6",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^5.18.0",
+    "@mui/system": "^5.18.0",
     "@remirror/core": "workspace:*",
     "@remirror/extension-blockquote": "workspace:*",
     "@remirror/extension-bold": "workspace:*",
