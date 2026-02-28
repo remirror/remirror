@@ -37,7 +37,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core": "workspace:*",
     "@remirror/extension-events": "workspace:*",
     "@remirror/messages": "workspace:*",
@@ -46,7 +46,7 @@
   "devDependencies": {
     "@remirror/cli": "workspace:*",
     "@remirror/pm": "workspace:*",
-    "@types/extract-domain": "2.3.1",
+    "@types/extract-domain": "2.3.3",
     "linkifyjs": "^3.0.5"
   },
   "peerDependencies": {

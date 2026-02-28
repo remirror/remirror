@@ -38,7 +38,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core": "workspace:*",
     "@remirror/extension-bidi": "workspace:*",
     "@remirror/extension-blockquote": "workspace:*",

@@ -45,17 +45,17 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core-helpers": "workspace:*"
   },
   "devDependencies": {
-    "@emotion/css": "^11.11.0",
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/css": "^11.13.5",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@remirror/cli": "workspace:*",
     "@types/react": "^18.2.0",
     "react": "^18.3.1",
-    "styled-components": "^6.1.12"
+    "styled-components": "^6.3.11"
   },
   "peerDependencies": {
     "@emotion/css": "^11.11.0",

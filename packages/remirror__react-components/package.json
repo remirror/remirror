@@ -40,8 +40,8 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
-    "@floating-ui/react": "^0.24.3",
+    "@babel/runtime": "^7.28.6",
+    "@floating-ui/react": "^0.27.18",
     "@remirror/core": "workspace:*",
     "@remirror/extension-positioner": "workspace:*",
     "@remirror/icons": "workspace:*",
@@ -51,9 +51,9 @@
     "@remirror/react-utils": "workspace:*",
     "@remirror/theme": "workspace:*",
     "@seznam/compose-react-refs": "^1.0.6",
-    "@types/react-color": "^3.0.6",
+    "@types/react-color": "^3.0.13",
     "create-context-state": "workspace:^",
-    "match-sorter": "^6.3.1",
+    "match-sorter": "^6.3.4",
     "multishift": "workspace:*",
     "react-color": "^2.19.3"
   },

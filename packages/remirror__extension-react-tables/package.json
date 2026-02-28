@@ -42,9 +42,9 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
-    "@emotion/css": "^11.11.0",
-    "@linaria/core": "4.2.10",
+    "@babel/runtime": "^7.28.6",
+    "@emotion/css": "^11.13.5",
+    "@linaria/core": "4.5.4",
     "@remirror/core": "workspace:*",
     "@remirror/core-utils": "workspace:*",
     "@remirror/extension-positioner": "workspace:*",
@@ -63,8 +63,8 @@
     "@types/react-dom": "^18.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "y-webrtc": "^10.2.5",
-    "yjs": "^13.6.1"
+    "y-webrtc": "^10.3.0",
+    "yjs": "^13.6.29"
   },
   "peerDependencies": {
     "@remirror/pm": "workspace:^",

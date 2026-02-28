@@ -39,17 +39,17 @@
     "generate": "tsx scripts/messages-to-json.ts"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core-helpers": "workspace:*",
     "@remirror/core-types": "workspace:*"
   },
   "devDependencies": {
-    "@babel/cli": "^7.27.0",
-    "@babel/preset-typescript": "^7.27.0",
+    "@babel/cli": "^7.28.6",
+    "@babel/preset-typescript": "^7.28.5",
     "@remirror/cli": "workspace:*",
     "babel-plugin-macros": "^3.1.0",
-    "rollup": "^3.23.0",
-    "tsx": "^4.6.2"
+    "rollup": "^3.30.0",
+    "tsx": "^4.21.0"
   },
   "publishConfig": {
     "access": "public",

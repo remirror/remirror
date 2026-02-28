@@ -61,7 +61,7 @@
     "build": "remirror-cli build"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
+    "@babel/runtime": "^7.28.6",
     "@remirror/core-helpers": "workspace:*",
     "@remirror/extension-react-tables": "workspace:*",
     "@remirror/i18n": "workspace:*",
@@ -70,14 +70,14 @@
     "@remirror/react-ui": "workspace:*",
     "@remirror/styles": "workspace:*",
     "@svgmoji/noto": "^3.2.0",
-    "@types/refractor": "^3.0.2",
+    "@types/refractor": "^3.4.1",
     "create-context-state": "workspace:^",
     "refractor": "^3.6.0",
     "remirror": "workspace:*",
     "svgmoji": "^3.2.0"
   },
   "devDependencies": {
-    "@emotion/css": "^11.11.0",
+    "@emotion/css": "^11.13.5",
     "@remirror/cli": "workspace:*",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",

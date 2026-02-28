@@ -38,9 +38,9 @@
   },
   "devDependencies": {
     "@remirror/cli": "workspace:*",
-    "prosemirror-model": "^1.25.1",
-    "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.39.2"
+    "prosemirror-model": "^1.25.4",
+    "prosemirror-state": "^1.4.4",
+    "prosemirror-view": "^1.41.6"
   },
   "peerDependencies": {
     "prosemirror-model": "^1.22.1",

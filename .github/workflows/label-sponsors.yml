@@ -10,7 +10,7 @@ jobs:
   label_sponsors:
     runs-on: ubuntu-latest
     steps:
-      - uses: JasonEtco/is-sponsor-label-action@v1
+      - uses: JasonEtco/is-sponsor-label-action@39d88e461a53ecb1b3c0a13673e6252f9976f2f5 # v1.2.0
         with:
           label: 'status: sponsored :sparkling_heart:'
         env:
