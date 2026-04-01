@@ -561,7 +561,7 @@ function nodeRuleTransformer(props: TransformerProps<NodePasteRule>) {
   const { getAttributes, nodeType, getContent } = rule;
   const attributes = isFunction(getAttributes) ? getAttributes(match, false) : getAttributes;
   const content = (getContent ? getContent(match) : textNode) || undefined;
-  nodes.push(nodeType.createChecked(attributes, content));
+  nodes.push(nodeType.createChecked(attributes, content, textNode.marks));
 }
 
 /**

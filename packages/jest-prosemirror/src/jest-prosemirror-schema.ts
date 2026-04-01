@@ -49,6 +49,14 @@ const atomInline: NodeSpec = {
   toDOM: () => ['span', { 'data-node-type': 'atomInline' }],
 };
 
+const inlineTextBlock: NodeSpec = {
+  inline: true,
+  group: 'inline',
+  content: 'text*',
+  parseDOM: [{ tag: 'code[data-node-type="inlineTextBlock"]' }],
+  toDOM: () => ['code', { 'data-node-type': 'inlineTextBlock' }, 0],
+};
+
 const atomBlock: NodeSpec = {
   inline: false,
   group: ExtensionTag.Block,
@@ -117,6 +125,7 @@ export const schema = new Schema({
     atomInline,
     atomBlock,
     atomContainer,
+    inlineTextBlock,
     containerWithRestrictedContent,
     table,
     table_row,
