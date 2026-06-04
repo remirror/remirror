@@ -12,6 +12,8 @@ import {
   findChildren,
   getChangedNodes,
   isElementDomNode,
+  keyBinding,
+  KeyBindingProps,
   NodeSpecOverride,
   NodeViewMethod,
   ProsemirrorNode,
@@ -234,6 +236,34 @@ export class TableExtension extends BaseTableExtension {
   @command()
   addTableRowAfter(): CommandFunction {
     return convertCommand(addRowAfter);
+  }
+
+  @keyBinding<TableExtension>({ shortcut: 'Backspace', priority: ExtensionPriority.High })
+  deleteTableBeforeOnBackspace(props: KeyBindingProps): boolean {
+    const { dispatch, tr } = props;
+    const { selection } = tr;
+
+    if (!(selection instanceof TextSelection) || !selection.empty || !selection.$cursor) {
+      return false;
+    }
+
+    const { $cursor } = selection;
+
+    if ($cursor.parentOffset !== 0) {
+      return false;
+    }
+
+    const $before = tr.doc.resolve($cursor.before());
+    const nodeBefore = $before.nodeBefore;
+
+    if (!nodeBefore || nodeBefore.type !== this.type) {
+      return false;
+    }
+
+    const tablePos = $before.pos - nodeBefore.nodeSize;
+    dispatch?.(tr.delete(tablePos, tablePos + nodeBefore.nodeSize).scrollIntoView());
+
+    return true;
   }
 
   createPlugin(): CreateExtensionPlugin {
