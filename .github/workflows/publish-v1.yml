@@ -23,7 +23,7 @@ jobs:
       id-token: write
     steps:
       - name: checkout code repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
           ref: 'v1'
@@ -40,7 +40,7 @@ jobs:
 
       - name: parse changelog for @remirror/react
         id: changelog_remirror_react
-        uses: ocavue/changelog-parser-action@v1
+        uses: ocavue/changelog-parser-action@0260f7a77c97ed295575683c8036b81724fd34f5 # v1.2.0
         with:
           filePath: 'packages/remirror__react/CHANGELOG.md'
 
@@ -55,7 +55,7 @@ jobs:
 
       - name: parse changelog for @remirror/pm
         id: changelog_remirror_pm
-        uses: ocavue/changelog-parser-action@v1
+        uses: ocavue/changelog-parser-action@0260f7a77c97ed295575683c8036b81724fd34f5 # v1.2.0
         with:
           filePath: 'packages/remirror__pm/CHANGELOG.md'
 
@@ -71,7 +71,7 @@ jobs:
       # make sure that `remirror` is the last one so that it can at the top of the release list
       - name: parse changelog for remirror
         id: changelog_remirror
-        uses: ocavue/changelog-parser-action@v1
+        uses: ocavue/changelog-parser-action@0260f7a77c97ed295575683c8036b81724fd34f5 # v1.2.0
         with:
           filePath: 'packages/remirror/CHANGELOG.md'
 
