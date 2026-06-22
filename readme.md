@@ -6,11 +6,20 @@
   A React <em>toolkit</em> for building <em>cross-platform</em> text editors, based on <a href="https://github.com/ProseMirror/prosemirror">ProseMirror</a>.
 </p>
 
+<!-- prettier-ignore -->
+> [!IMPORTANT]
+> **remirror is in maintenance mode and is not recommended for new projects.**
+>
+> It stays stable and we will keep fixing critical bugs, but active development
+> has moved on. For new projects, please use [ProseKit](https://prosekit.dev)
+> instead: a framework-agnostic editor toolkit built on the same ProseMirror
+> foundation. See the [migration guide](https://prosekit.dev/guides/migration/)
+> to move an existing editor over.
+
 <br />
 
 <p align="center">
   <a href="#motivation"><strong>Motivation</strong></a> ·
-  <a href="#status"><strong>Status</strong></a> ·
   <a href="https://remirror.io/docs"><strong>Documentation</strong></a> ·
   <a href="https://remirror.vercel.app"><strong>Storybook</strong></a> ·
   <a href="https://remirror.io/docs/contributing"><strong>Contributing</strong></a>
