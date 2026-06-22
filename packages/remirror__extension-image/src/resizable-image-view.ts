@@ -2,13 +2,23 @@ import { ResizableNodeView, ResizableRatioType } from 'prosemirror-resizable-vie
 import { setStyle } from '@remirror/core';
 import { EditorView, NodeView, ProsemirrorNode } from '@remirror/pm';
 
+interface ResizableImageViewOptions {
+  minWidth?: number;
+  maxWidth?: number;
+}
+
 /**
  * ResizableImageView is a NodeView for image. You can resize the image by
  * dragging the handle over the image.
  */
 export class ResizableImageView extends ResizableNodeView implements NodeView {
-  constructor(node: ProsemirrorNode, view: EditorView, getPos: () => number) {
-    super({ node, view, getPos, aspectRatio: ResizableRatioType.Fixed });
+  constructor(
+    node: ProsemirrorNode,
+    view: EditorView,
+    getPos: () => number,
+    options: ResizableImageViewOptions = {},
+  ) {
+    super({ node, view, getPos, aspectRatio: ResizableRatioType.Fixed, ...options });
   }
 
   createElement({ node }: { node: ProsemirrorNode }): HTMLImageElement {
@@ -18,7 +28,7 @@ export class ResizableImageView extends ResizableNodeView implements NodeView {
 
     setStyle(inner, {
       width: '100%',
-      minWidth: '50px',
+      minWidth: `${this.minWidth}px`,
       objectFit: 'contain', // maintain image's aspect ratio
     });
 

@@ -5,6 +5,7 @@ title: 'ImageExtension'
 
 import Basic from '../../website/extension-examples/extension-image/basic';
 import Resizable from '../../website/extension-examples/extension-image/resizable';
+import ResizableWithMinMaxWidth from '../../website/extension-examples/extension-image/resizable-with-min-max-width';
 import WithFigcaption from '../../website/extension-examples/extension-image/with-figcaption';
 
 # `ImageExtension`
@@ -36,6 +37,10 @@ Here is a basic image example. You can see a grean image below.
 You can also make an image resizable by using `enableResizing` option.
 
 <Resizable />
+
+You can constrain the resize range using `minWidth` and `maxWidth` options.
+
+<ResizableWithMinMaxWidth />
 
 You can further customize `ImageExtension` by extending it. For example, using a `<figure>` element to wrap the image and adding a `<figcaption>` element.
 

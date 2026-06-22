@@ -59,6 +59,22 @@ export interface ImageOptions {
   enableResizing?: boolean;
 
   /**
+   * The minimum width (in pixels) the image can be resized to when
+   * {@link ImageOptions.enableResizing} is `true`.
+   *
+   * @defaultValue 50
+   */
+  minWidth?: number;
+
+  /**
+   * The maximum width (in pixels) the image can be resized to when
+   * {@link ImageOptions.enableResizing} is `true`.
+   *
+   * @defaultValue Infinity
+   */
+  maxWidth?: number;
+
+  /**
    * When pasting mixed text and image content (usually from Microsoft Office products) the content on the clipboard is either:
    *
    * a. one large image: containing effectively a screenshot of the original content (an image with text in it).
@@ -100,6 +116,8 @@ type SetProgress = (progress: number) => void;
     destroyPlaceholder: () => {},
     uploadHandler,
     enableResizing: false,
+    minWidth: 50,
+    maxWidth: Number.POSITIVE_INFINITY,
     preferPastedTextContent: true,
   },
 })
@@ -276,8 +294,9 @@ export class ImageExtension extends NodeExtension<ImageOptions> {
 
   createNodeViews(): NodeViewMethod | Record<string, NodeViewMethod> {
     if (this.options.enableResizing) {
+      const { minWidth, maxWidth } = this.options;
       return (node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) =>
-        new ResizableImageView(node, view, getPos as () => number);
+        new ResizableImageView(node, view, getPos as () => number, { minWidth, maxWidth });
     }
 
     return {};

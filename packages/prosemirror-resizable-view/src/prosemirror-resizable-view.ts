@@ -5,7 +5,7 @@ import { setStyle } from '@remirror/core-utils';
 
 import { ResizableHandle, ResizableHandleType } from './resizable-view-handle';
 
-const MIN_WIDTH = 50;
+const DEFAULT_MIN_WIDTH = 50;
 
 export enum ResizableRatioType {
   Fixed,
@@ -26,6 +26,8 @@ interface OptionShape {
  * @param aspectRatio? - to determine which type of aspect ratio should be used.
  * @param options? - extra options to pass to `createElement` method.
  * @param initialSize? - initial view size.
+ * @param minWidth? - the minimum width (in pixels) the node can be resized to. Defaults to {@link DEFAULT_MIN_WIDTH}.
+ * @param maxWidth? - the maximum width (in pixels) the node can be resized to. Defaults to `Infinity`.
  */
 export abstract class ResizableNodeView implements NodeView {
   dom: HTMLElement;
@@ -33,6 +35,8 @@ export abstract class ResizableNodeView implements NodeView {
   #node: ProsemirrorNode;
   #destroyList: Array<() => void> = [];
   readonly aspectRatio: ResizableRatioType;
+  readonly minWidth: number;
+  readonly maxWidth: number;
 
   // cache the current element's size so that we can compare with new node's
   // size when `update` method is called.
@@ -46,6 +50,8 @@ export abstract class ResizableNodeView implements NodeView {
     aspectRatio = ResizableRatioType.Fixed,
     options,
     initialSize,
+    minWidth = DEFAULT_MIN_WIDTH,
+    maxWidth = Number.POSITIVE_INFINITY,
   }: {
     node: ProsemirrorNode;
     view: EditorView;
@@ -53,7 +59,12 @@ export abstract class ResizableNodeView implements NodeView {
     aspectRatio?: ResizableRatioType;
     options?: OptionShape;
     initialSize?: { width: number; height: number };
+    minWidth?: number;
+    maxWidth?: number;
   }) {
+    this.minWidth = minWidth;
+    this.maxWidth = maxWidth;
+
     const outer = this.createWrapper(node, initialSize);
     const element = this.createElement({ node, view, getPos, options });
 
@@ -137,8 +148,8 @@ export abstract class ResizableNodeView implements NodeView {
     }
 
     setStyle(outer, {
-      maxWidth: '100%',
-      minWidth: `${MIN_WIDTH}px`,
+      maxWidth: Number.isFinite(this.maxWidth) ? `min(100%, ${this.maxWidth}px)` : '100%',
+      minWidth: `${this.minWidth}px`,
 
       // By default, inline-block has "vertical-align: baseline", which makes
       // the outer wrapper slightly taller than the resizable view, which will
@@ -179,7 +190,11 @@ export abstract class ResizableNodeView implements NodeView {
       let newWidth: number | null = null;
       let newHeight: number | null = null;
 
-      if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
+      if (this.aspectRatio === ResizableRatioType.Fixed && (!startWidth || !startHeight)) {
+        return;
+      }
+
+      if (this.aspectRatio === ResizableRatioType.Fixed) {
         switch (handle.type) {
           case ResizableHandleType.Right:
           case ResizableHandleType.BottomRight:
@@ -218,12 +233,11 @@ export abstract class ResizableNodeView implements NodeView {
         }
       }
 
-      if (typeof newWidth === 'number' && newWidth < MIN_WIDTH) {
-        if (this.aspectRatio === ResizableRatioType.Fixed && startWidth && startHeight) {
-          newWidth = MIN_WIDTH;
+      if (typeof newWidth === 'number') {
+        newWidth = Math.min(this.maxWidth, Math.max(this.minWidth, newWidth));
+
+        if (this.aspectRatio === ResizableRatioType.Fixed) {
           newHeight = (startHeight / startWidth) * newWidth;
-        } else if (this.aspectRatio === ResizableRatioType.Flexible) {
-          newWidth = MIN_WIDTH;
         }
       }
 
