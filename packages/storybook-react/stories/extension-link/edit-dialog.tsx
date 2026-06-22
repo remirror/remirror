@@ -1,6 +1,13 @@
+import { css } from '@emotion/css';
 import type { ChangeEvent, HTMLProps, KeyboardEvent } from 'react';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { createMarkPositioner, LinkExtension, ShortcutHandlerProps } from 'remirror/extensions';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  createMarkPositioner,
+  LinkExtension,
+  ShortcutHandlerProps,
+  TextHighlightExtension,
+} from 'remirror/extensions';
+import { cx } from '@remirror/core';
 import {
   EditorComponent,
   FloatingWrapper,
@@ -9,10 +16,12 @@ import {
   useActive,
   useAttrs,
   useChainedCommands,
+  useCommands,
   useCurrentSelection,
+  useExtension,
   useExtensionEvent,
   useRemirror,
-  useUpdateReason,
+  useSelectedText,
 } from '@remirror/react';
 import { CommandButton, FloatingToolbar } from '@remirror/react-ui';
 
@@ -40,75 +49,111 @@ function useLinkShortcut() {
 
 function useFloatingLinkState() {
   const chain = useChainedCommands();
+  const commands = useCommands();
   const { isEditing, linkShortcut, setIsEditing } = useLinkShortcut();
-  const { to, empty } = useCurrentSelection();
-
-  const url = (useAttrs().link()?.href as string) ?? '';
-  const [href, setHref] = useState<string>(url);
+  const { to, empty: isSelectionEmpty } = useCurrentSelection();
+  const text = useSelectedText() ?? '';
+  const [editingText, setEditingText] = useState<string>(text);
+  const href = (useAttrs().link()?.href as string) ?? '';
+  const [editingHref, setEditingHref] = useState<string>(href);
+  const extension = useExtension(LinkExtension);
 
   // A positioner which only shows for links.
   const linkPositioner = useMemo(() => createMarkPositioner({ type: 'link' }), []);
 
-  const onRemove = useCallback(() => chain.removeLink().focus().run(), [chain]);
+  const onLinkOpen = useCallback(() => {
+    window.open(href, extension.options.defaultTarget ?? '_blank');
+  }, [extension.options.defaultTarget, href]);
 
-  const updateReason = useUpdateReason();
-
-  useLayoutEffect(() => {
-    if (!isEditing) {
-      return;
-    }
-
-    if (updateReason.doc || updateReason.selection) {
-      setIsEditing(false);
-    }
-  }, [isEditing, setIsEditing, updateReason.doc, updateReason.selection]);
+  const onRemoveLink = useCallback(() => {
+    chain.removeLink().focus().run();
+    setIsEditing(false);
+  }, [chain, setIsEditing]);
 
   useEffect(() => {
-    setHref(url);
-  }, [url]);
+    setEditingHref(href);
+    setEditingText(text);
+  }, [href, text]);
 
-  const submitHref = useCallback(() => {
+  const handleUpdatelink = useCallback(() => {
     setIsEditing(false);
     const range = linkShortcut ?? undefined;
 
-    if (href === '') {
+    if (editingHref === '') {
       chain.removeLink();
     } else {
-      chain.updateLink({ href, auto: false }, range);
+      chain
+        .replaceText({
+          content: editingText,
+          range,
+        })
+        .updateLink({ href: editingHref, auto: false }, range)
+        .run();
     }
 
     chain.focus(range?.to ?? to).run();
-  }, [setIsEditing, linkShortcut, chain, href, to]);
+  }, [setIsEditing, linkShortcut, chain, editingHref, editingText, to]);
 
-  const cancelHref = useCallback(() => {
+  const handleCancelEdit = useCallback(() => {
     setIsEditing(false);
-  }, [setIsEditing]);
+    chain.removeTextHighlight().emptySelection().run();
+  }, [chain, setIsEditing]);
 
-  const clickEdit = useCallback(() => {
-    if (empty) {
-      chain.selectLink();
+  const onEditLink = useCallback(() => {
+    if (isSelectionEmpty) {
+      chain.selectLink().run();
     }
 
+    commands.setTextHighlight('red');
+
     setIsEditing(true);
-  }, [chain, empty, setIsEditing]);
+  }, [chain, commands, isSelectionEmpty, setIsEditing]);
 
   return useMemo(
     () => ({
-      href,
-      setHref,
+      editingText,
+      setEditingText,
+      editingHref,
+      setEditingHref,
       linkShortcut,
       linkPositioner,
       isEditing,
-      clickEdit,
-      onRemove,
-      submitHref,
-      cancelHref,
+      setIsEditing,
+      onEditLink,
+      onRemoveLink,
+      onLinkOpen,
+      handleUpdatelink,
+      handleCancelEdit,
     }),
-    [href, linkShortcut, linkPositioner, isEditing, clickEdit, onRemove, submitHref, cancelHref],
+    [
+      editingText,
+      setEditingText,
+      editingHref,
+      setEditingHref,
+      linkShortcut,
+      linkPositioner,
+      isEditing,
+      setIsEditing,
+      onEditLink,
+      onRemoveLink,
+      onLinkOpen,
+      handleUpdatelink,
+      handleCancelEdit,
+    ],
   );
 }
 
-const DelayAutoFocusInput = ({ autoFocus, ...rest }: HTMLProps<HTMLInputElement>) => {
+interface DelayAutoFocusInput extends HTMLProps<HTMLInputElement> {
+  handleSubmit: () => void;
+  handleCancel: () => void;
+}
+
+const DelayAutoFocusInput = ({
+  handleSubmit,
+  handleCancel,
+  autoFocus,
+  ...rest
+}: DelayAutoFocusInput) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -125,73 +170,187 @@ const DelayAutoFocusInput = ({ autoFocus, ...rest }: HTMLProps<HTMLInputElement>
     };
   }, [autoFocus]);
 
-  return <input ref={inputRef} {...rest} />;
+  return (
+    <input
+      ref={inputRef}
+      {...rest}
+      onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
+        const { code } = event;
+
+        if (code === 'Enter') {
+          handleSubmit();
+        }
+
+        if (code === 'Escape') {
+          handleCancel();
+        }
+      }}
+    />
+  );
 };
 
 const FloatingLinkToolbar = () => {
-  const { isEditing, linkPositioner, clickEdit, onRemove, submitHref, href, setHref, cancelHref } =
-    useFloatingLinkState();
+  const {
+    editingText,
+    setEditingText,
+    isEditing,
+    linkPositioner,
+    onEditLink,
+    onLinkOpen,
+    onRemoveLink,
+    handleUpdatelink,
+    editingHref,
+    setEditingHref,
+    handleCancelEdit,
+  } = useFloatingLinkState();
   const active = useActive();
   const activeLink = active.link();
-  const { empty } = useCurrentSelection();
+  const selection = useCurrentSelection();
 
-  const handleClickEdit = useCallback(() => {
-    clickEdit();
-  }, [clickEdit]);
+  // If a selection spans across multiple lines, things get more complicated.
+  // Prevent the floating toolbar from showing in this case.
+  const isMultilineSelection = !selection.$from.sameParent(selection.$to);
 
-  const linkEditButtons = activeLink ? (
-    <>
-      <CommandButton
-        commandName='updateLink'
-        onSelect={handleClickEdit}
-        icon='pencilLine'
-        enabled
-      />
-      <CommandButton commandName='removeLink' onSelect={onRemove} icon='linkUnlink' enabled />
-    </>
-  ) : (
-    <CommandButton commandName='updateLink' onSelect={handleClickEdit} icon='link' enabled />
-  );
+  const handleOnEditLink = useCallback(() => {
+    onEditLink();
+  }, [onEditLink]);
+
+  const linkMenuButtons = useMemo(() => {
+    if (activeLink) {
+      return (
+        <>
+          <CommandButton
+            commandName='updateLink'
+            onSelect={handleOnEditLink}
+            icon='pencilLine'
+            enabled
+          />
+          <CommandButton
+            commandName='removeLink'
+            onSelect={onRemoveLink}
+            icon='linkUnlink'
+            enabled
+          />
+          <CommandButton
+            commandName='activateLink'
+            onSelect={onLinkOpen}
+            icon='externalLinkFill'
+            enabled
+          />
+        </>
+      );
+    }
+
+    if (!selection.empty) {
+      return (
+        <CommandButton commandName='updateLink' onSelect={handleOnEditLink} icon='link' enabled />
+      );
+    }
+
+    return <></>;
+  }, [activeLink, selection.empty, handleOnEditLink, onRemoveLink, onLinkOpen]);
 
   return (
     <>
-      {!isEditing && <FloatingToolbar>{linkEditButtons}</FloatingToolbar>}
-      {!isEditing && empty && (
-        <FloatingToolbar positioner={linkPositioner}>{linkEditButtons}</FloatingToolbar>
+      {!isEditing && !isMultilineSelection && <FloatingToolbar>{linkMenuButtons}</FloatingToolbar>}
+      {!isEditing && selection.empty && !isMultilineSelection && (
+        <FloatingToolbar positioner={linkPositioner}>{linkMenuButtons}</FloatingToolbar>
       )}
-
       <FloatingWrapper
-        positioner='always'
-        placement='bottom'
         enabled={isEditing}
-        renderOutsideEditor
+        placement='bottom-start'
+        positioner='selection'
+        renderOutsideEditor={false}
       >
-        <DelayAutoFocusInput
-          style={{ zIndex: 20 }}
-          autoFocus
-          placeholder='Enter link...'
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setHref(event.target.value)}
-          value={href}
-          onKeyPress={(event: KeyboardEvent<HTMLInputElement>) => {
-            const { code } = event;
-
-            if (code === 'Enter') {
-              submitHref();
-            }
-
-            if (code === 'Escape') {
-              cancelHref();
-            }
-          }}
+        <EditLinkDialog
+          editingHref={editingHref}
+          setEditingHref={setEditingHref}
+          editingText={editingText}
+          setEditingText={setEditingText}
+          handleUpdatelink={handleUpdatelink}
+          handleCancelEdit={handleCancelEdit}
         />
       </FloatingWrapper>
     </>
   );
 };
 
+interface EditLinkDialogProps {
+  editingHref: string;
+  setEditingHref: (href: string) => void;
+  editingText: string;
+  setEditingText: (text: string) => void;
+  handleUpdatelink: () => void;
+  handleCancelEdit: () => void;
+}
+
+const EditLinkDialog = ({
+  editingHref,
+  setEditingHref,
+  editingText,
+  setEditingText,
+  handleUpdatelink,
+  handleCancelEdit,
+}: EditLinkDialogProps) => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        handleCancelEdit();
+      }
+    },
+    [handleCancelEdit, wrapperRef],
+  );
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [handleClickOutside]);
+
+  return (
+    <div
+      ref={wrapperRef}
+      className={cx(
+        'edit-link-dialog',
+        css`
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 8px;
+          background-color: var(--rmr-hue-gray-1);
+          border-radius: 4px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          position: relative;
+          border: 1px solid var(--rmr-hue-gray-7);
+        `,
+      )}
+    >
+      <DelayAutoFocusInput
+        autoFocus
+        placeholder='Enter link...'
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setEditingHref(event.target.value)}
+        value={editingHref}
+        handleSubmit={handleUpdatelink}
+        handleCancel={handleCancelEdit}
+      />
+      <DelayAutoFocusInput
+        autoFocus={false}
+        placeholder='Enter text...'
+        onChange={(event: ChangeEvent<HTMLInputElement>) => setEditingText(event.target.value)}
+        value={editingText}
+        handleSubmit={handleUpdatelink}
+        handleCancel={handleCancelEdit}
+      />
+    </div>
+  );
+};
+
 const EditDialog = (): JSX.Element => {
   const { manager, state } = useRemirror({
-    extensions: () => [new LinkExtension({ autoLink: true })],
+    extensions: () => [new LinkExtension({ autoLink: true }), new TextHighlightExtension()],
     content: `Click this <a href="https://remirror.io" target="_blank">link</a> to edit it`,
     stringHandler: 'html',
   });
