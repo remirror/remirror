@@ -665,7 +665,7 @@ The `useSuggester` React hook was deprecated alias and has now been removed. Ple
 
 Similarly, the type of this function has been renamed, please update any usages of `UseSuggesterProps` to `UseSuggestProps`.
 
-## Update any usages of `getRemirrorJSON` to `useSuggest`
+## Update any usages of `getRemirrorJSON` to `getJSON`
 
 The `getRemirrorJSON` helper function was deprecated alias and has now been removed. Please use the `getJSON` helper instead.
 
