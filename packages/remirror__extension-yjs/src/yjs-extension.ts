@@ -64,6 +64,11 @@ interface YjsRealtimeProvider {
 
 export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimeProvider> {
   /**
+   * Set a document key in case you're sharing the same provider
+   */
+  documentKey?: string;
+
+  /**
    * Get the provider for this extension.
    */
   getProvider: Provider | (() => Provider);
@@ -130,6 +135,7 @@ export interface YjsOptions<Provider extends YjsRealtimeProvider = YjsRealtimePr
         message: 'You must provide a YJS Provider to the `YjsExtension`.',
       });
     },
+    documentKey: 'prosemirror',
     destroyProvider: defaultDestroyProvider,
     syncPluginOptions: undefined,
     cursorBuilder: defaultCursorBuilder,
@@ -178,10 +184,11 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       protectedNodes,
       trackedOrigins,
       selectionBuilder,
+      documentKey,
     } = this.options;
 
     const yDoc = this.provider.doc;
-    const type = yDoc.getXmlFragment('prosemirror');
+    const type = yDoc.getXmlFragment(documentKey);
 
     const { mapping } = initProseMirrorDoc(type, this.store.schema);
 
