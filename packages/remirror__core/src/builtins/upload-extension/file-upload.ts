@@ -28,7 +28,7 @@ export interface UploadPlaceholderPayload<NodeAttributes extends AbstractNodeAtt
 }
 
 export interface UploadFileProps<NodeAttributes extends AbstractNodeAttributes = object> {
-  file: File;
+  files: File[];
   pos: number | undefined;
   view: EditorView;
   fileType: NodeType;
@@ -39,30 +39,32 @@ export interface UploadFileProps<NodeAttributes extends AbstractNodeAttributes =
  * Insert a file into the editor and upload it.
  */
 export function uploadFile<NodeAttributes extends AbstractNodeAttributes>({
-  file,
+  files,
   pos,
   view,
   fileType,
   uploadHandler,
 }: UploadFileProps<NodeAttributes>): void {
-  const id = uniqueId('file-placeholder-');
+  for (const file of files) {
+    const id = uniqueId('file-placeholder-');
 
-  const context = createUploadContext();
+    const context = createUploadContext();
 
-  const fileUploader = createFilePlaceholder<NodeAttributes>({
-    id,
-    context,
-    file,
-    pos,
-    view,
-    fileType,
-    uploadHandler,
-  });
+    const fileUploader = createFilePlaceholder<NodeAttributes>({
+      id,
+      context,
+      file,
+      pos,
+      view,
+      fileType,
+      uploadHandler,
+    });
 
-  fileUploader
-    ?.upload(context)
-    .then((attrs) => onFileLoaded({ id, fileType, view, attrs }))
-    .catch((error) => onFileLoaded({ id, fileType, view, attrs: { error: error.message } }));
+    fileUploader
+      ?.upload(context)
+      .then((attrs) => onFileLoaded({ id, fileType, view, attrs }))
+      .catch((error) => onFileLoaded({ id, fileType, view, attrs: { error: error.message } }));
+  }
 }
 
 /**
