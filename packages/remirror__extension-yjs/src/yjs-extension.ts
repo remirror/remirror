@@ -11,13 +11,14 @@ import {
   yUndoPlugin,
   yUndoPluginKey,
 } from 'y-prosemirror';
-import type { Doc } from 'yjs';
+import type { Doc, XmlFragment } from 'yjs';
 import { UndoManager } from 'yjs';
 import {
   AcceptUndefined,
   command,
   convertCommand,
   EditorState,
+  EditorView,
   ErrorConstant,
   extension,
   ExtensionPriority,
@@ -175,8 +176,6 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
       getSelection,
       cursorStateField,
       disableUndo,
-      protectedNodes,
-      trackedOrigins,
       selectionBuilder,
     } = this.options;
 
@@ -195,14 +194,61 @@ export class YjsExtension extends PlainExtension<YjsOptions> {
     ];
 
     if (!disableUndo) {
-      const undoManager = new UndoManager(type, {
-        trackedOrigins: new Set([ySyncPluginKey, ...trackedOrigins]),
-        deleteFilter: (item) => defaultDeleteFilter(item, protectedNodes),
-      });
-      plugins.push(yUndoPlugin({ undoManager }));
+      const yUndoPluginInstance = this.createYUndoPlugin(type);
+      plugins.push(yUndoPluginInstance);
     }
 
     return plugins;
+  }
+
+  /**
+   * detailed reason for this method
+   * https://github.com/yjs/y-prosemirror/issues/114 and https://github.com/yjs/y-prosemirror/issues/102
+   *
+   * The implementation of this method is inspired by tiptap.
+   * https://github.com/ueberdosis/tiptap/blob/bdc51d12b513e8d395e2aefa52ad890e4f2478a7/packages/extension-collaboration/src/collaboration.ts#L108
+   */
+  private createYUndoPlugin(type: XmlFragment) {
+    const { trackedOrigins, protectedNodes } = this.options;
+    const undoManager = new UndoManager(type, {
+      trackedOrigins: new Set([ySyncPluginKey, ...trackedOrigins]),
+      deleteFilter: (item) => defaultDeleteFilter(item, protectedNodes),
+    });
+    const yUndoPluginInstance = yUndoPlugin({ undoManager });
+    const originalUndoPluginView = yUndoPluginInstance.spec.view;
+
+    yUndoPluginInstance.spec.view = (view: EditorView) => {
+      const { undoManager } = yUndoPluginKey.getState(view.state);
+
+      if (undoManager.restore) {
+        undoManager.restore();
+        undoManager.restore = () => {};
+      }
+
+      const viewRet = originalUndoPluginView?.(view);
+
+      return {
+        destroy: () => {
+          const hasUndoManSelf = undoManager.trackedOrigins.has(undoManager);
+
+          const observers = undoManager._observers;
+
+          undoManager.restore = () => {
+            if (hasUndoManSelf) {
+              undoManager.trackedOrigins.add(undoManager);
+            }
+
+            undoManager.doc.on('afterTransaction', undoManager.afterTransactionHandler);
+
+            undoManager._observers = observers;
+          };
+
+          viewRet?.destroy?.();
+        },
+      };
+    };
+
+    return yUndoPluginInstance;
   }
 
   /**
