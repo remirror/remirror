@@ -6,6 +6,7 @@ import {
   h1,
   h2,
   hardBreak,
+  inlineTextBlock,
   li,
   p,
   schema,
@@ -16,6 +17,7 @@ import {
   ul,
 } from 'jest-prosemirror';
 import type { Node as ProsemirrorNode } from 'prosemirror-model';
+import { ExtensionPriority } from '@remirror/core-constants';
 
 import { pasteRules } from '../';
 
@@ -592,6 +594,32 @@ describe('pasteRules', () => {
                 tableRow(tableCell(p()), tableCell(p()), tableCell(p())),
               ),
             ),
+          );
+        });
+    });
+
+    it('carries the marks to an inline block', () => {
+      const plugin = pasteRules([
+        {
+          regexp: /\*\*([^*]*)\*\*/,
+          markType: schema.marks.strong,
+          type: 'mark',
+          replaceSelection: true,
+          priority: ExtensionPriority.High,
+        },
+        {
+          regexp: /`([^`]*)`/,
+          type: 'node',
+          nodeType: schema.nodes.inlineTextBlock,
+          getContent: (match) => schema.text(match[1]),
+          priority: ExtensionPriority.Low,
+        },
+      ]);
+      createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+        .paste('**Hello `user.name`**')
+        .callback((content) => {
+          expect(content.doc).toEqualProsemirrorNode(
+            doc(p(strong('Hello '), strong(inlineTextBlock('user.name')))),
           );
         });
     });

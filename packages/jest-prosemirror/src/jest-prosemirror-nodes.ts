@@ -185,6 +185,7 @@ const built = pmBuild(schema, {
   p: { nodeType: 'paragraph' },
   text: { nodeType: 'text' },
   atomInline: { nodeType: 'atomInline' },
+  inlineTextBlock: { nodeType: 'inlineTextBlock' },
   atomBlock: { nodeType: 'atomBlock' },
   atomContainer: { nodeType: 'atomContainer' },
   li: { nodeType: 'listItem' },
@@ -241,6 +242,7 @@ export const {
 
 const b = built as any;
 
+export const inlineTextBlock: NodeBuilder = b.inlineTextBlock;
 export const code_block: NodeBuilder = b.code_block;
 export const pre: NodeBuilder = b.pre;
 export const img: NodeBuilder = b.img;
