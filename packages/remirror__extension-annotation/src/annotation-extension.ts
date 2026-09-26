@@ -20,6 +20,7 @@ import type { EditorState } from '@remirror/pm/state';
 import { AnnotationStore } from '.';
 import { ActionType, UpdateAnnotationAction } from './annotation-actions';
 import { AnnotationState } from './annotation-plugin';
+import { equalAnnotations, snapshotAnnotations } from './annotation-snapshot';
 import { MapLikeAnnotationStore } from './annotation-store';
 import type {
   Annotation,
@@ -62,6 +63,8 @@ function defaultGetStyle<A extends Annotation>(annotations: Array<OmitText<A>>) 
 export class AnnotationExtension<Type extends Annotation = Annotation> extends PlainExtension<
   AnnotationOptions<Type>
 > {
+  private cachedAnnotations?: { result: Type[]; snapshot: Type[] };
+
   get name() {
     return 'annotation' as const;
   }
@@ -246,14 +249,41 @@ export class AnnotationExtension<Type extends Annotation = Annotation> extends P
   /**
    * @returns all annotations in the editor.
    *
+   * Reuses the previous array when the ordered annotation data and plain text
+   * are deeply equal. Custom metadata is compared structurally, including
+   * collections and circular references. Functions, promises, errors and weak
+   * collections are compared by reference. If custom metadata cannot be
+   * inspected or copied, a fresh result is returned without memoization.
+   *
    * In order to use this helper make sure you have the
    * [[`AnnotationExtension`]] added to your editor.
    */
   @helper()
   getAnnotations(): Helper<Type[]> {
     const state: AnnotationState<Type> = this.getPluginState();
-    // Enrich text at annotation
-    return state.annotations.map(this.enrichText);
+    const result = state.annotations.map(this.enrichText);
+    const cached = this.cachedAnnotations;
+
+    try {
+      if (
+        cached &&
+        equalAnnotations(result, cached.snapshot) &&
+        equalAnnotations(cached.result, cached.snapshot)
+      ) {
+        return cached.result;
+      }
+
+      // A separate snapshot detects both source metadata edits and mutations of
+      // an array previously returned to the caller. Keep the returned annotations
+      // shallow, as before, so custom metadata retains its original references.
+      this.cachedAnnotations = { result, snapshot: snapshotAnnotations(result) };
+    } catch {
+      // Custom metadata can contain objects which cannot be inspected or copied.
+      // Memoization must not prevent callers from reading those annotations.
+      this.cachedAnnotations = undefined;
+    }
+
+    return result;
   }
 
   /**

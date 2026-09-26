@@ -40,7 +40,9 @@
     "@babel/runtime": "^7.27.0",
     "@remirror/core": "workspace:*",
     "@remirror/extension-positioner": "workspace:*",
-    "@remirror/messages": "workspace:*"
+    "@remirror/messages": "workspace:*",
+    "fast-copy": "4.1.1",
+    "fast-equals": "6.0.4"
   },
   "devDependencies": {
     "@remirror/cli": "workspace:*",

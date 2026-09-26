@@ -316,6 +316,291 @@ describe('styling', () => {
 
 describe('helpers', () => {
   describe('#getAnnotations', () => {
+    it('returns the same array when annotation data and text have not changed', () => {
+      const {
+        add,
+        helpers,
+        nodes: { p, doc },
+        commands,
+      } = create();
+
+      add(doc(p('<start>Hello<end> world')));
+      commands.addAnnotation({ id: '1' });
+      const annotations = helpers.getAnnotations();
+
+      expect(helpers.getAnnotations()).toBe(annotations);
+      commands.selectText({ from: 7, to: 12 });
+      expect(helpers.getAnnotations()).toBe(annotations);
+      commands.insertText('!', { from: 12 });
+      expect(helpers.getAnnotations()).toBe(annotations);
+    });
+
+    it('keeps empty results stable and invalidates added, changed and removed annotations', () => {
+      const {
+        add,
+        helpers,
+        commands,
+        nodes: { p, doc },
+        view,
+      } = create();
+      add(doc(p('Hello world')));
+      const empty = helpers.getAnnotations();
+      expect(helpers.getAnnotations()).toBe(empty);
+      commands.setAnnotations([{ id: '1', from: 1, to: 6 }]);
+      const first = helpers.getAnnotations();
+      expect(first).not.toBe(empty);
+
+      view.dispatch(view.state.tr.insertText('J', 1, 2));
+      const edited = helpers.getAnnotations();
+      expect(edited).not.toBe(first);
+      expect(edited[0]?.text).toBe('Jello');
+      expect(helpers.getAnnotations()).toBe(edited);
+
+      commands.insertText('x', { from: 1 });
+      const moved = helpers.getAnnotations();
+      expect(moved).not.toBe(edited);
+      expect(moved[0]).toMatchObject({ from: 2, to: 7, text: 'Jello' });
+
+      commands.removeAnnotations(['1']);
+      const removed = helpers.getAnnotations();
+      expect(removed).toEqual([]);
+      expect(removed).not.toBe(moved);
+      expect(helpers.getAnnotations()).toBe(removed);
+    });
+
+    it('compares custom metadata by value while retaining the original metadata references', () => {
+      interface TaggedAnnotation extends Annotation {
+        metadata: { tags: string[] };
+      }
+      type Extension = AnnotationExtension<TaggedAnnotation>;
+      const extension = new AnnotationExtension<TaggedAnnotation>();
+      const {
+        add,
+        helpers,
+        commands,
+        nodes: { p, doc },
+      } = renderEditor<Extension>([extension]);
+      const metadata = { tags: ['review'] };
+      add(doc(p('Hello')));
+      commands.setAnnotations([{ id: '1', from: 1, to: 6, metadata }]);
+      const initial = helpers.getAnnotations();
+      expect(initial[0]?.metadata).toBe(metadata);
+
+      commands.updateAnnotation('1', { metadata: { tags: ['review'] } });
+      expect(helpers.getAnnotations()).toBe(initial);
+
+      commands.updateAnnotation('1', { metadata });
+      metadata.tags.push('approved');
+      commands.redrawAnnotations();
+      const changed = helpers.getAnnotations();
+      expect(changed).not.toBe(initial);
+      expect(changed[0]?.metadata).toBe(metadata);
+      expect(changed[0]?.metadata.tags).toEqual(['review', 'approved']);
+      expect(helpers.getAnnotations()).toBe(changed);
+    });
+
+    it('does not reuse a returned array whose order or annotation data was changed by the caller', () => {
+      const {
+        add,
+        helpers,
+        commands,
+        nodes: { p, doc },
+      } = create();
+      add(doc(p('Hello world')));
+      commands.setAnnotations([
+        { id: '1', from: 1, to: 6, className: 'first' },
+        { id: '2', from: 7, to: 12 },
+      ]);
+      const initial = helpers.getAnnotations();
+      initial.reverse();
+      const restoredOrder = helpers.getAnnotations();
+      expect(restoredOrder).not.toBe(initial);
+      expect(restoredOrder.map(({ id }) => id)).toEqual(['1', '2']);
+      restoredOrder[0]!.className = 'modified by caller';
+      const restoredData = helpers.getAnnotations();
+      expect(restoredData).not.toBe(restoredOrder);
+      expect(restoredData[0]?.className).toBe('first');
+      expect(helpers.getAnnotations()).toBe(restoredData);
+
+      commands.setAnnotations([
+        { id: '2', from: 7, to: 12 },
+        { id: '1', from: 1, to: 6, className: 'first' },
+      ]);
+      const reordered = helpers.getAnnotations();
+      expect(reordered).not.toBe(restoredData);
+      expect(reordered.map(({ id }) => id)).toEqual(['2', '1']);
+    });
+
+    it('invalidates only when changing blockSeparator changes the returned text', () => {
+      const extension = new AnnotationExtension({ blockSeparator: ' ' });
+      const {
+        add,
+        helpers,
+        commands,
+        nodes: { p, doc },
+      } = renderEditor<typeof extension>([extension]);
+      add(doc(p('Hello'), p('World')));
+      commands.setAnnotations([{ id: '1', from: 1, to: 13 }]);
+      const initial = helpers.getAnnotations();
+      extension.setOptions({ blockSeparator: '\n' });
+      const changed = helpers.getAnnotations();
+      expect(changed).not.toBe(initial);
+      expect(changed[0]?.text).toBe('Hello\nWorld');
+      commands.setAnnotations([{ id: '1', from: 1, to: 6 }]);
+      const singleBlock = helpers.getAnnotations();
+      extension.setOptions({ blockSeparator: ' ' });
+      expect(helpers.getAnnotations()).toBe(singleBlock);
+    });
+
+    it('does not share cached results between editors', () => {
+      const first = create();
+      const second = create();
+      first.add(first.nodes.doc(first.nodes.p('Hello')));
+      second.add(second.nodes.doc(second.nodes.p('Hello')));
+      first.commands.setAnnotations([{ id: '1', from: 1, to: 6 }]);
+      second.commands.setAnnotations([{ id: '1', from: 1, to: 6 }]);
+      expect(first.helpers.getAnnotations()).toEqual(second.helpers.getAnnotations());
+      expect(first.helpers.getAnnotations()).not.toBe(second.helpers.getAnnotations());
+    });
+
+    it('tracks Map keys, ordered collection values and circular metadata without losing reference stability', () => {
+      interface RichAnnotation extends Annotation {
+        metadata: Map<{ label: string; parent?: unknown }, string[]>;
+      }
+      const extension = new AnnotationExtension<RichAnnotation>();
+      const {
+        add,
+        helpers,
+        commands,
+        nodes: { p, doc },
+      } = renderEditor<typeof extension>([extension]);
+      const key: { label: string; parent?: unknown } = { label: 'key' };
+      const metadata = new Map([[key, ['first', 'second']]]);
+      key.parent = metadata;
+      add(doc(p('Hello')));
+      commands.setAnnotations([{ id: '1', from: 1, to: 6, metadata }]);
+      const initial = helpers.getAnnotations();
+      expect(helpers.getAnnotations()).toBe(initial);
+      key.label = 'changed';
+      commands.redrawAnnotations();
+      const changedKey = helpers.getAnnotations();
+      expect(changedKey).not.toBe(initial);
+      expect(helpers.getAnnotations()).toBe(changedKey);
+      metadata.get(key)!.reverse();
+      commands.redrawAnnotations();
+      const changedOrder = helpers.getAnnotations();
+      expect(changedOrder).not.toBe(changedKey);
+      expect(changedOrder[0]?.metadata).toBe(metadata);
+      expect(helpers.getAnnotations()).toBe(changedOrder);
+    });
+
+    it.each([
+      [
+        'Date',
+        () => ({
+          value: new Date(0),
+          mutate(value: Date) {
+            value.setTime(1);
+          },
+        }),
+      ],
+      [
+        'Set',
+        () => ({
+          value: new Set([['first', 'second']]),
+          mutate(value: Set<string[]>) {
+            [...value][0]!.reverse();
+          },
+        }),
+      ],
+      [
+        'typed array',
+        () => ({
+          value: new Uint8Array([1, 2]),
+          mutate(value: Uint8Array) {
+            value[0] = 3;
+          },
+        }),
+      ],
+      [
+        'DataView window',
+        () => ({
+          value: new DataView(new ArrayBuffer(8), 2, 4),
+          mutate(value: DataView) {
+            value.setUint8(0, 3);
+          },
+        }),
+      ],
+      [
+        'symbol field',
+        () => {
+          const key = Symbol('metadata');
+          return {
+            value: { [key]: 'before' },
+            mutate(value: Record<symbol, string>) {
+              value[key] = 'after';
+            },
+          };
+        },
+      ],
+    ])('detects in-place changes to %s metadata', (_label, makeValue) => {
+      interface RichAnnotation extends Annotation {
+        metadata: unknown;
+      }
+      const extension = new AnnotationExtension<RichAnnotation>();
+      const {
+        add,
+        helpers,
+        commands,
+        nodes: { p, doc },
+      } = renderEditor<typeof extension>([extension]);
+      const { value, mutate } = makeValue();
+      add(doc(p('Hello')));
+      commands.setAnnotations([{ id: '1', from: 1, to: 6, metadata: value }]);
+      const initial = helpers.getAnnotations();
+      expect(helpers.getAnnotations()).toBe(initial);
+      // Each row supplies the mutator for its own value type.
+      (mutate as (value: unknown) => void)(value);
+      commands.redrawAnnotations();
+      const changed = helpers.getAnnotations();
+      expect(changed).not.toBe(initial);
+      expect(changed[0]?.metadata).toBe(value);
+      expect(helpers.getAnnotations()).toBe(changed);
+    });
+
+    it('compares opaque metadata by reference and preserves annotations which cannot be inspected', () => {
+      interface CustomAnnotation extends Annotation {
+        metadata: unknown;
+      }
+      const extension = new AnnotationExtension<CustomAnnotation>();
+      const {
+        add,
+        helpers,
+        commands,
+        nodes: { p, doc },
+      } = renderEditor<typeof extension>([extension]);
+      add(doc(p('Hello')));
+      const error = new Error('same message');
+      commands.setAnnotations([{ id: '1', from: 1, to: 6, metadata: error }]);
+      const initial = helpers.getAnnotations();
+      expect(helpers.getAnnotations()).toBe(initial);
+      commands.updateAnnotation('1', { metadata: new Error('same message') });
+      expect(helpers.getAnnotations()).not.toBe(initial);
+
+      const metadata = Object.defineProperty({}, 'unreadable', {
+        enumerable: true,
+        get() {
+          throw new Error('not inspectable');
+        },
+      });
+      commands.updateAnnotation('1', { metadata });
+      const first = helpers.getAnnotations();
+      const second = helpers.getAnnotations();
+      expect(second).not.toBe(first);
+      expect(second[0]?.metadata).toBe(metadata);
+      expect(helpers.getAnnotations()[0]?.text).toBe('Hello');
+    });
+
     it('default', () => {
       const {
         add,
